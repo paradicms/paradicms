@@ -4,7 +4,7 @@ export class Hrefs {
   }
 
   static get contact() {
-    return "mailto:info@dressdiscover.org";
+    return "mailto:info@paradicms.org";
   }
 
   static get home() {

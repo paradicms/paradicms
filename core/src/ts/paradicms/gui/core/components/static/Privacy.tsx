@@ -9,7 +9,7 @@ export class Privacy extends React.Component {
             <Frame activeNavItem={ActiveNavbarItem.Home} documentTitle="Privacy">
                 <p>
                     This privacy notice discloses the privacy practices for the DressDiscover
-                    web site (https://dressdiscover.org). This privacy notice
+                    web site (https://paradicms.org). This privacy notice
                     applies
                     solely to information collected by this website.
                 </p>

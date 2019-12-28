@@ -41,7 +41,7 @@ module.exports = function (env, argv) {
     // https://webpack.js.org/configuration/devtool/
     devtool: argv.mode === "production" ? 'hidden-source-map' : 'cheap-module-eval-source-map',
     entry: {
-      "core-gui": './ts/dressdiscover/cms/gui/core/main.tsx'
+      "core-gui": './ts/paradicms/gui/core/main.tsx'
     },
     module: {
       rules: [
@@ -112,7 +112,7 @@ module.exports = function (env, argv) {
       // (jsnext:main directs not usually distributable es6 format, but es6 sources)
       mainFields: ['module', 'browser', 'main'],
       alias: {
-        dressdiscover: path.resolve(__dirname, 'src/ts/dressdiscover')
+        paradicms: path.resolve(__dirname, 'src/ts/paradicms')
       }
     },
     target: 'web'
