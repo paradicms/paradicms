@@ -1,4 +1,4 @@
-import {Hrefs} from 'paradicms/gui/core/Hrefs';
+import {Hrefs} from 'paradicms/gui/generic/Hrefs';
 import * as React from 'react';
 import {Link} from 'react-router-dom';
 import {Col, Container, Row} from 'reactstrap';

@@ -1,5 +1,5 @@
-import { ConsoleLogger } from 'paradicms/gui/core/util/logging/ConsoleLogger';
-import { Logger } from 'paradicms/gui/core/util/logging/Logger';
+import { ConsoleLogger } from 'paradicms/gui/generic/util/logging/ConsoleLogger';
+import { Logger } from 'paradicms/gui/generic/util/logging/Logger';
 import * as React from 'react';
 
 

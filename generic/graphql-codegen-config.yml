@@ -2,6 +2,6 @@ schema: http://localhost:9000/graphql
 documents: ./src/ts/*.graphql
 overwrite: true
 generates:
-  ./src/ts/paradicms/gui/core/api/graphqlFragmentTypes.json:
+  ./src/ts/paradicms/gui/generic/api/graphqlFragmentTypes.json:
     plugins:
       - fragment-matcher

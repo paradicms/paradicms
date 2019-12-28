@@ -1,6 +1,6 @@
 import {Pagination, PaginationItem, PaginationLink} from "reactstrap";
 import * as React from "react";
-import {DefaultPaginationProps} from "paradicms/gui/core/components/pagination/DefaultPaginationProps";
+import {DefaultPaginationProps} from "paradicms/gui/generic/components/pagination/DefaultPaginationProps";
 import * as _ from "lodash";
 
 const PAGINATION_ITEMS_COUNT_LEFT = 5;

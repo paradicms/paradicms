@@ -1,4 +1,4 @@
-import { Logger } from 'paradicms/gui/core/util/logging/Logger';
+import { Logger } from 'paradicms/gui/generic/util/logging/Logger';
 
 export class ConsoleLogger implements Logger {
   debug(msg: any) {

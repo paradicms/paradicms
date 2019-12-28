@@ -1,22 +1,22 @@
-import 'paradicms/gui/core/custom_bootstrap.scss';
+import 'paradicms/gui/generic/custom_bootstrap.scss';
 
-import {apolloClient} from "paradicms/gui/core/api/apolloClient";
+import {apolloClient} from "paradicms/gui/generic/api/apolloClient";
 import {createBrowserHistory} from 'history';
-import {NoRoute} from 'paradicms/gui/core/components/error/NoRoute';
-import {Home} from 'paradicms/gui/core/components/home/Home';
-import {Privacy} from 'paradicms/gui/core/components/static/Privacy';
-import {Hrefs} from 'paradicms/gui/core/Hrefs';
-import {ConsoleLogger} from 'paradicms/gui/core/util/logging/ConsoleLogger';
+import {NoRoute} from 'paradicms/gui/generic/components/error/NoRoute';
+import {Home} from 'paradicms/gui/generic/components/home/Home';
+import {Privacy} from 'paradicms/gui/generic/components/static/Privacy';
+import {Hrefs} from 'paradicms/gui/generic/Hrefs';
+import {ConsoleLogger} from 'paradicms/gui/generic/util/logging/ConsoleLogger';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {ApolloProvider} from "react-apollo";
 import {ApolloProvider as ApolloHooksProvider} from "@apollo/react-hooks";
 import {Route, Router, Switch} from 'react-router';
-import {LoggerContext} from 'paradicms/gui/core/util/logging/LoggerContext';
-import {CollectionOverview} from "paradicms/gui/core/components/collection/CollectionOverview";
-import {InstitutionOverview} from "paradicms/gui/core/components/institution/InstitutionOverview";
-import {ObjectOverview} from "paradicms/gui/core/components/object/ObjectOverview";
-import {SearchResults} from "paradicms/gui/core/components/search/SearchResults";
+import {LoggerContext} from 'paradicms/gui/generic/util/logging/LoggerContext';
+import {CollectionOverview} from "paradicms/gui/generic/components/collection/CollectionOverview";
+import {InstitutionOverview} from "paradicms/gui/generic/components/institution/InstitutionOverview";
+import {ObjectOverview} from "paradicms/gui/generic/components/object/ObjectOverview";
+import {SearchResults} from "paradicms/gui/generic/components/search/SearchResults";
 
 // Logger
 const logger = new ConsoleLogger();

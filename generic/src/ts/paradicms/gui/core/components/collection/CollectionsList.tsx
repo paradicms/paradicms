@@ -1,6 +1,6 @@
 import * as React from "react";
 import {ListGroup, ListGroupItem} from "reactstrap";
-import {Hrefs} from "paradicms/gui/core/Hrefs";
+import {Hrefs} from "paradicms/gui/generic/Hrefs";
 import {Link} from "react-router-dom";
 
 interface Collection {

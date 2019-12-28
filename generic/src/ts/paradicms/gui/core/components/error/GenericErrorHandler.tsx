@@ -1,9 +1,9 @@
-import { Hrefs } from 'paradicms/gui/core/Hrefs';
+import { Hrefs } from 'paradicms/gui/generic/Hrefs';
 import * as React from 'react';
 import { Redirect } from 'react-router';
 
 import { FatalErrorModal } from './FatalErrorModal';
-import { Exception } from 'paradicms/gui/core/Exception';
+import { Exception } from 'paradicms/gui/generic/Exception';
 
 interface Props {
   error?: any;

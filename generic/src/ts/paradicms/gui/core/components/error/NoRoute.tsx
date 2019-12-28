@@ -1,4 +1,4 @@
-import {Frame} from 'paradicms/gui/core/components/frame/Frame';
+import {Frame} from 'paradicms/gui/generic/components/frame/Frame';
 import * as React from 'react';
 import {RouteComponentProps} from 'react-router';
 

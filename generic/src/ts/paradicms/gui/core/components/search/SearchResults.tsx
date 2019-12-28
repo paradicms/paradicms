@@ -1,20 +1,20 @@
 import {RouteComponentProps} from "react-router";
 import * as React from "react";
 import {useState} from "react";
-import * as searchResultsQuery from "paradicms/gui/core/api/queries/searchResultsQuery.graphql";
+import * as searchResultsQuery from "paradicms/gui/generic/api/queries/searchResultsQuery.graphql";
 import {
     SearchResultsQuery,
     SearchResultsQuery_matchingObjects,
     SearchResultsQueryVariables
-} from "paradicms/gui/core/api/queries/types/SearchResultsQuery";
-import {ObjectsGallery} from "paradicms/gui/core/components/object/ObjectsGallery";
-import {Frame} from "paradicms/gui/core/components/frame/Frame";
-import {ObjectSummary} from "paradicms/gui/core/components/object/ObjectSummary";
+} from "paradicms/gui/generic/api/queries/types/SearchResultsQuery";
+import {ObjectsGallery} from "paradicms/gui/generic/components/object/ObjectsGallery";
+import {Frame} from "paradicms/gui/generic/components/frame/Frame";
+import {ObjectSummary} from "paradicms/gui/generic/components/object/ObjectSummary";
 import {useQuery} from "@apollo/react-hooks";
 import * as ReactLoader from "react-loader";
 import {BreadcrumbItem} from "reactstrap";
 import {Link} from "react-router-dom";
-import {Hrefs} from "paradicms/gui/core/Hrefs";
+import {Hrefs} from "paradicms/gui/generic/Hrefs";
 
 export const SearchResults: React.FunctionComponent<RouteComponentProps<{ text: string }>> = ({match}) => {
     const searchText = decodeURIComponent(match.params.text);

@@ -1,15 +1,15 @@
 import {RouteComponentProps} from "react-router";
 import * as React from "react";
-import {InstitutionCollectionObjectOverview} from "paradicms/gui/core/components/frame/InstitutionCollectionObjectOverview";
-import {ApolloQueryWrapper} from "paradicms/gui/core/api/ApolloQueryWrapper";
+import {InstitutionCollectionObjectOverview} from "paradicms/gui/generic/components/frame/InstitutionCollectionObjectOverview";
+import {ApolloQueryWrapper} from "paradicms/gui/generic/api/ApolloQueryWrapper";
 import {
     ObjectOverviewQuery,
     ObjectOverviewQueryVariables
-} from "paradicms/gui/core/api/queries/types/ObjectOverviewQuery";
-import * as objectOverviewQuery from "paradicms/gui/core/api/queries/objectOverviewQuery.graphql";
+} from "paradicms/gui/generic/api/queries/types/ObjectOverviewQuery";
+import * as objectOverviewQuery from "paradicms/gui/generic/api/queries/objectOverviewQuery.graphql";
 import {Card, CardBody, CardHeader, CardTitle, Container, ListGroup, ListGroupItem, Row} from "reactstrap";
-import {ObjectImagesCarousel} from "paradicms/gui/core/components/object/ObjectImagesCarousel";
-import {RightsTable} from "paradicms/gui/core/components/rights/RightsTable";
+import {ObjectImagesCarousel} from "paradicms/gui/generic/components/object/ObjectImagesCarousel";
+import {RightsTable} from "paradicms/gui/generic/components/rights/RightsTable";
 
 // type Object = ObjectCardObject;
 

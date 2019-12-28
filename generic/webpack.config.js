@@ -41,7 +41,7 @@ module.exports = function (env, argv) {
     // https://webpack.js.org/configuration/devtool/
     devtool: argv.mode === "production" ? 'hidden-source-map' : 'cheap-module-eval-source-map',
     entry: {
-      "core-gui": './ts/paradicms/gui/core/main.tsx'
+      "generic-gui": './ts/paradicms/gui/generic/main.tsx'
     },
     module: {
       rules: [

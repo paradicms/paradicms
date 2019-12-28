@@ -1,9 +1,9 @@
 import {BreadcrumbItem} from "reactstrap";
 import {Link} from "react-router-dom";
-import {Hrefs} from "paradicms/gui/core/Hrefs";
+import {Hrefs} from "paradicms/gui/generic/Hrefs";
 import * as React from "react";
-import {Frame} from "paradicms/gui/core/components/frame/Frame";
-import {stripHtml} from "paradicms/gui/core/util/stripHtml";
+import {Frame} from "paradicms/gui/generic/components/frame/Frame";
+import {stripHtml} from "paradicms/gui/generic/util/stripHtml";
 
 export const InstitutionCollectionObjectOverview: React.FunctionComponent<{
     children: React.ReactNode;

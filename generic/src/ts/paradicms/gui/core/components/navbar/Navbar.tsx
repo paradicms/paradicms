@@ -1,5 +1,5 @@
-import {ActiveNavbarItem} from 'paradicms/gui/core/components/navbar/ActiveNavbarItem';
-import {Hrefs} from 'paradicms/gui/core/Hrefs';
+import {ActiveNavbarItem} from 'paradicms/gui/generic/components/navbar/ActiveNavbarItem';
+import {Hrefs} from 'paradicms/gui/generic/Hrefs';
 import * as React from 'react';
 import {ChangeEvent, useState} from 'react';
 import {Link, Redirect, RouteComponentProps, withRouter} from 'react-router-dom';

@@ -1,9 +1,9 @@
 import './Frame.scss';
 
 import * as classnames from 'classnames';
-import {Footer} from 'paradicms/gui/core/components/footer/Footer';
-import {ActiveNavbarItem} from 'paradicms/gui/core/components/navbar/ActiveNavbarItem';
-import Navbar from 'paradicms/gui/core/components/navbar/Navbar';
+import {Footer} from 'paradicms/gui/generic/components/footer/Footer';
+import {ActiveNavbarItem} from 'paradicms/gui/generic/components/navbar/ActiveNavbarItem';
+import Navbar from 'paradicms/gui/generic/components/navbar/Navbar';
 import * as React from 'react';
 import {useEffect} from 'react';
 import {Breadcrumb, Card, CardBody, CardHeader, CardTitle, Col, Container, Row} from "reactstrap";

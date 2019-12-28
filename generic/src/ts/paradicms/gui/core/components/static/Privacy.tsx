@@ -1,6 +1,6 @@
-import {Frame} from 'paradicms/gui/core/components/frame/Frame';
-import {ActiveNavbarItem} from 'paradicms/gui/core/components/navbar/ActiveNavbarItem';
-import {Hrefs} from 'paradicms/gui/core/Hrefs';
+import {Frame} from 'paradicms/gui/generic/components/frame/Frame';
+import {ActiveNavbarItem} from 'paradicms/gui/generic/components/navbar/ActiveNavbarItem';
+import {Hrefs} from 'paradicms/gui/generic/Hrefs';
 import * as React from 'react';
 
 export class Privacy extends React.Component {
