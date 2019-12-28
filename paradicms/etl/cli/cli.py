@@ -111,6 +111,7 @@ class Cli:
             try_pipeline_module_names.append(".%s.%s" % (args.pipeline_module, args.pipeline_module + "_pipeline"))
 
         first_import_error = None
+        pipeline_module = None
         for pipeline_module_name_i, pipeline_module_name in enumerate(try_pipeline_module_names):
             try:
                 pipeline_module = import_module(pipeline_module_name, _Pipeline.__module__.rsplit(".", 1)[0])
@@ -118,8 +119,9 @@ class Cli:
             except ImportError as e:
                 if pipeline_module_name_i == 0:
                     first_import_error = e
-                elif pipeline_module_name_i + 1 == len(try_pipeline_module_names):
-                    raise first_import_error
+
+        if pipeline_module is None:
+            raise first_import_error
 
         for attr in dir(pipeline_module):
             value = getattr(pipeline_module, attr)
