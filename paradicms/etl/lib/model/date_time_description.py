@@ -2,8 +2,8 @@ from typing import Optional
 
 from rdflib import BNode, Graph, Literal, XSD
 
-from dressdiscover.cms.etl.lib.model._model import _Model
-from dressdiscover.cms.etl.lib.namespace import TIME
+from paradicms.etl.lib.model._model import _Model
+from paradicms.etl.lib.namespace import TIME
 
 
 class DateTimeDescription(_Model):

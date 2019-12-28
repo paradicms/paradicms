@@ -3,8 +3,8 @@ from typing import Optional
 
 from rdflib.namespace import DCTERMS
 
-from dressdiscover.cms.etl.lib.model._model import _Model
-from dressdiscover.cms.etl.lib.namespace import EXIF
+from paradicms.etl.lib.model._model import _Model
+from paradicms.etl.lib.namespace import EXIF
 
 
 class Image(_Model):

@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from typing import Dict, Optional
 from urllib.request import urlopen
 
-from dressdiscover.cms.etl.lib.pipeline._pipeline_storage import _PipelineStorage
+from paradicms.etl.lib.pipeline._pipeline_storage import _PipelineStorage
 
 
 class _Extractor(ABC):

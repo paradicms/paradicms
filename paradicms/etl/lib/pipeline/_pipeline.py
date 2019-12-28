@@ -1,8 +1,8 @@
 from abc import ABC
 from argparse import ArgumentParser
 
-from dressdiscover.cms.etl.lib.pipeline._extractor import _Extractor
-from dressdiscover.cms.etl.lib.pipeline._transformer import _Transformer
+from paradicms.etl.lib.pipeline._extractor import _Extractor
+from paradicms.etl.lib.pipeline._transformer import _Transformer
 
 
 class _Pipeline(ABC):

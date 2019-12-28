@@ -5,7 +5,7 @@ from typing import Optional
 from rdflib import Graph, Literal, RDF, URIRef
 from rdflib.resource import Resource
 
-from dressdiscover.cms.etl.lib.namespace import CMS
+from paradicms.etl.lib.namespace import CMS
 
 
 class _Model(ABC):

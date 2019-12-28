@@ -1,6 +1,6 @@
-from dressdiscover.cms.etl.lib.pipeline._pipeline import _Pipeline
-from dressdiscover.cms.etl.lib.pipeline.oai_pmh.oai_pmh_extractor import OaiPmhExtractor
-from dressdiscover.cms.etl.lib.pipeline.oai_pmh.tfc.tfc_transformer import TfcTransformer
+from paradicms.etl.lib.pipeline._pipeline import _Pipeline
+from paradicms.etl.lib.pipeline.oai_pmh.oai_pmh_extractor import OaiPmhExtractor
+from paradicms.etl.lib.pipeline.oai_pmh.tfc.tfc_transformer import TfcTransformer
 
 
 class TfcPipeline(_Pipeline):

@@ -1,4 +1,4 @@
-from dressdiscover.cms.etl.lib.pipeline._pipeline import _Pipeline
+from paradicms.etl.lib.pipeline._pipeline import _Pipeline
 from .omeka_s_extractor import OmekaSExtractor
 from .omeka_s_transformer import OmekaSTransformer
 

@@ -6,8 +6,8 @@ from inspect import isclass
 
 import requests
 
-from dressdiscover.cms.etl.lib.pipeline._pipeline import _Pipeline
-from dressdiscover.cms.etl.lib.pipeline.file_pipeline_storage import FilePipelineStorage
+from paradicms.etl.lib.pipeline._pipeline import _Pipeline
+from paradicms.etl.lib.pipeline.file_pipeline_storage import FilePipelineStorage
 
 
 class Cli:

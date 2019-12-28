@@ -5,11 +5,11 @@ from rdflib import Graph, Namespace, RDF, URIRef
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
-from dressdiscover.cms.etl.lib.model.collection import Collection
-from dressdiscover.cms.etl.lib.model.image import Image
-from dressdiscover.cms.etl.lib.model.object import Object
-from dressdiscover.cms.etl.lib.namespace import CMS, PROV
-from dressdiscover.cms.etl.lib.pipeline._transformer import _Transformer
+from paradicms.etl.lib.model.collection import Collection
+from paradicms.etl.lib.model.image import Image
+from paradicms.etl.lib.model.object import Object
+from paradicms.etl.lib.namespace import CMS, PROV
+from paradicms.etl.lib.pipeline._transformer import _Transformer
 
 # Omeka namespace
 O = Namespace("http://omeka.org/s/vocabs/o#")

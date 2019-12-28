@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, FOAF
 
-from dressdiscover.cms.etl.lib.model.institution import Institution
+from paradicms.etl.lib.model.institution import Institution
 
 
 class _Transformer(ABC):

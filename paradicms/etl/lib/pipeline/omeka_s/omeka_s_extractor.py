@@ -3,8 +3,8 @@ from typing import Dict
 
 import requests
 
-from dressdiscover.cms.etl.lib.pipeline._extractor import _Extractor
-from dressdiscover.cms.etl.lib.pipeline._pipeline_storage import _PipelineStorage
+from paradicms.etl.lib.pipeline._extractor import _Extractor
+from paradicms.etl.lib.pipeline._pipeline_storage import _PipelineStorage
 
 
 class OmekaSExtractor(_Extractor):

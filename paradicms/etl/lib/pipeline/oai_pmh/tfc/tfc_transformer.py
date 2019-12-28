@@ -5,12 +5,12 @@ from xml.etree.ElementTree import ElementTree
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, FOAF, RDFS
 
-from dressdiscover.cms.etl.lib.model.collection import Collection
-from dressdiscover.cms.etl.lib.model.image import Image
-from dressdiscover.cms.etl.lib.model.institution import Institution
-from dressdiscover.cms.etl.lib.model.object import Object
-from dressdiscover.cms.etl.lib.namespace import CMS, DCMITYPE, PROV
-from dressdiscover.cms.etl.lib.pipeline._transformer import _Transformer
+from paradicms.etl.lib.model.collection import Collection
+from paradicms.etl.lib.model.image import Image
+from paradicms.etl.lib.model.institution import Institution
+from paradicms.etl.lib.model.object import Object
+from paradicms.etl.lib.namespace import CMS, DCMITYPE, PROV
+from paradicms.etl.lib.pipeline._transformer import _Transformer
 
 
 class TfcTransformer(_Transformer):

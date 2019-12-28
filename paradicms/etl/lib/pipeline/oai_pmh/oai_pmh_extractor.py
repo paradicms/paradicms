@@ -4,7 +4,7 @@ from urllib.request import urlopen
 from xml.dom.minidom import parseString
 from xml.etree.ElementTree import ElementTree
 
-from dressdiscover.cms.etl.lib.pipeline._extractor import _Extractor
+from paradicms.etl.lib.pipeline._extractor import _Extractor
 
 
 class OaiPmhExtractor(_Extractor):

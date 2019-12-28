@@ -3,7 +3,7 @@ from io import IOBase
 
 from pathvalidate import sanitize_filename
 
-from dressdiscover.cms.etl.lib.pipeline._pipeline_storage import _PipelineStorage
+from paradicms.etl.lib.pipeline._pipeline_storage import _PipelineStorage
 
 
 class FilePipelineStorage(_PipelineStorage):
