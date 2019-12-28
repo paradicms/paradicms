@@ -1,8 +1,8 @@
 {
-  "name": "paradicms-core-gui",
+  "name": "paradicms-generic-gui",
   "version": "1.0.0",
   "private": true,
-  "description": "Paradicms core GUI",
+  "description": "Paradicms generic GUI",
   "devDependencies": {
     "@graphql-codegen/cli": "1.2.0",
     "@graphql-codegen/fragment-matcher": "1.2.0",
