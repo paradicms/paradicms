@@ -1,0 +1,5 @@
+fragment RightsFragment on Rights {
+    holder
+    license
+    text
+}

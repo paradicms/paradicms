@@ -1,0 +1,9 @@
+#import "./objectSummaryFragment.graphql"
+
+query CollectionOverviewObjectsPaginationQuery($collectionUri: String!, $limit: Int!, $offset: Int!) {
+    collectionByUri(uri: $collectionUri) {
+        objects(limit: $limit, offset: $offset) {
+            ...ObjectSummaryFragment
+        }
+    }
+}

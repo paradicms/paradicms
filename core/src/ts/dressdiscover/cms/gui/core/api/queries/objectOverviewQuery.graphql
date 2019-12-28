@@ -1,0 +1,48 @@
+#import "./rightsFragment.graphql"
+
+query ObjectOverviewQuery($collectionUri: String!, $institutionUri: String!, $objectUri: String!) {
+    collectionByUri(uri: $collectionUri) {
+        name
+        rights {
+            ...RightsFragment
+        }
+    }
+    institutionByUri(uri: $institutionUri) {
+        name
+        rights {
+            ...RightsFragment
+        }
+    }
+    objectByUri(uri: $objectUri) {
+        alternativeTitles
+        creators
+        dates
+        descriptions
+        extents
+        identifiers
+        images {
+            original {
+                height
+                url
+                width
+            }
+            thumbnail {
+                height
+                url
+                width
+            }
+        }
+        languages
+        media
+        provenances
+        publishers
+        rights {
+            ...RightsFragment
+        }
+        sources
+        spatialCoverages
+        subjects
+        title
+        titles
+    }
+}

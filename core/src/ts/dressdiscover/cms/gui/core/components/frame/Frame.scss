@@ -1,0 +1,15 @@
+@import "dressdiscover/cms/gui/core/bootstrap_variables.scss";
+
+.frame {
+    height: 100%;
+    margin: 20px;
+
+    footer {
+        margin-top: 20px;
+    }
+
+    .headline {
+        background-color: $primary;
+        color: white;
+    }
+}

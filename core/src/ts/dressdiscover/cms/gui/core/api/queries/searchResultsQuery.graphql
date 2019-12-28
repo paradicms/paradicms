@@ -1,0 +1,27 @@
+#import "./objectSummaryFragment.graphql"
+
+query SearchResultsQuery($limit: Int!, $offset: Int!, $text: String!) {
+    matchingObjects(limit: $limit, offset: $offset, text: $text) {
+        collection {
+            name
+            rights {
+                text
+            }
+            uri
+        }
+        institution {
+            name
+            rights {
+                text
+            }
+            uri
+        }
+        object {
+            ...ObjectSummaryFragment
+            rights {
+                text
+            }
+        }
+    }
+    matchingObjectsCount(text: $text)
+}
