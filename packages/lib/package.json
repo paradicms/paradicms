@@ -45,7 +45,8 @@
     "webpack": "4.29.3",
     "webpack-cleanup-plugin": "0.5.1",
     "webpack-cli": "3.2.3",
-    "webpack-dev-server": "3.1.14"
+    "webpack-dev-server": "3.1.14",
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.1",
@@ -67,5 +68,8 @@
     "react-router-dom": "4.3.1",
     "reactstrap": "^8.2.0"
   },
+  "files": [
+    "src/ts/"
+  ],
   "license": "GPLv3"
 }
