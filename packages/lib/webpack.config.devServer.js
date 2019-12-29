@@ -1,6 +1,8 @@
-module.exports = {
+module.exports = function (contentBase) {
+  return {
     devServer: {
       clientLogLevel: 'warning',
+      contentBase: contentBase,
       historyApiFallback: {disableDotRule: true},
       host: 'localhost',
       // host: '0.0.0.0',
@@ -22,4 +24,5 @@ module.exports = {
       // public: "tunnel.minorgordon.net",
       stats: 'minimal'
     }
+  }
 }
