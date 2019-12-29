@@ -37,11 +37,6 @@ module.exports = function (env, argv) {
         hash: true,
         template: 'index.html'
       })
-    ],
-    resolve: {
-      alias: {
-        paradicms: path.resolve(__dirname, 'src/ts/paradicms')
-      }
-    }
+    ]
   });
 }
