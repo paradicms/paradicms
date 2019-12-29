@@ -1,11 +1,12 @@
 FROM tiangolo/node-frontend:10 as build
 WORKDIR /app
-COPY package.json .
+COPY /gui .
 RUN npm install
-COPY . .
-RUN npm run build
+RUN npm lerna:bootstrap
+WORKDIR /app/packages/generic
+RUN npm build
 
 # Deployment
 FROM nginx:1.17.6
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/packages/generic/dist /usr/share/nginx/html

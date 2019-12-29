@@ -7,8 +7,8 @@
   },
   "license": "GPLv3",
   "scripts": {
-    "build": "webpack --mode production -p",
-    "generate": "graphql-codegen --config graphql-codegen-config.yml && apollo codegen:generate --endpoint http://localhost:9000/graphql --target=typescript --includes=src/ts/**/*.graphql,src/ts/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/ts/paradicms/gui/generic/api/graphqlGlobalTypes.ts types",
-    "start": "webpack-dev-server --mode development --hot --info-verbosity verbose --inline"
+    "build": "../../node_modules/.bin/webpack --mode production -p",
+    "generate": "..\\..\\node_modules\\.bin\\graphql-codegen --config graphql-codegen-config.yml && apollo codegen:generate --endpoint http://localhost:9000/graphql --target=typescript --includes=src/ts/**/*.graphql,src/ts/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/ts/paradicms/gui/generic/api/graphqlGlobalTypes.ts types",
+    "start": "..\\..\\node_modules\\.bin\\webpack-dev-server --mode development --hot --info-verbosity verbose --inline"
   }
 }
