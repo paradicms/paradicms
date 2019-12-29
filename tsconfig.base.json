@@ -11,8 +11,9 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "paths": {
-      "paradicms/*": ["src/ts/paradicms/*"],
-      "node_modules/*": ["node_modules/*"]
+      "paradicms/*": [
+        "src/ts/paradicms/*"
+      ]
     },
     "removeComments": true,
     "resolveJsonModule": true,

@@ -68,8 +68,8 @@
     "react-router-dom": "4.3.1",
     "reactstrap": "^8.2.0"
   },
-  "files": [
-    "src/ts/"
-  ],
-  "license": "GPLv3"
+  "license": "GPLv3",
+  "scripts": {
+    "start": "..\\..\\node_modules\\.bin\\webpack --mode development --hot --info-verbosity verbose --inline --watch"
+  }
 }
