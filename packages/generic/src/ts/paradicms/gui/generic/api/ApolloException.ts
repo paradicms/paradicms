@@ -1,7 +1,7 @@
 import {ApolloError} from "apollo-boost";
 import {Exception} from "paradicms/gui/generic/Exception";
 import {get} from "lodash";
-import {Environment} from "paradicms-gui-lib/src/ts/paradicms/gui/lib/Environment";
+import {Environment} from "paradicms-gui-lib";
 
 export class ApolloException extends Exception {
   constructor(readonly apolloError: ApolloError) {

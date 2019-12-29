@@ -2,6 +2,7 @@ var webpack = require('webpack');
 
 // plugins
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
+var TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = function (env, argv) {
   return {
@@ -57,7 +58,8 @@ module.exports = function (env, argv) {
       extensions: ['.js', '.ts', '.tsx'],
       // Fix webpack's default behavior to not load packages with jsnext:main module
       // (jsnext:main directs not usually distributable es6 format, but es6 sources)
-      mainFields: ['module', 'browser', 'main']
+      mainFields: ['module', 'browser', 'main'],
+      plugins: [new TsconfigPathsPlugin()]
     },
     target: 'web'
   };

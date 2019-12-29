@@ -1,1 +1,1 @@
-require("./Environment");
+export * from "./Environment";
