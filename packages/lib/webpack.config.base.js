@@ -55,7 +55,7 @@ module.exports = function (env, argv) {
       })
     ],
     resolve: {
-      extensions: ['.js', '.ts', '.tsx'],
+      extensions: ['.ts', '.tsx'],
       // Fix webpack's default behavior to not load packages with jsnext:main module
       // (jsnext:main directs not usually distributable es6 format, but es6 sources)
       mainFields: ['module', 'browser', 'main'],

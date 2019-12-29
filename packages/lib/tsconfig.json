@@ -2,15 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "declaration": true,
-    "outDir": "out",
-    "paths": {
-      "paradicms/*": [
-        "src/ts/paradicms/*"
-      ]
-    }
+    "outDir": "dist"
   },
-  "extends": "./tsconfig.base.json",
-  "exclude": [
-    "out"
-  ]
+  "extends": "./tsconfig.base.json"
 }
