@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "declaration": true,
-    "outDir": "dist"
+    "outDir": "out"
   },
   "extends": "./tsconfig.base.json"
 }
