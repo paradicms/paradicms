@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "paradicms/*": [
+        "src/ts/paradicms/*"
+      ]
+    }
+  },
+  "extends": "../lib/tsconfig.base.json"
+}
