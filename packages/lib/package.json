@@ -75,8 +75,10 @@
   ],
   "license": "GPLv3",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "..\\..\\node_modules\\.bin\\webpack --mode production -p",
+    "build-development": "..\\..\\node_modules\\.bin\\webpack --mode development",
     "start": "..\\..\\node_modules\\.bin\\webpack --mode development --info-verbosity verbose --watch"
   }
 }

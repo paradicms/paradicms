@@ -2,6 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "declaration": true,
+    "outDir": "out",
     "paths": {
       "paradicms/*": [
         "src/ts/paradicms/*"

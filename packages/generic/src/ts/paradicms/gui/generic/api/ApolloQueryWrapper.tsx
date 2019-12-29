@@ -1,7 +1,7 @@
 import {ApolloQueryResult, DocumentNode, OperationVariables} from "apollo-boost";
 import * as React from "react";
 import {Query} from "react-apollo";
-import {ApolloException} from "paradicms/gui/generic/api/ApolloException";
+import {ApolloException} from "paradicms-gui-lib";
 import {GenericErrorHandler} from "paradicms/gui/generic/components/error/GenericErrorHandler";
 import * as ReactLoader from "react-loader";
 import * as invariant from "invariant";
