@@ -3,5 +3,8 @@
   "private": true,
   "devDependencies": {
     "lerna": "^3.20.0"
+  },
+  "scripts": {
+    "lerna:bootstrap": "set EDITOR=\"\" && lerna bootstrap --hoist"
   }
 }
