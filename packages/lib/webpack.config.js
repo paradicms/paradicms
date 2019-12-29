@@ -8,7 +8,7 @@ module.exports = function (env, argv) {
   return merge(configBase(env, argv), {
     context: path.join(__dirname, 'src'),
     entry: {
-      "index": './index.ts'
+      "index": './ts/paradicms/gui/lib/index.ts'
     },
     output: {
       path: path.join(__dirname, 'dist'),
