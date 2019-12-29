@@ -3,7 +3,7 @@ import {Card, CardBody, CardHeader, CardTitle, Col, Container, Row} from "reacts
 import {Hrefs} from "paradicms/gui/generic/Hrefs";
 import {Link} from "react-router-dom";
 import {ObjectSummary} from "paradicms/gui/generic/components/object/ObjectSummary";
-import {TextDisclosurePanel} from "paradicms/gui/generic/components/TextDisclosurePanel";
+import {TextDisclosurePanel} from "paradicms-gui-lib";
 
 export const ObjectCard: React.FunctionComponent<{ object: ObjectSummary }> = ({object}) => {
     const objectHref = Hrefs.object({
