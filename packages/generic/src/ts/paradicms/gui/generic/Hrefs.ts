@@ -15,6 +15,23 @@ export class Hrefs {
     return "/institution/" + encodeURIComponent(encodeURIComponent(uri));
   }
 
+  static login(returnTo?: string) {
+    if (!returnTo) {
+      returnTo = window.location.href;
+    } else if (returnTo.startsWith("/")) {
+      returnTo = window.location.protocol + "://" + window.location.host + returnTo;
+    }
+    return "/api/auth0/login?returnTo=" + encodeURI(returnTo);
+  }
+
+  static get loginCallback() {
+    return "/loginCallback";
+  }
+
+  static get logout() {
+    return "/api/auth0/logout?returnTo=" + encodeURI(window.location.protocol + "://" + window.location.host + "/");
+  }
+
   static object(kwds: { collectionUri: string, institutionUri: string, objectUri: string }) {
     return Hrefs.collection(kwds) + "/object/" + encodeURIComponent(encodeURIComponent(kwds.objectUri));
   }

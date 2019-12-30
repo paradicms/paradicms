@@ -5,6 +5,7 @@ import {useState} from 'react';
 import {Link, Redirect, RouteComponentProps, withRouter} from 'react-router-dom';
 import {Nav, Navbar as BootstrapNavbar, NavbarBrand, NavItem, NavLink,} from 'reactstrap';
 import {NavbarSearchForm} from "paradicms/gui/generic/components/navbar/NavbarSearchForm";
+import {NavbarUserDropdown} from "paradicms/gui/generic/components/navbar/NavbarUserDropdown";
 
 interface Props extends RouteComponentProps {
     activeNavItem?: ActiveNavbarItem;
@@ -22,7 +23,7 @@ const Navbar: React.FunctionComponent<Props> = ({activeNavItem}) => {
         <div>
             <BootstrapNavbar className="py-0" color="light" light expand="md">
                 <NavbarBrand href={Hrefs.home}>DressDiscover</NavbarBrand>
-                <Nav>
+                <Nav className="pb-2 pr-4">
                     <NavItem active={activeNavItem === ActiveNavbarItem.Home}>
                         <NavLink
                             active={activeNavItem === ActiveNavbarItem.Home}
@@ -33,7 +34,8 @@ const Navbar: React.FunctionComponent<Props> = ({activeNavItem}) => {
                         </NavLink>
                     </NavItem>
                 </Nav>
-                <NavbarSearchForm className="pb-2 ml-auto" onSearch={onSearch}/>
+                <NavbarSearchForm className="pb-2 pl-4 ml-auto" onSearch={onSearch}/>
+                <NavbarUserDropdown className="ml-auto" loginHref={Hrefs.login()} logoutHref={Hrefs.logout}/>
             </BootstrapNavbar>
         </div>);
 }
