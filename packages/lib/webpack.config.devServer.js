@@ -11,7 +11,7 @@ module.exports = function (contentBase) {
       open: false,
       port: 9001,
       proxy: {
-        "/graphql": {
+        "/api": {
           "target": {
             "host": "localhost",
             "protocol": 'http:',
