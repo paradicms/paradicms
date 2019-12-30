@@ -12,5 +12,5 @@ const cache = new InMemoryCache({fragmentMatcher});
 
 export const apolloClient = new ApolloClient({
     cache,
-    uri: "/graphql"
+    uri: "/api/graphql"
 });
