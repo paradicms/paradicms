@@ -10,6 +10,10 @@ module.exports = function (env, argv) {
     entry: {
       "index": './ts/paradicms/gui/lib/index.ts'
     },
+    // https://github.com/facebook/react/issues/13991
+    externals: {
+      react: "react",
+    },
     output: {
       path: path.join(__dirname, 'dist'),
       filename: '[name].js',

@@ -37,6 +37,12 @@ module.exports = function (env, argv) {
         hash: true,
         template: 'index.html'
       })
-    ]
+    ],
+    resolve: {
+      alias: {
+        // https://github.com/facebook/react/issues/13991
+        react: path.resolve("..", "..", "node_modules", "react")
+      }
+    }
   });
 }
