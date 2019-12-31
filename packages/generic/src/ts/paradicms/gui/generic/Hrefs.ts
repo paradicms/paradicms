@@ -21,7 +21,7 @@ export class Hrefs {
     } else if (returnTo.startsWith("/")) {
       returnTo = window.location.protocol + "://" + window.location.host + returnTo;
     }
-    return "/api/auth0/login?returnTo=" + encodeURI(returnTo);
+    return "/api/auth0/login?returnTo=" + encodeURIComponent(encodeURIComponent(returnTo));
   }
 
   static get loginCallback() {
@@ -29,7 +29,7 @@ export class Hrefs {
   }
 
   static get logout() {
-    return "/api/auth0/logout?returnTo=" + encodeURI(window.location.protocol + "://" + window.location.host + "/");
+    return "/api/auth0/logout?returnTo=" + encodeURIComponent(encodeURIComponent(window.location.protocol + "://" + window.location.host + "/"));
   }
 
   static object(kwds: { collectionUri: string, institutionUri: string, objectUri: string }) {
