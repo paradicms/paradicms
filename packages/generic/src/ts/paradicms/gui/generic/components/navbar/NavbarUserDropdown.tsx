@@ -9,7 +9,6 @@ import {
     NavLink,
     UncontrolledDropdown
 } from "reactstrap";
-import {Link} from "react-router-dom";
 import {CurrentUser} from "paradicms/gui/generic/components/navbar/CurrentUser";
 
 export const NavbarUserDropdown: React.FunctionComponent<{
@@ -27,7 +26,7 @@ export const NavbarUserDropdown: React.FunctionComponent<{
                 </DropdownToggle>
                 <DropdownMenu right>
                     {/* <DropdownItem><Link to={Hrefs.userSettings}>Settings</Link></DropdownItem> */}
-                    <DropdownItem><Link to={logoutHref}>Logout</Link></DropdownItem>
+                    <DropdownItem><a href={logoutHref}>Logout</a></DropdownItem>
                 </DropdownMenu>
             </UncontrolledDropdown>
         );

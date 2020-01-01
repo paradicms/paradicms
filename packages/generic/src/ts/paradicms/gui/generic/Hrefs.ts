@@ -29,7 +29,7 @@ export class Hrefs {
   }
 
   static get logout() {
-    return "/api/auth0/logout?returnTo=" + encodeURIComponent(encodeURIComponent(window.location.protocol + "://" + window.location.host + "/"));
+    return "/api/auth0/logout?returnTo=" + encodeURIComponent(encodeURIComponent(window.location.protocol + "//" + window.location.host + "/"));
   }
 
   static object(kwds: { collectionUri: string, institutionUri: string, objectUri: string }) {
