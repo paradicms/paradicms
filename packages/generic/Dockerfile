@@ -3,8 +3,8 @@ WORKDIR /app
 COPY /gui .
 RUN npm install
 RUN npm run lerna:bootstrap
-WORKDIR /app/packages/generic
-RUN npm run build
+RUN cd packages/lib && npm run build
+RUN cd packages/generic && npm run build
 
 # Deployment
 FROM nginx:1.17.6
