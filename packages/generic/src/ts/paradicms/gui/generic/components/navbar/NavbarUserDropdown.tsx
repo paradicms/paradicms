@@ -10,10 +10,7 @@ import {
     UncontrolledDropdown
 } from "reactstrap";
 import {Link} from "react-router-dom";
-
-interface CurrentUser {
-    name: string;
-}
+import {CurrentUser} from "paradicms/gui/generic/components/navbar/CurrentUser";
 
 export const NavbarUserDropdown: React.FunctionComponent<{
     className?: string,

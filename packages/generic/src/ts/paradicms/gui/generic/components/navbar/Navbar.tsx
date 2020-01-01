@@ -6,12 +6,14 @@ import {Link, Redirect, RouteComponentProps, withRouter} from 'react-router-dom'
 import {Nav, Navbar as BootstrapNavbar, NavbarBrand, NavItem, NavLink,} from 'reactstrap';
 import {NavbarSearchForm} from "paradicms/gui/generic/components/navbar/NavbarSearchForm";
 import {NavbarUserDropdown} from "paradicms/gui/generic/components/navbar/NavbarUserDropdown";
+import {CurrentUser} from "paradicms/gui/generic/components/navbar/CurrentUser";
 
 interface Props extends RouteComponentProps {
     activeNavItem?: ActiveNavbarItem;
+    currentUser?: CurrentUser;
 }
 
-const Navbar: React.FunctionComponent<Props> = ({activeNavItem}) => {
+const Navbar: React.FunctionComponent<Props> = ({activeNavItem, currentUser}) => {
     const [state, setState] = useState<{ searchText: string | null }>({searchText: null});
     const onSearch = (text: string) => setState(prevState => Object.assign({}, prevState, {searchText: text}));
 
@@ -35,7 +37,8 @@ const Navbar: React.FunctionComponent<Props> = ({activeNavItem}) => {
                     </NavItem>
                 </Nav>
                 <NavbarSearchForm className="pb-2 pl-4 ml-auto" onSearch={onSearch}/>
-                <NavbarUserDropdown className="ml-auto" loginHref={Hrefs.login()} logoutHref={Hrefs.logout}/>
+                <NavbarUserDropdown className="ml-auto" currentUser={currentUser} loginHref={Hrefs.login()}
+                                    logoutHref={Hrefs.logout}/>
             </BootstrapNavbar>
         </div>);
 }
