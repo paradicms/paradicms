@@ -38,7 +38,6 @@ class OmekaSTransformer(_Transformer):
             assert isinstance(item_set_id, int)
             collection = self.__transform_item_set(item_set=item_set_resource)
             collections_by_id[item_set_id] = collection
-            institution.resource.add(CMS.collection, collection.uri)
 
         media_by_item_id = {}
         for media_uri in graph.subjects(RDF.type, O.Media):
@@ -56,13 +55,17 @@ class OmekaSTransformer(_Transformer):
             object_ = self.__transform_item(item_resource, media_by_item_id)
             for item_set_resource in item_resource.objects(O.item_set):
                 item_set_id = item_set_resource.value(O.id).toPython()
-                collections_by_id[item_set_id].resource.add(CMS.object, object_.uri)
+                collections_by_id[item_set_id].add_object(object_)
+
+        for collection in collections_by_id.values():
+            institution.add_collection(collection)
 
         return graph
 
     def __transform_item(self, item: Resource, media_by_item_id: Dict[int, Resource]) -> Object:
         item_id = item.value(O.id).toPython()
         object_ = Object(resource=item)
+        object_.owner = CMS.inherit
         for media in media_by_item_id.get(item_id, []):
             original_image, thumbnail_image = self.__transform_media(media)
             if not original_image:
@@ -73,6 +76,7 @@ class OmekaSTransformer(_Transformer):
 
     def __transform_item_set(self, item_set: Resource) -> Collection:
         collection = Collection(resource=item_set)
+        collection.owner = CMS.inherit
         return collection
 
     def __transform_media(self, media: Resource) -> Tuple[Image, ...]:
