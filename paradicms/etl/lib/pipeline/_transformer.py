@@ -1,10 +1,12 @@
 import logging
 from abc import ABC, abstractmethod
+from typing import Optional
 
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, FOAF
 
 from paradicms.etl.lib.model.institution import Institution
+from paradicms.etl.lib.namespace import CMS
 
 
 class _Transformer(ABC):
@@ -25,9 +27,14 @@ class _Transformer(ABC):
             institution_name: str,
             institution_rights: str,
             institution_uri: str,
+            institution_owner: Optional[str] = None,
             **_kwds
     ) -> Institution:
         institution = Institution(graph=graph, uri=URIRef(institution_uri))
         institution.resource.add(DCTERMS.rights, Literal(institution_rights))
         institution.resource.add(FOAF.name, Literal(institution_name))
+        if institution_owner is not None:
+            institution.owner = URIRef(institution_owner)
+        else:
+            institution.owner = CMS.public
         return institution

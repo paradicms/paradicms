@@ -28,20 +28,26 @@ class OmekaClassicTransformer(_Transformer):
 
         transformed_collections_by_id = {}
         for collection in collections:
-            transformed_collection = self.__transform_collection(graph=graph, omeka_collection=collection)
-            transformed_collections_by_id[collection["id"]] = transformed_collection
-            institution.resource.add(CMS.collection, transformed_collection.uri)
+            transformed_collections_by_id[collection["id"]] = self.__transform_collection(graph=graph,
+                                                                                          omeka_collection=collection)
 
         files_by_item_id = {}
         for file_ in files:
             files_by_item_id.setdefault(file_["item"]["id"], []).append(file_)
 
+        # private = True
         for item in items:
             if not item["public"]:
                 continue
             transformed_item = self.__transform_item(files_by_item_id=files_by_item_id, graph=graph, item=item)
-            transformed_collections_by_id[item["collection"]["id"]].resource.add(CMS.object,
-                                                                                 transformed_item.uri)
+            # if private:
+            #     transformed_item.owner = URIRef("http://example.com/user")
+            #     private = False
+            transformed_collection = transformed_collections_by_id[item["collection"]["id"]]
+            transformed_collection.add_object(transformed_item)
+
+        for transformed_collection in transformed_collections_by_id.values():
+            institution.add_collection(transformed_collection)
 
         return graph
 
@@ -68,6 +74,7 @@ class OmekaClassicTransformer(_Transformer):
             graph=graph,
             uri=URIRef(omeka_collection["url"])
         )
+        collection.owner = CMS.inherit
         element_text_tree = self.__get_element_texts_as_tree(omeka_collection)
         self.__transform_dublin_core_elements(element_text_tree=element_text_tree, model=collection)
         self.__log_unknown_element_texts(element_text_tree)
@@ -175,6 +182,7 @@ class OmekaClassicTransformer(_Transformer):
             graph=graph,
             uri=URIRef(item["url"])
         )
+        object_.owner = CMS.inherit
         item_element_text_tree = self.__get_element_texts_as_tree(item)
         self.__transform_dublin_core_elements(element_text_tree=item_element_text_tree, model=object_)
         for file_ in files_by_item_id.get(item["id"], []):

@@ -26,5 +26,7 @@ class _Pipeline(ABC):
     @classmethod
     def _add_institution_arguments(cls, argument_parser: ArgumentParser) -> None:
         argument_parser.add_argument("--institution-name", required=True)
+        argument_parser.add_argument("--institution-owner",
+                                     help="URI of the user that owns this institution, defaults to public")
         argument_parser.add_argument("--institution-rights", required=True)
         argument_parser.add_argument("--institution-uri", required=True)
