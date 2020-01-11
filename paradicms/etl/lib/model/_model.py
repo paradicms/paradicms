@@ -31,15 +31,27 @@ class _Model(ABC):
     def _get_single_literal(self, predicate) -> Optional[Literal]:
         """
         Get a single literal object for the given predicate, or None if absent.
-        This model's resource must only have a single statement with that predicat
+        This model's resource must only have a single statement with that predicate
          and the statement's object must be a Literal.
         """
-        for object_ in self.resource.objects(predicate):
-            if not isinstance(object_, Literal):
-                self._logger.warning("%s has non-Literal object_", predicate)
-                continue
+        object_ = self._get_single_object(predicate)
+        if isinstance(object_, Literal):
             return object_
-        return None
+        else:
+            self._logger.warning("%s has non-Literal single object", predicate)
+            return None
+
+    def _get_single_object(self, predicate) -> Optional[Literal]:
+        """
+        Get a single object for the given predicate, or None if absent.
+        This model's resource must only have a single statement with that predicate.
+        """
+        objects = tuple(self.resource.objects(predicate))
+        if not objects:
+            return None
+        if len(objects) > 1:
+            self._logger.warning("%s has more than one object", predicate)
+        return objects[0]
 
     def _get_single_typed_literal(self, predicate, literal_datatype) -> Optional[Literal]:
         literal = self._get_single_literal(predicate)
@@ -69,14 +81,27 @@ class _Model(ABC):
     def resource(self) -> Resource:
         return self.__resource
 
+    def _set_single_object(self, predicate, object_):
+        """
+        Set a single object for the given predicate.
+        Checks to see whether a value has already been set. If so, removes it.
+        """
+        self.resource.remove(predicate)
+        self.resource.add(predicate, object_)
+
     def _set_single_value(self, predicate, value):
         """
         Set a single Python value (int, string, etc.) for the given predicate.
         Checks to see whether a value has already been set. If so, removes it.
         """
-        self.resource.remove(predicate)
-        self.resource.add(predicate, Literal(value))
+        self._set_single_object(predicate, Literal(value))
 
     @property
     def uri(self) -> URIRef:
         return self.resource.identifier
+
+    def validate(self):
+        """
+        Validate this model.
+        """
+        pass

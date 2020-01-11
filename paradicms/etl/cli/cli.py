@@ -49,13 +49,15 @@ class Cli:
 
             # Post to a named graph, since the Fuseki default graph is the union of all named graphs
             # https://www.w3.org/TR/2013/REC-sparql11-http-rdf-update-20130321/#http-post
-            requests.post(
-                url,
-                data=ttl,
-                headers={
-                    "Content-Type": "text/turtle;charset=utf-8"
-                }
-            )
+            response = \
+                requests.post(
+                    url,
+                    data=ttl,
+                    headers={
+                        "Content-Type": "text/turtle;charset=utf-8"
+                    }
+                )
+            assert response.status_code // 100 == 2
 
         def transform(self, force: bool, **extract_kwds):
             graph = self.__pipeline.transformer.transform(**extract_kwds)
