@@ -1,6 +1,6 @@
-from typing import Dict
+from typing import Dict, Optional
 
-from rdflib import Graph
+from rdflib import Graph, URIRef
 
 from paradicms.etl.lib.pipeline._transformer import _Transformer
 
@@ -8,16 +8,19 @@ ElementTextTree = Dict[str, Dict[str, str]]
 
 
 class BookCollectorTransformer(_Transformer):
+    def __init__(self, owner: Optional[URIRef]):
+        self.__owner = owner
+
     def transform(self, export_xml_file_path: str):
         graph = Graph()
-    #
-    #     institution = self._transform_institution_from_arguments(graph=graph, **self.__institution_kwds)
-    #
-    #     transformed_collections_by_id = {}
-    #     for collection in collections:
-    #         transformed_collections_by_id[collection["id"]] = self.__transform_collection(graph=graph,
-    #                                                                                       omeka_collection=collection)
-    #
+        #
+        #     institution = self._transform_institution_from_arguments(graph=graph, **self.__institution_kwds)
+        #
+        #     transformed_collections_by_id = {}
+        #     for collection in collections:
+        #         transformed_collections_by_id[collection["id"]] = self.__transform_collection(graph=graph,
+        #                                                                                       omeka_collection=collection)
+        #
     #     files_by_item_id = {}
     #     for file_ in files:
     #         files_by_item_id.setdefault(file_["item"]["id"], []).append(file_)
