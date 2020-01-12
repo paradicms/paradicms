@@ -24,7 +24,7 @@ const Navbar: React.FunctionComponent<Props> = ({activeNavItem, currentUser}) =>
     return (
         <div>
             <BootstrapNavbar className="py-0" color="light" light expand="md">
-                <NavbarBrand href={Hrefs.home}>DressDiscover</NavbarBrand>
+                <NavbarBrand href={Hrefs.home}>Paradicms</NavbarBrand>
                 <Nav className="pb-2 pr-4">
                     <NavItem active={activeNavItem === ActiveNavbarItem.Home}>
                         <NavLink
