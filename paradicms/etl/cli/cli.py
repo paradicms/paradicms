@@ -25,7 +25,7 @@ class Cli:
                         # In the container
                         "/data",
                         # In the checkout
-                        os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "data"))
+                        os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "data"))
                 ):
                     if os.path.isdir(data_dir_path):
                         break
