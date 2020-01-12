@@ -20,7 +20,7 @@ export const Frame: React.FunctionComponent<{
     documentTitle: string;
 }> = ({activeNavItem, breadcrumbItems, cardTitle, className, children, documentTitle}) => {
     useEffect(() => {
-        document.title = "DressDiscover CMS - " + documentTitle;
+        document.title = "Paradicms - " + documentTitle;
     });
     return (
         <ApolloQueryWrapper<FrameQuery> query={frameQuery}>
