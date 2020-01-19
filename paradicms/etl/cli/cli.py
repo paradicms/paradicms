@@ -43,7 +43,7 @@ class Cli:
             return extract_kwds if extract_kwds is not None else {}
 
         def load(self, ttl: str) -> None:
-            url = self.__args.fuseki_data_url + "?graph=urn:pipeline:" + self.__pipeline.id
+            url = self.__args.fuseki_data_url + "?graph=" + str(self.__pipeline.uri)
 
             requests.delete(url)
 
