@@ -10,6 +10,8 @@ class _OwnerPropertyMixin:
     @property
     def owner(self) -> Optional[URIRef]:
         object_ = self._get_single_object(CMS.owner)
+        if object_ is None:
+            return None
         if isinstance(object_, Resource):
             object_ = object_.identifier
         assert isinstance(object_, URIRef)
