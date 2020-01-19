@@ -1,6 +1,8 @@
 from abc import ABC
 from argparse import ArgumentParser
 
+from rdflib import URIRef
+
 from paradicms.etl.lib.pipeline._extractor import _Extractor
 from paradicms.etl.lib.pipeline._transformer import _Transformer
 
@@ -13,9 +15,9 @@ class _Pipeline(ABC):
         :param id: unique identifier for this pipeline instance, may be adapted from arguments
         :param transformer: transformer implementation
         """
-        self.extractor = extractor
-        self.id = id
-        self.transformer = transformer
+        self.__extractor = extractor
+        self.__id = id
+        self.__transformer = transformer
 
     @classmethod
     def add_arguments(cls, argument_parser: ArgumentParser) -> None:
@@ -30,3 +32,23 @@ class _Pipeline(ABC):
                                      help="URI of the user that owns this institution, defaults to public")
         argument_parser.add_argument("--institution-rights", required=True)
         argument_parser.add_argument("--institution-uri", required=True)
+
+    @property
+    def extractor(self):
+        return self.__extractor
+
+    @property
+    def id(self):
+        return self.__id
+
+    @staticmethod
+    def _id_to_uri(id_: str) -> URIRef:
+        return URIRef("urn:pipeline:" + id_)
+
+    @property
+    def transformer(self):
+        return self.__transformer
+
+    @property
+    def uri(self) -> URIRef:
+        return self._id_to_uri(self.id)
