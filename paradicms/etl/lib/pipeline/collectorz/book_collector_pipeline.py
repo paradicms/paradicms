@@ -8,12 +8,18 @@ from paradicms.etl.lib.pipeline.collectorz.book_collector_transformer import Boo
 
 
 class BookCollectorPipeline(_Pipeline):
-    def __init__(self, *, export_xml_file_path: str, owner: Optional[str], pipeline_id: str, **kwds):
+    def __init__(self, *,
+                 export_xml_file_path: str,
+                 owner: Optional[str],
+                 pipeline_id: str,
+                 **kwds):
         _Pipeline.__init__(
             self,
             extractor=BookCollectorExtractor(export_xml_file_path=export_xml_file_path),
             id=pipeline_id,
-            transformer=BookCollectorTransformer(owner=URIRef(owner) if owner is not None else None),
+            transformer=BookCollectorTransformer(
+                owner=URIRef(owner) if owner is not None else None,
+                pipeline_uri=_Pipeline._id_to_uri(pipeline_id)),
             **kwds
         )
 
