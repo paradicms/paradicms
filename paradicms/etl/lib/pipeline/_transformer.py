@@ -6,12 +6,26 @@ from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, FOAF
 
 from paradicms.etl.lib.model.institution import Institution
-from paradicms.etl.lib.namespace import CMS
+from paradicms.etl.lib.namespace import CMS, CONTACT, DCMITYPE, EXIF, PROV, SCHEMA, TIME
 
 
 class _Transformer(ABC):
     def __init__(self):
         self._logger = logging.getLogger(self.__class__.__name__)
+
+    @property
+    def _new_graph(self) -> Graph:
+        graph = Graph()
+        graph.namespace_manager.bind("cms", CMS)
+        graph.namespace_manager.bind("contact", CONTACT)
+        graph.namespace_manager.bind("dcmitype", DCMITYPE)
+        graph.namespace_manager.bind("dcterms", DCTERMS)
+        graph.namespace_manager.bind("exif", EXIF)
+        graph.namespace_manager.bind("foaf", FOAF)
+        graph.namespace_manager.bind("prov", PROV)
+        graph.namespace_manager.bind("schema", SCHEMA)
+        graph.namespace_manager.bind("time", TIME)
+        return graph
 
     @abstractmethod
     def transform(self, **kwds) -> Graph:

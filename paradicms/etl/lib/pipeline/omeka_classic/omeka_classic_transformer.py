@@ -22,7 +22,7 @@ class OmekaClassicTransformer(_Transformer):
         self.__square_thumbnail_width_px = square_thumbnail_width_px
 
     def transform(self, collections, files, items):
-        graph = Graph()
+        graph = self._new_graph
 
         institution = self._transform_institution_from_arguments(graph=graph, **self.__institution_kwds)
 

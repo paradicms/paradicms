@@ -1,7 +1,7 @@
 import json
 from typing import Dict, Tuple
 
-from rdflib import Graph, Namespace, RDF, URIRef
+from rdflib import Namespace, RDF, URIRef
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
@@ -23,7 +23,7 @@ class OmekaSTransformer(_Transformer):
         self.__square_thumbnail_width_px = square_thumbnail_width_px
 
     def transform(self, *, items, item_sets, media):
-        graph = Graph()
+        graph = self._new_graph
 
         graph.parse(data=json.dumps(items), format="json-ld")
         graph.parse(data=json.dumps(item_sets), format="json-ld")
