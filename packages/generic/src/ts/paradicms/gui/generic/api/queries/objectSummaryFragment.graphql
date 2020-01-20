@@ -1,8 +1,0 @@
-fragment ObjectSummaryFragment on Object {
-    description
-    title
-    thumbnail {
-        url
-    }
-    uri
-}

@@ -1,6 +1,0 @@
-query HomeQuery {
-    institutions {
-        name
-        uri
-    }
-}
