@@ -27,21 +27,21 @@ class OmekaClassicPipeline(_Pipeline):
         )
 
     @classmethod
-    def add_arguments(cls, argument_parser):
-        argument_parser.add_argument("--endpoint-url", help="Omeka API endpoint URL", required=True)
-        argument_parser.add_argument(
+    def add_arguments(cls, arg_parser):
+        arg_parser.add_argument("--endpoint-url", help="Omeka API endpoint URL", required=True)
+        arg_parser.add_argument(
             '--pipeline-id',
             help='unique identifier for this pipeline, used to isolate its cache',
             required=True
         )
-        argument_parser.add_argument(
+        arg_parser.add_argument(
             '--square-thumbnail-height-px',
             default=200,
             type=int
         )
-        argument_parser.add_argument(
+        arg_parser.add_argument(
             '--square-thumbnail-width-px',
             default=200,
             type=int
         )
-        cls._add_institution_arguments(argument_parser)
+        cls._add_institution_arguments(arg_parser)

@@ -20,18 +20,18 @@ class _Pipeline(ABC):
         self.__transformer = transformer
 
     @classmethod
-    def add_arguments(cls, argument_parser: ArgumentParser) -> None:
+    def add_arguments(cls, arg_parser: ArgumentParser) -> None:
         """
         Add pipeline-specific arguments. The parsed arguments are passed to the constructor as keywords.
         """
 
     @classmethod
-    def _add_institution_arguments(cls, argument_parser: ArgumentParser) -> None:
-        argument_parser.add_argument("--institution-name", required=True)
-        argument_parser.add_argument("--institution-owner",
-                                     help="URI of the user that owns this institution, defaults to public")
-        argument_parser.add_argument("--institution-rights", required=True)
-        argument_parser.add_argument("--institution-uri", required=True)
+    def _add_institution_arguments(cls, arg_parser: ArgumentParser) -> None:
+        arg_parser.add_argument("--institution-name", required=True)
+        arg_parser.add_argument("--institution-owner",
+                                help="URI of the user that owns this institution, defaults to public")
+        arg_parser.add_argument("--institution-rights", required=True)
+        arg_parser.add_argument("--institution-uri", required=True)
 
     @property
     def extractor(self):

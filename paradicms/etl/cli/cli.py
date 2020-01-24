@@ -1,10 +1,10 @@
 import logging
 import os.path
-from argparse import ArgumentParser
 from importlib import import_module
 from inspect import isclass
 
 import requests
+from configargparse import ArgParser
 
 from paradicms.etl.lib.pipeline._pipeline import _Pipeline
 from paradicms.etl.lib.pipeline.file_pipeline_storage import FilePipelineStorage
@@ -67,29 +67,30 @@ class Cli:
             return graph_ttl
 
     def __init__(self):
-        self.__argument_parser = ArgumentParser()
+        self.__arg_parser = ArgParser()
         self.__logger = logging.getLogger(self.__class__.__name__)
 
     def __add_arguments(self):
-        self.__argument_parser.add_argument("--data-dir-path",
-                                            help="path to a directory to store extracted data and transformed models")
-        self.__argument_parser.add_argument(
+        self.__arg_parser.add_argument("-c", is_config_file=True, help="config file path")
+        self.__arg_parser.add_argument("--data-dir-path",
+                                       help="path to a directory to store extracted data and transformed models")
+        self.__arg_parser.add_argument(
             '--debug',
             action='store_true',
             help='turn on debugging'
         )
-        self.__argument_parser.add_argument("-f", "--force", action="store_true",
-                                            help="force extract and transform, ignoring any cached data")
-        self.__argument_parser.add_argument("--force-extract", action="store_true",
-                                            help="force extract, ignoring any cached data")
-        self.__argument_parser.add_argument("--force-transform", action="store_true",
-                                            help="force transform, ignoring any cached data")
-        self.__argument_parser.add_argument("--fuseki-data-url", default="http://fuseki:3030/ds/data")
-        self.__argument_parser.add_argument(
+        self.__arg_parser.add_argument("-f", "--force", action="store_true",
+                                       help="force extract and transform, ignoring any cached data")
+        self.__arg_parser.add_argument("--force-extract", action="store_true",
+                                       help="force extract, ignoring any cached data")
+        self.__arg_parser.add_argument("--force-transform", action="store_true",
+                                       help="force transform, ignoring any cached data")
+        self.__arg_parser.add_argument("--fuseki-data-url", default="http://fuseki:3030/ds/data")
+        self.__arg_parser.add_argument(
             '--logging-level',
             help='set logging-level level (see Python logging module)'
         )
-        self.__argument_parser.add_argument(
+        self.__arg_parser.add_argument(
             '--pipeline-module',
             help='absolute (parent.module) or relative (.module) module name for the pipeline implementation',
             required=True
@@ -144,13 +145,13 @@ class Cli:
 
     def main(self):
         self.__add_arguments()
-        args, _ = self.__argument_parser.parse_known_args()
+        args, _ = self.__arg_parser.parse_known_args()
         self.__configure_logging(args)
 
         pipeline_class = self.__import_pipeline_class(args)
-        pipeline_class.add_arguments(self.__argument_parser)
+        pipeline_class.add_arguments(self.__arg_parser)
 
-        args = self.__argument_parser.parse_args()
+        args = self.__arg_parser.parse_args()
 
         pipeline = self.__instantiate_pipeline(args, pipeline_class)
         pipeline_wrapper = self.__PipelineWrapper(args=args, logger=self.__logger, pipeline=pipeline)
