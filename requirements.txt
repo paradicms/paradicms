@@ -1,5 +1,6 @@
 certifi==2019.11.28
 chardet==3.0.4
+ConfigArgParse==1.0
 dateparser==0.7.2
 idna==2.8
 isodate==0.6.0
