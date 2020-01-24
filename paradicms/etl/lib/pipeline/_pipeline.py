@@ -1,6 +1,6 @@
 from abc import ABC
-from argparse import ArgumentParser
 
+from configargparse import ArgParser
 from rdflib import URIRef
 
 from paradicms.etl.lib.pipeline._extractor import _Extractor
@@ -20,13 +20,13 @@ class _Pipeline(ABC):
         self.__transformer = transformer
 
     @classmethod
-    def add_arguments(cls, arg_parser: ArgumentParser) -> None:
+    def add_arguments(cls, arg_parser: ArgParser) -> None:
         """
         Add pipeline-specific arguments. The parsed arguments are passed to the constructor as keywords.
         """
 
     @classmethod
-    def _add_institution_arguments(cls, arg_parser: ArgumentParser) -> None:
+    def _add_institution_arguments(cls, arg_parser: ArgParser) -> None:
         arg_parser.add_argument("--institution-name", required=True)
         arg_parser.add_argument("--institution-owner",
                                 help="URI of the user that owns this institution, defaults to public")
