@@ -1,3 +1,4 @@
+/config/
 /data/
 .mypy_cache/
 *.pyc
