@@ -35,7 +35,7 @@ class _Model(ABC):
          and the statement's object must be a Literal.
         """
         object_ = self._get_single_object(predicate)
-        if isinstance(object_, Literal):
+        if object_ is None or isinstance(object_, Literal):
             return object_
         else:
             self._logger.warning("%s has non-Literal single object", predicate)

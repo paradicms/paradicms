@@ -5,7 +5,10 @@ from inspect import isclass
 
 import requests
 from configargparse import ArgParser
+from rdflib import Graph
+from rdflib.namespace import DCTERMS, FOAF
 
+from paradicms.etl.lib.namespace import CMS, VRA
 from paradicms.etl.lib.pipeline._pipeline import _Pipeline
 from paradicms.etl.lib.pipeline.file_pipeline_storage import FilePipelineStorage
 
@@ -17,6 +20,12 @@ class Cli:
             self.__logger = logger
             self.__pipeline = pipeline
             self.__data_dir_path = self.__create_data_dir_path()
+
+        def __bind_namespaces(self, graph: Graph) -> None:
+            graph.bind("paradicms", CMS)
+            graph.bind("dcterms", DCTERMS)
+            graph.bind("foaf", FOAF)
+            graph.bind("vra", VRA)
 
         def __create_data_dir_path(self) -> str:
             data_dir_path = self.__args.data_dir_path
@@ -61,6 +70,7 @@ class Cli:
 
         def transform(self, force: bool, **extract_kwds):
             graph = self.__pipeline.transformer.transform(**extract_kwds)
+            self.__bind_namespaces(graph)
             transformed_storage = FilePipelineStorage.create(os.path.join(self.__data_dir_path, "transformed"))
             graph_ttl = graph.serialize(format="ttl")
             transformed_storage.put(self.__pipeline.id + ".ttl", graph_ttl)
