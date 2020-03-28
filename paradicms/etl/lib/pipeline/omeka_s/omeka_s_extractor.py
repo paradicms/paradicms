@@ -57,7 +57,7 @@ class OmekaSExtractor(_Extractor):
         for resources_name_i, resources_name in enumerate(resources_names):
             url = self.__endpoint_url + "/" + resources_name
             file_name = sanitize_filename(url) + ".json"
-            file_path = storage.extracted_data_dir_path() / file_name
+            file_path = storage.extracted_data_dir_path / file_name
             resources = None
             if resources_name_i == 0 and not force and file_path.exists():
                 with open(file_path) as file_:
