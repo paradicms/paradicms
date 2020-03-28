@@ -1,14 +1,17 @@
 from abc import ABC
+from typing import Optional
 
 from configargparse import ArgParser
 from rdflib import URIRef
 
 from paradicms.etl.lib.pipeline._extractor import _Extractor
+from paradicms.etl.lib.pipeline._loader import _Loader
 from paradicms.etl.lib.pipeline._transformer import _Transformer
+from paradicms.etl.lib.pipeline.default_loader import DefaultLoader
 
 
 class _Pipeline(ABC):
-    def __init__(self, *, extractor: _Extractor, id: str, transformer: _Transformer, **kwds):
+    def __init__(self, *, extractor: _Extractor, id: str, transformer: _Transformer, loader: Optional[_Loader] = None, **kwds):
         """
         Construct an extract-transform pipeline.
         :param extractor: extractor implementation
@@ -17,6 +20,9 @@ class _Pipeline(ABC):
         """
         self.__extractor = extractor
         self.__id = id
+        if loader is None:
+            loader = DefaultLoader(pipeline_id=id, **kwds)
+        self.__loader = loader
         self.__transformer = transformer
 
     @classmethod
@@ -42,8 +48,12 @@ class _Pipeline(ABC):
         return self.__id
 
     @staticmethod
-    def _id_to_uri(id_: str) -> URIRef:
+    def id_to_uri(id_: str) -> URIRef:
         return URIRef("urn:pipeline:" + id_)
+
+    @property
+    def loader(self):
+        return self.__loader
 
     @property
     def transformer(self):
@@ -51,4 +61,4 @@ class _Pipeline(ABC):
 
     @property
     def uri(self) -> URIRef:
-        return self._id_to_uri(self.id)
+        return self.id_to_uri(self.id)

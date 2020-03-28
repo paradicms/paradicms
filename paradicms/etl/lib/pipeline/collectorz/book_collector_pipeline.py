@@ -19,7 +19,7 @@ class BookCollectorPipeline(_Pipeline):
             id=pipeline_id,
             transformer=BookCollectorTransformer(
                 owner=URIRef(owner) if owner is not None else None,
-                pipeline_uri=_Pipeline._id_to_uri(pipeline_id)),
+                pipeline_uri=_Pipeline.id_to_uri(pipeline_id)),
             **kwds
         )
 
