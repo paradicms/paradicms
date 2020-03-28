@@ -2,6 +2,7 @@ import logging
 import os.path
 from importlib import import_module
 from inspect import isclass
+from pathlib import Path
 
 import requests
 from configargparse import ArgParser
@@ -10,7 +11,7 @@ from rdflib.namespace import DCTERMS, FOAF
 
 from paradicms.etl.lib.namespace import CMS, VRA
 from paradicms.etl.lib.pipeline._pipeline import _Pipeline
-from paradicms.etl.lib.pipeline.file_pipeline_storage import FilePipelineStorage
+from paradicms.etl.lib.pipeline.pipeline_storage import PipelineStorage
 
 
 class Cli:
@@ -19,7 +20,7 @@ class Cli:
             self.__args = args
             self.__logger = logger
             self.__pipeline = pipeline
-            self.__data_dir_path = self.__create_data_dir_path()
+            self.__storage = PipelineStorage.create(data_dir_path=self.__create_data_dir_path(), pipeline_id=pipeline.id)
 
         def __bind_namespaces(self, graph: Graph) -> None:
             graph.bind("paradicms", CMS)
@@ -27,28 +28,21 @@ class Cli:
             graph.bind("foaf", FOAF)
             graph.bind("vra", VRA)
 
-        def __create_data_dir_path(self) -> str:
-            data_dir_path = self.__args.data_dir_path
+        def __create_data_dir_path(self) -> Path:
+            data_dir_path = Path(self.__args.data_dir_path) if self.__args.data_dir_path else None
             if data_dir_path is None:
                 for data_dir_path in (
                         # In the container
-                        "/data",
+                        Path("/data"),
                         # In the checkout
-                        os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "data"))
+                        Path(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "data")))
                 ):
-                    if os.path.isdir(data_dir_path):
-                        break
-            if not os.path.isdir(data_dir_path):
-                raise ValueError("data dir path %s does not exist" % data_dir_path)
-            data_dir_path = os.path.join(data_dir_path, self.__pipeline.id)
-            if not os.path.isdir(data_dir_path):
-                os.makedirs(data_dir_path)
-                self.__logger.info("created pipeline data directory %s", data_dir_path)
-            return data_dir_path
+                    if data_dir_path.is_dir():
+                        return data_dir_path
+            raise ValueError("data dir path %s does not exist" % data_dir_path)
 
         def extract(self, force: bool):
-            extract_kwds = self.__pipeline.extractor.extract(force=force, storage=FilePipelineStorage.create(
-                os.path.join(self.__data_dir_path, "extracted")))
+            extract_kwds = self.__pipeline.extractor.extract(force=force, storage=self.__storage)
             return extract_kwds if extract_kwds is not None else {}
 
         def load(self, ttl: str) -> None:
@@ -71,9 +65,9 @@ class Cli:
         def transform(self, force: bool, **extract_kwds):
             graph = self.__pipeline.transformer.transform(**extract_kwds)
             self.__bind_namespaces(graph)
-            transformed_storage = FilePipelineStorage.create(os.path.join(self.__data_dir_path, "transformed"))
             graph_ttl = graph.serialize(format="ttl")
-            transformed_storage.put(self.__pipeline.id + ".ttl", graph_ttl)
+            with open(self.__storage.transformed_data_dir_path / (self.__pipeline.id + ".ttl"), "w+b") as graph_ttl_file:
+                graph_ttl_file.write(graph_ttl)
             return graph_ttl
 
     def __init__(self):

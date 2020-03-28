@@ -1,4 +1,3 @@
-import os.path
 from pathlib import Path
 
 
@@ -10,8 +9,7 @@ class PipelineStorage:
     @classmethod
     def create(cls, *, data_dir_path: Path, pipeline_id: str):
         def makedirs(dir_path: Path) -> Path:
-            if not dir_path.is_dir():
-                os.makedirs(dir_path)
+            dir_path.mkdir(parents=True, exist_ok=True)
             return dir_path
         return \
             cls(
@@ -19,8 +17,10 @@ class PipelineStorage:
                 transformed_data_dir_path=makedirs(data_dir_path / pipeline_id / "transformed")
             )
 
+    @property
     def extracted_data_dir_path(self) -> Path:
         return self.__extracted_data_dir_path
 
+    @property
     def transformed_data_dir_path(self) -> Path:
         return self.__transformed_data_dir_path
