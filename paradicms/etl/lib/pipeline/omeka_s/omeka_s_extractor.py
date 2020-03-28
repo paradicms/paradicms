@@ -2,9 +2,10 @@ import json
 from typing import Dict
 
 import requests
+from pathvalidate import sanitize_filename
 
 from paradicms.etl.lib.pipeline._extractor import _Extractor
-from paradicms.etl.lib.pipeline._pipeline_storage import _PipelineStorage
+from paradicms.etl.lib.pipeline.pipeline_storage import PipelineStorage
 
 
 class OmekaSExtractor(_Extractor):
@@ -43,7 +44,7 @@ class OmekaSExtractor(_Extractor):
                 return tuple(resources)
             url = next_url
 
-    def extract(self, *, force: bool, storage: _PipelineStorage):
+    def extract(self, *, force: bool, storage: PipelineStorage):
         session = requests.Session()
 
         api_context = None  # Retrieve lazily
@@ -55,13 +56,16 @@ class OmekaSExtractor(_Extractor):
         use_cache = False
         for resources_name_i, resources_name in enumerate(resources_names):
             url = self.__endpoint_url + "/" + resources_name
-            storage_key = url + ".json"
+            file_name = sanitize_filename(url) + ".json"
+            file_path = storage.extracted_data_dir_path() / file_name
             resources = None
-            if resources_name_i == 0 and not force and storage.head(storage_key):
-                resources = json.load(storage.get(storage_key))
+            if resources_name_i == 0 and not force and file_path.exists():
+                with open(file_path) as file_:
+                    resources = json.load(file_)
                 use_cache = True
             elif use_cache:
-                resources = json.load(storage.get(storage_key))
+                with open(file_path) as file_:
+                    resources = json.load(file_)
 
             if resources is None:
                 resources = self.__extract_all_pages(session=session, url=url)
@@ -71,7 +75,8 @@ class OmekaSExtractor(_Extractor):
                     if api_context is None:
                         api_context = self.__get_api_context(session=session, url=api_context_url)
                     resource["@context"] = api_context
-                storage.put(storage_key, json.dumps(resources))
+                with open(file_path, "w+") as file_:
+                    json.dump(resources, file_)
             results[resources_name] = resources
         return results
 
