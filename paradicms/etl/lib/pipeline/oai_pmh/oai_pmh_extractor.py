@@ -1,8 +1,11 @@
 import json
+from pathlib import Path
 from typing import Optional
 from urllib.request import urlopen
 from xml.dom.minidom import parseString
 from xml.etree.ElementTree import ElementTree
+
+from pathvalidate import sanitize_filename
 
 from paradicms.etl.lib.pipeline._extractor import _Extractor
 
@@ -15,13 +18,16 @@ class OaiPmhExtractor(_Extractor):
         self.__set = set_
 
     def extract(self, *, force, storage):
-        record_identifiers_key = "record_identifiers.json"
-        if storage.head(record_identifiers_key):
-            with storage.get(record_identifiers_key) as record_identifiers_file:
+        def record_identifier_file_path(record_identifier: str) -> Path:
+            return storage.extracted_data_dir_path / (sanitize_filename(record_identifier) + ".xml")
+
+        record_identifiers_file_path = storage.extracted_data_dir_path / "record_identifiers.json"
+        if record_identifiers_file_path.exists:
+            with open(record_identifiers_file_path) as record_identifiers_file:
                 record_identifiers = tuple(json.load(record_identifiers_file))
                 record_etrees = []
                 for record_identifier in record_identifiers:
-                    with storage.get(record_identifier + ".xml") as f:
+                    with open(record_identifier_file_path(record_identifier)) as f:
                         record_etree = ElementTree()
                         record_etree.parse(f)
                         record_etrees.append(record_etree)
@@ -58,7 +64,8 @@ class OaiPmhExtractor(_Extractor):
                 record_identifiers.append(record_identifier)
 
                 record_element_xml = record_element.toxml()
-                storage.put(record_identifier + ".xml", record_element_xml)
+                with open(record_identifier_file_path(record_identifier), "w+") as record_identifier_file:
+                    record_identifier_file.write(record_element_xml)
                 record_etrees.append(ElementTree.fromstring(record_element_xml))
 
                 if len(record_identifiers) % 50 == 0:
@@ -70,6 +77,7 @@ class OaiPmhExtractor(_Extractor):
             if resumption_token is None:
                 break
 
-        storage.put("record_identifiers.json", json.dumps(record_identifiers))
+        with open(record_identifiers_file_path, "w+") as record_identifier_file:
+            json.dump(record_identifiers, record_identifier_file)
 
         return {"record_etrees": tuple(record_etrees)}
