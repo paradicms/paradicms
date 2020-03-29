@@ -3,6 +3,7 @@ from rdflib import Graph, URIRef
 from paradicms.etl.lib.model.collection import Collection
 from paradicms.etl.lib.model.institution import Institution
 from paradicms.etl.lib.model.object import Object
+from paradicms.etl.lib.model.user import User
 from paradicms.etl.lib.namespace import CMS
 from paradicms.etl.lib.pipeline._transformer import _Transformer
 
@@ -26,5 +27,9 @@ class TestDataTransformer(_Transformer):
             collection.add_object(object_)
 
         institution.add_collection(collection)
+
+        user = User(graph=graph, uri=URIRef("http://example.com/user"))
+        user.email = "test@example.com"
+        user.name = "Test user"
 
         return graph
