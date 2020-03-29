@@ -1,4 +1,5 @@
-from rdflib import Graph, URIRef
+from rdflib import Graph, Literal, URIRef
+from rdflib.namespace import DCTERMS
 
 from paradicms.etl.lib.model.collection import Collection
 from paradicms.etl.lib.model.institution import Institution
@@ -23,6 +24,7 @@ class TestDataTransformer(_Transformer):
         for object_i in range(10):
             object_ = Object(graph=graph, uri=URIRef(f"http://example.com/object{object_i}"))
             object_.owner = CMS.inherit
+            object_.resource.add(DCTERMS.subject, Literal(f"Test subject {object_i}"))
             object_.title = f"Test object {object_i}"
             collection.add_object(object_)
 
