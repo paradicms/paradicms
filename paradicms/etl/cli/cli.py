@@ -3,6 +3,7 @@ import os.path
 from importlib import import_module
 from inspect import isclass
 from pathlib import Path
+from typing import Dict, Union
 
 from configargparse import ArgParser
 from rdflib import Graph
@@ -29,7 +30,10 @@ class Cli:
 
         def __create_data_dir_path(self) -> Path:
             data_dir_path = Path(self.__args.data_dir_path) if self.__args.data_dir_path else None
-            if data_dir_path is None:
+            if data_dir_path is not None:
+                if data_dir_path.is_dir():
+                    return data_dir_path
+            else:
                 for data_dir_path in (
                         # In the container
                         Path("/data"),
@@ -47,10 +51,15 @@ class Cli:
         def load(self, force: bool, graph: Graph) -> None:
             self.__pipeline.loader.load(force=force, graph=graph, storage=self.__storage)
 
-        def transform(self, force: bool, **extract_kwds) -> Graph:
-            graph = self.__pipeline.transformer.transform(**extract_kwds)
+        def transform(self, force: bool, **extract_kwds) -> Union[Graph, Dict[str, object]]:
+            graph_or_kwds = self.__pipeline.transformer.transform(**extract_kwds)
+            if isinstance(graph_or_kwds, dict):
+                graph = graph_or_kwds["graph"]
+            else:
+                graph = graph_or_kwds
+            assert isinstance(graph, Graph)
             self.__bind_namespaces(graph)
-            return graph
+            return graph_or_kwds
 
     def __init__(self):
         self.__arg_parser = ArgParser()
@@ -148,8 +157,11 @@ class Cli:
         force_transform = force or bool(getattr(args, "force_transform", False))
 
         extract_kwds = pipeline_wrapper.extract(force=force_extract)
-        graph = pipeline_wrapper.transform(force=force_transform, **extract_kwds)
-        pipeline_wrapper.load(force=force_load, graph=graph)
+        graph_or_kwds = pipeline_wrapper.transform(force=force_transform, **extract_kwds)
+        if isinstance(graph_or_kwds, dict):
+            pipeline_wrapper.load(force=force_load, **graph_or_kwds)
+        else:
+            pipeline_wrapper.load(force=force_load, graph=graph_or_kwds)
 
 
 def main():
