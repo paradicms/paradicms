@@ -48,8 +48,8 @@ class Cli:
             extract_kwds = self.__pipeline.extractor.extract(force=force, storage=self.__storage)
             return extract_kwds if extract_kwds is not None else {}
 
-        def load(self, force: bool, graph: Graph) -> None:
-            self.__pipeline.loader.load(force=force, graph=graph, storage=self.__storage)
+        def load(self, force: bool, graph: Graph, **transform_kwds) -> None:
+            self.__pipeline.loader.load(force=force, graph=graph, storage=self.__storage, **transform_kwds)
 
         def transform(self, force: bool, **extract_kwds) -> Union[Graph, Dict[str, object]]:
             graph_or_kwds = self.__pipeline.transformer.transform(**extract_kwds)
