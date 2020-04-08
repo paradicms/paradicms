@@ -7,9 +7,8 @@ from typing import Dict, Union
 
 from configargparse import ArgParser
 from rdflib import Graph
-from rdflib.namespace import DCTERMS, FOAF
 
-from paradicms.etl.lib.namespace import CMS, VRA
+from paradicms.etl.lib.namespace import bind_namespaces
 from paradicms.etl.lib.pipeline._pipeline import _Pipeline
 from paradicms.etl.lib.pipeline.pipeline_storage import PipelineStorage
 
@@ -21,12 +20,6 @@ class Cli:
             self.__logger = logger
             self.__pipeline = pipeline
             self.__storage = PipelineStorage.create(data_dir_path=self.__create_data_dir_path(), pipeline_id=self.__pipeline.id)
-
-        def __bind_namespaces(self, graph: Graph) -> None:
-            graph.bind("paradicms", CMS)
-            graph.bind("dcterms", DCTERMS)
-            graph.bind("foaf", FOAF)
-            graph.bind("vra", VRA)
 
         def __create_data_dir_path(self) -> Path:
             data_dir_path = Path(self.__args.data_dir_path) if self.__args.data_dir_path else None
@@ -58,7 +51,7 @@ class Cli:
             else:
                 graph = graph_or_kwds
             assert isinstance(graph, Graph)
-            self.__bind_namespaces(graph)
+            bind_namespaces(graph.namespace_manager)
             return graph_or_kwds
 
     def __init__(self):
