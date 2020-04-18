@@ -5,7 +5,6 @@ from inspect import isclass
 from configargparse import ArgParser
 
 from paradicms.etl.lib.pipeline._pipeline import _Pipeline
-from paradicms.etl.lib.pipeline.pipeline_wrapper import PipelineWrapper
 
 
 class Cli:
@@ -13,48 +12,11 @@ class Cli:
         self.__arg_parser = ArgParser()
         self.__logger = logging.getLogger(self.__class__.__name__)
 
-    def __add_arguments(self):
-        self.__arg_parser.add_argument("-c", is_config_file=True, help="config file path")
-        self.__arg_parser.add_argument("--data-dir-path",
-                                       help="path to a directory to store extracted data and transformed models")
-        self.__arg_parser.add_argument(
-            '--debug',
-            action='store_true',
-            help='turn on debugging'
-        )
-        self.__arg_parser.add_argument("-f", "--force", action="store_true",
-                                       help="force extract and transform, ignoring any cached data")
-        self.__arg_parser.add_argument("--force-extract", action="store_true",
-                                       help="force extract, ignoring any cached data")
-        self.__arg_parser.add_argument("--force-transform", action="store_true",
-                                       help="force transform, ignoring any cached data")
-        self.__arg_parser.add_argument("--fuseki-data-url", default="http://fuseki:3030/ds/data")
-        self.__arg_parser.add_argument(
-            '--logging-level',
-            help='set logging-level level (see Python logging module)'
-        )
-        self.__arg_parser.add_argument(
-            '--pipeline-module',
-            help='absolute (parent.module) or relative (.module) module name for the pipeline implementation',
-            required=True
-        )
 
-    def __configure_logging(self, args):
-        if args.debug:
-            logging_level = logging.DEBUG
-        elif args.logging_level is not None:
-            logging_level = getattr(logging, args.logging_level.upper())
-        else:
-            logging_level = logging.INFO
-        logging.basicConfig(
-            format='%(asctime)s:%(module)s:%(lineno)s:%(name)s:%(levelname)s: %(message)s',
-            level=logging_level
-        )
-
-    def __import_pipeline_class(self, args) -> _Pipeline:
-        try_pipeline_module_names = [args.pipeline_module]
-        if not "." in args.pipeline_module:
-            try_pipeline_module_names.append(".%s.%s" % (args.pipeline_module, args.pipeline_module + "_pipeline"))
+    def __import_pipeline_class(self, pipeline_module_name: str) -> _Pipeline:
+        try_pipeline_module_names = [pipeline_module_name]
+        if not "." in pipeline_module_name:
+            try_pipeline_module_names.append(".%s.%s" % (pipeline_module_name, pipeline_module_name + "_pipeline"))
 
         first_import_error = None
         pipeline_module = None
@@ -75,41 +37,19 @@ class Cli:
                 return value
         raise ImportError("no Pipeline in the %s module" % pipeline_module.__name__)
 
-    def __instantiate_pipeline(self, args, pipeline_class, **kwds) -> _Pipeline:
-        pipeline_kwds = vars(args).copy()
-        pipeline_kwds.pop("data_dir_path")
-        pipeline_kwds.pop("force")
-        pipeline_kwds.pop("force_extract")
-        pipeline_kwds.pop("force_transform")
-        pipeline_kwds.pop("logging_level")
-        pipeline_kwds.pop("pipeline_module")
-        pipeline_kwds.update(kwds)
-        return pipeline_class(**pipeline_kwds)
-
     def main(self):
-        self.__add_arguments()
-        args, _ = self.__arg_parser.parse_known_args()
-        self.__configure_logging(args)
+        arg_parser = ArgParser()
+        arg_parser.add_argument(
+            'pipeline_module',
+            help='absolute (parent.module) or relative (.module) module name for the pipeline implementation'
+        )
+        args, _ = arg_parser.parse_known_args()
 
-        pipeline_class = self.__import_pipeline_class(args)
-        pipeline_class.add_arguments(self.__arg_parser)
+        pipeline_class = self.__import_pipeline_class(args.pipeline_module)
+        pipeline_class.add_arguments(arg_parser)
+        args = arg_parser.parse_args()
 
-        args = self.__arg_parser.parse_args()
-
-        pipeline = self.__instantiate_pipeline(args, pipeline_class)
-        pipeline_wrapper = PipelineWrapper(args=args, logger=self.__logger, pipeline=pipeline)
-
-        force = bool(getattr(args, "force", False))
-        force_extract = force or bool(getattr(args, "force_extract", False))
-        force_load = force or bool(getattr(args, "force_load", False))
-        force_transform = force or bool(getattr(args, "force_transform", False))
-
-        extract_kwds = pipeline_wrapper.extract(force=force_extract)
-        graph_or_kwds = pipeline_wrapper.transform(force=force_transform, **extract_kwds)
-        if isinstance(graph_or_kwds, dict):
-            pipeline_wrapper.load(force=force_load, **graph_or_kwds)
-        else:
-            pipeline_wrapper.load(force=force_load, graph=graph_or_kwds)
+        pipeline_class.main(args=args)
 
 
 def main():

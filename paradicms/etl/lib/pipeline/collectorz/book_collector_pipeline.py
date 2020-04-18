@@ -25,6 +25,7 @@ class BookCollectorPipeline(_Pipeline):
 
     @classmethod
     def add_arguments(cls, arg_parser):
+        _Pipeline.add_arguments(cls, arg_parser)
         arg_parser.add_argument('--export-xml-file-path', help="path to book-export.xml", required=True)
         arg_parser.add_argument("--owner", help="URI of the owner, or public if absent")
         arg_parser.add_argument(

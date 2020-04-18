@@ -1,6 +1,7 @@
+import logging
 import os.path
 from pathlib import Path
-from typing import Dict, Union
+from typing import Dict, Optional, Union
 
 from rdflib import Graph
 
@@ -10,14 +11,12 @@ from paradicms.etl.lib.pipeline.pipeline_storage import PipelineStorage
 
 
 class PipelineWrapper:
-    def __init__(self, args, logger, pipeline: _Pipeline):
-        self.__args = args
-        self.__logger = logger
+    def __init__(self, pipeline: _Pipeline, data_dir_path: Optional[Path] = None):
+        self.__logger = logging.getLogger(pipeline.__class__.__name__)
         self.__pipeline = pipeline
-        self.__storage = PipelineStorage.create(data_dir_path=self.__create_data_dir_path(), pipeline_id=self.__pipeline.id)
+        self.__storage = PipelineStorage.create(data_dir_path=self.__create_data_dir_path(data_dir_path=data_dir_path), pipeline_id=self.__pipeline.id)
 
-    def __create_data_dir_path(self) -> Path:
-        data_dir_path = Path(self.__args.data_dir_path) if self.__args.data_dir_path else None
+    def __create_data_dir_path(self, data_dir_path: Optional[Path] = None) -> Path:
         if data_dir_path is not None:
             if data_dir_path.is_dir():
                 return data_dir_path
@@ -26,7 +25,7 @@ class PipelineWrapper:
                     # In the container
                     Path("/data"),
                     # In the checkout
-                    Path(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "data")))
+                    Path(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "data")))
             ):
                 if data_dir_path.is_dir():
                     return data_dir_path

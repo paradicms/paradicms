@@ -30,6 +30,7 @@ class OmekaClassicPipeline(_Pipeline):
 
     @classmethod
     def add_arguments(cls, arg_parser):
+        _Pipeline.add_arguments(cls, arg_parser)
         arg_parser.add_argument('--api-key', help="Omeka API key", required=True)
         arg_parser.add_argument("--endpoint-url", help="Omeka API endpoint URL", required=True)
         arg_parser.add_argument(
