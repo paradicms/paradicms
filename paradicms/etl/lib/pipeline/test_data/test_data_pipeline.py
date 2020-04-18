@@ -22,3 +22,7 @@ class TestDataPipeline(_Pipeline):
             transformer=TestDataTransformer(),
             **kwds
         )
+
+
+if __name__ == "__main__":
+    TestDataPipeline.main()

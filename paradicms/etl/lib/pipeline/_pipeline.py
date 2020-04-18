@@ -88,7 +88,10 @@ class _Pipeline(ABC):
         pipeline_kwds.pop("force_extract")
         pipeline_kwds.pop("force_transform")
         pipeline_kwds.pop("logging_level")
-        pipeline_kwds.pop("pipeline_module")
+        try:
+            pipeline_kwds.pop("pipeline_module")
+        except KeyError:
+            pass
         pipeline = cls(**pipeline_kwds)
 
         from paradicms.etl.lib.pipeline.pipeline_wrapper import PipelineWrapper

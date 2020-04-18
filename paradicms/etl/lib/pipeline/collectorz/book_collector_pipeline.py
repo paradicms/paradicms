@@ -33,3 +33,7 @@ class BookCollectorPipeline(_Pipeline):
             help='unique identifier for this pipeline, used to isolate its cache',
             required=True
         )
+
+
+if __name__ == "__main__":
+    BookCollectorPipeline.main()
