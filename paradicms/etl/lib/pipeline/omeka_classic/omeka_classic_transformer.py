@@ -17,6 +17,7 @@ ElementTextTree = Dict[str, Dict[str, str]]
 class OmekaClassicTransformer(_Transformer):
     def __init__(self, *, institution_kwds: Dict[str, str], square_thumbnail_height_px: int,
                  square_thumbnail_width_px: int):
+        _Transformer.__init__(self)
         self.__institution_kwds = institution_kwds
         self.__square_thumbnail_height_px = square_thumbnail_height_px
         self.__square_thumbnail_width_px = square_thumbnail_width_px
@@ -44,7 +45,10 @@ class OmekaClassicTransformer(_Transformer):
             #     transformed_item.owner = URIRef("http://example.com/user")
             #     private = False
             transformed_collection = transformed_collections_by_id[item["collection"]["id"]]
-            transformed_collection.add_object(transformed_item)
+            try:
+                transformed_collection.add_object(transformed_item)
+            except ValueError as e:
+                self._logger.warning("invalid object from item %d: %s", item["id"], str(e))
 
         for transformed_collection in transformed_collections_by_id.values():
             institution.add_collection(transformed_collection)
@@ -86,59 +90,51 @@ class OmekaClassicTransformer(_Transformer):
         if not dc_element_text_tree:
             return
 
-        for creator in dc_element_text_tree.pop("Creator", []):
-            model.resource.add(DCTERMS.creator, Literal(creator))
+        def is_uri(value: str):
+            return value.startswith("http://") or value.startswith("https://")
 
-        for date in dc_element_text_tree.pop("Date", []):
-            model.resource.add(DCTERMS.date, Literal(date))
+        # The items JSON from the API has display name element identifiers instead of the Dublin Core URIs,
+        # so we have to map back here.
+        for key, property in (
+            ("Alternative Title", DCTERMS.alternative),
+            ("Contributor", DCTERMS.contributor),
+            ("Coverage", DCTERMS.coverage),
+            ("Creator", DCTERMS.creator),
+            ("Date", DCTERMS.date),
+            ("Date Created", DCTERMS.created),
+            ("Date Submitted", DCTERMS.dateSubmitted),
+            ("Description", DCTERMS.description),
+            ("Extent", DCTERMS.extent),
+            ("Format", DCTERMS["format"]),
+            ("Identifier", DCTERMS.identifier),
+            ("Is Referenced By", DCTERMS.isReferencedBy),
+            ("Language", DCTERMS.language),
+            ("Medium", DCTERMS.medium),
+            ("Provenance", DCTERMS.provenance),
+            ("Publisher", DCTERMS.publisher),
+            ("References", DCTERMS.references),
+            ("Relation", DCTERMS.relation),
+            ("Rights Holder", DCTERMS.rightsHolder),
+            ("Source", DCTERMS.source),
+            ("Spatial Coverage", DCTERMS.spatial),
+            ("Subject", DCTERMS.subject),
+            ("Temporal Coverage", DCTERMS.temporal),
+            ("Title", DCTERMS.title),
+            ("Type", DCTERMS.type),
+        ):
+            for value in dc_element_text_tree.pop(key, []):
+                # assert not value.startswith("http://") and not value.startswith("https://"), value
+                model.resource.add(property, Literal(value))
 
-        for description in dc_element_text_tree.pop("Description", []):
-            model.resource.add(DCTERMS.description, Literal(description))
-
-        for extent in dc_element_text_tree.pop("Extent", []):
-            model.resource.add(DCTERMS.extent, Literal(extent))
-
-        for identifier in dc_element_text_tree.pop("Identifier", []):
-            model.resource.add(DCTERMS.identifier, Literal(identifier))
-
-        for is_referenced_by in dc_element_text_tree.pop("Is Referenced By", []):
-            model.resource.add(DCTERMS.isReferencedBy, Literal(is_referenced_by))
-
-        for language in dc_element_text_tree.pop("Language", []):
-            model.resource.add(DCTERMS.language, Literal(language))
-
-        for medium in dc_element_text_tree.pop("Medium", []):
-            model.resource.add(DCTERMS.medium, Literal(medium))
-
-        for provenance in dc_element_text_tree.pop("Provenance", []):
-            model.resource.add(DCTERMS.provenance, Literal(provenance))
-
-        for publisher in dc_element_text_tree.pop("Publisher", []):
-            model.resource.add(DCTERMS.publisher, Literal(publisher))
-
-        for relation in dc_element_text_tree.pop("Relation", []):
-            model.resource.add(DCTERMS.relation, Literal(relation))
-
-        for rights in dc_element_text_tree.pop("Rights", []):
-            model.resource.add(DCTERMS.rights, Literal(rights))
-
-        for rights_holder in dc_element_text_tree.pop("Rights Holder", []):
-            model.resource.add(DCTERMS.rightsHolder, Literal(rights_holder))
-
-        for source in dc_element_text_tree.pop("Source", []):
-            model.resource.add(DCTERMS.source, Literal(source))
-
-        for spatial in dc_element_text_tree.pop("Spatial Coverage", []):
-            model.resource.add(DCTERMS.spatial, Literal(spatial))
-
-        for subject in dc_element_text_tree.pop("Subject", []):
-            model.resource.add(DCTERMS.subject, Literal(subject))
-
-        for title in dc_element_text_tree.pop("Title", []):
-            model.resource.add(DCTERMS.title, Literal(title))
-
-        for type_ in dc_element_text_tree.pop("Type", []):
-            model.resource.add(DCTERMS.type, Literal(type_))
+        for key, property in (
+            ("License", DCTERMS.license),
+            ("Rights", DCTERMS.rights),
+        ):
+            for value in dc_element_text_tree.pop(key, []):
+                if is_uri(value):
+                    model.resource.add(property, URIRef(value))
+                else:
+                    model.resource.add(property, Literal(value))
 
         if dc_element_text_tree:
             self._logger.warn("unknown Dublin Core element names: %s", tuple(dc_element_text_tree.keys()))
@@ -155,8 +151,18 @@ class OmekaClassicTransformer(_Transformer):
                 continue
             image = Image(graph=graph, uri=URIRef(url))
             if key == "original":
-                image.height = file_["metadata"]["video"]["resolution_y"]
-                image.width = file_["metadata"]["video"]["resolution_x"]
+                file_metadata = file_["metadata"]
+                if not isinstance(file_metadata, dict):
+                    self._logger.debug("file %s has no metadata", file_["id"])
+                    continue
+                file_metadata_video = file_metadata["video"]
+                if not isinstance(file_metadata_video, dict):
+                    self._logger.debug("file %s has no resolution in its metadata", file_["id"])
+                    continue
+                image.height = file_metadata_video["resolution_y"]
+                assert isinstance(image.height, int)
+                image.width = file_metadata_video["resolution_x"]
+                assert isinstance(image.width, int)
             elif key == "square_thumbnail":
                 image.height = self.__square_thumbnail_height_px
                 image.width = self.__square_thumbnail_width_px
