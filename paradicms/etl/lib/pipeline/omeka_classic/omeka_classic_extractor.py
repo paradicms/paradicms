@@ -18,7 +18,7 @@ class OmekaClassicExtractor(_Extractor):
         files_file_path = storage.extracted_data_dir_path / (sanitize_filename(self.__endpoint_url + " files") + ".json")
         items_file_path = storage.extracted_data_dir_path / (sanitize_filename(self.__endpoint_url + " items") + ".json")
 
-        if not collections_file_path.exists or force:
+        if not collections_file_path.exists() or force:
             collections = tuple(json.loads(collection.json) for collection in self.__client.get_all_collections())
             files = tuple(json.loads(file_.json) for file_ in self.__client.get_all_files())
             items = tuple(json.loads(item.json) for item in self.__client.get_all_items())
