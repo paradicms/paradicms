@@ -191,6 +191,8 @@ class OmekaClassicTransformer(_Transformer):
         object_.owner = CMS.inherit
         item_element_text_tree = self.__get_element_texts_as_tree(item)
         self.__transform_dublin_core_elements(element_text_tree=item_element_text_tree, model=object_)
+        self._transform_item_type_metadata(element_text_tree=item_element_text_tree, model=object_)
+        self.__log_unknown_element_texts(item_element_text_tree)
         for file_ in files_by_item_id.get(item["id"], []):
             original_image, thumbnail_image = self.__transform_file(file_=file_, graph=graph)
             if not original_image:
@@ -198,3 +200,9 @@ class OmekaClassicTransformer(_Transformer):
             original_image.resource.add(FOAF.depicts, object_.uri)
             object_.resource.add(FOAF.depiction, original_image.uri)
         return object_
+
+    def _transform_item_type_metadata(self, element_text_tree, model):
+        # "Item Type Metadata" is a catch-all element set for all user-defined elements.
+        itm_element_text_tree = element_text_tree.pop("Item Type Metadata", None)
+        if not itm_element_text_tree:
+            return
