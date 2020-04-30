@@ -1,4 +1,4 @@
-from typing import Dict, Tuple
+from typing import Dict, Optional, Tuple
 
 import dateparser
 from rdflib import Graph, Literal, URIRef
@@ -29,22 +29,28 @@ class OmekaClassicTransformer(_Transformer):
 
         transformed_collections_by_id = {}
         for collection in collections:
-            transformed_collections_by_id[collection["id"]] = self.__transform_collection(graph=graph,
-                                                                                          omeka_collection=collection)
+            transformed_collection = self._transform_collection(graph=graph,
+                                                                 omeka_collection=collection)
+            if transformed_collection is not None:
+                transformed_collections_by_id[collection["id"]] = transformed_collection
 
         files_by_item_id = {}
         for file_ in files:
             files_by_item_id.setdefault(file_["item"]["id"], []).append(file_)
 
-        # private = True
         for item in items:
             if not item["public"]:
+                self._logger.debug("item %s private, skipping", item["id"])
                 continue
-            transformed_item = self.__transform_item(files_by_item_id=files_by_item_id, graph=graph, item=item)
-            # if private:
-            #     transformed_item.owner = URIRef("http://example.com/user")
-            #     private = False
-            transformed_collection = transformed_collections_by_id[item["collection"]["id"]]
+
+            try:
+                transformed_collection = transformed_collections_by_id[item["collection"]["id"]]
+            except KeyError:
+                self._logger.debug("item %s in ignored collection, skipping", item["id"])
+                continue
+
+            transformed_item = self._transform_item(files_by_item_id=files_by_item_id, graph=graph, item=item)
+
             try:
                 transformed_collection.add_object(transformed_item)
             except ValueError as e:
@@ -55,7 +61,7 @@ class OmekaClassicTransformer(_Transformer):
 
         return graph
 
-    def __get_element_texts_as_tree(self, omeka_resource) -> ElementTextTree:
+    def _get_element_texts_as_tree(self, omeka_resource) -> ElementTextTree:
         result = {}
         for element_text in omeka_resource["element_texts"]:
             text = element_text["text"].strip()
@@ -67,24 +73,24 @@ class OmekaClassicTransformer(_Transformer):
             element_set_dict.setdefault(element_name, []).append(text)
         return result
 
-    def __log_unknown_element_texts(self, element_text_tree: ElementTextTree) -> None:
+    def _log_unknown_element_texts(self, element_text_tree: ElementTextTree) -> None:
         for element_set_name in element_text_tree.keys():
             if element_text_tree[element_set_name]:
                 self._logger.warn("unknown %s element names: %s", element_set_name,
                                   tuple(element_text_tree[element_set_name]))
 
-    def __transform_collection(self, *, graph: Graph, omeka_collection) -> Collection:
+    def _transform_collection(self, *, graph: Graph, omeka_collection) -> Optional[Collection]:
         collection = Collection(
             graph=graph,
             uri=URIRef(omeka_collection["url"])
         )
         collection.owner = CMS.inherit
-        element_text_tree = self.__get_element_texts_as_tree(omeka_collection)
-        self.__transform_dublin_core_elements(element_text_tree=element_text_tree, model=collection)
-        self.__log_unknown_element_texts(element_text_tree)
+        element_text_tree = self._get_element_texts_as_tree(omeka_collection)
+        self._transform_dublin_core_elements(element_text_tree=element_text_tree, model=collection)
+        self._log_unknown_element_texts(element_text_tree)
         return collection
 
-    def __transform_dublin_core_elements(self, *, element_text_tree: ElementTextTree,
+    def _transform_dublin_core_elements(self, *, element_text_tree: ElementTextTree,
                                          model: _Model) -> None:
         dc_element_text_tree = element_text_tree.pop("Dublin Core", None)
         if not dc_element_text_tree:
@@ -139,7 +145,7 @@ class OmekaClassicTransformer(_Transformer):
         if dc_element_text_tree:
             self._logger.warn("unknown Dublin Core element names: %s", tuple(dc_element_text_tree.keys()))
 
-    def __transform_file(self, *, file_, graph: Graph) -> Tuple[Image, ...]:
+    def _transform_file(self, *, file_, graph: Graph) -> Tuple[Image, ...]:
         if not file_["mime_type"].startswith("image/"):
             return None, None
 
@@ -183,18 +189,18 @@ class OmekaClassicTransformer(_Transformer):
 
         return original, thumbnail
 
-    def __transform_item(self, *, files_by_item_id, graph: Graph, item) -> Object:
+    def _transform_item(self, *, files_by_item_id, graph: Graph, item) -> Object:
         object_ = Object(
             graph=graph,
             uri=URIRef(item["url"])
         )
         object_.owner = CMS.inherit
-        item_element_text_tree = self.__get_element_texts_as_tree(item)
-        self.__transform_dublin_core_elements(element_text_tree=item_element_text_tree, model=object_)
+        item_element_text_tree = self._get_element_texts_as_tree(item)
+        self._transform_dublin_core_elements(element_text_tree=item_element_text_tree, model=object_)
         self._transform_item_type_metadata(element_text_tree=item_element_text_tree, model=object_)
-        self.__log_unknown_element_texts(item_element_text_tree)
+        self._log_unknown_element_texts(item_element_text_tree)
         for file_ in files_by_item_id.get(item["id"], []):
-            original_image, thumbnail_image = self.__transform_file(file_=file_, graph=graph)
+            original_image, thumbnail_image = self._transform_file(file_=file_, graph=graph)
             if not original_image:
                 continue
             original_image.resource.add(FOAF.depicts, object_.uri)
