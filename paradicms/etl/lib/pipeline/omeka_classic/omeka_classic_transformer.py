@@ -16,22 +16,22 @@ ElementTextTree = Dict[str, Dict[str, str]]
 
 class OmekaClassicTransformer(_Transformer):
     def __init__(self, *,
-                 fullsize_height_px: int,
-                 fullsize_width_px: int,
+                 fullsize_max_height_px: int,
+                 fullsize_max_width_px: int,
                  institution_kwds: Dict[str, str],
                  square_thumbnail_height_px: int,
                  square_thumbnail_width_px: int,
-                 thumbnail_height_px: int,
-                 thumbnail_width_px: int):
+                 thumbnail_max_height_px: int,
+                 thumbnail_max_width_px: int):
         _Transformer.__init__(self)
         # Single _ so we can use getattr
-        self._fullsize_height_px = fullsize_height_px
-        self._fullsize_width_px = fullsize_width_px
+        self._fullsize_max_height_px = fullsize_max_height_px
+        self._fullsize_max_width_px = fullsize_max_width_px
         self.__institution_kwds = institution_kwds
         self._square_thumbnail_height_px = square_thumbnail_height_px
         self._square_thumbnail_width_px = square_thumbnail_width_px
-        self._thumbnail_height_px = thumbnail_height_px
-        self._thumbnail_width_px = thumbnail_width_px
+        self._thumbnail_max_height_px = thumbnail_max_height_px
+        self._thumbnail_max_width_px = thumbnail_max_width_px
 
     def transform(self, collections, files, items):
         graph = self._new_graph
@@ -184,8 +184,12 @@ class OmekaClassicTransformer(_Transformer):
                 image.width = file_metadata_video["resolution_x"]
                 assert isinstance(image.width, int)
             else:
-                image.height = getattr(self, "_" + key + "_height_px")
-                image.width = getattr(self, "_" + key + "_width_px")
+                if key == "square_thumbnail":
+                    image.height = self._square_thumbnail_height_px
+                    image.width = self._square_thumbnail_width_px
+                else:
+                    image.max_height = getattr(self, "_" + key + "_max_height_px")
+                    image.max_width = getattr(self, "_" + key + "_max_width_px")
                 original_uri = URIRef(file_["file_urls"]["original"])
                 image.resource.add(PROV.wasDerivedFrom, original_uri)
                 graph.add((original_uri, FOAF.thumbnail, image.uri))

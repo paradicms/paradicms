@@ -4,7 +4,7 @@ from typing import Optional
 from rdflib.namespace import DCTERMS
 
 from paradicms.etl.lib.model._model import _Model
-from paradicms.etl.lib.namespace import EXIF
+from paradicms.etl.lib.namespace import CMS, EXIF
 
 
 class Image(_Model):
@@ -31,6 +31,22 @@ class Image(_Model):
     @height.setter
     def height(self, value: int):
         self._set_single_value(EXIF.height, value)
+
+    @property
+    def max_height(self) -> Optional[int]:
+        return self._get_single_value(CMS.imageMaxHeight, int)
+
+    @max_height.setter
+    def max_height(self, value: int):
+        self._set_single_value(CMS.imageMaxHeight, value)
+
+    @property
+    def max_width(self) -> Optional[int]:
+        return self._get_single_value(CMS.imageMaxWidth, int)
+
+    @max_width.setter
+    def max_width(self, value: int):
+        self._set_single_value(CMS.imageMaxWidth, value)
 
     @property
     def modified(self) -> Optional[datetime]:
