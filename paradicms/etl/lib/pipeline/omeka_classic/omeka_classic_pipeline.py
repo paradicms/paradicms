@@ -9,8 +9,12 @@ class OmekaClassicPipeline(_Pipeline):
             api_key: str,
             endpoint_url: str,
             pipeline_id: str,
+            fullsize_height_px: int,
+            fullsize_width_px: int,
             square_thumbnail_height_px: int,
             square_thumbnail_width_px: int,
+            thumbnail_height_px: int,
+            thumbnail_width_px: int,
             **kwds
     ):
         _Pipeline.__init__(
@@ -21,9 +25,13 @@ class OmekaClassicPipeline(_Pipeline):
             ),
             id=pipeline_id,
             transformer=OmekaClassicTransformer(
+                fullsize_height_px=fullsize_height_px,
+                fullsize_width_px=fullsize_width_px,
                 institution_kwds=kwds,
                 square_thumbnail_height_px=square_thumbnail_height_px,
                 square_thumbnail_width_px=square_thumbnail_width_px,
+                thumbnail_height_px=thumbnail_height_px,
+                thumbnail_width_px=thumbnail_width_px,
             ),
             **kwds
         )
@@ -38,14 +46,13 @@ class OmekaClassicPipeline(_Pipeline):
             help='unique identifier for this pipeline, used to isolate its cache',
             required=True
         )
-        arg_parser.add_argument(
-            '--square-thumbnail-height-px',
-            default=200,
-            type=int
-        )
-        arg_parser.add_argument(
-            '--square-thumbnail-width-px',
-            default=200,
-            type=int
-        )
+        for key in ("fullsize", "square-thumbnail", "thumbnail"):
+            arg_parser.add_argument(
+                '--' + key + '-height-px',
+                type=int
+            )
+            arg_parser.add_argument(
+                '--' + key + '-width-px',
+                type=int
+            )
         cls._add_institution_arguments(arg_parser)
