@@ -1,7 +1,8 @@
 from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import DCTERMS
+from rdflib.namespace import DCTERMS, FOAF
 
 from paradicms.etl.lib.model.collection import Collection
+from paradicms.etl.lib.model.image import Image
 from paradicms.etl.lib.model.institution import Institution
 from paradicms.etl.lib.model.object import Object
 from paradicms.etl.lib.model.user import User
@@ -25,6 +26,19 @@ class TestDataTransformer(_Transformer):
             object_ = Object(graph=graph, uri=URIRef(f"http://example.com/object{object_i}"))
             object_.owner = CMS.inherit
             object_.resource.add(DCTERMS.subject, Literal(f"Test subject {object_i}"))
+            for image_i in range(3):
+                image = Image(graph=graph, uri=URIRef(f"http://example.com/object{object_i}/image{image_i}"))
+                image.height = 1000
+                image.width = 1000
+                object_.resource.add(FOAF.depiction, image.uri)
+                square_thumbnail = Image(graph=graph, uri=URIRef(f"http://example.com/object{object_i}/image{image_i}/square_thumbnail"))
+                square_thumbnail.height = 75
+                square_thumbnail.width = 75
+                image.resource.add(FOAF.thumbnail, square_thumbnail.uri)
+                thumbnail = Image(graph=graph, uri=URIRef(f"http://example.com/object{object_i}/image{image_i}/thumbnail"))
+                thumbnail.max_height = 600
+                thumbnail.max_width = 600
+                image.resource.add(FOAF.thumbnail, thumbnail.uri)
             object_.title = f"Test object {object_i}"
             collection.add_object(object_)
 
