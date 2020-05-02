@@ -166,23 +166,26 @@ class OmekaClassicTransformer(_Transformer):
             return tuple()
 
         images = []
+        original_image = None
         for key, url in file_["file_urls"].items():
             if url is None:
                 continue
             image = Image(graph=graph, uri=URIRef(url))
             if key == "original":
                 file_metadata = file_["metadata"]
-                if not isinstance(file_metadata, dict):
+                if isinstance(file_metadata, dict):
+                    # Some files have no metadata
+                    file_metadata_video = file_metadata["video"]
+                    if isinstance(file_metadata_video, dict):
+                        image.height = file_metadata_video["resolution_y"]
+                        assert isinstance(image.height, int)
+                        image.width = file_metadata_video["resolution_x"]
+                        assert isinstance(image.width, int)
+                    else:
+                        self._logger.debug("file %s has no resolution in its metadata", file_["id"])
+                else:
                     self._logger.debug("file %s has no metadata", file_["id"])
-                    continue
-                file_metadata_video = file_metadata["video"]
-                if not isinstance(file_metadata_video, dict):
-                    self._logger.debug("file %s has no resolution in its metadata", file_["id"])
-                    continue
-                image.height = file_metadata_video["resolution_y"]
-                assert isinstance(image.height, int)
-                image.width = file_metadata_video["resolution_x"]
-                assert isinstance(image.width, int)
+                original_image = image
             else:
                 if key == "square_thumbnail":
                     image.height = self._square_thumbnail_height_px
@@ -200,6 +203,7 @@ class OmekaClassicTransformer(_Transformer):
                 images.insert(0, image)
             else:
                 images.append(image)
+        assert original_image
         return tuple(images)
 
     def _transform_item(self, *, files_by_item_id, graph: Graph, item) -> Object:
