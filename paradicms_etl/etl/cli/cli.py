@@ -3,8 +3,7 @@ from importlib import import_module
 from inspect import isclass
 
 from configargparse import ArgParser
-
-from paradicms.etl.lib.pipeline._pipeline import _Pipeline
+from paradicms_etl.lib.pipeline._pipeline import _Pipeline
 
 
 class Cli:
