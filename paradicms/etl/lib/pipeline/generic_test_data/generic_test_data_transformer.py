@@ -10,7 +10,7 @@ from paradicms.etl.lib.namespace import CMS
 from paradicms.etl.lib.pipeline._transformer import _Transformer
 
 
-class TestDataTransformer(_Transformer):
+class GenericTestDataTransformer(_Transformer):
     def transform(self):
         graph = Graph()
 
