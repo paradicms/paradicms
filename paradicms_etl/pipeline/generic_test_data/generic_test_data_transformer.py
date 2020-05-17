@@ -32,6 +32,7 @@ class GenericTestDataTransformer(_Transformer):
         for object_i in range(10):
             object_ = Object(graph=graph, uri=URIRef(f"http://example.com/object{object_i}"))
             object_.owner = CMS.inherit
+            object_.resource.add(DCTERMS.description, Literal(f"Test description {object_i}"))
             object_.resource.add(DCTERMS.subject, Literal(f"Test subject {object_i}"))
             for image_i in range(3):
                 image = Image(graph=graph, uri=URIRef(f"http://example.com/object{object_i}/image{image_i}"))
