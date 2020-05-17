@@ -17,23 +17,26 @@ class GenericTestDataTransformer(_Transformer):
         institution = Institution(graph=graph, uri=URIRef("http://example.com/institution"))
         institution.name = "Test institution"
         institution.owner = CMS.public
-        institution.resource.add(DCTERMS.rights, URIRef("https://rightsstatements.org/page/InC-EDU/1.0/?language=en"))
+        rights_uri = URIRef("https://rightsstatements.org/page/InC-EDU/1.0/?language=en")
+        institution.resource.add(DCTERMS.rights, rights_uri)
         institution.resource.add(DCTERMS.rights, Literal("Institution rights"))
         institution.resource.add(DCTERMS.rightsHolder, Literal("Institution rights holder"))
 
         collection = Collection(graph=graph, uri=URIRef("http://example.com/collection"))
         collection.owner = CMS.inherit
         collection.title = "Test collection"
-        collection.resource.add(DCTERMS.rights, URIRef("https://rightsstatements.org/page/InC-EDU/1.0/?language=en"))
+        collection.resource.add(DCTERMS.rights, rights_uri)
         collection.resource.add(DCTERMS.rights, Literal("Collection rights"))
         collection.resource.add(DCTERMS.rightsHolder, Literal("Collection rights holder"))
-
 
         for object_i in range(10):
             object_ = Object(graph=graph, uri=URIRef(f"http://example.com/object{object_i}"))
             object_.owner = CMS.inherit
             object_.resource.add(DCTERMS.description, Literal(f"Test description {object_i}"))
             object_.resource.add(DCTERMS.subject, Literal(f"Test subject {object_i}"))
+            object_.resource.add(DCTERMS.rights, rights_uri)
+            object_.resource.add(DCTERMS.rights, Literal("Object rights"))
+            object_.resource.add(DCTERMS.rightsHolder, Literal("Object rights holder"))
             for image_i in range(3):
                 image = Image(graph=graph, uri=URIRef(f"http://example.com/object{object_i}/image{image_i}"))
                 image.height = 1000
