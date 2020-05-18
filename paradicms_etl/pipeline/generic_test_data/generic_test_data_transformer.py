@@ -29,7 +29,7 @@ class GenericTestDataTransformer(_Transformer):
         collection.resource.add(DCTERMS.rights, Literal("Collection rights"))
         collection.resource.add(DCTERMS.rightsHolder, Literal("Collection rights holder"))
 
-        for object_i in range(10):
+        for object_i in range(100): # Objects per page is 20
             object_ = Object(graph=graph, uri=URIRef(f"http://example.com/object{object_i}"))
             object_.owner = CMS.inherit
             object_.resource.add(DCTERMS.description, Literal(f"Test description {object_i}"))
