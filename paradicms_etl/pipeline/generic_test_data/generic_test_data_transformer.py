@@ -38,15 +38,15 @@ class GenericTestDataTransformer(_Transformer):
             object_.resource.add(DCTERMS.rights, Literal("Object rights"))
             object_.resource.add(DCTERMS.rightsHolder, Literal("Object rights holder"))
             for image_i in range(3):
-                image = Image(graph=graph, uri=URIRef(f"http://example.com/object{object_i}/image{image_i}"))
+                image = Image(graph=graph, uri=URIRef(f"https://place-hold.it/1000x1000?text=Object{object_i}Image{image_i}"))
                 image.height = 1000
                 image.width = 1000
                 object_.resource.add(FOAF.depiction, image.uri)
-                square_thumbnail = Image(graph=graph, uri=URIRef(f"http://example.com/object{object_i}/image{image_i}/square_thumbnail"))
+                square_thumbnail = Image(graph=graph, uri=URIRef(f"https://place-hold.it/75x75?text=Object{object_i}Image{image_i}"))
                 square_thumbnail.height = 75
                 square_thumbnail.width = 75
                 image.resource.add(FOAF.thumbnail, square_thumbnail.uri)
-                thumbnail = Image(graph=graph, uri=URIRef(f"http://example.com/object{object_i}/image{image_i}/thumbnail"))
+                thumbnail = Image(graph=graph, uri=URIRef(f"https://place-hold.it/600x600?text=Object{object_i}Image{image_i}"))
                 thumbnail.max_height = 600
                 thumbnail.max_width = 600
                 image.resource.add(FOAF.thumbnail, thumbnail.uri)
