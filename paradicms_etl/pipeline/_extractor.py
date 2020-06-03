@@ -19,11 +19,11 @@ class _Extractor(ABC):
         file_path = storage.extracted_data_dir_path / sanitize_filename(from_url)
         if not force and file_path.exists():
             self._logger.info(
-                "%s already download and force not specified, skipping download",
-                from_url)
+                "%s already downloaded to %s and force not specified, skipping download",
+                from_url, file_path)
             return file_path
 
-        self._logger.info("downloading %s to %s", from_url)
+        self._logger.info("downloading %s to %s", from_url, file_path)
         try:
             url_ = urlopen(from_url)
             url_contents = url_.read()
