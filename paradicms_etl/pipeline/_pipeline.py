@@ -4,11 +4,12 @@ from pathlib import Path
 from typing import Optional
 
 from configargparse import ArgParser
+from rdflib import URIRef
+
 from paradicms_etl.pipeline._extractor import _Extractor
 from paradicms_etl.pipeline._loader import _Loader
 from paradicms_etl.pipeline._transformer import _Transformer
 from paradicms_etl.pipeline.default_loader import DefaultLoader
-from rdflib import URIRef
 
 
 class _Pipeline(ABC):
@@ -115,7 +116,7 @@ class _Pipeline(ABC):
 
     @staticmethod
     def id_to_uri(id_: str) -> URIRef:
-        return URIRef("urn:pipeline:" + id_)
+        return URIRef("urn:paradicms_etl:pipeline:" + id_)
 
     @property
     def loader(self):
