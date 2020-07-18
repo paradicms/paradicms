@@ -9,7 +9,7 @@ from rdflib import URIRef
 from paradicms_etl._extractor import _Extractor
 from paradicms_etl._loader import _Loader
 from paradicms_etl._transformer import _Transformer
-from paradicms_etl.pipelines.default_loader import DefaultLoader
+from paradicms_etl.loaders.default_loader import DefaultLoader
 
 
 class _Pipeline(ABC):

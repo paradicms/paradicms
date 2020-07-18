@@ -1,6 +1,6 @@
 from paradicms_etl._loader import _Loader
-from paradicms_etl.pipelines.file_loader import FileLoader
-from paradicms_etl.pipelines.fuseki_loader import FusekiLoader
+from paradicms_etl.loaders.file_loader import FileLoader
+from paradicms_etl.loaders.fuseki_loader import FusekiLoader
 
 
 class DefaultLoader(_Loader):
