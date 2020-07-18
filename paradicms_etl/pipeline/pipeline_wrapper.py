@@ -24,7 +24,7 @@ class PipelineWrapper:
                     # In the container
                     Path("/data"),
                     # In the checkout
-                    Path(__file__).parent.parent.parent / "data"
+                    Path(__file__).absolute().parent.parent.parent / "data"
             ):
                 if data_dir_path.is_dir():
                     return data_dir_path

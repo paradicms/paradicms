@@ -1,5 +1,6 @@
 /config/
-/data/
+/data/*
+!/data/README.md
 .mypy_cache/
 *.pyc
 /venv/
