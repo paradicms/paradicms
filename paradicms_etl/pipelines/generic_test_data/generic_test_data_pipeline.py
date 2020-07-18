@@ -2,7 +2,7 @@ from pathlib import Path
 
 from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl.extractors.nop_extractor import NopExtractor
-from paradicms_etl.loaders.file_loader import FileLoader
+from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.pipelines.generic_test_data.generic_test_data_transformer import GenericTestDataTransformer
 
 
@@ -18,7 +18,7 @@ class GenericTestDataPipeline(_Pipeline):
             self,
             extractor=NopExtractor(),
             id=self.__ID,
-            loader=FileLoader(file_path=file_path, pipeline_id=self.__ID),
+            loader=RdfFileLoader(file_path=file_path, pipeline_id=self.__ID),
             transformer=GenericTestDataTransformer(),
             **kwds
         )

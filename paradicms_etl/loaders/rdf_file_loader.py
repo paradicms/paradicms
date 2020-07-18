@@ -8,7 +8,7 @@ from paradicms_etl._loader import _Loader
 from paradicms_etl.pipeline_storage import PipelineStorage
 
 
-class FileLoader(_Loader):
+class RdfFileLoader(_Loader):
     def __init__(self, *, file_path: Optional[Path]=None, format="ttl", **kwds):
         _Loader.__init__(self, **kwds)
         self.__file_path = file_path
