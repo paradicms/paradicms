@@ -5,8 +5,8 @@ from typing import Dict, Optional, Union
 from rdflib import Graph
 
 from paradicms_etl.namespace import bind_namespaces
-from paradicms_etl.pipeline._pipeline import _Pipeline
-from paradicms_etl.pipeline.pipeline_storage import PipelineStorage
+from paradicms_etl.pipelines._pipeline import _Pipeline
+from paradicms_etl.pipelines.pipeline_storage import PipelineStorage
 
 
 class PipelineWrapper:

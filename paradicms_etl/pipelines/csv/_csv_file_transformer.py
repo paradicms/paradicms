@@ -2,8 +2,9 @@ from abc import abstractmethod
 from pathlib import Path
 from typing import Dict
 
-from paradicms_etl.pipeline._transformer import _Transformer
 from rdflib import Graph
+
+from paradicms_etl.pipelines._transformer import _Transformer
 
 
 class _CsvFileTransformer(_Transformer):

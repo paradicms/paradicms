@@ -1,10 +1,11 @@
 from pathlib import Path
 from typing import Optional
 
-from paradicms_etl.pipeline._loader import _Loader
-from paradicms_etl.pipeline.pipeline_storage import PipelineStorage
 from pathvalidate import sanitize_filename
 from rdflib import Graph
+
+from paradicms_etl.pipelines._loader import _Loader
+from paradicms_etl.pipelines.pipeline_storage import PipelineStorage
 
 
 class FileLoader(_Loader):

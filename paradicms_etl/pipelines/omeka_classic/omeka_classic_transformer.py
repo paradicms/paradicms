@@ -9,7 +9,7 @@ from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.object import Object
 from paradicms_etl.namespace import CMS, PROV
-from paradicms_etl.pipeline._transformer import _Transformer
+from paradicms_etl.pipelines._transformer import _Transformer
 
 ElementTextTree = Dict[str, Dict[str, str]]
 

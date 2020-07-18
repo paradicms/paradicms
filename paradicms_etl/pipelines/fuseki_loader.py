@@ -1,6 +1,7 @@
 import requests
-from paradicms_etl.pipeline._loader import _Loader
 from rdflib import Graph
+
+from paradicms_etl.pipelines._loader import _Loader
 
 
 class FusekiLoader(_Loader):

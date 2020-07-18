@@ -1,7 +1,7 @@
 import os.path
 from pathlib import Path
 
-from paradicms_etl.pipeline._extractor import _Extractor
+from paradicms_etl.pipelines._extractor import _Extractor
 
 
 class ExistingCsvFileExtractor(_Extractor):

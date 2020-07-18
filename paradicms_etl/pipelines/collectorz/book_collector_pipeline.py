@@ -1,9 +1,10 @@
 from typing import Optional
 
-from paradicms_etl.pipeline._pipeline import _Pipeline
-from paradicms_etl.pipeline.collectorz.book_collector_extractor import BookCollectorExtractor
-from paradicms_etl.pipeline.collectorz.book_collector_transformer import BookCollectorTransformer
 from rdflib import URIRef
+
+from paradicms_etl.pipelines._pipeline import _Pipeline
+from paradicms_etl.pipelines.collectorz.book_collector_extractor import BookCollectorExtractor
+from paradicms_etl.pipelines.collectorz.book_collector_transformer import BookCollectorTransformer
 
 
 class BookCollectorPipeline(_Pipeline):

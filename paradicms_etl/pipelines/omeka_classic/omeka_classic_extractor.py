@@ -1,10 +1,11 @@
 import json
 
-from paradicms_etl.pipeline._extractor import _Extractor
-from paradicms_etl.pipeline.pipeline_storage import PipelineStorage
 from pathvalidate import sanitize_filename
 from tqdm import tqdm
 from yomeka.client.omeka_rest_api_client import OmekaRestApiClient
+
+from paradicms_etl.pipelines._extractor import _Extractor
+from paradicms_etl.pipelines.pipeline_storage import PipelineStorage
 
 
 class OmekaClassicExtractor(_Extractor):

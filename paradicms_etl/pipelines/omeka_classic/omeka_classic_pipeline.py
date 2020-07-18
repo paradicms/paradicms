@@ -1,4 +1,4 @@
-from paradicms_etl.pipeline._pipeline import _Pipeline
+from paradicms_etl.pipelines._pipeline import _Pipeline
 
 from .omeka_classic_extractor import OmekaClassicExtractor
 from .omeka_classic_transformer import OmekaClassicTransformer

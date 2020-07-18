@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 
-from paradicms_etl.pipeline.pipeline_storage import PipelineStorage
 from rdflib import Graph
+
+from paradicms_etl.pipelines.pipeline_storage import PipelineStorage
 
 
 class _Loader(ABC):

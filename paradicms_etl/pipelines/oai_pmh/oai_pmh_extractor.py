@@ -4,9 +4,10 @@ from typing import Optional
 from urllib.request import urlopen
 from xml.etree.ElementTree import ElementTree
 
-from paradicms_etl.pipeline._extractor import _Extractor
 from pathvalidate import sanitize_filename
 from xml.dom.minidom import parseString
+
+from paradicms_etl.pipelines._extractor import _Extractor
 
 
 class OaiPmhExtractor(_Extractor):

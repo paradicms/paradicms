@@ -7,7 +7,7 @@ from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.object import Object
 from paradicms_etl.models.user import User
 from paradicms_etl.namespace import CMS
-from paradicms_etl.pipeline._transformer import _Transformer
+from paradicms_etl.pipelines._transformer import _Transformer
 
 
 class GenericTestDataTransformer(_Transformer):

@@ -2,9 +2,10 @@ import json
 from typing import Dict
 
 import requests
-from paradicms_etl.pipeline._extractor import _Extractor
-from paradicms_etl.pipeline.pipeline_storage import PipelineStorage
 from pathvalidate import sanitize_filename
+
+from paradicms_etl.pipelines._extractor import _Extractor
+from paradicms_etl.pipelines.pipeline_storage import PipelineStorage
 
 
 class OmekaSExtractor(_Extractor):
