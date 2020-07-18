@@ -6,13 +6,13 @@ from xml.etree import ElementTree
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, RDF
 
+from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.object import Object
 from paradicms_etl.models.person import Person
 from paradicms_etl.namespace import CMS, SCHEMA
-from paradicms_etl.pipelines._transformer import _Transformer
 
 
 class BookCollectorTransformer(_Transformer):

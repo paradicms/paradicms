@@ -4,8 +4,8 @@ from typing import Optional
 from pathvalidate import sanitize_filename
 from rdflib import Graph
 
-from paradicms_etl.pipelines._loader import _Loader
-from paradicms_etl.pipelines.pipeline_storage import PipelineStorage
+from paradicms_etl._loader import _Loader
+from paradicms_etl.pipeline_storage import PipelineStorage
 
 
 class FileLoader(_Loader):

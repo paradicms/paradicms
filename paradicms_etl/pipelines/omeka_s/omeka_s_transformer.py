@@ -5,11 +5,11 @@ from rdflib import Namespace, RDF, URIRef
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
+from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.object import Object
 from paradicms_etl.namespace import CMS, PROV
-from paradicms_etl.pipelines._transformer import _Transformer
 
 # Omeka namespace
 O = Namespace("http://omeka.org/s/vocabs/o#")

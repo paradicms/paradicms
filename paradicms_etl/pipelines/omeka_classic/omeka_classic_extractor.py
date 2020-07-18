@@ -4,8 +4,8 @@ from pathvalidate import sanitize_filename
 from tqdm import tqdm
 from yomeka.client.omeka_rest_api_client import OmekaRestApiClient
 
-from paradicms_etl.pipelines._extractor import _Extractor
-from paradicms_etl.pipelines.pipeline_storage import PipelineStorage
+from paradicms_etl._extractor import _Extractor
+from paradicms_etl.pipeline_storage import PipelineStorage
 
 
 class OmekaClassicExtractor(_Extractor):

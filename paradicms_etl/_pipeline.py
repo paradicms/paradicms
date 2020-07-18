@@ -6,9 +6,9 @@ from typing import Optional
 from configargparse import ArgParser
 from rdflib import URIRef
 
-from paradicms_etl.pipelines._extractor import _Extractor
-from paradicms_etl.pipelines._loader import _Loader
-from paradicms_etl.pipelines._transformer import _Transformer
+from paradicms_etl._extractor import _Extractor
+from paradicms_etl._loader import _Loader
+from paradicms_etl._transformer import _Transformer
 from paradicms_etl.pipelines.default_loader import DefaultLoader
 
 
@@ -95,7 +95,7 @@ class _Pipeline(ABC):
             pass
         pipeline = cls(**pipeline_kwds)
 
-        from paradicms_etl.pipelines.pipeline_wrapper import PipelineWrapper
+        from paradicms_etl.pipeline_wrapper import PipelineWrapper
         pipeline_wrapper = PipelineWrapper(data_dir_path=Path(args.data_dir_path) if args.data_dir_path else None, pipeline=pipeline)
 
         force = bool(getattr(args, "force", False))

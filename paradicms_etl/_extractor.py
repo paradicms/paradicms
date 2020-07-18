@@ -6,7 +6,7 @@ from urllib.request import urlopen
 
 from pathvalidate import sanitize_filename
 
-from paradicms_etl.pipelines.pipeline_storage import PipelineStorage
+from paradicms_etl.pipeline_storage import PipelineStorage
 
 
 class _Extractor(ABC):

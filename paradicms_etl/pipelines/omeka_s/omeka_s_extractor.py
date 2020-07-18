@@ -4,8 +4,8 @@ from typing import Dict
 import requests
 from pathvalidate import sanitize_filename
 
-from paradicms_etl.pipelines._extractor import _Extractor
-from paradicms_etl.pipelines.pipeline_storage import PipelineStorage
+from paradicms_etl._extractor import _Extractor
+from paradicms_etl.pipeline_storage import PipelineStorage
 
 
 class OmekaSExtractor(_Extractor):

@@ -1,4 +1,4 @@
-from paradicms_etl.pipelines._extractor import _Extractor
+from paradicms_etl._extractor import _Extractor
 
 
 class BookCollectorExtractor(_Extractor):

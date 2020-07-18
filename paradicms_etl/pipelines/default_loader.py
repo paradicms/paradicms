@@ -1,4 +1,4 @@
-from paradicms_etl.pipelines._loader import _Loader
+from paradicms_etl._loader import _Loader
 from paradicms_etl.pipelines.file_loader import FileLoader
 from paradicms_etl.pipelines.fuseki_loader import FusekiLoader
 
