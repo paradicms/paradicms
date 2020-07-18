@@ -10,7 +10,7 @@ class GenericTestDataPipeline(_Pipeline):
     __ID = "test_data"
 
     def __init__(self, **kwds):
-        root_dir_path = Path(__file__).parent.parent.parent.parent.parent
+        root_dir_path = Path(__file__).absolute().parent.parent.parent.parent.parent
         resources_dir_path = root_dir_path / "lib" / "scala" / "generic" / "src" / "main" / "resources"
         assert resources_dir_path.is_dir(), resources_dir_path
         file_path = resources_dir_path / "generic_test_data.ttl"
