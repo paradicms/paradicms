@@ -1,9 +1,9 @@
 from pathlib import Path
 
 from paradicms_etl._pipeline import _Pipeline
+from paradicms_etl.extractors.nop_extractor import NopExtractor
 from paradicms_etl.loaders.file_loader import FileLoader
 from paradicms_etl.pipelines.generic_test_data.generic_test_data_transformer import GenericTestDataTransformer
-from paradicms_etl.pipelines.nop_extractor import NopExtractor
 
 
 class GenericTestDataPipeline(_Pipeline):
