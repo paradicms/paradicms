@@ -2,10 +2,11 @@ import logging
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from paradicms_etl.model.institution import Institution
-from paradicms_etl.namespace import CMS, CONTACT, DCMITYPE, EXIF, PROV, SCHEMA, TIME
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, FOAF
+
+from paradicms_etl.models.institution import Institution
+from paradicms_etl.namespace import CMS, CONTACT, DCMITYPE, EXIF, PROV, SCHEMA, TIME
 
 
 class _Transformer(ABC):

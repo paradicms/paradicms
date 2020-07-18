@@ -2,7 +2,7 @@ from typing import Optional
 
 from rdflib.namespace import FOAF
 
-from ._model import _Model
+from paradicms_etl._model import _Model
 from ._name_property_mixin import _NamePropertyMixin
 from ..namespace import CONTACT
 

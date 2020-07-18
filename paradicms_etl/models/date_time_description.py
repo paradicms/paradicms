@@ -1,8 +1,9 @@
 from typing import Optional
 
-from paradicms_etl.model._model import _Model
-from paradicms_etl.namespace import TIME
 from rdflib import BNode, Graph, Literal, XSD
+
+from paradicms_etl._model import _Model
+from paradicms_etl.namespace import TIME
 
 
 class DateTimeDescription(_Model):

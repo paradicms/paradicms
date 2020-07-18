@@ -1,14 +1,15 @@
 from typing import Dict, Optional, Tuple
 
 import dateparser
-from paradicms_etl.model._model import _Model
-from paradicms_etl.model.collection import Collection
-from paradicms_etl.model.image import Image
-from paradicms_etl.model.object import Object
-from paradicms_etl.namespace import CMS, PROV
-from paradicms_etl.pipeline._transformer import _Transformer
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, FOAF
+
+from paradicms_etl._model import _Model
+from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.image import Image
+from paradicms_etl.models.object import Object
+from paradicms_etl.namespace import CMS, PROV
+from paradicms_etl.pipeline._transformer import _Transformer
 
 ElementTextTree = Dict[str, Dict[str, str]]
 

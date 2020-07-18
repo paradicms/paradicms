@@ -1,4 +1,4 @@
-from ._model import _Model
+from paradicms_etl._model import _Model
 from ._owner_property_mixin import _OwnerPropertyMixin
 from ._title_property_mixin import _TitlePropertyMixin
 

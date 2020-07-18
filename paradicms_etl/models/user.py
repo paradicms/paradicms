@@ -1,8 +1,9 @@
 from typing import Optional
 
-from paradicms_etl.model._model import _Model
-from paradicms_etl.model._name_property_mixin import _NamePropertyMixin
 from rdflib.namespace import FOAF
+
+from paradicms_etl._model import _Model
+from paradicms_etl.models._name_property_mixin import _NamePropertyMixin
 
 
 class User(_Model, _NamePropertyMixin):

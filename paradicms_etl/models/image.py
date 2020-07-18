@@ -1,9 +1,10 @@
 from datetime import datetime
 from typing import Optional
 
-from paradicms_etl.model._model import _Model
-from paradicms_etl.namespace import CMS, EXIF
 from rdflib.namespace import DCTERMS
+
+from paradicms_etl._model import _Model
+from paradicms_etl.namespace import CMS, EXIF
 
 
 class Image(_Model):
