@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-
-from rdflib import Graph
+from typing import Generator
 
 from paradicms_etl.pipeline_storage import PipelineStorage
 
@@ -10,7 +9,7 @@ class _Loader(ABC):
         self.__pipeline_id = pipeline_id
 
     @abstractmethod
-    def load(self, *, force: bool, graph: Graph, storage: PipelineStorage):
+    def load(self, *, force: bool, models: Generator[_Model], storage: PipelineStorage):
         pass
 
     @property

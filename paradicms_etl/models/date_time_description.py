@@ -1,59 +1,34 @@
+from dataclasses import dataclass
 from typing import Optional
 
-from rdflib import BNode, Graph, Literal, XSD
+from dataclasses_json import dataclass_json
+from rdflib import Graph, Literal, RDF, XSD
+from rdflib.resource import Resource
 
 from paradicms_etl._model import _Model
 from paradicms_etl.namespace import TIME
 
 
+@dataclass_json
+@dataclass
 class DateTimeDescription(_Model):
-    def __init__(self, graph: Graph):
-        _Model.__init__(
-            self,
-            graph=graph,
-            rdf_type=TIME.DateTimeDescription,
-            uri=BNode().skolemize()
-        )
+    day: Optional[int]
+    hour: Optional[int]
+    minute: Optional[int]
+    month: Optional[int]
+    year: Optional[int]
 
-    @property
-    def day(self) -> Optional[int]:
-        literal = self._get_single_typed_literal(TIME.day, XSD.gDay)
-        return int(literal.value.lstrip("-")) if literal is not None else None
-
-    @day.setter
-    def day(self, value: int):
-        self.resource.add(TIME.day, Literal("---" + str(value), datatype=XSD.gDay))
-
-    @property
-    def hour(self) -> Optional[int]:
-        return self._get_single_value(TIME.hour, int)
-
-    @hour.setter
-    def hour(self, value: int):
-        self._set_single_value(TIME.hour, value)
-
-    @property
-    def minute(self) -> Optional[int]:
-        return self._get_single_value(TIME.minute, int)
-
-    @minute.setter
-    def minute(self, value: int):
-        self._set_single_value(TIME.minute, value)
-
-    @property
-    def month(self) -> Optional[int]:
-        literal = self._get_single_typed_literal(TIME.month, XSD.gMonth)
-        return int(literal.value.lstrip("-")) if literal is not None else None
-
-    @month.setter
-    def month(self, value: int):
-        self.resource.add(TIME.month, Literal("---" + str(value), datatype=XSD.gMonth))
-
-    @property
-    def year(self) -> Optional[int]:
-        literal = self._get_single_typed_literal(TIME.year, XSD.gYear)
-        return int(literal.value) if literal is not None else None
-
-    @year.setter
-    def year(self, value: int):
-        self.resource.add(TIME.year, Literal(str(value), datatype=XSD.gYear))
+    def to_rdf(self, *, graph: Graph) -> Resource:
+        resource = _Model.to_rdf(self, graph=graph)
+        resource.add(RDF.type, TIME.DateTimeDescription)
+        if self.day is not None:
+            resource.add(TIME.day, Literal("---" + str(self.day), datatype=XSD.gDay))
+        if self.hour is not None:
+            resource.add(TIME.hour, Literal(self.hour))
+        if self.minute is not None:
+            resource.add(TIME.minute, Literal(self.minute))
+        if self.month is not None:
+            resource.add(TIME.month, Literal("---" + str(self.month), datatype=XSD.gMonth))
+        if self.year is not None:
+            resource.add(TIME.year, Literal(str(self.year), datatype=XSD.gYear))
+        return resource

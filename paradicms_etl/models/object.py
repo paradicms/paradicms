@@ -1,9 +1,26 @@
+from dataclasses import dataclass
+from typing import Optional
+
+from dataclasses_json import dataclass_json
+from rdflib import Graph, Literal, URIRef
+from rdflib.namespace import DCTERMS
+from rdflib.resource import Resource
+
 from paradicms_etl._model import _Model
-from ._owner_property_mixin import _OwnerPropertyMixin
-from ._title_property_mixin import _TitlePropertyMixin
+from paradicms_etl.namespace import CMS
 
 
-class Object(_Model, _OwnerPropertyMixin, _TitlePropertyMixin):
-    def validate(self):
-        _OwnerPropertyMixin.validate(self)
-        _TitlePropertyMixin.validate(self)
+@dataclass_json
+@dataclass
+class Object(_Model):
+    title: str
+    owner: Optional[URIRef]
+
+    def to_rdf(self, *, graph: Graph) -> Resource:
+        resource = _Model.__init__(self, graph=graph)
+        if self.owner is not None:
+            resource.add(CMS.owner, self.owner)
+        else:
+            resource.add(CMS.owner, CMS.inherit)
+        resource.add(DCTERMS.title, Literal(self.title))
+        return resource

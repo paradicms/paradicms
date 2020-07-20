@@ -1,65 +1,41 @@
+from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional
 
+from dataclasses_json import dataclass_json
+from rdflib import Graph
 from rdflib.namespace import DCTERMS
+from rdflib.resource import Resource
 
 from paradicms_etl._model import _Model
 from paradicms_etl.namespace import CMS, EXIF
 
 
+@dataclass_json
+@dataclass
 class Image(_Model):
-    @property
-    def created(self) -> Optional[datetime]:
-        return self._get_single_value(DCTERMS.created, datetime)
+    created: Optional[datetime]
+    format: Optional[str]
+    height: Optional[int]
+    max_height: Optional[int]
+    max_width: Optional[int]
+    modified: Optional[datetime]
+    width: Optional[int]
 
-    @created.setter
-    def created(self, value: datetime):
-        self._set_single_value(DCTERMS.created, value)
-
-    @property
-    def format(self) -> Optional[str]:
-        return self._get_single_value(DCTERMS["format"], str)
-
-    @format.setter
-    def format(self, value: str):
-        self._set_single_value(DCTERMS["format"], value)
-
-    @property
-    def height(self) -> Optional[int]:
-        return self._get_single_value(EXIF.height, int)
-
-    @height.setter
-    def height(self, value: int):
-        self._set_single_value(EXIF.height, value)
-
-    @property
-    def max_height(self) -> Optional[int]:
-        return self._get_single_value(CMS.imageMaxHeight, int)
-
-    @max_height.setter
-    def max_height(self, value: int):
-        self._set_single_value(CMS.imageMaxHeight, value)
-
-    @property
-    def max_width(self) -> Optional[int]:
-        return self._get_single_value(CMS.imageMaxWidth, int)
-
-    @max_width.setter
-    def max_width(self, value: int):
-        self._set_single_value(CMS.imageMaxWidth, value)
-
-    @property
-    def modified(self) -> Optional[datetime]:
-        return self._get_single_value(DCTERMS.modified, datetime)
-
-    @modified.setter
-    def modified(self, value: datetime):
-        self._set_single_value(DCTERMS.modified, value)
-
-    @property
-    def width(self) -> Optional[int]:
-        return self._get_single_value(EXIF.width, int)
-
-    @width.setter
-    def width(self, value: int):
-        self._set_single_value(EXIF.width, value)
+    def to_rdf(self, *, graph: Graph) -> Resource:
+        resource = _Model.to_rdf(self, graph=graph)
+        if self.created is not None:
+            resource.add(DCTERMS.created, self.created)
+        if self.format is not None:
+            resource.add(DCTERMS["format"], self.format)
+        if self.height is not None:
+            resource.add(EXIF.height, self.height)
+        if self.max_height is not None:
+            resource.add(CMS.imageMaxHeight, self.max_height)
+        if self.max_width is not None:
+            resource.add(CMS.imageMaxWidth, self.max_width)
+        if self.modified is not None:
+            resource.add(DCTERMS.modified, self.modified)
+        if self.width is not None:
+            resource.add(EXIF.width, self.width)
+        return resource

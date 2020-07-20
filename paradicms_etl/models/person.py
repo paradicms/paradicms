@@ -1,36 +1,30 @@
+from dataclasses import dataclass
 from typing import Optional
 
+from dataclasses_json import dataclass_json
+from rdflib import Graph, Literal
 from rdflib.namespace import FOAF
+from rdflib.resource import Resource
 
 from paradicms_etl._model import _Model
-from ._name_property_mixin import _NamePropertyMixin
 from ..namespace import CONTACT
 
 
-class Person(_Model, _NamePropertyMixin):
-    @property
-    def family_name(self) -> Optional[str]:
-        return self._get_single_value(FOAF.familyName, str)
+@dataclass_json
+@dataclass
+class Person(_Model):
+    name: str
+    family_name: Optional[str]
+    given_name: Optional[str]
+    sort_name: Optional[str]
 
-    @family_name.setter
-    def family_name(self, value: str):
-        self._set_single_value(FOAF.familyName, value)
-
-    @property
-    def given_name(self) -> Optional[str]:
-        return self._get_single_value(FOAF.givenName, str)
-
-    @given_name.setter
-    def given_name(self, value: str):
-        self._set_single_value(FOAF.givenName, value)
-
-    @property
-    def sort_name(self) -> Optional[str]:
-        return self._get_single_value(CONTACT.sortName, str)
-
-    @sort_name.setter
-    def sort_name(self, value: str):
-        self._set_single_value(CONTACT.sortName, value)
-
-    def validate(self):
-        _NamePropertyMixin.validate(self)
+    def to_rdf(self, *, graph: Graph) -> Resource:
+        resource = _Model.to_rdf(self, graph=graph)
+        if self.family_name is not None:
+            resource.add(FOAF.familyName, Literal(self.family_name))
+        if self.given_name is not None:
+            resource.add(FOAF.givenName, Literal(self.given_name))
+        resource.add(FOAF.name, Literal(self.name))
+        if self.sort_name is not None:
+            resource.add(CONTACT.sortName, Literal(self.sort_name))
+        return resource
