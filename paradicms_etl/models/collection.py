@@ -7,7 +7,6 @@ from rdflib.namespace import DCTERMS, RDF
 from rdflib.resource import Resource
 
 from paradicms_etl._model import _Model
-from .object import Object
 from .rights import Rights
 from ..namespace import CMS
 
@@ -18,13 +17,13 @@ class Collection(_Model):
     title: str
     owner: Optional[URIRef] = None
     rights: Optional[Rights] = None
-    objects: List[Object] = field(default_factory=list)
+    objects: List[URIRef] = field(default_factory=list)
 
     def to_rdf(self, *, graph: Graph) -> Resource:
         resource = _Model.to_rdf(self, graph=graph)
         resource.add(RDF.type, CMS[self.__class__.__name__])
         for object_ in self.objects:
-            resource.add(CMS.object, object_.uri)
+            resource.add(CMS.object, object_)
         if self.owner is not None:
             resource.add(CMS.owner, self.owner)
         else:

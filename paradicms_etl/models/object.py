@@ -28,9 +28,9 @@ class Object(_Model):
         for description in self.descriptions:
             resource.add(DCTERMS.description, Literal(description))
         for image in self.images:
-            resource.add(FOAF.depiction, image.original.uri)
+            resource.add(FOAF.depiction, image.original)
             for derived in image.derived:
-                graph.add((image.original.uri, FOAF.thumbnail, derived.uri))
+                graph.add((image.original, FOAF.thumbnail, derived))
         if self.owner is not None:
             resource.add(CMS.owner, self.owner)
         else:
