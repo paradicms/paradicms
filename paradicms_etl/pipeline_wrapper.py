@@ -1,11 +1,9 @@
 import logging
 from pathlib import Path
-from typing import Dict, Optional, Union
+from typing import Generator, Optional
 
-from rdflib import Graph
-
+from paradicms_etl._model import _Model
 from paradicms_etl._pipeline import _Pipeline
-from paradicms_etl.namespace import bind_namespaces
 from paradicms_etl.pipeline_storage import PipelineStorage
 
 
@@ -34,15 +32,8 @@ class PipelineWrapper:
         extract_kwds = self.__pipeline.extractor.extract(force=force, storage=self.__storage)
         return extract_kwds if extract_kwds is not None else {}
 
-    def load(self, force: bool, graph: Graph, **transform_kwds) -> None:
-        self.__pipeline.loader.load(force=force, graph=graph, storage=self.__storage, **transform_kwds)
+    def load(self, force: bool, models: Generator[_Model, None, None], **transform_kwds) -> None:
+        self.__pipeline.loader.load(force=force, models=models, storage=self.__storage, **transform_kwds)
 
-    def transform(self, force: bool, **extract_kwds) -> Union[Graph, Dict[str, object]]:
-        graph_or_kwds = self.__pipeline.transformer.transform(**extract_kwds)
-        if isinstance(graph_or_kwds, dict):
-            graph = graph_or_kwds["graph"]
-        else:
-            graph = graph_or_kwds
-        assert isinstance(graph, Graph)
-        bind_namespaces(graph.namespace_manager)
-        return graph_or_kwds
+    def transform(self, **extract_kwds) -> Generator[_Model, None, None]:
+        return self.__pipeline.transformer.transform(**extract_kwds)

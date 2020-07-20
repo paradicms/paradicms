@@ -12,11 +12,11 @@ from paradicms_etl.namespace import TIME
 @dataclass_json
 @dataclass
 class DateTimeDescription(_Model):
-    day: Optional[int]
-    hour: Optional[int]
-    minute: Optional[int]
-    month: Optional[int]
-    year: Optional[int]
+    day: Optional[int] = None
+    hour: Optional[int] = None
+    minute: Optional[int] = None
+    month: Optional[int] = None
+    year: Optional[int] = None
 
     def to_rdf(self, *, graph: Graph) -> Resource:
         resource = _Model.to_rdf(self, graph=graph)

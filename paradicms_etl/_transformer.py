@@ -1,10 +1,11 @@
 import logging
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Generator, Optional
 
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, FOAF
 
+from paradicms_etl._model import _Model
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.namespace import CMS, CONTACT, DCMITYPE, EXIF, PROV, SCHEMA, TIME
 
@@ -28,11 +29,11 @@ class _Transformer(ABC):
         return graph
 
     @abstractmethod
-    def transform(self, **kwds) -> Graph:
+    def transform(self, **kwds) -> Generator[_Model, None, None]:
         """
         Transform previously-extracted data.
         :param kwds: merged dictionary of initial extract kwds and the result of extract
-        :return: Graph containing models
+        :return: generator of models
         """
 
     def _transform_institution_from_arguments(

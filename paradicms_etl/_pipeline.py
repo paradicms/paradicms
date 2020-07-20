@@ -45,8 +45,6 @@ class _Pipeline(ABC):
                                        help="force extract and transform, ignoring any cached data")
         arg_parser.add_argument("--force-extract", action="store_true",
                                        help="force extract, ignoring any cached data")
-        arg_parser.add_argument("--force-transform", action="store_true",
-                                       help="force transform, ignoring any cached data")
         arg_parser.add_argument("--fuseki-data-url", default="http://fuseki:3030/ds/data")
         arg_parser.add_argument(
             '--logging-level',
@@ -87,7 +85,6 @@ class _Pipeline(ABC):
         pipeline_kwds.pop("data_dir_path")
         pipeline_kwds.pop("force")
         pipeline_kwds.pop("force_extract")
-        pipeline_kwds.pop("force_transform")
         pipeline_kwds.pop("logging_level")
         try:
             pipeline_kwds.pop("pipeline_module")
@@ -101,14 +98,10 @@ class _Pipeline(ABC):
         force = bool(getattr(args, "force", False))
         force_extract = force or bool(getattr(args, "force_extract", False))
         force_load = force or bool(getattr(args, "force_load", False))
-        force_transform = force or bool(getattr(args, "force_transform", False))
 
         extract_kwds = pipeline_wrapper.extract(force=force_extract)
-        graph_or_kwds = pipeline_wrapper.transform(force=force_transform, **extract_kwds)
-        if isinstance(graph_or_kwds, dict):
-            pipeline_wrapper.load(force=force_load, **graph_or_kwds)
-        else:
-            pipeline_wrapper.load(force=force_load, graph=graph_or_kwds)
+        models = pipeline_wrapper.transform(**extract_kwds)
+        pipeline_wrapper.load(force=force_load, models=models)
 
     @property
     def id(self):

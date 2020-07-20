@@ -14,9 +14,9 @@ from ..namespace import CONTACT
 @dataclass
 class Person(_Model):
     name: str
-    family_name: Optional[str]
-    given_name: Optional[str]
-    sort_name: Optional[str]
+    family_name: Optional[str] = None
+    given_name: Optional[str] = None
+    sort_name: Optional[str] = None
 
     def to_rdf(self, *, graph: Graph) -> Resource:
         resource = _Model.to_rdf(self, graph=graph)

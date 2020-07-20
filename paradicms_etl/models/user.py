@@ -11,8 +11,8 @@ from paradicms_etl._model import _Model
 @dataclass_json
 @dataclass
 class User(_Model):
-    name: str
     email: str
+    name: str
 
     def to_rdf(self, *, graph: Graph) -> Resource:
         resource = _Model.to_rdf(self, graph=graph)
