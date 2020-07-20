@@ -29,18 +29,27 @@ class GenericTestDataTransformer(_Transformer):
                 original = Image(uri=URIRef(f"https://place-hold.it/1000x1000?text=Object{object_i}Image{image_i}"))
                 original.height = 1000
                 original.width = 1000
+                yield original
+
                 image = DerivedImageSet(original=original)
-                image.original = original
+
                 square_thumbnail = Image(uri=URIRef(f"https://place-hold.it/75x75?text=Object{object_i}Image{image_i}"))
                 square_thumbnail.height = 75
                 square_thumbnail.width = 75
+                yield square_thumbnail
                 image.derived.append(square_thumbnail)
+
                 thumbnail = Image(uri=URIRef(f"https://place-hold.it/600x600?text=Object{object_i}Image{image_i}"))
                 thumbnail.max_height = 600
                 thumbnail.max_width = 600
+                yield thumbnail
                 image.derived.append(thumbnail)
+
                 object_.images.append(image)
+            yield object_
             collection.objects.append(object_)
+
+        yield collection
 
         institution.collections.append(collection)
         yield institution

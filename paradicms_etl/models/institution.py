@@ -24,7 +24,7 @@ class Institution(_Model):
         resource = _Model.to_rdf(self, graph=graph)
         resource.add(RDF.type, CMS[self.__class__.__name__])
         for collection in self.collections:
-            resource.add(CMS.collection, collection.to_rdf(graph=graph))
+            resource.add(CMS.collection, collection.uri)
         resource.add(FOAF.name, Literal(self.name))
         resource.add(CMS.owner, self.owner)
         if self.rights is not None:

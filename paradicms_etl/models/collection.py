@@ -24,7 +24,7 @@ class Collection(_Model):
         resource = _Model.to_rdf(self, graph=graph)
         resource.add(RDF.type, CMS[self.__class__.__name__])
         for object_ in self.objects:
-            resource.add(CMS.object, object_.to_rdf(graph=graph))
+            resource.add(CMS.object, object_.uri)
         if self.owner is not None:
             resource.add(CMS.owner, self.owner)
         else:
