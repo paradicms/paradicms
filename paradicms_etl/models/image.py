@@ -4,7 +4,7 @@ from typing import Optional
 
 from dataclasses_json import dataclass_json
 from rdflib import Graph, Literal
-from rdflib.namespace import DCTERMS
+from rdflib.namespace import DCTERMS, RDF
 from rdflib.resource import Resource
 
 from paradicms_etl._model import _Model
@@ -24,6 +24,7 @@ class Image(_Model):
 
     def to_rdf(self, *, graph: Graph) -> Resource:
         resource = _Model.to_rdf(self, graph=graph)
+        resource.add(RDF.type, CMS[self.__class__.__name__])
         if self.created is not None:
             resource.add(DCTERMS.created, Literal(self.created))
         if self.format is not None:

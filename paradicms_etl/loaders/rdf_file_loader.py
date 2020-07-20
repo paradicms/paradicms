@@ -6,6 +6,7 @@ from rdflib import Graph
 
 from paradicms_etl._loader import _Loader
 from paradicms_etl._model import _Model
+from paradicms_etl.namespace import bind_namespaces
 from paradicms_etl.pipeline_storage import PipelineStorage
 
 
@@ -20,6 +21,7 @@ class RdfFileLoader(_Loader):
         if file_path is None:
             file_path = storage.transformed_data_dir_path / (sanitize_filename(self._pipeline_id) + "." + self.__format)
         graph = Graph()
+        bind_namespaces(graph.namespace_manager)
         for model in models:
             model.to_rdf(graph=graph)
         with open(file_path, "w+b") as file_:

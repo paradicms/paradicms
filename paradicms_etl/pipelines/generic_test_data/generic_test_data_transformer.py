@@ -18,7 +18,7 @@ class GenericTestDataTransformer(_Transformer):
         institution.rights = Rights(holder="Institution rights holder", statements=("Institution rights", rights_statement_uri,))
 
         collection = Collection(title="Test collection", uri=URIRef("http://example.com/collection"))
-        institution.rights = Rights(holder="Collection rights holder", statements=("Collection rights", rights_statement_uri,))
+        collection.rights = Rights(holder="Collection rights holder", statements=("Collection rights", rights_statement_uri,))
 
         for object_i in range(100): # Objects per page is 20
             object_ = Object(title=f"Test object {object_i}", uri=URIRef(f"http://example.com/object{object_i}"))
