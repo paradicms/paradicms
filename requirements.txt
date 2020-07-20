@@ -1,9 +1,13 @@
 certifi==2019.11.28
 chardet==3.0.4
 ConfigArgParse==1.0
+dataclasses-json==0.5.1
 dateparser==0.7.2
 idna==2.8
 isodate==0.6.0
+marshmallow==3.7.0
+marshmallow-enum==1.5.1
+mypy-extensions==0.4.3
 pathvalidate==0.29.0
 pyparsing==2.4.5
 python-dateutil==2.8.1
@@ -13,6 +17,9 @@ rdflib-jsonld==0.4.0
 regex==2019.12.19
 requests==2.22.0
 six==1.13.0
+stringcase==1.2.0
 tqdm==4.45.0
+typing-extensions==3.7.4.2
+typing-inspect==0.6.0
 tzlocal==2.0.0
 urllib3==1.25.7
