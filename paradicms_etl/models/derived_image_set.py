@@ -10,3 +10,7 @@ from rdflib import URIRef
 class DerivedImageSet:
     original: URIRef
     derived: List[URIRef] = field(default_factory=list)
+
+    @property
+    def uri(self):
+        return self.original
