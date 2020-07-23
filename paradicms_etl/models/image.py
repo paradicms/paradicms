@@ -1,10 +1,10 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Optional
+from typing import List, Optional
 
 from dataclasses_json import dataclass_json
-from rdflib import Graph, Literal
-from rdflib.namespace import DCTERMS, RDF
+from rdflib import Graph, Literal, URIRef
+from rdflib.namespace import DCTERMS, FOAF, RDF
 from rdflib.resource import Resource
 
 from paradicms_etl._model import _Model
@@ -15,6 +15,7 @@ from paradicms_etl.namespace import CMS, EXIF
 @dataclass
 class Image(_Model):
     created: Optional[datetime] = None
+    derived_images: List[URIRef] = field(default_factory=list)
     format: Optional[str] = None
     height: Optional[int] = None
     max_height: Optional[int] = None
@@ -27,6 +28,8 @@ class Image(_Model):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         if self.created is not None:
             resource.add(DCTERMS.created, Literal(self.created))
+        for derived_image_uri in self.derived_images:
+            resource.add(FOAF.thumbnail, derived_image_uri)
         if self.format is not None:
             resource.add(DCTERMS["format"], Literal(self.format))
         if self.height is not None:

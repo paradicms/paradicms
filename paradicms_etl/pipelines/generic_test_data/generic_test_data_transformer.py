@@ -2,7 +2,6 @@ from rdflib import URIRef
 
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
-from paradicms_etl.models.derived_image_set import DerivedImageSet
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.object import Object
@@ -29,23 +28,21 @@ class GenericTestDataTransformer(_Transformer):
                 original = Image(uri=URIRef(f"https://place-hold.it/1000x1000?text=Object{object_i}Image{image_i}"))
                 original.height = 1000
                 original.width = 1000
-                yield original
-
-                image = DerivedImageSet(original=original.uri)
 
                 square_thumbnail = Image(uri=URIRef(f"https://place-hold.it/75x75?text=Object{object_i}Image{image_i}"))
                 square_thumbnail.height = 75
                 square_thumbnail.width = 75
                 yield square_thumbnail
-                image.derived.append(square_thumbnail.uri)
+                original.derived_images.append(square_thumbnail.uri)
 
                 thumbnail = Image(uri=URIRef(f"https://place-hold.it/600x600?text=Object{object_i}Image{image_i}"))
                 thumbnail.max_height = 600
                 thumbnail.max_width = 600
                 yield thumbnail
-                image.derived.append(thumbnail.uri)
+                original.derived_images.append(thumbnail.uri)
 
-                object_.images.append(image)
+                yield original
+                object_.images.append(original.uri)
             yield object_
             collection.objects.append(object_.uri)
 
