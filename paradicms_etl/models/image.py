@@ -8,6 +8,7 @@ from rdflib.namespace import DCTERMS, FOAF, RDF
 from rdflib.resource import Resource
 
 from paradicms_etl._model import _Model
+from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.namespace import CMS, EXIF
 
 
@@ -16,12 +17,11 @@ from paradicms_etl.namespace import CMS, EXIF
 class Image(_Model):
     created: Optional[datetime] = None
     derived_image_uris: List[URIRef] = field(default_factory=list)
+    exact_dimensions: Optional[ImageDimensions] = None
     format: Optional[str] = None
     height: Optional[int] = None
-    max_height: Optional[int] = None
-    max_width: Optional[int] = None
+    max_dimensions: Optional[ImageDimensions] = None
     modified: Optional[datetime] = None
-    width: Optional[int] = None
 
     def to_rdf(self, *, graph: Graph) -> Resource:
         resource = _Model.to_rdf(self, graph=graph)
@@ -32,14 +32,12 @@ class Image(_Model):
             resource.add(FOAF.thumbnail, derived_image_uri)
         if self.format is not None:
             resource.add(DCTERMS["format"], Literal(self.format))
-        if self.height is not None:
-            resource.add(EXIF.height, Literal(self.height))
-        if self.max_height is not None:
-            resource.add(CMS.imageMaxHeight, Literal(self.max_height))
-        if self.max_width is not None:
-            resource.add(CMS.imageMaxWidth, Literal(self.max_width))
+        if self.exact_dimensions is not None:
+            resource.add(EXIF.height, Literal(self.exact_dimensions.height))
+            resource.add(EXIF.width, Literal(self.exact_dimensions.width))
+        elif self.max_dimensions is not None:
+            resource.add(CMS.imageMaxHeight, Literal(self.max_dimensions.height))
+            resource.add(CMS.imageMaxWidth, Literal(self.max_dimensions.width))
         if self.modified is not None:
             resource.add(DCTERMS.modified, Literal(self.modified))
-        if self.width is not None:
-            resource.add(EXIF.width, Literal(self.width))
         return resource
