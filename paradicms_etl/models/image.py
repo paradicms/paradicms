@@ -15,7 +15,7 @@ from paradicms_etl.namespace import CMS, EXIF
 @dataclass
 class Image(_Model):
     created: Optional[datetime] = None
-    derived_images: List[URIRef] = field(default_factory=list)
+    derived_image_uris: List[URIRef] = field(default_factory=list)
     format: Optional[str] = None
     height: Optional[int] = None
     max_height: Optional[int] = None
@@ -28,7 +28,7 @@ class Image(_Model):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         if self.created is not None:
             resource.add(DCTERMS.created, Literal(self.created))
-        for derived_image_uri in self.derived_images:
+        for derived_image_uri in self.derived_image_uris:
             resource.add(FOAF.thumbnail, derived_image_uri)
         if self.format is not None:
             resource.add(DCTERMS["format"], Literal(self.format))

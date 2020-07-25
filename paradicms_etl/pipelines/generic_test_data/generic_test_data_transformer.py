@@ -12,7 +12,7 @@ from paradicms_etl.namespace import CMS
 
 class GenericTestDataTransformer(_Transformer):
     def transform(self):
-        institution = Institution(name="Test institution", owner=CMS.public, uri=URIRef("http://example.com/institution"))
+        institution = Institution(name="Test institution", owner_uri=CMS.public, uri=URIRef("http://example.com/institution"))
         rights_statement_uri = URIRef("https://rightsstatements.org/page/InC-EDU/1.0/?language=en")
         institution.rights = Rights(holder="Institution rights holder", statements=("Institution rights", rights_statement_uri,))
 
@@ -33,22 +33,22 @@ class GenericTestDataTransformer(_Transformer):
                 square_thumbnail.height = 75
                 square_thumbnail.width = 75
                 yield square_thumbnail
-                original.derived_images.append(square_thumbnail.uri)
+                original.derived_image_uris.append(square_thumbnail.uri)
 
                 thumbnail = Image(uri=URIRef(f"https://place-hold.it/600x600?text=Object{object_i}Image{image_i}"))
                 thumbnail.max_height = 600
                 thumbnail.max_width = 600
                 yield thumbnail
-                original.derived_images.append(thumbnail.uri)
+                original.derived_image_uris.append(thumbnail.uri)
 
                 yield original
-                object_.images.append(original.uri)
+                object_.image_uris.append(original.uri)
             yield object_
-            collection.objects.append(object_.uri)
+            collection.object_uris.append(object_.uri)
 
         yield collection
 
-        institution.collections.append(collection.uri)
+        institution.collection_uris.append(collection.uri)
         yield institution
 
         yield \

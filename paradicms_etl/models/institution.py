@@ -15,17 +15,17 @@ from ..namespace import CMS
 @dataclass
 class Institution(_Model):
     name: str
-    owner: URIRef
-    collections: List[URIRef] = field(default_factory=list)
+    owner_uri: URIRef
+    collection_uris: List[URIRef] = field(default_factory=list)
     rights: Optional[Rights] = None
 
     def to_rdf(self, *, graph: Graph) -> Resource:
         resource = _Model.to_rdf(self, graph=graph)
         resource.add(RDF.type, CMS[self.__class__.__name__])
-        for collection in self.collections:
-            resource.add(CMS.collection, collection)
+        for collection_uri in self.collection_uris:
+            resource.add(CMS.collection, collection_uri)
         resource.add(FOAF.name, Literal(self.name))
-        resource.add(CMS.owner, self.owner)
+        resource.add(CMS.owner, self.owner_uri)
         if self.rights is not None:
             self.rights.to_rdf(add_to_resource=resource)
         return resource

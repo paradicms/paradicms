@@ -15,17 +15,17 @@ from ..namespace import CMS
 @dataclass
 class Collection(_Model):
     title: str
-    owner: Optional[URIRef] = None
+    owner_uri: Optional[URIRef] = None
     rights: Optional[Rights] = None
-    objects: List[URIRef] = field(default_factory=list)
+    object_uris: List[URIRef] = field(default_factory=list)
 
     def to_rdf(self, *, graph: Graph) -> Resource:
         resource = _Model.to_rdf(self, graph=graph)
         resource.add(RDF.type, CMS[self.__class__.__name__])
-        for object_ in self.objects:
-            resource.add(CMS.object, object_)
-        if self.owner is not None:
-            resource.add(CMS.owner, self.owner)
+        for object_uri in self.object_uris:
+            resource.add(CMS.object, object_uri)
+        if self.owner_uri is not None:
+            resource.add(CMS.owner, self.owner_uri)
         else:
             resource.add(CMS.owner, CMS.inherit)
         if self.rights is not None:
