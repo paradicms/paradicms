@@ -5,7 +5,7 @@ from paradicms_etl._model import _Model
 
 
 class CompositeLoader(_Loader):
-    def __init__(self, *, loaders: Tuple[_Loader], **kwds):
+    def __init__(self, *, loaders: Tuple[_Loader, ...], **kwds):
         _Loader.__init__(self, **kwds)
         self.__loaders = loaders
 
