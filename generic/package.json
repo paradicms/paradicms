@@ -10,9 +10,11 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "@paradicms/gatsby-material-ui": "1.0.3"
+    "@paradicms/gatsby-material-ui": "1.0.3",
+    "gatsby": "^2.10.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.2",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
     "prettier": "^1.18.2",

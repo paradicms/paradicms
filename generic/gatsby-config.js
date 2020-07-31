@@ -63,7 +63,12 @@ module.exports = {
       }
     },
     "gatsby-plugin-react-helmet",
-    "gatsby-plugin-resolve-src",
+    {
+      resolve: "gatsby-plugin-resolve-src",
+      options: {
+        srcPath: `${__dirname}/src`
+      }
+    },
     "gatsby-plugin-typegen",
     "gatsby-plugin-typescript",
     "gatsby-plugin-use-query-params",

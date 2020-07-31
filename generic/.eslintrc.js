@@ -1,0 +1,1 @@
+../../lib/ts/gatsby-base/.eslintrc.js
