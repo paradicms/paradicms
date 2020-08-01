@@ -1,17 +1,18 @@
+import {ObjectQuery} from "models/ObjectQuery";
+import * as qs from "qs";
+
 export class Hrefs {
   static collection(kwds: {
     collectionUri: string;
     institutionUri: string;
-    // query?: ObjectQuery;
+    query?: ObjectQuery;
   }) {
-    let href =
+    return (
       Hrefs.institution(kwds.institutionUri) +
       "/collection/" +
-      encodeURIComponent(kwds.collectionUri);
-    // if (kwds.query && !_.isEmpty(kwds.query)) {
-    //   href += "?" + qs.stringify(kwds.query);
-    // }
-    return href;
+      encodeURIComponent(kwds.collectionUri) +
+      qs.stringify(kwds, {addQueryPrefix: true})
+    );
   }
 
   static get home() {
@@ -32,7 +33,7 @@ export class Hrefs {
     );
   }
 
-  // static search(query: ObjectQuery) {
-  //   return "/search?" + qs.stringify(query);
-  // }
+  static search(query?: ObjectQuery) {
+    return "/search" + qs.stringify(query, {addQueryPrefix: true});
+  }
 }

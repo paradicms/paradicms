@@ -11,6 +11,7 @@ import {
 import {Footer} from "components/layout/Footer";
 import {graphql, StaticQuery} from "gatsby";
 import Helmet from "react-helmet";
+import {Navbar} from "components/layout/Navbar";
 
 const useStyles = makeStyles(theme => ({
   breadcrumbs: {
@@ -27,17 +28,9 @@ export const Layout: React.FunctionComponent<{
   cardTitle?: React.ReactNode;
   children: React.ReactNode;
   className?: string;
-  currentDataset?: {id: string; label: string} | null;
   documentTitle?: string;
   onSearch?: (text: string) => void;
-}> = ({
-  breadcrumbItems,
-  cardTitle,
-  children,
-  currentDataset,
-  documentTitle,
-  onSearch,
-}) => {
+}> = ({breadcrumbItems, cardTitle, children, documentTitle, onSearch}) => {
   const classes = useStyles();
 
   return (
@@ -79,10 +72,7 @@ export const Layout: React.FunctionComponent<{
           />
           <Grid data-cy="frame" container direction="column" spacing={2}>
             <Grid item>
-              {/*<Navbar*/}
-              {/*  currentDataset={currentDataset ? currentDataset : undefined}*/}
-              {/*  onSearch={onSearch}*/}
-              {/*/>*/}
+              <Navbar onSearch={onSearch} />
             </Grid>
             {breadcrumbItems ? (
               <Grid item data-cy="frame-breadcrumbs-row">
