@@ -1,4 +1,4 @@
-import {ObjectQuery} from "models/ObjectQuery";
+import {ObjectQuery} from "~/models/search/ObjectQuery";
 import * as qs from "qs";
 
 export class Hrefs {

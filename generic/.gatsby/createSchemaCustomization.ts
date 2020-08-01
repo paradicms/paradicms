@@ -1,8 +1,8 @@
 import {CreateSchemaCustomizationArgs} from "gatsby";
 
-export const createSchemaCustomization = (
+export const createSchemaCustomization = async (
   args: CreateSchemaCustomizationArgs
-) => {
+): Promise<void> => {
   const {actions} = args;
   const {createTypes} = actions;
   createTypes(`
@@ -39,5 +39,25 @@ export const createSchemaCustomization = (
     holder: String!
     statements: [String!]!
   }
+
+  type Site implements Node {  
+    siteMetadata: SiteSiteMetadata!
+  }
+  
+  type SiteSiteMetadata {
+    author: SiteSiteMetadataAuthor!
+    description: String!
+    gitHubUrl: String!
+    keywords: String!
+    title: String!
+  }
+  
+  type SiteSiteMetadataAuthor {
+    name: String!
+    url: String!
+    email: String!
+  }
   `);
+
+  return Promise.resolve();
 };

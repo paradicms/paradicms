@@ -1,5 +1,5 @@
-import {UriFacetFilter} from "models/UriFacetFilter";
-import {StringFacetFilter} from "models/StringFacetFilter";
+import {UriFacetFilter} from "~/models/search/UriFacetFilter";
+import {StringFacetFilter} from "~/models/search/StringFacetFilter";
 
 export interface ObjectFilters {
   collectionUris?: UriFacetFilter | null;

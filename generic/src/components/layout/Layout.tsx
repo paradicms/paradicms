@@ -8,10 +8,11 @@ import {
   Grid,
   makeStyles,
 } from "@material-ui/core";
-import {Footer} from "components/layout/Footer";
+import {Footer} from "~/components/layout/Footer";
 import {graphql, StaticQuery} from "gatsby";
 import Helmet from "react-helmet";
-import {Navbar} from "components/layout/Navbar";
+
+import {Navbar} from "~/components/layout/Navbar";
 
 const useStyles = makeStyles(theme => ({
   breadcrumbs: {
@@ -34,9 +35,9 @@ export const Layout: React.FunctionComponent<{
   const classes = useStyles();
 
   return (
-    <StaticQuery<GatsbyTypes.LayoutQueryQuery>
+    <StaticQuery<{site: GatsbyTypes.Site}>
       query={graphql`
-        query LayoutQuery {
+        query Layout {
           site {
             siteMetadata {
               description
@@ -46,28 +47,20 @@ export const Layout: React.FunctionComponent<{
           }
         }
       `}
-      render={(data: {
-        site: {
-          siteMetadata: {
-            title: string;
-            description: string;
-            keywords: string;
-          };
-        };
-      }) => (
+      render={data => (
         <>
           <CssBaseline />
           <Helmet
             title={
-              data.site.siteMetadata.title +
+              data.site.siteMetadata!.title +
               (documentTitle ? " - " + documentTitle : "")
             }
             meta={[
               {
                 name: "description",
-                content: data.site.siteMetadata.description,
+                content: data!.site.siteMetadata!.description,
               },
-              {name: "keywords", content: data.site.siteMetadata.keywords},
+              {name: "keywords", content: data.site.siteMetadata!.keywords},
             ]}
           />
           <Grid data-cy="frame" container direction="column" spacing={2}>

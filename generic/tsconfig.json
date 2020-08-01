@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "*": [
-        "*"
+      "~/*": [
+        "src/*"
       ]
-    }
+    },
+    "plugins": [{ "transform": "@zerollup/ts-transform-paths"}]
   },
   "extends": "../../lib/ts/gatsby-base/tsconfig.base.json",
-  "include": ["./src/**/*"]
+  "include": [".gatsby/**/*","./src/**/*"]
 }

@@ -1,6 +1,7 @@
 import * as React from "react";
-import {Layout} from "components/layout/Layout";
-import {InstitutionsList} from "components/institution/InstitutionsList";
+import {Layout} from "~/components/layout/Layout";
+import {graphql} from "gatsby";
+import {InstitutionsList} from "~/components/institution/InstitutionsList";
 
 const IndexPage: React.FunctionComponent<{
   data: GatsbyTypes.IndexPageQuery;

@@ -1,13 +1,12 @@
 import * as React from "react";
 import {List, ListItem, ListItemText} from "@material-ui/core";
-import {Hrefs} from "Hrefs";
+import {Hrefs} from "~/Hrefs";
 import {Link} from "gatsby";
 
 export const InstitutionsList: React.FunctionComponent<{
-  institutions: {
-    name: string;
-    uri: string;
-  }[];
+  institutions: ReadonlyArray<
+    Pick<GatsbyTypes.InstitutionJson, "name" | "uri">
+  >;
 }> = ({institutions}) => (
   <List>
     {institutions.map(institution => (

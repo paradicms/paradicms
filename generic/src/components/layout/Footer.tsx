@@ -4,9 +4,9 @@ import {graphql, StaticQuery} from "gatsby";
 
 export const Footer: React.FunctionComponent = () => {
   return (
-    <StaticQuery<GatsbyTypes.IndexLayoutQueryQuery>
+    <StaticQuery<{site: GatsbyTypes.Site}>
       query={graphql`
-        query IndexLayoutQuery {
+        query Footer {
           site {
             siteMetadata {
               author {
@@ -19,18 +19,7 @@ export const Footer: React.FunctionComponent = () => {
           }
         }
       `}
-      render={(data: {
-        site: {
-          siteMetadata: {
-            author: {
-              email: string;
-              name: string;
-              url: string;
-            };
-            gitHubUrl: string;
-          };
-        };
-      }) => <MuiFooter {...data.site.siteMetadata} />}
+      render={data => <MuiFooter {...data.site.siteMetadata!} />}
     />
   );
 };
