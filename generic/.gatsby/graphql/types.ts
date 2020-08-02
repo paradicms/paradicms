@@ -1720,6 +1720,7 @@ declare namespace GatsbyTypes {
     children: Maybe<NodeFilterListInput>;
     internal: Maybe<InternalFilterInput>;
     isCreatedByStatefulCreatePages: Maybe<BooleanQueryOperatorInput>;
+    context: Maybe<SitePageContextFilterInput>;
     pluginCreator: Maybe<SitePluginFilterInput>;
     pluginCreatorId: Maybe<StringQueryOperatorInput>;
     componentPath: Maybe<StringQueryOperatorInput>;
@@ -2213,6 +2214,7 @@ declare namespace GatsbyTypes {
     readonly children: ReadonlyArray<Node>;
     readonly internal: Internal;
     readonly isCreatedByStatefulCreatePages: Maybe<Scalars["Boolean"]>;
+    readonly context: Maybe<SitePageContext>;
     readonly pluginCreator: Maybe<SitePlugin>;
     readonly pluginCreatorId: Maybe<Scalars["String"]>;
     readonly componentPath: Maybe<Scalars["String"]>;
@@ -2235,6 +2237,40 @@ declare namespace GatsbyTypes {
     skip: Maybe<Scalars["Int"]>;
     limit: Maybe<Scalars["Int"]>;
     field: SitePageFieldsEnum;
+  };
+
+  type SitePageContext = {
+    readonly institution: Maybe<SitePageContextInstitution>;
+  };
+
+  type SitePageContextFilterInput = {
+    readonly institution: Maybe<SitePageContextInstitutionFilterInput>;
+  };
+
+  type SitePageContextInstitution = {
+    readonly collection_uris: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
+    readonly name: Maybe<Scalars["String"]>;
+    readonly owner_uri: Maybe<Scalars["String"]>;
+    readonly rights: Maybe<SitePageContextInstitutionRights>;
+    readonly uri: Maybe<Scalars["String"]>;
+  };
+
+  type SitePageContextInstitutionFilterInput = {
+    readonly collection_uris: Maybe<StringQueryOperatorInput>;
+    readonly name: Maybe<StringQueryOperatorInput>;
+    readonly owner_uri: Maybe<StringQueryOperatorInput>;
+    readonly rights: Maybe<SitePageContextInstitutionRightsFilterInput>;
+    readonly uri: Maybe<StringQueryOperatorInput>;
+  };
+
+  type SitePageContextInstitutionRights = {
+    readonly holder: Maybe<Scalars["String"]>;
+    readonly statements: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
+  };
+
+  type SitePageContextInstitutionRightsFilterInput = {
+    readonly holder: Maybe<StringQueryOperatorInput>;
+    readonly statements: Maybe<StringQueryOperatorInput>;
   };
 
   type SitePageEdge = {
@@ -2336,6 +2372,12 @@ declare namespace GatsbyTypes {
     internal___owner = "internal.owner",
     internal___type = "internal.type",
     isCreatedByStatefulCreatePages = "isCreatedByStatefulCreatePages",
+    context___institution___collection_uris = "context.institution.collection_uris",
+    context___institution___name = "context.institution.name",
+    context___institution___owner_uri = "context.institution.owner_uri",
+    context___institution___rights___holder = "context.institution.rights.holder",
+    context___institution___rights___statements = "context.institution.rights.statements",
+    context___institution___uri = "context.institution.uri",
     pluginCreator___id = "pluginCreator.id",
     pluginCreator___parent___id = "pluginCreator.parent.id",
     pluginCreator___parent___parent___id = "pluginCreator.parent.parent.id",
@@ -2422,6 +2464,7 @@ declare namespace GatsbyTypes {
     readonly children: Maybe<NodeFilterListInput>;
     readonly internal: Maybe<InternalFilterInput>;
     readonly isCreatedByStatefulCreatePages: Maybe<BooleanQueryOperatorInput>;
+    readonly context: Maybe<SitePageContextFilterInput>;
     readonly pluginCreator: Maybe<SitePluginFilterInput>;
     readonly pluginCreatorId: Maybe<StringQueryOperatorInput>;
     readonly componentPath: Maybe<StringQueryOperatorInput>;

@@ -6,8 +6,10 @@
 
 import {GatsbyNode, SourceNodesArgs} from "gatsby";
 import {createSchemaCustomization} from "./createSchemaCustomization";
+import {createPages} from "./createPages";
 
 const gatsbyNode: GatsbyNode = {
+  createPages,
   createSchemaCustomization,
 
   sourceNodes: async ({

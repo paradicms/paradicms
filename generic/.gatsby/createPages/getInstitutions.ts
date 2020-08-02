@@ -2,7 +2,7 @@ import {CreatePagesArgs} from "gatsby";
 
 export const getInstitutions = async (
   args: CreatePagesArgs
-): Promise<any[]> => {
+): Promise<GatsbyTypes.InstitutionJson[]> => {
   const {graphql} = args;
 
   const allInstitutionsJson = await graphql(`
@@ -12,7 +12,10 @@ export const getInstitutions = async (
           collection_uris
           name
           owner_uri
-          rights
+          rights {
+            holder
+            statements
+          }
           uri
         }
       }

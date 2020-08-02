@@ -12,7 +12,7 @@ export const InstitutionsList: React.FunctionComponent<{
     {institutions.map(institution => (
       <ListItem key={institution.uri}>
         <ListItemText>
-          <Link to={Hrefs.institution(institution.uri)}>
+          <Link to={Hrefs.institution(institution).home}>
             {institution.name}
           </Link>
         </ListItemText>

@@ -1,36 +1,45 @@
 import {ObjectQuery} from "~/models/search/ObjectQuery";
 import * as qs from "qs";
+import sanitize from "sanitize-filename";
+
+interface UriParameter {
+  uri: string;
+  encoded?: string;
+}
 
 export class Hrefs {
-  static collection(kwds: {
-    collectionUri: string;
-    institutionUri: string;
-    query?: ObjectQuery;
-  }) {
-    return (
-      Hrefs.institution(kwds.institutionUri) +
-      "/collection/" +
-      encodeURIComponent(kwds.collectionUri) +
-      qs.stringify(kwds, {addQueryPrefix: true})
-    );
-  }
-
   static get home() {
     return "/";
   }
 
-  static institution(uri: string) {
-    return "/institution/" + encodeURIComponent(uri);
-  }
+  static institution(institutionUri: UriParameter) {
+    const encodeUriParameter = (uriParameter: UriParameter) =>
+      uriParameter.encoded ? uriParameter.uri : sanitize(uriParameter.uri);
 
-  static object(kwds: {
-    collectionUri: string;
-    institutionUri: string;
-    objectUri: string;
-  }) {
-    return (
-      Hrefs.collection(kwds) + "/object/" + encodeURIComponent(kwds.objectUri)
-    );
+    const institutionHref = `${Hrefs.home}institution/${encodeUriParameter(
+      institutionUri
+    )}/`;
+    return {
+      collection(collectionUri: UriParameter) {
+        const collectionHref = `${institutionHref}collection/${encodeUriParameter(
+          collectionUri
+        )}/`;
+        return {
+          get home() {
+            return this.objects();
+          },
+          object(objectUri: UriParameter) {
+            return `${collectionHref}object/${encodeUriParameter(objectUri)}`;
+          },
+          objects(objectQuery?: ObjectQuery) {
+            return `${collectionHref}object/${qs.stringify(objectQuery, {
+              addQueryPrefix: true,
+            })}`;
+          },
+        };
+      },
+      home: institutionHref,
+    };
   }
 
   static search(query?: ObjectQuery) {

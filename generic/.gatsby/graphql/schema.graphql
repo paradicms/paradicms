@@ -1824,6 +1824,7 @@ type Query {
     children: NodeFilterListInput
     internal: InternalFilterInput
     isCreatedByStatefulCreatePages: BooleanQueryOperatorInput
+    context: SitePageContextFilterInput
     pluginCreator: SitePluginFilterInput
     pluginCreatorId: StringQueryOperatorInput
     componentPath: StringQueryOperatorInput
@@ -2303,6 +2304,7 @@ type SitePage implements Node {
   children: [Node!]!
   internal: Internal!
   isCreatedByStatefulCreatePages: Boolean
+  context: SitePageContext
   pluginCreator: SitePlugin
   pluginCreatorId: String
   componentPath: String
@@ -2319,6 +2321,40 @@ type SitePageConnection {
     limit: Int
     field: SitePageFieldsEnum!
   ): [SitePageGroupConnection!]!
+}
+
+type SitePageContext {
+  institution: SitePageContextInstitution
+}
+
+input SitePageContextFilterInput {
+  institution: SitePageContextInstitutionFilterInput
+}
+
+type SitePageContextInstitution {
+  collection_uris: [String]
+  name: String
+  owner_uri: String
+  rights: SitePageContextInstitutionRights
+  uri: String
+}
+
+input SitePageContextInstitutionFilterInput {
+  collection_uris: StringQueryOperatorInput
+  name: StringQueryOperatorInput
+  owner_uri: StringQueryOperatorInput
+  rights: SitePageContextInstitutionRightsFilterInput
+  uri: StringQueryOperatorInput
+}
+
+type SitePageContextInstitutionRights {
+  holder: String
+  statements: [String]
+}
+
+input SitePageContextInstitutionRightsFilterInput {
+  holder: StringQueryOperatorInput
+  statements: StringQueryOperatorInput
 }
 
 type SitePageEdge {
@@ -2420,6 +2456,12 @@ enum SitePageFieldsEnum {
   internal___owner
   internal___type
   isCreatedByStatefulCreatePages
+  context___institution___collection_uris
+  context___institution___name
+  context___institution___owner_uri
+  context___institution___rights___holder
+  context___institution___rights___statements
+  context___institution___uri
   pluginCreator___id
   pluginCreator___parent___id
   pluginCreator___parent___parent___id
@@ -2506,6 +2548,7 @@ input SitePageFilterInput {
   children: NodeFilterListInput
   internal: InternalFilterInput
   isCreatedByStatefulCreatePages: BooleanQueryOperatorInput
+  context: SitePageContextFilterInput
   pluginCreator: SitePluginFilterInput
   pluginCreatorId: StringQueryOperatorInput
   componentPath: StringQueryOperatorInput
