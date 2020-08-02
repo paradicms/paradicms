@@ -2,10 +2,10 @@ import {CreatePagesArgs} from "gatsby";
 
 export const getInstitutions = async (
   args: CreatePagesArgs
-): Promise<GatsbyTypes.InstitutionJson[]> => {
+): Promise<ReadonlyArray<GatsbyTypes.InstitutionJson>> => {
   const {graphql} = args;
 
-  const allInstitutionsJson = await graphql(`
+  const result = await graphql<Pick<GatsbyTypes.Query, "allInstitutionJson">>(`
     {
       allInstitutionJson {
         nodes {
@@ -22,6 +22,9 @@ export const getInstitutions = async (
     }
   `);
 
-  return (allInstitutionsJson.data as any).allInstitutionJson
-    .nodes as GatsbyTypes.InstitutionJson[];
+  if (result.data) {
+    return result.data.allInstitutionJson.nodes;
+  } else {
+    return Promise.reject(result.errors);
+  }
 };

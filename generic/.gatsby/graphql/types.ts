@@ -2240,10 +2240,28 @@ declare namespace GatsbyTypes {
   };
 
   type SitePageContext = {
+    readonly collections: Maybe<
+      ReadonlyArray<Maybe<SitePageContextCollections>>
+    >;
     readonly institution: Maybe<SitePageContextInstitution>;
   };
 
+  type SitePageContextCollections = {
+    readonly title: Maybe<Scalars["String"]>;
+    readonly uri: Maybe<Scalars["String"]>;
+  };
+
+  type SitePageContextCollectionsFilterInput = {
+    readonly title: Maybe<StringQueryOperatorInput>;
+    readonly uri: Maybe<StringQueryOperatorInput>;
+  };
+
+  type SitePageContextCollectionsFilterListInput = {
+    readonly elemMatch: Maybe<SitePageContextCollectionsFilterInput>;
+  };
+
   type SitePageContextFilterInput = {
+    readonly collections: Maybe<SitePageContextCollectionsFilterListInput>;
     readonly institution: Maybe<SitePageContextInstitutionFilterInput>;
   };
 
@@ -2372,6 +2390,9 @@ declare namespace GatsbyTypes {
     internal___owner = "internal.owner",
     internal___type = "internal.type",
     isCreatedByStatefulCreatePages = "isCreatedByStatefulCreatePages",
+    context___collections = "context.collections",
+    context___collections___title = "context.collections.title",
+    context___collections___uri = "context.collections.uri",
     context___institution___collection_uris = "context.institution.collection_uris",
     context___institution___name = "context.institution.name",
     context___institution___owner_uri = "context.institution.owner_uri",

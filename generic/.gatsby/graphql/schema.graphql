@@ -2324,10 +2324,26 @@ type SitePageConnection {
 }
 
 type SitePageContext {
+  collections: [SitePageContextCollections]
   institution: SitePageContextInstitution
 }
 
+type SitePageContextCollections {
+  title: String
+  uri: String
+}
+
+input SitePageContextCollectionsFilterInput {
+  title: StringQueryOperatorInput
+  uri: StringQueryOperatorInput
+}
+
+input SitePageContextCollectionsFilterListInput {
+  elemMatch: SitePageContextCollectionsFilterInput
+}
+
 input SitePageContextFilterInput {
+  collections: SitePageContextCollectionsFilterListInput
   institution: SitePageContextInstitutionFilterInput
 }
 
@@ -2456,6 +2472,9 @@ enum SitePageFieldsEnum {
   internal___owner
   internal___type
   isCreatedByStatefulCreatePages
+  context___collections
+  context___collections___title
+  context___collections___uri
   context___institution___collection_uris
   context___institution___name
   context___institution___owner_uri
