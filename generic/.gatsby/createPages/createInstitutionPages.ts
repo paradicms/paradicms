@@ -2,13 +2,13 @@ import {CreatePagesArgs} from "gatsby";
 import {Hrefs} from "~/Hrefs";
 import * as path from "path";
 import {getInstitutions} from "./getInstitutions";
-import {getCollectionsByUris} from ".gatsby/createPages/getCollectionsByUris";
+import {getCollectionSummariesByUris} from "./getCollectionSummariesByUris";
 
 export const createInstitutionPages = async (args: CreatePagesArgs) => {
   const {createPage} = args.actions;
   const institutions = await getInstitutions(args);
   for (const institution of institutions) {
-    const collections = await getCollectionsByUris(
+    const collections = await getCollectionSummariesByUris(
       Object.assign({}, args, {collectionUris: institution.collection_uris})
     );
 

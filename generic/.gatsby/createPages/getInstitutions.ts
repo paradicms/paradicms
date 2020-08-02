@@ -1,8 +1,9 @@
 import {CreatePagesArgs} from "gatsby";
+import {Institution} from "~/models/institution/Institution";
 
 export const getInstitutions = async (
   args: CreatePagesArgs
-): Promise<ReadonlyArray<GatsbyTypes.InstitutionJson>> => {
+): Promise<ReadonlyArray<Institution>> => {
   const {graphql} = args;
 
   const result = await graphql<Pick<GatsbyTypes.Query, "allInstitutionJson">>(`

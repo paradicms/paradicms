@@ -2330,14 +2330,12 @@ type SitePageContext {
 }
 
 type SitePageContextCollection {
-  object_uris: [String]
   rights: SitePageContextCollectionRights
   title: String
   uri: String
 }
 
 input SitePageContextCollectionFilterInput {
-  object_uris: StringQueryOperatorInput
   rights: SitePageContextCollectionRightsFilterInput
   title: StringQueryOperatorInput
   uri: StringQueryOperatorInput
@@ -2354,14 +2352,12 @@ input SitePageContextCollectionRightsFilterInput {
 }
 
 type SitePageContextCollections {
-  object_uris: [String]
   rights: SitePageContextCollectionsRights
   title: String
   uri: String
 }
 
 input SitePageContextCollectionsFilterInput {
-  object_uris: StringQueryOperatorInput
   rights: SitePageContextCollectionsRightsFilterInput
   title: StringQueryOperatorInput
   uri: StringQueryOperatorInput
@@ -2512,7 +2508,6 @@ enum SitePageFieldsEnum {
   internal___owner
   internal___type
   isCreatedByStatefulCreatePages
-  context___collection___object_uris
   context___collection___rights___holder
   context___collection___rights___statements
   context___collection___title
@@ -2524,7 +2519,6 @@ enum SitePageFieldsEnum {
   context___institution___rights___statements
   context___institution___uri
   context___collections
-  context___collections___object_uris
   context___collections___rights___holder
   context___collections___rights___statements
   context___collections___title

@@ -1,8 +1,9 @@
 import {CreatePagesArgs} from "gatsby";
+import {CollectionSummary} from "~/models/collection/CollectionSummary";
 
-export const getCollectionByUri = async (
+export const getCollectionSummaryByUri = async (
   args: CreatePagesArgs & {collectionUri: string}
-): Promise<GatsbyTypes.CollectionJson> => {
+): Promise<CollectionSummary> => {
   const {collectionUri, graphql} = args;
 
   const result = await graphql<
@@ -13,7 +14,6 @@ export const getCollectionByUri = async (
       query($collectionUri: String!) {
         allCollectionJson(filter: {uri: {eq: $collectionUri}}) {
           nodes {
-            object_uris
             rights {
               holder
               statements

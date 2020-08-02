@@ -2248,14 +2248,12 @@ declare namespace GatsbyTypes {
   };
 
   type SitePageContextCollection = {
-    readonly object_uris: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
     readonly rights: Maybe<SitePageContextCollectionRights>;
     readonly title: Maybe<Scalars["String"]>;
     readonly uri: Maybe<Scalars["String"]>;
   };
 
   type SitePageContextCollectionFilterInput = {
-    readonly object_uris: Maybe<StringQueryOperatorInput>;
     readonly rights: Maybe<SitePageContextCollectionRightsFilterInput>;
     readonly title: Maybe<StringQueryOperatorInput>;
     readonly uri: Maybe<StringQueryOperatorInput>;
@@ -2272,14 +2270,12 @@ declare namespace GatsbyTypes {
   };
 
   type SitePageContextCollections = {
-    readonly object_uris: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
     readonly rights: Maybe<SitePageContextCollectionsRights>;
     readonly title: Maybe<Scalars["String"]>;
     readonly uri: Maybe<Scalars["String"]>;
   };
 
   type SitePageContextCollectionsFilterInput = {
-    readonly object_uris: Maybe<StringQueryOperatorInput>;
     readonly rights: Maybe<SitePageContextCollectionsRightsFilterInput>;
     readonly title: Maybe<StringQueryOperatorInput>;
     readonly uri: Maybe<StringQueryOperatorInput>;
@@ -2430,7 +2426,6 @@ declare namespace GatsbyTypes {
     internal___owner = "internal.owner",
     internal___type = "internal.type",
     isCreatedByStatefulCreatePages = "isCreatedByStatefulCreatePages",
-    context___collection___object_uris = "context.collection.object_uris",
     context___collection___rights___holder = "context.collection.rights.holder",
     context___collection___rights___statements = "context.collection.rights.statements",
     context___collection___title = "context.collection.title",
@@ -2442,7 +2437,6 @@ declare namespace GatsbyTypes {
     context___institution___rights___statements = "context.institution.rights.statements",
     context___institution___uri = "context.institution.uri",
     context___collections = "context.collections",
-    context___collections___object_uris = "context.collections.object_uris",
     context___collections___rights___holder = "context.collections.rights.holder",
     context___collections___rights___statements = "context.collections.rights.statements",
     context___collections___title = "context.collections.title",
