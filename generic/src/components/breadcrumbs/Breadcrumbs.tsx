@@ -4,11 +4,9 @@ import {Link} from "gatsby";
 import {Hrefs} from "~/Hrefs";
 import * as React from "react";
 
-export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
-  collection,
-  institution,
-  object,
-}) => {
+export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps & {
+  className?: string;
+}> = ({className, collection, institution, object}) => {
   const breadcrumbNodes: React.ReactNode[] = [
     <Link key="institutions" to={Hrefs.home}>
       Institutions
@@ -64,5 +62,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps> = ({
     }
   }
 
-  return <MuiBreadcrumbs></MuiBreadcrumbs>;
+  return (
+    <MuiBreadcrumbs className={className}>{breadcrumbNodes}</MuiBreadcrumbs>
+  );
 };

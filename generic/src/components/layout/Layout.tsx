@@ -1,6 +1,5 @@
 import * as React from "react";
 import {
-  Breadcrumbs,
   Card,
   CardContent,
   CardHeader,
@@ -13,6 +12,8 @@ import {graphql, StaticQuery} from "gatsby";
 import Helmet from "react-helmet";
 
 import {Navbar} from "~/components/layout/Navbar";
+import {BreadcrumbsProps} from "~/components/breadcrumbs/BreadcrumbsProps";
+import {Breadcrumbs} from "~/components/breadcrumbs/Breadcrumbs";
 
 const useStyles = makeStyles(theme => ({
   breadcrumbs: {
@@ -25,13 +26,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const Layout: React.FunctionComponent<{
-  breadcrumbItems?: React.ReactNode[];
+  breadcrumbs?: BreadcrumbsProps;
   cardTitle?: React.ReactNode;
   children: React.ReactNode;
   className?: string;
   documentTitle?: string;
   onSearch?: (text: string) => void;
-}> = ({breadcrumbItems, cardTitle, children, documentTitle, onSearch}) => {
+}> = ({breadcrumbs, cardTitle, children, documentTitle, onSearch}) => {
   const classes = useStyles();
 
   return (
@@ -67,14 +68,13 @@ export const Layout: React.FunctionComponent<{
             <Grid item>
               <Navbar onSearch={onSearch} />
             </Grid>
-            {breadcrumbItems ? (
+            {breadcrumbs ? (
               <Grid item data-cy="frame-breadcrumbs-row">
                 <Breadcrumbs
                   className={classes.breadcrumbs}
                   data-cy="frame-breadcrumbs"
-                >
-                  {breadcrumbItems}
-                </Breadcrumbs>
+                  {...breadcrumbs}
+                />
               </Grid>
             ) : null}
             <Grid item>

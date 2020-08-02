@@ -46,7 +46,7 @@ export const Navbar: React.FunctionComponent<{
       <Toolbar>
         <Typography variant="h6" className={classes.brand}>
           Paradicms
-        </Typography>th
+        </Typography>
         <Link to={Hrefs.home} className={classes.navLink}>
           Home
         </Link>
