@@ -2471,7 +2471,6 @@ enum SitePageFieldsEnum {
   pluginCreator___pluginOptions___configDir
   pluginCreator___pluginOptions___pathCheck
   pluginCreator___pluginOptions___outputPath
-  pluginCreator___pluginOptions___emitSchema___C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_introspection_json
   pluginCreator___pluginOptions___emitSchema___C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql
   pluginCreator___nodeAPIs
   pluginCreator___browserAPIs
@@ -2661,7 +2660,6 @@ enum SitePluginFieldsEnum {
   pluginOptions___configDir
   pluginOptions___pathCheck
   pluginOptions___outputPath
-  pluginOptions___emitSchema___C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_introspection_json
   pluginOptions___emitSchema___C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql
   nodeAPIs
   browserAPIs
@@ -2788,12 +2786,10 @@ type SitePluginPluginOptions {
 }
 
 type SitePluginPluginOptionsEmitSchema {
-  C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_introspection_json: Boolean
   C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql: Boolean
 }
 
 input SitePluginPluginOptionsEmitSchemaFilterInput {
-  C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_introspection_json: BooleanQueryOperatorInput
   C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql: BooleanQueryOperatorInput
 }
 

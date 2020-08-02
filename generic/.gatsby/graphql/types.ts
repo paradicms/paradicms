@@ -2387,7 +2387,6 @@ declare namespace GatsbyTypes {
     pluginCreator___pluginOptions___configDir = "pluginCreator.pluginOptions.configDir",
     pluginCreator___pluginOptions___pathCheck = "pluginCreator.pluginOptions.pathCheck",
     pluginCreator___pluginOptions___outputPath = "pluginCreator.pluginOptions.outputPath",
-    pluginCreator___pluginOptions___emitSchema___C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_introspection_json = "pluginCreator.pluginOptions.emitSchema.C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_introspection_json",
     pluginCreator___pluginOptions___emitSchema___C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql = "pluginCreator.pluginOptions.emitSchema.C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql",
     pluginCreator___nodeAPIs = "pluginCreator.nodeAPIs",
     pluginCreator___browserAPIs = "pluginCreator.browserAPIs",
@@ -2583,7 +2582,6 @@ declare namespace GatsbyTypes {
     pluginOptions___configDir = "pluginOptions.configDir",
     pluginOptions___pathCheck = "pluginOptions.pathCheck",
     pluginOptions___outputPath = "pluginOptions.outputPath",
-    pluginOptions___emitSchema___C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_introspection_json = "pluginOptions.emitSchema.C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_introspection_json",
     pluginOptions___emitSchema___C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql = "pluginOptions.emitSchema.C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql",
     nodeAPIs = "nodeAPIs",
     browserAPIs = "browserAPIs",
@@ -2722,18 +2720,12 @@ declare namespace GatsbyTypes {
   };
 
   type SitePluginPluginOptionsEmitSchema = {
-    readonly C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_introspection_json: Maybe<
-      Scalars["Boolean"]
-    >;
     readonly C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql: Maybe<
       Scalars["Boolean"]
     >;
   };
 
   type SitePluginPluginOptionsEmitSchemaFilterInput = {
-    readonly C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_introspection_json: Maybe<
-      BooleanQueryOperatorInput
-    >;
     readonly C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql: Maybe<
       BooleanQueryOperatorInput
     >;
