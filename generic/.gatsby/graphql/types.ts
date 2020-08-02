@@ -2240,18 +2240,47 @@ declare namespace GatsbyTypes {
   };
 
   type SitePageContext = {
+    readonly collection: Maybe<SitePageContextCollection>;
+    readonly institution: Maybe<SitePageContextInstitution>;
     readonly collections: Maybe<
       ReadonlyArray<Maybe<SitePageContextCollections>>
     >;
-    readonly institution: Maybe<SitePageContextInstitution>;
+  };
+
+  type SitePageContextCollection = {
+    readonly object_uris: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
+    readonly rights: Maybe<SitePageContextCollectionRights>;
+    readonly title: Maybe<Scalars["String"]>;
+    readonly uri: Maybe<Scalars["String"]>;
+  };
+
+  type SitePageContextCollectionFilterInput = {
+    readonly object_uris: Maybe<StringQueryOperatorInput>;
+    readonly rights: Maybe<SitePageContextCollectionRightsFilterInput>;
+    readonly title: Maybe<StringQueryOperatorInput>;
+    readonly uri: Maybe<StringQueryOperatorInput>;
+  };
+
+  type SitePageContextCollectionRights = {
+    readonly holder: Maybe<Scalars["String"]>;
+    readonly statements: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
+  };
+
+  type SitePageContextCollectionRightsFilterInput = {
+    readonly holder: Maybe<StringQueryOperatorInput>;
+    readonly statements: Maybe<StringQueryOperatorInput>;
   };
 
   type SitePageContextCollections = {
+    readonly object_uris: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
+    readonly rights: Maybe<SitePageContextCollectionsRights>;
     readonly title: Maybe<Scalars["String"]>;
     readonly uri: Maybe<Scalars["String"]>;
   };
 
   type SitePageContextCollectionsFilterInput = {
+    readonly object_uris: Maybe<StringQueryOperatorInput>;
+    readonly rights: Maybe<SitePageContextCollectionsRightsFilterInput>;
     readonly title: Maybe<StringQueryOperatorInput>;
     readonly uri: Maybe<StringQueryOperatorInput>;
   };
@@ -2260,9 +2289,20 @@ declare namespace GatsbyTypes {
     readonly elemMatch: Maybe<SitePageContextCollectionsFilterInput>;
   };
 
+  type SitePageContextCollectionsRights = {
+    readonly holder: Maybe<Scalars["String"]>;
+    readonly statements: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
+  };
+
+  type SitePageContextCollectionsRightsFilterInput = {
+    readonly holder: Maybe<StringQueryOperatorInput>;
+    readonly statements: Maybe<StringQueryOperatorInput>;
+  };
+
   type SitePageContextFilterInput = {
-    readonly collections: Maybe<SitePageContextCollectionsFilterListInput>;
+    readonly collection: Maybe<SitePageContextCollectionFilterInput>;
     readonly institution: Maybe<SitePageContextInstitutionFilterInput>;
+    readonly collections: Maybe<SitePageContextCollectionsFilterListInput>;
   };
 
   type SitePageContextInstitution = {
@@ -2390,15 +2430,23 @@ declare namespace GatsbyTypes {
     internal___owner = "internal.owner",
     internal___type = "internal.type",
     isCreatedByStatefulCreatePages = "isCreatedByStatefulCreatePages",
-    context___collections = "context.collections",
-    context___collections___title = "context.collections.title",
-    context___collections___uri = "context.collections.uri",
+    context___collection___object_uris = "context.collection.object_uris",
+    context___collection___rights___holder = "context.collection.rights.holder",
+    context___collection___rights___statements = "context.collection.rights.statements",
+    context___collection___title = "context.collection.title",
+    context___collection___uri = "context.collection.uri",
     context___institution___collection_uris = "context.institution.collection_uris",
     context___institution___name = "context.institution.name",
     context___institution___owner_uri = "context.institution.owner_uri",
     context___institution___rights___holder = "context.institution.rights.holder",
     context___institution___rights___statements = "context.institution.rights.statements",
     context___institution___uri = "context.institution.uri",
+    context___collections = "context.collections",
+    context___collections___object_uris = "context.collections.object_uris",
+    context___collections___rights___holder = "context.collections.rights.holder",
+    context___collections___rights___statements = "context.collections.rights.statements",
+    context___collections___title = "context.collections.title",
+    context___collections___uri = "context.collections.uri",
     pluginCreator___id = "pluginCreator.id",
     pluginCreator___parent___id = "pluginCreator.parent.id",
     pluginCreator___parent___parent___id = "pluginCreator.parent.parent.id",

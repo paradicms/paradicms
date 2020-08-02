@@ -2324,16 +2324,45 @@ type SitePageConnection {
 }
 
 type SitePageContext {
-  collections: [SitePageContextCollections]
+  collection: SitePageContextCollection
   institution: SitePageContextInstitution
+  collections: [SitePageContextCollections]
+}
+
+type SitePageContextCollection {
+  object_uris: [String]
+  rights: SitePageContextCollectionRights
+  title: String
+  uri: String
+}
+
+input SitePageContextCollectionFilterInput {
+  object_uris: StringQueryOperatorInput
+  rights: SitePageContextCollectionRightsFilterInput
+  title: StringQueryOperatorInput
+  uri: StringQueryOperatorInput
+}
+
+type SitePageContextCollectionRights {
+  holder: String
+  statements: [String]
+}
+
+input SitePageContextCollectionRightsFilterInput {
+  holder: StringQueryOperatorInput
+  statements: StringQueryOperatorInput
 }
 
 type SitePageContextCollections {
+  object_uris: [String]
+  rights: SitePageContextCollectionsRights
   title: String
   uri: String
 }
 
 input SitePageContextCollectionsFilterInput {
+  object_uris: StringQueryOperatorInput
+  rights: SitePageContextCollectionsRightsFilterInput
   title: StringQueryOperatorInput
   uri: StringQueryOperatorInput
 }
@@ -2342,9 +2371,20 @@ input SitePageContextCollectionsFilterListInput {
   elemMatch: SitePageContextCollectionsFilterInput
 }
 
+type SitePageContextCollectionsRights {
+  holder: String
+  statements: [String]
+}
+
+input SitePageContextCollectionsRightsFilterInput {
+  holder: StringQueryOperatorInput
+  statements: StringQueryOperatorInput
+}
+
 input SitePageContextFilterInput {
-  collections: SitePageContextCollectionsFilterListInput
+  collection: SitePageContextCollectionFilterInput
   institution: SitePageContextInstitutionFilterInput
+  collections: SitePageContextCollectionsFilterListInput
 }
 
 type SitePageContextInstitution {
@@ -2472,15 +2512,23 @@ enum SitePageFieldsEnum {
   internal___owner
   internal___type
   isCreatedByStatefulCreatePages
-  context___collections
-  context___collections___title
-  context___collections___uri
+  context___collection___object_uris
+  context___collection___rights___holder
+  context___collection___rights___statements
+  context___collection___title
+  context___collection___uri
   context___institution___collection_uris
   context___institution___name
   context___institution___owner_uri
   context___institution___rights___holder
   context___institution___rights___statements
   context___institution___uri
+  context___collections
+  context___collections___object_uris
+  context___collections___rights___holder
+  context___collections___rights___statements
+  context___collections___title
+  context___collections___uri
   pluginCreator___id
   pluginCreator___parent___id
   pluginCreator___parent___parent___id
