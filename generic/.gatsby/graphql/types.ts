@@ -23,8 +23,8 @@ declare namespace GatsbyTypes {
 
   type CollectionJson = Node & {
     readonly object_uris: ReadonlyArray<Scalars["String"]>;
-    readonly uri: Maybe<Scalars["String"]>;
-    readonly title: Maybe<Scalars["String"]>;
+    readonly title: Scalars["String"];
+    readonly uri: Scalars["String"];
     readonly rights: Maybe<CollectionJsonRights>;
     readonly id: Scalars["ID"];
     readonly parent: Maybe<Node>;
@@ -59,8 +59,8 @@ declare namespace GatsbyTypes {
 
   enum CollectionJsonFieldsEnum {
     object_uris = "object_uris",
-    uri = "uri",
     title = "title",
+    uri = "uri",
     rights___holder = "rights.holder",
     rights___statements = "rights.statements",
     id = "id",
@@ -153,8 +153,8 @@ declare namespace GatsbyTypes {
 
   type CollectionJsonFilterInput = {
     readonly object_uris: Maybe<StringQueryOperatorInput>;
-    readonly uri: Maybe<StringQueryOperatorInput>;
     readonly title: Maybe<StringQueryOperatorInput>;
+    readonly uri: Maybe<StringQueryOperatorInput>;
     readonly rights: Maybe<CollectionJsonRightsFilterInput>;
     readonly id: Maybe<StringQueryOperatorInput>;
     readonly parent: Maybe<NodeFilterInput>;
@@ -724,8 +724,8 @@ declare namespace GatsbyTypes {
     internal___owner = "internal.owner",
     internal___type = "internal.type",
     childCollectionJson___object_uris = "childCollectionJson.object_uris",
-    childCollectionJson___uri = "childCollectionJson.uri",
     childCollectionJson___title = "childCollectionJson.title",
+    childCollectionJson___uri = "childCollectionJson.uri",
     childCollectionJson___rights___holder = "childCollectionJson.rights.holder",
     childCollectionJson___rights___statements = "childCollectionJson.rights.statements",
     childCollectionJson___id = "childCollectionJson.id",
@@ -1755,8 +1755,8 @@ declare namespace GatsbyTypes {
 
   type Query_collectionJsonArgs = {
     object_uris: Maybe<StringQueryOperatorInput>;
-    uri: Maybe<StringQueryOperatorInput>;
     title: Maybe<StringQueryOperatorInput>;
+    uri: Maybe<StringQueryOperatorInput>;
     rights: Maybe<CollectionJsonRightsFilterInput>;
     id: Maybe<StringQueryOperatorInput>;
     parent: Maybe<NodeFilterInput>;
@@ -3017,30 +3017,5 @@ declare namespace GatsbyTypes {
     readonly allInstitutionJson: {
       readonly nodes: ReadonlyArray<Pick<InstitutionJson, "name" | "uri">>;
     };
-  };
-
-  type FooterQueryVariables = Exact<{[key: string]: never}>;
-
-  type FooterQuery = {
-    readonly site: Maybe<{
-      readonly siteMetadata: Maybe<
-        Pick<SiteSiteMetadata, "gitHubUrl"> & {
-          readonly author: Pick<
-            SiteSiteMetadataAuthor,
-            "email" | "name" | "url"
-          >;
-        }
-      >;
-    }>;
-  };
-
-  type LayoutQueryVariables = Exact<{[key: string]: never}>;
-
-  type LayoutQuery = {
-    readonly site: Maybe<{
-      readonly siteMetadata: Maybe<
-        Pick<SiteSiteMetadata, "description" | "keywords" | "title">
-      >;
-    }>;
   };
 }

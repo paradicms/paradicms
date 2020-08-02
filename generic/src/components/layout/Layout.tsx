@@ -35,7 +35,7 @@ export const Layout: React.FunctionComponent<{
   const classes = useStyles();
 
   return (
-    <StaticQuery<GatsbyTypes.LayoutQuery>
+    <StaticQuery<{site: {siteMetadata: GatsbyTypes.SiteSiteMetadata}}>
       query={graphql`
         query Layout {
           site {

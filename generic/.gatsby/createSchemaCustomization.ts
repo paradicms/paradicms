@@ -8,6 +8,8 @@ export const createSchemaCustomization = async (
   createTypes(`
   type CollectionJson implements Node {
     object_uris: [String!]!
+    title: String!
+    uri: String!
   }  
   
   type CollectionJsonRights {

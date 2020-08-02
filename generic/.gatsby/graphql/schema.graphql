@@ -65,8 +65,8 @@ input BooleanQueryOperatorInput {
 
 type CollectionJson implements Node {
   object_uris: [String!]!
-  uri: String
-  title: String
+  title: String!
+  uri: String!
   rights: CollectionJsonRights
   id: ID!
   parent: Node
@@ -95,8 +95,8 @@ type CollectionJsonEdge {
 
 enum CollectionJsonFieldsEnum {
   object_uris
-  uri
   title
+  uri
   rights___holder
   rights___statements
   id
@@ -189,8 +189,8 @@ enum CollectionJsonFieldsEnum {
 
 input CollectionJsonFilterInput {
   object_uris: StringQueryOperatorInput
-  uri: StringQueryOperatorInput
   title: StringQueryOperatorInput
+  uri: StringQueryOperatorInput
   rights: CollectionJsonRightsFilterInput
   id: StringQueryOperatorInput
   parent: NodeFilterInput
@@ -871,8 +871,8 @@ enum FileFieldsEnum {
   internal___owner
   internal___type
   childCollectionJson___object_uris
-  childCollectionJson___uri
   childCollectionJson___title
+  childCollectionJson___uri
   childCollectionJson___rights___holder
   childCollectionJson___rights___statements
   childCollectionJson___id
@@ -1855,8 +1855,8 @@ type Query {
   ): SiteConnection!
   collectionJson(
     object_uris: StringQueryOperatorInput
-    uri: StringQueryOperatorInput
     title: StringQueryOperatorInput
+    uri: StringQueryOperatorInput
     rights: CollectionJsonRightsFilterInput
     id: StringQueryOperatorInput
     parent: NodeFilterInput
