@@ -35,7 +35,7 @@ export const Layout: React.FunctionComponent<{
   const classes = useStyles();
 
   return (
-    <StaticQuery<{site: GatsbyTypes.Site}>
+    <StaticQuery<GatsbyTypes.LayoutQuery>
       query={graphql`
         query Layout {
           site {
@@ -52,15 +52,15 @@ export const Layout: React.FunctionComponent<{
           <CssBaseline />
           <Helmet
             title={
-              data.site.siteMetadata!.title +
+              data.site!.siteMetadata!.title +
               (documentTitle ? " - " + documentTitle : "")
             }
             meta={[
               {
                 name: "description",
-                content: data!.site.siteMetadata!.description,
+                content: data!.site!.siteMetadata!.description,
               },
-              {name: "keywords", content: data.site.siteMetadata!.keywords},
+              {name: "keywords", content: data.site!.siteMetadata!.keywords},
             ]}
           />
           <Grid data-cy="frame" container direction="column" spacing={2}>

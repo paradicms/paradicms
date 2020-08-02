@@ -2,10 +2,19 @@
 directive @default(value: JSON!) on INPUT_FIELD_DEFINITION
 
 # Add date formatting options.
-directive @dateformat(formatString: String, locale: String, fromNow: Boolean, difference: String) on FIELD_DEFINITION
+directive @dateformat(
+  formatString: String
+  locale: String
+  fromNow: Boolean
+  difference: String
+) on FIELD_DEFINITION
 
 # Link to node by foreign-key relation.
-directive @link(by: String! = "id", from: String, on: String) on FIELD_DEFINITION
+directive @link(
+  by: String! = "id"
+  from: String
+  on: String
+) on FIELD_DEFINITION
 
 # Link to File node by relative path.
 directive @fileByRelativePath(from: String) on FIELD_DEFINITION
@@ -71,7 +80,11 @@ type CollectionJsonConnection {
   nodes: [CollectionJson!]!
   pageInfo: PageInfo!
   distinct(field: CollectionJsonFieldsEnum!): [String!]!
-  group(skip: Int, limit: Int, field: CollectionJsonFieldsEnum!): [CollectionJsonGroupConnection!]!
+  group(
+    skip: Int
+    limit: Int
+    field: CollectionJsonFieldsEnum!
+  ): [CollectionJsonGroupConnection!]!
 }
 
 type CollectionJsonEdge {
@@ -380,7 +393,11 @@ type DirectoryConnection {
   nodes: [Directory!]!
   pageInfo: PageInfo!
   distinct(field: DirectoryFieldsEnum!): [String!]!
-  group(skip: Int, limit: Int, field: DirectoryFieldsEnum!): [DirectoryGroupConnection!]!
+  group(
+    skip: Int
+    limit: Int
+    field: DirectoryFieldsEnum!
+  ): [DirectoryGroupConnection!]!
 }
 
 type DirectoryEdge {
@@ -715,8 +732,8 @@ type File implements Node {
   childCollectionJson: CollectionJson
   childInstitutionJson: InstitutionJson
   childUserJson: UserJson
-  childImageJson: ImageJson
   childObjectJson: ObjectJson
+  childImageJson: ImageJson
 }
 
 type FileConnection {
@@ -981,50 +998,6 @@ enum FileFieldsEnum {
   childUserJson___uri
   childUserJson___email
   childUserJson___name
-  childImageJson___id
-  childImageJson___parent___id
-  childImageJson___parent___parent___id
-  childImageJson___parent___parent___children
-  childImageJson___parent___children
-  childImageJson___parent___children___id
-  childImageJson___parent___children___children
-  childImageJson___parent___internal___content
-  childImageJson___parent___internal___contentDigest
-  childImageJson___parent___internal___description
-  childImageJson___parent___internal___fieldOwners
-  childImageJson___parent___internal___ignoreType
-  childImageJson___parent___internal___mediaType
-  childImageJson___parent___internal___owner
-  childImageJson___parent___internal___type
-  childImageJson___children
-  childImageJson___children___id
-  childImageJson___children___parent___id
-  childImageJson___children___parent___children
-  childImageJson___children___children
-  childImageJson___children___children___id
-  childImageJson___children___children___children
-  childImageJson___children___internal___content
-  childImageJson___children___internal___contentDigest
-  childImageJson___children___internal___description
-  childImageJson___children___internal___fieldOwners
-  childImageJson___children___internal___ignoreType
-  childImageJson___children___internal___mediaType
-  childImageJson___children___internal___owner
-  childImageJson___children___internal___type
-  childImageJson___internal___content
-  childImageJson___internal___contentDigest
-  childImageJson___internal___description
-  childImageJson___internal___fieldOwners
-  childImageJson___internal___ignoreType
-  childImageJson___internal___mediaType
-  childImageJson___internal___owner
-  childImageJson___internal___type
-  childImageJson___uri
-  childImageJson___derived_image_uris
-  childImageJson___exact_dimensions___height
-  childImageJson___exact_dimensions___width
-  childImageJson___max_dimensions___height
-  childImageJson___max_dimensions___width
   childObjectJson___descriptions
   childObjectJson___image_uris
   childObjectJson___subjects
@@ -1070,6 +1043,50 @@ enum FileFieldsEnum {
   childObjectJson___internal___mediaType
   childObjectJson___internal___owner
   childObjectJson___internal___type
+  childImageJson___id
+  childImageJson___parent___id
+  childImageJson___parent___parent___id
+  childImageJson___parent___parent___children
+  childImageJson___parent___children
+  childImageJson___parent___children___id
+  childImageJson___parent___children___children
+  childImageJson___parent___internal___content
+  childImageJson___parent___internal___contentDigest
+  childImageJson___parent___internal___description
+  childImageJson___parent___internal___fieldOwners
+  childImageJson___parent___internal___ignoreType
+  childImageJson___parent___internal___mediaType
+  childImageJson___parent___internal___owner
+  childImageJson___parent___internal___type
+  childImageJson___children
+  childImageJson___children___id
+  childImageJson___children___parent___id
+  childImageJson___children___parent___children
+  childImageJson___children___children
+  childImageJson___children___children___id
+  childImageJson___children___children___children
+  childImageJson___children___internal___content
+  childImageJson___children___internal___contentDigest
+  childImageJson___children___internal___description
+  childImageJson___children___internal___fieldOwners
+  childImageJson___children___internal___ignoreType
+  childImageJson___children___internal___mediaType
+  childImageJson___children___internal___owner
+  childImageJson___children___internal___type
+  childImageJson___internal___content
+  childImageJson___internal___contentDigest
+  childImageJson___internal___description
+  childImageJson___internal___fieldOwners
+  childImageJson___internal___ignoreType
+  childImageJson___internal___mediaType
+  childImageJson___internal___owner
+  childImageJson___internal___type
+  childImageJson___uri
+  childImageJson___derived_image_uris
+  childImageJson___exact_dimensions___height
+  childImageJson___exact_dimensions___width
+  childImageJson___max_dimensions___height
+  childImageJson___max_dimensions___width
 }
 
 input FileFilterInput {
@@ -1112,8 +1129,8 @@ input FileFilterInput {
   childCollectionJson: CollectionJsonFilterInput
   childInstitutionJson: InstitutionJsonFilterInput
   childUserJson: UserJsonFilterInput
-  childImageJson: ImageJsonFilterInput
   childObjectJson: ObjectJsonFilterInput
+  childImageJson: ImageJsonFilterInput
 }
 
 type FileGroupConnection {
@@ -1158,7 +1175,11 @@ type ImageJsonConnection {
   nodes: [ImageJson!]!
   pageInfo: PageInfo!
   distinct(field: ImageJsonFieldsEnum!): [String!]!
-  group(skip: Int, limit: Int, field: ImageJsonFieldsEnum!): [ImageJsonGroupConnection!]!
+  group(
+    skip: Int
+    limit: Int
+    field: ImageJsonFieldsEnum!
+  ): [ImageJsonGroupConnection!]!
 }
 
 type ImageJsonEdge {
@@ -1325,7 +1346,11 @@ type InstitutionJsonConnection {
   nodes: [InstitutionJson!]!
   pageInfo: PageInfo!
   distinct(field: InstitutionJsonFieldsEnum!): [String!]!
-  group(skip: Int, limit: Int, field: InstitutionJsonFieldsEnum!): [InstitutionJsonGroupConnection!]!
+  group(
+    skip: Int
+    limit: Int
+    field: InstitutionJsonFieldsEnum!
+  ): [InstitutionJsonGroupConnection!]!
 }
 
 type InstitutionJsonEdge {
@@ -1539,7 +1564,11 @@ type ObjectJsonConnection {
   nodes: [ObjectJson!]!
   pageInfo: PageInfo!
   distinct(field: ObjectJsonFieldsEnum!): [String!]!
-  group(skip: Int, limit: Int, field: ObjectJsonFieldsEnum!): [ObjectJsonGroupConnection!]!
+  group(
+    skip: Int
+    limit: Int
+    field: ObjectJsonFieldsEnum!
+  ): [ObjectJsonGroupConnection!]!
 }
 
 type ObjectJsonEdge {
@@ -1692,28 +1721,254 @@ type PageInfo {
 }
 
 type Query {
-  file(sourceInstanceName: StringQueryOperatorInput, absolutePath: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, extension: StringQueryOperatorInput, size: IntQueryOperatorInput, prettySize: StringQueryOperatorInput, modifiedTime: DateQueryOperatorInput, accessTime: DateQueryOperatorInput, changeTime: DateQueryOperatorInput, birthTime: DateQueryOperatorInput, root: StringQueryOperatorInput, dir: StringQueryOperatorInput, base: StringQueryOperatorInput, ext: StringQueryOperatorInput, name: StringQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, dev: IntQueryOperatorInput, mode: IntQueryOperatorInput, nlink: IntQueryOperatorInput, uid: IntQueryOperatorInput, gid: IntQueryOperatorInput, rdev: IntQueryOperatorInput, ino: FloatQueryOperatorInput, atimeMs: FloatQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, atime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, ctime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, publicURL: StringQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput, childCollectionJson: CollectionJsonFilterInput, childInstitutionJson: InstitutionJsonFilterInput, childUserJson: UserJsonFilterInput, childImageJson: ImageJsonFilterInput, childObjectJson: ObjectJsonFilterInput): File
-  allFile(filter: FileFilterInput, sort: FileSortInput, skip: Int, limit: Int): FileConnection!
-  directory(sourceInstanceName: StringQueryOperatorInput, absolutePath: StringQueryOperatorInput, relativePath: StringQueryOperatorInput, extension: StringQueryOperatorInput, size: IntQueryOperatorInput, prettySize: StringQueryOperatorInput, modifiedTime: DateQueryOperatorInput, accessTime: DateQueryOperatorInput, changeTime: DateQueryOperatorInput, birthTime: DateQueryOperatorInput, root: StringQueryOperatorInput, dir: StringQueryOperatorInput, base: StringQueryOperatorInput, ext: StringQueryOperatorInput, name: StringQueryOperatorInput, relativeDirectory: StringQueryOperatorInput, dev: IntQueryOperatorInput, mode: IntQueryOperatorInput, nlink: IntQueryOperatorInput, uid: IntQueryOperatorInput, gid: IntQueryOperatorInput, rdev: IntQueryOperatorInput, ino: FloatQueryOperatorInput, atimeMs: FloatQueryOperatorInput, mtimeMs: FloatQueryOperatorInput, ctimeMs: FloatQueryOperatorInput, atime: DateQueryOperatorInput, mtime: DateQueryOperatorInput, ctime: DateQueryOperatorInput, birthtime: DateQueryOperatorInput, birthtimeMs: FloatQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): Directory
-  allDirectory(filter: DirectoryFilterInput, sort: DirectorySortInput, skip: Int, limit: Int): DirectoryConnection!
-  sitePage(path: StringQueryOperatorInput, component: StringQueryOperatorInput, internalComponentName: StringQueryOperatorInput, componentChunkName: StringQueryOperatorInput, matchPath: StringQueryOperatorInput, isCreatedByStatefulCreatePages: BooleanQueryOperatorInput, context: SitePageContextFilterInput, pluginCreator: SitePluginFilterInput, pluginCreatorId: StringQueryOperatorInput, componentPath: StringQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): SitePage
-  allSitePage(filter: SitePageFilterInput, sort: SitePageSortInput, skip: Int, limit: Int): SitePageConnection!
-  site(buildTime: DateQueryOperatorInput, siteMetadata: SiteSiteMetadataFilterInput, port: IntQueryOperatorInput, host: StringQueryOperatorInput, polyfill: BooleanQueryOperatorInput, pathPrefix: StringQueryOperatorInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): Site
-  allSite(filter: SiteFilterInput, sort: SiteSortInput, skip: Int, limit: Int): SiteConnection!
-  collectionJson(object_uris: StringQueryOperatorInput, uri: StringQueryOperatorInput, title: StringQueryOperatorInput, rights: CollectionJsonRightsFilterInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): CollectionJson
-  allCollectionJson(filter: CollectionJsonFilterInput, sort: CollectionJsonSortInput, skip: Int, limit: Int): CollectionJsonConnection!
-  institutionJson(collection_uris: StringQueryOperatorInput, name: StringQueryOperatorInput, owner_uri: StringQueryOperatorInput, uri: StringQueryOperatorInput, rights: InstitutionJsonRightsFilterInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): InstitutionJson
-  allInstitutionJson(filter: InstitutionJsonFilterInput, sort: InstitutionJsonSortInput, skip: Int, limit: Int): InstitutionJsonConnection!
-  objectJson(descriptions: StringQueryOperatorInput, image_uris: StringQueryOperatorInput, subjects: StringQueryOperatorInput, title: StringQueryOperatorInput, uri: StringQueryOperatorInput, rights: ObjectJsonRightsFilterInput, id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput): ObjectJson
-  allObjectJson(filter: ObjectJsonFilterInput, sort: ObjectJsonSortInput, skip: Int, limit: Int): ObjectJsonConnection!
-  imageJson(id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput, uri: StringQueryOperatorInput, derived_image_uris: StringQueryOperatorInput, exact_dimensions: ImageJsonExact_dimensionsFilterInput, max_dimensions: ImageJsonMax_dimensionsFilterInput): ImageJson
-  allImageJson(filter: ImageJsonFilterInput, sort: ImageJsonSortInput, skip: Int, limit: Int): ImageJsonConnection!
-  userJson(id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput, uri: StringQueryOperatorInput, email: StringQueryOperatorInput, name: StringQueryOperatorInput): UserJson
-  allUserJson(filter: UserJsonFilterInput, sort: UserJsonSortInput, skip: Int, limit: Int): UserJsonConnection!
-  siteBuildMetadata(id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput, buildTime: DateQueryOperatorInput): SiteBuildMetadata
-  allSiteBuildMetadata(filter: SiteBuildMetadataFilterInput, sort: SiteBuildMetadataSortInput, skip: Int, limit: Int): SiteBuildMetadataConnection!
-  sitePlugin(id: StringQueryOperatorInput, parent: NodeFilterInput, children: NodeFilterListInput, internal: InternalFilterInput, resolve: StringQueryOperatorInput, name: StringQueryOperatorInput, version: StringQueryOperatorInput, pluginOptions: SitePluginPluginOptionsFilterInput, nodeAPIs: StringQueryOperatorInput, browserAPIs: StringQueryOperatorInput, ssrAPIs: StringQueryOperatorInput, pluginFilepath: StringQueryOperatorInput, packageJson: SitePluginPackageJsonFilterInput): SitePlugin
-  allSitePlugin(filter: SitePluginFilterInput, sort: SitePluginSortInput, skip: Int, limit: Int): SitePluginConnection!
+  file(
+    sourceInstanceName: StringQueryOperatorInput
+    absolutePath: StringQueryOperatorInput
+    relativePath: StringQueryOperatorInput
+    extension: StringQueryOperatorInput
+    size: IntQueryOperatorInput
+    prettySize: StringQueryOperatorInput
+    modifiedTime: DateQueryOperatorInput
+    accessTime: DateQueryOperatorInput
+    changeTime: DateQueryOperatorInput
+    birthTime: DateQueryOperatorInput
+    root: StringQueryOperatorInput
+    dir: StringQueryOperatorInput
+    base: StringQueryOperatorInput
+    ext: StringQueryOperatorInput
+    name: StringQueryOperatorInput
+    relativeDirectory: StringQueryOperatorInput
+    dev: IntQueryOperatorInput
+    mode: IntQueryOperatorInput
+    nlink: IntQueryOperatorInput
+    uid: IntQueryOperatorInput
+    gid: IntQueryOperatorInput
+    rdev: IntQueryOperatorInput
+    ino: FloatQueryOperatorInput
+    atimeMs: FloatQueryOperatorInput
+    mtimeMs: FloatQueryOperatorInput
+    ctimeMs: FloatQueryOperatorInput
+    atime: DateQueryOperatorInput
+    mtime: DateQueryOperatorInput
+    ctime: DateQueryOperatorInput
+    birthtime: DateQueryOperatorInput
+    birthtimeMs: FloatQueryOperatorInput
+    publicURL: StringQueryOperatorInput
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+    childCollectionJson: CollectionJsonFilterInput
+    childInstitutionJson: InstitutionJsonFilterInput
+    childUserJson: UserJsonFilterInput
+    childObjectJson: ObjectJsonFilterInput
+    childImageJson: ImageJsonFilterInput
+  ): File
+  allFile(
+    filter: FileFilterInput
+    sort: FileSortInput
+    skip: Int
+    limit: Int
+  ): FileConnection!
+  directory(
+    sourceInstanceName: StringQueryOperatorInput
+    absolutePath: StringQueryOperatorInput
+    relativePath: StringQueryOperatorInput
+    extension: StringQueryOperatorInput
+    size: IntQueryOperatorInput
+    prettySize: StringQueryOperatorInput
+    modifiedTime: DateQueryOperatorInput
+    accessTime: DateQueryOperatorInput
+    changeTime: DateQueryOperatorInput
+    birthTime: DateQueryOperatorInput
+    root: StringQueryOperatorInput
+    dir: StringQueryOperatorInput
+    base: StringQueryOperatorInput
+    ext: StringQueryOperatorInput
+    name: StringQueryOperatorInput
+    relativeDirectory: StringQueryOperatorInput
+    dev: IntQueryOperatorInput
+    mode: IntQueryOperatorInput
+    nlink: IntQueryOperatorInput
+    uid: IntQueryOperatorInput
+    gid: IntQueryOperatorInput
+    rdev: IntQueryOperatorInput
+    ino: FloatQueryOperatorInput
+    atimeMs: FloatQueryOperatorInput
+    mtimeMs: FloatQueryOperatorInput
+    ctimeMs: FloatQueryOperatorInput
+    atime: DateQueryOperatorInput
+    mtime: DateQueryOperatorInput
+    ctime: DateQueryOperatorInput
+    birthtime: DateQueryOperatorInput
+    birthtimeMs: FloatQueryOperatorInput
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+  ): Directory
+  allDirectory(
+    filter: DirectoryFilterInput
+    sort: DirectorySortInput
+    skip: Int
+    limit: Int
+  ): DirectoryConnection!
+  sitePage(
+    path: StringQueryOperatorInput
+    component: StringQueryOperatorInput
+    internalComponentName: StringQueryOperatorInput
+    componentChunkName: StringQueryOperatorInput
+    matchPath: StringQueryOperatorInput
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+    isCreatedByStatefulCreatePages: BooleanQueryOperatorInput
+    context: SitePageContextFilterInput
+    pluginCreator: SitePluginFilterInput
+    pluginCreatorId: StringQueryOperatorInput
+    componentPath: StringQueryOperatorInput
+  ): SitePage
+  allSitePage(
+    filter: SitePageFilterInput
+    sort: SitePageSortInput
+    skip: Int
+    limit: Int
+  ): SitePageConnection!
+  site(
+    buildTime: DateQueryOperatorInput
+    siteMetadata: SiteSiteMetadataFilterInput
+    port: IntQueryOperatorInput
+    host: StringQueryOperatorInput
+    polyfill: BooleanQueryOperatorInput
+    pathPrefix: StringQueryOperatorInput
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+  ): Site
+  allSite(
+    filter: SiteFilterInput
+    sort: SiteSortInput
+    skip: Int
+    limit: Int
+  ): SiteConnection!
+  collectionJson(
+    object_uris: StringQueryOperatorInput
+    uri: StringQueryOperatorInput
+    title: StringQueryOperatorInput
+    rights: CollectionJsonRightsFilterInput
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+  ): CollectionJson
+  allCollectionJson(
+    filter: CollectionJsonFilterInput
+    sort: CollectionJsonSortInput
+    skip: Int
+    limit: Int
+  ): CollectionJsonConnection!
+  institutionJson(
+    collection_uris: StringQueryOperatorInput
+    name: StringQueryOperatorInput
+    owner_uri: StringQueryOperatorInput
+    uri: StringQueryOperatorInput
+    rights: InstitutionJsonRightsFilterInput
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+  ): InstitutionJson
+  allInstitutionJson(
+    filter: InstitutionJsonFilterInput
+    sort: InstitutionJsonSortInput
+    skip: Int
+    limit: Int
+  ): InstitutionJsonConnection!
+  objectJson(
+    descriptions: StringQueryOperatorInput
+    image_uris: StringQueryOperatorInput
+    subjects: StringQueryOperatorInput
+    title: StringQueryOperatorInput
+    uri: StringQueryOperatorInput
+    rights: ObjectJsonRightsFilterInput
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+  ): ObjectJson
+  allObjectJson(
+    filter: ObjectJsonFilterInput
+    sort: ObjectJsonSortInput
+    skip: Int
+    limit: Int
+  ): ObjectJsonConnection!
+  imageJson(
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+    uri: StringQueryOperatorInput
+    derived_image_uris: StringQueryOperatorInput
+    exact_dimensions: ImageJsonExact_dimensionsFilterInput
+    max_dimensions: ImageJsonMax_dimensionsFilterInput
+  ): ImageJson
+  allImageJson(
+    filter: ImageJsonFilterInput
+    sort: ImageJsonSortInput
+    skip: Int
+    limit: Int
+  ): ImageJsonConnection!
+  userJson(
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+    uri: StringQueryOperatorInput
+    email: StringQueryOperatorInput
+    name: StringQueryOperatorInput
+  ): UserJson
+  allUserJson(
+    filter: UserJsonFilterInput
+    sort: UserJsonSortInput
+    skip: Int
+    limit: Int
+  ): UserJsonConnection!
+  siteBuildMetadata(
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+    buildTime: DateQueryOperatorInput
+  ): SiteBuildMetadata
+  allSiteBuildMetadata(
+    filter: SiteBuildMetadataFilterInput
+    sort: SiteBuildMetadataSortInput
+    skip: Int
+    limit: Int
+  ): SiteBuildMetadataConnection!
+  sitePlugin(
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+    resolve: StringQueryOperatorInput
+    name: StringQueryOperatorInput
+    version: StringQueryOperatorInput
+    pluginOptions: SitePluginPluginOptionsFilterInput
+    nodeAPIs: StringQueryOperatorInput
+    browserAPIs: StringQueryOperatorInput
+    ssrAPIs: StringQueryOperatorInput
+    pluginFilepath: StringQueryOperatorInput
+    packageJson: SitePluginPackageJsonFilterInput
+  ): SitePlugin
+  allSitePlugin(
+    filter: SitePluginFilterInput
+    sort: SitePluginSortInput
+    skip: Int
+    limit: Int
+  ): SitePluginConnection!
 }
 
 type Site implements Node {
@@ -1775,7 +2030,11 @@ type SiteBuildMetadataConnection {
   nodes: [SiteBuildMetadata!]!
   pageInfo: PageInfo!
   distinct(field: SiteBuildMetadataFieldsEnum!): [String!]!
-  group(skip: Int, limit: Int, field: SiteBuildMetadataFieldsEnum!): [SiteBuildMetadataGroupConnection!]!
+  group(
+    skip: Int
+    limit: Int
+    field: SiteBuildMetadataFieldsEnum!
+  ): [SiteBuildMetadataGroupConnection!]!
 }
 
 type SiteBuildMetadataEdge {
@@ -2040,15 +2299,15 @@ type SitePage implements Node {
   internalComponentName: String!
   componentChunkName: String!
   matchPath: String
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
   isCreatedByStatefulCreatePages: Boolean
   context: SitePageContext
   pluginCreator: SitePlugin
   pluginCreatorId: String
   componentPath: String
-  id: ID!
-  parent: Node
-  children: [Node!]!
-  internal: Internal!
 }
 
 type SitePageConnection {
@@ -2057,7 +2316,11 @@ type SitePageConnection {
   nodes: [SitePage!]!
   pageInfo: PageInfo!
   distinct(field: SitePageFieldsEnum!): [String!]!
-  group(skip: Int, limit: Int, field: SitePageFieldsEnum!): [SitePageGroupConnection!]!
+  group(
+    skip: Int
+    limit: Int
+    field: SitePageFieldsEnum!
+  ): [SitePageGroupConnection!]!
 }
 
 type SitePageContext {
@@ -2106,86 +2369,6 @@ enum SitePageFieldsEnum {
   internalComponentName
   componentChunkName
   matchPath
-  isCreatedByStatefulCreatePages
-  context___institution___collection_uris
-  context___institution___name
-  context___institution___owner_uri
-  context___institution___rights___holder
-  context___institution___rights___statements
-  context___institution___uri
-  pluginCreator___id
-  pluginCreator___parent___id
-  pluginCreator___parent___parent___id
-  pluginCreator___parent___parent___children
-  pluginCreator___parent___children
-  pluginCreator___parent___children___id
-  pluginCreator___parent___children___children
-  pluginCreator___parent___internal___content
-  pluginCreator___parent___internal___contentDigest
-  pluginCreator___parent___internal___description
-  pluginCreator___parent___internal___fieldOwners
-  pluginCreator___parent___internal___ignoreType
-  pluginCreator___parent___internal___mediaType
-  pluginCreator___parent___internal___owner
-  pluginCreator___parent___internal___type
-  pluginCreator___children
-  pluginCreator___children___id
-  pluginCreator___children___parent___id
-  pluginCreator___children___parent___children
-  pluginCreator___children___children
-  pluginCreator___children___children___id
-  pluginCreator___children___children___children
-  pluginCreator___children___internal___content
-  pluginCreator___children___internal___contentDigest
-  pluginCreator___children___internal___description
-  pluginCreator___children___internal___fieldOwners
-  pluginCreator___children___internal___ignoreType
-  pluginCreator___children___internal___mediaType
-  pluginCreator___children___internal___owner
-  pluginCreator___children___internal___type
-  pluginCreator___internal___content
-  pluginCreator___internal___contentDigest
-  pluginCreator___internal___description
-  pluginCreator___internal___fieldOwners
-  pluginCreator___internal___ignoreType
-  pluginCreator___internal___mediaType
-  pluginCreator___internal___owner
-  pluginCreator___internal___type
-  pluginCreator___resolve
-  pluginCreator___name
-  pluginCreator___version
-  pluginCreator___pluginOptions___fonts
-  pluginCreator___pluginOptions___fonts___family
-  pluginCreator___pluginOptions___fonts___variants
-  pluginCreator___pluginOptions___codegen
-  pluginCreator___pluginOptions___name
-  pluginCreator___pluginOptions___path
-  pluginCreator___pluginOptions___projectRoot
-  pluginCreator___pluginOptions___configDir
-  pluginCreator___pluginOptions___pathCheck
-  pluginCreator___pluginOptions___outputPath
-  pluginCreator___pluginOptions___emitSchema___C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql
-  pluginCreator___nodeAPIs
-  pluginCreator___browserAPIs
-  pluginCreator___ssrAPIs
-  pluginCreator___pluginFilepath
-  pluginCreator___packageJson___name
-  pluginCreator___packageJson___description
-  pluginCreator___packageJson___version
-  pluginCreator___packageJson___main
-  pluginCreator___packageJson___license
-  pluginCreator___packageJson___dependencies
-  pluginCreator___packageJson___dependencies___name
-  pluginCreator___packageJson___dependencies___version
-  pluginCreator___packageJson___devDependencies
-  pluginCreator___packageJson___devDependencies___name
-  pluginCreator___packageJson___devDependencies___version
-  pluginCreator___packageJson___peerDependencies
-  pluginCreator___packageJson___peerDependencies___name
-  pluginCreator___packageJson___peerDependencies___version
-  pluginCreator___packageJson___keywords
-  pluginCreatorId
-  componentPath
   id
   parent___id
   parent___parent___id
@@ -2272,6 +2455,86 @@ enum SitePageFieldsEnum {
   internal___mediaType
   internal___owner
   internal___type
+  isCreatedByStatefulCreatePages
+  context___institution___collection_uris
+  context___institution___name
+  context___institution___owner_uri
+  context___institution___rights___holder
+  context___institution___rights___statements
+  context___institution___uri
+  pluginCreator___id
+  pluginCreator___parent___id
+  pluginCreator___parent___parent___id
+  pluginCreator___parent___parent___children
+  pluginCreator___parent___children
+  pluginCreator___parent___children___id
+  pluginCreator___parent___children___children
+  pluginCreator___parent___internal___content
+  pluginCreator___parent___internal___contentDigest
+  pluginCreator___parent___internal___description
+  pluginCreator___parent___internal___fieldOwners
+  pluginCreator___parent___internal___ignoreType
+  pluginCreator___parent___internal___mediaType
+  pluginCreator___parent___internal___owner
+  pluginCreator___parent___internal___type
+  pluginCreator___children
+  pluginCreator___children___id
+  pluginCreator___children___parent___id
+  pluginCreator___children___parent___children
+  pluginCreator___children___children
+  pluginCreator___children___children___id
+  pluginCreator___children___children___children
+  pluginCreator___children___internal___content
+  pluginCreator___children___internal___contentDigest
+  pluginCreator___children___internal___description
+  pluginCreator___children___internal___fieldOwners
+  pluginCreator___children___internal___ignoreType
+  pluginCreator___children___internal___mediaType
+  pluginCreator___children___internal___owner
+  pluginCreator___children___internal___type
+  pluginCreator___internal___content
+  pluginCreator___internal___contentDigest
+  pluginCreator___internal___description
+  pluginCreator___internal___fieldOwners
+  pluginCreator___internal___ignoreType
+  pluginCreator___internal___mediaType
+  pluginCreator___internal___owner
+  pluginCreator___internal___type
+  pluginCreator___resolve
+  pluginCreator___name
+  pluginCreator___version
+  pluginCreator___pluginOptions___fonts
+  pluginCreator___pluginOptions___fonts___family
+  pluginCreator___pluginOptions___fonts___variants
+  pluginCreator___pluginOptions___outputPath
+  pluginCreator___pluginOptions___emitSchema___C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql
+  pluginCreator___pluginOptions___codegen
+  pluginCreator___pluginOptions___name
+  pluginCreator___pluginOptions___path
+  pluginCreator___pluginOptions___projectRoot
+  pluginCreator___pluginOptions___configDir
+  pluginCreator___pluginOptions___pathCheck
+  pluginCreator___nodeAPIs
+  pluginCreator___browserAPIs
+  pluginCreator___ssrAPIs
+  pluginCreator___pluginFilepath
+  pluginCreator___packageJson___name
+  pluginCreator___packageJson___description
+  pluginCreator___packageJson___version
+  pluginCreator___packageJson___main
+  pluginCreator___packageJson___license
+  pluginCreator___packageJson___dependencies
+  pluginCreator___packageJson___dependencies___name
+  pluginCreator___packageJson___dependencies___version
+  pluginCreator___packageJson___devDependencies
+  pluginCreator___packageJson___devDependencies___name
+  pluginCreator___packageJson___devDependencies___version
+  pluginCreator___packageJson___peerDependencies
+  pluginCreator___packageJson___peerDependencies___name
+  pluginCreator___packageJson___peerDependencies___version
+  pluginCreator___packageJson___keywords
+  pluginCreatorId
+  componentPath
 }
 
 input SitePageFilterInput {
@@ -2280,15 +2543,15 @@ input SitePageFilterInput {
   internalComponentName: StringQueryOperatorInput
   componentChunkName: StringQueryOperatorInput
   matchPath: StringQueryOperatorInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
   isCreatedByStatefulCreatePages: BooleanQueryOperatorInput
   context: SitePageContextFilterInput
   pluginCreator: SitePluginFilterInput
   pluginCreatorId: StringQueryOperatorInput
   componentPath: StringQueryOperatorInput
-  id: StringQueryOperatorInput
-  parent: NodeFilterInput
-  children: NodeFilterListInput
-  internal: InternalFilterInput
 }
 
 type SitePageGroupConnection {
@@ -2327,7 +2590,11 @@ type SitePluginConnection {
   nodes: [SitePlugin!]!
   pageInfo: PageInfo!
   distinct(field: SitePluginFieldsEnum!): [String!]!
-  group(skip: Int, limit: Int, field: SitePluginFieldsEnum!): [SitePluginGroupConnection!]!
+  group(
+    skip: Int
+    limit: Int
+    field: SitePluginFieldsEnum!
+  ): [SitePluginGroupConnection!]!
 }
 
 type SitePluginEdge {
@@ -2429,14 +2696,14 @@ enum SitePluginFieldsEnum {
   pluginOptions___fonts
   pluginOptions___fonts___family
   pluginOptions___fonts___variants
+  pluginOptions___outputPath
+  pluginOptions___emitSchema___C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql
   pluginOptions___codegen
   pluginOptions___name
   pluginOptions___path
   pluginOptions___projectRoot
   pluginOptions___configDir
   pluginOptions___pathCheck
-  pluginOptions___outputPath
-  pluginOptions___emitSchema___C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql
   nodeAPIs
   browserAPIs
   ssrAPIs
@@ -2551,14 +2818,14 @@ input SitePluginPackageJsonPeerDependenciesFilterListInput {
 
 type SitePluginPluginOptions {
   fonts: [SitePluginPluginOptionsFonts]
+  outputPath: String
+  emitSchema: SitePluginPluginOptionsEmitSchema
   codegen: Boolean
   name: String
   path: String
   projectRoot: String
   configDir: String
   pathCheck: Boolean
-  outputPath: String
-  emitSchema: SitePluginPluginOptionsEmitSchema
 }
 
 type SitePluginPluginOptionsEmitSchema {
@@ -2571,14 +2838,14 @@ input SitePluginPluginOptionsEmitSchemaFilterInput {
 
 input SitePluginPluginOptionsFilterInput {
   fonts: SitePluginPluginOptionsFontsFilterListInput
+  outputPath: StringQueryOperatorInput
+  emitSchema: SitePluginPluginOptionsEmitSchemaFilterInput
   codegen: BooleanQueryOperatorInput
   name: StringQueryOperatorInput
   path: StringQueryOperatorInput
   projectRoot: StringQueryOperatorInput
   configDir: StringQueryOperatorInput
   pathCheck: BooleanQueryOperatorInput
-  outputPath: StringQueryOperatorInput
-  emitSchema: SitePluginPluginOptionsEmitSchemaFilterInput
 }
 
 type SitePluginPluginOptionsFonts {
@@ -2663,7 +2930,11 @@ type UserJsonConnection {
   nodes: [UserJson!]!
   pageInfo: PageInfo!
   distinct(field: UserJsonFieldsEnum!): [String!]!
-  group(skip: Int, limit: Int, field: UserJsonFieldsEnum!): [UserJsonGroupConnection!]!
+  group(
+    skip: Int
+    limit: Int
+    field: UserJsonFieldsEnum!
+  ): [UserJsonGroupConnection!]!
 }
 
 type UserJsonEdge {
