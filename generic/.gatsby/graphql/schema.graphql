@@ -1,0 +1,3021 @@
+# Provides default value for input field.
+directive @default(value: JSON!) on INPUT_FIELD_DEFINITION
+
+# Add date formatting options.
+directive @dateformat(
+  formatString: String
+  locale: String
+  fromNow: Boolean
+  difference: String
+) on FIELD_DEFINITION
+
+# Link to node by foreign-key relation.
+directive @link(
+  by: String! = "id"
+  from: String
+  on: String
+) on FIELD_DEFINITION
+
+# Link to File node by relative path.
+directive @fileByRelativePath(from: String) on FIELD_DEFINITION
+
+# Proxy resolver from another field.
+directive @proxy(from: String!, fromNode: Boolean! = false) on FIELD_DEFINITION
+
+# Infer field types from field values.
+directive @infer(
+  # Don't add default resolvers to defined fields.
+  noDefaultResolvers: Boolean
+) on OBJECT
+
+# Do not infer field types from field values.
+directive @dontInfer(
+  # Don't add default resolvers to defined fields.
+  noDefaultResolvers: Boolean
+) on OBJECT
+
+# Define the mime-types handled by this type.
+directive @mimeTypes(
+  # The mime-types handled by this type.
+  types: [String!]! = []
+) on OBJECT
+
+# Define parent-child relations between types. This is used to add `child*` or
+# `children*` convenience fields like `childImageSharp`.
+directive @childOf(
+  # A list of mime-types this type is a child of. Usually these are the mime-types handled by a transformer plugin.
+  mimeTypes: [String!]! = []
+
+  # A list of types this type is a child of. Usually these are the types handled by a transformer plugin.
+  types: [String!]! = []
+
+  # Specifies whether a parent can have multiple children of this type or not.
+  many: Boolean! = false
+) on OBJECT
+
+# Adds root query fields for an interface. All implementing types must also implement the Node interface.
+directive @nodeInterface on INTERFACE
+
+input BooleanQueryOperatorInput {
+  eq: Boolean
+  ne: Boolean
+  in: [Boolean]
+  nin: [Boolean]
+}
+
+type CollectionJson implements Node {
+  object_uris: [String!]!
+  uri: String
+  title: String
+  rights: CollectionJsonRights
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+type CollectionJsonConnection {
+  totalCount: Int!
+  edges: [CollectionJsonEdge!]!
+  nodes: [CollectionJson!]!
+  pageInfo: PageInfo!
+  distinct(field: CollectionJsonFieldsEnum!): [String!]!
+  group(
+    skip: Int
+    limit: Int
+    field: CollectionJsonFieldsEnum!
+  ): [CollectionJsonGroupConnection!]!
+}
+
+type CollectionJsonEdge {
+  next: CollectionJson
+  node: CollectionJson!
+  previous: CollectionJson
+}
+
+enum CollectionJsonFieldsEnum {
+  object_uris
+  uri
+  title
+  rights___holder
+  rights___statements
+  id
+  parent___id
+  parent___parent___id
+  parent___parent___parent___id
+  parent___parent___parent___children
+  parent___parent___children
+  parent___parent___children___id
+  parent___parent___children___children
+  parent___parent___internal___content
+  parent___parent___internal___contentDigest
+  parent___parent___internal___description
+  parent___parent___internal___fieldOwners
+  parent___parent___internal___ignoreType
+  parent___parent___internal___mediaType
+  parent___parent___internal___owner
+  parent___parent___internal___type
+  parent___children
+  parent___children___id
+  parent___children___parent___id
+  parent___children___parent___children
+  parent___children___children
+  parent___children___children___id
+  parent___children___children___children
+  parent___children___internal___content
+  parent___children___internal___contentDigest
+  parent___children___internal___description
+  parent___children___internal___fieldOwners
+  parent___children___internal___ignoreType
+  parent___children___internal___mediaType
+  parent___children___internal___owner
+  parent___children___internal___type
+  parent___internal___content
+  parent___internal___contentDigest
+  parent___internal___description
+  parent___internal___fieldOwners
+  parent___internal___ignoreType
+  parent___internal___mediaType
+  parent___internal___owner
+  parent___internal___type
+  children
+  children___id
+  children___parent___id
+  children___parent___parent___id
+  children___parent___parent___children
+  children___parent___children
+  children___parent___children___id
+  children___parent___children___children
+  children___parent___internal___content
+  children___parent___internal___contentDigest
+  children___parent___internal___description
+  children___parent___internal___fieldOwners
+  children___parent___internal___ignoreType
+  children___parent___internal___mediaType
+  children___parent___internal___owner
+  children___parent___internal___type
+  children___children
+  children___children___id
+  children___children___parent___id
+  children___children___parent___children
+  children___children___children
+  children___children___children___id
+  children___children___children___children
+  children___children___internal___content
+  children___children___internal___contentDigest
+  children___children___internal___description
+  children___children___internal___fieldOwners
+  children___children___internal___ignoreType
+  children___children___internal___mediaType
+  children___children___internal___owner
+  children___children___internal___type
+  children___internal___content
+  children___internal___contentDigest
+  children___internal___description
+  children___internal___fieldOwners
+  children___internal___ignoreType
+  children___internal___mediaType
+  children___internal___owner
+  children___internal___type
+  internal___content
+  internal___contentDigest
+  internal___description
+  internal___fieldOwners
+  internal___ignoreType
+  internal___mediaType
+  internal___owner
+  internal___type
+}
+
+input CollectionJsonFilterInput {
+  object_uris: StringQueryOperatorInput
+  uri: StringQueryOperatorInput
+  title: StringQueryOperatorInput
+  rights: CollectionJsonRightsFilterInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+type CollectionJsonGroupConnection {
+  totalCount: Int!
+  edges: [CollectionJsonEdge!]!
+  nodes: [CollectionJson!]!
+  pageInfo: PageInfo!
+  field: String!
+  fieldValue: String
+}
+
+type CollectionJsonRights {
+  holder: String!
+  statements: [String!]!
+}
+
+input CollectionJsonRightsFilterInput {
+  holder: StringQueryOperatorInput
+  statements: StringQueryOperatorInput
+}
+
+input CollectionJsonSortInput {
+  fields: [CollectionJsonFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
+}
+
+# A date string, such as 2007-12-03, compliant with the ISO 8601 standard for
+# representation of dates and times using the Gregorian calendar.
+scalar Date
+
+input DateQueryOperatorInput {
+  eq: Date
+  ne: Date
+  gt: Date
+  gte: Date
+  lt: Date
+  lte: Date
+  in: [Date]
+  nin: [Date]
+}
+
+type Directory implements Node {
+  sourceInstanceName: String!
+  absolutePath: String!
+  relativePath: String!
+  extension: String!
+  size: Int!
+  prettySize: String!
+  modifiedTime(
+    # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY
+    # MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for
+    # documentation for different tokens.
+    formatString: String
+
+    # Returns a string generated with Moment.js' `fromNow` function
+    fromNow: Boolean
+
+    # Returns the difference between this date and the current time. Defaults to
+    # "milliseconds" but you can also pass in as the measurement "years",
+    # "months", "weeks", "days", "hours", "minutes", and "seconds".
+    difference: String
+
+    # Configures the locale Moment.js will use to format the date.
+    locale: String
+  ): Date!
+  accessTime(
+    # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY
+    # MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for
+    # documentation for different tokens.
+    formatString: String
+
+    # Returns a string generated with Moment.js' `fromNow` function
+    fromNow: Boolean
+
+    # Returns the difference between this date and the current time. Defaults to
+    # "milliseconds" but you can also pass in as the measurement "years",
+    # "months", "weeks", "days", "hours", "minutes", and "seconds".
+    difference: String
+
+    # Configures the locale Moment.js will use to format the date.
+    locale: String
+  ): Date!
+  changeTime(
+    # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY
+    # MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for
+    # documentation for different tokens.
+    formatString: String
+
+    # Returns a string generated with Moment.js' `fromNow` function
+    fromNow: Boolean
+
+    # Returns the difference between this date and the current time. Defaults to
+    # "milliseconds" but you can also pass in as the measurement "years",
+    # "months", "weeks", "days", "hours", "minutes", and "seconds".
+    difference: String
+
+    # Configures the locale Moment.js will use to format the date.
+    locale: String
+  ): Date!
+  birthTime(
+    # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY
+    # MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for
+    # documentation for different tokens.
+    formatString: String
+
+    # Returns a string generated with Moment.js' `fromNow` function
+    fromNow: Boolean
+
+    # Returns the difference between this date and the current time. Defaults to
+    # "milliseconds" but you can also pass in as the measurement "years",
+    # "months", "weeks", "days", "hours", "minutes", and "seconds".
+    difference: String
+
+    # Configures the locale Moment.js will use to format the date.
+    locale: String
+  ): Date!
+  root: String!
+  dir: String!
+  base: String!
+  ext: String!
+  name: String!
+  relativeDirectory: String!
+  dev: Int!
+  mode: Int!
+  nlink: Int!
+  uid: Int!
+  gid: Int!
+  rdev: Int!
+  ino: Float!
+  atimeMs: Float!
+  mtimeMs: Float!
+  ctimeMs: Float!
+  atime(
+    # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY
+    # MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for
+    # documentation for different tokens.
+    formatString: String
+
+    # Returns a string generated with Moment.js' `fromNow` function
+    fromNow: Boolean
+
+    # Returns the difference between this date and the current time. Defaults to
+    # "milliseconds" but you can also pass in as the measurement "years",
+    # "months", "weeks", "days", "hours", "minutes", and "seconds".
+    difference: String
+
+    # Configures the locale Moment.js will use to format the date.
+    locale: String
+  ): Date!
+  mtime(
+    # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY
+    # MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for
+    # documentation for different tokens.
+    formatString: String
+
+    # Returns a string generated with Moment.js' `fromNow` function
+    fromNow: Boolean
+
+    # Returns the difference between this date and the current time. Defaults to
+    # "milliseconds" but you can also pass in as the measurement "years",
+    # "months", "weeks", "days", "hours", "minutes", and "seconds".
+    difference: String
+
+    # Configures the locale Moment.js will use to format the date.
+    locale: String
+  ): Date!
+  ctime(
+    # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY
+    # MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for
+    # documentation for different tokens.
+    formatString: String
+
+    # Returns a string generated with Moment.js' `fromNow` function
+    fromNow: Boolean
+
+    # Returns the difference between this date and the current time. Defaults to
+    # "milliseconds" but you can also pass in as the measurement "years",
+    # "months", "weeks", "days", "hours", "minutes", and "seconds".
+    difference: String
+
+    # Configures the locale Moment.js will use to format the date.
+    locale: String
+  ): Date!
+  birthtime: Date @deprecated(reason: "Use `birthTime` instead")
+  birthtimeMs: Float @deprecated(reason: "Use `birthTime` instead")
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+type DirectoryConnection {
+  totalCount: Int!
+  edges: [DirectoryEdge!]!
+  nodes: [Directory!]!
+  pageInfo: PageInfo!
+  distinct(field: DirectoryFieldsEnum!): [String!]!
+  group(
+    skip: Int
+    limit: Int
+    field: DirectoryFieldsEnum!
+  ): [DirectoryGroupConnection!]!
+}
+
+type DirectoryEdge {
+  next: Directory
+  node: Directory!
+  previous: Directory
+}
+
+enum DirectoryFieldsEnum {
+  sourceInstanceName
+  absolutePath
+  relativePath
+  extension
+  size
+  prettySize
+  modifiedTime
+  accessTime
+  changeTime
+  birthTime
+  root
+  dir
+  base
+  ext
+  name
+  relativeDirectory
+  dev
+  mode
+  nlink
+  uid
+  gid
+  rdev
+  ino
+  atimeMs
+  mtimeMs
+  ctimeMs
+  atime
+  mtime
+  ctime
+  birthtime
+  birthtimeMs
+  id
+  parent___id
+  parent___parent___id
+  parent___parent___parent___id
+  parent___parent___parent___children
+  parent___parent___children
+  parent___parent___children___id
+  parent___parent___children___children
+  parent___parent___internal___content
+  parent___parent___internal___contentDigest
+  parent___parent___internal___description
+  parent___parent___internal___fieldOwners
+  parent___parent___internal___ignoreType
+  parent___parent___internal___mediaType
+  parent___parent___internal___owner
+  parent___parent___internal___type
+  parent___children
+  parent___children___id
+  parent___children___parent___id
+  parent___children___parent___children
+  parent___children___children
+  parent___children___children___id
+  parent___children___children___children
+  parent___children___internal___content
+  parent___children___internal___contentDigest
+  parent___children___internal___description
+  parent___children___internal___fieldOwners
+  parent___children___internal___ignoreType
+  parent___children___internal___mediaType
+  parent___children___internal___owner
+  parent___children___internal___type
+  parent___internal___content
+  parent___internal___contentDigest
+  parent___internal___description
+  parent___internal___fieldOwners
+  parent___internal___ignoreType
+  parent___internal___mediaType
+  parent___internal___owner
+  parent___internal___type
+  children
+  children___id
+  children___parent___id
+  children___parent___parent___id
+  children___parent___parent___children
+  children___parent___children
+  children___parent___children___id
+  children___parent___children___children
+  children___parent___internal___content
+  children___parent___internal___contentDigest
+  children___parent___internal___description
+  children___parent___internal___fieldOwners
+  children___parent___internal___ignoreType
+  children___parent___internal___mediaType
+  children___parent___internal___owner
+  children___parent___internal___type
+  children___children
+  children___children___id
+  children___children___parent___id
+  children___children___parent___children
+  children___children___children
+  children___children___children___id
+  children___children___children___children
+  children___children___internal___content
+  children___children___internal___contentDigest
+  children___children___internal___description
+  children___children___internal___fieldOwners
+  children___children___internal___ignoreType
+  children___children___internal___mediaType
+  children___children___internal___owner
+  children___children___internal___type
+  children___internal___content
+  children___internal___contentDigest
+  children___internal___description
+  children___internal___fieldOwners
+  children___internal___ignoreType
+  children___internal___mediaType
+  children___internal___owner
+  children___internal___type
+  internal___content
+  internal___contentDigest
+  internal___description
+  internal___fieldOwners
+  internal___ignoreType
+  internal___mediaType
+  internal___owner
+  internal___type
+}
+
+input DirectoryFilterInput {
+  sourceInstanceName: StringQueryOperatorInput
+  absolutePath: StringQueryOperatorInput
+  relativePath: StringQueryOperatorInput
+  extension: StringQueryOperatorInput
+  size: IntQueryOperatorInput
+  prettySize: StringQueryOperatorInput
+  modifiedTime: DateQueryOperatorInput
+  accessTime: DateQueryOperatorInput
+  changeTime: DateQueryOperatorInput
+  birthTime: DateQueryOperatorInput
+  root: StringQueryOperatorInput
+  dir: StringQueryOperatorInput
+  base: StringQueryOperatorInput
+  ext: StringQueryOperatorInput
+  name: StringQueryOperatorInput
+  relativeDirectory: StringQueryOperatorInput
+  dev: IntQueryOperatorInput
+  mode: IntQueryOperatorInput
+  nlink: IntQueryOperatorInput
+  uid: IntQueryOperatorInput
+  gid: IntQueryOperatorInput
+  rdev: IntQueryOperatorInput
+  ino: FloatQueryOperatorInput
+  atimeMs: FloatQueryOperatorInput
+  mtimeMs: FloatQueryOperatorInput
+  ctimeMs: FloatQueryOperatorInput
+  atime: DateQueryOperatorInput
+  mtime: DateQueryOperatorInput
+  ctime: DateQueryOperatorInput
+  birthtime: DateQueryOperatorInput
+  birthtimeMs: FloatQueryOperatorInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+type DirectoryGroupConnection {
+  totalCount: Int!
+  edges: [DirectoryEdge!]!
+  nodes: [Directory!]!
+  pageInfo: PageInfo!
+  field: String!
+  fieldValue: String
+}
+
+input DirectorySortInput {
+  fields: [DirectoryFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
+}
+
+type File implements Node {
+  sourceInstanceName: String!
+  absolutePath: String!
+  relativePath: String!
+  extension: String!
+  size: Int!
+  prettySize: String!
+  modifiedTime(
+    # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY
+    # MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for
+    # documentation for different tokens.
+    formatString: String
+
+    # Returns a string generated with Moment.js' `fromNow` function
+    fromNow: Boolean
+
+    # Returns the difference between this date and the current time. Defaults to
+    # "milliseconds" but you can also pass in as the measurement "years",
+    # "months", "weeks", "days", "hours", "minutes", and "seconds".
+    difference: String
+
+    # Configures the locale Moment.js will use to format the date.
+    locale: String
+  ): Date!
+  accessTime(
+    # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY
+    # MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for
+    # documentation for different tokens.
+    formatString: String
+
+    # Returns a string generated with Moment.js' `fromNow` function
+    fromNow: Boolean
+
+    # Returns the difference between this date and the current time. Defaults to
+    # "milliseconds" but you can also pass in as the measurement "years",
+    # "months", "weeks", "days", "hours", "minutes", and "seconds".
+    difference: String
+
+    # Configures the locale Moment.js will use to format the date.
+    locale: String
+  ): Date!
+  changeTime(
+    # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY
+    # MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for
+    # documentation for different tokens.
+    formatString: String
+
+    # Returns a string generated with Moment.js' `fromNow` function
+    fromNow: Boolean
+
+    # Returns the difference between this date and the current time. Defaults to
+    # "milliseconds" but you can also pass in as the measurement "years",
+    # "months", "weeks", "days", "hours", "minutes", and "seconds".
+    difference: String
+
+    # Configures the locale Moment.js will use to format the date.
+    locale: String
+  ): Date!
+  birthTime(
+    # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY
+    # MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for
+    # documentation for different tokens.
+    formatString: String
+
+    # Returns a string generated with Moment.js' `fromNow` function
+    fromNow: Boolean
+
+    # Returns the difference between this date and the current time. Defaults to
+    # "milliseconds" but you can also pass in as the measurement "years",
+    # "months", "weeks", "days", "hours", "minutes", and "seconds".
+    difference: String
+
+    # Configures the locale Moment.js will use to format the date.
+    locale: String
+  ): Date!
+  root: String!
+  dir: String!
+  base: String!
+  ext: String!
+  name: String!
+  relativeDirectory: String!
+  dev: Int!
+  mode: Int!
+  nlink: Int!
+  uid: Int!
+  gid: Int!
+  rdev: Int!
+  ino: Float!
+  atimeMs: Float!
+  mtimeMs: Float!
+  ctimeMs: Float!
+  atime(
+    # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY
+    # MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for
+    # documentation for different tokens.
+    formatString: String
+
+    # Returns a string generated with Moment.js' `fromNow` function
+    fromNow: Boolean
+
+    # Returns the difference between this date and the current time. Defaults to
+    # "milliseconds" but you can also pass in as the measurement "years",
+    # "months", "weeks", "days", "hours", "minutes", and "seconds".
+    difference: String
+
+    # Configures the locale Moment.js will use to format the date.
+    locale: String
+  ): Date!
+  mtime(
+    # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY
+    # MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for
+    # documentation for different tokens.
+    formatString: String
+
+    # Returns a string generated with Moment.js' `fromNow` function
+    fromNow: Boolean
+
+    # Returns the difference between this date and the current time. Defaults to
+    # "milliseconds" but you can also pass in as the measurement "years",
+    # "months", "weeks", "days", "hours", "minutes", and "seconds".
+    difference: String
+
+    # Configures the locale Moment.js will use to format the date.
+    locale: String
+  ): Date!
+  ctime(
+    # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY
+    # MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for
+    # documentation for different tokens.
+    formatString: String
+
+    # Returns a string generated with Moment.js' `fromNow` function
+    fromNow: Boolean
+
+    # Returns the difference between this date and the current time. Defaults to
+    # "milliseconds" but you can also pass in as the measurement "years",
+    # "months", "weeks", "days", "hours", "minutes", and "seconds".
+    difference: String
+
+    # Configures the locale Moment.js will use to format the date.
+    locale: String
+  ): Date!
+  birthtime: Date @deprecated(reason: "Use `birthTime` instead")
+  birthtimeMs: Float @deprecated(reason: "Use `birthTime` instead")
+
+  # Copy file to static directory and return public url to it
+  publicURL: String
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  childCollectionJson: CollectionJson
+  childInstitutionJson: InstitutionJson
+  childUserJson: UserJson
+  childImageJson: ImageJson
+  childObjectJson: ObjectJson
+}
+
+type FileConnection {
+  totalCount: Int!
+  edges: [FileEdge!]!
+  nodes: [File!]!
+  pageInfo: PageInfo!
+  distinct(field: FileFieldsEnum!): [String!]!
+  group(skip: Int, limit: Int, field: FileFieldsEnum!): [FileGroupConnection!]!
+}
+
+type FileEdge {
+  next: File
+  node: File!
+  previous: File
+}
+
+enum FileFieldsEnum {
+  sourceInstanceName
+  absolutePath
+  relativePath
+  extension
+  size
+  prettySize
+  modifiedTime
+  accessTime
+  changeTime
+  birthTime
+  root
+  dir
+  base
+  ext
+  name
+  relativeDirectory
+  dev
+  mode
+  nlink
+  uid
+  gid
+  rdev
+  ino
+  atimeMs
+  mtimeMs
+  ctimeMs
+  atime
+  mtime
+  ctime
+  birthtime
+  birthtimeMs
+  publicURL
+  id
+  parent___id
+  parent___parent___id
+  parent___parent___parent___id
+  parent___parent___parent___children
+  parent___parent___children
+  parent___parent___children___id
+  parent___parent___children___children
+  parent___parent___internal___content
+  parent___parent___internal___contentDigest
+  parent___parent___internal___description
+  parent___parent___internal___fieldOwners
+  parent___parent___internal___ignoreType
+  parent___parent___internal___mediaType
+  parent___parent___internal___owner
+  parent___parent___internal___type
+  parent___children
+  parent___children___id
+  parent___children___parent___id
+  parent___children___parent___children
+  parent___children___children
+  parent___children___children___id
+  parent___children___children___children
+  parent___children___internal___content
+  parent___children___internal___contentDigest
+  parent___children___internal___description
+  parent___children___internal___fieldOwners
+  parent___children___internal___ignoreType
+  parent___children___internal___mediaType
+  parent___children___internal___owner
+  parent___children___internal___type
+  parent___internal___content
+  parent___internal___contentDigest
+  parent___internal___description
+  parent___internal___fieldOwners
+  parent___internal___ignoreType
+  parent___internal___mediaType
+  parent___internal___owner
+  parent___internal___type
+  children
+  children___id
+  children___parent___id
+  children___parent___parent___id
+  children___parent___parent___children
+  children___parent___children
+  children___parent___children___id
+  children___parent___children___children
+  children___parent___internal___content
+  children___parent___internal___contentDigest
+  children___parent___internal___description
+  children___parent___internal___fieldOwners
+  children___parent___internal___ignoreType
+  children___parent___internal___mediaType
+  children___parent___internal___owner
+  children___parent___internal___type
+  children___children
+  children___children___id
+  children___children___parent___id
+  children___children___parent___children
+  children___children___children
+  children___children___children___id
+  children___children___children___children
+  children___children___internal___content
+  children___children___internal___contentDigest
+  children___children___internal___description
+  children___children___internal___fieldOwners
+  children___children___internal___ignoreType
+  children___children___internal___mediaType
+  children___children___internal___owner
+  children___children___internal___type
+  children___internal___content
+  children___internal___contentDigest
+  children___internal___description
+  children___internal___fieldOwners
+  children___internal___ignoreType
+  children___internal___mediaType
+  children___internal___owner
+  children___internal___type
+  internal___content
+  internal___contentDigest
+  internal___description
+  internal___fieldOwners
+  internal___ignoreType
+  internal___mediaType
+  internal___owner
+  internal___type
+  childCollectionJson___object_uris
+  childCollectionJson___uri
+  childCollectionJson___title
+  childCollectionJson___rights___holder
+  childCollectionJson___rights___statements
+  childCollectionJson___id
+  childCollectionJson___parent___id
+  childCollectionJson___parent___parent___id
+  childCollectionJson___parent___parent___children
+  childCollectionJson___parent___children
+  childCollectionJson___parent___children___id
+  childCollectionJson___parent___children___children
+  childCollectionJson___parent___internal___content
+  childCollectionJson___parent___internal___contentDigest
+  childCollectionJson___parent___internal___description
+  childCollectionJson___parent___internal___fieldOwners
+  childCollectionJson___parent___internal___ignoreType
+  childCollectionJson___parent___internal___mediaType
+  childCollectionJson___parent___internal___owner
+  childCollectionJson___parent___internal___type
+  childCollectionJson___children
+  childCollectionJson___children___id
+  childCollectionJson___children___parent___id
+  childCollectionJson___children___parent___children
+  childCollectionJson___children___children
+  childCollectionJson___children___children___id
+  childCollectionJson___children___children___children
+  childCollectionJson___children___internal___content
+  childCollectionJson___children___internal___contentDigest
+  childCollectionJson___children___internal___description
+  childCollectionJson___children___internal___fieldOwners
+  childCollectionJson___children___internal___ignoreType
+  childCollectionJson___children___internal___mediaType
+  childCollectionJson___children___internal___owner
+  childCollectionJson___children___internal___type
+  childCollectionJson___internal___content
+  childCollectionJson___internal___contentDigest
+  childCollectionJson___internal___description
+  childCollectionJson___internal___fieldOwners
+  childCollectionJson___internal___ignoreType
+  childCollectionJson___internal___mediaType
+  childCollectionJson___internal___owner
+  childCollectionJson___internal___type
+  childInstitutionJson___collection_uris
+  childInstitutionJson___name
+  childInstitutionJson___owner_uri
+  childInstitutionJson___uri
+  childInstitutionJson___rights___holder
+  childInstitutionJson___rights___statements
+  childInstitutionJson___id
+  childInstitutionJson___parent___id
+  childInstitutionJson___parent___parent___id
+  childInstitutionJson___parent___parent___children
+  childInstitutionJson___parent___children
+  childInstitutionJson___parent___children___id
+  childInstitutionJson___parent___children___children
+  childInstitutionJson___parent___internal___content
+  childInstitutionJson___parent___internal___contentDigest
+  childInstitutionJson___parent___internal___description
+  childInstitutionJson___parent___internal___fieldOwners
+  childInstitutionJson___parent___internal___ignoreType
+  childInstitutionJson___parent___internal___mediaType
+  childInstitutionJson___parent___internal___owner
+  childInstitutionJson___parent___internal___type
+  childInstitutionJson___children
+  childInstitutionJson___children___id
+  childInstitutionJson___children___parent___id
+  childInstitutionJson___children___parent___children
+  childInstitutionJson___children___children
+  childInstitutionJson___children___children___id
+  childInstitutionJson___children___children___children
+  childInstitutionJson___children___internal___content
+  childInstitutionJson___children___internal___contentDigest
+  childInstitutionJson___children___internal___description
+  childInstitutionJson___children___internal___fieldOwners
+  childInstitutionJson___children___internal___ignoreType
+  childInstitutionJson___children___internal___mediaType
+  childInstitutionJson___children___internal___owner
+  childInstitutionJson___children___internal___type
+  childInstitutionJson___internal___content
+  childInstitutionJson___internal___contentDigest
+  childInstitutionJson___internal___description
+  childInstitutionJson___internal___fieldOwners
+  childInstitutionJson___internal___ignoreType
+  childInstitutionJson___internal___mediaType
+  childInstitutionJson___internal___owner
+  childInstitutionJson___internal___type
+  childUserJson___id
+  childUserJson___parent___id
+  childUserJson___parent___parent___id
+  childUserJson___parent___parent___children
+  childUserJson___parent___children
+  childUserJson___parent___children___id
+  childUserJson___parent___children___children
+  childUserJson___parent___internal___content
+  childUserJson___parent___internal___contentDigest
+  childUserJson___parent___internal___description
+  childUserJson___parent___internal___fieldOwners
+  childUserJson___parent___internal___ignoreType
+  childUserJson___parent___internal___mediaType
+  childUserJson___parent___internal___owner
+  childUserJson___parent___internal___type
+  childUserJson___children
+  childUserJson___children___id
+  childUserJson___children___parent___id
+  childUserJson___children___parent___children
+  childUserJson___children___children
+  childUserJson___children___children___id
+  childUserJson___children___children___children
+  childUserJson___children___internal___content
+  childUserJson___children___internal___contentDigest
+  childUserJson___children___internal___description
+  childUserJson___children___internal___fieldOwners
+  childUserJson___children___internal___ignoreType
+  childUserJson___children___internal___mediaType
+  childUserJson___children___internal___owner
+  childUserJson___children___internal___type
+  childUserJson___internal___content
+  childUserJson___internal___contentDigest
+  childUserJson___internal___description
+  childUserJson___internal___fieldOwners
+  childUserJson___internal___ignoreType
+  childUserJson___internal___mediaType
+  childUserJson___internal___owner
+  childUserJson___internal___type
+  childUserJson___uri
+  childUserJson___email
+  childUserJson___name
+  childImageJson___id
+  childImageJson___parent___id
+  childImageJson___parent___parent___id
+  childImageJson___parent___parent___children
+  childImageJson___parent___children
+  childImageJson___parent___children___id
+  childImageJson___parent___children___children
+  childImageJson___parent___internal___content
+  childImageJson___parent___internal___contentDigest
+  childImageJson___parent___internal___description
+  childImageJson___parent___internal___fieldOwners
+  childImageJson___parent___internal___ignoreType
+  childImageJson___parent___internal___mediaType
+  childImageJson___parent___internal___owner
+  childImageJson___parent___internal___type
+  childImageJson___children
+  childImageJson___children___id
+  childImageJson___children___parent___id
+  childImageJson___children___parent___children
+  childImageJson___children___children
+  childImageJson___children___children___id
+  childImageJson___children___children___children
+  childImageJson___children___internal___content
+  childImageJson___children___internal___contentDigest
+  childImageJson___children___internal___description
+  childImageJson___children___internal___fieldOwners
+  childImageJson___children___internal___ignoreType
+  childImageJson___children___internal___mediaType
+  childImageJson___children___internal___owner
+  childImageJson___children___internal___type
+  childImageJson___internal___content
+  childImageJson___internal___contentDigest
+  childImageJson___internal___description
+  childImageJson___internal___fieldOwners
+  childImageJson___internal___ignoreType
+  childImageJson___internal___mediaType
+  childImageJson___internal___owner
+  childImageJson___internal___type
+  childImageJson___uri
+  childImageJson___derived_image_uris
+  childImageJson___exact_dimensions___height
+  childImageJson___exact_dimensions___width
+  childImageJson___max_dimensions___height
+  childImageJson___max_dimensions___width
+  childObjectJson___descriptions
+  childObjectJson___image_uris
+  childObjectJson___subjects
+  childObjectJson___title
+  childObjectJson___uri
+  childObjectJson___rights___holder
+  childObjectJson___rights___statements
+  childObjectJson___id
+  childObjectJson___parent___id
+  childObjectJson___parent___parent___id
+  childObjectJson___parent___parent___children
+  childObjectJson___parent___children
+  childObjectJson___parent___children___id
+  childObjectJson___parent___children___children
+  childObjectJson___parent___internal___content
+  childObjectJson___parent___internal___contentDigest
+  childObjectJson___parent___internal___description
+  childObjectJson___parent___internal___fieldOwners
+  childObjectJson___parent___internal___ignoreType
+  childObjectJson___parent___internal___mediaType
+  childObjectJson___parent___internal___owner
+  childObjectJson___parent___internal___type
+  childObjectJson___children
+  childObjectJson___children___id
+  childObjectJson___children___parent___id
+  childObjectJson___children___parent___children
+  childObjectJson___children___children
+  childObjectJson___children___children___id
+  childObjectJson___children___children___children
+  childObjectJson___children___internal___content
+  childObjectJson___children___internal___contentDigest
+  childObjectJson___children___internal___description
+  childObjectJson___children___internal___fieldOwners
+  childObjectJson___children___internal___ignoreType
+  childObjectJson___children___internal___mediaType
+  childObjectJson___children___internal___owner
+  childObjectJson___children___internal___type
+  childObjectJson___internal___content
+  childObjectJson___internal___contentDigest
+  childObjectJson___internal___description
+  childObjectJson___internal___fieldOwners
+  childObjectJson___internal___ignoreType
+  childObjectJson___internal___mediaType
+  childObjectJson___internal___owner
+  childObjectJson___internal___type
+}
+
+input FileFilterInput {
+  sourceInstanceName: StringQueryOperatorInput
+  absolutePath: StringQueryOperatorInput
+  relativePath: StringQueryOperatorInput
+  extension: StringQueryOperatorInput
+  size: IntQueryOperatorInput
+  prettySize: StringQueryOperatorInput
+  modifiedTime: DateQueryOperatorInput
+  accessTime: DateQueryOperatorInput
+  changeTime: DateQueryOperatorInput
+  birthTime: DateQueryOperatorInput
+  root: StringQueryOperatorInput
+  dir: StringQueryOperatorInput
+  base: StringQueryOperatorInput
+  ext: StringQueryOperatorInput
+  name: StringQueryOperatorInput
+  relativeDirectory: StringQueryOperatorInput
+  dev: IntQueryOperatorInput
+  mode: IntQueryOperatorInput
+  nlink: IntQueryOperatorInput
+  uid: IntQueryOperatorInput
+  gid: IntQueryOperatorInput
+  rdev: IntQueryOperatorInput
+  ino: FloatQueryOperatorInput
+  atimeMs: FloatQueryOperatorInput
+  mtimeMs: FloatQueryOperatorInput
+  ctimeMs: FloatQueryOperatorInput
+  atime: DateQueryOperatorInput
+  mtime: DateQueryOperatorInput
+  ctime: DateQueryOperatorInput
+  birthtime: DateQueryOperatorInput
+  birthtimeMs: FloatQueryOperatorInput
+  publicURL: StringQueryOperatorInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+  childCollectionJson: CollectionJsonFilterInput
+  childInstitutionJson: InstitutionJsonFilterInput
+  childUserJson: UserJsonFilterInput
+  childImageJson: ImageJsonFilterInput
+  childObjectJson: ObjectJsonFilterInput
+}
+
+type FileGroupConnection {
+  totalCount: Int!
+  edges: [FileEdge!]!
+  nodes: [File!]!
+  pageInfo: PageInfo!
+  field: String!
+  fieldValue: String
+}
+
+input FileSortInput {
+  fields: [FileFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
+}
+
+input FloatQueryOperatorInput {
+  eq: Float
+  ne: Float
+  gt: Float
+  gte: Float
+  lt: Float
+  lte: Float
+  in: [Float]
+  nin: [Float]
+}
+
+type ImageJson implements Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  uri: String
+  derived_image_uris: [String]
+  exact_dimensions: ImageJsonExact_dimensions
+  max_dimensions: ImageJsonMax_dimensions
+}
+
+type ImageJsonConnection {
+  totalCount: Int!
+  edges: [ImageJsonEdge!]!
+  nodes: [ImageJson!]!
+  pageInfo: PageInfo!
+  distinct(field: ImageJsonFieldsEnum!): [String!]!
+  group(
+    skip: Int
+    limit: Int
+    field: ImageJsonFieldsEnum!
+  ): [ImageJsonGroupConnection!]!
+}
+
+type ImageJsonEdge {
+  next: ImageJson
+  node: ImageJson!
+  previous: ImageJson
+}
+
+type ImageJsonExact_dimensions {
+  height: Int
+  width: Int
+}
+
+input ImageJsonExact_dimensionsFilterInput {
+  height: IntQueryOperatorInput
+  width: IntQueryOperatorInput
+}
+
+enum ImageJsonFieldsEnum {
+  id
+  parent___id
+  parent___parent___id
+  parent___parent___parent___id
+  parent___parent___parent___children
+  parent___parent___children
+  parent___parent___children___id
+  parent___parent___children___children
+  parent___parent___internal___content
+  parent___parent___internal___contentDigest
+  parent___parent___internal___description
+  parent___parent___internal___fieldOwners
+  parent___parent___internal___ignoreType
+  parent___parent___internal___mediaType
+  parent___parent___internal___owner
+  parent___parent___internal___type
+  parent___children
+  parent___children___id
+  parent___children___parent___id
+  parent___children___parent___children
+  parent___children___children
+  parent___children___children___id
+  parent___children___children___children
+  parent___children___internal___content
+  parent___children___internal___contentDigest
+  parent___children___internal___description
+  parent___children___internal___fieldOwners
+  parent___children___internal___ignoreType
+  parent___children___internal___mediaType
+  parent___children___internal___owner
+  parent___children___internal___type
+  parent___internal___content
+  parent___internal___contentDigest
+  parent___internal___description
+  parent___internal___fieldOwners
+  parent___internal___ignoreType
+  parent___internal___mediaType
+  parent___internal___owner
+  parent___internal___type
+  children
+  children___id
+  children___parent___id
+  children___parent___parent___id
+  children___parent___parent___children
+  children___parent___children
+  children___parent___children___id
+  children___parent___children___children
+  children___parent___internal___content
+  children___parent___internal___contentDigest
+  children___parent___internal___description
+  children___parent___internal___fieldOwners
+  children___parent___internal___ignoreType
+  children___parent___internal___mediaType
+  children___parent___internal___owner
+  children___parent___internal___type
+  children___children
+  children___children___id
+  children___children___parent___id
+  children___children___parent___children
+  children___children___children
+  children___children___children___id
+  children___children___children___children
+  children___children___internal___content
+  children___children___internal___contentDigest
+  children___children___internal___description
+  children___children___internal___fieldOwners
+  children___children___internal___ignoreType
+  children___children___internal___mediaType
+  children___children___internal___owner
+  children___children___internal___type
+  children___internal___content
+  children___internal___contentDigest
+  children___internal___description
+  children___internal___fieldOwners
+  children___internal___ignoreType
+  children___internal___mediaType
+  children___internal___owner
+  children___internal___type
+  internal___content
+  internal___contentDigest
+  internal___description
+  internal___fieldOwners
+  internal___ignoreType
+  internal___mediaType
+  internal___owner
+  internal___type
+  uri
+  derived_image_uris
+  exact_dimensions___height
+  exact_dimensions___width
+  max_dimensions___height
+  max_dimensions___width
+}
+
+input ImageJsonFilterInput {
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+  uri: StringQueryOperatorInput
+  derived_image_uris: StringQueryOperatorInput
+  exact_dimensions: ImageJsonExact_dimensionsFilterInput
+  max_dimensions: ImageJsonMax_dimensionsFilterInput
+}
+
+type ImageJsonGroupConnection {
+  totalCount: Int!
+  edges: [ImageJsonEdge!]!
+  nodes: [ImageJson!]!
+  pageInfo: PageInfo!
+  field: String!
+  fieldValue: String
+}
+
+type ImageJsonMax_dimensions {
+  height: Int
+  width: Int
+}
+
+input ImageJsonMax_dimensionsFilterInput {
+  height: IntQueryOperatorInput
+  width: IntQueryOperatorInput
+}
+
+input ImageJsonSortInput {
+  fields: [ImageJsonFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
+}
+
+type InstitutionJson implements Node {
+  collection_uris: [String!]!
+  name: String!
+  owner_uri: String!
+  uri: String!
+  rights: InstitutionJsonRights
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+type InstitutionJsonConnection {
+  totalCount: Int!
+  edges: [InstitutionJsonEdge!]!
+  nodes: [InstitutionJson!]!
+  pageInfo: PageInfo!
+  distinct(field: InstitutionJsonFieldsEnum!): [String!]!
+  group(
+    skip: Int
+    limit: Int
+    field: InstitutionJsonFieldsEnum!
+  ): [InstitutionJsonGroupConnection!]!
+}
+
+type InstitutionJsonEdge {
+  next: InstitutionJson
+  node: InstitutionJson!
+  previous: InstitutionJson
+}
+
+enum InstitutionJsonFieldsEnum {
+  collection_uris
+  name
+  owner_uri
+  uri
+  rights___holder
+  rights___statements
+  id
+  parent___id
+  parent___parent___id
+  parent___parent___parent___id
+  parent___parent___parent___children
+  parent___parent___children
+  parent___parent___children___id
+  parent___parent___children___children
+  parent___parent___internal___content
+  parent___parent___internal___contentDigest
+  parent___parent___internal___description
+  parent___parent___internal___fieldOwners
+  parent___parent___internal___ignoreType
+  parent___parent___internal___mediaType
+  parent___parent___internal___owner
+  parent___parent___internal___type
+  parent___children
+  parent___children___id
+  parent___children___parent___id
+  parent___children___parent___children
+  parent___children___children
+  parent___children___children___id
+  parent___children___children___children
+  parent___children___internal___content
+  parent___children___internal___contentDigest
+  parent___children___internal___description
+  parent___children___internal___fieldOwners
+  parent___children___internal___ignoreType
+  parent___children___internal___mediaType
+  parent___children___internal___owner
+  parent___children___internal___type
+  parent___internal___content
+  parent___internal___contentDigest
+  parent___internal___description
+  parent___internal___fieldOwners
+  parent___internal___ignoreType
+  parent___internal___mediaType
+  parent___internal___owner
+  parent___internal___type
+  children
+  children___id
+  children___parent___id
+  children___parent___parent___id
+  children___parent___parent___children
+  children___parent___children
+  children___parent___children___id
+  children___parent___children___children
+  children___parent___internal___content
+  children___parent___internal___contentDigest
+  children___parent___internal___description
+  children___parent___internal___fieldOwners
+  children___parent___internal___ignoreType
+  children___parent___internal___mediaType
+  children___parent___internal___owner
+  children___parent___internal___type
+  children___children
+  children___children___id
+  children___children___parent___id
+  children___children___parent___children
+  children___children___children
+  children___children___children___id
+  children___children___children___children
+  children___children___internal___content
+  children___children___internal___contentDigest
+  children___children___internal___description
+  children___children___internal___fieldOwners
+  children___children___internal___ignoreType
+  children___children___internal___mediaType
+  children___children___internal___owner
+  children___children___internal___type
+  children___internal___content
+  children___internal___contentDigest
+  children___internal___description
+  children___internal___fieldOwners
+  children___internal___ignoreType
+  children___internal___mediaType
+  children___internal___owner
+  children___internal___type
+  internal___content
+  internal___contentDigest
+  internal___description
+  internal___fieldOwners
+  internal___ignoreType
+  internal___mediaType
+  internal___owner
+  internal___type
+}
+
+input InstitutionJsonFilterInput {
+  collection_uris: StringQueryOperatorInput
+  name: StringQueryOperatorInput
+  owner_uri: StringQueryOperatorInput
+  uri: StringQueryOperatorInput
+  rights: InstitutionJsonRightsFilterInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+type InstitutionJsonGroupConnection {
+  totalCount: Int!
+  edges: [InstitutionJsonEdge!]!
+  nodes: [InstitutionJson!]!
+  pageInfo: PageInfo!
+  field: String!
+  fieldValue: String
+}
+
+type InstitutionJsonRights {
+  holder: String!
+  statements: [String!]!
+}
+
+input InstitutionJsonRightsFilterInput {
+  holder: StringQueryOperatorInput
+  statements: StringQueryOperatorInput
+}
+
+input InstitutionJsonSortInput {
+  fields: [InstitutionJsonFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
+}
+
+type Internal {
+  content: String
+  contentDigest: String!
+  description: String
+  fieldOwners: [String]
+  ignoreType: Boolean
+  mediaType: String
+  owner: String!
+  type: String!
+}
+
+input InternalFilterInput {
+  content: StringQueryOperatorInput
+  contentDigest: StringQueryOperatorInput
+  description: StringQueryOperatorInput
+  fieldOwners: StringQueryOperatorInput
+  ignoreType: BooleanQueryOperatorInput
+  mediaType: StringQueryOperatorInput
+  owner: StringQueryOperatorInput
+  type: StringQueryOperatorInput
+}
+
+input IntQueryOperatorInput {
+  eq: Int
+  ne: Int
+  gt: Int
+  gte: Int
+  lt: Int
+  lte: Int
+  in: [Int]
+  nin: [Int]
+}
+
+# The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+scalar JSON
+
+# Node Interface
+interface Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+input NodeFilterInput {
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+input NodeFilterListInput {
+  elemMatch: NodeFilterInput
+}
+
+type ObjectJson implements Node {
+  descriptions: [String!]
+  image_uris: [String!]
+  subjects: [String!]
+  title: String!
+  uri: String!
+  rights: ObjectJsonRights
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+type ObjectJsonConnection {
+  totalCount: Int!
+  edges: [ObjectJsonEdge!]!
+  nodes: [ObjectJson!]!
+  pageInfo: PageInfo!
+  distinct(field: ObjectJsonFieldsEnum!): [String!]!
+  group(
+    skip: Int
+    limit: Int
+    field: ObjectJsonFieldsEnum!
+  ): [ObjectJsonGroupConnection!]!
+}
+
+type ObjectJsonEdge {
+  next: ObjectJson
+  node: ObjectJson!
+  previous: ObjectJson
+}
+
+enum ObjectJsonFieldsEnum {
+  descriptions
+  image_uris
+  subjects
+  title
+  uri
+  rights___holder
+  rights___statements
+  id
+  parent___id
+  parent___parent___id
+  parent___parent___parent___id
+  parent___parent___parent___children
+  parent___parent___children
+  parent___parent___children___id
+  parent___parent___children___children
+  parent___parent___internal___content
+  parent___parent___internal___contentDigest
+  parent___parent___internal___description
+  parent___parent___internal___fieldOwners
+  parent___parent___internal___ignoreType
+  parent___parent___internal___mediaType
+  parent___parent___internal___owner
+  parent___parent___internal___type
+  parent___children
+  parent___children___id
+  parent___children___parent___id
+  parent___children___parent___children
+  parent___children___children
+  parent___children___children___id
+  parent___children___children___children
+  parent___children___internal___content
+  parent___children___internal___contentDigest
+  parent___children___internal___description
+  parent___children___internal___fieldOwners
+  parent___children___internal___ignoreType
+  parent___children___internal___mediaType
+  parent___children___internal___owner
+  parent___children___internal___type
+  parent___internal___content
+  parent___internal___contentDigest
+  parent___internal___description
+  parent___internal___fieldOwners
+  parent___internal___ignoreType
+  parent___internal___mediaType
+  parent___internal___owner
+  parent___internal___type
+  children
+  children___id
+  children___parent___id
+  children___parent___parent___id
+  children___parent___parent___children
+  children___parent___children
+  children___parent___children___id
+  children___parent___children___children
+  children___parent___internal___content
+  children___parent___internal___contentDigest
+  children___parent___internal___description
+  children___parent___internal___fieldOwners
+  children___parent___internal___ignoreType
+  children___parent___internal___mediaType
+  children___parent___internal___owner
+  children___parent___internal___type
+  children___children
+  children___children___id
+  children___children___parent___id
+  children___children___parent___children
+  children___children___children
+  children___children___children___id
+  children___children___children___children
+  children___children___internal___content
+  children___children___internal___contentDigest
+  children___children___internal___description
+  children___children___internal___fieldOwners
+  children___children___internal___ignoreType
+  children___children___internal___mediaType
+  children___children___internal___owner
+  children___children___internal___type
+  children___internal___content
+  children___internal___contentDigest
+  children___internal___description
+  children___internal___fieldOwners
+  children___internal___ignoreType
+  children___internal___mediaType
+  children___internal___owner
+  children___internal___type
+  internal___content
+  internal___contentDigest
+  internal___description
+  internal___fieldOwners
+  internal___ignoreType
+  internal___mediaType
+  internal___owner
+  internal___type
+}
+
+input ObjectJsonFilterInput {
+  descriptions: StringQueryOperatorInput
+  image_uris: StringQueryOperatorInput
+  subjects: StringQueryOperatorInput
+  title: StringQueryOperatorInput
+  uri: StringQueryOperatorInput
+  rights: ObjectJsonRightsFilterInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+type ObjectJsonGroupConnection {
+  totalCount: Int!
+  edges: [ObjectJsonEdge!]!
+  nodes: [ObjectJson!]!
+  pageInfo: PageInfo!
+  field: String!
+  fieldValue: String
+}
+
+type ObjectJsonRights {
+  holder: String!
+  statements: [String!]!
+}
+
+input ObjectJsonRightsFilterInput {
+  holder: StringQueryOperatorInput
+  statements: StringQueryOperatorInput
+}
+
+input ObjectJsonSortInput {
+  fields: [ObjectJsonFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
+}
+
+type PageInfo {
+  currentPage: Int!
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+  itemCount: Int!
+  pageCount: Int!
+  perPage: Int
+  totalCount: Int!
+}
+
+type Query {
+  file(
+    sourceInstanceName: StringQueryOperatorInput
+    absolutePath: StringQueryOperatorInput
+    relativePath: StringQueryOperatorInput
+    extension: StringQueryOperatorInput
+    size: IntQueryOperatorInput
+    prettySize: StringQueryOperatorInput
+    modifiedTime: DateQueryOperatorInput
+    accessTime: DateQueryOperatorInput
+    changeTime: DateQueryOperatorInput
+    birthTime: DateQueryOperatorInput
+    root: StringQueryOperatorInput
+    dir: StringQueryOperatorInput
+    base: StringQueryOperatorInput
+    ext: StringQueryOperatorInput
+    name: StringQueryOperatorInput
+    relativeDirectory: StringQueryOperatorInput
+    dev: IntQueryOperatorInput
+    mode: IntQueryOperatorInput
+    nlink: IntQueryOperatorInput
+    uid: IntQueryOperatorInput
+    gid: IntQueryOperatorInput
+    rdev: IntQueryOperatorInput
+    ino: FloatQueryOperatorInput
+    atimeMs: FloatQueryOperatorInput
+    mtimeMs: FloatQueryOperatorInput
+    ctimeMs: FloatQueryOperatorInput
+    atime: DateQueryOperatorInput
+    mtime: DateQueryOperatorInput
+    ctime: DateQueryOperatorInput
+    birthtime: DateQueryOperatorInput
+    birthtimeMs: FloatQueryOperatorInput
+    publicURL: StringQueryOperatorInput
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+    childCollectionJson: CollectionJsonFilterInput
+    childInstitutionJson: InstitutionJsonFilterInput
+    childUserJson: UserJsonFilterInput
+    childImageJson: ImageJsonFilterInput
+    childObjectJson: ObjectJsonFilterInput
+  ): File
+  allFile(
+    filter: FileFilterInput
+    sort: FileSortInput
+    skip: Int
+    limit: Int
+  ): FileConnection!
+  directory(
+    sourceInstanceName: StringQueryOperatorInput
+    absolutePath: StringQueryOperatorInput
+    relativePath: StringQueryOperatorInput
+    extension: StringQueryOperatorInput
+    size: IntQueryOperatorInput
+    prettySize: StringQueryOperatorInput
+    modifiedTime: DateQueryOperatorInput
+    accessTime: DateQueryOperatorInput
+    changeTime: DateQueryOperatorInput
+    birthTime: DateQueryOperatorInput
+    root: StringQueryOperatorInput
+    dir: StringQueryOperatorInput
+    base: StringQueryOperatorInput
+    ext: StringQueryOperatorInput
+    name: StringQueryOperatorInput
+    relativeDirectory: StringQueryOperatorInput
+    dev: IntQueryOperatorInput
+    mode: IntQueryOperatorInput
+    nlink: IntQueryOperatorInput
+    uid: IntQueryOperatorInput
+    gid: IntQueryOperatorInput
+    rdev: IntQueryOperatorInput
+    ino: FloatQueryOperatorInput
+    atimeMs: FloatQueryOperatorInput
+    mtimeMs: FloatQueryOperatorInput
+    ctimeMs: FloatQueryOperatorInput
+    atime: DateQueryOperatorInput
+    mtime: DateQueryOperatorInput
+    ctime: DateQueryOperatorInput
+    birthtime: DateQueryOperatorInput
+    birthtimeMs: FloatQueryOperatorInput
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+  ): Directory
+  allDirectory(
+    filter: DirectoryFilterInput
+    sort: DirectorySortInput
+    skip: Int
+    limit: Int
+  ): DirectoryConnection!
+  sitePage(
+    path: StringQueryOperatorInput
+    component: StringQueryOperatorInput
+    internalComponentName: StringQueryOperatorInput
+    componentChunkName: StringQueryOperatorInput
+    matchPath: StringQueryOperatorInput
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+    isCreatedByStatefulCreatePages: BooleanQueryOperatorInput
+    pluginCreator: SitePluginFilterInput
+    pluginCreatorId: StringQueryOperatorInput
+    componentPath: StringQueryOperatorInput
+  ): SitePage
+  allSitePage(
+    filter: SitePageFilterInput
+    sort: SitePageSortInput
+    skip: Int
+    limit: Int
+  ): SitePageConnection!
+  site(
+    buildTime: DateQueryOperatorInput
+    siteMetadata: SiteSiteMetadataFilterInput
+    port: IntQueryOperatorInput
+    host: StringQueryOperatorInput
+    polyfill: BooleanQueryOperatorInput
+    pathPrefix: StringQueryOperatorInput
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+  ): Site
+  allSite(
+    filter: SiteFilterInput
+    sort: SiteSortInput
+    skip: Int
+    limit: Int
+  ): SiteConnection!
+  collectionJson(
+    object_uris: StringQueryOperatorInput
+    uri: StringQueryOperatorInput
+    title: StringQueryOperatorInput
+    rights: CollectionJsonRightsFilterInput
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+  ): CollectionJson
+  allCollectionJson(
+    filter: CollectionJsonFilterInput
+    sort: CollectionJsonSortInput
+    skip: Int
+    limit: Int
+  ): CollectionJsonConnection!
+  institutionJson(
+    collection_uris: StringQueryOperatorInput
+    name: StringQueryOperatorInput
+    owner_uri: StringQueryOperatorInput
+    uri: StringQueryOperatorInput
+    rights: InstitutionJsonRightsFilterInput
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+  ): InstitutionJson
+  allInstitutionJson(
+    filter: InstitutionJsonFilterInput
+    sort: InstitutionJsonSortInput
+    skip: Int
+    limit: Int
+  ): InstitutionJsonConnection!
+  objectJson(
+    descriptions: StringQueryOperatorInput
+    image_uris: StringQueryOperatorInput
+    subjects: StringQueryOperatorInput
+    title: StringQueryOperatorInput
+    uri: StringQueryOperatorInput
+    rights: ObjectJsonRightsFilterInput
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+  ): ObjectJson
+  allObjectJson(
+    filter: ObjectJsonFilterInput
+    sort: ObjectJsonSortInput
+    skip: Int
+    limit: Int
+  ): ObjectJsonConnection!
+  imageJson(
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+    uri: StringQueryOperatorInput
+    derived_image_uris: StringQueryOperatorInput
+    exact_dimensions: ImageJsonExact_dimensionsFilterInput
+    max_dimensions: ImageJsonMax_dimensionsFilterInput
+  ): ImageJson
+  allImageJson(
+    filter: ImageJsonFilterInput
+    sort: ImageJsonSortInput
+    skip: Int
+    limit: Int
+  ): ImageJsonConnection!
+  userJson(
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+    uri: StringQueryOperatorInput
+    email: StringQueryOperatorInput
+    name: StringQueryOperatorInput
+  ): UserJson
+  allUserJson(
+    filter: UserJsonFilterInput
+    sort: UserJsonSortInput
+    skip: Int
+    limit: Int
+  ): UserJsonConnection!
+  siteBuildMetadata(
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+    buildTime: DateQueryOperatorInput
+  ): SiteBuildMetadata
+  allSiteBuildMetadata(
+    filter: SiteBuildMetadataFilterInput
+    sort: SiteBuildMetadataSortInput
+    skip: Int
+    limit: Int
+  ): SiteBuildMetadataConnection!
+  sitePlugin(
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+    resolve: StringQueryOperatorInput
+    name: StringQueryOperatorInput
+    version: StringQueryOperatorInput
+    pluginOptions: SitePluginPluginOptionsFilterInput
+    nodeAPIs: StringQueryOperatorInput
+    browserAPIs: StringQueryOperatorInput
+    ssrAPIs: StringQueryOperatorInput
+    pluginFilepath: StringQueryOperatorInput
+    packageJson: SitePluginPackageJsonFilterInput
+  ): SitePlugin
+  allSitePlugin(
+    filter: SitePluginFilterInput
+    sort: SitePluginSortInput
+    skip: Int
+    limit: Int
+  ): SitePluginConnection!
+}
+
+type Site implements Node {
+  buildTime(
+    # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY
+    # MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for
+    # documentation for different tokens.
+    formatString: String
+
+    # Returns a string generated with Moment.js' `fromNow` function
+    fromNow: Boolean
+
+    # Returns the difference between this date and the current time. Defaults to
+    # "milliseconds" but you can also pass in as the measurement "years",
+    # "months", "weeks", "days", "hours", "minutes", and "seconds".
+    difference: String
+
+    # Configures the locale Moment.js will use to format the date.
+    locale: String
+  ): Date
+  siteMetadata: SiteSiteMetadata
+  port: Int
+  host: String
+  polyfill: Boolean
+  pathPrefix: String
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+}
+
+type SiteBuildMetadata implements Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  buildTime(
+    # Format the date using Moment.js' date tokens, e.g. `date(formatString: "YYYY
+    # MMMM DD")`. See https://momentjs.com/docs/#/displaying/format/ for
+    # documentation for different tokens.
+    formatString: String
+
+    # Returns a string generated with Moment.js' `fromNow` function
+    fromNow: Boolean
+
+    # Returns the difference between this date and the current time. Defaults to
+    # "milliseconds" but you can also pass in as the measurement "years",
+    # "months", "weeks", "days", "hours", "minutes", and "seconds".
+    difference: String
+
+    # Configures the locale Moment.js will use to format the date.
+    locale: String
+  ): Date
+}
+
+type SiteBuildMetadataConnection {
+  totalCount: Int!
+  edges: [SiteBuildMetadataEdge!]!
+  nodes: [SiteBuildMetadata!]!
+  pageInfo: PageInfo!
+  distinct(field: SiteBuildMetadataFieldsEnum!): [String!]!
+  group(
+    skip: Int
+    limit: Int
+    field: SiteBuildMetadataFieldsEnum!
+  ): [SiteBuildMetadataGroupConnection!]!
+}
+
+type SiteBuildMetadataEdge {
+  next: SiteBuildMetadata
+  node: SiteBuildMetadata!
+  previous: SiteBuildMetadata
+}
+
+enum SiteBuildMetadataFieldsEnum {
+  id
+  parent___id
+  parent___parent___id
+  parent___parent___parent___id
+  parent___parent___parent___children
+  parent___parent___children
+  parent___parent___children___id
+  parent___parent___children___children
+  parent___parent___internal___content
+  parent___parent___internal___contentDigest
+  parent___parent___internal___description
+  parent___parent___internal___fieldOwners
+  parent___parent___internal___ignoreType
+  parent___parent___internal___mediaType
+  parent___parent___internal___owner
+  parent___parent___internal___type
+  parent___children
+  parent___children___id
+  parent___children___parent___id
+  parent___children___parent___children
+  parent___children___children
+  parent___children___children___id
+  parent___children___children___children
+  parent___children___internal___content
+  parent___children___internal___contentDigest
+  parent___children___internal___description
+  parent___children___internal___fieldOwners
+  parent___children___internal___ignoreType
+  parent___children___internal___mediaType
+  parent___children___internal___owner
+  parent___children___internal___type
+  parent___internal___content
+  parent___internal___contentDigest
+  parent___internal___description
+  parent___internal___fieldOwners
+  parent___internal___ignoreType
+  parent___internal___mediaType
+  parent___internal___owner
+  parent___internal___type
+  children
+  children___id
+  children___parent___id
+  children___parent___parent___id
+  children___parent___parent___children
+  children___parent___children
+  children___parent___children___id
+  children___parent___children___children
+  children___parent___internal___content
+  children___parent___internal___contentDigest
+  children___parent___internal___description
+  children___parent___internal___fieldOwners
+  children___parent___internal___ignoreType
+  children___parent___internal___mediaType
+  children___parent___internal___owner
+  children___parent___internal___type
+  children___children
+  children___children___id
+  children___children___parent___id
+  children___children___parent___children
+  children___children___children
+  children___children___children___id
+  children___children___children___children
+  children___children___internal___content
+  children___children___internal___contentDigest
+  children___children___internal___description
+  children___children___internal___fieldOwners
+  children___children___internal___ignoreType
+  children___children___internal___mediaType
+  children___children___internal___owner
+  children___children___internal___type
+  children___internal___content
+  children___internal___contentDigest
+  children___internal___description
+  children___internal___fieldOwners
+  children___internal___ignoreType
+  children___internal___mediaType
+  children___internal___owner
+  children___internal___type
+  internal___content
+  internal___contentDigest
+  internal___description
+  internal___fieldOwners
+  internal___ignoreType
+  internal___mediaType
+  internal___owner
+  internal___type
+  buildTime
+}
+
+input SiteBuildMetadataFilterInput {
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+  buildTime: DateQueryOperatorInput
+}
+
+type SiteBuildMetadataGroupConnection {
+  totalCount: Int!
+  edges: [SiteBuildMetadataEdge!]!
+  nodes: [SiteBuildMetadata!]!
+  pageInfo: PageInfo!
+  field: String!
+  fieldValue: String
+}
+
+input SiteBuildMetadataSortInput {
+  fields: [SiteBuildMetadataFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
+}
+
+type SiteConnection {
+  totalCount: Int!
+  edges: [SiteEdge!]!
+  nodes: [Site!]!
+  pageInfo: PageInfo!
+  distinct(field: SiteFieldsEnum!): [String!]!
+  group(skip: Int, limit: Int, field: SiteFieldsEnum!): [SiteGroupConnection!]!
+}
+
+type SiteEdge {
+  next: Site
+  node: Site!
+  previous: Site
+}
+
+enum SiteFieldsEnum {
+  buildTime
+  siteMetadata___author___name
+  siteMetadata___author___url
+  siteMetadata___author___email
+  siteMetadata___description
+  siteMetadata___gitHubUrl
+  siteMetadata___keywords
+  siteMetadata___title
+  port
+  host
+  polyfill
+  pathPrefix
+  id
+  parent___id
+  parent___parent___id
+  parent___parent___parent___id
+  parent___parent___parent___children
+  parent___parent___children
+  parent___parent___children___id
+  parent___parent___children___children
+  parent___parent___internal___content
+  parent___parent___internal___contentDigest
+  parent___parent___internal___description
+  parent___parent___internal___fieldOwners
+  parent___parent___internal___ignoreType
+  parent___parent___internal___mediaType
+  parent___parent___internal___owner
+  parent___parent___internal___type
+  parent___children
+  parent___children___id
+  parent___children___parent___id
+  parent___children___parent___children
+  parent___children___children
+  parent___children___children___id
+  parent___children___children___children
+  parent___children___internal___content
+  parent___children___internal___contentDigest
+  parent___children___internal___description
+  parent___children___internal___fieldOwners
+  parent___children___internal___ignoreType
+  parent___children___internal___mediaType
+  parent___children___internal___owner
+  parent___children___internal___type
+  parent___internal___content
+  parent___internal___contentDigest
+  parent___internal___description
+  parent___internal___fieldOwners
+  parent___internal___ignoreType
+  parent___internal___mediaType
+  parent___internal___owner
+  parent___internal___type
+  children
+  children___id
+  children___parent___id
+  children___parent___parent___id
+  children___parent___parent___children
+  children___parent___children
+  children___parent___children___id
+  children___parent___children___children
+  children___parent___internal___content
+  children___parent___internal___contentDigest
+  children___parent___internal___description
+  children___parent___internal___fieldOwners
+  children___parent___internal___ignoreType
+  children___parent___internal___mediaType
+  children___parent___internal___owner
+  children___parent___internal___type
+  children___children
+  children___children___id
+  children___children___parent___id
+  children___children___parent___children
+  children___children___children
+  children___children___children___id
+  children___children___children___children
+  children___children___internal___content
+  children___children___internal___contentDigest
+  children___children___internal___description
+  children___children___internal___fieldOwners
+  children___children___internal___ignoreType
+  children___children___internal___mediaType
+  children___children___internal___owner
+  children___children___internal___type
+  children___internal___content
+  children___internal___contentDigest
+  children___internal___description
+  children___internal___fieldOwners
+  children___internal___ignoreType
+  children___internal___mediaType
+  children___internal___owner
+  children___internal___type
+  internal___content
+  internal___contentDigest
+  internal___description
+  internal___fieldOwners
+  internal___ignoreType
+  internal___mediaType
+  internal___owner
+  internal___type
+}
+
+input SiteFilterInput {
+  buildTime: DateQueryOperatorInput
+  siteMetadata: SiteSiteMetadataFilterInput
+  port: IntQueryOperatorInput
+  host: StringQueryOperatorInput
+  polyfill: BooleanQueryOperatorInput
+  pathPrefix: StringQueryOperatorInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+}
+
+type SiteGroupConnection {
+  totalCount: Int!
+  edges: [SiteEdge!]!
+  nodes: [Site!]!
+  pageInfo: PageInfo!
+  field: String!
+  fieldValue: String
+}
+
+type SitePage implements Node {
+  path: String!
+  component: String!
+  internalComponentName: String!
+  componentChunkName: String!
+  matchPath: String
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  isCreatedByStatefulCreatePages: Boolean
+  pluginCreator: SitePlugin
+  pluginCreatorId: String
+  componentPath: String
+}
+
+type SitePageConnection {
+  totalCount: Int!
+  edges: [SitePageEdge!]!
+  nodes: [SitePage!]!
+  pageInfo: PageInfo!
+  distinct(field: SitePageFieldsEnum!): [String!]!
+  group(
+    skip: Int
+    limit: Int
+    field: SitePageFieldsEnum!
+  ): [SitePageGroupConnection!]!
+}
+
+type SitePageEdge {
+  next: SitePage
+  node: SitePage!
+  previous: SitePage
+}
+
+enum SitePageFieldsEnum {
+  path
+  component
+  internalComponentName
+  componentChunkName
+  matchPath
+  id
+  parent___id
+  parent___parent___id
+  parent___parent___parent___id
+  parent___parent___parent___children
+  parent___parent___children
+  parent___parent___children___id
+  parent___parent___children___children
+  parent___parent___internal___content
+  parent___parent___internal___contentDigest
+  parent___parent___internal___description
+  parent___parent___internal___fieldOwners
+  parent___parent___internal___ignoreType
+  parent___parent___internal___mediaType
+  parent___parent___internal___owner
+  parent___parent___internal___type
+  parent___children
+  parent___children___id
+  parent___children___parent___id
+  parent___children___parent___children
+  parent___children___children
+  parent___children___children___id
+  parent___children___children___children
+  parent___children___internal___content
+  parent___children___internal___contentDigest
+  parent___children___internal___description
+  parent___children___internal___fieldOwners
+  parent___children___internal___ignoreType
+  parent___children___internal___mediaType
+  parent___children___internal___owner
+  parent___children___internal___type
+  parent___internal___content
+  parent___internal___contentDigest
+  parent___internal___description
+  parent___internal___fieldOwners
+  parent___internal___ignoreType
+  parent___internal___mediaType
+  parent___internal___owner
+  parent___internal___type
+  children
+  children___id
+  children___parent___id
+  children___parent___parent___id
+  children___parent___parent___children
+  children___parent___children
+  children___parent___children___id
+  children___parent___children___children
+  children___parent___internal___content
+  children___parent___internal___contentDigest
+  children___parent___internal___description
+  children___parent___internal___fieldOwners
+  children___parent___internal___ignoreType
+  children___parent___internal___mediaType
+  children___parent___internal___owner
+  children___parent___internal___type
+  children___children
+  children___children___id
+  children___children___parent___id
+  children___children___parent___children
+  children___children___children
+  children___children___children___id
+  children___children___children___children
+  children___children___internal___content
+  children___children___internal___contentDigest
+  children___children___internal___description
+  children___children___internal___fieldOwners
+  children___children___internal___ignoreType
+  children___children___internal___mediaType
+  children___children___internal___owner
+  children___children___internal___type
+  children___internal___content
+  children___internal___contentDigest
+  children___internal___description
+  children___internal___fieldOwners
+  children___internal___ignoreType
+  children___internal___mediaType
+  children___internal___owner
+  children___internal___type
+  internal___content
+  internal___contentDigest
+  internal___description
+  internal___fieldOwners
+  internal___ignoreType
+  internal___mediaType
+  internal___owner
+  internal___type
+  isCreatedByStatefulCreatePages
+  pluginCreator___id
+  pluginCreator___parent___id
+  pluginCreator___parent___parent___id
+  pluginCreator___parent___parent___children
+  pluginCreator___parent___children
+  pluginCreator___parent___children___id
+  pluginCreator___parent___children___children
+  pluginCreator___parent___internal___content
+  pluginCreator___parent___internal___contentDigest
+  pluginCreator___parent___internal___description
+  pluginCreator___parent___internal___fieldOwners
+  pluginCreator___parent___internal___ignoreType
+  pluginCreator___parent___internal___mediaType
+  pluginCreator___parent___internal___owner
+  pluginCreator___parent___internal___type
+  pluginCreator___children
+  pluginCreator___children___id
+  pluginCreator___children___parent___id
+  pluginCreator___children___parent___children
+  pluginCreator___children___children
+  pluginCreator___children___children___id
+  pluginCreator___children___children___children
+  pluginCreator___children___internal___content
+  pluginCreator___children___internal___contentDigest
+  pluginCreator___children___internal___description
+  pluginCreator___children___internal___fieldOwners
+  pluginCreator___children___internal___ignoreType
+  pluginCreator___children___internal___mediaType
+  pluginCreator___children___internal___owner
+  pluginCreator___children___internal___type
+  pluginCreator___internal___content
+  pluginCreator___internal___contentDigest
+  pluginCreator___internal___description
+  pluginCreator___internal___fieldOwners
+  pluginCreator___internal___ignoreType
+  pluginCreator___internal___mediaType
+  pluginCreator___internal___owner
+  pluginCreator___internal___type
+  pluginCreator___resolve
+  pluginCreator___name
+  pluginCreator___version
+  pluginCreator___pluginOptions___fonts
+  pluginCreator___pluginOptions___fonts___family
+  pluginCreator___pluginOptions___fonts___variants
+  pluginCreator___pluginOptions___codegen
+  pluginCreator___pluginOptions___name
+  pluginCreator___pluginOptions___path
+  pluginCreator___pluginOptions___projectRoot
+  pluginCreator___pluginOptions___configDir
+  pluginCreator___pluginOptions___pathCheck
+  pluginCreator___pluginOptions___outputPath
+  pluginCreator___pluginOptions___emitSchema___C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_introspection_json
+  pluginCreator___pluginOptions___emitSchema___C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql
+  pluginCreator___nodeAPIs
+  pluginCreator___browserAPIs
+  pluginCreator___ssrAPIs
+  pluginCreator___pluginFilepath
+  pluginCreator___packageJson___name
+  pluginCreator___packageJson___description
+  pluginCreator___packageJson___version
+  pluginCreator___packageJson___main
+  pluginCreator___packageJson___license
+  pluginCreator___packageJson___dependencies
+  pluginCreator___packageJson___dependencies___name
+  pluginCreator___packageJson___dependencies___version
+  pluginCreator___packageJson___devDependencies
+  pluginCreator___packageJson___devDependencies___name
+  pluginCreator___packageJson___devDependencies___version
+  pluginCreator___packageJson___peerDependencies
+  pluginCreator___packageJson___peerDependencies___name
+  pluginCreator___packageJson___peerDependencies___version
+  pluginCreator___packageJson___keywords
+  pluginCreatorId
+  componentPath
+}
+
+input SitePageFilterInput {
+  path: StringQueryOperatorInput
+  component: StringQueryOperatorInput
+  internalComponentName: StringQueryOperatorInput
+  componentChunkName: StringQueryOperatorInput
+  matchPath: StringQueryOperatorInput
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+  isCreatedByStatefulCreatePages: BooleanQueryOperatorInput
+  pluginCreator: SitePluginFilterInput
+  pluginCreatorId: StringQueryOperatorInput
+  componentPath: StringQueryOperatorInput
+}
+
+type SitePageGroupConnection {
+  totalCount: Int!
+  edges: [SitePageEdge!]!
+  nodes: [SitePage!]!
+  pageInfo: PageInfo!
+  field: String!
+  fieldValue: String
+}
+
+input SitePageSortInput {
+  fields: [SitePageFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
+}
+
+type SitePlugin implements Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  resolve: String
+  name: String
+  version: String
+  pluginOptions: SitePluginPluginOptions
+  nodeAPIs: [String]
+  browserAPIs: [String]
+  ssrAPIs: [String]
+  pluginFilepath: String
+  packageJson: SitePluginPackageJson
+}
+
+type SitePluginConnection {
+  totalCount: Int!
+  edges: [SitePluginEdge!]!
+  nodes: [SitePlugin!]!
+  pageInfo: PageInfo!
+  distinct(field: SitePluginFieldsEnum!): [String!]!
+  group(
+    skip: Int
+    limit: Int
+    field: SitePluginFieldsEnum!
+  ): [SitePluginGroupConnection!]!
+}
+
+type SitePluginEdge {
+  next: SitePlugin
+  node: SitePlugin!
+  previous: SitePlugin
+}
+
+enum SitePluginFieldsEnum {
+  id
+  parent___id
+  parent___parent___id
+  parent___parent___parent___id
+  parent___parent___parent___children
+  parent___parent___children
+  parent___parent___children___id
+  parent___parent___children___children
+  parent___parent___internal___content
+  parent___parent___internal___contentDigest
+  parent___parent___internal___description
+  parent___parent___internal___fieldOwners
+  parent___parent___internal___ignoreType
+  parent___parent___internal___mediaType
+  parent___parent___internal___owner
+  parent___parent___internal___type
+  parent___children
+  parent___children___id
+  parent___children___parent___id
+  parent___children___parent___children
+  parent___children___children
+  parent___children___children___id
+  parent___children___children___children
+  parent___children___internal___content
+  parent___children___internal___contentDigest
+  parent___children___internal___description
+  parent___children___internal___fieldOwners
+  parent___children___internal___ignoreType
+  parent___children___internal___mediaType
+  parent___children___internal___owner
+  parent___children___internal___type
+  parent___internal___content
+  parent___internal___contentDigest
+  parent___internal___description
+  parent___internal___fieldOwners
+  parent___internal___ignoreType
+  parent___internal___mediaType
+  parent___internal___owner
+  parent___internal___type
+  children
+  children___id
+  children___parent___id
+  children___parent___parent___id
+  children___parent___parent___children
+  children___parent___children
+  children___parent___children___id
+  children___parent___children___children
+  children___parent___internal___content
+  children___parent___internal___contentDigest
+  children___parent___internal___description
+  children___parent___internal___fieldOwners
+  children___parent___internal___ignoreType
+  children___parent___internal___mediaType
+  children___parent___internal___owner
+  children___parent___internal___type
+  children___children
+  children___children___id
+  children___children___parent___id
+  children___children___parent___children
+  children___children___children
+  children___children___children___id
+  children___children___children___children
+  children___children___internal___content
+  children___children___internal___contentDigest
+  children___children___internal___description
+  children___children___internal___fieldOwners
+  children___children___internal___ignoreType
+  children___children___internal___mediaType
+  children___children___internal___owner
+  children___children___internal___type
+  children___internal___content
+  children___internal___contentDigest
+  children___internal___description
+  children___internal___fieldOwners
+  children___internal___ignoreType
+  children___internal___mediaType
+  children___internal___owner
+  children___internal___type
+  internal___content
+  internal___contentDigest
+  internal___description
+  internal___fieldOwners
+  internal___ignoreType
+  internal___mediaType
+  internal___owner
+  internal___type
+  resolve
+  name
+  version
+  pluginOptions___fonts
+  pluginOptions___fonts___family
+  pluginOptions___fonts___variants
+  pluginOptions___codegen
+  pluginOptions___name
+  pluginOptions___path
+  pluginOptions___projectRoot
+  pluginOptions___configDir
+  pluginOptions___pathCheck
+  pluginOptions___outputPath
+  pluginOptions___emitSchema___C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_introspection_json
+  pluginOptions___emitSchema___C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql
+  nodeAPIs
+  browserAPIs
+  ssrAPIs
+  pluginFilepath
+  packageJson___name
+  packageJson___description
+  packageJson___version
+  packageJson___main
+  packageJson___license
+  packageJson___dependencies
+  packageJson___dependencies___name
+  packageJson___dependencies___version
+  packageJson___devDependencies
+  packageJson___devDependencies___name
+  packageJson___devDependencies___version
+  packageJson___peerDependencies
+  packageJson___peerDependencies___name
+  packageJson___peerDependencies___version
+  packageJson___keywords
+}
+
+input SitePluginFilterInput {
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+  resolve: StringQueryOperatorInput
+  name: StringQueryOperatorInput
+  version: StringQueryOperatorInput
+  pluginOptions: SitePluginPluginOptionsFilterInput
+  nodeAPIs: StringQueryOperatorInput
+  browserAPIs: StringQueryOperatorInput
+  ssrAPIs: StringQueryOperatorInput
+  pluginFilepath: StringQueryOperatorInput
+  packageJson: SitePluginPackageJsonFilterInput
+}
+
+type SitePluginGroupConnection {
+  totalCount: Int!
+  edges: [SitePluginEdge!]!
+  nodes: [SitePlugin!]!
+  pageInfo: PageInfo!
+  field: String!
+  fieldValue: String
+}
+
+type SitePluginPackageJson {
+  name: String
+  description: String
+  version: String
+  main: String
+  license: String
+  dependencies: [SitePluginPackageJsonDependencies]
+  devDependencies: [SitePluginPackageJsonDevDependencies]
+  peerDependencies: [SitePluginPackageJsonPeerDependencies]
+  keywords: [String]
+}
+
+type SitePluginPackageJsonDependencies {
+  name: String
+  version: String
+}
+
+input SitePluginPackageJsonDependenciesFilterInput {
+  name: StringQueryOperatorInput
+  version: StringQueryOperatorInput
+}
+
+input SitePluginPackageJsonDependenciesFilterListInput {
+  elemMatch: SitePluginPackageJsonDependenciesFilterInput
+}
+
+type SitePluginPackageJsonDevDependencies {
+  name: String
+  version: String
+}
+
+input SitePluginPackageJsonDevDependenciesFilterInput {
+  name: StringQueryOperatorInput
+  version: StringQueryOperatorInput
+}
+
+input SitePluginPackageJsonDevDependenciesFilterListInput {
+  elemMatch: SitePluginPackageJsonDevDependenciesFilterInput
+}
+
+input SitePluginPackageJsonFilterInput {
+  name: StringQueryOperatorInput
+  description: StringQueryOperatorInput
+  version: StringQueryOperatorInput
+  main: StringQueryOperatorInput
+  license: StringQueryOperatorInput
+  dependencies: SitePluginPackageJsonDependenciesFilterListInput
+  devDependencies: SitePluginPackageJsonDevDependenciesFilterListInput
+  peerDependencies: SitePluginPackageJsonPeerDependenciesFilterListInput
+  keywords: StringQueryOperatorInput
+}
+
+type SitePluginPackageJsonPeerDependencies {
+  name: String
+  version: String
+}
+
+input SitePluginPackageJsonPeerDependenciesFilterInput {
+  name: StringQueryOperatorInput
+  version: StringQueryOperatorInput
+}
+
+input SitePluginPackageJsonPeerDependenciesFilterListInput {
+  elemMatch: SitePluginPackageJsonPeerDependenciesFilterInput
+}
+
+type SitePluginPluginOptions {
+  fonts: [SitePluginPluginOptionsFonts]
+  codegen: Boolean
+  name: String
+  path: String
+  projectRoot: String
+  configDir: String
+  pathCheck: Boolean
+  outputPath: String
+  emitSchema: SitePluginPluginOptionsEmitSchema
+}
+
+type SitePluginPluginOptionsEmitSchema {
+  C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_introspection_json: Boolean
+  C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql: Boolean
+}
+
+input SitePluginPluginOptionsEmitSchemaFilterInput {
+  C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_introspection_json: BooleanQueryOperatorInput
+  C__Users_minor_projects_personal_paradicms_gui_generic__gatsby_graphql_schema_graphql: BooleanQueryOperatorInput
+}
+
+input SitePluginPluginOptionsFilterInput {
+  fonts: SitePluginPluginOptionsFontsFilterListInput
+  codegen: BooleanQueryOperatorInput
+  name: StringQueryOperatorInput
+  path: StringQueryOperatorInput
+  projectRoot: StringQueryOperatorInput
+  configDir: StringQueryOperatorInput
+  pathCheck: BooleanQueryOperatorInput
+  outputPath: StringQueryOperatorInput
+  emitSchema: SitePluginPluginOptionsEmitSchemaFilterInput
+}
+
+type SitePluginPluginOptionsFonts {
+  family: String
+  variants: [String]
+}
+
+input SitePluginPluginOptionsFontsFilterInput {
+  family: StringQueryOperatorInput
+  variants: StringQueryOperatorInput
+}
+
+input SitePluginPluginOptionsFontsFilterListInput {
+  elemMatch: SitePluginPluginOptionsFontsFilterInput
+}
+
+input SitePluginSortInput {
+  fields: [SitePluginFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
+}
+
+type SiteSiteMetadata {
+  author: SiteSiteMetadataAuthor!
+  description: String!
+  gitHubUrl: String!
+  keywords: String!
+  title: String!
+}
+
+type SiteSiteMetadataAuthor {
+  name: String!
+  url: String!
+  email: String!
+}
+
+input SiteSiteMetadataAuthorFilterInput {
+  name: StringQueryOperatorInput
+  url: StringQueryOperatorInput
+  email: StringQueryOperatorInput
+}
+
+input SiteSiteMetadataFilterInput {
+  author: SiteSiteMetadataAuthorFilterInput
+  description: StringQueryOperatorInput
+  gitHubUrl: StringQueryOperatorInput
+  keywords: StringQueryOperatorInput
+  title: StringQueryOperatorInput
+}
+
+input SiteSortInput {
+  fields: [SiteFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
+}
+
+enum SortOrderEnum {
+  ASC
+  DESC
+}
+
+input StringQueryOperatorInput {
+  eq: String
+  ne: String
+  in: [String]
+  nin: [String]
+  regex: String
+  glob: String
+}
+
+type UserJson implements Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  uri: String
+  email: String
+  name: String
+}
+
+type UserJsonConnection {
+  totalCount: Int!
+  edges: [UserJsonEdge!]!
+  nodes: [UserJson!]!
+  pageInfo: PageInfo!
+  distinct(field: UserJsonFieldsEnum!): [String!]!
+  group(
+    skip: Int
+    limit: Int
+    field: UserJsonFieldsEnum!
+  ): [UserJsonGroupConnection!]!
+}
+
+type UserJsonEdge {
+  next: UserJson
+  node: UserJson!
+  previous: UserJson
+}
+
+enum UserJsonFieldsEnum {
+  id
+  parent___id
+  parent___parent___id
+  parent___parent___parent___id
+  parent___parent___parent___children
+  parent___parent___children
+  parent___parent___children___id
+  parent___parent___children___children
+  parent___parent___internal___content
+  parent___parent___internal___contentDigest
+  parent___parent___internal___description
+  parent___parent___internal___fieldOwners
+  parent___parent___internal___ignoreType
+  parent___parent___internal___mediaType
+  parent___parent___internal___owner
+  parent___parent___internal___type
+  parent___children
+  parent___children___id
+  parent___children___parent___id
+  parent___children___parent___children
+  parent___children___children
+  parent___children___children___id
+  parent___children___children___children
+  parent___children___internal___content
+  parent___children___internal___contentDigest
+  parent___children___internal___description
+  parent___children___internal___fieldOwners
+  parent___children___internal___ignoreType
+  parent___children___internal___mediaType
+  parent___children___internal___owner
+  parent___children___internal___type
+  parent___internal___content
+  parent___internal___contentDigest
+  parent___internal___description
+  parent___internal___fieldOwners
+  parent___internal___ignoreType
+  parent___internal___mediaType
+  parent___internal___owner
+  parent___internal___type
+  children
+  children___id
+  children___parent___id
+  children___parent___parent___id
+  children___parent___parent___children
+  children___parent___children
+  children___parent___children___id
+  children___parent___children___children
+  children___parent___internal___content
+  children___parent___internal___contentDigest
+  children___parent___internal___description
+  children___parent___internal___fieldOwners
+  children___parent___internal___ignoreType
+  children___parent___internal___mediaType
+  children___parent___internal___owner
+  children___parent___internal___type
+  children___children
+  children___children___id
+  children___children___parent___id
+  children___children___parent___children
+  children___children___children
+  children___children___children___id
+  children___children___children___children
+  children___children___internal___content
+  children___children___internal___contentDigest
+  children___children___internal___description
+  children___children___internal___fieldOwners
+  children___children___internal___ignoreType
+  children___children___internal___mediaType
+  children___children___internal___owner
+  children___children___internal___type
+  children___internal___content
+  children___internal___contentDigest
+  children___internal___description
+  children___internal___fieldOwners
+  children___internal___ignoreType
+  children___internal___mediaType
+  children___internal___owner
+  children___internal___type
+  internal___content
+  internal___contentDigest
+  internal___description
+  internal___fieldOwners
+  internal___ignoreType
+  internal___mediaType
+  internal___owner
+  internal___type
+  uri
+  email
+  name
+}
+
+input UserJsonFilterInput {
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+  uri: StringQueryOperatorInput
+  email: StringQueryOperatorInput
+  name: StringQueryOperatorInput
+}
+
+type UserJsonGroupConnection {
+  totalCount: Int!
+  edges: [UserJsonEdge!]!
+  nodes: [UserJson!]!
+  pageInfo: PageInfo!
+  field: String!
+  fieldValue: String
+}
+
+input UserJsonSortInput {
+  fields: [UserJsonFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
+}

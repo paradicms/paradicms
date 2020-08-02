@@ -38,10 +38,10 @@ const gatsbyConfig: ITSConfigFn<
       resolve: `gatsby-plugin-typegen`,
       options: {
         outputPath: `${projectRoot}/.gatsby/graphql/types.ts`,
-        // emitSchema: {
-        //   [`${projectRoot}/.gatsby/graphql/introspection.json`]: true,
-        //   [`${projectRoot}/.gatsby/graphql/schema.graphql`]: true,
-        // },
+        emitSchema: {
+          // [`${projectRoot}/.gatsby/graphql/introspection.json`]: true,
+          [`${projectRoot}/.gatsby/graphql/schema.graphql`]: true,
+        },
         // emitPluginDocuments: {
         //   [`${projectRoot}/.gatsby/graphql/plugin-documents.graphql`]: true,
         // },
