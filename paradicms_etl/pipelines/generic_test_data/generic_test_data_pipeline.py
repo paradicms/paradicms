@@ -24,7 +24,7 @@ class GenericTestDataPipeline(_Pipeline):
                         clean=True,
                         gatsby_js=True,
                         pipeline_id=self.__ID,
-                        root_directory_path=root_dir_path / "gui" / "generic" / "src" / "data"
+                        root_directory_path=root_dir_path / "gui" / "generic" / "src" / "data" / "test"
                     )
                 ),
                 pipeline_id=self.__ID
