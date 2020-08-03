@@ -3,13 +3,13 @@ import {Layout} from "~/components/layout/Layout";
 import {List, ListItem} from "@material-ui/core";
 import {Hrefs} from "~/Hrefs";
 import {Link} from "gatsby";
-import {CollectionSummary} from "~/models/collection/CollectionSummary";
-import {InstitutionSummary} from "~/models/institution/InstitutionSummary";
+import {Collection} from "~/models/collection/Collection";
+import {Institution} from "~/models/institution/Institution";
 
 const InstitutionPage: React.FunctionComponent<{
   pageContext: {
-    collections: ReadonlyArray<CollectionSummary>;
-    institution: InstitutionSummary;
+    collections: ReadonlyArray<Collection>;
+    institution: Institution;
   };
 }> = ({pageContext: {collections, institution}}) => {
   return (

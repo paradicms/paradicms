@@ -10,9 +10,7 @@ export const getInstitutions = async (
     {
       allInstitutionJson {
         nodes {
-          collection_uris
           name
-          owner_uri
           rights {
             holder
             statements
@@ -23,9 +21,8 @@ export const getInstitutions = async (
     }
   `);
 
-  if (result.data) {
-    return result.data.allInstitutionJson.nodes;
-  } else {
+  if (!result.data) {
     return Promise.reject(result.errors);
   }
+  return result.data.allInstitutionJson.nodes;
 };

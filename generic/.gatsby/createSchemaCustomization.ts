@@ -7,7 +7,7 @@ export const createSchemaCustomization = async (
   const {createTypes} = actions;
   createTypes(`
   type CollectionJson implements Node {
-    object_uris: [String!]!
+    institution_uri: String!
     title: String!
     uri: String!
   }  
@@ -18,9 +18,7 @@ export const createSchemaCustomization = async (
   }
   
   type InstitutionJson implements Node {
-    collection_uris: [String!]!
     name: String!
-    owner_uri: String!
     uri: String!
   }
 
@@ -30,8 +28,10 @@ export const createSchemaCustomization = async (
   }  
   
   type ObjectJson implements Node {
+    collection_uris: [String!]!
     descriptions: [String!]
     image_uris: [String!]
+    institution_uri: String!
     subjects: [String!]
     title: String!
     uri: String!
