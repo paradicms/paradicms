@@ -2,6 +2,7 @@ import {IMergePluginOptions, ITSConfigFn} from "gatsby-plugin-ts-config";
 import {PluginOptions as ITypegenPluginOptions} from "gatsby-plugin-typegen/types";
 import {FileSystemConfig} from "gatsby-source-filesystem";
 import * as path from "path";
+import {ObjectIndex} from "~/models/search/ObjectIndex";
 
 const gatsbyConfig: ITSConfigFn<
   "config",
@@ -34,6 +35,10 @@ const gatsbyConfig: ITSConfigFn<
       title: "Paradicms",
     },
     plugins: [
+      {
+        resolve: `gatsby-plugin-lunr`,
+        options: ObjectIndex.configOptions,
+      },
       "gatsby-plugin-material-ui",
       {
         resolve: `gatsby-plugin-prefetch-google-fonts`,
