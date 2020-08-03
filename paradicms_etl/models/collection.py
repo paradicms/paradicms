@@ -14,20 +14,16 @@ from ..namespace import CMS
 @dataclass_json
 @dataclass
 class Collection(_Model):
+    # Linking up to the parent (relational style )instead of down to child objects
+    # makes it easier to do page generation and search indexing downstream.
+    institution_uri: URIRef
     title: str
-    owner_uri: Optional[URIRef] = None
     rights: Optional[Rights] = None
-    object_uris: List[URIRef] = field(default_factory=list)
 
     def to_rdf(self, *, graph: Graph) -> Resource:
         resource = _Model.to_rdf(self, graph=graph)
         resource.add(RDF.type, CMS[self.__class__.__name__])
-        for object_uri in self.object_uris:
-            resource.add(CMS.object, object_uri)
-        if self.owner_uri is not None:
-            resource.add(CMS.owner, self.owner_uri)
-        else:
-            resource.add(CMS.owner, CMS.inherit)
+        graph.add((self.institution_uri, CMS.collection, self.uri))
         if self.rights is not None:
             self.rights.to_rdf(add_to_resource=resource)
         resource.add(DCTERMS.title, Literal(self.title))

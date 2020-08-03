@@ -7,21 +7,32 @@ from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.object import Object
 from paradicms_etl.models.rights import Rights
-from paradicms_etl.models.user import User
-from paradicms_etl.namespace import CMS
 
 
 class GenericTestDataTransformer(_Transformer):
     def transform(self):
-        institution = Institution(name="Test institution", owner_uri=CMS.public, uri=URIRef("http://example.com/institution"))
+        institution = Institution(name="Test institution", uri=URIRef("http://example.com/institution"))
         rights_statement_uri = URIRef("https://rightsstatements.org/page/InC-EDU/1.0/?language=en")
         institution.rights = Rights(holder="Institution rights holder", statements=("Institution rights", rights_statement_uri,))
+        yield institution
 
-        collection = Collection(title="Test collection", uri=URIRef("http://example.com/collection"))
+        collection = \
+            Collection(
+                institution_uri=institution.uri,
+                title="Test collection",
+                uri=URIRef("http://example.com/collection")
+            )
         collection.rights = Rights(holder="Collection rights holder", statements=("Collection rights", rights_statement_uri,))
+        yield collection
 
         for object_i in range(100): # Objects per page is 20
-            object_ = Object(title=f"Test object {object_i}", uri=URIRef(f"http://example.com/object{object_i}"))
+            object_ = \
+                Object(
+                    collection_uris=(collection.uri,),
+                    institution_uri=institution.uri,
+                    title=f"Test object {object_i}",
+                    uri=URIRef(f"http://example.com/object{object_i}")
+                )
             object_.descriptions.append(f"Test description {object_i}")
             object_.subjects.append(f"Test subject {object_i}")
             object_.rights = Rights(holder="Object rights holder", statements=("Object rights", rights_statement_uri,))
@@ -42,16 +53,3 @@ class GenericTestDataTransformer(_Transformer):
                 yield original
                 object_.image_uris.append(original.uri)
             yield object_
-            collection.object_uris.append(object_.uri)
-
-        yield collection
-
-        institution.collection_uris.append(collection.uri)
-        yield institution
-
-        yield \
-            User(
-                email="test@example.com",
-                name="Test user",
-                uri=URIRef("http://example.com/user")
-            )
