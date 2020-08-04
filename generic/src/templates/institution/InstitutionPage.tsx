@@ -8,7 +8,7 @@ import {Institution} from "~/models/institution/Institution";
 
 const InstitutionPage: React.FunctionComponent<{
   pageContext: {
-    collections: ReadonlyArray<Collection>;
+    collections: readonly Collection[];
     institution: Institution;
   };
 }> = ({pageContext: {collections, institution}}) => {

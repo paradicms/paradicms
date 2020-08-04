@@ -3,7 +3,7 @@ import {Institution} from "~/models/institution/Institution";
 
 export const getInstitutions = async (
   args: CreatePagesArgs
-): Promise<ReadonlyArray<Institution>> => {
+): Promise<readonly Institution[]> => {
   const {graphql} = args;
 
   const result = await graphql<Pick<GatsbyTypes.Query, "allInstitutionJson">>(`

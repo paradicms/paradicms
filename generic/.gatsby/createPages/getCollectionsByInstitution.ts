@@ -3,7 +3,7 @@ import {Collection} from "~/models/collection/Collection";
 
 export const getCollectionsByInstitution = async (
   args: CreatePagesArgs & {institutionUri: string}
-): Promise<ReadonlyArray<Collection>> => {
+): Promise<readonly Collection[]> => {
   const {graphql, institutionUri} = args;
 
   const result = await graphql<
