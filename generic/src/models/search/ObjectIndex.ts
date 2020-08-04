@@ -1,5 +1,14 @@
+import {Index} from "lunr";
+import {ObjectIndexDocument} from "~/models/search/ObjectIndexDocument";
+import {ObjectQuery} from "~/models/search/ObjectQuery";
+
+type Store = {[index: string]: ObjectIndexDocument};
+
 export class ObjectIndex {
-  private constructor(readonly index: Index) {}
+  private constructor(
+    private readonly index: Index,
+    private readonly store: Store
+  ) {}
 
   static get available() {
     return typeof window !== "undefined" && (window as any).__LUNR__;
@@ -9,6 +18,8 @@ export class ObjectIndex {
     // Fields to index. If store === true value will be stored in index file.
     // Attributes for custom indexing logic. See https://lunrjs.com/docs/lunr.Builder.html for details
     fields: [
+      {name: "collectionUri", store: true},
+      {name: "institutionUri", store: true},
       {name: "title", store: true},
       {name: "uri", store: true},
     ],
@@ -21,6 +32,9 @@ export class ObjectIndex {
     resolvers: {
       // For any node of type X, list how to resolve the fields' values
       ObjectJson: {
+        collectionUri: (node: GatsbyTypes.ObjectJson) =>
+          node.collection_uris[0],
+        institutionUri: (node: GatsbyTypes.ObjectJson) => node.institution_uri,
         title: (node: GatsbyTypes.ObjectJson) => node.title,
         uri: (node: GatsbyTypes.ObjectJson) => node.uri,
       },
@@ -28,12 +42,22 @@ export class ObjectIndex {
   };
 
   static async loaded(): Promise<ObjectIndex> {
-    (window as any).__LUNR__.__loaded.then((lunr: any) => {
+    return (window as any).__LUNR__.__loaded.then((lunr: any) => {
       // @ts-ignore
       const index: Index = lunr.en.index;
       // @ts-ignore
-      const store: { [index: string]: DatasetSearchResult } = lunr.en.store;
+      const store: Store = lunr.en.store;
       return new ObjectIndex(index, store);
+    });
+  }
+
+  search(query: ObjectQuery): ObjectIndexDocument[] {
+    const lunrQuery = [];
+    if (query.text) {
+      lunrQuery.push(query.text);
     }
+    return this.index
+      .search(lunrQuery.join(" "))
+      .map(({ref}) => this.store[ref]);
   }
 }
