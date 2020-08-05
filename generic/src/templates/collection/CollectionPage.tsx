@@ -12,21 +12,13 @@ const CollectionPage: React.FunctionComponent<{
     objects: Object[];
   };
 }> = ({pageContext: {collection, institution, objects}}) => {
-  const collectionObjects = objects.filter(
-    object =>
-      object.institution_uri === institution.uri &&
-      object.collection_uris.some(
-        collectionUri => collectionUri === collection.uri
-      )
-  );
-
   return (
     <Layout
       breadcrumbs={{collection, institution}}
       documentTitle={"Collection - " + collection.title}
     >
       <List>
-        {collectionObjects.map(object => (
+        {objects.map(object => (
           <ListItem>
             <ListItemText>{object.title}</ListItemText>
           </ListItem>

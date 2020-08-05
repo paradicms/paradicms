@@ -3,6 +3,7 @@ import {Hrefs} from "~/Hrefs";
 import * as path from "path";
 import {getInstitutions} from "./getInstitutions";
 import {getCollectionsByInstitution} from "./getCollectionsByInstitution";
+import {getCollectionObjects} from "./getCollectionObjects";
 
 export const createCollectionPages = async (args: CreatePagesArgs) => {
   const {createPage} = args.actions;
@@ -12,11 +13,18 @@ export const createCollectionPages = async (args: CreatePagesArgs) => {
       Object.assign({}, args, {institutionUri: institution.uri})
     );
     for (const collection of collections) {
+      const objects = await getCollectionObjects(
+        Object.assign({}, args, {
+          collectionUri: collection.uri,
+          institutionUri: institution.uri,
+        })
+      );
       createPage({
         component: path.resolve("src/templates/collection/CollectionPage.tsx"),
         context: {
           collection,
           institution,
+          objects,
         },
         path: Hrefs.institution(institution).collection(collection).home,
       });
