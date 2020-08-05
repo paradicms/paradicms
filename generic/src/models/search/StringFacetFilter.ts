@@ -1,4 +1,4 @@
 export interface StringFacetFilter {
-  exclude?: string[] | null;
-  include?: string[] | null;
+  exclude?: readonly string[] | null;
+  include?: readonly string[] | null;
 }
