@@ -2267,6 +2267,7 @@ type SitePageConnection {
 type SitePageContext {
   collection: SitePageContextCollection
   institution: SitePageContextInstitution
+  objects: [SitePageContextObjects]
   collections: [SitePageContextCollections]
 }
 
@@ -2325,6 +2326,7 @@ input SitePageContextCollectionsRightsFilterInput {
 input SitePageContextFilterInput {
   collection: SitePageContextCollectionFilterInput
   institution: SitePageContextInstitutionFilterInput
+  objects: SitePageContextObjectsFilterListInput
   collections: SitePageContextCollectionsFilterListInput
 }
 
@@ -2346,6 +2348,42 @@ type SitePageContextInstitutionRights {
 }
 
 input SitePageContextInstitutionRightsFilterInput {
+  holder: StringQueryOperatorInput
+  statements: StringQueryOperatorInput
+}
+
+type SitePageContextObjects {
+  collection_uris: [String]
+  descriptions: [String]
+  image_uris: [String]
+  institution_uri: String
+  rights: SitePageContextObjectsRights
+  subjects: [String]
+  title: String
+  uri: String
+}
+
+input SitePageContextObjectsFilterInput {
+  collection_uris: StringQueryOperatorInput
+  descriptions: StringQueryOperatorInput
+  image_uris: StringQueryOperatorInput
+  institution_uri: StringQueryOperatorInput
+  rights: SitePageContextObjectsRightsFilterInput
+  subjects: StringQueryOperatorInput
+  title: StringQueryOperatorInput
+  uri: StringQueryOperatorInput
+}
+
+input SitePageContextObjectsFilterListInput {
+  elemMatch: SitePageContextObjectsFilterInput
+}
+
+type SitePageContextObjectsRights {
+  holder: String
+  statements: [String]
+}
+
+input SitePageContextObjectsRightsFilterInput {
   holder: StringQueryOperatorInput
   statements: StringQueryOperatorInput
 }
@@ -2458,6 +2496,16 @@ enum SitePageFieldsEnum {
   context___institution___rights___holder
   context___institution___rights___statements
   context___institution___uri
+  context___objects
+  context___objects___collection_uris
+  context___objects___descriptions
+  context___objects___image_uris
+  context___objects___institution_uri
+  context___objects___rights___holder
+  context___objects___rights___statements
+  context___objects___subjects
+  context___objects___title
+  context___objects___uri
   context___collections
   context___collections___institution_uri
   context___collections___rights___holder
