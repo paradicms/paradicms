@@ -78,55 +78,58 @@ const StringFacetPanel: React.FunctionComponent<{
   return (
     <FacetExpansionPanel id={id} title={title}>
       <List>
-        {allValues.sort().map(value => {
-          const onChangeValue = (
-            e: React.ChangeEvent<HTMLInputElement>
-          ): void => {
-            const newChecked = e.target.checked;
-            delete excludeSet[value];
-            delete includeSet[value];
-            if (newChecked) {
-              includeSet[value] = true;
-            } else {
-              excludeSet[value] = true;
-            }
+        {allValues
+          .concat()
+          .sort()
+          .map((value: string) => {
+            const onChangeValue = (
+              e: React.ChangeEvent<HTMLInputElement>
+            ): void => {
+              const newChecked = e.target.checked;
+              delete excludeSet[value];
+              delete includeSet[value];
+              if (newChecked) {
+                includeSet[value] = true;
+              } else {
+                excludeSet[value] = true;
+              }
 
-            const exclude = Object.keys(excludeSet).sort();
-            const include = Object.keys(includeSet).sort();
-            invariant(
-              include.length + exclude.length === allValues.length,
-              "sets should account for all values"
+              const exclude = Object.keys(excludeSet).sort();
+              const include = Object.keys(includeSet).sort();
+              invariant(
+                include.length + exclude.length === allValues.length,
+                "sets should account for all values"
+              );
+
+              if (include.length === allValues.length) {
+                onChange(undefined); // Implicitly include all values
+              } else if (exclude.length === allValues.length) {
+                onChange({exclude}); // Explicitly exclude all values
+              } else if (include.length >= exclude.length) {
+                invariant(exclude.length > 0, "must explicitly exclude");
+                // exclude includes fewer values. Those outside it will be included.
+                onChange({exclude});
+              } else {
+                // include includes fewer values. Those outside it will be excluded.
+                invariant(include.length > 0, "must explicitly include");
+                onChange({include});
+              }
+            };
+
+            return (
+              <ListItem className="w-100" key={value}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={!!includeSet[value]}
+                      onChange={onChangeValue}
+                    />
+                  }
+                  label={value}
+                />
+              </ListItem>
             );
-
-            if (include.length === allValues.length) {
-              onChange(undefined); // Implicitly include all values
-            } else if (exclude.length === allValues.length) {
-              onChange({exclude}); // Explicitly exclude all values
-            } else if (include.length >= exclude.length) {
-              invariant(exclude.length > 0, "must explicitly exclude");
-              // exclude includes fewer values. Those outside it will be included.
-              onChange({exclude});
-            } else {
-              // include includes fewer values. Those outside it will be excluded.
-              invariant(include.length > 0, "must explicitly include");
-              onChange({include});
-            }
-          };
-
-          return (
-            <ListItem className="w-100" key={value}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={!!includeSet[value]}
-                    onChange={onChangeValue}
-                  />
-                }
-                label={value}
-              />
-            </ListItem>
-          );
-        })}
+          })}
       </List>
     </FacetExpansionPanel>
   );
