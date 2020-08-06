@@ -67,6 +67,7 @@ type CollectionJson implements Node {
   institution_uri: String!
   title: String!
   uri: String!
+  rights: CollectionJsonRights
   id: ID!
   parent: Node
   children: [Node!]!
@@ -96,6 +97,8 @@ enum CollectionJsonFieldsEnum {
   institution_uri
   title
   uri
+  rights___holder
+  rights___statements
   id
   parent___id
   parent___parent___id
@@ -188,10 +191,15 @@ input CollectionJsonFilterInput {
   institution_uri: StringQueryOperatorInput
   title: StringQueryOperatorInput
   uri: StringQueryOperatorInput
+  rights: CollectionJsonRightsFilterInput
   id: StringQueryOperatorInput
   parent: NodeFilterInput
   children: NodeFilterListInput
   internal: InternalFilterInput
+}
+
+input CollectionJsonFilterListInput {
+  elemMatch: CollectionJsonFilterInput
 }
 
 type CollectionJsonGroupConnection {
@@ -206,6 +214,11 @@ type CollectionJsonGroupConnection {
 type CollectionJsonRights {
   holder: String!
   statements: [String!]!
+}
+
+input CollectionJsonRightsFilterInput {
+  holder: StringQueryOperatorInput
+  statements: StringQueryOperatorInput
 }
 
 input CollectionJsonSortInput {
@@ -720,6 +733,10 @@ type File implements Node {
   parent: Node
   children: [Node!]!
   internal: Internal!
+  childrenCollectionJson: [CollectionJson]
+  childrenInstitutionJson: [InstitutionJson]
+  childrenImageJson: [ImageJson]
+  childrenObjectJson: [ObjectJson]
 }
 
 type FileConnection {
@@ -856,6 +873,186 @@ enum FileFieldsEnum {
   internal___mediaType
   internal___owner
   internal___type
+  childrenCollectionJson
+  childrenCollectionJson___institution_uri
+  childrenCollectionJson___title
+  childrenCollectionJson___uri
+  childrenCollectionJson___rights___holder
+  childrenCollectionJson___rights___statements
+  childrenCollectionJson___id
+  childrenCollectionJson___parent___id
+  childrenCollectionJson___parent___parent___id
+  childrenCollectionJson___parent___parent___children
+  childrenCollectionJson___parent___children
+  childrenCollectionJson___parent___children___id
+  childrenCollectionJson___parent___children___children
+  childrenCollectionJson___parent___internal___content
+  childrenCollectionJson___parent___internal___contentDigest
+  childrenCollectionJson___parent___internal___description
+  childrenCollectionJson___parent___internal___fieldOwners
+  childrenCollectionJson___parent___internal___ignoreType
+  childrenCollectionJson___parent___internal___mediaType
+  childrenCollectionJson___parent___internal___owner
+  childrenCollectionJson___parent___internal___type
+  childrenCollectionJson___children
+  childrenCollectionJson___children___id
+  childrenCollectionJson___children___parent___id
+  childrenCollectionJson___children___parent___children
+  childrenCollectionJson___children___children
+  childrenCollectionJson___children___children___id
+  childrenCollectionJson___children___children___children
+  childrenCollectionJson___children___internal___content
+  childrenCollectionJson___children___internal___contentDigest
+  childrenCollectionJson___children___internal___description
+  childrenCollectionJson___children___internal___fieldOwners
+  childrenCollectionJson___children___internal___ignoreType
+  childrenCollectionJson___children___internal___mediaType
+  childrenCollectionJson___children___internal___owner
+  childrenCollectionJson___children___internal___type
+  childrenCollectionJson___internal___content
+  childrenCollectionJson___internal___contentDigest
+  childrenCollectionJson___internal___description
+  childrenCollectionJson___internal___fieldOwners
+  childrenCollectionJson___internal___ignoreType
+  childrenCollectionJson___internal___mediaType
+  childrenCollectionJson___internal___owner
+  childrenCollectionJson___internal___type
+  childrenInstitutionJson
+  childrenInstitutionJson___name
+  childrenInstitutionJson___uri
+  childrenInstitutionJson___rights___holder
+  childrenInstitutionJson___rights___statements
+  childrenInstitutionJson___id
+  childrenInstitutionJson___parent___id
+  childrenInstitutionJson___parent___parent___id
+  childrenInstitutionJson___parent___parent___children
+  childrenInstitutionJson___parent___children
+  childrenInstitutionJson___parent___children___id
+  childrenInstitutionJson___parent___children___children
+  childrenInstitutionJson___parent___internal___content
+  childrenInstitutionJson___parent___internal___contentDigest
+  childrenInstitutionJson___parent___internal___description
+  childrenInstitutionJson___parent___internal___fieldOwners
+  childrenInstitutionJson___parent___internal___ignoreType
+  childrenInstitutionJson___parent___internal___mediaType
+  childrenInstitutionJson___parent___internal___owner
+  childrenInstitutionJson___parent___internal___type
+  childrenInstitutionJson___children
+  childrenInstitutionJson___children___id
+  childrenInstitutionJson___children___parent___id
+  childrenInstitutionJson___children___parent___children
+  childrenInstitutionJson___children___children
+  childrenInstitutionJson___children___children___id
+  childrenInstitutionJson___children___children___children
+  childrenInstitutionJson___children___internal___content
+  childrenInstitutionJson___children___internal___contentDigest
+  childrenInstitutionJson___children___internal___description
+  childrenInstitutionJson___children___internal___fieldOwners
+  childrenInstitutionJson___children___internal___ignoreType
+  childrenInstitutionJson___children___internal___mediaType
+  childrenInstitutionJson___children___internal___owner
+  childrenInstitutionJson___children___internal___type
+  childrenInstitutionJson___internal___content
+  childrenInstitutionJson___internal___contentDigest
+  childrenInstitutionJson___internal___description
+  childrenInstitutionJson___internal___fieldOwners
+  childrenInstitutionJson___internal___ignoreType
+  childrenInstitutionJson___internal___mediaType
+  childrenInstitutionJson___internal___owner
+  childrenInstitutionJson___internal___type
+  childrenImageJson
+  childrenImageJson___id
+  childrenImageJson___parent___id
+  childrenImageJson___parent___parent___id
+  childrenImageJson___parent___parent___children
+  childrenImageJson___parent___children
+  childrenImageJson___parent___children___id
+  childrenImageJson___parent___children___children
+  childrenImageJson___parent___internal___content
+  childrenImageJson___parent___internal___contentDigest
+  childrenImageJson___parent___internal___description
+  childrenImageJson___parent___internal___fieldOwners
+  childrenImageJson___parent___internal___ignoreType
+  childrenImageJson___parent___internal___mediaType
+  childrenImageJson___parent___internal___owner
+  childrenImageJson___parent___internal___type
+  childrenImageJson___children
+  childrenImageJson___children___id
+  childrenImageJson___children___parent___id
+  childrenImageJson___children___parent___children
+  childrenImageJson___children___children
+  childrenImageJson___children___children___id
+  childrenImageJson___children___children___children
+  childrenImageJson___children___internal___content
+  childrenImageJson___children___internal___contentDigest
+  childrenImageJson___children___internal___description
+  childrenImageJson___children___internal___fieldOwners
+  childrenImageJson___children___internal___ignoreType
+  childrenImageJson___children___internal___mediaType
+  childrenImageJson___children___internal___owner
+  childrenImageJson___children___internal___type
+  childrenImageJson___internal___content
+  childrenImageJson___internal___contentDigest
+  childrenImageJson___internal___description
+  childrenImageJson___internal___fieldOwners
+  childrenImageJson___internal___ignoreType
+  childrenImageJson___internal___mediaType
+  childrenImageJson___internal___owner
+  childrenImageJson___internal___type
+  childrenImageJson___uri
+  childrenImageJson___derived_image_uris
+  childrenImageJson___exact_dimensions___height
+  childrenImageJson___exact_dimensions___width
+  childrenImageJson___max_dimensions___height
+  childrenImageJson___max_dimensions___width
+  childrenObjectJson
+  childrenObjectJson___collection_uris
+  childrenObjectJson___descriptions
+  childrenObjectJson___image_uris
+  childrenObjectJson___institution_uri
+  childrenObjectJson___subjects
+  childrenObjectJson___title
+  childrenObjectJson___uri
+  childrenObjectJson___rights___holder
+  childrenObjectJson___rights___statements
+  childrenObjectJson___id
+  childrenObjectJson___parent___id
+  childrenObjectJson___parent___parent___id
+  childrenObjectJson___parent___parent___children
+  childrenObjectJson___parent___children
+  childrenObjectJson___parent___children___id
+  childrenObjectJson___parent___children___children
+  childrenObjectJson___parent___internal___content
+  childrenObjectJson___parent___internal___contentDigest
+  childrenObjectJson___parent___internal___description
+  childrenObjectJson___parent___internal___fieldOwners
+  childrenObjectJson___parent___internal___ignoreType
+  childrenObjectJson___parent___internal___mediaType
+  childrenObjectJson___parent___internal___owner
+  childrenObjectJson___parent___internal___type
+  childrenObjectJson___children
+  childrenObjectJson___children___id
+  childrenObjectJson___children___parent___id
+  childrenObjectJson___children___parent___children
+  childrenObjectJson___children___children
+  childrenObjectJson___children___children___id
+  childrenObjectJson___children___children___children
+  childrenObjectJson___children___internal___content
+  childrenObjectJson___children___internal___contentDigest
+  childrenObjectJson___children___internal___description
+  childrenObjectJson___children___internal___fieldOwners
+  childrenObjectJson___children___internal___ignoreType
+  childrenObjectJson___children___internal___mediaType
+  childrenObjectJson___children___internal___owner
+  childrenObjectJson___children___internal___type
+  childrenObjectJson___internal___content
+  childrenObjectJson___internal___contentDigest
+  childrenObjectJson___internal___description
+  childrenObjectJson___internal___fieldOwners
+  childrenObjectJson___internal___ignoreType
+  childrenObjectJson___internal___mediaType
+  childrenObjectJson___internal___owner
+  childrenObjectJson___internal___type
 }
 
 input FileFilterInput {
@@ -895,6 +1092,10 @@ input FileFilterInput {
   parent: NodeFilterInput
   children: NodeFilterListInput
   internal: InternalFilterInput
+  childrenCollectionJson: CollectionJsonFilterListInput
+  childrenInstitutionJson: InstitutionJsonFilterListInput
+  childrenImageJson: ImageJsonFilterListInput
+  childrenObjectJson: ObjectJsonFilterListInput
 }
 
 type FileGroupConnection {
@@ -922,9 +1123,184 @@ input FloatQueryOperatorInput {
   nin: [Float]
 }
 
+type ImageJson implements Node {
+  id: ID!
+  parent: Node
+  children: [Node!]!
+  internal: Internal!
+  uri: String
+  derived_image_uris: [String]
+  exact_dimensions: ImageJsonExact_dimensions
+  max_dimensions: ImageJsonMax_dimensions
+}
+
+type ImageJsonConnection {
+  totalCount: Int!
+  edges: [ImageJsonEdge!]!
+  nodes: [ImageJson!]!
+  pageInfo: PageInfo!
+  distinct(field: ImageJsonFieldsEnum!): [String!]!
+  group(
+    skip: Int
+    limit: Int
+    field: ImageJsonFieldsEnum!
+  ): [ImageJsonGroupConnection!]!
+}
+
+type ImageJsonEdge {
+  next: ImageJson
+  node: ImageJson!
+  previous: ImageJson
+}
+
+type ImageJsonExact_dimensions {
+  height: Int
+  width: Int
+}
+
+input ImageJsonExact_dimensionsFilterInput {
+  height: IntQueryOperatorInput
+  width: IntQueryOperatorInput
+}
+
+enum ImageJsonFieldsEnum {
+  id
+  parent___id
+  parent___parent___id
+  parent___parent___parent___id
+  parent___parent___parent___children
+  parent___parent___children
+  parent___parent___children___id
+  parent___parent___children___children
+  parent___parent___internal___content
+  parent___parent___internal___contentDigest
+  parent___parent___internal___description
+  parent___parent___internal___fieldOwners
+  parent___parent___internal___ignoreType
+  parent___parent___internal___mediaType
+  parent___parent___internal___owner
+  parent___parent___internal___type
+  parent___children
+  parent___children___id
+  parent___children___parent___id
+  parent___children___parent___children
+  parent___children___children
+  parent___children___children___id
+  parent___children___children___children
+  parent___children___internal___content
+  parent___children___internal___contentDigest
+  parent___children___internal___description
+  parent___children___internal___fieldOwners
+  parent___children___internal___ignoreType
+  parent___children___internal___mediaType
+  parent___children___internal___owner
+  parent___children___internal___type
+  parent___internal___content
+  parent___internal___contentDigest
+  parent___internal___description
+  parent___internal___fieldOwners
+  parent___internal___ignoreType
+  parent___internal___mediaType
+  parent___internal___owner
+  parent___internal___type
+  children
+  children___id
+  children___parent___id
+  children___parent___parent___id
+  children___parent___parent___children
+  children___parent___children
+  children___parent___children___id
+  children___parent___children___children
+  children___parent___internal___content
+  children___parent___internal___contentDigest
+  children___parent___internal___description
+  children___parent___internal___fieldOwners
+  children___parent___internal___ignoreType
+  children___parent___internal___mediaType
+  children___parent___internal___owner
+  children___parent___internal___type
+  children___children
+  children___children___id
+  children___children___parent___id
+  children___children___parent___children
+  children___children___children
+  children___children___children___id
+  children___children___children___children
+  children___children___internal___content
+  children___children___internal___contentDigest
+  children___children___internal___description
+  children___children___internal___fieldOwners
+  children___children___internal___ignoreType
+  children___children___internal___mediaType
+  children___children___internal___owner
+  children___children___internal___type
+  children___internal___content
+  children___internal___contentDigest
+  children___internal___description
+  children___internal___fieldOwners
+  children___internal___ignoreType
+  children___internal___mediaType
+  children___internal___owner
+  children___internal___type
+  internal___content
+  internal___contentDigest
+  internal___description
+  internal___fieldOwners
+  internal___ignoreType
+  internal___mediaType
+  internal___owner
+  internal___type
+  uri
+  derived_image_uris
+  exact_dimensions___height
+  exact_dimensions___width
+  max_dimensions___height
+  max_dimensions___width
+}
+
+input ImageJsonFilterInput {
+  id: StringQueryOperatorInput
+  parent: NodeFilterInput
+  children: NodeFilterListInput
+  internal: InternalFilterInput
+  uri: StringQueryOperatorInput
+  derived_image_uris: StringQueryOperatorInput
+  exact_dimensions: ImageJsonExact_dimensionsFilterInput
+  max_dimensions: ImageJsonMax_dimensionsFilterInput
+}
+
+input ImageJsonFilterListInput {
+  elemMatch: ImageJsonFilterInput
+}
+
+type ImageJsonGroupConnection {
+  totalCount: Int!
+  edges: [ImageJsonEdge!]!
+  nodes: [ImageJson!]!
+  pageInfo: PageInfo!
+  field: String!
+  fieldValue: String
+}
+
+type ImageJsonMax_dimensions {
+  height: Int
+  width: Int
+}
+
+input ImageJsonMax_dimensionsFilterInput {
+  height: IntQueryOperatorInput
+  width: IntQueryOperatorInput
+}
+
+input ImageJsonSortInput {
+  fields: [ImageJsonFieldsEnum]
+  order: [SortOrderEnum] = [ASC]
+}
+
 type InstitutionJson implements Node {
   name: String!
   uri: String!
+  rights: InstitutionJsonRights
   id: ID!
   parent: Node
   children: [Node!]!
@@ -953,6 +1329,8 @@ type InstitutionJsonEdge {
 enum InstitutionJsonFieldsEnum {
   name
   uri
+  rights___holder
+  rights___statements
   id
   parent___id
   parent___parent___id
@@ -1044,10 +1422,15 @@ enum InstitutionJsonFieldsEnum {
 input InstitutionJsonFilterInput {
   name: StringQueryOperatorInput
   uri: StringQueryOperatorInput
+  rights: InstitutionJsonRightsFilterInput
   id: StringQueryOperatorInput
   parent: NodeFilterInput
   children: NodeFilterListInput
   internal: InternalFilterInput
+}
+
+input InstitutionJsonFilterListInput {
+  elemMatch: InstitutionJsonFilterInput
 }
 
 type InstitutionJsonGroupConnection {
@@ -1062,6 +1445,11 @@ type InstitutionJsonGroupConnection {
 type InstitutionJsonRights {
   holder: String!
   statements: [String!]!
+}
+
+input InstitutionJsonRightsFilterInput {
+  holder: StringQueryOperatorInput
+  statements: StringQueryOperatorInput
 }
 
 input InstitutionJsonSortInput {
@@ -1132,6 +1520,7 @@ type ObjectJson implements Node {
   subjects: [String!]
   title: String!
   uri: String!
+  rights: ObjectJsonRights
   id: ID!
   parent: Node
   children: [Node!]!
@@ -1165,6 +1554,8 @@ enum ObjectJsonFieldsEnum {
   subjects
   title
   uri
+  rights___holder
+  rights___statements
   id
   parent___id
   parent___parent___id
@@ -1261,10 +1652,15 @@ input ObjectJsonFilterInput {
   subjects: StringQueryOperatorInput
   title: StringQueryOperatorInput
   uri: StringQueryOperatorInput
+  rights: ObjectJsonRightsFilterInput
   id: StringQueryOperatorInput
   parent: NodeFilterInput
   children: NodeFilterListInput
   internal: InternalFilterInput
+}
+
+input ObjectJsonFilterListInput {
+  elemMatch: ObjectJsonFilterInput
 }
 
 type ObjectJsonGroupConnection {
@@ -1279,6 +1675,11 @@ type ObjectJsonGroupConnection {
 type ObjectJsonRights {
   holder: String!
   statements: [String!]!
+}
+
+input ObjectJsonRightsFilterInput {
+  holder: StringQueryOperatorInput
+  statements: StringQueryOperatorInput
 }
 
 input ObjectJsonSortInput {
@@ -1334,6 +1735,10 @@ type Query {
     parent: NodeFilterInput
     children: NodeFilterListInput
     internal: InternalFilterInput
+    childrenCollectionJson: CollectionJsonFilterListInput
+    childrenInstitutionJson: InstitutionJsonFilterListInput
+    childrenImageJson: ImageJsonFilterListInput
+    childrenObjectJson: ObjectJsonFilterListInput
   ): File
   allFile(
     filter: FileFilterInput
@@ -1395,6 +1800,7 @@ type Query {
     children: NodeFilterListInput
     internal: InternalFilterInput
     isCreatedByStatefulCreatePages: BooleanQueryOperatorInput
+    context: SitePageContextFilterInput
     pluginCreator: SitePluginFilterInput
     pluginCreatorId: StringQueryOperatorInput
     componentPath: StringQueryOperatorInput
@@ -1427,6 +1833,7 @@ type Query {
     institution_uri: StringQueryOperatorInput
     title: StringQueryOperatorInput
     uri: StringQueryOperatorInput
+    rights: CollectionJsonRightsFilterInput
     id: StringQueryOperatorInput
     parent: NodeFilterInput
     children: NodeFilterListInput
@@ -1441,6 +1848,7 @@ type Query {
   institutionJson(
     name: StringQueryOperatorInput
     uri: StringQueryOperatorInput
+    rights: InstitutionJsonRightsFilterInput
     id: StringQueryOperatorInput
     parent: NodeFilterInput
     children: NodeFilterListInput
@@ -1460,6 +1868,7 @@ type Query {
     subjects: StringQueryOperatorInput
     title: StringQueryOperatorInput
     uri: StringQueryOperatorInput
+    rights: ObjectJsonRightsFilterInput
     id: StringQueryOperatorInput
     parent: NodeFilterInput
     children: NodeFilterListInput
@@ -1471,6 +1880,22 @@ type Query {
     skip: Int
     limit: Int
   ): ObjectJsonConnection!
+  imageJson(
+    id: StringQueryOperatorInput
+    parent: NodeFilterInput
+    children: NodeFilterListInput
+    internal: InternalFilterInput
+    uri: StringQueryOperatorInput
+    derived_image_uris: StringQueryOperatorInput
+    exact_dimensions: ImageJsonExact_dimensionsFilterInput
+    max_dimensions: ImageJsonMax_dimensionsFilterInput
+  ): ImageJson
+  allImageJson(
+    filter: ImageJsonFilterInput
+    sort: ImageJsonSortInput
+    skip: Int
+    limit: Int
+  ): ImageJsonConnection!
   siteBuildMetadata(
     id: StringQueryOperatorInput
     parent: NodeFilterInput
@@ -1840,6 +2265,7 @@ type SitePage implements Node {
   children: [Node!]!
   internal: Internal!
   isCreatedByStatefulCreatePages: Boolean
+  context: SitePageContext
   pluginCreator: SitePlugin
   pluginCreatorId: String
   componentPath: String
@@ -1856,6 +2282,130 @@ type SitePageConnection {
     limit: Int
     field: SitePageFieldsEnum!
   ): [SitePageGroupConnection!]!
+}
+
+type SitePageContext {
+  collection: SitePageContextCollection
+  institution: SitePageContextInstitution
+  objects: [SitePageContextObjects]
+  collections: [SitePageContextCollections]
+}
+
+type SitePageContextCollection {
+  institution_uri: String
+  rights: SitePageContextCollectionRights
+  title: String
+  uri: String
+}
+
+input SitePageContextCollectionFilterInput {
+  institution_uri: StringQueryOperatorInput
+  rights: SitePageContextCollectionRightsFilterInput
+  title: StringQueryOperatorInput
+  uri: StringQueryOperatorInput
+}
+
+type SitePageContextCollectionRights {
+  holder: String
+  statements: [String]
+}
+
+input SitePageContextCollectionRightsFilterInput {
+  holder: StringQueryOperatorInput
+  statements: StringQueryOperatorInput
+}
+
+type SitePageContextCollections {
+  institution_uri: String
+  rights: SitePageContextCollectionsRights
+  title: String
+  uri: String
+}
+
+input SitePageContextCollectionsFilterInput {
+  institution_uri: StringQueryOperatorInput
+  rights: SitePageContextCollectionsRightsFilterInput
+  title: StringQueryOperatorInput
+  uri: StringQueryOperatorInput
+}
+
+input SitePageContextCollectionsFilterListInput {
+  elemMatch: SitePageContextCollectionsFilterInput
+}
+
+type SitePageContextCollectionsRights {
+  holder: String
+  statements: [String]
+}
+
+input SitePageContextCollectionsRightsFilterInput {
+  holder: StringQueryOperatorInput
+  statements: StringQueryOperatorInput
+}
+
+input SitePageContextFilterInput {
+  collection: SitePageContextCollectionFilterInput
+  institution: SitePageContextInstitutionFilterInput
+  objects: SitePageContextObjectsFilterListInput
+  collections: SitePageContextCollectionsFilterListInput
+}
+
+type SitePageContextInstitution {
+  name: String
+  rights: SitePageContextInstitutionRights
+  uri: String
+}
+
+input SitePageContextInstitutionFilterInput {
+  name: StringQueryOperatorInput
+  rights: SitePageContextInstitutionRightsFilterInput
+  uri: StringQueryOperatorInput
+}
+
+type SitePageContextInstitutionRights {
+  holder: String
+  statements: [String]
+}
+
+input SitePageContextInstitutionRightsFilterInput {
+  holder: StringQueryOperatorInput
+  statements: StringQueryOperatorInput
+}
+
+type SitePageContextObjects {
+  collection_uris: [String]
+  descriptions: [String]
+  image_uris: [String]
+  institution_uri: String
+  rights: SitePageContextObjectsRights
+  subjects: [String]
+  title: String
+  uri: String
+}
+
+input SitePageContextObjectsFilterInput {
+  collection_uris: StringQueryOperatorInput
+  descriptions: StringQueryOperatorInput
+  image_uris: StringQueryOperatorInput
+  institution_uri: StringQueryOperatorInput
+  rights: SitePageContextObjectsRightsFilterInput
+  subjects: StringQueryOperatorInput
+  title: StringQueryOperatorInput
+  uri: StringQueryOperatorInput
+}
+
+input SitePageContextObjectsFilterListInput {
+  elemMatch: SitePageContextObjectsFilterInput
+}
+
+type SitePageContextObjectsRights {
+  holder: String
+  statements: [String]
+}
+
+input SitePageContextObjectsRightsFilterInput {
+  holder: StringQueryOperatorInput
+  statements: StringQueryOperatorInput
 }
 
 type SitePageEdge {
@@ -1957,6 +2507,31 @@ enum SitePageFieldsEnum {
   internal___owner
   internal___type
   isCreatedByStatefulCreatePages
+  context___collection___institution_uri
+  context___collection___rights___holder
+  context___collection___rights___statements
+  context___collection___title
+  context___collection___uri
+  context___institution___name
+  context___institution___rights___holder
+  context___institution___rights___statements
+  context___institution___uri
+  context___objects
+  context___objects___collection_uris
+  context___objects___descriptions
+  context___objects___image_uris
+  context___objects___institution_uri
+  context___objects___rights___holder
+  context___objects___rights___statements
+  context___objects___subjects
+  context___objects___title
+  context___objects___uri
+  context___collections
+  context___collections___institution_uri
+  context___collections___rights___holder
+  context___collections___rights___statements
+  context___collections___title
+  context___collections___uri
   pluginCreator___id
   pluginCreator___parent___id
   pluginCreator___parent___parent___id
@@ -2043,6 +2618,7 @@ input SitePageFilterInput {
   children: NodeFilterListInput
   internal: InternalFilterInput
   isCreatedByStatefulCreatePages: BooleanQueryOperatorInput
+  context: SitePageContextFilterInput
   pluginCreator: SitePluginFilterInput
   pluginCreatorId: StringQueryOperatorInput
   componentPath: StringQueryOperatorInput
