@@ -14,6 +14,7 @@
     "gatsby": "^2.10.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.2.0",
     "cross-env": "^7.0.2",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
@@ -24,6 +25,7 @@
     "build": "gatsby build",
     "develop": "gatsby develop",
     "format": "prettier --write \"src/**/*.{ts,tsx,md}\"",
+    "graphql-codegen": "graphql-codegen --config graphql-codegen-config.yml",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "serve": "gatsby serve",
     "start": "npm run develop"
