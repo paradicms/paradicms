@@ -27,7 +27,7 @@ class GenericTestDataTransformer(_Transformer):
                 collection.rights = Rights(holder=f"{collection.title} rights holder", statements=(f"{collection.title} rights", rights_statement_uri,))
                 yield collection
 
-                for object_i in range(40):  # Objects per page is 20
+                for object_i in range(25):  # Objects per page is 20
                     object_ = \
                         Object(
                             collection_uris=(collection.uri,),
@@ -38,7 +38,7 @@ class GenericTestDataTransformer(_Transformer):
                     object_.descriptions.append(f"{object_.title} description")
                     object_.subjects.append(f"{object_.title} subject")
                     object_.rights = Rights(holder=f"{object_.title} rights holder", statements=(f"{object_.title} rights", rights_statement_uri,))
-                    for image_i in range(3):
+                    for image_i in range(2):
                         original = Image(uri=URIRef(f"https://place-hold.it/1000x1000?text=Institution{institution_i}Collection{collection_i}Object{object_i}Image{image_i}"))
                         original.exact_dimensions = ImageDimensions(height=1000, width=1000)
 
