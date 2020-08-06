@@ -53,19 +53,6 @@ const gatsbyConfig: ITSConfigFn<
       },
       `gatsby-plugin-react-helmet`,
       {
-        resolve: `gatsby-plugin-typegen`,
-        options: {
-          outputPath: `${projectRoot}/.gatsby/graphql/types.ts`,
-          emitSchema: {
-            // [`${projectRoot}/.gatsby/graphql/introspection.json`]: true,
-            [`${projectRoot}/.gatsby/graphql/schema.graphql`]: true,
-          },
-          // emitPluginDocuments: {
-          //   [`${projectRoot}/.gatsby/graphql/plugin-documents.graphql`]: true,
-          // },
-        },
-      },
-      {
         resolve: `gatsby-plugin-ts`,
         options: {
           codegen: false,
