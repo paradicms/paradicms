@@ -25,7 +25,6 @@ declare namespace GatsbyTypes {
     readonly institution_uri: Scalars["String"];
     readonly title: Scalars["String"];
     readonly uri: Scalars["String"];
-    readonly rights: Maybe<CollectionJsonRights>;
     readonly id: Scalars["ID"];
     readonly parent: Maybe<Node>;
     readonly children: ReadonlyArray<Node>;
@@ -61,8 +60,6 @@ declare namespace GatsbyTypes {
     institution_uri = "institution_uri",
     title = "title",
     uri = "uri",
-    rights___holder = "rights.holder",
-    rights___statements = "rights.statements",
     id = "id",
     parent___id = "parent.id",
     parent___parent___id = "parent.parent.id",
@@ -155,7 +152,6 @@ declare namespace GatsbyTypes {
     readonly institution_uri: Maybe<StringQueryOperatorInput>;
     readonly title: Maybe<StringQueryOperatorInput>;
     readonly uri: Maybe<StringQueryOperatorInput>;
-    readonly rights: Maybe<CollectionJsonRightsFilterInput>;
     readonly id: Maybe<StringQueryOperatorInput>;
     readonly parent: Maybe<NodeFilterInput>;
     readonly children: Maybe<NodeFilterListInput>;
@@ -174,11 +170,6 @@ declare namespace GatsbyTypes {
   type CollectionJsonRights = {
     readonly holder: Scalars["String"];
     readonly statements: ReadonlyArray<Scalars["String"]>;
-  };
-
-  type CollectionJsonRightsFilterInput = {
-    readonly holder: Maybe<StringQueryOperatorInput>;
-    readonly statements: Maybe<StringQueryOperatorInput>;
   };
 
   type CollectionJsonSortInput = {
@@ -523,7 +514,6 @@ declare namespace GatsbyTypes {
     readonly parent: Maybe<Node>;
     readonly children: ReadonlyArray<Node>;
     readonly internal: Internal;
-    readonly childCollectionJson: Maybe<CollectionJson>;
     readonly childInstitutionJson: Maybe<InstitutionJson>;
     readonly childObjectJson: Maybe<ObjectJson>;
     readonly childImageJson: Maybe<ImageJson>;
@@ -722,49 +712,6 @@ declare namespace GatsbyTypes {
     internal___mediaType = "internal.mediaType",
     internal___owner = "internal.owner",
     internal___type = "internal.type",
-    childCollectionJson___institution_uri = "childCollectionJson.institution_uri",
-    childCollectionJson___title = "childCollectionJson.title",
-    childCollectionJson___uri = "childCollectionJson.uri",
-    childCollectionJson___rights___holder = "childCollectionJson.rights.holder",
-    childCollectionJson___rights___statements = "childCollectionJson.rights.statements",
-    childCollectionJson___id = "childCollectionJson.id",
-    childCollectionJson___parent___id = "childCollectionJson.parent.id",
-    childCollectionJson___parent___parent___id = "childCollectionJson.parent.parent.id",
-    childCollectionJson___parent___parent___children = "childCollectionJson.parent.parent.children",
-    childCollectionJson___parent___children = "childCollectionJson.parent.children",
-    childCollectionJson___parent___children___id = "childCollectionJson.parent.children.id",
-    childCollectionJson___parent___children___children = "childCollectionJson.parent.children.children",
-    childCollectionJson___parent___internal___content = "childCollectionJson.parent.internal.content",
-    childCollectionJson___parent___internal___contentDigest = "childCollectionJson.parent.internal.contentDigest",
-    childCollectionJson___parent___internal___description = "childCollectionJson.parent.internal.description",
-    childCollectionJson___parent___internal___fieldOwners = "childCollectionJson.parent.internal.fieldOwners",
-    childCollectionJson___parent___internal___ignoreType = "childCollectionJson.parent.internal.ignoreType",
-    childCollectionJson___parent___internal___mediaType = "childCollectionJson.parent.internal.mediaType",
-    childCollectionJson___parent___internal___owner = "childCollectionJson.parent.internal.owner",
-    childCollectionJson___parent___internal___type = "childCollectionJson.parent.internal.type",
-    childCollectionJson___children = "childCollectionJson.children",
-    childCollectionJson___children___id = "childCollectionJson.children.id",
-    childCollectionJson___children___parent___id = "childCollectionJson.children.parent.id",
-    childCollectionJson___children___parent___children = "childCollectionJson.children.parent.children",
-    childCollectionJson___children___children = "childCollectionJson.children.children",
-    childCollectionJson___children___children___id = "childCollectionJson.children.children.id",
-    childCollectionJson___children___children___children = "childCollectionJson.children.children.children",
-    childCollectionJson___children___internal___content = "childCollectionJson.children.internal.content",
-    childCollectionJson___children___internal___contentDigest = "childCollectionJson.children.internal.contentDigest",
-    childCollectionJson___children___internal___description = "childCollectionJson.children.internal.description",
-    childCollectionJson___children___internal___fieldOwners = "childCollectionJson.children.internal.fieldOwners",
-    childCollectionJson___children___internal___ignoreType = "childCollectionJson.children.internal.ignoreType",
-    childCollectionJson___children___internal___mediaType = "childCollectionJson.children.internal.mediaType",
-    childCollectionJson___children___internal___owner = "childCollectionJson.children.internal.owner",
-    childCollectionJson___children___internal___type = "childCollectionJson.children.internal.type",
-    childCollectionJson___internal___content = "childCollectionJson.internal.content",
-    childCollectionJson___internal___contentDigest = "childCollectionJson.internal.contentDigest",
-    childCollectionJson___internal___description = "childCollectionJson.internal.description",
-    childCollectionJson___internal___fieldOwners = "childCollectionJson.internal.fieldOwners",
-    childCollectionJson___internal___ignoreType = "childCollectionJson.internal.ignoreType",
-    childCollectionJson___internal___mediaType = "childCollectionJson.internal.mediaType",
-    childCollectionJson___internal___owner = "childCollectionJson.internal.owner",
-    childCollectionJson___internal___type = "childCollectionJson.internal.type",
     childInstitutionJson___name = "childInstitutionJson.name",
     childInstitutionJson___uri = "childInstitutionJson.uri",
     childInstitutionJson___rights___holder = "childInstitutionJson.rights.holder",
@@ -937,7 +884,6 @@ declare namespace GatsbyTypes {
     readonly parent: Maybe<NodeFilterInput>;
     readonly children: Maybe<NodeFilterListInput>;
     readonly internal: Maybe<InternalFilterInput>;
-    readonly childCollectionJson: Maybe<CollectionJsonFilterInput>;
     readonly childInstitutionJson: Maybe<InstitutionJsonFilterInput>;
     readonly childObjectJson: Maybe<ObjectJsonFilterInput>;
     readonly childImageJson: Maybe<ImageJsonFilterInput>;
@@ -1605,7 +1551,6 @@ declare namespace GatsbyTypes {
     parent: Maybe<NodeFilterInput>;
     children: Maybe<NodeFilterListInput>;
     internal: Maybe<InternalFilterInput>;
-    childCollectionJson: Maybe<CollectionJsonFilterInput>;
     childInstitutionJson: Maybe<InstitutionJsonFilterInput>;
     childObjectJson: Maybe<ObjectJsonFilterInput>;
     childImageJson: Maybe<ImageJsonFilterInput>;
@@ -1669,15 +1614,15 @@ declare namespace GatsbyTypes {
     internalComponentName: Maybe<StringQueryOperatorInput>;
     componentChunkName: Maybe<StringQueryOperatorInput>;
     matchPath: Maybe<StringQueryOperatorInput>;
-    id: Maybe<StringQueryOperatorInput>;
-    parent: Maybe<NodeFilterInput>;
-    children: Maybe<NodeFilterListInput>;
-    internal: Maybe<InternalFilterInput>;
     isCreatedByStatefulCreatePages: Maybe<BooleanQueryOperatorInput>;
     context: Maybe<SitePageContextFilterInput>;
     pluginCreator: Maybe<SitePluginFilterInput>;
     pluginCreatorId: Maybe<StringQueryOperatorInput>;
     componentPath: Maybe<StringQueryOperatorInput>;
+    id: Maybe<StringQueryOperatorInput>;
+    parent: Maybe<NodeFilterInput>;
+    children: Maybe<NodeFilterListInput>;
+    internal: Maybe<InternalFilterInput>;
   };
 
   type Query_allSitePageArgs = {
@@ -1711,7 +1656,6 @@ declare namespace GatsbyTypes {
     institution_uri: Maybe<StringQueryOperatorInput>;
     title: Maybe<StringQueryOperatorInput>;
     uri: Maybe<StringQueryOperatorInput>;
-    rights: Maybe<CollectionJsonRightsFilterInput>;
     id: Maybe<StringQueryOperatorInput>;
     parent: Maybe<NodeFilterInput>;
     children: Maybe<NodeFilterListInput>;
@@ -2146,15 +2090,15 @@ declare namespace GatsbyTypes {
     readonly internalComponentName: Scalars["String"];
     readonly componentChunkName: Scalars["String"];
     readonly matchPath: Maybe<Scalars["String"]>;
-    readonly id: Scalars["ID"];
-    readonly parent: Maybe<Node>;
-    readonly children: ReadonlyArray<Node>;
-    readonly internal: Internal;
     readonly isCreatedByStatefulCreatePages: Maybe<Scalars["Boolean"]>;
     readonly context: Maybe<SitePageContext>;
     readonly pluginCreator: Maybe<SitePlugin>;
     readonly pluginCreatorId: Maybe<Scalars["String"]>;
     readonly componentPath: Maybe<Scalars["String"]>;
+    readonly id: Scalars["ID"];
+    readonly parent: Maybe<Node>;
+    readonly children: ReadonlyArray<Node>;
+    readonly internal: Internal;
   };
 
   type SitePageConnection = {
@@ -2314,92 +2258,6 @@ declare namespace GatsbyTypes {
     internalComponentName = "internalComponentName",
     componentChunkName = "componentChunkName",
     matchPath = "matchPath",
-    id = "id",
-    parent___id = "parent.id",
-    parent___parent___id = "parent.parent.id",
-    parent___parent___parent___id = "parent.parent.parent.id",
-    parent___parent___parent___children = "parent.parent.parent.children",
-    parent___parent___children = "parent.parent.children",
-    parent___parent___children___id = "parent.parent.children.id",
-    parent___parent___children___children = "parent.parent.children.children",
-    parent___parent___internal___content = "parent.parent.internal.content",
-    parent___parent___internal___contentDigest = "parent.parent.internal.contentDigest",
-    parent___parent___internal___description = "parent.parent.internal.description",
-    parent___parent___internal___fieldOwners = "parent.parent.internal.fieldOwners",
-    parent___parent___internal___ignoreType = "parent.parent.internal.ignoreType",
-    parent___parent___internal___mediaType = "parent.parent.internal.mediaType",
-    parent___parent___internal___owner = "parent.parent.internal.owner",
-    parent___parent___internal___type = "parent.parent.internal.type",
-    parent___children = "parent.children",
-    parent___children___id = "parent.children.id",
-    parent___children___parent___id = "parent.children.parent.id",
-    parent___children___parent___children = "parent.children.parent.children",
-    parent___children___children = "parent.children.children",
-    parent___children___children___id = "parent.children.children.id",
-    parent___children___children___children = "parent.children.children.children",
-    parent___children___internal___content = "parent.children.internal.content",
-    parent___children___internal___contentDigest = "parent.children.internal.contentDigest",
-    parent___children___internal___description = "parent.children.internal.description",
-    parent___children___internal___fieldOwners = "parent.children.internal.fieldOwners",
-    parent___children___internal___ignoreType = "parent.children.internal.ignoreType",
-    parent___children___internal___mediaType = "parent.children.internal.mediaType",
-    parent___children___internal___owner = "parent.children.internal.owner",
-    parent___children___internal___type = "parent.children.internal.type",
-    parent___internal___content = "parent.internal.content",
-    parent___internal___contentDigest = "parent.internal.contentDigest",
-    parent___internal___description = "parent.internal.description",
-    parent___internal___fieldOwners = "parent.internal.fieldOwners",
-    parent___internal___ignoreType = "parent.internal.ignoreType",
-    parent___internal___mediaType = "parent.internal.mediaType",
-    parent___internal___owner = "parent.internal.owner",
-    parent___internal___type = "parent.internal.type",
-    children = "children",
-    children___id = "children.id",
-    children___parent___id = "children.parent.id",
-    children___parent___parent___id = "children.parent.parent.id",
-    children___parent___parent___children = "children.parent.parent.children",
-    children___parent___children = "children.parent.children",
-    children___parent___children___id = "children.parent.children.id",
-    children___parent___children___children = "children.parent.children.children",
-    children___parent___internal___content = "children.parent.internal.content",
-    children___parent___internal___contentDigest = "children.parent.internal.contentDigest",
-    children___parent___internal___description = "children.parent.internal.description",
-    children___parent___internal___fieldOwners = "children.parent.internal.fieldOwners",
-    children___parent___internal___ignoreType = "children.parent.internal.ignoreType",
-    children___parent___internal___mediaType = "children.parent.internal.mediaType",
-    children___parent___internal___owner = "children.parent.internal.owner",
-    children___parent___internal___type = "children.parent.internal.type",
-    children___children = "children.children",
-    children___children___id = "children.children.id",
-    children___children___parent___id = "children.children.parent.id",
-    children___children___parent___children = "children.children.parent.children",
-    children___children___children = "children.children.children",
-    children___children___children___id = "children.children.children.id",
-    children___children___children___children = "children.children.children.children",
-    children___children___internal___content = "children.children.internal.content",
-    children___children___internal___contentDigest = "children.children.internal.contentDigest",
-    children___children___internal___description = "children.children.internal.description",
-    children___children___internal___fieldOwners = "children.children.internal.fieldOwners",
-    children___children___internal___ignoreType = "children.children.internal.ignoreType",
-    children___children___internal___mediaType = "children.children.internal.mediaType",
-    children___children___internal___owner = "children.children.internal.owner",
-    children___children___internal___type = "children.children.internal.type",
-    children___internal___content = "children.internal.content",
-    children___internal___contentDigest = "children.internal.contentDigest",
-    children___internal___description = "children.internal.description",
-    children___internal___fieldOwners = "children.internal.fieldOwners",
-    children___internal___ignoreType = "children.internal.ignoreType",
-    children___internal___mediaType = "children.internal.mediaType",
-    children___internal___owner = "children.internal.owner",
-    children___internal___type = "children.internal.type",
-    internal___content = "internal.content",
-    internal___contentDigest = "internal.contentDigest",
-    internal___description = "internal.description",
-    internal___fieldOwners = "internal.fieldOwners",
-    internal___ignoreType = "internal.ignoreType",
-    internal___mediaType = "internal.mediaType",
-    internal___owner = "internal.owner",
-    internal___type = "internal.type",
     isCreatedByStatefulCreatePages = "isCreatedByStatefulCreatePages",
     context___collection___institution_uri = "context.collection.institution_uri",
     context___collection___rights___holder = "context.collection.rights.holder",
@@ -2499,6 +2357,92 @@ declare namespace GatsbyTypes {
     pluginCreator___packageJson___keywords = "pluginCreator.packageJson.keywords",
     pluginCreatorId = "pluginCreatorId",
     componentPath = "componentPath",
+    id = "id",
+    parent___id = "parent.id",
+    parent___parent___id = "parent.parent.id",
+    parent___parent___parent___id = "parent.parent.parent.id",
+    parent___parent___parent___children = "parent.parent.parent.children",
+    parent___parent___children = "parent.parent.children",
+    parent___parent___children___id = "parent.parent.children.id",
+    parent___parent___children___children = "parent.parent.children.children",
+    parent___parent___internal___content = "parent.parent.internal.content",
+    parent___parent___internal___contentDigest = "parent.parent.internal.contentDigest",
+    parent___parent___internal___description = "parent.parent.internal.description",
+    parent___parent___internal___fieldOwners = "parent.parent.internal.fieldOwners",
+    parent___parent___internal___ignoreType = "parent.parent.internal.ignoreType",
+    parent___parent___internal___mediaType = "parent.parent.internal.mediaType",
+    parent___parent___internal___owner = "parent.parent.internal.owner",
+    parent___parent___internal___type = "parent.parent.internal.type",
+    parent___children = "parent.children",
+    parent___children___id = "parent.children.id",
+    parent___children___parent___id = "parent.children.parent.id",
+    parent___children___parent___children = "parent.children.parent.children",
+    parent___children___children = "parent.children.children",
+    parent___children___children___id = "parent.children.children.id",
+    parent___children___children___children = "parent.children.children.children",
+    parent___children___internal___content = "parent.children.internal.content",
+    parent___children___internal___contentDigest = "parent.children.internal.contentDigest",
+    parent___children___internal___description = "parent.children.internal.description",
+    parent___children___internal___fieldOwners = "parent.children.internal.fieldOwners",
+    parent___children___internal___ignoreType = "parent.children.internal.ignoreType",
+    parent___children___internal___mediaType = "parent.children.internal.mediaType",
+    parent___children___internal___owner = "parent.children.internal.owner",
+    parent___children___internal___type = "parent.children.internal.type",
+    parent___internal___content = "parent.internal.content",
+    parent___internal___contentDigest = "parent.internal.contentDigest",
+    parent___internal___description = "parent.internal.description",
+    parent___internal___fieldOwners = "parent.internal.fieldOwners",
+    parent___internal___ignoreType = "parent.internal.ignoreType",
+    parent___internal___mediaType = "parent.internal.mediaType",
+    parent___internal___owner = "parent.internal.owner",
+    parent___internal___type = "parent.internal.type",
+    children = "children",
+    children___id = "children.id",
+    children___parent___id = "children.parent.id",
+    children___parent___parent___id = "children.parent.parent.id",
+    children___parent___parent___children = "children.parent.parent.children",
+    children___parent___children = "children.parent.children",
+    children___parent___children___id = "children.parent.children.id",
+    children___parent___children___children = "children.parent.children.children",
+    children___parent___internal___content = "children.parent.internal.content",
+    children___parent___internal___contentDigest = "children.parent.internal.contentDigest",
+    children___parent___internal___description = "children.parent.internal.description",
+    children___parent___internal___fieldOwners = "children.parent.internal.fieldOwners",
+    children___parent___internal___ignoreType = "children.parent.internal.ignoreType",
+    children___parent___internal___mediaType = "children.parent.internal.mediaType",
+    children___parent___internal___owner = "children.parent.internal.owner",
+    children___parent___internal___type = "children.parent.internal.type",
+    children___children = "children.children",
+    children___children___id = "children.children.id",
+    children___children___parent___id = "children.children.parent.id",
+    children___children___parent___children = "children.children.parent.children",
+    children___children___children = "children.children.children",
+    children___children___children___id = "children.children.children.id",
+    children___children___children___children = "children.children.children.children",
+    children___children___internal___content = "children.children.internal.content",
+    children___children___internal___contentDigest = "children.children.internal.contentDigest",
+    children___children___internal___description = "children.children.internal.description",
+    children___children___internal___fieldOwners = "children.children.internal.fieldOwners",
+    children___children___internal___ignoreType = "children.children.internal.ignoreType",
+    children___children___internal___mediaType = "children.children.internal.mediaType",
+    children___children___internal___owner = "children.children.internal.owner",
+    children___children___internal___type = "children.children.internal.type",
+    children___internal___content = "children.internal.content",
+    children___internal___contentDigest = "children.internal.contentDigest",
+    children___internal___description = "children.internal.description",
+    children___internal___fieldOwners = "children.internal.fieldOwners",
+    children___internal___ignoreType = "children.internal.ignoreType",
+    children___internal___mediaType = "children.internal.mediaType",
+    children___internal___owner = "children.internal.owner",
+    children___internal___type = "children.internal.type",
+    internal___content = "internal.content",
+    internal___contentDigest = "internal.contentDigest",
+    internal___description = "internal.description",
+    internal___fieldOwners = "internal.fieldOwners",
+    internal___ignoreType = "internal.ignoreType",
+    internal___mediaType = "internal.mediaType",
+    internal___owner = "internal.owner",
+    internal___type = "internal.type",
   }
 
   type SitePageFilterInput = {
@@ -2507,15 +2451,15 @@ declare namespace GatsbyTypes {
     readonly internalComponentName: Maybe<StringQueryOperatorInput>;
     readonly componentChunkName: Maybe<StringQueryOperatorInput>;
     readonly matchPath: Maybe<StringQueryOperatorInput>;
-    readonly id: Maybe<StringQueryOperatorInput>;
-    readonly parent: Maybe<NodeFilterInput>;
-    readonly children: Maybe<NodeFilterListInput>;
-    readonly internal: Maybe<InternalFilterInput>;
     readonly isCreatedByStatefulCreatePages: Maybe<BooleanQueryOperatorInput>;
     readonly context: Maybe<SitePageContextFilterInput>;
     readonly pluginCreator: Maybe<SitePluginFilterInput>;
     readonly pluginCreatorId: Maybe<StringQueryOperatorInput>;
     readonly componentPath: Maybe<StringQueryOperatorInput>;
+    readonly id: Maybe<StringQueryOperatorInput>;
+    readonly parent: Maybe<NodeFilterInput>;
+    readonly children: Maybe<NodeFilterListInput>;
+    readonly internal: Maybe<InternalFilterInput>;
   };
 
   type SitePageGroupConnection = {
