@@ -14,6 +14,7 @@ import Helmet from "react-helmet";
 import {Navbar} from "~/components/layout/Navbar";
 import {BreadcrumbsProps} from "~/components/breadcrumbs/BreadcrumbsProps";
 import {Breadcrumbs} from "~/components/breadcrumbs/Breadcrumbs";
+import {LayoutQuery} from "~/graphql/types";
 
 const useStyles = makeStyles(theme => ({
   breadcrumbs: {
@@ -36,7 +37,7 @@ export const Layout: React.FunctionComponent<{
   const classes = useStyles();
 
   return (
-    <StaticQuery<any>
+    <StaticQuery<LayoutQuery>
       query={graphql`
         query Layout {
           site {
