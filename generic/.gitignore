@@ -3,4 +3,4 @@
 /node_modules/
 /package-lock.json
 /public/
-/schema.graphql
+/src/graphql/schema.graphql
