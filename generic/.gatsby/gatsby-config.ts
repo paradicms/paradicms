@@ -1,12 +1,10 @@
-import {IMergePluginOptions, ITSConfigFn} from "gatsby-plugin-ts-config";
-import {PluginOptions as ITypegenPluginOptions} from "gatsby-plugin-typegen/types";
+import {ITSConfigFn} from "gatsby-plugin-ts-config";
 import {FileSystemConfig} from "gatsby-source-filesystem";
 import * as path from "path";
 // import {ObjectIndex} from "~/models/search/ObjectIndex";
 
 const gatsbyConfig: ITSConfigFn<
   "config",
-  | IMergePluginOptions<"gatsby-plugin-typegen", ITypegenPluginOptions>
   | FileSystemConfig
   // Add additional plugin types here
 > = ({projectRoot}) => {
