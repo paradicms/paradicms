@@ -4,7 +4,7 @@ import {graphql, StaticQuery} from "gatsby";
 
 export const Footer: React.FunctionComponent = () => {
   return (
-    <StaticQuery<{site: {siteMetadata: GatsbyTypes.SiteSiteMetadata}}>
+    <StaticQuery<GatsbyTypes.FooterQuery>
       query={graphql`
         query Footer {
           site {
@@ -19,7 +19,7 @@ export const Footer: React.FunctionComponent = () => {
           }
         }
       `}
-      render={data => <MuiFooter {...data.site.siteMetadata} />}
+      render={data => <MuiFooter {...data.site!.siteMetadata!} />}
     />
   );
 };
