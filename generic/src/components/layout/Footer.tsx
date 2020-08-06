@@ -4,7 +4,7 @@ import {graphql, StaticQuery} from "gatsby";
 
 export const Footer: React.FunctionComponent = () => {
   return (
-    <StaticQuery<GatsbyTypes.FooterQuery>
+    <StaticQuery<any>
       query={graphql`
         query Footer {
           site {

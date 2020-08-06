@@ -1,3 +1,4 @@
+import {graphql} from "gatsby";
 import * as React from "react";
 import {Layout} from "~/components/layout/Layout";
 import {List, ListItem, ListItemText} from "@material-ui/core";
@@ -6,12 +7,18 @@ import {Institution} from "~/models/institution/Institution";
 import {Object} from "~/models/object/Object";
 
 const CollectionPage: React.FunctionComponent<{
+  data: GatsbyTypes.CollectionPageQuery;
   pageContext: {
     collection: Collection;
     institution: Institution;
     objects: Object[];
   };
-}> = ({pageContext: {collection, institution, objects}}) => {
+}> = ({
+  data: {
+    allObjectJson: {nodes: objects},
+  },
+  pageContext: {collection, institution},
+}) => {
   return (
     <Layout
       breadcrumbs={{collection, institution}}
@@ -29,3 +36,18 @@ const CollectionPage: React.FunctionComponent<{
 };
 
 export default CollectionPage;
+
+export const query = graphql`
+  query CollectionPage($collectionUri: String!, $institutionUri: String!) {
+    allObjectJson(
+      filter: {
+        collection_uris: {in: [$collectionUri]}
+        institution_uri: {eq: $institutionUri}
+      }
+    ) {
+      nodes {
+        ...ObjectFragment
+      }
+    }
+  }
+`;

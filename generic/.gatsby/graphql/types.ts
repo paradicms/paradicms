@@ -2202,8 +2202,9 @@ declare namespace GatsbyTypes {
 
   type SitePageContext = {
     readonly collection: Maybe<SitePageContextCollection>;
+    readonly collectionUri: Maybe<Scalars["String"]>;
     readonly institution: Maybe<SitePageContextInstitution>;
-    readonly objects: Maybe<ReadonlyArray<Maybe<SitePageContextObjects>>>;
+    readonly institutionUri: Maybe<Scalars["String"]>;
     readonly collections: Maybe<
       ReadonlyArray<Maybe<SitePageContextCollections>>
     >;
@@ -2263,8 +2264,9 @@ declare namespace GatsbyTypes {
 
   type SitePageContextFilterInput = {
     readonly collection: Maybe<SitePageContextCollectionFilterInput>;
+    readonly collectionUri: Maybe<StringQueryOperatorInput>;
     readonly institution: Maybe<SitePageContextInstitutionFilterInput>;
-    readonly objects: Maybe<SitePageContextObjectsFilterListInput>;
+    readonly institutionUri: Maybe<StringQueryOperatorInput>;
     readonly collections: Maybe<SitePageContextCollectionsFilterListInput>;
   };
 
@@ -2286,42 +2288,6 @@ declare namespace GatsbyTypes {
   };
 
   type SitePageContextInstitutionRightsFilterInput = {
-    readonly holder: Maybe<StringQueryOperatorInput>;
-    readonly statements: Maybe<StringQueryOperatorInput>;
-  };
-
-  type SitePageContextObjects = {
-    readonly collection_uris: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
-    readonly descriptions: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
-    readonly image_uris: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
-    readonly institution_uri: Maybe<Scalars["String"]>;
-    readonly rights: Maybe<SitePageContextObjectsRights>;
-    readonly subjects: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
-    readonly title: Maybe<Scalars["String"]>;
-    readonly uri: Maybe<Scalars["String"]>;
-  };
-
-  type SitePageContextObjectsFilterInput = {
-    readonly collection_uris: Maybe<StringQueryOperatorInput>;
-    readonly descriptions: Maybe<StringQueryOperatorInput>;
-    readonly image_uris: Maybe<StringQueryOperatorInput>;
-    readonly institution_uri: Maybe<StringQueryOperatorInput>;
-    readonly rights: Maybe<SitePageContextObjectsRightsFilterInput>;
-    readonly subjects: Maybe<StringQueryOperatorInput>;
-    readonly title: Maybe<StringQueryOperatorInput>;
-    readonly uri: Maybe<StringQueryOperatorInput>;
-  };
-
-  type SitePageContextObjectsFilterListInput = {
-    readonly elemMatch: Maybe<SitePageContextObjectsFilterInput>;
-  };
-
-  type SitePageContextObjectsRights = {
-    readonly holder: Maybe<Scalars["String"]>;
-    readonly statements: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
-  };
-
-  type SitePageContextObjectsRightsFilterInput = {
     readonly holder: Maybe<StringQueryOperatorInput>;
     readonly statements: Maybe<StringQueryOperatorInput>;
   };
@@ -2430,20 +2396,12 @@ declare namespace GatsbyTypes {
     context___collection___rights___statements = "context.collection.rights.statements",
     context___collection___title = "context.collection.title",
     context___collection___uri = "context.collection.uri",
+    context___collectionUri = "context.collectionUri",
     context___institution___name = "context.institution.name",
     context___institution___rights___holder = "context.institution.rights.holder",
     context___institution___rights___statements = "context.institution.rights.statements",
     context___institution___uri = "context.institution.uri",
-    context___objects = "context.objects",
-    context___objects___collection_uris = "context.objects.collection_uris",
-    context___objects___descriptions = "context.objects.descriptions",
-    context___objects___image_uris = "context.objects.image_uris",
-    context___objects___institution_uri = "context.objects.institution_uri",
-    context___objects___rights___holder = "context.objects.rights.holder",
-    context___objects___rights___statements = "context.objects.rights.statements",
-    context___objects___subjects = "context.objects.subjects",
-    context___objects___title = "context.objects.title",
-    context___objects___uri = "context.objects.uri",
+    context___institutionUri = "context.institutionUri",
     context___collections = "context.collections",
     context___collections___institution_uri = "context.collections.institution_uri",
     context___collections___rights___holder = "context.collections.rights.holder",
@@ -2924,6 +2882,28 @@ declare namespace GatsbyTypes {
     readonly glob: Maybe<Scalars["String"]>;
   };
 
+  type ObjectFragmentFragment = Pick<
+    ObjectJson,
+    | "collection_uris"
+    | "descriptions"
+    | "image_uris"
+    | "institution_uri"
+    | "subjects"
+    | "title"
+    | "uri"
+  > & {readonly rights: Maybe<Pick<ObjectJsonRights, "holder" | "statements">>};
+
+  type CollectionPageQueryVariables = Exact<{
+    collectionUri: Scalars["String"];
+    institutionUri: Scalars["String"];
+  }>;
+
+  type CollectionPageQuery = {
+    readonly allObjectJson: {
+      readonly nodes: ReadonlyArray<ObjectFragmentFragment>;
+    };
+  };
+
   type PagesQueryQueryVariables = Exact<{[key: string]: never}>;
 
   type PagesQueryQuery = {
@@ -2938,30 +2918,5 @@ declare namespace GatsbyTypes {
     readonly allInstitutionJson: {
       readonly nodes: ReadonlyArray<Pick<InstitutionJson, "name" | "uri">>;
     };
-  };
-
-  type FooterQueryVariables = Exact<{[key: string]: never}>;
-
-  type FooterQuery = {
-    readonly site: Maybe<{
-      readonly siteMetadata: Maybe<
-        Pick<SiteSiteMetadata, "gitHubUrl"> & {
-          readonly author: Pick<
-            SiteSiteMetadataAuthor,
-            "email" | "name" | "url"
-          >;
-        }
-      >;
-    }>;
-  };
-
-  type LayoutQueryVariables = Exact<{[key: string]: never}>;
-
-  type LayoutQuery = {
-    readonly site: Maybe<{
-      readonly siteMetadata: Maybe<
-        Pick<SiteSiteMetadata, "description" | "keywords" | "title">
-      >;
-    }>;
   };
 }

@@ -1,4 +1,6 @@
-export const ObjectFragment = `
+import {graphql} from "gatsby";
+
+export const ObjectFragment = graphql`
   fragment ObjectFragment on ObjectJson {
     collection_uris
     descriptions
