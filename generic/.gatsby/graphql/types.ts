@@ -25,6 +25,7 @@ declare namespace GatsbyTypes {
     readonly institution_uri: Scalars["String"];
     readonly title: Scalars["String"];
     readonly uri: Scalars["String"];
+    readonly rights: Maybe<CollectionJsonRights>;
     readonly id: Scalars["ID"];
     readonly parent: Maybe<Node>;
     readonly children: ReadonlyArray<Node>;
@@ -60,6 +61,8 @@ declare namespace GatsbyTypes {
     institution_uri = "institution_uri",
     title = "title",
     uri = "uri",
+    rights___holder = "rights.holder",
+    rights___statements = "rights.statements",
     id = "id",
     parent___id = "parent.id",
     parent___parent___id = "parent.parent.id",
@@ -152,10 +155,15 @@ declare namespace GatsbyTypes {
     readonly institution_uri: Maybe<StringQueryOperatorInput>;
     readonly title: Maybe<StringQueryOperatorInput>;
     readonly uri: Maybe<StringQueryOperatorInput>;
+    readonly rights: Maybe<CollectionJsonRightsFilterInput>;
     readonly id: Maybe<StringQueryOperatorInput>;
     readonly parent: Maybe<NodeFilterInput>;
     readonly children: Maybe<NodeFilterListInput>;
     readonly internal: Maybe<InternalFilterInput>;
+  };
+
+  type CollectionJsonFilterListInput = {
+    readonly elemMatch: Maybe<CollectionJsonFilterInput>;
   };
 
   type CollectionJsonGroupConnection = {
@@ -170,6 +178,11 @@ declare namespace GatsbyTypes {
   type CollectionJsonRights = {
     readonly holder: Scalars["String"];
     readonly statements: ReadonlyArray<Scalars["String"]>;
+  };
+
+  type CollectionJsonRightsFilterInput = {
+    readonly holder: Maybe<StringQueryOperatorInput>;
+    readonly statements: Maybe<StringQueryOperatorInput>;
   };
 
   type CollectionJsonSortInput = {
@@ -514,6 +527,14 @@ declare namespace GatsbyTypes {
     readonly parent: Maybe<Node>;
     readonly children: ReadonlyArray<Node>;
     readonly internal: Internal;
+    readonly childrenCollectionJson: Maybe<
+      ReadonlyArray<Maybe<CollectionJson>>
+    >;
+    readonly childrenInstitutionJson: Maybe<
+      ReadonlyArray<Maybe<InstitutionJson>>
+    >;
+    readonly childrenImageJson: Maybe<ReadonlyArray<Maybe<ImageJson>>>;
+    readonly childrenObjectJson: Maybe<ReadonlyArray<Maybe<ObjectJson>>>;
   };
 
   type File_modifiedTimeArgs = {
@@ -709,6 +730,186 @@ declare namespace GatsbyTypes {
     internal___mediaType = "internal.mediaType",
     internal___owner = "internal.owner",
     internal___type = "internal.type",
+    childrenCollectionJson = "childrenCollectionJson",
+    childrenCollectionJson___institution_uri = "childrenCollectionJson.institution_uri",
+    childrenCollectionJson___title = "childrenCollectionJson.title",
+    childrenCollectionJson___uri = "childrenCollectionJson.uri",
+    childrenCollectionJson___rights___holder = "childrenCollectionJson.rights.holder",
+    childrenCollectionJson___rights___statements = "childrenCollectionJson.rights.statements",
+    childrenCollectionJson___id = "childrenCollectionJson.id",
+    childrenCollectionJson___parent___id = "childrenCollectionJson.parent.id",
+    childrenCollectionJson___parent___parent___id = "childrenCollectionJson.parent.parent.id",
+    childrenCollectionJson___parent___parent___children = "childrenCollectionJson.parent.parent.children",
+    childrenCollectionJson___parent___children = "childrenCollectionJson.parent.children",
+    childrenCollectionJson___parent___children___id = "childrenCollectionJson.parent.children.id",
+    childrenCollectionJson___parent___children___children = "childrenCollectionJson.parent.children.children",
+    childrenCollectionJson___parent___internal___content = "childrenCollectionJson.parent.internal.content",
+    childrenCollectionJson___parent___internal___contentDigest = "childrenCollectionJson.parent.internal.contentDigest",
+    childrenCollectionJson___parent___internal___description = "childrenCollectionJson.parent.internal.description",
+    childrenCollectionJson___parent___internal___fieldOwners = "childrenCollectionJson.parent.internal.fieldOwners",
+    childrenCollectionJson___parent___internal___ignoreType = "childrenCollectionJson.parent.internal.ignoreType",
+    childrenCollectionJson___parent___internal___mediaType = "childrenCollectionJson.parent.internal.mediaType",
+    childrenCollectionJson___parent___internal___owner = "childrenCollectionJson.parent.internal.owner",
+    childrenCollectionJson___parent___internal___type = "childrenCollectionJson.parent.internal.type",
+    childrenCollectionJson___children = "childrenCollectionJson.children",
+    childrenCollectionJson___children___id = "childrenCollectionJson.children.id",
+    childrenCollectionJson___children___parent___id = "childrenCollectionJson.children.parent.id",
+    childrenCollectionJson___children___parent___children = "childrenCollectionJson.children.parent.children",
+    childrenCollectionJson___children___children = "childrenCollectionJson.children.children",
+    childrenCollectionJson___children___children___id = "childrenCollectionJson.children.children.id",
+    childrenCollectionJson___children___children___children = "childrenCollectionJson.children.children.children",
+    childrenCollectionJson___children___internal___content = "childrenCollectionJson.children.internal.content",
+    childrenCollectionJson___children___internal___contentDigest = "childrenCollectionJson.children.internal.contentDigest",
+    childrenCollectionJson___children___internal___description = "childrenCollectionJson.children.internal.description",
+    childrenCollectionJson___children___internal___fieldOwners = "childrenCollectionJson.children.internal.fieldOwners",
+    childrenCollectionJson___children___internal___ignoreType = "childrenCollectionJson.children.internal.ignoreType",
+    childrenCollectionJson___children___internal___mediaType = "childrenCollectionJson.children.internal.mediaType",
+    childrenCollectionJson___children___internal___owner = "childrenCollectionJson.children.internal.owner",
+    childrenCollectionJson___children___internal___type = "childrenCollectionJson.children.internal.type",
+    childrenCollectionJson___internal___content = "childrenCollectionJson.internal.content",
+    childrenCollectionJson___internal___contentDigest = "childrenCollectionJson.internal.contentDigest",
+    childrenCollectionJson___internal___description = "childrenCollectionJson.internal.description",
+    childrenCollectionJson___internal___fieldOwners = "childrenCollectionJson.internal.fieldOwners",
+    childrenCollectionJson___internal___ignoreType = "childrenCollectionJson.internal.ignoreType",
+    childrenCollectionJson___internal___mediaType = "childrenCollectionJson.internal.mediaType",
+    childrenCollectionJson___internal___owner = "childrenCollectionJson.internal.owner",
+    childrenCollectionJson___internal___type = "childrenCollectionJson.internal.type",
+    childrenInstitutionJson = "childrenInstitutionJson",
+    childrenInstitutionJson___name = "childrenInstitutionJson.name",
+    childrenInstitutionJson___uri = "childrenInstitutionJson.uri",
+    childrenInstitutionJson___rights___holder = "childrenInstitutionJson.rights.holder",
+    childrenInstitutionJson___rights___statements = "childrenInstitutionJson.rights.statements",
+    childrenInstitutionJson___id = "childrenInstitutionJson.id",
+    childrenInstitutionJson___parent___id = "childrenInstitutionJson.parent.id",
+    childrenInstitutionJson___parent___parent___id = "childrenInstitutionJson.parent.parent.id",
+    childrenInstitutionJson___parent___parent___children = "childrenInstitutionJson.parent.parent.children",
+    childrenInstitutionJson___parent___children = "childrenInstitutionJson.parent.children",
+    childrenInstitutionJson___parent___children___id = "childrenInstitutionJson.parent.children.id",
+    childrenInstitutionJson___parent___children___children = "childrenInstitutionJson.parent.children.children",
+    childrenInstitutionJson___parent___internal___content = "childrenInstitutionJson.parent.internal.content",
+    childrenInstitutionJson___parent___internal___contentDigest = "childrenInstitutionJson.parent.internal.contentDigest",
+    childrenInstitutionJson___parent___internal___description = "childrenInstitutionJson.parent.internal.description",
+    childrenInstitutionJson___parent___internal___fieldOwners = "childrenInstitutionJson.parent.internal.fieldOwners",
+    childrenInstitutionJson___parent___internal___ignoreType = "childrenInstitutionJson.parent.internal.ignoreType",
+    childrenInstitutionJson___parent___internal___mediaType = "childrenInstitutionJson.parent.internal.mediaType",
+    childrenInstitutionJson___parent___internal___owner = "childrenInstitutionJson.parent.internal.owner",
+    childrenInstitutionJson___parent___internal___type = "childrenInstitutionJson.parent.internal.type",
+    childrenInstitutionJson___children = "childrenInstitutionJson.children",
+    childrenInstitutionJson___children___id = "childrenInstitutionJson.children.id",
+    childrenInstitutionJson___children___parent___id = "childrenInstitutionJson.children.parent.id",
+    childrenInstitutionJson___children___parent___children = "childrenInstitutionJson.children.parent.children",
+    childrenInstitutionJson___children___children = "childrenInstitutionJson.children.children",
+    childrenInstitutionJson___children___children___id = "childrenInstitutionJson.children.children.id",
+    childrenInstitutionJson___children___children___children = "childrenInstitutionJson.children.children.children",
+    childrenInstitutionJson___children___internal___content = "childrenInstitutionJson.children.internal.content",
+    childrenInstitutionJson___children___internal___contentDigest = "childrenInstitutionJson.children.internal.contentDigest",
+    childrenInstitutionJson___children___internal___description = "childrenInstitutionJson.children.internal.description",
+    childrenInstitutionJson___children___internal___fieldOwners = "childrenInstitutionJson.children.internal.fieldOwners",
+    childrenInstitutionJson___children___internal___ignoreType = "childrenInstitutionJson.children.internal.ignoreType",
+    childrenInstitutionJson___children___internal___mediaType = "childrenInstitutionJson.children.internal.mediaType",
+    childrenInstitutionJson___children___internal___owner = "childrenInstitutionJson.children.internal.owner",
+    childrenInstitutionJson___children___internal___type = "childrenInstitutionJson.children.internal.type",
+    childrenInstitutionJson___internal___content = "childrenInstitutionJson.internal.content",
+    childrenInstitutionJson___internal___contentDigest = "childrenInstitutionJson.internal.contentDigest",
+    childrenInstitutionJson___internal___description = "childrenInstitutionJson.internal.description",
+    childrenInstitutionJson___internal___fieldOwners = "childrenInstitutionJson.internal.fieldOwners",
+    childrenInstitutionJson___internal___ignoreType = "childrenInstitutionJson.internal.ignoreType",
+    childrenInstitutionJson___internal___mediaType = "childrenInstitutionJson.internal.mediaType",
+    childrenInstitutionJson___internal___owner = "childrenInstitutionJson.internal.owner",
+    childrenInstitutionJson___internal___type = "childrenInstitutionJson.internal.type",
+    childrenImageJson = "childrenImageJson",
+    childrenImageJson___id = "childrenImageJson.id",
+    childrenImageJson___parent___id = "childrenImageJson.parent.id",
+    childrenImageJson___parent___parent___id = "childrenImageJson.parent.parent.id",
+    childrenImageJson___parent___parent___children = "childrenImageJson.parent.parent.children",
+    childrenImageJson___parent___children = "childrenImageJson.parent.children",
+    childrenImageJson___parent___children___id = "childrenImageJson.parent.children.id",
+    childrenImageJson___parent___children___children = "childrenImageJson.parent.children.children",
+    childrenImageJson___parent___internal___content = "childrenImageJson.parent.internal.content",
+    childrenImageJson___parent___internal___contentDigest = "childrenImageJson.parent.internal.contentDigest",
+    childrenImageJson___parent___internal___description = "childrenImageJson.parent.internal.description",
+    childrenImageJson___parent___internal___fieldOwners = "childrenImageJson.parent.internal.fieldOwners",
+    childrenImageJson___parent___internal___ignoreType = "childrenImageJson.parent.internal.ignoreType",
+    childrenImageJson___parent___internal___mediaType = "childrenImageJson.parent.internal.mediaType",
+    childrenImageJson___parent___internal___owner = "childrenImageJson.parent.internal.owner",
+    childrenImageJson___parent___internal___type = "childrenImageJson.parent.internal.type",
+    childrenImageJson___children = "childrenImageJson.children",
+    childrenImageJson___children___id = "childrenImageJson.children.id",
+    childrenImageJson___children___parent___id = "childrenImageJson.children.parent.id",
+    childrenImageJson___children___parent___children = "childrenImageJson.children.parent.children",
+    childrenImageJson___children___children = "childrenImageJson.children.children",
+    childrenImageJson___children___children___id = "childrenImageJson.children.children.id",
+    childrenImageJson___children___children___children = "childrenImageJson.children.children.children",
+    childrenImageJson___children___internal___content = "childrenImageJson.children.internal.content",
+    childrenImageJson___children___internal___contentDigest = "childrenImageJson.children.internal.contentDigest",
+    childrenImageJson___children___internal___description = "childrenImageJson.children.internal.description",
+    childrenImageJson___children___internal___fieldOwners = "childrenImageJson.children.internal.fieldOwners",
+    childrenImageJson___children___internal___ignoreType = "childrenImageJson.children.internal.ignoreType",
+    childrenImageJson___children___internal___mediaType = "childrenImageJson.children.internal.mediaType",
+    childrenImageJson___children___internal___owner = "childrenImageJson.children.internal.owner",
+    childrenImageJson___children___internal___type = "childrenImageJson.children.internal.type",
+    childrenImageJson___internal___content = "childrenImageJson.internal.content",
+    childrenImageJson___internal___contentDigest = "childrenImageJson.internal.contentDigest",
+    childrenImageJson___internal___description = "childrenImageJson.internal.description",
+    childrenImageJson___internal___fieldOwners = "childrenImageJson.internal.fieldOwners",
+    childrenImageJson___internal___ignoreType = "childrenImageJson.internal.ignoreType",
+    childrenImageJson___internal___mediaType = "childrenImageJson.internal.mediaType",
+    childrenImageJson___internal___owner = "childrenImageJson.internal.owner",
+    childrenImageJson___internal___type = "childrenImageJson.internal.type",
+    childrenImageJson___uri = "childrenImageJson.uri",
+    childrenImageJson___derived_image_uris = "childrenImageJson.derived_image_uris",
+    childrenImageJson___exact_dimensions___height = "childrenImageJson.exact_dimensions.height",
+    childrenImageJson___exact_dimensions___width = "childrenImageJson.exact_dimensions.width",
+    childrenImageJson___max_dimensions___height = "childrenImageJson.max_dimensions.height",
+    childrenImageJson___max_dimensions___width = "childrenImageJson.max_dimensions.width",
+    childrenObjectJson = "childrenObjectJson",
+    childrenObjectJson___collection_uris = "childrenObjectJson.collection_uris",
+    childrenObjectJson___descriptions = "childrenObjectJson.descriptions",
+    childrenObjectJson___image_uris = "childrenObjectJson.image_uris",
+    childrenObjectJson___institution_uri = "childrenObjectJson.institution_uri",
+    childrenObjectJson___subjects = "childrenObjectJson.subjects",
+    childrenObjectJson___title = "childrenObjectJson.title",
+    childrenObjectJson___uri = "childrenObjectJson.uri",
+    childrenObjectJson___rights___holder = "childrenObjectJson.rights.holder",
+    childrenObjectJson___rights___statements = "childrenObjectJson.rights.statements",
+    childrenObjectJson___id = "childrenObjectJson.id",
+    childrenObjectJson___parent___id = "childrenObjectJson.parent.id",
+    childrenObjectJson___parent___parent___id = "childrenObjectJson.parent.parent.id",
+    childrenObjectJson___parent___parent___children = "childrenObjectJson.parent.parent.children",
+    childrenObjectJson___parent___children = "childrenObjectJson.parent.children",
+    childrenObjectJson___parent___children___id = "childrenObjectJson.parent.children.id",
+    childrenObjectJson___parent___children___children = "childrenObjectJson.parent.children.children",
+    childrenObjectJson___parent___internal___content = "childrenObjectJson.parent.internal.content",
+    childrenObjectJson___parent___internal___contentDigest = "childrenObjectJson.parent.internal.contentDigest",
+    childrenObjectJson___parent___internal___description = "childrenObjectJson.parent.internal.description",
+    childrenObjectJson___parent___internal___fieldOwners = "childrenObjectJson.parent.internal.fieldOwners",
+    childrenObjectJson___parent___internal___ignoreType = "childrenObjectJson.parent.internal.ignoreType",
+    childrenObjectJson___parent___internal___mediaType = "childrenObjectJson.parent.internal.mediaType",
+    childrenObjectJson___parent___internal___owner = "childrenObjectJson.parent.internal.owner",
+    childrenObjectJson___parent___internal___type = "childrenObjectJson.parent.internal.type",
+    childrenObjectJson___children = "childrenObjectJson.children",
+    childrenObjectJson___children___id = "childrenObjectJson.children.id",
+    childrenObjectJson___children___parent___id = "childrenObjectJson.children.parent.id",
+    childrenObjectJson___children___parent___children = "childrenObjectJson.children.parent.children",
+    childrenObjectJson___children___children = "childrenObjectJson.children.children",
+    childrenObjectJson___children___children___id = "childrenObjectJson.children.children.id",
+    childrenObjectJson___children___children___children = "childrenObjectJson.children.children.children",
+    childrenObjectJson___children___internal___content = "childrenObjectJson.children.internal.content",
+    childrenObjectJson___children___internal___contentDigest = "childrenObjectJson.children.internal.contentDigest",
+    childrenObjectJson___children___internal___description = "childrenObjectJson.children.internal.description",
+    childrenObjectJson___children___internal___fieldOwners = "childrenObjectJson.children.internal.fieldOwners",
+    childrenObjectJson___children___internal___ignoreType = "childrenObjectJson.children.internal.ignoreType",
+    childrenObjectJson___children___internal___mediaType = "childrenObjectJson.children.internal.mediaType",
+    childrenObjectJson___children___internal___owner = "childrenObjectJson.children.internal.owner",
+    childrenObjectJson___children___internal___type = "childrenObjectJson.children.internal.type",
+    childrenObjectJson___internal___content = "childrenObjectJson.internal.content",
+    childrenObjectJson___internal___contentDigest = "childrenObjectJson.internal.contentDigest",
+    childrenObjectJson___internal___description = "childrenObjectJson.internal.description",
+    childrenObjectJson___internal___fieldOwners = "childrenObjectJson.internal.fieldOwners",
+    childrenObjectJson___internal___ignoreType = "childrenObjectJson.internal.ignoreType",
+    childrenObjectJson___internal___mediaType = "childrenObjectJson.internal.mediaType",
+    childrenObjectJson___internal___owner = "childrenObjectJson.internal.owner",
+    childrenObjectJson___internal___type = "childrenObjectJson.internal.type",
   }
 
   type FileFilterInput = {
@@ -748,6 +949,10 @@ declare namespace GatsbyTypes {
     readonly parent: Maybe<NodeFilterInput>;
     readonly children: Maybe<NodeFilterListInput>;
     readonly internal: Maybe<InternalFilterInput>;
+    readonly childrenCollectionJson: Maybe<CollectionJsonFilterListInput>;
+    readonly childrenInstitutionJson: Maybe<InstitutionJsonFilterListInput>;
+    readonly childrenImageJson: Maybe<ImageJsonFilterListInput>;
+    readonly childrenObjectJson: Maybe<ObjectJsonFilterListInput>;
   };
 
   type FileGroupConnection = {
@@ -775,9 +980,190 @@ declare namespace GatsbyTypes {
     readonly nin: Maybe<ReadonlyArray<Maybe<Scalars["Float"]>>>;
   };
 
+  type ImageJson = Node & {
+    readonly id: Scalars["ID"];
+    readonly parent: Maybe<Node>;
+    readonly children: ReadonlyArray<Node>;
+    readonly internal: Internal;
+    readonly uri: Maybe<Scalars["String"]>;
+    readonly derived_image_uris: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
+    readonly exact_dimensions: Maybe<ImageJsonExact_dimensions>;
+    readonly max_dimensions: Maybe<ImageJsonMax_dimensions>;
+  };
+
+  type ImageJsonConnection = {
+    readonly totalCount: Scalars["Int"];
+    readonly edges: ReadonlyArray<ImageJsonEdge>;
+    readonly nodes: ReadonlyArray<ImageJson>;
+    readonly pageInfo: PageInfo;
+    readonly distinct: ReadonlyArray<Scalars["String"]>;
+    readonly group: ReadonlyArray<ImageJsonGroupConnection>;
+  };
+
+  type ImageJsonConnection_distinctArgs = {
+    field: ImageJsonFieldsEnum;
+  };
+
+  type ImageJsonConnection_groupArgs = {
+    skip: Maybe<Scalars["Int"]>;
+    limit: Maybe<Scalars["Int"]>;
+    field: ImageJsonFieldsEnum;
+  };
+
+  type ImageJsonEdge = {
+    readonly next: Maybe<ImageJson>;
+    readonly node: ImageJson;
+    readonly previous: Maybe<ImageJson>;
+  };
+
+  type ImageJsonExact_dimensions = {
+    readonly height: Maybe<Scalars["Int"]>;
+    readonly width: Maybe<Scalars["Int"]>;
+  };
+
+  type ImageJsonExact_dimensionsFilterInput = {
+    readonly height: Maybe<IntQueryOperatorInput>;
+    readonly width: Maybe<IntQueryOperatorInput>;
+  };
+
+  enum ImageJsonFieldsEnum {
+    id = "id",
+    parent___id = "parent.id",
+    parent___parent___id = "parent.parent.id",
+    parent___parent___parent___id = "parent.parent.parent.id",
+    parent___parent___parent___children = "parent.parent.parent.children",
+    parent___parent___children = "parent.parent.children",
+    parent___parent___children___id = "parent.parent.children.id",
+    parent___parent___children___children = "parent.parent.children.children",
+    parent___parent___internal___content = "parent.parent.internal.content",
+    parent___parent___internal___contentDigest = "parent.parent.internal.contentDigest",
+    parent___parent___internal___description = "parent.parent.internal.description",
+    parent___parent___internal___fieldOwners = "parent.parent.internal.fieldOwners",
+    parent___parent___internal___ignoreType = "parent.parent.internal.ignoreType",
+    parent___parent___internal___mediaType = "parent.parent.internal.mediaType",
+    parent___parent___internal___owner = "parent.parent.internal.owner",
+    parent___parent___internal___type = "parent.parent.internal.type",
+    parent___children = "parent.children",
+    parent___children___id = "parent.children.id",
+    parent___children___parent___id = "parent.children.parent.id",
+    parent___children___parent___children = "parent.children.parent.children",
+    parent___children___children = "parent.children.children",
+    parent___children___children___id = "parent.children.children.id",
+    parent___children___children___children = "parent.children.children.children",
+    parent___children___internal___content = "parent.children.internal.content",
+    parent___children___internal___contentDigest = "parent.children.internal.contentDigest",
+    parent___children___internal___description = "parent.children.internal.description",
+    parent___children___internal___fieldOwners = "parent.children.internal.fieldOwners",
+    parent___children___internal___ignoreType = "parent.children.internal.ignoreType",
+    parent___children___internal___mediaType = "parent.children.internal.mediaType",
+    parent___children___internal___owner = "parent.children.internal.owner",
+    parent___children___internal___type = "parent.children.internal.type",
+    parent___internal___content = "parent.internal.content",
+    parent___internal___contentDigest = "parent.internal.contentDigest",
+    parent___internal___description = "parent.internal.description",
+    parent___internal___fieldOwners = "parent.internal.fieldOwners",
+    parent___internal___ignoreType = "parent.internal.ignoreType",
+    parent___internal___mediaType = "parent.internal.mediaType",
+    parent___internal___owner = "parent.internal.owner",
+    parent___internal___type = "parent.internal.type",
+    children = "children",
+    children___id = "children.id",
+    children___parent___id = "children.parent.id",
+    children___parent___parent___id = "children.parent.parent.id",
+    children___parent___parent___children = "children.parent.parent.children",
+    children___parent___children = "children.parent.children",
+    children___parent___children___id = "children.parent.children.id",
+    children___parent___children___children = "children.parent.children.children",
+    children___parent___internal___content = "children.parent.internal.content",
+    children___parent___internal___contentDigest = "children.parent.internal.contentDigest",
+    children___parent___internal___description = "children.parent.internal.description",
+    children___parent___internal___fieldOwners = "children.parent.internal.fieldOwners",
+    children___parent___internal___ignoreType = "children.parent.internal.ignoreType",
+    children___parent___internal___mediaType = "children.parent.internal.mediaType",
+    children___parent___internal___owner = "children.parent.internal.owner",
+    children___parent___internal___type = "children.parent.internal.type",
+    children___children = "children.children",
+    children___children___id = "children.children.id",
+    children___children___parent___id = "children.children.parent.id",
+    children___children___parent___children = "children.children.parent.children",
+    children___children___children = "children.children.children",
+    children___children___children___id = "children.children.children.id",
+    children___children___children___children = "children.children.children.children",
+    children___children___internal___content = "children.children.internal.content",
+    children___children___internal___contentDigest = "children.children.internal.contentDigest",
+    children___children___internal___description = "children.children.internal.description",
+    children___children___internal___fieldOwners = "children.children.internal.fieldOwners",
+    children___children___internal___ignoreType = "children.children.internal.ignoreType",
+    children___children___internal___mediaType = "children.children.internal.mediaType",
+    children___children___internal___owner = "children.children.internal.owner",
+    children___children___internal___type = "children.children.internal.type",
+    children___internal___content = "children.internal.content",
+    children___internal___contentDigest = "children.internal.contentDigest",
+    children___internal___description = "children.internal.description",
+    children___internal___fieldOwners = "children.internal.fieldOwners",
+    children___internal___ignoreType = "children.internal.ignoreType",
+    children___internal___mediaType = "children.internal.mediaType",
+    children___internal___owner = "children.internal.owner",
+    children___internal___type = "children.internal.type",
+    internal___content = "internal.content",
+    internal___contentDigest = "internal.contentDigest",
+    internal___description = "internal.description",
+    internal___fieldOwners = "internal.fieldOwners",
+    internal___ignoreType = "internal.ignoreType",
+    internal___mediaType = "internal.mediaType",
+    internal___owner = "internal.owner",
+    internal___type = "internal.type",
+    uri = "uri",
+    derived_image_uris = "derived_image_uris",
+    exact_dimensions___height = "exact_dimensions.height",
+    exact_dimensions___width = "exact_dimensions.width",
+    max_dimensions___height = "max_dimensions.height",
+    max_dimensions___width = "max_dimensions.width",
+  }
+
+  type ImageJsonFilterInput = {
+    readonly id: Maybe<StringQueryOperatorInput>;
+    readonly parent: Maybe<NodeFilterInput>;
+    readonly children: Maybe<NodeFilterListInput>;
+    readonly internal: Maybe<InternalFilterInput>;
+    readonly uri: Maybe<StringQueryOperatorInput>;
+    readonly derived_image_uris: Maybe<StringQueryOperatorInput>;
+    readonly exact_dimensions: Maybe<ImageJsonExact_dimensionsFilterInput>;
+    readonly max_dimensions: Maybe<ImageJsonMax_dimensionsFilterInput>;
+  };
+
+  type ImageJsonFilterListInput = {
+    readonly elemMatch: Maybe<ImageJsonFilterInput>;
+  };
+
+  type ImageJsonGroupConnection = {
+    readonly totalCount: Scalars["Int"];
+    readonly edges: ReadonlyArray<ImageJsonEdge>;
+    readonly nodes: ReadonlyArray<ImageJson>;
+    readonly pageInfo: PageInfo;
+    readonly field: Scalars["String"];
+    readonly fieldValue: Maybe<Scalars["String"]>;
+  };
+
+  type ImageJsonMax_dimensions = {
+    readonly height: Maybe<Scalars["Int"]>;
+    readonly width: Maybe<Scalars["Int"]>;
+  };
+
+  type ImageJsonMax_dimensionsFilterInput = {
+    readonly height: Maybe<IntQueryOperatorInput>;
+    readonly width: Maybe<IntQueryOperatorInput>;
+  };
+
+  type ImageJsonSortInput = {
+    readonly fields: Maybe<ReadonlyArray<Maybe<ImageJsonFieldsEnum>>>;
+    readonly order: Maybe<ReadonlyArray<Maybe<SortOrderEnum>>>;
+  };
+
   type InstitutionJson = Node & {
     readonly name: Scalars["String"];
     readonly uri: Scalars["String"];
+    readonly rights: Maybe<InstitutionJsonRights>;
     readonly id: Scalars["ID"];
     readonly parent: Maybe<Node>;
     readonly children: ReadonlyArray<Node>;
@@ -812,6 +1198,8 @@ declare namespace GatsbyTypes {
   enum InstitutionJsonFieldsEnum {
     name = "name",
     uri = "uri",
+    rights___holder = "rights.holder",
+    rights___statements = "rights.statements",
     id = "id",
     parent___id = "parent.id",
     parent___parent___id = "parent.parent.id",
@@ -903,10 +1291,15 @@ declare namespace GatsbyTypes {
   type InstitutionJsonFilterInput = {
     readonly name: Maybe<StringQueryOperatorInput>;
     readonly uri: Maybe<StringQueryOperatorInput>;
+    readonly rights: Maybe<InstitutionJsonRightsFilterInput>;
     readonly id: Maybe<StringQueryOperatorInput>;
     readonly parent: Maybe<NodeFilterInput>;
     readonly children: Maybe<NodeFilterListInput>;
     readonly internal: Maybe<InternalFilterInput>;
+  };
+
+  type InstitutionJsonFilterListInput = {
+    readonly elemMatch: Maybe<InstitutionJsonFilterInput>;
   };
 
   type InstitutionJsonGroupConnection = {
@@ -921,6 +1314,11 @@ declare namespace GatsbyTypes {
   type InstitutionJsonRights = {
     readonly holder: Scalars["String"];
     readonly statements: ReadonlyArray<Scalars["String"]>;
+  };
+
+  type InstitutionJsonRightsFilterInput = {
+    readonly holder: Maybe<StringQueryOperatorInput>;
+    readonly statements: Maybe<StringQueryOperatorInput>;
   };
 
   type InstitutionJsonSortInput = {
@@ -988,6 +1386,7 @@ declare namespace GatsbyTypes {
     readonly subjects: Maybe<ReadonlyArray<Scalars["String"]>>;
     readonly title: Scalars["String"];
     readonly uri: Scalars["String"];
+    readonly rights: Maybe<ObjectJsonRights>;
     readonly id: Scalars["ID"];
     readonly parent: Maybe<Node>;
     readonly children: ReadonlyArray<Node>;
@@ -1027,6 +1426,8 @@ declare namespace GatsbyTypes {
     subjects = "subjects",
     title = "title",
     uri = "uri",
+    rights___holder = "rights.holder",
+    rights___statements = "rights.statements",
     id = "id",
     parent___id = "parent.id",
     parent___parent___id = "parent.parent.id",
@@ -1123,10 +1524,15 @@ declare namespace GatsbyTypes {
     readonly subjects: Maybe<StringQueryOperatorInput>;
     readonly title: Maybe<StringQueryOperatorInput>;
     readonly uri: Maybe<StringQueryOperatorInput>;
+    readonly rights: Maybe<ObjectJsonRightsFilterInput>;
     readonly id: Maybe<StringQueryOperatorInput>;
     readonly parent: Maybe<NodeFilterInput>;
     readonly children: Maybe<NodeFilterListInput>;
     readonly internal: Maybe<InternalFilterInput>;
+  };
+
+  type ObjectJsonFilterListInput = {
+    readonly elemMatch: Maybe<ObjectJsonFilterInput>;
   };
 
   type ObjectJsonGroupConnection = {
@@ -1141,6 +1547,11 @@ declare namespace GatsbyTypes {
   type ObjectJsonRights = {
     readonly holder: Scalars["String"];
     readonly statements: ReadonlyArray<Scalars["String"]>;
+  };
+
+  type ObjectJsonRightsFilterInput = {
+    readonly holder: Maybe<StringQueryOperatorInput>;
+    readonly statements: Maybe<StringQueryOperatorInput>;
   };
 
   type ObjectJsonSortInput = {
@@ -1173,6 +1584,8 @@ declare namespace GatsbyTypes {
     readonly allInstitutionJson: InstitutionJsonConnection;
     readonly objectJson: Maybe<ObjectJson>;
     readonly allObjectJson: ObjectJsonConnection;
+    readonly imageJson: Maybe<ImageJson>;
+    readonly allImageJson: ImageJsonConnection;
     readonly siteBuildMetadata: Maybe<SiteBuildMetadata>;
     readonly allSiteBuildMetadata: SiteBuildMetadataConnection;
     readonly sitePlugin: Maybe<SitePlugin>;
@@ -1216,6 +1629,10 @@ declare namespace GatsbyTypes {
     parent: Maybe<NodeFilterInput>;
     children: Maybe<NodeFilterListInput>;
     internal: Maybe<InternalFilterInput>;
+    childrenCollectionJson: Maybe<CollectionJsonFilterListInput>;
+    childrenInstitutionJson: Maybe<InstitutionJsonFilterListInput>;
+    childrenImageJson: Maybe<ImageJsonFilterListInput>;
+    childrenObjectJson: Maybe<ObjectJsonFilterListInput>;
   };
 
   type Query_allFileArgs = {
@@ -1281,6 +1698,7 @@ declare namespace GatsbyTypes {
     children: Maybe<NodeFilterListInput>;
     internal: Maybe<InternalFilterInput>;
     isCreatedByStatefulCreatePages: Maybe<BooleanQueryOperatorInput>;
+    context: Maybe<SitePageContextFilterInput>;
     pluginCreator: Maybe<SitePluginFilterInput>;
     pluginCreatorId: Maybe<StringQueryOperatorInput>;
     componentPath: Maybe<StringQueryOperatorInput>;
@@ -1317,6 +1735,7 @@ declare namespace GatsbyTypes {
     institution_uri: Maybe<StringQueryOperatorInput>;
     title: Maybe<StringQueryOperatorInput>;
     uri: Maybe<StringQueryOperatorInput>;
+    rights: Maybe<CollectionJsonRightsFilterInput>;
     id: Maybe<StringQueryOperatorInput>;
     parent: Maybe<NodeFilterInput>;
     children: Maybe<NodeFilterListInput>;
@@ -1333,6 +1752,7 @@ declare namespace GatsbyTypes {
   type Query_institutionJsonArgs = {
     name: Maybe<StringQueryOperatorInput>;
     uri: Maybe<StringQueryOperatorInput>;
+    rights: Maybe<InstitutionJsonRightsFilterInput>;
     id: Maybe<StringQueryOperatorInput>;
     parent: Maybe<NodeFilterInput>;
     children: Maybe<NodeFilterListInput>;
@@ -1354,6 +1774,7 @@ declare namespace GatsbyTypes {
     subjects: Maybe<StringQueryOperatorInput>;
     title: Maybe<StringQueryOperatorInput>;
     uri: Maybe<StringQueryOperatorInput>;
+    rights: Maybe<ObjectJsonRightsFilterInput>;
     id: Maybe<StringQueryOperatorInput>;
     parent: Maybe<NodeFilterInput>;
     children: Maybe<NodeFilterListInput>;
@@ -1363,6 +1784,24 @@ declare namespace GatsbyTypes {
   type Query_allObjectJsonArgs = {
     filter: Maybe<ObjectJsonFilterInput>;
     sort: Maybe<ObjectJsonSortInput>;
+    skip: Maybe<Scalars["Int"]>;
+    limit: Maybe<Scalars["Int"]>;
+  };
+
+  type Query_imageJsonArgs = {
+    id: Maybe<StringQueryOperatorInput>;
+    parent: Maybe<NodeFilterInput>;
+    children: Maybe<NodeFilterListInput>;
+    internal: Maybe<InternalFilterInput>;
+    uri: Maybe<StringQueryOperatorInput>;
+    derived_image_uris: Maybe<StringQueryOperatorInput>;
+    exact_dimensions: Maybe<ImageJsonExact_dimensionsFilterInput>;
+    max_dimensions: Maybe<ImageJsonMax_dimensionsFilterInput>;
+  };
+
+  type Query_allImageJsonArgs = {
+    filter: Maybe<ImageJsonFilterInput>;
+    sort: Maybe<ImageJsonSortInput>;
     skip: Maybe<Scalars["Int"]>;
     limit: Maybe<Scalars["Int"]>;
   };
@@ -1736,6 +2175,7 @@ declare namespace GatsbyTypes {
     readonly children: ReadonlyArray<Node>;
     readonly internal: Internal;
     readonly isCreatedByStatefulCreatePages: Maybe<Scalars["Boolean"]>;
+    readonly context: Maybe<SitePageContext>;
     readonly pluginCreator: Maybe<SitePlugin>;
     readonly pluginCreatorId: Maybe<Scalars["String"]>;
     readonly componentPath: Maybe<Scalars["String"]>;
@@ -1758,6 +2198,132 @@ declare namespace GatsbyTypes {
     skip: Maybe<Scalars["Int"]>;
     limit: Maybe<Scalars["Int"]>;
     field: SitePageFieldsEnum;
+  };
+
+  type SitePageContext = {
+    readonly collection: Maybe<SitePageContextCollection>;
+    readonly institution: Maybe<SitePageContextInstitution>;
+    readonly objects: Maybe<ReadonlyArray<Maybe<SitePageContextObjects>>>;
+    readonly collections: Maybe<
+      ReadonlyArray<Maybe<SitePageContextCollections>>
+    >;
+  };
+
+  type SitePageContextCollection = {
+    readonly institution_uri: Maybe<Scalars["String"]>;
+    readonly rights: Maybe<SitePageContextCollectionRights>;
+    readonly title: Maybe<Scalars["String"]>;
+    readonly uri: Maybe<Scalars["String"]>;
+  };
+
+  type SitePageContextCollectionFilterInput = {
+    readonly institution_uri: Maybe<StringQueryOperatorInput>;
+    readonly rights: Maybe<SitePageContextCollectionRightsFilterInput>;
+    readonly title: Maybe<StringQueryOperatorInput>;
+    readonly uri: Maybe<StringQueryOperatorInput>;
+  };
+
+  type SitePageContextCollectionRights = {
+    readonly holder: Maybe<Scalars["String"]>;
+    readonly statements: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
+  };
+
+  type SitePageContextCollectionRightsFilterInput = {
+    readonly holder: Maybe<StringQueryOperatorInput>;
+    readonly statements: Maybe<StringQueryOperatorInput>;
+  };
+
+  type SitePageContextCollections = {
+    readonly institution_uri: Maybe<Scalars["String"]>;
+    readonly rights: Maybe<SitePageContextCollectionsRights>;
+    readonly title: Maybe<Scalars["String"]>;
+    readonly uri: Maybe<Scalars["String"]>;
+  };
+
+  type SitePageContextCollectionsFilterInput = {
+    readonly institution_uri: Maybe<StringQueryOperatorInput>;
+    readonly rights: Maybe<SitePageContextCollectionsRightsFilterInput>;
+    readonly title: Maybe<StringQueryOperatorInput>;
+    readonly uri: Maybe<StringQueryOperatorInput>;
+  };
+
+  type SitePageContextCollectionsFilterListInput = {
+    readonly elemMatch: Maybe<SitePageContextCollectionsFilterInput>;
+  };
+
+  type SitePageContextCollectionsRights = {
+    readonly holder: Maybe<Scalars["String"]>;
+    readonly statements: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
+  };
+
+  type SitePageContextCollectionsRightsFilterInput = {
+    readonly holder: Maybe<StringQueryOperatorInput>;
+    readonly statements: Maybe<StringQueryOperatorInput>;
+  };
+
+  type SitePageContextFilterInput = {
+    readonly collection: Maybe<SitePageContextCollectionFilterInput>;
+    readonly institution: Maybe<SitePageContextInstitutionFilterInput>;
+    readonly objects: Maybe<SitePageContextObjectsFilterListInput>;
+    readonly collections: Maybe<SitePageContextCollectionsFilterListInput>;
+  };
+
+  type SitePageContextInstitution = {
+    readonly name: Maybe<Scalars["String"]>;
+    readonly rights: Maybe<SitePageContextInstitutionRights>;
+    readonly uri: Maybe<Scalars["String"]>;
+  };
+
+  type SitePageContextInstitutionFilterInput = {
+    readonly name: Maybe<StringQueryOperatorInput>;
+    readonly rights: Maybe<SitePageContextInstitutionRightsFilterInput>;
+    readonly uri: Maybe<StringQueryOperatorInput>;
+  };
+
+  type SitePageContextInstitutionRights = {
+    readonly holder: Maybe<Scalars["String"]>;
+    readonly statements: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
+  };
+
+  type SitePageContextInstitutionRightsFilterInput = {
+    readonly holder: Maybe<StringQueryOperatorInput>;
+    readonly statements: Maybe<StringQueryOperatorInput>;
+  };
+
+  type SitePageContextObjects = {
+    readonly collection_uris: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
+    readonly descriptions: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
+    readonly image_uris: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
+    readonly institution_uri: Maybe<Scalars["String"]>;
+    readonly rights: Maybe<SitePageContextObjectsRights>;
+    readonly subjects: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
+    readonly title: Maybe<Scalars["String"]>;
+    readonly uri: Maybe<Scalars["String"]>;
+  };
+
+  type SitePageContextObjectsFilterInput = {
+    readonly collection_uris: Maybe<StringQueryOperatorInput>;
+    readonly descriptions: Maybe<StringQueryOperatorInput>;
+    readonly image_uris: Maybe<StringQueryOperatorInput>;
+    readonly institution_uri: Maybe<StringQueryOperatorInput>;
+    readonly rights: Maybe<SitePageContextObjectsRightsFilterInput>;
+    readonly subjects: Maybe<StringQueryOperatorInput>;
+    readonly title: Maybe<StringQueryOperatorInput>;
+    readonly uri: Maybe<StringQueryOperatorInput>;
+  };
+
+  type SitePageContextObjectsFilterListInput = {
+    readonly elemMatch: Maybe<SitePageContextObjectsFilterInput>;
+  };
+
+  type SitePageContextObjectsRights = {
+    readonly holder: Maybe<Scalars["String"]>;
+    readonly statements: Maybe<ReadonlyArray<Maybe<Scalars["String"]>>>;
+  };
+
+  type SitePageContextObjectsRightsFilterInput = {
+    readonly holder: Maybe<StringQueryOperatorInput>;
+    readonly statements: Maybe<StringQueryOperatorInput>;
   };
 
   type SitePageEdge = {
@@ -1859,6 +2425,31 @@ declare namespace GatsbyTypes {
     internal___owner = "internal.owner",
     internal___type = "internal.type",
     isCreatedByStatefulCreatePages = "isCreatedByStatefulCreatePages",
+    context___collection___institution_uri = "context.collection.institution_uri",
+    context___collection___rights___holder = "context.collection.rights.holder",
+    context___collection___rights___statements = "context.collection.rights.statements",
+    context___collection___title = "context.collection.title",
+    context___collection___uri = "context.collection.uri",
+    context___institution___name = "context.institution.name",
+    context___institution___rights___holder = "context.institution.rights.holder",
+    context___institution___rights___statements = "context.institution.rights.statements",
+    context___institution___uri = "context.institution.uri",
+    context___objects = "context.objects",
+    context___objects___collection_uris = "context.objects.collection_uris",
+    context___objects___descriptions = "context.objects.descriptions",
+    context___objects___image_uris = "context.objects.image_uris",
+    context___objects___institution_uri = "context.objects.institution_uri",
+    context___objects___rights___holder = "context.objects.rights.holder",
+    context___objects___rights___statements = "context.objects.rights.statements",
+    context___objects___subjects = "context.objects.subjects",
+    context___objects___title = "context.objects.title",
+    context___objects___uri = "context.objects.uri",
+    context___collections = "context.collections",
+    context___collections___institution_uri = "context.collections.institution_uri",
+    context___collections___rights___holder = "context.collections.rights.holder",
+    context___collections___rights___statements = "context.collections.rights.statements",
+    context___collections___title = "context.collections.title",
+    context___collections___uri = "context.collections.uri",
     pluginCreator___id = "pluginCreator.id",
     pluginCreator___parent___id = "pluginCreator.parent.id",
     pluginCreator___parent___parent___id = "pluginCreator.parent.parent.id",
@@ -1945,6 +2536,7 @@ declare namespace GatsbyTypes {
     readonly children: Maybe<NodeFilterListInput>;
     readonly internal: Maybe<InternalFilterInput>;
     readonly isCreatedByStatefulCreatePages: Maybe<BooleanQueryOperatorInput>;
+    readonly context: Maybe<SitePageContextFilterInput>;
     readonly pluginCreator: Maybe<SitePluginFilterInput>;
     readonly pluginCreatorId: Maybe<StringQueryOperatorInput>;
     readonly componentPath: Maybe<StringQueryOperatorInput>;
@@ -2346,5 +2938,30 @@ declare namespace GatsbyTypes {
     readonly allInstitutionJson: {
       readonly nodes: ReadonlyArray<Pick<InstitutionJson, "name" | "uri">>;
     };
+  };
+
+  type FooterQueryVariables = Exact<{[key: string]: never}>;
+
+  type FooterQuery = {
+    readonly site: Maybe<{
+      readonly siteMetadata: Maybe<
+        Pick<SiteSiteMetadata, "gitHubUrl"> & {
+          readonly author: Pick<
+            SiteSiteMetadataAuthor,
+            "email" | "name" | "url"
+          >;
+        }
+      >;
+    }>;
+  };
+
+  type LayoutQueryVariables = Exact<{[key: string]: never}>;
+
+  type LayoutQuery = {
+    readonly site: Maybe<{
+      readonly siteMetadata: Maybe<
+        Pick<SiteSiteMetadata, "description" | "keywords" | "title">
+      >;
+    }>;
   };
 }
