@@ -11,45 +11,47 @@ from paradicms_etl.models.rights import Rights
 
 class GenericTestDataTransformer(_Transformer):
     def transform(self):
-        institution = Institution(name="Test institution", uri=URIRef("http://example.com/institution"))
         rights_statement_uri = URIRef("https://rightsstatements.org/page/InC-EDU/1.0/?language=en")
-        institution.rights = Rights(holder="Institution rights holder", statements=("Institution rights", rights_statement_uri,))
-        yield institution
+        for institution_i in range(2):
+            institution = Institution(name=f"Institution {institution_i}", uri=URIRef(f"http://example.com/institution{institution_i}"))
+            institution.rights = Rights(holder=f"{institution.name} rights holder", statements=(f"{institution.name} rights", rights_statement_uri,))
+            yield institution
 
-        collection = \
-            Collection(
-                institution_uri=institution.uri,
-                title="Test collection",
-                uri=URIRef("http://example.com/collection")
-            )
-        collection.rights = Rights(holder="Collection rights holder", statements=("Collection rights", rights_statement_uri,))
-        yield collection
+            for collection_i in range(2):
+                collection = \
+                    Collection(
+                        institution_uri=institution.uri,
+                        title=f"{institution.name} collection {collection_i}",
+                        uri=URIRef(f"http://example.com/institution{institution_i}/collection{collection_i}")
+                    )
+                collection.rights = Rights(holder=f"{collection.title} rights holder", statements=(f"{collection.title} rights", rights_statement_uri,))
+                yield collection
 
-        for object_i in range(100): # Objects per page is 20
-            object_ = \
-                Object(
-                    collection_uris=(collection.uri,),
-                    institution_uri=institution.uri,
-                    title=f"Test object {object_i}",
-                    uri=URIRef(f"http://example.com/object{object_i}")
-                )
-            object_.descriptions.append(f"Test description {object_i}")
-            object_.subjects.append(f"Test subject {object_i}")
-            object_.rights = Rights(holder="Object rights holder", statements=("Object rights", rights_statement_uri,))
-            for image_i in range(3):
-                original = Image(uri=URIRef(f"https://place-hold.it/1000x1000?text=Object{object_i}Image{image_i}"))
-                original.exact_dimensions = ImageDimensions(height=1000, width=1000)
+                for object_i in range(40):  # Objects per page is 20
+                    object_ = \
+                        Object(
+                            collection_uris=(collection.uri,),
+                            institution_uri=institution.uri,
+                            title=f"{collection.title} object {object_i}",
+                            uri=URIRef(f"http://example.com/institution{institution_i}/collection{collection_i}/object{object_i}")
+                        )
+                    object_.descriptions.append(f"{object_.title} description")
+                    object_.subjects.append(f"{object_.title} subject")
+                    object_.rights = Rights(holder=f"{object_.title} rights holder", statements=(f"{object_.title} rights", rights_statement_uri,))
+                    for image_i in range(3):
+                        original = Image(uri=URIRef(f"https://place-hold.it/1000x1000?text=Institution{institution_i}Collection{collection_i}Object{object_i}Image{image_i}"))
+                        original.exact_dimensions = ImageDimensions(height=1000, width=1000)
 
-                square_thumbnail = Image(uri=URIRef(f"https://place-hold.it/75x75?text=Object{object_i}Image{image_i}"))
-                square_thumbnail.exact_dimensions = ImageDimensions(height=75, width=75)
-                yield square_thumbnail
-                original.derived_image_uris.append(square_thumbnail.uri)
+                        square_thumbnail = Image(uri=URIRef(f"https://place-hold.it/75x75?text=Institution{institution_i}Collection{collection_i}Object{object_i}Image{image_i}"))
+                        square_thumbnail.exact_dimensions = ImageDimensions(height=75, width=75)
+                        yield square_thumbnail
+                        original.derived_image_uris.append(square_thumbnail.uri)
 
-                thumbnail = Image(uri=URIRef(f"https://place-hold.it/600x600?text=Object{object_i}Image{image_i}"))
-                thumbnail.max_dimensions = ImageDimensions(height=600, width=600)
-                yield thumbnail
-                original.derived_image_uris.append(thumbnail.uri)
+                        thumbnail = Image(uri=URIRef(f"https://place-hold.it/600x600?text=Institution{institution_i}Collection{collection_i}Object{object_i}Image{image_i}"))
+                        thumbnail.max_dimensions = ImageDimensions(height=600, width=600)
+                        yield thumbnail
+                        original.derived_image_uris.append(thumbnail.uri)
 
-                yield original
-                object_.image_uris.append(original.uri)
-            yield object_
+                        yield original
+                        object_.image_uris.append(original.uri)
+                    yield object_
