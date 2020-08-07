@@ -10,10 +10,8 @@ import {
 } from "@material-ui/core";
 import {Rights} from "~/models/rights/Rights";
 
-const isUrl = (uri: string): boolean
-  => {
-  return uri.startsWith("http://") || uri.startsWith("https://");
-}
+const isUrl = (uri: string) =>
+  uri.startsWith("http://") || uri.startsWith("https://");
 
 const useStyles = makeStyles(theme => ({
   cell: {
@@ -35,7 +33,7 @@ export const RightsTable: React.FunctionComponent<{
     <TableContainer component={Paper}>
       <Table className={classes.table}>
         <TableBody>
-          {rights.statements.map(statement =>
+          {rights.statements.map(statement => (
             <TableRow>
               <TableCell className={classes.cell}>
                 <strong>Rights</strong>
@@ -48,7 +46,7 @@ export const RightsTable: React.FunctionComponent<{
                 )}
               </TableCell>
             </TableRow>
-          ) : null}
+          ))}
           {rights.holder ? (
             <TableRow>
               <TableCell className={classes.cell}>

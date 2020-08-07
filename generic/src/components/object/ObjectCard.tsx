@@ -15,7 +15,7 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Link} from "gatsby";
 import {Hrefs} from "~/Hrefs";
-import {ObjectCardObject} from "~/models/object/ObjectCardObject";
+import {ObjectSummary} from "~/models/object/ObjectSummary";
 
 const useStyles = makeStyles(theme => ({
   expansionPanelText: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const ObjectCard: React.FunctionComponent<{
-  object: ObjectCardObject;
+  object: ObjectSummary;
 }> = ({object}) => {
   const objectHref = Hrefs.institution(object.institution)
     .collection(object.collection)
