@@ -3,6 +3,6 @@ import {createInstitutionPages} from "./createInstitutionPages";
 import {createCollectionPages} from "./createCollectionPages";
 
 export const createPages = async (args: CreatePagesArgs) => {
-  await createCollectionPages(args);
-  await createInstitutionPages(args);
+  const institutionsWithCollections = await createInstitutionPages(args);
+  await createCollectionPages({...args, institutionsWithCollections});
 };
