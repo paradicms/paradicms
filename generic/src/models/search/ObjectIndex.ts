@@ -1,6 +1,7 @@
 import {Index} from "lunr";
 import {ObjectIndexDocument} from "~/models/search/ObjectIndexDocument";
 import {ObjectQuery} from "~/models/search/ObjectQuery";
+import {ObjectJson} from "~/graphql/types";
 
 type Store = {[index: string]: ObjectIndexDocument};
 
@@ -32,11 +33,10 @@ export class ObjectIndex {
     resolvers: {
       // For any node of type X, list how to resolve the fields' values
       ObjectJson: {
-        collectionUri: (node: GatsbyTypes.ObjectJson) =>
-          node.collection_uris[0],
-        institutionUri: (node: GatsbyTypes.ObjectJson) => node.institution_uri,
-        title: (node: GatsbyTypes.ObjectJson) => node.title,
-        uri: (node: GatsbyTypes.ObjectJson) => node.uri,
+        collectionUri: (node: ObjectJson) => node.collection_uris[0],
+        institutionUri: (node: ObjectJson) => node.institution_uri,
+        title: (node: ObjectJson) => node.title,
+        uri: (node: ObjectJson) => node.uri,
       },
     },
   };

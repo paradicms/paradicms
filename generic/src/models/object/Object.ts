@@ -1,4 +1,4 @@
-import ObjectJson = GatsbyTypes.ObjectJson;
+import {ObjectJson} from "~/graphql/types";
 
 export type Object = Pick<
   ObjectJson,

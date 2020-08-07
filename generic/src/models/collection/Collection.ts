@@ -1,4 +1,4 @@
-import CollectionJson = GatsbyTypes.CollectionJson;
+import {CollectionJson} from "~/graphql/types";
 
 export type Collection = Pick<
   CollectionJson,

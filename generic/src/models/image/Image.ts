@@ -1,4 +1,6 @@
+import {ImageJson} from "~/graphql/types";
+
 export type Image = Pick<
-  GatsbyTypes.ImageJson,
+  ImageJson,
   "derived_image_uris" | "exact_dimensions" | "max_dimensions" | "uri"
 >;

@@ -5,9 +5,10 @@ import {List, ListItem, ListItemText} from "@material-ui/core";
 import {Collection} from "~/models/collection/Collection";
 import {Institution} from "~/models/institution/Institution";
 import {Object} from "~/models/object/Object";
+import {CollectionPageQuery} from "~/graphql/types";
 
 const CollectionPage: React.FunctionComponent<{
-  data: GatsbyTypes.CollectionPageQuery;
+  data: CollectionPageQuery;
   pageContext: {
     collection: Collection;
     institution: Institution;

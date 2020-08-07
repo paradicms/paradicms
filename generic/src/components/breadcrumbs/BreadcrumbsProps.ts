@@ -1,5 +1,7 @@
+import {CollectionJson, InstitutionJson, ObjectJson} from "~/graphql/types";
+
 export interface BreadcrumbsProps {
-  collection?: Pick<GatsbyTypes.CollectionJson, "title" | "uri">;
-  institution?: Pick<GatsbyTypes.InstitutionJson, "name" | "uri">;
-  object?: Pick<GatsbyTypes.ObjectJson, "title" | "uri">;
+  collection?: Pick<CollectionJson, "title" | "uri">;
+  institution?: Pick<InstitutionJson, "name" | "uri">;
+  object?: Pick<ObjectJson, "title" | "uri">;
 }

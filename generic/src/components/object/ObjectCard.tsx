@@ -45,7 +45,9 @@ export const ObjectCard: React.FunctionComponent<{
                   <Link to={objectHref}>
                     <img
                       className="figure-img rounded"
-                      src={object.thumbnail.uri}
+                      src={
+                        object.thumbnail.uri ? object.thumbnail.uri : undefined
+                      }
                     />
                   </Link>
                 </figure>
