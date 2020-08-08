@@ -2948,6 +2948,24 @@ export type LayoutQuery = {__typename?: "Query"} & {
   >;
 };
 
+export type ImageFragmentFragment = {__typename?: "ImageJson"} & Pick<
+  ImageJson,
+  "institution_uri" | "object_uri" | "original_image_uri" | "uri"
+> & {
+    exact_dimensions?: Maybe<
+      {__typename?: "ImageJsonExact_dimensions"} & Pick<
+        ImageJsonExact_Dimensions,
+        "height" | "width"
+      >
+    >;
+    max_dimensions?: Maybe<
+      {__typename?: "ImageJsonMax_dimensions"} & Pick<
+        ImageJsonMax_Dimensions,
+        "height" | "width"
+      >
+    >;
+  };
+
 export type ObjectFragmentFragment = {__typename?: "ObjectJson"} & Pick<
   ObjectJson,
   | "collection_uris"
@@ -2981,6 +2999,9 @@ export type CollectionPageQueryVariables = Exact<{
 }>;
 
 export type CollectionPageQuery = {__typename?: "Query"} & {
+  allImageJson: {__typename?: "ImageJsonConnection"} & {
+    nodes: Array<{__typename?: "ImageJson"} & ImageFragmentFragment>;
+  };
   allObjectJson: {__typename?: "ObjectJsonConnection"} & {
     nodes: Array<{__typename?: "ObjectJson"} & ObjectFragmentFragment>;
   };

@@ -4,7 +4,6 @@ import {Layout} from "~/components/layout/Layout";
 import {Grid} from "@material-ui/core";
 import {Collection} from "~/models/collection/Collection";
 import {Institution} from "~/models/institution/Institution";
-import {Object} from "~/models/object/Object";
 import {CollectionPageQuery} from "~/graphql/types";
 import {ObjectSummary} from "~/models/object/ObjectSummary";
 import {RightsTable} from "~/components/rights/RightsTable";
@@ -21,11 +20,11 @@ const CollectionPage: React.FunctionComponent<{
   pageContext: {
     collection: Collection;
     institution: Institution;
-    objects: Object[];
   };
 }> = ({
   data: {
-    allObjectJson: {nodes: objects},
+    allImageJson: {nodes: institutionImages},
+    allObjectJson: {nodes: collectionObjects},
   },
   pageContext: {collection, institution},
 }) => {
@@ -35,7 +34,7 @@ const CollectionPage: React.FunctionComponent<{
 
   const [objectsPage, setObjectsPage] = React.useState<number>(0);
 
-  const objectFacets = new ObjectFacets(objects);
+  const objectFacets = new ObjectFacets(collectionObjects);
 
   const collectionsByUri: {[index: string]: Collection} = {};
   collectionsByUri[collection.uri] = collection;
@@ -45,7 +44,7 @@ const CollectionPage: React.FunctionComponent<{
   const objectSummaries: readonly ObjectSummary[] = Objects.summarize({
     collectionsByUri,
     institutionsByUri,
-    objects,
+    objects: collectionObjects,
   });
 
   const rights = collection.rights ?? institution.rights ?? undefined;
@@ -106,6 +105,11 @@ export default CollectionPage;
 
 export const query = graphql`
   query CollectionPage($collectionUri: String!, $institutionUri: String!) {
+    allImageJson(filter: {institution_uri: {eq: $institutionUri}}) {
+      nodes {
+        ...ImageFragment
+      }
+    }
     allObjectJson(
       filter: {
         collection_uris: {in: [$collectionUri]}
