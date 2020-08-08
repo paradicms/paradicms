@@ -23,7 +23,7 @@ class TestDataTransformer(_Transformer):
         yield from self.__generate_institutions()
 
     def __generate_collection_objects(self, *, collection: Collection, collection_i: int, institution: Institution, institution_i: int):
-        for object_i in range(25):  # Objects per page is 20
+        for object_i in range(20):  # Objects per page is 20
             object_ = \
                 Object(
                     collection_uris=(collection.uri,),
