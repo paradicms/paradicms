@@ -1,13 +1,13 @@
 import * as React from "react";
 import {Grid} from "@material-ui/core";
 import {Pagination} from "@material-ui/lab";
-import {ObjectSummary} from "~/models/object/ObjectSummary";
+import {JoinedObject} from "~/models/object/JoinedObject";
 import {ObjectCard} from "~/components/object/ObjectCard";
 
 export const ObjectsGallery: React.FunctionComponent<{
   currentPage: number;
   maxPage: number;
-  objects: ObjectSummary[];
+  objects: JoinedObject[];
   onChangePage: (page: number) => void;
 }> = ({currentPage, maxPage, objects, onChangePage}) => (
   <Grid container direction="column" spacing={4}>

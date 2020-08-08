@@ -1,25 +1,24 @@
 import * as React from "react";
 import {
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Grid,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-export const FacetExpansionPanel: React.FunctionComponent<{
-  children: React.ReactNode;
+export const FacetExpansionPanel: React.FunctionComponent<React.PropsWithChildren<{
   id: string;
   title: string;
-}> = ({children, id, title}) => {
+}>> = ({children, id, title}) => {
   return (
     <Grid item className="facet" data-cy={id + "-facet"}>
-      <ExpansionPanel>
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           {title}
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>{children}</ExpansionPanelDetails>
-      </ExpansionPanel>
+        </AccordionSummary>
+        <AccordionDetails>{children}</AccordionDetails>
+      </Accordion>
     </Grid>
   );
 };

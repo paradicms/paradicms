@@ -26,14 +26,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const Layout: React.FunctionComponent<{
+export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   breadcrumbs?: BreadcrumbsProps;
   cardTitle?: React.ReactNode;
-  children: React.ReactNode;
   className?: string;
   documentTitle?: string;
   onSearch?: (text: string) => void;
-}> = ({breadcrumbs, cardTitle, children, documentTitle, onSearch}) => {
+}>> = ({breadcrumbs, cardTitle, children, documentTitle, onSearch}) => {
   const classes = useStyles();
 
   return (

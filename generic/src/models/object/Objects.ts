@@ -1,8 +1,9 @@
 import {Collection} from "~/models/collection/Collection";
 import {Institution} from "~/models/institution/Institution";
 import {Object} from "~/models/object/Object";
-import {ObjectSummary} from "~/models/object/ObjectSummary";
+import {JoinedObject} from "~/models/object/JoinedObject";
 import {ObjectFilters} from "~/models/search/ObjectFilters";
+import {Image} from "~/models/image/Image";
 
 export class Objects {
   static filter(kwds: {
@@ -13,20 +14,34 @@ export class Objects {
     return objects;
   }
 
-  static summarize(kwds: {
+  static join(kwds: {
     collectionsByUri: {[index: string]: Collection};
+    imagesByObjectUri: {[index: string]: readonly Image[]};
     institutionsByUri: {[index: string]: Institution};
     objects: readonly Object[];
-  }): readonly ObjectSummary[] {
-    const {collectionsByUri, institutionsByUri, objects} = kwds;
+  }): readonly JoinedObject[] {
+    const {
+      collectionsByUri,
+      imagesByObjectUri,
+      institutionsByUri,
+      objects,
+    } = kwds;
     return objects.map(object => {
-      const collectionUri = object.collection_uris.find(
-        collectionUri => !!collectionsByUri[collectionUri]
-      );
-      if (!collectionUri) {
-        throw new EvalError("unable to resolve collection");
+      const collections: Collection[] = [];
+      for (const collectionUri of object.collection_uris) {
+        const collection = collectionsByUri[collectionUri];
+        if (collection) {
+          collections.push(collection);
+        }
       }
-      const collection = collectionsByUri[collectionUri];
+      if (collections.length === 0) {
+        throw new EvalError(
+          "unable to resolve any collection URIs: " +
+            object.collection_uris.join(" ")
+        );
+      }
+
+      const images = imagesByObjectUri[object.uri];
 
       const institution = institutionsByUri[object.institution_uri];
       if (!institution) {
@@ -36,7 +51,8 @@ export class Objects {
       }
 
       return {
-        collection,
+        collections,
+        images: images ?? [],
         institution,
         ...object,
       };

@@ -5,13 +5,15 @@ import {Grid} from "@material-ui/core";
 import {Collection} from "~/models/collection/Collection";
 import {Institution} from "~/models/institution/Institution";
 import {CollectionPageQuery} from "~/graphql/types";
-import {ObjectSummary} from "~/models/object/ObjectSummary";
+import {JoinedObject} from "~/models/object/JoinedObject";
 import {RightsTable} from "~/components/rights/RightsTable";
 import {ObjectFacets} from "~/models/search/ObjectFacets";
 import {ObjectFacetsGrid} from "~/components/object/ObjectFacetsGrid";
 import {ObjectQuery} from "~/models/search/ObjectQuery";
 import {Objects} from "~/models/object/Objects";
 import {ObjectsGallery} from "~/components/object/ObjectsGallery";
+import {Models} from "~/models/Models";
+import {Images} from "~/models/image/Images";
 
 const OBJECTS_PER_PAGE = 20;
 
@@ -36,14 +38,10 @@ const CollectionPage: React.FunctionComponent<{
 
   const objectFacets = new ObjectFacets(collectionObjects);
 
-  const collectionsByUri: {[index: string]: Collection} = {};
-  collectionsByUri[collection.uri] = collection;
-  const institutionsByUri: {[index: string]: Institution} = {};
-  institutionsByUri[institution.uri] = institution;
-
-  const objectSummaries: readonly ObjectSummary[] = Objects.summarize({
-    collectionsByUri,
-    institutionsByUri,
+  const joinedObjects: readonly JoinedObject[] = Objects.join({
+    collectionsByUri: Models.indexByUri([collection]),
+    institutionsByUri: Models.indexByUri([institution]),
+    imagesByObjectUri: Images.indexByObjectUri(institutionImages),
     objects: collectionObjects,
   });
 
@@ -55,7 +53,7 @@ const CollectionPage: React.FunctionComponent<{
       documentTitle={"Collection - " + collection.title}
     >
       <Grid container direction="column" spacing={2}>
-        {rights && objectSummaries.length ? (
+        {rights && joinedObjects.length ? (
           <Grid item>
             <RightsTable rights={rights} />
           </Grid>
@@ -71,11 +69,13 @@ const CollectionPage: React.FunctionComponent<{
         <Grid item>
           <Grid container>
             <Grid item xs={10}>
-              {objects.length ? (
+              {joinedObjects.length ? (
                 <ObjectsGallery
                   currentPage={objectsPage}
-                  maxPage={Math.ceil(objects.length / OBJECTS_PER_PAGE) - 1}
-                  objects={objectSummaries.slice(
+                  maxPage={
+                    Math.ceil(joinedObjects.length / OBJECTS_PER_PAGE) - 1
+                  }
+                  objects={joinedObjects.slice(
                     objectsPage * OBJECTS_PER_PAGE,
                     (objectsPage + 1) * OBJECTS_PER_PAGE
                   )}

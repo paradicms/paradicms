@@ -15,7 +15,8 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Link} from "gatsby";
 import {Hrefs} from "~/Hrefs";
-import {ObjectSummary} from "~/models/object/ObjectSummary";
+import {JoinedObject} from "~/models/object/JoinedObject";
+import {Images} from "~/models/image/Images";
 
 const useStyles = makeStyles(theme => ({
   expansionPanelText: {
@@ -25,30 +26,32 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const ObjectCard: React.FunctionComponent<{
-  object: ObjectSummary;
+  object: JoinedObject;
 }> = ({object}) => {
+  const classes = useStyles();
+
+  const collection = object.collections[0];
+
   const objectHref = Hrefs.institution(object.institution)
-    .collection(object.collection)
+    .collection(collection)
     .object(object);
 
-  const classes = useStyles();
+  const thumbnail = Images.selectThumbnail({
+    images: object.images,
+    maxDimensions: {height: 200, width: 200},
+  });
 
   return (
     <Card>
       <CardHeader component="a" href={objectHref} title={object.title} />
       <CardContent>
         <Grid container direction="column" spacing={1}>
-          {object.thumbnail ? (
+          {thumbnail ? (
             <Grid item>
               <div style={{height: 200, width: 200}}>
                 <figure className="figure text-center w-100">
                   <Link to={objectHref}>
-                    <img
-                      className="figure-img rounded"
-                      src={
-                        object.thumbnail.uri ? object.thumbnail.uri : undefined
-                      }
-                    />
+                    <img className="figure-img rounded" src={thumbnail.uri} />
                   </Link>
                 </figure>
               </div>
@@ -64,12 +67,11 @@ export const ObjectCard: React.FunctionComponent<{
             Collection:{" "}
             <Link
               to={
-                Hrefs.institution(object.institution).collection(
-                  object.collection
-                ).home
+                Hrefs.institution(object.institution).collection(collection)
+                  .home
               }
             >
-              {object.collection.title}
+              {collection.title}
             </Link>
           </Grid>
           {object.descriptions && object.descriptions.length > 0 ? (
