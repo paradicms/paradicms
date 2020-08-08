@@ -1,7 +1,7 @@
 import {graphql} from "gatsby";
 import * as React from "react";
 import {Layout} from "~/components/layout/Layout";
-import {Grid, List, ListItem, ListItemText} from "@material-ui/core";
+import {Grid} from "@material-ui/core";
 import {Collection} from "~/models/collection/Collection";
 import {Institution} from "~/models/institution/Institution";
 import {Object} from "~/models/object/Object";
@@ -11,6 +11,10 @@ import {RightsTable} from "~/components/rights/RightsTable";
 import {ObjectFacets} from "~/models/search/ObjectFacets";
 import {ObjectFacetsGrid} from "~/components/object/ObjectFacetsGrid";
 import {ObjectQuery} from "~/models/search/ObjectQuery";
+import {Objects} from "~/models/object/Objects";
+import {ObjectsGallery} from "~/components/object/ObjectsGallery";
+
+const OBJECTS_PER_PAGE = 20;
 
 const CollectionPage: React.FunctionComponent<{
   data: CollectionPageQuery;
@@ -29,13 +33,20 @@ const CollectionPage: React.FunctionComponent<{
     filters: {collectionUris: {include: [collection.uri]}},
   });
 
+  const [objectsPage, setObjectsPage] = React.useState<number>(0);
+
   const objectFacets = new ObjectFacets(objects);
 
-  const objectSummaries: ObjectSummary[] = objects.map(object => ({
-    collection,
-    institution,
-    ...object,
-  }));
+  const collectionsByUri: {[index: string]: Collection} = {};
+  collectionsByUri[collection.uri] = collection;
+  const institutionsByUri: {[index: string]: Institution} = {};
+  institutionsByUri[institution.uri] = institution;
+
+  const objectSummaries: readonly ObjectSummary[] = Objects.summarize({
+    collectionsByUri,
+    institutionsByUri,
+    objects,
+  });
 
   const rights = collection.rights ?? institution.rights ?? undefined;
 
@@ -61,13 +72,21 @@ const CollectionPage: React.FunctionComponent<{
         <Grid item>
           <Grid container>
             <Grid item xs={10}>
-              <List>
-                {objects.map(object => (
-                  <ListItem>
-                    <ListItemText>{object.title}</ListItemText>
-                  </ListItem>
-                ))}
-              </List>
+              {objects.length ? (
+                <ObjectsGallery
+                  currentPage={objectsPage}
+                  maxPage={Math.ceil(objects.length / OBJECTS_PER_PAGE) - 1}
+                  objects={objectSummaries.slice(
+                    objectsPage * OBJECTS_PER_PAGE,
+                    (objectsPage + 1) * OBJECTS_PER_PAGE
+                  )}
+                  onChangePage={setObjectsPage}
+                />
+              ) : (
+                <h4 style={{textAlign: "center"}}>
+                  No matching objects found.
+                </h4>
+              )}
             </Grid>
             <Grid item xs={2}>
               <ObjectFacetsGrid
