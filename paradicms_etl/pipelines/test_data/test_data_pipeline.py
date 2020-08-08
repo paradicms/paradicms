@@ -5,10 +5,10 @@ from paradicms_etl.extractors.nop_extractor import NopExtractor
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.json_directory_loader import JsonDirectoryLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
-from paradicms_etl.pipelines.generic_test_data.generic_test_data_transformer import GenericTestDataTransformer
+from paradicms_etl.pipelines.test_data.test_data_transformer import TestDataTransformer
 
 
-class GenericTestDataPipeline(_Pipeline):
+class TestDataPipeline(_Pipeline):
     __ID = "test_data"
 
     def __init__(self, **kwds):
@@ -30,10 +30,10 @@ class GenericTestDataPipeline(_Pipeline):
                 ),
                 pipeline_id=self.__ID
             ),
-            transformer=GenericTestDataTransformer(),
+            transformer=TestDataTransformer(),
             **kwds
         )
 
 
 if __name__ == "__main__":
-    GenericTestDataPipeline.main()
+    TestDataPipeline.main()

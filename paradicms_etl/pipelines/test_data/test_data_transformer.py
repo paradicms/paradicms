@@ -9,7 +9,7 @@ from paradicms_etl.models.object import Object
 from paradicms_etl.models.rights import Rights
 
 
-class GenericTestDataTransformer(_Transformer):
+class TestDataTransformer(_Transformer):
     def transform(self):
         rights_statement_uri = URIRef("https://rightsstatements.org/page/InC-EDU/1.0/?language=en")
         for institution_i in range(2):
