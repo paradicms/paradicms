@@ -32,7 +32,7 @@ class TestDataTransformer(_Transformer):
                     uri=URIRef(f"http://example.com/institution{institution_i}/collection{collection_i}/object{object_i}")
                 )
             self.__set_object_properties(object_, object_i)
-            yield from self.__generate_object_images(collection_i=collection_i, institution_i=institution_i, object_=object_, object_i=object_i)
+            yield from self.__generate_object_images(collection_i=collection_i, institution=institution, institution_i=institution_i, object_=object_, object_i=object_i)
             yield object_
 
     def __generate_institution_collections(self, institution: Institution, institution_i: int):
@@ -59,23 +59,34 @@ class TestDataTransformer(_Transformer):
             yield from self.__generate_shared_objects(collections=tuple(collections), institution=institution, institution_i=institution_i)
             yield institution
 
-    def __generate_object_images(self, *, collection_i: object, institution_i: int, object_: Object, object_i: int):
+    def __generate_object_images(self, *, collection_i: object, institution: Institution, institution_i: int, object_: Object, object_i: int):
         for image_i in range(2):
-            original = Image(uri=URIRef(f"https://place-hold.it/1000x1000?text=Institution{institution_i}Collection{collection_i}Object{object_i}Image{image_i}"))
-            original.exact_dimensions = ImageDimensions(height=1000, width=1000)
-
-            square_thumbnail = Image(uri=URIRef(f"https://place-hold.it/75x75?text=Institution{institution_i}Collection{collection_i}Object{object_i}Image{image_i}"))
-            square_thumbnail.exact_dimensions = ImageDimensions(height=75, width=75)
-            yield square_thumbnail
-            original.derived_image_uris.append(square_thumbnail.uri)
-
-            thumbnail = Image(uri=URIRef(f"https://place-hold.it/600x600?text=Institution{institution_i}Collection{collection_i}Object{object_i}Image{image_i}"))
-            thumbnail.max_dimensions = ImageDimensions(height=600, width=600)
-            yield thumbnail
-            original.derived_image_uris.append(thumbnail.uri)
-
+            original = \
+                Image(
+                    exact_dimensions = ImageDimensions(height=1000, width=1000),
+                    institution_uri=institution.uri,
+                    object_uri=object_.uri,
+                    uri=URIRef(f"https://place-hold.it/1000x1000?text=Institution{institution_i}Collection{collection_i}Object{object_i}Image{image_i}")
+                )
             yield original
-            object_.image_uris.append(original.uri)
+
+            yield \
+                Image(
+                    exact_dimensions=ImageDimensions(height=75, width=75),
+                    institution_uri=institution.uri,
+                    object_uri=object_.uri,
+                    original_image_uri=original.uri,
+                    uri=URIRef(f"https://place-hold.it/75x75?text=Institution{institution_i}Collection{collection_i}Object{object_i}Image{image_i}")
+                )
+
+            yield \
+                Image(
+                    institution_uri=institution.uri,
+                    max_dimensions=ImageDimensions(height=600, width=600),
+                    object_uri=object_.uri,
+                    original_image_uri=original.uri,
+                    uri=URIRef(f"https://place-hold.it/600x600?text=Institution{institution_i}Collection{collection_i}Object{object_i}Image{image_i}")
+                )
 
     def __generate_shared_objects(self, *, collections: Tuple[Collection, ...], institution: Institution, institution_i: int):
         for object_i in range(5):  # Per institution
@@ -87,5 +98,5 @@ class TestDataTransformer(_Transformer):
                     uri=URIRef(f"http://example.com/institution{institution_i}/shared/object{object_i}")
                 )
             self.__set_object_properties(object_, object_i)
-            yield from self.__generate_object_images(collection_i="shared", institution_i=institution_i, object_=object_, object_i=object_i)
+            yield from self.__generate_object_images(collection_i="shared", institution=institution, institution_i=institution_i, object_=object_, object_i=object_i)
             yield object_

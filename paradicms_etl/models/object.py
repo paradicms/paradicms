@@ -20,7 +20,6 @@ class Object(_Model):
     institution_uri: URIRef
     title: str
     descriptions: List[str] = field(default_factory=list)
-    image_uris: List[URIRef] = field(default_factory=list)
     rights: Optional[Rights] = None
     subjects: List[str] = field(default_factory=list)
 
@@ -31,8 +30,6 @@ class Object(_Model):
             graph.add((collection_uri, CMS.object, self.uri))
         for description in self.descriptions:
             resource.add(DCTERMS.description, Literal(description))
-        for image_uri in self.image_uris:
-            resource.add(FOAF.depiction, image_uri)
         if self.rights is not None:
             self.rights.to_rdf(add_to_resource=resource)
         for subject in self.subjects:
