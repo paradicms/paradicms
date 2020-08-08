@@ -538,8 +538,8 @@ export type File = Node & {
   internal: Internal;
   childrenCollectionJson?: Maybe<Array<Maybe<CollectionJson>>>;
   childrenInstitutionJson?: Maybe<Array<Maybe<InstitutionJson>>>;
-  childrenImageJson?: Maybe<Array<Maybe<ImageJson>>>;
   childrenObjectJson?: Maybe<Array<Maybe<ObjectJson>>>;
+  childrenImageJson?: Maybe<Array<Maybe<ImageJson>>>;
 };
 
 export type FileModifiedTimeArgs = {
@@ -824,55 +824,9 @@ export enum FileFieldsEnum {
   childrenInstitutionJson___internal___mediaType = "childrenInstitutionJson___internal___mediaType",
   childrenInstitutionJson___internal___owner = "childrenInstitutionJson___internal___owner",
   childrenInstitutionJson___internal___type = "childrenInstitutionJson___internal___type",
-  childrenImageJson = "childrenImageJson",
-  childrenImageJson___derived_image_uris = "childrenImageJson___derived_image_uris",
-  childrenImageJson___exact_dimensions___height = "childrenImageJson___exact_dimensions___height",
-  childrenImageJson___exact_dimensions___width = "childrenImageJson___exact_dimensions___width",
-  childrenImageJson___max_dimensions___height = "childrenImageJson___max_dimensions___height",
-  childrenImageJson___max_dimensions___width = "childrenImageJson___max_dimensions___width",
-  childrenImageJson___uri = "childrenImageJson___uri",
-  childrenImageJson___id = "childrenImageJson___id",
-  childrenImageJson___parent___id = "childrenImageJson___parent___id",
-  childrenImageJson___parent___parent___id = "childrenImageJson___parent___parent___id",
-  childrenImageJson___parent___parent___children = "childrenImageJson___parent___parent___children",
-  childrenImageJson___parent___children = "childrenImageJson___parent___children",
-  childrenImageJson___parent___children___id = "childrenImageJson___parent___children___id",
-  childrenImageJson___parent___children___children = "childrenImageJson___parent___children___children",
-  childrenImageJson___parent___internal___content = "childrenImageJson___parent___internal___content",
-  childrenImageJson___parent___internal___contentDigest = "childrenImageJson___parent___internal___contentDigest",
-  childrenImageJson___parent___internal___description = "childrenImageJson___parent___internal___description",
-  childrenImageJson___parent___internal___fieldOwners = "childrenImageJson___parent___internal___fieldOwners",
-  childrenImageJson___parent___internal___ignoreType = "childrenImageJson___parent___internal___ignoreType",
-  childrenImageJson___parent___internal___mediaType = "childrenImageJson___parent___internal___mediaType",
-  childrenImageJson___parent___internal___owner = "childrenImageJson___parent___internal___owner",
-  childrenImageJson___parent___internal___type = "childrenImageJson___parent___internal___type",
-  childrenImageJson___children = "childrenImageJson___children",
-  childrenImageJson___children___id = "childrenImageJson___children___id",
-  childrenImageJson___children___parent___id = "childrenImageJson___children___parent___id",
-  childrenImageJson___children___parent___children = "childrenImageJson___children___parent___children",
-  childrenImageJson___children___children = "childrenImageJson___children___children",
-  childrenImageJson___children___children___id = "childrenImageJson___children___children___id",
-  childrenImageJson___children___children___children = "childrenImageJson___children___children___children",
-  childrenImageJson___children___internal___content = "childrenImageJson___children___internal___content",
-  childrenImageJson___children___internal___contentDigest = "childrenImageJson___children___internal___contentDigest",
-  childrenImageJson___children___internal___description = "childrenImageJson___children___internal___description",
-  childrenImageJson___children___internal___fieldOwners = "childrenImageJson___children___internal___fieldOwners",
-  childrenImageJson___children___internal___ignoreType = "childrenImageJson___children___internal___ignoreType",
-  childrenImageJson___children___internal___mediaType = "childrenImageJson___children___internal___mediaType",
-  childrenImageJson___children___internal___owner = "childrenImageJson___children___internal___owner",
-  childrenImageJson___children___internal___type = "childrenImageJson___children___internal___type",
-  childrenImageJson___internal___content = "childrenImageJson___internal___content",
-  childrenImageJson___internal___contentDigest = "childrenImageJson___internal___contentDigest",
-  childrenImageJson___internal___description = "childrenImageJson___internal___description",
-  childrenImageJson___internal___fieldOwners = "childrenImageJson___internal___fieldOwners",
-  childrenImageJson___internal___ignoreType = "childrenImageJson___internal___ignoreType",
-  childrenImageJson___internal___mediaType = "childrenImageJson___internal___mediaType",
-  childrenImageJson___internal___owner = "childrenImageJson___internal___owner",
-  childrenImageJson___internal___type = "childrenImageJson___internal___type",
   childrenObjectJson = "childrenObjectJson",
   childrenObjectJson___collection_uris = "childrenObjectJson___collection_uris",
   childrenObjectJson___descriptions = "childrenObjectJson___descriptions",
-  childrenObjectJson___image_uris = "childrenObjectJson___image_uris",
   childrenObjectJson___institution_uri = "childrenObjectJson___institution_uri",
   childrenObjectJson___subjects = "childrenObjectJson___subjects",
   childrenObjectJson___title = "childrenObjectJson___title",
@@ -917,6 +871,53 @@ export enum FileFieldsEnum {
   childrenObjectJson___internal___mediaType = "childrenObjectJson___internal___mediaType",
   childrenObjectJson___internal___owner = "childrenObjectJson___internal___owner",
   childrenObjectJson___internal___type = "childrenObjectJson___internal___type",
+  childrenImageJson = "childrenImageJson",
+  childrenImageJson___exact_dimensions___height = "childrenImageJson___exact_dimensions___height",
+  childrenImageJson___exact_dimensions___width = "childrenImageJson___exact_dimensions___width",
+  childrenImageJson___institution_uri = "childrenImageJson___institution_uri",
+  childrenImageJson___object_uri = "childrenImageJson___object_uri",
+  childrenImageJson___original_image_uri = "childrenImageJson___original_image_uri",
+  childrenImageJson___max_dimensions___height = "childrenImageJson___max_dimensions___height",
+  childrenImageJson___max_dimensions___width = "childrenImageJson___max_dimensions___width",
+  childrenImageJson___uri = "childrenImageJson___uri",
+  childrenImageJson___id = "childrenImageJson___id",
+  childrenImageJson___parent___id = "childrenImageJson___parent___id",
+  childrenImageJson___parent___parent___id = "childrenImageJson___parent___parent___id",
+  childrenImageJson___parent___parent___children = "childrenImageJson___parent___parent___children",
+  childrenImageJson___parent___children = "childrenImageJson___parent___children",
+  childrenImageJson___parent___children___id = "childrenImageJson___parent___children___id",
+  childrenImageJson___parent___children___children = "childrenImageJson___parent___children___children",
+  childrenImageJson___parent___internal___content = "childrenImageJson___parent___internal___content",
+  childrenImageJson___parent___internal___contentDigest = "childrenImageJson___parent___internal___contentDigest",
+  childrenImageJson___parent___internal___description = "childrenImageJson___parent___internal___description",
+  childrenImageJson___parent___internal___fieldOwners = "childrenImageJson___parent___internal___fieldOwners",
+  childrenImageJson___parent___internal___ignoreType = "childrenImageJson___parent___internal___ignoreType",
+  childrenImageJson___parent___internal___mediaType = "childrenImageJson___parent___internal___mediaType",
+  childrenImageJson___parent___internal___owner = "childrenImageJson___parent___internal___owner",
+  childrenImageJson___parent___internal___type = "childrenImageJson___parent___internal___type",
+  childrenImageJson___children = "childrenImageJson___children",
+  childrenImageJson___children___id = "childrenImageJson___children___id",
+  childrenImageJson___children___parent___id = "childrenImageJson___children___parent___id",
+  childrenImageJson___children___parent___children = "childrenImageJson___children___parent___children",
+  childrenImageJson___children___children = "childrenImageJson___children___children",
+  childrenImageJson___children___children___id = "childrenImageJson___children___children___id",
+  childrenImageJson___children___children___children = "childrenImageJson___children___children___children",
+  childrenImageJson___children___internal___content = "childrenImageJson___children___internal___content",
+  childrenImageJson___children___internal___contentDigest = "childrenImageJson___children___internal___contentDigest",
+  childrenImageJson___children___internal___description = "childrenImageJson___children___internal___description",
+  childrenImageJson___children___internal___fieldOwners = "childrenImageJson___children___internal___fieldOwners",
+  childrenImageJson___children___internal___ignoreType = "childrenImageJson___children___internal___ignoreType",
+  childrenImageJson___children___internal___mediaType = "childrenImageJson___children___internal___mediaType",
+  childrenImageJson___children___internal___owner = "childrenImageJson___children___internal___owner",
+  childrenImageJson___children___internal___type = "childrenImageJson___children___internal___type",
+  childrenImageJson___internal___content = "childrenImageJson___internal___content",
+  childrenImageJson___internal___contentDigest = "childrenImageJson___internal___contentDigest",
+  childrenImageJson___internal___description = "childrenImageJson___internal___description",
+  childrenImageJson___internal___fieldOwners = "childrenImageJson___internal___fieldOwners",
+  childrenImageJson___internal___ignoreType = "childrenImageJson___internal___ignoreType",
+  childrenImageJson___internal___mediaType = "childrenImageJson___internal___mediaType",
+  childrenImageJson___internal___owner = "childrenImageJson___internal___owner",
+  childrenImageJson___internal___type = "childrenImageJson___internal___type",
 }
 
 export type FileFilterInput = {
@@ -958,8 +959,8 @@ export type FileFilterInput = {
   internal?: Maybe<InternalFilterInput>;
   childrenCollectionJson?: Maybe<CollectionJsonFilterListInput>;
   childrenInstitutionJson?: Maybe<InstitutionJsonFilterListInput>;
-  childrenImageJson?: Maybe<ImageJsonFilterListInput>;
   childrenObjectJson?: Maybe<ObjectJsonFilterListInput>;
+  childrenImageJson?: Maybe<ImageJsonFilterListInput>;
 };
 
 export type FileGroupConnection = {
@@ -990,8 +991,10 @@ export type FloatQueryOperatorInput = {
 
 export type ImageJson = Node & {
   __typename?: "ImageJson";
-  derived_image_uris?: Maybe<Array<Scalars["String"]>>;
   exact_dimensions?: Maybe<ImageJsonExact_Dimensions>;
+  institution_uri: Scalars["String"];
+  object_uri: Scalars["String"];
+  original_image_uri?: Maybe<Scalars["String"]>;
   max_dimensions?: Maybe<ImageJsonMax_Dimensions>;
   uri: Scalars["String"];
   id: Scalars["ID"];
@@ -1039,9 +1042,11 @@ export type ImageJsonExact_DimensionsFilterInput = {
 };
 
 export enum ImageJsonFieldsEnum {
-  derived_image_uris = "derived_image_uris",
   exact_dimensions___height = "exact_dimensions___height",
   exact_dimensions___width = "exact_dimensions___width",
+  institution_uri = "institution_uri",
+  object_uri = "object_uri",
+  original_image_uri = "original_image_uri",
   max_dimensions___height = "max_dimensions___height",
   max_dimensions___width = "max_dimensions___width",
   uri = "uri",
@@ -1134,8 +1139,10 @@ export enum ImageJsonFieldsEnum {
 }
 
 export type ImageJsonFilterInput = {
-  derived_image_uris?: Maybe<StringQueryOperatorInput>;
   exact_dimensions?: Maybe<ImageJsonExact_DimensionsFilterInput>;
+  institution_uri?: Maybe<StringQueryOperatorInput>;
+  object_uri?: Maybe<StringQueryOperatorInput>;
+  original_image_uri?: Maybe<StringQueryOperatorInput>;
   max_dimensions?: Maybe<ImageJsonMax_DimensionsFilterInput>;
   uri?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
@@ -1402,7 +1409,6 @@ export type ObjectJson = Node & {
   __typename?: "ObjectJson";
   collection_uris: Array<Scalars["String"]>;
   descriptions?: Maybe<Array<Scalars["String"]>>;
-  image_uris?: Maybe<Array<Scalars["String"]>>;
   institution_uri: Scalars["String"];
   subjects?: Maybe<Array<Scalars["String"]>>;
   title: Scalars["String"];
@@ -1444,7 +1450,6 @@ export type ObjectJsonEdge = {
 export enum ObjectJsonFieldsEnum {
   collection_uris = "collection_uris",
   descriptions = "descriptions",
-  image_uris = "image_uris",
   institution_uri = "institution_uri",
   subjects = "subjects",
   title = "title",
@@ -1542,7 +1547,6 @@ export enum ObjectJsonFieldsEnum {
 export type ObjectJsonFilterInput = {
   collection_uris?: Maybe<StringQueryOperatorInput>;
   descriptions?: Maybe<StringQueryOperatorInput>;
-  image_uris?: Maybe<StringQueryOperatorInput>;
   institution_uri?: Maybe<StringQueryOperatorInput>;
   subjects?: Maybe<StringQueryOperatorInput>;
   title?: Maybe<StringQueryOperatorInput>;
@@ -1658,8 +1662,8 @@ export type QueryFileArgs = {
   internal?: Maybe<InternalFilterInput>;
   childrenCollectionJson?: Maybe<CollectionJsonFilterListInput>;
   childrenInstitutionJson?: Maybe<InstitutionJsonFilterListInput>;
-  childrenImageJson?: Maybe<ImageJsonFilterListInput>;
   childrenObjectJson?: Maybe<ObjectJsonFilterListInput>;
+  childrenImageJson?: Maybe<ImageJsonFilterListInput>;
 };
 
 export type QueryAllFileArgs = {
@@ -1777,8 +1781,10 @@ export type QueryAllCollectionJsonArgs = {
 };
 
 export type QueryImageJsonArgs = {
-  derived_image_uris?: Maybe<StringQueryOperatorInput>;
   exact_dimensions?: Maybe<ImageJsonExact_DimensionsFilterInput>;
+  institution_uri?: Maybe<StringQueryOperatorInput>;
+  object_uri?: Maybe<StringQueryOperatorInput>;
+  original_image_uri?: Maybe<StringQueryOperatorInput>;
   max_dimensions?: Maybe<ImageJsonMax_DimensionsFilterInput>;
   uri?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
@@ -1814,7 +1820,6 @@ export type QueryAllInstitutionJsonArgs = {
 export type QueryObjectJsonArgs = {
   collection_uris?: Maybe<StringQueryOperatorInput>;
   descriptions?: Maybe<StringQueryOperatorInput>;
-  image_uris?: Maybe<StringQueryOperatorInput>;
   institution_uri?: Maybe<StringQueryOperatorInput>;
   subjects?: Maybe<StringQueryOperatorInput>;
   title?: Maybe<StringQueryOperatorInput>;
@@ -2241,6 +2246,35 @@ export type SitePageContext = {
   __typename?: "SitePageContext";
   collections?: Maybe<Array<Maybe<SitePageContextCollections>>>;
   institution?: Maybe<SitePageContextInstitution>;
+  collection?: Maybe<SitePageContextCollection>;
+  collectionUri?: Maybe<Scalars["String"]>;
+  institutionUri?: Maybe<Scalars["String"]>;
+};
+
+export type SitePageContextCollection = {
+  __typename?: "SitePageContextCollection";
+  institution_uri?: Maybe<Scalars["String"]>;
+  rights?: Maybe<SitePageContextCollectionRights>;
+  title?: Maybe<Scalars["String"]>;
+  uri?: Maybe<Scalars["String"]>;
+};
+
+export type SitePageContextCollectionFilterInput = {
+  institution_uri?: Maybe<StringQueryOperatorInput>;
+  rights?: Maybe<SitePageContextCollectionRightsFilterInput>;
+  title?: Maybe<StringQueryOperatorInput>;
+  uri?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePageContextCollectionRights = {
+  __typename?: "SitePageContextCollectionRights";
+  holder?: Maybe<Scalars["String"]>;
+  statements?: Maybe<Array<Maybe<Scalars["String"]>>>;
+};
+
+export type SitePageContextCollectionRightsFilterInput = {
+  holder?: Maybe<StringQueryOperatorInput>;
+  statements?: Maybe<StringQueryOperatorInput>;
 };
 
 export type SitePageContextCollections = {
@@ -2276,6 +2310,9 @@ export type SitePageContextCollectionsRightsFilterInput = {
 export type SitePageContextFilterInput = {
   collections?: Maybe<SitePageContextCollectionsFilterListInput>;
   institution?: Maybe<SitePageContextInstitutionFilterInput>;
+  collection?: Maybe<SitePageContextCollectionFilterInput>;
+  collectionUri?: Maybe<StringQueryOperatorInput>;
+  institutionUri?: Maybe<StringQueryOperatorInput>;
 };
 
 export type SitePageContextInstitution = {
@@ -2412,6 +2449,13 @@ export enum SitePageFieldsEnum {
   context___institution___rights___holder = "context___institution___rights___holder",
   context___institution___rights___statements = "context___institution___rights___statements",
   context___institution___uri = "context___institution___uri",
+  context___collection___institution_uri = "context___collection___institution_uri",
+  context___collection___rights___holder = "context___collection___rights___holder",
+  context___collection___rights___statements = "context___collection___rights___statements",
+  context___collection___title = "context___collection___title",
+  context___collection___uri = "context___collection___uri",
+  context___collectionUri = "context___collectionUri",
+  context___institutionUri = "context___institutionUri",
   pluginCreator___id = "pluginCreator___id",
   pluginCreator___parent___id = "pluginCreator___parent___id",
   pluginCreator___parent___parent___id = "pluginCreator___parent___parent___id",
@@ -2908,7 +2952,6 @@ export type ObjectFragmentFragment = {__typename?: "ObjectJson"} & Pick<
   ObjectJson,
   | "collection_uris"
   | "descriptions"
-  | "image_uris"
   | "institution_uri"
   | "subjects"
   | "title"

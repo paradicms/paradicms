@@ -18,8 +18,10 @@ export const createSchemaCustomization = async (
   }
   
   type ImageJson implements Node {
-    derived_image_uris: [String!]
     exact_dimensions: ImageJsonExact_dimensions
+    institution_uri: String!
+    object_uri: String!
+    original_image_uri: String
     max_dimensions: ImageJsonMax_dimensions
     uri: String!
   }
@@ -47,7 +49,6 @@ export const createSchemaCustomization = async (
   type ObjectJson implements Node {
     collection_uris: [String!]!
     descriptions: [String!]
-    image_uris: [String!]
     institution_uri: String!
     subjects: [String!]
     title: String!

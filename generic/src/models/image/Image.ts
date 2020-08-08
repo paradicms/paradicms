@@ -2,5 +2,10 @@ import {ImageJson} from "~/graphql/types";
 
 export type Image = Pick<
   ImageJson,
-  "derived_image_uris" | "exact_dimensions" | "max_dimensions" | "uri"
+  | "exact_dimensions"
+  | "institution_uri"
+  | "max_dimensions"
+  | "object_uri"
+  | "original_image_uri"
+  | "uri"
 >;
