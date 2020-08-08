@@ -10,6 +10,7 @@ import {ObjectSummary} from "~/models/object/ObjectSummary";
 import {RightsTable} from "~/components/rights/RightsTable";
 import {ObjectFacets} from "~/models/search/ObjectFacets";
 import {ObjectFacetsGrid} from "~/components/object/ObjectFacetsGrid";
+import {ObjectQuery} from "~/models/search/ObjectQuery";
 
 const CollectionPage: React.FunctionComponent<{
   data: CollectionPageQuery;
@@ -24,6 +25,10 @@ const CollectionPage: React.FunctionComponent<{
   },
   pageContext: {collection, institution},
 }) => {
+  const [objectQuery, setObjectQuery] = React.useState<ObjectQuery>({
+    filters: {collectionUris: {include: [collection.uri]}},
+  });
+
   const objectFacets = new ObjectFacets(objects);
 
   const objectSummaries: ObjectSummary[] = objects.map(object => ({
@@ -67,8 +72,8 @@ const CollectionPage: React.FunctionComponent<{
             <Grid item xs={2}>
               <ObjectFacetsGrid
                 facets={objectFacets}
-                onChange={() => {}}
-                query={{}}
+                onChange={setObjectQuery}
+                query={objectQuery}
               />
             </Grid>
           </Grid>
