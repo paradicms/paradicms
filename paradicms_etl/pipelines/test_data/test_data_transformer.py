@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from rdflib import URIRef
 
 from paradicms_etl._transformer import _Transformer
@@ -12,10 +14,15 @@ from paradicms_etl.models.rights import Rights
 class TestDataTransformer(_Transformer):
     __RIGHTS_STATEMENT_URI = URIRef("https://rightsstatements.org/page/InC-EDU/1.0/?language=en")
 
-    def transform(self):
-        yield from self.__transform_institutions()
+    def __set_object_properties(self, object_: Object, object_i: int):
+        object_.descriptions.append(f"{object_.title} description")
+        object_.subjects.append(f"{object_.title} subject")
+        object_.rights = Rights(holder=f"{object_.title} rights holder", statements=(f"{object_.title} rights", self.__RIGHTS_STATEMENT_URI,))
 
-    def __transform_collection_objects(self, *, collection: Collection, collection_i: int, institution: Institution, institution_i: int):
+    def transform(self):
+        yield from self.__generate_institutions()
+
+    def __generate_collection_objects(self, *, collection: Collection, collection_i: int, institution: Institution, institution_i: int):
         for object_i in range(25):  # Objects per page is 20
             object_ = \
                 Object(
@@ -24,13 +31,11 @@ class TestDataTransformer(_Transformer):
                     title=f"{collection.title} object {object_i}",
                     uri=URIRef(f"http://example.com/institution{institution_i}/collection{collection_i}/object{object_i}")
                 )
-            object_.descriptions.append(f"{object_.title} description")
-            object_.subjects.append(f"{object_.title} subject")
-            object_.rights = Rights(holder=f"{object_.title} rights holder", statements=(f"{object_.title} rights", self.__RIGHTS_STATEMENT_URI,))
-            yield from self.__transform_object_images(collection_i=collection_i, institution_i=institution_i, object_=object_, object_i=object_i)
+            self.__set_object_properties(object_, object_i)
+            yield from self.__generate_object_images(collection_i=collection_i, institution_i=institution_i, object_=object_, object_i=object_i)
             yield object_
 
-    def __transform_institution_collections(self, institution: Institution, institution_i: int):
+    def __generate_institution_collections(self, institution: Institution, institution_i: int):
         for collection_i in range(2):
             collection = \
                 Collection(
@@ -39,17 +44,22 @@ class TestDataTransformer(_Transformer):
                     uri=URIRef(f"http://example.com/institution{institution_i}/collection{collection_i}")
                 )
             collection.rights = Rights(holder=f"{collection.title} rights holder", statements=(f"{collection.title} rights", self.__RIGHTS_STATEMENT_URI,))
-            yield from self.__transform_collection_objects(collection=collection, collection_i=collection_i, institution=institution, institution_i=institution_i)
+            yield from self.__generate_collection_objects(collection=collection, collection_i=collection_i, institution=institution, institution_i=institution_i)
             yield collection
 
-    def __transform_institutions(self):
+    def __generate_institutions(self):
         for institution_i in range(2):
             institution = Institution(name=f"Institution {institution_i}", uri=URIRef(f"http://example.com/institution{institution_i}"))
             institution.rights = Rights(holder=f"{institution.name} rights holder", statements=(f"{institution.name} rights", self.__RIGHTS_STATEMENT_URI,))
-            yield from self.__transform_institution_collections(institution=institution, institution_i=institution_i)
+            collections = []
+            for model in self.__generate_institution_collections(institution=institution, institution_i=institution_i):
+                if isinstance(model, Collection):
+                    collections.append(model)
+                yield model
+            yield from self.__generate_shared_objects(collections=tuple(collections), institution=institution, institution_i=institution_i)
             yield institution
 
-    def __transform_object_images(self, *, collection_i: int, institution_i: int, object_: Object, object_i: int):
+    def __generate_object_images(self, *, collection_i: object, institution_i: int, object_: Object, object_i: int):
         for image_i in range(2):
             original = Image(uri=URIRef(f"https://place-hold.it/1000x1000?text=Institution{institution_i}Collection{collection_i}Object{object_i}Image{image_i}"))
             original.exact_dimensions = ImageDimensions(height=1000, width=1000)
@@ -66,3 +76,16 @@ class TestDataTransformer(_Transformer):
 
             yield original
             object_.image_uris.append(original.uri)
+
+    def __generate_shared_objects(self, *, collections: Tuple[Collection, ...], institution: Institution, institution_i: int):
+        for object_i in range(5):  # Per institution
+            object_ = \
+                Object(
+                    collection_uris=tuple(map(lambda collection: collection.uri, collections)),
+                    institution_uri=institution.uri,
+                    title=f"Institution {institution_i} shared object {object_i}",
+                    uri=URIRef(f"http://example.com/institution{institution_i}/shared/object{object_i}")
+                )
+            self.__set_object_properties(object_, object_i)
+            yield from self.__generate_object_images(collection_i="shared", institution_i=institution_i, object_=object_, object_i=object_i)
+            yield object_
