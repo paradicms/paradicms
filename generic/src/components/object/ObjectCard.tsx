@@ -3,9 +3,9 @@ import {
   Card,
   CardContent,
   CardHeader,
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Grid,
   List,
   ListItem,
@@ -17,6 +17,7 @@ import {Link} from "gatsby";
 import {Hrefs} from "~/Hrefs";
 import {JoinedObject} from "~/models/object/JoinedObject";
 import {Images} from "~/models/image/Images";
+import {RightsTable} from "~/components/rights/RightsTable";
 
 const useStyles = makeStyles(theme => ({
   expansionPanelText: {
@@ -76,11 +77,11 @@ export const ObjectCard: React.FunctionComponent<{
           </Grid>
           {object.descriptions && object.descriptions.length > 0 ? (
             <Grid item>
-              <ExpansionPanel>
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   Description
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails className={classes.expansionPanelText}>
+                </AccordionSummary>
+                <AccordionDetails className={classes.expansionPanelText}>
                   {object.descriptions.length === 1 ? (
                     <span>{object.descriptions[0]}</span>
                   ) : (
@@ -94,20 +95,20 @@ export const ObjectCard: React.FunctionComponent<{
                       )}
                     </List>
                   )}
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
+                </AccordionDetails>
+              </Accordion>
             </Grid>
           ) : null}
           {object.rights ? (
             <Grid item>
-              <ExpansionPanel>
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   Rights
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails className={classes.expansionPanelText}>
-                  {object.rights}
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
+                </AccordionSummary>
+                <AccordionDetails className={classes.expansionPanelText}>
+                  <RightsTable rights={object.rights} />
+                </AccordionDetails>
+              </Accordion>
             </Grid>
           ) : null}
         </Grid>
