@@ -36,7 +36,7 @@ export const RightsTable: React.FunctionComponent<{
           {rights.statements.map((statement, statementIndex) => (
             <TableRow key={statementIndex}>
               <TableCell className={classes.cell}>
-                <strong>Rights</strong>
+                <strong>Rights statement</strong>
               </TableCell>
               <TableCell className={classes.cell}>
                 {isUrl(statement) ? (
@@ -50,7 +50,7 @@ export const RightsTable: React.FunctionComponent<{
           {rights.holder ? (
             <TableRow>
               <TableCell className={classes.cell}>
-                <strong>Holder</strong>
+                <strong>Rights holder</strong>
               </TableCell>
               <TableCell className={classes.cell}>{rights.holder}</TableCell>
             </TableRow>

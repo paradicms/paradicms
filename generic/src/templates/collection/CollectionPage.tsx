@@ -15,7 +15,7 @@ import {ObjectsGallery} from "~/components/object/ObjectsGallery";
 import {Models} from "~/models/Models";
 import {Images} from "~/models/image/Images";
 
-const OBJECTS_PER_PAGE = 20;
+const OBJECTS_PER_PAGE = 10;
 
 const CollectionPage: React.FunctionComponent<{
   data: CollectionPageQuery;
@@ -34,6 +34,10 @@ const CollectionPage: React.FunctionComponent<{
     filters: {collectionUris: {include: [collection.uri]}},
   });
 
+  // let [objectsPageQueryParam, setObjectsPage] = useQueryParam<
+  //   number | null | undefined
+  // >("page", NumberParam);
+  // const objectsPage = objectsPageQueryParam ?? 0;
   const [objectsPage, setObjectsPage] = React.useState<number>(0);
 
   const objectFacets = new ObjectFacets(collectionObjects);
@@ -58,14 +62,6 @@ const CollectionPage: React.FunctionComponent<{
             <RightsTable rights={rights} />
           </Grid>
         ) : null}
-        {/*{objectSummaries.length ? (*/}
-        {/*  <Grid item>*/}
-        {/*    <SearchResultsSummary*/}
-        {/*      objectsPerPage={OBJECTS_PER_PAGE}*/}
-        {/*      state={state}*/}
-        {/*    />*/}
-        {/*  </Grid>*/}
-        {/*) : null}*/}
         <Grid item>
           <Grid container>
             <Grid item xs={10}>
@@ -79,6 +75,8 @@ const CollectionPage: React.FunctionComponent<{
                     objectsPage * OBJECTS_PER_PAGE,
                     (objectsPage + 1) * OBJECTS_PER_PAGE
                   )}
+                  objectsPerPage={OBJECTS_PER_PAGE}
+                  objectsTotal={joinedObjects.length}
                   onChangePage={setObjectsPage}
                 />
               ) : (
