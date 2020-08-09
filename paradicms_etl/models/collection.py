@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
 
-from dataclasses_json import dataclass_json
+from dataclasses_json import LetterCase, dataclass_json
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, RDF
 from rdflib.resource import Resource
@@ -11,7 +11,7 @@ from .rights import Rights
 from ..namespace import CMS
 
 
-@dataclass_json
+@dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
 class Collection(_Model):
     # Linking up to the parent (relational style )instead of down to child objects

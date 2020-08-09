@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List, Optional, Tuple, Union
 
-from dataclasses_json import dataclass_json
+from dataclasses_json import LetterCase, dataclass_json
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, FOAF, RDF
 from rdflib.resource import Resource
@@ -11,7 +11,7 @@ from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespace import CMS, VRA
 
 
-@dataclass_json
+@dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
 class Object(_Model):
     # Linking up to the parent (relational style) and grandparent makes it easier to do

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from dataclasses_json import dataclass_json
+from dataclasses_json import LetterCase, dataclass_json
 from rdflib import Graph, Literal
 from rdflib.namespace import FOAF, RDF
 from rdflib.resource import Resource
@@ -9,7 +9,7 @@ from paradicms_etl._model import _Model
 from paradicms_etl.namespace import CMS
 
 
-@dataclass_json
+@dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
 class User(_Model):
     email: str
@@ -21,3 +21,5 @@ class User(_Model):
         resource.add(FOAF.mbox, Literal(self.email))
         resource.add(FOAF.name, Literal(self.name))
         return resource
+
+User(email="x", name="x").to_json()

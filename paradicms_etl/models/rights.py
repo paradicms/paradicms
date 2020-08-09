@@ -1,13 +1,13 @@
 from dataclasses import dataclass
 from typing import List, Optional, Union
 
-from dataclasses_json import dataclass_json
+from dataclasses_json import LetterCase, dataclass_json
 from rdflib import Literal, URIRef
 from rdflib.namespace import DCTERMS
 from rdflib.resource import Resource
 
 
-@dataclass_json
+@dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
 class Rights:
     holder: Union[URIRef, str, None] = None

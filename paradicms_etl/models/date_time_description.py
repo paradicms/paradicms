@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from dataclasses_json import dataclass_json
+from dataclasses_json import LetterCase, dataclass_json
 from rdflib import Graph, Literal, RDF, XSD
 from rdflib.resource import Resource
 
@@ -9,7 +9,7 @@ from paradicms_etl._model import _Model
 from paradicms_etl.namespace import TIME
 
 
-@dataclass_json
+@dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
 class DateTimeDescription(_Model):
     day: Optional[int] = None
