@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from datetime import date, datetime, timedelta
+from typing import List, Optional, Tuple, Union
 
 from rdflib import URIRef
 
@@ -13,7 +14,20 @@ from paradicms_etl.models.rights import Rights
 
 
 class TestDataTransformer(_Transformer):
+    __CREATORS = tuple(f"Creator {i}" for i in range(10))
+    __CULTURAL_CONTEXTS = tuple(f"Cultural context {i}" for i in range(10))
+    __EXTENTS = tuple(f"Extent {i}" for i in range(10))
+    __LANGUAGES = tuple(f"Language {i}" for i in range(10))
+    __MATERIALS = tuple(f"Material {i}" for i in range(10))
+    __MEDIA = tuple(f"Medium {i}" for i in range(10))
+    __PUBLISHERS = tuple(f"Publisher {i}" for i in range(10))
     __RIGHTS_STATEMENT_URI = URIRef("https://rightsstatements.org/page/InC-EDU/1.0/?language=en")
+    __SOURCES = tuple(f"Source {i}" for i in range(10))
+    __SPATIALS = tuple(f"Spatial {i}" for i in range(10))
+    __SUBJECTS = tuple(f"Subject {i}" for i in range(10))
+    __TECHNIQUES = tuple(f"Technique {i}" for i in range(10))
+    __TEMPORALS = tuple(f"Temporal {i}" for i in range(10))
+    __TYPES = tuple(f"Type {i}" for i in range(10))
 
     def transform(self):
         yield from self.__generate_institutions()
@@ -53,6 +67,9 @@ class TestDataTransformer(_Transformer):
             yield institution
 
     def __generate_object(self, *, collection_uris: Tuple[URIRef, ...], institution: Institution, object_i: int, title: str, uri: URIRef):
+        def object_property_values(all_property_values: List[Union[URIRef, str]], count):
+            return tuple(all_property_values[(object_i + i) % len(all_property_values)] for i in range(count))
+
         object_ = \
             Object(
                 collection_uris=collection_uris,
@@ -60,9 +77,25 @@ class TestDataTransformer(_Transformer):
                 title=title,
                 uri=uri
             )
-        object_.descriptions.append(f"{object_.title} description")
-        object_.subjects.append(f"{object_.title} subject")
+        object_.alternative_titles.extend(f"{object_.title} alternative title {i}" for i in range(2))
+        object_.creators.extend(object_property_values(self.__CREATORS, 2))
+        object_.cultural_contexts.extend(object_property_values(self.__CULTURAL_CONTEXTS, 2))
+        object_.dates.extend((date(year=2020, month=8, day=9) - timedelta(minutes=(60 * 24 * (object_i + date_i)))).isoformat() for date_i in range(2))
+        object_.descriptions.extend(f"{object_.title} description {i}" for i in range(2))
+        object_.extents.extend(object_property_values(self.__EXTENTS, 2))
+        object_.identifiers.extend(f"{object_.title}Id{i}" for i in range(2))
+        object_.languages.extend(object_property_values(self.__LANGUAGES, 2))
+        object_.materials.extend(object_property_values(self.__MATERIALS, 2))
+        object_.media.extend(object_property_values(self.__MEDIA, 2))
+        object_.provenances.extend(f"{object_.title} provenance {i}" for i in range(2))
+        object_.publishers.extend(object_property_values(self.__PUBLISHERS, 2))
         object_.rights = Rights(holder=f"{object_.title} rights holder", statements=(f"{object_.title} rights", self.__RIGHTS_STATEMENT_URI,))
+        object_.sources.extend(object_property_values(self.__SOURCES, 2))
+        object_.spatials.extend(object_property_values(self.__SPATIALS, 2))
+        object_.subjects.extend(object_property_values(self.__SUBJECTS, 2))
+        object_.techniques.extend(object_property_values(self.__TECHNIQUES, 2))
+        object_.temporals.extend(object_property_values(self.__TEMPORALS, 2))
+        object_.types.extend(object_property_values(self.__TYPES, 2))
         yield object_
         yield from self.__generate_object_images(institution=institution, object_=object_)
 
