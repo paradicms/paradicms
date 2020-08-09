@@ -14,6 +14,7 @@ import {Objects} from "~/models/object/Objects";
 import {ObjectsGallery} from "~/components/object/ObjectsGallery";
 import {Models} from "~/models/Models";
 import {Images} from "~/models/image/Images";
+import {useQueryParam, NumberParam} from "use-query-params";
 
 const OBJECTS_PER_PAGE = 10;
 
@@ -34,11 +35,11 @@ const CollectionPage: React.FunctionComponent<{
     filters: {collectionUris: {include: [collection.uri]}},
   });
 
-  // let [objectsPageQueryParam, setObjectsPage] = useQueryParam<
-  //   number | null | undefined
-  // >("page", NumberParam);
-  // const objectsPage = objectsPageQueryParam ?? 0;
-  const [objectsPage, setObjectsPage] = React.useState<number>(0);
+  let [objectsPageQueryParam, setObjectsPage] = useQueryParam<
+    number | null | undefined
+  >("page", NumberParam);
+  const objectsPage = objectsPageQueryParam ?? 0;
+  // const [objectsPage, setObjectsPage] = React.useState<number>(0);
 
   const objectFacets = new ObjectFacets(collectionObjects);
 
