@@ -37,111 +37,43 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
     onChange(newQuery);
   };
 
+  const panels: {id: keyof ObjectFacets; title: string}[] = [
+    {id: "creators", title: "Creator"},
+    {id: "culturalContexts", title: "Cultural context"},
+    {id: "extents", title: "Extent"},
+    {id: "languages", title: "Language"},
+    {id: "materials", title: "Material"},
+    {id: "media", title: "Medium"},
+    {id: "publishers", title: "Publisher"},
+    {id: "spatials", title: "Spatial coverage"},
+    {id: "subjects", title: "Subject"},
+    {id: "techniques", title: "Technique"},
+    {id: "temporals", title: "Temporal coverage"},
+    {id: "types", title: "Type"},
+  ];
+
   return (
-    <Grid container direction="column">
-      {facets.subjects.length > 0 ? (
-        <FacetExpansionPanel id="subject" title="Subjects">
-          <StringFacetForm
-            valueUniverse={facets.subjects}
-            currentState={
-              query.filters && query.filters.subjects
-                ? query.filters.subjects
-                : undefined
-            }
-            onChange={newState =>
-              onChangeStringFacetFilter("subjects", newState)
-            }
-          />
-        </FacetExpansionPanel>
-      ) : null}
-      {facets.types.length > 0 ? (
-        <FacetExpansionPanel id="type" title="Types">
-          <StringFacetForm
-            valueUniverse={facets.types}
-            currentState={
-              query.filters && query.filters.types
-                ? query.filters.types
-                : undefined
-            }
-            onChange={newState => onChangeStringFacetFilter("types", newState)}
-          />
-        </FacetExpansionPanel>
-      ) : null}
-      {facets.culturalContexts.length > 0 ? (
-        <FacetExpansionPanel id="cultural-context" title="Cultural context">
-          <StringFacetForm
-            valueUniverse={facets.culturalContexts}
-            currentState={
-              query.filters && query.filters.culturalContexts
-                ? query.filters.culturalContexts
-                : undefined
-            }
-            onChange={newState =>
-              onChangeStringFacetFilter("culturalContexts", newState)
-            }
-          />
-        </FacetExpansionPanel>
-      ) : null}
-      {facets.materials.length > 0 ? (
-        <FacetExpansionPanel id="material" title="Material">
-          <StringFacetForm
-            valueUniverse={facets.materials}
-            currentState={
-              query.filters && query.filters.materials
-                ? query.filters.materials
-                : undefined
-            }
-            onChange={newState =>
-              onChangeStringFacetFilter("materials", newState)
-            }
-          />
-        </FacetExpansionPanel>
-      ) : null}
-      {facets.spatials.length > 0 ? (
-        <FacetExpansionPanel id="spatial-coverage" title="Spatial coverage">
-          <StringFacetForm
-            valueUniverse={facets.spatials}
-            currentState={
-              query.filters && query.filters.spatials
-                ? query.filters.spatials
-                : undefined
-            }
-            onChange={newState =>
-              onChangeStringFacetFilter("spatials", newState)
-            }
-          />
-        </FacetExpansionPanel>
-      ) : null}
-      {facets.techniques.length > 0 ? (
-        <FacetExpansionPanel id="technique" title="Technique">
-          <StringFacetForm
-            valueUniverse={facets.techniques}
-            currentState={
-              query.filters && query.filters.techniques
-                ? query.filters.techniques
-                : undefined
-            }
-            onChange={newState =>
-              onChangeStringFacetFilter("techniques", newState)
-            }
-          />
-        </FacetExpansionPanel>
-      ) : null}
-      {facets.temporals.length > 0 ? (
-        <FacetExpansionPanel id="temporal-coverage" title="Temporal coverage">
-          <StringFacetForm
-            valueUniverse={facets.temporals}
-            currentState={
-              query.filters && query.filters.temporals
-                ? query.filters.temporals
-                : undefined
-            }
-            onChange={newState =>
-              onChangeStringFacetFilter("temporals", newState)
-            }
-          />
-        </FacetExpansionPanel>
-      ) : null}
+    <Grid container direction="column" spacing={4}>
+      {panels.map(({id, title}) => {
+        if (facets[id].length === 0) {
+          return null;
+        }
+        return (
+          <Grid item key={id}>
+            <FacetExpansionPanel id={id} title={title}>
+              <StringFacetForm
+                valueUniverse={facets[id as keyof ObjectFacets]}
+                currentState={
+                  query.filters && query.filters[id]
+                    ? (query.filters[id] as StringFacetFilter)
+                    : undefined
+                }
+                onChange={newState => onChangeStringFacetFilter(id, newState)}
+              />
+            </FacetExpansionPanel>
+          </Grid>
+        );
+      })}
     </Grid>
   );
 };
