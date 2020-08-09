@@ -6,11 +6,11 @@ export class Images {
     images: readonly Image[]
   ): {[index: string]: readonly Image[]} {
     return images.reduce((map, image) => {
-      const existingImages = map[image.object_uri];
+      const existingImages = map[image.objectUri];
       if (existingImages) {
         existingImages.push(image);
       } else {
-        map[image.object_uri] = [image];
+        map[image.objectUri] = [image];
       }
       return map;
     }, {} as {[index: string]: Image[]});
@@ -20,14 +20,14 @@ export class Images {
     images: readonly Image[]
   ): {[index: string]: readonly Image[]} {
     return images.reduce((map, image) => {
-      if (!image.original_image_uri) {
+      if (!image.originalImageUri) {
         return map;
       }
-      const existingImages = map[image.original_image_uri];
+      const existingImages = map[image.originalImageUri];
       if (existingImages) {
         existingImages.push(image);
       } else {
-        map[image.original_image_uri] = [image];
+        map[image.originalImageUri] = [image];
       }
       return map;
     }, {} as {[index: string]: Image[]});
@@ -48,13 +48,13 @@ export class Images {
 
     const candidateImages: [Image, ImageDimensions][] = [];
     for (const image of images) {
-      if (image.exact_dimensions) {
-        if (contains(maxDimensions, image.exact_dimensions)) {
-          candidateImages.push([image, image.exact_dimensions]);
+      if (image.exactDimensions) {
+        if (contains(maxDimensions, image.exactDimensions)) {
+          candidateImages.push([image, image.exactDimensions]);
         }
-      } else if (image.max_dimensions) {
-        if (contains(maxDimensions, image.max_dimensions)) {
-          candidateImages.push([image, image.max_dimensions]);
+      } else if (image.maxDimensions) {
+        if (contains(maxDimensions, image.maxDimensions)) {
+          candidateImages.push([image, image.maxDimensions]);
         }
       }
     }

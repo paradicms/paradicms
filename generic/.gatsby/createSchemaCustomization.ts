@@ -7,7 +7,7 @@ export const createSchemaCustomization = async (
   const {createTypes} = actions;
   createTypes(`
   type CollectionJson implements Node {
-    institution_uri: String!
+    institutionUri: String!
     title: String!
     uri: String!
   }  
@@ -18,20 +18,20 @@ export const createSchemaCustomization = async (
   }
   
   type ImageJson implements Node {
-    exact_dimensions: ImageJsonExact_dimensions
-    institution_uri: String!
-    object_uri: String!
-    original_image_uri: String
-    max_dimensions: ImageJsonMax_dimensions
+    exactDimensions: ImageJsonExactDimensions
+    institutionUri: String!
+    objectUri: String!
+    originalImageUri: String
+    maxDimensions: ImageJsonMaxDimensions
     uri: String!
   }
   
-  type ImageJsonExact_dimensions {
+  type ImageJsonExactDimensions {
     height: Int!
     width: Int!
   }
   
-  type ImageJsonMax_dimensions {
+  type ImageJsonMaxDimensions {
     height: Int!
     width: Int!
   }
@@ -47,15 +47,15 @@ export const createSchemaCustomization = async (
   }  
   
   type ObjectJson implements Node {
-    alternative_titles: [String!]
-    collection_uris: [String!]!
+    alternativeTitles: [String!]
+    collectionUris: [String!]!
     creators: [String!]
-    cultural_contexts: [String!]
+    culturalContexts: [String!]
     dates: [String!]
     descriptions: [String!]
     extents: [String!]
     identifiers: [String!]
-    institution_uri: String!
+    institutionUri: String!
     languages: [String!]
     materials: [String!]
     media: [String!]

@@ -16,7 +16,7 @@ export class ObjectFacets {
     const types: Set<string> = new Set();
     for (const object of objects) {
       object.creators?.forEach(creator => creators.add(creator));
-      object.cultural_contexts?.forEach(culturalContext =>
+      object.culturalContexts?.forEach(culturalContext =>
         culturalContexts.add(culturalContext)
       );
       object.extents?.forEach(extent => extents.add(extent));

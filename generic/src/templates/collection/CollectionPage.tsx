@@ -103,15 +103,15 @@ export default CollectionPage;
 
 export const query = graphql`
   query CollectionPage($collectionUri: String!, $institutionUri: String!) {
-    allImageJson(filter: {institution_uri: {eq: $institutionUri}}) {
+    allImageJson(filter: {institutionUri: {eq: $institutionUri}}) {
       nodes {
         ...ImageFragment
       }
     }
     allObjectJson(
       filter: {
-        collection_uris: {in: [$collectionUri]}
-        institution_uri: {eq: $institutionUri}
+        collectionUris: {in: [$collectionUri]}
+        institutionUri: {eq: $institutionUri}
       }
     ) {
       nodes {

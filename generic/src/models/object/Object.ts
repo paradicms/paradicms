@@ -2,15 +2,15 @@ import {ObjectJson} from "~/graphql/types";
 
 export type Object = Pick<
   ObjectJson,
-  | "alternative_titles"
-  | "collection_uris"
+  | "alternativeTitles"
+  | "collectionUris"
   | "creators"
-  | "cultural_contexts"
+  | "culturalContexts"
   | "dates"
   | "descriptions"
   | "extents"
   | "identifiers"
-  | "institution_uri"
+  | "institutionUri"
   | "languages"
   | "materials"
   | "media"

@@ -28,7 +28,7 @@ export class Objects {
     } = kwds;
     return objects.map(object => {
       const collections: Collection[] = [];
-      for (const collectionUri of object.collection_uris) {
+      for (const collectionUri of object.collectionUris) {
         const collection = collectionsByUri[collectionUri];
         if (collection) {
           collections.push(collection);
@@ -37,16 +37,16 @@ export class Objects {
       if (collections.length === 0) {
         throw new EvalError(
           "unable to resolve any collection URIs: " +
-            object.collection_uris.join(" ")
+            object.collectionUris.join(" ")
         );
       }
 
       const images = imagesByObjectUri[object.uri];
 
-      const institution = institutionsByUri[object.institution_uri];
+      const institution = institutionsByUri[object.institutionUri];
       if (!institution) {
         throw new EvalError(
-          "unable to resolve institution " + object.institution_uri
+          "unable to resolve institution " + object.institutionUri
         );
       }
 

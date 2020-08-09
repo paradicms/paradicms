@@ -42,11 +42,9 @@ export const createInstitutionPages = async (
       >(
         `
           query($institutionUri: String!) {
-            allCollectionJson(
-              filter: {institution_uri: {eq: $institutionUri}}
-            ) {
+            allCollectionJson(filter: {institutionUri: {eq: $institutionUri}}) {
               nodes {
-                institution_uri
+                institutionUri
                 rights {
                   holder
                   statements

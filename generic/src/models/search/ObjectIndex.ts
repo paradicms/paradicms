@@ -33,8 +33,8 @@ export class ObjectIndex {
     resolvers: {
       // For any node of type X, list how to resolve the fields' values
       ObjectJson: {
-        collectionUri: (node: ObjectJson) => node.collection_uris[0],
-        institutionUri: (node: ObjectJson) => node.institution_uri,
+        collectionUri: (node: ObjectJson) => node.collectionUris[0],
+        institutionUri: (node: ObjectJson) => node.institutionUri,
         title: (node: ObjectJson) => node.title,
         uri: (node: ObjectJson) => node.uri,
       },

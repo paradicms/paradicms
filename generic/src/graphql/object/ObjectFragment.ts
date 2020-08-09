@@ -2,15 +2,15 @@ import {graphql} from "gatsby";
 
 export const ObjectFragment = graphql`
   fragment ObjectFragment on ObjectJson {
-    alternative_titles
-    collection_uris
+    alternativeTitles
+    collectionUris
     creators
-    cultural_contexts
+    culturalContexts
     dates
     descriptions
     extents
     identifiers
-    institution_uri
+    institutionUri
     languages
     materials
     media
