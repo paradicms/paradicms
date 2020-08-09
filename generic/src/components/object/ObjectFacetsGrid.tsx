@@ -14,12 +14,12 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
   query: ObjectQuery;
 }> = ({facets, onChange, query}) => {
   const isFiltersEmpty = (filters: ObjectFilters): boolean => {
-    return (
-      !filters.collectionUris &&
-      !filters.institutionUris &&
-      !filters.subjects &&
-      !filters.types
-    );
+    for (const key of Object.keys(filters)) {
+      if (!_.isEmpty(filters[key as keyof ObjectFilters])) {
+        return false;
+      }
+    }
+    return true;
   };
 
   const onChangeStringFacetFilter = (
@@ -37,21 +37,6 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
     onChange(newQuery);
   };
 
-  const onChangeCulturalContext = (newState?: StringFacetFilter) =>
-    onChangeStringFacetFilter("culturalContexts", newState);
-  const onChangeMaterial = (newState?: StringFacetFilter) =>
-    onChangeStringFacetFilter("materials", newState);
-  const onChangeSpatial = (newState?: StringFacetFilter) =>
-    onChangeStringFacetFilter("spatials", newState);
-  const onChangeSubject = (newState?: StringFacetFilter) =>
-    onChangeStringFacetFilter("subjects", newState);
-  const onChangeTechnique = (newState?: StringFacetFilter) =>
-    onChangeStringFacetFilter("techniques", newState);
-  const onChangeTemporal = (newState?: StringFacetFilter) =>
-    onChangeStringFacetFilter("temporals", newState);
-  const onChangeType = (newState?: StringFacetFilter) =>
-    onChangeStringFacetFilter("types", newState);
-
   return (
     <Grid container direction="column">
       {facets.subjects.length > 0 ? (
@@ -63,7 +48,9 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
                 ? query.filters.subjects
                 : undefined
             }
-            onChange={onChangeSubject}
+            onChange={newState =>
+              onChangeStringFacetFilter("subjects", newState)
+            }
           />
         </FacetExpansionPanel>
       ) : null}
@@ -76,7 +63,7 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
                 ? query.filters.types
                 : undefined
             }
-            onChange={onChangeType}
+            onChange={newState => onChangeStringFacetFilter("types", newState)}
           />
         </FacetExpansionPanel>
       ) : null}
@@ -89,7 +76,9 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
                 ? query.filters.culturalContexts
                 : undefined
             }
-            onChange={onChangeCulturalContext}
+            onChange={newState =>
+              onChangeStringFacetFilter("culturalContexts", newState)
+            }
           />
         </FacetExpansionPanel>
       ) : null}
@@ -102,7 +91,9 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
                 ? query.filters.materials
                 : undefined
             }
-            onChange={onChangeMaterial}
+            onChange={newState =>
+              onChangeStringFacetFilter("materials", newState)
+            }
           />
         </FacetExpansionPanel>
       ) : null}
@@ -115,7 +106,9 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
                 ? query.filters.spatials
                 : undefined
             }
-            onChange={onChangeSpatial}
+            onChange={newState =>
+              onChangeStringFacetFilter("spatials", newState)
+            }
           />
         </FacetExpansionPanel>
       ) : null}
@@ -128,7 +121,9 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
                 ? query.filters.techniques
                 : undefined
             }
-            onChange={onChangeTechnique}
+            onChange={newState =>
+              onChangeStringFacetFilter("techniques", newState)
+            }
           />
         </FacetExpansionPanel>
       ) : null}
@@ -141,7 +136,9 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
                 ? query.filters.temporals
                 : undefined
             }
-            onChange={onChangeTemporal}
+            onChange={newState =>
+              onChangeStringFacetFilter("temporals", newState)
+            }
           />
         </FacetExpansionPanel>
       ) : null}

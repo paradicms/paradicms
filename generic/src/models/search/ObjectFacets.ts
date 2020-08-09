@@ -2,8 +2,13 @@ import {Object} from "~/models/object/Object";
 
 export class ObjectFacets {
   constructor(objects: readonly Object[]) {
+    const creators: Set<string> = new Set();
     const culturalContexts: Set<string> = new Set();
+    const extents: Set<string> = new Set();
+    const languages: Set<string> = new Set();
     const materials: Set<string> = new Set();
+    const media: Set<string> = new Set();
+    const publishers: Set<string> = new Set();
     const spatials: Set<string> = new Set();
     const subjects: Set<string> = new Set();
     const techniques: Set<string> = new Set();
@@ -12,8 +17,13 @@ export class ObjectFacets {
     for (const object of objects) {
       object.subjects?.forEach(subject => subjects.add(subject));
     }
+    this.creators = [...creators];
     this.culturalContexts = [...culturalContexts];
+    this.extents = [...extents];
+    this.languages = [...languages];
     this.materials = [...materials];
+    this.media = [...media];
+    this.publishers = [...publishers];
     this.spatials = [...spatials];
     this.subjects = [...subjects];
     this.techniques = [...techniques];
@@ -21,11 +31,16 @@ export class ObjectFacets {
     this.types = [...types];
   }
 
-  culturalContexts: readonly string[];
-  materials: readonly string[];
-  spatials: readonly string[];
-  subjects: readonly string[];
-  techniques: readonly string[];
-  temporals: readonly string[];
-  types: readonly string[];
+  readonly creators: readonly string[];
+  readonly culturalContexts: readonly string[];
+  readonly extents: readonly string[];
+  readonly languages: readonly string[];
+  readonly materials: readonly string[];
+  readonly media: readonly string[];
+  readonly publishers: readonly string[];
+  readonly spatials: readonly string[];
+  readonly subjects: readonly string[];
+  readonly techniques: readonly string[];
+  readonly temporals: readonly string[];
+  readonly types: readonly string[];
 }

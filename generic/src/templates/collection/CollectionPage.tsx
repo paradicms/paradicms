@@ -39,7 +39,6 @@ const CollectionPage: React.FunctionComponent<{
     number | null | undefined
   >("page", NumberParam);
   const objectsPage = objectsPageQueryParam ?? 0;
-  // const [objectsPage, setObjectsPage] = React.useState<number>(0);
 
   const objectFacets = new ObjectFacets(collectionObjects);
 
