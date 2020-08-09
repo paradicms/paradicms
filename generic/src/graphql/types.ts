@@ -538,8 +538,8 @@ export type File = Node & {
   internal: Internal;
   childrenCollectionJson?: Maybe<Array<Maybe<CollectionJson>>>;
   childrenInstitutionJson?: Maybe<Array<Maybe<InstitutionJson>>>;
-  childrenObjectJson?: Maybe<Array<Maybe<ObjectJson>>>;
   childrenImageJson?: Maybe<Array<Maybe<ImageJson>>>;
+  childrenObjectJson?: Maybe<Array<Maybe<ObjectJson>>>;
 };
 
 export type FileModifiedTimeArgs = {
@@ -824,53 +824,6 @@ export enum FileFieldsEnum {
   childrenInstitutionJson___internal___mediaType = "childrenInstitutionJson___internal___mediaType",
   childrenInstitutionJson___internal___owner = "childrenInstitutionJson___internal___owner",
   childrenInstitutionJson___internal___type = "childrenInstitutionJson___internal___type",
-  childrenObjectJson = "childrenObjectJson",
-  childrenObjectJson___collection_uris = "childrenObjectJson___collection_uris",
-  childrenObjectJson___descriptions = "childrenObjectJson___descriptions",
-  childrenObjectJson___institution_uri = "childrenObjectJson___institution_uri",
-  childrenObjectJson___subjects = "childrenObjectJson___subjects",
-  childrenObjectJson___title = "childrenObjectJson___title",
-  childrenObjectJson___uri = "childrenObjectJson___uri",
-  childrenObjectJson___rights___holder = "childrenObjectJson___rights___holder",
-  childrenObjectJson___rights___statements = "childrenObjectJson___rights___statements",
-  childrenObjectJson___id = "childrenObjectJson___id",
-  childrenObjectJson___parent___id = "childrenObjectJson___parent___id",
-  childrenObjectJson___parent___parent___id = "childrenObjectJson___parent___parent___id",
-  childrenObjectJson___parent___parent___children = "childrenObjectJson___parent___parent___children",
-  childrenObjectJson___parent___children = "childrenObjectJson___parent___children",
-  childrenObjectJson___parent___children___id = "childrenObjectJson___parent___children___id",
-  childrenObjectJson___parent___children___children = "childrenObjectJson___parent___children___children",
-  childrenObjectJson___parent___internal___content = "childrenObjectJson___parent___internal___content",
-  childrenObjectJson___parent___internal___contentDigest = "childrenObjectJson___parent___internal___contentDigest",
-  childrenObjectJson___parent___internal___description = "childrenObjectJson___parent___internal___description",
-  childrenObjectJson___parent___internal___fieldOwners = "childrenObjectJson___parent___internal___fieldOwners",
-  childrenObjectJson___parent___internal___ignoreType = "childrenObjectJson___parent___internal___ignoreType",
-  childrenObjectJson___parent___internal___mediaType = "childrenObjectJson___parent___internal___mediaType",
-  childrenObjectJson___parent___internal___owner = "childrenObjectJson___parent___internal___owner",
-  childrenObjectJson___parent___internal___type = "childrenObjectJson___parent___internal___type",
-  childrenObjectJson___children = "childrenObjectJson___children",
-  childrenObjectJson___children___id = "childrenObjectJson___children___id",
-  childrenObjectJson___children___parent___id = "childrenObjectJson___children___parent___id",
-  childrenObjectJson___children___parent___children = "childrenObjectJson___children___parent___children",
-  childrenObjectJson___children___children = "childrenObjectJson___children___children",
-  childrenObjectJson___children___children___id = "childrenObjectJson___children___children___id",
-  childrenObjectJson___children___children___children = "childrenObjectJson___children___children___children",
-  childrenObjectJson___children___internal___content = "childrenObjectJson___children___internal___content",
-  childrenObjectJson___children___internal___contentDigest = "childrenObjectJson___children___internal___contentDigest",
-  childrenObjectJson___children___internal___description = "childrenObjectJson___children___internal___description",
-  childrenObjectJson___children___internal___fieldOwners = "childrenObjectJson___children___internal___fieldOwners",
-  childrenObjectJson___children___internal___ignoreType = "childrenObjectJson___children___internal___ignoreType",
-  childrenObjectJson___children___internal___mediaType = "childrenObjectJson___children___internal___mediaType",
-  childrenObjectJson___children___internal___owner = "childrenObjectJson___children___internal___owner",
-  childrenObjectJson___children___internal___type = "childrenObjectJson___children___internal___type",
-  childrenObjectJson___internal___content = "childrenObjectJson___internal___content",
-  childrenObjectJson___internal___contentDigest = "childrenObjectJson___internal___contentDigest",
-  childrenObjectJson___internal___description = "childrenObjectJson___internal___description",
-  childrenObjectJson___internal___fieldOwners = "childrenObjectJson___internal___fieldOwners",
-  childrenObjectJson___internal___ignoreType = "childrenObjectJson___internal___ignoreType",
-  childrenObjectJson___internal___mediaType = "childrenObjectJson___internal___mediaType",
-  childrenObjectJson___internal___owner = "childrenObjectJson___internal___owner",
-  childrenObjectJson___internal___type = "childrenObjectJson___internal___type",
   childrenImageJson = "childrenImageJson",
   childrenImageJson___exact_dimensions___height = "childrenImageJson___exact_dimensions___height",
   childrenImageJson___exact_dimensions___width = "childrenImageJson___exact_dimensions___width",
@@ -918,6 +871,69 @@ export enum FileFieldsEnum {
   childrenImageJson___internal___mediaType = "childrenImageJson___internal___mediaType",
   childrenImageJson___internal___owner = "childrenImageJson___internal___owner",
   childrenImageJson___internal___type = "childrenImageJson___internal___type",
+  childrenObjectJson = "childrenObjectJson",
+  childrenObjectJson___alternative_titles = "childrenObjectJson___alternative_titles",
+  childrenObjectJson___collection_uris = "childrenObjectJson___collection_uris",
+  childrenObjectJson___creators = "childrenObjectJson___creators",
+  childrenObjectJson___cultural_contexts = "childrenObjectJson___cultural_contexts",
+  childrenObjectJson___dates = "childrenObjectJson___dates",
+  childrenObjectJson___descriptions = "childrenObjectJson___descriptions",
+  childrenObjectJson___extents = "childrenObjectJson___extents",
+  childrenObjectJson___identifiers = "childrenObjectJson___identifiers",
+  childrenObjectJson___institution_uri = "childrenObjectJson___institution_uri",
+  childrenObjectJson___languages = "childrenObjectJson___languages",
+  childrenObjectJson___materials = "childrenObjectJson___materials",
+  childrenObjectJson___media = "childrenObjectJson___media",
+  childrenObjectJson___provenances = "childrenObjectJson___provenances",
+  childrenObjectJson___publishers = "childrenObjectJson___publishers",
+  childrenObjectJson___rights___holder = "childrenObjectJson___rights___holder",
+  childrenObjectJson___rights___statements = "childrenObjectJson___rights___statements",
+  childrenObjectJson___sources = "childrenObjectJson___sources",
+  childrenObjectJson___spatials = "childrenObjectJson___spatials",
+  childrenObjectJson___subjects = "childrenObjectJson___subjects",
+  childrenObjectJson___techniques = "childrenObjectJson___techniques",
+  childrenObjectJson___temporals = "childrenObjectJson___temporals",
+  childrenObjectJson___title = "childrenObjectJson___title",
+  childrenObjectJson___types = "childrenObjectJson___types",
+  childrenObjectJson___uri = "childrenObjectJson___uri",
+  childrenObjectJson___id = "childrenObjectJson___id",
+  childrenObjectJson___parent___id = "childrenObjectJson___parent___id",
+  childrenObjectJson___parent___parent___id = "childrenObjectJson___parent___parent___id",
+  childrenObjectJson___parent___parent___children = "childrenObjectJson___parent___parent___children",
+  childrenObjectJson___parent___children = "childrenObjectJson___parent___children",
+  childrenObjectJson___parent___children___id = "childrenObjectJson___parent___children___id",
+  childrenObjectJson___parent___children___children = "childrenObjectJson___parent___children___children",
+  childrenObjectJson___parent___internal___content = "childrenObjectJson___parent___internal___content",
+  childrenObjectJson___parent___internal___contentDigest = "childrenObjectJson___parent___internal___contentDigest",
+  childrenObjectJson___parent___internal___description = "childrenObjectJson___parent___internal___description",
+  childrenObjectJson___parent___internal___fieldOwners = "childrenObjectJson___parent___internal___fieldOwners",
+  childrenObjectJson___parent___internal___ignoreType = "childrenObjectJson___parent___internal___ignoreType",
+  childrenObjectJson___parent___internal___mediaType = "childrenObjectJson___parent___internal___mediaType",
+  childrenObjectJson___parent___internal___owner = "childrenObjectJson___parent___internal___owner",
+  childrenObjectJson___parent___internal___type = "childrenObjectJson___parent___internal___type",
+  childrenObjectJson___children = "childrenObjectJson___children",
+  childrenObjectJson___children___id = "childrenObjectJson___children___id",
+  childrenObjectJson___children___parent___id = "childrenObjectJson___children___parent___id",
+  childrenObjectJson___children___parent___children = "childrenObjectJson___children___parent___children",
+  childrenObjectJson___children___children = "childrenObjectJson___children___children",
+  childrenObjectJson___children___children___id = "childrenObjectJson___children___children___id",
+  childrenObjectJson___children___children___children = "childrenObjectJson___children___children___children",
+  childrenObjectJson___children___internal___content = "childrenObjectJson___children___internal___content",
+  childrenObjectJson___children___internal___contentDigest = "childrenObjectJson___children___internal___contentDigest",
+  childrenObjectJson___children___internal___description = "childrenObjectJson___children___internal___description",
+  childrenObjectJson___children___internal___fieldOwners = "childrenObjectJson___children___internal___fieldOwners",
+  childrenObjectJson___children___internal___ignoreType = "childrenObjectJson___children___internal___ignoreType",
+  childrenObjectJson___children___internal___mediaType = "childrenObjectJson___children___internal___mediaType",
+  childrenObjectJson___children___internal___owner = "childrenObjectJson___children___internal___owner",
+  childrenObjectJson___children___internal___type = "childrenObjectJson___children___internal___type",
+  childrenObjectJson___internal___content = "childrenObjectJson___internal___content",
+  childrenObjectJson___internal___contentDigest = "childrenObjectJson___internal___contentDigest",
+  childrenObjectJson___internal___description = "childrenObjectJson___internal___description",
+  childrenObjectJson___internal___fieldOwners = "childrenObjectJson___internal___fieldOwners",
+  childrenObjectJson___internal___ignoreType = "childrenObjectJson___internal___ignoreType",
+  childrenObjectJson___internal___mediaType = "childrenObjectJson___internal___mediaType",
+  childrenObjectJson___internal___owner = "childrenObjectJson___internal___owner",
+  childrenObjectJson___internal___type = "childrenObjectJson___internal___type",
 }
 
 export type FileFilterInput = {
@@ -959,8 +975,8 @@ export type FileFilterInput = {
   internal?: Maybe<InternalFilterInput>;
   childrenCollectionJson?: Maybe<CollectionJsonFilterListInput>;
   childrenInstitutionJson?: Maybe<InstitutionJsonFilterListInput>;
-  childrenObjectJson?: Maybe<ObjectJsonFilterListInput>;
   childrenImageJson?: Maybe<ImageJsonFilterListInput>;
+  childrenObjectJson?: Maybe<ObjectJsonFilterListInput>;
 };
 
 export type FileGroupConnection = {
@@ -1407,13 +1423,29 @@ export type NodeFilterListInput = {
 
 export type ObjectJson = Node & {
   __typename?: "ObjectJson";
+  alternative_titles?: Maybe<Array<Scalars["String"]>>;
   collection_uris: Array<Scalars["String"]>;
+  creators?: Maybe<Array<Scalars["String"]>>;
+  cultural_contexts?: Maybe<Array<Scalars["String"]>>;
+  dates?: Maybe<Array<Scalars["String"]>>;
   descriptions?: Maybe<Array<Scalars["String"]>>;
+  extents?: Maybe<Array<Scalars["String"]>>;
+  identifiers?: Maybe<Array<Scalars["String"]>>;
   institution_uri: Scalars["String"];
-  subjects?: Maybe<Array<Scalars["String"]>>;
-  title: Scalars["String"];
-  uri: Scalars["String"];
+  languages?: Maybe<Array<Scalars["String"]>>;
+  materials?: Maybe<Array<Scalars["String"]>>;
+  media?: Maybe<Array<Scalars["String"]>>;
+  provenances?: Maybe<Array<Scalars["String"]>>;
+  publishers?: Maybe<Array<Scalars["String"]>>;
   rights?: Maybe<ObjectJsonRights>;
+  sources?: Maybe<Array<Scalars["String"]>>;
+  spatials?: Maybe<Array<Scalars["String"]>>;
+  subjects?: Maybe<Array<Scalars["String"]>>;
+  techniques?: Maybe<Array<Scalars["String"]>>;
+  temporals?: Maybe<Array<Scalars["String"]>>;
+  title: Scalars["String"];
+  types?: Maybe<Array<Scalars["String"]>>;
+  uri: Scalars["String"];
   id: Scalars["ID"];
   parent?: Maybe<Node>;
   children: Array<Node>;
@@ -1448,14 +1480,30 @@ export type ObjectJsonEdge = {
 };
 
 export enum ObjectJsonFieldsEnum {
+  alternative_titles = "alternative_titles",
   collection_uris = "collection_uris",
+  creators = "creators",
+  cultural_contexts = "cultural_contexts",
+  dates = "dates",
   descriptions = "descriptions",
+  extents = "extents",
+  identifiers = "identifiers",
   institution_uri = "institution_uri",
-  subjects = "subjects",
-  title = "title",
-  uri = "uri",
+  languages = "languages",
+  materials = "materials",
+  media = "media",
+  provenances = "provenances",
+  publishers = "publishers",
   rights___holder = "rights___holder",
   rights___statements = "rights___statements",
+  sources = "sources",
+  spatials = "spatials",
+  subjects = "subjects",
+  techniques = "techniques",
+  temporals = "temporals",
+  title = "title",
+  types = "types",
+  uri = "uri",
   id = "id",
   parent___id = "parent___id",
   parent___parent___id = "parent___parent___id",
@@ -1545,13 +1593,29 @@ export enum ObjectJsonFieldsEnum {
 }
 
 export type ObjectJsonFilterInput = {
+  alternative_titles?: Maybe<StringQueryOperatorInput>;
   collection_uris?: Maybe<StringQueryOperatorInput>;
+  creators?: Maybe<StringQueryOperatorInput>;
+  cultural_contexts?: Maybe<StringQueryOperatorInput>;
+  dates?: Maybe<StringQueryOperatorInput>;
   descriptions?: Maybe<StringQueryOperatorInput>;
+  extents?: Maybe<StringQueryOperatorInput>;
+  identifiers?: Maybe<StringQueryOperatorInput>;
   institution_uri?: Maybe<StringQueryOperatorInput>;
-  subjects?: Maybe<StringQueryOperatorInput>;
-  title?: Maybe<StringQueryOperatorInput>;
-  uri?: Maybe<StringQueryOperatorInput>;
+  languages?: Maybe<StringQueryOperatorInput>;
+  materials?: Maybe<StringQueryOperatorInput>;
+  media?: Maybe<StringQueryOperatorInput>;
+  provenances?: Maybe<StringQueryOperatorInput>;
+  publishers?: Maybe<StringQueryOperatorInput>;
   rights?: Maybe<ObjectJsonRightsFilterInput>;
+  sources?: Maybe<StringQueryOperatorInput>;
+  spatials?: Maybe<StringQueryOperatorInput>;
+  subjects?: Maybe<StringQueryOperatorInput>;
+  techniques?: Maybe<StringQueryOperatorInput>;
+  temporals?: Maybe<StringQueryOperatorInput>;
+  title?: Maybe<StringQueryOperatorInput>;
+  types?: Maybe<StringQueryOperatorInput>;
+  uri?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -1662,8 +1726,8 @@ export type QueryFileArgs = {
   internal?: Maybe<InternalFilterInput>;
   childrenCollectionJson?: Maybe<CollectionJsonFilterListInput>;
   childrenInstitutionJson?: Maybe<InstitutionJsonFilterListInput>;
-  childrenObjectJson?: Maybe<ObjectJsonFilterListInput>;
   childrenImageJson?: Maybe<ImageJsonFilterListInput>;
+  childrenObjectJson?: Maybe<ObjectJsonFilterListInput>;
 };
 
 export type QueryAllFileArgs = {
@@ -1818,13 +1882,29 @@ export type QueryAllInstitutionJsonArgs = {
 };
 
 export type QueryObjectJsonArgs = {
+  alternative_titles?: Maybe<StringQueryOperatorInput>;
   collection_uris?: Maybe<StringQueryOperatorInput>;
+  creators?: Maybe<StringQueryOperatorInput>;
+  cultural_contexts?: Maybe<StringQueryOperatorInput>;
+  dates?: Maybe<StringQueryOperatorInput>;
   descriptions?: Maybe<StringQueryOperatorInput>;
+  extents?: Maybe<StringQueryOperatorInput>;
+  identifiers?: Maybe<StringQueryOperatorInput>;
   institution_uri?: Maybe<StringQueryOperatorInput>;
-  subjects?: Maybe<StringQueryOperatorInput>;
-  title?: Maybe<StringQueryOperatorInput>;
-  uri?: Maybe<StringQueryOperatorInput>;
+  languages?: Maybe<StringQueryOperatorInput>;
+  materials?: Maybe<StringQueryOperatorInput>;
+  media?: Maybe<StringQueryOperatorInput>;
+  provenances?: Maybe<StringQueryOperatorInput>;
+  publishers?: Maybe<StringQueryOperatorInput>;
   rights?: Maybe<ObjectJsonRightsFilterInput>;
+  sources?: Maybe<StringQueryOperatorInput>;
+  spatials?: Maybe<StringQueryOperatorInput>;
+  subjects?: Maybe<StringQueryOperatorInput>;
+  techniques?: Maybe<StringQueryOperatorInput>;
+  temporals?: Maybe<StringQueryOperatorInput>;
+  title?: Maybe<StringQueryOperatorInput>;
+  types?: Maybe<StringQueryOperatorInput>;
+  uri?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;

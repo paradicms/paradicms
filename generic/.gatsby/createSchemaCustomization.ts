@@ -47,11 +47,28 @@ export const createSchemaCustomization = async (
   }  
   
   type ObjectJson implements Node {
+    alternative_titles: [String!]
     collection_uris: [String!]!
+    creators: [String!]
+    cultural_contexts: [String!]
+    dates: [String!]
     descriptions: [String!]
+    extents: [String!]
+    identifiers: [String!]
     institution_uri: String!
+    languages: [String!]
+    materials: [String!]
+    media: [String!]
+    provenances: [String!]
+    publishers: [String!]
+    rights: ObjectJsonRights
+    sources: [String!]
+    spatials: [String!]
     subjects: [String!]
+    techniques: [String!]
+    temporals: [String!]
     title: String!
+    types: [String!]
     uri: String!
   }
   
