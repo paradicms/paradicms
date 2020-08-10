@@ -3,38 +3,31 @@ import * as _ from "lodash";
 import {Grid} from "@material-ui/core";
 import {StringFacetFilter} from "~/models/search/StringFacetFilter";
 import {ObjectFacets} from "~/models/search/ObjectFacets";
-import {ObjectQuery} from "~/models/search/ObjectQuery";
 import {ObjectFilters} from "~/models/search/ObjectFilters";
 import {FacetExpansionPanel} from "~/components/object/FacetExpansionPanel";
 import {StringFacetForm} from "~/components/object/StringFacetForm";
 
 export const ObjectFacetsGrid: React.FunctionComponent<{
   facets: ObjectFacets;
-  onChange: (query: ObjectQuery) => void;
-  query: ObjectQuery;
-}> = ({facets, onChange, query}) => {
-  const isFiltersEmpty = (filters: ObjectFilters): boolean => {
-    for (const key of Object.keys(filters)) {
-      if (!_.isEmpty(filters[key as keyof ObjectFilters])) {
-        return false;
-      }
-    }
-    return true;
-  };
+  filters: ObjectFilters;
+  onChange: (filters: ObjectFilters) => void;
+}> = ({facets, filters, onChange}) => {
+  // const isFiltersEmpty = (filters: ObjectFilters): boolean => {
+  //   for (const key of Object.keys(filters)) {
+  //     if (!_.isEmpty(filters[key as keyof ObjectFilters])) {
+  //       return false;
+  //     }
+  //   }
+  //   return true;
+  // };
 
   const onChangeStringFacetFilter = (
     attribute: keyof ObjectFilters,
     newState?: StringFacetFilter
   ) => {
-    const newQuery: ObjectQuery = _.cloneDeep(query);
-    if (!newQuery.filters) {
-      newQuery.filters = {};
-    }
-    newQuery.filters[attribute] = newState;
-    if (isFiltersEmpty(newQuery.filters)) {
-      newQuery.filters = undefined;
-    }
-    onChange(newQuery);
+    const newFilters: ObjectFilters = _.cloneDeep(filters);
+    newFilters[attribute] = newState;
+    onChange(newFilters);
   };
 
   const panels: {id: keyof ObjectFacets; title: string}[] = [
@@ -64,9 +57,7 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
               <StringFacetForm
                 valueUniverse={facets[id as keyof ObjectFacets]}
                 currentState={
-                  query.filters && query.filters[id]
-                    ? (query.filters[id] as StringFacetFilter)
-                    : undefined
+                  filters[id] ? (filters[id] as StringFacetFilter) : undefined
                 }
                 onChange={newState => onChangeStringFacetFilter(id, newState)}
               />

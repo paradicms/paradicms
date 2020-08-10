@@ -9,12 +9,13 @@ import {JoinedObject} from "~/models/object/JoinedObject";
 import {RightsTable} from "~/components/rights/RightsTable";
 import {ObjectFacets} from "~/models/search/ObjectFacets";
 import {ObjectFacetsGrid} from "~/components/object/ObjectFacetsGrid";
-import {ObjectQuery} from "~/models/search/ObjectQuery";
 import {Objects} from "~/models/object/Objects";
 import {ObjectsGallery} from "~/components/object/ObjectsGallery";
 import {Models} from "~/models/Models";
 import {Images} from "~/models/image/Images";
 import {useQueryParam, NumberParam} from "use-query-params";
+import {ObjectFilters} from "~/models/search/ObjectFilters";
+import {Object} from "~/models/object/Object";
 
 const OBJECTS_PER_PAGE = 10;
 
@@ -31,8 +32,11 @@ const CollectionPage: React.FunctionComponent<{
   },
   pageContext: {collection, institution},
 }) => {
-  const [objectQuery, setObjectQuery] = React.useState<ObjectQuery>({
-    filters: {collectionUris: {include: [collection.uri]}},
+  const [filteredObjects, setFilteredObjects] = React.useState<
+    readonly Object[]
+  >(collectionObjects);
+  const [objectFilters, setObjectFilters] = React.useState<ObjectFilters>({
+    collectionUris: {include: [collection.uri]},
   });
 
   let [objectsPageQueryParam, setObjectsPage] = useQueryParam<
@@ -42,11 +46,11 @@ const CollectionPage: React.FunctionComponent<{
 
   const objectFacets = new ObjectFacets(collectionObjects);
 
-  const joinedObjects: readonly JoinedObject[] = Objects.join({
+  const joinedFilteredObjects: readonly JoinedObject[] = Objects.join({
     collectionsByUri: Models.indexByUri([collection]),
     institutionsByUri: Models.indexByUri([institution]),
     imagesByObjectUri: Images.indexByObjectUri(institutionImages),
-    objects: collectionObjects,
+    objects: filteredObjects,
   });
 
   const rights = collection.rights ?? institution.rights ?? undefined;
@@ -57,7 +61,7 @@ const CollectionPage: React.FunctionComponent<{
       documentTitle={"Collection - " + collection.title}
     >
       <Grid container direction="column" spacing={2}>
-        {rights && joinedObjects.length ? (
+        {rights && joinedFilteredObjects.length ? (
           <Grid item>
             <RightsTable rights={rights} />
           </Grid>
@@ -65,18 +69,19 @@ const CollectionPage: React.FunctionComponent<{
         <Grid item>
           <Grid container>
             <Grid item xs={10}>
-              {joinedObjects.length ? (
+              {joinedFilteredObjects.length ? (
                 <ObjectsGallery
                   currentPage={objectsPage}
                   maxPage={
-                    Math.ceil(joinedObjects.length / OBJECTS_PER_PAGE) - 1
+                    Math.ceil(joinedFilteredObjects.length / OBJECTS_PER_PAGE) -
+                    1
                   }
-                  objects={joinedObjects.slice(
+                  objects={joinedFilteredObjects.slice(
                     objectsPage * OBJECTS_PER_PAGE,
                     (objectsPage + 1) * OBJECTS_PER_PAGE
                   )}
                   objectsPerPage={OBJECTS_PER_PAGE}
-                  objectsTotal={joinedObjects.length}
+                  objectsTotal={joinedFilteredObjects.length}
                   onChangePage={setObjectsPage}
                 />
               ) : (
@@ -88,8 +93,16 @@ const CollectionPage: React.FunctionComponent<{
             <Grid item xs={2}>
               <ObjectFacetsGrid
                 facets={objectFacets}
-                onChange={setObjectQuery}
-                query={objectQuery}
+                filters={objectFilters}
+                onChange={newObjectFilters => {
+                  setFilteredObjects(
+                    Objects.filter({
+                      filters: newObjectFilters,
+                      objects: collectionObjects,
+                    })
+                  );
+                  setObjectFilters(newObjectFilters);
+                }}
               />
             </Grid>
           </Grid>
