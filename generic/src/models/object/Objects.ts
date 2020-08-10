@@ -46,7 +46,7 @@ export class Objects {
         }
         if (excludeValues.length > 0) {
           // If an object has any value that is excluded, then exclude the object
-          for (const objectValue in objectValues) {
+          for (const objectValue of objectValues) {
             if (
               excludeValues.some(excludeValue => excludeValue === objectValue)
             ) {
@@ -59,7 +59,7 @@ export class Objects {
           // If the object has any value that is included, then include the object
           // Conversely, if any values are included and an object doesn't have one of them, exclude the object.
           let include = false;
-          for (const objectValue in objectValues) {
+          for (const objectValue of objectValues) {
             if (
               includeValues.some(includeValue => includeValue === objectValue)
             ) {

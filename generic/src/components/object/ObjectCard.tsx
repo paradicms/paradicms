@@ -12,6 +12,7 @@ import {
   ListItemText,
   makeStyles,
   Table,
+  TableBody,
   TableCell,
   TableRow,
 } from "@material-ui/core";
@@ -63,32 +64,34 @@ export const ObjectCard: React.FunctionComponent<{
           ) : null}
           <Grid item>
             <Table>
-              <TableRow>
-                <TableCell>
-                  <strong>Institution</strong>
-                </TableCell>
-                <TableCell>
-                  <Link to={Hrefs.institution(object.institution).home}>
-                    {object.institution.name}
-                  </Link>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <strong>Collection</strong>
-                </TableCell>
-                <TableCell>
-                  <Link
-                    to={
-                      Hrefs.institution(object.institution).collection(
-                        collection
-                      ).home
-                    }
-                  >
-                    {collection.title}
-                  </Link>
-                </TableCell>
-              </TableRow>
+              <TableBody>
+                <TableRow>
+                  <TableCell>
+                    <strong>Institution</strong>
+                  </TableCell>
+                  <TableCell>
+                    <Link to={Hrefs.institution(object.institution).home}>
+                      {object.institution.name}
+                    </Link>
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>
+                    <strong>Collection</strong>
+                  </TableCell>
+                  <TableCell>
+                    <Link
+                      to={
+                        Hrefs.institution(object.institution).collection(
+                          collection
+                        ).home
+                      }
+                    >
+                      {collection.title}
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
             </Table>
           </Grid>
           {object.descriptions && object.descriptions.length > 0 ? (
