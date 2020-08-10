@@ -1,0 +1,1 @@
+ObjectPropertyKey = str
