@@ -11,7 +11,7 @@ from ..namespace import CMS, CONTACT
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass
+@dataclass(frozen=True)
 class Person(_Model):
     name: str
     family_name: Optional[str] = None

@@ -10,7 +10,7 @@ from paradicms_etl.namespace import TIME
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass
+@dataclass(frozen=True)
 class DateTimeDescription(_Model):
     day: Optional[int] = None
     hour: Optional[int] = None

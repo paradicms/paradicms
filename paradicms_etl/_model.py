@@ -7,9 +7,9 @@ from rdflib.resource import Resource
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass
+@dataclass(frozen=True)
 class _Model:
-    uri: Optional[URIRef]
+    uri: URIRef
 
     def to_rdf(self, *, graph: Graph) -> Resource:
         """
@@ -19,9 +19,3 @@ class _Model:
             return graph.resource(self.uri)
         else:
             return graph.resource(BNode().skolemize())
-
-    def validate(self):
-        """
-        Validate this model.
-        """
-        pass

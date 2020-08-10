@@ -13,7 +13,7 @@ from paradicms_etl.namespace import CMS, EXIF
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass
+@dataclass(frozen=True)
 class Image(_Model):
     # Linking up to the parent (relational style) makes it easier to do page generation and search indexing downstream.
     institution_uri: URIRef

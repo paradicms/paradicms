@@ -14,7 +14,7 @@ from paradicms_etl.namespace import CMS, VRA
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass
+@dataclass(frozen=True)
 class Object(_Model):
     # Linking up to the parent (relational style) and grandparent makes it easier to do
     # page generation and search indexing downstream.

@@ -12,7 +12,7 @@ from ..namespace import CMS
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass
+@dataclass(frozen=True)
 class Institution(_Model):
     # See note in Collection re: why there are no links to collections here.
     name: str

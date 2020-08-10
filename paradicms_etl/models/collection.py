@@ -12,7 +12,7 @@ from ..namespace import CMS
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass
+@dataclass(frozen=True)
 class Collection(_Model):
     # Linking up to the parent (relational style )instead of down to child objects
     # makes it easier to do page generation and search indexing downstream.
@@ -28,7 +28,3 @@ class Collection(_Model):
             self.rights.to_rdf(add_to_resource=resource)
         resource.add(DCTERMS.title, Literal(self.title))
         return resource
-
-    def validate(self):
-        for object_ in self.objects:
-            object_.validate()

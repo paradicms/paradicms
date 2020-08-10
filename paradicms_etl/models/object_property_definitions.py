@@ -1,15 +1,9 @@
-from dataclasses import dataclass, field
-from typing import List, Optional, Tuple, Union
+from typing import Tuple
 
-from dataclasses_json import LetterCase, dataclass_json
-from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import DCTERMS, FOAF, RDF
-from rdflib.resource import Resource
+from rdflib.namespace import DCTERMS
 
-from paradicms_etl._model import _Model
 from paradicms_etl.models.object_property_definition import ObjectPropertyDefinition
-from paradicms_etl.models.rights import Rights
-from paradicms_etl.namespace import CMS, VRA
+from paradicms_etl.namespace import VRA
 
 
 class ObjectPropertyDefinitions:
@@ -32,7 +26,13 @@ class ObjectPropertyDefinitions:
     TEMPORAL = ObjectPropertyDefinition(key="temporal", label_plural="Temporal coverages", label_singular="Temporal coverage", uri=DCTERMS.temporal)
     TYPE = ObjectPropertyDefinition(key="type", label_plural="Types", label_singular="Type", uri=DCTERMS.type)
 
-for __attr in dir(ObjectPropertyDefinitions):
-    __value = getattr(ObjectPropertyDefinitions)
-    if isinstance(__value, ObjectPropertyDefinition):
-        assert __attr == __value.key.upper()
+    def as_tuple(self) -> Tuple[ObjectPropertyDefinition, ...]:
+        tuple_ = []
+        for __attr in dir(ObjectPropertyDefinitions):
+            __value = getattr(ObjectPropertyDefinitions, __attr)
+            if isinstance(__value, ObjectPropertyDefinition):
+                tuple_.append(__value)
+        return tuple(tuple_)
+
+for __definition in ObjectPropertyDefinitions.as_tuple():
+    assert getattr(ObjectPropertyDefinitions, __definition.key.upper()) == __definition
