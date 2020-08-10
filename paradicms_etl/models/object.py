@@ -33,9 +33,9 @@ class Object(_Model):
         for property_ in self.properties:
             property_definition = getattr(ObjectPropertyDefinitions, property_.key.upper())
             if isinstance(property_.value, URIRef):
-                self.resource.add(property_definition.uri, property_.value)
+                resource.add(property_definition.uri, property_.value)
             else:
-                self.resource.add(property_definition.uri, Literal(property_.value))
+                resource.add(property_definition.uri, Literal(property_.value))
         if self.rights is not None:
             self.rights.to_rdf(add_to_resource=resource)
         resource.add(DCTERMS.title, Literal(self.title))

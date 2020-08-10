@@ -26,7 +26,8 @@ class ObjectPropertyDefinitions:
     TEMPORAL = ObjectPropertyDefinition(key="temporal", label_plural="Temporal coverages", label_singular="Temporal coverage", uri=DCTERMS.temporal)
     TYPE = ObjectPropertyDefinition(key="type", label_plural="Types", label_singular="Type", uri=DCTERMS.type)
 
-    def as_tuple(self) -> Tuple[ObjectPropertyDefinition, ...]:
+    @classmethod
+    def as_tuple(cls) -> Tuple[ObjectPropertyDefinition, ...]:
         tuple_ = []
         for __attr in dir(ObjectPropertyDefinitions):
             __value = getattr(ObjectPropertyDefinitions, __attr)
