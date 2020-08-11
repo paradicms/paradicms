@@ -4,46 +4,74 @@ import {Object} from "~/models/object/Object";
 import {JoinedObject} from "~/models/object/JoinedObject";
 import {ObjectFilters} from "~/models/search/ObjectFilters";
 import {Image} from "~/models/image/Image";
-import {StringFacetFilter} from "~/models/search/StringFacetFilter";
-import {UriFacetFilter} from "~/models/search/UriFacetFilter";
+import {StringFilter} from "~/models/search/StringFilter";
+import {ObjectPropertyDefinition} from "~/models/object/ObjectPropertyDefinition";
+import {ObjectPropertyFacet} from "~/models/search/ObjectPropertyFacet";
+import {ObjectPropertyValue} from "~/models/object/ObjectPropertyValue";
+import {ObjectFacets} from "~/models/search/ObjectFacets";
 
 export class Objects {
+  static facetize(
+    objectPropertyDefinitions: readonly ObjectPropertyDefinition[],
+    objects: readonly Object[]
+  ): ObjectFacets {
+    const propertyFacets: ObjectPropertyFacet[] = [];
+    const objectsWithProperties = objects.filter(object => object.properties);
+    for (const objectPropertyDefinition of objectPropertyDefinitions) {
+      if (!objectPropertyDefinition.faceted) {
+        continue;
+      }
+      const facetObjects: Object[] = [];
+      const facetValues: ObjectPropertyValue[] = [];
+      for (const object of objectsWithProperties) {
+        let includeObject = false;
+        for (const objectProperty of object.properties!) {
+          if (objectProperty!.key === objectPropertyDefinition!.key) {
+            facetValues.push(objectProperty!.value);
+            includeObject = true;
+          }
+        }
+        if (includeObject) {
+          facetObjects.push(object);
+        }
+      }
+      if (facetObjects.length > 0) {
+        propertyFacets.push({
+          definition: objectPropertyDefinition,
+          objects: facetObjects,
+          values: facetValues,
+        });
+      }
+    }
+    return {properties: propertyFacets};
+  }
+
   static filter(kwds: {
     filters: ObjectFilters;
     objects: readonly Object[];
   }): readonly Object[] {
     let {filters, objects} = kwds;
 
-    const filter = (
-      key: keyof ObjectFilters,
-      objects: readonly Object[]
-    ): readonly Object[] => {
-      const stringFilters:
-        | StringFacetFilter
-        | UriFacetFilter
-        | null
-        | undefined = filters[key];
-      if (!stringFilters) {
+    const filterStrings = (kwds: {
+      filter: StringFilter | null | undefined;
+      getObjectValues: (object: Object) => string[] | null | undefined;
+      objects: readonly Object[];
+    }): readonly Object[] => {
+      const {filter, getObjectValues, objects} = kwds;
+      if (!filter) {
         return objects;
       }
-      const excludeValues = stringFilters.exclude ?? [];
-      const includeValues = stringFilters.include ?? [];
+      const excludeValues = filter.exclude ?? [];
+      const includeValues = filter.include ?? [];
       if (excludeValues.length === 0 && includeValues.length === 0) {
         return objects;
       }
       return objects.filter(object => {
-        let objectValues: string[] | null | undefined;
-        switch (key) {
-          case "institutionUris":
-            objectValues = [object.institutionUri];
-            break;
-          default:
-            objectValues = object[key as keyof Object] as string[];
-            break;
-        }
+        let objectValues = getObjectValues(object);
         if (!objectValues) {
-          return true;
+          objectValues = [];
         }
+
         if (excludeValues.length > 0) {
           // If an object has any value that is excluded, then exclude the object
           for (const objectValue of objectValues) {
@@ -76,20 +104,30 @@ export class Objects {
       });
     };
 
-    objects = filter("collectionUris", objects);
-    objects = filter("creators", objects);
-    objects = filter("culturalContexts", objects);
-    objects = filter("extents", objects);
-    objects = filter("institutionUris", objects);
-    objects = filter("languages", objects);
-    objects = filter("materials", objects);
-    objects = filter("media", objects);
-    objects = filter("publishers", objects);
-    objects = filter("spatials", objects);
-    objects = filter("subjects", objects);
-    objects = filter("techniques", objects);
-    objects = filter("temporals", objects);
-    objects = filter("types", objects);
+    objects = filterStrings({
+      filter: filters.collectionUris,
+      getObjectValues: object => object.collectionUris,
+      objects,
+    });
+
+    objects = filterStrings({
+      filter: filters.institutionUris,
+      getObjectValues: object => [object.institutionUri],
+      objects,
+    });
+
+    if (filters.properties) {
+      for (const propertyFilter of filters.properties) {
+        objects = filterStrings({
+          filter: propertyFilter,
+          getObjectValues: object =>
+            (object.properties ?? [])
+              .filter(property => property!.key === propertyFilter.key)
+              .map(property => property!.value),
+          objects,
+        });
+      }
+    }
 
     return objects;
   }
