@@ -7,13 +7,12 @@ import {Institution} from "~/models/institution/Institution";
 import {CollectionPageQuery} from "~/graphql/types";
 import {JoinedObject} from "~/models/object/JoinedObject";
 import {RightsTable} from "~/components/rights/RightsTable";
-import {ObjectFacets} from "~/models/search/ObjectFacets";
 import {ObjectFacetsGrid} from "~/components/object/ObjectFacetsGrid";
 import {Objects} from "~/models/object/Objects";
 import {ObjectsGallery} from "~/components/object/ObjectsGallery";
 import {Models} from "~/models/Models";
 import {Images} from "~/models/image/Images";
-import {useQueryParam, NumberParam} from "use-query-params";
+import {NumberParam, useQueryParam} from "use-query-params";
 import {ObjectFilters} from "~/models/search/ObjectFilters";
 import {Object} from "~/models/object/Object";
 
@@ -29,6 +28,7 @@ const CollectionPage: React.FunctionComponent<{
   data: {
     allImageJson: {nodes: institutionImages},
     allObjectJson: {nodes: collectionObjects},
+    allObjectPropertyDefinitionJson: {nodes: objectPropertyDefinitions},
   },
   pageContext: {collection, institution},
 }) => {
@@ -44,7 +44,10 @@ const CollectionPage: React.FunctionComponent<{
   >("page", NumberParam);
   const objectsPage = objectsPageQueryParam ?? 0;
 
-  const objectFacets = new ObjectFacets(collectionObjects);
+  const objectFacets = Objects.facetize(
+    objectPropertyDefinitions,
+    collectionObjects
+  );
 
   const joinedFilteredObjects: readonly JoinedObject[] = Objects.join({
     collectionsByUri: Models.indexByUri([collection]),
@@ -119,6 +122,11 @@ export const query = graphql`
     allImageJson(filter: {institutionUri: {eq: $institutionUri}}) {
       nodes {
         ...ImageFragment
+      }
+    }
+    allObjectPropertyDefinitionJson {
+      nodes {
+        ...ObjectPropertyDefinitionFragment
       }
     }
     allObjectJson(
