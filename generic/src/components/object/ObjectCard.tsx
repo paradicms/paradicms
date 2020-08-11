@@ -41,6 +41,10 @@ export const ObjectCard: React.FunctionComponent<{
     .collection(collection)
     .object(object);
 
+  const descriptions = (object.properties ?? [])
+    .filter(property => property.key == "description")
+    .map(property => property.value);
+
   const thumbnail = Images.selectThumbnail({
     images: object.images,
     maxDimensions: {height: 200, width: 200},
@@ -94,24 +98,22 @@ export const ObjectCard: React.FunctionComponent<{
               </TableBody>
             </Table>
           </Grid>
-          {object.descriptions && object.descriptions.length > 0 ? (
+          {descriptions.length > 0 ? (
             <Grid item>
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   Description
                 </AccordionSummary>
                 <AccordionDetails className={classes.expansionPanelText}>
-                  {object.descriptions.length === 1 ? (
-                    <span>{object.descriptions[0]}</span>
+                  {descriptions.length === 1 ? (
+                    <span>{descriptions[0]}</span>
                   ) : (
                     <List>
-                      {object.descriptions.map(
-                        (description, descriptionIndex) => (
-                          <ListItem key={descriptionIndex}>
-                            <ListItemText>{description}</ListItemText>
-                          </ListItem>
-                        )
-                      )}
+                      {descriptions.map((description, descriptionIndex) => (
+                        <ListItem key={descriptionIndex}>
+                          <ListItemText>{description}</ListItemText>
+                        </ListItem>
+                      ))}
                     </List>
                   )}
                 </AccordionDetails>
