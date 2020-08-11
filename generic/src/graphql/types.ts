@@ -540,6 +540,9 @@ export type File = Node & {
   childrenInstitutionJson?: Maybe<Array<Maybe<InstitutionJson>>>;
   childrenObjectJson?: Maybe<Array<Maybe<ObjectJson>>>;
   childrenImageJson?: Maybe<Array<Maybe<ImageJson>>>;
+  childrenObjectPropertyDefinitionJson?: Maybe<
+    Array<Maybe<ObjectPropertyDefinitionJson>>
+  >;
 };
 
 export type FileModifiedTimeArgs = {
@@ -825,30 +828,15 @@ export enum FileFieldsEnum {
   childrenInstitutionJson___internal___owner = "childrenInstitutionJson___internal___owner",
   childrenInstitutionJson___internal___type = "childrenInstitutionJson___internal___type",
   childrenObjectJson = "childrenObjectJson",
-  childrenObjectJson___alternativeTitles = "childrenObjectJson___alternativeTitles",
   childrenObjectJson___collectionUris = "childrenObjectJson___collectionUris",
-  childrenObjectJson___creators = "childrenObjectJson___creators",
-  childrenObjectJson___culturalContexts = "childrenObjectJson___culturalContexts",
-  childrenObjectJson___dates = "childrenObjectJson___dates",
-  childrenObjectJson___descriptions = "childrenObjectJson___descriptions",
-  childrenObjectJson___extents = "childrenObjectJson___extents",
-  childrenObjectJson___identifiers = "childrenObjectJson___identifiers",
   childrenObjectJson___institutionUri = "childrenObjectJson___institutionUri",
-  childrenObjectJson___languages = "childrenObjectJson___languages",
-  childrenObjectJson___materials = "childrenObjectJson___materials",
-  childrenObjectJson___media = "childrenObjectJson___media",
-  childrenObjectJson___provenances = "childrenObjectJson___provenances",
-  childrenObjectJson___publishers = "childrenObjectJson___publishers",
   childrenObjectJson___rights___holder = "childrenObjectJson___rights___holder",
   childrenObjectJson___rights___statements = "childrenObjectJson___rights___statements",
-  childrenObjectJson___sources = "childrenObjectJson___sources",
-  childrenObjectJson___spatials = "childrenObjectJson___spatials",
-  childrenObjectJson___subjects = "childrenObjectJson___subjects",
-  childrenObjectJson___techniques = "childrenObjectJson___techniques",
-  childrenObjectJson___temporals = "childrenObjectJson___temporals",
-  childrenObjectJson___title = "childrenObjectJson___title",
-  childrenObjectJson___types = "childrenObjectJson___types",
   childrenObjectJson___uri = "childrenObjectJson___uri",
+  childrenObjectJson___title = "childrenObjectJson___title",
+  childrenObjectJson___properties = "childrenObjectJson___properties",
+  childrenObjectJson___properties___key = "childrenObjectJson___properties___key",
+  childrenObjectJson___properties___value = "childrenObjectJson___properties___value",
   childrenObjectJson___id = "childrenObjectJson___id",
   childrenObjectJson___parent___id = "childrenObjectJson___parent___id",
   childrenObjectJson___parent___parent___id = "childrenObjectJson___parent___parent___id",
@@ -934,6 +922,50 @@ export enum FileFieldsEnum {
   childrenImageJson___internal___mediaType = "childrenImageJson___internal___mediaType",
   childrenImageJson___internal___owner = "childrenImageJson___internal___owner",
   childrenImageJson___internal___type = "childrenImageJson___internal___type",
+  childrenObjectPropertyDefinitionJson = "childrenObjectPropertyDefinitionJson",
+  childrenObjectPropertyDefinitionJson___id = "childrenObjectPropertyDefinitionJson___id",
+  childrenObjectPropertyDefinitionJson___parent___id = "childrenObjectPropertyDefinitionJson___parent___id",
+  childrenObjectPropertyDefinitionJson___parent___parent___id = "childrenObjectPropertyDefinitionJson___parent___parent___id",
+  childrenObjectPropertyDefinitionJson___parent___parent___children = "childrenObjectPropertyDefinitionJson___parent___parent___children",
+  childrenObjectPropertyDefinitionJson___parent___children = "childrenObjectPropertyDefinitionJson___parent___children",
+  childrenObjectPropertyDefinitionJson___parent___children___id = "childrenObjectPropertyDefinitionJson___parent___children___id",
+  childrenObjectPropertyDefinitionJson___parent___children___children = "childrenObjectPropertyDefinitionJson___parent___children___children",
+  childrenObjectPropertyDefinitionJson___parent___internal___content = "childrenObjectPropertyDefinitionJson___parent___internal___content",
+  childrenObjectPropertyDefinitionJson___parent___internal___contentDigest = "childrenObjectPropertyDefinitionJson___parent___internal___contentDigest",
+  childrenObjectPropertyDefinitionJson___parent___internal___description = "childrenObjectPropertyDefinitionJson___parent___internal___description",
+  childrenObjectPropertyDefinitionJson___parent___internal___fieldOwners = "childrenObjectPropertyDefinitionJson___parent___internal___fieldOwners",
+  childrenObjectPropertyDefinitionJson___parent___internal___ignoreType = "childrenObjectPropertyDefinitionJson___parent___internal___ignoreType",
+  childrenObjectPropertyDefinitionJson___parent___internal___mediaType = "childrenObjectPropertyDefinitionJson___parent___internal___mediaType",
+  childrenObjectPropertyDefinitionJson___parent___internal___owner = "childrenObjectPropertyDefinitionJson___parent___internal___owner",
+  childrenObjectPropertyDefinitionJson___parent___internal___type = "childrenObjectPropertyDefinitionJson___parent___internal___type",
+  childrenObjectPropertyDefinitionJson___children = "childrenObjectPropertyDefinitionJson___children",
+  childrenObjectPropertyDefinitionJson___children___id = "childrenObjectPropertyDefinitionJson___children___id",
+  childrenObjectPropertyDefinitionJson___children___parent___id = "childrenObjectPropertyDefinitionJson___children___parent___id",
+  childrenObjectPropertyDefinitionJson___children___parent___children = "childrenObjectPropertyDefinitionJson___children___parent___children",
+  childrenObjectPropertyDefinitionJson___children___children = "childrenObjectPropertyDefinitionJson___children___children",
+  childrenObjectPropertyDefinitionJson___children___children___id = "childrenObjectPropertyDefinitionJson___children___children___id",
+  childrenObjectPropertyDefinitionJson___children___children___children = "childrenObjectPropertyDefinitionJson___children___children___children",
+  childrenObjectPropertyDefinitionJson___children___internal___content = "childrenObjectPropertyDefinitionJson___children___internal___content",
+  childrenObjectPropertyDefinitionJson___children___internal___contentDigest = "childrenObjectPropertyDefinitionJson___children___internal___contentDigest",
+  childrenObjectPropertyDefinitionJson___children___internal___description = "childrenObjectPropertyDefinitionJson___children___internal___description",
+  childrenObjectPropertyDefinitionJson___children___internal___fieldOwners = "childrenObjectPropertyDefinitionJson___children___internal___fieldOwners",
+  childrenObjectPropertyDefinitionJson___children___internal___ignoreType = "childrenObjectPropertyDefinitionJson___children___internal___ignoreType",
+  childrenObjectPropertyDefinitionJson___children___internal___mediaType = "childrenObjectPropertyDefinitionJson___children___internal___mediaType",
+  childrenObjectPropertyDefinitionJson___children___internal___owner = "childrenObjectPropertyDefinitionJson___children___internal___owner",
+  childrenObjectPropertyDefinitionJson___children___internal___type = "childrenObjectPropertyDefinitionJson___children___internal___type",
+  childrenObjectPropertyDefinitionJson___internal___content = "childrenObjectPropertyDefinitionJson___internal___content",
+  childrenObjectPropertyDefinitionJson___internal___contentDigest = "childrenObjectPropertyDefinitionJson___internal___contentDigest",
+  childrenObjectPropertyDefinitionJson___internal___description = "childrenObjectPropertyDefinitionJson___internal___description",
+  childrenObjectPropertyDefinitionJson___internal___fieldOwners = "childrenObjectPropertyDefinitionJson___internal___fieldOwners",
+  childrenObjectPropertyDefinitionJson___internal___ignoreType = "childrenObjectPropertyDefinitionJson___internal___ignoreType",
+  childrenObjectPropertyDefinitionJson___internal___mediaType = "childrenObjectPropertyDefinitionJson___internal___mediaType",
+  childrenObjectPropertyDefinitionJson___internal___owner = "childrenObjectPropertyDefinitionJson___internal___owner",
+  childrenObjectPropertyDefinitionJson___internal___type = "childrenObjectPropertyDefinitionJson___internal___type",
+  childrenObjectPropertyDefinitionJson___uri = "childrenObjectPropertyDefinitionJson___uri",
+  childrenObjectPropertyDefinitionJson___key = "childrenObjectPropertyDefinitionJson___key",
+  childrenObjectPropertyDefinitionJson___labelPlural = "childrenObjectPropertyDefinitionJson___labelPlural",
+  childrenObjectPropertyDefinitionJson___labelSingular = "childrenObjectPropertyDefinitionJson___labelSingular",
+  childrenObjectPropertyDefinitionJson___faceted = "childrenObjectPropertyDefinitionJson___faceted",
 }
 
 export type FileFilterInput = {
@@ -977,6 +1009,9 @@ export type FileFilterInput = {
   childrenInstitutionJson?: Maybe<InstitutionJsonFilterListInput>;
   childrenObjectJson?: Maybe<ObjectJsonFilterListInput>;
   childrenImageJson?: Maybe<ImageJsonFilterListInput>;
+  childrenObjectPropertyDefinitionJson?: Maybe<
+    ObjectPropertyDefinitionJsonFilterListInput
+  >;
 };
 
 export type FileGroupConnection = {
@@ -1423,29 +1458,12 @@ export type NodeFilterListInput = {
 
 export type ObjectJson = Node & {
   __typename?: "ObjectJson";
-  alternativeTitles?: Maybe<Array<Scalars["String"]>>;
   collectionUris: Array<Scalars["String"]>;
-  creators?: Maybe<Array<Scalars["String"]>>;
-  culturalContexts?: Maybe<Array<Scalars["String"]>>;
-  dates?: Maybe<Array<Scalars["String"]>>;
-  descriptions?: Maybe<Array<Scalars["String"]>>;
-  extents?: Maybe<Array<Scalars["String"]>>;
-  identifiers?: Maybe<Array<Scalars["String"]>>;
   institutionUri: Scalars["String"];
-  languages?: Maybe<Array<Scalars["String"]>>;
-  materials?: Maybe<Array<Scalars["String"]>>;
-  media?: Maybe<Array<Scalars["String"]>>;
-  provenances?: Maybe<Array<Scalars["String"]>>;
-  publishers?: Maybe<Array<Scalars["String"]>>;
   rights?: Maybe<ObjectJsonRights>;
-  sources?: Maybe<Array<Scalars["String"]>>;
-  spatials?: Maybe<Array<Scalars["String"]>>;
-  subjects?: Maybe<Array<Scalars["String"]>>;
-  techniques?: Maybe<Array<Scalars["String"]>>;
-  temporals?: Maybe<Array<Scalars["String"]>>;
-  title: Scalars["String"];
-  types?: Maybe<Array<Scalars["String"]>>;
   uri: Scalars["String"];
+  title?: Maybe<Scalars["String"]>;
+  properties?: Maybe<Array<Maybe<ObjectJsonProperties>>>;
   id: Scalars["ID"];
   parent?: Maybe<Node>;
   children: Array<Node>;
@@ -1480,30 +1498,15 @@ export type ObjectJsonEdge = {
 };
 
 export enum ObjectJsonFieldsEnum {
-  alternativeTitles = "alternativeTitles",
   collectionUris = "collectionUris",
-  creators = "creators",
-  culturalContexts = "culturalContexts",
-  dates = "dates",
-  descriptions = "descriptions",
-  extents = "extents",
-  identifiers = "identifiers",
   institutionUri = "institutionUri",
-  languages = "languages",
-  materials = "materials",
-  media = "media",
-  provenances = "provenances",
-  publishers = "publishers",
   rights___holder = "rights___holder",
   rights___statements = "rights___statements",
-  sources = "sources",
-  spatials = "spatials",
-  subjects = "subjects",
-  techniques = "techniques",
-  temporals = "temporals",
-  title = "title",
-  types = "types",
   uri = "uri",
+  title = "title",
+  properties = "properties",
+  properties___key = "properties___key",
+  properties___value = "properties___value",
   id = "id",
   parent___id = "parent___id",
   parent___parent___id = "parent___parent___id",
@@ -1593,29 +1596,12 @@ export enum ObjectJsonFieldsEnum {
 }
 
 export type ObjectJsonFilterInput = {
-  alternativeTitles?: Maybe<StringQueryOperatorInput>;
   collectionUris?: Maybe<StringQueryOperatorInput>;
-  creators?: Maybe<StringQueryOperatorInput>;
-  culturalContexts?: Maybe<StringQueryOperatorInput>;
-  dates?: Maybe<StringQueryOperatorInput>;
-  descriptions?: Maybe<StringQueryOperatorInput>;
-  extents?: Maybe<StringQueryOperatorInput>;
-  identifiers?: Maybe<StringQueryOperatorInput>;
   institutionUri?: Maybe<StringQueryOperatorInput>;
-  languages?: Maybe<StringQueryOperatorInput>;
-  materials?: Maybe<StringQueryOperatorInput>;
-  media?: Maybe<StringQueryOperatorInput>;
-  provenances?: Maybe<StringQueryOperatorInput>;
-  publishers?: Maybe<StringQueryOperatorInput>;
   rights?: Maybe<ObjectJsonRightsFilterInput>;
-  sources?: Maybe<StringQueryOperatorInput>;
-  spatials?: Maybe<StringQueryOperatorInput>;
-  subjects?: Maybe<StringQueryOperatorInput>;
-  techniques?: Maybe<StringQueryOperatorInput>;
-  temporals?: Maybe<StringQueryOperatorInput>;
-  title?: Maybe<StringQueryOperatorInput>;
-  types?: Maybe<StringQueryOperatorInput>;
   uri?: Maybe<StringQueryOperatorInput>;
+  title?: Maybe<StringQueryOperatorInput>;
+  properties?: Maybe<ObjectJsonPropertiesFilterListInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -1636,6 +1622,21 @@ export type ObjectJsonGroupConnection = {
   fieldValue?: Maybe<Scalars["String"]>;
 };
 
+export type ObjectJsonProperties = {
+  __typename?: "ObjectJsonProperties";
+  key: Scalars["String"];
+  value: Scalars["String"];
+};
+
+export type ObjectJsonPropertiesFilterInput = {
+  key?: Maybe<StringQueryOperatorInput>;
+  value?: Maybe<StringQueryOperatorInput>;
+};
+
+export type ObjectJsonPropertiesFilterListInput = {
+  elemMatch?: Maybe<ObjectJsonPropertiesFilterInput>;
+};
+
 export type ObjectJsonRights = {
   __typename?: "ObjectJsonRights";
   holder: Scalars["String"];
@@ -1649,6 +1650,171 @@ export type ObjectJsonRightsFilterInput = {
 
 export type ObjectJsonSortInput = {
   fields?: Maybe<Array<Maybe<ObjectJsonFieldsEnum>>>;
+  order?: Maybe<Array<Maybe<SortOrderEnum>>>;
+};
+
+export type ObjectPropertyDefinitionJson = Node & {
+  __typename?: "ObjectPropertyDefinitionJson";
+  id: Scalars["ID"];
+  parent?: Maybe<Node>;
+  children: Array<Node>;
+  internal: Internal;
+  uri?: Maybe<Scalars["String"]>;
+  key?: Maybe<Scalars["String"]>;
+  labelPlural?: Maybe<Scalars["String"]>;
+  labelSingular?: Maybe<Scalars["String"]>;
+  faceted?: Maybe<Scalars["Boolean"]>;
+};
+
+export type ObjectPropertyDefinitionJsonConnection = {
+  __typename?: "ObjectPropertyDefinitionJsonConnection";
+  totalCount: Scalars["Int"];
+  edges: Array<ObjectPropertyDefinitionJsonEdge>;
+  nodes: Array<ObjectPropertyDefinitionJson>;
+  pageInfo: PageInfo;
+  distinct: Array<Scalars["String"]>;
+  group: Array<ObjectPropertyDefinitionJsonGroupConnection>;
+};
+
+export type ObjectPropertyDefinitionJsonConnectionDistinctArgs = {
+  field: ObjectPropertyDefinitionJsonFieldsEnum;
+};
+
+export type ObjectPropertyDefinitionJsonConnectionGroupArgs = {
+  skip?: Maybe<Scalars["Int"]>;
+  limit?: Maybe<Scalars["Int"]>;
+  field: ObjectPropertyDefinitionJsonFieldsEnum;
+};
+
+export type ObjectPropertyDefinitionJsonEdge = {
+  __typename?: "ObjectPropertyDefinitionJsonEdge";
+  next?: Maybe<ObjectPropertyDefinitionJson>;
+  node: ObjectPropertyDefinitionJson;
+  previous?: Maybe<ObjectPropertyDefinitionJson>;
+};
+
+export enum ObjectPropertyDefinitionJsonFieldsEnum {
+  id = "id",
+  parent___id = "parent___id",
+  parent___parent___id = "parent___parent___id",
+  parent___parent___parent___id = "parent___parent___parent___id",
+  parent___parent___parent___children = "parent___parent___parent___children",
+  parent___parent___children = "parent___parent___children",
+  parent___parent___children___id = "parent___parent___children___id",
+  parent___parent___children___children = "parent___parent___children___children",
+  parent___parent___internal___content = "parent___parent___internal___content",
+  parent___parent___internal___contentDigest = "parent___parent___internal___contentDigest",
+  parent___parent___internal___description = "parent___parent___internal___description",
+  parent___parent___internal___fieldOwners = "parent___parent___internal___fieldOwners",
+  parent___parent___internal___ignoreType = "parent___parent___internal___ignoreType",
+  parent___parent___internal___mediaType = "parent___parent___internal___mediaType",
+  parent___parent___internal___owner = "parent___parent___internal___owner",
+  parent___parent___internal___type = "parent___parent___internal___type",
+  parent___children = "parent___children",
+  parent___children___id = "parent___children___id",
+  parent___children___parent___id = "parent___children___parent___id",
+  parent___children___parent___children = "parent___children___parent___children",
+  parent___children___children = "parent___children___children",
+  parent___children___children___id = "parent___children___children___id",
+  parent___children___children___children = "parent___children___children___children",
+  parent___children___internal___content = "parent___children___internal___content",
+  parent___children___internal___contentDigest = "parent___children___internal___contentDigest",
+  parent___children___internal___description = "parent___children___internal___description",
+  parent___children___internal___fieldOwners = "parent___children___internal___fieldOwners",
+  parent___children___internal___ignoreType = "parent___children___internal___ignoreType",
+  parent___children___internal___mediaType = "parent___children___internal___mediaType",
+  parent___children___internal___owner = "parent___children___internal___owner",
+  parent___children___internal___type = "parent___children___internal___type",
+  parent___internal___content = "parent___internal___content",
+  parent___internal___contentDigest = "parent___internal___contentDigest",
+  parent___internal___description = "parent___internal___description",
+  parent___internal___fieldOwners = "parent___internal___fieldOwners",
+  parent___internal___ignoreType = "parent___internal___ignoreType",
+  parent___internal___mediaType = "parent___internal___mediaType",
+  parent___internal___owner = "parent___internal___owner",
+  parent___internal___type = "parent___internal___type",
+  children = "children",
+  children___id = "children___id",
+  children___parent___id = "children___parent___id",
+  children___parent___parent___id = "children___parent___parent___id",
+  children___parent___parent___children = "children___parent___parent___children",
+  children___parent___children = "children___parent___children",
+  children___parent___children___id = "children___parent___children___id",
+  children___parent___children___children = "children___parent___children___children",
+  children___parent___internal___content = "children___parent___internal___content",
+  children___parent___internal___contentDigest = "children___parent___internal___contentDigest",
+  children___parent___internal___description = "children___parent___internal___description",
+  children___parent___internal___fieldOwners = "children___parent___internal___fieldOwners",
+  children___parent___internal___ignoreType = "children___parent___internal___ignoreType",
+  children___parent___internal___mediaType = "children___parent___internal___mediaType",
+  children___parent___internal___owner = "children___parent___internal___owner",
+  children___parent___internal___type = "children___parent___internal___type",
+  children___children = "children___children",
+  children___children___id = "children___children___id",
+  children___children___parent___id = "children___children___parent___id",
+  children___children___parent___children = "children___children___parent___children",
+  children___children___children = "children___children___children",
+  children___children___children___id = "children___children___children___id",
+  children___children___children___children = "children___children___children___children",
+  children___children___internal___content = "children___children___internal___content",
+  children___children___internal___contentDigest = "children___children___internal___contentDigest",
+  children___children___internal___description = "children___children___internal___description",
+  children___children___internal___fieldOwners = "children___children___internal___fieldOwners",
+  children___children___internal___ignoreType = "children___children___internal___ignoreType",
+  children___children___internal___mediaType = "children___children___internal___mediaType",
+  children___children___internal___owner = "children___children___internal___owner",
+  children___children___internal___type = "children___children___internal___type",
+  children___internal___content = "children___internal___content",
+  children___internal___contentDigest = "children___internal___contentDigest",
+  children___internal___description = "children___internal___description",
+  children___internal___fieldOwners = "children___internal___fieldOwners",
+  children___internal___ignoreType = "children___internal___ignoreType",
+  children___internal___mediaType = "children___internal___mediaType",
+  children___internal___owner = "children___internal___owner",
+  children___internal___type = "children___internal___type",
+  internal___content = "internal___content",
+  internal___contentDigest = "internal___contentDigest",
+  internal___description = "internal___description",
+  internal___fieldOwners = "internal___fieldOwners",
+  internal___ignoreType = "internal___ignoreType",
+  internal___mediaType = "internal___mediaType",
+  internal___owner = "internal___owner",
+  internal___type = "internal___type",
+  uri = "uri",
+  key = "key",
+  labelPlural = "labelPlural",
+  labelSingular = "labelSingular",
+  faceted = "faceted",
+}
+
+export type ObjectPropertyDefinitionJsonFilterInput = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  uri?: Maybe<StringQueryOperatorInput>;
+  key?: Maybe<StringQueryOperatorInput>;
+  labelPlural?: Maybe<StringQueryOperatorInput>;
+  labelSingular?: Maybe<StringQueryOperatorInput>;
+  faceted?: Maybe<BooleanQueryOperatorInput>;
+};
+
+export type ObjectPropertyDefinitionJsonFilterListInput = {
+  elemMatch?: Maybe<ObjectPropertyDefinitionJsonFilterInput>;
+};
+
+export type ObjectPropertyDefinitionJsonGroupConnection = {
+  __typename?: "ObjectPropertyDefinitionJsonGroupConnection";
+  totalCount: Scalars["Int"];
+  edges: Array<ObjectPropertyDefinitionJsonEdge>;
+  nodes: Array<ObjectPropertyDefinitionJson>;
+  pageInfo: PageInfo;
+  field: Scalars["String"];
+  fieldValue?: Maybe<Scalars["String"]>;
+};
+
+export type ObjectPropertyDefinitionJsonSortInput = {
+  fields?: Maybe<Array<Maybe<ObjectPropertyDefinitionJsonFieldsEnum>>>;
   order?: Maybe<Array<Maybe<SortOrderEnum>>>;
 };
 
@@ -1681,6 +1847,8 @@ export type Query = {
   allInstitutionJson: InstitutionJsonConnection;
   objectJson?: Maybe<ObjectJson>;
   allObjectJson: ObjectJsonConnection;
+  objectPropertyDefinitionJson?: Maybe<ObjectPropertyDefinitionJson>;
+  allObjectPropertyDefinitionJson: ObjectPropertyDefinitionJsonConnection;
   siteBuildMetadata?: Maybe<SiteBuildMetadata>;
   allSiteBuildMetadata: SiteBuildMetadataConnection;
   sitePlugin?: Maybe<SitePlugin>;
@@ -1728,6 +1896,9 @@ export type QueryFileArgs = {
   childrenInstitutionJson?: Maybe<InstitutionJsonFilterListInput>;
   childrenObjectJson?: Maybe<ObjectJsonFilterListInput>;
   childrenImageJson?: Maybe<ImageJsonFilterListInput>;
+  childrenObjectPropertyDefinitionJson?: Maybe<
+    ObjectPropertyDefinitionJsonFilterListInput
+  >;
 };
 
 export type QueryAllFileArgs = {
@@ -1793,6 +1964,7 @@ export type QuerySitePageArgs = {
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
   isCreatedByStatefulCreatePages?: Maybe<BooleanQueryOperatorInput>;
+  context?: Maybe<SitePageContextFilterInput>;
   pluginCreator?: Maybe<SitePluginFilterInput>;
   pluginCreatorId?: Maybe<StringQueryOperatorInput>;
   componentPath?: Maybe<StringQueryOperatorInput>;
@@ -1881,29 +2053,12 @@ export type QueryAllInstitutionJsonArgs = {
 };
 
 export type QueryObjectJsonArgs = {
-  alternativeTitles?: Maybe<StringQueryOperatorInput>;
   collectionUris?: Maybe<StringQueryOperatorInput>;
-  creators?: Maybe<StringQueryOperatorInput>;
-  culturalContexts?: Maybe<StringQueryOperatorInput>;
-  dates?: Maybe<StringQueryOperatorInput>;
-  descriptions?: Maybe<StringQueryOperatorInput>;
-  extents?: Maybe<StringQueryOperatorInput>;
-  identifiers?: Maybe<StringQueryOperatorInput>;
   institutionUri?: Maybe<StringQueryOperatorInput>;
-  languages?: Maybe<StringQueryOperatorInput>;
-  materials?: Maybe<StringQueryOperatorInput>;
-  media?: Maybe<StringQueryOperatorInput>;
-  provenances?: Maybe<StringQueryOperatorInput>;
-  publishers?: Maybe<StringQueryOperatorInput>;
   rights?: Maybe<ObjectJsonRightsFilterInput>;
-  sources?: Maybe<StringQueryOperatorInput>;
-  spatials?: Maybe<StringQueryOperatorInput>;
-  subjects?: Maybe<StringQueryOperatorInput>;
-  techniques?: Maybe<StringQueryOperatorInput>;
-  temporals?: Maybe<StringQueryOperatorInput>;
-  title?: Maybe<StringQueryOperatorInput>;
-  types?: Maybe<StringQueryOperatorInput>;
   uri?: Maybe<StringQueryOperatorInput>;
+  title?: Maybe<StringQueryOperatorInput>;
+  properties?: Maybe<ObjectJsonPropertiesFilterListInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -1913,6 +2068,25 @@ export type QueryObjectJsonArgs = {
 export type QueryAllObjectJsonArgs = {
   filter?: Maybe<ObjectJsonFilterInput>;
   sort?: Maybe<ObjectJsonSortInput>;
+  skip?: Maybe<Scalars["Int"]>;
+  limit?: Maybe<Scalars["Int"]>;
+};
+
+export type QueryObjectPropertyDefinitionJsonArgs = {
+  id?: Maybe<StringQueryOperatorInput>;
+  parent?: Maybe<NodeFilterInput>;
+  children?: Maybe<NodeFilterListInput>;
+  internal?: Maybe<InternalFilterInput>;
+  uri?: Maybe<StringQueryOperatorInput>;
+  key?: Maybe<StringQueryOperatorInput>;
+  labelPlural?: Maybe<StringQueryOperatorInput>;
+  labelSingular?: Maybe<StringQueryOperatorInput>;
+  faceted?: Maybe<BooleanQueryOperatorInput>;
+};
+
+export type QueryAllObjectPropertyDefinitionJsonArgs = {
+  filter?: Maybe<ObjectPropertyDefinitionJsonFilterInput>;
+  sort?: Maybe<ObjectPropertyDefinitionJsonSortInput>;
   skip?: Maybe<Scalars["Int"]>;
   limit?: Maybe<Scalars["Int"]>;
 };
@@ -2295,6 +2469,7 @@ export type SitePage = Node & {
   children: Array<Node>;
   internal: Internal;
   isCreatedByStatefulCreatePages?: Maybe<Scalars["Boolean"]>;
+  context?: Maybe<SitePageContext>;
   pluginCreator?: Maybe<SitePlugin>;
   pluginCreatorId?: Maybe<Scalars["String"]>;
   componentPath?: Maybe<Scalars["String"]>;
@@ -2318,6 +2493,103 @@ export type SitePageConnectionGroupArgs = {
   skip?: Maybe<Scalars["Int"]>;
   limit?: Maybe<Scalars["Int"]>;
   field: SitePageFieldsEnum;
+};
+
+export type SitePageContext = {
+  __typename?: "SitePageContext";
+  collections?: Maybe<Array<Maybe<SitePageContextCollections>>>;
+  institution?: Maybe<SitePageContextInstitution>;
+  collection?: Maybe<SitePageContextCollection>;
+  collectionUri?: Maybe<Scalars["String"]>;
+  institutionUri?: Maybe<Scalars["String"]>;
+};
+
+export type SitePageContextCollection = {
+  __typename?: "SitePageContextCollection";
+  institutionUri?: Maybe<Scalars["String"]>;
+  rights?: Maybe<SitePageContextCollectionRights>;
+  title?: Maybe<Scalars["String"]>;
+  uri?: Maybe<Scalars["String"]>;
+};
+
+export type SitePageContextCollectionFilterInput = {
+  institutionUri?: Maybe<StringQueryOperatorInput>;
+  rights?: Maybe<SitePageContextCollectionRightsFilterInput>;
+  title?: Maybe<StringQueryOperatorInput>;
+  uri?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePageContextCollectionRights = {
+  __typename?: "SitePageContextCollectionRights";
+  holder?: Maybe<Scalars["String"]>;
+  statements?: Maybe<Array<Maybe<Scalars["String"]>>>;
+};
+
+export type SitePageContextCollectionRightsFilterInput = {
+  holder?: Maybe<StringQueryOperatorInput>;
+  statements?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePageContextCollections = {
+  __typename?: "SitePageContextCollections";
+  institutionUri?: Maybe<Scalars["String"]>;
+  rights?: Maybe<SitePageContextCollectionsRights>;
+  title?: Maybe<Scalars["String"]>;
+  uri?: Maybe<Scalars["String"]>;
+};
+
+export type SitePageContextCollectionsFilterInput = {
+  institutionUri?: Maybe<StringQueryOperatorInput>;
+  rights?: Maybe<SitePageContextCollectionsRightsFilterInput>;
+  title?: Maybe<StringQueryOperatorInput>;
+  uri?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePageContextCollectionsFilterListInput = {
+  elemMatch?: Maybe<SitePageContextCollectionsFilterInput>;
+};
+
+export type SitePageContextCollectionsRights = {
+  __typename?: "SitePageContextCollectionsRights";
+  holder?: Maybe<Scalars["String"]>;
+  statements?: Maybe<Array<Maybe<Scalars["String"]>>>;
+};
+
+export type SitePageContextCollectionsRightsFilterInput = {
+  holder?: Maybe<StringQueryOperatorInput>;
+  statements?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePageContextFilterInput = {
+  collections?: Maybe<SitePageContextCollectionsFilterListInput>;
+  institution?: Maybe<SitePageContextInstitutionFilterInput>;
+  collection?: Maybe<SitePageContextCollectionFilterInput>;
+  collectionUri?: Maybe<StringQueryOperatorInput>;
+  institutionUri?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePageContextInstitution = {
+  __typename?: "SitePageContextInstitution";
+  name?: Maybe<Scalars["String"]>;
+  rights?: Maybe<SitePageContextInstitutionRights>;
+  uri?: Maybe<Scalars["String"]>;
+};
+
+export type SitePageContextInstitutionFilterInput = {
+  name?: Maybe<StringQueryOperatorInput>;
+  rights?: Maybe<SitePageContextInstitutionRightsFilterInput>;
+  uri?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePageContextInstitutionRights = {
+  __typename?: "SitePageContextInstitutionRights";
+  holder?: Maybe<Scalars["String"]>;
+  statements?: Maybe<Array<Maybe<Scalars["String"]>>>;
+};
+
+export type SitePageContextInstitutionRightsFilterInput = {
+  holder?: Maybe<StringQueryOperatorInput>;
+  statements?: Maybe<StringQueryOperatorInput>;
 };
 
 export type SitePageEdge = {
@@ -2420,6 +2692,23 @@ export enum SitePageFieldsEnum {
   internal___owner = "internal___owner",
   internal___type = "internal___type",
   isCreatedByStatefulCreatePages = "isCreatedByStatefulCreatePages",
+  context___collections = "context___collections",
+  context___collections___institutionUri = "context___collections___institutionUri",
+  context___collections___rights___holder = "context___collections___rights___holder",
+  context___collections___rights___statements = "context___collections___rights___statements",
+  context___collections___title = "context___collections___title",
+  context___collections___uri = "context___collections___uri",
+  context___institution___name = "context___institution___name",
+  context___institution___rights___holder = "context___institution___rights___holder",
+  context___institution___rights___statements = "context___institution___rights___statements",
+  context___institution___uri = "context___institution___uri",
+  context___collection___institutionUri = "context___collection___institutionUri",
+  context___collection___rights___holder = "context___collection___rights___holder",
+  context___collection___rights___statements = "context___collection___rights___statements",
+  context___collection___title = "context___collection___title",
+  context___collection___uri = "context___collection___uri",
+  context___collectionUri = "context___collectionUri",
+  context___institutionUri = "context___institutionUri",
   pluginCreator___id = "pluginCreator___id",
   pluginCreator___parent___id = "pluginCreator___parent___id",
   pluginCreator___parent___parent___id = "pluginCreator___parent___parent___id",
@@ -2504,6 +2793,7 @@ export type SitePageFilterInput = {
   children?: Maybe<NodeFilterListInput>;
   internal?: Maybe<InternalFilterInput>;
   isCreatedByStatefulCreatePages?: Maybe<BooleanQueryOperatorInput>;
+  context?: Maybe<SitePageContextFilterInput>;
   pluginCreator?: Maybe<SitePluginFilterInput>;
   pluginCreatorId?: Maybe<StringQueryOperatorInput>;
   componentPath?: Maybe<StringQueryOperatorInput>;
@@ -2931,29 +3221,18 @@ export type ImageFragmentFragment = {__typename?: "ImageJson"} & Pick<
 
 export type ObjectFragmentFragment = {__typename?: "ObjectJson"} & Pick<
   ObjectJson,
-  | "alternativeTitles"
-  | "collectionUris"
-  | "creators"
-  | "culturalContexts"
-  | "dates"
-  | "descriptions"
-  | "extents"
-  | "identifiers"
-  | "institutionUri"
-  | "languages"
-  | "materials"
-  | "media"
-  | "provenances"
-  | "publishers"
-  | "sources"
-  | "spatials"
-  | "subjects"
-  | "techniques"
-  | "temporals"
-  | "title"
-  | "types"
-  | "uri"
+  "collectionUris" | "institutionUri" | "title" | "uri"
 > & {
+    properties?: Maybe<
+      Array<
+        Maybe<
+          {__typename?: "ObjectJsonProperties"} & Pick<
+            ObjectJsonProperties,
+            "key" | "value"
+          >
+        >
+      >
+    >;
     rights?: Maybe<
       {__typename?: "ObjectJsonRights"} & Pick<
         ObjectJsonRights,
@@ -2961,6 +3240,13 @@ export type ObjectFragmentFragment = {__typename?: "ObjectJson"} & Pick<
       >
     >;
   };
+
+export type ObjectPropertyDefinitionFragmentFragment = {
+  __typename?: "ObjectPropertyDefinitionJson";
+} & Pick<
+  ObjectPropertyDefinitionJson,
+  "faceted" | "key" | "labelPlural" | "labelSingular"
+>;
 
 export type IndexPageQueryVariables = Exact<{[key: string]: never}>;
 
@@ -2980,6 +3266,15 @@ export type CollectionPageQueryVariables = Exact<{
 export type CollectionPageQuery = {__typename?: "Query"} & {
   allImageJson: {__typename?: "ImageJsonConnection"} & {
     nodes: Array<{__typename?: "ImageJson"} & ImageFragmentFragment>;
+  };
+  allObjectPropertyDefinitionJson: {
+    __typename?: "ObjectPropertyDefinitionJsonConnection";
+  } & {
+    nodes: Array<
+      {
+        __typename?: "ObjectPropertyDefinitionJson";
+      } & ObjectPropertyDefinitionFragmentFragment
+    >;
   };
   allObjectJson: {__typename?: "ObjectJsonConnection"} & {
     nodes: Array<{__typename?: "ObjectJson"} & ObjectFragmentFragment>;
