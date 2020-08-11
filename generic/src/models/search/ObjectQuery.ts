@@ -1,6 +1,6 @@
 import {ObjectFilters} from "~/models/search/ObjectFilters";
 
 export interface ObjectQuery {
-  filters?: ObjectFilters | null;
-  text?: string | null;
+  readonly filters?: ObjectFilters | null;
+  readonly text?: string | null;
 }
