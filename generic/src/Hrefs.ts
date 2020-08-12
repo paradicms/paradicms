@@ -28,15 +28,15 @@ export class Hrefs {
           get home() {
             return this.objects();
           },
-          object(objectUri: UriParameter) {
-            return `${collectionHref}object/${encodeUriParameter(objectUri)}`;
-          },
           objects(objectQuery?: ObjectQuery) {
             return `${collectionHref}object/${qs.stringify(objectQuery, {
               addQueryPrefix: true,
             })}`;
           },
         };
+      },
+      object(objectUri: UriParameter) {
+        return `${institutionHref}object/${encodeUriParameter(objectUri)}`;
       },
       home: institutionHref,
     };

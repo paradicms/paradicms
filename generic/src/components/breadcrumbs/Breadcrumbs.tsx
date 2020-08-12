@@ -36,8 +36,10 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps & {
           {collection.title}
         </Link>
       );
+    }
 
-      if (object) {
+    if (object) {
+      if (collection) {
         breadcrumbNodes.push(
           <Link
             key="objects"
@@ -48,17 +50,17 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps & {
             Objects
           </Link>
         );
-        breadcrumbNodes.push(
-          <Link
-            key={`object-${object.uri}`}
-            to={Hrefs.institution(institution)
-              .collection(collection)
-              .object(object)}
-          >
-            {object.title}
-          </Link>
-        );
+      } else {
+        breadcrumbNodes.push(<span key="objects">Objects</span>);
       }
+      breadcrumbNodes.push(
+        <Link
+          key={`object-${object.uri}`}
+          to={Hrefs.institution(institution).object(object)}
+        >
+          {object.title}
+        </Link>
+      );
     }
   }
 

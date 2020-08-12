@@ -35,11 +35,7 @@ export const ObjectCard: React.FunctionComponent<{
 }> = ({object}) => {
   const classes = useStyles();
 
-  const collection = object.collections[0];
-
-  const objectHref = Hrefs.institution(object.institution)
-    .collection(collection)
-    .object(object);
+  const objectHref = Hrefs.institution(object.institution).object(object);
 
   const descriptions = (object.properties ?? [])
     .filter(property => property.key == "description")
@@ -76,22 +72,6 @@ export const ObjectCard: React.FunctionComponent<{
                   <TableCell>
                     <Link to={Hrefs.institution(object.institution).home}>
                       {object.institution.name}
-                    </Link>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>
-                    <strong>Collection</strong>
-                  </TableCell>
-                  <TableCell>
-                    <Link
-                      to={
-                        Hrefs.institution(object.institution).collection(
-                          collection
-                        ).home
-                      }
-                    >
-                      {collection.title}
                     </Link>
                   </TableCell>
                 </TableRow>
