@@ -28,7 +28,7 @@ const CollectionPage: React.FunctionComponent<{
   data: {
     allImageJson: {nodes: institutionImages},
     allObjectJson: {nodes: collectionObjects},
-    // allPropertyDefinitionJson: {nodes: propertyDefinitions},
+    allPropertyDefinitionJson: {nodes: propertyDefinitions},
   },
   pageContext: {collection, institution},
 }) => {
@@ -44,7 +44,7 @@ const CollectionPage: React.FunctionComponent<{
   >("page", NumberParam);
   const objectsPage = objectsPageQueryParam ?? 0;
 
-  const objectFacets = Objects.facetize([], collectionObjects);
+  const objectFacets = Objects.facetize(propertyDefinitions, collectionObjects);
 
   const joinedFilteredObjects: readonly JoinedObject[] = Objects.join({
     collectionsByUri: Models.indexByUri([collection]),
