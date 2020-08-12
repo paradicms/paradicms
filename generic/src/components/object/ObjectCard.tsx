@@ -31,8 +31,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const ObjectCard: React.FunctionComponent<{
+  includeInstitution?: boolean;
   object: JoinedObject;
-}> = ({object}) => {
+}> = ({includeInstitution, object}) => {
   const classes = useStyles();
 
   const objectHref = Hrefs.institution(object.institution).object(object);
@@ -62,22 +63,24 @@ export const ObjectCard: React.FunctionComponent<{
               </div>
             </Grid>
           ) : null}
-          <Grid item>
-            <Table>
-              <TableBody>
-                <TableRow>
-                  <TableCell>
-                    <strong>Institution</strong>
-                  </TableCell>
-                  <TableCell>
-                    <Link to={Hrefs.institution(object.institution).home}>
-                      {object.institution.name}
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </Grid>
+          {includeInstitution ? (
+            <Grid item>
+              <Table>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>
+                      <strong>Institution</strong>
+                    </TableCell>
+                    <TableCell>
+                      <Link to={Hrefs.institution(object.institution).home}>
+                        {object.institution.name}
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </Grid>
+          ) : null}
           {descriptions.length > 0 ? (
             <Grid item>
               <Accordion>
