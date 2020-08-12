@@ -10,9 +10,9 @@ from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.object import Object
-from paradicms_etl.models.object_property import ObjectProperty
-from paradicms_etl.models.object_property_definition import ObjectPropertyDefinition
-from paradicms_etl.models.object_property_definitions import ObjectPropertyDefinitions
+from paradicms_etl.models.property import Property
+from paradicms_etl.models.property_definition import PropertyDefinition
+from paradicms_etl.models.property_definitions import PropertyDefinitions
 from paradicms_etl.models.rights import Rights
 
 
@@ -34,7 +34,7 @@ class TestDataTransformer(_Transformer):
 
     def transform(self):
         yield from self.__generate_institutions()
-        yield from ObjectPropertyDefinitions.as_tuple()
+        yield from PropertyDefinitions.as_tuple()
 
     def __generate_collection_objects(self, *, collection: Collection, institution: Institution):
         for object_i in range(20):  # Objects per page is 20
@@ -77,8 +77,8 @@ class TestDataTransformer(_Transformer):
             yield institution
 
     def __generate_object(self, *, collection_uris: Tuple[URIRef, ...], institution: Institution, object_i: int, title: str, uri: URIRef):
-        def object_property_values(all_property_values: List[Union[URIRef, str]], count, property_definition: ObjectPropertyDefinition):
-            return tuple(ObjectProperty(key=property_definition.key, value=all_property_values[(object_i + i) % len(all_property_values)])
+        def object_property_values(all_property_values: List[Union[URIRef, str]], count, property_definition: PropertyDefinition):
+            return tuple(Property(key=property_definition.key, value=all_property_values[(object_i + i) % len(all_property_values)])
                          for i in range(count))
 
         object_ = \
@@ -89,24 +89,24 @@ class TestDataTransformer(_Transformer):
                 title=title,
                 uri=uri
             )
-        object_.properties.extend(ObjectProperty(key=ObjectPropertyDefinitions.ALTERNATIVE_TITLE.key, value=f"{object_.title} alternative title {i}") for i in range(2))
-        object_.properties.extend(object_property_values(self.__CREATORS, 2, ObjectPropertyDefinitions.CREATOR))
-        object_.properties.extend(object_property_values(self.__CULTURAL_CONTEXTS, 2, ObjectPropertyDefinitions.CULTURAL_CONTEXT))
-        object_.properties.extend(ObjectProperty(key=ObjectPropertyDefinitions.DATE.key, value=(date(year=2020, month=8, day=9) - timedelta(minutes=(60 * 24 * (object_i + date_i)))).isoformat()) for date_i in range(2))
-        object_.properties.extend(ObjectProperty(key=ObjectPropertyDefinitions.DESCRIPTION.key, value=f"{object_.title} description {i}") for i in range(2))
-        object_.properties.extend(object_property_values(self.__EXTENTS, 2, ObjectPropertyDefinitions.EXTENT))
-        object_.properties.extend(ObjectProperty(key=ObjectPropertyDefinitions.IDENTIFIER.key, value=f"{object_.title}Id{i}") for i in range(2))
-        object_.properties.extend(object_property_values(self.__LANGUAGES, 2, ObjectPropertyDefinitions.LANGUAGE))
-        object_.properties.extend(object_property_values(self.__MATERIALS, 2, ObjectPropertyDefinitions.MATERIAL))
-        object_.properties.extend(object_property_values(self.__MEDIA, 2, ObjectPropertyDefinitions.MEDIUM))
-        object_.properties.extend(ObjectProperty(key=ObjectPropertyDefinitions.PROVENANCE.key, value=f"{object_.title} provenance {i}") for i in range(2))
-        object_.properties.extend(object_property_values(self.__PUBLISHERS, 2, ObjectPropertyDefinitions.PUBLISHER))
-        object_.properties.extend(object_property_values(self.__SOURCES, 2, ObjectPropertyDefinitions.SOURCE))
-        object_.properties.extend(object_property_values(self.__SPATIALS, 2, ObjectPropertyDefinitions.SPATIAL))
-        object_.properties.extend(object_property_values(self.__SUBJECTS, 2, ObjectPropertyDefinitions.SUBJECT))
-        object_.properties.extend(object_property_values(self.__TECHNIQUES, 2, ObjectPropertyDefinitions.TECHNIQUE))
-        object_.properties.extend(object_property_values(self.__TEMPORALS, 2, ObjectPropertyDefinitions.TEMPORAL))
-        object_.properties.extend(object_property_values(self.__TYPES, 2, ObjectPropertyDefinitions.TYPE))
+        object_.properties.extend(Property(key=PropertyDefinitions.ALTERNATIVE_TITLE.key, value=f"{object_.title} alternative title {i}") for i in range(2))
+        object_.properties.extend(object_property_values(self.__CREATORS, 2, PropertyDefinitions.CREATOR))
+        object_.properties.extend(object_property_values(self.__CULTURAL_CONTEXTS, 2, PropertyDefinitions.CULTURAL_CONTEXT))
+        object_.properties.extend(Property(key=PropertyDefinitions.DATE.key, value=(date(year=2020, month=8, day=9) - timedelta(minutes=(60 * 24 * (object_i + date_i)))).isoformat()) for date_i in range(2))
+        object_.properties.extend(Property(key=PropertyDefinitions.DESCRIPTION.key, value=f"{object_.title} description {i}") for i in range(2))
+        object_.properties.extend(object_property_values(self.__EXTENTS, 2, PropertyDefinitions.EXTENT))
+        object_.properties.extend(Property(key=PropertyDefinitions.IDENTIFIER.key, value=f"{object_.title}Id{i}") for i in range(2))
+        object_.properties.extend(object_property_values(self.__LANGUAGES, 2, PropertyDefinitions.LANGUAGE))
+        object_.properties.extend(object_property_values(self.__MATERIALS, 2, PropertyDefinitions.MATERIAL))
+        object_.properties.extend(object_property_values(self.__MEDIA, 2, PropertyDefinitions.MEDIUM))
+        object_.properties.extend(Property(key=PropertyDefinitions.PROVENANCE.key, value=f"{object_.title} provenance {i}") for i in range(2))
+        object_.properties.extend(object_property_values(self.__PUBLISHERS, 2, PropertyDefinitions.PUBLISHER))
+        object_.properties.extend(object_property_values(self.__SOURCES, 2, PropertyDefinitions.SOURCE))
+        object_.properties.extend(object_property_values(self.__SPATIALS, 2, PropertyDefinitions.SPATIAL))
+        object_.properties.extend(object_property_values(self.__SUBJECTS, 2, PropertyDefinitions.SUBJECT))
+        object_.properties.extend(object_property_values(self.__TECHNIQUES, 2, PropertyDefinitions.TECHNIQUE))
+        object_.properties.extend(object_property_values(self.__TEMPORALS, 2, PropertyDefinitions.TEMPORAL))
+        object_.properties.extend(object_property_values(self.__TYPES, 2, PropertyDefinitions.TYPE))
         yield object_
         yield from self.__generate_object_images(institution=institution, object_=object_)
 
