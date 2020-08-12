@@ -28,7 +28,7 @@ const CollectionPage: React.FunctionComponent<{
   data: {
     allImageJson: {nodes: institutionImages},
     allObjectJson: {nodes: collectionObjects},
-    allObjectPropertyDefinitionJson: {nodes: objectPropertyDefinitions},
+    // allPropertyDefinitionJson: {nodes: propertyDefinitions},
   },
   pageContext: {collection, institution},
 }) => {
@@ -44,10 +44,7 @@ const CollectionPage: React.FunctionComponent<{
   >("page", NumberParam);
   const objectsPage = objectsPageQueryParam ?? 0;
 
-  const objectFacets = Objects.facetize(
-    objectPropertyDefinitions,
-    collectionObjects
-  );
+  const objectFacets = Objects.facetize([], collectionObjects);
 
   const joinedFilteredObjects: readonly JoinedObject[] = Objects.join({
     collectionsByUri: Models.indexByUri([collection]),
@@ -124,9 +121,9 @@ export const query = graphql`
         ...ImageFragment
       }
     }
-    allObjectPropertyDefinitionJson {
+    allPropertyDefinitionJson {
       nodes {
-        ...ObjectPropertyDefinitionFragment
+        ...PropertyDefinitionFragment
       }
     }
     allObjectJson(

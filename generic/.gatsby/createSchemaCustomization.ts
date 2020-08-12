@@ -64,6 +64,13 @@ export const createSchemaCustomization = async (
     holder: String!
     statements: [String!]!
   }
+  
+  type PropertyDefinitionJson implements Node {
+    key: String!
+    labelPlural: String!
+    labelSingular: String!
+    uri: String!
+  }
 
   type Site implements Node {  
     siteMetadata: SiteSiteMetadata!

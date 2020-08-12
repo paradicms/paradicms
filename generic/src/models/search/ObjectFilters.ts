@@ -1,8 +1,8 @@
 import {StringFilter} from "~/models/search/StringFilter";
-import {ObjectPropertyFilter} from "~/models/search/ObjectPropertyFilter";
+import {PropertyFilter} from "~/models/search/PropertyFilter";
 
 export interface ObjectFilters {
   readonly collectionUris?: StringFilter;
   readonly institutionUris?: StringFilter;
-  readonly properties?: readonly ObjectPropertyFilter[];
+  readonly properties?: readonly PropertyFilter[];
 }

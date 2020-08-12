@@ -5,29 +5,29 @@ import {JoinedObject} from "~/models/object/JoinedObject";
 import {ObjectFilters} from "~/models/search/ObjectFilters";
 import {Image} from "~/models/image/Image";
 import {StringFilter} from "~/models/search/StringFilter";
-import {ObjectPropertyDefinition} from "~/models/object/ObjectPropertyDefinition";
+import {PropertyDefinition} from "~/models/property/PropertyDefinition";
 import {ObjectPropertyFacet} from "~/models/search/ObjectPropertyFacet";
-import {ObjectPropertyValue} from "~/models/object/ObjectPropertyValue";
+import {PropertyValue} from "~/models/property/PropertyValue";
 import {ObjectFacets} from "~/models/search/ObjectFacets";
 
 export class Objects {
   static facetize(
-    objectPropertyDefinitions: readonly ObjectPropertyDefinition[],
+    propertyDefinitions: readonly PropertyDefinition[],
     objects: readonly Object[]
   ): ObjectFacets {
     const propertyFacets: ObjectPropertyFacet[] = [];
     const objectsWithProperties = objects.filter(object => object.properties);
-    for (const objectPropertyDefinition of objectPropertyDefinitions) {
-      if (!objectPropertyDefinition.faceted) {
+    for (const propertyDefinition of propertyDefinitions) {
+      if (!propertyDefinition.faceted) {
         continue;
       }
       const facetObjects: Object[] = [];
-      const facetValues: ObjectPropertyValue[] = [];
+      const facetValues: PropertyValue[] = [];
       for (const object of objectsWithProperties) {
         let includeObject = false;
-        for (const objectProperty of object.properties!) {
-          if (objectProperty!.key === objectPropertyDefinition!.key) {
-            facetValues.push(objectProperty!.value);
+        for (const property of object.properties!) {
+          if (property.key === propertyDefinition.key) {
+            facetValues.push(property.value);
             includeObject = true;
           }
         }
@@ -37,7 +37,7 @@ export class Objects {
       }
       if (facetObjects.length > 0) {
         propertyFacets.push({
-          definition: objectPropertyDefinition,
+          definition: propertyDefinition,
           objects: facetObjects,
           values: facetValues,
         });
@@ -122,8 +122,8 @@ export class Objects {
           filter: propertyFilter,
           getObjectValues: object =>
             (object.properties ?? [])
-              .filter(property => property!.key === propertyFilter.key)
-              .map(property => property!.value),
+              .filter(property => property.key === propertyFilter.key)
+              .map(property => property.value),
           objects,
         });
       }

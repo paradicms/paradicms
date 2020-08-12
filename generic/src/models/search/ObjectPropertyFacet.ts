@@ -1,8 +1,8 @@
-import {ObjectPropertyDefinition} from "~/models/object/ObjectPropertyDefinition";
-import {ObjectPropertyValue} from "~/models/object/ObjectPropertyValue";
+import {PropertyDefinition} from "~/models/property/PropertyDefinition";
+import {PropertyValue} from "~/models/property/PropertyValue";
 
 export interface ObjectPropertyFacet {
-  readonly definition: ObjectPropertyDefinition;
+  readonly definition: PropertyDefinition;
   readonly objects: readonly Object[];
-  readonly values: readonly ObjectPropertyValue[];
+  readonly values: readonly PropertyValue[];
 }
