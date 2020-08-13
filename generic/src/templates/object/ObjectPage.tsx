@@ -1,11 +1,21 @@
 import {graphql} from "gatsby";
 import * as React from "react";
 import {Layout} from "~/components/layout/Layout";
-import {Card, CardContent, CardHeader, Grid} from "@material-ui/core";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@material-ui/core";
 import {Institution} from "~/models/institution/Institution";
 import {ObjectPageQuery} from "~/graphql/types";
 import {Object} from "~/models/object/Object";
 import {RightsTable} from "~/components/rights/RightsTable";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const ObjectPage: React.FunctionComponent<{
   data: ObjectPageQuery;
@@ -28,13 +38,58 @@ const ObjectPage: React.FunctionComponent<{
       documentTitle={"Object - " + object.title}
     >
       <Grid container direction="column" spacing={2}>
+        {object.properties ? (
+          <Grid item>
+            <Accordion defaultExpanded={true}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <h3>Properties</h3>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Table>
+                  <TableBody>
+                    {propertyDefinitions
+                      .sort((left, right) => left.key.localeCompare(right.key))
+                      .map(propertyDefinition => {
+                        const properties = object.properties!.filter(
+                          property => property.key === propertyDefinition.key
+                        );
+                        if (properties.length === 0) {
+                          return null;
+                        }
+                        return (
+                          <>
+                            {properties.map((property, propertyIndex) => (
+                              <TableRow
+                                key={`property-${propertyDefinition.key}-${propertyIndex}`}
+                              >
+                                <TableCell>
+                                  <strong>
+                                    {propertyDefinition.labelSingular}
+                                  </strong>
+                                </TableCell>
+                                <TableCell>{property.value}</TableCell>
+                              </TableRow>
+                            ))}
+                          </>
+                        );
+                      })}
+                  </TableBody>
+                </Table>
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
+        ) : null}
         {rights ? (
-          <Card>
-            <CardHeader>Rights</CardHeader>
-            <CardContent>
-              <RightsTable rights={rights} />
-            </CardContent>
-          </Card>
+          <Grid item>
+            <Accordion>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <h3>Rights</h3>
+              </AccordionSummary>
+              <AccordionDetails>
+                <RightsTable rights={rights} />
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
         ) : null}
       </Grid>
     </Layout>

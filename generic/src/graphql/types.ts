@@ -2496,6 +2496,7 @@ export type SitePageContext = {
   collection?: Maybe<SitePageContextCollection>;
   collectionUri?: Maybe<Scalars["String"]>;
   object?: Maybe<SitePageContextObject>;
+  objectUri?: Maybe<Scalars["String"]>;
 };
 
 export type SitePageContextCollection = {
@@ -2530,6 +2531,7 @@ export type SitePageContextFilterInput = {
   collection?: Maybe<SitePageContextCollectionFilterInput>;
   collectionUri?: Maybe<StringQueryOperatorInput>;
   object?: Maybe<SitePageContextObjectFilterInput>;
+  objectUri?: Maybe<StringQueryOperatorInput>;
 };
 
 export type SitePageContextInstitution = {
@@ -2721,6 +2723,7 @@ export enum SitePageFieldsEnum {
   context___object___properties___value = "context___object___properties___value",
   context___object___title = "context___object___title",
   context___object___uri = "context___object___uri",
+  context___objectUri = "context___objectUri",
   pluginCreator___id = "pluginCreator___id",
   pluginCreator___parent___id = "pluginCreator___parent___id",
   pluginCreator___parent___parent___id = "pluginCreator___parent___parent___id",
@@ -3288,6 +3291,18 @@ export type CollectionPageQuery = {__typename?: "Query"} & {
   };
   allObjectJson: {__typename?: "ObjectJsonConnection"} & {
     nodes: Array<{__typename?: "ObjectJson"} & ObjectFragmentFragment>;
+  };
+};
+
+export type InstitutionPageQueryVariables = Exact<{
+  institutionUri: Scalars["String"];
+}>;
+
+export type InstitutionPageQuery = {__typename?: "Query"} & {
+  allCollectionJson: {__typename?: "CollectionJsonConnection"} & {
+    nodes: Array<
+      {__typename?: "CollectionJson"} & Pick<CollectionJson, "title" | "uri">
+    >;
   };
 };
 

@@ -2,16 +2,21 @@ import * as React from "react";
 import {Layout} from "~/components/layout/Layout";
 import {List, ListItem} from "@material-ui/core";
 import {Hrefs} from "~/Hrefs";
-import {Link} from "gatsby";
-import {Collection} from "~/models/collection/Collection";
+import {graphql, Link} from "gatsby";
 import {Institution} from "~/models/institution/Institution";
+import {InstitutionPageQuery} from "~/graphql/types";
 
 const InstitutionPage: React.FunctionComponent<{
+  data: InstitutionPageQuery;
   pageContext: {
-    collections: readonly Collection[];
     institution: Institution;
   };
-}> = ({pageContext: {collections, institution}}) => {
+}> = ({
+  data: {
+    allCollectionJson: {nodes: collections},
+  },
+  pageContext: {institution},
+}) => {
   return (
     <Layout
       breadcrumbs={{institution}}
@@ -33,3 +38,14 @@ const InstitutionPage: React.FunctionComponent<{
 };
 
 export default InstitutionPage;
+
+export const query = graphql`
+  query InstitutionPage($institutionUri: String!) {
+    allCollectionJson(filter: {institutionUri: {eq: $institutionUri}}) {
+      nodes {
+        title
+        uri
+      }
+    }
+  }
+`;
