@@ -3,12 +3,12 @@ import * as React from "react";
 import {Layout} from "~/components/layout/Layout";
 import {Card, CardContent, CardHeader, Grid} from "@material-ui/core";
 import {Institution} from "~/models/institution/Institution";
-import {CollectionPageQuery} from "~/graphql/types";
+import {ObjectPageQuery} from "~/graphql/types";
 import {Object} from "~/models/object/Object";
 import {RightsTable} from "~/components/rights/RightsTable";
 
 const ObjectPage: React.FunctionComponent<{
-  data: CollectionPageQuery;
+  data: ObjectPageQuery;
   pageContext: {
     object: Object;
     institution: Institution;

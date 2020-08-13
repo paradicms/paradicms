@@ -2491,11 +2491,11 @@ export type SitePageConnectionGroupArgs = {
 
 export type SitePageContext = {
   __typename?: "SitePageContext";
-  collections?: Maybe<Array<Maybe<SitePageContextCollections>>>;
   institution?: Maybe<SitePageContextInstitution>;
+  institutionUri?: Maybe<Scalars["String"]>;
   collection?: Maybe<SitePageContextCollection>;
   collectionUri?: Maybe<Scalars["String"]>;
-  institutionUri?: Maybe<Scalars["String"]>;
+  object?: Maybe<SitePageContextObject>;
 };
 
 export type SitePageContextCollection = {
@@ -2524,42 +2524,12 @@ export type SitePageContextCollectionRightsFilterInput = {
   statements?: Maybe<StringQueryOperatorInput>;
 };
 
-export type SitePageContextCollections = {
-  __typename?: "SitePageContextCollections";
-  institutionUri?: Maybe<Scalars["String"]>;
-  rights?: Maybe<SitePageContextCollectionsRights>;
-  title?: Maybe<Scalars["String"]>;
-  uri?: Maybe<Scalars["String"]>;
-};
-
-export type SitePageContextCollectionsFilterInput = {
-  institutionUri?: Maybe<StringQueryOperatorInput>;
-  rights?: Maybe<SitePageContextCollectionsRightsFilterInput>;
-  title?: Maybe<StringQueryOperatorInput>;
-  uri?: Maybe<StringQueryOperatorInput>;
-};
-
-export type SitePageContextCollectionsFilterListInput = {
-  elemMatch?: Maybe<SitePageContextCollectionsFilterInput>;
-};
-
-export type SitePageContextCollectionsRights = {
-  __typename?: "SitePageContextCollectionsRights";
-  holder?: Maybe<Scalars["String"]>;
-  statements?: Maybe<Array<Maybe<Scalars["String"]>>>;
-};
-
-export type SitePageContextCollectionsRightsFilterInput = {
-  holder?: Maybe<StringQueryOperatorInput>;
-  statements?: Maybe<StringQueryOperatorInput>;
-};
-
 export type SitePageContextFilterInput = {
-  collections?: Maybe<SitePageContextCollectionsFilterListInput>;
   institution?: Maybe<SitePageContextInstitutionFilterInput>;
+  institutionUri?: Maybe<StringQueryOperatorInput>;
   collection?: Maybe<SitePageContextCollectionFilterInput>;
   collectionUri?: Maybe<StringQueryOperatorInput>;
-  institutionUri?: Maybe<StringQueryOperatorInput>;
+  object?: Maybe<SitePageContextObjectFilterInput>;
 };
 
 export type SitePageContextInstitution = {
@@ -2582,6 +2552,51 @@ export type SitePageContextInstitutionRights = {
 };
 
 export type SitePageContextInstitutionRightsFilterInput = {
+  holder?: Maybe<StringQueryOperatorInput>;
+  statements?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePageContextObject = {
+  __typename?: "SitePageContextObject";
+  collectionUris?: Maybe<Array<Maybe<Scalars["String"]>>>;
+  institutionUri?: Maybe<Scalars["String"]>;
+  rights?: Maybe<SitePageContextObjectRights>;
+  properties?: Maybe<Array<Maybe<SitePageContextObjectProperties>>>;
+  title?: Maybe<Scalars["String"]>;
+  uri?: Maybe<Scalars["String"]>;
+};
+
+export type SitePageContextObjectFilterInput = {
+  collectionUris?: Maybe<StringQueryOperatorInput>;
+  institutionUri?: Maybe<StringQueryOperatorInput>;
+  rights?: Maybe<SitePageContextObjectRightsFilterInput>;
+  properties?: Maybe<SitePageContextObjectPropertiesFilterListInput>;
+  title?: Maybe<StringQueryOperatorInput>;
+  uri?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePageContextObjectProperties = {
+  __typename?: "SitePageContextObjectProperties";
+  key?: Maybe<Scalars["String"]>;
+  value?: Maybe<Scalars["String"]>;
+};
+
+export type SitePageContextObjectPropertiesFilterInput = {
+  key?: Maybe<StringQueryOperatorInput>;
+  value?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePageContextObjectPropertiesFilterListInput = {
+  elemMatch?: Maybe<SitePageContextObjectPropertiesFilterInput>;
+};
+
+export type SitePageContextObjectRights = {
+  __typename?: "SitePageContextObjectRights";
+  holder?: Maybe<Scalars["String"]>;
+  statements?: Maybe<Array<Maybe<Scalars["String"]>>>;
+};
+
+export type SitePageContextObjectRightsFilterInput = {
   holder?: Maybe<StringQueryOperatorInput>;
   statements?: Maybe<StringQueryOperatorInput>;
 };
@@ -2686,23 +2701,26 @@ export enum SitePageFieldsEnum {
   internal___owner = "internal___owner",
   internal___type = "internal___type",
   isCreatedByStatefulCreatePages = "isCreatedByStatefulCreatePages",
-  context___collections = "context___collections",
-  context___collections___institutionUri = "context___collections___institutionUri",
-  context___collections___rights___holder = "context___collections___rights___holder",
-  context___collections___rights___statements = "context___collections___rights___statements",
-  context___collections___title = "context___collections___title",
-  context___collections___uri = "context___collections___uri",
   context___institution___name = "context___institution___name",
   context___institution___rights___holder = "context___institution___rights___holder",
   context___institution___rights___statements = "context___institution___rights___statements",
   context___institution___uri = "context___institution___uri",
+  context___institutionUri = "context___institutionUri",
   context___collection___institutionUri = "context___collection___institutionUri",
   context___collection___rights___holder = "context___collection___rights___holder",
   context___collection___rights___statements = "context___collection___rights___statements",
   context___collection___title = "context___collection___title",
   context___collection___uri = "context___collection___uri",
   context___collectionUri = "context___collectionUri",
-  context___institutionUri = "context___institutionUri",
+  context___object___collectionUris = "context___object___collectionUris",
+  context___object___institutionUri = "context___object___institutionUri",
+  context___object___rights___holder = "context___object___rights___holder",
+  context___object___rights___statements = "context___object___rights___statements",
+  context___object___properties = "context___object___properties",
+  context___object___properties___key = "context___object___properties___key",
+  context___object___properties___value = "context___object___properties___value",
+  context___object___title = "context___object___title",
+  context___object___uri = "context___object___uri",
   pluginCreator___id = "pluginCreator___id",
   pluginCreator___parent___id = "pluginCreator___parent___id",
   pluginCreator___parent___parent___id = "pluginCreator___parent___parent___id",
@@ -3270,5 +3288,24 @@ export type CollectionPageQuery = {__typename?: "Query"} & {
   };
   allObjectJson: {__typename?: "ObjectJsonConnection"} & {
     nodes: Array<{__typename?: "ObjectJson"} & ObjectFragmentFragment>;
+  };
+};
+
+export type ObjectPageQueryVariables = Exact<{
+  objectUri: Scalars["String"];
+}>;
+
+export type ObjectPageQuery = {__typename?: "Query"} & {
+  allImageJson: {__typename?: "ImageJsonConnection"} & {
+    nodes: Array<{__typename?: "ImageJson"} & ImageFragmentFragment>;
+  };
+  allPropertyDefinitionJson: {
+    __typename?: "PropertyDefinitionJsonConnection";
+  } & {
+    nodes: Array<
+      {
+        __typename?: "PropertyDefinitionJson";
+      } & PropertyDefinitionFragmentFragment
+    >;
   };
 };

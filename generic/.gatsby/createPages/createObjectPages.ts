@@ -3,9 +3,9 @@ import {Hrefs} from "~/Hrefs";
 import * as path from "path";
 import {Institution} from "~/models/institution/Institution";
 import {Query} from "~/graphql/types";
-import {Collection} from "~/models/collection/Collection";
+import {Object} from "~/models/object/Object";
 
-export const createCollectionPages = async (
+export const createObjectPages = async (
   args: CreatePagesArgs & {
     institutions: readonly Institution[];
   }
@@ -14,18 +14,23 @@ export const createCollectionPages = async (
   const {createPage} = args.actions;
   await Promise.all(
     institutions.map(async institution => {
-      const allCollectionJson = await graphql<
-        Pick<Query, "allCollectionJson">,
+      const allObjectJson = await graphql<
+        Pick<Query, "allObjectJson">,
         {institutionUri: string}
       >(
         `
           query($institutionUri: String!) {
-            allCollectionJson(filter: {institutionUri: {eq: $institutionUri}}) {
+            allObjectJson(filter: {institutionUri: {eq: $institutionUri}}) {
               nodes {
+                collectionUris
                 institutionUri
                 rights {
                   holder
                   statements
+                }
+                properties {
+                  key
+                  value
                 }
                 title
                 uri
@@ -36,24 +41,20 @@ export const createCollectionPages = async (
         {institutionUri: institution.uri}
       );
 
-      if (!allCollectionJson.data) {
-        return Promise.reject(allCollectionJson.errors);
+      if (!allObjectJson.data) {
+        return Promise.reject(allObjectJson.errors);
       }
-      const collections: Collection[] =
-        allCollectionJson.data.allCollectionJson.nodes;
+      const objects: Object[] = allObjectJson.data.allObjectJson.nodes;
 
-      for (const collection of collections) {
+      for (const object of objects) {
         createPage({
-          component: path.resolve(
-            "src/templates/collection/CollectionPage.tsx"
-          ),
+          component: path.resolve("src/templates/object/ObjectPage.tsx"),
           context: {
-            collection,
-            collectionUri: collection.uri,
             institution,
-            institutionUri: institution.uri,
+            object,
+            objectUri: object.uri,
           },
-          path: Hrefs.institution(institution).collection(collection).home,
+          path: Hrefs.institution(institution).object(object),
         });
       }
     })
