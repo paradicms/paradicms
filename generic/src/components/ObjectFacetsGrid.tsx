@@ -1,13 +1,33 @@
 import * as React from "react";
-import {Grid} from "@material-ui/core";
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Grid,
+} from "@material-ui/core";
 import {ObjectFilters} from "~/models/ObjectFilters";
-import {FacetExpansionPanel} from "~/components/FacetExpansionPanel";
 import {ObjectFacets} from "~/models/ObjectFacets";
 import {StringFilter} from "~/models/StringFilter";
-import _ from "lodash";
 import {PropertyFilter} from "~/models/PropertyFilter";
 import {PropertyKey} from "~/models/PropertyKey";
 import {StringFacetForm} from "~/components/StringFacetForm";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
+const FacetExpansionPanel: React.FunctionComponent<React.PropsWithChildren<{
+  id: string;
+  title: string;
+}>> = ({children, id, title}) => {
+  return (
+    <Grid item className="facet" data-cy={id + "-facet"}>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          {title}
+        </AccordionSummary>
+        <AccordionDetails>{children}</AccordionDetails>
+      </Accordion>
+    </Grid>
+  );
+};
 
 export const ObjectFacetsGrid: React.FunctionComponent<{
   facets: ObjectFacets;
