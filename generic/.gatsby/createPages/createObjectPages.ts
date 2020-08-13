@@ -48,7 +48,7 @@ export const createObjectPages = async (
 
       for (const object of objects) {
         createPage({
-          component: path.resolve("src/templates/object/ObjectPage.tsx"),
+          component: path.resolve("src/templates/ObjectPage.tsx"),
           context: {
             institution,
             object,

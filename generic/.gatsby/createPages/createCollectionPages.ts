@@ -44,9 +44,7 @@ export const createCollectionPages = async (
 
       for (const collection of collections) {
         createPage({
-          component: path.resolve(
-            "src/templates/collection/CollectionPage.tsx"
-          ),
+          component: path.resolve("src/templates/CollectionPage.tsx"),
           context: {
             collection,
             collectionUri: collection.uri,

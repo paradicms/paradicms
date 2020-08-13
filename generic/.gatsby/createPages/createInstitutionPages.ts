@@ -35,9 +35,7 @@ export const createInstitutionPages = async (
   return await Promise.all(
     institutions.map(async institution => {
       createPage({
-        component: path.resolve(
-          "src/templates/institution/InstitutionPage.tsx"
-        ),
+        component: path.resolve("src/templates/InstitutionPage.tsx"),
         context: {
           institution,
           institutionUri: institution.uri,
