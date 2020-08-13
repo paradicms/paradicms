@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Layout} from "~/components/layout/Layout";
+import {Layout} from "~/components/Layout";
 import {List, ListItem} from "@material-ui/core";
 import {Hrefs} from "~/Hrefs";
 import {graphql, Link} from "gatsby";

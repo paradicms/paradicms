@@ -21,7 +21,7 @@ import {Link} from "gatsby";
 import {Hrefs} from "~/Hrefs";
 import {JoinedObject} from "~/models/JoinedObject";
 import {Images} from "~/models/Images";
-import {RightsTable} from "~/components/rights/RightsTable";
+import {RightsTable} from "~/components/RightsTable";
 import {Image} from "~/models/Image";
 
 const useStyles = makeStyles(theme => ({

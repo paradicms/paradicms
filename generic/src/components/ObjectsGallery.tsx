@@ -2,7 +2,7 @@ import * as React from "react";
 import {Grid} from "@material-ui/core";
 import {Pagination} from "@material-ui/lab";
 import {JoinedObject} from "~/models/JoinedObject";
-import {ObjectCard} from "~/components/object/ObjectCard";
+import {ObjectCard} from "~/components/ObjectCard";
 
 export const ObjectsGallery: React.FunctionComponent<{
   currentPage: number; // From 0

@@ -7,13 +7,13 @@ import {
   Grid,
   makeStyles,
 } from "@material-ui/core";
-import {Footer} from "~/components/layout/Footer";
+import {Footer} from "~/components/Footer";
 import {graphql, StaticQuery} from "gatsby";
 import Helmet from "react-helmet";
 
-import {Navbar} from "~/components/layout/Navbar";
-import {BreadcrumbsProps} from "~/components/breadcrumbs/BreadcrumbsProps";
-import {Breadcrumbs} from "~/components/breadcrumbs/Breadcrumbs";
+import {Navbar} from "~/components/Navbar";
+import {BreadcrumbsProps} from "~/components/BreadcrumbsProps";
+import {Breadcrumbs} from "~/components/Breadcrumbs";
 import {LayoutQuery} from "~/graphql/types";
 
 const useStyles = makeStyles(theme => ({

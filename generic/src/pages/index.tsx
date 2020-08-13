@@ -1,7 +1,7 @@
 import * as React from "react";
-import {Layout} from "~/components/layout/Layout";
+import {Layout} from "~/components/Layout";
 import {graphql} from "gatsby";
-import {InstitutionsList} from "~/components/institution/InstitutionsList";
+import {InstitutionsList} from "~/components/InstitutionsList";
 import {IndexPageQuery} from "~/graphql/types";
 
 const IndexPage: React.FunctionComponent<{

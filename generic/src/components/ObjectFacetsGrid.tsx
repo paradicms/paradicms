@@ -1,13 +1,13 @@
 import * as React from "react";
 import {Grid} from "@material-ui/core";
 import {ObjectFilters} from "~/models/ObjectFilters";
-import {FacetExpansionPanel} from "~/components/object/FacetExpansionPanel";
+import {FacetExpansionPanel} from "~/components/FacetExpansionPanel";
 import {ObjectFacets} from "~/models/ObjectFacets";
 import {StringFilter} from "~/models/StringFilter";
 import _ from "lodash";
 import {PropertyFilter} from "~/models/PropertyFilter";
 import {PropertyKey} from "~/models/PropertyKey";
-import {StringFacetForm} from "~/components/object/StringFacetForm";
+import {StringFacetForm} from "~/components/StringFacetForm";
 
 export const ObjectFacetsGrid: React.FunctionComponent<{
   facets: ObjectFacets;

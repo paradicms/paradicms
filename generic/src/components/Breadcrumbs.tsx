@@ -1,4 +1,4 @@
-import {BreadcrumbsProps} from "~/components/breadcrumbs/BreadcrumbsProps";
+import {BreadcrumbsProps} from "~/components/BreadcrumbsProps";
 import {Breadcrumbs as MuiBreadcrumbs} from "@material-ui/core";
 import {Link} from "gatsby";
 import {Hrefs} from "~/Hrefs";

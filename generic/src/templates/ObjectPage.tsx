@@ -1,6 +1,6 @@
 import {graphql} from "gatsby";
 import * as React from "react";
-import {Layout} from "~/components/layout/Layout";
+import {Layout} from "~/components/Layout";
 import {
   Accordion,
   AccordionDetails,
@@ -14,9 +14,9 @@ import {
 import {Institution} from "~/models/Institution";
 import {ObjectPageQuery} from "~/graphql/types";
 import {Object} from "~/models/Object";
-import {RightsTable} from "~/components/rights/RightsTable";
+import {RightsTable} from "~/components/RightsTable";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {ObjectImagesCarousel} from "~/components/object/ObjectImagesCarousel";
+import {ObjectImagesCarousel} from "~/components/ObjectImagesCarousel";
 
 const ObjectPage: React.FunctionComponent<{
   data: ObjectPageQuery;
