@@ -1,4 +1,4 @@
-import {ObjectQuery} from "~/models/search/ObjectQuery";
+import {ObjectQuery} from "~/models/ObjectQuery";
 import * as qs from "qs";
 import sanitize from "sanitize-filename";
 

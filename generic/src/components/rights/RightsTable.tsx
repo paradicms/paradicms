@@ -8,7 +8,7 @@ import {
   TableContainer,
   TableRow,
 } from "@material-ui/core";
-import {Rights} from "~/models/rights/Rights";
+import {Rights} from "~/models/Rights";
 
 const isUrl = (uri: string) =>
   uri.startsWith("http://") || uri.startsWith("https://");

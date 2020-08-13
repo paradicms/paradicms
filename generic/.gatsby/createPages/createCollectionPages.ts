@@ -1,9 +1,9 @@
 import {CreatePagesArgs} from "gatsby";
 import {Hrefs} from "~/Hrefs";
 import * as path from "path";
-import {Institution} from "~/models/institution/Institution";
+import {Institution} from "~/models/Institution";
 import {Query} from "~/graphql/types";
-import {Collection} from "~/models/collection/Collection";
+import {Collection} from "~/models/Collection";
 
 export const createCollectionPages = async (
   args: CreatePagesArgs & {

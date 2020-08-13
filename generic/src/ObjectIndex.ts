@@ -1,6 +1,6 @@
 import {Index} from "lunr";
-import {ObjectIndexDocument} from "~/models/search/ObjectIndexDocument";
-import {ObjectQuery} from "~/models/search/ObjectQuery";
+import {ObjectIndexDocument} from "~/models/ObjectIndexDocument";
+import {ObjectQuery} from "~/models/ObjectQuery";
 import {ObjectJson} from "~/graphql/types";
 
 type Store = {[index: string]: ObjectIndexDocument};

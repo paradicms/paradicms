@@ -1,5 +1,5 @@
-import {StringFilter} from "~/models/search/StringFilter";
-import {PropertyFilter} from "~/models/search/PropertyFilter";
+import {StringFilter} from "~/models/StringFilter";
+import {PropertyFilter} from "~/models/PropertyFilter";
 
 export interface ObjectFilters {
   readonly collectionUris?: StringFilter;

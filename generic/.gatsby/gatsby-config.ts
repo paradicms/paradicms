@@ -1,8 +1,7 @@
 import {ITSConfigFn} from "gatsby-plugin-ts-config";
 import {FileSystemConfig} from "gatsby-source-filesystem";
 import * as path from "path";
-import {ObjectIndex} from "~/models/search/ObjectIndex";
-// import {ObjectIndex} from "~/models/search/ObjectIndex";
+import {ObjectIndex} from "~/ObjectIndex";
 
 const gatsbyConfig: ITSConfigFn<
   "config",

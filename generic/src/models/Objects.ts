@@ -1,14 +1,14 @@
-import {Collection} from "~/models/collection/Collection";
-import {Institution} from "~/models/institution/Institution";
-import {Object} from "~/models/object/Object";
-import {JoinedObject} from "~/models/object/JoinedObject";
-import {ObjectFilters} from "~/models/search/ObjectFilters";
-import {Image} from "~/models/image/Image";
-import {StringFilter} from "~/models/search/StringFilter";
-import {PropertyDefinition} from "~/models/property/PropertyDefinition";
-import {ObjectPropertyFacet} from "~/models/search/ObjectPropertyFacet";
-import {PropertyValue} from "~/models/property/PropertyValue";
-import {ObjectFacets} from "~/models/search/ObjectFacets";
+import {Collection} from "~/models/Collection";
+import {Institution} from "~/models/Institution";
+import {Object} from "~/models/Object";
+import {JoinedObject} from "~/models/JoinedObject";
+import {ObjectFilters} from "~/models/ObjectFilters";
+import {Image} from "~/models/Image";
+import {StringFilter} from "~/models/StringFilter";
+import {PropertyDefinition} from "~/models/PropertyDefinition";
+import {ObjectPropertyFacet} from "~/models/ObjectPropertyFacet";
+import {PropertyValue} from "~/models/PropertyValue";
+import {ObjectFacets} from "~/models/ObjectFacets";
 
 export class Objects {
   static facetize(

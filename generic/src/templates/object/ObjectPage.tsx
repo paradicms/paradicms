@@ -11,9 +11,9 @@ import {
   TableCell,
   TableRow,
 } from "@material-ui/core";
-import {Institution} from "~/models/institution/Institution";
+import {Institution} from "~/models/Institution";
 import {ObjectPageQuery} from "~/graphql/types";
-import {Object} from "~/models/object/Object";
+import {Object} from "~/models/Object";
 import {RightsTable} from "~/components/rights/RightsTable";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {ObjectImagesCarousel} from "~/components/object/ObjectImagesCarousel";

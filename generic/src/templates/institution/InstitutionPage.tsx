@@ -3,7 +3,7 @@ import {Layout} from "~/components/layout/Layout";
 import {List, ListItem} from "@material-ui/core";
 import {Hrefs} from "~/Hrefs";
 import {graphql, Link} from "gatsby";
-import {Institution} from "~/models/institution/Institution";
+import {Institution} from "~/models/Institution";
 import {InstitutionPageQuery} from "~/graphql/types";
 
 const InstitutionPage: React.FunctionComponent<{

@@ -2,19 +2,19 @@ import {graphql} from "gatsby";
 import * as React from "react";
 import {Layout} from "~/components/layout/Layout";
 import {Grid} from "@material-ui/core";
-import {Collection} from "~/models/collection/Collection";
-import {Institution} from "~/models/institution/Institution";
+import {Collection} from "~/models/Collection";
+import {Institution} from "~/models/Institution";
 import {CollectionPageQuery} from "~/graphql/types";
-import {JoinedObject} from "~/models/object/JoinedObject";
+import {JoinedObject} from "~/models/JoinedObject";
 import {RightsTable} from "~/components/rights/RightsTable";
 import {ObjectFacetsGrid} from "~/components/object/ObjectFacetsGrid";
-import {Objects} from "~/models/object/Objects";
+import {Objects} from "~/models/Objects";
 import {ObjectsGallery} from "~/components/object/ObjectsGallery";
 import {Models} from "~/models/Models";
-import {Images} from "~/models/image/Images";
+import {Images} from "~/models/Images";
 import {NumberParam, useQueryParam} from "use-query-params";
-import {ObjectFilters} from "~/models/search/ObjectFilters";
-import {Object} from "~/models/object/Object";
+import {ObjectFilters} from "~/models/ObjectFilters";
+import {Object} from "~/models/Object";
 
 const OBJECTS_PER_PAGE = 10;
 

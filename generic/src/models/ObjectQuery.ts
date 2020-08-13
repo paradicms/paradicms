@@ -1,4 +1,4 @@
-import {ObjectFilters} from "~/models/search/ObjectFilters";
+import {ObjectFilters} from "~/models/ObjectFilters";
 
 export interface ObjectQuery {
   readonly filters?: ObjectFilters | null;

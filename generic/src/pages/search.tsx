@@ -1,8 +1,8 @@
 import {NumberParam, useQueryParams} from "use-query-params";
 import {JsonQueryParamConfig} from "~/components/JsonQueryParamConfig";
-import {ObjectQuery} from "~/models/search/ObjectQuery";
+import {ObjectQuery} from "~/models/ObjectQuery";
 import * as React from "react";
-import {ObjectIndex} from "~/models/search/ObjectIndex";
+import {ObjectIndex} from "~/ObjectIndex";
 import {graphql} from "gatsby";
 
 const LIMIT_DEFAULT = 10;
