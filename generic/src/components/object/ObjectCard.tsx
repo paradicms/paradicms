@@ -22,6 +22,7 @@ import {Hrefs} from "~/Hrefs";
 import {JoinedObject} from "~/models/object/JoinedObject";
 import {Images} from "~/models/image/Images";
 import {RightsTable} from "~/components/rights/RightsTable";
+import {Image} from "~/models/image/Image";
 
 const useStyles = makeStyles(theme => ({
   expansionPanelText: {
@@ -42,10 +43,19 @@ export const ObjectCard: React.FunctionComponent<{
     .filter(property => property.key == "description")
     .map(property => property.value);
 
-  const thumbnail = Images.selectThumbnail({
-    images: object.images,
-    maxDimensions: {height: 200, width: 200},
-  });
+  let thumbnail: Image | undefined;
+  const objectImagesByOriginalImageUri = Images.indexByOriginalImageUri(
+    object.images
+  );
+  for (const originalImageUri of Object.keys(objectImagesByOriginalImageUri)) {
+    thumbnail = Images.selectThumbnail({
+      images: objectImagesByOriginalImageUri[originalImageUri],
+      maxDimensions: {height: 200, width: 200},
+    });
+    if (thumbnail) {
+      break;
+    }
+  }
 
   return (
     <Card>

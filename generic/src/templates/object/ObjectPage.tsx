@@ -16,6 +16,7 @@ import {ObjectPageQuery} from "~/graphql/types";
 import {Object} from "~/models/object/Object";
 import {RightsTable} from "~/components/rights/RightsTable";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import {ObjectImagesCarousel} from "~/components/object/ObjectImagesCarousel";
 
 const ObjectPage: React.FunctionComponent<{
   data: ObjectPageQuery;
@@ -38,6 +39,9 @@ const ObjectPage: React.FunctionComponent<{
       documentTitle={"Object - " + object.title}
     >
       <Grid container direction="column" spacing={2}>
+        <Grid item>
+          <ObjectImagesCarousel images={objectImages} />
+        </Grid>
         {object.properties ? (
           <Grid item>
             <Accordion defaultExpanded={true}>

@@ -20,14 +20,12 @@ export class Images {
     images: readonly Image[]
   ): {[index: string]: readonly Image[]} {
     return images.reduce((map, image) => {
-      if (!image.originalImageUri) {
-        return map;
-      }
-      const existingImages = map[image.originalImageUri];
+      const originalImageUri = image.originalImageUri ?? image.uri;
+      const existingImages = map[originalImageUri];
       if (existingImages) {
         existingImages.push(image);
       } else {
-        map[image.originalImageUri] = [image];
+        map[originalImageUri] = [image];
       }
       return map;
     }, {} as {[index: string]: Image[]});
