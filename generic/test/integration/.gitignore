@@ -1,0 +1,2 @@
+# The CircleCI orb requires package-lock.json
+!package-lock.json
