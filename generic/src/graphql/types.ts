@@ -538,9 +538,9 @@ export type File = Node & {
   internal: Internal;
   childrenCollectionJson?: Maybe<Array<Maybe<CollectionJson>>>;
   childrenInstitutionJson?: Maybe<Array<Maybe<InstitutionJson>>>;
-  childrenObjectJson?: Maybe<Array<Maybe<ObjectJson>>>;
-  childrenImageJson?: Maybe<Array<Maybe<ImageJson>>>;
   childrenPropertyDefinitionJson?: Maybe<Array<Maybe<PropertyDefinitionJson>>>;
+  childrenImageJson?: Maybe<Array<Maybe<ImageJson>>>;
+  childrenObjectJson?: Maybe<Array<Maybe<ObjectJson>>>;
 };
 
 export type FileModifiedTimeArgs = {
@@ -825,6 +825,97 @@ export enum FileFieldsEnum {
   childrenInstitutionJson___internal___mediaType = "childrenInstitutionJson___internal___mediaType",
   childrenInstitutionJson___internal___owner = "childrenInstitutionJson___internal___owner",
   childrenInstitutionJson___internal___type = "childrenInstitutionJson___internal___type",
+  childrenPropertyDefinitionJson = "childrenPropertyDefinitionJson",
+  childrenPropertyDefinitionJson___key = "childrenPropertyDefinitionJson___key",
+  childrenPropertyDefinitionJson___labelPlural = "childrenPropertyDefinitionJson___labelPlural",
+  childrenPropertyDefinitionJson___labelSingular = "childrenPropertyDefinitionJson___labelSingular",
+  childrenPropertyDefinitionJson___uri = "childrenPropertyDefinitionJson___uri",
+  childrenPropertyDefinitionJson___faceted = "childrenPropertyDefinitionJson___faceted",
+  childrenPropertyDefinitionJson___id = "childrenPropertyDefinitionJson___id",
+  childrenPropertyDefinitionJson___parent___id = "childrenPropertyDefinitionJson___parent___id",
+  childrenPropertyDefinitionJson___parent___parent___id = "childrenPropertyDefinitionJson___parent___parent___id",
+  childrenPropertyDefinitionJson___parent___parent___children = "childrenPropertyDefinitionJson___parent___parent___children",
+  childrenPropertyDefinitionJson___parent___children = "childrenPropertyDefinitionJson___parent___children",
+  childrenPropertyDefinitionJson___parent___children___id = "childrenPropertyDefinitionJson___parent___children___id",
+  childrenPropertyDefinitionJson___parent___children___children = "childrenPropertyDefinitionJson___parent___children___children",
+  childrenPropertyDefinitionJson___parent___internal___content = "childrenPropertyDefinitionJson___parent___internal___content",
+  childrenPropertyDefinitionJson___parent___internal___contentDigest = "childrenPropertyDefinitionJson___parent___internal___contentDigest",
+  childrenPropertyDefinitionJson___parent___internal___description = "childrenPropertyDefinitionJson___parent___internal___description",
+  childrenPropertyDefinitionJson___parent___internal___fieldOwners = "childrenPropertyDefinitionJson___parent___internal___fieldOwners",
+  childrenPropertyDefinitionJson___parent___internal___ignoreType = "childrenPropertyDefinitionJson___parent___internal___ignoreType",
+  childrenPropertyDefinitionJson___parent___internal___mediaType = "childrenPropertyDefinitionJson___parent___internal___mediaType",
+  childrenPropertyDefinitionJson___parent___internal___owner = "childrenPropertyDefinitionJson___parent___internal___owner",
+  childrenPropertyDefinitionJson___parent___internal___type = "childrenPropertyDefinitionJson___parent___internal___type",
+  childrenPropertyDefinitionJson___children = "childrenPropertyDefinitionJson___children",
+  childrenPropertyDefinitionJson___children___id = "childrenPropertyDefinitionJson___children___id",
+  childrenPropertyDefinitionJson___children___parent___id = "childrenPropertyDefinitionJson___children___parent___id",
+  childrenPropertyDefinitionJson___children___parent___children = "childrenPropertyDefinitionJson___children___parent___children",
+  childrenPropertyDefinitionJson___children___children = "childrenPropertyDefinitionJson___children___children",
+  childrenPropertyDefinitionJson___children___children___id = "childrenPropertyDefinitionJson___children___children___id",
+  childrenPropertyDefinitionJson___children___children___children = "childrenPropertyDefinitionJson___children___children___children",
+  childrenPropertyDefinitionJson___children___internal___content = "childrenPropertyDefinitionJson___children___internal___content",
+  childrenPropertyDefinitionJson___children___internal___contentDigest = "childrenPropertyDefinitionJson___children___internal___contentDigest",
+  childrenPropertyDefinitionJson___children___internal___description = "childrenPropertyDefinitionJson___children___internal___description",
+  childrenPropertyDefinitionJson___children___internal___fieldOwners = "childrenPropertyDefinitionJson___children___internal___fieldOwners",
+  childrenPropertyDefinitionJson___children___internal___ignoreType = "childrenPropertyDefinitionJson___children___internal___ignoreType",
+  childrenPropertyDefinitionJson___children___internal___mediaType = "childrenPropertyDefinitionJson___children___internal___mediaType",
+  childrenPropertyDefinitionJson___children___internal___owner = "childrenPropertyDefinitionJson___children___internal___owner",
+  childrenPropertyDefinitionJson___children___internal___type = "childrenPropertyDefinitionJson___children___internal___type",
+  childrenPropertyDefinitionJson___internal___content = "childrenPropertyDefinitionJson___internal___content",
+  childrenPropertyDefinitionJson___internal___contentDigest = "childrenPropertyDefinitionJson___internal___contentDigest",
+  childrenPropertyDefinitionJson___internal___description = "childrenPropertyDefinitionJson___internal___description",
+  childrenPropertyDefinitionJson___internal___fieldOwners = "childrenPropertyDefinitionJson___internal___fieldOwners",
+  childrenPropertyDefinitionJson___internal___ignoreType = "childrenPropertyDefinitionJson___internal___ignoreType",
+  childrenPropertyDefinitionJson___internal___mediaType = "childrenPropertyDefinitionJson___internal___mediaType",
+  childrenPropertyDefinitionJson___internal___owner = "childrenPropertyDefinitionJson___internal___owner",
+  childrenPropertyDefinitionJson___internal___type = "childrenPropertyDefinitionJson___internal___type",
+  childrenImageJson = "childrenImageJson",
+  childrenImageJson___exactDimensions___height = "childrenImageJson___exactDimensions___height",
+  childrenImageJson___exactDimensions___width = "childrenImageJson___exactDimensions___width",
+  childrenImageJson___institutionUri = "childrenImageJson___institutionUri",
+  childrenImageJson___objectUri = "childrenImageJson___objectUri",
+  childrenImageJson___originalImageUri = "childrenImageJson___originalImageUri",
+  childrenImageJson___maxDimensions___height = "childrenImageJson___maxDimensions___height",
+  childrenImageJson___maxDimensions___width = "childrenImageJson___maxDimensions___width",
+  childrenImageJson___uri = "childrenImageJson___uri",
+  childrenImageJson___id = "childrenImageJson___id",
+  childrenImageJson___parent___id = "childrenImageJson___parent___id",
+  childrenImageJson___parent___parent___id = "childrenImageJson___parent___parent___id",
+  childrenImageJson___parent___parent___children = "childrenImageJson___parent___parent___children",
+  childrenImageJson___parent___children = "childrenImageJson___parent___children",
+  childrenImageJson___parent___children___id = "childrenImageJson___parent___children___id",
+  childrenImageJson___parent___children___children = "childrenImageJson___parent___children___children",
+  childrenImageJson___parent___internal___content = "childrenImageJson___parent___internal___content",
+  childrenImageJson___parent___internal___contentDigest = "childrenImageJson___parent___internal___contentDigest",
+  childrenImageJson___parent___internal___description = "childrenImageJson___parent___internal___description",
+  childrenImageJson___parent___internal___fieldOwners = "childrenImageJson___parent___internal___fieldOwners",
+  childrenImageJson___parent___internal___ignoreType = "childrenImageJson___parent___internal___ignoreType",
+  childrenImageJson___parent___internal___mediaType = "childrenImageJson___parent___internal___mediaType",
+  childrenImageJson___parent___internal___owner = "childrenImageJson___parent___internal___owner",
+  childrenImageJson___parent___internal___type = "childrenImageJson___parent___internal___type",
+  childrenImageJson___children = "childrenImageJson___children",
+  childrenImageJson___children___id = "childrenImageJson___children___id",
+  childrenImageJson___children___parent___id = "childrenImageJson___children___parent___id",
+  childrenImageJson___children___parent___children = "childrenImageJson___children___parent___children",
+  childrenImageJson___children___children = "childrenImageJson___children___children",
+  childrenImageJson___children___children___id = "childrenImageJson___children___children___id",
+  childrenImageJson___children___children___children = "childrenImageJson___children___children___children",
+  childrenImageJson___children___internal___content = "childrenImageJson___children___internal___content",
+  childrenImageJson___children___internal___contentDigest = "childrenImageJson___children___internal___contentDigest",
+  childrenImageJson___children___internal___description = "childrenImageJson___children___internal___description",
+  childrenImageJson___children___internal___fieldOwners = "childrenImageJson___children___internal___fieldOwners",
+  childrenImageJson___children___internal___ignoreType = "childrenImageJson___children___internal___ignoreType",
+  childrenImageJson___children___internal___mediaType = "childrenImageJson___children___internal___mediaType",
+  childrenImageJson___children___internal___owner = "childrenImageJson___children___internal___owner",
+  childrenImageJson___children___internal___type = "childrenImageJson___children___internal___type",
+  childrenImageJson___internal___content = "childrenImageJson___internal___content",
+  childrenImageJson___internal___contentDigest = "childrenImageJson___internal___contentDigest",
+  childrenImageJson___internal___description = "childrenImageJson___internal___description",
+  childrenImageJson___internal___fieldOwners = "childrenImageJson___internal___fieldOwners",
+  childrenImageJson___internal___ignoreType = "childrenImageJson___internal___ignoreType",
+  childrenImageJson___internal___mediaType = "childrenImageJson___internal___mediaType",
+  childrenImageJson___internal___owner = "childrenImageJson___internal___owner",
+  childrenImageJson___internal___type = "childrenImageJson___internal___type",
   childrenObjectJson = "childrenObjectJson",
   childrenObjectJson___collectionUris = "childrenObjectJson___collectionUris",
   childrenObjectJson___institutionUri = "childrenObjectJson___institutionUri",
@@ -873,97 +964,6 @@ export enum FileFieldsEnum {
   childrenObjectJson___internal___mediaType = "childrenObjectJson___internal___mediaType",
   childrenObjectJson___internal___owner = "childrenObjectJson___internal___owner",
   childrenObjectJson___internal___type = "childrenObjectJson___internal___type",
-  childrenImageJson = "childrenImageJson",
-  childrenImageJson___exactDimensions___height = "childrenImageJson___exactDimensions___height",
-  childrenImageJson___exactDimensions___width = "childrenImageJson___exactDimensions___width",
-  childrenImageJson___institutionUri = "childrenImageJson___institutionUri",
-  childrenImageJson___objectUri = "childrenImageJson___objectUri",
-  childrenImageJson___originalImageUri = "childrenImageJson___originalImageUri",
-  childrenImageJson___maxDimensions___height = "childrenImageJson___maxDimensions___height",
-  childrenImageJson___maxDimensions___width = "childrenImageJson___maxDimensions___width",
-  childrenImageJson___uri = "childrenImageJson___uri",
-  childrenImageJson___id = "childrenImageJson___id",
-  childrenImageJson___parent___id = "childrenImageJson___parent___id",
-  childrenImageJson___parent___parent___id = "childrenImageJson___parent___parent___id",
-  childrenImageJson___parent___parent___children = "childrenImageJson___parent___parent___children",
-  childrenImageJson___parent___children = "childrenImageJson___parent___children",
-  childrenImageJson___parent___children___id = "childrenImageJson___parent___children___id",
-  childrenImageJson___parent___children___children = "childrenImageJson___parent___children___children",
-  childrenImageJson___parent___internal___content = "childrenImageJson___parent___internal___content",
-  childrenImageJson___parent___internal___contentDigest = "childrenImageJson___parent___internal___contentDigest",
-  childrenImageJson___parent___internal___description = "childrenImageJson___parent___internal___description",
-  childrenImageJson___parent___internal___fieldOwners = "childrenImageJson___parent___internal___fieldOwners",
-  childrenImageJson___parent___internal___ignoreType = "childrenImageJson___parent___internal___ignoreType",
-  childrenImageJson___parent___internal___mediaType = "childrenImageJson___parent___internal___mediaType",
-  childrenImageJson___parent___internal___owner = "childrenImageJson___parent___internal___owner",
-  childrenImageJson___parent___internal___type = "childrenImageJson___parent___internal___type",
-  childrenImageJson___children = "childrenImageJson___children",
-  childrenImageJson___children___id = "childrenImageJson___children___id",
-  childrenImageJson___children___parent___id = "childrenImageJson___children___parent___id",
-  childrenImageJson___children___parent___children = "childrenImageJson___children___parent___children",
-  childrenImageJson___children___children = "childrenImageJson___children___children",
-  childrenImageJson___children___children___id = "childrenImageJson___children___children___id",
-  childrenImageJson___children___children___children = "childrenImageJson___children___children___children",
-  childrenImageJson___children___internal___content = "childrenImageJson___children___internal___content",
-  childrenImageJson___children___internal___contentDigest = "childrenImageJson___children___internal___contentDigest",
-  childrenImageJson___children___internal___description = "childrenImageJson___children___internal___description",
-  childrenImageJson___children___internal___fieldOwners = "childrenImageJson___children___internal___fieldOwners",
-  childrenImageJson___children___internal___ignoreType = "childrenImageJson___children___internal___ignoreType",
-  childrenImageJson___children___internal___mediaType = "childrenImageJson___children___internal___mediaType",
-  childrenImageJson___children___internal___owner = "childrenImageJson___children___internal___owner",
-  childrenImageJson___children___internal___type = "childrenImageJson___children___internal___type",
-  childrenImageJson___internal___content = "childrenImageJson___internal___content",
-  childrenImageJson___internal___contentDigest = "childrenImageJson___internal___contentDigest",
-  childrenImageJson___internal___description = "childrenImageJson___internal___description",
-  childrenImageJson___internal___fieldOwners = "childrenImageJson___internal___fieldOwners",
-  childrenImageJson___internal___ignoreType = "childrenImageJson___internal___ignoreType",
-  childrenImageJson___internal___mediaType = "childrenImageJson___internal___mediaType",
-  childrenImageJson___internal___owner = "childrenImageJson___internal___owner",
-  childrenImageJson___internal___type = "childrenImageJson___internal___type",
-  childrenPropertyDefinitionJson = "childrenPropertyDefinitionJson",
-  childrenPropertyDefinitionJson___key = "childrenPropertyDefinitionJson___key",
-  childrenPropertyDefinitionJson___labelPlural = "childrenPropertyDefinitionJson___labelPlural",
-  childrenPropertyDefinitionJson___labelSingular = "childrenPropertyDefinitionJson___labelSingular",
-  childrenPropertyDefinitionJson___uri = "childrenPropertyDefinitionJson___uri",
-  childrenPropertyDefinitionJson___faceted = "childrenPropertyDefinitionJson___faceted",
-  childrenPropertyDefinitionJson___id = "childrenPropertyDefinitionJson___id",
-  childrenPropertyDefinitionJson___parent___id = "childrenPropertyDefinitionJson___parent___id",
-  childrenPropertyDefinitionJson___parent___parent___id = "childrenPropertyDefinitionJson___parent___parent___id",
-  childrenPropertyDefinitionJson___parent___parent___children = "childrenPropertyDefinitionJson___parent___parent___children",
-  childrenPropertyDefinitionJson___parent___children = "childrenPropertyDefinitionJson___parent___children",
-  childrenPropertyDefinitionJson___parent___children___id = "childrenPropertyDefinitionJson___parent___children___id",
-  childrenPropertyDefinitionJson___parent___children___children = "childrenPropertyDefinitionJson___parent___children___children",
-  childrenPropertyDefinitionJson___parent___internal___content = "childrenPropertyDefinitionJson___parent___internal___content",
-  childrenPropertyDefinitionJson___parent___internal___contentDigest = "childrenPropertyDefinitionJson___parent___internal___contentDigest",
-  childrenPropertyDefinitionJson___parent___internal___description = "childrenPropertyDefinitionJson___parent___internal___description",
-  childrenPropertyDefinitionJson___parent___internal___fieldOwners = "childrenPropertyDefinitionJson___parent___internal___fieldOwners",
-  childrenPropertyDefinitionJson___parent___internal___ignoreType = "childrenPropertyDefinitionJson___parent___internal___ignoreType",
-  childrenPropertyDefinitionJson___parent___internal___mediaType = "childrenPropertyDefinitionJson___parent___internal___mediaType",
-  childrenPropertyDefinitionJson___parent___internal___owner = "childrenPropertyDefinitionJson___parent___internal___owner",
-  childrenPropertyDefinitionJson___parent___internal___type = "childrenPropertyDefinitionJson___parent___internal___type",
-  childrenPropertyDefinitionJson___children = "childrenPropertyDefinitionJson___children",
-  childrenPropertyDefinitionJson___children___id = "childrenPropertyDefinitionJson___children___id",
-  childrenPropertyDefinitionJson___children___parent___id = "childrenPropertyDefinitionJson___children___parent___id",
-  childrenPropertyDefinitionJson___children___parent___children = "childrenPropertyDefinitionJson___children___parent___children",
-  childrenPropertyDefinitionJson___children___children = "childrenPropertyDefinitionJson___children___children",
-  childrenPropertyDefinitionJson___children___children___id = "childrenPropertyDefinitionJson___children___children___id",
-  childrenPropertyDefinitionJson___children___children___children = "childrenPropertyDefinitionJson___children___children___children",
-  childrenPropertyDefinitionJson___children___internal___content = "childrenPropertyDefinitionJson___children___internal___content",
-  childrenPropertyDefinitionJson___children___internal___contentDigest = "childrenPropertyDefinitionJson___children___internal___contentDigest",
-  childrenPropertyDefinitionJson___children___internal___description = "childrenPropertyDefinitionJson___children___internal___description",
-  childrenPropertyDefinitionJson___children___internal___fieldOwners = "childrenPropertyDefinitionJson___children___internal___fieldOwners",
-  childrenPropertyDefinitionJson___children___internal___ignoreType = "childrenPropertyDefinitionJson___children___internal___ignoreType",
-  childrenPropertyDefinitionJson___children___internal___mediaType = "childrenPropertyDefinitionJson___children___internal___mediaType",
-  childrenPropertyDefinitionJson___children___internal___owner = "childrenPropertyDefinitionJson___children___internal___owner",
-  childrenPropertyDefinitionJson___children___internal___type = "childrenPropertyDefinitionJson___children___internal___type",
-  childrenPropertyDefinitionJson___internal___content = "childrenPropertyDefinitionJson___internal___content",
-  childrenPropertyDefinitionJson___internal___contentDigest = "childrenPropertyDefinitionJson___internal___contentDigest",
-  childrenPropertyDefinitionJson___internal___description = "childrenPropertyDefinitionJson___internal___description",
-  childrenPropertyDefinitionJson___internal___fieldOwners = "childrenPropertyDefinitionJson___internal___fieldOwners",
-  childrenPropertyDefinitionJson___internal___ignoreType = "childrenPropertyDefinitionJson___internal___ignoreType",
-  childrenPropertyDefinitionJson___internal___mediaType = "childrenPropertyDefinitionJson___internal___mediaType",
-  childrenPropertyDefinitionJson___internal___owner = "childrenPropertyDefinitionJson___internal___owner",
-  childrenPropertyDefinitionJson___internal___type = "childrenPropertyDefinitionJson___internal___type",
 }
 
 export type FileFilterInput = {
@@ -1005,9 +1005,9 @@ export type FileFilterInput = {
   internal?: Maybe<InternalFilterInput>;
   childrenCollectionJson?: Maybe<CollectionJsonFilterListInput>;
   childrenInstitutionJson?: Maybe<InstitutionJsonFilterListInput>;
-  childrenObjectJson?: Maybe<ObjectJsonFilterListInput>;
-  childrenImageJson?: Maybe<ImageJsonFilterListInput>;
   childrenPropertyDefinitionJson?: Maybe<PropertyDefinitionJsonFilterListInput>;
+  childrenImageJson?: Maybe<ImageJsonFilterListInput>;
+  childrenObjectJson?: Maybe<ObjectJsonFilterListInput>;
 };
 
 export type FileGroupConnection = {
@@ -1890,9 +1890,9 @@ export type QueryFileArgs = {
   internal?: Maybe<InternalFilterInput>;
   childrenCollectionJson?: Maybe<CollectionJsonFilterListInput>;
   childrenInstitutionJson?: Maybe<InstitutionJsonFilterListInput>;
-  childrenObjectJson?: Maybe<ObjectJsonFilterListInput>;
-  childrenImageJson?: Maybe<ImageJsonFilterListInput>;
   childrenPropertyDefinitionJson?: Maybe<PropertyDefinitionJsonFilterListInput>;
+  childrenImageJson?: Maybe<ImageJsonFilterListInput>;
+  childrenObjectJson?: Maybe<ObjectJsonFilterListInput>;
 };
 
 export type QueryAllFileArgs = {
@@ -2765,6 +2765,11 @@ export enum SitePageFieldsEnum {
   pluginCreator___resolve = "pluginCreator___resolve",
   pluginCreator___name = "pluginCreator___name",
   pluginCreator___version = "pluginCreator___version",
+  pluginCreator___pluginOptions___fields = "pluginCreator___pluginOptions___fields",
+  pluginCreator___pluginOptions___fields___name = "pluginCreator___pluginOptions___fields___name",
+  pluginCreator___pluginOptions___fields___store = "pluginCreator___pluginOptions___fields___store",
+  pluginCreator___pluginOptions___languages = "pluginCreator___pluginOptions___languages",
+  pluginCreator___pluginOptions___languages___name = "pluginCreator___pluginOptions___languages___name",
   pluginCreator___pluginOptions___fonts = "pluginCreator___pluginOptions___fonts",
   pluginCreator___pluginOptions___fonts___family = "pluginCreator___pluginOptions___fonts___family",
   pluginCreator___pluginOptions___fonts___variants = "pluginCreator___pluginOptions___fonts___variants",
@@ -2963,6 +2968,11 @@ export enum SitePluginFieldsEnum {
   resolve = "resolve",
   name = "name",
   version = "version",
+  pluginOptions___fields = "pluginOptions___fields",
+  pluginOptions___fields___name = "pluginOptions___fields___name",
+  pluginOptions___fields___store = "pluginOptions___fields___store",
+  pluginOptions___languages = "pluginOptions___languages",
+  pluginOptions___languages___name = "pluginOptions___languages___name",
   pluginOptions___fonts = "pluginOptions___fonts",
   pluginOptions___fonts___family = "pluginOptions___fonts___family",
   pluginOptions___fonts___variants = "pluginOptions___fonts___variants",
@@ -3093,6 +3103,8 @@ export type SitePluginPackageJsonPeerDependenciesFilterListInput = {
 
 export type SitePluginPluginOptions = {
   __typename?: "SitePluginPluginOptions";
+  fields?: Maybe<Array<Maybe<SitePluginPluginOptionsFields>>>;
+  languages?: Maybe<Array<Maybe<SitePluginPluginOptionsLanguages>>>;
   fonts?: Maybe<Array<Maybe<SitePluginPluginOptionsFonts>>>;
   codegen?: Maybe<Scalars["Boolean"]>;
   name?: Maybe<Scalars["String"]>;
@@ -3102,7 +3114,24 @@ export type SitePluginPluginOptions = {
   pathCheck?: Maybe<Scalars["Boolean"]>;
 };
 
+export type SitePluginPluginOptionsFields = {
+  __typename?: "SitePluginPluginOptionsFields";
+  name?: Maybe<Scalars["String"]>;
+  store?: Maybe<Scalars["Boolean"]>;
+};
+
+export type SitePluginPluginOptionsFieldsFilterInput = {
+  name?: Maybe<StringQueryOperatorInput>;
+  store?: Maybe<BooleanQueryOperatorInput>;
+};
+
+export type SitePluginPluginOptionsFieldsFilterListInput = {
+  elemMatch?: Maybe<SitePluginPluginOptionsFieldsFilterInput>;
+};
+
 export type SitePluginPluginOptionsFilterInput = {
+  fields?: Maybe<SitePluginPluginOptionsFieldsFilterListInput>;
+  languages?: Maybe<SitePluginPluginOptionsLanguagesFilterListInput>;
   fonts?: Maybe<SitePluginPluginOptionsFontsFilterListInput>;
   codegen?: Maybe<BooleanQueryOperatorInput>;
   name?: Maybe<StringQueryOperatorInput>;
@@ -3125,6 +3154,19 @@ export type SitePluginPluginOptionsFontsFilterInput = {
 
 export type SitePluginPluginOptionsFontsFilterListInput = {
   elemMatch?: Maybe<SitePluginPluginOptionsFontsFilterInput>;
+};
+
+export type SitePluginPluginOptionsLanguages = {
+  __typename?: "SitePluginPluginOptionsLanguages";
+  name?: Maybe<Scalars["String"]>;
+};
+
+export type SitePluginPluginOptionsLanguagesFilterInput = {
+  name?: Maybe<StringQueryOperatorInput>;
+};
+
+export type SitePluginPluginOptionsLanguagesFilterListInput = {
+  elemMatch?: Maybe<SitePluginPluginOptionsLanguagesFilterInput>;
 };
 
 export type SitePluginSortInput = {
@@ -3216,6 +3258,18 @@ export type LayoutQuery = {__typename?: "Query"} & {
   >;
 };
 
+export type CollectionFragmentFragment = {__typename?: "CollectionJson"} & Pick<
+  CollectionJson,
+  "institutionUri" | "title" | "uri"
+> & {
+    rights?: Maybe<
+      {__typename?: "CollectionJsonRights"} & Pick<
+        CollectionJsonRights,
+        "holder" | "statements"
+      >
+    >;
+  };
+
 export type ImageFragmentFragment = {__typename?: "ImageJson"} & Pick<
   ImageJson,
   "institutionUri" | "objectUri" | "originalImageUri" | "uri"
@@ -3230,6 +3284,17 @@ export type ImageFragmentFragment = {__typename?: "ImageJson"} & Pick<
       {__typename?: "ImageJsonMaxDimensions"} & Pick<
         ImageJsonMaxDimensions,
         "height" | "width"
+      >
+    >;
+  };
+
+export type InstitutionFragmentFragment = {
+  __typename?: "InstitutionJson";
+} & Pick<InstitutionJson, "name" | "uri"> & {
+    rights?: Maybe<
+      {__typename?: "InstitutionJsonRights"} & Pick<
+        InstitutionJsonRights,
+        "holder" | "statements"
       >
     >;
   };
@@ -3267,6 +3332,34 @@ export type IndexPageQuery = {__typename?: "Query"} & {
   allInstitutionJson: {__typename?: "InstitutionJsonConnection"} & {
     nodes: Array<
       {__typename?: "InstitutionJson"} & Pick<InstitutionJson, "name" | "uri">
+    >;
+  };
+};
+
+export type SearchPageQueryVariables = Exact<{[key: string]: never}>;
+
+export type SearchPageQuery = {__typename?: "Query"} & {
+  allCollectionJson: {__typename?: "CollectionJsonConnection"} & {
+    nodes: Array<{__typename?: "CollectionJson"} & CollectionFragmentFragment>;
+  };
+  allImageJson: {__typename?: "ImageJsonConnection"} & {
+    nodes: Array<{__typename?: "ImageJson"} & ImageFragmentFragment>;
+  };
+  allInstitutionJson: {__typename?: "InstitutionJsonConnection"} & {
+    nodes: Array<
+      {__typename?: "InstitutionJson"} & InstitutionFragmentFragment
+    >;
+  };
+  allObjectJson: {__typename?: "ObjectJsonConnection"} & {
+    nodes: Array<{__typename?: "ObjectJson"} & ObjectFragmentFragment>;
+  };
+  allPropertyDefinitionJson: {
+    __typename?: "PropertyDefinitionJsonConnection";
+  } & {
+    nodes: Array<
+      {
+        __typename?: "PropertyDefinitionJson";
+      } & PropertyDefinitionFragmentFragment
     >;
   };
 };

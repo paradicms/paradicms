@@ -1,6 +1,5 @@
 import {Index} from "lunr";
 import {ObjectIndexDocument} from "~/models/ObjectIndexDocument";
-import {ObjectQuery} from "~/models/ObjectQuery";
 import {ObjectJson} from "~/graphql/types";
 
 type Store = {[index: string]: ObjectIndexDocument};
@@ -19,8 +18,6 @@ export class ObjectIndex {
     // Fields to index. If store === true value will be stored in index file.
     // Attributes for custom indexing logic. See https://lunrjs.com/docs/lunr.Builder.html for details
     fields: [
-      {name: "collectionUri", store: true},
-      {name: "institutionUri", store: true},
       {name: "title", store: true},
       {name: "uri", store: true},
     ],
@@ -33,8 +30,6 @@ export class ObjectIndex {
     resolvers: {
       // For any node of type X, list how to resolve the fields' values
       ObjectJson: {
-        collectionUri: (node: ObjectJson) => node.collectionUris[0],
-        institutionUri: (node: ObjectJson) => node.institutionUri,
         title: (node: ObjectJson) => node.title,
         uri: (node: ObjectJson) => node.uri,
       },
@@ -51,13 +46,7 @@ export class ObjectIndex {
     });
   }
 
-  search(query: ObjectQuery): ObjectIndexDocument[] {
-    const lunrQuery = [];
-    if (query.text) {
-      lunrQuery.push(query.text);
-    }
-    return this.index
-      .search(lunrQuery.join(" "))
-      .map(({ref}) => this.store[ref]);
+  search(query: string): ObjectIndexDocument[] {
+    return this.index.search(query).map(({ref}) => this.store[ref]);
   }
 }
