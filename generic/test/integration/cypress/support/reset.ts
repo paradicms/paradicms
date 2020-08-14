@@ -1,3 +1,3 @@
 export const reset = () => {
- cy.request("/api/test/reset");
-}
+  cy.request("/api/test/reset");
+};

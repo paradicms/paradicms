@@ -1,5 +1,5 @@
-import { HomePage } from "../support/pages/HomePage";
-import { PrivacyPage } from "../support/pages/PrivacyPage";
+import {HomePage} from "../support/pages/HomePage";
+import {PrivacyPage} from "../support/pages/PrivacyPage";
 
 describe("Privacy page", () => {
   const homePage = new HomePage();

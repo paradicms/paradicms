@@ -1,5 +1,5 @@
-import { HomePage } from "../support/pages/HomePage";
-import { SearchResultsPage } from "../support/pages/SearchResultsPage";
+import {HomePage} from "../support/pages/HomePage";
+import {SearchResultsPage} from "../support/pages/SearchResultsPage";
 
 describe("Navbar", () => {
   const page = new HomePage();

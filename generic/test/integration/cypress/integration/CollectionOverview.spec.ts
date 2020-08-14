@@ -1,8 +1,11 @@
-import { TestData } from "./TestData";
-import { CollectionOverviewPage } from "../support/pages/CollectionOverviewPage";
+import {TestData} from "./TestData";
+import {CollectionOverviewPage} from "../support/pages/CollectionOverviewPage";
 
 describe("Collection overview", () => {
-  const page = new CollectionOverviewPage({collectionUri: TestData.collection.uri, institutionUri: TestData.institution.uri});
+  const page = new CollectionOverviewPage({
+    collectionUri: TestData.collection.uri,
+    institutionUri: TestData.institution.uri,
+  });
 
   beforeEach(() => page.visit());
 
@@ -10,7 +13,7 @@ describe("Collection overview", () => {
     page.frame.cardTitle.should("have.text", TestData.collection.name);
   });
 
-  it ("should have breadcrumbs to the collection", () => {
+  it("should have breadcrumbs to the collection", () => {
     page.frame.breadcrumbItem(1).should("have.text", "Home");
     page.frame.breadcrumbItem(2).should("have.text", "Institutions");
     page.frame.breadcrumbItem(3).should("have.text", TestData.institution.name);
@@ -22,7 +25,10 @@ describe("Collection overview", () => {
     page.objectsGallery.getObjects(TestData.objects.slice(0, 20));
     page.objectsGallery.startObjectIndex.should("have.text", "1");
     page.objectsGallery.endObjectIndex.should("have.text", "20");
-    page.objectsGallery.objectsCount.should("have.text", TestData.objects.length.toString());
+    page.objectsGallery.objectsCount.should(
+      "have.text",
+      TestData.objects.length.toString()
+    );
   });
 
   it("should unselect one subject and see one fewer object", () => {

@@ -1,8 +1,12 @@
-import { ObjectOverviewPage } from "../support/pages/ObjectOverviewPage";
-import { TestData } from "./TestData";
+import {ObjectOverviewPage} from "../support/pages/ObjectOverviewPage";
+import {TestData} from "./TestData";
 
 describe("Object overview", () => {
-  const page = new ObjectOverviewPage({collectionUri: TestData.collection.uri, institutionUri: TestData.institution.uri, objectUri: TestData.object.uri});
+  const page = new ObjectOverviewPage({
+    collectionUri: TestData.collection.uri,
+    institutionUri: TestData.institution.uri,
+    objectUri: TestData.object.uri,
+  });
 
   beforeEach(() => page.visit());
 
@@ -10,7 +14,7 @@ describe("Object overview", () => {
     page.frame.cardTitle.should("have.text", TestData.object.title);
   });
 
-  it ("should have breadcrumbs to the object", () => {
+  it("should have breadcrumbs to the object", () => {
     page.frame.breadcrumbItem(1).should("have.text", "Home");
     page.frame.breadcrumbItem(2).should("have.text", "Institutions");
     page.frame.breadcrumbItem(3).should("have.text", TestData.institution.name);
