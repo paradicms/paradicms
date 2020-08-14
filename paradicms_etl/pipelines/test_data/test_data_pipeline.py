@@ -25,7 +25,7 @@ class TestDataPipeline(_Pipeline):
                         pipeline_id=self.__ID,
                         root_directory_path=root_dir_path / "gui" / "generic" / "src" / "data" / "test",
                         strategy=JsonDirectoryLoader.Strategy.FILE_PER_MODEL_TYPE
-                    )
+                    ),
                 ),
                 pipeline_id=self.__ID
             ),
