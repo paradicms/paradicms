@@ -1,6 +1,7 @@
 import {ObjectQuery} from "~/models/ObjectQuery";
 import * as qs from "qs";
 import sanitize from "sanitize-filename";
+import _ from "lodash";
 
 interface UriParameter {
   uri: string;
@@ -43,6 +44,13 @@ export class Hrefs {
   }
 
   static search(query?: ObjectQuery) {
-    return "/search" + qs.stringify(query, {addQueryPrefix: true});
+    const href = "/search";
+    if (_.isEmpty(query)) {
+      return href;
+    }
+    return (
+      href +
+      qs.stringify({query: JSON.stringify(query)}, {addQueryPrefix: true})
+    );
   }
 }

@@ -78,6 +78,7 @@ const SearchPage: React.FunctionComponent<{data: SearchPageQuery}> = ({
     }
 
     let resultObjects: readonly ObjectModel[];
+    console.info("query " + JSON.stringify(query));
     if (query.text) {
       let results = index.search(query.text);
       results = results.slice(offset, offset + limit);
@@ -148,7 +149,18 @@ const SearchPage: React.FunctionComponent<{data: SearchPageQuery}> = ({
 
   return (
     <Layout
-      documentTitle="Search results"
+      cardTitle={
+        query.text ? (
+          <span>
+            Search results for <i>{query.text}</i>
+          </span>
+        ) : (
+          "Search results"
+        )
+      }
+      documentTitle={
+        query.text ? `Search results for "${query.text}"` : "Search results"
+      }
       onSearch={text =>
         setQueryParams(Object.assign({}, queryParams, {query: {text}}))
       }
