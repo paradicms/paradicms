@@ -8,7 +8,7 @@ const IndexPage: React.FunctionComponent<{
   data: IndexPageQuery;
 }> = ({data}) => {
   return (
-    <Layout documentTitle="Home" cardTitle="Home">
+    <Layout documentTitle="Institutions">
       <InstitutionsList institutions={data.allInstitutionJson.nodes} />
     </Layout>
   );
