@@ -5,14 +5,13 @@ from pathvalidate import sanitize_filename
 
 from paradicms_etl._model import _Model
 from paradicms_etl.loaders._file_loader import _FileLoader
-from paradicms_etl.pipeline_storage import PipelineStorage
 
 
 class JsonFileLoader(_FileLoader):
-    def load(self, *, force: bool, models: Generator[_Model, None, None], storage: PipelineStorage):
+    def load(self, *, force: bool, models: Generator[_Model, None, None]):
         file_path = self._file_path
         if file_path is None:
-            file_path = storage.transformed_data_dir_path / (sanitize_filename(self._pipeline_id) + ".json")
+            file_path = self._loaded_data_dir_path / (sanitize_filename(self._pipeline_id) + ".json")
 
         json_objects_by_class_name = {}
         for model in models:

@@ -5,7 +5,6 @@ import requests
 from pathvalidate import sanitize_filename
 
 from paradicms_etl._extractor import _Extractor
-from paradicms_etl.pipeline_storage import PipelineStorage
 
 
 class OmekaSExtractor(_Extractor):
@@ -44,7 +43,7 @@ class OmekaSExtractor(_Extractor):
                 return tuple(resources)
             url = next_url
 
-    def extract(self, *, force: bool, storage: PipelineStorage):
+    def extract(self, *, force: bool):
         session = requests.Session()
 
         api_context = None  # Retrieve lazily
@@ -57,7 +56,7 @@ class OmekaSExtractor(_Extractor):
         for resources_name_i, resources_name in enumerate(resources_names):
             url = self.__endpoint_url + "/" + resources_name
             file_name = sanitize_filename(url) + ".json"
-            file_path = storage.extracted_data_dir_path / file_name
+            file_path = self._extracted_data_dir_path / file_name
             resources = None
             if resources_name_i == 0 and not force and file_path.exists():
                 with open(file_path) as file_:

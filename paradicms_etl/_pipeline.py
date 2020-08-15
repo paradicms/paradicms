@@ -15,9 +15,10 @@ from paradicms_etl.loaders.default_loader import DefaultLoader
 class _Pipeline(ABC):
     def __init__(self, *, extractor: _Extractor, id: str, transformer: _Transformer, loader: Optional[_Loader] = None, **kwds):
         """
-        Construct an extract-transform pipeline.
+        Construct an extract-transform-load pipeline.
         :param extractor: extractor implementation
         :param id: unique identifier for this pipeline instance, may be adapted from arguments
+        :param loader: optional loader; if not specified, a default loader will be used
         :param transformer: transformer implementation
         """
         self.__extractor = extractor
@@ -83,26 +84,22 @@ class _Pipeline(ABC):
         )
 
         pipeline_kwds = args.copy()
-        for key in ("data_dir_path", "force", "force_extract", "logging_level", "pipeline_module"):
+        for key in ("force", "force_extract", "logging_level", "pipeline_module"):
             try:
                 pipeline_kwds.pop(key)
             except KeyError:
                 pass
         pipeline = cls(**pipeline_kwds)
 
-        from paradicms_etl.pipeline_wrapper import PipelineWrapper
-        data_dir_path = args.get("data_dir_path")
-        if data_dir_path is not None:
-            data_dir_path = Path(data_dir_path)
-        pipeline_wrapper = PipelineWrapper(data_dir_path=data_dir_path, pipeline=pipeline)
-
         force = bool(args.get("force", False))
         force_extract = force or bool(args.get("force_extract", False))
         force_load = force or bool(args.get("force_load", False))
 
-        extract_kwds = pipeline_wrapper.extract(force=force_extract)
-        models = pipeline_wrapper.transform(**extract_kwds)
-        pipeline_wrapper.load(force=force_load, models=models)
+        extract_kwds = pipeline.extract(force=force_extract)
+        if not extract_kwds:
+            extract_kwds = {}
+        models = pipeline.transform(**extract_kwds)
+        pipeline.load(force=force_load, models=models)
 
     @property
     def id(self):

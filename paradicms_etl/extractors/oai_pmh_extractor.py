@@ -19,9 +19,9 @@ class OaiPmhExtractor(_Extractor):
 
     def extract(self, *, force, storage):
         def record_identifier_file_path(record_identifier: str) -> Path:
-            return storage.extracted_data_dir_path / (sanitize_filename(record_identifier) + ".xml")
+            return self._extracted_data_dir_path / (sanitize_filename(record_identifier) + ".xml")
 
-        record_identifiers_file_path = storage.extracted_data_dir_path / "record_identifiers.json"
+        record_identifiers_file_path = self._extracted_data_dir_path / "record_identifiers.json"
         if record_identifiers_file_path.exists:
             with open(record_identifiers_file_path) as record_identifiers_file:
                 record_identifiers = tuple(json.load(record_identifiers_file))

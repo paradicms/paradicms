@@ -5,7 +5,6 @@ from tqdm import tqdm
 from yomeka.client.omeka_rest_api_client import OmekaRestApiClient
 
 from paradicms_etl._extractor import _Extractor
-from paradicms_etl.pipeline_storage import PipelineStorage
 
 
 class OmekaClassicExtractor(_Extractor):
@@ -14,10 +13,10 @@ class OmekaClassicExtractor(_Extractor):
         self.__client = OmekaRestApiClient(api_key=api_key, endpoint_url=endpoint_url)
         self.__endpoint_url = endpoint_url
 
-    def extract(self, *, force: bool, storage: PipelineStorage):
-        collections_file_path = storage.extracted_data_dir_path / (sanitize_filename(self.__endpoint_url + " collections") + ".json")
-        files_file_path = storage.extracted_data_dir_path / (sanitize_filename(self.__endpoint_url + " files") + ".json")
-        items_file_path = storage.extracted_data_dir_path / (sanitize_filename(self.__endpoint_url + " items") + ".json")
+    def extract(self, *, force: bool):
+        collections_file_path = self._extracted_data_dir_path / (sanitize_filename(self.__endpoint_url + " collections") + ".json")
+        files_file_path = self._extracted_data_dir_path / (sanitize_filename(self.__endpoint_url + " files") + ".json")
+        items_file_path = self._extracted_data_dir_path / (sanitize_filename(self.__endpoint_url + " items") + ".json")
 
         if not collections_file_path.exists() or force:
             collections = tuple(json.loads(collection.json) for collection in tqdm(self.__client.get_all_collections(), desc="Collections"))
