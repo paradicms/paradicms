@@ -20,11 +20,11 @@ class PropertyDefinitions:
     PROVENANCE = PropertyDefinition(key="provenance", label_plural="Provenances", label_singular="Provenance", uri=DCTERMS.provenance)
     PUBLISHER = PropertyDefinition(faceted=True, key="publisher", label_plural="Publishers", label_singular="Publisher", uri=DCTERMS.publisher)
     SOURCE = PropertyDefinition(key="source", label_plural="Sources", label_singular="Source", uri=DCTERMS.source)
-    SPATIAL = PropertyDefinition(key="spatial", label_plural="Spatial coverages", label_singular="Spatial coverage", uri=DCTERMS.spatial)
-    SUBJECT = PropertyDefinition(key="subject", label_plural="Subjects", label_singular="Subject", uri=DCTERMS.subject)
-    TECHNIQUE = PropertyDefinition(key="technique", label_plural="Techniques", label_singular="Technique", uri=VRA.hasTechnique)
-    TEMPORAL = PropertyDefinition(key="temporal", label_plural="Temporal coverages", label_singular="Temporal coverage", uri=DCTERMS.temporal)
-    TYPE = PropertyDefinition(key="type", label_plural="Types", label_singular="Type", uri=DCTERMS.type)
+    SPATIAL = PropertyDefinition(faceted = True, key="spatial", label_plural="Spatial coverages", label_singular="Spatial coverage", uri=DCTERMS.spatial)
+    SUBJECT = PropertyDefinition(faceted=True, key="subject", label_plural="Subjects", label_singular="Subject", uri=DCTERMS.subject)
+    TECHNIQUE = PropertyDefinition(faceted=True, key="technique", label_plural="Techniques", label_singular="Technique", uri=VRA.hasTechnique)
+    TEMPORAL = PropertyDefinition(faceted=True, key="temporal", label_plural="Temporal coverages", label_singular="Temporal coverage", uri=DCTERMS.temporal)
+    TYPE = PropertyDefinition(faceted=True, key="type", label_plural="Types", label_singular="Type", uri=DCTERMS.type)
 
     @classmethod
     def as_tuple(cls) -> Tuple[PropertyDefinition, ...]:
