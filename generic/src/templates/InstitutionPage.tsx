@@ -20,7 +20,7 @@ const InstitutionPage: React.FunctionComponent<{
   return (
     <Layout
       breadcrumbs={{institution}}
-      documentTitle={"Institution - " + institution.name}
+      documentTitle={`${institution.name} - Collections`}
     >
       <List>
         {collections.map(collection => (

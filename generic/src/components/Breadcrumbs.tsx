@@ -8,6 +8,9 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps & {
   className?: string;
 }> = ({className, collection, institution, object}) => {
   const breadcrumbNodes: React.ReactNode[] = [
+    <Link key="home" to={Hrefs.home}>
+      Home
+    </Link>,
     <Link key="institutions" to={Hrefs.home}>
       Institutions
     </Link>,
@@ -65,6 +68,8 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps & {
   }
 
   return (
-    <MuiBreadcrumbs className={className}>{breadcrumbNodes}</MuiBreadcrumbs>
+    <MuiBreadcrumbs className={className} data-cy="breadcrumbs">
+      {breadcrumbNodes}
+    </MuiBreadcrumbs>
   );
 };

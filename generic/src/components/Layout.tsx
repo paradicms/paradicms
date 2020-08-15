@@ -69,10 +69,10 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
               <Navbar onSearch={onSearch} />
             </Grid>
             {breadcrumbs ? (
-              <Grid item data-cy="frame-breadcrumbs-row">
+              <Grid item data-cy="Fixtures-row">
                 <Breadcrumbs
                   className={classes.breadcrumbs}
-                  data-cy="frame-breadcrumbs"
+                  data-cy="Fixtures"
                   {...breadcrumbs}
                 />
               </Grid>
