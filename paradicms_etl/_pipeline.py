@@ -46,7 +46,6 @@ class _Pipeline(ABC):
                                        help="force extract and transform, ignoring any cached data")
         arg_parser.add_argument("--force-extract", action="store_true",
                                        help="force extract, ignoring any cached data")
-        arg_parser.add_argument("--fuseki-data-url", default="http://fuseki:3030/ds/data")
         arg_parser.add_argument(
             '--logging-level',
             help='set logging-level level (see Python logging module)'
@@ -84,7 +83,7 @@ class _Pipeline(ABC):
         )
 
         pipeline_kwds = args.copy()
-        for key in ("force", "force_extract", "logging_level", "pipeline_module"):
+        for key in ("force", "force_extract", "logging_level"):
             try:
                 pipeline_kwds.pop(key)
             except KeyError:
