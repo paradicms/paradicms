@@ -152,7 +152,7 @@ const SearchPage: React.FunctionComponent<{data: SearchPageQuery}> = ({
       cardTitle={
         query.text ? (
           <span>
-            Search results for <i>{query.text}</i>
+            Search results for <i data-cy="query-text">{query.text}</i>
           </span>
         ) : (
           "Search results"
