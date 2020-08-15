@@ -40,7 +40,7 @@ class JsonDirectoryLoader(_Loader):
         loaded_data_dir_path = self._loaded_data_dir_path
         if self.__clean:
             rmtree(self._loaded_data_dir_path)
-        self._loaded_data_dir_path.mkdir()
+        self._loaded_data_dir_path.mkdir(exist_ok=True)
 
         json_objects_by_type = {}
         for model in models:

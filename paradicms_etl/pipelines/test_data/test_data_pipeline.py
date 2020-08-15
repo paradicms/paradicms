@@ -15,26 +15,26 @@ class TestDataPipeline(_Pipeline):
         root_dir_path = Path(__file__).absolute().parent.parent.parent.parent.parent
         _Pipeline.__init__(
             self,
-            extractor=NopExtractor(),
+            extractor=NopExtractor(pipeline_id=self.__ID),
             id=self.__ID,
             loader=CompositeLoader(
                 loaders=(
                     JsonDirectoryLoader(
                         clean=True,
                         pipeline_id=self.__ID,
-                        root_directory_path=root_dir_path / "gui" / "generic" / "src" / "data" / "test",
+                        loaded_data_dir_path=root_dir_path / "gui" / "generic" / "src" / "data" / "test",
                         strategy=JsonDirectoryLoader.Strategy.FILE_PER_MODEL_TYPE
                     ),
                     JsonDirectoryLoader(
                         clean=True,
                         pipeline_id=self.__ID,
-                        root_directory_path=root_dir_path / "integration" / "generic" / "cypress" / "fixtures",
+                        loaded_data_dir_path=root_dir_path / "integration" / "generic" / "cypress" / "fixtures",
                         strategy=JsonDirectoryLoader.Strategy.FILE_PER_MODEL_TYPE
                     ),
                 ),
                 pipeline_id=self.__ID
             ),
-            transformer=TestDataTransformer(),
+            transformer=TestDataTransformer(pipeline_id=self.__ID),
             **kwds
         )
 

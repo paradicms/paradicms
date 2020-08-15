@@ -95,11 +95,11 @@ class _Pipeline(ABC):
         force_extract = force or bool(args.get("force_extract", False))
         force_load = force or bool(args.get("force_load", False))
 
-        extract_kwds = pipeline.extract(force=force_extract)
+        extract_kwds = pipeline.extractor.extract(force=force_extract)
         if not extract_kwds:
             extract_kwds = {}
-        models = pipeline.transform(**extract_kwds)
-        pipeline.load(force=force_load, models=models)
+        models = pipeline.transformer.transform(**extract_kwds)
+        pipeline.loader.load(force=force_load, models=models)
 
     @property
     def id(self):
