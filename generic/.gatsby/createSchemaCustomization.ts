@@ -33,6 +33,7 @@ export const createSchemaCustomization = async (
   
   type InstitutionJson implements Node {
     name: String!
+    rights: InstitutionJsonRights!
     uri: String!
   }
 
@@ -61,6 +62,7 @@ export const createSchemaCustomization = async (
   }
   
   type PropertyDefinitionJson implements Node {
+    faceted: Boolean
     key: String!
     labelPlural: String!
     labelSingular: String!
