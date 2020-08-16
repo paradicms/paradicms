@@ -2,15 +2,15 @@ import json
 
 from pathvalidate import sanitize_filename
 from tqdm import tqdm
-from yomeka.client.omeka_rest_api_client import OmekaRestApiClient
+from yomeka.classic.omeka_classic_rest_api_client import OmekaClassicRestApiClient
 
 from paradicms_etl._extractor import _Extractor
 
 
 class OmekaClassicExtractor(_Extractor):
-    def __init__(self, api_key: str, endpoint_url: str):
-        _Extractor.__init__(self)
-        self.__client = OmekaRestApiClient(api_key=api_key, endpoint_url=endpoint_url)
+    def __init__(self, api_key: str, endpoint_url: str, **kwds):
+        _Extractor.__init__(self, **kwds)
+        self.__client = OmekaClassicRestApiClient(api_key=api_key, endpoint_url=endpoint_url)
         self.__endpoint_url = endpoint_url
 
     def extract(self, *, force: bool):

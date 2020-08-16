@@ -8,7 +8,10 @@ from paradicms_etl._model import _Model
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
+from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.object import Object
+from paradicms_etl.models.property import Property
+from paradicms_etl.models.property_definitions import PropertyDefinitions
 from paradicms_etl.namespace import CMS, PROV
 
 ElementTextTree = Dict[str, Dict[str, str]]
@@ -22,8 +25,8 @@ class OmekaClassicTransformer(_Transformer):
                  square_thumbnail_height_px: int,
                  square_thumbnail_width_px: int,
                  thumbnail_max_height_px: int,
-                 thumbnail_max_width_px: int):
-        _Transformer.__init__(self)
+                 thumbnail_max_width_px: int, **kwds):
+        _Transformer.__init__(self, **kwds)
         # Single _ so we can use getattr
         self._fullsize_max_height_px = fullsize_max_height_px
         self._fullsize_max_width_px = fullsize_max_width_px
@@ -34,14 +37,11 @@ class OmekaClassicTransformer(_Transformer):
         self._thumbnail_max_width_px = thumbnail_max_width_px
 
     def transform(self, collections, files, items):
-        graph = self._new_graph
-
-        institution = self._transform_institution_from_arguments(graph=graph, **self.__institution_kwds)
+        institution = self._transform_institution_from_arguments(**self.__institution_kwds)
 
         transformed_collections_by_id = {}
         for collection in collections:
-            transformed_collection = self._transform_collection(graph=graph,
-                                                                 omeka_collection=collection)
+            transformed_collection = self._transform_collection(omeka_collection=collection)
             if transformed_collection is not None:
                 transformed_collections_by_id[collection["id"]] = transformed_collection
 
@@ -60,7 +60,7 @@ class OmekaClassicTransformer(_Transformer):
                 self._logger.debug("item %s in ignored collection, skipping", item["id"])
                 continue
 
-            transformed_item = self._transform_item(files_by_item_id=files_by_item_id, graph=graph, item=item)
+            transformed_item = self._transform_item(files_by_item_id=files_by_item_id, item=item)
 
             try:
                 transformed_collection.add_object(transformed_item)
@@ -69,8 +69,6 @@ class OmekaClassicTransformer(_Transformer):
 
         for transformed_collection in transformed_collections_by_id.values():
             institution.add_collection(transformed_collection)
-
-        return graph
 
     def _get_element_texts_as_tree(self, omeka_resource) -> ElementTextTree:
         result = {}
@@ -90,73 +88,65 @@ class OmekaClassicTransformer(_Transformer):
                 self._logger.warn("unknown %s element names: %s", element_set_name,
                                   tuple(element_text_tree[element_set_name]))
 
-    def _transform_collection(self, *, graph: Graph, omeka_collection) -> Optional[Collection]:
+    def _transform_collection(self, *, omeka_collection) -> Optional[Collection]:
         collection = Collection(
-            graph=graph,
             uri=URIRef(omeka_collection["url"])
         )
-        collection.owner = CMS.inherit
         element_text_tree = self._get_element_texts_as_tree(omeka_collection)
         self._transform_dublin_core_elements(element_text_tree=element_text_tree, model=collection)
         self._log_unknown_element_texts(element_text_tree)
         return collection
 
-    def _transform_dublin_core_elements(self, *, element_text_tree: ElementTextTree,
-                                         model: _Model) -> None:
+    def _transform_dublin_core_elements(self, *, element_text_tree: ElementTextTree) -> Tuple[Property, ...]:
         dc_element_text_tree = element_text_tree.pop("Dublin Core", None)
         if not dc_element_text_tree:
-            return
+            return ()
 
         def is_uri(value: str):
             return value.startswith("http://") or value.startswith("https://")
 
         # The items JSON from the API has display name element identifiers instead of the Dublin Core URIs,
         # so we have to map back here.
-        for key, property in (
-            ("Alternative Title", DCTERMS.alternative),
-            ("Contributor", DCTERMS.contributor),
-            ("Coverage", DCTERMS.coverage),
-            ("Creator", DCTERMS.creator),
-            ("Date", DCTERMS.date),
-            ("Date Created", DCTERMS.created),
-            ("Date Submitted", DCTERMS.dateSubmitted),
-            ("Description", DCTERMS.description),
-            ("Extent", DCTERMS.extent),
-            ("Format", DCTERMS["format"]),
-            ("Identifier", DCTERMS.identifier),
-            ("Is Referenced By", DCTERMS.isReferencedBy),
-            ("Language", DCTERMS.language),
-            ("Medium", DCTERMS.medium),
-            ("Provenance", DCTERMS.provenance),
-            ("Publisher", DCTERMS.publisher),
-            ("References", DCTERMS.references),
-            ("Relation", DCTERMS.relation),
-            ("Rights Holder", DCTERMS.rightsHolder),
-            ("Source", DCTERMS.source),
-            ("Spatial Coverage", DCTERMS.spatial),
-            ("Subject", DCTERMS.subject),
-            ("Temporal Coverage", DCTERMS.temporal),
+        properties = []
+        for key, property_definition in (
+            ("Alternative Title", PropertyDefinitions.ALTERNATIVE_TITLE),
+            ("Contributor", PropertyDefinitions.CONTRIBUTOR),
+            ("Coverage", PropertyDefinitions.COVERAGE),
+            ("Creator", PropertyDefinitions.CREATOR),
+            ("Date", PropertyDefinitions.DATE),
+            ("Date Created", PropertyDefinitions.DATE_CREATED),
+            ("Date Submitted", PropertyDefinitions.DATE_SUBMITTED),
+            ("Description", PropertyDefinitions.DESCRIPTION),
+            ("Extent", PropertyDefinitions.EXTENT),
+            ("Format", PropertyDefinitions.FORMAT),
+            ("Identifier", PropertyDefinitions.IDENTIFIER),
+            ("Is Referenced By", PropertyDefinitions.IS_REFERENCED_BY),
+            ("Language", PropertyDefinitions.LANGUAGE),
+            ("License", PropertyDefinitions.LICENSE),
+            ("Medium", PropertyDefinitions.MEDIUM),
+            ("Provenance", PropertyDefinitions.PROVENANCE),
+            ("Publisher", PropertyDefinitions.PUBLISHER),
+            ("References", PropertyDefinitions.IS_REFERENCED_BY),
+            ("Relation", PropertyDefinitions.RELATION),
+            ("Rights", PropertyDefinitions.RIGHTS),
+            ("Rights Holder", PropertyDefinitions.RIGHTS_HOLDER),
+            ("Source", PropertyDefinitions.SOURCE),
+            ("Spatial Coverage", PropertyDefinitions.SPATIAL),
+            ("Subject", PropertyDefinitions.SUBJECT),
+            ("Temporal Coverage", PropertyDefinitions.TEMPORAL),
             ("Title", DCTERMS.title),
-            ("Type", DCTERMS.type),
+            ("Type", PropertyDefinitions.TYPE),
         ):
             for value in dc_element_text_tree.pop(key, []):
                 # assert not value.startswith("http://") and not value.startswith("https://"), value
-                model.resource.add(property, Literal(value))
-
-        for key, property in (
-            ("License", DCTERMS.license),
-            ("Rights", DCTERMS.rights),
-        ):
-            for value in dc_element_text_tree.pop(key, []):
-                if is_uri(value):
-                    model.resource.add(property, URIRef(value))
-                else:
-                    model.resource.add(property, Literal(value))
+                properties.append(Property(key=property_definition.key, value=value))
 
         if dc_element_text_tree:
             self._logger.warn("unknown Dublin Core element names: %s", tuple(dc_element_text_tree.keys()))
 
-    def _transform_file(self, *, file_, graph: Graph) -> Tuple[Image, ...]:
+        return tuple(properties)
+
+    def _transform_file(self, *, file_) -> Tuple[Image, ...]:
         """
         Transform a file JSON object into a sequence of images.
 
@@ -170,35 +160,49 @@ class OmekaClassicTransformer(_Transformer):
         for key, url in file_["file_urls"].items():
             if url is None:
                 continue
-            image = Image(graph=graph, uri=URIRef(url))
+            exact_dimensions = max_dimensions = None
             if key == "original":
                 file_metadata = file_["metadata"]
                 if isinstance(file_metadata, dict):
                     # Some files have no metadata
                     file_metadata_video = file_metadata["video"]
                     if isinstance(file_metadata_video, dict):
-                        image.height = file_metadata_video["resolution_y"]
+                        height = file_metadata_video["resolution_y"]
                         assert isinstance(image.height, int)
-                        image.width = file_metadata_video["resolution_x"]
+                        width = file_metadata_video["resolution_x"]
                         assert isinstance(image.width, int)
+                        exact_dimensions = ImageDimensions(height=height, width=width)
                     else:
                         self._logger.debug("file %s has no resolution in its metadata", file_["id"])
                 else:
                     self._logger.debug("file %s has no metadata", file_["id"])
                 original_image = image
+                original_image_uri = None
             else:
                 if key == "square_thumbnail":
-                    image.height = self._square_thumbnail_height_px
-                    image.width = self._square_thumbnail_width_px
+                    exact_dimensions = \
+                        ImageDimensions(
+                            height=self._square_thumbnail_height_px,
+                            width=self._square_thumbnail_width_px
+                        )
                 else:
-                    image.max_height = getattr(self, "_" + key + "_max_height_px")
-                    image.max_width = getattr(self, "_" + key + "_max_width_px")
-                original_uri = URIRef(file_["file_urls"]["original"])
-                image.resource.add(PROV.wasDerivedFrom, original_uri)
-                graph.add((original_uri, FOAF.thumbnail, image.uri))
-            image.created = dateparser.parse(file_["added"], settings={"STRICT_PARSING": True})
-            image.format = file_["mime_type"]
-            image.modified = dateparser.parse(file_["modified"], settings={"STRICT_PARSING": True})
+                    max_dimensions = \
+                        ImageDimensions(
+                            height = getattr(self, "_" + key + "_max_height_px"),
+                            width = getattr(self, "_" + key + "_max_width_px")
+                        )
+                original_image_uri = URIRef(file_["file_urls"]["original"])
+
+            image = \
+                Image(
+                    created=dateparser.parse(file_["added"], settings={"STRICT_PARSING": True}),
+                    exact_dimensions=exact_dimensions,
+                    format=file_["mime_type"],
+                    max_dimensions=max_dimensions,
+                    modified=dateparser.parse(file_["modified"], settings={"STRICT_PARSING": True}),
+                    original_image_uri=original_image_uri,
+                    uri=URIRef(url)
+                )
             if key == "original":
                 images.insert(0, image)
             else:
@@ -206,7 +210,7 @@ class OmekaClassicTransformer(_Transformer):
         assert original_image
         return tuple(images)
 
-    def _transform_item(self, *, files_by_item_id, graph: Graph, item) -> Object:
+    def _transform_item(self, *, files_by_item_id, item) -> Object:
         object_ = Object(
             graph=graph,
             uri=URIRef(item["url"])
