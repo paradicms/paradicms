@@ -13,7 +13,15 @@ from paradicms_etl.loaders.default_loader import DefaultLoader
 
 
 class _Pipeline(ABC):
-    def __init__(self, *, extractor: _Extractor, id: str, transformer: _Transformer, loader: Optional[_Loader] = None, **kwds):
+    def __init__(
+        self,
+        *,
+        extractor: _Extractor,
+        id: str,
+        transformer: _Transformer,
+        loader: Optional[_Loader] = None,
+        **kwds
+    ):
         """
         Construct an extract-transform-load pipeline.
         :param extractor: extractor implementation
@@ -29,26 +37,35 @@ class _Pipeline(ABC):
         self.__transformer = transformer
 
     @classmethod
-    def add_arguments(cls, arg_parser: ArgParser, *, data_dir_path_default: Optional[str] = None) -> None:
+    def add_arguments(
+        cls, arg_parser: ArgParser, *, data_dir_path_default: Optional[str] = None
+    ) -> None:
         """
         Add pipeline-specific arguments. The parsed arguments are passed to the constructor as keywords.
         """
         arg_parser.add_argument("-c", is_config_file=True, help="config file path")
-        arg_parser.add_argument("--data-dir-path",
-                                default=data_dir_path_default,
-                                help="path to a directory to store extracted data and transformed models")
         arg_parser.add_argument(
-            '--debug',
-            action='store_true',
-            help='turn on debugging'
+            "--data-dir-path",
+            default=data_dir_path_default,
+            help="path to a directory to store extracted data and transformed models",
         )
-        arg_parser.add_argument("-f", "--force", action="store_true",
-                                       help="force extract and transform, ignoring any cached data")
-        arg_parser.add_argument("--force-extract", action="store_true",
-                                       help="force extract, ignoring any cached data")
         arg_parser.add_argument(
-            '--logging-level',
-            help='set logging-level level (see Python logging module)'
+            "--debug", action="store_true", help="turn on debugging"
+        )
+        arg_parser.add_argument(
+            "-f",
+            "--force",
+            action="store_true",
+            help="force extract and transform, ignoring any cached data",
+        )
+        arg_parser.add_argument(
+            "--force-extract",
+            action="store_true",
+            help="force extract, ignoring any cached data",
+        )
+        arg_parser.add_argument(
+            "--logging-level",
+            help="set logging-level level (see Python logging module)",
         )
 
     @classmethod
@@ -57,12 +74,21 @@ class _Pipeline(ABC):
         arg_parser.add_argument("--institution-rights", required=True)
         arg_parser.add_argument("--institution-uri", required=True)
 
+    def extract_transform_load(
+        self, *, force_extract: bool = False, force_load: bool = False
+    ):
+        extract_kwds = self.extractor.extract(force=force_extract)
+        if not extract_kwds:
+            extract_kwds = {}
+        models = self.transformer.transform(**extract_kwds)
+        self.loader.load(force=force_load, models=models)
+
     @property
     def extractor(self):
         return self.__extractor
 
     @classmethod
-    def main(cls, args: Optional[Dict[str, object]]=None):
+    def main(cls, args: Optional[Dict[str, object]] = None):
         if args is None:
             arg_parser = ArgParser()
             cls.add_arguments(arg_parser)
@@ -76,8 +102,8 @@ class _Pipeline(ABC):
         else:
             logging_level = logging.INFO
         logging.basicConfig(
-            format='%(asctime)s:%(module)s:%(lineno)s:%(name)s:%(levelname)s: %(message)s',
-            level=logging_level
+            format="%(asctime)s:%(module)s:%(lineno)s:%(name)s:%(levelname)s: %(message)s",
+            level=logging_level,
         )
 
         pipeline_kwds = args.copy()
@@ -95,11 +121,9 @@ class _Pipeline(ABC):
         force_extract = force or bool(args.get("force_extract", False))
         force_load = force or bool(args.get("force_load", False))
 
-        extract_kwds = pipeline.extractor.extract(force=force_extract)
-        if not extract_kwds:
-            extract_kwds = {}
-        models = pipeline.transformer.transform(**extract_kwds)
-        pipeline.loader.load(force=force_load, models=models)
+        pipeline.extract_transform_load(
+            force_extract=force_extract, force_load=force_load
+        )
 
     @property
     def id(self):
