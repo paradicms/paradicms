@@ -12,11 +12,6 @@ export const createSchemaCustomization = async (
     uri: String!
   }  
   
-  type CollectionJsonRights {
-    holder: String!
-    statements: [String!]!
-  }
-  
   type ImageJson implements Node {
     exactDimensions: ImageJsonExactDimensions
     institutionUri: String!

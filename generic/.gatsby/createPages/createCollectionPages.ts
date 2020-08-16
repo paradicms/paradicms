@@ -23,10 +23,6 @@ export const createCollectionPages = async (
             allCollectionJson(filter: {institutionUri: {eq: $institutionUri}}) {
               nodes {
                 institutionUri
-                rights {
-                  holder
-                  statements
-                }
                 title
                 uri
               }

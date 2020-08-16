@@ -53,7 +53,7 @@ const CollectionPage: React.FunctionComponent<{
     objects: filteredObjects,
   });
 
-  const rights = collection.rights ?? institution.rights ?? undefined;
+  const rights = institution.rights;
 
   return (
     <Layout
