@@ -21,7 +21,6 @@ class Collection(_Model):
     institution_uri: URIRef
     title: str
     properties: Tuple[Property, ...] = ()
-    rights: Optional[Rights] = None
 
     def to_rdf(
         self, *, graph: Graph, property_definitions: Tuple[PropertyDefinition, ...]
@@ -34,7 +33,5 @@ class Collection(_Model):
         self._properties_to_rdf(
             property_definitions=property_definitions, resource=resource
         )
-        if self.rights is not None:
-            self.rights.to_rdf(add_to_resource=resource)
         resource.add(DCTERMS.title, Literal(self.title))
         return resource
