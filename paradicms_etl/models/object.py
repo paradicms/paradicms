@@ -21,7 +21,7 @@ class Object(_Model):
     collection_uris: Tuple[URIRef, ...]
     institution_uri: URIRef
     title: str
-    properties: List[Property] = field(default_factory=list)
+    properties: Tuple[Property, ...] = ()
     rights: Optional[Rights] = None
 
     def to_rdf(self, *, graph: Graph) -> Resource:
@@ -30,12 +30,7 @@ class Object(_Model):
 
         for collection_uri in self.collection_uris:
             graph.add((collection_uri, CMS.object, self.uri))
-        for property_ in self.properties:
-            property_definition = getattr(PropertyDefinitions, property_.key.upper())
-            if isinstance(property_.value, URIRef):
-                resource.add(property_definition.uri, property_.value)
-            else:
-                resource.add(property_definition.uri, Literal(property_.value))
+        self._properties_to_rdf(properties=self.properties, resource=resource)
         if self.rights is not None:
             self.rights.to_rdf(add_to_resource=resource)
         resource.add(DCTERMS.title, Literal(self.title))
