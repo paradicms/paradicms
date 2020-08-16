@@ -6,7 +6,6 @@ from rdflib import BNode, Graph, Literal, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.models.property import Property
-from paradicms_etl.models.property_definitions import PropertyDefinitions
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
@@ -15,6 +14,7 @@ class _Model:
     uri: URIRef
 
     def _properties_to_rdf(self, *, properties: Tuple[Property, ...], resource: Resource):
+        from paradicms_etl.models.property_definitions import PropertyDefinitions
         for property_ in self.properties:
             property_definition = getattr(PropertyDefinitions, property_.key.upper())
             if isinstance(property_.value, URIRef):

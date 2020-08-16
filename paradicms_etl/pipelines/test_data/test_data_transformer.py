@@ -81,32 +81,35 @@ class TestDataTransformer(_Transformer):
             return tuple(Property(key=property_definition.key, value=all_property_values[(object_i + i) % len(all_property_values)])
                          for i in range(count))
 
+        properties = []
+        properties.extend(Property(key=PropertyDefinitions.ALTERNATIVE_TITLE.key, value=f"{title} alternative title {i}") for i in range(2))
+        properties.extend(object_property_values(self.__CREATORS, 2, PropertyDefinitions.CREATOR))
+        properties.extend(object_property_values(self.__CULTURAL_CONTEXTS, 2, PropertyDefinitions.CULTURAL_CONTEXT))
+        properties.extend(Property(key=PropertyDefinitions.DATE.key, value=(date(year=2020, month=8, day=9) - timedelta(minutes=(60 * 24 * (object_i + date_i)))).isoformat()) for date_i in range(2))
+        properties.extend(Property(key=PropertyDefinitions.DESCRIPTION.key, value=f"{title} description {i}") for i in range(2))
+        properties.extend(object_property_values(self.__EXTENTS, 2, PropertyDefinitions.EXTENT))
+        properties.extend(Property(key=PropertyDefinitions.IDENTIFIER.key, value=f"{title}Id{i}") for i in range(2))
+        properties.extend(object_property_values(self.__LANGUAGES, 2, PropertyDefinitions.LANGUAGE))
+        properties.extend(object_property_values(self.__MATERIALS, 2, PropertyDefinitions.MATERIAL))
+        properties.extend(object_property_values(self.__MEDIA, 2, PropertyDefinitions.MEDIUM))
+        properties.extend(Property(key=PropertyDefinitions.PROVENANCE.key, value=f"{title} provenance {i}") for i in range(2))
+        properties.extend(object_property_values(self.__PUBLISHERS, 2, PropertyDefinitions.PUBLISHER))
+        properties.extend(object_property_values(self.__SOURCES, 2, PropertyDefinitions.SOURCE))
+        properties.extend(object_property_values(self.__SPATIALS, 2, PropertyDefinitions.SPATIAL))
+        properties.extend(object_property_values(self.__SUBJECTS, 2, PropertyDefinitions.SUBJECT))
+        properties.extend(object_property_values(self.__TECHNIQUES, 2, PropertyDefinitions.TECHNIQUE))
+        properties.extend(object_property_values(self.__TEMPORALS, 2, PropertyDefinitions.TEMPORAL))
+        properties.extend(object_property_values(self.__TYPES, 2, PropertyDefinitions.TYPE))
+
         object_ = \
             Object(
                 collection_uris=collection_uris,
                 institution_uri=institution.uri,
+                properties=tuple(properties),
                 rights=Rights(holder=f"{title} rights holder", statements=(f"{title} rights", self.__RIGHTS_STATEMENT_URI,)),
                 title=title,
                 uri=uri
             )
-        object_.properties.extend(Property(key=PropertyDefinitions.ALTERNATIVE_TITLE.key, value=f"{object_.title} alternative title {i}") for i in range(2))
-        object_.properties.extend(object_property_values(self.__CREATORS, 2, PropertyDefinitions.CREATOR))
-        object_.properties.extend(object_property_values(self.__CULTURAL_CONTEXTS, 2, PropertyDefinitions.CULTURAL_CONTEXT))
-        object_.properties.extend(Property(key=PropertyDefinitions.DATE.key, value=(date(year=2020, month=8, day=9) - timedelta(minutes=(60 * 24 * (object_i + date_i)))).isoformat()) for date_i in range(2))
-        object_.properties.extend(Property(key=PropertyDefinitions.DESCRIPTION.key, value=f"{object_.title} description {i}") for i in range(2))
-        object_.properties.extend(object_property_values(self.__EXTENTS, 2, PropertyDefinitions.EXTENT))
-        object_.properties.extend(Property(key=PropertyDefinitions.IDENTIFIER.key, value=f"{object_.title}Id{i}") for i in range(2))
-        object_.properties.extend(object_property_values(self.__LANGUAGES, 2, PropertyDefinitions.LANGUAGE))
-        object_.properties.extend(object_property_values(self.__MATERIALS, 2, PropertyDefinitions.MATERIAL))
-        object_.properties.extend(object_property_values(self.__MEDIA, 2, PropertyDefinitions.MEDIUM))
-        object_.properties.extend(Property(key=PropertyDefinitions.PROVENANCE.key, value=f"{object_.title} provenance {i}") for i in range(2))
-        object_.properties.extend(object_property_values(self.__PUBLISHERS, 2, PropertyDefinitions.PUBLISHER))
-        object_.properties.extend(object_property_values(self.__SOURCES, 2, PropertyDefinitions.SOURCE))
-        object_.properties.extend(object_property_values(self.__SPATIALS, 2, PropertyDefinitions.SPATIAL))
-        object_.properties.extend(object_property_values(self.__SUBJECTS, 2, PropertyDefinitions.SUBJECT))
-        object_.properties.extend(object_property_values(self.__TECHNIQUES, 2, PropertyDefinitions.TECHNIQUE))
-        object_.properties.extend(object_property_values(self.__TEMPORALS, 2, PropertyDefinitions.TEMPORAL))
-        object_.properties.extend(object_property_values(self.__TYPES, 2, PropertyDefinitions.TYPE))
         yield object_
         yield from self.__generate_object_images(institution=institution, object_=object_)
 
