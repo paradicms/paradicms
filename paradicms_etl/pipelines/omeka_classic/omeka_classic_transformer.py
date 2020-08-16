@@ -133,7 +133,6 @@ class OmekaClassicTransformer(_Transformer):
         return Collection(
             institution_uri=institution_uri,
             properties=properties,
-            rights=Rights.from_properties(properties),
             title=title,
             uri=URIRef(omeka_collection["url"]),
         )
