@@ -26,8 +26,8 @@ class Image(_Model):
     modified: Optional[datetime] = None
     original_image_uri: Optional[URIRef] = None
 
-    def to_rdf(self, *, graph: Graph) -> Resource:
-        resource = _Model.to_rdf(self, graph=graph)
+    def to_rdf(self, *, graph: Graph, **kwds) -> Resource:
+        resource = _Model.to_rdf(self, graph=graph, **kwds)
         resource.add(RDF.type, CMS[self.__class__.__name__])
         if self.created is not None:
             resource.add(DCTERMS.created, Literal(self.created))

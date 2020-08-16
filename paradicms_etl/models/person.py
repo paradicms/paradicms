@@ -18,8 +18,8 @@ class Person(_Model):
     given_name: Optional[str] = None
     sort_name: Optional[str] = None
 
-    def to_rdf(self, *, graph: Graph) -> Resource:
-        resource = _Model.to_rdf(self, graph=graph)
+    def to_rdf(self, *, graph: Graph, **kwds) -> Resource:
+        resource = _Model.to_rdf(self, graph=graph, **kwds)
         resource.add(RDF.type, CMS[self.__class__.__name__])
         if self.family_name is not None:
             resource.add(FOAF.familyName, Literal(self.family_name))

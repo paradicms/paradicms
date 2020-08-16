@@ -18,7 +18,7 @@ class DateTimeDescription(_Model):
     month: Optional[int] = None
     year: Optional[int] = None
 
-    def to_rdf(self, *, graph: Graph) -> Resource:
+    def to_rdf(self, *, graph: Graph, **kwds) -> Resource:
         resource = _Model.to_rdf(self, graph=graph)
         resource.add(RDF.type, TIME.DateTimeDescription)
         if self.day is not None:
@@ -28,7 +28,9 @@ class DateTimeDescription(_Model):
         if self.minute is not None:
             resource.add(TIME.minute, Literal(self.minute))
         if self.month is not None:
-            resource.add(TIME.month, Literal("---" + str(self.month), datatype=XSD.gMonth))
+            resource.add(
+                TIME.month, Literal("---" + str(self.month), datatype=XSD.gMonth)
+            )
         if self.year is not None:
             resource.add(TIME.year, Literal(str(self.year), datatype=XSD.gYear))
         return resource
