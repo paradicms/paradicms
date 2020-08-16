@@ -11,3 +11,7 @@ from paradicms_etl.models.property_value import PropertyValue
 class Property:
     key: PropertyKey
     value: PropertyValue
+
+    def __post_init__(self):
+        if not isinstance(self.value, str):
+            raise ValueError("value not a string")
