@@ -88,10 +88,9 @@ class _Pipeline(ABC):
                 pipeline_kwds.pop(key)
             except KeyError:
                 pass
-        try:
-            pipeline_kwds["data_dir_path"] = Path(pipeline_kwds["data_dir_path"])
-        except KeyError:
-            pass
+        data_dir_path = pipeline_kwds.get("data_dir_path")
+        if data_dir_path is not None:
+            pipeline_kwds["data_dir_path"] = Path(data_dir_path)
         pipeline = cls(**pipeline_kwds)
 
         force = bool(args.get("force", False))
