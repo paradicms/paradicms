@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Footer as MuiFooter} from "@paradicms/gatsby-material-ui";
+import {Footer as MuiFooter} from "@paradicms/material-ui";
 import {graphql, StaticQuery} from "gatsby";
 import {FooterQuery} from "~/graphql/types";
 

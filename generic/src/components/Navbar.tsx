@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useState} from "react";
 import {AppBar, makeStyles, Toolbar, Typography} from "@material-ui/core";
-import {NavbarSearchForm} from "@paradicms/gatsby-material-ui";
+import {NavbarSearchForm} from "@paradicms/material-ui";
 import {Hrefs} from "~/Hrefs";
 import {Link} from "gatsby";
 
