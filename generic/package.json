@@ -10,6 +10,7 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
+    "@paradicms/base": "1.0.3",
     "@paradicms/material-ui": "1.0.3",
     "@types/react-medium-image-zoom": "^3.0.0",
     "gatsby": "^2.24.47",

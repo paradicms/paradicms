@@ -1,1 +1,1 @@
-export {wrapRootElement} from "./wrapRootElement";
+export {QueryParamProviderRootElementWrapper as wrapRootElement} from "@paradicms/base";
