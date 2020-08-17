@@ -57,7 +57,6 @@ const gatsbyConfig: ITSConfigFn<
         },
       },
       `gatsby-plugin-tsconfig-paths`,
-      "gatsby-plugin-use-query-params",
       {
         resolve: "gatsby-source-filesystem",
         options: {
