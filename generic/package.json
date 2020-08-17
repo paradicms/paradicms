@@ -26,6 +26,7 @@
   },
   "scripts": {
     "build": "gatsby build",
+    "clean": "gatsby clean",
     "develop": "gatsby develop",
     "format": "prettier --write \"src/**/*.{ts,tsx,md}\"",
     "graphql-codegen": "graphql-codegen --config graphql-codegen-config.yml",
