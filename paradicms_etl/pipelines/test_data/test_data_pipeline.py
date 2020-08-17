@@ -22,17 +22,24 @@ class TestDataPipeline(_Pipeline):
                     JsonDirectoryLoader(
                         clean=True,
                         pipeline_id=self.__ID,
-                        loaded_data_dir_path=root_dir_path / "gui" / "generic" / "src" / "data" / "test",
-                        strategy=JsonDirectoryLoader.Strategy.FILE_PER_MODEL_TYPE
+                        loaded_data_dir_path=root_dir_path
+                        / "gui"
+                        / "generic"
+                        / "src"
+                        / "data"
+                        / "test",
                     ),
                     JsonDirectoryLoader(
                         clean=True,
                         pipeline_id=self.__ID,
-                        loaded_data_dir_path=root_dir_path / "integration" / "generic" / "cypress" / "fixtures",
-                        strategy=JsonDirectoryLoader.Strategy.FILE_PER_MODEL_TYPE
+                        loaded_data_dir_path=root_dir_path
+                        / "integration"
+                        / "generic"
+                        / "cypress"
+                        / "fixtures",
                     ),
                 ),
-                pipeline_id=self.__ID
+                pipeline_id=self.__ID,
             ),
             transformer=TestDataTransformer(pipeline_id=self.__ID),
             **kwds

@@ -27,7 +27,7 @@ class JsonDirectoryLoader(_Loader):
         *,
         clean: bool = False,
         gatsby_js: bool = False,
-        strategy: Strategy = Strategy.FILE_PER_MODEL,
+        strategy: Strategy = Strategy.FILE_PER_MODEL_TYPE,
         **kwds
     ):
         _FileLoader.__init__(self, **kwds)
