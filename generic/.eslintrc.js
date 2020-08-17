@@ -1,1 +1,1 @@
-../../lib/ts/gatsby-base/.eslintrc.js
+../../lib/ts/base/.eslintrc.js

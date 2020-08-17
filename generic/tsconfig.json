@@ -8,6 +8,6 @@
     },
     "plugins": [{"transform": "@zerollup/ts-transform-paths"}]
   },
-  "extends": "../../lib/ts/gatsby-base/tsconfig.base.json",
+  "extends": "../../lib/ts/base/tsconfig.base.json",
   "include": [".gatsby/**/*","./src/**/*"]
 }
