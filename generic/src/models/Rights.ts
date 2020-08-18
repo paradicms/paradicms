@@ -1,4 +1,4 @@
 export interface Rights {
-  holder?: string;
-  statements?: readonly string[];
+  holder?: string | null;
+  statements?: readonly string[] | null;
 }
