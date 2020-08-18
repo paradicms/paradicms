@@ -13,7 +13,7 @@
     "@paradicms/base": "1.0.3",
     "@paradicms/material-ui": "1.0.3",
     "@types/react-medium-image-zoom": "^3.0.0",
-    "gatsby": "^2.10.5",
+    "gatsby": "2.24.47",
     "react-material-ui-carousel": "1.4.5",
     "react-medium-image-zoom": "3.1.2"
   },
