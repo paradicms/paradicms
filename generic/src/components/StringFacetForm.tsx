@@ -2,7 +2,7 @@ import * as React from "react";
 import * as _ from "lodash";
 import {invariant} from "ts-invariant";
 import {Checkbox, FormControlLabel, List, ListItem} from "@material-ui/core";
-import {StringFilter} from "~/models/StringFilter";
+import {StringFilter} from "@paradicms/models";
 
 export const StringFacetForm: React.FunctionComponent<{
   currentState?: StringFilter; // value id's only

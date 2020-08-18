@@ -5,10 +5,10 @@ import {
   AccordionDetails,
   Grid,
 } from "@material-ui/core";
-import {ObjectFilters} from "~/models/ObjectFilters";
-import {ObjectFacets} from "~/models/ObjectFacets";
-import {StringFilter} from "~/models/StringFilter";
-import {PropertyFilter} from "~/models/PropertyFilter";
+import {ObjectFilters} from "@paradicms/models";
+import {ObjectFacets} from "@paradicms/models";
+import {StringFilter} from "@paradicms/models";
+import {PropertyFilter} from "@paradicms/models";
 import {StringFacetForm} from "~/components/StringFacetForm";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 

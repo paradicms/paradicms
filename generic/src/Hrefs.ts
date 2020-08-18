@@ -1,4 +1,4 @@
-import {ObjectQuery} from "~/models/ObjectQuery";
+import {ObjectQuery} from "@paradicms/models";
 import * as qs from "qs";
 import sanitize from "sanitize-filename";
 import _ from "lodash";

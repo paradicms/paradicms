@@ -19,10 +19,10 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Link} from "gatsby";
 import {Hrefs} from "~/Hrefs";
-import {JoinedObject} from "~/models/JoinedObject";
-import {Images} from "~/models/Images";
+import {JoinedObject} from "@paradicms/models";
+import {Images} from "@paradicms/models";
 import {RightsTable} from "~/components/RightsTable";
-import {Image} from "~/models/Image";
+import {Image} from "@paradicms/models";
 
 const useStyles = makeStyles(theme => ({
   expansionPanelText: {

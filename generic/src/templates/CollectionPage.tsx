@@ -2,19 +2,19 @@ import {graphql} from "gatsby";
 import * as React from "react";
 import {Layout} from "~/components/Layout";
 import {Grid} from "@material-ui/core";
-import {Collection} from "~/models/Collection";
-import {Institution} from "~/models/Institution";
+import {Collection} from "@paradicms/models";
+import {Institution} from "@paradicms/models";
 import {CollectionPageQuery} from "~/graphql/types";
-import {JoinedObject} from "~/models/JoinedObject";
+import {JoinedObject} from "@paradicms/models";
 import {RightsTable} from "~/components/RightsTable";
 import {ObjectFacetsGrid} from "~/components/ObjectFacetsGrid";
-import {Objects} from "~/models/Objects";
+import {Objects} from "@paradicms/models";
 import {ObjectsGallery} from "~/components/ObjectsGallery";
-import {Models} from "~/models/Models";
-import {Images} from "~/models/Images";
+import {Models} from "@paradicms/models";
+import {Images} from "@paradicms/models";
 import {NumberParam, useQueryParam} from "use-query-params";
-import {ObjectFilters} from "~/models/ObjectFilters";
-import {Object} from "~/models/Object";
+import {ObjectFilters} from "@paradicms/models";
+import {Object} from "@paradicms/models";
 
 const OBJECTS_PER_PAGE = 10;
 

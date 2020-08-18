@@ -1,21 +1,21 @@
 import {NumberParam, useQueryParams, useQueryParam} from "use-query-params";
 import {JsonQueryParamConfig} from "~/components/JsonQueryParamConfig";
-import {ObjectQuery} from "~/models/ObjectQuery";
+import {ObjectQuery} from "@paradicms/models";
 import * as React from "react";
 import {ObjectIndex} from "~/ObjectIndex";
 import {graphql} from "gatsby";
 import {SearchPageQuery} from "~/graphql/types";
 import {ObjectIndexDocument} from "~/models/ObjectIndexDocument";
-import {Models} from "~/models/Models";
-import {JoinedObject} from "~/models/JoinedObject";
-import {Images} from "~/models/Images";
+import {Models} from "@paradicms/models";
+import {JoinedObject} from "@paradicms/models";
+import {Images} from "@paradicms/models";
 import {Layout} from "~/components/Layout";
 import {ObjectsGallery} from "~/components/ObjectsGallery";
 import {ObjectFacetsGrid} from "~/components/ObjectFacetsGrid";
-import {Objects} from "~/models/Objects";
+import {Objects} from "@paradicms/models";
 import {Grid} from "@material-ui/core";
-import {Object as ObjectModel} from "~/models/Object";
-import {ObjectFacets} from "~/models/ObjectFacets";
+import {Object as ObjectModel} from "@paradicms/models";
+import {ObjectFacets} from "@paradicms/models";
 
 const LIMIT_DEFAULT = 10;
 const OBJECTS_PER_PAGE = 10;

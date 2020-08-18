@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Grid} from "@material-ui/core";
 import {Pagination} from "@material-ui/lab";
-import {JoinedObject} from "~/models/JoinedObject";
+import {JoinedObject} from "@paradicms/models";
 import {ObjectCard} from "~/components/ObjectCard";
 
 export const ObjectsGallery: React.FunctionComponent<{

@@ -1,8 +1,8 @@
 import * as React from "react";
 import ImageZoom from "react-medium-image-zoom";
 import Carousel from "react-material-ui-carousel";
-import {Image} from "~/models/Image";
-import {Images} from "~/models/Images";
+import {Image} from "@paradicms/models";
+import {Images} from "@paradicms/models";
 
 export const ObjectImagesCarousel: React.FunctionComponent<{
   images: Image[];

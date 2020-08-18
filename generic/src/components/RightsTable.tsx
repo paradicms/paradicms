@@ -8,7 +8,7 @@ import {
   TableContainer,
   TableRow,
 } from "@material-ui/core";
-import {Rights} from "~/models/Rights";
+import {Rights} from "@paradicms/models";
 
 const isUrl = (uri: string) =>
   uri.startsWith("http://") || uri.startsWith("https://");
