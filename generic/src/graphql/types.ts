@@ -1,5 +1,5 @@
 export type Maybe<T> = T | null;
-export type Exact<T extends {[key: string]: any}> = {[K in keyof T]: T[K]};
+export type Exact<T extends {[key: string]: unknown}> = {[K in keyof T]: T[K]};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -25,7 +25,6 @@ export type CollectionJson = Node & {
   institutionUri: Scalars["String"];
   title: Scalars["String"];
   uri: Scalars["String"];
-  rights?: Maybe<CollectionJsonRights>;
   id: Scalars["ID"];
   parent?: Maybe<Node>;
   children: Array<Node>;
@@ -63,8 +62,6 @@ export enum CollectionJsonFieldsEnum {
   institutionUri = "institutionUri",
   title = "title",
   uri = "uri",
-  rights___holder = "rights___holder",
-  rights___statements = "rights___statements",
   id = "id",
   parent___id = "parent___id",
   parent___parent___id = "parent___parent___id",
@@ -157,7 +154,6 @@ export type CollectionJsonFilterInput = {
   institutionUri?: Maybe<StringQueryOperatorInput>;
   title?: Maybe<StringQueryOperatorInput>;
   uri?: Maybe<StringQueryOperatorInput>;
-  rights?: Maybe<CollectionJsonRightsFilterInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -176,17 +172,6 @@ export type CollectionJsonGroupConnection = {
   pageInfo: PageInfo;
   field: Scalars["String"];
   fieldValue?: Maybe<Scalars["String"]>;
-};
-
-export type CollectionJsonRights = {
-  __typename?: "CollectionJsonRights";
-  holder: Scalars["String"];
-  statements: Array<Scalars["String"]>;
-};
-
-export type CollectionJsonRightsFilterInput = {
-  holder?: Maybe<StringQueryOperatorInput>;
-  statements?: Maybe<StringQueryOperatorInput>;
 };
 
 export type CollectionJsonSortInput = {
@@ -742,8 +727,6 @@ export enum FileFieldsEnum {
   childrenCollectionJson___institutionUri = "childrenCollectionJson___institutionUri",
   childrenCollectionJson___title = "childrenCollectionJson___title",
   childrenCollectionJson___uri = "childrenCollectionJson___uri",
-  childrenCollectionJson___rights___holder = "childrenCollectionJson___rights___holder",
-  childrenCollectionJson___rights___statements = "childrenCollectionJson___rights___statements",
   childrenCollectionJson___id = "childrenCollectionJson___id",
   childrenCollectionJson___parent___id = "childrenCollectionJson___parent___id",
   childrenCollectionJson___parent___parent___id = "childrenCollectionJson___parent___parent___id",
@@ -784,9 +767,9 @@ export enum FileFieldsEnum {
   childrenCollectionJson___internal___type = "childrenCollectionJson___internal___type",
   childrenInstitutionJson = "childrenInstitutionJson",
   childrenInstitutionJson___name = "childrenInstitutionJson___name",
-  childrenInstitutionJson___uri = "childrenInstitutionJson___uri",
   childrenInstitutionJson___rights___holder = "childrenInstitutionJson___rights___holder",
   childrenInstitutionJson___rights___statements = "childrenInstitutionJson___rights___statements",
+  childrenInstitutionJson___uri = "childrenInstitutionJson___uri",
   childrenInstitutionJson___id = "childrenInstitutionJson___id",
   childrenInstitutionJson___parent___id = "childrenInstitutionJson___parent___id",
   childrenInstitutionJson___parent___parent___id = "childrenInstitutionJson___parent___parent___id",
@@ -826,11 +809,11 @@ export enum FileFieldsEnum {
   childrenInstitutionJson___internal___owner = "childrenInstitutionJson___internal___owner",
   childrenInstitutionJson___internal___type = "childrenInstitutionJson___internal___type",
   childrenPropertyDefinitionJson = "childrenPropertyDefinitionJson",
+  childrenPropertyDefinitionJson___faceted = "childrenPropertyDefinitionJson___faceted",
   childrenPropertyDefinitionJson___key = "childrenPropertyDefinitionJson___key",
   childrenPropertyDefinitionJson___labelPlural = "childrenPropertyDefinitionJson___labelPlural",
   childrenPropertyDefinitionJson___labelSingular = "childrenPropertyDefinitionJson___labelSingular",
   childrenPropertyDefinitionJson___uri = "childrenPropertyDefinitionJson___uri",
-  childrenPropertyDefinitionJson___faceted = "childrenPropertyDefinitionJson___faceted",
   childrenPropertyDefinitionJson___id = "childrenPropertyDefinitionJson___id",
   childrenPropertyDefinitionJson___parent___id = "childrenPropertyDefinitionJson___parent___id",
   childrenPropertyDefinitionJson___parent___parent___id = "childrenPropertyDefinitionJson___parent___parent___id",
@@ -1231,8 +1214,8 @@ export type ImageJsonSortInput = {
 export type InstitutionJson = Node & {
   __typename?: "InstitutionJson";
   name: Scalars["String"];
+  rights: InstitutionJsonRights;
   uri: Scalars["String"];
-  rights?: Maybe<InstitutionJsonRights>;
   id: Scalars["ID"];
   parent?: Maybe<Node>;
   children: Array<Node>;
@@ -1268,9 +1251,9 @@ export type InstitutionJsonEdge = {
 
 export enum InstitutionJsonFieldsEnum {
   name = "name",
-  uri = "uri",
   rights___holder = "rights___holder",
   rights___statements = "rights___statements",
+  uri = "uri",
   id = "id",
   parent___id = "parent___id",
   parent___parent___id = "parent___parent___id",
@@ -1361,8 +1344,8 @@ export enum InstitutionJsonFieldsEnum {
 
 export type InstitutionJsonFilterInput = {
   name?: Maybe<StringQueryOperatorInput>;
-  uri?: Maybe<StringQueryOperatorInput>;
   rights?: Maybe<InstitutionJsonRightsFilterInput>;
+  uri?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -1385,8 +1368,8 @@ export type InstitutionJsonGroupConnection = {
 
 export type InstitutionJsonRights = {
   __typename?: "InstitutionJsonRights";
-  holder: Scalars["String"];
-  statements: Array<Scalars["String"]>;
+  holder?: Maybe<Scalars["String"]>;
+  statements?: Maybe<Array<Scalars["String"]>>;
 };
 
 export type InstitutionJsonRightsFilterInput = {
@@ -1635,8 +1618,8 @@ export type ObjectJsonPropertiesFilterListInput = {
 
 export type ObjectJsonRights = {
   __typename?: "ObjectJsonRights";
-  holder: Scalars["String"];
-  statements: Array<Scalars["String"]>;
+  holder?: Maybe<Scalars["String"]>;
+  statements?: Maybe<Array<Scalars["String"]>>;
 };
 
 export type ObjectJsonRightsFilterInput = {
@@ -1662,11 +1645,11 @@ export type PageInfo = {
 
 export type PropertyDefinitionJson = Node & {
   __typename?: "PropertyDefinitionJson";
+  faceted?: Maybe<Scalars["Boolean"]>;
   key: Scalars["String"];
   labelPlural: Scalars["String"];
   labelSingular: Scalars["String"];
   uri: Scalars["String"];
-  faceted?: Maybe<Scalars["Boolean"]>;
   id: Scalars["ID"];
   parent?: Maybe<Node>;
   children: Array<Node>;
@@ -1701,11 +1684,11 @@ export type PropertyDefinitionJsonEdge = {
 };
 
 export enum PropertyDefinitionJsonFieldsEnum {
+  faceted = "faceted",
   key = "key",
   labelPlural = "labelPlural",
   labelSingular = "labelSingular",
   uri = "uri",
-  faceted = "faceted",
   id = "id",
   parent___id = "parent___id",
   parent___parent___id = "parent___parent___id",
@@ -1795,11 +1778,11 @@ export enum PropertyDefinitionJsonFieldsEnum {
 }
 
 export type PropertyDefinitionJsonFilterInput = {
+  faceted?: Maybe<BooleanQueryOperatorInput>;
   key?: Maybe<StringQueryOperatorInput>;
   labelPlural?: Maybe<StringQueryOperatorInput>;
   labelSingular?: Maybe<StringQueryOperatorInput>;
   uri?: Maybe<StringQueryOperatorInput>;
-  faceted?: Maybe<BooleanQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -1995,7 +1978,6 @@ export type QueryCollectionJsonArgs = {
   institutionUri?: Maybe<StringQueryOperatorInput>;
   title?: Maybe<StringQueryOperatorInput>;
   uri?: Maybe<StringQueryOperatorInput>;
-  rights?: Maybe<CollectionJsonRightsFilterInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -2031,8 +2013,8 @@ export type QueryAllImageJsonArgs = {
 
 export type QueryInstitutionJsonArgs = {
   name?: Maybe<StringQueryOperatorInput>;
-  uri?: Maybe<StringQueryOperatorInput>;
   rights?: Maybe<InstitutionJsonRightsFilterInput>;
+  uri?: Maybe<StringQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -2067,11 +2049,11 @@ export type QueryAllObjectJsonArgs = {
 };
 
 export type QueryPropertyDefinitionJsonArgs = {
+  faceted?: Maybe<BooleanQueryOperatorInput>;
   key?: Maybe<StringQueryOperatorInput>;
   labelPlural?: Maybe<StringQueryOperatorInput>;
   labelSingular?: Maybe<StringQueryOperatorInput>;
   uri?: Maybe<StringQueryOperatorInput>;
-  faceted?: Maybe<BooleanQueryOperatorInput>;
   id?: Maybe<StringQueryOperatorInput>;
   parent?: Maybe<NodeFilterInput>;
   children?: Maybe<NodeFilterListInput>;
@@ -2502,27 +2484,14 @@ export type SitePageContext = {
 export type SitePageContextCollection = {
   __typename?: "SitePageContextCollection";
   institutionUri?: Maybe<Scalars["String"]>;
-  rights?: Maybe<SitePageContextCollectionRights>;
   title?: Maybe<Scalars["String"]>;
   uri?: Maybe<Scalars["String"]>;
 };
 
 export type SitePageContextCollectionFilterInput = {
   institutionUri?: Maybe<StringQueryOperatorInput>;
-  rights?: Maybe<SitePageContextCollectionRightsFilterInput>;
   title?: Maybe<StringQueryOperatorInput>;
   uri?: Maybe<StringQueryOperatorInput>;
-};
-
-export type SitePageContextCollectionRights = {
-  __typename?: "SitePageContextCollectionRights";
-  holder?: Maybe<Scalars["String"]>;
-  statements?: Maybe<Array<Maybe<Scalars["String"]>>>;
-};
-
-export type SitePageContextCollectionRightsFilterInput = {
-  holder?: Maybe<StringQueryOperatorInput>;
-  statements?: Maybe<StringQueryOperatorInput>;
 };
 
 export type SitePageContextFilterInput = {
@@ -2709,8 +2678,6 @@ export enum SitePageFieldsEnum {
   context___institution___uri = "context___institution___uri",
   context___institutionUri = "context___institutionUri",
   context___collection___institutionUri = "context___collection___institutionUri",
-  context___collection___rights___holder = "context___collection___rights___holder",
-  context___collection___rights___statements = "context___collection___rights___statements",
   context___collection___title = "context___collection___title",
   context___collection___uri = "context___collection___uri",
   context___collectionUri = "context___collectionUri",
@@ -3261,14 +3228,7 @@ export type LayoutQuery = {__typename?: "Query"} & {
 export type CollectionFragmentFragment = {__typename?: "CollectionJson"} & Pick<
   CollectionJson,
   "institutionUri" | "title" | "uri"
-> & {
-    rights?: Maybe<
-      {__typename?: "CollectionJsonRights"} & Pick<
-        CollectionJsonRights,
-        "holder" | "statements"
-      >
-    >;
-  };
+>;
 
 export type ImageFragmentFragment = {__typename?: "ImageJson"} & Pick<
   ImageJson,
@@ -3291,11 +3251,9 @@ export type ImageFragmentFragment = {__typename?: "ImageJson"} & Pick<
 export type InstitutionFragmentFragment = {
   __typename?: "InstitutionJson";
 } & Pick<InstitutionJson, "name" | "uri"> & {
-    rights?: Maybe<
-      {__typename?: "InstitutionJsonRights"} & Pick<
-        InstitutionJsonRights,
-        "holder" | "statements"
-      >
+    rights: {__typename?: "InstitutionJsonRights"} & Pick<
+      InstitutionJsonRights,
+      "holder" | "statements"
     >;
   };
 
