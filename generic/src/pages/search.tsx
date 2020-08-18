@@ -1,5 +1,5 @@
 import {NumberParam, useQueryParams, useQueryParam} from "use-query-params";
-import {JsonQueryParamConfig} from "~/components/JsonQueryParamConfig";
+import {JsonQueryParamConfig} from "@paradicms/base";
 import {ObjectQuery} from "@paradicms/models";
 import * as React from "react";
 import {ObjectIndex} from "~/ObjectIndex";
