@@ -9,7 +9,6 @@ import {ObjectFilters} from "~/models/ObjectFilters";
 import {ObjectFacets} from "~/models/ObjectFacets";
 import {StringFilter} from "~/models/StringFilter";
 import {PropertyFilter} from "~/models/PropertyFilter";
-import {PropertyKey} from "~/models/PropertyKey";
 import {StringFacetForm} from "~/components/StringFacetForm";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
@@ -34,10 +33,7 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
   filters: ObjectFilters;
   onChange: (filters: ObjectFilters) => void;
 }> = ({facets, filters, onChange}) => {
-  const onChangePropertyFilter = (
-    key: PropertyKey,
-    newState?: StringFilter
-  ) => {
+  const onChangePropertyFilter = (key: string, newState?: StringFilter) => {
     const {properties: oldProperties, ...oldFiltersWithoutProperties} = filters;
 
     let newPropertyFilters: PropertyFilter[];

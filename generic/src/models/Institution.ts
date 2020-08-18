@@ -1,3 +1,7 @@
-import {InstitutionJson} from "~/graphql/types";
+import {Rights} from "~/models/Rights";
 
-export type Institution = Pick<InstitutionJson, "name" | "rights" | "uri">;
+export interface Institution {
+  readonly name: string;
+  readonly rights?: Rights | null;
+  readonly uri: string;
+}

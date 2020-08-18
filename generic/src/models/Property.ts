@@ -1,3 +1,4 @@
-import {ObjectJsonProperties} from "~/graphql/types";
-
-export type Property = Pick<ObjectJsonProperties, "key" | "value">;
+export interface Property {
+  readonly key: string;
+  readonly value: string;
+}

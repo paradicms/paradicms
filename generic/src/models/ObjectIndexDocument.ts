@@ -1,4 +1,4 @@
 export interface ObjectIndexDocument {
-  title: string;
-  uri: string;
+  readonly title: string;
+  readonly uri: string;
 }

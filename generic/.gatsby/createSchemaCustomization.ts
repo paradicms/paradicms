@@ -38,8 +38,8 @@ export const createSchemaCustomization = async (
   }
 
   type InstitutionJsonRights {
-    holder: String!
-    statements: [String!]!
+    holder: String
+    statements: [String!]
   }  
   
   type ObjectJson implements Node {
@@ -57,8 +57,8 @@ export const createSchemaCustomization = async (
   }
   
   type ObjectJsonRights {
-    holder: String!
-    statements: [String!]!
+    holder: String
+    statements: [String!]
   }
   
   type PropertyDefinitionJson implements Node {

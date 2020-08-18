@@ -1,6 +1,5 @@
-import {CollectionJson} from "~/graphql/types";
-
-export type Collection = Pick<
-  CollectionJson,
-  "institutionUri" | "rights" | "title" | "uri"
->;
+export interface Collection {
+  readonly institutionUri: string;
+  readonly title: string;
+  readonly uri: string;
+}

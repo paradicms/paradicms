@@ -33,7 +33,7 @@ export const RightsTable: React.FunctionComponent<{
     <TableContainer component={Paper}>
       <Table className={classes.table}>
         <TableBody>
-          {rights.statements.map((statement, statementIndex) => (
+          {rights.statements?.map((statement, statementIndex) => (
             <TableRow key={statementIndex}>
               <TableCell className={classes.cell}>
                 <strong>Rights statement</strong>

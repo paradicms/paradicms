@@ -7,7 +7,6 @@ import {Image} from "~/models/Image";
 import {StringFilter} from "~/models/StringFilter";
 import {PropertyDefinition} from "~/models/PropertyDefinition";
 import {ObjectPropertyFacet} from "~/models/ObjectPropertyFacet";
-import {PropertyValue} from "~/models/PropertyValue";
 import {ObjectFacets} from "~/models/ObjectFacets";
 
 export class Objects {
@@ -22,7 +21,7 @@ export class Objects {
         continue;
       }
       const facetObjects: Object[] = [];
-      const facetValues: PropertyValue[] = [];
+      const facetValues: string[] = [];
       for (const object of objectsWithProperties) {
         let includeObject = false;
         for (const property of object.properties!) {
@@ -54,7 +53,7 @@ export class Objects {
 
     const filterStrings = (kwds: {
       filter: StringFilter | null | undefined;
-      getObjectValues: (object: Object) => string[] | null | undefined;
+      getObjectValues: (object: Object) => readonly string[] | null | undefined;
       objects: readonly Object[];
     }): readonly Object[] => {
       const {filter, getObjectValues, objects} = kwds;

@@ -1,3 +1,4 @@
-import {CollectionJsonRights} from "~/graphql/types";
-
-export type Rights = Pick<CollectionJsonRights, "holder" | "statements">;
+export interface Rights {
+  holder?: string;
+  statements?: readonly string[];
+}
