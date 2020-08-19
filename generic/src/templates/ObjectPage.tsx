@@ -11,12 +11,10 @@ import {
   TableCell,
   TableRow,
 } from "@material-ui/core";
-import {Institution} from "@paradicms/models";
+import {Institution, Object} from "@paradicms/models";
 import {ObjectPageQuery} from "~/graphql/types";
-import {Object} from "@paradicms/models";
-import {RightsTable} from "~/components/RightsTable";
+import {ObjectImagesCarousel, RightsTable} from "@paradicms/material-ui";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {ObjectImagesCarousel} from "~/components/ObjectImagesCarousel";
 
 const ObjectPage: React.FunctionComponent<{
   data: ObjectPageQuery;

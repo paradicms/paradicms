@@ -2,19 +2,24 @@ import {graphql} from "gatsby";
 import * as React from "react";
 import {Layout} from "~/components/Layout";
 import {Grid} from "@material-ui/core";
-import {Collection} from "@paradicms/models";
-import {Institution} from "@paradicms/models";
+import {
+  Collection,
+  Images,
+  Institution,
+  JoinedObject,
+  Models,
+  Object,
+  ObjectFilters,
+  Objects,
+} from "@paradicms/models";
 import {CollectionPageQuery} from "~/graphql/types";
-import {JoinedObject} from "@paradicms/models";
-import {RightsTable} from "~/components/RightsTable";
-import {ObjectFacetsGrid} from "~/components/ObjectFacetsGrid";
-import {Objects} from "@paradicms/models";
-import {ObjectsGallery} from "~/components/ObjectsGallery";
-import {Models} from "@paradicms/models";
-import {Images} from "@paradicms/models";
+import {
+  ObjectFacetsGrid,
+  ObjectsGallery,
+  RightsTable,
+} from "@paradicms/material-ui";
 import {NumberParam, useQueryParam} from "use-query-params";
-import {ObjectFilters} from "@paradicms/models";
-import {Object} from "@paradicms/models";
+import {Hrefs} from "~/Hrefs";
 
 const OBJECTS_PER_PAGE = 10;
 
@@ -72,6 +77,12 @@ const CollectionPage: React.FunctionComponent<{
               {joinedFilteredObjects.length ? (
                 <ObjectsGallery
                   currentPage={objectsPage}
+                  getInstitutionHref={institution =>
+                    Hrefs.institution(institution).home
+                  }
+                  getObjectHref={object =>
+                    Hrefs.institution(object.institution).object(object)
+                  }
                   maxPage={
                     Math.ceil(joinedFilteredObjects.length / OBJECTS_PER_PAGE) -
                     1
