@@ -10,10 +10,9 @@ import {
   Objects,
 } from "@paradicms/models";
 import * as React from "react";
-import {ObjectIndex} from "~/ObjectIndex";
+import {ObjectIndex} from "@paradicms/lunr";
 import {graphql} from "gatsby";
 import {SearchPageQuery} from "~/graphql/types";
-import {ObjectIndexDocument} from "~/models/ObjectIndexDocument";
 import {Layout} from "~/components/Layout";
 import {ObjectFacetsGrid, ObjectsGallery} from "@paradicms/material-ui";
 import {Grid} from "@material-ui/core";
@@ -50,7 +49,7 @@ const SearchPage: React.FunctionComponent<{data: SearchPageQuery}> = ({
 
   const [index, setIndex] = React.useState<ObjectIndex>();
   React.useEffect(() => {
-    ObjectIndex.loaded().then(index => setIndex(index));
+    setIndex(new ObjectIndex(objects));
   }, []);
 
   const collectionsByUri = React.useMemo(() => Models.indexByUri(collections), [
@@ -64,9 +63,6 @@ const SearchPage: React.FunctionComponent<{data: SearchPageQuery}> = ({
     () => Models.indexByUri(institutions),
     [institutions]
   );
-  const objectsByUri = React.useMemo(() => Models.indexByUri(objects), [
-    objects,
-  ]);
 
   const [results, setResults] = React.useState<{
     filteredObjects: readonly ObjectModel[];
@@ -82,19 +78,8 @@ const SearchPage: React.FunctionComponent<{data: SearchPageQuery}> = ({
     let resultObjects: readonly ObjectModel[];
     console.info("query " + JSON.stringify(query));
     if (query.text) {
-      let results = index.search(query.text);
-      results = results.slice(offset, offset + limit);
-      resultObjects = results.map(
-        (result: ObjectIndexDocument): ObjectModel => {
-          const {uri: objectUri} = result;
-
-          const object = objectsByUri[objectUri];
-          if (!object) {
-            throw new EvalError("unable to find object with URI " + objectUri);
-          }
-          return object;
-        }
-      );
+      resultObjects = index.search(query.text);
+      resultObjects = resultObjects.slice(offset, offset + limit);
     } else {
       resultObjects = objects;
     }

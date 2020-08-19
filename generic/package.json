@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@paradicms/base": "1.0.3",
+    "@paradicms/lunr": "1.0.3",
     "@paradicms/material-ui": "1.0.3",
     "@paradicms/models": "1.0.3",
     "gatsby": "2.24.47"
