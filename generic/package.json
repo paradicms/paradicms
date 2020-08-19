@@ -14,15 +14,21 @@
     "@paradicms/lunr": "1.0.3",
     "@paradicms/material-ui": "1.0.3",
     "@paradicms/models": "1.0.3",
-    "gatsby": "2.24.47"
+    "react-helmet": "^6.0.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.2.0",
-    "cross-env": "^7.0.2",
-    "eslint": "^6.6.0",
-    "eslint-config-prettier": "^6.5.0",
-    "prettier": "^1.18.2",
-    "rimraf": "^2.6.3"
+    "gatsby": "2.24.47",
+    "gatsby-plugin-canonical-urls": "^2.1.0",
+    "gatsby-plugin-material-ui": "^2.1.9",
+    "gatsby-plugin-prefetch-google-fonts": "^1.4.3",
+    "gatsby-plugin-react-helmet": "^3.1.0",
+    "gatsby-plugin-ts": "^2.7.1",
+    "gatsby-plugin-ts-config": "^0.2.3",
+    "gatsby-plugin-tsconfig-paths": "^1.0.2",
+    "gatsby-source-filesystem": "^2.1.0",
+    "gatsby-transformer-json": "^2.2.0",
+    "ts-node": "^8.10.2"
   },
   "scripts": {
     "build": "gatsby build",
