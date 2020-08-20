@@ -33,6 +33,15 @@ class TestDataPipeline(_Pipeline):
                         clean=True,
                         pipeline_id=self.__ID,
                         loaded_data_dir_path=root_dir_path
+                        / "gui"
+                        / "union"
+                        / "data"
+                        / "test",
+                    ),
+                    JsonDirectoryLoader(
+                        clean=True,
+                        pipeline_id=self.__ID,
+                        loaded_data_dir_path=root_dir_path
                         / "integration"
                         / "generic"
                         / "cypress"
