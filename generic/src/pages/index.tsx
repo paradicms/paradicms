@@ -1,15 +1,30 @@
 import * as React from "react";
 import {Layout} from "~/components/Layout";
-import {graphql} from "gatsby";
-import {InstitutionsList} from "~/components/InstitutionsList";
+import {graphql, Link} from "gatsby";
+import {List, ListItem, ListItemText} from "@material-ui/core";
 import {IndexPageQuery} from "~/graphql/types";
+import {Hrefs} from "~/Hrefs";
 
 const IndexPage: React.FunctionComponent<{
   data: IndexPageQuery;
-}> = ({data}) => {
+}> = ({
+  data: {
+    allInstitutionJson: {nodes: institutions},
+  },
+}) => {
   return (
     <Layout documentTitle="Institutions">
-      <InstitutionsList institutions={data.allInstitutionJson.nodes} />
+      <List>
+        {institutions.map(institution => (
+          <ListItem key={institution.uri}>
+            <ListItemText>
+              <Link to={Hrefs.institution(institution).home}>
+                {institution.name}
+              </Link>
+            </ListItemText>
+          </ListItem>
+        ))}
+      </List>
     </Layout>
   );
 };
