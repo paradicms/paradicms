@@ -7,6 +7,7 @@ import {
   Object,
   PropertyDefinition,
 } from "@paradicms/models";
+import * as sanitize from "sanitize-filename";
 
 export class Data {
   private static readonly dataDirectoryPath = path.join(
@@ -36,8 +37,12 @@ export class Data {
     return Data.getModels<Image>("image");
   }
 
+  static getInstitutionBySanitizedUri(institutionUri: string): Institution {
+    return Data.getModelBySanitizedUri(Data.getInstitutions(), institutionUri);
+  }
+
   static getInstitutionByUri(institutionUri: string): Institution {
-    return this.getModelByUri(Data.getInstitutions(), institutionUri);
+    return Data.getModelByUri(Data.getInstitutions(), institutionUri);
   }
 
   static getInstitutions(): readonly Institution[] {
@@ -56,6 +61,19 @@ export class Data {
     return models.filter(model => model.institutionUri === institutionUri);
   }
 
+  private static getModelBySanitizedUri<ModelT extends {uri: string}>(
+    models: readonly ModelT[],
+    sanitizedModelUri: string
+  ): ModelT {
+    const model = models.find(
+      model => sanitize(model.uri) === sanitizedModelUri
+    );
+    if (!model) {
+      throw new EvalError("could not find model " + sanitizedModelUri);
+    }
+    return model;
+  }
+
   private static getModelByUri<ModelT extends {uri: string}>(
     models: readonly ModelT[],
     modelUri: string
@@ -68,7 +86,7 @@ export class Data {
   }
 
   static getObjectByUri(objectUri: string): Object {
-    return this.getModelByUri(Data.getObjects(), objectUri);
+    return Data.getModelByUri(Data.getObjects(), objectUri);
   }
 
   static getObjects(): readonly Object[] {

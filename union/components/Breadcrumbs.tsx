@@ -9,10 +9,10 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps & {
 }> = ({className, collection, institution, object}) => {
   const breadcrumbNodes: React.ReactNode[] = [
     <Link key="home" {...Hrefs.home}>
-      Home
+      <a>Home</a>
     </Link>,
     <Link key="institutions" {...Hrefs.home}>
-      Institutions
+      <a>Institutions</a>
     </Link>,
   ];
   if (institution) {
@@ -21,14 +21,14 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps & {
         key={`institution-${institution.uri}`}
         {...Hrefs.institution(institution.uri).home}
       >
-        {institution.name}
+        <a>{institution.name}</a>
       </Link>
     );
 
     if (collection) {
       breadcrumbNodes.push(
         <Link key="collections" {...Hrefs.institution(institution.uri).home}>
-          Collections
+          <a>Collections</a>
         </Link>
       );
       breadcrumbNodes.push(
@@ -37,7 +37,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps & {
           {...Hrefs.institution(institution.uri).collection(collection.uri)
             .home}
         >
-          {collection.title}
+          <a>{collection.title}</a>
         </Link>
       );
     }
@@ -51,7 +51,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps & {
               .collection(collection.uri)
               .objects()}
           >
-            Objects
+            <a>Objects</a>
           </Link>
         );
       } else {
@@ -62,7 +62,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps & {
           key={`object-${object.uri}`}
           {...Hrefs.institution(institution.uri).object(object.uri)}
         >
-          {object.title}
+          <a>{object.title}</a>
         </Link>
       );
     }

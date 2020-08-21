@@ -11,8 +11,7 @@ import Helmet from "react-helmet";
 import {Breadcrumbs} from "components/Breadcrumbs";
 import {BreadcrumbsProps} from "components/BreadcrumbsProps";
 import {Footer} from "@paradicms/material-ui";
-
-// import {Navbar} from "components/Navbar";
+import {Navbar} from "components/Navbar";
 
 const useStyles = makeStyles(theme => ({
   breadcrumbs: {
@@ -38,7 +37,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
       <CssBaseline />
       <Helmet
         title={
-          "Paradicms union catalog - " +
+          "Paradicms union catalog" +
           (documentTitle ? " - " + documentTitle : "")
         }
         meta={[
@@ -50,9 +49,9 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         ]}
       />
       <Grid data-cy="frame" container direction="column" spacing={2}>
-        {/*<Grid item>*/}
-        {/*  <Navbar onSearch={onSearch} />*/}
-        {/*</Grid>*/}
+        <Grid item>
+          <Navbar onSearch={onSearch} />
+        </Grid>
         {breadcrumbs ? (
           <Grid item data-cy="Fixtures-row">
             <Breadcrumbs
