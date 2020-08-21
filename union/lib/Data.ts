@@ -100,4 +100,14 @@ export class Data {
   static getPropertyDefinitions(): readonly PropertyDefinition[] {
     return Data.getModels<PropertyDefinition>("propertyDefinition");
   }
+
+  static getSanitizedInstitutionUris(): readonly string[] {
+    return Data.getSanitizedModelUris(Data.getInstitutions());
+  }
+
+  private static getSanitizedModelUris<ModelT extends {uri: string}>(
+    models: readonly ModelT[]
+  ): readonly string[] {
+    models.map(model => sanitize(model.uri));
+  }
 }
