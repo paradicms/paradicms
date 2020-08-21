@@ -10,7 +10,7 @@ import {
 import Helmet from "react-helmet";
 import {Breadcrumbs} from "components/Breadcrumbs";
 import {BreadcrumbsProps} from "components/BreadcrumbsProps";
-import {Footer} from "@paradicms/material-ui";
+import {Fonts, Footer} from "@paradicms/material-ui";
 import {Navbar} from "components/Navbar";
 
 const useStyles = makeStyles(theme => ({
@@ -34,6 +34,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
 
   return (
     <>
+      <Fonts />
       <CssBaseline />
       <Helmet
         title={
