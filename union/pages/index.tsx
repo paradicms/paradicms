@@ -5,11 +5,12 @@ import {Hrefs} from "lib/Hrefs";
 import {Data} from "lib/Data";
 import {List, ListItem, ListItemText} from "@material-ui/core";
 import Link from "next/link";
+import {Layout} from "components/Layout";
 
 const IndexPage: React.FunctionComponent<{
   institutions: readonly Institution[];
 }> = ({institutions}) => (
-  <div>
+  <Layout documentTitle="Institutions">
     <List>
       {institutions.map(institution => (
         <ListItem key={institution.uri}>
@@ -21,7 +22,7 @@ const IndexPage: React.FunctionComponent<{
         </ListItem>
       ))}
     </List>
-  </div>
+  </Layout>
 );
 
 export default IndexPage;

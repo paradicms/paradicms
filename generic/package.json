@@ -13,8 +13,7 @@
     "@paradicms/base": "1.0.3",
     "@paradicms/lunr": "1.0.3",
     "@paradicms/material-ui": "1.0.3",
-    "@paradicms/models": "1.0.3",
-    "react-helmet": "^6.0.0"
+    "@paradicms/models": "1.0.3"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^1.2.0",
