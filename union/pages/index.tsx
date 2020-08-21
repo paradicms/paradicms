@@ -16,7 +16,7 @@ const IndexPage: React.FunctionComponent<{
         <ListItem key={institution.uri}>
           <ListItemText>
             <Link {...Hrefs.institution(institution.uri).home}>
-              {institution.name}
+              <a>{institution.name}</a>
             </Link>
           </ListItemText>
         </ListItem>
