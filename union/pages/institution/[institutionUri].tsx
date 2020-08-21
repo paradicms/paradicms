@@ -6,6 +6,7 @@ import { Collection, Institution } from "@paradicms/models";
 import Link from "next/link";
 import {GetStaticPaths, GetStaticProps} from "next";
 import { Data } from "lib/Data";
+import * as sanitize from "sanitize-filename";
 
 const InstitutionPage: React.FunctionComponent<{
   collections: readonly Collection[];
@@ -36,14 +37,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const institutions = Data.getInstitutions();
   return {
     fallback: false,
-    paths: institutions.map(institution => ({ params: { institutionUri: institution.uri } }))
+    paths: institutions.map(institution => ({ params: { institutionUri: sanitize(institution.uri) } }))
   }
 }
 
 export const getStaticProps: GetStaticProps = async({params}) => {
-  const institutionUri = params!.institutionUri as string;
-  const institution = Data.getInstitutionByUri(institutionUri);
-  const collections = Data.getCollectionsByInstitutionUri(institutionUri)
+  const sanitizedInstitutionUri = params!.institutionUri as string;
+  const institution = Data.getInstitutions().find(institution => sanitize(institution.uri) === sanitizedInstitutionUri);
+  if (!institution) {
+    throw new EvalError("unable to find institution " + sanitizedInstitutionUri);
+  }
+  const collections = Data.getCollectionsByInstitutionUri(institution.uri)
   return {
     props: {collections, institution}
   }
