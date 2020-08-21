@@ -1,6 +1,12 @@
 import fs from "fs";
 import * as path from "path";
-import {Institution} from "@paradicms/models";
+import {
+  Collection,
+  Image,
+  Institution,
+  Object,
+  PropertyDefinition,
+} from "@paradicms/models";
 
 export class Data {
   private static readonly dataDirectoryPath = path.join(
@@ -9,13 +15,71 @@ export class Data {
     "test"
   );
 
+  static getCollectionByUri(collectionUri: string): Collection {
+    return this.getModelByUri(Data.getCollections(), collectionUri);
+  }
+
+  static getCollections(): readonly Collection[] {
+    return Data.getModels<Collection>("collection");
+  }
+
+  static getCollectionsByInstitutionUri(
+    institutionUri: string
+  ): readonly Collection[] {
+    return Data.getModelsByInstitutionUri(
+      institutionUri,
+      Data.getCollections()
+    );
+  }
+
+  static getImages(): readonly Image[] {
+    return Data.getModels<Image>("image");
+  }
+
+  static getInstitutionByUri(institutionUri: string): Institution {
+    return this.getModelByUri(Data.getInstitutions(), institutionUri);
+  }
+
   static getInstitutions(): readonly Institution[] {
     return Data.getModels<Institution>("institution");
   }
 
-  private static getModels<T>(fileBaseName: string): readonly T[] {
+  private static getModels<ModelT>(fileBaseName: string): readonly ModelT[] {
     const filePath = path.join(Data.dataDirectoryPath, fileBaseName + ".json");
     const fileContents = fs.readFileSync(filePath, "utf8");
     return JSON.parse(fileContents);
+  }
+
+  private static getModelsByInstitutionUri<
+    ModelT extends {institutionUri: string}
+  >(institutionUri: string, models: readonly ModelT[]): readonly ModelT[] {
+    return models.filter(model => model.institutionUri === institutionUri);
+  }
+
+  private static getModelByUri<ModelT extends {uri: string}>(
+    models: readonly ModelT[],
+    modelUri: string
+  ): ModelT {
+    const model = models.find(model => model.uri === modelUri);
+    if (!model) {
+      throw new EvalError("could not find model " + modelUri);
+    }
+    return model;
+  }
+
+  static getObjectByUri(objectUri: string): Object {
+    return this.getModelByUri(Data.getObjects(), objectUri);
+  }
+
+  static getObjects(): readonly Object[] {
+    return Data.getModels<Object>("object");
+  }
+
+  static getObjectsByInstitutionUri(institutionUri: string): readonly Object[] {
+    return Data.getModelsByInstitutionUri(institutionUri, Data.getObjects());
+  }
+
+  static getPropertyDefinitions(): readonly PropertyDefinition[] {
+    return Data.getModels<PropertyDefinition>("propertyDefinition");
   }
 }
