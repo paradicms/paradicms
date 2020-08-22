@@ -23,12 +23,21 @@ class GuiLoader(_Loader):
         subprocess_env = os.environ.copy()
         subprocess_env["DATA_DIRECTORY_PATH"] = str(data_dir_path)
         subprocess_env["EDITOR"] = ""
+
         os.chdir(str(gui_dir_path))
+
         subprocess_ret = subprocess.call(
             ["npm", "run", "build"], env=subprocess_env, shell=True,
         )
         if subprocess_ret != 0:
             self._logger.warning("build command returned non-zero: %d", subprocess_ret)
+            sys.exit(subprocess_ret)
+
+        subprocess_ret = subprocess.call(
+            ["npm", "run", "export"], env=subprocess_env, shell=True,
+        )
+        if subprocess_ret != 0:
+            self._logger.warning("export command returned non-zero: %d", subprocess_ret)
             sys.exit(subprocess_ret)
 
         gui_dist_dir_path = gui_dir_path / "out"
@@ -82,12 +91,22 @@ class GuiLoader(_Loader):
 
     def __load_data(self, force: bool, models: Generator[_Model, None, None]) -> Path:
         data_dir_path = self._loaded_data_dir_path / "data"
+
+        if not any(os.listdir(data_dir_path)):
+            self._logger.info("%s is empty, loading data")
+        elif force:
+            self._logger.info("force specified, loading data to %s", data_dir_path)
+        else:
+            self._logger.info(
+                "%s is not empty and force not specified, skipping data load",
+                data_dir_path,
+            )
+            return data_dir_path
+
         data_loader = JsonDirectoryLoader(
             clean=True,
             loaded_data_dir_path=data_dir_path,
             pipeline_id=self._pipeline_id,
         )
-        self._logger.info("loading data to %s", data_dir_path)
         data_loader.load(force=force, models=models)
         self._logger.info("loaded data to %s", data_dir_path)
-        return data_dir_path
