@@ -1,6 +1,6 @@
 import {AppProps} from "next/app";
 import Head from "next/head";
-import {QueryParamProvider} from "components/QueryParamProvider";
+import {QueryParamProvider} from "@paradicms/next";
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
@@ -16,7 +16,6 @@ const MyApp: React.FunctionComponent<AppProps> = ({Component, pageProps}) => {
   return (
     <>
       <Head>
-        <title>Paradicms union catalog</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"

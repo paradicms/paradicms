@@ -11,13 +11,8 @@
     "@paradicms/lunr": "1.0.3",
     "@paradicms/material-ui": "1.0.3",
     "@paradicms/models": "1.0.3",
+    "@paradicms/next": "1.0.3",
     "next": "9.5.2"
-  },
-  "devDependencies": {
-    "react-refresh": "^0.8.3",
-    "rimraf": "^3.0.2",
-    "serve": "^11.3.2",
-    "webpack": "^4.44.1"
   },
   "scripts": {
     "clean": "rimraf .next && rimraf out",
