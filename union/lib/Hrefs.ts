@@ -32,14 +32,14 @@ export class Hrefs {
           get home() {
             return collectionHref;
           },
-          // objects(objectQuery?: ObjectQuery): Href {
-          //   return {
-          //     href: `${collectionHref.href}/objects`,
-          //     as: `${collectionHref.as}/objects/${qs.stringify(objectQuery, {
-          //       addQueryPrefix: true,
-          //     })}`,
-          //   };
-          // },
+          objects(objectQuery?: ObjectQuery): Href {
+            return {
+              href: `${collectionHref.href}`,
+              as: `${collectionHref.as}${qs.stringify(objectQuery, {
+                addQueryPrefix: true,
+              })}`,
+            };
+          },
         };
       },
       home: institutionHref,
