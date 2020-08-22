@@ -11,7 +11,7 @@ from paradicms_etl.loaders.json_directory_loader import JsonDirectoryLoader
 
 
 class GuiLoader(_Loader):
-    def __init__(self, *, gui: str = "generic", **kwds):
+    def __init__(self, *, gui: str = "union", **kwds):
         """
         :param gui: name of a gui (in gui/ of this repository) or path to a gui
         """
@@ -31,26 +31,24 @@ class GuiLoader(_Loader):
             self._logger.warning("build command returned non-zero: %d", subprocess_ret)
             sys.exit(subprocess_ret)
 
-        gui_public_dir_path = gui_dir_path / "public"
+        gui_dist_dir_path = gui_dir_path / "out"
 
-        if not gui_public_dir_path.is_dir():
+        if not gui_dist_dir_path.is_dir():
             self._logger.warning(
                 "build command returned success but %s does not exist",
-                gui_public_dir_path,
+                gui_dist_dir_path,
             )
             sys.exit(1)
 
-        final_public_dir_path = self._loaded_data_dir_path / "public"
-        if final_public_dir_path.is_dir():
+        final_dist_dir_path = self._loaded_data_dir_path / "site"
+        if final_dist_dir_path.is_dir():
             self._logger.info(
-                "deleting existing final public directory %s", final_public_dir_path
+                "deleting existing final dist directory %s", final_dist_dir_path
             )
-            rmtree(final_public_dir_path)
+            rmtree(final_dist_dir_path)
 
-        self._logger.info(
-            "renaming %s to %s", gui_public_dir_path, final_public_dir_path
-        )
-        os.rename(gui_public_dir_path, final_public_dir_path)
+        self._logger.info("renaming %s to %s", gui_dist_dir_path, final_dist_dir_path)
+        os.rename(gui_dist_dir_path, final_dist_dir_path)
 
     def __clean_gui(self, gui_dir_path: Path):
         subprocess_env = os.environ.copy()
