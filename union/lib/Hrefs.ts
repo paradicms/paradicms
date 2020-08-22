@@ -1,8 +1,8 @@
 import {ObjectQuery} from "@paradicms/models";
 import * as qs from "qs";
-import sanitize from "sanitize-filename";
 import _ from "lodash";
 import {UrlObject} from "url";
+import {encodeFileName} from "lib/encodeFileName";
 
 interface Href {
   // Adapted from Next's <Link> LinkProps
@@ -18,33 +18,35 @@ export class Hrefs {
   static institution(institutionUri: string) {
     const institutionHref = {
       href: "/institution/[institutionUri]",
-      as: `/institution/${sanitize(institutionUri)}`,
+      as: `/institution/${encodeFileName(institutionUri)}`,
     };
     return {
       collection(collectionUri: string) {
         const collectionHref = {
-          href: `${institutionHref.href}/collection/[collectionUri]/`,
-          as: `${institutionHref.as}/collection/${sanitize(collectionUri)}`,
+          href: `${institutionHref.href}/collection/[collectionUri]`,
+          as: `${institutionHref.as}/collection/${encodeFileName(
+            collectionUri
+          )}/`,
         };
         return {
           get home() {
-            return this.objects();
+            return collectionHref;
           },
-          objects(objectQuery?: ObjectQuery): Href {
-            return {
-              href: `${collectionHref.href}/objects`,
-              as: `${collectionHref.as}/objects/${qs.stringify(objectQuery, {
-                addQueryPrefix: true,
-              })}`,
-            };
-          },
+          // objects(objectQuery?: ObjectQuery): Href {
+          //   return {
+          //     href: `${collectionHref.href}/objects`,
+          //     as: `${collectionHref.as}/objects/${qs.stringify(objectQuery, {
+          //       addQueryPrefix: true,
+          //     })}`,
+          //   };
+          // },
         };
       },
       home: institutionHref,
       object(objectUri: string): Href {
         return {
           href: `${institutionHref.href}/object/[objectUri]`,
-          as: `${institutionHref.as}/object/${sanitize(objectUri)}`,
+          as: `${institutionHref.as}/object/${encodeFileName(objectUri)}`,
         };
       },
     };

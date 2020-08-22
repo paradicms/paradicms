@@ -27,6 +27,7 @@
     "gatsby-plugin-tsconfig-paths": "^1.0.2",
     "gatsby-source-filesystem": "^2.1.0",
     "gatsby-transformer-json": "^2.2.0",
+    "sanitize-filename": "1.6.3",
     "ts-node": "^8.10.2"
   },
   "scripts": {

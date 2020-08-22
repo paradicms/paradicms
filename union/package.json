@@ -11,6 +11,7 @@
     "@paradicms/lunr": "1.0.3",
     "@paradicms/material-ui": "1.0.3",
     "@paradicms/models": "1.0.3",
+    "base-x": "^3.0.8",
     "next": "9.5.2"
   },
   "scripts": {
