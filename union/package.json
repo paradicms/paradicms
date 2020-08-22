@@ -24,7 +24,7 @@
     "dev": "next dev",
     "build": "next build",
     "export": "next export",
-    "serve": "serve",
+    "serve": "serve out",
     "start": "next start"
   }
 }
