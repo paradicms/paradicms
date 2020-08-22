@@ -1,1 +1,0 @@
-../../lib/ts/base/.eslintrc.js

@@ -1,6 +1,0 @@
-# Gatsby cache
-/.cache/
-/node_modules/
-/package-lock.json
-/public/
-/src/graphql/schema.graphql
