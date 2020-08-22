@@ -2,7 +2,6 @@ from typing import Dict, Optional, Tuple
 
 import dateparser
 from rdflib import URIRef
-from rdflib.namespace import DCTERMS
 
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
