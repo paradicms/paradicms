@@ -60,7 +60,7 @@ const ObjectPage: React.FunctionComponent<{
                           return null;
                         }
                         return (
-                          <>
+                          <React.Fragment key={propertyDefinition.key}>
                             {properties.map((property, propertyIndex) => (
                               <TableRow
                                 key={`property-${propertyDefinition.key}-${propertyIndex}`}
@@ -73,7 +73,7 @@ const ObjectPage: React.FunctionComponent<{
                                 <TableCell>{property.value}</TableCell>
                               </TableRow>
                             ))}
-                          </>
+                          </React.Fragment>
                         );
                       })}
                   </TableBody>
