@@ -2,7 +2,7 @@ import {ObjectQuery} from "@paradicms/models";
 import * as qs from "qs";
 import _ from "lodash";
 import {UrlObject} from "url";
-import {encodeFileName} from "lib/encodeFileName";
+import {encodeFileName} from "@paradicms/base";
 
 interface Href {
   // Adapted from Next's <Link> LinkProps

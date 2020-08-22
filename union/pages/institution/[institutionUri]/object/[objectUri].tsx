@@ -19,7 +19,7 @@ import {
 import {ObjectImagesCarousel, RightsTable} from "@paradicms/material-ui";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Data} from "lib/Data";
-import {decodeFileName, encodeFileName} from "lib/encodeFileName";
+import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {GetStaticPaths, GetStaticProps} from "next";
 
 const ObjectPage: React.FunctionComponent<{

@@ -16,7 +16,7 @@ import {
 import {ObjectFacetsGrid, RightsTable} from "@paradicms/material-ui";
 import {Data} from "lib/Data";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {decodeFileName, encodeFileName} from "lib/encodeFileName";
+import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {ObjectsGallery} from "components/ObjectsGallery";
 
 const CollectionPage: React.FunctionComponent<{

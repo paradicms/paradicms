@@ -6,7 +6,7 @@ import {Collection, Institution} from "@paradicms/models";
 import Link from "next/link";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Data} from "lib/Data";
-import {decodeFileName, encodeFileName} from "lib/encodeFileName";
+import {decodeFileName, encodeFileName} from "@paradicms/base";
 
 const InstitutionPage: React.FunctionComponent<{
   collections: readonly Collection[];

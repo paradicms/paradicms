@@ -9,11 +9,15 @@ import {
 } from "@paradicms/models";
 
 export class Data {
-  private static readonly dataDirectoryPath = path.join(
-    process.cwd(),
-    "data",
-    "test"
-  );
+  private static findDataDirectory(): string {
+    let dataDirectoryPath: string | undefined = process.env.DATA_DIRECTORY_PATH;
+    if (!dataDirectoryPath) {
+      dataDirectoryPath = path.join(process.cwd(), "data", "test");
+    }
+    return dataDirectoryPath;
+  }
+
+  private static readonly dataDirectoryPath = Data.findDataDirectory();
 
   static getCollectionByUri(collectionUri: string): Collection {
     return this.getModelByUri(Data.getCollections(), collectionUri);
