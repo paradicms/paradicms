@@ -50,6 +50,10 @@ export class Data {
     );
   }
 
+  static getImagesByObjectUri(objectUri: string): readonly Image[] {
+    return Data.getImages().filter(image => image.objectUri === objectUri);
+  }
+
   static getInstitutionByUri(institutionUri: string): Institution {
     return Data.getModelByUri(Data.getInstitutions(), institutionUri);
   }
@@ -103,6 +107,14 @@ export class Data {
         objectCollectionUri => objectCollectionUri === collectionUri
       )
     );
+  }
+
+  static getObjectUrisByInstitutionUri(
+    institutionUri: string
+  ): readonly string[] {
+    return Data.getObjects()
+      .filter(object => object.institutionUri === institutionUri)
+      .map(object => object.uri);
   }
 
   static getPropertyDefinitions(): readonly PropertyDefinition[] {
