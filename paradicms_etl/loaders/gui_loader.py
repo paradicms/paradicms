@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from shutil import copytree, rmtree
-from typing import Generator
+from typing import Generator, Optional
 import subprocess
 import sys
 
@@ -20,25 +20,12 @@ class GuiLoader(_Loader):
         self.__gui = gui
 
     def __build_gui(self, data_dir_path: Path, gui_dir_path: Path):
-        subprocess_env = os.environ.copy()
-        subprocess_env["DATA_DIRECTORY_PATH"] = str(data_dir_path)
-        subprocess_env["EDITOR"] = ""
-
-        os.chdir(str(gui_dir_path))
-
-        subprocess_ret = subprocess.call(
-            ["npm", "run", "build"], env=subprocess_env, shell=True,
+        self.__run_npm_script(
+            "build", data_dir_path=data_dir_path, gui_dir_path=gui_dir_path
         )
-        if subprocess_ret != 0:
-            self._logger.warning("build command returned non-zero: %d", subprocess_ret)
-            sys.exit(subprocess_ret)
-
-        subprocess_ret = subprocess.call(
-            ["npm", "run", "export"], env=subprocess_env, shell=True,
+        self.__run_npm_script(
+            "export", data_dir_path=data_dir_path, gui_dir_path=gui_dir_path
         )
-        if subprocess_ret != 0:
-            self._logger.warning("export command returned non-zero: %d", subprocess_ret)
-            sys.exit(subprocess_ret)
 
         gui_dist_dir_path = gui_dir_path / "out"
 
@@ -60,16 +47,7 @@ class GuiLoader(_Loader):
         os.rename(gui_dist_dir_path, final_dist_dir_path)
 
     def __clean_gui(self, gui_dir_path: Path):
-        subprocess_env = os.environ.copy()
-        subprocess_env["EDITOR"] = ""
-        os.chdir(str(gui_dir_path))
-        subprocess_ret = subprocess.call(
-            ["npm", "run", "clean"], env=subprocess_env, shell=True,
-        )
-        if subprocess_ret == 0:
-            return
-        self._logger.warning("clean command returned non-zero: %d", subprocess_ret)
-        sys.exit(subprocess_ret)
+        self.__run_npm_script("clean", gui_dir_path=gui_dir_path)
 
     def __get_gui_dir_path(self) -> Path:
         if os.path.isdir(self.__gui):
@@ -110,3 +88,24 @@ class GuiLoader(_Loader):
         )
         data_loader.load(force=force, models=models)
         self._logger.info("loaded data to %s", data_dir_path)
+
+    def __run_npm_script(
+        self, script, *, gui_dir_path: Path, data_dir_path: Optional[Path] = None
+    ):
+        subprocess_env = os.environ.copy()
+        if data_dir_path is not None:
+            subprocess_env["DATA_DIRECTORY_PATH"] = str(data_dir_path)
+        subprocess_env["EDITOR"] = ""
+
+        args = ["npm", "run", script]
+        self._logger.info("running %s", args)
+        subprocess_ret = subprocess.call(
+            args, cwd=str(gui_dir_path), env=subprocess_env, shell=True,
+        )
+        self._logger.info("%s returned %d", args, subprocess_ret)
+
+        if subprocess_ret != 0:
+            self._logger.warning(
+                "npm %s script returned non-zero: %d", script, subprocess_ret
+            )
+            sys.exit(subprocess_ret)
