@@ -6,6 +6,7 @@ import {Collection, Institution} from "@paradicms/models";
 import Link from "next/link";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Data} from "lib/Data";
+import {decodeFileName, encodeFileName} from "lib/encodeFileName";
 
 const InstitutionPage: React.FunctionComponent<{
   collections: readonly Collection[];
@@ -35,17 +36,16 @@ export default InstitutionPage;
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     fallback: false,
-    paths: Data.getSanitizedInstitutionUris().map(institutionUri => ({
-      params: {institutionUri},
+    paths: Data.getInstitutionUris().map(institutionUri => ({
+      params: {institutionUri: encodeFileName(institutionUri)},
     })),
   };
 };
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
-  const institution = Data.getInstitutionBySanitizedUri(
-    params!.institutionUri as string
-  );
-  const collections = Data.getCollectionsByInstitutionUri(institution.uri);
+  const institutionUri = decodeFileName(params!.institutionUri as string);
+  const institution = Data.getInstitutionByUri(institutionUri);
+  const collections = Data.getCollectionsByInstitutionUri(institutionUri);
   return {
     props: {collections, institution},
   };

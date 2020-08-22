@@ -7,7 +7,6 @@ import {
   Object,
   PropertyDefinition,
 } from "@paradicms/models";
-import * as sanitize from "sanitize-filename";
 
 export class Data {
   private static readonly dataDirectoryPath = path.join(
@@ -33,12 +32,22 @@ export class Data {
     );
   }
 
+  static getCollectionUrisByInstitutionUri(
+    institutionUri: string
+  ): readonly string[] {
+    return Data.getCollections()
+      .filter(collection => collection.institutionUri == institutionUri)
+      .map(collection => collection.uri);
+  }
+
   static getImages(): readonly Image[] {
     return Data.getModels<Image>("image");
   }
 
-  static getInstitutionBySanitizedUri(institutionUri: string): Institution {
-    return Data.getModelBySanitizedUri(Data.getInstitutions(), institutionUri);
+  static getImagesByInstitutionUri(institutionUri: string): readonly Image[] {
+    return Data.getImages().filter(
+      image => image.institutionUri === institutionUri
+    );
   }
 
   static getInstitutionByUri(institutionUri: string): Institution {
@@ -47,6 +56,10 @@ export class Data {
 
   static getInstitutions(): readonly Institution[] {
     return Data.getModels<Institution>("institution");
+  }
+
+  static getInstitutionUris(): readonly string[] {
+    return Data.getInstitutions().map(institution => institution.uri);
   }
 
   private static getModels<ModelT>(fileBaseName: string): readonly ModelT[] {
@@ -59,19 +72,6 @@ export class Data {
     ModelT extends {institutionUri: string}
   >(institutionUri: string, models: readonly ModelT[]): readonly ModelT[] {
     return models.filter(model => model.institutionUri === institutionUri);
-  }
-
-  private static getModelBySanitizedUri<ModelT extends {uri: string}>(
-    models: readonly ModelT[],
-    sanitizedModelUri: string
-  ): ModelT {
-    const model = models.find(
-      model => sanitize(model.uri) === sanitizedModelUri
-    );
-    if (!model) {
-      throw new EvalError("could not find model " + sanitizedModelUri);
-    }
-    return model;
   }
 
   private static getModelByUri<ModelT extends {uri: string}>(
@@ -97,17 +97,15 @@ export class Data {
     return Data.getModelsByInstitutionUri(institutionUri, Data.getObjects());
   }
 
+  static getObjectsByCollectionUri(collectionUri: string): readonly Object[] {
+    return Data.getObjects().filter(object =>
+      object.collectionUris.some(
+        objectCollectionUri => objectCollectionUri === collectionUri
+      )
+    );
+  }
+
   static getPropertyDefinitions(): readonly PropertyDefinition[] {
     return Data.getModels<PropertyDefinition>("propertyDefinition");
-  }
-
-  static getSanitizedInstitutionUris(): readonly string[] {
-    return Data.getSanitizedModelUris(Data.getInstitutions());
-  }
-
-  private static getSanitizedModelUris<ModelT extends {uri: string}>(
-    models: readonly ModelT[]
-  ): readonly string[] {
-    models.map(model => sanitize(model.uri));
   }
 }
