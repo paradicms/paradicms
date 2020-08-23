@@ -16,9 +16,11 @@ O = Namespace("http://omeka.org/s/vocabs/o#")
 
 
 class OmekaSTransformer(_Transformer):
-    def __init__(self, *, institution_kwds: Dict[str, str], square_thumbnail_height_px: int,
-                 square_thumbnail_width_px: int):
-        self.__institution_kwds = institution_kwds
+    def __init__(
+        self, *, square_thumbnail_height_px: int, square_thumbnail_width_px: int, **kwds
+    ):
+        _Transformer.__init__(self, **kwds)
+        self.__institution_kwds = kwds
         self.__square_thumbnail_height_px = square_thumbnail_height_px
         self.__square_thumbnail_width_px = square_thumbnail_width_px
 
@@ -29,7 +31,9 @@ class OmekaSTransformer(_Transformer):
         graph.parse(data=json.dumps(item_sets), format="json-ld")
         graph.parse(data=json.dumps(media), format="json-ld")
 
-        institution = self._transform_institution_from_arguments(graph=graph, **self.__institution_kwds)
+        institution = self._transform_institution_from_arguments(
+            graph=graph, **self.__institution_kwds
+        )
 
         collections_by_id = {}
         for item_set_uri in graph.subjects(RDF.type, O.ItemSet):
@@ -62,7 +66,9 @@ class OmekaSTransformer(_Transformer):
 
         return graph
 
-    def __transform_item(self, item: Resource, media_by_item_id: Dict[int, Resource]) -> Object:
+    def __transform_item(
+        self, item: Resource, media_by_item_id: Dict[int, Resource]
+    ) -> Object:
         item_id = item.value(O.id).toPython()
         object_ = Object(resource=item)
         object_.owner = CMS.inherit
@@ -89,8 +95,10 @@ class OmekaSTransformer(_Transformer):
 
         # thumbnail_urls is a JSON payload that rdflib can't read
         # Reconstruct the square thumbnail URL from the original
-        thumbnail = Image(graph=media.graph,
-                          uri=URIRef(str(original.uri).replace("/files/original/", "/files/square/")))
+        thumbnail = Image(
+            graph=media.graph,
+            uri=URIRef(str(original.uri).replace("/files/original/", "/files/square/")),
+        )
         thumbnail.height = self.__square_thumbnail_height_px
         thumbnail.width = self.__square_thumbnail_width_px
         thumbnail.resource.add(PROV.wasDerivedFrom, original.uri)

@@ -21,7 +21,6 @@ class OmekaClassicTransformer(_Transformer):
         *,
         fullsize_max_height_px: int,
         fullsize_max_width_px: int,
-        institution_kwds: Dict[str, str],
         square_thumbnail_height_px: int,
         square_thumbnail_width_px: int,
         thumbnail_max_height_px: int,
@@ -32,7 +31,7 @@ class OmekaClassicTransformer(_Transformer):
         # Single _ so we can use getattr
         self._fullsize_max_height_px = fullsize_max_height_px
         self._fullsize_max_width_px = fullsize_max_width_px
-        self.__institution_kwds = institution_kwds
+        self.__institution_kwds = kwds
         self._square_thumbnail_height_px = square_thumbnail_height_px
         self._square_thumbnail_width_px = square_thumbnail_width_px
         self._thumbnail_max_height_px = thumbnail_max_height_px

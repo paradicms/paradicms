@@ -22,13 +22,16 @@ class OmekaClassicPipeline(_Pipeline):
         _Pipeline.__init__(
             self,
             extractor=OmekaClassicExtractor(
-                api_key=api_key, endpoint_url=endpoint_url, **kwds
+                api_key=api_key,
+                endpoint_url=endpoint_url,
+                pipeline_id=pipeline_id,
+                **kwds
             ),
             id=pipeline_id,
             transformer=OmekaClassicTransformer(
                 fullsize_height_px=fullsize_height_px,
                 fullsize_width_px=fullsize_width_px,
-                institution_kwds=kwds,
+                pipeline_id=pipeline_id,
                 square_thumbnail_height_px=square_thumbnail_height_px,
                 square_thumbnail_width_px=square_thumbnail_width_px,
                 thumbnail_height_px=thumbnail_height_px,
