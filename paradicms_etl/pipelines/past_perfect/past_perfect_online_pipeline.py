@@ -15,16 +15,19 @@ class PastPerfectOnlinePipeline(_PastPerfectPipeline):
             self,
             extractor=PastPerfectOnlineExtractor(pipeline_id=subdomain, **kwds),
             id=subdomain,
-            transformer=PastPerfectOnlineTransformer(subdomain=subdomain, **kwds),
+            transformer=PastPerfectOnlineTransformer(pipeline_id=subdomain, **kwds),
             **kwds
         )
 
     @classmethod
     def add_arguments(cls, arg_parser):
-        _PastPerfectPipeline.add_arguments(cls, arg_parser)
+        _PastPerfectPipeline.add_arguments(arg_parser)
         arg_parser.add_argument(
             "--subdomain",
             help="subdomain of pastperfectonline.com e.g., 'yourcollection' in yourcollection.pastperfectonline.com",
             required=True,
         )
-        cls._add_institution_arguments(arg_parser)
+
+
+if __name__ == "__main__":
+    PastPerfectOnlinePipeline.main()

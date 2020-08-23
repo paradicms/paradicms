@@ -1,10 +1,5 @@
-import json
-
-from pastpy.impl.online.online_database_configuration import OnlineDatabaseConfiguration
-from pathvalidate import sanitize_filename
-from tqdm import tqdm
-
 from paradicms_etl._extractor import _Extractor
+import os
 
 
 class PastPerfectOnlineExtractor(_Extractor):
@@ -13,6 +8,9 @@ class PastPerfectOnlineExtractor(_Extractor):
 
     def extract(self, *, force: bool):
         from pastpy.database import Database
+        from pastpy.impl.online.online_database_configuration import (
+            OnlineDatabaseConfiguration,
+        )
 
         database = Database.create(
             configuration=OnlineDatabaseConfiguration(
@@ -21,6 +19,26 @@ class PastPerfectOnlineExtractor(_Extractor):
             )
         )
 
-        database.download(tqdm_disable=False)
+        objects_detail_dir_path = self._extracted_data_dir_path / "objects" / "detail"
+        if force:
+            self._logger.info("forcing download")
+            download = True
+        elif not objects_detail_dir_path.is_dir() or not any(
+            os.listdir(objects_detail_dir_path)
+        ):
+            self._logger.info(
+                "no object detail .html files found in %s, downloading",
+                objects_detail_dir_path,
+            )
+            download = True
+        else:
+            self._logger.info(
+                "object detail .html files already downloaded to %s, skipping download",
+                objects_detail_dir_path,
+            )
+            download = False
+
+        if download:
+            database.download(tqdm_disable=False)
 
         return {"database": database}
