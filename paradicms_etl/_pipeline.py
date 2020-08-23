@@ -69,6 +69,11 @@ class _Pipeline(ABC):
         )
 
     @classmethod
+    def _add_collection_arguments(cls, arg_parser: ArgParser) -> None:
+        arg_parser.add_argument("--collection-title", required=True)
+        arg_parser.add_argument("--collection-uri", required=True)
+
+    @classmethod
     def _add_institution_arguments(cls, arg_parser: ArgParser) -> None:
         arg_parser.add_argument("--institution-name", required=True)
         arg_parser.add_argument("--institution-rights", required=True)
