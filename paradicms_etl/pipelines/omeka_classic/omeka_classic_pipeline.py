@@ -57,3 +57,7 @@ class OmekaClassicPipeline(_Pipeline):
             arg_parser.add_argument("--" + key + "-height-px", type=int)
             arg_parser.add_argument("--" + key + "-width-px", type=int)
         cls._add_institution_arguments(arg_parser)
+
+
+if __name__ == "__main__":
+    OmekaClassicPipeline.main()
