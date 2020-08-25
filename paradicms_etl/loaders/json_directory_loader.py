@@ -47,7 +47,7 @@ class JsonDirectoryLoader(_Loader):
             class_json_objects = json_objects_by_type.setdefault(
                 model.__class__.__name__, {}
             )
-            assert str(model.uri) not in class_json_objects
+            assert str(model.uri) not in class_json_objects, model.uri
             class_json_objects[str(model.uri)] = json_remove_nulls(model.to_dict())
 
         if self.__strategy == self.Strategy.FILE_PER_MODEL:
