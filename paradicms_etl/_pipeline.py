@@ -86,7 +86,7 @@ class _Pipeline(ABC):
         if not extract_kwds:
             extract_kwds = {}
         models = self.transformer.transform(**extract_kwds)
-        self.loader.load(force=force_load, models=models)
+        return self.loader.load(force=force_load, models=models)
 
     @property
     def extractor(self):
