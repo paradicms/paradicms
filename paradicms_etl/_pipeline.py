@@ -37,16 +37,13 @@ class _Pipeline(ABC):
         self.__transformer = transformer
 
     @classmethod
-    def add_arguments(
-        cls, arg_parser: ArgParser, *, data_dir_path_default: Optional[str] = None
-    ) -> None:
+    def add_arguments(cls, arg_parser: ArgParser) -> None:
         """
         Add pipeline-specific arguments. The parsed arguments are passed to the constructor as keywords.
         """
         arg_parser.add_argument("-c", is_config_file=True, help="config file path")
         arg_parser.add_argument(
             "--data-dir-path",
-            default=data_dir_path_default,
             help="path to a directory to store extracted data and transformed models",
         )
         arg_parser.add_argument(

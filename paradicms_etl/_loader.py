@@ -7,7 +7,13 @@ from paradicms_etl._pipeline_phase import _PipelinePhase
 
 
 class _Loader(_PipelinePhase):
-    def __init__(self, *, data_dir_path: Optional[Path] = None, loaded_data_dir_path: Optional[Path] = None, **kwds):
+    def __init__(
+        self,
+        *,
+        data_dir_path: Optional[Path] = None,
+        loaded_data_dir_path: Optional[Path] = None,
+        **kwds
+    ):
         """
         Construct a loader.
 
@@ -19,7 +25,9 @@ class _Loader(_PipelinePhase):
         _PipelinePhase.__init__(self, **kwds)
         if loaded_data_dir_path is None:
             if data_dir_path is None:
-                data_dir_path = self._DATA_DIR_PATH_DEFAULT
+                raise ValueError(
+                    "must specify extracted_data_dir_path or data_dir_path"
+                )
             loaded_data_dir_path = data_dir_path / self._pipeline_id / "loaded"
         self.__loaded_data_dir_path = loaded_data_dir_path
 
