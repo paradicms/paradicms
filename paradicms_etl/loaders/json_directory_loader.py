@@ -59,6 +59,7 @@ class JsonDirectoryLoader(_Loader):
                         loaded_data_dir_path
                         / (stringcase.camelcase(class_name) + ".json"),
                         "w+",
+                        newline="\n"
                     ) as file_:
                         json.dump(
                             tuple(json_objects.values()),
@@ -75,13 +76,14 @@ class JsonDirectoryLoader(_Loader):
                     file_path = class_directory_path / (
                         sanitize_filename(uri) + ".json"
                     )
-                    with open(file_path, "w+") as file_:
+                    with open(file_path, "w+", newline="\n") as file_:
                         json.dump(json_object, file_, default=json_dump_default)
         elif self.__strategy == self.Strategy.FILE_PER_MODEL_TYPE:
             for class_name, json_objects in json_objects_by_type.items():
                 with open(
                     loaded_data_dir_path / (stringcase.camelcase(class_name) + ".json"),
                     "w+",
+                    newline="\n"
                 ) as file_:
                     json.dump(
                         tuple(json_objects.values()), file_, default=json_dump_default

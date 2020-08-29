@@ -24,7 +24,7 @@ class JsonFileLoader(_FileLoader):
 
         json_objects_by_class_name = json_remove_nulls(json_objects_by_class_name)
 
-        with open(file_path, "w+") as file_:
+        with open(file_path, "w+", newline="\n") as file_:
             json.dump(
                 json_objects_by_class_name, file_, indent=4, default=json_dump_default
             )
