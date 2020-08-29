@@ -26,12 +26,7 @@ class _Extractor(_PipelinePhase):
         """
 
         _PipelinePhase.__init__(self, **kwds)
-        if extracted_data_dir_path is None:
-            if data_dir_path is None:
-                raise ValueError(
-                    "must specify extracted_data_dir_path or data_dir_path"
-                )
-            extracted_data_dir_path = data_dir_path / self._pipeline_id / "extracted"
+        self.__data_dir_path = data_dir_path
         self.__extracted_data_dir_path = extracted_data_dir_path
 
     def _download(self, from_url: str, force: bool) -> Path:
@@ -74,5 +69,13 @@ class _Extractor(_PipelinePhase):
         Paths into this directory can be passed to the transformer via the kwds return from extract.
         """
 
-        self.__extracted_data_dir_path.mkdir(parents=True, exist_ok=True)
-        return self.__extracted_data_dir_path
+        if self.__extracted_data_dir_path is not None:
+            extracted_data_dir_path = self.__extracted_data_dir_path
+        elif self.__data_dir_path is not None:
+            extracted_data_dir_path = (
+                self.__data_dir_path / self._pipeline_id / "extracted"
+            )
+        else:
+            raise ValueError("must specify extracted_data_dir_path or data_dir_path")
+        extracted_data_dir_path.mkdir(parents=True, exist_ok=True)
+        return extracted_data_dir_path
