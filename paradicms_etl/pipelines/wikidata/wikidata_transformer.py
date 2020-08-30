@@ -5,7 +5,6 @@ from rdflib import Graph, RDF
 
 from paradicms_etl._model import _Model
 from paradicms_etl._transformer import _Transformer
-from paradicms_etl.models.person import Person
 from paradicms_etl.pipelines.wikidata.wikidata_item import WikidataItem
 from paradicms_etl.pipelines.wikidata.wikidata_namespace import WIKIBASE
 from paradicms_etl.pipelines.wikidata.wikidata_property_definition import (
@@ -14,10 +13,6 @@ from paradicms_etl.pipelines.wikidata.wikidata_property_definition import (
 
 
 class WikidataTransformer(_Transformer):
-    def __init__(self, *, dataset_id: str, **kwds):
-        _Transformer.__init__(self, **kwds)
-        self.__dataset_id = dataset_id
-
     def __read_items(
         self, graph: Graph, property_definitions: Tuple[WikidataPropertyDefinition, ...]
     ) -> Tuple[WikidataItem, ...]:
@@ -88,17 +83,7 @@ class WikidataTransformer(_Transformer):
             graph=graph, property_definitions=property_definitions
         )
 
-        for item in items:
-            statements_by_property_label = item.statements_by_property_label()
-            instance_of_statements = statements_by_property_label.get("instance of")
-            if not instance_of_statements:
-                continue
-            assert len(instance_of_statements) == 1
-            instance_of_value = instance_of_statements[0].value.labels.pref_label
-            if instance_of_value == "human":
-                yield from self.__transform_person_item(item)
-            else:
-                raise NotImplementedError(instance_of_value)
+        yield from self._transform_items(items)
 
-    def __transform_person_item(self, item: WikidataItem):
-        yield Person(dataset_id=self.__dataset_id, labels=item.labels, uri=item.uri)
+    def _transform_items(self, items: Tuple[WikidataItem, ...]):
+        raise NotImplementedError("TODO: transform to Objects")
