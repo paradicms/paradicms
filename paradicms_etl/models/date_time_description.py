@@ -15,6 +15,7 @@ class DateTimeDescription(_Model):
     day: Optional[int] = None
     hour: Optional[int] = None
     minute: Optional[int] = None
+    second: Optional[int] = None
     month: Optional[int] = None
     year: Optional[int] = None
 

@@ -4,7 +4,7 @@ from typing import Tuple, Union
 
 from rdflib import Graph, Literal, PROV, RDF, URIRef
 
-from paradicms_etl.models.partial_date import PartialDate
+from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.pipelines.wikidata.wikidata_namespace import WIKIBASE
 from paradicms_etl.pipelines.wikidata.wikidata_property_definition import (
     WikidataPropertyDefinition,
@@ -135,6 +135,14 @@ class WikidataFullStatement(WikidataStatement):
             if time_precision >= 14:
                 second = time_value.second
 
-            return PartialDate(year=year, month=month, day=day)
+            return DateTimeDescription(
+                year=year,
+                month=month,
+                day=day,
+                hour=hour,
+                minute=minute,
+                second=second,
+                uri=value_uri,
+            )
         else:
             raise NotImplementedError(str(value_type))
