@@ -11,4 +11,5 @@ from paradicms_etl.pipelines.wikidata.wikidata_property_definition import (
 @dataclass
 class WikidataStatement:
     property_definition: WikidataPropertyDefinition
+    normalized_value: Union[Literal, None, URIRef, object]
     value: Union[Literal, URIRef, object]  # Can be replaced by WikidataItem

@@ -5,6 +5,9 @@ from rdflib import Graph, RDF
 
 from paradicms_etl._model import _Model
 from paradicms_etl._transformer import _Transformer
+from paradicms_etl.pipelines.wikidata.wikidata_full_statement import (
+    WikidataFullStatement,
+)
 from paradicms_etl.pipelines.wikidata.wikidata_item import WikidataItem
 from paradicms_etl.pipelines.wikidata.wikidata_namespace import WIKIBASE
 from paradicms_etl.pipelines.wikidata.wikidata_property_definition import (
@@ -21,6 +24,7 @@ class WikidataTransformer(_Transformer):
             items.append(
                 WikidataItem.parse(
                     graph=graph,
+                    logger=self._logger,
                     property_definitions=property_definitions,
                     uri=item_subject,
                 )
@@ -29,25 +33,33 @@ class WikidataTransformer(_Transformer):
         # Make another pass on items, substituting a WikidataItem instance for an (internal) URIRef to it
         items_by_uri = {item.uri: item for item in items}
 
-        # accounted_for_item_uris = set()
         for item in items:
-            for direct_claim in item.direct_claims:
+            for statement in item.statements:
                 try:
-                    direct_claim.value = items_by_uri[direct_claim.value]
-                    # accounted_for_item_uris.add(property_.value)
+                    statement.normalized_value = items_by_uri[
+                        statement.normalized_value
+                    ]
                 except KeyError:
-                    continue
-            for full_statement in item.full_statements:
+                    pass
+
                 try:
-                    full_statement.value = items_by_uri[full_statement.value]
-                    # accounted_for_item_uris.add(property_.value)
+                    statement.value = items_by_uri[statement.value]
                 except KeyError:
-                    continue
-                for qualifier in full_statement.qualifiers:
-                    try:
-                        qualifier.value = items_by_uri[qualifier.value]
-                    except KeyError:
-                        continue
+                    pass
+
+                if isinstance(statement, WikidataFullStatement):
+                    for qualifier in statement.qualifiers:
+                        try:
+                            qualifier.normalized_value = items_by_uri[
+                                qualifier.normalized_value
+                            ]
+                        except KeyError:
+                            pass
+
+                        try:
+                            qualifier.value = items_by_uri[qualifier.value]
+                        except KeyError:
+                            pass
 
         # for item in items:
         #     if item.uri not in accounted_for_item_uris:
