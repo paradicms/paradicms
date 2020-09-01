@@ -1,18 +1,17 @@
 from logging import Logger
-from typing import Dict, Generator, List, NamedTuple, Tuple
+from typing import Dict, List, NamedTuple, Optional, Tuple
 
-from paradicms_etl.namespace import SCHEMA
 from rdflib import Graph, Literal, RDF, RDFS, SKOS, URIRef
 
 from paradicms_etl.models.labels import Labels
-from paradicms_etl.pipelines.wikidata.wikidata_direct_claim import WikidataDirectClaim
-from paradicms_etl.pipelines.wikidata.wikidata_full_statement import (
-    WikidataFullStatement,
-)
-from paradicms_etl.pipelines.wikidata.wikidata_property_definition import (
+from paradicms_etl.namespace import SCHEMA
+from paradicms_etl.models.wikidata.wikidata_direct_claim import WikidataDirectClaim
+from paradicms_etl.models.wikidata.wikidata_full_statement import WikidataFullStatement
+from paradicms_etl.models.wikidata.wikidata_namespace import WIKIBASE
+from paradicms_etl.models.wikidata.wikidata_property_definition import (
     WikidataPropertyDefinition,
 )
-from paradicms_etl.pipelines.wikidata.wikidata_statement import WikidataStatement
+from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
 
 
 class WikidataItem(NamedTuple):
@@ -26,7 +25,70 @@ class WikidataItem(NamedTuple):
         return self.uri == other.uri
 
     @classmethod
-    def parse(
+    def from_rdf(
+        cls,
+        *,
+        graph: Graph,
+        logger: Logger,
+        property_definitions: Optional[Tuple[WikidataPropertyDefinition, ...]] = None,
+    ) -> Tuple:
+        """
+        Read all items from the graph and return a tuple of them.
+        """
+
+        if property_definitions is None:
+            property_definitions = WikidataPropertyDefinition.from_rdf(graph=graph)
+
+        items = []
+        for item_subject in graph.subjects(predicate=RDF.type, object=WIKIBASE.Item):
+            items.append(
+                cls.__from_rdf(
+                    graph=graph,
+                    logger=logger,
+                    property_definitions=property_definitions,
+                    uri=item_subject,
+                )
+            )
+
+        # Make another pass on items, substituting a WikidataItem instance for an (internal) URIRef to it
+        items_by_uri = {item.uri: item for item in items}
+
+        for item in items:
+            for statement in item.statements:
+                try:
+                    statement.normalized_value = items_by_uri[
+                        statement.normalized_value
+                    ]
+                except KeyError:
+                    pass
+
+                try:
+                    statement.value = items_by_uri[statement.value]
+                except KeyError:
+                    pass
+
+                if isinstance(statement, WikidataFullStatement):
+                    for qualifier in statement.qualifiers:
+                        try:
+                            qualifier.normalized_value = items_by_uri[
+                                qualifier.normalized_value
+                            ]
+                        except KeyError:
+                            pass
+
+                        try:
+                            qualifier.value = items_by_uri[qualifier.value]
+                        except KeyError:
+                            pass
+
+        # for item in items:
+        #     if item.uri not in accounted_for_item_uris:
+        #         print("Unaccounted item URI", item.uri)
+
+        return tuple(items)
+
+    @classmethod
+    def __from_rdf(
         cls,
         *,
         graph: Graph,
@@ -34,6 +96,10 @@ class WikidataItem(NamedTuple):
         property_definitions: Tuple[WikidataPropertyDefinition, ...],
         uri: URIRef,
     ):
+        """
+        Read the item corresponding to the given URI.
+        """
+
         IGNORE_PREDICATES = {SCHEMA.description, SCHEMA.name, RDF.type, RDFS.label}
 
         alt_labels = []
@@ -64,7 +130,7 @@ class WikidataItem(NamedTuple):
             for property_definition in property_definitions:
                 if predicate == property_definition.claim_uri:
                     full_statements.append(
-                        WikidataFullStatement.parse(
+                        WikidataFullStatement.from_rdf(
                             graph=graph,
                             logger=logger,
                             property_definitions=property_definitions,
@@ -75,7 +141,7 @@ class WikidataItem(NamedTuple):
                     break
                 elif predicate == property_definition.direct_claim_uri:
                     direct_claims.append(
-                        WikidataDirectClaim.parse(
+                        WikidataDirectClaim.from_rdf(
                             graph=graph,
                             object_=object_,
                             predicate=predicate,
@@ -130,7 +196,7 @@ class WikidataItem(NamedTuple):
 
         return cls(
             labels=Labels(
-                alt_labels=tuple(alt_labels) if alt_labels else None,
+                alt_labels=tuple(sorted(alt_labels)) if alt_labels else None,
                 pref_label=pref_label,
             ),
             statements=tuple(statements),

@@ -2,10 +2,12 @@ import shutil
 from typing import Tuple
 from urllib.request import urlopen
 
+from rdflib import Graph
+
 from paradicms_etl._extractor import _Extractor
 
 
-class WikidataExtractor(_Extractor):
+class WikidataQidExtractor(_Extractor):
     def __init__(self, qids: Tuple[str, ...], **kwds):
         _Extractor.__init__(self, **kwds)
         self.__qids = qids
@@ -26,4 +28,9 @@ class WikidataExtractor(_Extractor):
                 shutil.copyfileobj(response, file_)
             self._logger.info("downloaded %s to %s", url, file_path)
             rdf_file_paths.append(file_path)
-        return {"rdf_file_paths": tuple(rdf_file_paths)}
+
+        graph = Graph()
+        for rdf_file_path in rdf_file_paths:
+            graph.parse(format="ttl", source=str(rdf_file_path))
+
+        return {"graph": graph}

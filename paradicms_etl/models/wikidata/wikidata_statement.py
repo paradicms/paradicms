@@ -3,7 +3,7 @@ from typing import Union
 
 from rdflib import Literal, URIRef
 
-from paradicms_etl.pipelines.wikidata.wikidata_property_definition import (
+from paradicms_etl.models.wikidata.wikidata_property_definition import (
     WikidataPropertyDefinition,
 )
 

@@ -6,11 +6,11 @@ from typing import Optional, Tuple, Union
 from rdflib import Graph, Literal, PROV, RDF, URIRef
 
 from paradicms_etl.models.date_time_description import DateTimeDescription
-from paradicms_etl.pipelines.wikidata.wikidata_namespace import WIKIBASE
-from paradicms_etl.pipelines.wikidata.wikidata_property_definition import (
+from paradicms_etl.models.wikidata.wikidata_namespace import WIKIBASE
+from paradicms_etl.models.wikidata.wikidata_property_definition import (
     WikidataPropertyDefinition,
 )
-from paradicms_etl.pipelines.wikidata.wikidata_statement import WikidataStatement
+from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
 
 
 @dataclass
@@ -24,7 +24,7 @@ class WikidataFullStatement(WikidataStatement):
     qualifiers: Tuple[Qualifier, ...]
 
     @classmethod
-    def parse(
+    def from_rdf(
         cls,
         *,
         graph: Graph,

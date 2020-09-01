@@ -1,8 +1,8 @@
-from typing import NamedTuple, Optional
+from typing import NamedTuple, Optional, Tuple
 
-from rdflib import Graph, Literal, RDFS, URIRef
+from rdflib import Graph, Literal, RDF, RDFS, URIRef
 
-from paradicms_etl.pipelines.wikidata.wikidata_namespace import WIKIBASE
+from paradicms_etl.models.wikidata.wikidata_namespace import WIKIBASE
 
 
 class WikidataPropertyDefinition(NamedTuple):
@@ -19,7 +19,26 @@ class WikidataPropertyDefinition(NamedTuple):
     statement_value_uri: Optional[URIRef] = None
 
     @classmethod
-    def parse(cls, *, entity_uri: URIRef, graph: Graph):
+    def from_rdf(cls, *, graph: Graph) -> Tuple:
+        """
+        Return property definitions from the graph and return a tuple of them.
+        """
+
+        property_definitions = []
+        property_definition_labels = set()
+        for property_subject in graph.subjects(
+            predicate=RDF.type, object=WIKIBASE.Property
+        ):
+            property_definition = cls.__from_rdf(
+                graph=graph, entity_uri=property_subject
+            )
+            assert property_definition.label not in property_definition_labels
+            property_definitions.append(property_definition)
+            property_definition_labels.add(property_definition.label)
+        return tuple(property_definitions)
+
+    @classmethod
+    def __from_rdf(cls, *, entity_uri: URIRef, graph: Graph):
         # wd:P244 a wikibase:Property,
         # wikibase:Property ;
         # wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;

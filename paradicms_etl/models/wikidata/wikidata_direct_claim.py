@@ -3,13 +3,13 @@ from dataclasses import dataclass
 from rdflib import Graph, URIRef
 
 from paradicms_etl.models.property_definition import PropertyDefinition
-from paradicms_etl.pipelines.wikidata.wikidata_statement import WikidataStatement
+from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
 
 
 @dataclass
 class WikidataDirectClaim(WikidataStatement):
     @classmethod
-    def parse(
+    def from_rdf(
         cls,
         *,
         graph: Graph,
