@@ -89,3 +89,6 @@ class WikidataPropertyDefinition(NamedTuple):
         kwds["label"] = labels[0]
 
         return cls(**kwds)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}(entity_uri={str(self.entity_uri)}, label={self.label})"

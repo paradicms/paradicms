@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 from logging import Logger
-from typing import Optional, Tuple, Union
+from typing import Dict, Optional, Tuple, Union
 
 from rdflib import Graph, Literal, PROV, RDF, URIRef
 
@@ -193,3 +193,10 @@ class WikidataFullStatement(WikidataStatement):
             return parsed_value
         else:
             raise NotImplementedError(str(value_type))
+
+    def qualifiers_by_property_label(self) -> Dict[str, Qualifier]:
+        result = {}
+        for qualifier in self.qualifiers:
+            assert qualifier.property_definition.label not in result
+            result[qualifier.property_definition.label] = qualifier
+        return result
