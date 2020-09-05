@@ -1,12 +1,14 @@
+from datetime import date, timedelta
 from pathlib import Path
-
-from dataclasses import dataclass
-from datetime import date, datetime, timedelta
-from typing import List, Optional, Tuple, Union
+from typing import List, Tuple, Union
 
 from rdflib import URIRef
 
+from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl._transformer import _Transformer
+from paradicms_etl.extractors.nop_extractor import NopExtractor
+from paradicms_etl.loaders.composite_loader import CompositeLoader
+from paradicms_etl.loaders.json_directory_loader import JsonDirectoryLoader
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
@@ -16,12 +18,6 @@ from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definition import PropertyDefinition
 from paradicms_etl.models.property_definitions import PropertyDefinitions
 from paradicms_etl.models.rights import Rights
-
-from paradicms_etl._pipeline import _Pipeline
-from paradicms_etl.extractors.nop_extractor import NopExtractor
-from paradicms_etl.loaders.composite_loader import CompositeLoader
-from paradicms_etl.loaders.json_directory_loader import JsonDirectoryLoader
-from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 
 
 class TestDataPipeline(_Pipeline):

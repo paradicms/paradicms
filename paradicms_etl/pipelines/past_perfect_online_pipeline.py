@@ -1,10 +1,8 @@
-from paradicms_etl.pipelines.past_perfect._past_perfect_pipeline import (
-    _PastPerfectPipeline,
-)
-from paradicms_etl.pipelines.past_perfect.past_perfect_online_extractor import (
+from paradicms_etl.extractors.past_perfect_online_extractor import (
     PastPerfectOnlineExtractor,
 )
-from paradicms_etl.pipelines.past_perfect.past_perfect_online_transformer import (
+from paradicms_etl.pipelines._past_perfect_pipeline import _PastPerfectPipeline
+from paradicms_etl.transformers.past_perfect_online_transformer import (
     PastPerfectOnlineTransformer,
 )
 

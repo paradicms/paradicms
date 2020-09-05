@@ -1,8 +1,5 @@
-from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definitions import PropertyDefinitions
-from paradicms_etl.pipelines.past_perfect._past_perfect_transformer import (
-    _PastPerfectTransformer,
-)
+from paradicms_etl.transformers._past_perfect_transformer import _PastPerfectTransformer
 
 
 class PastPerfectOnlineTransformer(_PastPerfectTransformer):

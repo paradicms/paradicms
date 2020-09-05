@@ -1,7 +1,6 @@
 from paradicms_etl._pipeline import _Pipeline
-
-from .omeka_classic_extractor import OmekaClassicExtractor
-from .omeka_classic_transformer import OmekaClassicTransformer
+from paradicms_etl.extractors.omeka_classic_extractor import OmekaClassicExtractor
+from paradicms_etl.transformers.omeka_classic_transformer import OmekaClassicTransformer
 
 
 class OmekaClassicPipeline(_Pipeline):
