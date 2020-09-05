@@ -64,4 +64,4 @@ class AirtableExtractor(_Extractor):
 
     @classmethod
     def table_url(cls, *, base_id: str, table: str):
-        return f"https://api.airtable.com/v0/{base_id}/{table}"
+        return f"https://api.airtable.com/v0/{quote(base_id)}/{quote(table)}"
