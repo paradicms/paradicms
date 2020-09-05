@@ -77,5 +77,6 @@ class _Extractor(_PipelinePhase):
             )
         else:
             raise ValueError("must specify extracted_data_dir_path or data_dir_path")
+        extracted_data_dir_path = extracted_data_dir_path.absolute()
         extracted_data_dir_path.mkdir(parents=True, exist_ok=True)
         return extracted_data_dir_path

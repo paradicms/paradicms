@@ -48,5 +48,6 @@ class _Loader(_PipelinePhase):
             loaded_data_dir_path = self.__data_dir_path / self._pipeline_id / "loaded"
         else:
             raise ValueError("must specify loaded_data_dir_path or data_dir_path")
+        loaded_data_dir_path = loaded_data_dir_path.absolute()
         loaded_data_dir_path.mkdir(parents=True, exist_ok=True)
         return loaded_data_dir_path
