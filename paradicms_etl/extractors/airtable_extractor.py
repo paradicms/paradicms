@@ -43,7 +43,7 @@ class AirtableExtractor(_Extractor):
                 with open(file_path, "w+b") as file_:
                     file_.write(response_str)
 
-            with open(file_path) as file_:
+            with open(file_path, "rb") as file_:
                 file_json = json.load(file_)
             file_records = file_json["records"]
             self._logger.info("extracted %s records from %s (%s)", url, file_path)
