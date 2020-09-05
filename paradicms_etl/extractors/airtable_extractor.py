@@ -27,7 +27,10 @@ class AirtableExtractor(_Extractor):
         records = []
         offset = None
         while True:
-            url = f"https://api.airtable.com/v0/{self.__base_id}/{table}?api_key={quote(self.__api_key)}"
+            url = (
+                self.table_url(base_id=self.__base_id, table=table)
+                + f"?api_key={quote(self.__api_key)}"
+            )
             if offset is not None:
                 url += "&offset=" + quote(offset)
             file_path = self._extracted_data_dir_path / (
@@ -46,9 +49,19 @@ class AirtableExtractor(_Extractor):
             with open(file_path, "rb") as file_:
                 file_json = json.load(file_)
             file_records = file_json["records"]
-            self._logger.info("extracted %s records from %s (%s)", url, file_path)
+            self._logger.info(
+                "extracted %d records from %s (%s)", len(file_records), url, file_path
+            )
             records.extend(file_records)
             offset = file_json.get("offset")
             if offset is None:
                 break
         return tuple(records)
+
+    @classmethod
+    def record_url(cls, *, base_id: str, record_id: str, table: str):
+        return cls.table_url(base_id=base_id, table=table) + f"/{record_id}"
+
+    @classmethod
+    def table_url(cls, *, base_id: str, table: str):
+        return f"https://api.airtable.com/v0/{base_id}/{table}"
