@@ -20,12 +20,16 @@ class GuiLoader(_BufferingLoader):
         self.__gui = gui
 
     def __build_gui(self, data_dir_path: Path, gui_dir_path: Path):
+        self._logger.info("building GUI")
         self.__run_npm_script(
             "build", data_dir_path=data_dir_path, gui_dir_path=gui_dir_path
         )
+        self._logger.info("built GUI")
+        self._logger.info("exporting GUI build")
         self.__run_npm_script(
             "export", data_dir_path=data_dir_path, gui_dir_path=gui_dir_path
         )
+        self._logger.info("exported GUI build")
 
         gui_dist_dir_path = gui_dir_path / "out"
 
@@ -41,7 +45,7 @@ class GuiLoader(_BufferingLoader):
             self._logger.info(
                 "deleting existing final dist directory %s", final_dist_dir_path
             )
-            rmtree(final_dist_dir_path)
+            rmtree(final_dist_dir_path, ignore_errors=True)
 
         self._logger.info("renaming %s to %s", gui_dist_dir_path, final_dist_dir_path)
         os.rename(gui_dist_dir_path, final_dist_dir_path)
@@ -68,16 +72,6 @@ class GuiLoader(_BufferingLoader):
 
     def __load_data(self, models: Tuple[_Model, ...]) -> Path:
         data_dir_path = self._loaded_data_dir_path / "data"
-
-        if not any(os.listdir(data_dir_path)):
-            self._logger.info("%s is empty, loading data", data_dir_path)
-        else:
-            self._logger.info(
-                "%s is not empty and force not specified, skipping data load",
-                data_dir_path,
-            )
-            return data_dir_path
-
         data_loader = JsonDirectoryLoader(
             clean=True,
             loaded_data_dir_path=data_dir_path,
