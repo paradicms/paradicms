@@ -37,7 +37,7 @@ class AirtableExtractor(_Extractor):
                 sanitize_filename(url) + ".json"
             )
             if not file_path.is_file() or force:
-                self._logger.info("downloading %s to %s", url, file_path)
+                self._logger.debug("downloading %s to %s", url, file_path)
                 f = urlopen(url)
                 try:
                     response_str = f.read()
@@ -49,7 +49,7 @@ class AirtableExtractor(_Extractor):
             with open(file_path, "rb") as file_:
                 file_json = json.load(file_)
             file_records = file_json["records"]
-            self._logger.info(
+            self._logger.debug(
                 "extracted %d records from %s (%s)", len(file_records), url, file_path
             )
             records.extend(file_records)
