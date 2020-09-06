@@ -76,14 +76,13 @@ class _Pipeline(ABC):
         arg_parser.add_argument("--institution-rights", required=True)
         arg_parser.add_argument("--institution-uri", required=True)
 
-    def extract_transform_load(
-        self, *, force_extract: bool = False, force_load: bool = False
-    ):
+    def extract_transform_load(self, *, force_extract: bool = False):
         extract_kwds = self.extractor.extract(force=force_extract)
         if not extract_kwds:
             extract_kwds = {}
         models = self.transformer.transform(**extract_kwds)
-        return self.loader.load(force=force_load, models=models)
+        self.loader.load(models=models)
+        return self.loader.flush()
 
     @property
     def extractor(self):

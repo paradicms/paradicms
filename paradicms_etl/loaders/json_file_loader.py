@@ -9,7 +9,11 @@ from paradicms_etl.loaders.json_utils import json_dump_default, json_remove_null
 
 
 class JsonFileLoader(_FileLoader):
-    def load(self, *, force: bool, models: Generator[_Model, None, None]):
+    def __init__(self, **kwds):
+        _FileLoader.__init__(self, **kwds)
+        self.__models = []
+
+    def flush(self):
         file_path = self._file_path
         if file_path is None:
             file_path = self._loaded_data_dir_path / (
@@ -17,7 +21,7 @@ class JsonFileLoader(_FileLoader):
             )
 
         json_objects_by_class_name = {}
-        for model in models:
+        for model in self.__models:
             json_objects_by_class_name.setdefault(model.__class__.__name__, []).append(
                 model.to_dict()
             )
@@ -28,3 +32,6 @@ class JsonFileLoader(_FileLoader):
             json.dump(
                 json_objects_by_class_name, file_, indent=4, default=json_dump_default
             )
+
+    def load(self, *, models: Generator[_Model, None, None]):
+        self.__models.extend(models)

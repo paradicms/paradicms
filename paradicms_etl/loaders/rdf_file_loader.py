@@ -6,17 +6,18 @@ from rdflib import Graph
 
 from paradicms_etl._loader import _Loader
 from paradicms_etl._model import _Model
+from paradicms_etl.loaders._buffering_loader import _BufferingLoader
 from paradicms_etl.models.property_definition import PropertyDefinition
 from paradicms_etl.namespace import bind_namespaces
 
 
-class RdfFileLoader(_Loader):
+class RdfFileLoader(_BufferingLoader):
     def __init__(self, *, file_path: Optional[Path] = None, format="ttl", **kwds):
-        _Loader.__init__(self, **kwds)
+        _BufferingLoader.__init__(self, **kwds)
         self.__file_path = file_path
         self.__format = format
 
-    def load(self, *, force: bool, models: Generator[_Model, None, None]):
+    def _flush(self, models):
         file_path = self.__file_path
         if file_path is None:
             file_path = self._loaded_data_dir_path / (

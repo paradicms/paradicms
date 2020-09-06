@@ -8,11 +8,12 @@ from pathvalidate import sanitize_filename
 
 from paradicms_etl._loader import _Loader
 from paradicms_etl._model import _Model
+from paradicms_etl.loaders._buffering_loader import _BufferingLoader
 from paradicms_etl.loaders._file_loader import _FileLoader
 from paradicms_etl.loaders.json_utils import json_dump_default, json_remove_nulls
 
 
-class JsonDirectoryLoader(_Loader):
+class JsonDirectoryLoader(_BufferingLoader):
     class Strategy(Enum):
         # Create one file per model. Group the files by model type into subdirectories so they can be picked up correctly by Gatsby.
         # This is useful when multiple pipelines load to the same directory tree.
@@ -26,16 +27,14 @@ class JsonDirectoryLoader(_Loader):
         self,
         *,
         clean: bool = False,
-        gatsby_js: bool = False,
         strategy: Strategy = Strategy.FILE_PER_MODEL_TYPE,
         **kwds
     ):
-        _FileLoader.__init__(self, **kwds)
+        _BufferingLoader.__init__(self, **kwds)
         self.__clean = clean
-        self.__gatsby_js = gatsby_js
         self.__strategy = strategy
 
-    def load(self, *, force: bool, models: Generator[_Model, None, None]):
+    def _flush(self, models):
         loaded_data_dir_path = self._loaded_data_dir_path
         if self.__clean:
             rmtree(self._loaded_data_dir_path)
@@ -52,22 +51,6 @@ class JsonDirectoryLoader(_Loader):
 
         if self.__strategy == self.Strategy.FILE_PER_MODEL:
             for class_name, json_objects in json_objects_by_type.items():
-                if self.__gatsby_js and len(json_objects) == 1:
-                    # The gatsby-json-transformer has a problem picking up a directory with a single .json file in it with a top-level object (instead of an array)
-                    # Work around this by writing a file with a top-level array instead.
-                    with open(
-                        loaded_data_dir_path
-                        / (stringcase.camelcase(class_name) + ".json"),
-                        "w+",
-                        newline="\n"
-                    ) as file_:
-                        json.dump(
-                            tuple(json_objects.values()),
-                            file_,
-                            default=json_dump_default,
-                        )
-                    continue
-
                 class_directory_path = loaded_data_dir_path / stringcase.camelcase(
                     class_name
                 )
@@ -83,7 +66,7 @@ class JsonDirectoryLoader(_Loader):
                 with open(
                     loaded_data_dir_path / (stringcase.camelcase(class_name) + ".json"),
                     "w+",
-                    newline="\n"
+                    newline="\n",
                 ) as file_:
                     json.dump(
                         tuple(json_objects.values()), file_, default=json_dump_default
