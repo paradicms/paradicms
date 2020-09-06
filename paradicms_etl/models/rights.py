@@ -11,7 +11,7 @@ from paradicms_etl.models.property_definitions import PropertyDefinitions
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclassis
+@dataclass
 class Rights:
     holder: Union[URIRef, str, None] = None
     statements: Optional[List[Union[URIRef, str]]] = None
