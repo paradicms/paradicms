@@ -14,6 +14,7 @@ export class Data {
     if (!dataDirectoryPath) {
       dataDirectoryPath = path.join(process.cwd(), "data", "test");
     }
+    console.info("using data directory ", dataDirectoryPath);
     return dataDirectoryPath;
   }
 
