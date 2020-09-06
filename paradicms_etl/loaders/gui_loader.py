@@ -1,8 +1,8 @@
 import os
 import subprocess
 import sys
+from datetime import date
 from pathlib import Path
-from shutil import rmtree
 from typing import Optional, Tuple
 
 from paradicms_etl._model import _Model
@@ -43,9 +43,14 @@ class GuiLoader(_BufferingLoader):
         final_dist_dir_path = self._loaded_data_dir_path / "site"
         if final_dist_dir_path.is_dir():
             self._logger.info(
-                "deleting existing final dist directory %s", final_dist_dir_path
+                "renaming existing final dist directory %s", final_dist_dir_path
             )
-            rmtree(final_dist_dir_path, ignore_errors=True)
+            # rmtree has some issues deleting very long file paths on Windows
+            # rename the old directory instead
+            os.rename(
+                final_dist_dir_path,
+                self._loaded_data_dir_path / f"site-pre-{date.now().isoformat()}",
+            )
 
         self._logger.info("renaming %s to %s", gui_dist_dir_path, final_dist_dir_path)
         os.rename(gui_dist_dir_path, final_dist_dir_path)
