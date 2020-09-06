@@ -1,7 +1,7 @@
 import os
 import subprocess
 import sys
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 from typing import Optional, Tuple
 
@@ -42,14 +42,19 @@ class GuiLoader(_BufferingLoader):
 
         final_dist_dir_path = self._loaded_data_dir_path / "site"
         if final_dist_dir_path.is_dir():
+            archive_dist_dir_path = (
+                self._loaded_data_dir_path
+                / f"site-pre-{datetime.now().isoformat().split('.')[0].replace('-', '').replace(':', '')}"
+            )
             self._logger.info(
-                "renaming existing final dist directory %s", final_dist_dir_path
+                "renaming existing final dist directory %s to %s",
+                final_dist_dir_path,
+                archive_dist_dir_path,
             )
             # rmtree has some issues deleting very long file paths on Windows
             # rename the old directory instead
             os.rename(
-                final_dist_dir_path,
-                self._loaded_data_dir_path / f"site-pre-{date.now().isoformat()}",
+                final_dist_dir_path, archive_dist_dir_path,
             )
 
         self._logger.info("renaming %s to %s", gui_dist_dir_path, final_dist_dir_path)
@@ -85,6 +90,7 @@ class GuiLoader(_BufferingLoader):
         data_loader.load(models=models)
         data_loader.flush()
         self._logger.info("loaded data to %s", data_dir_path)
+        return data_dir_path
 
     def __run_npm_script(
         self, script, *, gui_dir_path: Path, data_dir_path: Optional[Path] = None
@@ -92,6 +98,7 @@ class GuiLoader(_BufferingLoader):
         subprocess_env = os.environ.copy()
         if data_dir_path is not None:
             subprocess_env["DATA_DIRECTORY_PATH"] = str(data_dir_path)
+            self._logger.info("using DATA_DIRECTORY_PATH = %s", data_dir_path)
         subprocess_env["EDITOR"] = ""
 
         args = ["npm", "run", script]
