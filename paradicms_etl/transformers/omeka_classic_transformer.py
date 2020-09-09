@@ -178,7 +178,7 @@ class OmekaClassicTransformer(_Transformer):
             ("Type", PropertyDefinitions.TYPE),
         ):
             for value in dc_element_text_tree.pop(key, []):
-                properties.append(Property(key=property_definition.key, value=value))
+                properties.append(Property(property_definition, value))
 
         if dc_element_text_tree:
             self._logger.warn(

@@ -26,10 +26,10 @@ class _PastPerfectTransformer(_Transformer):
         if attribute_values is None:
             return ()
         if isinstance(attribute_values, str):
-            return (Property(key=property_definition.key, value=attribute_values),)
+            return (Property(property_definition, attribute_values),)
         elif isinstance(attribute_values, tuple):
             return tuple(
-                Property(key=property_definition.key, value=property_value)
+                Property(property_definition, property_value)
                 for property_value in attribute_values
             )
         else:

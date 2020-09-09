@@ -112,10 +112,8 @@ class TestDataPipeline(_Pipeline):
             ):
                 return tuple(
                     Property(
-                        key=property_definition.key,
-                        value=all_property_values[
-                            (object_i + i) % len(all_property_values)
-                        ],
+                        property_definition,
+                        all_property_values[(object_i + i) % len(all_property_values)],
                     )
                     for i in range(count)
                 )
@@ -123,7 +121,7 @@ class TestDataPipeline(_Pipeline):
             properties = []
             properties.extend(
                 Property(
-                    key=PropertyDefinitions.ALTERNATIVE_TITLE.key,
+                    key=PropertyDefinitions.ALTERNATIVE_TITLE,
                     value=f"{title} alternative title {i}",
                 )
                 for i in range(2)
@@ -138,8 +136,8 @@ class TestDataPipeline(_Pipeline):
             )
             properties.extend(
                 Property(
-                    key=PropertyDefinitions.DATE.key,
-                    value=(
+                    PropertyDefinitions.DATE,
+                    (
                         date(year=2020, month=8, day=9)
                         - timedelta(minutes=(60 * 24 * (object_i + date_i)))
                     ).isoformat(),
@@ -147,17 +145,14 @@ class TestDataPipeline(_Pipeline):
                 for date_i in range(2)
             )
             properties.extend(
-                Property(
-                    key=PropertyDefinitions.DESCRIPTION.key,
-                    value=f"{title} description {i}",
-                )
+                Property(PropertyDefinitions.DESCRIPTION, f"{title} description {i}",)
                 for i in range(2)
             )
             properties.extend(
                 object_property_values(self.__EXTENTS, 2, PropertyDefinitions.EXTENT)
             )
             properties.extend(
-                Property(key=PropertyDefinitions.IDENTIFIER.key, value=f"{title}Id{i}")
+                Property(PropertyDefinitions.IDENTIFIER, f"{title}Id{i}")
                 for i in range(2)
             )
             properties.extend(
@@ -174,10 +169,7 @@ class TestDataPipeline(_Pipeline):
                 object_property_values(self.__MEDIA, 2, PropertyDefinitions.MEDIUM)
             )
             properties.extend(
-                Property(
-                    key=PropertyDefinitions.PROVENANCE.key,
-                    value=f"{title} provenance {i}",
-                )
+                Property(PropertyDefinitions.PROVENANCE, f"{title} provenance {i}")
                 for i in range(2)
             )
             properties.extend(
