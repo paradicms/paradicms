@@ -121,8 +121,8 @@ class TestDataPipeline(_Pipeline):
             properties = []
             properties.extend(
                 Property(
-                    key=PropertyDefinitions.ALTERNATIVE_TITLE,
-                    value=f"{title} alternative title {i}",
+                    PropertyDefinitions.ALTERNATIVE_TITLE,
+                    f"{title} alternative title {i}",
                 )
                 for i in range(2)
             )

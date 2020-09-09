@@ -164,7 +164,3 @@ class PropertyDefinitions:
             if isinstance(__value, PropertyDefinition):
                 tuple_.append(__value)
         return tuple(tuple_)
-
-
-for __definition in PropertyDefinitions.as_tuple():
-    assert getattr(PropertyDefinitions, __definition.key.upper()) == __definition
