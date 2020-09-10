@@ -50,19 +50,21 @@ const ObjectPage: React.FunctionComponent<{
                   <TableBody>
                     {propertyDefinitions
                       .concat()
-                      .sort((left, right) => left.key.localeCompare(right.key))
+                      .sort((left, right) => left.uri.localeCompare(right.uri))
                       .map(propertyDefinition => {
                         const properties = object.properties!.filter(
-                          property => property.key === propertyDefinition.key
+                          property =>
+                            property.propertyDefinitionUri ===
+                            propertyDefinition.uri
                         );
                         if (properties.length === 0) {
                           return null;
                         }
                         return (
-                          <React.Fragment key={propertyDefinition.key}>
+                          <React.Fragment key={propertyDefinition.uri}>
                             {properties.map((property, propertyIndex) => (
                               <TableRow
-                                key={`property-${propertyDefinition.key}-${propertyIndex}`}
+                                key={`property-${propertyDefinition.uri}-${propertyIndex}`}
                               >
                                 <TableCell>
                                   <strong>
