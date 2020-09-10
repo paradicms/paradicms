@@ -265,7 +265,7 @@ class TestDataPipeline(_Pipeline):
                 )
 
     def __init__(self, **kwds):
-        root_dir_path = Path(__file__).absolute().parent.parent.parent.parent.parent
+        root_dir_path = Path(__file__).absolute().parent.parent.parent.parent
         _Pipeline.__init__(
             self,
             extractor=NopExtractor(pipeline_id=self.__ID),
