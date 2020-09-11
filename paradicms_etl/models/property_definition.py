@@ -10,6 +10,6 @@ from paradicms_etl._model import _Model
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass(frozen=True)
 class PropertyDefinition(_Model):
-    label_singular: str
+    label: str
     uri: URIRef
     faceted: Optional[bool] = None
