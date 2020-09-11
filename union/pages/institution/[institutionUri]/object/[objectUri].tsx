@@ -67,9 +67,7 @@ const ObjectPage: React.FunctionComponent<{
                                 key={`property-${propertyDefinition.uri}-${propertyIndex}`}
                               >
                                 <TableCell>
-                                  <strong>
-                                    {propertyDefinition.labelSingular}
-                                  </strong>
+                                  <strong>{propertyDefinition.label}</strong>
                                 </TableCell>
                                 <TableCell>{property.value}</TableCell>
                               </TableRow>
