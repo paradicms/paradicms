@@ -65,14 +65,14 @@ class JsonDirectoryLoader(_BufferingLoader):
                     with open(file_path, "w+", newline="\n") as file_:
                         json.dump(json_object, file_, default=json_dump_default)
         elif self.__strategy == self.Strategy.FILE_PER_MODEL_TYPE:
-            for class_name, json_objects in json_objects_by_type.items():
+            for class_name, json_objects_by_uri in json_objects_by_type.items():
                 with open(
                     loaded_data_dir_path / (stringcase.camelcase(class_name) + ".json"),
                     "w+",
                     newline="\n",
                 ) as file_:
                     json.dump(
-                        tuple(json_objects.values()), file_, default=json_dump_default
+                        tuple(json_objects_by_uri[uri] for uri in sorted(json_objects_by_uri.keys())), file_, default=json_dump_default
                     )
         else:
             raise NotImplemented(self.__strategy)
