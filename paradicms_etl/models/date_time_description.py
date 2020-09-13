@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 from dataclasses_json import LetterCase, dataclass_json
-from rdflib import Graph, Literal, RDF, XSD
+from rdflib import Graph, Literal, RDF, XSD, BNode
 from rdflib.resource import Resource
 
 from paradicms_etl._model import _Model
@@ -11,7 +11,7 @@ from paradicms_etl.namespace import TIME
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass(frozen=True)
-class DateTimeDescription(_Model):
+class DateTimeDescription:
     day: Optional[int] = None
     hour: Optional[int] = None
     minute: Optional[int] = None
@@ -19,8 +19,8 @@ class DateTimeDescription(_Model):
     month: Optional[int] = None
     year: Optional[int] = None
 
-    def to_rdf(self, *, graph: Graph, **kwds) -> Resource:
-        resource = _Model.to_rdf(self, graph=graph)
+    def to_rdf(self, *, graph: Graph) -> Resource:
+        resource = graph.resource(BNode())
         resource.add(RDF.type, TIME.DateTimeDescription)
         if self.day is not None:
             resource.add(TIME.day, Literal("---" + str(self.day), datatype=XSD.gDay))
