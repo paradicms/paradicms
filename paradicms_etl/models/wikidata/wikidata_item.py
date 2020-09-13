@@ -18,6 +18,7 @@ class WikidataItem(NamedTuple):
     labels: Labels
     statements: Tuple[WikidataStatement, ...]
     uri: URIRef
+    description: Optional[str] = None
 
     def __eq__(self, other):
         if not isinstance(other, WikidataItem):
@@ -103,6 +104,7 @@ class WikidataItem(NamedTuple):
         IGNORE_PREDICATES = {SCHEMA.description, SCHEMA.name, RDF.type, RDFS.label}
 
         alt_labels = []
+        description = None
         pref_label = None
 
         direct_claims = []
@@ -124,6 +126,11 @@ class WikidataItem(NamedTuple):
             if predicate == SKOS.prefLabel:
                 assert isinstance(object_, Literal)
                 pref_label = object_.value
+                continue
+
+            if predicate == SCHEMA.description:
+                assert isinstance(object_, Literal)
+                description = object_.value
                 continue
 
             added_property = False
@@ -192,9 +199,10 @@ class WikidataItem(NamedTuple):
                 )
                 statements.append(direct_claim)
 
-        assert pref_label is not None
+        assert pref_label is not None, uri
 
         return cls(
+            description=description,
             labels=Labels(
                 alt_labels=tuple(sorted(alt_labels)) if alt_labels else None,
                 pref_label=pref_label,
