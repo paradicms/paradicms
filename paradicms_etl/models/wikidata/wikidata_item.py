@@ -68,19 +68,18 @@ class WikidataItem(NamedTuple):
                 except KeyError:
                     pass
 
-                if isinstance(statement, WikidataFullStatement):
-                    for qualifier in statement.qualifiers:
-                        try:
-                            qualifier.normalized_value = items_by_uri[
-                                qualifier.normalized_value
-                            ]
-                        except KeyError:
-                            pass
+                for qualifier in statement.qualifiers:
+                    try:
+                        qualifier.normalized_value = items_by_uri[
+                            qualifier.normalized_value
+                        ]
+                    except KeyError:
+                        pass
 
-                        try:
-                            qualifier.value = items_by_uri[qualifier.value]
-                        except KeyError:
-                            pass
+                    try:
+                        qualifier.value = items_by_uri[qualifier.value]
+                    except KeyError:
+                        pass
 
         # for item in items:
         #     if item.uri not in accounted_for_item_uris:
@@ -115,7 +114,7 @@ class WikidataItem(NamedTuple):
                 continue
 
             if isinstance(object_, Literal) and object_.language != "en":
-                logger.debug("item %s: ignoring non-English literal", uri, object_)
+                logger.debug("item %s: ignoring non-English literal: %s", uri, object_)
                 continue
 
             if predicate == SKOS.altLabel:

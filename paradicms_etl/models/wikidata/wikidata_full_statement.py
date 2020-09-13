@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime
 from logging import Logger
-from typing import Dict, Optional, Tuple, Union
+from typing import Dict, Optional, Tuple
 
 from rdflib import Graph, Literal, PROV, RDF, URIRef
 
@@ -15,14 +15,6 @@ from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
 
 @dataclass
 class WikidataFullStatement(WikidataStatement):
-    @dataclass
-    class Qualifier:
-        property_definition: WikidataPropertyDefinition
-        normalized_value: Union[Literal, URIRef, object]
-        value: Union[Literal, URIRef, object]  # Can be replaced by WikidataItem
-
-    qualifiers: Tuple[Qualifier, ...]
-
     @classmethod
     def from_rdf(
         cls,
@@ -176,13 +168,7 @@ class WikidataFullStatement(WikidataStatement):
                 second = time_value.second
 
             parsed_value = DateTimeDescription(
-                year=year,
-                month=month,
-                day=day,
-                hour=hour,
-                minute=minute,
-                second=second,
-                uri=value_uri,
+                year=year, month=month, day=day, hour=hour, minute=minute, second=second
             )
             logger.debug(
                 "parsed %s from %s with precision=%d",
@@ -193,10 +179,3 @@ class WikidataFullStatement(WikidataStatement):
             return parsed_value
         else:
             raise NotImplementedError(str(value_type))
-
-    def qualifiers_by_property_label(self) -> Dict[str, Qualifier]:
-        result = {}
-        for qualifier in self.qualifiers:
-            assert qualifier.property_definition.label not in result
-            result[qualifier.property_definition.label] = qualifier
-        return result

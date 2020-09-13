@@ -39,5 +39,6 @@ class WikidataDirectClaim(WikidataStatement):
         return cls(
             property_definition=property_definition,
             normalized_value=normalized_value,
+            qualifiers=tuple(),
             value=object_,
         )
