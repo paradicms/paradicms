@@ -10,7 +10,11 @@ from paradicms_etl._loader import _Loader
 from paradicms_etl._model import _Model
 from paradicms_etl.loaders._buffering_loader import _BufferingLoader
 from paradicms_etl.loaders._file_loader import _FileLoader
-from paradicms_etl.loaders.json_utils import json_dump_default, json_remove_nulls
+from paradicms_etl.loaders.json_utils import (
+    json_dump_default,
+    json_remove_nulls,
+    model_to_json_object,
+)
 
 
 class JsonDirectoryLoader(_BufferingLoader):
@@ -48,7 +52,7 @@ class JsonDirectoryLoader(_BufferingLoader):
             )
             # existing_model = class_json_objects.get(str(model.uri))
             # if existing_model is None:
-            class_json_objects[str(model.uri)] = json_remove_nulls(model.to_dict())
+            class_json_objects[str(model.uri)] = model_to_json_object(model)
             # else:
             #     assert existing_model == model, model.uri
 
@@ -72,7 +76,12 @@ class JsonDirectoryLoader(_BufferingLoader):
                     newline="\n",
                 ) as file_:
                     json.dump(
-                        tuple(json_objects_by_uri[uri] for uri in sorted(json_objects_by_uri.keys())), file_, default=json_dump_default
+                        tuple(
+                            json_objects_by_uri[uri]
+                            for uri in sorted(json_objects_by_uri.keys())
+                        ),
+                        file_,
+                        default=json_dump_default,
                     )
         else:
             raise NotImplemented(self.__strategy)

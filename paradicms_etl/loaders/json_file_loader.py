@@ -5,7 +5,7 @@ from pathvalidate import sanitize_filename
 
 from paradicms_etl._model import _Model
 from paradicms_etl.loaders._file_loader import _FileLoader
-from paradicms_etl.loaders.json_utils import json_dump_default, json_remove_nulls
+from paradicms_etl.loaders.json_utils import json_dump_default, model_to_json_object
 
 
 class JsonFileLoader(_FileLoader):
@@ -23,10 +23,8 @@ class JsonFileLoader(_FileLoader):
         json_objects_by_class_name = {}
         for model in self.__models:
             json_objects_by_class_name.setdefault(model.__class__.__name__, []).append(
-                model.to_dict()
+                model_to_json_object(model)
             )
-
-        json_objects_by_class_name = json_remove_nulls(json_objects_by_class_name)
 
         with open(file_path, "w+", newline="\n") as file_:
             json.dump(
