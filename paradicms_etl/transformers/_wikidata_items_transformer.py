@@ -19,7 +19,7 @@ class _WikidataItemsTransformer(_Transformer):
             "instance of", None
         )
         if not instance_of_statements:
-            self._logger.warning("item %s has no instance of statements", item.uri)
+            self._logger.debug("item %s has no instance of statements", item.uri)
             return
 
         instance_of_value = instance_of_statements[0].value.labels.pref_label
@@ -38,7 +38,7 @@ class _WikidataItemsTransformer(_Transformer):
             )
             return
 
-        yield from transform_method()
+        yield from transform_method(item=item)
 
     def _transform_items(self, items: Tuple[WikidataItem, ...]):
         authoritative_models_by_uri = {}

@@ -1,5 +1,5 @@
-from abc import ABC, abstractmethod
-from typing import Dict, Generator, List, Optional, Tuple
+from abc import abstractmethod
+from typing import Dict, Generator, List, Optional
 
 from rdflib import Literal
 
@@ -11,10 +11,6 @@ from paradicms_etl.sanitize_method_name import sanitize_method_name
 
 
 class _WikidataItemTransformer(_Transformer):
-    def __init__(self, *, item: WikidataItem, **kwds):
-        _Transformer.__init__(self, **kwds)
-        self.__item = item
-
     def _get_literal_statement_value(
         self, statements: Optional[List[WikidataStatement]],
     ) -> Optional[str]:
@@ -29,29 +25,33 @@ class _WikidataItemTransformer(_Transformer):
 
         return None
 
-    @property
-    def _item(self):
-        return self.__item
-
-    def transform(self):
-        item_model = self._transform_item()
+    def transform(self, item: WikidataItem):
+        item_model = self._transform_item(item=item)
         yield item_model
 
-        for statement in self._item.statements:
+        for statement in item.statements:
             yield from self._transform_statement(
+                item=item,
                 item_model=item_model,
                 statement=statement,
-                **self._transform_statement_qualifiers(statement=statement),
+                **self._transform_statement_qualifiers(
+                    item=item, item_model=item_model, statement=statement
+                ),
             )
 
     @abstractmethod
-    def _transform_item(self) -> _Model:
+    def _transform_item(self, item: WikidataItem) -> _Model:
         """
         Transform the item to a _Model.
         """
 
     def _transform_statement(
-        self, *, item_model: _Model, statement: WikidataStatement
+        self,
+        *,
+        item: WikidataItem,
+        item_model: _Model,
+        statement: WikidataStatement,
+        **kwds,
     ) -> Generator[_Model, None, None]:
         """
         Transform an item statement into zero or more _Models.
@@ -66,14 +66,16 @@ class _WikidataItemTransformer(_Transformer):
                 "unable to find method %s to transform %s statement on item %s",
                 transform_method_name,
                 statement.property_definition.label,
-                self._item.uri,
+                item.uri,
             )
             return
 
-        yield from transform_method(item_model=item_model, statement=statement)
+        yield from transform_method(
+            item=item, item_model=item_model, statement=statement
+        )
 
     def _transform_statement_qualifiers(
-        self, *, item_model: _Model, statement: WikidataStatement
+        self, *, item: WikidataItem, item_model: _Model, statement: WikidataStatement
     ) -> Dict[str, object]:
         """
         Transform a statement's qualifiers into a **kwds dictionary, which will be passed to _transform_statement.
@@ -95,10 +97,11 @@ class _WikidataItemTransformer(_Transformer):
                     transform_method_name,
                     qualifier.property_definition.label,
                     statement.property_definition.label,
-                    self._item.uri,
+                    item.uri,
                 )
                 continue
             qualifier_value = transform_method(
+                item=item,
                 item_model=item_model,
                 statement=statement,
                 statement_qualifier=qualifier,
