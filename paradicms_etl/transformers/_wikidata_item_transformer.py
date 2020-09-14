@@ -31,12 +31,7 @@ class _WikidataItemTransformer(_Transformer):
 
         for statement in item.statements:
             yield from self._transform_statement(
-                item=item,
-                item_model=item_model,
-                statement=statement,
-                **self._transform_statement_qualifiers(
-                    item=item, item_model=item_model, statement=statement
-                ),
+                item=item, item_model=item_model, statement=statement
             )
 
     @abstractmethod
@@ -46,16 +41,10 @@ class _WikidataItemTransformer(_Transformer):
         """
 
     def _transform_statement(
-        self,
-        *,
-        item: WikidataItem,
-        item_model: _Model,
-        statement: WikidataStatement,
-        **kwds,
+        self, *, item: WikidataItem, item_model: _Model, statement: WikidataStatement,
     ) -> Generator[_Model, None, None]:
         """
         Transform an item statement into zero or more _Models.
-        :param kwds:
         """
 
         transform_method_name = f"_transform_{sanitize_method_name(statement.property_definition.label)}_statement"
@@ -63,15 +52,23 @@ class _WikidataItemTransformer(_Transformer):
             transform_method = getattr(self, transform_method_name)
         except AttributeError:
             self._logger.warning(
-                "unable to find method %s to transform %s statement on item %s",
+                "unable to find method %s to transform %s statement on item %s: %s",
                 transform_method_name,
                 statement.property_definition.label,
                 item.uri,
+                statement,
             )
             return
 
-        yield from transform_method(
+        statement_qualifier_kwds = self._transform_statement_qualifiers(
             item=item, item_model=item_model, statement=statement
+        )
+
+        yield from transform_method(
+            item=item,
+            item_model=item_model,
+            statement=statement,
+            **statement_qualifier_kwds,
         )
 
     def _transform_statement_qualifiers(
@@ -93,11 +90,12 @@ class _WikidataItemTransformer(_Transformer):
                 transform_method = getattr(self, transform_method_name)
             except AttributeError:
                 self._logger.warning(
-                    "unable to find method %s to transform %s statement qualifier on %s statement on item %s",
+                    "unable to find method %s to transform %s statement qualifier on %s statement on item %s: %s",
                     transform_method_name,
                     qualifier.property_definition.label,
                     statement.property_definition.label,
                     item.uri,
+                    qualifier,
                 )
                 continue
             qualifier_value = transform_method(
