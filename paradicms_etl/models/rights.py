@@ -1,48 +1,75 @@
 from dataclasses import dataclass
-from typing import List, Optional, Tuple, Union
+from typing import Optional, Tuple, Union
 
 from dataclasses_json import LetterCase, dataclass_json
-from rdflib import Literal, URIRef
-from rdflib.namespace import DCTERMS
+from rdflib import URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definitions import PropertyDefinitions
+from paradicms_etl.models.rights_value import RightsValue
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass(frozen=True)
+@dataclass(init=False)
 class Rights:
-    holder: Union[URIRef, str, None] = None
-    statements: Optional[Tuple[Union[URIRef, str]]] = None
+    holder: Optional[RightsValue] = None
+    license: Optional[RightsValue] = None
+    statement: Optional[RightsValue] = None
+
+    def __init__(
+        self,
+        *,
+        holder: Union[None, RightsValue, str, URIRef] = None,
+        license: Union[None, RightsValue, str, URIRef] = None,
+        statement: Union[None, RightsValue, str, URIRef] = None
+    ):
+        self.holder = RightsValue.from_value(holder)
+        self.license = RightsValue.from_value(license)
+        self.statement = RightsValue.from_value(statement)
 
     @classmethod
     def from_properties(cls, properties: Tuple[Property, ...]):
-        holders = []
-        statements = []
-        for property in properties:
-            if property.key == PropertyDefinitions.RIGHTS.key:
-                statements.append(property.value)
-            elif property.key == PropertyDefinitions.RIGHTS_HOLDER.key:
-                holders.append(property.value)
-        if not holders and not statements:
-            return None
-        if len(holders) > 1:
-            raise NotImplementedError("more than one rights holder")
-        return Rights(
-            holder=holders[0] if holders else None,
-            statements=tuple(statements) if statements else None,
+        holder = RightsValue.from_properties(
+            properties=tuple(
+                property
+                for properties in properties
+                if property.uri == PropertyDefinitions.RIGHTS_HOLDER.uri
+            )
         )
+        license = RightsValue.from_properties(
+            properties=tuple(
+                property
+                for properties in properties
+                if property.uri == PropertyDefinitions.LICENSE.uri
+            )
+        )
+        statement = RightsValue.from_properties(
+            properties=tuple(
+                property
+                for properties in properties
+                if property.uri == PropertyDefinitions.RIGHTS.uri
+            )
+        )
+
+        if not holder and not license and not statement:
+            return None
+
+        return Rights(holder=holder, license=license, statement=statement)
 
     def to_rdf(self, *, add_to_resource: Resource) -> None:
         if self.holder is not None:
-            if isinstance(self.holder, URIRef):
-                add_to_resource.add(DCTERMS.rightHolder, self.holder)
-            elif isinstance(self.holder, str):
-                add_to_resource.add(DCTERMS.rightsHolder, Literal(self.holder))
-        if self.statements is not None:
-            for statement in self.statements:
-                if isinstance(statement, URIRef):
-                    add_to_resource.add(DCTERMS.rights, statement)
-                elif isinstance(statement, str):
-                    add_to_resource.add(DCTERMS.rights, Literal(statement))
+            self.holder.to_rdf(
+                add_to_resource=add_to_resource,
+                property_uri=PropertyDefinitions.RIGHTS_HOLDER.uri,
+            )
+        if self.license is not None:
+            self.license.to_rdf(
+                add_to_resource=add_to_resource,
+                property_uri=PropertyDefinitions.LICENSE.uri,
+            )
+        if self.statement is not None:
+            self.statement.to_rdf(
+                add_to_resource=add_to_resource,
+                property_uri=PropertyDefinitions.RIGHTS.uri,
+            )

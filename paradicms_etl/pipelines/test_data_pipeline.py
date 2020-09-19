@@ -18,6 +18,7 @@ from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definition import PropertyDefinition
 from paradicms_etl.models.property_definitions import PropertyDefinitions
 from paradicms_etl.models.rights import Rights
+from paradicms_etl.models.rights_value import RightsValue
 
 
 class TestDataPipeline(_Pipeline):
@@ -77,9 +78,9 @@ class TestDataPipeline(_Pipeline):
                     name=institution_name,
                     rights=Rights(
                         holder=f"{institution_name} rights holder",
-                        statements=(
-                            f"{institution_name} rights",
-                            self.__RIGHTS_STATEMENT_URI,
+                        statement=RightsValue(
+                            text=f"{institution_name} rights",
+                            uri=self.__RIGHTS_STATEMENT_URI,
                         ),
                     ),
                     uri=URIRef(f"http://example.com/institution{institution_i}"),
@@ -201,12 +202,15 @@ class TestDataPipeline(_Pipeline):
             )
 
             object_ = Object(
+                abstract=f"{title} abstract",
                 collection_uris=collection_uris,
                 institution_uri=institution.uri,
                 properties=tuple(properties),
                 rights=Rights(
                     holder=f"{title} rights holder",
-                    statements=(f"{title} rights", self.__RIGHTS_STATEMENT_URI,),
+                    statement=RightsValue(
+                        text=f"{title} rights", uri=self.__RIGHTS_STATEMENT_URI
+                    ),
                 ),
                 title=title,
                 uri=uri,
