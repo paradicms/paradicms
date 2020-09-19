@@ -11,10 +11,10 @@ from paradicms_etl.models.property_definitions import PropertyDefinitions
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass
+@dataclass(frozen=True)
 class Rights:
     holder: Union[URIRef, str, None] = None
-    statements: Optional[List[Union[URIRef, str]]] = None
+    statements: Optional[Tuple[Union[URIRef, str]]] = None
 
     @classmethod
     def from_properties(cls, properties: Tuple[Property, ...]):
