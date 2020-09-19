@@ -20,6 +20,7 @@ class Collection(_Model):
     # makes it easier to do page generation and search indexing downstream.
     institution_uri: URIRef
     title: str
+    abstract: Optional[str] = None
     properties: Tuple[Property, ...] = ()
 
     def to_rdf(

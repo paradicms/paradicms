@@ -1,17 +1,16 @@
-from dataclasses import dataclass, field
-from typing import List, Optional, Tuple, Union
+from dataclasses import dataclass
+from typing import Optional, Tuple
 
 from dataclasses_json import LetterCase, dataclass_json
 from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import DCTERMS, FOAF, RDF
+from rdflib.namespace import DCTERMS, RDF
 from rdflib.resource import Resource
 
 from paradicms_etl._model import _Model
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definition import PropertyDefinition
-from paradicms_etl.models.property_definitions import PropertyDefinitions
 from paradicms_etl.models.rights import Rights
-from paradicms_etl.namespace import CMS, VRA
+from paradicms_etl.namespace import CMS
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
@@ -22,6 +21,7 @@ class Object(_Model):
     collection_uris: Tuple[URIRef, ...]
     institution_uri: URIRef
     title: str
+    abstract: Optional[str] = None
     properties: Tuple[Property, ...] = ()
     rights: Optional[Rights] = None
 

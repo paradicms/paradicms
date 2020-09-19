@@ -18,6 +18,7 @@ from ..namespace import CMS
 class Institution(_Model):
     # See note in Collection re: why there are no links to collections here.
     name: str
+    abstract: Optional[str] = None
     properties: Tuple[Property, ...] = ()
     rights: Optional[Rights] = None
 
