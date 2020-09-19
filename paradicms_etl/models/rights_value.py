@@ -23,14 +23,15 @@ class RightsValue:
     ):
         assert text or uri
 
-        if text is not None:
-            assert isinstance(text, str)
+        if text is not None and not isinstance(text, str):
+            raise TypeError(type(text))
         self.text = text
 
         if uri is not None:
             if isinstance(uri, URIRef):
                 uri = str(uri)
-            assert isinstance(uri, str)
+            if not isinstance(uri, str):
+                raise TypeError(type(uri))
         self.uri = uri
 
     @classmethod
