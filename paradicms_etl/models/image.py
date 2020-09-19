@@ -9,6 +9,7 @@ from rdflib.resource import Resource
 
 from paradicms_etl._model import _Model
 from paradicms_etl.models.image_dimensions import ImageDimensions
+ from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespace import CMS, EXIF
 
 
@@ -25,6 +26,7 @@ class Image(_Model):
     max_dimensions: Optional[ImageDimensions] = None
     modified: Optional[datetime] = None
     original_image_uri: Optional[URIRef] = None
+    rights: Optional[Rights] = None
 
     def to_rdf(self, *, graph: Graph, **kwds) -> Resource:
         resource = _Model.to_rdf(self, graph=graph, **kwds)
