@@ -8,7 +8,7 @@ from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
 from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
-from paradicms_etl.sanitize_method_name import sanitize_method_name
+from paradicms_etl.utils import sanitize_method_name
 
 
 class _WikidataItemTransformer(_Transformer):
