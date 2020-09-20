@@ -11,13 +11,14 @@ from paradicms_etl.loaders.json_directory_loader import JsonDirectoryLoader
 
 
 class GuiLoader(_BufferingLoader):
-    def __init__(self, *, gui: str = "union", **kwds):
+    def __init__(self, *, gui: str = "union", load_data_only: bool = False, **kwds):
         """
         :param gui: name of a gui (in gui/ of this repository) or path to a gui
         """
 
         _BufferingLoader.__init__(self, **kwds)
         self.__gui = gui
+        self.__load_data_only = load_data_only
 
     def __build_gui(self, data_dir_path: Path, gui_dir_path: Path):
         self._logger.info("building GUI")
@@ -76,6 +77,8 @@ class GuiLoader(_BufferingLoader):
 
     def _flush(self, models):
         data_dir_path = self.__load_data(models)
+        if self.__load_data_only:
+            return
         gui_dir_path = self.__get_gui_dir_path()
         self.__clean_gui(gui_dir_path=gui_dir_path)
         self.__build_gui(data_dir_path=data_dir_path, gui_dir_path=gui_dir_path)
