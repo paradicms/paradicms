@@ -9,7 +9,8 @@ const OBJECTS_PER_PAGE = 10;
 
 export const ObjectsGallery: React.FunctionComponent<{
   joinedObjects: readonly JoinedObject[];
-}> = ({joinedObjects}) => {
+  renderInstitution?: boolean;
+}> = ({joinedObjects, renderInstitution}) => {
   let [objectsPageQueryParam, setObjectsPage] = useQueryParam<
     number | null | undefined
   >("page", NumberParam);
@@ -22,11 +23,15 @@ export const ObjectsGallery: React.FunctionComponent<{
   return (
     <WrappedObjectsGallery
       currentPage={objectsPage}
-      renderInstitutionLink={(institution, children) => (
-        <Link {...Hrefs.institution(institution.uri).home}>
-          <a>{children}</a>
-        </Link>
-      )}
+      renderInstitutionLink={
+        renderInstitution
+          ? (institution, children) => (
+              <Link {...Hrefs.institution(institution.uri).home}>
+                <a>{children}</a>
+              </Link>
+            )
+          : undefined
+      }
       renderObjectLink={(object, children) => (
         <Link {...Hrefs.institution(object.institution.uri).object(object.uri)}>
           <a>{children}</a>
