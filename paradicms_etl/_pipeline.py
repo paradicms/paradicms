@@ -34,6 +34,7 @@ class _Pipeline(ABC):
         if loader is None:
             loader = DefaultLoader(pipeline_id=id, **kwds)
         self.__loader = loader
+        self.__logger = logging.getLogger(self.__class__.__name__)
         self.__transformer = transformer
 
     @classmethod
@@ -90,6 +91,10 @@ class _Pipeline(ABC):
     @property
     def extractor(self):
         return self.__extractor
+
+    @property
+    def _logger(self):
+        return self.__logger
 
     @classmethod
     def main(cls, args: Optional[Dict[str, object]] = None):
