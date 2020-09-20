@@ -39,7 +39,7 @@ const ObjectPage: React.FunctionComponent<{
         <Grid item>
           <ObjectImagesCarousel images={objectImages} />
         </Grid>
-        {object.properties ? (
+        {object.properties && object.properties.length > 0 ? (
           <Grid item>
             <Accordion defaultExpanded={true}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -85,7 +85,7 @@ const ObjectPage: React.FunctionComponent<{
           <Grid item>
             <Accordion>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <h3>Rights</h3>
+                <h3>Metadata rights</h3>
               </AccordionSummary>
               <AccordionDetails>
                 <RightsTable rights={rights} />
