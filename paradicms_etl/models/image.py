@@ -9,7 +9,7 @@ from rdflib.resource import Resource
 
 from paradicms_etl._model import _Model
 from paradicms_etl.models.image_dimensions import ImageDimensions
- from paradicms_etl.models.rights import Rights
+from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespace import CMS, EXIF
 
 
