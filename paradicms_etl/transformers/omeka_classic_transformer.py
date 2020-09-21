@@ -240,6 +240,7 @@ class OmekaClassicTransformer(_Transformer):
                 created=dateparser.parse(
                     file_["added"], settings={"STRICT_PARSING": True}
                 ),
+                depicts_uri=object_uri,
                 exact_dimensions=exact_dimensions,
                 format=file_["mime_type"],
                 institution_uri=institution_uri,
@@ -247,7 +248,6 @@ class OmekaClassicTransformer(_Transformer):
                 modified=dateparser.parse(
                     file_["modified"], settings={"STRICT_PARSING": True}
                 ),
-                object_uri=object_uri,
                 original_image_uri=original_image_uri,
                 uri=URIRef(url),
             )

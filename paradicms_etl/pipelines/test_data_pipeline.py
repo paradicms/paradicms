@@ -225,9 +225,9 @@ class TestDataPipeline(_Pipeline):
         ):
             for image_i in range(2):
                 original = Image(
+                    depicts_uri=object_.uri,
                     exact_dimensions=ImageDimensions(height=1000, width=1000),
                     institution_uri=institution.uri,
-                    object_uri=object_.uri,
                     uri=URIRef(
                         f"https://place-hold.it/1000x1000?text={object_.title}Image{image_i}"
                     ),
@@ -235,9 +235,9 @@ class TestDataPipeline(_Pipeline):
                 yield original
 
                 yield Image(
+                    depicts_uri=object_.uri,
                     exact_dimensions=ImageDimensions(height=75, width=75),
                     institution_uri=institution.uri,
-                    object_uri=object_.uri,
                     original_image_uri=original.uri,
                     uri=URIRef(
                         f"https://place-hold.it/75x75?text={object_.title}Image{image_i}"
@@ -245,9 +245,9 @@ class TestDataPipeline(_Pipeline):
                 )
 
                 yield Image(
+                    depicts_uri=object_.uri,
                     institution_uri=institution.uri,
                     max_dimensions=ImageDimensions(height=600, width=600),
-                    object_uri=object_.uri,
                     original_image_uri=original.uri,
                     uri=URIRef(
                         f"https://place-hold.it/600x600?text={object_.title}Image{image_i}"

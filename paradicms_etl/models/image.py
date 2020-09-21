@@ -17,8 +17,8 @@ from paradicms_etl.namespace import CMS, EXIF
 @dataclass(frozen=True)
 class Image(_Model):
     # Linking up to the parent (relational style) makes it easier to do page generation and search indexing downstream.
-    institution_uri: URIRef
-    object_uri: URIRef
+    depicts_uri: URIRef  # Collection, institution, or object
+    institution_uri: URIRef  # So images can be grouped by institution
     created: Optional[datetime] = None
     exact_dimensions: Optional[ImageDimensions] = None
     format: Optional[str] = None
@@ -36,7 +36,7 @@ class Image(_Model):
         if self.original_image_uri is not None:
             graph.add((self.original_image_uri, FOAF.thumbnail, self.uri))
         else:
-            graph.add((self.object_uri, FOAF.depiction, self.uri))
+            graph.add((self.depicts_uri, FOAF.depiction, self.uri))
         if self.format is not None:
             resource.add(DCTERMS["format"], Literal(self.format))
         if self.exact_dimensions is not None:
