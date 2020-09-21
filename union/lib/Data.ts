@@ -20,55 +20,50 @@ export class Data {
 
   private static readonly dataDirectoryPath = Data.findDataDirectory();
 
-  static getCollectionByUri(collectionUri: string): Collection {
-    return this.getModelByUri(Data.getCollections(), collectionUri);
+  static collectionByUri(collectionUri: string): Collection {
+    return this.getModelByUri(Data.collections, collectionUri);
   }
 
-  static getCollections(): readonly Collection[] {
+  static get collections(): readonly Collection[] {
     return Data.getModels<Collection>("collection");
   }
 
-  static getCollectionsByInstitutionUri(
+  static collectionsByInstitutionUri(
     institutionUri: string
   ): readonly Collection[] {
-    return Data.getModelsByInstitutionUri(
-      institutionUri,
-      Data.getCollections()
-    );
+    return Data.getModelsByInstitutionUri(institutionUri, Data.collections);
   }
 
-  static getCollectionUrisByInstitutionUri(
+  static collectionUrisByInstitutionUri(
     institutionUri: string
   ): readonly string[] {
-    return Data.getCollections()
+    return Data.collections
       .filter(collection => collection.institutionUri == institutionUri)
       .map(collection => collection.uri);
   }
 
-  static getImages(): readonly Image[] {
+  static get images(): readonly Image[] {
     return Data.getModels<Image>("image");
   }
 
-  static getImagesByInstitutionUri(institutionUri: string): readonly Image[] {
-    return Data.getImages().filter(
-      image => image.institutionUri === institutionUri
-    );
+  static imagesByInstitutionUri(institutionUri: string): readonly Image[] {
+    return Data.images.filter(image => image.institutionUri === institutionUri);
   }
 
-  static getImagesByObjectUri(objectUri: string): readonly Image[] {
-    return Data.getImages().filter(image => image.objectUri === objectUri);
+  static imagesByObjectUri(objectUri: string): readonly Image[] {
+    return Data.images.filter(image => image.objectUri === objectUri);
   }
 
-  static getInstitutionByUri(institutionUri: string): Institution {
-    return Data.getModelByUri(Data.getInstitutions(), institutionUri);
+  static institutionByUri(institutionUri: string): Institution {
+    return Data.getModelByUri(Data.institutions, institutionUri);
   }
 
-  static getInstitutions(): readonly Institution[] {
+  static get institutions(): readonly Institution[] {
     return Data.getModels<Institution>("institution");
   }
 
-  static getInstitutionUris(): readonly string[] {
-    return Data.getInstitutions().map(institution => institution.uri);
+  static get institutionUris(): readonly string[] {
+    return Data.institutions.map(institution => institution.uri);
   }
 
   private static getModels<ModelT>(fileBaseName: string): readonly ModelT[] {
@@ -94,35 +89,29 @@ export class Data {
     return model;
   }
 
-  static getObjectByUri(objectUri: string): Object {
-    return Data.getModelByUri(Data.getObjects(), objectUri);
+  static objectByUri(objectUri: string): Object {
+    return Data.getModelByUri(Data.objects, objectUri);
   }
 
-  static getObjects(): readonly Object[] {
+  static get objects(): readonly Object[] {
     return Data.getModels<Object>("object");
   }
 
-  static getObjectsByInstitutionUri(institutionUri: string): readonly Object[] {
-    return Data.getModelsByInstitutionUri(institutionUri, Data.getObjects());
-  }
-
-  static getObjectsByCollectionUri(collectionUri: string): readonly Object[] {
-    return Data.getObjects().filter(object =>
+  static objectsByCollectionUri(collectionUri: string): readonly Object[] {
+    return Data.objects.filter(object =>
       object.collectionUris.some(
         objectCollectionUri => objectCollectionUri === collectionUri
       )
     );
   }
 
-  static getObjectUrisByInstitutionUri(
-    institutionUri: string
-  ): readonly string[] {
-    return Data.getObjects()
+  static objectUrisByInstitutionUri(institutionUri: string): readonly string[] {
+    return Data.objects
       .filter(object => object.institutionUri === institutionUri)
       .map(object => object.uri);
   }
 
-  static getPropertyDefinitions(): readonly PropertyDefinition[] {
+  static get propertyDefinitions(): readonly PropertyDefinition[] {
     return Data.getModels<PropertyDefinition>("propertyDefinition");
   }
 }

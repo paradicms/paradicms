@@ -92,8 +92,8 @@ export default CollectionPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {collectionUri: string; institutionUri: string}}[] = [];
-  for (const institutionUri of Data.getInstitutionUris()) {
-    for (const collectionUri of Data.getCollectionUrisByInstitutionUri(
+  for (const institutionUri of Data.institutionUris) {
+    for (const collectionUri of Data.collectionUrisByInstitutionUri(
       institutionUri
     )) {
       paths.push({
@@ -117,11 +117,11 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 
   return {
     props: {
-      collection: Data.getCollectionByUri(collectionUri),
-      collectionObjects: Data.getObjectsByCollectionUri(collectionUri),
-      institution: Data.getInstitutionByUri(institutionUri),
-      institutionImages: Data.getImagesByInstitutionUri(institutionUri),
-      propertyDefinitions: Data.getPropertyDefinitions(),
+      collection: Data.collectionByUri(collectionUri),
+      collectionObjects: Data.objectsByCollectionUri(collectionUri),
+      institution: Data.institutionByUri(institutionUri),
+      institutionImages: Data.imagesByInstitutionUri(institutionUri),
+      propertyDefinitions: Data.propertyDefinitions,
     },
   };
 };

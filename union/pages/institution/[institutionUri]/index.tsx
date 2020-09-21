@@ -36,7 +36,7 @@ export default InstitutionPage;
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     fallback: false,
-    paths: Data.getInstitutionUris().map(institutionUri => ({
+    paths: Data.institutionUris.map(institutionUri => ({
       params: {institutionUri: encodeFileName(institutionUri)},
     })),
   };
@@ -44,8 +44,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
   const institutionUri = decodeFileName(params!.institutionUri as string);
-  const institution = Data.getInstitutionByUri(institutionUri);
-  const collections = Data.getCollectionsByInstitutionUri(institutionUri);
+  const institution = Data.institutionByUri(institutionUri);
+  const collections = Data.collectionsByInstitutionUri(institutionUri);
   return {
     props: {collections, institution},
   };

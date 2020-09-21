@@ -29,6 +29,6 @@ export default IndexPage;
 
 export const getStaticProps: GetStaticProps = async context => {
   return {
-    props: {institutions: Data.getInstitutions()},
+    props: {institutions: Data.institutions},
   };
 };

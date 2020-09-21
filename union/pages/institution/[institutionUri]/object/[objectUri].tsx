@@ -102,10 +102,8 @@ export default ObjectPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {institutionUri: string; objectUri: string}}[] = [];
-  for (const institutionUri of Data.getInstitutionUris()) {
-    for (const objectUri of Data.getObjectUrisByInstitutionUri(
-      institutionUri
-    )) {
+  for (const institutionUri of Data.institutionUris) {
+    for (const objectUri of Data.objectUrisByInstitutionUri(institutionUri)) {
       paths.push({
         params: {
           institutionUri: encodeFileName(institutionUri),
@@ -127,10 +125,10 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 
   return {
     props: {
-      institution: Data.getInstitutionByUri(institutionUri),
-      object: Data.getObjectByUri(objectUri),
-      objectImages: Data.getImagesByObjectUri(objectUri),
-      propertyDefinitions: Data.getPropertyDefinitions(),
+      institution: Data.institutionByUri(institutionUri),
+      object: Data.objectByUri(objectUri),
+      objectImages: Data.imagesByObjectUri(objectUri),
+      propertyDefinitions: Data.propertyDefinitions,
     },
   };
 };
