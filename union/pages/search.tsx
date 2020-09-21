@@ -5,7 +5,6 @@ import {
   Image,
   Images,
   Institution,
-  JoinedObject,
   Models,
   Object as ObjectModel,
   ObjectFacets,
