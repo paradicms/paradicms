@@ -94,35 +94,14 @@ const SearchPage: React.FunctionComponent<{
 
   const joinedFilteredResultObjects = React.useMemo(
     () =>
-      results?.filteredObjects.map(
-        (object): JoinedObject => {
-          const collections = object.collectionUris.map(collectionUri => {
-            const collection = collectionsByUri[collectionUri];
-            if (!collection) {
-              throw new EvalError(
-                "unable to find collection with URI " + collectionUri
-              );
-            }
-            return collection;
-          });
-
-          const images = imagesByObjectUri[object.uri];
-
-          const institution = institutionsByUri[object.institutionUri];
-          if (!institution) {
-            throw new EvalError(
-              "unable to find institution with URI " + object.institutionUri
-            );
-          }
-
-          return {
-            collections,
-            images,
-            institution,
-            ...object,
-          };
-        }
-      ),
+      results && results.filteredObjects
+        ? Objects.join({
+            collectionsByUri,
+            imagesByObjectUri,
+            institutionsByUri,
+            objects: results.filteredObjects,
+          })
+        : [],
     [results]
   );
 
@@ -181,11 +160,11 @@ export default SearchPage;
 export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
-      collections: Data.getCollections(),
-      images: Data.getImages(),
-      institutions: Data.getInstitutions(),
-      objects: Data.getObjects(),
-      propertyDefinitions: Data.getPropertyDefinitions(),
+      collections: Data.collections,
+      images: Data.images,
+      institutions: Data.institutions,
+      objects: Data.objects,
+      propertyDefinitions: Data.propertyDefinitions,
     },
   };
 };
