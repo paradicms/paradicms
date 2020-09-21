@@ -50,8 +50,8 @@ const SearchPage: React.FunctionComponent<{
   const collectionsByUri = React.useMemo(() => Models.indexByUri(collections), [
     collections,
   ]);
-  const imagesByObjectUri = React.useMemo(
-    () => Images.indexByObjectUri(images),
+  const imagesByDepictsUri = React.useMemo(
+    () => Images.indexByDepictsUri(images),
     [images]
   );
   const institutionsByUri = React.useMemo(
@@ -96,7 +96,7 @@ const SearchPage: React.FunctionComponent<{
       results && results.filteredObjects
         ? Objects.join({
             collectionsByUri,
-            imagesByObjectUri,
+            imagesByDepictsUri,
             institutionsByUri,
             objects: results.filteredObjects,
           })

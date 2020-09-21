@@ -127,7 +127,7 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
     props: {
       institution: Data.institutionByUri(institutionUri),
       object: Data.objectByUri(objectUri),
-      objectImages: Data.imagesByObjectUri(objectUri),
+      objectImages: Data.imagesByDepictsUri(objectUri),
       propertyDefinitions: Data.propertyDefinitions,
     },
   };

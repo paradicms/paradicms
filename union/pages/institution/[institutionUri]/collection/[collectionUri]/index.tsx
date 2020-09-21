@@ -44,7 +44,7 @@ const CollectionPage: React.FunctionComponent<{
   const joinedFilteredObjects: readonly JoinedObject[] = Objects.join({
     collectionsByUri: Models.indexByUri([collection]),
     institutionsByUri: Models.indexByUri([institution]),
-    imagesByObjectUri: Images.indexByObjectUri(institutionImages),
+    imagesByDepictsUri: Images.indexByDepictsUri(institutionImages),
     objects: filteredObjects,
   });
 

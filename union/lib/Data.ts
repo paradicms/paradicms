@@ -50,8 +50,8 @@ export class Data {
     return Data.images.filter(image => image.institutionUri === institutionUri);
   }
 
-  static imagesByObjectUri(objectUri: string): readonly Image[] {
-    return Data.images.filter(image => image.objectUri === objectUri);
+  static imagesByDepictsUri(depictsUri: string): readonly Image[] {
+    return Data.images.filter(image => image.depictsUri === depictsUri);
   }
 
   static institutionByUri(institutionUri: string): Institution {
