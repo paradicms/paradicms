@@ -72,11 +72,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         </Grid>
         <Grid item>
           <Footer
-            author={{
-              email: "info@paradicms.org",
-              name: "Minor Gordon",
-              url: "https://paradicms.org",
-            }}
+            contactUrl="mailto:info@paradicms.org"
             gitHubUrl="https://github.com/minorg/paradicms"
           />
         </Grid>
