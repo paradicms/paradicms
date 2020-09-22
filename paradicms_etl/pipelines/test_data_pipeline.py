@@ -58,6 +58,40 @@ class TestDataPipeline(_Pipeline):
                     uri=URIRef(f"{collection.uri}/object{object_i}"),
                 )
 
+        def __generate_images(
+            self, *, depicts_uri: URIRef, institution: Institution, text_prefix: str
+        ):
+            for image_i in range(2):
+                original = Image(
+                    depicts_uri=depicts_uri,
+                    exact_dimensions=ImageDimensions(height=1000, width=1000),
+                    institution_uri=institution.uri,
+                    uri=URIRef(
+                        f"https://place-hold.it/1000x1000?text={text_prefix}Image{image_i}"
+                    ),
+                )
+                yield original
+
+                yield Image(
+                    depicts_uri=depicts_uri,
+                    exact_dimensions=ImageDimensions(height=75, width=75),
+                    institution_uri=institution.uri,
+                    original_image_uri=original.uri,
+                    uri=URIRef(
+                        f"https://place-hold.it/75x75?text={text_prefix}Image{image_i}"
+                    ),
+                )
+
+                yield Image(
+                    depicts_uri=depicts_uri,
+                    institution_uri=institution.uri,
+                    max_dimensions=ImageDimensions(height=600, width=600),
+                    original_image_uri=original.uri,
+                    uri=URIRef(
+                        f"https://place-hold.it/600x600?text={text_prefix}Image{image_i}"
+                    ),
+                )
+
         def __generate_institution_collections(self, institution: Institution):
             for collection_i in range(2):
                 collection_title = f"{institution.name}Collection{collection_i}"
@@ -66,10 +100,19 @@ class TestDataPipeline(_Pipeline):
                     title=collection_title,
                     uri=URIRef(f"{institution.uri}/collection{collection_i}"),
                 )
+                yield collection
+
+                if collection_i > 0:
+                    yield from self.__generate_images(
+                        depicts_uri=collection.uri,
+                        institution=institution,
+                        text_prefix=collection.title,
+                    )
+                # For collection 0, force the GUI to use an object image
+
                 yield from self.__generate_collection_objects(
                     collection=collection, institution=institution
                 )
-                yield collection
 
         def __generate_institutions(self):
             for institution_i in range(2):
@@ -85,6 +128,14 @@ class TestDataPipeline(_Pipeline):
                     ),
                     uri=URIRef(f"http://example.com/institution{institution_i}"),
                 )
+                yield institution
+
+                yield from self.__generate_images(
+                    depicts_uri=institution.uri,
+                    institution=institution,
+                    text_prefix=institution.name,
+                )
+
                 collections = []
                 for model in self.__generate_institution_collections(
                     institution=institution
@@ -92,10 +143,10 @@ class TestDataPipeline(_Pipeline):
                     if isinstance(model, Collection):
                         collections.append(model)
                     yield model
+
                 yield from self.__generate_shared_objects(
                     collections=tuple(collections), institution=institution
                 )
-                yield institution
 
         def __generate_object(
             self,
@@ -216,43 +267,12 @@ class TestDataPipeline(_Pipeline):
                 uri=uri,
             )
             yield object_
-            yield from self.__generate_object_images(
-                institution=institution, object_=object_
+
+            yield from self.__generate_images(
+                depicts_uri=object_.uri,
+                institution=institution,
+                text_prefix=object_.title,
             )
-
-        def __generate_object_images(
-            self, *, institution: Institution, object_: Object
-        ):
-            for image_i in range(2):
-                original = Image(
-                    depicts_uri=object_.uri,
-                    exact_dimensions=ImageDimensions(height=1000, width=1000),
-                    institution_uri=institution.uri,
-                    uri=URIRef(
-                        f"https://place-hold.it/1000x1000?text={object_.title}Image{image_i}"
-                    ),
-                )
-                yield original
-
-                yield Image(
-                    depicts_uri=object_.uri,
-                    exact_dimensions=ImageDimensions(height=75, width=75),
-                    institution_uri=institution.uri,
-                    original_image_uri=original.uri,
-                    uri=URIRef(
-                        f"https://place-hold.it/75x75?text={object_.title}Image{image_i}"
-                    ),
-                )
-
-                yield Image(
-                    depicts_uri=object_.uri,
-                    institution_uri=institution.uri,
-                    max_dimensions=ImageDimensions(height=600, width=600),
-                    original_image_uri=original.uri,
-                    uri=URIRef(
-                        f"https://place-hold.it/600x600?text={object_.title}Image{image_i}"
-                    ),
-                )
 
         def __generate_shared_objects(
             self, *, collections: Tuple[Collection, ...], institution: Institution
