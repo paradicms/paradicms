@@ -102,12 +102,14 @@ export default ObjectPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {institutionUri: string; objectUri: string}}[] = [];
-  for (const institutionUri of Data.institutionUris) {
-    for (const objectUri of Data.objectUrisByInstitutionUri(institutionUri)) {
+  for (const institution of Data.institutions) {
+    for (const object of Data.objects.filter(
+      object => object.institutionUri === institution.uri
+    )) {
       paths.push({
         params: {
-          institutionUri: encodeFileName(institutionUri),
-          objectUri: encodeFileName(objectUri),
+          institutionUri: encodeFileName(institution.uri),
+          objectUri: encodeFileName(object.uri),
         },
       });
     }
@@ -125,9 +127,11 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 
   return {
     props: {
-      institution: Data.institutionByUri(institutionUri),
-      object: Data.objectByUri(objectUri),
-      objectImages: Data.imagesByDepictsUri(objectUri),
+      institution: Data.institutions.find(
+        institution => institution.uri === institutionUri
+      )!,
+      object: Data.objects.find(object => object.uri === objectUri),
+      objectImages: Data.images.filter(image => image.depictsUri === objectUri),
       propertyDefinitions: Data.propertyDefinitions,
     },
   };
