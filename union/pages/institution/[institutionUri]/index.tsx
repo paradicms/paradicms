@@ -1,35 +1,65 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
-import {List, ListItem} from "@material-ui/core";
 import {Hrefs} from "lib/Hrefs";
-import {Collection, Institution} from "@paradicms/models";
+import {
+  Collection,
+  Collections,
+  Image,
+  Images,
+  Institution,
+  Object,
+  Objects,
+} from "@paradicms/models";
 import Link from "next/link";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
+import {CollectionsGallery} from "@paradicms/material-ui";
 
-const InstitutionPage: React.FunctionComponent<{
-  collections: readonly Collection[];
+interface StaticProps {
   institution: Institution;
-}> = ({collections, institution}) => (
-  <Layout
-    breadcrumbs={{institution}}
-    documentTitle={`${institution.name} - Collections`}
-  >
-    <List>
-      {collections.map(collection => (
-        <ListItem key={collection.uri}>
+  institutionCollections: readonly Collection[];
+  institutionImages: readonly Image[];
+  institutionObjects: readonly Object[];
+}
+
+const InstitutionPage: React.FunctionComponent<StaticProps> = ({
+  institution,
+  institutionCollections,
+  institutionImages,
+  institutionObjects,
+}) => {
+  const institutionsByUri: {[index: string]: Institution} = {};
+  institutionsByUri[institution.uri] = institution;
+
+  const joinedCollections = Collections.join({
+    collections: institutionCollections,
+    institutionsByUri,
+    imagesByDepictsUri: Images.indexByDepictsUri(institutionImages),
+    objectsByCollectionUri: Objects.indexByCollectionUri({
+      objects: institutionObjects,
+    }),
+  });
+
+  return (
+    <Layout
+      breadcrumbs={{institution}}
+      documentTitle={`${institution.name} - Collections`}
+    >
+      <CollectionsGallery
+        collections={joinedCollections}
+        renderCollectionLink={(collection, children) => (
           <Link
             {...Hrefs.institution(institution.uri).collection(collection.uri)
               .home}
           >
-            <a>{collection.title}</a>
+            <a>{children}</a>
           </Link>
-        </ListItem>
-      ))}
-    </List>
-  </Layout>
-);
+        )}
+      />
+    </Layout>
+  );
+};
 
 export default InstitutionPage;
 
@@ -42,15 +72,24 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({params}) => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+}): Promise<{props: StaticProps}> => {
   const institutionUri = decodeFileName(params!.institutionUri as string);
-  const institution = Data.institutions.find(
-    institution => institution.uri === institutionUri
-  )!;
-  const collections = Data.collections.filter(
-    collection => collection.institutionUri === institutionUri
-  );
   return {
-    props: {collections, institution},
+    props: {
+      institution: Data.institutions.find(
+        institution => institution.uri === institutionUri
+      )!,
+      institutionCollections: Data.collections.filter(
+        collection => collection.institutionUri === institutionUri
+      ),
+      institutionImages: Data.images.filter(
+        image => image.institutionUri === institutionUri
+      ),
+      institutionObjects: Data.objects.filter(
+        object => object.institutionUri === institutionUri
+      ),
+    },
   };
 };
