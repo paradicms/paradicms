@@ -82,6 +82,16 @@ class TestDataPipeline(_Pipeline):
                     ),
                 )
 
+                # yield Image(
+                #     depicts_uri=depicts_uri,
+                #     exact_dimensions=ImageDimensions(height=200, width=200),
+                #     institution_uri=institution.uri,
+                #     original_image_uri=original.uri,
+                #     uri=URIRef(
+                #         f"https://place-hold.it/200x200?text={text_prefix}Image{image_i}"
+                #     ),
+                # )
+
                 yield Image(
                     depicts_uri=depicts_uri,
                     institution_uri=institution.uri,
