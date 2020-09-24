@@ -20,8 +20,7 @@ interface StaticProps {
   institution: Institution;
   institutionCollections: readonly Collection[];
   institutionImages: readonly Image[];
-  institution;
-  Objects: readonly Object[];
+  institutionObjects: readonly Object[];
 }
 
 const InstitutionPage: React.FunctionComponent<StaticProps> = ({
