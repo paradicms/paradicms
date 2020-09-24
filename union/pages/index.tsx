@@ -4,8 +4,8 @@ import {Institution} from "@paradicms/models";
 import {Hrefs} from "lib/Hrefs";
 import {Data} from "lib/Data";
 import {List, ListItem, ListItemText} from "@material-ui/core";
-import Link from "next/link";
 import {Layout} from "components/Layout";
+import {Link} from "@paradicms/next";
 
 const IndexPage: React.FunctionComponent<{
   institutions: readonly Institution[];
@@ -16,7 +16,7 @@ const IndexPage: React.FunctionComponent<{
         <ListItem key={institution.uri}>
           <ListItemText>
             <Link {...Hrefs.institution(institution.uri).home}>
-              <a>{institution.name}</a>
+              {institution.name}
             </Link>
           </ListItemText>
         </ListItem>

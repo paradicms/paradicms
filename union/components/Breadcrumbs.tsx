@@ -1,18 +1,18 @@
 import {BreadcrumbsProps} from "components/BreadcrumbsProps";
 import {Breadcrumbs as MuiBreadcrumbs} from "@material-ui/core";
 import * as React from "react";
-import Link from "next/link";
 import {Hrefs} from "lib/Hrefs";
+import {Link} from "@paradicms/next";
 
 export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps & {
   className?: string;
 }> = ({className, collection, institution, object}) => {
   const breadcrumbNodes: React.ReactNode[] = [
     <Link key="home" {...Hrefs.home}>
-      <a>Home</a>
+      Home
     </Link>,
     <Link key="institutions" {...Hrefs.home}>
-      <a>Institutions</a>
+      Institutions
     </Link>,
   ];
   if (institution) {
@@ -21,14 +21,14 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps & {
         key={`institution-${institution.uri}`}
         {...Hrefs.institution(institution.uri).home}
       >
-        <a>{institution.name}</a>
+        {institution.name}
       </Link>
     );
 
     if (collection) {
       breadcrumbNodes.push(
         <Link key="collections" {...Hrefs.institution(institution.uri).home}>
-          <a>Collections</a>
+          Collections
         </Link>
       );
       breadcrumbNodes.push(
@@ -37,7 +37,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps & {
           {...Hrefs.institution(institution.uri).collection(collection.uri)
             .home}
         >
-          <a>{collection.title}</a>
+          {collection.title}
         </Link>
       );
     }
@@ -51,7 +51,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps & {
               .collection(collection.uri)
               .objects()}
           >
-            <a>Objects</a>
+            Objects
           </Link>
         );
       } else {
@@ -62,7 +62,7 @@ export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps & {
           key={`object-${object.uri}`}
           {...Hrefs.institution(institution.uri).object(object.uri)}
         >
-          <a>{object.title}</a>
+          {object.title}
         </Link>
       );
     }

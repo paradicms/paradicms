@@ -2,8 +2,8 @@ import {ObjectsGallery as WrappedObjectsGallery} from "@paradicms/material-ui";
 import {JoinedObject} from "@paradicms/models";
 import {Hrefs} from "lib/Hrefs";
 import * as React from "react";
-import Link from "next/link";
 import {NumberParam, useQueryParam} from "use-query-params";
+import {Link} from "@paradicms/next";
 
 const OBJECTS_PER_PAGE = 10;
 
@@ -27,14 +27,14 @@ export const ObjectsGallery: React.FunctionComponent<{
         renderInstitution
           ? (institution, children) => (
               <Link {...Hrefs.institution(institution.uri).home}>
-                <a>{children}</a>
+                {children}
               </Link>
             )
           : undefined
       }
       renderObjectLink={(object, children) => (
         <Link {...Hrefs.institution(object.institution.uri).object(object.uri)}>
-          <a>{children}</a>
+          {children}
         </Link>
       )}
       maxPage={Math.ceil(joinedObjects.length / OBJECTS_PER_PAGE) - 1}

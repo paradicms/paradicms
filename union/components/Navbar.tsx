@@ -2,8 +2,8 @@ import * as React from "react";
 import {useState} from "react";
 import {AppBar, makeStyles, Toolbar, Typography} from "@material-ui/core";
 import {NavbarSearchForm} from "@paradicms/material-ui";
-import Link from "next/link";
 import {Hrefs} from "lib/Hrefs";
+import {Link} from "@paradicms/next";
 
 const useStyles = makeStyles(theme => ({
   brand: {
@@ -49,8 +49,8 @@ export const Navbar: React.FunctionComponent<{
         <Typography variant="h6" className={classes.brand}>
           Paradicms
         </Typography>
-        <Link {...Hrefs.home}>
-          <a className={classes.navLink}>Home</a>
+        <Link className={classes.navLink} {...Hrefs.home}>
+          Home
         </Link>
         <NavbarSearchForm onSearch={onSearch} />
       </Toolbar>
