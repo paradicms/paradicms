@@ -10,17 +10,18 @@ import {
   Object,
   Objects,
 } from "@paradicms/models";
-import Link from "next/link";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {CollectionsGallery} from "@paradicms/material-ui";
+import {Link} from "@paradicms/next";
 
 interface StaticProps {
   institution: Institution;
   institutionCollections: readonly Collection[];
   institutionImages: readonly Image[];
-  institutionObjects: readonly Object[];
+  institution;
+  Objects: readonly Object[];
 }
 
 const InstitutionPage: React.FunctionComponent<StaticProps> = ({
@@ -52,8 +53,9 @@ const InstitutionPage: React.FunctionComponent<StaticProps> = ({
           <Link
             {...Hrefs.institution(institution.uri).collection(collection.uri)
               .home}
+            data-cy={"collection-link-" + collection.uri}
           >
-            <a>{children}</a>
+            {children}
           </Link>
         )}
       />
