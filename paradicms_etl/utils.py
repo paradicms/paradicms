@@ -8,4 +8,10 @@ def is_uri(string: str) -> bool:
 
 
 def sanitize_method_name(string: str) -> str:
-    return string.replace(" ", "_").lower().encode("ascii", "ignore").decode("ascii")
+    return (
+        string.replace(" ", "_")
+        .replace(",", "_")
+        .lower()
+        .encode("ascii", "ignore")
+        .decode("ascii")
+    )
