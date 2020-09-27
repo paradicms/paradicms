@@ -28,7 +28,15 @@ class JsonFileLoader(_FileLoader):
 
         with open(file_path, "w+", newline="\n") as file_:
             json.dump(
-                json_objects_by_class_name, file_, indent=4, default=json_dump_default
+                {
+                    class_name: list(
+                        sorted(json_objects, key=lambda json_object: json_object["uri"])
+                    )
+                    for class_name, json_objects in json_objects_by_class_name.items()
+                },
+                file_,
+                indent=4,
+                default=json_dump_default,
             )
 
     def load(self, *, models: Generator[_Model, None, None]):
