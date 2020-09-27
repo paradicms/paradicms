@@ -10,6 +10,7 @@
     "@paradicms/base": "1.0.3",
     "@paradicms/lunr": "1.0.3",
     "@paradicms/material-ui": "1.0.3",
+    "@paradicms/material-ui-next": "1.0.3",
     "@paradicms/models": "1.0.3",
     "@paradicms/next": "1.0.3",
     "next": "9.5.2"

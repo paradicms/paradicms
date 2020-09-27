@@ -3,7 +3,7 @@ import {useState} from "react";
 import {AppBar, makeStyles, Toolbar, Typography} from "@material-ui/core";
 import {NavbarSearchForm} from "@paradicms/material-ui";
 import {Hrefs} from "lib/Hrefs";
-import {Link} from "@paradicms/next";
+import {Link} from "@paradicms/material-ui-next";
 
 const useStyles = makeStyles(theme => ({
   brand: {

@@ -2,7 +2,7 @@ import {BreadcrumbsProps} from "components/BreadcrumbsProps";
 import {Breadcrumbs as MuiBreadcrumbs} from "@material-ui/core";
 import * as React from "react";
 import {Hrefs} from "lib/Hrefs";
-import {Link} from "@paradicms/next";
+import {Link} from "@paradicms/material-ui-next";
 
 export const Breadcrumbs: React.FunctionComponent<BreadcrumbsProps & {
   className?: string;

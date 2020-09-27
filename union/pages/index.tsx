@@ -4,7 +4,7 @@ import {Image, Images, Institution, Institutions} from "@paradicms/models";
 import {Hrefs} from "lib/Hrefs";
 import {Data} from "lib/Data";
 import {Layout} from "components/Layout";
-import {Link} from "@paradicms/next";
+import {Link} from "@paradicms/material-ui-next";
 import {InstitutionsGallery} from "@paradicms/material-ui";
 
 const IndexPage: React.FunctionComponent<{

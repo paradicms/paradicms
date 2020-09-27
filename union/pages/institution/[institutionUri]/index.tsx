@@ -14,7 +14,7 @@ import {GetStaticPaths, GetStaticProps} from "next";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {CollectionsGallery} from "@paradicms/material-ui";
-import {Link} from "@paradicms/next";
+import {Link} from "@paradicms/material-ui-next";
 
 interface StaticProps {
   institution: Institution;

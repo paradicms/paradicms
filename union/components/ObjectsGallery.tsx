@@ -3,7 +3,7 @@ import {JoinedObject} from "@paradicms/models";
 import {Hrefs} from "lib/Hrefs";
 import * as React from "react";
 import {NumberParam, useQueryParam} from "use-query-params";
-import {Link} from "@paradicms/next";
+import {Link} from "@paradicms/material-ui-next";
 
 const OBJECTS_PER_PAGE = 10;
 
