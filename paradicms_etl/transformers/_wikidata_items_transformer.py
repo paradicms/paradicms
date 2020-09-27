@@ -52,11 +52,22 @@ class _WikidataItemsTransformer(_Transformer):
                     self._logger.debug("authoritative model %s", model.uri)
                 else:
                     self._logger.debug("non-authoritative model %s", model.uri)
-                    if model.uri in non_authoritative_models_by_uri:
+                    existing_non_authoritative_model = non_authoritative_models_by_uri.get(
+                        model.uri
+                    )
+                    if existing_non_authoritative_model is None:
+                        non_authoritative_models_by_uri[model.uri] = model
+                    elif existing_non_authoritative_model != model:
                         self._logger.info(
+                            "conflicting non-authoritative model %s: %s vs %s",
+                            model.uri,
+                            existing_non_authoritative_model,
+                            model,
+                        )
+                    else:
+                        self._logger.debug(
                             "duplicate non-authoritative model %s", model.uri
                         )
-                    non_authoritative_models_by_uri[model.uri] = model
 
         yield from authoritative_models_by_uri.values()
         for model in non_authoritative_models_by_uri.values():

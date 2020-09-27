@@ -65,12 +65,15 @@ class _WikidataItemTransformer(_Transformer):
         #         statement.property_definition.label,
         #     )
 
-        yield from transform_method(
+        models = transform_method(
             item=item,
             item_model=item_model,
             statement=statement,
             **statement_qualifier_kwds,
         )
+        if models is None:
+            return None
+        yield from models
 
     def _transform_statement_qualifiers(
         self, *, item: WikidataItem, item_model: _Model, statement: WikidataStatement
@@ -121,9 +124,13 @@ class _WikidataItemTransformer(_Transformer):
         for statement in sorted(
             statements, key=lambda statement: statement.property_definition.label
         ):
-            for model in self._transform_statement(
+            models = self._transform_statement(
                 item=item, item_model=item_model, statement=statement
-            ):
+            )
+            if models is None:
+                continue
+
+            for model in models:
                 if model.uri == item_model.uri:
                     item_model = model
                     reassigned_item_model = True
