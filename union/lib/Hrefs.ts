@@ -45,8 +45,8 @@ export class Hrefs {
       home: institutionHref,
       object(objectUri: string): Href {
         return {
-          href: `${institutionHref.href}/object/[objectUri]`,
-          as: `${institutionHref.as}/object/${encodeFileName(objectUri)}`,
+          href: `${institutionHref.href}/object/[objectUri]/`,
+          as: `${institutionHref.as}/object/${encodeFileName(objectUri)}/`,
         };
       },
     };
