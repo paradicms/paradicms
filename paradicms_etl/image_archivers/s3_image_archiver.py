@@ -40,12 +40,8 @@ class S3ImageArchiver(_ImageArchiver):
 
         with Image.open(str(image_file_path)) as image:
             image_format = image.format
-            image_width, image_height = image.size
 
-        key_parts = []
-        key_parts.append(image_file_hash.hexdigest())
-        key_parts.append(f"{image_width}x{image_height}")
-        key = "/".join(key_parts)
+        key = image_file_hash.hexdigest()
 
         archived_image_url = URIRef(
             f"https://{self.__bucket_name}.s3.amazonaws.com/{key}"
@@ -79,17 +75,17 @@ if __name__ == "__main__":
     # Manual unit test, since we don't want to do this on every CI build, or have credentials there.
     import tempfile
     import urllib
-    from paradicms_etl.image_cache import ImageCache
+    from paradicms_etl.file_cache import FileCache
 
     with tempfile.TemporaryDirectory() as temp_dir:
-        image_cache = ImageCache(cache_dir_path=Path(temp_dir))
+        image_cache = FileCache(cache_dir_path=Path(temp_dir))
         sut = S3ImageArchiver(s3_bucket_name="dressdiscover-images")
         archived_url = sut.archive_image(
-            image_file_path=image_cache.get_image(
-                image_url=URIRef("https://place-hold.it/1000x1000")
+            image_file_path=image_cache.get_file(
+                URIRef("https://place-hold.it/1000x1000")
             )
         )
-        print("Archived URL: " + archived_url)
+        # print("Archived URL: " + archived_url)
         with urllib.request.urlopen(
             urllib.request.Request(str(archived_url), method="HEAD")
         ) as open_url:
