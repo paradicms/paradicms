@@ -100,7 +100,7 @@ class _PastPerfectTransformer(_Transformer):
                 )
                 yield full_size_image
 
-                yield Image(
+                yield Image.create(
                     depicts_uri=object_.uri,
                     institution_uri=institution.uri,
                     original_image_uri=full_size_image.uri,

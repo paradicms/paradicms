@@ -236,7 +236,7 @@ class OmekaClassicTransformer(_Transformer):
                     )
                 original_image_uri = URIRef(file_["file_urls"]["original"])
 
-            image = Image(
+            image = Image.create(
                 created=dateparser.parse(
                     file_["added"], settings={"STRICT_PARSING": True}
                 ),
