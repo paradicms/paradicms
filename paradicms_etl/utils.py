@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Dict
 
-from paradicms_etl.models.image import Image
+from PIL import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 
 
