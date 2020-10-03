@@ -62,7 +62,7 @@ class TestDataPipeline(_Pipeline):
             self, *, depicts_uri: URIRef, institution: Institution, text_prefix: str
         ):
             for image_i in range(2):
-                original = Image(
+                original = Image.create(
                     depicts_uri=depicts_uri,
                     exact_dimensions=ImageDimensions(height=1000, width=1000),
                     institution_uri=institution.uri,
@@ -72,35 +72,19 @@ class TestDataPipeline(_Pipeline):
                 )
                 yield original
 
-                yield Image(
-                    depicts_uri=depicts_uri,
-                    exact_dimensions=ImageDimensions(height=75, width=75),
-                    institution_uri=institution.uri,
-                    original_image_uri=original.uri,
-                    uri=URIRef(
-                        f"https://place-hold.it/75x75?text={text_prefix}Image{image_i}"
-                    ),
-                )
-
-                # yield Image(
-                #     depicts_uri=depicts_uri,
-                #     exact_dimensions=ImageDimensions(height=200, width=200),
-                #     institution_uri=institution.uri,
-                #     original_image_uri=original.uri,
-                #     uri=URIRef(
-                #         f"https://place-hold.it/200x200?text={text_prefix}Image{image_i}"
-                #     ),
-                # )
-
-                yield Image(
-                    depicts_uri=depicts_uri,
-                    institution_uri=institution.uri,
-                    max_dimensions=ImageDimensions(height=600, width=600),
-                    original_image_uri=original.uri,
-                    uri=URIRef(
-                        f"https://place-hold.it/600x600?text={text_prefix}Image{image_i}"
-                    ),
-                )
+                for thumbnail_dimensions in (
+                    ImageDimensions(75, 75),
+                    ImageDimensions(600, 600),
+                ):
+                    yield Image.create(
+                        depicts_uri=depicts_uri,
+                        exact_dimensions=thumbnail_dimensions,
+                        institution_uri=institution.uri,
+                        original_image_uri=original.uri,
+                        uri=URIRef(
+                            f"https://place-hold.it/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}?text={text_prefix}Image{image_i}"
+                        ),
+                    )
 
         def __generate_institution_collections(self, institution: Institution):
             for collection_i in range(2):

@@ -1,15 +1,14 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
-from typing import List, Optional
+from typing import Optional
 
 from dataclasses_json import LetterCase, dataclass_json
 from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import DCTERMS, FOAF, RDF
+from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
 from paradicms_etl._model import _Model
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespace import CMS, EXIF
 
 
