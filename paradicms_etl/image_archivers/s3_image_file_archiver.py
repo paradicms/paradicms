@@ -40,6 +40,7 @@ class S3ImageFileArchiver(_ImageArchiver):
                 image_file_hash.update(byte_block)
 
         with Image.open(str(image_file_path)) as image:
+            image_format = image.format
             image_width, image_height = image.size
 
         key_parts = []
@@ -64,7 +65,12 @@ class S3ImageFileArchiver(_ImageArchiver):
                     raise
 
         self._logger.debug("uploading %s to %s", image_file_path, archived_image_url)
-        self.__s3_client.upload_file(str(image_file_path), self.__bucket_name, key)
+        self.__s3_client.upload_file(
+            str(image_file_path),
+            self.__bucket_name,
+            key,
+            ExtraArgs={"ContentType": "image/" + image_format.lower(),},
+        )
         self._logger.debug("uploaded %s to %s", image_file_path, archived_image_url)
 
         return archived_image_url
@@ -83,6 +89,7 @@ if __name__ == "__main__":
             ),
         )
         archived_url = sut.archive_image(image_url="https://place-hold.it/1000x1000")
+        print("Archived URL: " + archived_url)
         with urllib.request.urlopen(
             urllib.request.Request(str(archived_url), method="HEAD")
         ) as open_url:
