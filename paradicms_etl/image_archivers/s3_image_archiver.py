@@ -8,10 +8,9 @@ from botocore.exceptions import ClientError
 from rdflib import URIRef
 
 from paradicms_etl._image_archiver import _ImageArchiver
-from paradicms_etl.image_archivers.image_url_archiver import ImageUrlArchiver
 
 
-class S3ImageFileArchiver(_ImageArchiver):
+class S3ImageArchiver(_ImageArchiver):
     def __init__(
         self,
         *,
@@ -80,15 +79,16 @@ if __name__ == "__main__":
     # Manual unit test, since we don't want to do this on every CI build, or have credentials there.
     import tempfile
     import urllib
+    from paradicms_etl.image_cache import ImageCache
 
     with tempfile.TemporaryDirectory() as temp_dir:
-        sut = ImageUrlArchiver(
-            cache_dir_path=Path(temp_dir),
-            image_file_archiver=S3ImageFileArchiver(
-                s3_bucket_name="dressdiscover-images"
-            ),
+        image_cache = ImageCache(cache_dir_path=Path(temp_dir))
+        sut = S3ImageArchiver(s3_bucket_name="dressdiscover-images")
+        archived_url = sut.archive_image(
+            image_file_path=image_cache.get_image(
+                image_url=URIRef("https://place-hold.it/1000x1000")
+            )
         )
-        archived_url = sut.archive_image(image_url="https://place-hold.it/1000x1000")
         print("Archived URL: " + archived_url)
         with urllib.request.urlopen(
             urllib.request.Request(str(archived_url), method="HEAD")
