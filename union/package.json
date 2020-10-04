@@ -15,6 +15,9 @@
     "@paradicms/next": "1.0.3",
     "next": "9.5.2"
   },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
+  },
   "scripts": {
     "clean": "rimraf .next && rimraf out",
     "dev": "next dev",
