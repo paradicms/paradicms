@@ -68,7 +68,10 @@ class GuiBuilder:
         args = ["npm", "run", script]
         self.__logger.info("running %s", args)
         subprocess_ret = subprocess.call(
-            args, cwd=str(self.__gui_dir_path), env=subprocess_env, shell=True,
+            args,
+            cwd=str(self.__gui_dir_path),
+            env=subprocess_env,
+            shell=os.environ.get("CI") is None,
         )
 
         if subprocess_ret != 0:
