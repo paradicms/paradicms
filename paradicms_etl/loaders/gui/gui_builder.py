@@ -58,9 +58,6 @@ class GuiBuilder:
     def gui_dir_path(self) -> Path:
         return self.__gui_dir_path
 
-    def install(self):
-        self.__run_npm_script("install")
-
     def __run_npm_script(self, script, data_dir_path: Optional[Path] = None):
         subprocess_env = os.environ.copy()
         if data_dir_path is not None:
@@ -68,10 +65,7 @@ class GuiBuilder:
             self.__logger.info("using DATA_DIRECTORY_PATH = %s", data_dir_path)
         subprocess_env["EDITOR"] = ""
 
-        args = ["npm"]
-        if script != "install":
-            args.append("run")
-        args.append(script)
+        args = ["npm", "run", script]
         self.__logger.info("running %s", args)
         subprocess_ret = subprocess.call(
             args, cwd=str(self.__gui_dir_path), env=subprocess_env, shell=True,
