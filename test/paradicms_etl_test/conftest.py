@@ -14,9 +14,11 @@ def test_data_models() -> Tuple[_Model, ...]:
 
 @pytest.fixture
 def test_data_images(test_data_models: Tuple[_Model, ...]) -> Tuple[Image, ...]:
-    return tuple(model if isinstance(model, Image) for model in test_data_models)
+    return tuple(model for model in test_data_models if isinstance(model, Image))
 
 
 @pytest.fixture
 def test_data_original_images(test_data_images: Tuple[Image, ...]) -> Tuple[Image, ...]:
-    return tuple(image if image.original_image_uri is None for image in test_data_images)
+    return tuple(
+        image for image in test_data_images if image.original_image_uri is None
+    )
