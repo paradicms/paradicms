@@ -38,6 +38,7 @@ class GuiLoader(_BufferingLoader):
             GuiImagesLoader(
                 image_archiver=self.__image_archiver,
                 loaded_data_dir_path=self._loaded_data_dir_path,
+                pipeline_id=self._pipeline_id,
             ).load(models=original_images)
         )
 
@@ -45,15 +46,15 @@ class GuiLoader(_BufferingLoader):
         data_loader = GuiDataLoader(
             loaded_data_dir_path=data_dir_path, pipeline_id=self._pipeline_id,
         )
-        data_loader.load(models=gui_ + other_models)
+        data_loader.load(models=gui_images + other_models)
         data_loader.flush()
         self._logger.info("loaded data to %s", data_dir_path)
 
-        gui_builder = GuiBuilder(data_dir_path=data_dir_path, gui=self.__gui)
+        gui_builder = GuiBuilder(gui=self.__gui)
 
         gui_builder.clean()
 
-        gui_out_dir_path = gui_builder.build()
+        gui_out_dir_path = gui_builder.build(data_dir_path=data_dir_path)
 
         final_dist_dir_path = self._loaded_data_dir_path / "site"
         if final_dist_dir_path.is_dir():
