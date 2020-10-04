@@ -35,7 +35,7 @@ class GuiImagesLoader(_Loader):
             self.__thumbnail_cache_dir_path = (
                 self._loaded_data_dir_path / "thumbnail_cache"
             )
-            self.__thumbnail_cache_dir_path.mkdir(exist_ok=True, parents=True)
+            self.__thumbnail_cache_dir_path.mkdir(exist_ok=True)
         else:
             self.__thumbnail_cache_dir_path = None
 
