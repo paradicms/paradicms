@@ -1,5 +1,7 @@
 import dataclasses
 from typing import Generator, Tuple
+from urllib.error import HTTPError
+import os.path
 
 from pathvalidate import sanitize_filename
 
@@ -12,14 +14,18 @@ from paradicms_etl.utils import thumbnail_image
 
 
 class GuiImagesLoader(_Loader):
+    THUMBNAIL_MAX_DIMENSIONS_DEFAULT = (
+        ImageDimensions(height=200, width=200),
+        ImageDimensions(height=600, width=600),
+    )
+
     def __init__(
         self,
         *,
         image_archiver: _ImageArchiver,
-        thumbnail_dimensions: Tuple[ImageDimensions, ...] = (
-            ImageDimensions(height=200, width=200),
-            ImageDimensions(height=600, width=600),
-        ),
+        thumbnail_max_dimensions: Tuple[
+            ImageDimensions, ...
+        ] = THUMBNAIL_MAX_DIMENSIONS_DEFAULT,
         **kwds,
     ):
         _Loader.__init__(self, **kwds)
@@ -30,14 +36,11 @@ class GuiImagesLoader(_Loader):
             cache_dir_path=self._loaded_data_dir_path / "original_image_cache"
         )
 
-        self.__thumbnail_dimensions = thumbnail_dimensions
-        if self.__thumbnail_dimensions:
-            self.__thumbnail_cache_dir_path = (
-                self._loaded_data_dir_path / "thumbnail_cache"
-            )
-            self.__thumbnail_cache_dir_path.mkdir(exist_ok=True)
-        else:
-            self.__thumbnail_cache_dir_path = None
+        if not thumbnail_max_dimensions:
+            raise ValueError("must specify thumbnail max dimensions")
+        self.__thumbnail_max_dimensions = thumbnail_max_dimensions
+        self.__thumbnail_cache_dir_path = self._loaded_data_dir_path / "thumbnail_cache"
+        self.__thumbnail_cache_dir_path.mkdir(exist_ok=True)
 
     def load(self, *, models) -> Generator[_Image, None, None]:
         """
@@ -58,9 +61,17 @@ class GuiImagesLoader(_Loader):
 
             original_image = image
 
-            original_image_file_path = self.__original_image_file_cache.get_file(
-                original_image.uri
-            )
+            try:
+                original_image_file_path = self.__original_image_file_cache.get_file(
+                    original_image.uri
+                )
+            except HTTPError as http_error:
+                if http_error.code == 404:
+                    self._logger.error(
+                        "original image %s not found, skipping", str(original_image.uri)
+                    )
+                    continue
+
             self._logger.debug(
                 "cached original image %s at %s",
                 original_image.uri,
@@ -77,7 +88,7 @@ class GuiImagesLoader(_Loader):
 
             yield dataclasses.replace(original_image, uri=archived_original_image_url)
 
-            if not self.__thumbnail_dimensions:
+            if not self.__thumbnail_max_dimensions:
                 continue
 
             thumbnail_dir_path = self.__thumbnail_cache_dir_path / sanitize_filename(
@@ -85,15 +96,18 @@ class GuiImagesLoader(_Loader):
             )
             thumbnail_dir_path.mkdir(parents=True, exist_ok=True)
 
-            for thumbnail_dimensions in self.__thumbnail_dimensions:
+            image_file_ext = os.path.splitext(original_image_file_path)[1]
+            assert image_file_ext
+
+            for thumbnail_max_dimensions in self.__thumbnail_max_dimensions:
                 thumbnail_file_path = (
                     thumbnail_dir_path
-                    / f"{thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
+                    / f"{thumbnail_max_dimensions.width}x{thumbnail_max_dimensions.height}{image_file_ext}"
                 )
 
-                thumbnail_image(
+                thumbnail_exact_dimensions = thumbnail_image(
                     input_image_file_path=original_image_file_path,
-                    output_thumbnail_dimensions=thumbnail_dimensions,
+                    output_thumbnail_max_dimensions=thumbnail_max_dimensions,
                     output_thumbnail_file_path=thumbnail_file_path,
                 )
 
@@ -103,8 +117,8 @@ class GuiImagesLoader(_Loader):
 
                 yield dataclasses.replace(
                     original_image,
-                    exact_dimensions=thumbnail_dimensions,
-                    max_dimensions=None,
+                    exact_dimensions=thumbnail_exact_dimensions,
+                    max_dimensions=thumbnail_max_dimensions,
                     original_image_uri=archived_original_image_url,
                     uri=archived_thumbnail_url,
                 )

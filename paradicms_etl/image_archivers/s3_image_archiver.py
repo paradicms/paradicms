@@ -1,4 +1,5 @@
 import hashlib
+import mimetypes
 from pathlib import Path
 from typing import Optional
 from PIL import Image
@@ -20,7 +21,7 @@ class S3ImageArchiver(_ImageArchiver):
         force_upload: bool = False,
         **kwds,
     ):
-        _ImageArchiver.__init__(self)
+        _ImageArchiver.__init__(self, **kwds)
 
         self.__bucket_name = s3_bucket_name
         self.__force_upload = force_upload
@@ -41,7 +42,15 @@ class S3ImageArchiver(_ImageArchiver):
         with Image.open(str(image_file_path)) as image:
             image_format = image.format
 
-        key = image_file_hash.hexdigest()
+        guess_file_ext = mimetypes.guess_extension(
+            "image/" + image_format.lower(), strict=False
+        )
+        if guess_file_ext is None:
+            raise ValueError(
+                f"unable to guess file extension for format {image_format}"
+            )
+
+        key = image_file_hash.hexdigest() + guess_file_ext
 
         archived_image_url = URIRef(
             f"https://{self.__bucket_name}.s3.amazonaws.com/{key}"
@@ -53,7 +62,7 @@ class S3ImageArchiver(_ImageArchiver):
                 return archived_image_url
             except ClientError as client_error:
                 if client_error.response["Error"]["Code"] == "404":
-                    self._logger.info(
+                    self._logger.debug(
                         "%s does not exist, uploading", archived_image_url
                     )
                 else:
