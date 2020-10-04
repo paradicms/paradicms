@@ -60,7 +60,8 @@ def thumbnail_image(
     output_thumbnail_dimensions: ImageDimensions
 ) -> None:
     with Image.open(str(input_image_file_path)) as image:
+        input_image_format = image.format
         image.thumbnail(
             (output_thumbnail_dimensions.width, output_thumbnail_dimensions.height)
         )
-        image.save(str(output_thumbnail_file_path))
+        image.save(str(output_thumbnail_file_path), format=input_image_format)
