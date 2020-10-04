@@ -70,10 +70,12 @@ class GuiBuilder:
         subprocess_ret = subprocess.call(
             args, cwd=str(self.__gui_dir_path), env=subprocess_env, shell=True,
         )
-        self.__logger.info("%s returned %d", args, subprocess_ret)
 
         if subprocess_ret != 0:
             self.__logger.warning(
-                "npm %s script returned non-zero: %d", script, subprocess_ret
+                "%s in %s returned non-zero: %d",
+                args,
+                self.__gui_dir_path,
+                subprocess_ret,
             )
             sys.exit(subprocess_ret)
