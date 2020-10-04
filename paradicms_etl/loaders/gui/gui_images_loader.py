@@ -1,23 +1,25 @@
 import dataclasses
-from typing import Tuple
+from typing import Generator, Tuple
 
 from pathvalidate import sanitize_filename
 
 from paradicms_etl._image_archiver import _ImageArchiver
 from paradicms_etl._loader import _Loader
-
 from paradicms_etl.file_cache import FileCache
 from paradicms_etl.models._image import _Image
-from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.utils import thumbnail_image
 
 
-class ImageArchiveLoader(_Loader):
+class GuiImagesLoader(_Loader):
     def __init__(
         self,
+        *,
         image_archiver: _ImageArchiver,
-        thumbnail_dimensions: Tuple[ImageDimensions, ...] = (),
+        thumbnail_dimensions: Tuple[ImageDimensions, ...] = (
+            ImageDimensions(height=200, width=200),
+            ImageDimensions(height=600, width=600),
+        ),
         **kwds,
     ):
         _Loader.__init__(self, **kwds)
@@ -30,23 +32,31 @@ class ImageArchiveLoader(_Loader):
 
         self.__thumbnail_dimensions = thumbnail_dimensions
         if self.__thumbnail_dimensions:
-            self.__thumbnail_cache_dir_path = self._loaded_dir_path / "thumbnail_cache"
+            self.__thumbnail_cache_dir_path = (
+                self._loaded_data_dir_path / "thumbnail_cache"
+            )
             self.__thumbnail_cache_dir_path.mkdir(exist_ok=True, parents=True)
         else:
             self.__thumbnail_cache_dir_path = None
 
-    def load(self, *, models):
+    def load(self, *, models) -> Generator[_Image, None, None]:
+        """
+        Archive an original image and its thumbnails.
+        :return a generator of (1) a copy of image with the archived image URL and (2) new Images for the thumbnails
+        """
+
         for model in models:
             if not isinstance(model, _Image):
+                raise TypeError("model is not an _Image subclass: " + type(model))
+
+            image = model
+
+            if image.original_image_uri is not None:
                 raise ValueError(
-                    f"expected {_Image.__name__} instance, found {type(model)}"
+                    f"non-original images should not be archived: {image.uri}"
                 )
 
-            if model.original_image_uri is not None:
-                self._logger.warning("ignoring non-original image: %s", model)
-                continue
-
-            original_image = model
+            original_image = image
 
             original_image_file_path = self.__original_image_file_cache.get_file(
                 original_image.uri
