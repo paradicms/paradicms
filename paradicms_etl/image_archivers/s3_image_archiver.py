@@ -78,24 +78,3 @@ class S3ImageArchiver(_ImageArchiver):
         self._logger.debug("uploaded %s to %s", image_file_path, archived_image_url)
 
         return archived_image_url
-
-
-if __name__ == "__main__":
-    # Manual unit test, since we don't want to do this on every CI build, or have credentials there.
-    import tempfile
-    import urllib
-    from paradicms_etl.file_cache import FileCache
-
-    with tempfile.TemporaryDirectory() as temp_dir:
-        image_cache = FileCache(cache_dir_path=Path(temp_dir))
-        sut = S3ImageArchiver(s3_bucket_name="dressdiscover-images")
-        archived_url = sut.archive_image(
-            image_file_path=image_cache.get_file(
-                URIRef("https://place-hold.it/1000x1000")
-            )
-        )
-        # print("Archived URL: " + archived_url)
-        with urllib.request.urlopen(
-            urllib.request.Request(str(archived_url), method="HEAD")
-        ) as open_url:
-            assert open_url.getcode() == 200
