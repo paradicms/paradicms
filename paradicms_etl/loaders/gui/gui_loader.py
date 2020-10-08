@@ -5,6 +5,8 @@ from typing import Optional, Tuple, Union
 
 from paradicms_etl._image_archiver import _ImageArchiver
 from paradicms_etl.loaders._buffering_loader import _BufferingLoader
+from paradicms_etl.loaders.gui._gui_deployer import _GuiDeployer
+from paradicms_etl.loaders.gui.fs_gui_deployer import FsGuiDeployer
 from paradicms_etl.loaders.gui.gui_builder import GuiBuilder
 from paradicms_etl.loaders.gui.gui_data_loader import GuiDataLoader
 from paradicms_etl.loaders.gui.gui_images_loader import GuiImagesLoader
@@ -17,6 +19,7 @@ class GuiLoader(_BufferingLoader):
         self,
         *,
         gui: Union[Path, str],
+        deployer: Optional[_GuiDeployer] = None,
         image_archiver: Optional[_ImageArchiver] = None,
         thumbnail_max_dimensions: Tuple[
             ImageDimensions, ...
@@ -24,6 +27,7 @@ class GuiLoader(_BufferingLoader):
         **kwds,
     ):
         _BufferingLoader.__init__(self, **kwds)
+        self.__deployer = deployer
         self.__gui = gui
         self.__image_archiver = image_archiver
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
@@ -65,22 +69,10 @@ class GuiLoader(_BufferingLoader):
 
         gui_out_dir_path = gui_builder.build(data_dir_path=data_dir_path)
 
-        final_dist_dir_path = self._loaded_data_dir_path / "site"
-        if final_dist_dir_path.is_dir():
-            archive_dist_dir_path = (
-                self._loaded_data_dir_path
-                / f"site-pre-{datetime.now().isoformat().split('.')[0].replace('-', '').replace(':', '')}"
-            )
-            self._logger.info(
-                "renaming existing final dist directory %s to %s",
-                final_dist_dir_path,
-                archive_dist_dir_path,
-            )
-            # rmtree has some issues deleting very long file paths on Windows
-            # rename the old directory instead
-            os.rename(
-                final_dist_dir_path, archive_dist_dir_path,
+        deployer = self.__deployer
+        if deployer is None:
+            deployer = FsGuiDeployer(
+                gui_deploy_dir_path=self._loaded_data_dir_path / "deployed"
             )
 
-        self._logger.info("renaming %s to %s", gui_out_dir_path, final_dist_dir_path)
-        os.rename(gui_out_dir_path, final_dist_dir_path)
+        deployer.deploy(gui_out_dir_path=gui_out_dir_path)

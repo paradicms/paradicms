@@ -3,8 +3,6 @@ from typing import Tuple
 
 from paradicms_etl._model import _Model
 from paradicms_etl.image_archivers.nop_image_archiver import NopImageArchiver
-from paradicms_etl.loaders.gui.gui_builder import GuiBuilder
-from paradicms_etl.loaders.gui.gui_data_loader import GuiDataLoader
 from paradicms_etl.loaders.gui.gui_loader import GuiLoader
 from paradicms_etl.models._image import _Image
 
@@ -44,7 +42,5 @@ def test_load(test_data_models: Tuple[_Model, ...], tmp_path):
     gui_loader.load(models=[original_images[0]] + other_models)
     gui_loader.flush()
 
-    assert (loaded_data_dir_path / "data").is_dir()
     assert (loaded_data_dir_path / "data" / "institution.json").is_file()
-    assert (loaded_data_dir_path / "site").is_dir()
-    assert (loaded_data_dir_path / "site" / "index.html").is_file()
+    assert (loaded_data_dir_path / "deployed" / "current" / "index.html").is_file()
