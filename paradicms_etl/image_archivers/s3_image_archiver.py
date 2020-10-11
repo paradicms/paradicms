@@ -23,8 +23,8 @@ class S3ImageArchiver(_ImageArchiver):
     ):
         _ImageArchiver.__init__(self, **kwds)
 
-        self.__bucket_name = s3_bucket_name
         self.__force_upload = force_upload
+        self.__s3_bucket_name = s3_bucket_name
 
         client_kwds = {}
         if aws_access_key_id is not None:
@@ -53,12 +53,12 @@ class S3ImageArchiver(_ImageArchiver):
         key = image_file_hash.hexdigest() + guess_file_ext
 
         archived_image_url = URIRef(
-            f"https://{self.__bucket_name}.s3.amazonaws.com/{key}"
+            f"https://{self.__s3_bucket_name}.s3.amazonaws.com/{key}"
         )
 
         if not self.__force_upload:
             try:
-                self.__s3_client.head_object(Bucket=self.__bucket_name, Key=key)
+                self.__s3_client.head_object(Bucket=self.__s3_bucket_name, Key=key)
                 return archived_image_url
             except ClientError as client_error:
                 if client_error.response["Error"]["Code"] == "404":
@@ -71,7 +71,7 @@ class S3ImageArchiver(_ImageArchiver):
         self._logger.debug("uploading %s to %s", image_file_path, archived_image_url)
         self.__s3_client.upload_file(
             str(image_file_path),
-            self.__bucket_name,
+            self.__s3_bucket_name,
             key,
             ExtraArgs={"ContentType": "image/" + image_format.lower(),},
         )
