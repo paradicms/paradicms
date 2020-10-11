@@ -18,12 +18,10 @@ class S3GuiDeployer(_GuiDeployer):
         s3_bucket_name: str,
         aws_access_key_id: Optional[str] = None,
         aws_secret_access_key: Optional[str] = None,
-        force_upload: bool = False,
         **kwds,
     ):
         _GuiDeployer.__init__(self, **kwds)
 
-        self.__force_upload = force_upload
         self.__s3_bucket_name = s3_bucket_name
 
         client_kwds = {}
@@ -58,19 +56,6 @@ class S3GuiDeployer(_GuiDeployer):
         )
         for file_path in tqdm(gui_out_file_paths, desc=self.__class__.__name__):
             key = str(file_path.relative_to(gui_out_dir_path)).replace(os.path.sep, "/")
-
-            if not self.__force_upload:
-                try:
-                    self.__s3_client.head_object(Bucket=self.__s3_bucket_name, Key=key)
-                    self._logger.debug(
-                        "%s exists and force_upload not specified, skipping", key
-                    )
-                    continue
-                except ClientError as client_error:
-                    if client_error.response["Error"]["Code"] == "404":
-                        self._logger.debug("%s does not exist, uploading", key)
-                    else:
-                        raise
 
             guess_mime_type, _ = mimetypes.guess_type(file_path.as_uri(), strict=False)
             if guess_mime_type is None:
