@@ -2,6 +2,7 @@ import dataclasses
 from typing import Generator, Tuple
 from urllib.error import HTTPError
 import os.path
+from tqdm import tqdm
 
 from pathvalidate import sanitize_filename
 
@@ -48,7 +49,8 @@ class GuiImagesLoader(_Loader):
         :return a generator of (1) a copy of image with the archived image URL and (2) new Images for the thumbnails
         """
 
-        for model in models:
+        self._logger.info("loading GUI images")
+        for model in tqdm(models):
             if not isinstance(model, _Image):
                 raise TypeError("model is not an _Image subclass: " + type(model))
 
@@ -122,3 +124,4 @@ class GuiImagesLoader(_Loader):
                     original_image_uri=archived_original_image_url,
                     uri=archived_thumbnail_url,
                 )
+        self._logger.info("loaded GUI images")
