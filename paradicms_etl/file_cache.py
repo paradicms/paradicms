@@ -31,6 +31,8 @@ class FileCache:
         # The file will be <root dir path>/<sanitized version of file URL>/file.<ext>
         # The headers will be in the same directory as headers.txt.
 
+        assert not str(file_url).startswith("file:")
+
         file_cache_dir_path = self.__cache_dir_path / sanitize_filename(str(file_url))
 
         if not self.__force_download and file_cache_dir_path.is_dir():

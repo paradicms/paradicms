@@ -1,7 +1,10 @@
 import dataclasses
+from pathlib import PurePath, PureWindowsPath
 from typing import Generator, Tuple
 from urllib.error import HTTPError
 import os.path
+from urllib.parse import unquote, urlparse
+
 from tqdm import tqdm
 
 from pathvalidate import sanitize_filename
@@ -63,22 +66,42 @@ class GuiImagesLoader(_Loader):
 
             original_image = image
 
-            try:
-                original_image_file_path = self.__original_image_file_cache.get_file(
-                    original_image.uri
-                )
-            except HTTPError as http_error:
-                if http_error.code == 404:
-                    self._logger.error(
-                        "original image %s not found, skipping", str(original_image.uri)
-                    )
-                    continue
+            original_image_uri_parsed = urlparse(str(original_image.uri))
+            if original_image_uri_parsed.scheme == "file":
+                original_image_file_path = unquote(original_image_uri_parsed.path)
+                if isinstance(
+                    PurePath(), PureWindowsPath
+                ) and original_image_file_path.startswith("/"):
+                    original_image_file_path = PurePath(original_image_file_path[1:])
+                else:
+                    original_image_file_path = PurePath(original_image_file_path)
 
-            self._logger.debug(
-                "cached original image %s at %s",
-                original_image.uri,
-                original_image_file_path,
-            )
+                self._logger.debug(
+                    "using original image %s at %s",
+                    original_image.uri,
+                    original_image_file_path,
+                )
+            else:
+                try:
+                    original_image_file_path = self.__original_image_file_cache.get_file(
+                        original_image.uri
+                    )
+                except HTTPError as http_error:
+                    if http_error.code == 404:
+                        self._logger.error(
+                            "original image %s not found, skipping",
+                            str(original_image.uri),
+                        )
+                        continue
+                    else:
+                        raise
+
+                self._logger.debug(
+                    "cached original image %s at %s",
+                    original_image.uri,
+                    original_image_file_path,
+                )
+
             archived_original_image_url = self.__image_archiver.archive_image(
                 image_file_path=original_image_file_path
             )
