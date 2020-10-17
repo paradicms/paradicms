@@ -15,12 +15,12 @@ class _Model:
         self, *, property_definitions, resource: Resource,
     ):
         # PropertyDefinition is a _Model, have to elide the type here to avoid a circular import.
-        property_definitions_by_key = {
-            property_definition.key: property_definition
+        property_definitions_by_uri = {
+            property_definition.uri: property_definition
             for property_definition in property_definitions
         }
         for property_ in self.properties:
-            property_definition = property_definitions_by_key[property_.key]
+            property_definition = property_definitions_by_uri[property_.property_definition_uri]
             if isinstance(property_.value, URIRef):
                 resource.add(property_definition.uri, property_.value)
             else:

@@ -46,6 +46,6 @@ class _Transformer(_PipelinePhase):
     ) -> Institution:
         return Institution(
             name=institution_name,
-            rights=Rights(holder=institution_name, statements=(institution_rights,),),
+            rights=Rights(holder=institution_name, statement=institution_rights),
             uri=URIRef(institution_uri),
         )

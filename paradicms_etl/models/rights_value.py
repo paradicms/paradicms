@@ -39,29 +39,31 @@ class RightsValue:
         if not properties:
             return None
 
-        property_uri = None
+        property_definition_uri = None
         text_property_values = []
         uri_property_values = []
-        for property in properties:
-            if property_uri is None:
-                property_uri = property.uri
-            elif property.uri != property_uri:
+        for property_ in properties:
+            if property_definition_uri is None:
+                property_definition_uri = property_.property_definition_uri
+            elif property_.property_definition_uri != property_definition_uri:
                 raise ValueError(
-                    f"rights properties with different URIs: {property.uri} vs. {property_uri}"
+                    f"rights properties with different URIs: {property_.property_definition_uri} vs. {property_definition_uri}"
                 )
 
-            assert isinstance(property.value, str)
+            assert isinstance(property_.value, str)
 
-            if is_uri(property.value):
-                uri_property_values.append(property.value)
+            if is_uri(property_.value):
+                uri_property_values.append(property_.value)
             else:
-                text_property_values.append(property.value)
+                text_property_values.append(property_.value)
 
         if len(text_property_values) > 1:
-            raise ValueError(f"{property_uri}: more than one text property, ambiguous")
+            # raise ValueError(f"{property_definition_uri}: more than one text property, ambiguous")
+            return None
 
         if len(uri_property_values) > 1:
-            raise ValueError(f"{property_uri}: more than one URI property, ambiguous")
+            # raise ValueError(f"{property_definition_uri}: more than one URI property, ambiguous")
+            return None
 
         return cls(
             text=text_property_values[0] if text_property_values else None,

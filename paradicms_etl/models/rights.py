@@ -35,30 +35,30 @@ class Rights:
     def from_properties(cls, properties: Tuple[Property, ...]):
         creator = RightsValue.from_properties(
             properties=tuple(
-                property
-                for properties in properties
-                if property.uri == PropertyDefinitions.CREATOR.uri
+                property_
+                for property_ in properties
+                if property_.property_definition_uri == PropertyDefinitions.CREATOR.uri
             )
         )
         holder = RightsValue.from_properties(
             properties=tuple(
-                property
-                for properties in properties
-                if property.uri == PropertyDefinitions.RIGHTS_HOLDER.uri
+                property_
+                for property_ in properties
+                if property_.property_definition_uri == PropertyDefinitions.RIGHTS_HOLDER.uri
             )
         )
         license = RightsValue.from_properties(
             properties=tuple(
-                property
-                for properties in properties
-                if property.uri == PropertyDefinitions.LICENSE.uri
+                property_
+                for property_ in properties
+                if property_.property_definition_uri == PropertyDefinitions.LICENSE.uri
             )
         )
         statement = RightsValue.from_properties(
             properties=tuple(
-                property
-                for properties in properties
-                if property.uri == PropertyDefinitions.RIGHTS.uri
+                property_
+                for property_ in properties
+                if property_.property_definition_uri == PropertyDefinitions.RIGHTS.uri
             )
         )
 
