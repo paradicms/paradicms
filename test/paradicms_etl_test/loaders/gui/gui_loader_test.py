@@ -1,17 +1,18 @@
 from pathlib import Path
 from typing import Tuple
 
+import pytest
+
 from paradicms_etl._model import _Model
 from paradicms_etl.image_archivers.nop_image_archiver import NopImageArchiver
 from paradicms_etl.loaders.gui.gui_loader import GuiLoader
 from paradicms_etl.models._image import _Image
 
-GUI = "union"
 
-
-def test_load(test_data_models: Tuple[_Model, ...], tmp_path):
+@pytest.mark.parametrize("gui", [("union")])
+def test_load(gui: str, test_data_models: Tuple[_Model, ...], tmp_path):
     gui_dir_path = (
-        Path(__file__).parent.parent.parent.parent.parent.parent / "gui" / GUI
+        Path(__file__).parent.parent.parent.parent.parent.parent / "gui" / gui
     )
     assert gui_dir_path.is_dir(), gui_dir_path
 
@@ -24,7 +25,7 @@ def test_load(test_data_models: Tuple[_Model, ...], tmp_path):
     gui_loader = GuiLoader(
         image_archiver=NopImageArchiver(),
         loaded_data_dir_path=loaded_data_dir_path,
-        gui=GUI,
+        gui=gui,
         pipeline_id="test",
     )
 
