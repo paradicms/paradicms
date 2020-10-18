@@ -12,7 +12,7 @@ export class Data {
   private static findDataDirectory(): string {
     let dataDirectoryPath: string | undefined = process.env.DATA_DIRECTORY_PATH;
     if (!dataDirectoryPath) {
-      dataDirectoryPath = path.join(process.cwd(), "data", "test");
+      throw new EvalError("must specify a data directory path");
     }
     console.info("using data directory ", dataDirectoryPath);
     return dataDirectoryPath;
