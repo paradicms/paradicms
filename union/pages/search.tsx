@@ -18,7 +18,7 @@ import {Layout} from "components/Layout";
 import {ObjectFacetsGrid} from "@paradicms/material-ui";
 import {Grid} from "@material-ui/core";
 import {ObjectsGallery} from "components/ObjectsGallery";
-import {Data} from "@paradicms/next";
+import {Data} from "lib/Data";
 import {GetStaticProps} from "next";
 
 const LIMIT_DEFAULT = 10;
