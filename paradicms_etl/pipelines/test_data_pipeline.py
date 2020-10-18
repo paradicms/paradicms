@@ -191,7 +191,10 @@ class TestDataPipeline(_Pipeline):
                 for date_i in range(2)
             )
             properties.extend(
-                Property(PropertyDefinitions.DESCRIPTION, f"{title} description {i}",)
+                Property(
+                    PropertyDefinitions.DESCRIPTION,
+                    f"{title} description {i}",
+                )
                 for i in range(2)
             )
             properties.extend(
@@ -292,12 +295,8 @@ class TestDataPipeline(_Pipeline):
                 loaders=(
                     JsonDirectoryLoader(
                         clean=True,
+                        data_dir_path=root_dir_path / "etl" / "data",
                         pipeline_id=self.__ID,
-                        loaded_data_dir_path=root_dir_path
-                        / "gui"
-                        / "union"
-                        / "data"
-                        / "test",
                     ),
                     JsonDirectoryLoader(
                         clean=True,

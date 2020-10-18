@@ -1,5 +1,5 @@
 /config/
-/data/*
+/data/gordon-book-export/
 !/data/README.md
 .mypy_cache/
 *.pyc
