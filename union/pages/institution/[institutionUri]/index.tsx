@@ -11,7 +11,7 @@ import {
   Objects,
 } from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {Data} from "lib/Data";
+import {Data} from "@paradicms/next";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {CollectionsGallery} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";

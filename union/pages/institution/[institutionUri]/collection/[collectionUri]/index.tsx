@@ -14,7 +14,7 @@ import {
   PropertyDefinition,
 } from "@paradicms/models";
 import {ObjectFacetsGrid, RightsTable} from "@paradicms/material-ui";
-import {Data} from "lib/Data";
+import {Data} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {ObjectsGallery} from "components/ObjectsGallery";

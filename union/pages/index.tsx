@@ -2,7 +2,7 @@ import * as React from "react";
 import {GetStaticProps} from "next";
 import {Image, Images, Institution, Institutions} from "@paradicms/models";
 import {Hrefs} from "lib/Hrefs";
-import {Data} from "lib/Data";
+import {Data} from "@paradicms/next";
 import {Layout} from "components/Layout";
 import {Link} from "@paradicms/material-ui-next";
 import {InstitutionsGallery} from "@paradicms/material-ui";
