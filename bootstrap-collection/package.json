@@ -1,0 +1,28 @@
+{
+  "name": "bootstrap-collection",
+  "description": "Bootstrap+Next.js collection GUI for paradicms",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Minor Gordon",
+  "license": "GPLv3",
+  "main": "n/a",
+  "dependencies": {
+    "@paradicms/base": "1.0.3",
+    "@paradicms/lunr": "1.0.3",
+    "@paradicms/bootstrap": "1.0.3",
+    "@paradicms/models": "1.0.3",
+    "@paradicms/next": "1.0.3",
+    "next": "9.5.2"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
+  },
+  "scripts": {
+    "clean": "rimraf .next && rimraf out",
+    "dev": "next dev",
+    "build": "next build",
+    "export": "next export",
+    "serve": "serve out",
+    "start": "next start"
+  }
+}
