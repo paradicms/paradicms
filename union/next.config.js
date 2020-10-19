@@ -1,3 +1,1 @@
-module.exports = {
-  trailingSlash: true,
-};
+../../lib/ts/next/next.config.js

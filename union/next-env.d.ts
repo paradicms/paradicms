@@ -1,2 +1,1 @@
-/// <reference types="next" />
-/// <reference types="next/types/global" />
+../../lib/ts/next/next-env.d.ts
