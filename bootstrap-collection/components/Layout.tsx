@@ -15,6 +15,7 @@ import {
   NavItem,
   Row,
 } from "reactstrap";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: Collection;
@@ -81,7 +82,9 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
                     <Button
                       className="btn-outline-success my-2 my-sm-0"
                       type="submit"
-                    />
+                    >
+                      <FontAwesomeIcon icon="search" />
+                    </Button>
                   </Form>
                 </NavItem>
               </Nav>
