@@ -22,12 +22,19 @@ import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {GetStaticPaths, GetStaticProps} from "next";
 
-const ObjectPage: React.FunctionComponent<{
+interface StaticProps {
   institution: Institution;
   object: Object;
   objectImages: readonly Image[];
   propertyDefinitions: readonly PropertyDefinition[];
-}> = ({institution, object, objectImages, propertyDefinitions}) => {
+}
+
+const ObjectPage: React.FunctionComponent<StaticProps> = ({
+  institution,
+  object,
+  objectImages,
+  propertyDefinitions,
+}) => {
   const rights = object.rights ?? institution.rights ?? undefined;
 
   return (
@@ -121,7 +128,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({params}) => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+}): Promise<{props: StaticProps}> => {
   const institutionUri = decodeFileName(params!.institutionUri as string);
   const objectUri = decodeFileName(params!.objectUri as string);
 
@@ -130,7 +139,7 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
       institution: Data.institutions.find(
         institution => institution.uri === institutionUri
       )!,
-      object: Data.objects.find(object => object.uri === objectUri),
+      object: Data.objects.find(object => object.uri === objectUri)!,
       objectImages: Data.images.filter(image => image.depictsUri === objectUri),
       propertyDefinitions: Data.propertyDefinitions,
     },

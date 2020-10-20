@@ -19,13 +19,15 @@ import {GetStaticPaths, GetStaticProps} from "next";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {ObjectsGallery} from "components/ObjectsGallery";
 
-const CollectionPage: React.FunctionComponent<{
+interface StaticProps {
   collection: Collection;
   collectionObjects: readonly Object[];
   institution: Institution;
   institutionImages: readonly Image[];
   propertyDefinitions: readonly PropertyDefinition[];
-}> = ({
+}
+
+const CollectionPage: React.FunctionComponent<StaticProps> = ({
   collection,
   collectionObjects,
   institution,
@@ -111,7 +113,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({params}) => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+}): Promise<{props: StaticProps}> => {
   const collectionUri = decodeFileName(params!.collectionUri as string);
   const institutionUri = decodeFileName(params!.institutionUri as string);
 
