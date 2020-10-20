@@ -1,5 +1,7 @@
 import {UrlObject} from "url";
 import {encodeFileName} from "@paradicms/base";
+import {ObjectQuery} from "@paradicms/models";
+import * as qs from "qs";
 
 interface Href {
   // Adapted from Next's <Link> LinkProps
@@ -8,8 +10,17 @@ interface Href {
 }
 
 export class Hrefs {
+  static collection(objectQuery?: ObjectQuery): Href {
+    return {
+      href: "/",
+      as: `/${qs.stringify(objectQuery, {
+        addQueryPrefix: true,
+      })}`,
+    };
+  }
+
   static get home(): Href {
-    return {href: "/"};
+    return Hrefs.collection();
   }
 
   object(objectUri: string): Href {
