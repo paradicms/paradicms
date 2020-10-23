@@ -23,7 +23,7 @@ export class Hrefs {
     return Hrefs.collection();
   }
 
-  object(objectUri: string): Href {
+  static object(objectUri: string): Href {
     return {
       href: `/object/[objectUri]/`,
       as: `/object/${encodeFileName(objectUri)}/`,
