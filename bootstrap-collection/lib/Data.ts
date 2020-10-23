@@ -1,6 +1,12 @@
 import fs from "fs";
 import * as path from "path";
-import {Collection, Image, Object, PropertyDefinition} from "@paradicms/models";
+import {
+  Collection,
+  Image,
+  Institution,
+  Object,
+  PropertyDefinition,
+} from "@paradicms/models";
 
 export class Data {
   constructor() {
@@ -10,14 +16,32 @@ export class Data {
     }
     console.info("using data directory ", dataDirectoryPath);
 
+    const institutions = Data.getModels<Institution>(
+      dataDirectoryPath,
+      "institution"
+    );
+    if (institutions.length === 0) {
+      throw new EvalError("no institutions");
+    }
+    // Ignore all but the first institution
+    // In production there should only be one institution.
+    // The test data has more than one institution.
+    this.institution = institutions[0];
+
     const collections = Data.getModels<Collection>(
       dataDirectoryPath,
       "collection"
     );
-    if (collections.length === 0) {
-      throw new EvalError("no collections");
+    // Ignore all but the first collection. See above.
+    const collection = collections.find(
+      collection => collection.institutionUri === this.institution.uri
+    );
+    if (!collection) {
+      throw new EvalError(
+        "no collection for institution " + this.institution.uri
+      );
     }
-    this.collection = collections[0];
+    this.collection = collection;
 
     this.objects = Data.getModels<Object>(
       dataDirectoryPath,
@@ -27,6 +51,9 @@ export class Data {
         collectionUri => collectionUri === this.collection.uri
       )
     );
+    if (this.objects.length === 0) {
+      throw new EvalError("no objects for collection " + this.collection.uri);
+    }
 
     const objectUris = new Set<string>(this.objects.map(object => object.uri));
     this.images = Data.getModels<Image>(
@@ -42,6 +69,7 @@ export class Data {
 
   readonly collection: Collection;
   readonly images: readonly Image[];
+  readonly institution: Institution;
   readonly objects: readonly Object[];
   readonly propertyDefinitions: readonly PropertyDefinition[];
 
