@@ -113,7 +113,13 @@ const SearchPage: React.FunctionComponent<{
       cardTitle={
         query.text ? (
           <span>
-            Search results for <i data-cy="query-text">{query.text}</i>
+            <span data-cy="objects-count">
+              {joinedFilteredResultObjects.length}
+            </span>
+            &nbsp;
+            <span>search results for</span>
+            &nbsp;
+            <i data-cy="query-text">{query.text}</i>
           </span>
         ) : (
           "Search results"
