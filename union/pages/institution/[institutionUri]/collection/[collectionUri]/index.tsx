@@ -66,7 +66,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
         <Grid item>
           <Grid container>
             <Grid item xs={10}>
-              <ObjectsGallery joinedObjects={joinedFilteredObjects} />
+              <ObjectsGallery objects={joinedFilteredObjects} />
             </Grid>
             <Grid item xs={2}>
               <ObjectFacetsGrid

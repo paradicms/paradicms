@@ -131,7 +131,7 @@ const SearchPage: React.FunctionComponent<{
           <Grid container>
             <Grid item xs={10}>
               <ObjectsGallery
-                joinedObjects={joinedFilteredResultObjects ?? []}
+                objects={joinedFilteredResultObjects ?? []}
                 renderInstitution={true}
               />
             </Grid>

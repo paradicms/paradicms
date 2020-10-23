@@ -5,24 +5,25 @@ import * as React from "react";
 import {NumberParam, useQueryParam} from "use-query-params";
 import {Link} from "@paradicms/material-ui-next";
 
-const OBJECTS_PER_PAGE = 10;
-
 export const ObjectsGallery: React.FunctionComponent<{
-  joinedObjects: readonly JoinedObject[];
+  objects: readonly JoinedObject[];
   renderInstitution?: boolean;
-}> = ({joinedObjects, renderInstitution}) => {
-  let [objectsPageQueryParam, setObjectsPage] = useQueryParam<
-    number | null | undefined
-  >("page", NumberParam);
-  const objectsPage = objectsPageQueryParam ?? 0;
+}> = ({objects, renderInstitution}) => {
+  let [pageQueryParam, setPage] = useQueryParam<number | null | undefined>(
+    "page",
+    NumberParam
+  );
+  const page = pageQueryParam ?? 0;
 
-  if (joinedObjects.length === 0) {
+  if (objects.length === 0) {
     return <h4 style={{textAlign: "center"}}>No matching objects found.</h4>;
   }
 
   return (
     <WrappedObjectsGallery
-      currentPage={objectsPage}
+      objects={objects}
+      onChangePage={setPage}
+      page={page}
       renderInstitutionLink={
         renderInstitution
           ? (institution, children) => (
@@ -37,14 +38,6 @@ export const ObjectsGallery: React.FunctionComponent<{
           {children}
         </Link>
       )}
-      maxPage={Math.ceil(joinedObjects.length / OBJECTS_PER_PAGE) - 1}
-      objects={joinedObjects.slice(
-        objectsPage * OBJECTS_PER_PAGE,
-        (objectsPage + 1) * OBJECTS_PER_PAGE
-      )}
-      objectsPerPage={OBJECTS_PER_PAGE}
-      objectsTotal={joinedObjects.length}
-      onChangePage={setObjectsPage}
     />
   );
 };
