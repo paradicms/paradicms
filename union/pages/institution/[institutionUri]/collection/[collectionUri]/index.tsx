@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
-import {Grid} from "@material-ui/core";
+import {Grid, Typography} from "@material-ui/core";
 import {
   Collection,
   Image,
@@ -55,14 +55,39 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
   return (
     <Layout
       breadcrumbs={{collection, institution}}
+      cardTitle={
+        <span>
+          <span>
+            Collection&nbsp;&mdash;&nbsp;
+            <span data-cy="collection-title">{collection.title}</span>
+          </span>
+        </span>
+      }
       documentTitle={"Collection - " + collection.title}
     >
       <Grid container direction="column" spacing={2}>
-        {rights && joinedFilteredObjects.length ? (
-          <Grid item>
-            <RightsTable rights={rights} />
+        <Grid item container>
+          <Grid item xs={4}>
+            {rights && joinedFilteredObjects.length ? (
+              <>
+                <Typography variant="h6" style={{textAlign: "center"}}>
+                  Rights
+                </Typography>
+                <RightsTable rights={rights} />
+              </>
+            ) : null}
           </Grid>
-        ) : null}
+          <Grid item xs={6}></Grid>
+          <Grid item xs={2} style={{textAlign: "center"}}>
+            <Typography variant="h6">
+              <span>Showing&nbsp;</span>
+              <span data-cy="objects-count">
+                {joinedFilteredObjects.length}
+              </span>
+              <span>&nbsp;objects</span>
+            </Typography>
+          </Grid>
+        </Grid>
         <Grid item>
           <Grid container>
             <Grid item xs={10}>
