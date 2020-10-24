@@ -8,7 +8,7 @@ export const Accordion: React.FunctionComponent<React.PropsWithChildren<{
 
   return (
     <Card>
-      <CardHeader onClick={() => setOpen(!open)}>title</CardHeader>
+      <CardHeader onClick={() => setOpen(!open)}>{title}</CardHeader>
       <Collapse isOpen={open}>
         <CardBody>{children}</CardBody>
       </Collapse>

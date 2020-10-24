@@ -1,10 +1,15 @@
 import * as React from "react";
 import {
   Collection,
+  Image,
   Images,
   Institution,
   JoinedObject,
+  Models,
+  ObjectFilters,
+  Object,
   Objects,
+  PropertyDefinition,
 } from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {Data} from "lib/Data";
@@ -14,16 +19,39 @@ import {ObjectsGallery} from "components/ObjectsGallery";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {NumberParam, useQueryParam} from "use-query-params";
+import {ObjectFacetsContainer} from "components/ObjectFacetsContainer";
 
 interface StaticProps {
   collection: Collection;
-  objects: readonly JoinedObject[];
+  images: readonly Image[];
+  institution: Institution;
+  objects: readonly Object[];
+  propertyDefinitions: readonly PropertyDefinition[];
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   collection,
+  images,
+  institution,
   objects,
+  propertyDefinitions,
 }) => {
+  const [filteredObjects, setFilteredObjects] = React.useState<
+    readonly Object[]
+  >(objects);
+  const [objectFilters, setObjectFilters] = React.useState<ObjectFilters>({
+    collectionUris: {include: [collection.uri]},
+  });
+
+  const objectFacets = Objects.facetize(propertyDefinitions, objects);
+
+  const joinedFilteredObjects: readonly JoinedObject[] = Objects.join({
+    collectionsByUri: Models.indexByUri([collection]),
+    institutionsByUri: Models.indexByUri([institution]),
+    imagesByDepictsUri: Images.indexByDepictsUri(images),
+    objects: filteredObjects,
+  });
+
   let [pageQueryParam, setPage] = useQueryParam<number | null | undefined>(
     "page",
     NumberParam
@@ -34,9 +62,9 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     <Layout collection={collection}>
       <Container fluid>
         <Row>
-          <Col xs="12">
+          <Col xs="10">
             <ObjectsGallery
-              objects={objects}
+              objects={joinedFilteredObjects}
               onChangePage={setPage}
               page={page}
               renderObjectLink={(object, children) => (
@@ -44,6 +72,21 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
                   <a>{children}</a>
                 </Link>
               )}
+            />
+          </Col>
+          <Col xs="2">
+            <ObjectFacetsContainer
+              facets={objectFacets}
+              filters={objectFilters}
+              onChange={newObjectFilters => {
+                setFilteredObjects(
+                  Objects.filter({
+                    filters: newObjectFilters,
+                    objects,
+                  })
+                );
+                setObjectFilters(newObjectFilters);
+              }}
             />
           </Col>
         </Row>
@@ -61,30 +104,10 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   return {
     props: {
       collection: data.collection,
-      objects: Objects.join({
-        collectionsByUri: [data.collection].reduce(
-          (
-            collectionsByUri: {[index: string]: Collection},
-            collection: Collection
-          ) => {
-            collectionsByUri[collection.uri] = collection;
-            return collectionsByUri;
-          },
-          {}
-        ),
-        imagesByDepictsUri: Images.indexByDepictsUri(data.images),
-        institutionsByUri: [data.institution].reduce(
-          (
-            institutionsByUri: {[index: string]: Institution},
-            institution: Institution
-          ) => {
-            institutionsByUri[institution.uri] = institution;
-            return institutionsByUri;
-          },
-          {}
-        ),
-        objects: data.objects,
-      }),
+      images: data.images,
+      institution: data.institution,
+      objects: data.objects,
+      propertyDefinitions: data.propertyDefinitions,
     },
   };
 };
