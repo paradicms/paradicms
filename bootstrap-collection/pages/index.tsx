@@ -12,7 +12,7 @@ import {GetStaticProps} from "next";
 import {Col, Container, Row} from "reactstrap";
 import {ObjectsGallery} from "components/ObjectsGallery";
 import {Hrefs} from "lib/Hrefs";
-import {Link} from "next/link";
+import Link from "next/link";
 import {NumberParam, useQueryParam} from "use-query-params";
 
 interface StaticProps {
@@ -40,7 +40,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
               onChangePage={setPage}
               page={page}
               renderObjectLink={(object, children) => (
-                <Link {...Hrefs.object(object.uri).href}>
+                <Link {...Hrefs.object(object.uri)}>
                   <a>{children}</a>
                 </Link>
               )}

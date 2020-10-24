@@ -5,6 +5,7 @@ import {Collection} from "@paradicms/models";
 import {
   Card,
   CardBody,
+  CardHeader,
   CardText,
   CardTitle,
   Col,
@@ -47,7 +48,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
       <Helmet
         title={collection.title + (documentTitle ? " - " + documentTitle : "")}
       />
-      <Container>
+      <Container fluid>
         <Row>
           <Col>
             <Navbar>
@@ -65,12 +66,12 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         <Row>
           <Col>
             <Card>
-              <CardBody>
-                {cardTitle || documentTitle ? (
+              {cardTitle || documentTitle ? (
+                <CardHeader tag="h3">
                   <CardTitle>{cardTitle ?? documentTitle}</CardTitle>
-                ) : null}
-                <CardText>{children}</CardText>
-              </CardBody>
+                </CardHeader>
+              ) : null}
+              <CardBody>{children}</CardBody>
             </Card>
           </Col>
         </Row>

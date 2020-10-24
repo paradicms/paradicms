@@ -2,6 +2,7 @@ import * as React from "react";
 import {Institution, JoinedObject} from "@paradicms/models";
 import {Container, Row, Col} from "reactstrap";
 import PaginationComponent from "react-reactstrap-pagination";
+import {ObjectCard} from "components/ObjectCard";
 
 const OBJECTS_PER_PAGE = 10;
 
@@ -24,19 +25,23 @@ export const ObjectsGallery: React.FunctionComponent<{
   renderInstitutionLink,
   renderObjectLink,
 }) => (
-  <Container fluid>
+  <Container className="objects-gallery" fluid>
     <Row>
-      <Col xs={12}>
-        {objects
-          .slice(page * OBJECTS_PER_PAGE, (page + 1) * OBJECTS_PER_PAGE)
-          .map(object => (
-            <div key={object.uri}>{object.title}</div>
-          ))}
-      </Col>
+      {objects
+        .slice(page * OBJECTS_PER_PAGE, (page + 1) * OBJECTS_PER_PAGE)
+        .map(object => (
+          <div className="object-card-container" key={object.uri}>
+            <ObjectCard
+              object={object}
+              renderInstitutionLink={renderInstitutionLink}
+              renderObjectLink={renderObjectLink}
+            />
+          </div>
+        ))}
     </Row>
     {objects.length > 0 ? (
-      <Row className="pt-2">
-        <Col xs={12}>
+      <Row className="pagination-row">
+        <Col className="pagination-col" xs={12}>
           <PaginationComponent
             defaultActivePage={page + 1}
             onSelect={page => onChangePage(page - 1)}
