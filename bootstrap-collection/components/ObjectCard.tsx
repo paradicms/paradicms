@@ -14,29 +14,10 @@ import {
   Row,
   Container,
   CardImg,
+  Table,
 } from "reactstrap";
 import {Accordion} from "components/Accordion";
-
-// const useStyles = makeStyles(theme => ({
-//   accordionTitle: {
-//     fontSize: "smaller",
-//   },
-//   objectSummary: {
-//     fontSize: "x-small",
-//     maxWidth: "32em",
-//   },
-//   thumbnailImg: {
-//     maxHeight: "200px",
-//     maxWidth: "200px",
-//   },
-//   rightsTableCell: {
-//     fontSize: "x-small",
-//     padding: theme.spacing(1),
-//   },
-//   title: {
-//     textAlign: "center",
-//   },
-// }));
+import {RightsTable} from "components/RightsTable";
 
 export const ObjectCard: React.FunctionComponent<{
   object: JoinedObject;
@@ -76,77 +57,62 @@ export const ObjectCard: React.FunctionComponent<{
           title={object.title}
         />
       )}
-      {/*<Container fluid>*/}
-      {/*  /!*<Grid container direction="column" spacing={2}>*!/*/}
-      {/*  /!*  <Grid item container alignItems="center" justify="center">*!/*/}
-      {/*  <Row>*/}
-      {/*    <Col xs={12}>*/}
-      {/*    </Col>*/}
-      {/*  </Row>*/}
-      {/*  /!*  {renderInstitutionLink ? (*!/*/}
-      {/*  /!*    <Grid item>*!/*/}
-      {/*  /!*      <Table>*!/*/}
-      {/*  /!*        <TableBody>*!/*/}
-      {/*  /!*          <TableRow>*!/*/}
-      {/*  /!*            <TableCell>*!/*/}
-      {/*  /!*              <strong>Institution</strong>*!/*/}
-      {/*  /!*            </TableCell>*!/*/}
-      {/*  /!*            <TableCell>*!/*/}
-      {/*  /!*              {renderInstitutionLink(*!/*/}
-      {/*  /!*                object.institution,*!/*/}
-      {/*  /!*                <span>{object.institution.name}</span>*!/*/}
-      {/*  /!*              )}*!/*/}
-      {/*  /!*            </TableCell>*!/*/}
-      {/*  /!*          </TableRow>*!/*/}
-      {/*  /!*        </TableBody>*!/*/}
-      {/*  /!*      </Table>*!/*/}
-      {/*  /!*    </Grid>*!/*/}
-      {/*  /!*  ) : null}*!/*/}
-      {/*  {object.abstract ? (*/}
-      {/*    <Row>*/}
-      {/*      <Col xs={12}>*/}
-      {/*        <Accordion title="Summary">{object.abstract}</Accordion>*/}
-      {/*      </Col>*/}
-      {/*    </Row>*/}
-      {/*  ) : null}*/}
-      {/*  /!*  {thumbnail && thumbnail.rights ? (*!/*/}
-      {/*  /!*    <Grid item>*!/*/}
-      {/*  /!*      <Accordion>*!/*/}
-      {/*  /!*        <AccordionSummary*!/*/}
-      {/*  /!*          className={classes.accordionTitle}*!/*/}
-      {/*  /!*          expandIcon={<ExpandMoreIcon />}*!/*/}
-      {/*  /!*        >*!/*/}
-      {/*  /!*          Image rights*!/*/}
-      {/*  /!*        </AccordionSummary>*!/*/}
-      {/*  /!*        <AccordionDetails>*!/*/}
-      {/*  /!*          <RightsTable*!/*/}
-      {/*  /!*            cellClassName={classes.rightsTableCell}*!/*/}
-      {/*  /!*            rights={thumbnail.rights}*!/*/}
-      {/*  /!*          ></RightsTable>*!/*/}
-      {/*  /!*        </AccordionDetails>*!/*/}
-      {/*  /!*      </Accordion>*!/*/}
-      {/*  /!*    </Grid>*!/*/}
-      {/*  /!*  ) : null}*!/*/}
-      {/*  /!*  {object.rights ? (*!/*/}
-      {/*  /!*    <Grid item>*!/*/}
-      {/*  /!*      <Accordion>*!/*/}
-      {/*  /!*        <AccordionSummary*!/*/}
-      {/*  /!*          className={classes.accordionTitle}*!/*/}
-      {/*  /!*          expandIcon={<ExpandMoreIcon />}*!/*/}
-      {/*  /!*        >*!/*/}
-      {/*  /!*          Metadata rights*!/*/}
-      {/*  /!*        </AccordionSummary>*!/*/}
-      {/*  /!*        <AccordionDetails>*!/*/}
-      {/*  /!*          <RightsTable*!/*/}
-      {/*  /!*            cellClassName={classes.rightsTableCell}*!/*/}
-      {/*  /!*            rights={object.rights}*!/*/}
-      {/*  /!*          ></RightsTable>*!/*/}
-      {/*  /!*        </AccordionDetails>*!/*/}
-      {/*  /!*      </Accordion>*!/*/}
-      {/*  /!*    </Grid>*!/*/}
-      {/*  /!*  ) : null}*!/*/}
-      {/*  /!*</Grid>*!/*/}
-      {/*</Container>*/}
+      <CardBody>
+        <Container fluid>
+          {renderInstitutionLink ? (
+            <Row>
+              <Col xs={12}>
+                <Table>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <strong>Institution</strong>
+                      </td>
+                      <td>
+                        {renderInstitutionLink(
+                          object.institution,
+                          <span>{object.institution.name}</span>
+                        )}
+                      </td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </Col>
+            </Row>
+          ) : null}
+          {object.abstract ? (
+            <Row>
+              <Col xs={12}>
+                <Accordion title="Summary">{object.abstract}</Accordion>
+              </Col>
+            </Row>
+          ) : null}
+          {thumbnail && thumbnail.rights ? (
+            <Row>
+              <Col xs={12}>
+                <Accordion title="Image rights">
+                  <RightsTable
+                    rights={thumbnail.rights}
+                    tableClassName="rights-table"
+                  ></RightsTable>
+                </Accordion>
+              </Col>
+            </Row>
+          ) : null}
+          {object.rights ? (
+            <Row>
+              <Col xs={12}>
+                <Accordion title="Metadata rights">
+                  <RightsTable
+                    rights={object.rights}
+                    tableClassName="rights-table"
+                  ></RightsTable>
+                </Accordion>
+              </Col>
+            </Row>
+          ) : null}
+        </Container>
+      </CardBody>
     </Card>
   );
 };

@@ -1,6 +1,14 @@
 .object-card {
   text-align: center;
 
+  .rights-table {
+    font-size: xx-small;
+    td {
+      padding: 0;
+      text-align: left;
+    }
+  }
+
   .thumbnail {
     margin-top: 20px;
     margin-bottom: 20px;

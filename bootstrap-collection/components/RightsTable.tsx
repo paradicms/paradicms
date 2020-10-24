@@ -46,7 +46,7 @@ export const RightsTable: React.FunctionComponent<{
   tableClassName?: string;
 }> = ({cellClassName, rights, rowClassName, tableClassName}) => {
   return (
-    <Table className={tableClassName}>
+    <Table className={tableClassName} size="sm">
       <tbody>
         <RightsTableRow
           cellClassName={cellClassName}
