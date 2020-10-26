@@ -5,10 +5,6 @@ import {
   AccordionDetails,
   AccordionSummary,
   Grid,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
 } from "@material-ui/core";
 import {
   Image,
@@ -16,7 +12,11 @@ import {
   Object,
   PropertyDefinition,
 } from "@paradicms/models";
-import {ObjectImagesCarousel, RightsTable} from "@paradicms/material-ui";
+import {
+  ObjectImagesCarousel,
+  PropertiesTable,
+  RightsTable,
+} from "@paradicms/material-ui";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
@@ -53,37 +53,10 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
                 <h3>Properties</h3>
               </AccordionSummary>
               <AccordionDetails>
-                <Table>
-                  <TableBody>
-                    {propertyDefinitions
-                      .concat()
-                      .sort((left, right) => left.uri.localeCompare(right.uri))
-                      .map(propertyDefinition => {
-                        const properties = object.properties!.filter(
-                          property =>
-                            property.propertyDefinitionUri ===
-                            propertyDefinition.uri
-                        );
-                        if (properties.length === 0) {
-                          return null;
-                        }
-                        return (
-                          <React.Fragment key={propertyDefinition.uri}>
-                            {properties.map((property, propertyIndex) => (
-                              <TableRow
-                                key={`property-${propertyDefinition.uri}-${propertyIndex}`}
-                              >
-                                <TableCell>
-                                  <strong>{propertyDefinition.label}</strong>
-                                </TableCell>
-                                <TableCell>{property.value}</TableCell>
-                              </TableRow>
-                            ))}
-                          </React.Fragment>
-                        );
-                      })}
-                  </TableBody>
-                </Table>
+                <PropertiesTable
+                  properties={object.properties}
+                  propertyDefinitions={propertyDefinitions}
+                />
               </AccordionDetails>
             </Accordion>
           </Grid>
