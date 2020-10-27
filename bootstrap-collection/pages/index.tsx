@@ -43,9 +43,12 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     "query",
     new JsonQueryParamConfig<ObjectQuery>()
   );
-  console.info("Query:", JSON.stringify(objectQuery));
+  // console.info("Query:", JSON.stringify(objectQuery));
 
-  const objectIndex = useMemo(() => new ObjectIndex(objects), [objects]);
+  const objectIndex = useMemo(
+    () => new ObjectIndex(objects, propertyDefinitions),
+    [objects]
+  );
 
   const filteredObjects = useMemo(() => {
     let filteredObjects = objects;

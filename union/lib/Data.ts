@@ -14,7 +14,7 @@ export class Data {
     if (!dataDirectoryPath) {
       throw new EvalError("must specify a data directory path");
     }
-    console.info("using data directory ", dataDirectoryPath);
+    // console.info("using data directory ", dataDirectoryPath);
     return dataDirectoryPath;
   }
 

@@ -42,10 +42,10 @@ const SearchPage: React.FunctionComponent<{
   const offset = queryParams.offset ?? OFFSET_DEFAULT;
   const query = queryParams.query ?? {};
 
-  const [index, setIndex] = React.useState<ObjectIndex>();
-  React.useEffect(() => {
-    setIndex(new ObjectIndex(objects));
-  }, []);
+  const index = React.useMemo(
+    () => new ObjectIndex(objects, propertyDefinitions),
+    [objects, propertyDefinitions]
+  );
 
   const collectionsByUri = React.useMemo(() => Models.indexByUri(collections), [
     collections,
