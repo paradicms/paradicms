@@ -93,16 +93,20 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
       <Container fluid>
         <Row>
           <Col xs="10">
-            <ObjectsGallery
-              objects={joinedFilteredObjects}
-              onChangePage={setPage}
-              page={page}
-              renderObjectLink={(object, children) => (
-                <Link {...Hrefs.object(object.uri)}>
-                  <a>{children}</a>
-                </Link>
-              )}
-            />
+            {joinedFilteredObjects.length > 0 ? (
+              <ObjectsGallery
+                objects={joinedFilteredObjects}
+                onChangePage={setPage}
+                page={page}
+                renderObjectLink={(object, children) => (
+                  <Link {...Hrefs.object(object.uri)}>
+                    <a>{children}</a>
+                  </Link>
+                )}
+              />
+            ) : (
+              <h3>No matching objects found.</h3>
+            )}
           </Col>
           <Col xs="2">
             <ObjectFacetsContainer
