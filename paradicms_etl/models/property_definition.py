@@ -13,3 +13,4 @@ class PropertyDefinition(_Model):
     label: str
     uri: URIRef
     faceted: Optional[bool] = None
+    full_text_searchable: Optional[bool] = None
