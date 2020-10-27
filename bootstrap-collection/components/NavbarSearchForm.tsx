@@ -19,6 +19,7 @@ export const NavbarSearchForm: React.FunctionComponent<{
         className="form-control mr-sm-2"
         onChange={e => setText(e.target.value)}
         placeholder="Search"
+        style={{width: "24em"}}
         type="search"
         value={text}
       />
