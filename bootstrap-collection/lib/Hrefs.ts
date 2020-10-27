@@ -13,9 +13,12 @@ export class Hrefs {
   static collection(objectQuery?: ObjectQuery): Href {
     return {
       href: "/",
-      as: `/${qs.stringify(objectQuery, {
-        addQueryPrefix: true,
-      })}`,
+      as: `/${qs.stringify(
+        {query: JSON.stringify(objectQuery)},
+        {
+          addQueryPrefix: true,
+        }
+      )}`,
     };
   }
 

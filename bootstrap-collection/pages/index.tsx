@@ -6,8 +6,8 @@ import {
   Institution,
   JoinedObject,
   Models,
-  ObjectFilters,
   Object,
+  ObjectQuery,
   Objects,
   PropertyDefinition,
 } from "@paradicms/models";
@@ -20,6 +20,8 @@ import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {NumberParam, useQueryParam} from "use-query-params";
 import {ObjectFacetsContainer} from "components/ObjectFacetsContainer";
+import {JsonQueryParamConfig} from "@paradicms/base";
+import {useMemo} from "react";
 
 interface StaticProps {
   collection: Collection;
@@ -36,21 +38,37 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   objects,
   propertyDefinitions,
 }) => {
-  const [filteredObjects, setFilteredObjects] = React.useState<
-    readonly Object[]
-  >(objects);
-  const [objectFilters, setObjectFilters] = React.useState<ObjectFilters>({
-    collectionUris: {include: [collection.uri]},
-  });
+  const [objectQuery, setObjectQueryParam] = useQueryParam<ObjectQuery>(
+    "query",
+    new JsonQueryParamConfig<ObjectQuery>()
+  );
 
-  const objectFacets = Objects.facetize(propertyDefinitions, objects);
+  const filteredObjects = useMemo(
+    () =>
+      objectQuery?.filters
+        ? Objects.filter({
+            filters: objectQuery.filters,
+            objects,
+          })
+        : objects,
+    [objectQuery, objects]
+  );
 
-  const joinedFilteredObjects: readonly JoinedObject[] = Objects.join({
-    collectionsByUri: Models.indexByUri([collection]),
-    institutionsByUri: Models.indexByUri([institution]),
-    imagesByDepictsUri: Images.indexByDepictsUri(images),
-    objects: filteredObjects,
-  });
+  const objectFacets = useMemo(
+    () => Objects.facetize(propertyDefinitions, objects),
+    [filteredObjects, propertyDefinitions]
+  );
+
+  const joinedFilteredObjects: readonly JoinedObject[] = useMemo(
+    () =>
+      Objects.join({
+        collectionsByUri: Models.indexByUri([collection]),
+        imagesByDepictsUri: Images.indexByDepictsUri(images),
+        institutionsByUri: Models.indexByUri([institution]),
+        objects: filteredObjects,
+      }),
+    [collection, images, institution, filteredObjects]
+  );
 
   let [pageQueryParam, setPage] = useQueryParam<number | null | undefined>(
     "page",
@@ -77,15 +95,12 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
           <Col xs="2">
             <ObjectFacetsContainer
               facets={objectFacets}
-              filters={objectFilters}
+              filters={objectQuery?.filters ?? {}}
               onChange={newObjectFilters => {
-                setFilteredObjects(
-                  Objects.filter({
-                    filters: newObjectFilters,
-                    objects,
-                  })
-                );
-                setObjectFilters(newObjectFilters);
+                setObjectQueryParam({
+                  ...objectQuery,
+                  filters: newObjectFilters,
+                });
               }}
             />
           </Col>
