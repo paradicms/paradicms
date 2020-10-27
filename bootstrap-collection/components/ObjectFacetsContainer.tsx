@@ -21,7 +21,6 @@ export const ObjectFacetsContainer: React.FunctionComponent<{
         <Row
           className="facet"
           data-cy={propertyFacet.definition.uri + "-facet"}
-          item
           key={propertyFacet.definition.uri}
         >
           <Col xs={12}>

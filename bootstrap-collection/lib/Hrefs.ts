@@ -12,13 +12,14 @@ interface Href {
 export class Hrefs {
   static collection(objectQuery?: ObjectQuery): Href {
     return {
-      href: "/",
-      as: `/${qs.stringify(
-        {query: JSON.stringify(objectQuery)},
-        {
-          addQueryPrefix: true,
-        }
-      )}`,
+      href:
+        "/" +
+        qs.stringify(
+          {query: JSON.stringify(objectQuery)},
+          {
+            addQueryPrefix: true,
+          }
+        ),
     };
   }
 

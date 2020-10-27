@@ -16,6 +16,7 @@ import {
   Row,
 } from "reactstrap";
 import {NavbarSearchForm} from "components/NavbarSearchForm";
+import {useRouter} from "next/router";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: Collection;
@@ -30,15 +31,20 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   documentTitle,
   onSearch: onSearchUserDefined,
 }) => {
+  const router = useRouter();
+
   // @ts-ignore
   let onSearch: (text: string) => void;
   if (onSearchUserDefined) {
     onSearch = onSearchUserDefined;
   } else {
     onSearch = (text: string) => {
-      window.location.href = Hrefs.collection({
+      const href = Hrefs.collection({
         text: text,
       }).href.toString();
+      console.info("redirecting to search href", href);
+      router.push(href);
+      return null;
     };
   }
 

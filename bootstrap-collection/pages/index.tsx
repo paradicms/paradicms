@@ -22,6 +22,7 @@ import {NumberParam, useQueryParam} from "use-query-params";
 import {ObjectFacetsContainer} from "components/ObjectFacetsContainer";
 import {JsonQueryParamConfig} from "@paradicms/base";
 import {useMemo} from "react";
+import {ObjectIndex} from "@paradicms/lunr";
 
 interface StaticProps {
   collection: Collection;
@@ -42,17 +43,25 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     "query",
     new JsonQueryParamConfig<ObjectQuery>()
   );
+  console.info("Query:", JSON.stringify(objectQuery));
 
-  const filteredObjects = useMemo(
-    () =>
-      objectQuery?.filters
-        ? Objects.filter({
-            filters: objectQuery.filters,
-            objects,
-          })
-        : objects,
-    [objectQuery, objects]
-  );
+  const objectIndex = useMemo(() => new ObjectIndex(objects), [objects]);
+
+  const filteredObjects = useMemo(() => {
+    let filteredObjects = objects;
+    if (objectQuery) {
+      if (objectQuery.text) {
+        filteredObjects = objectIndex.search(objectQuery.text);
+      }
+      if (objectQuery.filters) {
+        filteredObjects = Objects.filter({
+          filters: objectQuery.filters,
+          objects: filteredObjects,
+        });
+      }
+    }
+    return filteredObjects;
+  }, [objectQuery, objects]);
 
   const objectFacets = useMemo(
     () => Objects.facetize(propertyDefinitions, objects),
@@ -77,7 +86,10 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   const page = pageQueryParam ?? 0;
 
   return (
-    <Layout collection={collection}>
+    <Layout
+      collection={collection}
+      onSearch={text => setObjectQueryParam({text})}
+    >
       <Container fluid>
         <Row>
           <Col xs="10">
