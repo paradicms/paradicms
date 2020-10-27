@@ -2,9 +2,10 @@ import * as React from "react";
 import {Card, CardBody, CardHeader, Collapse} from "reactstrap";
 
 export const Accordion: React.FunctionComponent<React.PropsWithChildren<{
-  title: string;
-}>> = ({children, title}) => {
-  const [open, setOpen] = React.useState<boolean>(false);
+  defaultOpen?: boolean;
+  title: React.ReactNode;
+}>> = ({children, defaultOpen, title}) => {
+  const [open, setOpen] = React.useState<boolean>(!!defaultOpen);
 
   return (
     <Card>
