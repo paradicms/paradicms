@@ -67,6 +67,11 @@ class _Pipeline(ABC):
         )
 
     @classmethod
+    def _add_aws_credentials_arguments(cls, arg_parser: ArgParser) -> None:
+        arg_parser.add_argument("--aws-access-key-id")
+        arg_parser.add_argument("--aws-secret-access-key")
+
+    @classmethod
     def _add_collection_arguments(cls, arg_parser: ArgParser) -> None:
         arg_parser.add_argument("--collection-title", required=True)
         arg_parser.add_argument("--collection-uri", required=True)
