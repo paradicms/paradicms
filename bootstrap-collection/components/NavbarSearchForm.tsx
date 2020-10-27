@@ -11,7 +11,7 @@ export const NavbarSearchForm: React.FunctionComponent<{
     <Form
       className="form-inline my-2 my-lg-0"
       onSubmit={e => {
-        e.stopPropagation();
+        e.preventDefault();
         onSearch(text);
       }}
     >
