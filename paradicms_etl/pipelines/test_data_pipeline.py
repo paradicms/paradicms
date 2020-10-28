@@ -29,6 +29,7 @@ class TestDataPipeline(_Pipeline):
         __CULTURAL_CONTEXTS = tuple(f"Cultural context {i}" for i in range(10))
         __EXTENTS = tuple(f"Extent {i}" for i in range(10))
         __LANGUAGES = tuple(f"Language {i}" for i in range(10))
+        __LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae."
         __MATERIALS = tuple(f"Material {i}" for i in range(10))
         __MEDIA = tuple(f"Medium {i}" for i in range(10))
         __PUBLISHERS = tuple(f"Publisher {i}" for i in range(10))
@@ -193,7 +194,7 @@ class TestDataPipeline(_Pipeline):
             properties.append(
                 Property(
                     PropertyDefinitions.DESCRIPTION,
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae.",
+                    self.__LOREM_IPSUM,
                 )
             )
             properties.extend(
@@ -256,7 +257,7 @@ class TestDataPipeline(_Pipeline):
             )
 
             object_ = Object(
-                abstract=f"{title} abstract",
+                abstract=self.__LOREM_IPSUM,
                 collection_uris=collection_uris,
                 institution_uri=institution.uri,
                 properties=tuple(properties),
