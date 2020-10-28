@@ -3,9 +3,8 @@ import {
   ObjectFacets,
   ObjectFilters,
   ObjectFiltersState,
-  PropertyDefinition,
 } from "@paradicms/models";
-import {Badge, Col, Container, Row} from "reactstrap";
+import {Col, Container, Row} from "reactstrap";
 import {Accordion} from "components/Accordion";
 import {StringFacetForm} from "components/StringFacetForm";
 

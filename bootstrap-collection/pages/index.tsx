@@ -108,7 +108,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
                     {joinedFilteredObjects.length === 1 ? "object" : "objects"}
                   </span>
                   &nbsp;
-                  {objectQuery.text ? (
+                  {objectQuery && objectQuery.text ? (
                     <span>
                       matching <i>{objectQuery.text}</i>
                     </span>
