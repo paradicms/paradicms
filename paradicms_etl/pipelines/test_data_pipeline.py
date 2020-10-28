@@ -190,6 +190,12 @@ class TestDataPipeline(_Pipeline):
                 )
                 for date_i in range(2)
             )
+            properties.append(
+                Property(
+                    PropertyDefinitions.DESCRIPTION,
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae.",
+                )
+            )
             properties.extend(
                 Property(
                     PropertyDefinitions.DESCRIPTION,
