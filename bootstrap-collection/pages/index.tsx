@@ -23,6 +23,7 @@ import {ObjectFacetsContainer} from "components/ObjectFacetsContainer";
 import {JsonQueryParamConfig} from "@paradicms/base";
 import {useMemo} from "react";
 import {ObjectIndex} from "@paradicms/lunr";
+import {ObjectFiltersBadges} from "components/ObjectFiltersBadges";
 
 interface StaticProps {
   collection: Collection;
@@ -68,7 +69,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
 
   const objectFacets = useMemo(
     () => Objects.facetize(propertyDefinitions, objects),
-    [filteredObjects, propertyDefinitions]
+    [objects, propertyDefinitions]
   );
 
   const joinedFilteredObjects: readonly JoinedObject[] = useMemo(
@@ -91,9 +92,47 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   return (
     <Layout
       collection={collection}
-      onSearch={text => setObjectQueryParam({text})}
+      onSearch={text => {
+        setObjectQueryParam({text});
+        setPage(undefined);
+      }}
     >
       <Container fluid>
+        {joinedFilteredObjects.length > 0 ? (
+          <>
+            <Row>
+              <Col xs={12}>
+                <h4 className="d-inline-block">
+                  <span>{joinedFilteredObjects.length}</span>&nbsp;
+                  <span>
+                    {joinedFilteredObjects.length === 1 ? "object" : "objects"}
+                  </span>
+                  &nbsp;
+                  {objectQuery.text ? (
+                    <span>
+                      matching <i>{objectQuery.text}</i>
+                    </span>
+                  ) : (
+                    <span>matched</span>
+                  )}
+                </h4>
+                {objectQuery?.filters ? (
+                  <div className="d-inline-block">
+                    <ObjectFiltersBadges
+                      objectFilters={objectQuery.filters}
+                      propertyDefinitions={propertyDefinitions}
+                    />
+                  </div>
+                ) : null}
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12}>
+                <hr />
+              </Col>
+            </Row>
+          </>
+        ) : null}
         <Row>
           <Col xs="10">
             {joinedFilteredObjects.length > 0 ? (
@@ -112,16 +151,19 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
             )}
           </Col>
           <Col xs="2">
-            <ObjectFacetsContainer
-              facets={objectFacets}
-              filters={objectQuery?.filters ?? {}}
-              onChange={newObjectFilters => {
-                setObjectQueryParam({
-                  ...objectQuery,
-                  filters: newObjectFilters,
-                });
-              }}
-            />
+            {joinedFilteredObjects.length > 0 ? (
+              <ObjectFacetsContainer
+                facets={objectFacets}
+                filters={objectQuery?.filters ?? {}}
+                onChange={newObjectFilters => {
+                  setObjectQueryParam({
+                    ...objectQuery,
+                    filters: newObjectFilters,
+                  });
+                  setPage(undefined);
+                }}
+              />
+            ) : null}
           </Col>
         </Row>
       </Container>

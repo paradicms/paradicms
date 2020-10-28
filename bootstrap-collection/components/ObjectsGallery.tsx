@@ -39,13 +39,13 @@ export const ObjectsGallery: React.FunctionComponent<{
           </div>
         ))}
     </Row>
-    {objects.length > 0 ? (
+    {objects.length > OBJECTS_PER_PAGE ? (
       <Row className="pagination-row">
         <Col className="pagination-col" xs={12}>
           <PaginationComponent
             defaultActivePage={page + 1}
             onSelect={page => onChangePage(page - 1)}
-            pageSize={20}
+            pageSize={OBJECTS_PER_PAGE}
             totalItems={objects.length}
           />
         </Col>
