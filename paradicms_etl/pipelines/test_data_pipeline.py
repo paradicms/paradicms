@@ -62,11 +62,20 @@ class TestDataPipeline(_Pipeline):
         def __generate_images(
             self, *, depicts_uri: URIRef, institution: Institution, text_prefix: str
         ):
+            rights = Rights(
+                holder=f"{institution.name} rights holder",
+                statement=RightsValue(
+                    text=f"{institution.name} rights",
+                    uri=self.__RIGHTS_STATEMENT_URI,
+                ),
+            )
+
             for image_i in range(2):
                 original = Image.create(
                     depicts_uri=depicts_uri,
                     exact_dimensions=ImageDimensions(height=1000, width=1000),
                     institution_uri=institution.uri,
+                    rights=rights,
                     uri=URIRef(
                         f"https://place-hold.it/1000x1000?text={text_prefix}Image{image_i}"
                     ),
@@ -82,6 +91,7 @@ class TestDataPipeline(_Pipeline):
                         exact_dimensions=thumbnail_dimensions,
                         institution_uri=institution.uri,
                         original_image_uri=original.uri,
+                        rights=rights,
                         uri=URIRef(
                             f"https://place-hold.it/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}?text={text_prefix}Image{image_i}"
                         ),
