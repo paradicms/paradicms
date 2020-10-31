@@ -1,6 +1,8 @@
+from datetime import datetime
 from typing import Dict, Optional, Tuple
 
 import dateparser
+from pyformance import MetricsRegistry
 from rdflib import URIRef
 from tqdm import tqdm
 
@@ -33,10 +35,13 @@ class OmekaClassicTransformer(_Transformer):
         self._fullsize_max_height_px = fullsize_max_height_px
         self._fullsize_max_width_px = fullsize_max_width_px
         self.__institution_kwds = kwds
+        self._metrics_registry = MetricsRegistry()
         self._square_thumbnail_height_px = square_thumbnail_height_px
         self._square_thumbnail_width_px = square_thumbnail_width_px
         self._thumbnail_max_height_px = thumbnail_max_height_px
         self._thumbnail_max_width_px = thumbnail_max_width_px
+        self.__transform_item_timer = self._metrics_registry.timer("transform_item")
+        self.__transform_file_timer = self._metrics_registry.timer("transform_file")
 
     def transform(self, collections, files, items):
         yield from PropertyDefinitions.as_tuple()
@@ -65,22 +70,28 @@ class OmekaClassicTransformer(_Transformer):
                 self._logger.debug("item %s private, skipping", item["id"])
                 continue
 
-            transformed_item = self._transform_item(
-                collection_uris_by_id=collection_uris_by_id,
-                institution_uri=institution.uri,
-                item=item,
-            )
+            with self.__transform_item_timer.time():
+                transformed_item = self._transform_item(
+                    collection_uris_by_id=collection_uris_by_id,
+                    institution_uri=institution.uri,
+                    item=item,
+                )
             if transformed_item is None:
                 continue
 
             yield transformed_item
 
             for file_ in files_by_item_id.get(item["id"], []):
-                yield from self._transform_file(
-                    file_=file_,
-                    institution_uri=institution.uri,
-                    object_uri=transformed_item.uri,
-                )
+                with self.__transform_file_timer.time():
+                    transformed_files = self._transform_file(
+                        file_=file_,
+                        institution_uri=institution.uri,
+                        object_uri=transformed_item.uri,
+                    )
+                yield from transformed_files
+
+        for key, value in self._metrics_registry.dump_metrics().items():
+            self._logger.info("%s: %s", key, value)
 
     def _get_element_texts_as_tree(self, omeka_resource) -> ElementTextTree:
         result = {}
@@ -200,29 +211,33 @@ class OmekaClassicTransformer(_Transformer):
         if not file_["mime_type"].startswith("image/"):
             return tuple()
 
+        file_exact_dimensions = None
+        file_metadata = file_["metadata"]
+        if isinstance(file_metadata, dict):
+            # Some files have no metadata
+            file_metadata_video = file_metadata["video"]
+            if isinstance(file_metadata_video, dict):
+                file_exact_dimensions = ImageDimensions(
+                    height=file_metadata_video["resolution_y"],
+                    width=file_metadata_video["resolution_x"],
+                )
+            else:
+                self._logger.debug(
+                    "file %s has no resolution in its metadata", file_["id"]
+                )
+        else:
+            self._logger.debug("file %s has no metadata", file_["id"])
+
+        file_added = datetime.fromisoformat(file_["added"])
+        file_modified = datetime.fromisoformat(file_["modified"])
+
         images = []
-        original_image = None
         for key, url in file_["file_urls"].items():
             if url is None:
                 continue
             exact_dimensions = max_dimensions = None
             if key == "original":
-                file_metadata = file_["metadata"]
-                if isinstance(file_metadata, dict):
-                    # Some files have no metadata
-                    file_metadata_video = file_metadata["video"]
-                    if isinstance(file_metadata_video, dict):
-                        height = file_metadata_video["resolution_y"]
-                        # assert isinstance(height, int)
-                        width = file_metadata_video["resolution_x"]
-                        # assert isinstance(width, int)
-                        exact_dimensions = ImageDimensions(height=height, width=width)
-                    else:
-                        self._logger.debug(
-                            "file %s has no resolution in its metadata", file_["id"]
-                        )
-                else:
-                    self._logger.debug("file %s has no metadata", file_["id"])
+                exact_dimensions = file_exact_dimensions
                 original_image_uri = None
             else:
                 if key == "square_thumbnail":
@@ -238,17 +253,13 @@ class OmekaClassicTransformer(_Transformer):
                 original_image_uri = URIRef(file_["file_urls"]["original"])
 
             image = Image.create(
-                created=dateparser.parse(
-                    file_["added"], settings={"STRICT_PARSING": True}
-                ),
+                created=file_added,
                 depicts_uri=object_uri,
                 exact_dimensions=exact_dimensions,
                 format=file_["mime_type"],
                 institution_uri=institution_uri,
                 max_dimensions=max_dimensions,
-                modified=dateparser.parse(
-                    file_["modified"], settings={"STRICT_PARSING": True}
-                ),
+                modified=file_modified,
                 original_image_uri=original_image_uri,
                 uri=URIRef(url),
             )
