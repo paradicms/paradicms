@@ -8,7 +8,7 @@ from paradicms_etl.models.property_definition import PropertyDefinition
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass(init=True)
+@dataclass(init=True, unsafe_hash=True)
 class Property:
     property_definition_uri: URIRef
     value: str
