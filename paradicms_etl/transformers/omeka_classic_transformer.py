@@ -1,11 +1,6 @@
 from datetime import datetime
 from typing import Dict, Optional, Tuple
 
-import dateparser
-from pyformance import MetricsRegistry
-from rdflib import URIRef
-from tqdm import tqdm
-
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
@@ -14,6 +9,9 @@ from paradicms_etl.models.object import Object
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definitions import PropertyDefinitions
 from paradicms_etl.models.rights import Rights
+from pyformance import MetricsRegistry
+from rdflib import URIRef
+from tqdm import tqdm
 
 ElementTextTree = Dict[str, Dict[str, str]]
 
