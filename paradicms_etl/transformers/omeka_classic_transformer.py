@@ -2,6 +2,7 @@ from typing import Dict, Optional, Tuple
 
 import dateparser
 from rdflib import URIRef
+from tqdm import tqdm
 
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
@@ -46,7 +47,7 @@ class OmekaClassicTransformer(_Transformer):
         yield institution
 
         collection_uris_by_id = {}
-        for collection in collections:
+        for collection in tqdm(collections, desc="Omeka collections"):
             transformed_collection = self._transform_collection(
                 institution_uri=institution.uri, omeka_collection=collection
             )
@@ -56,10 +57,10 @@ class OmekaClassicTransformer(_Transformer):
             collection_uris_by_id[collection["id"]] = transformed_collection.uri
 
         files_by_item_id = {}
-        for file_ in files:
+        for file_ in tqdm(files, desc="Omeka files"):
             files_by_item_id.setdefault(file_["item"]["id"], []).append(file_)
 
-        for item in items:
+        for item in tqdm(items, desc="Omeka items"):
             if not item["public"]:
                 self._logger.debug("item %s private, skipping", item["id"])
                 continue
@@ -101,7 +102,7 @@ class OmekaClassicTransformer(_Transformer):
             PropertyDefinitions.ALTERNATIVE_TITLE,
         ):
             for property_i, property in enumerate(properties):
-                if property.key == title_property_definition.key:
+                if property.property_definition_uri == title_property_definition.uri:
                     remaining_properties = list(properties[:property_i]) + list(
                         properties[property_i + 1 :]
                     )
