@@ -83,8 +83,8 @@ class GuiImagesLoader(_Loader):
                 )
             else:
                 try:
-                    original_image_file_path = self.__original_image_file_cache.get_file(
-                        original_image.uri
+                    original_image_file_path = (
+                        self.__original_image_file_cache.get_file(original_image.uri)
                     )
                 except HTTPError as http_error:
                     if http_error.code == 404:
@@ -95,6 +95,13 @@ class GuiImagesLoader(_Loader):
                         continue
                     else:
                         raise
+                except ValueError:
+                    self._logger.error(
+                        "error caching original image %s, skipping",
+                        original_image.uri,
+                        exc_info=True,
+                    )
+                    continue
 
                 self._logger.debug(
                     "cached original image %s at %s",
