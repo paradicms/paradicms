@@ -73,7 +73,7 @@ class S3ImageArchiver(_ImageArchiver):
                 )
             if key in self.__existing_s3_bucket_keys:
                 self._logger.debug(
-                    "%s exists and force_upload not specified, skipping upload"
+                    "%s exists and force_upload not specified, skipping upload", key
                 )
                 return archived_image_url
             else:

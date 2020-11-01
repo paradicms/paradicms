@@ -54,6 +54,7 @@ class FileCache:
         self.__logger.debug("downloading %s", file_url)
         temp_file_path, headers = urlretrieve(str(file_url))
         headers_dict = {key: value for key, value in headers.items()}
+        self.__logger.debug("downloaded %s to %s", file_url, temp_file_path)
 
         content_type = headers_dict["Content-Type"]
         cached_file_ext = mimetypes.guess_extension(content_type, strict=False)
@@ -62,10 +63,19 @@ class FileCache:
                 f"unable to guess file extension from Content-Type {content_type}"
             )
 
+        self.__logger.debug(
+            "%s content type = %s, file extension = %s",
+            file_url,
+            content_type,
+            cached_file_ext,
+        )
+
         cached_file_path = file_cache_dir_path / ("file" + cached_file_ext)
         file_cache_dir_path.mkdir(exist_ok=True)
         os.rename(temp_file_path, cached_file_path)
-        self.__logger.debug("downloaded %s to %s", file_url, cached_file_path)
+        self.__logger.debug(
+            "moved %s (from %s) to %s", temp_file_path, file_url, cached_file_path
+        )
 
         headers_json_file_path = file_cache_dir_path / "headers.json"
         with open(headers_json_file_path, "w+", encoding="utf-8") as headers_json_file:
