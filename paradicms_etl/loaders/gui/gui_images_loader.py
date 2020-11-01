@@ -137,11 +137,20 @@ class GuiImagesLoader(_Loader):
                     / f"{thumbnail_max_dimensions.width}x{thumbnail_max_dimensions.height}{image_file_ext}"
                 )
 
-                thumbnail_exact_dimensions = thumbnail_image(
-                    input_image_file_path=original_image_file_path,
-                    output_thumbnail_max_dimensions=thumbnail_max_dimensions,
-                    output_thumbnail_file_path=thumbnail_file_path,
-                )
+                try:
+                    thumbnail_exact_dimensions = thumbnail_image(
+                        input_image_file_path=original_image_file_path,
+                        output_thumbnail_max_dimensions=thumbnail_max_dimensions,
+                        output_thumbnail_file_path=thumbnail_file_path,
+                    )
+                except OSError:
+                    self._logger.error(
+                        "error thumbnailing %s (from %s):",
+                        original_image_file_path,
+                        original_image.uri,
+                        exc_info=True,
+                    )
+                    continue
 
                 archived_thumbnail_url = self.__image_archiver.archive_image(
                     image_file_path=thumbnail_file_path
