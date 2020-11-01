@@ -32,6 +32,7 @@ class GuiImagesLoader(_Loader):
         self,
         *,
         image_archiver: _ImageArchiver,
+        sleep_s_after_image_download: Optional[float] = None,
         thumbnail_max_dimensions: Tuple[
             ImageDimensions, ...
         ] = THUMBNAIL_MAX_DIMENSIONS_DEFAULT,
@@ -42,7 +43,8 @@ class GuiImagesLoader(_Loader):
         self.__image_archiver = image_archiver
 
         self.__original_image_file_cache = FileCache(
-            cache_dir_path=self._loaded_data_dir_path / "original_image_cache"
+            cache_dir_path=self._loaded_data_dir_path / "original_image_cache",
+            sleep_s_after_download=sleep_s_after_image_download,
         )
 
         if not thumbnail_max_dimensions:

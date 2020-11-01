@@ -2,8 +2,9 @@ import json
 import logging
 import mimetypes
 import os
-from http.client import HTTPMessage
 from pathlib import Path
+from time import sleep
+from typing import Optional
 from urllib.request import urlretrieve
 
 from pathvalidate import sanitize_filename
@@ -11,7 +12,13 @@ from rdflib import URIRef
 
 
 class FileCache:
-    def __init__(self, *, cache_dir_path: Path, force_download: bool = False):
+    def __init__(
+        self,
+        *,
+        cache_dir_path: Path,
+        force_download: bool = False,
+        sleep_s_after_download: Optional[float] = None,
+    ):
         """
         :param cache_dir_path: directory where files from URLs can be cached
         :param force_download: always download files, never use cached versions
@@ -20,6 +27,7 @@ class FileCache:
         self.__cache_dir_path.mkdir(exist_ok=True)
         self.__force_download = force_download
         self.__logger = logging.getLogger(self.__class__.__name__)
+        self.__sleep_s_after_download = sleep_s_after_download
 
     def get_file(self, file_url: URIRef) -> Path:
         """
@@ -55,6 +63,14 @@ class FileCache:
         temp_file_path, headers = urlretrieve(str(file_url))
         headers_dict = {key: value for key, value in headers.items()}
         self.__logger.debug("downloaded %s to %s", file_url, temp_file_path)
+
+        if self.__sleep_s_after_download is not None:
+            self.__logger.debug(
+                "sleeping %.2f seconds after downloading %s",
+                self.__sleep_s_after_download,
+                file_url,
+            )
+            sleep(self.__sleep_s_after_download)
 
         content_type = headers_dict["Content-Type"]
         cached_file_ext = mimetypes.guess_extension(content_type, strict=False)

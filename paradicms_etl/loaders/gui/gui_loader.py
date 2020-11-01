@@ -21,6 +21,7 @@ class GuiLoader(_BufferingLoader):
         gui: Union[Path, str],
         deployer: Optional[_GuiDeployer] = None,
         image_archiver: Optional[_ImageArchiver] = None,
+        sleep_s_after_image_download: Optional[float] = None,
         thumbnail_max_dimensions: Tuple[
             ImageDimensions, ...
         ] = GuiImagesLoader.THUMBNAIL_MAX_DIMENSIONS_DEFAULT,
@@ -30,6 +31,7 @@ class GuiLoader(_BufferingLoader):
         self.__deployer = deployer
         self.__gui = gui
         self.__image_archiver = image_archiver
+        self.__sleep_s_after_image_download = sleep_s_after_image_download
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
 
     def _flush(self, models):
@@ -49,6 +51,7 @@ class GuiLoader(_BufferingLoader):
                     image_archiver=self.__image_archiver,
                     loaded_data_dir_path=self._loaded_data_dir_path,
                     pipeline_id=self._pipeline_id,
+                    sleep_s_after_image_download=self.__sleep_s_after_image_download,
                     thumbnail_max_dimensions=self.__thumbnail_max_dimensions,
                 ).load(models=original_images)
             )
@@ -57,7 +60,8 @@ class GuiLoader(_BufferingLoader):
 
         data_dir_path = self._loaded_data_dir_path / "data"
         data_loader = GuiDataLoader(
-            loaded_data_dir_path=data_dir_path, pipeline_id=self._pipeline_id,
+            loaded_data_dir_path=data_dir_path,
+            pipeline_id=self._pipeline_id,
         )
         data_loader.load(models=models)
         data_loader.flush()
