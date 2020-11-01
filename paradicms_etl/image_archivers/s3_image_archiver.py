@@ -31,7 +31,9 @@ class S3ImageArchiver(_ImageArchiver):
             client_kwds["aws_access_key_id"] = aws_access_key_id
         if aws_secret_access_key is not None:
             client_kwds["aws_secret_access_key"] = aws_secret_access_key
-        self.__s3_client = boto3.client("s3", **client_kwds)
+        s3 = boto3.resource("s3", **client_kwds)
+        self.__s3_bucket = s3.Bucket(self.__s3_bucket_name)
+        self.__existing_s3_bucket_keys = None
 
     def archive_image(self, *, image_file_path: Path) -> URIRef:
         image_file_hash = hashlib.sha256()
@@ -57,23 +59,33 @@ class S3ImageArchiver(_ImageArchiver):
         )
 
         if not self.__force_upload:
-            try:
-                self.__s3_client.head_object(Bucket=self.__s3_bucket_name, Key=key)
+            # Listing the bucket and caching the keys takes a few requests, vs. HEADing each object
+            if self.__existing_s3_bucket_keys is None:
+                self._logger.info("listing S3 bucket %s", self.__s3_bucket_name)
+                self.__existing_s3_bucket_keys = set()
+                for object_summary in self.__s3_bucket.objects.all():
+                    assert object_summary.key not in self.__existing_s3_bucket_keys
+                    self.__existing_s3_bucket_keys.add(object_summary.key)
+                self._logger.info(
+                    "listed %d keys in S3 bucket %s",
+                    len(self.__existing_s3_bucket_keys),
+                    self.__s3_bucket_name,
+                )
+            if key in self.__existing_s3_bucket_keys:
+                self._logger.debug(
+                    "%s exists and force_upload not specified, skipping upload"
+                )
                 return archived_image_url
-            except ClientError as client_error:
-                if client_error.response["Error"]["Code"] == "404":
-                    self._logger.debug(
-                        "%s does not exist, uploading", archived_image_url
-                    )
-                else:
-                    raise
+            else:
+                self._logger.debug("%s does not exist, uploading", archived_image_url)
 
         self._logger.debug("uploading %s to %s", image_file_path, archived_image_url)
-        self.__s3_client.upload_file(
+        self.__s3_bucket.upload_file(
             str(image_file_path),
-            self.__s3_bucket_name,
             key,
-            ExtraArgs={"ContentType": "image/" + image_format.lower(),},
+            ExtraArgs={
+                "ContentType": "image/" + image_format.lower(),
+            },
         )
         self._logger.debug("uploaded %s to %s", image_file_path, archived_image_url)
 
