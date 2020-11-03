@@ -14,6 +14,7 @@ from paradicms_etl.models.object import Object
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definitions import PropertyDefinitions
 from paradicms_etl.models.rights import Rights
+from paradicms_etl.models.rights_value import RightsValue
 
 
 class LunaTransformer(_Transformer):
@@ -190,7 +191,6 @@ class LunaTransformer(_Transformer):
         for field_name, property_definition in (
             ("Culture", PropertyDefinitions.CULTURAL_CONTEXT),
             ("Description", PropertyDefinitions.DESCRIPTION),
-            ("Reproduction Rights Statement", PropertyDefinitions.RIGHTS),
             ("Subject", PropertyDefinitions.SUBJECT),
             ("Work Type", PropertyDefinitions.TYPE),
         ):
@@ -235,7 +235,6 @@ class LunaTransformer(_Transformer):
         for ignore_key in (
             "Repository",
             "Repository Type",
-            "Reproduction Record ID",
             "Work Class",
             "Work Record ID",
         ):
@@ -255,6 +254,7 @@ class LunaTransformer(_Transformer):
             return self._pop_qualified_field_values(field_values, *args)
 
         field_values.pop("Reproduction Description", None)
+        field_values.pop("Reproduction Record ID")
 
         for reproduction_view, reproduction_view_type in pop_qualified_field_values(
             "Reproduction View", "Reproduction View Type"
@@ -271,6 +271,11 @@ class LunaTransformer(_Transformer):
             if reproduction_date_type == "creation":
                 image_created = datetime(reproduction_year, 1, 1)
 
+        reproduction_rights_statement = field_values.pop(
+            "Reproduction Rights Statement"
+        )
+        assert reproduction_rights_statement
+
         url_size_i = 0
         while True:
             try:
@@ -285,6 +290,9 @@ class LunaTransformer(_Transformer):
                 max_dimensions=ImageDimensions(
                     height=image_dimension_max,
                     width=image_dimension_max,
+                ),
+                rights=Rights(
+                    statement=RightsValue(text=reproduction_rights_statement[0])
                 ),
                 uri=URIRef(image_url),
             )
