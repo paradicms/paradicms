@@ -5,7 +5,7 @@ from rdflib import Graph
 from paradicms_etl._model import _Model
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
-from paradicms_etl.utils import sanitize_method_name
+from paradicms_etl.utils.string_utils import sanitize_method_name
 
 
 class _WikidataItemsTransformer(_Transformer):
@@ -52,8 +52,8 @@ class _WikidataItemsTransformer(_Transformer):
                     self._logger.debug("authoritative model %s", model.uri)
                 else:
                     self._logger.debug("non-authoritative model %s", model.uri)
-                    existing_non_authoritative_model = non_authoritative_models_by_uri.get(
-                        model.uri
+                    existing_non_authoritative_model = (
+                        non_authoritative_models_by_uri.get(model.uri)
                     )
                     if existing_non_authoritative_model is None:
                         non_authoritative_models_by_uri[model.uri] = model

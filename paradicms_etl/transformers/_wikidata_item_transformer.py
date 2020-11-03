@@ -5,7 +5,7 @@ from paradicms_etl._model import _Model
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
 from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
-from paradicms_etl.utils import sanitize_method_name
+from paradicms_etl.utils.string_utils import sanitize_method_name
 
 
 class _WikidataItemTransformer(_Transformer):
@@ -35,7 +35,11 @@ class _WikidataItemTransformer(_Transformer):
         """
 
     def _transform_statement(
-        self, *, item: WikidataItem, item_model: _Model, statement: WikidataStatement,
+        self,
+        *,
+        item: WikidataItem,
+        item_model: _Model,
+        statement: WikidataStatement,
     ) -> Generator[_Model, None, None]:
         """
         Transform an item statement into zero or more _Models.

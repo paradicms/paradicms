@@ -5,7 +5,7 @@ from pathvalidate import sanitize_filename
 
 from paradicms_etl._model import _Model
 from paradicms_etl.loaders._file_loader import _FileLoader
-from paradicms_etl.loaders.json_utils import json_dump_default, model_to_json_object
+from paradicms_etl.utils.json_utils import json_dump_default, model_to_json_object
 
 
 class JsonFileLoader(_FileLoader):
