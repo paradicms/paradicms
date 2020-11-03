@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Dict, Generator, List, Optional, Tuple
 
 from rdflib import URIRef
@@ -35,50 +36,77 @@ class LunaTransformer(_Transformer):
 
     __URL_SIZES = (96, 192, 384, 768, 1536, 3072, 6144, 12288, 24576)
 
+    @staticmethod
+    def _pop_qualified_field_values(
+        field_values: Dict[str, List[str]],
+        primary_field_name,
+        *qualifier_field_names: Tuple[str, ...],
+    ):
+        """
+        Fields such as "Title" have qualifying fields such as "Title Type",
+        which should have the same number of values.
+
+        :param field_values: field values dict passed to _transform_object_field_values
+        :param primary_field_name: primary field name, such as "Title"
+        :param qualifier_field_names: qualifier field names, such as "Title Type"
+        :return: a generator of field value tuple (primary field value, qualifier field value 1, qualifier field value 2, ...)
+        """
+
+        primary_field_values = field_values.pop(primary_field_name, [])
+        all_field_values = [primary_field_values]
+        for qualifier_field_name in qualifier_field_names:
+            qualifier_field_values = field_values.pop(qualifier_field_name, [])
+            if qualifier_field_values:
+                while len(qualifier_field_values) < len(primary_field_values):
+                    qualifier_field_values.append(None)
+            else:
+                qualifier_field_values = [None] * len(primary_field_values)
+            all_field_values.append(qualifier_field_values)
+        yield from zip(*all_field_values)
+
     def transform(self, base_url: str, search_results):
         yield from PropertyDefinitions.as_tuple()
 
-        institution = self.__transform_institution(
+        institution = self._transform_institution(
             base_url=base_url, institution_name=search_results["institutionName"]
         )
         yield institution
 
         collections_by_id = {}
         collections_by_uri = {}
-        for collection_id, collection_name in search_results["collections"].items():
-            collection = self._transform_collection(
-                base_url=base_url,
-                id_=collection_id,
-                institution=institution,
-                name=collection_name,
-            )
-            collections_by_id[collection_id] = collection
-            collections_by_uri[collection.uri] = collection
-            # Don't yield the collection until we see an object with it
+        for collection_pair in search_results["collections"]:
+            assert len(collection_pair) == 1
+            for collection_id, luna_collection in collection_pair.items():
+                collection = self._transform_collection(
+                    base_url=base_url,
+                    id_=collection_id,
+                    institution=institution,
+                    luna_collection=luna_collection,
+                )
+                yield collection
+                collections_by_id[collection_id] = collection
+                collections_by_uri[collection.uri] = collection
 
-        yielded_collection_uris = set()
         for luna_object in search_results["results"]:
-            for model in self._transform_object(
+            yield from self._transform_object(
                 collections_by_id=collections_by_id,
                 institution=institution,
                 luna_object=luna_object,
-            ):
-                yield model
-                if not isinstance(model, Object):
-                    continue
-                for object_collection_uri in model.collection_uris:
-                    if object_collection_uri in yielded_collection_uris:
-                        continue
-                    collection = collections_by_uri[object_collection_uri]
-                    yield collection
-                    yielded_collection_uris.add(collection_id.uri)
+            )
 
     def _transform_collection(
-        self, *, base_url: str, id_: str, institution: Institution, name: str
+        self,
+        *,
+        base_url: str,
+        id_: str,
+        institution: Institution,
+        luna_collection: Dict[str, str],
     ) -> Collection:
+        description = luna_collection.get("description", "").strip()
         return Collection(
+            abstract=description if description else None,
             institution_uri=institution.uri,
-            title=name,
+            title=luna_collection["name"],
             uri=URIRef(
                 LunaExtractor.create_search_url(base_url=base_url, query={"lc": id_})
             ),
@@ -115,16 +143,133 @@ class LunaTransformer(_Transformer):
         media_type = luna_object["mediaType"]
         assert media_type == "Image", media_type
 
-        properties = self._transform_object_field_values(luna_object["fieldValues"])
+        field_values_dict = {}
+        for field_value_pair in luna_object["fieldValues"]:
+            assert len(field_value_pair) == 1
+            for field_name, field_values in field_value_pair.items():
+                assert field_name not in field_values_dict, field_name
+                field_values_dict[field_name] = field_values
+                self._logger.debug(
+                    "object %s: field %s = %s", id_, field_name, field_values
+                )
+
+        properties = self._transform_object_field_values(field_values=field_values_dict)
 
         object_ = Object(
             abstract=description,
             collection_uris=collection_uris,
+            institution_uri=institution.uri,
             rights=Rights.from_properties(properties),
             title=display_name,
-            uri=URIRef(luna_object["iifManifest"]),
+            uri=URIRef(luna_object["iiifManifest"]),
         )
         yield object_
+
+        yield from self._transform_object_images(
+            field_values=field_values_dict,
+            institution=institution,
+            luna_object=luna_object,
+            object_=object_,
+        )
+
+        for field_name, field_values in field_values_dict.items():
+            self._logger.warning(
+                "object %s: untransformed field %s = %s", id_, field_name, field_values
+            )
+
+    def _transform_object_field_values(
+        self, *, field_values: Dict[str, List[str]]
+    ) -> Tuple[Property, ...]:
+        """
+        Transform LUNA object fieldValues into zero or more object Property's
+        Should mutate field_values to indicate that those fields have been consumed.
+        """
+
+        properties = []
+
+        for field_name, property_definition in (
+            ("Culture", PropertyDefinitions.CULTURAL_CONTEXT),
+            ("Description", PropertyDefinitions.DESCRIPTION),
+            ("Reproduction Rights Statement", PropertyDefinitions.RIGHTS),
+            ("Subject", PropertyDefinitions.SUBJECT),
+            ("Work Type", PropertyDefinitions.TYPE),
+        ):
+            for field_value in field_values.pop(field_name, []):
+                properties.append(Property(property_definition, field_value))
+
+        def pop_qualified_field_values(*args):
+            return self._pop_qualified_field_values(field_values, *args)
+
+        for (
+            creator,
+            creator_dates,
+            creator_role,
+            creator_type,
+        ) in pop_qualified_field_values(
+            "Creator", "Creator Dates", "Creator Type", "Creator Role"
+        ):
+            properties.append(Property(PropertyDefinitions.CREATOR, creator))
+
+        for date, date_type in pop_qualified_field_values("Date", "Date Type"):
+            if date_type == "completion date":
+                property_definition = PropertyDefinitions.DATE_SUBMITTED
+            elif date_type == "creation":
+                property_definition = PropertyDefinitions.DATE_CREATED
+            else:
+                raise ValueError(date_type)
+            properties.append(Property(property_definition, date))
+
+        for location, location_type in pop_qualified_field_values(
+            "Location", "Location Type"
+        ):
+            pass
+
+        for material, material_type in pop_qualified_field_values(
+            "Material", "Material Type"
+        ):
+            properties.append(Property(PropertyDefinitions.MATERIAL, material))
+
+        for title, title_type in pop_qualified_field_values("Title", "Title Type"):
+            properties.append(Property(PropertyDefinitions.TITLE, title))
+
+        for ignore_key in (
+            "Repository",
+            "Repository Type",
+            "Reproduction Record ID",
+            "Work Class",
+            "Work Record ID",
+        ):
+            field_values.pop(ignore_key, None)
+
+        return tuple(properties)
+
+    def _transform_object_images(
+        self,
+        *,
+        field_values: Dict[str, List[str]],
+        institution: Institution,
+        luna_object,
+        object_: Object,
+    ) -> Generator[Image, None, None]:
+        def pop_qualified_field_values(*args):
+            return self._pop_qualified_field_values(field_values, *args)
+
+        field_values.pop("Reproduction Description", None)
+
+        for reproduction_view, reproduction_view_type in pop_qualified_field_values(
+            "Reproduction View", "Reproduction View Type"
+        ):
+            # Front, rear view
+            # Don't have anything to do with this currently.
+            pass
+
+        image_created = None
+        for reproduction_date, reproduction_date_type in pop_qualified_field_values(
+            "Reproduction Date", "Reproduction Date Type"
+        ):
+            reproduction_year = int(reproduction_date)
+            if reproduction_date_type == "creation":
+                image_created = datetime(reproduction_year, 1, 1)
 
         url_size_i = 0
         while True:
@@ -134,6 +279,7 @@ class LunaTransformer(_Transformer):
                 break
             image_dimension_max = self.__URL_SIZES[url_size_i]
             yield Image.create(
+                created=image_created,
                 depicts_uri=object_.uri,
                 institution_uri=institution.uri,
                 max_dimensions=ImageDimensions(
@@ -142,6 +288,4 @@ class LunaTransformer(_Transformer):
                 ),
                 uri=URIRef(image_url),
             )
-
-    def _transform_object_field_values(self, *, field_values) -> Tuple[Property, ...]:
-        return ()
+            url_size_i += 1

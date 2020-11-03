@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from urllib.parse import urlencode
+from urllib.parse import urlencode, quote
 from urllib.request import urlretrieve
 
 from pathvalidate import sanitize_filename
@@ -26,22 +26,26 @@ class LunaExtractor(_Extractor):
         :param query: query for the LUNA search API, either a mapping object or a sequence of two-element tuples, which may contain str or bytes objects
         """
         return (
-            base_url.rstrip("/") + "/luna/servlet/as/search?" + urlencode(self.__query)
+            base_url.rstrip("/")
+            + "/luna/servlet/as/search?"
+            + urlencode(query, quote_via=quote)
         )
 
     def extract(self, *, force: bool):
         url = self.create_search_url(base_url=self.__base_url, query=self.__query)
-        cached_json_file_path = (
-            self._extracted_data_dir_path + sanitize_filename(url) + ".json"
+        cached_json_file_path = self._extracted_data_dir_path / (
+            sanitize_filename(url) + ".json"
         )
 
         if force or not cached_json_file_path.is_file():
-            self._logger.debug("downloading %s", url)
+            self._logger.info("downloading %s", url)
             temp_file_path, _ = urlretrieve(url)
             self._logger.debug("downloaded %s to %s", url, temp_file_path)
 
-        Path(temp_file_path).rename(cached_json_file_path)
-        self._logger.debug("renamed %s to %s", temp_file_path, cached_json_file_path)
+            Path(temp_file_path).rename(cached_json_file_path)
+            self._logger.debug(
+                "renamed %s to %s", temp_file_path, cached_json_file_path
+            )
 
         with open(cached_json_file_path) as cached_json_file:
             return {
