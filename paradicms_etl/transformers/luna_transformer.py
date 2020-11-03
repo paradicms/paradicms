@@ -160,7 +160,7 @@ class LunaTransformer(_Transformer):
             abstract=description,
             collection_uris=collection_uris,
             institution_uri=institution.uri,
-            rights=Rights.from_properties(properties),
+            properties=properties,
             title=display_name,
             uri=URIRef(luna_object["iiifManifest"]),
         )
@@ -276,13 +276,24 @@ class LunaTransformer(_Transformer):
         )
         assert reproduction_rights_statement
 
+        image_urls = []
         url_size_i = 0
         while True:
             try:
-                image_url = luna_object[f"urlSize{url_size_i}"]
+                image_urls.append(luna_object[f"urlSize{url_size_i}"])
             except KeyError:
                 break
+            url_size_i += 1
+
+        if not image_urls:
+            return
+
+        # Treat the largest image as the original.
+        original_image_uri = URIRef(image_urls[-1])
+
+        for url_size_i, image_url in enumerate(image_urls):
             image_dimension_max = self.__URL_SIZES[url_size_i]
+            image_uri = URIRef(image_url)
             yield Image.create(
                 created=image_created,
                 depicts_uri=object_.uri,
@@ -291,9 +302,11 @@ class LunaTransformer(_Transformer):
                     height=image_dimension_max,
                     width=image_dimension_max,
                 ),
+                original_image_uri=original_image_uri
+                if image_uri != original_image_uri
+                else None,
                 rights=Rights(
                     statement=RightsValue(text=reproduction_rights_statement[0])
                 ),
-                uri=URIRef(image_url),
+                uri=image_uri,
             )
-            url_size_i += 1
