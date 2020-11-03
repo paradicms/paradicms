@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import NamedTuple, Optional, Tuple
+from typing import Optional, Tuple
 
 from dataclasses_json import LetterCase, dataclass_json
 from rdflib import Literal, RDFS

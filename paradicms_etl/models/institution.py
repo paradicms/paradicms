@@ -6,16 +6,16 @@ from rdflib import Graph, Literal
 from rdflib.namespace import FOAF, RDF
 from rdflib.resource import Resource
 
-from paradicms_etl._model import _Model
-from .property import Property
-from .property_definition import PropertyDefinition
-from .rights import Rights
-from ..namespace import CMS
+from paradicms_etl.models._named_model import _NamedModel
+from paradicms_etl.models.property import Property
+from paradicms_etl.models.property_definition import PropertyDefinition
+from paradicms_etl.models.rights import Rights
+from paradicms_etl.namespace import CMS
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass(frozen=True)
-class Institution(_Model):
+class Institution(_NamedModel):
     # See note in Collection re: why there are no links to collections here.
     name: str
     abstract: Optional[str] = None
@@ -25,7 +25,7 @@ class Institution(_Model):
     def to_rdf(
         self, *, graph: Graph, property_definitions: Tuple[PropertyDefinition, ...]
     ) -> Resource:
-        resource = _Model.to_rdf(
+        resource = _NamedModel.to_rdf(
             self, graph=graph, property_definitions=property_definitions
         )
         resource.add(RDF.type, CMS[self.__class__.__name__])

@@ -1,13 +1,15 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
+from dataclasses_json import LetterCase, dataclass_json
 from rdflib import Literal, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.models.property import Property
-from paradicms_etl.utils import is_uri
+from paradicms_etl.utils.string_utils import is_uri
 
 
+@dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass(init=False)
 class RightsValue:
     """

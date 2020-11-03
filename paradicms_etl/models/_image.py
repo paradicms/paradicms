@@ -7,14 +7,14 @@ from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
-from paradicms_etl._model import _Model
+from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.namespace import CMS, EXIF
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass(frozen=True)
-class _Image(_Model):
+class _Image(_NamedModel):
     """
     Base class for image models that can be reused by other systems.
     """
@@ -27,7 +27,7 @@ class _Image(_Model):
     original_image_uri: Optional[URIRef]
 
     def to_rdf(self, *, graph: Graph, **kwds) -> Resource:
-        resource = _Model.to_rdf(self, graph=graph, **kwds)
+        resource = _NamedModel.to_rdf(self, graph=graph, **kwds)
         if self.created is not None:
             resource.add(DCTERMS.created, Literal(self.created))
         if self.format is not None:

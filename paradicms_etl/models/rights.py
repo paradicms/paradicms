@@ -44,7 +44,8 @@ class Rights:
             properties=tuple(
                 property_
                 for property_ in properties
-                if property_.property_definition_uri == PropertyDefinitions.RIGHTS_HOLDER.uri
+                if property_.property_definition_uri
+                == PropertyDefinitions.RIGHTS_HOLDER.uri
             )
         )
         license = RightsValue.from_properties(
