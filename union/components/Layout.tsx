@@ -52,6 +52,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   cardTitle,
   children,
   documentTitle,
+  guiMetadata,
   onSearch: onSearchUserDefined,
 }) => {
   const classes = useStyles();
@@ -140,28 +141,35 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
     }
   }
 
+  let qualifiedDocumentTitle: string[] = [];
+  if (guiMetadata && guiMetadata.documentTitle) {
+    qualifiedDocumentTitle.push(guiMetadata.documentTitle);
+  }
+  if (documentTitle) {
+    qualifiedDocumentTitle.push(documentTitle);
+  }
+
   return (
     <>
       <Helmet
-        title={
-          "Paradicms union catalog" +
-          (documentTitle ? " - " + documentTitle : "")
-        }
-        meta={[
-          {
-            name: "description",
-            content: "Paradicms union catalog",
-          },
-          // {name: "keywords", content: data.site!.siteMetadata!.keywords},
-        ]}
+        title={qualifiedDocumentTitle.join(" - ")}
+        // meta={[
+        //   {
+        //     name: "description",
+        //     content: "Paradicms union catalog",
+        //   },
+        //   // {name: "keywords", content: data.site!.siteMetadata!.keywords},
+        // ]}
       />
       <Grid data-cy="frame" container direction="column" spacing={2}>
         <Grid item>
           <AppBar data-cy="navbar" position="static">
             <Toolbar>
-              <Typography variant="h6" className={classes.brand}>
-                Paradicms
-              </Typography>
+              {guiMetadata?.navbarTitle ? (
+                <Typography variant="h6" className={classes.brand}>
+                  {guiMetadata.navbarTitle}
+                </Typography>
+              ) : null}
               <Link className={classes.navLink} {...Hrefs.home}>
                 Home
               </Link>
