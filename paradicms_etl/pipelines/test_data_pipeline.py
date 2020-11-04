@@ -10,6 +10,7 @@ from paradicms_etl.extractors.nop_extractor import NopExtractor
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.json_directory_loader import JsonDirectoryLoader
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.gui_metadata import GuiMetadata
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
@@ -44,8 +45,11 @@ class TestDataPipeline(_Pipeline):
         __TYPES = tuple(f"Type {i}" for i in range(10))
 
         def transform(self):
-            yield from self.__generate_institutions()
             yield from PropertyDefinitions.as_tuple()
+
+            yield GuiMetadata(document_title="Test data", navbar_title="Test data")
+
+            yield from self.__generate_institutions()
 
         def __generate_collection_objects(
             self, *, collection: Collection, institution: Institution
