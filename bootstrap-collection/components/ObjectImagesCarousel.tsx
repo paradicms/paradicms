@@ -1,18 +1,16 @@
 import * as React from "react";
+import {useState} from "react";
 import ImageZoom from "react-medium-image-zoom";
 import {Image, Images} from "@paradicms/models";
 import {RightsTable} from "./RightsTable";
-import {useState} from "react";
 import {
   Carousel,
   CarouselControl,
-  CarouselIndicators,
   CarouselItem,
   Col,
   Container,
   Row,
 } from "reactstrap";
-import {Accordion} from "components/Accordion";
 
 export const ObjectImagesCarousel: React.FunctionComponent<{
   images: readonly Image[];
@@ -37,10 +35,10 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
     setActiveIndex(nextIndex);
   };
 
-  const goToIndex = (newIndex: number) => {
-    // if (animating) return;
-    setActiveIndex(newIndex);
-  };
+  // const goToIndex = (newIndex: number) => {
+  //   // if (animating) return;
+  //   setActiveIndex(newIndex);
+  // };
 
   return (
     <Carousel
