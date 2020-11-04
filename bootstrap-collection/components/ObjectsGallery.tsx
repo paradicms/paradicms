@@ -6,6 +6,11 @@ import {ObjectCard} from "components/ObjectCard";
 
 const OBJECTS_PER_PAGE = 10;
 
+/**
+ * Objects gallery component.
+ *
+ * @param objects objects to render in the gallery, should not be sliced (limit + offset) beforehand
+ */
 export const ObjectsGallery: React.FunctionComponent<{
   objects: readonly JoinedObject[];
   onChangePage: (page: number) => void;
