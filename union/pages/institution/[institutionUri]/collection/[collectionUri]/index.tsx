@@ -5,13 +5,9 @@ import {
   Collection,
   GuiMetadata,
   Image,
-  Images,
   Institution,
-  JoinedObject,
-  Models,
   Object,
   ObjectFilters,
-  Objects,
   PropertyDefinition,
 } from "@paradicms/models";
 import {ObjectFacetsGrid, RightsTable} from "@paradicms/material-ui";
@@ -19,6 +15,7 @@ import {Data} from "lib/Data";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {ObjectsGallery} from "components/ObjectsGallery";
+import {ObjectFacetedSearch} from "@paradicms/lunr";
 
 interface StaticProps {
   collection: Collection;
@@ -37,85 +34,74 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
   institutionImages,
   propertyDefinitions,
 }) => {
-  const [filteredObjects, setFilteredObjects] = React.useState<
-    readonly Object[]
-  >(collectionObjects);
   const [objectFilters, setObjectFilters] = React.useState<ObjectFilters>({
     collectionUris: {include: [collection.uri]},
-  });
-
-  const objectFacets = Objects.facetize(propertyDefinitions, collectionObjects);
-
-  const joinedFilteredObjects: readonly JoinedObject[] = Objects.join({
-    collectionsByUri: Models.indexByUri([collection]),
-    institutionsByUri: Models.indexByUri([institution]),
-    imagesByDepictsUri: Images.indexByDepictsUri(institutionImages),
-    objects: filteredObjects,
   });
 
   const rights = institution.rights;
 
   return (
-    <Layout
-      breadcrumbs={{collection, institution}}
-      cardTitle={
-        <span>
-          <span>
-            Collection&nbsp;&mdash;&nbsp;
-            <span data-cy="collection-title">{collection.title}</span>
-          </span>
-        </span>
-      }
-      documentTitle={"Collection - " + collection.title}
-      guiMetadata={guiMetadata}
+    <ObjectFacetedSearch
+      collections={[collection]}
+      images={institutionImages}
+      institutions={[institution]}
+      objects={collectionObjects}
+      propertyDefinitions={propertyDefinitions}
+      query={{filters: objectFilters}}
     >
-      <Grid container direction="column" spacing={2}>
-        <Grid item container>
-          <Grid item xs={4}>
-            {rights && joinedFilteredObjects.length ? (
-              <>
-                <Typography variant="h6" style={{textAlign: "center"}}>
-                  Rights
-                </Typography>
-                <RightsTable rights={rights} />
-              </>
-            ) : null}
-          </Grid>
-          <Grid item xs={6}></Grid>
-          <Grid item xs={2} style={{textAlign: "center"}}>
-            <Typography variant="h6">
-              <span>Showing&nbsp;</span>
-              <span data-cy="objects-count">
-                {joinedFilteredObjects.length}
+      {({objectFacets, objects}) => (
+        <Layout
+          breadcrumbs={{collection, institution}}
+          cardTitle={
+            <span>
+              <span>
+                Collection&nbsp;&mdash;&nbsp;
+                <span data-cy="collection-title">{collection.title}</span>
               </span>
-              <span>&nbsp;objects</span>
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid item>
-          <Grid container>
-            <Grid item xs={10}>
-              <ObjectsGallery objects={joinedFilteredObjects} />
+            </span>
+          }
+          documentTitle={"Collection - " + collection.title}
+          guiMetadata={guiMetadata}
+        >
+          <Grid container direction="column" spacing={2}>
+            <Grid item container>
+              <Grid item xs={4}>
+                {rights && objects.length ? (
+                  <>
+                    <Typography variant="h6" style={{textAlign: "center"}}>
+                      Rights
+                    </Typography>
+                    <RightsTable rights={rights} />
+                  </>
+                ) : null}
+              </Grid>
+              <Grid item xs={6}></Grid>
+              <Grid item xs={2} style={{textAlign: "center"}}>
+                <Typography variant="h6">
+                  <span>Showing&nbsp;</span>
+                  <span data-cy="objects-count">{objects.length}</span>
+                  <span>&nbsp;objects</span>
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={2}>
-              <ObjectFacetsGrid
-                facets={objectFacets}
-                filters={objectFilters}
-                onChange={newObjectFilters => {
-                  setFilteredObjects(
-                    Objects.filter({
-                      filters: newObjectFilters,
-                      objects: collectionObjects,
-                    })
-                  );
-                  setObjectFilters(newObjectFilters);
-                }}
-              />
+            <Grid item>
+              <Grid container>
+                <Grid item xs={10}>
+                  <ObjectsGallery objects={objects} />
+                </Grid>
+                <Grid item xs={2}>
+                  <ObjectFacetsGrid
+                    facets={objectFacets}
+                    filters={objectFilters}
+                    onChange={setObjectFilters}
+                  />
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </Grid>
-    </Layout>
+        </Layout>
+      )}
+    </ObjectFacetedSearch>
   );
 };
 
