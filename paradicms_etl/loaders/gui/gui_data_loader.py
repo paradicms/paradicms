@@ -4,6 +4,7 @@ import stringcase
 
 from paradicms_etl.loaders.json_directory_loader import JsonDirectoryLoader
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.gui_metadata import GuiMetadata
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.property_definition import PropertyDefinition
@@ -17,7 +18,13 @@ class GuiDataLoader(JsonDirectoryLoader):
         JsonDirectoryLoader._flush(self, *args, **kwds)
 
         # The GUI builders depend on certain files existing.
-        for model_class in (Collection, Image, Institution, PropertyDefinition):
+        for model_class in (
+            Collection,
+            GuiMetadata,
+            Image,
+            Institution,
+            PropertyDefinition,
+        ):
             file_path = self._loaded_data_dir_path / (
                 stringcase.camelcase(model_class.__name__) + ".json"
             )
