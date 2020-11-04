@@ -15,7 +15,7 @@ import {Footer, NavbarSearchForm} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {Collection, GuiMetadata, Institution, Object} from "@paradicms/models";
-import {useState} from "react";
+import {useRouter} from "next/router";
 
 const useStyles = makeStyles(theme => ({
   brand: {
@@ -56,6 +56,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   onSearch: onSearchUserDefined,
 }) => {
   const classes = useStyles();
+  const router = useRouter();
 
   const breadcrumbNodes: React.ReactNode[] = [];
   if (breadcrumbs) {
@@ -124,21 +125,19 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
     }
   }
 
-  const [redirectToSearchText, setRedirectToSearchText] = useState<
-    string | null
-  >(null);
-
   // @ts-ignore
   let onSearch: (text: string) => void;
   if (onSearchUserDefined) {
     onSearch = onSearchUserDefined;
   } else {
-    onSearch = setRedirectToSearchText;
-    if (redirectToSearchText) {
-      window.location.href = Hrefs.search({
-        text: redirectToSearchText,
+    onSearch = (text: string) => {
+      const href = Hrefs.search({
+        text: text,
       }).href.toString();
-    }
+      console.info("redirecting to search href", href);
+      router.push(href);
+      return null;
+    };
   }
 
   let qualifiedDocumentTitle: string[] = [];
