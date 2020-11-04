@@ -25,7 +25,10 @@ class JsonDirectoryLoader(_BufferingLoader):
 
         json_objects_by_type = {}
         for model in models:
-            json_objects_by_type.setdefault(model.__class__.__name__, []).append(model)
+            assert model is not None
+            json_objects_by_type.setdefault(model.__class__.__name__, []).append(
+                model_to_json_object(model)
+            )
 
         for class_name, json_objects in json_objects_by_type.items():
             with open(
@@ -34,7 +37,7 @@ class JsonDirectoryLoader(_BufferingLoader):
                 newline="\n",
             ) as file_:
                 json.dump(
-                    tuple(json_objects),
+                    json_objects,
                     file_,
                     default=json_dump_default,
                 )
