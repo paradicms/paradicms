@@ -2,6 +2,7 @@ import fs from "fs";
 import * as path from "path";
 import {
   Collection,
+  GuiMetadata,
   Image,
   Institution,
   Object,
@@ -22,6 +23,11 @@ export class Data {
 
   static get collections(): readonly Collection[] {
     return Data.getModels<Collection>("collection");
+  }
+
+  static get guiMetadata(): GuiMetadata | null {
+    const models = Data.getModels<GuiMetadata>("guiMetadata");
+    return models.length > 0 ? models[0] : null;
   }
 
   static get images(): readonly Image[] {

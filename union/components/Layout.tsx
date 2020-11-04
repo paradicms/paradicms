@@ -14,7 +14,7 @@ import Helmet from "react-helmet";
 import {Footer, NavbarSearchForm} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
-import {Collection, Institution, Object} from "@paradicms/models";
+import {Collection, GuiMetadata, Institution, Object} from "@paradicms/models";
 import {useState} from "react";
 
 const useStyles = makeStyles(theme => ({
@@ -45,6 +45,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   cardTitle?: React.ReactNode;
   className?: string;
   documentTitle?: string;
+  guiMetadata: GuiMetadata | null;
   onSearch?: (text: string) => void;
 }>> = ({
   breadcrumbs,

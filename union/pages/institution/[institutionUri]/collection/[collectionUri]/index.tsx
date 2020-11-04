@@ -3,6 +3,7 @@ import {Layout} from "components/Layout";
 import {Grid, Typography} from "@material-ui/core";
 import {
   Collection,
+  GuiMetadata,
   Image,
   Images,
   Institution,
@@ -22,6 +23,7 @@ import {ObjectsGallery} from "components/ObjectsGallery";
 interface StaticProps {
   collection: Collection;
   collectionObjects: readonly Object[];
+  guiMetadata: GuiMetadata | null;
   institution: Institution;
   institutionImages: readonly Image[];
   propertyDefinitions: readonly PropertyDefinition[];
@@ -30,6 +32,7 @@ interface StaticProps {
 const CollectionPage: React.FunctionComponent<StaticProps> = ({
   collection,
   collectionObjects,
+  guiMetadata,
   institution,
   institutionImages,
   propertyDefinitions,
@@ -64,6 +67,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
         </span>
       }
       documentTitle={"Collection - " + collection.title}
+      guiMetadata={guiMetadata}
     >
       <Grid container direction="column" spacing={2}>
         <Grid item container>
@@ -154,6 +158,7 @@ export const getStaticProps: GetStaticProps = async ({
           objectCollectionUri => objectCollectionUri === collectionUri
         )
       ),
+      guiMetadata: Data.guiMetadata,
       institution: Data.institutions.find(
         institution => institution.uri === institutionUri
       )!,

@@ -7,6 +7,7 @@ import {
   Grid,
 } from "@material-ui/core";
 import {
+  GuiMetadata,
   Image,
   Institution,
   Object,
@@ -23,6 +24,7 @@ import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {GetStaticPaths, GetStaticProps} from "next";
 
 interface StaticProps {
+  guiMetadata: GuiMetadata | null;
   institution: Institution;
   object: Object;
   objectImages: readonly Image[];
@@ -30,6 +32,7 @@ interface StaticProps {
 }
 
 const ObjectPage: React.FunctionComponent<StaticProps> = ({
+  guiMetadata,
   institution,
   object,
   objectImages,
@@ -41,6 +44,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
     <Layout
       breadcrumbs={{institution, object}}
       documentTitle={"Object - " + object.title}
+      guiMetadata={guiMetadata}
     >
       <Grid container direction="column" spacing={2}>
         <Grid item>
@@ -109,6 +113,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
+      guiMetadata: Data.guiMetadata,
       institution: Data.institutions.find(
         institution => institution.uri === institutionUri
       )!,

@@ -4,6 +4,7 @@ import {Hrefs} from "lib/Hrefs";
 import {
   Collection,
   Collections,
+  GuiMetadata,
   Image,
   Images,
   Institution,
@@ -17,6 +18,7 @@ import {CollectionsGallery} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 
 interface StaticProps {
+  guiMetadata: GuiMetadata | null;
   institution: Institution;
   institutionCollections: readonly Collection[];
   institutionImages: readonly Image[];
@@ -24,6 +26,7 @@ interface StaticProps {
 }
 
 const InstitutionPage: React.FunctionComponent<StaticProps> = ({
+  guiMetadata,
   institution,
   institutionCollections,
   institutionImages,
@@ -45,6 +48,7 @@ const InstitutionPage: React.FunctionComponent<StaticProps> = ({
     <Layout
       breadcrumbs={{institution}}
       documentTitle={`${institution.name} - Collections`}
+      guiMetadata={guiMetadata}
     >
       <CollectionsGallery
         collections={joinedCollections}
@@ -79,6 +83,7 @@ export const getStaticProps: GetStaticProps = async ({
   const institutionUri = decodeFileName(params!.institutionUri as string);
   return {
     props: {
+      guiMetadata: Data.guiMetadata,
       institution: Data.institutions.find(
         institution => institution.uri === institutionUri
       )!,

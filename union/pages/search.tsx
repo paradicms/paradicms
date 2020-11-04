@@ -2,6 +2,7 @@ import {NumberParam, useQueryParams} from "use-query-params";
 import {JsonQueryParamConfig} from "@paradicms/base";
 import {
   Collection,
+  GuiMetadata,
   Image,
   Images,
   Institution,
@@ -24,13 +25,23 @@ import {GetStaticProps} from "next";
 const LIMIT_DEFAULT = 10;
 const OFFSET_DEFAULT = 0;
 
-const SearchPage: React.FunctionComponent<{
+interface StaticProps {
   collections: readonly Collection[];
+  guiMetadata: GuiMetadata | null;
   images: readonly Image[];
   institutions: readonly Institution[];
   objects: readonly ObjectModel[];
   propertyDefinitions: readonly PropertyDefinition[];
-}> = ({collections, images, institutions, objects, propertyDefinitions}) => {
+}
+
+const SearchPage: React.FunctionComponent<StaticProps> = ({
+  collections,
+  guiMetadata,
+  images,
+  institutions,
+  objects,
+  propertyDefinitions,
+}) => {
   // @ts-ignore
   const [queryParams, setQueryParams] = useQueryParams({
     limit: NumberParam,
@@ -128,6 +139,7 @@ const SearchPage: React.FunctionComponent<{
       documentTitle={
         query.text ? `Search results for "${query.text}"` : "Search results"
       }
+      guiMetadata={guiMetadata}
       onSearch={text =>
         setQueryParams(Object.assign({}, queryParams, {query: {text}}))
       }
@@ -162,10 +174,13 @@ const SearchPage: React.FunctionComponent<{
 
 export default SearchPage;
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async (): Promise<{
+  props: StaticProps;
+}> => {
   return {
     props: {
       collections: Data.collections,
+      guiMetadata: Data.guiMetadata,
       images: Data.images,
       institutions: Data.institutions,
       objects: Data.objects,
