@@ -18,6 +18,7 @@ from paradicms_etl.namespace import CMS
 class Image(_Image):
     depicts_uri: URIRef  # Collection, institution, or object
     institution_uri: URIRef  # So images can be grouped by institution
+    copyable: bool = True  # Can this image be copied from its source (for GUI building), or does it have to be hot linked in order to use it?
     rights: Optional[Rights] = None
 
     @classmethod
@@ -27,6 +28,7 @@ class Image(_Image):
         depicts_uri: URIRef,
         institution_uri: URIRef,
         uri: URIRef,
+        copyable: bool = True,
         created: Optional[datetime] = None,
         exact_dimensions: Optional[ImageDimensions] = None,
         format: Optional[str] = None,
@@ -42,6 +44,7 @@ class Image(_Image):
         Optional fields with default values aren't allowed before required fields in MRO.
         """
         return cls(
+            copyable=copyable,
             created=created,
             depicts_uri=depicts_uri,
             exact_dimensions=exact_dimensions,
