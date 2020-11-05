@@ -11,6 +11,7 @@ from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definition import PropertyDefinition
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespace import CMS
+from paradicms_etl.utils.rdf_utils import properties_to_rdf
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
@@ -35,7 +36,8 @@ class Object(_NamedModel):
 
         for collection_uri in self.collection_uris:
             graph.add((collection_uri, CMS.object, self.uri))
-        self._properties_to_rdf(
+        properties_to_rdf(
+            properties=self.properties,
             property_definitions=property_definitions,
             resource=resource,
         )

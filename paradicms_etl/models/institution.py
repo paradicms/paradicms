@@ -11,6 +11,7 @@ from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definition import PropertyDefinition
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespace import CMS
+from paradicms_etl.utils.rdf_utils import properties_to_rdf
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
@@ -30,8 +31,10 @@ class Institution(_NamedModel):
         )
         resource.add(RDF.type, CMS[self.__class__.__name__])
         resource.add(FOAF.name, Literal(self.name))
-        self._properties_to_rdf(
-            property_definitions=property_definitions, resource=resource
+        properties_to_rdf(
+            properties=self.properties,
+            property_definitions=property_definitions,
+            resource=resource,
         )
         if self.rights is not None:
             self.rights.to_rdf(add_to_resource=resource)
