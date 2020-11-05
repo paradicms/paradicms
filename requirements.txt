@@ -1,8 +1,8 @@
 atomicwrites==1.4.0
 attrs==20.2.0
-boto3==1.15.11
-boto3-stubs==1.15.11.0
-botocore==1.18.11
+boto3==1.16.11
+boto3-stubs==1.16.11.0
+botocore==1.19.11
 certifi==2019.11.28
 chardet==3.0.4
 colorama==0.4.3
@@ -15,6 +15,9 @@ isodate==0.6.0
 jmespath==0.10.0
 marshmallow==3.7.0
 marshmallow-enum==1.5.1
+mypy-boto3-cloudfront==1.16.11.0
+mypy-boto3-route53==1.16.11.0
+mypy-boto3-s3==1.16.11.0
 mypy-extensions==0.4.3
 packaging==20.4
 pathvalidate==0.29.0
