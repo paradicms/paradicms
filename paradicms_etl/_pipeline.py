@@ -122,10 +122,7 @@ class _Pipeline(ABC):
 
         pipeline_kwds = args.copy()
         for key in ("force", "force_extract", "logging_level"):
-            try:
-                pipeline_kwds.pop(key)
-            except KeyError:
-                pass
+            pipeline_kwds.pop(key, None)
         data_dir_path = pipeline_kwds.get("data_dir_path")
         if data_dir_path is not None:
             pipeline_kwds["data_dir_path"] = Path(data_dir_path)
