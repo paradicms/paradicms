@@ -17,7 +17,7 @@ import Link from "next/link";
 import {NumberParam, useQueryParam} from "use-query-params";
 import {ObjectFacetsContainer} from "components/ObjectFacetsContainer";
 import {JsonQueryParamConfig} from "@paradicms/base";
-import {ObjectFacetedSearch} from "@paradicms/lunr";
+import {ObjectFacetedSearchQuery} from "@paradicms/lunr";
 import {ObjectFiltersBadges} from "components/ObjectFiltersBadges";
 
 interface StaticProps {
