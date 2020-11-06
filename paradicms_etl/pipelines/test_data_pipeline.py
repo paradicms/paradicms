@@ -324,7 +324,7 @@ class TestDataPipeline(_Pipeline):
                         pipeline_id=self.__ID,
                         loaded_data_dir_path=root_dir_path
                         / "integration"
-                        / "union"
+                        / "material-ui-union"
                         / "cypress"
                         / "fixtures",
                     ),

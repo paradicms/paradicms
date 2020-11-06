@@ -9,7 +9,7 @@ from paradicms_etl.loaders.gui.gui_loader import GuiLoader
 from paradicms_etl.models._image import _Image
 
 
-@pytest.mark.parametrize("gui", [("union")])
+@pytest.mark.parametrize("gui", [("bootstrap-collection", "material-ui-union")])
 def test_load(gui: str, test_data_models: Tuple[_Model, ...], tmp_path):
     gui_dir_path = (
         Path(__file__).parent.parent.parent.parent.parent.parent / "gui" / gui

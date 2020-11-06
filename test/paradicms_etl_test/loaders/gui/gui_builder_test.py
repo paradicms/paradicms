@@ -5,7 +5,7 @@ from paradicms_etl._model import _Model
 from paradicms_etl.loaders.gui.gui_builder import GuiBuilder
 from paradicms_etl.loaders.gui.gui_data_loader import GuiDataLoader
 
-GUI = "union"
+GUI = "material-ui-union"
 
 
 # def test_clean():
