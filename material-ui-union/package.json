@@ -1,6 +1,6 @@
 {
-  "name": "union",
-  "description": "Next.js-based union catalog GUI for paradicms",
+  "name": "material-ui-union",
+  "description": "Material UI+Next.js-based union catalog GUI for paradicms",
   "version": "1.0.0",
   "private": true,
   "author": "Minor Gordon",
