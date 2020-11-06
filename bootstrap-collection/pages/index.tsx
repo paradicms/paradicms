@@ -47,7 +47,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   const page = pageQueryParam ?? 0;
 
   return (
-    <ObjectFacetedSearch
+    <ObjectFacetedSearchQuery
       collections={[collection]}
       images={images}
       institutions={[institution]}
@@ -133,7 +133,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
           </Container>
         </Layout>
       )}
-    </ObjectFacetedSearch>
+    </ObjectFacetedSearchQuery>
   );
 };
 
