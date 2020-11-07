@@ -93,7 +93,7 @@ class _PastPerfectTransformer(_Transformer):
                     )
                     continue
 
-                full_size_image = Image(
+                full_size_image = Image.create(
                     depicts_uri=object_.uri,
                     institution_uri=institution.uri,
                     uri=URIRef(database_image.full_size_url),
