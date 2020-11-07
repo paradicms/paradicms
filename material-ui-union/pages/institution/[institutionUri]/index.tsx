@@ -71,7 +71,7 @@ export default InstitutionPage;
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     fallback: false,
-    paths: Data.institutions.map(institution => ({
+    paths: new Data().institutions.map(institution => ({
       params: {institutionUri: encodeFileName(institution.uri)},
     })),
   };
@@ -80,20 +80,21 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
+  const data = new Data();
   const institutionUri = decodeFileName(params!.institutionUri as string);
   return {
     props: {
-      guiMetadata: Data.guiMetadata,
-      institution: Data.institutions.find(
+      guiMetadata: data.guiMetadata,
+      institution: data.institutions.find(
         institution => institution.uri === institutionUri
       )!,
-      institutionCollections: Data.collections.filter(
+      institutionCollections: data.collections.filter(
         collection => collection.institutionUri === institutionUri
       ),
-      institutionImages: Data.images.filter(
+      institutionImages: data.images.filter(
         image => image.institutionUri === institutionUri
       ),
-      institutionObjects: Data.objects.filter(
+      institutionObjects: data.objects.filter(
         object => object.institutionUri === institutionUri
       ),
     },

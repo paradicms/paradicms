@@ -85,9 +85,10 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
 export default ObjectPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const data = new Data();
   const paths: {params: {institutionUri: string; objectUri: string}}[] = [];
-  for (const institution of Data.institutions) {
-    for (const object of Data.objects.filter(
+  for (const institution of data.institutions) {
+    for (const object of data.objects.filter(
       object => object.institutionUri === institution.uri
     )) {
       paths.push({
@@ -108,18 +109,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
+  const data = new Data();
   const institutionUri = decodeFileName(params!.institutionUri as string);
   const objectUri = decodeFileName(params!.objectUri as string);
 
   return {
     props: {
-      guiMetadata: Data.guiMetadata,
-      institution: Data.institutions.find(
+      guiMetadata: data.guiMetadata,
+      institution: data.institutions.find(
         institution => institution.uri === institutionUri
       )!,
-      object: Data.objects.find(object => object.uri === objectUri)!,
-      objectImages: Data.images.filter(image => image.depictsUri === objectUri),
-      propertyDefinitions: Data.propertyDefinitions,
+      object: data.objects.find(object => object.uri === objectUri)!,
+      objectImages: data.images.filter(image => image.depictsUri === objectUri),
+      propertyDefinitions: data.propertyDefinitions,
     },
   };
 };

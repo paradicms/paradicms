@@ -86,9 +86,10 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
 export default CollectionPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const data = new Data();
   const paths: {params: {collectionUri: string; institutionUri: string}}[] = [];
-  for (const institution of Data.institutions) {
-    for (const collection of Data.collections.filter(
+  for (const institution of data.institutions) {
+    for (const collection of data.collections.filter(
       collection => collection.institutionUri == institution.uri
     )) {
       paths.push({
@@ -112,24 +113,25 @@ export const getStaticProps: GetStaticProps = async ({
   const collectionUri = decodeFileName(params!.collectionUri as string);
   const institutionUri = decodeFileName(params!.institutionUri as string);
 
+  const data = new Data();
   return {
     props: {
-      collection: Data.collections.find(
+      collection: data.collections.find(
         collection => collection.uri === collectionUri
       )!,
-      collectionObjects: Data.objects.filter(object =>
+      collectionObjects: data.objects.filter(object =>
         object.collectionUris.some(
           objectCollectionUri => objectCollectionUri === collectionUri
         )
       ),
-      guiMetadata: Data.guiMetadata,
-      institution: Data.institutions.find(
+      guiMetadata: data.guiMetadata,
+      institution: data.institutions.find(
         institution => institution.uri === institutionUri
       )!,
-      institutionImages: Data.images.filter(
+      institutionImages: data.images.filter(
         image => image.institutionUri === institutionUri
       ),
-      propertyDefinitions: Data.propertyDefinitions,
+      propertyDefinitions: data.propertyDefinitions,
     },
   };
 };

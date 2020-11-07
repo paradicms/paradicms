@@ -51,11 +51,12 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
+  const data = new Data();
   return {
     props: {
-      guiMetadata: Data.guiMetadata,
-      images: Data.images,
-      institutions: Data.institutions,
+      guiMetadata: data.guiMetadata,
+      images: data.images,
+      institutions: data.institutions,
     },
   };
 };

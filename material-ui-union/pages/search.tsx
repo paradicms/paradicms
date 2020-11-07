@@ -92,14 +92,15 @@ export default SearchPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
+  const data = new Data();
   return {
     props: {
-      collections: Data.collections,
-      guiMetadata: Data.guiMetadata,
-      images: Data.images,
-      institutions: Data.institutions,
-      objects: Data.objects,
-      propertyDefinitions: Data.propertyDefinitions,
+      collections: data.collections,
+      guiMetadata: data.guiMetadata,
+      images: data.images,
+      institutions: data.institutions,
+      objects: data.objects,
+      propertyDefinitions: data.propertyDefinitions,
     },
   };
 };
