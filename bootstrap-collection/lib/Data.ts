@@ -1,6 +1,7 @@
 import fs from "fs";
 import * as path from "path";
 import {
+  AbstractData,
   Collection,
   Image,
   Institution,
@@ -8,30 +9,40 @@ import {
   PropertyDefinition,
 } from "@paradicms/models";
 
-export class Data {
+class AllData extends AbstractData {
   constructor() {
+    super();
     let dataDirectoryPath: string | undefined = process.env.DATA_DIRECTORY_PATH;
     if (!dataDirectoryPath) {
       throw new EvalError("must specify a data directory path");
     }
-    // console.info("using data directory ", dataDirectoryPath);
+    this.dataDirectoryPath = dataDirectoryPath;
+  }
 
-    const institutions = Data.getModels<Institution>(
-      dataDirectoryPath,
-      "institution"
-    );
+  models<ModelT>(fileBaseName: string): readonly ModelT[] {
+    const filePath = path.join(this.dataDirectoryPath, fileBaseName + ".json");
+    const fileContents = fs.readFileSync(filePath, "utf8");
+    return JSON.parse(fileContents);
+  }
+
+  private readonly dataDirectoryPath: string;
+}
+
+export class Data {
+  constructor() {
+    const allData = new AllData();
+
+    const institutions = allData.institutions;
     if (institutions.length === 0) {
       throw new EvalError("no institutions");
     }
     // Ignore all but the first institution
+
     // In production there should only be one institution.
     // The test data has more than one institution.
     this.institution = institutions[0];
 
-    const collections = Data.getModels<Collection>(
-      dataDirectoryPath,
-      "collection"
-    );
+    const collections = allData.collections;
     // Ignore all but the first collection. See above.
     const collection = collections.find(
       collection => collection.institutionUri === this.institution.uri
@@ -43,10 +54,7 @@ export class Data {
     }
     this.collection = collection;
 
-    this.objects = Data.getModels<Object>(
-      dataDirectoryPath,
-      "object"
-    ).filter(object =>
+    this.objects = allData.objects.filter(object =>
       object.collectionUris.some(
         collectionUri => collectionUri === this.collection.uri
       )
@@ -56,15 +64,11 @@ export class Data {
     }
 
     const objectUris = new Set<string>(this.objects.map(object => object.uri));
-    this.images = Data.getModels<Image>(
-      dataDirectoryPath,
-      "image"
-    ).filter(image => objectUris.has(image.depictsUri));
-
-    this.propertyDefinitions = Data.getModels<PropertyDefinition>(
-      dataDirectoryPath,
-      "propertyDefinition"
+    this.images = allData.images.filter(image =>
+      objectUris.has(image.depictsUri)
     );
+
+    this.propertyDefinitions = allData.propertyDefinitions;
   }
 
   readonly collection: Collection;
@@ -72,13 +76,4 @@ export class Data {
   readonly institution: Institution;
   readonly objects: readonly Object[];
   readonly propertyDefinitions: readonly PropertyDefinition[];
-
-  private static getModels<ModelT>(
-    dataDirectoryPath: string,
-    fileBaseName: string
-  ): readonly ModelT[] {
-    const filePath = path.join(dataDirectoryPath, fileBaseName + ".json");
-    const fileContents = fs.readFileSync(filePath, "utf8");
-    return JSON.parse(fileContents);
-  }
 }
