@@ -73,11 +73,34 @@ class FileCache:
             sleep(self.__sleep_s_after_download)
 
         content_type = headers_dict["Content-Type"]
-        cached_file_ext = mimetypes.guess_extension(content_type, strict=False)
-        if cached_file_ext is None:
-            raise ValueError(
-                f"unable to guess file extension from Content-Type {content_type}"
+        cached_file_ext = None
+        if content_type:
+            cached_file_ext = mimetypes.guess_extension(content_type, strict=False)
+            self.__logger.debug(
+                "guessed file extension %s from Content-Type %s",
+                cached_file_ext,
+                content_type,
             )
+        else:
+            self.__logger.debug("%s returned an empty Content-Type", file_url)
+
+        if cached_file_ext is None:
+            guessed_mime_type, _ = mimetypes.guess_type(file_url, strict=False)
+            if guessed_mime_type is not None:
+                self.__logger.debug(
+                    "guessed MIME type %s from file URL %s", guessed_mime_type, file_url
+                )
+                cached_file_ext = mimetypes.guess_extension(
+                    guessed_mime_type, strict=False
+                )
+                self.__logger.debug(
+                    "guessed file extension %s from guessed MIME type %s",
+                    cached_file_ext,
+                    guessed_mime_type,
+                )
+
+        if cached_file_ext is None:
+            raise ValueError(f"unable to guess file extension for {file_url}")
 
         self.__logger.debug(
             "%s content type = %s, file extension = %s",
