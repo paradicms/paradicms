@@ -78,8 +78,9 @@ class _Pipeline(ABC):
 
     @classmethod
     def _add_institution_arguments(cls, arg_parser: ArgParser) -> None:
+        arg_parser.add_argument("--institution-image-uri")
         arg_parser.add_argument("--institution-name", required=True)
-        arg_parser.add_argument("--institution-rights", required=True)
+        arg_parser.add_argument("--institution-rights")
         arg_parser.add_argument("--institution-uri", required=True)
 
     def extract_transform(self, *, force_extract: bool = False):

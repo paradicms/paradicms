@@ -61,6 +61,12 @@ class _PastPerfectTransformer(_Transformer):
         institution = self._transform_institution_from_arguments(**self.__kwds)
         yield institution
 
+        institution_image = self._transform_institution_image_from_arguments(
+            **self.__kwds
+        )
+        if institution_image is not None:
+            yield institution_image
+
         collection = self._transform_collection_from_arguments(**self.__kwds)
         yield collection
 
