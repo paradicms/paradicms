@@ -20,25 +20,36 @@ import {Link} from "@paradicms/material-ui-next";
 
 interface StaticProps {
   guiMetadata: GuiMetadata | null;
-  imagesByDepictsUri: {[index: string]: readonly Image[]};
   institution: Institution;
-  objects: readonly Object[];
-  collections: readonly Collection[];
+  institutionCollectionImagesByDepictsUri: {[index: string]: readonly Image[]}; // No duplicate Images
+  institutionCollections: readonly Collection[];
+  institutionObjects: readonly Object[];
 }
 
 const InstitutionPage: React.FunctionComponent<StaticProps> = ({
-  collections,
   guiMetadata,
-  imagesByDepictsUri,
   institution,
-  objects,
+  institutionCollections,
+  institutionCollectionImagesByDepictsUri,
+  institutionObjects,
 }) => {
-  const joinedCollections = Collections.join({
-    collections,
-    imagesByDepictsUri,
-    institutionsByUri: Models.indexByUri([institution]),
-    objectsByCollectionUri: Objects.indexByCollectionUri(objects),
-  });
+  const joinedCollections = React.useMemo(
+    () =>
+      Collections.join({
+        collections: institutionCollections,
+        imagesByDepictsUri: institutionCollectionImagesByDepictsUri,
+        institutionsByUri: Models.indexByUri([institution]),
+        objectsByCollectionUri: Objects.indexByCollectionUri(
+          institutionObjects
+        ),
+      }),
+    [
+      institution,
+      institutionCollectionImagesByDepictsUri,
+      institutionCollections,
+      institutionObjects,
+    ]
+  );
 
   return (
     <Layout
@@ -79,21 +90,38 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const data = Data.instance;
   const institutionUri = decodeFileName(params!.institutionUri as string);
+
+  const institutionCollections =
+    data.collectionsByInstitutionUri[institutionUri] ?? [];
+
+  const institutionObjects = data.objectsByInstitutionUri[institutionUri] ?? [];
+
+  const institutionImagesByDepictsUri = Images.indexByDepictsUri(
+    data.imagesByInstitutionUri[institutionUri] ?? []
+  );
+
+  const institutionCollectionImages: Image[] = [];
+  for (const collection of institutionCollections) {
+    institutionCollectionImages.push(
+      ...Collections.selectCollectionImages({
+        collection,
+        imagesByDepictsUri: institutionImagesByDepictsUri,
+        objectsByCollectionUri: Objects.indexByCollectionUri(
+          institutionObjects
+        ),
+      })
+    );
+  }
+
   return {
     props: {
-      collections: data.collections.filter(
-        collection => collection.institutionUri === institutionUri
-      ),
       guiMetadata: data.guiMetadata,
-      images: data.images.filter(
-        image => image.institutionUri === institutionUri
+      institution: data.institutionByUri(institutionUri),
+      institutionCollectionImagesByDepictsUri: Images.indexByDepictsUri(
+        institutionCollectionImages
       ),
-      institution: data.institutions.find(
-        institution => institution.uri === institutionUri
-      )!,
-      objects: data.objects.filter(
-        object => object.institutionUri === institutionUri
-      ),
+      institutionCollections,
+      institutionObjects,
     },
   };
 };

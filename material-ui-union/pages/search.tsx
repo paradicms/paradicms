@@ -5,7 +5,7 @@ import {
   GuiMetadata,
   Image,
   Institution,
-  Object as ObjectModel,
+  Object,
   ObjectQuery,
   PropertyDefinition,
 } from "@paradicms/models";
@@ -22,7 +22,7 @@ interface StaticProps {
   guiMetadata: GuiMetadata | null;
   images: readonly Image[];
   institutions: readonly Institution[];
-  objects: readonly ObjectModel[];
+  objects: readonly Object[];
   propertyDefinitions: readonly PropertyDefinition[];
 }
 

@@ -23,19 +23,19 @@ import {Hrefs} from "lib/Hrefs";
 
 interface StaticProps {
   collection: Collection;
+  collectionImages: readonly Image[];
+  collectionObjects: readonly Object[];
   guiMetadata: GuiMetadata | null;
-  images: readonly Image[];
   institution: Institution;
-  objects: readonly Object[];
   propertyDefinitions: readonly PropertyDefinition[];
 }
 
 const CollectionPage: React.FunctionComponent<StaticProps> = ({
   collection,
+  collectionImages,
+  collectionObjects,
   guiMetadata,
-  images,
   institution,
-  objects,
   propertyDefinitions,
 }) => {
   const [filters, setFilters] = useQueryParam<ObjectFilters>(
@@ -63,9 +63,9 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
     >
       <ObjectFacetedSearchGrid
         collections={[collection]}
-        images={images}
+        images={collectionImages}
         institutions={[institution]}
-        objects={objects}
+        objects={collectionObjects}
         onChangeFilters={setFilters}
         onChangePage={setPage}
         page={page ?? 0}
@@ -116,17 +116,21 @@ export const getStaticProps: GetStaticProps = async ({
   const data = Data.instance;
   const collection = data.collectionByUri(collectionUri);
   const institution = data.institutionByUri(institutionUri);
-  const objects = data.objectsByCollectionUri[collectionUri] ?? [];
-  const objectUris = new Set<string>(objects.map(object => object.uri));
-  const images = data.images.filter(image => objectUris.has(image.depictsUri));
+  const collectionObjects = data.objectsByCollectionUri[collectionUri] ?? [];
+  const collectionObjectUris = new Set<string>(
+    collectionObjects.map(object => object.uri)
+  );
+  const collectionImages = (
+    data.imagesByInstitutionUri[institution.uri] ?? []
+  ).filter(image => collectionObjectUris.has(image.depictsUri));
 
   return {
     props: {
       collection,
+      collectionImages,
+      collectionObjects,
       guiMetadata: data.guiMetadata,
-      images,
       institution,
-      objects,
       propertyDefinitions: data.propertyDefinitions,
     },
   };
