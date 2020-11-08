@@ -23,19 +23,19 @@ import {Hrefs} from "lib/Hrefs";
 
 interface StaticProps {
   collection: Collection;
-  collectionObjects: readonly Object[];
   guiMetadata: GuiMetadata | null;
+  images: readonly Image[];
   institution: Institution;
-  institutionImages: readonly Image[];
+  objects: readonly Object[];
   propertyDefinitions: readonly PropertyDefinition[];
 }
 
 const CollectionPage: React.FunctionComponent<StaticProps> = ({
   collection,
-  collectionObjects,
   guiMetadata,
+  images,
   institution,
-  institutionImages,
+  objects,
   propertyDefinitions,
 }) => {
   const [filters, setFilters] = useQueryParam<ObjectFilters>(
@@ -63,9 +63,9 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
     >
       <ObjectFacetedSearchGrid
         collections={[collection]}
-        images={institutionImages}
+        images={images}
         institutions={[institution]}
-        objects={collectionObjects}
+        objects={objects}
         onChangeFilters={setFilters}
         onChangePage={setPage}
         page={page ?? 0}
@@ -114,23 +114,27 @@ export const getStaticProps: GetStaticProps = async ({
   const institutionUri = decodeFileName(params!.institutionUri as string);
 
   const data = new Data();
+  const collection = data.collections.find(
+    collection => collection.uri === collectionUri
+  )!;
+  const institution = data.institutions.find(
+    institution => institution.uri === institutionUri
+  )!;
+  const objects = data.objects.filter(object =>
+    object.collectionUris.some(
+      objectCollectionUri => objectCollectionUri === collectionUri
+    )
+  );
+  const objectUris = new Set<string>(objects.map(object => object.uri));
+  const images = data.images.filter(image => objectUris.has(image.depictsUri));
+
   return {
     props: {
-      collection: data.collections.find(
-        collection => collection.uri === collectionUri
-      )!,
-      collectionObjects: data.objects.filter(object =>
-        object.collectionUris.some(
-          objectCollectionUri => objectCollectionUri === collectionUri
-        )
-      ),
+      collection,
       guiMetadata: data.guiMetadata,
-      institution: data.institutions.find(
-        institution => institution.uri === institutionUri
-      )!,
-      institutionImages: data.images.filter(
-        image => image.institutionUri === institutionUri
-      ),
+      images,
+      institution,
+      objects,
       propertyDefinitions: data.propertyDefinitions,
     },
   };

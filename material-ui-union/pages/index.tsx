@@ -52,11 +52,17 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
   const data = new Data();
+  const institutions = data.institutions;
+  const institutionUris = new Set<string>(
+    institutions.map(institution => institution.uri)
+  );
   return {
     props: {
       guiMetadata: data.guiMetadata,
-      images: data.images,
-      institutions: data.institutions,
+      images: data.images.filter(image =>
+        institutionUris.has(image.depictsUri)
+      ),
+      institutions,
     },
   };
 };

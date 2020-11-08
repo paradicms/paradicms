@@ -8,6 +8,7 @@ import {
   Image,
   Images,
   Institution,
+  Models,
   Object,
   Objects,
 } from "@paradicms/models";
@@ -20,27 +21,24 @@ import {Link} from "@paradicms/material-ui-next";
 interface StaticProps {
   guiMetadata: GuiMetadata | null;
   institution: Institution;
-  institutionCollections: readonly Collection[];
-  institutionImages: readonly Image[];
-  institutionObjects: readonly Object[];
+  objects: readonly Object[];
+  collections: readonly Collection[];
+  images: readonly Image[];
 }
 
 const InstitutionPage: React.FunctionComponent<StaticProps> = ({
+  collections,
   guiMetadata,
+  images,
   institution,
-  institutionCollections,
-  institutionImages,
-  institutionObjects,
+  objects,
 }) => {
-  const institutionsByUri: {[index: string]: Institution} = {};
-  institutionsByUri[institution.uri] = institution;
-
   const joinedCollections = Collections.join({
-    collections: institutionCollections,
-    institutionsByUri,
-    imagesByDepictsUri: Images.indexByDepictsUri(institutionImages),
+    collections,
+    institutionsByUri: Models.indexByUri([institution]),
+    imagesByDepictsUri: Images.indexByDepictsUri(images),
     objectsByCollectionUri: Objects.indexByCollectionUri({
-      objects: institutionObjects,
+      objects: objects,
     }),
   });
 
@@ -84,17 +82,17 @@ export const getStaticProps: GetStaticProps = async ({
   const institutionUri = decodeFileName(params!.institutionUri as string);
   return {
     props: {
+      collections: data.collections.filter(
+        collection => collection.institutionUri === institutionUri
+      ),
       guiMetadata: data.guiMetadata,
+      images: data.images.filter(
+        image => image.institutionUri === institutionUri
+      ),
       institution: data.institutions.find(
         institution => institution.uri === institutionUri
       )!,
-      institutionCollections: data.collections.filter(
-        collection => collection.institutionUri === institutionUri
-      ),
-      institutionImages: data.images.filter(
-        image => image.institutionUri === institutionUri
-      ),
-      institutionObjects: data.objects.filter(
+      objects: data.objects.filter(
         object => object.institutionUri === institutionUri
       ),
     },
