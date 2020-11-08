@@ -20,26 +20,24 @@ import {Link} from "@paradicms/material-ui-next";
 
 interface StaticProps {
   guiMetadata: GuiMetadata | null;
+  imagesByDepictsUri: {[index: string]: readonly Image[]};
   institution: Institution;
   objects: readonly Object[];
   collections: readonly Collection[];
-  images: readonly Image[];
 }
 
 const InstitutionPage: React.FunctionComponent<StaticProps> = ({
   collections,
   guiMetadata,
-  images,
+  imagesByDepictsUri,
   institution,
   objects,
 }) => {
   const joinedCollections = Collections.join({
     collections,
+    imagesByDepictsUri,
     institutionsByUri: Models.indexByUri([institution]),
-    imagesByDepictsUri: Images.indexByDepictsUri(images),
-    objectsByCollectionUri: Objects.indexByCollectionUri({
-      objects: objects,
-    }),
+    objectsByCollectionUri: Objects.indexByCollectionUri(objects),
   });
 
   return (

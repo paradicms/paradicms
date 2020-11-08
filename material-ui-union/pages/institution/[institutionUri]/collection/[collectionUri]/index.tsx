@@ -89,9 +89,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const data = Data.instance;
   const paths: {params: {collectionUri: string; institutionUri: string}}[] = [];
   for (const institution of data.institutions) {
-    for (const collection of data.collections.filter(
-      collection => collection.institutionUri == institution.uri
-    )) {
+    for (const collection of data.collectionsByInstitutionUri[
+      institution.uri
+    ] ?? []) {
       paths.push({
         params: {
           collectionUri: encodeFileName(collection.uri),
@@ -114,17 +114,9 @@ export const getStaticProps: GetStaticProps = async ({
   const institutionUri = decodeFileName(params!.institutionUri as string);
 
   const data = Data.instance;
-  const collection = data.collections.find(
-    collection => collection.uri === collectionUri
-  )!;
-  const institution = data.institutions.find(
-    institution => institution.uri === institutionUri
-  )!;
-  const objects = data.objects.filter(object =>
-    object.collectionUris.some(
-      objectCollectionUri => objectCollectionUri === collectionUri
-    )
-  );
+  const collection = data.collectionByUri(collectionUri);
+  const institution = data.institutionByUri(institutionUri);
+  const objects = data.objectsByCollectionUri[collectionUri] ?? [];
   const objectUris = new Set<string>(objects.map(object => object.uri));
   const images = data.images.filter(image => objectUris.has(image.depictsUri));
 
