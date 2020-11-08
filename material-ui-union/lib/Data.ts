@@ -13,10 +13,20 @@ export class Data extends AbstractData {
   }
 
   private static readonly dataDirectoryPath = Data.findDataDirectory();
+  // private static instanceCount = 0;
+  static readonly instance = new Data();
 
-  protected models<ModelT>(fileBaseName: string): readonly ModelT[] {
+  private constructor() {
+    super();
+    // Data.instanceCount++;
+    // console.info("Data instance:", Data.instanceCount);
+  }
+
+  protected readModels<ModelT>(fileBaseName: string): readonly ModelT[] {
     const filePath = path.join(Data.dataDirectoryPath, fileBaseName + ".json");
     const fileContents = fs.readFileSync(filePath, "utf8");
-    return JSON.parse(fileContents);
+    const models: ModelT[] = JSON.parse(fileContents);
+    // console.info("read", models.length, "models from", filePath);
+    return models;
   }
 }

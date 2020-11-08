@@ -85,7 +85,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
 export default ObjectPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const data = new Data();
+  const data = Data.instance;
   const paths: {params: {institutionUri: string; objectUri: string}}[] = [];
   for (const institution of data.institutions) {
     for (const object of data.objects.filter(
@@ -109,7 +109,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const data = new Data();
+  const data = Data.instance;
   const institutionUri = decodeFileName(params!.institutionUri as string);
   const objectUri = decodeFileName(params!.objectUri as string);
 

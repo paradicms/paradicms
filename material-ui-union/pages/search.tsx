@@ -92,7 +92,7 @@ export default SearchPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const data = new Data();
+  const data = Data.instance;
   return {
     props: {
       collections: data.collections,

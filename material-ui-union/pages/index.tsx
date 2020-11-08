@@ -51,7 +51,7 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const data = new Data();
+  const data = Data.instance;
   const institutions = data.institutions;
   const institutionUris = new Set<string>(
     institutions.map(institution => institution.uri)

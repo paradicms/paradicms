@@ -86,7 +86,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
 export default CollectionPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const data = new Data();
+  const data = Data.instance;
   const paths: {params: {collectionUri: string; institutionUri: string}}[] = [];
   for (const institution of data.institutions) {
     for (const collection of data.collections.filter(
@@ -113,7 +113,7 @@ export const getStaticProps: GetStaticProps = async ({
   const collectionUri = decodeFileName(params!.collectionUri as string);
   const institutionUri = decodeFileName(params!.institutionUri as string);
 
-  const data = new Data();
+  const data = Data.instance;
   const collection = data.collections.find(
     collection => collection.uri === collectionUri
   )!;

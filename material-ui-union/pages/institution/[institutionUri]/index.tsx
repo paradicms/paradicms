@@ -67,9 +67,10 @@ const InstitutionPage: React.FunctionComponent<StaticProps> = ({
 export default InstitutionPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const data = Data.instance;
   return {
     fallback: false,
-    paths: new Data().institutions.map(institution => ({
+    paths: data.institutions.map(institution => ({
       params: {institutionUri: encodeFileName(institution.uri)},
     })),
   };
@@ -78,7 +79,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const data = new Data();
+  const data = Data.instance;
   const institutionUri = decodeFileName(params!.institutionUri as string);
   return {
     props: {
