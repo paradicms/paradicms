@@ -15,19 +15,23 @@ import {InstitutionsGallery} from "@paradicms/material-ui";
 
 interface StaticProps {
   guiMetadata: GuiMetadata | null;
-  images: readonly Image[];
+  imagesByDepictsUri: {[index: string]: readonly Image[]};
   institutions: readonly Institution[];
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   guiMetadata,
-  images,
+  imagesByDepictsUri,
   institutions,
 }) => {
-  const joinedInstitutions = Institutions.join({
-    institutions,
-    imagesByDepictsUri: Images.indexByDepictsUri(images),
-  });
+  const joinedInstitutions = React.useMemo(
+    () =>
+      Institutions.join({
+        institutions,
+        imagesByDepictsUri,
+      }),
+    [institutions, imagesByDepictsUri]
+  );
 
   return (
     <Layout documentTitle="Institutions" guiMetadata={guiMetadata}>
@@ -59,8 +63,8 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   return {
     props: {
       guiMetadata: data.guiMetadata,
-      images: data.images.filter(image =>
-        institutionUris.has(image.depictsUri)
+      imagesByDepictsUri: Images.indexByDepictsUri(
+        data.images.filter(image => institutionUris.has(image.depictsUri))
       ),
       institutions,
     },

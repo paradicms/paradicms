@@ -89,13 +89,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const data = Data.instance;
   const paths: {params: {collectionUri: string; institutionUri: string}}[] = [];
   for (const institution of data.institutions) {
+    const encodedInstitutionUri = encodeFileName(institution.uri);
     for (const collection of data.collectionsByInstitutionUri[
       institution.uri
     ] ?? []) {
       paths.push({
         params: {
           collectionUri: encodeFileName(collection.uri),
-          institutionUri: encodeFileName(institution.uri),
+          institutionUri: encodedInstitutionUri,
         },
       });
     }
