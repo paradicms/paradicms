@@ -10,6 +10,7 @@ import {
   Collection,
   GuiMetadata,
   Image,
+  Images,
   Institution,
   Object,
   ObjectFilters,
@@ -17,7 +18,10 @@ import {
 } from "@paradicms/models";
 import {Data} from "lib/Data";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {ObjectFacetedSearchGrid} from "@paradicms/material-ui";
+import {
+  ObjectFacetedSearchGrid,
+  THUMBNAIL_TARGET_DIMENSIONS,
+} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 
@@ -38,6 +42,10 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
   institution,
   propertyDefinitions,
 }) => {
+  // if (typeof window === "undefined") {
+  //   return null; // Don't render on the server
+  // }
+
   const [filters, setFilters] = useQueryParam<ObjectFilters>(
     "filters",
     new JsonQueryParamConfig<ObjectFilters>()
@@ -118,17 +126,27 @@ export const getStaticProps: GetStaticProps = async ({
   const collection = data.collectionByUri(collectionUri);
   const institution = data.institutionByUri(institutionUri);
   const collectionObjects = data.objectsByCollectionUri[collectionUri] ?? [];
-  const collectionObjectUris = new Set<string>(
-    collectionObjects.map(object => object.uri)
-  );
-  const collectionImages = (
-    data.imagesByInstitutionUri[institution.uri] ?? []
-  ).filter(image => collectionObjectUris.has(image.depictsUri));
+
+  const collectionObjectThumbnails: Image[] = [];
+  for (const object of collectionObjects) {
+    const objectImages = data.imagesByDepictsUri[object.uri];
+    if (!objectImages) {
+      continue;
+    }
+    const objectThumbnail = Images.selectThumbnail({
+      images: objectImages,
+      targetDimensions: THUMBNAIL_TARGET_DIMENSIONS,
+    });
+    if (!objectThumbnail) {
+      continue;
+    }
+    collectionObjectThumbnails.push(objectThumbnail);
+  }
 
   return {
     props: {
       collection,
-      collectionImages,
+      collectionImages: collectionObjectThumbnails,
       collectionObjects,
       guiMetadata: data.guiMetadata,
       institution,

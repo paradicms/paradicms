@@ -4,6 +4,7 @@ import {
   Collection,
   GuiMetadata,
   Image,
+  Images,
   Institution,
   Object,
   ObjectQuery,
@@ -13,7 +14,10 @@ import * as React from "react";
 import {Layout} from "components/Layout";
 import {Data} from "lib/Data";
 import {GetStaticProps} from "next";
-import {ObjectFacetedSearchGrid} from "@paradicms/material-ui";
+import {
+  ObjectFacetedSearchGrid,
+  THUMBNAIL_TARGET_DIMENSIONS,
+} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 
@@ -34,6 +38,10 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
   objects,
   propertyDefinitions,
 }) => {
+  // if (typeof window === "undefined") {
+  //   return null; // Don't render on the server
+  // }
+
   const [page, setPage] = useQueryParam<number | null | undefined>(
     "page",
     NumberParam
@@ -93,11 +101,28 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
   const data = Data.instance;
+
+  const objectThumbnails: Image[] = [];
+  for (const object of data.objects) {
+    const objectImages = data.imagesByDepictsUri[object.uri];
+    if (!objectImages) {
+      continue;
+    }
+    const objectThumbnail = Images.selectThumbnail({
+      images: objectImages,
+      targetDimensions: THUMBNAIL_TARGET_DIMENSIONS,
+    });
+    if (!objectThumbnail) {
+      continue;
+    }
+    objectThumbnails.push(objectThumbnail);
+  }
+
   return {
     props: {
       collections: data.collections,
       guiMetadata: data.guiMetadata,
-      images: data.images,
+      images: objectThumbnails,
       institutions: data.institutions,
       objects: data.objects,
       propertyDefinitions: data.propertyDefinitions,
