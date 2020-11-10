@@ -10,22 +10,28 @@ import {
 } from "@paradicms/models";
 
 class AllData extends AbstractData {
-  constructor() {
-    super();
+  private static findDataDirectory(): string {
     let dataDirectoryPath: string | undefined = process.env.DATA_DIRECTORY_PATH;
     if (!dataDirectoryPath) {
       throw new EvalError("must specify a data directory path");
     }
-    this.dataDirectoryPath = dataDirectoryPath;
+    return dataDirectoryPath;
   }
 
-  models<ModelT>(fileBaseName: string): readonly ModelT[] {
-    const filePath = path.join(this.dataDirectoryPath, fileBaseName + ".json");
+  private static readonly dataDirectoryPath = AllData.findDataDirectory();
+
+  constructor() {
+    super();
+  }
+
+  readModels<ModelT>(fileBaseName: string): readonly ModelT[] {
+    const filePath = path.join(
+      AllData.dataDirectoryPath,
+      fileBaseName + ".json"
+    );
     const fileContents = fs.readFileSync(filePath, "utf8");
     return JSON.parse(fileContents);
   }
-
-  private readonly dataDirectoryPath: string;
 }
 
 export class Data {
