@@ -163,10 +163,12 @@ class _Pipeline(ABC):
     def __validate_transform(
         self, models: Generator[_Model, None, None]
     ) -> Generator[_Model, None, None]:
-        collection_uris = set()
+        collections_by_uri = {}
         image_depicts_uris = set()
-        institution_uris = set()
+        institutions_by_uri = {}
+        property_definitions_by_uri = {}
         model_uris = set()
+        objects_by_uri = {}
         referenced_collection_uris = set()
         referenced_institution_uris = set()
 
@@ -177,17 +179,39 @@ class _Pipeline(ABC):
                 raise ValueError(f"duplicate model URI: {model.uri}")
 
             if isinstance(model, Collection):
-                collection_uris.add(model.uri)
-                referenced_institution_uris.add(model.institution_uri)
+                collection = model
+                assert collection.uri not in collections_by_uri
+                collections_by_uri[collection.uri] = collection
+                referenced_institution_uris.add(collection.institution_uri)
             elif isinstance(model, Image):
-                image_depicts_uris.add(model.depicts_uri)
-                referenced_institution_uris.add(model.institution_uri)
+                image = model
+                image_depicts_uris.add(image.depicts_uri)
+                referenced_institution_uris.add(image.institution_uri)
             elif isinstance(model, Institution):
-                institution_uris.add(model.uri)
+                institution = model
+                assert institution.uri not in institutions_by_uri
+                institutions_by_uri[institution.uri] = institution
             elif isinstance(model, Object):
-                for collection_uri in model.collection_uris:
+                object_ = model
+                for collection_uri in object_.collection_uris:
                     referenced_collection_uris.add(collection_uri)
-                referenced_institution_uris.add(model.institution_uri)
+                referenced_institution_uris.add(object_.institution_uri)
+                assert object_.uri not in objects_by_uri
+                objects_by_uri[object_.uri] = object_
+            elif isinstance(model, PropertyDefinition):
+                property_definition = model
+                existing_property_definition = property_definitions_by_uri.get(
+                    property_definition.uri
+                )
+                if existing_property_definition is not None:
+                    if property_definition != existing_property_definition:
+                        raise ValueError(
+                            f"conflicting definition of property {property_definition.uri}: {property_definition} vs. {existing_property_definition}"
+                        )
+                else:
+                    property_definitions_by_uri[
+                        property_definition.uri
+                    ] = property_definition
 
             yield model
 
@@ -208,12 +232,12 @@ class _Pipeline(ABC):
 
         check_uri_references(
             referenced_uris=referenced_institution_uris,
-            universe_uris=institution_uris,
+            universe_uris=set(institutions_by_uri.keys()),
             uri_type="institution",
         )
         check_uri_references(
             referenced_uris=referenced_collection_uris,
-            universe_uris=collection_uris,
+            universe_uris=set(collections_by_uri.keys()),
             uri_type="collection",
         )
         # check_uri_references(
@@ -221,3 +245,22 @@ class _Pipeline(ABC):
         #     universe_uris=model_uris,
         #     uri_type="image depicts",
         # )
+
+        for models_by_uri in (collections_by_uri, institutions_by_uri, objects_by_uri):
+            for model in models_by_uri.values():
+                properties_set = set()
+                for property_ in model.properties:
+                    if property_ not in properties_set:
+                        properties_set.add(property_)
+                    else:
+                        raise ValueError(
+                            f"{model.uri} has duplicate property {property_.property_definition_uri}: {model.properties}"
+                        )
+
+                    if (
+                        property_.property_definition_uri
+                        not in property_definitions_by_uri
+                    ):
+                        raise ValueError(
+                            f"{model.uri} uses undefined property {property_.property_definition_uri}"
+                        )
