@@ -1,15 +1,21 @@
 import logging
 from abc import ABC
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, Generator, Optional, Set
 
 from configargparse import ArgParser
 from rdflib import URIRef
 
 from paradicms_etl._extractor import _Extractor
 from paradicms_etl._loader import _Loader
+from paradicms_etl._model import _Model
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.loaders.default_loader import DefaultLoader
+from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.image import Image
+from paradicms_etl.models.institution import Institution
+from paradicms_etl.models.object import Object
+from paradicms_etl.models.property_definition import PropertyDefinition
 
 
 class _Pipeline(ABC):
@@ -20,7 +26,7 @@ class _Pipeline(ABC):
         id: str,
         transformer: _Transformer,
         loader: Optional[_Loader] = None,
-        **kwds
+        **kwds,
     ):
         """
         Construct an extract-transform-load pipeline.
@@ -87,7 +93,7 @@ class _Pipeline(ABC):
         extract_kwds = self.extractor.extract(force=force_extract)
         if not extract_kwds:
             extract_kwds = {}
-        return self.transformer.transform(**extract_kwds)
+        return self.__validate_transform(self.transformer.transform(**extract_kwds))
 
     def extract_transform_load(self, *, force_extract: bool = False):
         models = self.extract_transform(force_extract=force_extract)
@@ -153,3 +159,65 @@ class _Pipeline(ABC):
     @property
     def uri(self) -> URIRef:
         return self.id_to_uri(self.id)
+
+    def __validate_transform(
+        self, models: Generator[_Model, None, None]
+    ) -> Generator[_Model, None, None]:
+        collection_uris = set()
+        image_depicts_uris = set()
+        institution_uris = set()
+        model_uris = set()
+        referenced_collection_uris = set()
+        referenced_institution_uris = set()
+
+        for model in models:
+            if model.uri not in model_uris:
+                model_uris.add(model.uri)
+            elif not isinstance(model, PropertyDefinition):
+                raise ValueError(f"duplicate model URI: {model.uri}")
+
+            if isinstance(model, Collection):
+                collection_uris.add(model.uri)
+                referenced_institution_uris.add(model.institution_uri)
+            elif isinstance(model, Image):
+                image_depicts_uris.add(model.depicts_uri)
+                referenced_institution_uris.add(model.institution_uri)
+            elif isinstance(model, Institution):
+                institution_uris.add(model.uri)
+            elif isinstance(model, Object):
+                for collection_uri in model.collection_uris:
+                    referenced_collection_uris.add(collection_uri)
+                referenced_institution_uris.add(model.institution_uri)
+
+            yield model
+
+        def check_uri_references(
+            *, referenced_uris: Set[URIRef], universe_uris: Set[URIRef], uri_type: str
+        ):
+            if universe_uris.intersection(referenced_uris) != len(universe_uris):
+                for referenced_uri in referenced_uris:
+                    if referenced_uri not in universe_uris:
+                        raise ValueError(
+                            f"dangling {uri_type} URI reference: {referenced_uri}"
+                        )
+                for universe_uri in universe_uris:
+                    if universe_uri not in referenced_uris:
+                        self.__logger.warning(
+                            f"unreferenced {uri_type} URI: %s", universe_uri
+                        )
+
+        check_uri_references(
+            referenced_uris=referenced_institution_uris,
+            universe_uris=institution_uris,
+            uri_type="institution",
+        )
+        check_uri_references(
+            referenced_uris=referenced_collection_uris,
+            universe_uris=collection_uris,
+            uri_type="collection",
+        )
+        # check_uri_references(
+        #     referenced_uris=image_depicts_uris,
+        #     universe_uris=model_uris,
+        #     uri_type="image depicts",
+        # )
