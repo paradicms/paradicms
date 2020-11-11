@@ -11,6 +11,7 @@ from paradicms_etl._loader import _Loader
 from paradicms_etl._model import _Model
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.loaders.default_loader import DefaultLoader
+from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
@@ -173,10 +174,11 @@ class _Pipeline(ABC):
         referenced_institution_uris = set()
 
         for model in models:
-            if model.uri not in model_uris:
-                model_uris.add(model.uri)
-            elif not isinstance(model, PropertyDefinition):
-                raise ValueError(f"duplicate model URI: {model.uri}")
+            if isinstance(model, _NamedModel):
+                if model.uri not in model_uris:
+                    model_uris.add(model.uri)
+                elif not isinstance(model, PropertyDefinition):
+                    raise ValueError(f"duplicate model URI: {model.uri}")
 
             if isinstance(model, Collection):
                 collection = model
