@@ -6,6 +6,7 @@ from paradicms_etl._loader import _Loader
 from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl.extractors.nop_extractor import NopExtractor
 from paradicms_etl.transformers.nop_transformer import NopTransformer
+from paradicms_etl.transformers.validation_transformer import ValidationTransformer
 
 
 class _CompositePipeline(_Pipeline):
@@ -63,8 +64,13 @@ class _CompositePipeline(_Pipeline):
         arg_parser.add_argument("--include-pipeline-id", action="append")
 
     def extract_transform_load(self, **kwds):
-        for pipeline in self.__pipelines:
-            self.loader.load(pipeline.extract_transform(**kwds))
+        def extract_transform():
+            for pipeline in self.__pipelines:
+                yield from pipeline.extract_transform(**kwds)
+
+        self.loader.load(ValidationTransformer(pipeline_id=self.id)).transform(
+            extract_transform()
+        )
         self.loader.flush()
 
     @property
