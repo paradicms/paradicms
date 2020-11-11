@@ -157,7 +157,7 @@ class OmekaClassicTransformer(_Transformer):
         #
         # The items JSON from the API has display name element identifiers instead of the Dublin Core URIs,
         # so we have to map back here.
-        properties = []
+        properties = set()
         for key, property_definition in (
             ("Alternative Title", PropertyDefinitions.ALTERNATIVE_TITLE),
             ("Contributor", PropertyDefinitions.CONTRIBUTOR),
@@ -188,7 +188,7 @@ class OmekaClassicTransformer(_Transformer):
             ("Type", PropertyDefinitions.TYPE),
         ):
             for value in dc_element_text_tree.pop(key, []):
-                properties.append(Property(property_definition, value))
+                properties.add(Property(property_definition, value))
 
         if dc_element_text_tree:
             self._logger.warn(
@@ -278,15 +278,15 @@ class OmekaClassicTransformer(_Transformer):
             return None
 
         item_element_text_tree = self._get_element_texts_as_tree(item)
-        properties = []
-        properties.extend(
-            self._transform_dublin_core_elements(
-                element_text_tree=item_element_text_tree
-            )
-        )
-        properties.extend(
-            self._transform_item_type_metadata(element_text_tree=item_element_text_tree)
-        )
+        properties = set()
+        for property_ in self._transform_dublin_core_elements(
+            element_text_tree=item_element_text_tree
+        ):
+            properties.add(property_)
+        for property_ in self._transform_item_type_metadata(
+            element_text_tree=item_element_text_tree
+        ):
+            properties.add(property_)
         properties = tuple(properties)
         self._log_unknown_element_texts(item_element_text_tree)
         title, properties = self._get_title(properties)
