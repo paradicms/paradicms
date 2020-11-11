@@ -61,8 +61,9 @@ const InstitutionPage: React.FunctionComponent<StaticProps> = ({
         collections={joinedCollections}
         renderCollectionLink={(collection, children) => (
           <Link
-            {...Hrefs.institution(institution.uri).collection(collection.uri)
-              .home}
+            href={
+              Hrefs.institution(institution.uri).collection(collection.uri).home
+            }
             data-cy={"collection-link-" + collection.uri}
           >
             {children}

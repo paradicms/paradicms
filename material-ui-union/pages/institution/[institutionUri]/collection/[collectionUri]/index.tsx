@@ -80,7 +80,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
         propertyDefinitions={propertyDefinitions}
         renderObjectLink={(object, children) => (
           <Link
-            {...Hrefs.institution(object.institution.uri).object(object.uri)}
+            href={Hrefs.institution(object.institution.uri).object(object.uri)}
           >
             {children}
           </Link>

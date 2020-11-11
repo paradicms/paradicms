@@ -61,21 +61,21 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   const breadcrumbNodes: React.ReactNode[] = [];
   if (breadcrumbs) {
     breadcrumbNodes.push(
-      <Link key="home" {...Hrefs.home}>
+      <Link href={Hrefs.home} key="home">
         Home
       </Link>
     );
     const {collection, institution, object} = breadcrumbs;
     if (institution) {
       breadcrumbNodes.push(
-        <Link key="institutions" {...Hrefs.home}>
+        <Link href={Hrefs.home} key="institutions">
           Institutions
         </Link>
       );
       breadcrumbNodes.push(
         <Link
+          href={Hrefs.institution(institution.uri).home}
           key={`institution-${institution.uri}`}
-          {...Hrefs.institution(institution.uri).home}
         >
           {institution.name}
         </Link>
@@ -83,15 +83,19 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
 
       if (collection) {
         breadcrumbNodes.push(
-          <Link key="collections" {...Hrefs.institution(institution.uri).home}>
+          <Link
+            href={Hrefs.institution(institution.uri).home}
+            key="collections"
+          >
             Collections
           </Link>
         );
         breadcrumbNodes.push(
           <Link
+            href={
+              Hrefs.institution(institution.uri).collection(collection.uri).home
+            }
             key={`collection-${collection.uri}`}
-            {...Hrefs.institution(institution.uri).collection(collection.uri)
-              .home}
           >
             {collection.title}
           </Link>
@@ -102,10 +106,10 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         if (collection) {
           breadcrumbNodes.push(
             <Link
-              key="objects"
-              {...Hrefs.institution(institution.uri)
+              href={Hrefs.institution(institution.uri)
                 .collection(collection.uri)
                 .objects()}
+              key="objects"
             >
               Objects
             </Link>
@@ -115,8 +119,8 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         }
         breadcrumbNodes.push(
           <Link
+            href={Hrefs.institution(institution.uri).object(object.uri)}
             key={`object-${object.uri}`}
-            {...Hrefs.institution(institution.uri).object(object.uri)}
           >
             {object.title}
           </Link>
@@ -133,7 +137,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
     onSearch = (text: string) => {
       const href = Hrefs.search({
         text: text,
-      }).href.toString();
+      });
       console.info("redirecting to search href", href);
       router.push(href);
       return null;
@@ -169,7 +173,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
                   {guiMetadata.navbarTitle}
                 </Typography>
               ) : null}
-              <Link className={classes.navLink} {...Hrefs.home}>
+              <Link className={classes.navLink} href={Hrefs.home}>
                 Home
               </Link>
               <NavbarSearchForm onSearch={onSearch} />

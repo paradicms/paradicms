@@ -1,36 +1,25 @@
-import {UrlObject} from "url";
 import {encodeFileName} from "@paradicms/base";
 import {ObjectQuery} from "@paradicms/models";
 import * as qs from "qs";
 
-interface Href {
-  // Adapted from Next's <Link> LinkProps
-  readonly as?: string | UrlObject;
-  readonly href: string | UrlObject;
-}
-
 export class Hrefs {
-  static collection(objectQuery?: ObjectQuery): Href {
-    return {
-      href:
-        "/" +
-        qs.stringify(
-          {query: JSON.stringify(objectQuery)},
-          {
-            addQueryPrefix: true,
-          }
-        ),
-    };
+  static collection(objectQuery?: ObjectQuery): string {
+    return (
+      "/" +
+      qs.stringify(
+        {query: JSON.stringify(objectQuery)},
+        {
+          addQueryPrefix: true,
+        }
+      )
+    );
   }
 
-  static get home(): Href {
+  static get home(): string {
     return Hrefs.collection();
   }
 
-  static object(objectUri: string): Href {
-    return {
-      href: `/object/[objectUri]/`,
-      as: `/object/${encodeFileName(objectUri)}/`,
-    };
+  static object(objectUri: string): string {
+    return `/object/${encodeFileName(objectUri)}/`;
   }
 }

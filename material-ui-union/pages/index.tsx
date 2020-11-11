@@ -39,7 +39,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
         institutions={joinedInstitutions}
         renderInstitutionLink={(institution, children) => (
           <Link
-            {...Hrefs.institution(institution.uri).home}
+            href={Hrefs.institution(institution.uri).home}
             data-cy={"institution-link-" + institution.uri}
           >
             {children}

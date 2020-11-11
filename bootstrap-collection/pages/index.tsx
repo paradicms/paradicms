@@ -105,7 +105,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
                     onChangePage={setPage}
                     page={page}
                     renderObjectLink={(object, children) => (
-                      <Link {...Hrefs.object(object.uri)}>
+                      <Link href={Hrefs.object(object.uri)}>
                         <a>{children}</a>
                       </Link>
                     )}

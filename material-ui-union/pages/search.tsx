@@ -80,11 +80,11 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
         onChangePage={setPage}
         propertyDefinitions={propertyDefinitions}
         renderInstitutionLink={(institution, children) => (
-          <Link {...Hrefs.institution(institution.uri).home}>{children}</Link>
+          <Link href={Hrefs.institution(institution.uri).home}>{children}</Link>
         )}
         renderObjectLink={(object, children) => (
           <Link
-            {...Hrefs.institution(object.institution.uri).object(object.uri)}
+            href={Hrefs.institution(object.institution.uri).object(object.uri)}
           >
             {children}
           </Link>
