@@ -17,43 +17,51 @@ export const ObjectFacetsContainer: React.FunctionComponent<{
 
   return (
     <Container fluid>
-      {(facets.properties ?? []).map(propertyFacet => (
-        <Row
-          className="facet"
-          data-cy={propertyFacet.definition.uri + "-facet"}
-          key={propertyFacet.definition.uri}
-        >
-          <Col xs={12}>
-            <Accordion title={propertyFacet.definition.label}>
-              <StringFacetForm
-                currentState={filtersState.getPropertyFilter(
-                  propertyFacet.definition.uri
-                )}
-                onChange={newState => {
-                  if (newState) {
-                    filtersState.setPropertyFilter({
-                      propertyDefinitionUri: propertyFacet.definition.uri,
-                      ...newState,
-                    });
-                  } else {
-                    filtersState.removePropertyFilter(
-                      propertyFacet.definition.uri
-                    );
-                  }
-                  onChange(filtersState.snapshot);
-                }}
-                valueUniverse={propertyFacet.values.reduce(
-                  (valueUniverse: {[index: string]: string}, value: string) => {
-                    valueUniverse[value] = value;
-                    return valueUniverse;
-                  },
-                  {}
-                )}
-              />
-            </Accordion>
-          </Col>
-        </Row>
-      ))}
+      {(facets.properties ?? [])
+        .concat()
+        .sort((left, right) =>
+          left.definition.label.localeCompare(right.definition.label)
+        )
+        .map(propertyFacet => (
+          <Row
+            className="facet"
+            data-cy={propertyFacet.definition.uri + "-facet"}
+            key={propertyFacet.definition.uri}
+          >
+            <Col xs={12}>
+              <Accordion title={propertyFacet.definition.label}>
+                <StringFacetForm
+                  currentState={filtersState.getPropertyFilter(
+                    propertyFacet.definition.uri
+                  )}
+                  onChange={newState => {
+                    if (newState) {
+                      filtersState.setPropertyFilter({
+                        propertyDefinitionUri: propertyFacet.definition.uri,
+                        ...newState,
+                      });
+                    } else {
+                      filtersState.removePropertyFilter(
+                        propertyFacet.definition.uri
+                      );
+                    }
+                    onChange(filtersState.snapshot);
+                  }}
+                  valueUniverse={propertyFacet.values.reduce(
+                    (
+                      valueUniverse: {[index: string]: string},
+                      value: string
+                    ) => {
+                      valueUniverse[value] = value;
+                      return valueUniverse;
+                    },
+                    {}
+                  )}
+                />
+              </Accordion>
+            </Col>
+          </Row>
+        ))}
     </Container>
   );
 };
