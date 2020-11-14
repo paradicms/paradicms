@@ -1,11 +1,15 @@
 import * as React from "react";
-import {StringFilter, StringFilterState} from "@paradicms/models";
-import {FormGroup, Input, ListGroup, ListGroupItem, Label} from "reactstrap";
+import {
+  StringFacetValue,
+  StringFilter,
+  StringFilterState,
+} from "@paradicms/models";
+import {FormGroup, Input, Label, ListGroup, ListGroupItem} from "reactstrap";
 
 export const StringFacetForm: React.FunctionComponent<{
   currentState?: StringFilter; // value id's only
   onChange: (newState?: StringFilter) => void;
-  valueUniverse: {[index: string]: string}; // valueId: value label
+  valueUniverse: readonly StringFacetValue[];
 }> = ({currentState, onChange, valueUniverse}) => {
   const state = new StringFilterState({
     filter: currentState,
@@ -14,37 +18,38 @@ export const StringFacetForm: React.FunctionComponent<{
 
   return (
     <ListGroup>
-      {Object.keys(valueUniverse).map(valueId => {
-        const valueLabel = valueUniverse[valueId];
+      {valueUniverse
+        .concat()
+        .sort((left, right) => right.count - left.count)
+        .map(value => {
+          const onChangeValue = (
+            e: React.ChangeEvent<HTMLInputElement>
+          ): void => {
+            const newChecked = e.target.checked;
+            if (newChecked) {
+              state.includeValue(value.value);
+            } else {
+              state.excludeValue(value.value);
+            }
+            onChange(state.snapshot);
+          };
 
-        const onChangeValue = (
-          e: React.ChangeEvent<HTMLInputElement>
-        ): void => {
-          const newChecked = e.target.checked;
-          if (newChecked) {
-            state.includeValue(valueId);
-          } else {
-            state.excludeValue(valueId);
-          }
-          onChange(state.snapshot);
-        };
-
-        return (
-          <ListGroupItem className="w-100" key={valueId}>
-            <FormGroup check>
-              <Label check>
-                <Input
-                  checked={state.includesValue(valueId)}
-                  data-cy={"facet-value-" + valueId}
-                  onChange={onChangeValue}
-                  type="checkbox"
-                />
-                {valueLabel}
-              </Label>
-            </FormGroup>
-          </ListGroupItem>
-        );
-      })}
+          return (
+            <ListGroupItem className="w-100" key={value.value}>
+              <FormGroup check>
+                <Label check>
+                  <Input
+                    checked={state.includesValue(value.value)}
+                    data-cy={"facet-value-" + value.value}
+                    onChange={onChangeValue}
+                    type="checkbox"
+                  />
+                  {value.label ?? value.value}&nbsp;({value.count})
+                </Label>
+              </FormGroup>
+            </ListGroupItem>
+          );
+        })}
     </ListGroup>
   );
 };
