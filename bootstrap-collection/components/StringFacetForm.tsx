@@ -4,7 +4,15 @@ import {
   StringFilter,
   StringFilterState,
 } from "@paradicms/models";
-import {FormGroup, Input, Label, ListGroup, ListGroupItem} from "reactstrap";
+import {
+  Button,
+  FormGroup,
+  Input,
+  Label,
+  ListGroup,
+  ListGroupItem,
+  ListGroupItemText,
+} from "reactstrap";
 
 export const StringFacetForm: React.FunctionComponent<{
   currentState?: StringFilter; // value id's only
@@ -13,11 +21,34 @@ export const StringFacetForm: React.FunctionComponent<{
 }> = ({currentState, onChange, valueUniverse}) => {
   const state = new StringFilterState({
     filter: currentState,
-    valueUniverse: Object.keys(valueUniverse),
+    valueUniverse: valueUniverse.map(value => value.value),
   });
 
   return (
     <ListGroup>
+      <ListGroupItem className="m-0 pr-0 w-100">
+        <Button
+          className="d-inline p-0"
+          color="link"
+          onClick={() => {
+            state.includeAll();
+            onChange(state.snapshot);
+          }}
+        >
+          Select
+        </Button>
+        &nbsp;/&nbsp;
+        <Button
+          className="d-inline p-0 pl-1"
+          color="link"
+          onClick={() => {
+            state.excludeAll();
+            onChange(state.snapshot);
+          }}
+        >
+          Deselect all
+        </Button>
+      </ListGroupItem>
       {valueUniverse
         .concat()
         .sort((left, right) => right.count - left.count)

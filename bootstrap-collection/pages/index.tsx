@@ -115,19 +115,17 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
                 )}
               </Col>
               <Col xs="2">
-                {objects.length > 0 ? (
-                  <ObjectFacetsContainer
-                    facets={objectFacets}
-                    filters={objectQuery?.filters ?? {}}
-                    onChange={newObjectFilters => {
-                      setObjectQueryParam({
-                        ...objectQuery,
-                        filters: newObjectFilters,
-                      });
-                      setPage(undefined);
-                    }}
-                  />
-                ) : null}
+                <ObjectFacetsContainer
+                  facets={objectFacets}
+                  filters={objectQuery?.filters ?? {}}
+                  onChange={newObjectFilters => {
+                    setObjectQueryParam({
+                      ...objectQuery,
+                      filters: newObjectFilters,
+                    });
+                    setPage(undefined);
+                  }}
+                />
               </Col>
             </Row>
           </Container>
