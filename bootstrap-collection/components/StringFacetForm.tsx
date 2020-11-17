@@ -11,7 +11,6 @@ import {
   Label,
   ListGroup,
   ListGroupItem,
-  ListGroupItemText,
 } from "reactstrap";
 
 export const StringFacetForm: React.FunctionComponent<{
