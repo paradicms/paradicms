@@ -1,4 +1,6 @@
 import {
+  Models,
+  ObjectFacets,
   ObjectFilters,
   ObjectFiltersState,
   PropertyDefinition,
@@ -7,23 +9,17 @@ import * as React from "react";
 import {Badge} from "reactstrap";
 
 export const ObjectFiltersBadges: React.FunctionComponent<{
-  objectFilters: ObjectFilters;
+  facets: ObjectFacets;
+  filters: ObjectFilters;
   propertyDefinitions: readonly PropertyDefinition[];
-}> = ({objectFilters, propertyDefinitions}) => {
-  const filtersState = new ObjectFiltersState(objectFilters);
+}> = ({facets, filters, propertyDefinitions}) => {
+  const filtersState = new ObjectFiltersState({facets, filters});
 
-  const propertyDefinitionsByUri = propertyDefinitions.reduce(
-    (propertyDefinitionsByUri, propertyDefinition) => {
-      propertyDefinitionsByUri[propertyDefinition.uri] = propertyDefinition;
-      return propertyDefinitionsByUri;
-    },
-    {} as {[index: string]: PropertyDefinition}
-  );
+  const propertyDefinitionsByUri = Models.indexByUri(propertyDefinitions);
 
   const filterBadges: React.ReactNodeArray = [];
-  filtersState
-    .getExcludedProperties()
-    .forEach((excludedProperty, excludedPropertyI) => {
+  filtersState.excludedProperties.forEach(
+    (excludedProperty, excludedPropertyI) => {
       filterBadges.push(
         <h5
           className="d-inline-block ml-2"
@@ -39,10 +35,10 @@ export const ObjectFiltersBadges: React.FunctionComponent<{
           </Badge>
         </h5>
       );
-    });
-  filtersState
-    .getIncludedProperties()
-    .forEach((includedProperty, includedPropertyI) => {
+    }
+  );
+  filtersState.includedProperties.forEach(
+    (includedProperty, includedPropertyI) => {
       filterBadges.push(
         <h5
           className="d-inline-block ml-2"
@@ -58,7 +54,8 @@ export const ObjectFiltersBadges: React.FunctionComponent<{
           </Badge>
         </h5>
       );
-    });
+    }
+  );
 
   return <>{filterBadges}</>;
 };
