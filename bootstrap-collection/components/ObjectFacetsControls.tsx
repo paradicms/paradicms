@@ -6,14 +6,14 @@ import {
 } from "@paradicms/models";
 import {Col, Container, Row} from "reactstrap";
 import {Accordion} from "components/Accordion";
-import {StringFacetForm} from "components/StringFacetForm";
+import {StringFacetControls} from "components/StringFacetControls";
 
-export const ObjectFacetsContainer: React.FunctionComponent<{
+export const ObjectFacetsControls: React.FunctionComponent<{
   facets: ObjectFacets;
   filters: ObjectFilters;
   onChange: (filters: ObjectFilters) => void;
 }> = ({facets, filters, onChange}) => {
-  const filtersState = new ObjectFiltersState(filters);
+  const filtersState = new ObjectFiltersState({facets, filters});
 
   return (
     <Container fluid>
@@ -30,8 +30,8 @@ export const ObjectFacetsContainer: React.FunctionComponent<{
           >
             <Col xs={12}>
               <Accordion title={propertyFacet.definition.label}>
-                <StringFacetForm
-                  currentState={filtersState.getPropertyFilter(
+                <StringFacetControls
+                  currentState={filtersState.propertyFilter(
                     propertyFacet.definition.uri
                   )}
                   onChange={newState => {

@@ -15,7 +15,7 @@ import {ObjectsGallery} from "components/ObjectsGallery";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {NumberParam, useQueryParam} from "use-query-params";
-import {ObjectFacetsContainer} from "components/ObjectFacetsContainer";
+import {ObjectFacetsControls} from "components/ObjectFacetsControls";
 import {JsonQueryParamConfig} from "@paradicms/base";
 import {ObjectFacetedSearchQuery} from "@paradicms/lunr";
 import {ObjectFiltersBadges} from "components/ObjectFiltersBadges";
@@ -83,7 +83,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
                     {objectQuery?.filters ? (
                       <div className="d-inline-block">
                         <ObjectFiltersBadges
-                          objectFilters={objectQuery.filters}
+                          filters={objectQuery.filters}
                           propertyDefinitions={propertyDefinitions}
                         />
                       </div>
@@ -115,7 +115,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
                 )}
               </Col>
               <Col xs="2">
-                <ObjectFacetsContainer
+                <ObjectFacetsControls
                   facets={objectFacets}
                   filters={objectQuery?.filters ?? {}}
                   onChange={newObjectFilters => {
