@@ -83,6 +83,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
                     {objectQuery?.filters ? (
                       <div className="d-inline-block">
                         <ObjectFiltersBadges
+                          facets={objectFacets}
                           filters={objectQuery.filters}
                           propertyDefinitions={propertyDefinitions}
                         />
