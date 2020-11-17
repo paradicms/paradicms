@@ -14,7 +14,6 @@ class PropertyDefinitions:
         uri=DCTERMS.alternative,
     )
     CONTRIBUTOR = PropertyDefinition(
-        faceted=True,
         full_text_searchable=True,
         label="Contributor",
         uri=DCTERMS.contributor,
@@ -46,7 +45,6 @@ class PropertyDefinitions:
         uri=DCTERMS.description,
     )
     EXTENT = PropertyDefinition(
-        faceted=True,
         full_text_searchable=True,
         label="Extent",
         uri=DCTERMS.extent,
