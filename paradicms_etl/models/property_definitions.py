@@ -147,6 +147,10 @@ class PropertyDefinitions:
         label="Earliest date",
         uri=VRA.earliestDate,
     )
+    INSCRIPTION = PropertyDefinition(
+        label="Inscription",
+        uri=VRA.inscription,
+    )
     LATEST_DATE = PropertyDefinition(
         label="Latest date",
         uri=VRA.latestDate,
@@ -157,11 +161,25 @@ class PropertyDefinitions:
         label="Material",
         uri=VRA.material,
     )
+    MEASUREMENTS = PropertyDefinition(
+        label="Measurements",
+        uri=VRA.measurements,
+    )
+    STYLE_PERIOD = PropertyDefinition(
+        label="Style Period",
+        uri=VRA.stylePeriod,
+    )
     TECHNIQUE = PropertyDefinition(
         faceted=True,
         full_text_searchable=True,
         label="Technique",
         uri=VRA.hasTechnique,
+    )
+    WORK_TYPE = PropertyDefinition(
+        faceted=True,
+        full_text_searchable=True,
+        label="Work type",
+        uri=VRA.worktype,
     )
 
     @classmethod
