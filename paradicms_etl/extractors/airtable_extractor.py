@@ -85,9 +85,5 @@ class AirtableExtractor(_Extractor):
         return tuple(records)
 
     @classmethod
-    def record_url(cls, *, base_id: str, record_id: str, table: str):
-        return cls.table_url(base_id=base_id, table=table) + f"/{record_id}"
-
-    @classmethod
     def table_url(cls, *, base_id: str, table: str):
         return f"https://api.airtable.com/v0/{quote(base_id)}/{quote(table)}"
