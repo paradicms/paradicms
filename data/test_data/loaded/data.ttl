@@ -2,6 +2,7 @@
 @prefix exif: <http://www.w3.org/2003/12/exif/ns#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix paradicms: <http://www.paradicms.org/ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix vra: <http://purl.org/vra/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -24,6 +25,147 @@
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Image1> ;
     foaf:name "Institution1" .
+
+dcterms:alternative a paradicms:PropertyDefinition ;
+    rdfs:label "Alternative title" ;
+    paradicms:fullTextSearchable true .
+
+dcterms:contributor a paradicms:PropertyDefinition ;
+    rdfs:label "Contributor" ;
+    paradicms:fullTextSearchable true .
+
+dcterms:coverage a paradicms:PropertyDefinition ;
+    rdfs:label "Coverage" ;
+    paradicms:faceted true ;
+    paradicms:fullTextSearchable true .
+
+dcterms:creator a paradicms:PropertyDefinition ;
+    rdfs:label "Creator" ;
+    paradicms:faceted true ;
+    paradicms:fullTextSearchable true .
+
+dcterms:date a paradicms:PropertyDefinition ;
+    rdfs:label "Date" .
+
+dcterms:dateCreated a paradicms:PropertyDefinition ;
+    rdfs:label "Date created" .
+
+dcterms:dateSubmitted a paradicms:PropertyDefinition ;
+    rdfs:label "Date submitted" .
+
+dcterms:description a paradicms:PropertyDefinition ;
+    rdfs:label "Description" ;
+    paradicms:fullTextSearchable true .
+
+dcterms:extent a paradicms:PropertyDefinition ;
+    rdfs:label "Extent" ;
+    paradicms:fullTextSearchable true .
+
+dcterms:format a paradicms:PropertyDefinition ;
+    rdfs:label "Format" ;
+    paradicms:fullTextSearchable true .
+
+dcterms:identifier a paradicms:PropertyDefinition ;
+    rdfs:label "Identifier" ;
+    paradicms:fullTextSearchable true .
+
+dcterms:isReferencedBy a paradicms:PropertyDefinition ;
+    rdfs:label "Referenced by" .
+
+dcterms:language a paradicms:PropertyDefinition ;
+    rdfs:label "Language" ;
+    paradicms:faceted true .
+
+dcterms:license a paradicms:PropertyDefinition ;
+    rdfs:label "License" .
+
+dcterms:medium a paradicms:PropertyDefinition ;
+    rdfs:label "Medium" ;
+    paradicms:faceted true ;
+    paradicms:fullTextSearchable true .
+
+dcterms:provenance a paradicms:PropertyDefinition ;
+    rdfs:label "Provenance" ;
+    paradicms:fullTextSearchable true .
+
+dcterms:publisher a paradicms:PropertyDefinition ;
+    rdfs:label "Publisher" ;
+    paradicms:faceted true ;
+    paradicms:fullTextSearchable true .
+
+dcterms:references a paradicms:PropertyDefinition ;
+    rdfs:label "References" .
+
+dcterms:relation a paradicms:PropertyDefinition ;
+    rdfs:label "Relation" .
+
+dcterms:rights a paradicms:PropertyDefinition ;
+    rdfs:label "Rights" .
+
+dcterms:rightsHolder a paradicms:PropertyDefinition ;
+    rdfs:label "Rights holder" .
+
+dcterms:source a paradicms:PropertyDefinition ;
+    rdfs:label "Source" ;
+    paradicms:fullTextSearchable true .
+
+dcterms:spatial a paradicms:PropertyDefinition ;
+    rdfs:label "Spatial coverage" ;
+    paradicms:faceted true ;
+    paradicms:fullTextSearchable true .
+
+dcterms:subject a paradicms:PropertyDefinition ;
+    rdfs:label "Subject" ;
+    paradicms:faceted true ;
+    paradicms:fullTextSearchable true .
+
+dcterms:temporal a paradicms:PropertyDefinition ;
+    rdfs:label "Temporal coverage" ;
+    paradicms:faceted true ;
+    paradicms:fullTextSearchable true .
+
+dcterms:title a paradicms:PropertyDefinition ;
+    rdfs:label "Title" ;
+    paradicms:fullTextSearchable true .
+
+dcterms:type a paradicms:PropertyDefinition ;
+    rdfs:label "Type" ;
+    paradicms:faceted true ;
+    paradicms:fullTextSearchable true .
+
+vra:culturalContext a paradicms:PropertyDefinition ;
+    rdfs:label "Cultural context" ;
+    paradicms:fullTextSearchable true .
+
+vra:earliestDate a paradicms:PropertyDefinition ;
+    rdfs:label "Earliest date" .
+
+vra:hasTechnique a paradicms:PropertyDefinition ;
+    rdfs:label "Technique" ;
+    paradicms:faceted true ;
+    paradicms:fullTextSearchable true .
+
+vra:inscription a paradicms:PropertyDefinition ;
+    rdfs:label "Inscription" .
+
+vra:latestDate a paradicms:PropertyDefinition ;
+    rdfs:label "Latest date" .
+
+vra:material a paradicms:PropertyDefinition ;
+    rdfs:label "Material" ;
+    paradicms:faceted true ;
+    paradicms:fullTextSearchable true .
+
+vra:measurements a paradicms:PropertyDefinition ;
+    rdfs:label "Measurements" .
+
+vra:stylePeriod a paradicms:PropertyDefinition ;
+    rdfs:label "Style Period" .
+
+vra:worktype a paradicms:PropertyDefinition ;
+    rdfs:label "Work type" ;
+    paradicms:faceted true ;
+    paradicms:fullTextSearchable true .
 
 <http://example.com/institution0/collection0> a paradicms:Collection ;
     dcterms:title "Institution0Collection0" ;
