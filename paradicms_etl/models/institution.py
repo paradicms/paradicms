@@ -29,7 +29,6 @@ class Institution(_NamedModel):
         resource = _NamedModel.to_rdf(
             self, graph=graph, property_definitions=property_definitions
         )
-        resource.add(RDF.type, CMS[self.__class__.__name__])
         resource.add(FOAF.name, Literal(self.name))
         properties_to_rdf(
             properties=self.properties,

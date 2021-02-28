@@ -20,7 +20,6 @@ class PropertyDefinition(_NamedModel):
         resource = _NamedModel.to_rdf(
             self, graph=graph, property_definitions=property_definitions
         )
-        resource.add(RDF.type, CMS[self.__class__.__name__])
         resource.add(RDFS.label, Literal(self.label))
         if self.faceted:
             resource.add(CMS.faceted, Literal(self.faceted))

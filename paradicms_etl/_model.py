@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 
-from rdflib import BNode, Graph
+from rdflib import BNode, Graph, RDF
 from rdflib.resource import Resource
+
+from paradicms_etl.namespace import CMS
 
 
 @dataclass(frozen=True)
@@ -10,4 +12,7 @@ class _Model:
         """
         Convert this model to RDF.
         """
-        return graph.resource(BNode().skolemize())
+
+        resource = graph.resource(BNode().skolemize())
+        resource.add(RDF.type, CMS[self.__class__.__name__])
+        return resource

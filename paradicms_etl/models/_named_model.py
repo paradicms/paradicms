@@ -1,10 +1,11 @@
 from dataclasses import dataclass
 
 from dataclasses_json import LetterCase, dataclass_json
-from rdflib import Graph, URIRef
+from rdflib import Graph, RDF, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl._model import _Model
+from paradicms_etl.namespace import CMS
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
@@ -16,4 +17,7 @@ class _NamedModel(_Model):
         """
         Convert this model to RDF.
         """
-        return graph.resource(self.uri)
+
+        resource = graph.resource(self.uri)
+        resource.add(RDF.type, CMS[self.__class__.__name__])
+        return resource

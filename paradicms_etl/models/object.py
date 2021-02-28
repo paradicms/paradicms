@@ -32,7 +32,6 @@ class Object(_NamedModel):
         resource = _NamedModel.to_rdf(
             self, graph=graph, property_definitions=property_definitions
         )
-        resource.add(RDF.type, CMS[self.__class__.__name__])
 
         for collection_uri in self.collection_uris:
             graph.add((collection_uri, CMS.object, self.uri))

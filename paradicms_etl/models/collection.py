@@ -29,7 +29,6 @@ class Collection(_NamedModel):
         resource = _NamedModel.to_rdf(
             self, graph=graph, property_definitions=property_definitions
         )
-        resource.add(RDF.type, CMS[self.__class__.__name__])
         graph.add((self.institution_uri, CMS.collection, self.uri))
         properties_to_rdf(
             properties=self.properties,

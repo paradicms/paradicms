@@ -167,6 +167,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     paradicms:faceted true ;
     paradicms:fullTextSearchable true .
 
+paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
+    paradicms:guiDocumentTitle "Test data" ;
+    paradicms:guiNavbarTitle "Test data" .
+
 <http://example.com/institution0/collection0> a paradicms:Collection ;
     dcterms:title "Institution0Collection0" ;
     paradicms:object <http://example.com/institution0/collection0/object0>,
