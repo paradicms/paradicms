@@ -29,7 +29,7 @@ class Collection(_NamedModel):
         resource = _NamedModel.to_rdf(
             self, graph=graph, property_definitions=property_definitions
         )
-        graph.add((self.institution_uri, CMS.collection, self.uri))
+        resource.add(CMS.institution, self.institution_uri)
         properties_to_rdf(
             properties=self.properties,
             property_definitions=property_definitions,
