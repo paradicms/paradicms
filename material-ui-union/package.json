@@ -13,6 +13,7 @@
     "@paradicms/material-ui-next": "1.0.3",
     "@paradicms/models": "1.0.3",
     "@paradicms/next": "1.0.3",
+    "@paradicms/rdf": "1.0.3",
     "next": "10.0.1"
   },
   "devDependencies": {

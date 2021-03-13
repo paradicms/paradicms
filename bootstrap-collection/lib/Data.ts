@@ -7,6 +7,7 @@ import {
   PropertyDefinition,
 } from "@paradicms/models";
 import {RdfData} from "@paradicms/rdf";
+import {graph, parse} from "rdflib";
 
 export class Data {
   constructor() {
@@ -14,10 +15,9 @@ export class Data {
     if (!dataTtlFilePath) {
       throw new EvalError("must specify a data .ttl (text/turtle) file path");
     }
-    const allData = RdfData.parse(
-      fs.readFileSync(dataTtlFilePath).toString(),
-      "text/turtle"
-    );
+    const store = graph();
+    parse(fs.readFileSync(dataTtlFilePath).toString(), store, "text/turtle");
+    const allData = new RdfData(store);
 
     const institutions = allData.institutions;
     if (institutions.length === 0) {
