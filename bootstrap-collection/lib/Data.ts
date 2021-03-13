@@ -16,7 +16,12 @@ export class Data {
       throw new EvalError("must specify a data .ttl (text/turtle) file path");
     }
     const store = graph();
-    parse(fs.readFileSync(dataTtlFilePath).toString(), store, "text/turtle");
+    parse(
+      fs.readFileSync(dataTtlFilePath).toString(),
+      store,
+      "http://example.org",
+      "text/turtle"
+    );
     const allData = new RdfData(store);
 
     const institutions = allData.institutions;

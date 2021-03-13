@@ -29,7 +29,12 @@ export class Data extends RdfData {
       throw new EvalError("must specify a data .ttl (text/turtle) file path");
     }
     const store = graph();
-    parse(fs.readFileSync(dataTtlFilePath).toString(), store, "text/turtle");
+    parse(
+      fs.readFileSync(dataTtlFilePath).toString(),
+      store,
+      "http://example.org",
+      "text/turtle"
+    );
     return store;
   }
 
