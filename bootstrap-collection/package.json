@@ -12,6 +12,7 @@
     "@paradicms/lunr": "1.0.3",
     "@paradicms/models": "1.0.3",
     "@paradicms/next": "1.0.3",
+    "@paradicms/rdf": "1.0.3",
     "@types/reactstrap": "^8.5.1",
     "bootswatch": "^4.5.3",
     "next": "10.0.1",

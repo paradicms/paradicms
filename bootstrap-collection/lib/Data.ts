@@ -1,42 +1,23 @@
 import fs from "fs";
-import * as path from "path";
 import {
-  AbstractData,
   Collection,
   Image,
   Institution,
   Object,
   PropertyDefinition,
 } from "@paradicms/models";
-
-class AllData extends AbstractData {
-  private static findDataDirectory(): string {
-    let dataDirectoryPath: string | undefined = process.env.DATA_DIRECTORY_PATH;
-    if (!dataDirectoryPath) {
-      throw new EvalError("must specify a data directory path");
-    }
-    return dataDirectoryPath;
-  }
-
-  private static readonly dataDirectoryPath = AllData.findDataDirectory();
-
-  constructor() {
-    super();
-  }
-
-  readModels<ModelT>(fileBaseName: string): readonly ModelT[] {
-    const filePath = path.join(
-      AllData.dataDirectoryPath,
-      fileBaseName + ".json"
-    );
-    const fileContents = fs.readFileSync(filePath, "utf8");
-    return JSON.parse(fileContents);
-  }
-}
+import {RdfData} from "@paradicms/rdf";
 
 export class Data {
   constructor() {
-    const allData = new AllData();
+    const dataTtlFilePath: string | undefined = process.env.DATA_TTL_FILE_PATH;
+    if (!dataTtlFilePath) {
+      throw new EvalError("must specify a data .ttl (text/turtle) file path");
+    }
+    const allData = RdfData.parse(
+      fs.readFileSync(dataTtlFilePath).toString(),
+      "text/turtle"
+    );
 
     const institutions = allData.institutions;
     if (institutions.length === 0) {
