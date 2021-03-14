@@ -9,7 +9,7 @@ from rdflib import URIRef
 from paradicms_etl._extractor import _Extractor
 from paradicms_etl._loader import _Loader
 from paradicms_etl._transformer import _Transformer
-from paradicms_etl.loaders.default_loader import DefaultLoader
+from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.transformers.validation_transformer import ValidationTransformer
 
 
@@ -33,7 +33,7 @@ class _Pipeline(ABC):
         self.__extractor = extractor
         self.__id = id
         if loader is None:
-            loader = DefaultLoader(pipeline_id=id, **kwds)
+            loader = RdfFileLoader(pipeline_id=id, **kwds)
         self.__loader = loader
         self.__logger = logging.getLogger(self.__class__.__name__)
         self.__transformer = transformer

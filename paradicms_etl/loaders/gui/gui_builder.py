@@ -2,7 +2,6 @@ import logging
 import os
 import subprocess
 import sys
-from datetime import datetime
 from pathlib import Path
 from typing import Optional, Union
 
@@ -29,17 +28,17 @@ class GuiBuilder:
 
         self.__gui_dir_path = gui_dir_path
 
-    def build(self, data_dir_path: Path) -> Path:
+    def build(self, data_ttl_file_path: Path) -> Path:
         """
         Build the GUI
         :return: directory path to the built site
         """
 
         self.__logger.info("building GUI")
-        self.__run_npm_script("build", data_dir_path=data_dir_path)
+        self.__run_npm_script("build", data_ttl_file_path=data_ttl_file_path)
         self.__logger.info("built GUI")
         self.__logger.info("exporting GUI build")
-        self.__run_npm_script("export", data_dir_path=data_dir_path)
+        self.__run_npm_script("export", data_ttl_file_path=data_ttl_file_path)
         self.__logger.info("exported GUI build")
 
         gui_out_dir_path = self.__gui_dir_path / "out"
@@ -58,11 +57,11 @@ class GuiBuilder:
     def gui_dir_path(self) -> Path:
         return self.__gui_dir_path
 
-    def __run_npm_script(self, script, data_dir_path: Optional[Path] = None):
+    def __run_npm_script(self, script, data_ttl_file_path: Optional[Path] = None):
         subprocess_env = os.environ.copy()
-        if data_dir_path is not None:
-            subprocess_env["DATA_DIRECTORY_PATH"] = str(data_dir_path)
-            self.__logger.info("using DATA_DIRECTORY_PATH = %s", data_dir_path)
+        if data_ttl_file_path is not None:
+            subprocess_env["DATA_TTL_FILE_PATH"] = str(data_ttl_file_path)
+            self.__logger.info("using DATA_TTL_FILE_PATH = %s", data_ttl_file_path)
         subprocess_env["EDITOR"] = ""
 
         args = ["npm", "run", script]

@@ -1,5 +1,3 @@
-import os
-from datetime import datetime
 from pathlib import Path
 from typing import Optional, Tuple, Union
 
@@ -8,8 +6,8 @@ from paradicms_etl.loaders._buffering_loader import _BufferingLoader
 from paradicms_etl.loaders.gui._gui_deployer import _GuiDeployer
 from paradicms_etl.loaders.gui.fs_gui_deployer import FsGuiDeployer
 from paradicms_etl.loaders.gui.gui_builder import GuiBuilder
-from paradicms_etl.loaders.gui.gui_data_loader import GuiDataLoader
 from paradicms_etl.loaders.gui.gui_images_loader import GuiImagesLoader
+from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models._image import _Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 
@@ -76,7 +74,7 @@ class GuiLoader(_BufferingLoader):
             models = tuple(gui_images + other_models)
 
         data_dir_path = self._loaded_data_dir_path / "data"
-        data_loader = GuiDataLoader(
+        data_loader = RdfFileLoader(
             loaded_data_dir_path=data_dir_path,
             pipeline_id=self._pipeline_id,
         )
@@ -88,7 +86,9 @@ class GuiLoader(_BufferingLoader):
 
         gui_builder.clean()
 
-        gui_out_dir_path = gui_builder.build(data_dir_path=data_dir_path)
+        gui_out_dir_path = gui_builder.build(
+            data_ttl_file_path=data_dir_path / (self._pipeline_id + ".ttl")
+        )
 
         deployer = self.__deployer
         if deployer is None:

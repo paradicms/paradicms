@@ -3,7 +3,7 @@ from typing import Tuple
 
 from paradicms_etl._model import _Model
 from paradicms_etl.loaders.gui.gui_builder import GuiBuilder
-from paradicms_etl.loaders.gui.gui_data_loader import GuiDataLoader
+from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 
 GUI = "material-ui-union"
 
@@ -22,13 +22,16 @@ def test_build(test_data_models: Tuple[_Model, ...], tmp_path):
     gui_builder.clean()
     assert not (gui_builder.gui_dir_path / "out").exists()
 
-    gui_data_loader = GuiDataLoader(
-        loaded_data_dir_path=Path(tmp_path), pipeline_id="test"
+    pipeline_id = "test"
+    gui_data_loader = RdfFileLoader(
+        loaded_data_dir_path=Path(tmp_path), pipeline_id=pipeline_id
     )
     gui_data_loader.load(models=test_data_models)
     gui_data_loader.flush()
 
-    gui_out_dir_path = gui_builder.build(data_dir_path=Path(tmp_path))
+    gui_out_dir_path = gui_builder.build(
+        data_ttl_file_path=Path(tmp_path) / (pipeline_id + ".ttl")
+    )
     assert gui_out_dir_path == (gui_builder.gui_dir_path / "out")
     assert gui_out_dir_path.is_dir()
 
