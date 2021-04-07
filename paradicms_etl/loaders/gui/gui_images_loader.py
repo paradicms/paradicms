@@ -16,7 +16,7 @@ from paradicms_etl.file_cache import FileCache
 from paradicms_etl.models._image import _Image
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.utils.image_utils import thumbnail_image
+from paradicms_etl.utils.thumbnail_image import thumbnail_image
 
 
 class GuiImagesLoader(_Loader):

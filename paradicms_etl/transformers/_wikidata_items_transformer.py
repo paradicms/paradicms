@@ -5,7 +5,7 @@ from rdflib import Graph
 from paradicms_etl._model import _Model
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
-from paradicms_etl.utils.string_utils import sanitize_method_name
+from paradicms_etl.utils.sanitize_method_name import sanitize_method_name
 
 
 class _WikidataItemsTransformer(_Transformer):

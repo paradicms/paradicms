@@ -10,7 +10,7 @@ from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definition import PropertyDefinition
 from paradicms_etl.namespace import CMS
-from paradicms_etl.utils.rdf_utils import properties_to_rdf
+from paradicms_etl.utils.properties_to_rdf import properties_to_rdf
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)

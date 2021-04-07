@@ -1,21 +1,6 @@
 import re
-from urllib.parse import urlparse
 
 __METHOD_NAME_RE = re.compile("[a-z_]+[a-z0-9_]*")
-
-
-def is_uri(string: str) -> bool:
-    """
-    Check if a string is a URI.
-
-    Only supports http:// and https:// currently.
-    """
-
-    if not isinstance(string, str):
-        return False
-
-    result = urlparse(string)
-    return all([result.scheme, result.netloc])
 
 
 def sanitize_method_name(string: str) -> str:

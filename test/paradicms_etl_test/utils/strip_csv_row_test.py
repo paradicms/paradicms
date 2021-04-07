@@ -1,4 +1,4 @@
-from paradicms_etl.utils.csv_utils import strip_csv_row
+from paradicms_etl.utils.strip_csv_row import strip_csv_row
 
 
 def test_strip_csv_row():

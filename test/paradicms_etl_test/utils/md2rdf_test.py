@@ -1,5 +1,5 @@
 from paradicms_etl.utils.md2rdf import md2rdf
-from paradicms_etl.utils.string_utils import is_uri, sanitize_method_name
+from paradicms_etl.utils.is_uri import is_uri, sanitize_method_name
 
 
 def test_md2rdf():

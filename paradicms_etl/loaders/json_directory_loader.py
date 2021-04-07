@@ -1,15 +1,11 @@
 import json
-from enum import Enum
 from shutil import rmtree
 
 import stringcase
-from pathvalidate import sanitize_filename
 
 from paradicms_etl.loaders._buffering_loader import _BufferingLoader
-from paradicms_etl.utils.json_utils import (
-    json_dump_default,
-    model_to_json_object,
-)
+from paradicms_etl.utils.json_dump_default import json_dump_default
+from paradicms_etl.utils.model_to_json_object import model_to_json_object
 
 
 class JsonDirectoryLoader(_BufferingLoader):
