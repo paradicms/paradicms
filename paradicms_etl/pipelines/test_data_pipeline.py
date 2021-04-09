@@ -315,19 +315,14 @@ class TestDataPipeline(_Pipeline):
             id=self.__ID,
             loader=CompositeLoader(
                 loaders=(
-                    JsonDirectoryLoader(
-                        clean=True,
-                        data_dir_path=root_dir_path / "etl" / "data",
-                        pipeline_id=self.__ID,
-                    ),
-                    JsonDirectoryLoader(
-                        clean=True,
-                        pipeline_id=self.__ID,
-                        loaded_data_dir_path=root_dir_path
+                    RdfFileLoader(
+                        file_path=root_dir_path
                         / "integration"
                         / "material-ui-union"
                         / "cypress"
-                        / "fixtures",
+                        / "fixtures"
+                        / "data.ttl",
+                        pipeline_id=self.__ID,
                     ),
                     RdfFileLoader(
                         file_path=root_dir_path
