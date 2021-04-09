@@ -13,7 +13,7 @@ idna==2.8
 iniconfig==1.0.1
 isodate==0.6.0
 jmespath==0.10.0
-markdown-it-py==git+https://github.com/executablebooks/markdown-it-py.git@v1.0.0b1
+#markdown-it-py==git+https://github.com/executablebooks/markdown-it-py.git@v1.0.0b1
 marshmallow==3.7.0
 marshmallow-enum==1.5.1
 mdit-py-plugins==0.2.6
