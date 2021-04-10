@@ -11,6 +11,7 @@ idna==2.8
 iniconfig==1.0.1
 isodate==0.6.0
 jmespath==0.10.0
+mdit-py-plugins==0.2.6
 mypy-boto3-cloudfront==1.16.11.0
 mypy-boto3-route53==1.16.11.0
 mypy-boto3-s3==1.16.11.0
