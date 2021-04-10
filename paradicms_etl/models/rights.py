@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple, Union
 
-from dataclasses_json import LetterCase, dataclass_json
 from rdflib import URIRef
 from rdflib.resource import Resource
 
@@ -10,7 +9,6 @@ from paradicms_etl.models.property_definitions import PropertyDefinitions
 from paradicms_etl.models.rights_value import RightsValue
 
 
-@dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass(init=False)
 class Rights:
     creator: Optional[RightsValue] = None

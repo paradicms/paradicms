@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from dataclasses_json import LetterCase, dataclass_json
 from rdflib import Graph, Literal
 from rdflib.namespace import FOAF, RDF
 from rdflib.resource import Resource
@@ -10,7 +9,6 @@ from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.namespace import CMS, CONTACT
 
 
-@dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass(frozen=True)
 class Person(_NamedModel):
     name: str

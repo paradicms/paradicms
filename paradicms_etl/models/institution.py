@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
-from dataclasses_json import LetterCase, dataclass_json
 from rdflib import Graph, Literal
 from rdflib.namespace import FOAF, RDF
 from rdflib.resource import Resource
@@ -14,7 +13,6 @@ from paradicms_etl.namespace import CMS
 from paradicms_etl.utils.properties_to_rdf import properties_to_rdf
 
 
-@dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass(frozen=True)
 class Institution(_NamedModel):
     # See note in Collection re: why there are no links to collections here.

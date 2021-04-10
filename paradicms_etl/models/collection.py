@@ -1,9 +1,8 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
-from dataclasses_json import LetterCase, dataclass_json
 from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import DCTERMS, RDF
+from rdflib.namespace import DCTERMS
 from rdflib.resource import Resource
 
 from paradicms_etl.models._named_model import _NamedModel
@@ -13,7 +12,6 @@ from paradicms_etl.namespace import CMS
 from paradicms_etl.utils.properties_to_rdf import properties_to_rdf
 
 
-@dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass(frozen=True)
 class Collection(_NamedModel):
     # Linking up to the parent (relational style )instead of down to child objects

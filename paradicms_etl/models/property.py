@@ -1,13 +1,11 @@
 from dataclasses import dataclass
 from typing import Union
 
-from dataclasses_json import LetterCase, dataclass_json
 from rdflib import URIRef
 
 from paradicms_etl.models.property_definition import PropertyDefinition
 
 
-@dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass(init=True, unsafe_hash=True)
 class Property:
     property_definition_uri: URIRef

@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional
 
-from dataclasses_json import LetterCase, dataclass_json
 from rdflib import Graph, URIRef
 from rdflib.namespace import FOAF, RDF
 from rdflib.resource import Resource
@@ -13,7 +12,6 @@ from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespace import CMS
 
 
-@dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass(frozen=True)
 class Image(_Image):
     depicts_uri: URIRef  # Collection, institution, or object

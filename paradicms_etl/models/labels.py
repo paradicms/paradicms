@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
-from dataclasses_json import LetterCase, dataclass_json
 from rdflib import Literal, RDFS
 from rdflib.namespace import SKOS
 from rdflib.resource import Resource
@@ -9,7 +8,6 @@ from rdflib.resource import Resource
 from paradicms_etl.namespace import CMS
 
 
-@dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass(frozen=True)
 class Labels:
     pref_label: str

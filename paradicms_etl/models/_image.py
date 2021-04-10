@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional
 
-from dataclasses_json import LetterCase, dataclass_json
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
@@ -12,7 +11,6 @@ from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.namespace import CMS, EXIF
 
 
-@dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass(frozen=True)
 class _Image(_NamedModel):
     """
