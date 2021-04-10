@@ -117,13 +117,10 @@ class ValidationTransformer(_Transformer):
                         properties_set.add(property_)
                     else:
                         raise ValueError(
-                            f"{model.uri} has duplicate property {property_.property_definition_uri}: {model.properties}"
+                            f"{model.uri} has duplicate property {property_.uri}: {model.properties}"
                         )
 
-                    if (
-                        property_.property_definition_uri
-                        not in property_definitions_by_uri
-                    ):
+                    if property_.uri not in property_definitions_by_uri:
                         raise ValueError(
-                            f"{model.uri} uses undefined property {property_.property_definition_uri}"
+                            f"{model.uri} uses undefined property {property_.uri}"
                         )

@@ -110,13 +110,13 @@ class OmekaClassicTransformer(_Transformer):
             PropertyDefinitions.TITLE,
             PropertyDefinitions.ALTERNATIVE_TITLE,
         ):
-            for property_i, property in enumerate(properties):
-                if property.property_definition_uri == title_property_definition.uri:
+            for property_i, property_ in enumerate(properties):
+                if property_.uri == title_property_definition.uri:
                     remaining_properties = list(properties[:property_i]) + list(
                         properties[property_i + 1 :]
                     )
                     assert len(remaining_properties) == len(properties) - 1
-                    title = property.value
+                    title = property_.value
                     return title, remaining_properties
         raise NotImplementedError("no title property")
 

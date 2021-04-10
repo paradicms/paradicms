@@ -44,10 +44,10 @@ class RightsValue:
         uri_property_values = []
         for property_ in properties:
             if property_definition_uri is None:
-                property_definition_uri = property_.property_definition_uri
-            elif property_.property_definition_uri != property_definition_uri:
+                property_definition_uri = property_.uri
+            elif property_.uri != property_definition_uri:
                 raise ValueError(
-                    f"rights properties with different URIs: {property_.property_definition_uri} vs. {property_definition_uri}"
+                    f"rights properties with different URIs: {property_.uri} vs. {property_definition_uri}"
                 )
 
             assert isinstance(property_.value, str)

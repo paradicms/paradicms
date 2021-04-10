@@ -18,9 +18,7 @@ def properties_to_rdf(
         for property_definition in property_definitions
     }
     for property_ in properties:
-        property_definition = property_definitions_by_uri[
-            property_.property_definition_uri
-        ]
+        property_definition = property_definitions_by_uri[property_.uri]
         if isinstance(property_.value, URIRef):
             resource.add(property_definition.uri, property_.value)
         else:

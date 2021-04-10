@@ -8,18 +8,17 @@ from paradicms_etl.models.property_definition import PropertyDefinition
 
 @dataclass(init=True, unsafe_hash=True)
 class Property:
-    property_definition_uri: URIRef
+    uri: URIRef
     value: str
 
-    def __init__(
-        self, property_definition: Union[PropertyDefinition, URIRef], value: str
-    ):
-        if isinstance(property_definition, PropertyDefinition):
-            self.property_definition_uri = property_definition.uri
-        elif isinstance(property_definition, URIRef):
-            self.property_definition_uri = property_definition
+    def __init__(self, uri: Union[PropertyDefinition, URIRef], value: str):
+        if isinstance(uri, PropertyDefinition):
+            property_definition = uri
+            self.uri = property_definition.uri
+        elif isinstance(uri, URIRef):
+            self.uri = uri
         else:
-            raise TypeError(type(property_definition))
+            raise TypeError(type(uri))
 
         if not isinstance(value, str):
             raise TypeError("value not a string")
