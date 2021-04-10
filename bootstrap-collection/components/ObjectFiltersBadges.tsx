@@ -27,11 +27,8 @@ export const ObjectFiltersBadges: React.FunctionComponent<{
         >
           <Badge className="p-2" color="warning" pill>
             Exclude&nbsp;
-            {
-              propertyDefinitionsByUri[excludedProperty.propertyDefinitionUri]
-                .label
-            }
-            : {excludedProperty.value}
+            {propertyDefinitionsByUri[excludedProperty.uri].label}:{" "}
+            {excludedProperty.value}
           </Badge>
         </h5>
       );
@@ -46,11 +43,8 @@ export const ObjectFiltersBadges: React.FunctionComponent<{
         >
           <Badge className="p-2" color="warning" pill>
             Include&nbsp;
-            {
-              propertyDefinitionsByUri[includedProperty.propertyDefinitionUri]
-                .label
-            }
-            : {includedProperty.value}
+            {propertyDefinitionsByUri[includedProperty.uri].label}:{" "}
+            {includedProperty.value}
           </Badge>
         </h5>
       );

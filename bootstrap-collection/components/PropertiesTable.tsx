@@ -13,8 +13,7 @@ export const PropertiesTable: React.FunctionComponent<{
         .sort((left, right) => left.uri.localeCompare(right.uri))
         .map(propertyDefinition => {
           const propertyDefinitionProperties = properties.filter(
-            property =>
-              property.propertyDefinitionUri === propertyDefinition.uri
+            property => property.uri === propertyDefinition.uri
           );
           if (propertyDefinitionProperties.length === 0) {
             return null;
