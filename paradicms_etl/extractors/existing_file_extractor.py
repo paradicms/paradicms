@@ -5,6 +5,10 @@ from paradicms_etl._extractor import _Extractor
 
 
 class ExistingFileExtractor(_Extractor):
+    """
+    Extractor that's parameterized with an existing file path (or file name in the _extracted_data_dir_path) and returns it.
+    """
+
     def __init__(
         self,
         *,

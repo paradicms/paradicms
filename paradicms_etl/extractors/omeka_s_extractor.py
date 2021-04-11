@@ -8,6 +8,10 @@ from paradicms_etl._extractor import _Extractor
 
 
 class OmekaSExtractor(_Extractor):
+    """
+    Extractor for Omeka S (https://omeka.org/s/) API endpoints.
+    """
+
     def __init__(self, endpoint_url: str):
         _Extractor.__init__(self)
         self.__endpoint_url = endpoint_url.rstrip("/")

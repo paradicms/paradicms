@@ -7,6 +7,10 @@ from paradicms_etl._extractor import _Extractor
 
 
 class OmekaClassicExtractor(_Extractor):
+    """
+    Extractor for Omeka Classic (https://omeka.org/classic/) API endpoints.
+    """
+
     def __init__(self, api_key: str, endpoint_url: str, **kwds):
         _Extractor.__init__(self, **kwds)
         from yomeka.classic.omeka_classic_rest_api_client import (

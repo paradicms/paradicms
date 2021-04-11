@@ -9,6 +9,10 @@ from paradicms_etl._extractor import _Extractor
 
 
 class LunaExtractor(_Extractor):
+    """
+    Extractor for LUNA Digital Asset Management (http://www.lunaimaging.com/) software installations on the web.
+    """
+
     def __init__(self, *, base_url: str, query, **kwds):
         """
         :param base_url: base URL of the Luna installation e.g., http://example.com; /luna/servlet will be appended to this

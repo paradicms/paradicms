@@ -3,6 +3,10 @@ import os
 
 
 class PastPerfectOnlineExtractor(_Extractor):
+    """
+    Extractor that scrapes PastPerfect Online (http://www.pastperfect-online.com/)
+    """
+
     def __init__(self, **kwds):
         _Extractor.__init__(self, **kwds)
 

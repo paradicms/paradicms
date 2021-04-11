@@ -8,6 +8,10 @@ from paradicms_etl._extractor import _Extractor
 
 
 class WikidataQidExtractor(_Extractor):
+    """
+    Extractor that downloads a set of Wikidata concepts (identified by QIDs) in RDF.
+    """
+
     def __init__(self, qids: Tuple[str, ...], **kwds):
         _Extractor.__init__(self, **kwds)
         self.__qids = qids

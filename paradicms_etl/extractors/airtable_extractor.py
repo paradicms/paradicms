@@ -9,6 +9,10 @@ from paradicms_etl._extractor import _Extractor
 
 
 class AirtableExtractor(_Extractor):
+    """
+    Extractor for an Airtable (https://airtable.com/) base.
+    """
+
     def __init__(
         self,
         *,
