@@ -7,6 +7,7 @@ from rdflib.resource import Resource
 
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.namespace import CMS, CONTACT
+from paradicms_etl.utils.rdf_resource_wrapper import RdfResourceWrapper
 
 
 @dataclass(frozen=True)
@@ -15,6 +16,14 @@ class Person(_NamedModel):
     family_name: Optional[str] = None
     given_name: Optional[str] = None
     sort_name: Optional[str] = None
+
+    @classmethod
+    def from_rdf(cls, resource: Resource):
+        resource_wrapper = RdfResourceWrapper(resource)
+        name = resource_wrapper.str_value(FOAF.name)
+        if name is None:
+            raise ValueError("person requires a literal string foaf:name")
+        return Person(name=name, uri=resource.identifier)
 
     def to_rdf(self, *, graph: Graph, **kwds) -> Resource:
         resource = _NamedModel.to_rdf(self, graph=graph, **kwds)

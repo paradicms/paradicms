@@ -13,7 +13,7 @@ class MarkdownDirectoryExtractor(_Extractor):
     person/id2.md
     other/id.md
 
-    Returns a dict of {"person": {"id1": contents, "id2": contents}, "object": {"id1", contents, "id2": contents}, "other": {"id": contents}}
+    Returns a dict of {"markdown": {"person": {"id1": contents, "id2": contents}, "object": {"id1", contents, "id2": contents}, "other": {"id": contents}}}
     """
 
     def extract(self):
@@ -31,4 +31,4 @@ class MarkdownDirectoryExtractor(_Extractor):
                 with open(file_path) as md_file:
                     md_file_contents = md_file.read()
                 result.setdefault(type_, {})[str(file_name.stem)] = md_file_contents
-        return result
+        return {"markdown": result}

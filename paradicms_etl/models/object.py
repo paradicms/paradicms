@@ -11,6 +11,7 @@ from paradicms_etl.models.property_definition import PropertyDefinition
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespace import CMS
 from paradicms_etl.utils.properties_to_rdf import properties_to_rdf
+from paradicms_etl.utils.rdf_resource_wrapper import RdfResourceWrapper
 
 
 @dataclass(frozen=True)
@@ -23,6 +24,51 @@ class Object(_NamedModel):
     abstract: Optional[str] = None
     properties: Tuple[Property, ...] = ()
     rights: Optional[Rights] = None
+
+    @classmethod
+    def from_rdf(
+        cls,
+        resource: Resource,
+        *,
+        collection_uris: Tuple[URIRef, ...] = (),
+        institution_uri: Optional[URIRef] = None,
+    ):
+        resource_wrapper = RdfResourceWrapper(resource)
+
+        if not collection_uris:
+            collection_uris = tuple(
+                collection_resource.identifier
+                for collection_resource in resource.objects(CMS.collection)
+                if isinstance(collection_resource, Resource)
+            )
+
+        if institution_uri is None:
+            institution_uri = resource.value(CMS.institution)
+            if not isinstance(institution_uri, URIRef):
+                raise ValueError(
+                    f"object {resource.identifier} has no institution statement"
+                )
+
+        title = resource_wrapper.str_value(DCTERMS.title)
+        if title is None:
+            raise ValueError("object requires a literal string dcterms:title")
+
+        properties = []
+        for p, o in resource.predicate_objects():
+            if not isinstance(o, Literal):
+                continue
+            properties.append(Property(p.identifier, o))
+        properties = tuple(properties)
+
+        return Object(
+            abstract=resource_wrapper.str_value(DCTERMS.abstract),
+            collection_uris=collection_uris,
+            institution_uri=institution_uri,
+            properties=properties,
+            rights=Rights.from_properties(properties),
+            title=title,
+            uri=resource.identifier,
+        )
 
     def to_rdf(
         self, *, graph: Graph, property_definitions: Tuple[PropertyDefinition, ...]
