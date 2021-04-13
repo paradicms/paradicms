@@ -16,7 +16,7 @@ class MarkdownDirectoryExtractor(_Extractor):
     Returns a dict of {"markdown": {"person": {"id1": contents, "id2": contents}, "object": {"id1", contents, "id2": contents}, "other": {"id": contents}}}
     """
 
-    def extract(self):
+    def extract(self, **kwds):
         result = {}
         root_dir_path = self._extracted_data_dir_path.absolute()
         for dir_path, _, file_names in os.walk(root_dir_path):

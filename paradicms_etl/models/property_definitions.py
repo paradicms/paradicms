@@ -13,6 +13,11 @@ class PropertyDefinitions:
         label="Alternative title",
         uri=DCTERMS.alternative,
     )
+    BIBLIOGRAPHIC_CITATION = PropertyDefinition(
+        full_text_searchable=True,
+        label="Bibliographic citation",
+        uri=DCTERMS.bibliographicCitation,
+    )
     CONTRIBUTOR = PropertyDefinition(
         full_text_searchable=True,
         label="Contributor",
