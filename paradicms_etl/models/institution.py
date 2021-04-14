@@ -9,8 +9,6 @@ from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definition import PropertyDefinition
 from paradicms_etl.models.rights import Rights
-from paradicms_etl.namespace import CMS
-from paradicms_etl.utils.properties_to_rdf import properties_to_rdf
 
 
 @dataclass(frozen=True)
@@ -28,11 +26,8 @@ class Institution(_NamedModel):
             self, graph=graph, property_definitions=property_definitions
         )
         resource.add(FOAF.name, Literal(self.name))
-        properties_to_rdf(
-            properties=self.properties,
-            property_definitions=property_definitions,
-            resource=resource,
-        )
+        for property_ in self.properties:
+            resource.add(property_.uri, property_.value)
         if self.rights is not None:
             self.rights.to_rdf(add_to_resource=resource)
         return resource

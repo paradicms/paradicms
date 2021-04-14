@@ -4,13 +4,13 @@ from typing import Optional, Tuple
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, RDF
 from rdflib.resource import Resource
+from rdflib.term import Node
 
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definition import PropertyDefinition
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespace import CMS
-from paradicms_etl.utils.properties_to_rdf import properties_to_rdf
 from paradicms_etl.utils.rdf_resource_wrapper import RdfResourceWrapper
 
 
@@ -55,9 +55,13 @@ class Object(_NamedModel):
 
         properties = []
         for p, o in resource.predicate_objects():
-            if not isinstance(o, Literal):
-                continue
-            properties.append(Property(p.identifier, o))
+            if isinstance(o, Node):
+                value = o
+            elif isinstance(o, Resource):
+                value = o.identifier
+            else:
+                raise TypeError(type(o))
+            properties.append(Property(p.identifier, value))
         properties = tuple(properties)
 
         return Object(
@@ -79,11 +83,8 @@ class Object(_NamedModel):
         for collection_uri in self.collection_uris:
             resource.add(CMS.collection, collection_uri)
         resource.add(CMS.institution, self.institution_uri)
-        properties_to_rdf(
-            properties=self.properties,
-            property_definitions=property_definitions,
-            resource=resource,
-        )
+        for property_ in self.properties:
+            resource.add(property_.uri, property_.value)
         if self.rights is not None:
             self.rights.to_rdf(add_to_resource=resource)
         resource.add(DCTERMS.title, Literal(self.title))
