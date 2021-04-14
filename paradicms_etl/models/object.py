@@ -30,24 +30,25 @@ class Object(_NamedModel):
         cls,
         resource: Resource,
         *,
-        collection_uris: Tuple[URIRef, ...] = (),
-        institution_uri: Optional[URIRef] = None,
+        default_collection_uris: Tuple[URIRef, ...] = (),
+        default_institution_uri: Optional[URIRef] = None,
     ):
         resource_wrapper = RdfResourceWrapper(resource)
 
-        if not collection_uris:
-            collection_uris = tuple(
-                collection_resource.identifier
-                for collection_resource in resource.objects(CMS.collection)
-                if isinstance(collection_resource, Resource)
-            )
+        collection_uris = tuple(
+            collection_resource.identifier
+            for collection_resource in resource.objects(CMS.collection)
+            if isinstance(collection_resource, Resource)
+        )
+        if not collection_uris and default_collection_uris:
+            collection_uris = default_collection_uris
 
-        if institution_uri is None:
-            institution_uri = resource.value(CMS.institution)
-            if not isinstance(institution_uri, URIRef):
-                raise ValueError(
-                    f"object {resource.identifier} has no institution statement"
-                )
+        institution_uri = resource.value(CMS.institution)
+        if not institution_uri:
+            if default_institution_uri:
+                institution_uri = default_institution_uri
+            else:
+                raise ValueError("object has no connection to an institution")
 
         title = resource_wrapper.str_value(DCTERMS.title)
         if title is None:

@@ -14,6 +14,8 @@ from markdown_it.renderer import RendererHTML
 from markdown_it.tree import SyntaxTreeNode
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models._named_model import _NamedModel
+from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.object import Object
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property_definitions import PropertyDefinitions
@@ -98,7 +100,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                     if uri_value.startswith("/"):
                         uri_value_split = uri_value.split("/", 2)
                         if len(uri_value_split) == 3:
-                            return MarkdownDirectoryTransformer._model_uri(
+                            return MarkdownDirectoryTransformer.model_uri(
                                 pipeline_id=self.__pipeline_id,
                                 model_type=uri_value_split[1],
                                 model_id=uri_value_split[2],
@@ -219,9 +221,11 @@ class MarkdownDirectoryTransformer(_Transformer):
                 self._visit_node(child_node)
 
     class _MarkdownGraphToModelTransformer:
-        def __init__(self, *, collection_uri: URIRef, institution_uri: URIRef):
-            self.__collection_uri = collection_uri
-            self.__institution_uri = institution_uri
+        def __init__(
+            self, *, default_collection_uri: URIRef, default_institution_uri: URIRef
+        ):
+            self.__default_collection_uri = default_collection_uri
+            self.__default_institution_uri = default_institution_uri
 
         def visit_graph(
             self, *, model_resource: Resource, model_type: str
@@ -232,42 +236,44 @@ class MarkdownDirectoryTransformer(_Transformer):
         def _visit_object_graph(self, object_resource: Resource) -> Object:
             return Object.from_rdf(
                 object_resource,
-                collection_uris=(self.__collection_uri,),
-                institution_uri=self.__institution_uri,
+                default_collection_uris=(self.__default_collection_uri,),
+                default_institution_uri=self.__default_institution_uri,
             )
 
         def _visit_person_graph(self, person_resource: Resource) -> Person:
             return Person.from_rdf(person_resource)
 
-    def __init__(self, **kwds):
+    def __init__(
+        self,
+        default_institution: Optional[Institution] = None,
+        default_collection: Optional[Collection] = None,
+        **kwds,
+    ):
         _Transformer.__init__(self, **kwds)
-        self.__kwds = kwds
+        if default_institution is None:
+            default_institution = self._transform_institution_from_arguments(**kwds)
+        if default_collection is None:
+            default_collection = self._transform_collection_from_arguments(**kwds)
+        assert default_collection.institution_uri == default_institution.uri
+        self.__default_collection = default_collection
+        self.__default_institution = default_institution
 
     def transform(self, markdown: Dict[str, Dict[str, str]]):
         yield from PropertyDefinitions.as_tuple()
 
-        institution = self._transform_institution_from_arguments(**self.__kwds)
-        yield institution
-
-        institution_image = self._transform_institution_image_from_arguments(
-            **self.__kwds
-        )
-        if institution_image is not None:
-            yield institution_image
-
-        collection = self._transform_collection_from_arguments(**self.__kwds)
-        yield collection
+        yielded_default_collection = False
+        yielded_default_institution = False
 
         for model_type in markdown.keys():
             for model_id, markdown_str in markdown[model_type].items():
-                yield self._MarkdownGraphToModelTransformer(
-                    collection_uri=collection.uri,
-                    institution_uri=institution.uri,
+                model = self._MarkdownGraphToModelTransformer(
+                    default_collection_uri=self.__default_collection.uri,
+                    default_institution_uri=self.__default_institution.uri,
                 ).visit_graph(
                     model_type=model_type,
                     model_resource=self._MarkdownAstToGraphTransformer.visit_document(
                         markdown_str,
-                        model_uri=self._model_uri(
+                        model_uri=self.model_uri(
                             pipeline_id=self._pipeline_id,
                             model_type=model_type,
                             model_id=model_id,
@@ -275,9 +281,23 @@ class MarkdownDirectoryTransformer(_Transformer):
                         pipeline_id=self._pipeline_id,
                     ),
                 )
+                yield model
+
+                if not yielded_default_collection and hasattr(model, "collection_uris"):
+                    for collection_uri in model.collection_uris:
+                        if collection_uri == self.__default_collection.uri:
+                            yield self.__default_collection
+                            yielded_default_collection = True
+
+                if not yielded_default_institution and hasattr(
+                    model, "institution_uri"
+                ):
+                    if model.institution_uri == self.__default_institution.uri:
+                        yield self.__default_institution
+                        yielded_default_institution = True
 
     @staticmethod
-    def _model_uri(*, pipeline_id: str, model_type: str, model_id: str) -> URIRef:
+    def model_uri(*, pipeline_id: str, model_type: str, model_id: str) -> URIRef:
         return URIRef(
             f"urn:markdown:{pipeline_id}:{quote(model_type)}:{quote(model_id)}"
         )
