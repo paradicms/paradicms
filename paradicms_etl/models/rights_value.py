@@ -5,7 +5,6 @@ from rdflib import Literal, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.models.property import Property
-from paradicms_etl.utils.is_uri import is_uri
 
 
 @dataclass(init=False)
@@ -16,10 +15,10 @@ class RightsValue:
     """
 
     text: Optional[str] = None
-    uri: Optional[str] = None
+    uri: Optional[URIRef] = None
 
     def __init__(
-        self, text: Union[None, str] = None, uri: Union[None, str, URIRef] = None
+        self, text: Optional[str] = None, uri: Union[None, str, URIRef] = None
     ):
         assert text or uri
 
@@ -29,8 +28,10 @@ class RightsValue:
 
         if uri is not None:
             if isinstance(uri, URIRef):
-                uri = str(uri)
-            if not isinstance(uri, str):
+                pass
+            elif isinstance(uri, str):
+                uri = URIRef(uri)
+            else:
                 raise TypeError(type(uri))
         self.uri = uri
 
@@ -50,12 +51,12 @@ class RightsValue:
                     f"rights properties with different URIs: {property_.uri} vs. {property_definition_uri}"
                 )
 
-            assert isinstance(property_.value, str)
-
-            if is_uri(property_.value):
+            if isinstance(property_.value, Literal):
+                property_value_py = property_.value.toPython()
+                if isinstance(property_value_py, str):
+                    text_property_values.append(property_value_py)
+            elif isinstance(property_.value, URIRef):
                 uri_property_values.append(property_.value)
-            else:
-                text_property_values.append(property_.value)
 
         if len(text_property_values) > 1:
             # raise ValueError(f"{property_definition_uri}: more than one text property, ambiguous")
@@ -77,10 +78,7 @@ class RightsValue:
         elif isinstance(value, cls):
             return value
         elif isinstance(value, str):
-            if is_uri(value):
-                return cls(uri=value)
-            else:
-                return cls(text=value)
+            return cls(text=value)
         elif isinstance(value, URIRef):
             return cls(uri=str(value))
         else:
@@ -90,4 +88,4 @@ class RightsValue:
         if self.text is not None:
             add_to_resource.add(property_uri, Literal(self.text))
         if self.uri is not None:
-            add_to_resource.add(property_uri, URIRef(self.uri))
+            add_to_resource.add(property_uri, self.uri)
