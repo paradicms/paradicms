@@ -48,6 +48,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             *,
             markdown_it: MarkdownIt,
             model_uri: URIRef,
+            pipeline_id: str,
             default_namespace: rdflib.Namespace = DCTERMS,
             namespaces_by_prefix: Optional[Dict[str, rdflib.Namespace]] = None,
         ):
@@ -67,6 +68,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                             continue
                         namespaces_by_prefix[attr.lower()] = value
             self.__namespaces_by_prefix = namespaces_by_prefix.copy()
+            self.__pipeline_id = pipeline_id
             self.__result = Graph().resource(model_uri)
 
         def _convert_front_matter_value_to_rdf_node(
@@ -90,7 +92,18 @@ class MarkdownDirectoryTransformer(_Transformer):
                     raise NotImplementedError("return an RDF list")
             elif isinstance(value, str):
                 if len(value) > 2 and value[0] == "<" and value[-1] == ">":
-                    return URIRef(value[1:-1])
+                    # Consider a URI like </person/X> to be a link to another model in the same Markdown directory,
+                    # and translate it to
+                    uri_value = value[1:-1]
+                    if uri_value.startswith("/"):
+                        uri_value_split = uri_value.split("/", 2)
+                        if len(uri_value_split) == 3:
+                            return MarkdownDirectoryTransformer._model_uri(
+                                pipeline_id=self.__pipeline_id,
+                                model_type=uri_value_split[1],
+                                model_id=uri_value_split[2],
+                            )
+                    return URIRef(uri_value)
                 else:
                     return Literal(value)
             else:
@@ -254,8 +267,17 @@ class MarkdownDirectoryTransformer(_Transformer):
                     model_type=model_type,
                     model_resource=self._MarkdownAstToGraphTransformer.visit_document(
                         markdown_str,
-                        model_uri=URIRef(
-                            f"urn:markdown:{self._pipeline_id}:{quote(model_type)}:{quote(model_id)}"
+                        model_uri=self._model_uri(
+                            pipeline_id=self._pipeline_id,
+                            model_type=model_type,
+                            model_id=model_id,
                         ),
+                        pipeline_id=self._pipeline_id,
                     ),
                 )
+
+    @staticmethod
+    def _model_uri(*, pipeline_id: str, model_type: str, model_id: str) -> URIRef:
+        return URIRef(
+            f"urn:markdown:{pipeline_id}:{quote(model_type)}:{quote(model_id)}"
+        )
