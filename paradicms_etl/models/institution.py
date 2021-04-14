@@ -19,12 +19,8 @@ class Institution(_NamedModel):
     properties: Tuple[Property, ...] = ()
     rights: Optional[Rights] = None
 
-    def to_rdf(
-        self, *, graph: Graph, property_definitions: Tuple[PropertyDefinition, ...]
-    ) -> Resource:
-        resource = _NamedModel.to_rdf(
-            self, graph=graph, property_definitions=property_definitions
-        )
+    def to_rdf(self, *, graph: Graph) -> Resource:
+        resource = _NamedModel.to_rdf(self, graph=graph)
         resource.add(FOAF.name, Literal(self.name))
         for property_ in self.properties:
             resource.add(property_.uri, property_.value)

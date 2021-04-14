@@ -8,7 +8,7 @@ from paradicms_etl.namespace import CMS
 
 @dataclass(frozen=True)
 class _Model:
-    def to_rdf(self, *, graph: Graph, property_definitions) -> Resource:
+    def to_rdf(self, *, graph: Graph) -> Resource:
         """
         Convert this model to RDF.
         """

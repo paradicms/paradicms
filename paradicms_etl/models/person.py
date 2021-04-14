@@ -25,8 +25,8 @@ class Person(_NamedModel):
             raise ValueError("person requires a literal string foaf:name")
         return Person(name=name, uri=resource.identifier)
 
-    def to_rdf(self, *, graph: Graph, **kwds) -> Resource:
-        resource = _NamedModel.to_rdf(self, graph=graph, **kwds)
+    def to_rdf(self, *, graph: Graph) -> Resource:
+        resource = _NamedModel.to_rdf(self, graph=graph)
         if self.family_name is not None:
             resource.add(FOAF.familyName, Literal(self.family_name))
         if self.given_name is not None:

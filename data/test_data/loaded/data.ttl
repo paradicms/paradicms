@@ -10,6 +10,10 @@ dcterms:alternative a paradicms:PropertyDefinition ;
     rdfs:label "Alternative title" ;
     paradicms:fullTextSearchable true .
 
+dcterms:bibliographicCitation a paradicms:PropertyDefinition ;
+    rdfs:label "Bibliographic citation" ;
+    paradicms:fullTextSearchable true .
+
 dcterms:contributor a paradicms:PropertyDefinition ;
     rdfs:label "Contributor" ;
     paradicms:fullTextSearchable true .

@@ -74,12 +74,8 @@ class Object(_NamedModel):
             uri=resource.identifier,
         )
 
-    def to_rdf(
-        self, *, graph: Graph, property_definitions: Tuple[PropertyDefinition, ...]
-    ) -> Resource:
-        resource = _NamedModel.to_rdf(
-            self, graph=graph, property_definitions=property_definitions
-        )
+    def to_rdf(self, *, graph: Graph) -> Resource:
+        resource = _NamedModel.to_rdf(self, graph=graph)
         for collection_uri in self.collection_uris:
             resource.add(CMS.collection, collection_uri)
         resource.add(CMS.institution, self.institution_uri)

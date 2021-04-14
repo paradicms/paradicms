@@ -24,11 +24,8 @@ class RdfFileLoader(_BufferingLoader):
                 sanitize_filename(self._pipeline_id) + "." + self.__format
             )
         graph = self._new_graph()
-        property_definitions = []
         for model in models:
-            if isinstance(model, PropertyDefinition):
-                property_definitions.append(model)
-            model.to_rdf(graph=graph, property_definitions=tuple(property_definitions))
+            model.to_rdf(graph=graph)
         with open(file_path, "w+b") as file_:
             graph.serialize(destination=file_, format=self.__format)
 

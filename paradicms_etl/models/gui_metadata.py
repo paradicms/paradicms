@@ -13,7 +13,7 @@ class GuiMetadata(_Model):
     document_title: Optional[str] = None
     navbar_title: Optional[str] = None
 
-    def to_rdf(self, graph: Graph, **kwds) -> Resource:
+    def to_rdf(self, graph: Graph) -> Resource:
         resource = graph.resource(CMS.guiMetadataInstance)
         # GUI metadata is a singleton, remove all prior triples
         graph.remove((resource.identifier, None, None))

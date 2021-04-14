@@ -14,10 +14,8 @@ class PropertyDefinition(_NamedModel):
     faceted: Optional[bool] = None
     full_text_searchable: Optional[bool] = None
 
-    def to_rdf(self, *, graph: Graph, property_definitions) -> Resource:
-        resource = _NamedModel.to_rdf(
-            self, graph=graph, property_definitions=property_definitions
-        )
+    def to_rdf(self, *, graph: Graph) -> Resource:
+        resource = _NamedModel.to_rdf(self, graph=graph)
         resource.add(RDFS.label, Literal(self.label))
         if self.faceted:
             resource.add(CMS.faceted, Literal(self.faceted))

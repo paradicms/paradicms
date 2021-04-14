@@ -55,8 +55,8 @@ class Image(_Image):
             uri=uri,
         )
 
-    def to_rdf(self, *, graph: Graph, **kwds) -> Resource:
-        resource = _Image.to_rdf(self, graph=graph, **kwds)
+    def to_rdf(self, *, graph: Graph) -> Resource:
+        resource = _Image.to_rdf(self, graph=graph)
         resource.add(FOAF.depicts, self.depicts_uri)
         resource.add(CMS.institution, self.institution_uri)
         return resource
