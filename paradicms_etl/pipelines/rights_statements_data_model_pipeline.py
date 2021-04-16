@@ -1,11 +1,13 @@
 from io import BytesIO
-from typing import Dict
+from pathlib import Path
+from typing import Dict, Generator
 from zipfile import ZipFile
 
 from rdflib import Graph
 import rdflib_jsonld
 
 from paradicms_etl._extractor import _Extractor
+from paradicms_etl._loader import _Loader
 from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.loaders.nop_loader import NopLoader
@@ -41,9 +43,30 @@ class RightsStatementsDataModelPipeline(_Pipeline):
                 graph_subjects = tuple(set(graph.subjects()))
                 assert len(graph_subjects) == 1, graph_subjects
                 uri = graph_subjects[0]
-                model = RightsStatement.from_rdf(resource=graph.resource(uri))
-                print(repr(model))
-                yield model
+                yield RightsStatement.from_rdf(resource=graph.resource(uri))
+
+    class _RightsStatementsDataModelLoader(_Loader):
+        def load(self, *, models: Generator[RightsStatement, None, None]):
+            rights_statements_py_file_path = (
+                Path(__file__).parent.parent / "models" / "rights_statements.py"
+            )
+            rights_statement_reprs = "\n".join(
+                repr(rights_statement) for rights_statement in models
+            )
+            with open(
+                rights_statements_py_file_path, "w+", encoding="utf-8"
+            ) as rights_statements_py_file:
+                rights_statements_py_file.write(
+                    f"""\
+# -*- coding: utf-8 -*-
+                    
+import rdflib.term
+from paradicms_etl.models.rights_statement import RightsStatement
+
+
+{rights_statement_reprs}
+"""
+                )
 
     def __init__(self, **kwds):
         _Pipeline.__init__(
@@ -52,11 +75,11 @@ class RightsStatementsDataModelPipeline(_Pipeline):
                 pipeline_id=self.ID, **kwds
             ),
             id=self.ID,
-            loader=NopLoader(pipeline_id=self.ID, **kwds),
+            loader=self._RightsStatementsDataModelLoader(pipeline_id=self.ID, **kwds),
             transformer=self._RightsStatementsDataModelTransformer(
                 pipeline_id=self.ID, **kwds
             ),
-            **kwds
+            **kwds,
         )
 
 
