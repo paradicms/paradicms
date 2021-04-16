@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
-from rdflib import DCTERMS, Graph, Literal, SKOS
+from rdflib import DCTERMS, Graph, Literal, SKOS, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.models._named_model import _NamedModel
@@ -13,9 +13,9 @@ class RightsStatement(_NamedModel):
     A rights statement. Adapted from the rightsstatements.org data model (https://github.com/rightsstatements/data-model).
     """
 
-    description: str
     pref_label: str
     definition: Optional[str] = None
+    description: Optional[str] = None
     notes: Tuple[str, ...] = ()
     scope_note: Optional[str] = None
 
@@ -29,9 +29,11 @@ class RightsStatement(_NamedModel):
         )
 
         description_literal = resource.value(DCTERMS.description)
-        if not isinstance(description_literal, Literal):
-            raise ValueError("rights statement must have literal dcterms:description")
-        description = description_literal.value
+        description = (
+            description_literal.value
+            if isinstance(description_literal, Literal)
+            else None
+        )
 
         pref_label_literal = resource.value(SKOS.prefLabel)
         if not isinstance(pref_label_literal, Literal):
@@ -50,12 +52,15 @@ class RightsStatement(_NamedModel):
             else None
         )
 
+        assert isinstance(resource.identifier, URIRef)
+
         return cls(
             definition=definition,
             description=description,
             pref_label=pref_label,
             notes=tuple(notes),
             scope_note=scope_note,
+            uri=resource.identifier,
         )
 
     def to_rdf(self, *, graph: Graph) -> Resource:

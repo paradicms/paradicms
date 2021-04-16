@@ -1,5 +1,6 @@
 /config/
 /data/gordon-book-export/
+/data/rights_statements_data_model/
 !/data/README.md
 .mypy_cache/
 *.pyc
