@@ -1,5 +1,5 @@
 from rdflib import Namespace
-from rdflib.namespace import DCTERMS, FOAF, NamespaceManager, OWL
+from rdflib.namespace import DCTERMS, FOAF, NamespaceManager, OWL, SKOS
 
 CMS = Namespace("http://www.paradicms.org/ns#")
 CONTACT = Namespace("http://www.w3.org/2000/10/swap/pim/contact#")
@@ -9,6 +9,7 @@ PROV = Namespace("http://www.w3.org/ns/prov#")
 SCHEMA = Namespace("http://schema.org/")
 TIME = Namespace("http://www.w3.org/2006/time#")
 VRA = Namespace("http://purl.org/vra/")
+
 
 def bind_namespaces(namespace_manager: NamespaceManager):
     namespace_manager.bind("paradicms", CMS)
@@ -20,5 +21,6 @@ def bind_namespaces(namespace_manager: NamespaceManager):
     namespace_manager.bind("owl", OWL)
     namespace_manager.bind("prov", PROV)
     namespace_manager.bind("schema", SCHEMA)
+    namespace_manager.bind("skos", SKOS)
     namespace_manager.bind("time", TIME)
     namespace_manager.bind("vra", VRA)

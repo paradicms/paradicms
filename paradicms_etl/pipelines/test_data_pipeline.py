@@ -19,6 +19,7 @@ from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definition import PropertyDefinition
 from paradicms_etl.models.property_definitions import PropertyDefinitions
 from paradicms_etl.models.rights import Rights
+from paradicms_etl.models.rights_statements import RightsStatements
 from paradicms_etl.models.rights_value import RightsValue
 
 
@@ -46,6 +47,7 @@ class TestDataPipeline(_Pipeline):
 
         def transform(self):
             yield from PropertyDefinitions.as_tuple()
+            yield from RightsStatements.as_tuple()
 
             yield GuiMetadata(document_title="Test data", navbar_title="Test data")
 
