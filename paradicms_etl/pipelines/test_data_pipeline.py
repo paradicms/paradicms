@@ -35,9 +35,6 @@ class TestDataPipeline(_Pipeline):
         __MATERIALS = tuple(f"Material {i}" for i in range(10))
         __MEDIA = tuple(f"Medium {i}" for i in range(10))
         __PUBLISHERS = tuple(f"Publisher {i}" for i in range(10))
-        __RIGHTS_STATEMENT_URI = URIRef(
-            "https://rightsstatements.org/page/InC-EDU/1.0/?language=en"
-        )
         __SOURCES = tuple(f"Source {i}" for i in range(10))
         __SPATIALS = tuple(f"Spatial {i}" for i in range(10))
         __SUBJECTS = tuple(f"Subject {i}" for i in range(10))
@@ -71,8 +68,9 @@ class TestDataPipeline(_Pipeline):
             rights = Rights(
                 holder=f"{institution.name} rights holder",
                 statement=RightsValue(
+                    # Override text
                     text=f"{institution.name} rights",
-                    uri=self.__RIGHTS_STATEMENT_URI,
+                    uri=RightsStatements.InC_EDU.uri,
                 ),
             )
 
@@ -133,8 +131,9 @@ class TestDataPipeline(_Pipeline):
                     rights=Rights(
                         holder=f"{institution_name} rights holder",
                         statement=RightsValue(
+                            # Override text
                             text=f"{institution_name} rights",
-                            uri=self.__RIGHTS_STATEMENT_URI,
+                            uri=RightsStatements.InC_EDU.uri,
                         ),
                     ),
                     uri=URIRef(f"http://example.com/institution{institution_i}"),
@@ -280,7 +279,8 @@ class TestDataPipeline(_Pipeline):
                 rights=Rights(
                     holder=f"{title} rights holder",
                     statement=RightsValue(
-                        text=f"{title} rights", uri=self.__RIGHTS_STATEMENT_URI
+                        # No text, will have to pick up from RightsStatement
+                        uri=RightsStatements.InC_EDU.uri
                     ),
                 ),
                 title=title,
