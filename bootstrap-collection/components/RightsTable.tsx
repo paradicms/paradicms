@@ -28,14 +28,10 @@ const RightsValueLink: React.FunctionComponent<{value: RightsValue}> = ({
   value,
 }) => {
   let {text, uri} = value;
-  if (text && uri) {
+  if (uri) {
     return <a href={uri}>{text}</a>;
-  } else if (text) {
-    return <span>{text}</span>;
-  } else if (uri) {
-    return <a href={uri}>{uri}</a>;
   } else {
-    return null;
+    return <span>{text}</span>;
   }
 };
 
