@@ -70,7 +70,6 @@ class Object(_NamedModel):
             collection_uris=collection_uris,
             institution_uri=institution_uri,
             properties=properties,
-            rights=Rights.from_properties(properties),
             title=title,
             uri=resource.identifier,
         )

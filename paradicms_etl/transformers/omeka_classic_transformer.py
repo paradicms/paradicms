@@ -294,7 +294,7 @@ class OmekaClassicTransformer(_Transformer):
             collection_uris=(collection_uri,),
             institution_uri=institution_uri,
             properties=properties,
-            rights=Rights.from_properties(properties),
+            # rights=Rights.from_properties(properties),
             title=title,
             uri=URIRef(item["url"]),
         )

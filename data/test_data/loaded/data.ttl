@@ -8082,14 +8082,12 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     skos:scopeNote "This Rights Statement can be used only for copyrighted Items for which the organization making the Item available is the rights-holder or has been explicitly authorized by the rights-holder(s) to allow third parties to use their Work(s) for educational purposes without first obtaining permission." .
 
 <http://example.com/institution0> a paradicms:Institution ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/>,
-        "Institution0 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0 rights holder" ;
     foaf:name "Institution0" .
 
 <http://example.com/institution1> a paradicms:Institution ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/>,
-        "Institution1 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1 rights holder" ;
     foaf:name "Institution1" .
 

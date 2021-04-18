@@ -305,8 +305,6 @@ class LunaTransformer(_Transformer):
                 original_image_uri=original_image_uri
                 if image_uri != original_image_uri
                 else None,
-                rights=Rights(
-                    statement=RightsValue(text=reproduction_rights_statement[0])
-                ),
+                rights=Rights(statement=reproduction_rights_statement[0]),
                 uri=image_uri,
             )
