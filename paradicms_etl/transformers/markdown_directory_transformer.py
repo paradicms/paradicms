@@ -15,10 +15,16 @@ from markdown_it.tree import SyntaxTreeNode
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.creative_commons_rights_statements import (
+    CreativeCommonsRightsStatements,
+)
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.object import Object
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property_definitions import PropertyDefinitions
+from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
+    RightsStatementsDotOrgRightsStatements,
+)
 
 
 class MarkdownDirectoryTransformer(_Transformer):
@@ -259,7 +265,9 @@ class MarkdownDirectoryTransformer(_Transformer):
         self.__default_institution = default_institution
 
     def transform(self, markdown: Dict[str, Dict[str, str]]):
+        yield from CreativeCommonsRightsStatements.as_tuple()
         yield from PropertyDefinitions.as_tuple()
+        yield from RightsStatementsDotOrgRightsStatements.as_tuple()
 
         yielded_default_collection = False
         yielded_default_institution = False
