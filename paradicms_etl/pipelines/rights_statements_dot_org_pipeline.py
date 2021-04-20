@@ -14,10 +14,10 @@ from paradicms_etl.loaders.nop_loader import NopLoader
 from paradicms_etl.models.rights_statement import RightsStatement
 
 
-class RightsStatementsDataModelPipeline(_Pipeline):
-    ID = "rights_statements_data_model"
+class RightsStatementsDotOrgPipeline(_Pipeline):
+    ID = "rights_statements_dot_org"
 
-    class _RightsStatementsDataModelExtractor(_Extractor):
+    class _RightsStatementsDotOrgExtractor(_Extractor):
         def extract(self, *, force: bool):
             zip_file_path = self._download(
                 "https://github.com/rightsstatements/data-model/archive/refs/heads/master.zip",
@@ -40,7 +40,7 @@ class RightsStatementsDataModelPipeline(_Pipeline):
                         json_ld_file_contents[id_] = zip_file_entry.read()
             return {"json_ld_file_contents": json_ld_file_contents}
 
-    class _RightsStatementsDataModelTransformer(_Transformer):
+    class _RightsStatementsDotOrgTransformer(_Transformer):
         def transform(self, json_ld_file_contents: Dict[str, bytes]):
             for entry_id, json_ld_bytes in json_ld_file_contents.items():
                 graph = Graph()
@@ -52,10 +52,12 @@ class RightsStatementsDataModelPipeline(_Pipeline):
                     resource=graph.resource(uri), identifier=entry_id
                 )
 
-    class _RightsStatementsDataModelLoader(_Loader):
+    class _RightsStatementsDotOrgLoader(_Loader):
         def load(self, *, models: Generator[RightsStatement, None, None]):
             rights_statements_py_file_path = (
-                Path(__file__).parent.parent / "models" / "rights_statements.py"
+                Path(__file__).parent.parent
+                / "models"
+                / "rights_statements_dot_org_rights_statements.py"
             )
             rights_statement_reprs = "\n\n".join(
                 f"    {rights_statement.identifier.replace('-', '_')} = {repr(rights_statement)}"
@@ -72,31 +74,25 @@ from typing import Tuple
 
 import rdflib.term
 from paradicms_etl.models.rights_statement import RightsStatement
+from paradicms_etl.models._model_singletons import _ModelSingletons
 
 
-class RightsStatements:
+class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
+    _MODEL_CLASS = RightsStatement
+
 {rights_statement_reprs}
-    
-    @classmethod
-    def as_tuple(cls) -> Tuple[RightsStatement, ...]:
-        tuple_ = []
-        for __attr in dir(RightsStatements):
-            __value = getattr(RightsStatements, __attr)
-            if isinstance(__value, RightsStatement):
-                tuple_.append(__value)
-        return tuple(tuple_)
 """
                 )
 
     def __init__(self, **kwds):
         _Pipeline.__init__(
             self,
-            extractor=self._RightsStatementsDataModelExtractor(
+            extractor=self._RightsStatementsDotOrgExtractor(
                 pipeline_id=self.ID, **kwds
             ),
             id=self.ID,
-            loader=self._RightsStatementsDataModelLoader(pipeline_id=self.ID, **kwds),
-            transformer=self._RightsStatementsDataModelTransformer(
+            loader=self._RightsStatementsDotOrgLoader(pipeline_id=self.ID, **kwds),
+            transformer=self._RightsStatementsDotOrgTransformer(
                 pipeline_id=self.ID, **kwds
             ),
             **kwds,
@@ -104,4 +100,4 @@ class RightsStatements:
 
 
 if __name__ == "__main__":
-    RightsStatementsDataModelPipeline.main()
+    RightsStatementsDotOrgPipeline.main()
