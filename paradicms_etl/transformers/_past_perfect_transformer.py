@@ -9,7 +9,9 @@ from paradicms_etl.models.image import Image
 from paradicms_etl.models.object import Object
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definition import PropertyDefinition
-from paradicms_etl.models.property_definitions import PropertyDefinitions
+from paradicms_etl.models.dublin_core_property_definitions import (
+    DublinCorePropertyDefinitions,
+)
 
 
 class _PastPerfectTransformer(_Transformer):
@@ -42,11 +44,14 @@ class _PastPerfectTransformer(_Transformer):
 
         properties = []
         for property_definition, attribute_values in (
-            (PropertyDefinitions.ALTERNATIVE_TITLE, database_object.othername),
-            (PropertyDefinitions.DATE, database_object.date),
-            (PropertyDefinitions.DESCRIPTION, database_object.description),
-            (PropertyDefinitions.IDENTIFIER, database_object.id),
-            (PropertyDefinitions.TITLE, database_object.title),
+            (
+                DublinCorePropertyDefinitions.ALTERNATIVE_TITLE,
+                database_object.othername,
+            ),
+            (DublinCorePropertyDefinitions.DATE, database_object.date),
+            (DublinCorePropertyDefinitions.DESCRIPTION, database_object.description),
+            (DublinCorePropertyDefinitions.IDENTIFIER, database_object.id),
+            (DublinCorePropertyDefinitions.TITLE, database_object.title),
         ):
             properties.extend(
                 self._convert_database_object_attribute_values_to_properties(
@@ -56,7 +61,7 @@ class _PastPerfectTransformer(_Transformer):
         return tuple(properties)
 
     def transform(self, database):
-        yield from PropertyDefinitions.as_tuple()
+        yield from DublinCorePropertyDefinitions.as_tuple()
 
         institution = self._transform_institution_from_arguments(**self.__kwds)
         yield institution
