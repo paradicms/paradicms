@@ -12,9 +12,14 @@ from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.object import Object
 from paradicms_etl.models.property import Property
-from paradicms_etl.models.property_definitions import PropertyDefinitions
+from paradicms_etl.models.dublin_core_property_definitions import (
+    DublinCorePropertyDefinitions,
+)
 from paradicms_etl.models.rights import Rights
-from paradicms_etl.models.rights_value import RightsValue
+
+from paradicms_etl.models.vra_core_property_definitions import (
+    VraCorePropertyDefinitions,
+)
 
 
 class LunaTransformer(_Transformer):
@@ -66,7 +71,8 @@ class LunaTransformer(_Transformer):
         yield from zip(*all_field_values)
 
     def transform(self, base_url: str, search_results):
-        yield from PropertyDefinitions.as_tuple()
+        yield from DublinCorePropertyDefinitions.as_tuple()
+        yield from VraCorePropertyDefinitions.as_tuple()
 
         institution = self._transform_institution(
             base_url=base_url, institution_name=search_results["institutionName"]
@@ -189,10 +195,10 @@ class LunaTransformer(_Transformer):
         properties = []
 
         for field_name, property_definition in (
-            ("Culture", PropertyDefinitions.CULTURAL_CONTEXT),
-            ("Description", PropertyDefinitions.DESCRIPTION),
-            ("Subject", PropertyDefinitions.SUBJECT),
-            ("Work Type", PropertyDefinitions.TYPE),
+            ("Culture", VraCorePropertyDefinitions.CULTURAL_CONTEXT),
+            ("Description", DublinCorePropertyDefinitions.DESCRIPTION),
+            ("Subject", DublinCorePropertyDefinitions.SUBJECT),
+            ("Work Type", DublinCorePropertyDefinitions.TYPE),
         ):
             for field_value in field_values.pop(field_name, []):
                 properties.append(Property(property_definition, field_value))
@@ -208,13 +214,13 @@ class LunaTransformer(_Transformer):
         ) in pop_qualified_field_values(
             "Creator", "Creator Dates", "Creator Type", "Creator Role"
         ):
-            properties.append(Property(PropertyDefinitions.CREATOR, creator))
+            properties.append(Property(DublinCorePropertyDefinitions.CREATOR, creator))
 
         for date, date_type in pop_qualified_field_values("Date", "Date Type"):
             if date_type == "completion date":
-                property_definition = PropertyDefinitions.DATE_SUBMITTED
+                property_definition = DublinCorePropertyDefinitions.DATE_SUBMITTED
             elif date_type == "creation":
-                property_definition = PropertyDefinitions.DATE_CREATED
+                property_definition = DublinCorePropertyDefinitions.DATE_CREATED
             else:
                 raise ValueError(date_type)
             properties.append(Property(property_definition, date))
@@ -227,10 +233,10 @@ class LunaTransformer(_Transformer):
         for material, material_type in pop_qualified_field_values(
             "Material", "Material Type"
         ):
-            properties.append(Property(PropertyDefinitions.MATERIAL, material))
+            properties.append(Property(VraCorePropertyDefinitions.MATERIAL, material))
 
         for title, title_type in pop_qualified_field_values("Title", "Title Type"):
-            properties.append(Property(PropertyDefinitions.TITLE, title))
+            properties.append(Property(DublinCorePropertyDefinitions.TITLE, title))
 
         for ignore_key in (
             "Repository",
