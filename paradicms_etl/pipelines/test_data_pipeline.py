@@ -17,10 +17,15 @@ from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.object import Object
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definition import PropertyDefinition
-from paradicms_etl.models.property_definitions import PropertyDefinitions
+from paradicms_etl.models.dublin_core_property_definitions import (
+    DublinCorePropertyDefinitions,
+)
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
+)
+from paradicms_etl.models.vra_core_property_definitions import (
+    VraCorePropertyDefinitions,
 )
 
 
@@ -44,8 +49,9 @@ class TestDataPipeline(_Pipeline):
         __TYPES = tuple(f"Type {i}" for i in range(10))
 
         def transform(self):
-            yield from PropertyDefinitions.as_tuple()
+            yield from DublinCorePropertyDefinitions.as_tuple()
             yield from RightsStatementsDotOrgRightsStatements.as_tuple()
+            yield from VraCorePropertyDefinitions.as_tuple()
 
             yield GuiMetadata(document_title="Test data", navbar_title="Test data")
 
@@ -176,22 +182,26 @@ class TestDataPipeline(_Pipeline):
             properties = []
             properties.extend(
                 Property(
-                    PropertyDefinitions.ALTERNATIVE_TITLE,
+                    DublinCorePropertyDefinitions.ALTERNATIVE_TITLE,
                     f"{title} alternative title {i}",
                 )
                 for i in range(2)
             )
             properties.extend(
-                object_property_values(self.__CREATORS, 2, PropertyDefinitions.CREATOR)
+                object_property_values(
+                    self.__CREATORS, 2, DublinCorePropertyDefinitions.CREATOR
+                )
             )
             properties.extend(
                 object_property_values(
-                    self.__CULTURAL_CONTEXTS, 2, PropertyDefinitions.CULTURAL_CONTEXT
+                    self.__CULTURAL_CONTEXTS,
+                    2,
+                    VraCorePropertyDefinitions.CULTURAL_CONTEXT,
                 )
             )
             properties.extend(
                 Property(
-                    PropertyDefinitions.DATE,
+                    DublinCorePropertyDefinitions.DATE,
                     (
                         date(year=2020, month=8, day=9)
                         - timedelta(minutes=(60 * 24 * (object_i + date_i)))
@@ -201,67 +211,81 @@ class TestDataPipeline(_Pipeline):
             )
             properties.append(
                 Property(
-                    PropertyDefinitions.DESCRIPTION,
+                    DublinCorePropertyDefinitions.DESCRIPTION,
                     self.__LOREM_IPSUM,
                 )
             )
             properties.extend(
                 Property(
-                    PropertyDefinitions.DESCRIPTION,
+                    DublinCorePropertyDefinitions.DESCRIPTION,
                     f"{title} description {i}",
                 )
                 for i in range(2)
             )
             properties.extend(
-                object_property_values(self.__EXTENTS, 2, PropertyDefinitions.EXTENT)
+                object_property_values(
+                    self.__EXTENTS, 2, DublinCorePropertyDefinitions.EXTENT
+                )
             )
             properties.extend(
-                Property(PropertyDefinitions.IDENTIFIER, f"{title}Id{i}")
+                Property(DublinCorePropertyDefinitions.IDENTIFIER, f"{title}Id{i}")
                 for i in range(2)
             )
             properties.extend(
                 object_property_values(
-                    self.__LANGUAGES, 2, PropertyDefinitions.LANGUAGE
+                    self.__LANGUAGES, 2, DublinCorePropertyDefinitions.LANGUAGE
                 )
             )
             properties.extend(
                 object_property_values(
-                    self.__MATERIALS, 2, PropertyDefinitions.MATERIAL
+                    self.__MATERIALS, 2, VraCorePropertyDefinitions.MATERIAL
                 )
             )
             properties.extend(
-                object_property_values(self.__MEDIA, 2, PropertyDefinitions.MEDIUM)
+                object_property_values(
+                    self.__MEDIA, 2, DublinCorePropertyDefinitions.MEDIUM
+                )
             )
             properties.extend(
-                Property(PropertyDefinitions.PROVENANCE, f"{title} provenance {i}")
+                Property(
+                    DublinCorePropertyDefinitions.PROVENANCE, f"{title} provenance {i}"
+                )
                 for i in range(2)
             )
             properties.extend(
                 object_property_values(
-                    self.__PUBLISHERS, 2, PropertyDefinitions.PUBLISHER
-                )
-            )
-            properties.extend(
-                object_property_values(self.__SOURCES, 2, PropertyDefinitions.SOURCE)
-            )
-            properties.extend(
-                object_property_values(self.__SPATIALS, 2, PropertyDefinitions.SPATIAL)
-            )
-            properties.extend(
-                object_property_values(self.__SUBJECTS, 2, PropertyDefinitions.SUBJECT)
-            )
-            properties.extend(
-                object_property_values(
-                    self.__TECHNIQUES, 2, PropertyDefinitions.TECHNIQUE
+                    self.__PUBLISHERS, 2, DublinCorePropertyDefinitions.PUBLISHER
                 )
             )
             properties.extend(
                 object_property_values(
-                    self.__TEMPORALS, 2, PropertyDefinitions.TEMPORAL
+                    self.__SOURCES, 2, DublinCorePropertyDefinitions.SOURCE
                 )
             )
             properties.extend(
-                object_property_values(self.__TYPES, 2, PropertyDefinitions.TYPE)
+                object_property_values(
+                    self.__SPATIALS, 2, DublinCorePropertyDefinitions.SPATIAL
+                )
+            )
+            properties.extend(
+                object_property_values(
+                    self.__SUBJECTS, 2, DublinCorePropertyDefinitions.SUBJECT
+                )
+            )
+            properties.extend(
+                object_property_values(
+                    self.__TECHNIQUES, 2, VraCorePropertyDefinitions.TECHNIQUE
+                )
+            )
+            properties.extend(
+                object_property_values(
+                    self.__TEMPORALS, 2, DublinCorePropertyDefinitions.TEMPORAL
+                )
+            )
+            properties.extend(
+                object_property_values(
+                    self.__TYPES, 2, DublinCorePropertyDefinitions.TYPE
+                )
             )
 
             object_ = Object(

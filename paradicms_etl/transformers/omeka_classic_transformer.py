@@ -7,7 +7,9 @@ from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.object import Object
 from paradicms_etl.models.property import Property
-from paradicms_etl.models.property_definitions import PropertyDefinitions
+from paradicms_etl.models.dublin_core_property_definitions import (
+    DublinCorePropertyDefinitions,
+)
 from paradicms_etl.models.rights import Rights
 from pyformance import MetricsRegistry
 from rdflib import URIRef
@@ -42,7 +44,7 @@ class OmekaClassicTransformer(_Transformer):
         self.__transform_file_timer = self._metrics_registry.timer("transform_file")
 
     def transform(self, collections, files, items):
-        yield from PropertyDefinitions.as_tuple()
+        yield from DublinCorePropertyDefinitions.as_tuple()
 
         institution = self._transform_institution_from_arguments(
             **self.__institution_kwds
@@ -107,8 +109,8 @@ class OmekaClassicTransformer(_Transformer):
         self, properties: Tuple[Property, ...]
     ) -> Tuple[str, Tuple[Property, ...]]:
         for title_property_definition in (
-            PropertyDefinitions.TITLE,
-            PropertyDefinitions.ALTERNATIVE_TITLE,
+            DublinCorePropertyDefinitions.TITLE,
+            DublinCorePropertyDefinitions.ALTERNATIVE_TITLE,
         ):
             for property_i, property_ in enumerate(properties):
                 if property_.uri == title_property_definition.uri:
@@ -159,33 +161,33 @@ class OmekaClassicTransformer(_Transformer):
         # so we have to map back here.
         properties = set()
         for key, property_definition in (
-            ("Alternative Title", PropertyDefinitions.ALTERNATIVE_TITLE),
-            ("Contributor", PropertyDefinitions.CONTRIBUTOR),
-            ("Coverage", PropertyDefinitions.COVERAGE),
-            ("Creator", PropertyDefinitions.CREATOR),
-            ("Date", PropertyDefinitions.DATE),
-            ("Date Created", PropertyDefinitions.DATE_CREATED),
-            ("Date Submitted", PropertyDefinitions.DATE_SUBMITTED),
-            ("Description", PropertyDefinitions.DESCRIPTION),
-            ("Extent", PropertyDefinitions.EXTENT),
-            ("Format", PropertyDefinitions.FORMAT),
-            ("Identifier", PropertyDefinitions.IDENTIFIER),
-            ("Is Referenced By", PropertyDefinitions.IS_REFERENCED_BY),
-            ("Language", PropertyDefinitions.LANGUAGE),
-            ("License", PropertyDefinitions.LICENSE),
-            ("Medium", PropertyDefinitions.MEDIUM),
-            ("Provenance", PropertyDefinitions.PROVENANCE),
-            ("Publisher", PropertyDefinitions.PUBLISHER),
-            ("References", PropertyDefinitions.IS_REFERENCED_BY),
-            ("Relation", PropertyDefinitions.RELATION),
-            ("Rights", PropertyDefinitions.RIGHTS),
-            ("Rights Holder", PropertyDefinitions.RIGHTS_HOLDER),
-            ("Source", PropertyDefinitions.SOURCE),
-            ("Spatial Coverage", PropertyDefinitions.SPATIAL),
-            ("Subject", PropertyDefinitions.SUBJECT),
-            ("Temporal Coverage", PropertyDefinitions.TEMPORAL),
-            ("Title", PropertyDefinitions.TITLE),
-            ("Type", PropertyDefinitions.TYPE),
+            ("Alternative Title", DublinCorePropertyDefinitions.ALTERNATIVE_TITLE),
+            ("Contributor", DublinCorePropertyDefinitions.CONTRIBUTOR),
+            ("Coverage", DublinCorePropertyDefinitions.COVERAGE),
+            ("Creator", DublinCorePropertyDefinitions.CREATOR),
+            ("Date", DublinCorePropertyDefinitions.DATE),
+            ("Date Created", DublinCorePropertyDefinitions.DATE_CREATED),
+            ("Date Submitted", DublinCorePropertyDefinitions.DATE_SUBMITTED),
+            ("Description", DublinCorePropertyDefinitions.DESCRIPTION),
+            ("Extent", DublinCorePropertyDefinitions.EXTENT),
+            ("Format", DublinCorePropertyDefinitions.FORMAT),
+            ("Identifier", DublinCorePropertyDefinitions.IDENTIFIER),
+            ("Is Referenced By", DublinCorePropertyDefinitions.IS_REFERENCED_BY),
+            ("Language", DublinCorePropertyDefinitions.LANGUAGE),
+            ("License", DublinCorePropertyDefinitions.LICENSE),
+            ("Medium", DublinCorePropertyDefinitions.MEDIUM),
+            ("Provenance", DublinCorePropertyDefinitions.PROVENANCE),
+            ("Publisher", DublinCorePropertyDefinitions.PUBLISHER),
+            ("References", DublinCorePropertyDefinitions.IS_REFERENCED_BY),
+            ("Relation", DublinCorePropertyDefinitions.RELATION),
+            ("Rights", DublinCorePropertyDefinitions.RIGHTS),
+            ("Rights Holder", DublinCorePropertyDefinitions.RIGHTS_HOLDER),
+            ("Source", DublinCorePropertyDefinitions.SOURCE),
+            ("Spatial Coverage", DublinCorePropertyDefinitions.SPATIAL),
+            ("Subject", DublinCorePropertyDefinitions.SUBJECT),
+            ("Temporal Coverage", DublinCorePropertyDefinitions.TEMPORAL),
+            ("Title", DublinCorePropertyDefinitions.TITLE),
+            ("Type", DublinCorePropertyDefinitions.TYPE),
         ):
             for value in dc_element_text_tree.pop(key, []):
                 properties.add(Property(property_definition, value))

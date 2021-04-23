@@ -1,4 +1,6 @@
-from paradicms_etl.models.property_definitions import PropertyDefinitions
+from paradicms_etl.models.dublin_core_property_definitions import (
+    DublinCorePropertyDefinitions,
+)
 from paradicms_etl.transformers._past_perfect_transformer import _PastPerfectTransformer
 
 
@@ -16,9 +18,9 @@ class PastPerfectOnlineTransformer(_PastPerfectTransformer):
             ("Description", None),
             ("Object Name", None),
             ("Other Name", None),
-            ("People & Trade Names", PropertyDefinitions.ALTERNATIVE_TITLE),
-            ("Provenance", PropertyDefinitions.PROVENANCE),
-            ("Subjects", PropertyDefinitions.SUBJECT),
+            ("People & Trade Names", DublinCorePropertyDefinitions.ALTERNATIVE_TITLE),
+            ("Provenance", DublinCorePropertyDefinitions.PROVENANCE),
+            ("Subjects", DublinCorePropertyDefinitions.SUBJECT),
             ("Title", None),
         ):
             impl_attribute_values = impl_attributes.pop(impl_attributes_key, None)

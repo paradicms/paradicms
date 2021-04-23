@@ -1,12 +1,13 @@
 from dataclasses import dataclass
-from typing import Optional, Tuple, Union
+from typing import Union
 
-from rdflib import BNode, Graph, Literal, URIRef
+from rdflib import Literal, URIRef
 from rdflib.resource import Resource
 from rdflib.term import Node
 
-from paradicms_etl.models.property import Property
-from paradicms_etl.models.property_definitions import PropertyDefinitions
+from paradicms_etl.models.dublin_core_property_definitions import (
+    DublinCorePropertyDefinitions,
+)
 
 
 @dataclass
@@ -17,10 +18,10 @@ class Rights:
     statement: Union[None, str, URIRef] = None
 
     __PROPERTY_URIS = {
-        "creator": PropertyDefinitions.CREATOR.uri,
-        "holder": PropertyDefinitions.RIGHTS_HOLDER.uri,
-        "license": PropertyDefinitions.LICENSE.uri,
-        "statement": PropertyDefinitions.RIGHTS.uri,
+        "creator": DublinCorePropertyDefinitions.CREATOR.uri,
+        "holder": DublinCorePropertyDefinitions.RIGHTS_HOLDER.uri,
+        "license": DublinCorePropertyDefinitions.LICENSE.uri,
+        "statement": DublinCorePropertyDefinitions.RIGHTS.uri,
     }
 
     def to_rdf(self, *, add_to_resource: Resource) -> None:

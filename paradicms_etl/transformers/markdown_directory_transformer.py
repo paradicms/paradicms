@@ -21,7 +21,9 @@ from paradicms_etl.models.creative_commons_rights_statements import (
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.object import Object
 from paradicms_etl.models.person import Person
-from paradicms_etl.models.property_definitions import PropertyDefinitions
+from paradicms_etl.models.dublin_core_property_definitions import (
+    DublinCorePropertyDefinitions,
+)
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -266,7 +268,7 @@ class MarkdownDirectoryTransformer(_Transformer):
 
     def transform(self, markdown: Dict[str, Dict[str, str]]):
         yield from CreativeCommonsRightsStatements.as_tuple()
-        yield from PropertyDefinitions.as_tuple()
+        yield from DublinCorePropertyDefinitions.as_tuple()
         yield from RightsStatementsDotOrgRightsStatements.as_tuple()
 
         yielded_default_collection = False
