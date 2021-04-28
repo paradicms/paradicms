@@ -51,12 +51,6 @@ class License(_NamedModel):
 
     def to_rdf(self, *, graph: Graph) -> Resource:
         resource = _NamedModel.to_rdf(self, graph=graph)
-        if self.definition is not None:
-            resource.add(SKOS.definition, Literal(self.definition))
-        resource.add(DCTERMS.description, Literal(self.description))
         resource.add(DCTERMS.identifier, Literal(self.identifier))
-        for note in self.notes:
-            resource.add(SKOS.note, Literal(note))
-        resource.add(SKOS.prefLabel, Literal(self.pref_label))
-        if self.scope_note is not None:
-            resource.add(SKOS.scopeNote, Literal(self.scope_note))
+        resource.add(DCTERMS.title, Literal(self.title))
+        return resource
