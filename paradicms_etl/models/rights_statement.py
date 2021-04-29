@@ -22,14 +22,14 @@ class RightsStatement(_NamedModel):
 
     @classmethod
     def from_rdf(cls, resource: Resource, *, identifier: Optional[str] = None):
-        definition_literal = resource.value(SKOS.definition)
+        definition_literal = resource.value(SKOS.definition, any=False)
         definition = (
             definition_literal.value
             if isinstance(definition_literal, Literal)
             else None
         )
 
-        description_literal = resource.value(DCTERMS.description)
+        description_literal = resource.value(DCTERMS.description, any=False)
         description = (
             description_literal.value
             if isinstance(description_literal, Literal)
@@ -37,14 +37,14 @@ class RightsStatement(_NamedModel):
         )
 
         if identifier is None:
-            identifier_literal = resource.value(DCTERMS.identifier)
+            identifier_literal = resource.value(DCTERMS.identifier, any=False)
             if not isinstance(identifier_literal, Literal):
                 raise ValueError(
                     "rights statement must have literal dcterms:identifier"
                 )
             identifier = identifier_literal.value
 
-        pref_label_literal = resource.value(SKOS.prefLabel)
+        pref_label_literal = resource.value(SKOS.prefLabel, any=False)
         if not isinstance(pref_label_literal, Literal):
             raise ValueError("rights statement must have literal skos:prefLabel")
         pref_label = pref_label_literal.value
@@ -54,7 +54,7 @@ class RightsStatement(_NamedModel):
             if isinstance(note_literal, Literal):
                 notes.append(note_literal.value)
 
-        scope_note_literal = resource.value(SKOS.scopeNote)
+        scope_note_literal = resource.value(SKOS.scopeNote, any=False)
         scope_note = (
             scope_note_literal.value
             if isinstance(scope_note_literal, Literal)

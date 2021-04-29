@@ -29,19 +29,27 @@ class License(_NamedModel):
         # <dc:identifier>BSD</dc:identifier>
         # </cc:License>
 
-        identifier_literal = resource.value(DCTERMS.identifier)
+        identifier_literal = resource.value(DCTERMS.identifier, any=False)
         if identifier_literal is None:
             identifier_literal = resource.value(DC.identifier)
         if not isinstance(identifier_literal, Literal):
             raise ValueError("license must have literal dcterms:identifier")
         identifier = identifier_literal.value
 
-        title_literal = resource.value(DCTERMS.title)
-        if title_literal is None:
-            title_literal = resource.value(DC.title)
-        if not isinstance(title_literal, Literal):
+        title = None
+        for property_ in (DCTERMS.title, DC.title):
+            for title_node in resource.objects(property_):
+                if not isinstance(title_node, Literal):
+                    continue
+                title_literal = title_node
+                if title_literal.language != "en":
+                    continue
+                title = title_literal.value
+                break
+            if title is not None:
+                break
+        if title is None:
             raise ValueError("license must have literal dcterms:title")
-        title = title_literal.value
 
         return cls(
             identifier=identifier,
