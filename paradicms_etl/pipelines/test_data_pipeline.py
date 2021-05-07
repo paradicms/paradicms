@@ -10,6 +10,7 @@ from paradicms_etl.extractors.nop_extractor import NopExtractor
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.gui_metadata import GuiMetadata
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
@@ -49,6 +50,7 @@ class TestDataPipeline(_Pipeline):
         __TYPES = tuple(f"Type {i}" for i in range(10))
 
         def transform(self):
+            yield from CreativeCommonsLicenses.as_tuple()
             yield from DublinCorePropertyDefinitions.as_tuple()
             yield from RightsStatementsDotOrgRightsStatements.as_tuple()
             yield from VraCorePropertyDefinitions.as_tuple()

@@ -7,6 +7,98 @@
 @prefix vra: <http://purl.org/vra/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+<http://creativecommons.org/licenses/BSD/> a paradicms:License ;
+    dcterms:identifier "BSD" ;
+    dcterms:title "BSD" .
+
+<http://creativecommons.org/licenses/GPL/2.0/> a paradicms:License ;
+    dcterms:identifier "GPL" ;
+    dcterms:title "GNU General Public License" .
+
+<http://creativecommons.org/licenses/LGPL/2.1/> a paradicms:License ;
+    dcterms:identifier "LGPL" ;
+    dcterms:title "GNU Lesser General Public License" .
+
+<http://creativecommons.org/licenses/MIT/> a paradicms:License ;
+    dcterms:identifier "MIT" ;
+    dcterms:title "MIT" .
+
+<http://creativecommons.org/licenses/by-nc-nd/4.0/> a paradicms:License ;
+    dcterms:identifier "by-nc-nd" ;
+    dcterms:title "Attribution-NonCommercial-NoDerivatives 4.0 International" .
+
+<http://creativecommons.org/licenses/by-nc-sa/4.0/> a paradicms:License ;
+    dcterms:identifier "by-nc-sa" ;
+    dcterms:title "Attribution-NonCommercial-ShareAlike 4.0 International" .
+
+<http://creativecommons.org/licenses/by-nc/4.0/> a paradicms:License ;
+    dcterms:identifier "by-nc" ;
+    dcterms:title "Attribution-NonCommercial 4.0 International" .
+
+<http://creativecommons.org/licenses/by-nd-nc/1.0/> a paradicms:License ;
+    dcterms:identifier "by-nd-nc" ;
+    dcterms:title "Attribution-NoDerivs-NonCommercial 1.0 Generic" .
+
+<http://creativecommons.org/licenses/by-nd/4.0/> a paradicms:License ;
+    dcterms:identifier "by-nd" ;
+    dcterms:title "Attribution-NoDerivatives 4.0 International" .
+
+<http://creativecommons.org/licenses/by-sa/4.0/> a paradicms:License ;
+    dcterms:identifier "by-sa" ;
+    dcterms:title "Attribution-ShareAlike 4.0 International" .
+
+<http://creativecommons.org/licenses/by/4.0/> a paradicms:License ;
+    dcterms:identifier "by" ;
+    dcterms:title "Attribution 4.0 International" .
+
+<http://creativecommons.org/licenses/devnations/2.0/> a paradicms:License ;
+    dcterms:identifier "devnations" ;
+    dcterms:title "Developing Nations License" .
+
+<http://creativecommons.org/licenses/nc-sa/1.0/> a paradicms:License ;
+    dcterms:identifier "nc-sa" ;
+    dcterms:title "NonCommercial-ShareAlike 1.0 Generic" .
+
+<http://creativecommons.org/licenses/nc-sampling+/1.0/> a paradicms:License ;
+    dcterms:identifier "nc-sampling+" ;
+    dcterms:title "NonCommercial Sampling Plus 1.0" .
+
+<http://creativecommons.org/licenses/nc/1.0/> a paradicms:License ;
+    dcterms:identifier "nc" ;
+    dcterms:title "NonCommercial 1.0 Generic" .
+
+<http://creativecommons.org/licenses/nd-nc/1.0/> a paradicms:License ;
+    dcterms:identifier "nd-nc" ;
+    dcterms:title "NoDerivs-NonCommercial 1.0 Generic" .
+
+<http://creativecommons.org/licenses/nd/1.0/> a paradicms:License ;
+    dcterms:identifier "nd" ;
+    dcterms:title "NoDerivs 1.0 Generic" .
+
+<http://creativecommons.org/licenses/publicdomain/> a paradicms:License ;
+    dcterms:identifier "publicdomain" ;
+    dcterms:title "Public Domain" .
+
+<http://creativecommons.org/licenses/sa/1.0/> a paradicms:License ;
+    dcterms:identifier "sa" ;
+    dcterms:title "ShareAlike 1.0 Generic" .
+
+<http://creativecommons.org/licenses/sampling+/1.0/> a paradicms:License ;
+    dcterms:identifier "sampling+" ;
+    dcterms:title "Sampling Plus 1.0" .
+
+<http://creativecommons.org/licenses/sampling/1.0/> a paradicms:License ;
+    dcterms:identifier "sampling" ;
+    dcterms:title "Sampling 1.0" .
+
+<http://creativecommons.org/publicdomain/mark/1.0/> a paradicms:License ;
+    dcterms:identifier "mark" ;
+    dcterms:title "Public Domain Mark 1.0" .
+
+<http://creativecommons.org/publicdomain/zero/1.0/> a paradicms:License ;
+    dcterms:identifier "CC0" ;
+    dcterms:title "CC0 1.0 Universal" .
+
 dcterms:alternative a paradicms:PropertyDefinition ;
     rdfs:label "Alternative title" ;
     paradicms:fullTextSearchable true .
