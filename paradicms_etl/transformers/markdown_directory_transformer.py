@@ -15,6 +15,7 @@ from markdown_it.tree import SyntaxTreeNode
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.creative_commons_rights_statements import (
     CreativeCommonsRightsStatements,
 )
@@ -267,6 +268,7 @@ class MarkdownDirectoryTransformer(_Transformer):
         self.__default_institution = default_institution
 
     def transform(self, markdown: Dict[str, Dict[str, str]]):
+        yield from CreativeCommonsLicenses.as_tuple()
         yield from CreativeCommonsRightsStatements.as_tuple()
         yield from DublinCorePropertyDefinitions.as_tuple()
         yield from RightsStatementsDotOrgRightsStatements.as_tuple()
