@@ -89,7 +89,7 @@ class ValidationTransformer(_Transformer):
                         )
                 for universe_uri in universe_uris:
                     if universe_uri not in referenced_uris:
-                        self.__logger.warning(
+                        self._logger.warning(
                             f"unreferenced {uri_type} URI: %s", universe_uri
                         )
 

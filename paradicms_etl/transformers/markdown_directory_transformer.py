@@ -21,13 +21,16 @@ from paradicms_etl.models.creative_commons_rights_statements import (
 )
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.object import Object
+from paradicms_etl.models.opaque_named_model import OpaqueNamedModel
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.dublin_core_property_definitions import (
     DublinCorePropertyDefinitions,
 )
+from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
+from paradicms_etl.namespace import CMS
 
 
 class MarkdownDirectoryTransformer(_Transformer):
@@ -210,7 +213,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                 self.__result.set(property_uri, Literal(html))
 
         @classmethod
-        def visit_document(cls, markdown: str, **kwds) -> Dict[str, object]:
+        def visit_document(cls, markdown: str, **kwds) -> Resource:
             markdown_it = MarkdownIt().use(front_matter_plugin)
             tokens = markdown_it.parse(markdown)
             ast = SyntaxTreeNode(tokens)
@@ -278,12 +281,8 @@ class MarkdownDirectoryTransformer(_Transformer):
 
         for model_type in markdown.keys():
             for model_id, markdown_str in markdown[model_type].items():
-                model = self._MarkdownGraphToModelTransformer(
-                    default_collection_uri=self.__default_collection.uri,
-                    default_institution_uri=self.__default_institution.uri,
-                ).visit_graph(
-                    model_type=model_type,
-                    model_resource=self._MarkdownAstToGraphTransformer.visit_document(
+                model_resource: Resource = (
+                    self._MarkdownAstToGraphTransformer.visit_document(
                         markdown_str,
                         model_uri=self.model_uri(
                             pipeline_id=self._pipeline_id,
@@ -291,22 +290,40 @@ class MarkdownDirectoryTransformer(_Transformer):
                             model_id=model_id,
                         ),
                         pipeline_id=self._pipeline_id,
-                    ),
+                    )
                 )
-                yield model
 
-                if not yielded_default_collection and hasattr(model, "collection_uris"):
-                    for collection_uri in model.collection_uris:
-                        if collection_uri == self.__default_collection.uri:
+                if model_type in ("object",):
+                    if model_resource.value(CMS.collection) is None:
+                        model_resource.add(
+                            CMS.collection, self.__default_collection.uri
+                        )
+                        if not yielded_default_collection:
                             yield self.__default_collection
-                            yielded_default_collection = True
 
-                if not yielded_default_institution and hasattr(
-                    model, "institution_uri"
-                ):
-                    if model.institution_uri == self.__default_institution.uri:
-                        yield self.__default_institution
-                        yielded_default_institution = True
+                if model_type in ("collection", "image", "object"):
+                    if model_resource.value(CMS.institution) is None:
+                        model_resource.add(
+                            CMS.institution, self.__default_institution.uri
+                        )
+                        if not yielded_default_institution:
+                            yield self.__default_institution
+
+                model_properties = []
+                for p, o in model_resource.predicate_objects():
+                    if isinstance(o, Node):
+                        value = o
+                    elif isinstance(o, Resource):
+                        value = o.identifier
+                    else:
+                        raise TypeError(type(o))
+                    model_properties.append(Property(p.identifier, value))
+
+                yield OpaqueNamedModel(
+                    properties=tuple(model_properties),
+                    type=CMS[model_type.capitalize()],
+                    uri=model_resource.identifier,
+                )
 
     @staticmethod
     def model_uri(*, pipeline_id: str, model_type: str, model_id: str) -> URIRef:
