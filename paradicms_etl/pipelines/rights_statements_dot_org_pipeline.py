@@ -3,8 +3,9 @@ from pathlib import Path
 from typing import Dict, Generator
 from zipfile import ZipFile
 
-from rdflib import Graph
+from rdflib import DCTERMS, Graph, Literal, SKOS, URIRef
 import rdflib_jsonld
+from rdflib.resource import Resource
 
 from paradicms_etl._extractor import _Extractor
 from paradicms_etl._loader import _Loader
@@ -41,6 +42,50 @@ class RightsStatementsDotOrgPipeline(_Pipeline):
             return {"json_ld_file_contents": json_ld_file_contents}
 
     class _RightsStatementsDotOrgTransformer(_Transformer):
+        def __rights_statement_from_rdf(self, identifier: str, resource: Resource):
+            definition_literal = resource.value(SKOS.definition, any=False)
+            definition = (
+                definition_literal.value
+                if isinstance(definition_literal, Literal)
+                else None
+            )
+
+            description_literal = resource.value(DCTERMS.description, any=False)
+            description = (
+                description_literal.value
+                if isinstance(description_literal, Literal)
+                else None
+            )
+
+            pref_label_literal = resource.value(SKOS.prefLabel, any=False)
+            if not isinstance(pref_label_literal, Literal):
+                raise ValueError("rights statement must have literal skos:prefLabel")
+            pref_label = pref_label_literal.value
+
+            notes = []
+            for note_literal in resource.objects(SKOS.note):
+                if isinstance(note_literal, Literal):
+                    notes.append(note_literal.value)
+
+            scope_note_literal = resource.value(SKOS.scopeNote, any=False)
+            scope_note = (
+                scope_note_literal.value
+                if isinstance(scope_note_literal, Literal)
+                else None
+            )
+
+            assert isinstance(resource.identifier, URIRef)
+
+            return RightsStatement(
+                definition=definition,
+                description=description,
+                identifier=identifier,
+                pref_label=pref_label,
+                notes=tuple(notes),
+                scope_note=scope_note,
+                uri=resource.identifier,
+            )
+
         def transform(self, json_ld_file_contents: Dict[str, bytes]):
             for entry_id, json_ld_bytes in json_ld_file_contents.items():
                 graph = Graph()
@@ -48,8 +93,8 @@ class RightsStatementsDotOrgPipeline(_Pipeline):
                 graph_subjects = tuple(set(graph.subjects()))
                 assert len(graph_subjects) == 1, graph_subjects
                 uri = graph_subjects[0]
-                yield RightsStatement.from_rdf(
-                    resource=graph.resource(uri), identifier=entry_id
+                yield self.__rights_statement_from_rdf(
+                    identifier=entry_id, resource=graph.resource(uri)
                 )
 
     class _RightsStatementsDotOrgLoader(_Loader):

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
-from rdflib import DCTERMS, Graph, Literal, SKOS, URIRef
+from rdflib import DCTERMS, Graph, Literal, SKOS
 from rdflib.resource import Resource
 
 from paradicms_etl.models._named_model import _NamedModel
@@ -19,59 +19,6 @@ class RightsStatement(_NamedModel):
     description: Optional[str] = None
     notes: Tuple[str, ...] = ()
     scope_note: Optional[str] = None
-
-    @classmethod
-    def from_rdf(cls, resource: Resource, *, identifier: Optional[str] = None):
-        definition_literal = resource.value(SKOS.definition, any=False)
-        definition = (
-            definition_literal.value
-            if isinstance(definition_literal, Literal)
-            else None
-        )
-
-        description_literal = resource.value(DCTERMS.description, any=False)
-        description = (
-            description_literal.value
-            if isinstance(description_literal, Literal)
-            else None
-        )
-
-        if identifier is None:
-            identifier_literal = resource.value(DCTERMS.identifier, any=False)
-            if not isinstance(identifier_literal, Literal):
-                raise ValueError(
-                    "rights statement must have literal dcterms:identifier"
-                )
-            identifier = identifier_literal.value
-
-        pref_label_literal = resource.value(SKOS.prefLabel, any=False)
-        if not isinstance(pref_label_literal, Literal):
-            raise ValueError("rights statement must have literal skos:prefLabel")
-        pref_label = pref_label_literal.value
-
-        notes = []
-        for note_literal in resource.objects(SKOS.note):
-            if isinstance(note_literal, Literal):
-                notes.append(note_literal.value)
-
-        scope_note_literal = resource.value(SKOS.scopeNote, any=False)
-        scope_note = (
-            scope_note_literal.value
-            if isinstance(scope_note_literal, Literal)
-            else None
-        )
-
-        assert isinstance(resource.identifier, URIRef)
-
-        return cls(
-            definition=definition,
-            description=description,
-            identifier=identifier,
-            pref_label=pref_label,
-            notes=tuple(notes),
-            scope_note=scope_note,
-            uri=resource.identifier,
-        )
 
     def to_rdf(self, *, graph: Graph) -> Resource:
         resource = _NamedModel.to_rdf(self, graph=graph)

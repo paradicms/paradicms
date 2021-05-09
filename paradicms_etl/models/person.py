@@ -17,14 +17,6 @@ class Person(_NamedModel):
     given_name: Optional[str] = None
     sort_name: Optional[str] = None
 
-    @classmethod
-    def from_rdf(cls, resource: Resource):
-        resource_wrapper = RdfResourceWrapper(resource)
-        name = resource_wrapper.str_value(FOAF.name)
-        if name is None:
-            raise ValueError("person requires a literal string foaf:name")
-        return Person(name=name, uri=resource.identifier)
-
     def to_rdf(self, *, graph: Graph) -> Resource:
         resource = _NamedModel.to_rdf(self, graph=graph)
         if self.family_name is not None:
