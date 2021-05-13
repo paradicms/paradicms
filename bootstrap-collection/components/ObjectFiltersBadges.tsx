@@ -1,5 +1,4 @@
 import {
-  Models,
   ObjectFacets,
   ObjectFilters,
   ObjectFiltersState,
@@ -7,6 +6,7 @@ import {
 } from "@paradicms/models";
 import * as React from "react";
 import {Badge} from "reactstrap";
+import {indexModelsByUri} from "@paradicms/model-utils";
 
 export const ObjectFiltersBadges: React.FunctionComponent<{
   facets: ObjectFacets;
@@ -15,7 +15,7 @@ export const ObjectFiltersBadges: React.FunctionComponent<{
 }> = ({facets, filters, propertyDefinitions}) => {
   const filtersState = new ObjectFiltersState({facets, filters});
 
-  const propertyDefinitionsByUri = Models.indexByUri(propertyDefinitions);
+  const propertyDefinitionsByUri = indexModelsByUri(propertyDefinitions);
 
   const filterBadges: React.ReactNodeArray = [];
   filtersState.excludedProperties.forEach(

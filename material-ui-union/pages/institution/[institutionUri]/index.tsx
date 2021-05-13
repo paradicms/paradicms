@@ -3,20 +3,23 @@ import {Layout} from "components/Layout";
 import {Hrefs} from "lib/Hrefs";
 import {
   Collection,
-  Collections,
   GuiMetadata,
   Image,
-  Images,
   Institution,
-  Models,
   Object,
-  Objects,
 } from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {CollectionsGallery} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
+import {
+  indexImagesByDepictsUri,
+  indexModelsByUri,
+  indexObjectsByCollectionUri,
+  joinCollections,
+  selectCollectionImages,
+} from "@paradicms/model-utils";
 
 interface StaticProps {
   guiMetadata: GuiMetadata | null;
@@ -35,13 +38,11 @@ const InstitutionPage: React.FunctionComponent<StaticProps> = ({
 }) => {
   const joinedCollections = React.useMemo(
     () =>
-      Collections.join({
+      joinCollections({
         collections: institutionCollections,
         imagesByDepictsUri: institutionCollectionImagesByDepictsUri,
-        institutionsByUri: Models.indexByUri([institution]),
-        objectsByCollectionUri: Objects.indexByCollectionUri(
-          institutionObjects
-        ),
+        institutionsByUri: indexModelsByUri([institution]),
+        objectsByCollectionUri: indexObjectsByCollectionUri(institutionObjects),
       }),
     [
       institution,
@@ -97,19 +98,17 @@ export const getStaticProps: GetStaticProps = async ({
 
   const institutionObjects = data.objectsByInstitutionUri[institutionUri] ?? [];
 
-  const institutionImagesByDepictsUri = Images.indexByDepictsUri(
+  const institutionImagesByDepictsUri = indexImagesByDepictsUri(
     data.imagesByInstitutionUri[institutionUri] ?? []
   );
 
   const institutionCollectionImages: Image[] = [];
   for (const collection of institutionCollections) {
     institutionCollectionImages.push(
-      ...Collections.selectCollectionImages({
+      ...selectCollectionImages({
         collection,
         imagesByDepictsUri: institutionImagesByDepictsUri,
-        objectsByCollectionUri: Objects.indexByCollectionUri(
-          institutionObjects
-        ),
+        objectsByCollectionUri: indexObjectsByCollectionUri(institutionObjects),
       })
     );
   }
@@ -118,7 +117,7 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       guiMetadata: data.guiMetadata,
       institution: data.institutionByUri(institutionUri),
-      institutionCollectionImagesByDepictsUri: Images.indexByDepictsUri(
+      institutionCollectionImagesByDepictsUri: indexImagesByDepictsUri(
         institutionCollectionImages
       ),
       institutionCollections,

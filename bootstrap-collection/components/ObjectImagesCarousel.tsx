@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useState} from "react";
 import ImageZoom from "react-medium-image-zoom";
-import {Image, Images} from "@paradicms/models";
+import {Image} from "@paradicms/models";
 import {RightsTable} from "./RightsTable";
 import {
   Carousel,
@@ -11,11 +11,16 @@ import {
   Container,
   Row,
 } from "reactstrap";
+import {
+  indexImagesByOriginalImageUri,
+  placeholderImageUrl,
+  selectThumbnail,
+} from "@paradicms/model-utils";
 
 export const ObjectImagesCarousel: React.FunctionComponent<{
   images: readonly Image[];
 }> = ({images}) => {
-  const imagesByOriginalImageUri = Images.indexByOriginalImageUri(images);
+  const imagesByOriginalImageUri = indexImagesByOriginalImageUri(images);
 
   const items = Object.keys(imagesByOriginalImageUri).map(originalImageUri => ({
     key: originalImageUri,
@@ -58,7 +63,7 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
         const originalImage = images.find(
           image => image.uri === originalImageUri
         );
-        const thumbnail = Images.selectThumbnail({
+        const thumbnail = selectThumbnail({
           images,
           targetDimensions: {height: 600, width: 600},
         });
@@ -71,7 +76,7 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
                     className: "img",
                     src: thumbnail
                       ? thumbnail.uri
-                      : Images.placeholderUrl({
+                      : placeholderImageUrl({
                           dimensions: {height: 600, width: 600},
                           text: "Missing thumbnail",
                         }),

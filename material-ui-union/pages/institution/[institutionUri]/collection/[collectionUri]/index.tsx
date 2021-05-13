@@ -10,7 +10,6 @@ import {
   Collection,
   GuiMetadata,
   Image,
-  Images,
   Institution,
   Object,
   ObjectFilters,
@@ -24,6 +23,7 @@ import {
 } from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
+import {selectThumbnail} from "@paradicms/model-utils";
 
 interface StaticProps {
   collection: Collection;
@@ -133,7 +133,7 @@ export const getStaticProps: GetStaticProps = async ({
     if (!objectImages) {
       continue;
     }
-    const objectThumbnail = Images.selectThumbnail({
+    const objectThumbnail = selectThumbnail({
       images: objectImages,
       targetDimensions: THUMBNAIL_TARGET_DIMENSIONS,
     });

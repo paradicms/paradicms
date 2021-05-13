@@ -1,17 +1,15 @@
 import * as React from "react";
 import {GetStaticProps} from "next";
-import {
-  GuiMetadata,
-  Image,
-  Images,
-  Institution,
-  Institutions,
-} from "@paradicms/models";
+import {GuiMetadata, Image, Institution} from "@paradicms/models";
 import {Hrefs} from "lib/Hrefs";
 import {Data} from "lib/Data";
 import {Layout} from "components/Layout";
 import {Link} from "@paradicms/material-ui-next";
 import {InstitutionsGallery} from "@paradicms/material-ui";
+import {
+  indexImagesByDepictsUri,
+  joinInstitutions,
+} from "@paradicms/model-utils";
 
 interface StaticProps {
   guiMetadata: GuiMetadata | null;
@@ -26,7 +24,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
 }) => {
   const joinedInstitutions = React.useMemo(
     () =>
-      Institutions.join({
+      joinInstitutions({
         institutions,
         imagesByDepictsUri,
       }),
@@ -63,7 +61,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   return {
     props: {
       guiMetadata: data.guiMetadata,
-      imagesByDepictsUri: Images.indexByDepictsUri(
+      imagesByDepictsUri: indexImagesByDepictsUri(
         data.images.filter(image => institutionUris.has(image.depictsUri))
       ),
       institutions,

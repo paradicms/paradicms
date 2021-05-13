@@ -1,10 +1,5 @@
 import * as React from "react";
-import {
-  ImageDimensions,
-  Images,
-  Institution,
-  JoinedObject,
-} from "@paradicms/models";
+import {ImageDimensions, Institution, JoinedObject} from "@paradicms/models";
 // import {RightsTable} from "./RightsTable";
 import {
   Card,
@@ -18,6 +13,7 @@ import {
 } from "reactstrap";
 import {Accordion} from "components/Accordion";
 import {RightsTable} from "components/RightsTable";
+import {placeholderImageUrl, selectThumbnail} from "@paradicms/model-utils";
 
 export const ObjectCard: React.FunctionComponent<{
   object: JoinedObject;
@@ -32,7 +28,7 @@ export const ObjectCard: React.FunctionComponent<{
 }> = ({object, renderInstitutionLink, renderObjectLink}) => {
   const thumbnailDimensions: ImageDimensions = {height: 200, width: 200};
 
-  const thumbnail = Images.selectThumbnail({
+  const thumbnail = selectThumbnail({
     images: object.images,
     targetDimensions: thumbnailDimensions,
   });
@@ -49,7 +45,7 @@ export const ObjectCard: React.FunctionComponent<{
           src={
             thumbnail
               ? thumbnail.uri
-              : Images.placeholderUrl({
+              : placeholderImageUrl({
                   dimensions: thumbnailDimensions,
                   text: "Missing thumbnail",
                 })
