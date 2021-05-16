@@ -1,57 +1,40 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
 import {Hrefs} from "lib/Hrefs";
-import {
-  Collection,
-  GuiMetadata,
-  Image,
-  Institution,
-  Object,
-} from "@paradicms/models";
+import {GuiMetadata, JoinedImage} from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
-import {CollectionsGallery} from "@paradicms/material-ui";
+import {
+  CollectionsGallery,
+  thumbnailTargetDimensions,
+} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {
   indexImagesByDepictsUri,
-  indexModelsByUri,
   indexObjectsByCollectionUri,
-  joinCollection,
+  joinImage,
   selectCollectionImages,
+  selectThumbnail,
 } from "@paradicms/model-utils";
 
 interface StaticProps {
-  guiMetadata: GuiMetadata | null;
-  institution: Institution;
-  institutionCollectionImagesByDepictsUri: {[index: string]: readonly Image[]}; // No duplicate Images
-  institutionCollections: readonly Collection[];
-  institutionObjects: readonly Object[];
+  readonly guiMetadata: GuiMetadata | null;
+  readonly institution: {
+    readonly collections: readonly {
+      readonly title: string;
+      readonly thumbnail?: JoinedImage;
+      readonly uri: string;
+    }[];
+    readonly name: string;
+    readonly uri: string;
+  };
 }
 
 const InstitutionPage: React.FunctionComponent<StaticProps> = ({
   guiMetadata,
   institution,
-  institutionCollections,
-  institutionCollectionImagesByDepictsUri,
-  institutionObjects,
 }) => {
-  const joinedCollections = React.useMemo(
-    () => institutionCollections.map(collection =>
-      joinCollection({
-        collection,
-        imagesByDepictsUri: institutionCollectionImagesByDepictsUri,
-        institutionsByUri: indexModelsByUri([institution]),
-        objectsByCollectionUri: indexObjectsByCollectionUri(institutionObjects),
-      }),
-    [
-      institution,
-      institutionCollectionImagesByDepictsUri,
-      institutionCollections,
-      institutionObjects,
-    ]
-  );
-
   return (
     <Layout
       breadcrumbs={{institution}}
@@ -59,7 +42,7 @@ const InstitutionPage: React.FunctionComponent<StaticProps> = ({
       guiMetadata={guiMetadata}
     >
       <CollectionsGallery
-        collections={joinedCollections}
+        collections={institution.collections}
         renderCollectionLink={(collection, children) => (
           <Link
             href={
@@ -93,35 +76,47 @@ export const getStaticProps: GetStaticProps = async ({
   const data = Data.instance;
   const institutionUri = decodeFileName(params!.institutionUri as string);
 
-  const institutionCollections =
-    data.collectionsByInstitutionUri[institutionUri] ?? [];
+  const institution = data.institutionByUri(institutionUri);
 
-  const institutionObjects = data.objectsByInstitutionUri[institutionUri] ?? [];
+  const institutionCollections = data.institutionCollections(institutionUri);
+
+  const institutionObjects = data.institutionObjects(institutionUri);
 
   const institutionImagesByDepictsUri = indexImagesByDepictsUri(
-    data.imagesByInstitutionUri[institutionUri] ?? []
+    data.institutionImages(institutionUri)
   );
-
-  const institutionCollectionImages: Image[] = [];
-  for (const collection of institutionCollections) {
-    institutionCollectionImages.push(
-      ...selectCollectionImages({
-        collection,
-        imagesByDepictsUri: institutionImagesByDepictsUri,
-        objectsByCollectionUri: indexObjectsByCollectionUri(institutionObjects),
-      })
-    );
-  }
 
   return {
     props: {
       guiMetadata: data.guiMetadata,
-      institution: data.institutionByUri(institutionUri),
-      institutionCollectionImagesByDepictsUri: indexImagesByDepictsUri(
-        institutionCollectionImages
-      ),
-      institutionCollections,
-      institutionObjects,
+      institution: {
+        collections: institutionCollections.map(collection => {
+          const thumbnail = selectThumbnail({
+            images: selectCollectionImages({
+              collection,
+              imagesByDepictsUri: institutionImagesByDepictsUri,
+              objectsByCollectionUri: indexObjectsByCollectionUri(
+                institutionObjects
+              ),
+            }),
+            targetDimensions: thumbnailTargetDimensions,
+          });
+          return {
+            thumbnail: thumbnail
+              ? joinImage({
+                  image: thumbnail,
+                  licenseTitlesByUri: data.licenseTitlesByUri,
+                  rightsStatementPrefLabelsByUri:
+                    data.rightsStatementPrefLabelsByUri,
+                })
+              : undefined,
+            title: collection.title,
+            uri: collection.uri,
+          };
+        }),
+        name: institution.name,
+        uri: institution.uri,
+      },
     },
   };
 };

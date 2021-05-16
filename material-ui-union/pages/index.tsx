@@ -1,81 +1,30 @@
 import * as React from "react";
 import {GetStaticProps} from "next";
-import {
-  GuiMetadata,
-  Image,
-  Institution,
-  License,
-  RightsStatement,
-} from "@paradicms/models";
+import {GuiMetadata} from "@paradicms/models";
 import {Hrefs} from "lib/Hrefs";
 import {Data} from "lib/Data";
 import {Layout} from "components/Layout";
 import {Link} from "@paradicms/material-ui-next";
-import {InstitutionsGallery} from "@paradicms/material-ui";
 import {
-  indexImagesByDepictsUri,
-  indexLicenseTitlesByUri,
-  indexRightsStatementPrefLabelsByUri,
-  joinImage,
-  joinInstitution,
-} from "@paradicms/model-utils";
+  InstitutionsGallery,
+  thumbnailTargetDimensions,
+} from "@paradicms/material-ui";
+import {joinImage, selectThumbnail} from "@paradicms/model-utils";
+import {InstitutionCardInstitution} from "@paradicms/material-ui/dist/InstitutionCardInstitution";
 
 interface StaticProps {
-  guiMetadata: GuiMetadata | null;
-  images: readonly Image[];
-  institutions: readonly Institution[];
-  licenses: readonly License[];
-  rightsStatements: readonly RightsStatement[];
+  readonly guiMetadata: GuiMetadata | null;
+  readonly institutions: readonly InstitutionCardInstitution[];
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   guiMetadata,
-  images,
   institutions,
-  licenses,
-  rightsStatements,
 }) => {
-  const licenseTitlesByUri = React.useMemo(
-    () => indexLicenseTitlesByUri(licenses),
-    [licenses]
-  );
-
-  const rightsStatementPrefLabelsByUri = React.useMemo(
-    () => indexRightsStatementPrefLabelsByUri(rightsStatements),
-    [rightsStatements]
-  );
-
-  const imagesByDepictsUri = React.useMemo(
-    () =>
-      indexImagesByDepictsUri(
-        images.map(image =>
-          joinImage({
-            image,
-            licenseTitlesByUri,
-            rightsStatementPrefLabelsByUri,
-          })
-        )
-      ),
-    [images, licenseTitlesByUri, rightsStatementPrefLabelsByUri]
-  );
-
-  const joinedInstitutions = React.useMemo(
-    () =>
-      institutions.map(institution =>
-        joinInstitution({
-          institution,
-          imagesByDepictsUri,
-          licenseTitlesByUri,
-          rightsStatementPrefLabelsByUri,
-        })
-      ),
-    [institutions, imagesByDepictsUri]
-  );
-
   return (
     <Layout documentTitle="Institutions" guiMetadata={guiMetadata}>
       <InstitutionsGallery
-        institutions={joinedInstitutions}
+        institutions={institutions}
         renderInstitutionLink={(institution, children) => (
           <Link
             href={Hrefs.institution(institution.uri).home}
@@ -95,19 +44,31 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
   const data = Data.instance;
+
   const institutions = data.institutions;
-  const institutionUris = new Set<string>(
-    institutions.map(institution => institution.uri)
-  );
+
   return {
     props: {
       guiMetadata: data.guiMetadata,
-      images: data.images.filter(image =>
-        institutionUris.has(image.depictsUri)
-      ),
-      institutions,
-      licenses: data.licenses,
-      rightsStatements: data.rightsStatements,
+      institutions: institutions.map(institution => {
+        const thumbnail = selectThumbnail({
+          images: data.institutionImages(institution.uri),
+          targetDimensions: thumbnailTargetDimensions,
+        });
+
+        return {
+          name: institution.name,
+          thumbnail: thumbnail
+            ? joinImage({
+                image: thumbnail,
+                licenseTitlesByUri: data.licenseTitlesByUri,
+                rightsStatementPrefLabelsByUri:
+                  data.rightsStatementPrefLabelsByUri,
+              })
+            : undefined,
+          uri: institution.uri,
+        };
+      }),
     },
   };
 };

@@ -14,7 +14,7 @@ import Helmet from "react-helmet";
 import {Footer, NavbarSearchForm} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
-import {Collection, GuiMetadata, Institution, Object} from "@paradicms/models";
+import {GuiMetadata} from "@paradicms/models";
 import {useRouter} from "next/router";
 
 const useStyles = makeStyles(theme => ({
@@ -38,9 +38,9 @@ const useStyles = makeStyles(theme => ({
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   breadcrumbs?: {
-    collection?: Collection;
-    institution?: Institution;
-    object?: Object;
+    collection?: {title: string; uri: string};
+    institution?: {name: string; uri: string};
+    object?: {title: string; uri: string};
   };
   cardTitle?: React.ReactNode;
   className?: string;

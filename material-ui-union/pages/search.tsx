@@ -15,10 +15,7 @@ import * as React from "react";
 import {Layout} from "components/Layout";
 import {Data} from "lib/Data";
 import {GetStaticProps} from "next";
-import {
-  ObjectFacetedSearchGrid,
-  THUMBNAIL_TARGET_DIMENSIONS,
-} from "@paradicms/material-ui";
+import {ObjectFacetedSearchGrid} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {
@@ -33,6 +30,7 @@ import {
   joinObject,
   selectThumbnail,
 } from "@paradicms/model-utils";
+import {thumbnailTargetDimensions} from "@paradicms/material-ui/dist/thumbnailTargetDimensions";
 
 interface StaticProps {
   collections: readonly Collection[];
@@ -210,7 +208,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     }
     const objectThumbnail = selectThumbnail({
       images: objectImages,
-      targetDimensions: THUMBNAIL_TARGET_DIMENSIONS,
+      targetDimensions: thumbnailTargetDimensions,
     });
     if (!objectThumbnail) {
       continue;
