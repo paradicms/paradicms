@@ -17,7 +17,7 @@ import {
   indexImagesByDepictsUri,
   indexModelsByUri,
   indexObjectsByCollectionUri,
-  joinCollections,
+  joinCollection,
   selectCollectionImages,
 } from "@paradicms/model-utils";
 
@@ -37,9 +37,9 @@ const InstitutionPage: React.FunctionComponent<StaticProps> = ({
   institutionObjects,
 }) => {
   const joinedCollections = React.useMemo(
-    () =>
-      joinCollections({
-        collections: institutionCollections,
+    () => institutionCollections.map(collection =>
+      joinCollection({
+        collection,
         imagesByDepictsUri: institutionCollectionImagesByDepictsUri,
         institutionsByUri: indexModelsByUri([institution]),
         objectsByCollectionUri: indexObjectsByCollectionUri(institutionObjects),
