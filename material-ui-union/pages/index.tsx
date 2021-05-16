@@ -1,6 +1,12 @@
 import * as React from "react";
 import {GetStaticProps} from "next";
-import {GuiMetadata, Image, Institution} from "@paradicms/models";
+import {
+  GuiMetadata,
+  Image,
+  Institution,
+  License,
+  RightsStatement,
+} from "@paradicms/models";
 import {Hrefs} from "lib/Hrefs";
 import {Data} from "lib/Data";
 import {Layout} from "components/Layout";
@@ -8,26 +14,61 @@ import {Link} from "@paradicms/material-ui-next";
 import {InstitutionsGallery} from "@paradicms/material-ui";
 import {
   indexImagesByDepictsUri,
-  joinInstitutions,
+  indexLicenseTitlesByUri,
+  indexRightsStatementPrefLabelsByUri,
+  joinImage,
+  joinInstitution,
 } from "@paradicms/model-utils";
 
 interface StaticProps {
   guiMetadata: GuiMetadata | null;
-  imagesByDepictsUri: {[index: string]: readonly Image[]};
+  images: readonly Image[];
   institutions: readonly Institution[];
+  licenses: readonly License[];
+  rightsStatements: readonly RightsStatement[];
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   guiMetadata,
-  imagesByDepictsUri,
+  images,
   institutions,
+  licenses,
+  rightsStatements,
 }) => {
+  const licenseTitlesByUri = React.useMemo(
+    () => indexLicenseTitlesByUri(licenses),
+    [licenses]
+  );
+
+  const rightsStatementPrefLabelsByUri = React.useMemo(
+    () => indexRightsStatementPrefLabelsByUri(rightsStatements),
+    [rightsStatements]
+  );
+
+  const imagesByDepictsUri = React.useMemo(
+    () =>
+      indexImagesByDepictsUri(
+        images.map(image =>
+          joinImage({
+            image,
+            licenseTitlesByUri,
+            rightsStatementPrefLabelsByUri,
+          })
+        )
+      ),
+    [images, licenseTitlesByUri, rightsStatementPrefLabelsByUri]
+  );
+
   const joinedInstitutions = React.useMemo(
     () =>
-      joinInstitutions({
-        institutions,
-        imagesByDepictsUri,
-      }),
+      institutions.map(institution =>
+        joinInstitution({
+          institution,
+          imagesByDepictsUri,
+          licenseTitlesByUri,
+          rightsStatementPrefLabelsByUri,
+        })
+      ),
     [institutions, imagesByDepictsUri]
   );
 
@@ -61,10 +102,12 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   return {
     props: {
       guiMetadata: data.guiMetadata,
-      imagesByDepictsUri: indexImagesByDepictsUri(
-        data.images.filter(image => institutionUris.has(image.depictsUri))
+      images: data.images.filter(image =>
+        institutionUris.has(image.depictsUri)
       ),
       institutions,
+      licenses: data.licenses,
+      rightsStatements: data.rightsStatements,
     },
   };
 };
