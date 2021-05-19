@@ -8,9 +8,9 @@ import {
 } from "@material-ui/core";
 import {
   GuiMetadata,
-  Image,
-  Institution,
-  Object,
+  JoinedImage,
+  JoinedRights,
+  Property,
   PropertyDefinition,
 } from "@paradicms/models";
 import {
@@ -22,22 +22,31 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {GetStaticPaths, GetStaticProps} from "next";
+import {deleteUndefined, joinImage, joinRights} from "@paradicms/model-utils";
 
 interface StaticProps {
   guiMetadata: GuiMetadata | null;
-  institution: Institution;
-  object: Object;
-  objectImages: readonly Image[];
+  readonly institution: {
+    readonly name: string;
+    readonly object: {
+      readonly images: readonly JoinedImage[];
+      readonly rights?: JoinedRights;
+      readonly properties?: readonly Property[];
+      readonly title: string;
+      readonly uri: string;
+    };
+    readonly rights?: JoinedRights;
+    readonly uri: string;
+  };
   propertyDefinitions: readonly PropertyDefinition[];
 }
 
 const ObjectPage: React.FunctionComponent<StaticProps> = ({
   guiMetadata,
   institution,
-  object,
-  objectImages,
   propertyDefinitions,
 }) => {
+  const object = institution.object;
   const rights = object.rights ?? institution.rights ?? undefined;
 
   return (
@@ -48,7 +57,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
     >
       <Grid container direction="column" spacing={2}>
         <Grid item>
-          <ObjectImagesCarousel images={objectImages} />
+          <ObjectImagesCarousel images={object.images} />
         </Grid>
         {object.properties && object.properties.length > 0 ? (
           <Grid item>
@@ -89,7 +98,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {institutionUri: string; objectUri: string}}[] = [];
   for (const institution of data.institutions) {
     const encodedInstitutionUri = encodeFileName(institution.uri);
-    for (const object of data.objectsByInstitutionUri[institution.uri] ?? []) {
+    for (const object of data.institutionObjects(institution.uri)) {
       paths.push({
         params: {
           institutionUri: encodedInstitutionUri,
@@ -112,13 +121,46 @@ export const getStaticProps: GetStaticProps = async ({
   const institutionUri = decodeFileName(params!.institutionUri as string);
   const objectUri = decodeFileName(params!.objectUri as string);
 
+  const institution = data.institutionByUri(institutionUri);
+  const object = data.objectByUri(objectUri);
+  const objectImages = data.imagesDepictingUri(objectUri);
+
   return {
-    props: {
+    props: deleteUndefined({
       guiMetadata: data.guiMetadata,
-      institution: data.institutionByUri(institutionUri),
-      object: data.objectByUri(objectUri),
-      objectImages: data.imagesByDepictsUri[objectUri] ?? [],
+      institution: {
+        name: institution.name,
+        object: {
+          images: objectImages.map(image =>
+            joinImage({
+              licenseTitlesByUri: data.licenseTitlesByUri,
+              image,
+              rightsStatementPrefLabelsByUri:
+                data.rightsStatementPrefLabelsByUri,
+            })
+          ),
+          rights: object.rights
+            ? joinRights({
+                licenseTitlesByUri: data.licenseTitlesByUri,
+                rights: object.rights,
+                rightsStatementPrefLabelsByUri:
+                  data.rightsStatementPrefLabelsByUri,
+              })
+            : undefined,
+          title: object.title,
+          uri: object.uri,
+        },
+        rights: institution.rights
+          ? joinRights({
+              licenseTitlesByUri: data.licenseTitlesByUri,
+              rights: institution.rights,
+              rightsStatementPrefLabelsByUri:
+                data.rightsStatementPrefLabelsByUri,
+            })
+          : undefined,
+        uri: institution.uri,
+      },
       propertyDefinitions: data.propertyDefinitions,
-    },
+    }),
   };
 };

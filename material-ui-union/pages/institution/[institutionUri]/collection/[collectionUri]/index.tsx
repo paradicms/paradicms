@@ -7,37 +7,40 @@ import {
 import * as React from "react";
 import {Layout} from "components/Layout";
 import {
-  Collection,
   GuiMetadata,
-  Image,
-  Institution,
-  Object,
   ObjectFilters,
   PropertyDefinition,
 } from "@paradicms/models";
 import {Data} from "lib/Data";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {
+  ObjectCardObject,
   ObjectFacetedSearchGrid,
-  THUMBNAIL_TARGET_DIMENSIONS,
+  thumbnailTargetDimensions,
 } from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
-import {selectThumbnail} from "@paradicms/model-utils";
+import {
+  deleteUndefined,
+  joinImage,
+  selectThumbnail,
+} from "@paradicms/model-utils";
 
 interface StaticProps {
-  collection: Collection;
-  collectionImages: readonly Image[];
-  collectionObjects: readonly Object[];
-  guiMetadata: GuiMetadata | null;
-  institution: Institution;
+  readonly guiMetadata: GuiMetadata | null;
+  readonly institution: {
+    readonly collection: {
+      readonly objects: ObjectCardObject[];
+      readonly title: string;
+      readonly uri: string;
+    };
+    readonly name: string;
+    readonly uri: string;
+  };
   propertyDefinitions: readonly PropertyDefinition[];
 }
 
 const CollectionPage: React.FunctionComponent<StaticProps> = ({
-  collection,
-  collectionImages,
-  collectionObjects,
   guiMetadata,
   institution,
   propertyDefinitions,
@@ -45,6 +48,8 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
   // if (typeof window === "undefined") {
   //   return null; // Don't render on the server
   // }
+
+  const collection = institution.collection;
 
   const [filters, setFilters] = useQueryParam<ObjectFilters>(
     "filters",
@@ -70,10 +75,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
       guiMetadata={guiMetadata}
     >
       <ObjectFacetedSearchGrid
-        collections={[collection]}
-        images={collectionImages}
-        institutions={[institution]}
-        objects={collectionObjects}
+        objects={collection.objects}
         onChangeFilters={setFilters}
         onChangePage={setPage}
         page={page ?? 0}
@@ -98,9 +100,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {collectionUri: string; institutionUri: string}}[] = [];
   for (const institution of data.institutions) {
     const encodedInstitutionUri = encodeFileName(institution.uri);
-    for (const collection of data.collectionsByInstitutionUri[
-      institution.uri
-    ] ?? []) {
+    for (const collection of data.institutionCollections(institution.uri)) {
       paths.push({
         params: {
           collectionUri: encodeFileName(collection.uri),
@@ -125,32 +125,38 @@ export const getStaticProps: GetStaticProps = async ({
   const data = Data.instance;
   const collection = data.collectionByUri(collectionUri);
   const institution = data.institutionByUri(institutionUri);
-  const collectionObjects = data.objectsByCollectionUri[collectionUri] ?? [];
-
-  const collectionObjectThumbnails: Image[] = [];
-  for (const object of collectionObjects) {
-    const objectImages = data.imagesByDepictsUri[object.uri];
-    if (!objectImages) {
-      continue;
-    }
-    const objectThumbnail = selectThumbnail({
-      images: objectImages,
-      targetDimensions: THUMBNAIL_TARGET_DIMENSIONS,
-    });
-    if (!objectThumbnail) {
-      continue;
-    }
-    collectionObjectThumbnails.push(objectThumbnail);
-  }
 
   return {
-    props: {
-      collection,
-      collectionImages: collectionObjectThumbnails,
-      collectionObjects,
+    props: deleteUndefined({
       guiMetadata: data.guiMetadata,
-      institution,
+      institution: {
+        collection: {
+          objects: data.collectionObjects(collection.uri).map(object => {
+            const images = data.imagesDepictingUri(object.uri);
+            const thumbnail = selectThumbnail({
+              images,
+              targetDimensions: thumbnailTargetDimensions,
+            });
+            return {
+              thumbnail: thumbnail
+                ? joinImage({
+                    image: thumbnail,
+                    licenseTitlesByUri: data.licenseTitlesByUri,
+                    rightsStatementPrefLabelsByUri:
+                      data.rightsStatementPrefLabelsByUri,
+                  })
+                : undefined,
+              title: object.title,
+              uri: object.uri,
+            } as ObjectCardObject;
+          }),
+          title: collection.title,
+          uri: collection.uri,
+        },
+        name: institution.name,
+        uri: institution.uri,
+      },
       propertyDefinitions: data.propertyDefinitions,
-    },
+    }),
   };
 };

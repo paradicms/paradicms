@@ -1,57 +1,50 @@
 import {useQueryParam, NumberParam} from "use-query-params";
 import {JsonQueryParamConfig} from "@paradicms/base";
 import {
-  Collection,
   GuiMetadata,
-  Image,
-  Institution,
-  License,
-  Object,
+  JoinedImage,
+  JoinedRights,
   ObjectQuery,
   PropertyDefinition,
-  RightsStatement,
 } from "@paradicms/models";
 import * as React from "react";
 import {Layout} from "components/Layout";
 import {Data} from "lib/Data";
 import {GetStaticProps} from "next";
-import {ObjectFacetedSearchGrid} from "@paradicms/material-ui";
+import {
+  ObjectCardObject,
+  ObjectFacetedSearchGrid,
+  thumbnailTargetDimensions,
+} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {
-  indexImagesByDepictsUri,
-  indexModelsByUri,
-  indexLicenseTitlesByUri,
-  indexObjectsByCollectionUri,
-  indexRightsStatementPrefLabelsByUri,
-  joinCollection,
+  deleteUndefined,
   joinImage,
-  joinInstitution,
-  joinObject,
+  joinRights,
   selectThumbnail,
 } from "@paradicms/model-utils";
-import {thumbnailTargetDimensions} from "@paradicms/material-ui/dist/thumbnailTargetDimensions";
 
 interface StaticProps {
-  collections: readonly Collection[];
-  guiMetadata: GuiMetadata | null;
-  images: readonly Image[];
-  institutions: readonly Institution[];
-  licenses: readonly License[];
-  objects: readonly Object[];
+  readonly guiMetadata: GuiMetadata | null;
+  readonly institutions: readonly {
+    readonly objects: readonly {
+      readonly abstract?: string;
+      readonly rights?: JoinedRights;
+      readonly title: string;
+      readonly thumbnail?: JoinedImage;
+      readonly uri: string;
+    }[];
+    readonly name: string;
+    readonly uri: string;
+  }[];
   propertyDefinitions: readonly PropertyDefinition[];
-  rightsStatements: readonly RightsStatement[];
 }
 
 const SearchPage: React.FunctionComponent<StaticProps> = ({
-  collections,
   guiMetadata,
-  images,
   institutions,
-  licenses,
-  objects,
   propertyDefinitions,
-  rightsStatements,
 }) => {
   // if (typeof window === "undefined") {
   //   return null; // Don't render on the server
@@ -66,90 +59,17 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
     new JsonQueryParamConfig<ObjectQuery>()
   );
 
-  const licenseTitlesByUri = React.useMemo(
-    () => indexLicenseTitlesByUri(licenses),
-    [licenses]
-  );
-
-  const rightsStatementPrefLabelsByUri = React.useMemo(
-    () => indexRightsStatementPrefLabelsByUri(rightsStatements),
-    [rightsStatements]
-  );
-
-  const imagesByDepictsUri = React.useMemo(
+  // The gallery expects each Object to have a nested Institution,
+  // but we have an Institution->Object tree in order to save space.
+  const objects: readonly ObjectCardObject[] = React.useMemo(
     () =>
-      indexImagesByDepictsUri(
-        images.map(image =>
-          joinImage({
-            image,
-            licenseTitlesByUri,
-            rightsStatementPrefLabelsByUri,
-          })
-        )
+      institutions.flatMap(institution =>
+        institution.objects.map(object => ({
+          ...object,
+          institution,
+        }))
       ),
-    [images, licenseTitlesByUri, rightsStatementPrefLabelsByUri]
-  );
-
-  const institutionsByUri = React.useMemo(
-    () =>
-      indexModelsByUri(
-        institutions.map(institution =>
-          joinInstitution({
-            imagesByDepictsUri,
-            institution,
-            licenseTitlesByUri,
-            rightsStatementPrefLabelsByUri,
-          })
-        )
-      ),
-    [
-      imagesByDepictsUri,
-      institutions,
-      licenseTitlesByUri,
-      rightsStatementPrefLabelsByUri,
-    ]
-  );
-
-  const collectionsByUri = React.useMemo(() => {
-    const objectsByCollectionUri = indexObjectsByCollectionUri(objects);
-    return indexModelsByUri(
-      collections.map(collection =>
-        joinCollection({
-          collection,
-          imagesByDepictsUri,
-          institutionsByUri,
-          objectsByCollectionUri,
-        })
-      )
-    );
-  }, [
-    collections,
-    institutionsByUri,
-    licenseTitlesByUri,
-    objects,
-    rightsStatementPrefLabelsByUri,
-  ]);
-
-  const joinedObjects = React.useMemo(
-    () =>
-      objects.map(object =>
-        joinObject({
-          collectionsByUri,
-          imagesByDepictsUri,
-          institutionsByUri,
-          licenseTitlesByUri,
-          object,
-          rightsStatementPrefLabelsByUri,
-        })
-      ),
-    [
-      collectionsByUri,
-      imagesByDepictsUri,
-      institutionsByUri,
-      licenses,
-      objects,
-      rightsStatementPrefLabelsByUri,
-    ]
+    [institutions]
   );
 
   return (
@@ -172,7 +92,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
       onSearch={text => setQuery({text})}
     >
       <ObjectFacetedSearchGrid
-        objects={joinedObjects}
+        objects={objects}
         page={page ?? 0}
         onChangeFilters={filters => setQuery({...query, filters})}
         onChangePage={setPage}
@@ -200,32 +120,41 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 }> => {
   const data = Data.instance;
 
-  const objectThumbnails: Image[] = [];
-  for (const object of data.objects) {
-    const objectImages = data.imagesDepictingUri(object.uri);
-    if (objectImages.length === 0) {
-      continue;
-    }
-    const objectThumbnail = selectThumbnail({
-      images: objectImages,
-      targetDimensions: thumbnailTargetDimensions,
-    });
-    if (!objectThumbnail) {
-      continue;
-    }
-    objectThumbnails.push(objectThumbnail);
-  }
-
   return {
-    props: {
-      collections: data.collections,
+    props: deleteUndefined({
       guiMetadata: data.guiMetadata,
-      images: objectThumbnails,
-      licenses: data.licenses,
-      institutions: data.institutions,
-      objects: data.objects,
+      institutions: data.institutions.map(institution => ({
+        name: institution.name,
+        objects: data.institutionObjects(institution.uri).map(object => {
+          const thumbnail = selectThumbnail({
+            images: data.imagesDepictingUri(object.uri),
+            targetDimensions: thumbnailTargetDimensions,
+          });
+          return {
+            abstract: object.abstract,
+            rights: object.rights
+              ? joinRights({
+                  licenseTitlesByUri: data.licenseTitlesByUri,
+                  rights: object.rights,
+                  rightsStatementPrefLabelsByUri:
+                    data.rightsStatementPrefLabelsByUri,
+                })
+              : undefined,
+            thumbnail: thumbnail
+              ? joinImage({
+                  licenseTitlesByUri: data.licenseTitlesByUri,
+                  image: thumbnail,
+                  rightsStatementPrefLabelsByUri:
+                    data.rightsStatementPrefLabelsByUri,
+                })
+              : undefined,
+            title: object.title,
+            uri: object.uri,
+          };
+        }),
+        uri: institution.uri,
+      })),
       propertyDefinitions: data.propertyDefinitions,
-      rightsStatements: data.rightsStatements,
-    },
+    }),
   };
 };

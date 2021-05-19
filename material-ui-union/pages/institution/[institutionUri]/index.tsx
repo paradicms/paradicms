@@ -11,6 +11,7 @@ import {
 } from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {
+  deleteUndefined,
   indexImagesByDepictsUri,
   indexObjectsByCollectionUri,
   joinImage,
@@ -87,7 +88,7 @@ export const getStaticProps: GetStaticProps = async ({
   );
 
   return {
-    props: {
+    props: deleteUndefined({
       guiMetadata: data.guiMetadata,
       institution: {
         collections: institutionCollections.map(collection => {
@@ -117,6 +118,6 @@ export const getStaticProps: GetStaticProps = async ({
         name: institution.name,
         uri: institution.uri,
       },
-    },
+    }),
   };
 };

@@ -6,11 +6,15 @@ import {Data} from "lib/Data";
 import {Layout} from "components/Layout";
 import {Link} from "@paradicms/material-ui-next";
 import {
+  InstitutionCardInstitution,
   InstitutionsGallery,
   thumbnailTargetDimensions,
 } from "@paradicms/material-ui";
-import {joinImage, selectThumbnail} from "@paradicms/model-utils";
-import {InstitutionCardInstitution} from "@paradicms/material-ui/dist/InstitutionCardInstitution";
+import {
+  deleteUndefined,
+  joinImage,
+  selectThumbnail,
+} from "@paradicms/model-utils";
 
 interface StaticProps {
   readonly guiMetadata: GuiMetadata | null;
@@ -48,7 +52,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   const institutions = data.institutions;
 
   return {
-    props: {
+    props: deleteUndefined({
       guiMetadata: data.guiMetadata,
       institutions: institutions.map(institution => {
         const thumbnail = selectThumbnail({
@@ -69,6 +73,6 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
           uri: institution.uri,
         };
       }),
-    },
+    }),
   };
 };
