@@ -25,7 +25,7 @@ import {GetStaticPaths, GetStaticProps} from "next";
 import {deleteUndefined, joinImage, joinRights} from "@paradicms/model-utils";
 
 interface StaticProps {
-  guiMetadata: GuiMetadata | null;
+  readonly guiMetadata: GuiMetadata | null;
   readonly institution: {
     readonly name: string;
     readonly object: {
@@ -38,7 +38,7 @@ interface StaticProps {
     readonly rights?: JoinedRights;
     readonly uri: string;
   };
-  propertyDefinitions: readonly PropertyDefinition[];
+  readonly propertyDefinitions: readonly PropertyDefinition[];
 }
 
 const ObjectPage: React.FunctionComponent<StaticProps> = ({

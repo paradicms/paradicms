@@ -1,6 +1,5 @@
 import * as React from "react";
-import {ImageDimensions, Institution, JoinedObject} from "@paradicms/models";
-// import {RightsTable} from "./RightsTable";
+import {ImageDimensions} from "@paradicms/models";
 import {
   Card,
   CardBody,
@@ -13,25 +12,22 @@ import {
 } from "reactstrap";
 import {Accordion} from "components/Accordion";
 import {RightsTable} from "components/RightsTable";
-import {placeholderImageUrl, selectThumbnail} from "@paradicms/model-utils";
+import {placeholderImageUrl} from "@paradicms/model-utils";
+import {ObjectCardObject} from "lib/ObjectCardObject";
+import {ObjectCardInstitution} from "lib/ObjectCardInstitution";
 
 export const ObjectCard: React.FunctionComponent<{
-  object: JoinedObject;
+  object: ObjectCardObject;
   renderInstitutionLink?: (
-    institution: Institution,
+    institution: ObjectCardInstitution,
     children: React.ReactNode
   ) => React.ReactNode;
   renderObjectLink: (
-    object: JoinedObject,
+    object: ObjectCardObject,
     children: React.ReactNode
   ) => React.ReactNode;
 }> = ({object, renderInstitutionLink, renderObjectLink}) => {
   const thumbnailDimensions: ImageDimensions = {height: 200, width: 200};
-
-  const thumbnail = selectThumbnail({
-    images: object.images,
-    targetDimensions: thumbnailDimensions,
-  });
 
   return (
     <Card className="object-card">
@@ -43,8 +39,8 @@ export const ObjectCard: React.FunctionComponent<{
         <CardImg
           className="thumbnail"
           src={
-            thumbnail
-              ? thumbnail.uri
+            object.thumbnail
+              ? object.thumbnail.uri
               : placeholderImageUrl({
                   dimensions: thumbnailDimensions,
                   text: "Missing thumbnail",
@@ -83,12 +79,12 @@ export const ObjectCard: React.FunctionComponent<{
               </Col>
             </Row>
           ) : null}
-          {thumbnail && thumbnail.rights ? (
+          {object.thumbnail && object.thumbnail.rights ? (
             <Row>
               <Col xs={12}>
                 <Accordion title="Image rights">
                   <RightsTable
-                    rights={thumbnail.rights}
+                    rights={object.thumbnail.rights}
                     tableClassName="rights-table"
                   ></RightsTable>
                 </Accordion>

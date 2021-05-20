@@ -1,10 +1,9 @@
 import * as React from "react";
 import {
-  Collection,
-  Image,
-  Institution,
-  Object,
+  JoinedImage,
+  JoinedRights,
   ObjectQuery,
+  Property,
   PropertyDefinition,
 } from "@paradicms/models";
 import {Layout} from "components/Layout";
@@ -19,22 +18,41 @@ import {ObjectFacetsControls} from "components/ObjectFacetsControls";
 import {JsonQueryParamConfig} from "@paradicms/base";
 import {ObjectFacetedSearchQuery} from "@paradicms/lunr";
 import {ObjectFiltersBadges} from "components/ObjectFiltersBadges";
+import {IndexedObject} from "@paradicms/lunr/dist/IndexedObject";
+import {
+  deleteUndefined,
+  joinImage,
+  joinRights,
+  selectThumbnail,
+} from "@paradicms/model-utils";
 
 interface StaticProps {
-  collection: Collection;
-  images: readonly Image[];
-  institution: Institution;
-  objects: readonly Object[];
-  propertyDefinitions: readonly PropertyDefinition[];
+  readonly institution: {
+    readonly collection: {
+      readonly objects: readonly {
+        readonly abstract?: string;
+        readonly properties?: readonly Property[];
+        readonly rights?: JoinedRights;
+        readonly title: string;
+        readonly thumbnail?: JoinedImage;
+        readonly uri: string;
+      }[];
+      readonly title: string;
+      readonly uri: string;
+    };
+    readonly name: string;
+    readonly rights?: JoinedRights;
+    readonly uri: string;
+  };
+  readonly propertyDefinitions: readonly PropertyDefinition[];
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
-  collection,
-  images,
   institution,
-  objects,
   propertyDefinitions,
 }) => {
+  const collection = institution.collection;
+
   const [objectQuery, setObjectQueryParam] = useQueryParam<ObjectQuery>(
     "query",
     new JsonQueryParamConfig<ObjectQuery>()
@@ -46,12 +64,20 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   );
   const page = pageQueryParam ?? 0;
 
+  const indexedObjects: readonly IndexedObject[] = React.useMemo(
+    () =>
+      collection.objects.map(object => ({
+        collectionUris: [collection.uri],
+        institutionUri: institution.uri,
+        title: object.title,
+        uri: object.uri,
+      })),
+    [institution]
+  );
+
   return (
     <ObjectFacetedSearchQuery
-      collections={[collection]}
-      images={images}
-      institutions={[institution]}
-      objects={objects}
+      objects={indexedObjects}
       propertyDefinitions={propertyDefinitions}
       query={objectQuery ?? {}}
     >
@@ -142,13 +168,59 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
   const data = new Data();
+
+  const collection = data.collection;
+  const institution = data.institution;
+
   return {
-    props: {
-      collection: data.collection,
-      images: data.images,
-      institution: data.institution,
-      objects: data.objects,
+    props: deleteUndefined({
+      institution: {
+        collection: {
+          objects: data.objects.map(object => {
+            const images = data.images.filter(
+              image => image.depictsUri === object.uri
+            );
+            const thumbnail = selectThumbnail({
+              images,
+              targetDimensions: {height: 200, width: 200},
+            });
+            return {
+              abstract: object.abstract,
+              rights: object.rights
+                ? joinRights({
+                    licenseTitlesByUri: data.licenseTitlesByUri,
+                    rights: object.rights,
+                    rightsStatementPrefLabelsByUri:
+                      data.rightsStatementPrefLabelsByUri,
+                  })
+                : undefined,
+              thumbnail: thumbnail
+                ? joinImage({
+                    image: thumbnail,
+                    licenseTitlesByUri: data.licenseTitlesByUri,
+                    rightsStatementPrefLabelsByUri:
+                      data.rightsStatementPrefLabelsByUri,
+                  })
+                : undefined,
+              title: object.title,
+              uri: object.uri,
+            };
+          }),
+          title: collection.title,
+          uri: collection.uri,
+        },
+        name: institution.name,
+        rights: institution.rights
+          ? joinRights({
+              licenseTitlesByUri: data.licenseTitlesByUri,
+              rights: institution.rights,
+              rightsStatementPrefLabelsByUri:
+                data.rightsStatementPrefLabelsByUri,
+            })
+          : undefined,
+        uri: institution.uri,
+      },
       propertyDefinitions: data.propertyDefinitions,
-    },
+    }),
   };
 };

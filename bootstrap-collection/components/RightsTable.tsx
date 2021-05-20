@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Rights} from "@paradicms/models";
+import {JoinedRights} from "@paradicms/models";
 import {JoinedValue} from "@paradicms/models";
 import {Table} from "reactstrap";
 
@@ -37,7 +37,7 @@ const JoinedValueLink: React.FunctionComponent<{value: JoinedValue}> = ({
 
 export const RightsTable: React.FunctionComponent<{
   cellClassName?: string;
-  rights: Rights;
+  rights: JoinedRights;
   rowClassName?: string;
   tableClassName?: string;
 }> = ({cellClassName, rights, rowClassName, tableClassName}) => {

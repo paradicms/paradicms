@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useState} from "react";
 import ImageZoom from "react-medium-image-zoom";
-import {Image} from "@paradicms/models";
+import {JoinedImage} from "@paradicms/models";
 import {RightsTable} from "./RightsTable";
 import {
   Carousel,
@@ -18,7 +18,7 @@ import {
 } from "@paradicms/model-utils";
 
 export const ObjectImagesCarousel: React.FunctionComponent<{
-  images: readonly Image[];
+  images: readonly JoinedImage[];
 }> = ({images}) => {
   const imagesByOriginalImageUri = indexImagesByOriginalImageUri(images);
 

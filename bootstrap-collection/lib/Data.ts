@@ -60,12 +60,19 @@ export class Data {
       objectUris.has(image.depictsUri)
     );
 
+    this.licenseTitlesByUri = allData.licenseTitlesByUri;
+
     this.propertyDefinitions = allData.propertyDefinitions;
+
+    this.rightsStatementPrefLabelsByUri =
+      allData.rightsStatementPrefLabelsByUri;
   }
 
   readonly collection: Collection;
   readonly images: readonly Image[];
   readonly institution: Institution;
+  readonly licenseTitlesByUri: {[index: string]: string};
   readonly objects: readonly Object[];
   readonly propertyDefinitions: readonly PropertyDefinition[];
+  readonly rightsStatementPrefLabelsByUri: {[index: string]: string};
 }

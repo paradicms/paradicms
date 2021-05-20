@@ -1,8 +1,9 @@
 import * as React from "react";
-import {Institution, JoinedObject} from "@paradicms/models";
 import {Container, Row, Col} from "reactstrap";
 import PaginationComponent from "react-reactstrap-pagination";
 import {ObjectCard} from "components/ObjectCard";
+import {ObjectCardObject} from "lib/ObjectCardObject";
+import {ObjectCardInstitution} from "lib/ObjectCardInstitution";
 
 const OBJECTS_PER_PAGE = 10;
 
@@ -12,15 +13,15 @@ const OBJECTS_PER_PAGE = 10;
  * @param objects objects to render in the gallery, should not be sliced (limit + offset) beforehand
  */
 export const ObjectsGallery: React.FunctionComponent<{
-  objects: readonly JoinedObject[];
+  objects: readonly ObjectCardObject[];
   onChangePage: (page: number) => void;
   page: number;
   renderInstitutionLink?: (
-    institution: Institution,
+    institution: ObjectCardInstitution,
     children: React.ReactNode
   ) => React.ReactNode;
   renderObjectLink: (
-    object: JoinedObject,
+    object: ObjectCardObject,
     children: React.ReactNode
   ) => React.ReactNode;
 }> = ({

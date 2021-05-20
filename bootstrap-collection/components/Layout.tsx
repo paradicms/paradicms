@@ -1,7 +1,6 @@
 import * as React from "react";
 import Helmet from "react-helmet";
 import {Hrefs} from "lib/Hrefs";
-import {Collection} from "@paradicms/models";
 import {
   Card,
   CardBody,
@@ -19,7 +18,7 @@ import {NavbarSearchForm} from "components/NavbarSearchForm";
 import {useRouter} from "next/router";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
-  collection: Collection;
+  collection: {readonly title: string; readonly uri: string};
   cardTitle?: React.ReactNode;
   className?: string;
   documentTitle?: string;

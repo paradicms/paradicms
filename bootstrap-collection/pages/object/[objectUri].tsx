@@ -1,10 +1,9 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
 import {
-  Collection,
-  Image,
-  Institution,
-  Object,
+  JoinedImage,
+  JoinedRights,
+  Property,
   PropertyDefinition,
 } from "@paradicms/models";
 import {Data} from "lib/Data";
@@ -15,22 +14,34 @@ import {Accordion} from "components/Accordion";
 import {RightsTable} from "components/RightsTable";
 import {PropertiesTable} from "components/PropertiesTable";
 import {ObjectImagesCarousel} from "components/ObjectImagesCarousel";
+import {deleteUndefined, joinImage, joinRights} from "@paradicms/model-utils";
 
 interface StaticProps {
-  collection: Collection;
-  institution: Institution;
-  object: Object;
-  objectImages: readonly Image[];
-  propertyDefinitions: readonly PropertyDefinition[];
+  readonly institution: {
+    readonly collection: {
+      readonly object: {
+        readonly images: readonly JoinedImage[];
+        readonly rights?: JoinedRights;
+        readonly properties?: readonly Property[];
+        readonly title: string;
+        readonly uri: string;
+      };
+      readonly title: string;
+      readonly uri: string;
+    };
+    readonly name: string;
+    readonly rights?: JoinedRights;
+    readonly uri: string;
+  };
+  readonly propertyDefinitions: readonly PropertyDefinition[];
 }
 
 const ObjectPage: React.FunctionComponent<StaticProps> = ({
-  collection,
   institution,
-  object,
-  objectImages,
   propertyDefinitions,
 }) => {
+  const collection = institution.collection;
+  const object = collection.object;
   const rights = object.rights ?? institution.rights ?? undefined;
 
   return (
@@ -38,7 +49,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
       <Container fluid>
         <Row>
           <Col xs={12} style={{display: "flex", justifyContent: "center"}}>
-            <ObjectImagesCarousel images={objectImages} />
+            <ObjectImagesCarousel images={object.images} />
           </Col>
         </Row>
         {object.properties && object.properties.length > 0 ? (
@@ -91,13 +102,51 @@ export const getStaticProps: GetStaticProps = async ({
   const data = new Data();
   const objectUri = decodeFileName(params!.objectUri as string);
 
+  const collection = data.collection;
+  const institution = data.institution;
+  const object = data.objects.find(object => object.uri === objectUri)!;
+
   return {
-    props: {
-      collection: data.collection,
-      institution: data.institution,
-      object: data.objects.find(object => object.uri === objectUri)!,
-      objectImages: data.images.filter(image => image.depictsUri === objectUri),
+    props: deleteUndefined({
+      institution: {
+        collection: {
+          object: {
+            images: data.images
+              .filter(image => image.depictsUri === objectUri)
+              .map(image =>
+                joinImage({
+                  licenseTitlesByUri: data.licenseTitlesByUri,
+                  image,
+                  rightsStatementPrefLabelsByUri:
+                    data.rightsStatementPrefLabelsByUri,
+                })
+              ),
+            rights: object.rights
+              ? joinRights({
+                  licenseTitlesByUri: data.licenseTitlesByUri,
+                  rights: object.rights,
+                  rightsStatementPrefLabelsByUri:
+                    data.rightsStatementPrefLabelsByUri,
+                })
+              : undefined,
+            title: object.title,
+            uri: object.uri,
+          },
+          title: collection.title,
+          uri: collection.uri,
+        },
+        name: institution.name,
+        rights: institution.rights
+          ? joinRights({
+              licenseTitlesByUri: data.licenseTitlesByUri,
+              rights: institution.rights,
+              rightsStatementPrefLabelsByUri:
+                data.rightsStatementPrefLabelsByUri,
+            })
+          : undefined,
+        uri: institution.uri,
+      },
       propertyDefinitions: data.propertyDefinitions,
-    },
+    }),
   };
 };
