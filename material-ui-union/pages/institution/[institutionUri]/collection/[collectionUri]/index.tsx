@@ -8,6 +8,8 @@ import * as React from "react";
 import {Layout} from "components/Layout";
 import {
   GuiMetadata,
+  JoinedImage,
+  JoinedRights,
   ObjectFilters,
   PropertyDefinition,
 } from "@paradicms/models";
@@ -23,6 +25,7 @@ import {Hrefs} from "lib/Hrefs";
 import {
   deleteUndefined,
   joinImage,
+  joinRights,
   selectThumbnail,
 } from "@paradicms/model-utils";
 
@@ -30,7 +33,13 @@ interface StaticProps {
   readonly guiMetadata: GuiMetadata | null;
   readonly institution: {
     readonly collection: {
-      readonly objects: ObjectCardObject[];
+      readonly objects: readonly {
+        readonly abstract?: string;
+        readonly rights?: JoinedRights;
+        readonly title: string;
+        readonly thumbnail?: JoinedImage;
+        readonly uri: string;
+      }[];
       readonly title: string;
       readonly uri: string;
     };
@@ -60,6 +69,17 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
     NumberParam
   );
 
+  // The gallery expects each Object to have a nested Institution,
+  // but we have an Institution->Object tree in order to save space.
+  const objects: readonly ObjectCardObject[] = React.useMemo(
+    () =>
+      institution.collection.objects.map(object => ({
+        ...object,
+        institution,
+      })),
+    [institution]
+  );
+
   return (
     <Layout
       breadcrumbs={{collection, institution}}
@@ -75,7 +95,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
       guiMetadata={guiMetadata}
     >
       <ObjectFacetedSearchGrid
-        objects={collection.objects}
+        objects={objects}
         onChangeFilters={setFilters}
         onChangePage={setPage}
         page={page ?? 0}
@@ -138,6 +158,15 @@ export const getStaticProps: GetStaticProps = async ({
               targetDimensions: thumbnailTargetDimensions,
             });
             return {
+              abstract: object.abstract,
+              rights: object.rights
+                ? joinRights({
+                    licenseTitlesByUri: data.licenseTitlesByUri,
+                    rights: object.rights,
+                    rightsStatementPrefLabelsByUri:
+                      data.rightsStatementPrefLabelsByUri,
+                  })
+                : undefined,
               thumbnail: thumbnail
                 ? joinImage({
                     image: thumbnail,
@@ -148,7 +177,7 @@ export const getStaticProps: GetStaticProps = async ({
                 : undefined,
               title: object.title,
               uri: object.uri,
-            } as ObjectCardObject;
+            };
           }),
           title: collection.title,
           uri: collection.uri,
