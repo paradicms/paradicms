@@ -21,7 +21,7 @@ interface StaticProps {
     readonly collection: {
       readonly object: {
         readonly images: readonly JoinedImage[];
-        readonly rights?: JoinedRights;
+        readonly rights: JoinedRights | null;
         readonly properties?: readonly Property[];
         readonly title: string;
         readonly uri: string;
@@ -30,7 +30,7 @@ interface StaticProps {
       readonly uri: string;
     };
     readonly name: string;
-    readonly rights?: JoinedRights;
+    readonly rights: JoinedRights | null;
     readonly uri: string;
   };
   readonly propertyDefinitions: readonly PropertyDefinition[];
@@ -128,7 +128,7 @@ export const getStaticProps: GetStaticProps = async ({
                   rightsStatementPrefLabelsByUri:
                     data.rightsStatementPrefLabelsByUri,
                 })
-              : undefined,
+              : null,
             title: object.title,
             uri: object.uri,
           },
@@ -143,7 +143,7 @@ export const getStaticProps: GetStaticProps = async ({
               rightsStatementPrefLabelsByUri:
                 data.rightsStatementPrefLabelsByUri,
             })
-          : undefined,
+          : null,
         uri: institution.uri,
       },
       propertyDefinitions: data.propertyDefinitions,

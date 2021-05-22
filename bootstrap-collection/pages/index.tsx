@@ -25,18 +25,18 @@ interface StaticProps {
   readonly institution: {
     readonly collection: {
       readonly objects: readonly {
-        readonly abstract?: string;
-        readonly properties?: readonly Property[];
-        readonly rights?: JoinedRights;
+        readonly abstract: string | null;
+        readonly properties: readonly Property[] | null;
+        readonly rights: JoinedRights | null;
+        readonly thumbnail: JoinedImage | null;
         readonly title: string;
-        readonly thumbnail?: JoinedImage;
         readonly uri: string;
       }[];
       readonly title: string;
       readonly uri: string;
     };
     readonly name: string;
-    readonly rights?: JoinedRights;
+    readonly rights: JoinedRights | null;
     readonly uri: string;
   };
   readonly propertyDefinitions: readonly PropertyDefinition[];
@@ -62,8 +62,10 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   const indexedObjects: readonly IndexedObject[] = React.useMemo(
     () =>
       collection.objects.map(object => ({
+        abstract: object.abstract,
         collectionUris: [collection.uri],
         institutionUri: institution.uri,
+        properties: object.properties,
         title: object.title,
         uri: object.uri,
       })),
@@ -80,7 +82,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
         <Layout
           collection={collection}
           onSearch={text => {
-            setObjectQueryParam({text});
+            setObjectQueryParam({filters: null, text});
             setPage(undefined);
           }}
         >
@@ -139,7 +141,13 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
               <Col xs="2">
                 <ObjectFacetsControls
                   facets={objectFacets}
-                  filters={objectQuery?.filters ?? {}}
+                  filters={
+                    objectQuery?.filters ?? {
+                      collectionUris: null,
+                      institutionUris: null,
+                      properties: null,
+                    }
+                  }
                   onChange={newObjectFilters => {
                     setObjectQueryParam({
                       ...objectQuery,
@@ -181,6 +189,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
             });
             return {
               abstract: object.abstract,
+              properties: object.properties,
               rights: object.rights
                 ? joinRights({
                     licenseTitlesByUri: data.licenseTitlesByUri,
@@ -188,7 +197,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
                     rightsStatementPrefLabelsByUri:
                       data.rightsStatementPrefLabelsByUri,
                   })
-                : undefined,
+                : null,
               thumbnail: thumbnail
                 ? joinImage({
                     image: thumbnail,
@@ -196,7 +205,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
                     rightsStatementPrefLabelsByUri:
                       data.rightsStatementPrefLabelsByUri,
                   })
-                : undefined,
+                : null,
               title: object.title,
               uri: object.uri,
             };
@@ -212,7 +221,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
               rightsStatementPrefLabelsByUri:
                 data.rightsStatementPrefLabelsByUri,
             })
-          : undefined,
+          : null,
         uri: institution.uri,
       },
       propertyDefinitions: data.propertyDefinitions,

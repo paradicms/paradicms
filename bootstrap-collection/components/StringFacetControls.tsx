@@ -14,7 +14,7 @@ import {
 } from "reactstrap";
 
 export const StringFacetControls: React.FunctionComponent<{
-  currentState?: StringFilter; // value id's only
+  currentState: StringFilter | null; // value id's only
   onChange: (newState?: StringFilter) => void;
   valueUniverse: readonly StringFacetValue[];
 }> = ({currentState, onChange, valueUniverse}) => {
