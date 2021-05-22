@@ -10,11 +10,7 @@ import {
   InstitutionsGallery,
   thumbnailTargetDimensions,
 } from "@paradicms/material-ui";
-import {
-  deleteUndefined,
-  joinImage,
-  selectThumbnail,
-} from "@paradicms/model-utils";
+import {joinImage, selectThumbnail} from "@paradicms/model-utils";
 
 interface StaticProps {
   readonly guiMetadata: GuiMetadata | null;
@@ -52,7 +48,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   const institutions = data.institutions;
 
   return {
-    props: deleteUndefined({
+    props: {
       guiMetadata: data.guiMetadata,
       institutions: institutions.map(institution => {
         const thumbnail = selectThumbnail({
@@ -69,10 +65,10 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
                 rightsStatementPrefLabelsByUri:
                   data.rightsStatementPrefLabelsByUri,
               })
-            : undefined,
+            : null,
           uri: institution.uri,
         };
       }),
-    }),
+    },
   };
 };

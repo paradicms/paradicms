@@ -22,7 +22,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {deleteUndefined, joinImage, joinRights} from "@paradicms/model-utils";
+import {joinImage, joinRights} from "@paradicms/model-utils";
 
 interface StaticProps {
   readonly guiMetadata: GuiMetadata | null;
@@ -30,12 +30,12 @@ interface StaticProps {
     readonly name: string;
     readonly object: {
       readonly images: readonly JoinedImage[];
-      readonly rights?: JoinedRights;
-      readonly properties?: readonly Property[];
+      readonly properties: readonly Property[] | null;
+      readonly rights: JoinedRights | null;
       readonly title: string;
       readonly uri: string;
     };
-    readonly rights?: JoinedRights;
+    readonly rights: JoinedRights | null;
     readonly uri: string;
   };
   readonly propertyDefinitions: readonly PropertyDefinition[];
@@ -126,7 +126,7 @@ export const getStaticProps: GetStaticProps = async ({
   const objectImages = data.imagesDepictingUri(objectUri);
 
   return {
-    props: deleteUndefined({
+    props: {
       guiMetadata: data.guiMetadata,
       institution: {
         name: institution.name,
@@ -139,6 +139,7 @@ export const getStaticProps: GetStaticProps = async ({
                 data.rightsStatementPrefLabelsByUri,
             })
           ),
+          properties: object.properties,
           rights: object.rights
             ? joinRights({
                 licenseTitlesByUri: data.licenseTitlesByUri,
@@ -146,7 +147,7 @@ export const getStaticProps: GetStaticProps = async ({
                 rightsStatementPrefLabelsByUri:
                   data.rightsStatementPrefLabelsByUri,
               })
-            : undefined,
+            : null,
           title: object.title,
           uri: object.uri,
         },
@@ -157,10 +158,10 @@ export const getStaticProps: GetStaticProps = async ({
               rightsStatementPrefLabelsByUri:
                 data.rightsStatementPrefLabelsByUri,
             })
-          : undefined,
+          : null,
         uri: institution.uri,
       },
       propertyDefinitions: data.propertyDefinitions,
-    }),
+    },
   };
 };

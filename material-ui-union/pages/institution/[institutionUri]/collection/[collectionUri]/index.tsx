@@ -22,22 +22,17 @@ import {
 } from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
-import {
-  deleteUndefined,
-  joinImage,
-  joinRights,
-  selectThumbnail,
-} from "@paradicms/model-utils";
+import {joinImage, joinRights, selectThumbnail} from "@paradicms/model-utils";
 
 interface StaticProps {
   readonly guiMetadata: GuiMetadata | null;
   readonly institution: {
     readonly collection: {
       readonly objects: readonly {
-        readonly abstract?: string;
-        readonly rights?: JoinedRights;
+        readonly abstract: string | null;
+        readonly rights: JoinedRights | null;
+        readonly thumbnail: JoinedImage | null;
         readonly title: string;
-        readonly thumbnail?: JoinedImage;
         readonly uri: string;
       }[];
       readonly title: string;
@@ -107,7 +102,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
             {children}
           </Link>
         )}
-        query={{filters}}
+        query={{filters, text: null}}
       />
     </Layout>
   );
@@ -147,7 +142,7 @@ export const getStaticProps: GetStaticProps = async ({
   const institution = data.institutionByUri(institutionUri);
 
   return {
-    props: deleteUndefined({
+    props: {
       guiMetadata: data.guiMetadata,
       institution: {
         collection: {
@@ -166,7 +161,7 @@ export const getStaticProps: GetStaticProps = async ({
                     rightsStatementPrefLabelsByUri:
                       data.rightsStatementPrefLabelsByUri,
                   })
-                : undefined,
+                : null,
               thumbnail: thumbnail
                 ? joinImage({
                     image: thumbnail,
@@ -174,7 +169,7 @@ export const getStaticProps: GetStaticProps = async ({
                     rightsStatementPrefLabelsByUri:
                       data.rightsStatementPrefLabelsByUri,
                   })
-                : undefined,
+                : null,
               title: object.title,
               uri: object.uri,
             };
@@ -186,6 +181,6 @@ export const getStaticProps: GetStaticProps = async ({
         uri: institution.uri,
       },
       propertyDefinitions: data.propertyDefinitions,
-    }),
+    },
   };
 };

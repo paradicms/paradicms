@@ -19,12 +19,7 @@ import {JsonQueryParamConfig} from "@paradicms/base";
 import {ObjectFacetedSearchQuery} from "@paradicms/lunr";
 import {ObjectFiltersBadges} from "components/ObjectFiltersBadges";
 import {IndexedObject} from "@paradicms/lunr/dist/IndexedObject";
-import {
-  deleteUndefined,
-  joinImage,
-  joinRights,
-  selectThumbnail,
-} from "@paradicms/model-utils";
+import {joinImage, joinRights, selectThumbnail} from "@paradicms/model-utils";
 
 interface StaticProps {
   readonly institution: {
@@ -173,7 +168,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   const institution = data.institution;
 
   return {
-    props: deleteUndefined({
+    props: {
       institution: {
         collection: {
           objects: data.objects.map(object => {
@@ -221,6 +216,6 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
         uri: institution.uri,
       },
       propertyDefinitions: data.propertyDefinitions,
-    }),
+    },
   };
 };

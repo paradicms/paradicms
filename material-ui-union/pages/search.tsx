@@ -18,21 +18,16 @@ import {
 } from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
-import {
-  deleteUndefined,
-  joinImage,
-  joinRights,
-  selectThumbnail,
-} from "@paradicms/model-utils";
+import {joinImage, joinRights, selectThumbnail} from "@paradicms/model-utils";
 
 interface StaticProps {
   readonly guiMetadata: GuiMetadata | null;
   readonly institutions: readonly {
     readonly objects: readonly {
-      readonly abstract?: string;
-      readonly rights?: JoinedRights;
+      readonly abstract: string | null;
+      readonly rights: JoinedRights | null;
       readonly title: string;
-      readonly thumbnail?: JoinedImage;
+      readonly thumbnail: JoinedImage | null;
       readonly uri: string;
     }[];
     readonly name: string;
@@ -89,7 +84,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
         query?.text ? `Search results for "${query.text}"` : "Search results"
       }
       guiMetadata={guiMetadata}
-      onSearch={text => setQuery({text})}
+      onSearch={text => setQuery({filters: null, text})}
     >
       <ObjectFacetedSearchGrid
         objects={objects}
@@ -121,7 +116,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   const data = Data.instance;
 
   return {
-    props: deleteUndefined({
+    props: {
       guiMetadata: data.guiMetadata,
       institutions: data.institutions.map(institution => ({
         name: institution.name,
@@ -139,7 +134,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
                   rightsStatementPrefLabelsByUri:
                     data.rightsStatementPrefLabelsByUri,
                 })
-              : undefined,
+              : null,
             thumbnail: thumbnail
               ? joinImage({
                   licenseTitlesByUri: data.licenseTitlesByUri,
@@ -147,7 +142,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
                   rightsStatementPrefLabelsByUri:
                     data.rightsStatementPrefLabelsByUri,
                 })
-              : undefined,
+              : null,
             title: object.title,
             uri: object.uri,
           };
@@ -155,6 +150,6 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
         uri: institution.uri,
       })),
       propertyDefinitions: data.propertyDefinitions,
-    }),
+    },
   };
 };

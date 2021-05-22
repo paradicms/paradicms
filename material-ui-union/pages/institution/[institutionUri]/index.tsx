@@ -11,7 +11,6 @@ import {
 } from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {
-  deleteUndefined,
   indexImagesByDepictsUri,
   indexObjectsByCollectionUri,
   joinImage,
@@ -23,8 +22,8 @@ interface StaticProps {
   readonly guiMetadata: GuiMetadata | null;
   readonly institution: {
     readonly collections: readonly {
+      readonly thumbnail: JoinedImage | null;
       readonly title: string;
-      readonly thumbnail?: JoinedImage;
       readonly uri: string;
     }[];
     readonly name: string;
@@ -88,7 +87,7 @@ export const getStaticProps: GetStaticProps = async ({
   );
 
   return {
-    props: deleteUndefined({
+    props: {
       guiMetadata: data.guiMetadata,
       institution: {
         collections: institutionCollections.map(collection => {
@@ -110,7 +109,7 @@ export const getStaticProps: GetStaticProps = async ({
                   rightsStatementPrefLabelsByUri:
                     data.rightsStatementPrefLabelsByUri,
                 })
-              : undefined,
+              : null,
             title: collection.title,
             uri: collection.uri,
           };
@@ -118,6 +117,6 @@ export const getStaticProps: GetStaticProps = async ({
         name: institution.name,
         uri: institution.uri,
       },
-    }),
+    },
   };
 };

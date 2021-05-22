@@ -14,7 +14,7 @@ import {Accordion} from "components/Accordion";
 import {RightsTable} from "components/RightsTable";
 import {PropertiesTable} from "components/PropertiesTable";
 import {ObjectImagesCarousel} from "components/ObjectImagesCarousel";
-import {deleteUndefined, joinImage, joinRights} from "@paradicms/model-utils";
+import {joinImage, joinRights} from "@paradicms/model-utils";
 
 interface StaticProps {
   readonly institution: {
@@ -107,7 +107,7 @@ export const getStaticProps: GetStaticProps = async ({
   const object = data.objects.find(object => object.uri === objectUri)!;
 
   return {
-    props: deleteUndefined({
+    props: {
       institution: {
         collection: {
           object: {
@@ -147,6 +147,6 @@ export const getStaticProps: GetStaticProps = async ({
         uri: institution.uri,
       },
       propertyDefinitions: data.propertyDefinitions,
-    }),
+    },
   };
 };
