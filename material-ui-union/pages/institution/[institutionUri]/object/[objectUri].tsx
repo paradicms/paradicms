@@ -47,7 +47,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
   propertyDefinitions,
 }) => {
   const object = institution.object;
-  const rights = object.rights ?? institution.rights ?? undefined;
+  const rights = object.rights ?? institution.rights ?? null;
 
   return (
     <Layout

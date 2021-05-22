@@ -42,7 +42,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
 }) => {
   const collection = institution.collection;
   const object = collection.object;
-  const rights = object.rights ?? institution.rights ?? undefined;
+  const rights = object.rights ?? institution.rights ?? null;
 
   return (
     <Layout collection={collection} documentTitle={"Object - " + object.title}>
