@@ -22,5 +22,5 @@
   "exclude": [
     "node_modules"
   ],
-  "extends": "../../lib/ts/base/tsconfig.base.json"
+  "extends": "../../lib/base/tsconfig.base.json"
 }

@@ -1,6 +1,5 @@
 import {Page} from "./Page";
-import {CollectionPage} from "./CollectionPage";
-import {encodeFileName} from "../../../../../lib/ts/base/src";
+import {encodeFileName} from "../../../../../lib/base/src";
 
 export class InstitutionPage extends Page {
   constructor(readonly institutionUri: string) {

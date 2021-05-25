@@ -1,5 +1,5 @@
 import {Page} from "./Page";
-import {encodeFileName} from "../../../../../lib/ts/base/src";
+import {encodeFileName} from "../../../../../lib/base/src";
 
 export class ObjectPage extends Page {
   constructor(kwds: {
