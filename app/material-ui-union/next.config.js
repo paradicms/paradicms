@@ -1,1 +1,1 @@
-../../lib/ts/next/next.config.js
+../../lib/next/next.config.js

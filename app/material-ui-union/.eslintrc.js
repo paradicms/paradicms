@@ -1,1 +1,1 @@
-../../lib/ts/base/.eslintrc.js
+../../lib/base/.eslintrc.js

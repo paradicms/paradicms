@@ -1,0 +1,8 @@
+{
+  "packages": [
+    "gui/*",
+    "integration/*",
+    "lib/ts/*"
+  ],
+  "version": "1.0.3"
+}
