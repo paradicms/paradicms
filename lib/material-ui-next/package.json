@@ -1,0 +1,23 @@
+{
+  "author": "Minor Gordon",
+  "name": "@paradicms/material-ui-next",
+  "description": "Paradicms @material-ui + Next.js integration library",
+  "dependencies": {
+    "@paradicms/material-ui": "1.0.3",
+    "@paradicms/next": "1.0.3"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.5"
+  },
+  "license": "GPLv3",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -b",
+    "start": "tsc -w"
+  },
+  "types": "dist/index.d.ts",
+  "version": "1.0.3"
+}

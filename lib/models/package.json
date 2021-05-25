@@ -1,0 +1,22 @@
+{
+  "author": "Minor Gordon",
+  "name": "@paradicms/models",
+  "description": "Paradicms models library",
+  "dependencies": {
+    "@paradicms/base": "1.0.3"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.5"
+  },
+  "license": "GPLv3",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -b",
+    "start": "tsc -w"
+  },
+  "types": "dist/index.d.ts",
+  "version": "1.0.3"
+}

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "esModuleInterop": true,
+    "outDir": "./dist"
+  },
+  "exclude": [
+    "./node_modules/*"
+  ],
+  "extends": "../base/tsconfig.base.json",
+  "include": [
+    "next-env.d.ts",
+    "./src/**/*"
+  ]
+}

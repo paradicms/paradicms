@@ -1,0 +1,26 @@
+{
+  "author": "Minor Gordon",
+  "name": "@paradicms/lunr",
+  "description": "Paradicms lunr library",
+  "dependencies": {
+    "@paradicms/base": "1.0.3",
+    "@paradicms/models": "1.0.3",
+    "@paradicms/model-utils": "1.0.3",
+    "@types/lunr": "^2.3.3",
+    "lunr": "^2.3.8"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.5"
+  },
+  "license": "GPLv3",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -b",
+    "start": "tsc -w"
+  },
+  "types": "dist/index.d.ts",
+  "version": "1.0.3"
+}

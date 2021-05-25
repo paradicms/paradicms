@@ -1,0 +1,31 @@
+{
+  "author": "Minor Gordon",
+  "name": "@paradicms/rdf",
+  "description": "Paradicms RDF manipulation library",
+  "dependencies": {
+    "@paradicms/models": "1.0.3",
+    "@paradicms/model-utils": "1.0.3",
+    "rdflib": "^2.1.7"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.15",
+    "@types/mocha": "^8.2.1",
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.5"
+  },
+  "license": "GPLv3",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -b",
+    "start": "tsc -w",
+    "test": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/**/*.ts'",
+    "test-watch": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register -w 'test/**/*.ts'"
+  },
+  "types": "dist/index.d.ts",
+  "version": "1.0.3"
+}

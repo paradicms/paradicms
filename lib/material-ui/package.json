@@ -1,0 +1,33 @@
+{
+  "author": "Minor Gordon",
+  "name": "@paradicms/material-ui",
+  "description": "Paradicms material-ui library",
+  "dependencies": {
+    "@material-ui/core": "4.11.0",
+    "@material-ui/icons": "4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "@paradicms/base": "1.0.3",
+    "@paradicms/models": "1.0.3",
+    "@paradicms/model-utils": "1.0.3",
+    "@paradicms/lunr": "1.0.3",
+    "@types/mui-datatables": "^3.7.0",
+    "@types/react-medium-image-zoom": "^3.0.0",
+    "mui-datatables": "^3.7.1",
+    "react-material-ui-carousel": "1.4.5",
+    "react-medium-image-zoom": "3.1.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.5"
+  },
+  "license": "GPLv3",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -b",
+    "start": "tsc -w"
+  },
+  "types": "dist/index.d.ts",
+  "version": "1.0.3"
+}

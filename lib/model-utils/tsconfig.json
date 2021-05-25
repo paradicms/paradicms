@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "outDir": "./dist"
+  },
+  "exclude": [
+    "./node_modules/*"
+  ],
+  "extends": "../base/tsconfig.base.json",
+  "include": [
+    "./src/**/*"
+  ]
+}
