@@ -21,7 +21,7 @@ class GuiBuilder:
             gui_dir_path = Path(self.__gui)
         else:
             gui_dir_path = (
-                Path(__file__).parent.parent.parent.parent.parent / "gui" / gui
+                Path(__file__).parent.parent.parent.parent.parent / "gui" / "app" / gui
             )
         if not gui_dir_path.is_dir():
             raise ValueError(f"{gui_dir_path} does not exist")
