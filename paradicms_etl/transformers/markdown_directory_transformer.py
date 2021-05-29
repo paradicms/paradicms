@@ -1,6 +1,7 @@
-from typing import Dict, Optional, Tuple, Union
+from typing import Dict, Generator, Optional, Tuple, Union
 from urllib.parse import quote
 
+from copy import deepcopy
 import rdflib.namespace
 import yaml
 from mdit_py_plugins.front_matter import front_matter_plugin
@@ -232,29 +233,6 @@ class MarkdownDirectoryTransformer(_Transformer):
             for child_node in root_node.children:
                 self._visit_node(child_node)
 
-    class _MarkdownGraphToModelTransformer:
-        def __init__(
-            self, *, default_collection_uri: URIRef, default_institution_uri: URIRef
-        ):
-            self.__default_collection_uri = default_collection_uri
-            self.__default_institution_uri = default_institution_uri
-
-        def visit_graph(
-            self, *, model_resource: Resource, model_type: str
-        ) -> _NamedModel:
-            method = getattr(self, f"_visit_{model_type}_graph")
-            return method(model_resource)
-
-        def _visit_object_graph(self, object_resource: Resource) -> Object:
-            return Object.from_rdf(
-                object_resource,
-                default_collection_uris=(self.__default_collection_uri,),
-                default_institution_uri=self.__default_institution_uri,
-            )
-
-        def _visit_person_graph(self, person_resource: Resource) -> Person:
-            return Person.from_rdf(person_resource)
-
     def __init__(
         self,
         default_institution: Optional[Institution] = None,
@@ -262,13 +240,18 @@ class MarkdownDirectoryTransformer(_Transformer):
         **kwds,
     ):
         _Transformer.__init__(self, **kwds)
-        if default_institution is None:
-            default_institution = self._transform_institution_from_arguments(**kwds)
-        if default_collection is None:
-            default_collection = self._transform_collection_from_arguments(**kwds)
-        assert default_collection.institution_uri == default_institution.uri
+        if default_institution is None and default_collection is not None:
+            raise ValueError(
+                "default institutin must be supplied if default collection is"
+            )
         self.__default_collection = default_collection
         self.__default_institution = default_institution
+
+    @staticmethod
+    def model_uri(*, pipeline_id: str, model_type: str, model_id: str) -> URIRef:
+        return URIRef(
+            f"urn:markdown:{pipeline_id}:{quote(model_type)}:{quote(model_id)}"
+        )
 
     def transform(self, markdown: Dict[str, Dict[str, str]]):
         yield from CreativeCommonsLicenses.as_tuple()
@@ -276,57 +259,145 @@ class MarkdownDirectoryTransformer(_Transformer):
         yield from DublinCorePropertyDefinitions.as_tuple()
         yield from RightsStatementsDotOrgRightsStatements.as_tuple()
 
-        yielded_default_collection = False
-        yielded_default_institution = False
+        markdown = deepcopy(markdown)
+
+        default_institution = self.__default_institution
+        if default_institution is None:
+            # If the directory has institution models, use the first of them as the default institution
+            institutions = tuple(
+                self.__transform_model(
+                    markdown_str=markdown_str,
+                    model_id=model_id,
+                    model_type="institution",
+                )
+                for model_id, markdown_str in markdown.pop("institution", {}).items()
+            )
+            if institutions:
+                yield from institutions
+                default_institution = institutions[0]
+                self._logger.debug(
+                    "using the first institution %s as the default institution",
+                    default_institution.uri,
+                )
+            else:
+                # Directory has no institution models, synthesize a default institution
+                default_institution = Institution(
+                    name="Default institution",
+                    uri=self.model_uri(
+                        pipeline_id=self._pipeline_id,
+                        model_type="institution",
+                        model_id="default",
+                    ),
+                )
+        assert default_institution is not None
+
+        default_collection = self.__default_collection
+        if default_collection is None:
+            # If the directory has collection models, use the first that belongs to the default institution as the default collection
+            collections = tuple(
+                self.__transform_model(
+                    markdown_str=markdown_str,
+                    model_id=model_id,
+                    model_type="collection",
+                )
+                for model_id, markdown_str in markdown.pop("collection", {}).items()
+            )
+            if collections:
+                yield from collections
+                for collection in collections:
+                    if collection.institution_uri == default_institution.uri:
+                        default_collection = collection
+                        self._logger.debug(
+                            "using first collection %s that belongs to the default institution %s as the default collection",
+                            default_collection.uri,
+                            default_institution.uri,
+                        )
+            if default_collection is None:
+                # Otherwise synthesize a default collection
+                default_collection = Collection(
+                    institution_uri=default_institution.uri,
+                    title="Default collection",
+                    uri=self.model_uri(
+                        pipeline_id=self._pipeline_id,
+                        model_type="collection",
+                        model_id="default",
+                    ),
+                )
+        assert default_collection is not None
+        if default_collection.institution_uri != default_institution.uri:
+            raise ValueError(
+                f"the default collection {default_collection.uri} belongs to the institution {default_collection.institution_uri}, not the default institution {default_institution.uri}"
+            )
 
         for model_type in markdown.keys():
             for model_id, markdown_str in markdown[model_type].items():
-                model_resource: Resource = (
-                    self._MarkdownAstToGraphTransformer.visit_document(
-                        markdown_str,
-                        model_uri=self.model_uri(
-                            pipeline_id=self._pipeline_id,
-                            model_type=model_type,
-                            model_id=model_id,
-                        ),
-                        pipeline_id=self._pipeline_id,
-                    )
+                # Only certain model types should have the default collection and/or institution added to them
+                # if they have no explicit collection and/or institution statement
+                yield self.__transform_model(
+                    default_collection=default_collection
+                    if model_type in ("object",)
+                    else None,
+                    default_institution=default_institution
+                    if model_type in ("collection", "image", "object")
+                    else None,
+                    markdown_str=markdown_str,
+                    model_id=model_id,
+                    model_type=model_type,
                 )
 
-                if model_type in ("object",):
-                    if model_resource.value(CMS.collection) is None:
-                        model_resource.add(
-                            CMS.collection, self.__default_collection.uri
-                        )
-                        if not yielded_default_collection:
-                            yield self.__default_collection
+    def __transform_model(
+        self,
+        *,
+        markdown_str: str,
+        model_id: str,
+        model_type: str,
+        default_collection: Optional[Collection] = None,
+        default_institution: Optional[Institution] = None,
+    ) -> OpaqueNamedModel:
+        """
+        :param default_collection: collection to add to the model if no collection statement is defined
+        :param default_institution: institution to add to the model if no institution statement is defined
+        """
 
-                if model_type in ("collection", "image", "object"):
-                    if model_resource.value(CMS.institution) is None:
-                        model_resource.add(
-                            CMS.institution, self.__default_institution.uri
-                        )
-                        if not yielded_default_institution:
-                            yield self.__default_institution
+        if default_collection is not None:
+            assert default_institution is not None
 
-                model_properties = []
-                for p, o in model_resource.predicate_objects():
-                    if isinstance(o, Node):
-                        value = o
-                    elif isinstance(o, Resource):
-                        value = o.identifier
-                    else:
-                        raise TypeError(type(o))
-                    model_properties.append(Property(p.identifier, value))
+        model_resource: Resource = self._MarkdownAstToGraphTransformer.visit_document(
+            markdown_str,
+            model_uri=self.model_uri(
+                pipeline_id=self._pipeline_id,
+                model_type=model_type,
+                model_id=model_id,
+            ),
+            pipeline_id=self._pipeline_id,
+        )
 
-                yield OpaqueNamedModel(
-                    properties=tuple(model_properties),
-                    type=CMS[model_type.capitalize()],
-                    uri=model_resource.identifier,
-                )
+        # if model_type in ("object",):
+        if (
+            default_collection is not None
+            and model_resource.value(CMS.collection) is None
+        ):
+            model_resource.add(CMS.collection, self.__default_collection.uri)
 
-    @staticmethod
-    def model_uri(*, pipeline_id: str, model_type: str, model_id: str) -> URIRef:
-        return URIRef(
-            f"urn:markdown:{pipeline_id}:{quote(model_type)}:{quote(model_id)}"
+        # if model_type in ("collection", "image", "object"):
+        if (
+            default_institution is not None
+            and model_resource.value(CMS.institution) is None
+        ):
+            model_resource.add(CMS.institution, self.__default_institution.uri)
+
+        model_properties = []
+        for p, o in model_resource.predicate_objects():
+            if isinstance(o, Node):
+                value = o
+            elif isinstance(o, Resource):
+                value = o.identifier
+            else:
+                raise TypeError(type(o))
+            model_properties.append(Property(p.identifier, value))
+
+        return OpaqueNamedModel(
+            properties=tuple(model_properties),
+            type=CMS[model_type.capitalize()],
+            uri=model_resource.identifier,
         )
