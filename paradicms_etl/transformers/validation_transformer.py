@@ -85,7 +85,7 @@ class ValidationTransformer(_Transformer):
                 for referenced_uri in referenced_uris:
                     if referenced_uri not in universe_uris:
                         raise ValueError(
-                            f"dangling {uri_type} URI reference: {referenced_uri}"
+                            f"dangling {uri_type} URI reference: {referenced_uri} (universe: {universe_uris})"
                         )
                 for universe_uri in universe_uris:
                     if universe_uri not in referenced_uris:

@@ -253,6 +253,40 @@ class MarkdownDirectoryTransformer(_Transformer):
             f"urn:markdown:{pipeline_id}:{quote(model_type)}:{quote(model_id)}"
         )
 
+    def __opacify_model(self, model: _NamedModel) -> OpaqueNamedModel:
+        graph = Graph()
+        model_resource = model.to_rdf(graph=graph)
+        return self.__transform_resource_to_model(
+            model_resource=model_resource, model_type=model.__class__.__name__
+        )
+
+    def __synthesize_default_collection(
+        self, *, institution_uri: URIRef
+    ) -> OpaqueNamedModel:
+        return self.__opacify_model(
+            Collection(
+                institution_uri=institution_uri,
+                title="Default collection",
+                uri=self.model_uri(
+                    pipeline_id=self._pipeline_id,
+                    model_type="collection",
+                    model_id="default",
+                ),
+            )
+        )
+
+    def __synthesize_default_institution(self) -> OpaqueNamedModel:
+        return self.__opacify_model(
+            Institution(
+                name="Default institution",
+                uri=self.model_uri(
+                    pipeline_id=self._pipeline_id,
+                    model_type="institution",
+                    model_id="default",
+                ),
+            )
+        )
+
     def transform(self, markdown: Dict[str, Dict[str, str]]):
         yield from CreativeCommonsLicenses.as_tuple()
         yield from CreativeCommonsRightsStatements.as_tuple()
@@ -315,13 +349,8 @@ class MarkdownDirectoryTransformer(_Transformer):
                         if default_institution is None:
                             # No default institution was specified (see above)
                             # Synthesize one and yield it
-                            default_institution = Institution(
-                                name="Default institution",
-                                uri=self.model_uri(
-                                    pipeline_id=self._pipeline_id,
-                                    model_type="institution",
-                                    model_id="default",
-                                ),
+                            default_institution = (
+                                self.__synthesize_default_institution()
                             )
                             yield default_institution
 
@@ -333,24 +362,10 @@ class MarkdownDirectoryTransformer(_Transformer):
                         if default_collection is None:
                             # No default collection was specified (see above)
                             # Synthesize one and yield it
-                            default_collection = Collection(
-                                institution_uri=default_institution.uri,
-                                title="Default collection",
-                                uri=self.model_uri(
-                                    pipeline_id=self._pipeline_id,
-                                    model_type="collection",
-                                    model_id="default",
-                                ),
+                            default_collection = self.__synthesize_default_collection(
+                                institution_uri=default_institution.uri
                             )
                             yield default_collection
-
-                        if (
-                            default_collection.institution_uri
-                            != default_institution.uri
-                        ):
-                            raise ValueError(
-                                f"the default collection {default_collection.uri} belongs to the institution {default_collection.institution_uri}, not the default institution {default_institution.uri}"
-                            )
 
                         model_resource.add(CMS.collection, default_collection.uri)
 
@@ -360,7 +375,7 @@ class MarkdownDirectoryTransformer(_Transformer):
 
     def __transform_collections(
         self, inout_markdown: Dict[str, Dict[str, str]]
-    ) -> Tuple[Collection, ...]:
+    ) -> Tuple[OpaqueNamedModel, ...]:
         collection_model_type = "collection"
         return tuple(
             self.__transform_resource_to_model(
@@ -378,7 +393,7 @@ class MarkdownDirectoryTransformer(_Transformer):
 
     def __transform_institutions(
         self, inout_markdown: Dict[str, Dict[str, str]]
-    ) -> Tuple[Institution, ...]:
+    ) -> Tuple[OpaqueNamedModel, ...]:
         institution_model_type = "institution"
         return tuple(
             self.__transform_resource_to_model(
