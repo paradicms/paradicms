@@ -13,6 +13,9 @@ npm run build
 cd ../model-utils
 npm run build
 
+cd ../rdf
+npm run build
+
 cd ../bootstrap
 npm run build
 

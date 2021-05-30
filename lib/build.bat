@@ -12,6 +12,9 @@ CALL npm run build
 cd ..\model-utils
 CALL npm run build
 
+cd ..\rdf
+CALL npm run build
+
 cd ..\bootstrap
 CALL npm run build
 
