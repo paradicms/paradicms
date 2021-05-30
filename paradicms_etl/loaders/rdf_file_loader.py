@@ -12,9 +12,19 @@ from paradicms_etl.namespace import bind_namespaces
 
 
 class RdfFileLoader(_BufferingLoader):
-    def __init__(self, *, file_path: Optional[Path] = None, format="ttl", **kwds):
+    FORMAT_DEFAULT = "ttl"
+
+    def __init__(
+        self,
+        *,
+        file_path: Optional[Path] = None,
+        format: Optional[str] = FORMAT_DEFAULT,
+        **kwds
+    ):
         _BufferingLoader.__init__(self, **kwds)
         self.__file_path = file_path
+        if format is None:
+            format = self.FORMAT_DEFAULT
         self.__format = format
 
     def _flush(self, models):
