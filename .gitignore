@@ -1,8 +1,11 @@
+/build/
 /config/
 /data/creative_commons/
 /data/gordon-book-export/
 /data/rights_statements_dot_org/
 !/data/README.md
+/dist/
+*.egg-info/
 .mypy_cache/
 *.pyc
 /venv/
