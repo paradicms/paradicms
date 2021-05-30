@@ -23,11 +23,15 @@ class RdfFileLoader(_BufferingLoader):
             file_path = self._loaded_data_dir_path / (
                 sanitize_filename(self._pipeline_id) + "." + self.__format
             )
+        self._logger.debug("serializing %d models to a graph", len(models))
         graph = self._new_graph()
         for model in models:
             model.to_rdf(graph=graph)
+        self._logger.debug("serialized %d models to a graph", len(models))
+        self._logger.debug("writing %d models to %s", len(models), file_path)
         with open(file_path, "w+b") as file_:
             graph.serialize(destination=file_, format=self.__format)
+        self._logger.info("wrote %d models to %s", len(models), file_path)
 
     def _new_graph(self) -> Graph:
         graph = Graph()

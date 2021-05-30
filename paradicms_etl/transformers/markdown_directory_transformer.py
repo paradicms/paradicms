@@ -148,7 +148,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             )
 
         def _visit_front_matter_node(self, front_matter_node: SyntaxTreeNode):
-            front_matter_dict = yaml.load(front_matter_node.content)
+            front_matter_dict = yaml.load(front_matter_node.content, Loader=yaml.FullLoader)
             for key, value in front_matter_dict.items():
                 property_uri = self._convert_key_to_property_uri(key)
                 value_nodes = self._convert_front_matter_value_to_rdf_node(value)
