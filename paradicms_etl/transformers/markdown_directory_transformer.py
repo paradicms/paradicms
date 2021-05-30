@@ -377,14 +377,14 @@ class MarkdownDirectoryTransformer(_Transformer):
             default_collection is not None
             and model_resource.value(CMS.collection) is None
         ):
-            model_resource.add(CMS.collection, self.__default_collection.uri)
+            model_resource.add(CMS.collection, default_collection.uri)
 
         # if model_type in ("collection", "image", "object"):
         if (
             default_institution is not None
             and model_resource.value(CMS.institution) is None
         ):
-            model_resource.add(CMS.institution, self.__default_institution.uri)
+            model_resource.add(CMS.institution, default_institution.uri)
 
         model_properties = []
         for p, o in model_resource.predicate_objects():
