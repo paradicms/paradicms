@@ -1,14 +1,13 @@
-import hashlib
 import mimetypes
 from pathlib import Path
 from typing import Optional
-from PIL import Image
 
 import boto3
-from botocore.exceptions import ClientError
 from rdflib import URIRef
 
 from paradicms_etl._image_archiver import _ImageArchiver
+from paradicms_etl.utils.get_image_file_mime_type import get_image_file_mime_type
+from paradicms_etl.utils.sha256_hash_file import sha256_hash_file
 
 
 class S3ImageArchiver(_ImageArchiver):
@@ -36,23 +35,15 @@ class S3ImageArchiver(_ImageArchiver):
         self.__existing_s3_bucket_keys = None
 
     def archive_image(self, *, image_file_path: Path) -> URIRef:
-        image_file_hash = hashlib.sha256()
-        with open(image_file_path, "rb") as image_file:
-            for byte_block in iter(lambda: image_file.read(4096), b""):
-                image_file_hash.update(byte_block)
+        image_file_mime_type = get_image_file_mime_type(image_file_path)
 
-        with Image.open(str(image_file_path)) as image:
-            image_format = image.format
-
-        guess_file_ext = mimetypes.guess_extension(
-            "image/" + image_format.lower(), strict=False
-        )
+        guess_file_ext = mimetypes.guess_extension(image_file_mime_type, strict=False)
         if guess_file_ext is None:
             raise ValueError(
-                f"unable to guess file extension for format {image_format}"
+                f"unable to guess file extension for MIME type {image_file_mime_type}"
             )
 
-        key = image_file_hash.hexdigest() + guess_file_ext
+        key = sha256_hash_file(image_file_path) + guess_file_ext
 
         archived_image_url = URIRef(
             f"https://{self.__s3_bucket_name}.s3.amazonaws.com/{key}"
@@ -84,7 +75,7 @@ class S3ImageArchiver(_ImageArchiver):
             str(image_file_path),
             key,
             ExtraArgs={
-                "ContentType": "image/" + image_format.lower(),
+                "ContentType": image_file_mime_type,
             },
         )
         self._logger.debug("uploaded %s to %s", image_file_path, archived_image_url)
