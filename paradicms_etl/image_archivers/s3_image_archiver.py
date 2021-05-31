@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Optional
 
 import boto3
-from rdflib import URIRef
 
 from paradicms_etl._image_archiver import _ImageArchiver
 from paradicms_etl.utils.get_image_file_mime_type import get_image_file_mime_type
@@ -34,7 +33,7 @@ class S3ImageArchiver(_ImageArchiver):
         self.__s3_bucket = s3.Bucket(self.__s3_bucket_name)
         self.__existing_s3_bucket_keys = None
 
-    def archive_image(self, *, image_file_path: Path) -> URIRef:
+    def archive_image(self, *, image_file_path: Path) -> str:
         image_file_mime_type = get_image_file_mime_type(image_file_path)
 
         guess_file_ext = mimetypes.guess_extension(image_file_mime_type, strict=False)
@@ -45,9 +44,7 @@ class S3ImageArchiver(_ImageArchiver):
 
         key = sha256_hash_file(image_file_path) + guess_file_ext
 
-        archived_image_url = URIRef(
-            f"https://{self.__s3_bucket_name}.s3.amazonaws.com/{key}"
-        )
+        archived_image_url = f"https://{self.__s3_bucket_name}.s3.amazonaws.com/{key}"
 
         if not self.__force_upload:
             # Listing the bucket and caching the keys takes a few requests, vs. HEADing each object

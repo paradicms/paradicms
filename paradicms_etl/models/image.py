@@ -24,6 +24,9 @@ class Image(_NamedModel):
     modified: Optional[datetime] = None
     original_image_uri: Optional[URIRef] = None
     rights: Optional[Rights] = None
+    src: Optional[
+        str
+    ] = None  # src that can be used in an <img> tag; if not specified, defaults to URI
 
     def to_rdf(self, *, graph: Graph) -> Resource:
         resource = _NamedModel.to_rdf(self, graph=graph)

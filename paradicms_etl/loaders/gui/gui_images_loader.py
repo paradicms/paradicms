@@ -57,12 +57,11 @@ class GuiImagesLoader(_Loader):
             image_file_path=original_image_file_path
         )
         assert archived_original_image_url
-        return dataclasses.replace(original_image, uri=archived_original_image_url)
+        return dataclasses.replace(original_image, src=archived_original_image_url)
 
     def __archive_thumbnail_images(
         self,
         *,
-        archived_original_image: Image,
         original_image: Image,
         original_image_file_path: Path,
     ) -> Optional[Tuple[Image, ...]]:
@@ -106,8 +105,8 @@ class GuiImagesLoader(_Loader):
                     original_image,
                     exact_dimensions=thumbnail_exact_dimensions,
                     max_dimensions=thumbnail_max_dimensions,
-                    original_image_uri=archived_original_image.uri,
-                    uri=archived_thumbnail_url,
+                    original_image_uri=original_image.uri,
+                    src=archived_thumbnail_url,
                 )
             )
         assert len(archived_thumbnail_images) == len(self.__thumbnail_max_dimensions)
@@ -207,7 +206,6 @@ class GuiImagesLoader(_Loader):
 
             try:
                 archived_thumbnail_images = self.__archive_thumbnail_images(
-                    archived_original_image=archived_original_image,
                     original_image=original_image,
                     original_image_file_path=original_image_file_path,
                 )
