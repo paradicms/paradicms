@@ -13,7 +13,7 @@ from paradicms_etl.namespace import CMS, EXIF
 
 
 @dataclass(frozen=True)
-class Image:
+class Image(_NamedModel):
     depicts_uri: URIRef  # Collection, institution, or object
     institution_uri: URIRef  # So images can be grouped by institution
     copyable: bool = True  # Can this image be copied from its source (for GUI building), or does it have to be hot linked in order to use it?
