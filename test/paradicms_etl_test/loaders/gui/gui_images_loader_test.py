@@ -1,9 +1,9 @@
 from pathlib import Path
 from typing import Tuple
 
-from paradicms_etl.image_archivers.nop_image_archiver import NopImageArchiver
 from paradicms_etl.loaders.gui.gui_images_loader import GuiImagesLoader
 from paradicms_etl.models.image import Image
+from .nop_image_archiver import NopImageArchiver
 
 
 def test_load(test_data_original_images: Tuple[Image, ...], tmp_path):

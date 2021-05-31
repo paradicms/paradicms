@@ -4,9 +4,9 @@ from typing import Tuple
 import pytest
 
 from paradicms_etl._model import _Model
-from paradicms_etl.image_archivers.nop_image_archiver import NopImageArchiver
 from paradicms_etl.loaders.gui.gui_loader import GuiLoader
 from paradicms_etl.models._image import _Image
+from .nop_image_archiver import NopImageArchiver
 
 
 @pytest.mark.parametrize("gui", ["bootstrap-collection", "material-ui-union"])
