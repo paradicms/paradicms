@@ -5,7 +5,7 @@ import pytest
 
 from paradicms_etl._model import _Model
 from paradicms_etl.loaders.gui.gui_loader import GuiLoader
-from paradicms_etl.models._image import _Image
+from paradicms_etl.models.image import Image
 from .nop_image_archiver import NopImageArchiver
 
 
@@ -32,7 +32,7 @@ def test_load(gui: str, test_data_models: Tuple[_Model, ...], tmp_path):
     original_images = []
     other_models = []
     for model in test_data_models:
-        if isinstance(model, _Image):
+        if isinstance(model, Image):
             image = model
             if image.original_image_uri is None:
                 original_images.append(image)

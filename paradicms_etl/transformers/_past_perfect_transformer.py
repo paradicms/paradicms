@@ -104,14 +104,14 @@ class _PastPerfectTransformer(_Transformer):
                     )
                     continue
 
-                full_size_image = Image.create(
+                full_size_image = Image(
                     depicts_uri=object_.uri,
                     institution_uri=institution.uri,
                     uri=URIRef(database_image.full_size_url),
                 )
                 yield full_size_image
 
-                yield Image.create(
+                yield Image(
                     depicts_uri=object_.uri,
                     institution_uri=institution.uri,
                     original_image_uri=full_size_image.uri,

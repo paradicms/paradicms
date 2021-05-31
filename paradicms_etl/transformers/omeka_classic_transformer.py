@@ -252,7 +252,7 @@ class OmekaClassicTransformer(_Transformer):
                     )
                 original_image_uri = URIRef(file_["file_urls"]["original"])
 
-            image = Image.create(
+            image = Image(
                 created=file_added,
                 depicts_uri=object_uri,
                 exact_dimensions=exact_dimensions,

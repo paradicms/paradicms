@@ -1,19 +1,16 @@
 import dataclasses
+import os.path
 from pathlib import Path, PurePath, PureWindowsPath
 from typing import Generator, Optional, Tuple
 from urllib.error import HTTPError
-import os.path
 from urllib.parse import unquote, urlparse
 
-from rdflib import URIRef
-from tqdm import tqdm
-
 from pathvalidate import sanitize_filename
+from tqdm import tqdm
 
 from paradicms_etl._image_archiver import _ImageArchiver
 from paradicms_etl._loader import _Loader
 from paradicms_etl.file_cache import FileCache
-from paradicms_etl.models._image import _Image
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.utils.thumbnail_image import thumbnail_image
@@ -159,7 +156,7 @@ class GuiImagesLoader(_Loader):
 
         return original_image_file_path
 
-    def load(self, *, models) -> Generator[_Image, None, None]:
+    def load(self, *, models) -> Generator[Image, None, None]:
         """
         Archive an original image and its thumbnails.
         :return a generator of (1) a copy of image with the archived image URL and (2) new Images for the thumbnails
@@ -167,8 +164,8 @@ class GuiImagesLoader(_Loader):
 
         self._logger.info("loading GUI images")
         for model in tqdm(models):
-            if not isinstance(model, _Image):
-                raise TypeError("model is not an _Image subclass: " + type(model))
+            if not isinstance(model, Image):
+                raise TypeError("model is not an Image: " + type(model))
 
             original_image = model
 

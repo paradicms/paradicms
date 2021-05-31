@@ -300,7 +300,7 @@ class LunaTransformer(_Transformer):
         for url_size_i, image_url in enumerate(image_urls):
             image_dimension_max = self.__URL_SIZES[url_size_i]
             image_uri = URIRef(image_url)
-            yield Image.create(
+            yield Image(
                 created=image_created,
                 depicts_uri=object_.uri,
                 institution_uri=institution.uri,

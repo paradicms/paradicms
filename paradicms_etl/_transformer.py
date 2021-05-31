@@ -62,7 +62,7 @@ class _Transformer(_PipelinePhase):
     ) -> Optional[Image]:
         if institution_image_uri is None:
             return None
-        return Image.create(
+        return Image(
             depicts_uri=URIRef(institution_uri),
             institution_uri=URIRef(institution_uri),
             uri=URIRef(institution_image_uri),

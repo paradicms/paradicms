@@ -80,7 +80,7 @@ class TestDataPipeline(_Pipeline):
             )
 
             for image_i in range(2):
-                original = Image.create(
+                original = Image(
                     depicts_uri=depicts_uri,
                     exact_dimensions=ImageDimensions(height=1000, width=1000),
                     institution_uri=institution.uri,
@@ -95,7 +95,7 @@ class TestDataPipeline(_Pipeline):
                     ImageDimensions(75, 75),
                     ImageDimensions(600, 600),
                 ):
-                    yield Image.create(
+                    yield Image(
                         depicts_uri=depicts_uri,
                         exact_dimensions=thumbnail_dimensions,
                         institution_uri=institution.uri,
