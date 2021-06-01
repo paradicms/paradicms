@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from paradicms_etl.models.image import Image
+from PIL import Image
 
 
 def get_image_file_mime_type(image_file_path: Path):
