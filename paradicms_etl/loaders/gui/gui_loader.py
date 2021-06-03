@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Optional, Tuple, Union
 
 from paradicms_etl._image_archiver import _ImageArchiver
+from paradicms_etl.image_archivers.fs_image_archiver import FsImageArchiver
 from paradicms_etl.loaders._buffering_loader import _BufferingLoader
 from paradicms_etl.loaders.gui._gui_deployer import _GuiDeployer
 from paradicms_etl.loaders.gui.fs_gui_deployer import FsGuiDeployer
@@ -13,6 +14,18 @@ from paradicms_etl.models.image_dimensions import ImageDimensions
 
 
 class GuiLoader(_BufferingLoader):
+    """
+    Loader that statically generates a web site using one of the GUI implementations in gui/.
+
+    The loader:
+    - Archives original images (via an _ImageArchiver)
+    - Thumbnails images and archives them (via GuiImagesLoader)
+    - Calls npm to generate the site (via GuiBuilder)
+    - Optionally deploys the generated site (via a _GuiDeployer)
+
+    As noted, this class delegate most of its work to auxiliary classes such as GuiBuilder.
+    """
+
     def __init__(
         self,
         *,
@@ -33,43 +46,55 @@ class GuiLoader(_BufferingLoader):
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
 
     def _flush(self, models):
-        if self.__image_archiver and self.__thumbnail_max_dimensions:
-            copyable_original_images = []
-            non_copyable_images = []
-            other_models = []
-            for model in models:
-                if isinstance(model, Image):
-                    image = model
-                    if image.copyable:
-                        if image.original_image_uri is None:
-                            copyable_original_images.append(image)
-                    else:
-                        non_copyable_images.append(image)
+        gui_builder = GuiBuilder(gui=self.__gui)
+
+        image_archiver = self.__image_archiver
+        if image_archiver is None:
+            # If no image archiver specified, "archive" copies of images to the Next.js public/ directory, which contains static assets.
+            image_archiver = FsImageArchiver(
+                base_url="/img/archive/",
+                root_directory_path=gui_builder.gui_dir_path
+                / "public"
+                / "img"
+                / "archive",
+            )
+
+        copyable_original_images = []
+        non_copyable_images = []
+        other_models = []
+        for model in models:
+            if isinstance(model, Image):
+                image = model
+                if image.copyable:
+                    if image.original_image_uri is None:
+                        copyable_original_images.append(image)
                 else:
-                    other_models.append(model)
+                    non_copyable_images.append(image)
+            else:
+                other_models.append(model)
 
-            gui_images = []
+        gui_images = []
 
-            if non_copyable_images:
-                self._logger.info(
-                    "using %d non-copyable images as-is", len(non_copyable_images)
-                )
-                gui_images.extend(non_copyable_images)
+        if non_copyable_images:
+            self._logger.info(
+                "using %d non-copyable images as-is", len(non_copyable_images)
+            )
+            gui_images.extend(non_copyable_images)
 
-            if copyable_original_images:
-                self._logger.info(
-                    "thumbnailing and archiving %d copyable original images",
-                    len(copyable_original_images),
-                )
-                gui_images.extend(
-                    GuiImagesLoader(
-                        image_archiver=self.__image_archiver,
-                        loaded_data_dir_path=self._loaded_data_dir_path,
-                        pipeline_id=self._pipeline_id,
-                        sleep_s_after_image_download=self.__sleep_s_after_image_download,
-                        thumbnail_max_dimensions=self.__thumbnail_max_dimensions,
-                    ).load(models=copyable_original_images)
-                )
+        if copyable_original_images:
+            self._logger.info(
+                "thumbnailing and archiving %d copyable original images",
+                len(copyable_original_images),
+            )
+            gui_images.extend(
+                GuiImagesLoader(
+                    image_archiver=image_archiver,
+                    loaded_data_dir_path=self._loaded_data_dir_path,
+                    pipeline_id=self._pipeline_id,
+                    sleep_s_after_image_download=self.__sleep_s_after_image_download,
+                    thumbnail_max_dimensions=self.__thumbnail_max_dimensions,
+                ).load(models=copyable_original_images)
+            )
 
             models = tuple(gui_images + other_models)
 
@@ -81,8 +106,6 @@ class GuiLoader(_BufferingLoader):
         data_loader.load(models=models)
         data_loader.flush()
         self._logger.info("loaded data to %s", data_dir_path)
-
-        gui_builder = GuiBuilder(gui=self.__gui)
 
         gui_builder.clean()
 

@@ -17,6 +17,14 @@ from paradicms_etl.utils.thumbnail_image import thumbnail_image
 
 
 class GuiImagesLoader(_Loader):
+    """
+    Loader that:
+    - Thumbnails images
+    - Archives original images and thumbnails
+
+    Separated from GuiLoader for modularity and testability.
+    """
+
     class __Exception(Exception):
         pass
 
@@ -45,7 +53,7 @@ class GuiImagesLoader(_Loader):
         )
 
         if not thumbnail_max_dimensions:
-            raise ValueError("must specify thumbnail max dimensions")
+            thumbnail_max_dimensions = self.THUMBNAIL_MAX_DIMENSIONS_DEFAULT
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
         self.__thumbnail_cache_dir_path = self._loaded_data_dir_path / "thumbnail_cache"
         self.__thumbnail_cache_dir_path.mkdir(exist_ok=True)

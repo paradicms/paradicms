@@ -1,9 +1,10 @@
 from datetime import date, timedelta
 from pathlib import Path
-from typing import List, Tuple, Union
+from typing import List, Optional, Tuple, Union
 
 from rdflib import URIRef
 
+from paradicms_etl._loader import _Loader
 from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.extractors.nop_extractor import NopExtractor
@@ -31,7 +32,7 @@ from paradicms_etl.models.vra_core_property_definitions import (
 
 
 class TestDataPipeline(_Pipeline):
-    __ID = "test_data"
+    ID = "test_data"
 
     class __TestDataTransformer(_Transformer):
         __CREATORS = tuple(f"Creator {i}" for i in range(10))
@@ -49,6 +50,21 @@ class TestDataPipeline(_Pipeline):
         __TEMPORALS = tuple(f"Temporal {i}" for i in range(10))
         __TYPES = tuple(f"Type {i}" for i in range(10))
 
+        def __init__(
+            self,
+            *,
+            collections_per_institution=1,
+            images_per_object=2,
+            institutions=2,
+            objects_per_institution=20,  # Objects per page is 20
+            **kwds,
+        ):
+            _Transformer.__init__(self, **kwds)
+            self.__institutions = institutions
+            self.__collections_per_institution = collections_per_institution
+            self.__images_per_object = images_per_object
+            self.__objects_per_institution = objects_per_institution
+
         def transform(self):
             yield from CreativeCommonsLicenses.as_tuple()
             yield from DublinCorePropertyDefinitions.as_tuple()
@@ -62,7 +78,7 @@ class TestDataPipeline(_Pipeline):
         def __generate_collection_objects(
             self, *, collection: Collection, institution: Institution
         ):
-            for object_i in range(20):  # Objects per page is 20
+            for object_i in range(self.__objects_per_institution):
                 yield from self.__generate_object(
                     collection_uris=(collection.uri,),
                     institution=institution,
@@ -79,7 +95,7 @@ class TestDataPipeline(_Pipeline):
                 statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
             )
 
-            for image_i in range(2):
+            for image_i in range(self.__images_per_object):
                 original = Image(
                     depicts_uri=depicts_uri,
                     exact_dimensions=ImageDimensions(height=1000, width=1000),
@@ -107,7 +123,7 @@ class TestDataPipeline(_Pipeline):
                     )
 
         def __generate_institution_collections(self, institution: Institution):
-            for collection_i in range(2):
+            for collection_i in range(self.__collections_per_institution):
                 collection_title = f"{institution.name}Collection{collection_i}"
                 collection = Collection(
                     institution_uri=institution.uri,
@@ -129,7 +145,7 @@ class TestDataPipeline(_Pipeline):
                 )
 
         def __generate_institutions(self):
-            for institution_i in range(2):
+            for institution_i in range(self.__institutions):
                 institution_name = f"Institution{institution_i}"
                 institution = Institution(
                     name=institution_name,
@@ -313,7 +329,7 @@ class TestDataPipeline(_Pipeline):
         def __generate_shared_objects(
             self, *, collections: Tuple[Collection, ...], institution: Institution
         ):
-            for object_i in range(5):  # Per institution
+            for object_i in range(self.__objects_per_institution):  # Per institution
                 yield from self.__generate_object(
                     collection_uris=tuple(
                         map(lambda collection: collection.uri, collections)
@@ -324,13 +340,10 @@ class TestDataPipeline(_Pipeline):
                     uri=URIRef(f"{institution.uri}/shared/object{object_i}"),
                 )
 
-    def __init__(self, **kwds):
+    def __init__(self, loader: Optional[_Loader] = None, **kwds):
         root_dir_path = Path(__file__).absolute().parent.parent.parent.parent
-        _Pipeline.__init__(
-            self,
-            extractor=NopExtractor(pipeline_id=self.__ID),
-            id=self.__ID,
-            loader=CompositeLoader(
+        if loader is None:
+            loader = CompositeLoader(
                 loaders=(
                     RdfFileLoader(
                         file_path=root_dir_path
@@ -340,7 +353,7 @@ class TestDataPipeline(_Pipeline):
                         / "cypress"
                         / "fixtures"
                         / "data.ttl",
-                        pipeline_id=self.__ID,
+                        pipeline_id=self.ID,
                     ),
                     RdfFileLoader(
                         file_path=root_dir_path
@@ -349,12 +362,18 @@ class TestDataPipeline(_Pipeline):
                         / "test_data"
                         / "loaded"
                         / "data.ttl",
-                        pipeline_id=self.__ID,
+                        pipeline_id=self.ID,
                     ),
                 ),
-                pipeline_id=self.__ID,
-            ),
-            transformer=self.__TestDataTransformer(pipeline_id=self.__ID),
+                pipeline_id=self.ID,
+            )
+
+        _Pipeline.__init__(
+            self,
+            extractor=NopExtractor(pipeline_id=self.ID),
+            id=self.ID,
+            loader=loader,
+            transformer=self.__TestDataTransformer(pipeline_id=self.ID, **kwds),
             **kwds,
         )
 
