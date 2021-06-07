@@ -46,4 +46,6 @@ class Image(_NamedModel):
             resource.add(DCTERMS.modified, Literal(self.modified))
         if self.original_image_uri is not None:
             graph.add((self.original_image_uri, FOAF.thumbnail, self.uri))
+        if self.src is not None:
+            resource.add(CMS.imageSrc, Literal(self.src))
         return resource
