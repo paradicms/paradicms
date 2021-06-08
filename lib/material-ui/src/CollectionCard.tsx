@@ -1,14 +1,8 @@
 import * as React from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Grid,
-  makeStyles,
-} from "@material-ui/core";
-import {placeholderImageUrl} from "@paradicms/model-utils";
+import {Card, CardContent, CardHeader, Grid, makeStyles} from "@material-ui/core";
 import {CollectionCardCollection} from "./CollectionCardCollection";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
+import {getImageSrc} from "@paradicms/model-utils";
 
 const useStyles = makeStyles(theme => ({
   thumbnailImg: {
@@ -51,14 +45,7 @@ export const CollectionCard: React.FunctionComponent<{
                 collection,
                 <img
                   className={classes.thumbnailImg}
-                  src={
-                    collection.thumbnail
-                      ? collection.thumbnail.uri
-                      : placeholderImageUrl({
-                          dimensions: thumbnailTargetDimensions,
-                          text: "Missing thumbnail",
-                        })
-                  }
+                  src={getImageSrc({image: collection.thumbnail, targetDimensions: thumbnailTargetDimensions})}
                   title={collection.title}
                 />
               )}

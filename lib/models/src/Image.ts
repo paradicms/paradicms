@@ -8,5 +8,6 @@ export interface Image {
   readonly maxDimensions: ImageDimensions | null;
   readonly originalImageUri: string | null;
   readonly rights: Rights | null;
+  readonly src: string | null;
   readonly uri: string;
 }

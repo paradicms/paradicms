@@ -15,10 +15,10 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {RightsTable} from "./RightsTable";
-import {placeholderImageUrl} from "@paradicms/model-utils";
 import {ObjectCardObject} from "./ObjectCardObject";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 import {ObjectCardInstitution} from "./ObjectCardInstitution";
+import {getImageSrc} from "@paradicms/model-utils";
 
 const useStyles = makeStyles(theme => ({
   accordionTitle: {
@@ -71,14 +71,7 @@ export const ObjectCard: React.FunctionComponent<{
                 object,
                 <img
                   className={classes.thumbnailImg}
-                  src={
-                    object.thumbnail
-                      ? object.thumbnail.uri
-                      : placeholderImageUrl({
-                          dimensions: thumbnailTargetDimensions,
-                          text: "Missing thumbnail",
-                        })
-                  }
+                  src={getImageSrc({image: object.thumbnail, targetDimensions: thumbnailTargetDimensions})}
                   title={object.title}
                 />
               )}

@@ -12,6 +12,7 @@ export class PARADICMS {
   static guiNavbarTitle = PARADICMS.NS("guiNavbarTitle");
   static imageMaxHeight = PARADICMS.NS("imageMaxHeight");
   static imageMaxWidth = PARADICMS.NS("imageMaxWidth");
+  static imageSrc = PARADICMS.NS("imageSrc");
 
   // Resources
   static Collection = PARADICMS.NS("Collection");

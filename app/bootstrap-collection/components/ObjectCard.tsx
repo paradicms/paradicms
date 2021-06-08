@@ -1,18 +1,9 @@
 import * as React from "react";
 import {ImageDimensions} from "@paradicms/models";
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Col,
-  Row,
-  Container,
-  CardImg,
-  Table,
-} from "reactstrap";
+import {Card, CardBody, CardHeader, CardImg, Col, Container, Row, Table} from "reactstrap";
 import {Accordion} from "components/Accordion";
 import {RightsTable} from "components/RightsTable";
-import {placeholderImageUrl} from "@paradicms/model-utils";
+import {getImageSrc} from "@paradicms/model-utils";
 import {ObjectCardObject} from "lib/ObjectCardObject";
 import {ObjectCardInstitution} from "lib/ObjectCardInstitution";
 
@@ -38,14 +29,7 @@ export const ObjectCard: React.FunctionComponent<{
         object,
         <CardImg
           className="thumbnail"
-          src={
-            object.thumbnail
-              ? object.thumbnail.uri
-              : placeholderImageUrl({
-                  dimensions: thumbnailDimensions,
-                  text: "Missing thumbnail",
-                })
-          }
+          src={getImageSrc({image: object.thumbnail, targetDimensions: thumbnailDimensions})}
           title={object.title}
         />
       )}

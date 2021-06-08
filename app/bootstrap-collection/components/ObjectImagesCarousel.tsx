@@ -1,21 +1,10 @@
 import * as React from "react";
 import {useState} from "react";
 import ImageZoom from "react-medium-image-zoom";
-import {JoinedImage} from "@paradicms/models";
+import {ImageDimensions, JoinedImage} from "@paradicms/models";
 import {RightsTable} from "./RightsTable";
-import {
-  Carousel,
-  CarouselControl,
-  CarouselItem,
-  Col,
-  Container,
-  Row,
-} from "reactstrap";
-import {
-  indexImagesByOriginalImageUri,
-  placeholderImageUrl,
-  selectThumbnail,
-} from "@paradicms/model-utils";
+import {Carousel, CarouselControl, CarouselItem, Col, Container, Row} from "reactstrap";
+import {getImageSrc, indexImagesByOriginalImageUri, selectThumbnail} from "@paradicms/model-utils";
 
 export const ObjectImagesCarousel: React.FunctionComponent<{
   images: readonly JoinedImage[];
@@ -61,11 +50,12 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
       {Object.keys(imagesByOriginalImageUri).map(originalImageUri => {
         const images = imagesByOriginalImageUri[originalImageUri];
         const originalImage = images.find(
-          image => image.uri === originalImageUri
+          image => image.uri === originalImageUri,
         );
+        const thumbnailTargetDimensions: ImageDimensions = {height: 600, width: 600};
         const thumbnail = selectThumbnail({
           images,
-          targetDimensions: {height: 600, width: 600},
+          targetDimensions: thumbnailTargetDimensions,
         });
         return (
           <CarouselItem key={originalImageUri}>
@@ -74,20 +64,15 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
                 <ImageZoom
                   image={{
                     className: "img",
-                    src: thumbnail
-                      ? thumbnail.uri
-                      : placeholderImageUrl({
-                          dimensions: {height: 600, width: 600},
-                          text: "Missing thumbnail",
-                        }),
+                    src: getImageSrc({image: thumbnail, targetDimensions: thumbnailTargetDimensions}),
                     style: {
-                      maxHeight: 600,
-                      maxWidth: 600,
+                      maxHeight: thumbnailTargetDimensions.height,
+                      maxWidth: thumbnailTargetDimensions.width,
                     },
                   }}
                   zoomImage={{
                     className: "img--zoomed",
-                    src: originalImageUri,
+                    src: getImageSrc({image: originalImage, targetDimensions: thumbnailTargetDimensions}),
                     style: originalImage?.exactDimensions ?? undefined,
                   }}
                 />

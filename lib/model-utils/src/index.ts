@@ -1,5 +1,6 @@
 export * from "./facetizeObjects";
 export * from "./filterObjects";
+export * from "./getImageSrc";
 export * from "./indexImagesByDepictsUri";
 export * from "./indexImagesByOriginalImageUri";
 export * from "./indexLicenseTitlesByUri";

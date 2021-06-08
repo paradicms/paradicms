@@ -20,11 +20,12 @@ export class ImageRdfReader extends ModelRdfReader<Image> {
         .value,
       maxDimensions: this.readImageDimensions(
         PARADICMS.imageMaxHeight,
-        PARADICMS.imageMaxWidth
+        PARADICMS.imageMaxWidth,
       ),
       originalImageUri:
         this.store.any(undefined, FOAF.thumbnail, this.node)?.value ?? null,
       rights: new RightsRdfReader(this.node, this.store).read(),
+      src: this.readOptionalLiteral(PARADICMS.imageSrc)?.toString() ?? null,
       uri: this.nodeUri,
     };
   }
@@ -60,7 +61,7 @@ export class ImageRdfReader extends ModelRdfReader<Image> {
     return ModelRdfReader._readAll<Image>(
       node => new ImageRdfReader(node, store),
       store,
-      PARADICMS.Image
+      PARADICMS.Image,
     );
   }
 }

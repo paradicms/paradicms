@@ -8,5 +8,6 @@ export interface JoinedImage {
   readonly maxDimensions: ImageDimensions | null;
   readonly originalImageUri: string | null;
   readonly rights: JoinedRights | null;
+  readonly src: string | null;
   readonly uri: string;
 }
