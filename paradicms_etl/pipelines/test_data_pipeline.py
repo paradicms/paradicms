@@ -53,7 +53,7 @@ class TestDataPipeline(_Pipeline):
         def __init__(
             self,
             *,
-            collections_per_institution=1,
+            collections_per_institution=2,
             images_per_object=2,
             institutions=2,
             objects_per_institution=20,  # Objects per page is 20
