@@ -15,7 +15,7 @@ describe("Collection RDF reader", () => {
 
   it("should read all collections from the store", () => {
     const models = CollectionRdfReader.readAll(store);
-    expect(models).to.have.length(4);
+    expect(models).to.not.be.empty;
     models.forEach(model => {
       expect(model.institutionUri.trim()).to.not.be.empty;
       expect(model.title.trim()).to.not.be.empty;
