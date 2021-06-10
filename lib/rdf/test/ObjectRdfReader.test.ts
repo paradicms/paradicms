@@ -18,7 +18,7 @@ describe("Object RDF reader", () => {
     this.timeout(10000);
     const propertyDefinitions = PropertyDefinitionRdfReader.readAll(store);
     const models = ObjectRdfReader.readAll(store);
-    expect(models).to.have.length(90);
+    expect(models).to.not.be.empty;
     models.forEach(model => {
       expect(model.collectionUris).to.not.be.empty;
       expect(model.institutionUri).to.not.be.empty;
@@ -27,8 +27,8 @@ describe("Object RDF reader", () => {
         expect(property.uri.trim()).to.not.be.empty;
         expect(
           propertyDefinitions.find(
-            propertyDefinition => propertyDefinition.uri === property.uri
-          )
+            propertyDefinition => propertyDefinition.uri === property.uri,
+          ),
         ).to.not.be.undefined;
         if (typeof property.value === "string") {
           expect(property.value.trim()).to.not.be.empty;

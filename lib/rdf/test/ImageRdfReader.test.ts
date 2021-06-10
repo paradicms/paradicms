@@ -15,7 +15,7 @@ describe("Image RDF reader", () => {
 
   it("should read all images from the store", () => {
     const models = ImageRdfReader.readAll(store);
-    expect(models).to.have.length(564);
+    expect(models).to.not.be.empty;
     models.forEach(model => {
       expect(model.depictsUri.trim()).to.not.be.empty;
       expect(model.institutionUri.trim()).to.not.be.empty;
