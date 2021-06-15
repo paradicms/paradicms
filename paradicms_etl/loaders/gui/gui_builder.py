@@ -70,7 +70,7 @@ class GuiBuilder:
             args,
             cwd=str(self.__gui_dir_path),
             env=subprocess_env,
-            shell=os.environ.get("CI") is None,
+            shell=sys.platform == "win32",  # os.environ.get("CI") is None,
         )
 
         if subprocess_ret != 0:
