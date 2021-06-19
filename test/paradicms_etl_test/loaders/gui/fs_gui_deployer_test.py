@@ -1,10 +1,11 @@
 import os
 from pathlib import Path
+from shutil import rmtree
 
 from paradicms_etl.loaders.gui.fs_gui_deployer import FsGuiDeployer
 
 
-def test_archive(tmp_path):
+def test_archive_rename(tmp_path):
     tmp_dir_path = Path(tmp_path)
     gui_deploy_dir_path = tmp_dir_path / "deploy"
     gui_deploy_dir_path.mkdir()
@@ -13,7 +14,7 @@ def test_archive(tmp_path):
     (gui_out_dir_path / "temp.txt").touch()
 
     sut = FsGuiDeployer(
-        gui_deploy_dir_path=gui_deploy_dir_path, mode=FsGuiDeployer.Mode.ARCHIVE
+        archive=True, gui_deploy_dir_path=gui_deploy_dir_path, copy=False
     )
     sut.deploy(gui_out_dir_path=gui_out_dir_path)
     assert not gui_out_dir_path.exists()  # Should have been renamed
@@ -39,7 +40,7 @@ def test_archive(tmp_path):
     ), gui_deploy_dir_path_subdirs
 
 
-def test_overwrite(tmp_path):
+def test_overwrite_copy(tmp_path):
     tmp_dir_path = Path(tmp_path)
     gui_deploy_dir_path = tmp_dir_path / "deploy"
     gui_out_dir_path = tmp_dir_path / "out"
@@ -47,8 +48,28 @@ def test_overwrite(tmp_path):
     (gui_out_dir_path / "temp.txt").touch()
 
     sut = FsGuiDeployer(
-        gui_deploy_dir_path=gui_deploy_dir_path, mode=FsGuiDeployer.Mode.OVERWRITE
+        archive=False, gui_deploy_dir_path=gui_deploy_dir_path, copy=True
     )
+    sut.deploy(gui_out_dir_path=gui_out_dir_path)
+    assert gui_deploy_dir_path.is_dir()
+    assert gui_out_dir_path.exists()
+
+    # Deploy again
+    rmtree(gui_deploy_dir_path)
+    assert not gui_deploy_dir_path.exists()
+    sut.deploy(gui_out_dir_path=gui_out_dir_path)
+    assert gui_deploy_dir_path.is_dir()
+    assert gui_out_dir_path.exists()
+
+
+def test_overwrite_rename(tmp_path):
+    tmp_dir_path = Path(tmp_path)
+    gui_deploy_dir_path = tmp_dir_path / "deploy"
+    gui_out_dir_path = tmp_dir_path / "out"
+    gui_out_dir_path.mkdir()
+    (gui_out_dir_path / "temp.txt").touch()
+
+    sut = FsGuiDeployer(archive=False, gui_deploy_dir_path=gui_deploy_dir_path)
     sut.deploy(gui_out_dir_path=gui_out_dir_path)
     assert gui_deploy_dir_path.is_dir()
     assert not gui_out_dir_path.exists()  # Should have been renamed
