@@ -16,6 +16,7 @@ import {
 } from "reactstrap";
 import {NavbarSearchForm} from "components/NavbarSearchForm";
 import {useRouter} from "next/router";
+import Link from "next/link";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string; readonly uri: string};
@@ -57,8 +58,8 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         <Row>
           <Col>
             <Navbar>
-              <NavbarBrand href="/" className="mr-auto">
-                {collection.title}
+              <NavbarBrand className="mr-auto">
+                <Link href={Hrefs.home}>{collection.title}</Link>
               </NavbarBrand>
               <Nav navbar>
                 <NavItem>
