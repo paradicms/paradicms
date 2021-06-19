@@ -7,13 +7,15 @@ from typing import Optional, Union
 
 
 class GuiBuilder:
-    def __init__(self, *, gui: Union[str, Path]):
+    def __init__(self, *, gui: Union[str, Path], base_url_path: str = ""):
         """
-        :param data_dir_path: path to the GUI's data directory, which will be passed to the build process as DATA_DIRECTORY_PATH
+        :param base_url_path: Next.js basePath (https://nextjs.org/docs/api-reference/next.config.js/basepath)
         :param gui: name of a gui (in gui/ of this repository) or path to a gui
         """
 
         self.__logger = logging.getLogger(self.__class__.__name__)
+
+        self.__base_url_path = base_url_path
 
         if isinstance(gui, Path):
             gui_dir_path = gui
@@ -59,6 +61,9 @@ class GuiBuilder:
 
     def __run_npm_script(self, script, data_ttl_file_path: Optional[Path] = None):
         subprocess_env = os.environ.copy()
+        if self.__base_url_path:
+            subprocess_env["GUI_BASE_URL_PATH"] = self.__base_url_path
+            self.__logger.info("using GUI_BASE_URL_PATH = %s", self.__base_url_path)
         if data_ttl_file_path is not None:
             subprocess_env["DATA_TTL_FILE_PATH"] = str(data_ttl_file_path)
             self.__logger.info("using DATA_TTL_FILE_PATH = %s", data_ttl_file_path)

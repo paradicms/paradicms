@@ -30,6 +30,7 @@ class GuiLoader(_BufferingLoader):
         self,
         *,
         gui: Union[Path, str],
+        base_url_path: str = "",
         deployer: Optional[_GuiDeployer] = None,
         image_archiver: Optional[_ImageArchiver] = None,
         sleep_s_after_image_download: Optional[float] = None,
@@ -38,7 +39,17 @@ class GuiLoader(_BufferingLoader):
         ] = GuiImagesLoader.THUMBNAIL_MAX_DIMENSIONS_DEFAULT,
         **kwds,
     ):
+        """
+        :param base_url_path: Next.js basePath (https://nextjs.org/docs/api-reference/next.config.js/basepath)
+        :param gui: name of a gui (in gui/ of this repository) or path to a gui
+        :param deployer: optional deployer implementation; if not specified, defaults to a file system deployer that writes to the loaded data directory
+        :param image_archiver: optional image archiver implementation; if not specified, defaults to a file system archiver that writes to Next's public/ directory
+        :param sleep_s_after_image_download: sleep this number of seconds after downloading each image, to avoid triggering denial of service mechanisms
+        :param thumbnail_max_dimensions: maximum dimensions of amage thumbnails to use
+        """
+
         _BufferingLoader.__init__(self, **kwds)
+        self.__base_url_path = base_url_path
         self.__deployer = deployer
         self.__gui = gui
         self.__image_archiver = image_archiver
@@ -46,7 +57,7 @@ class GuiLoader(_BufferingLoader):
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
 
     def _flush(self, models):
-        gui_builder = GuiBuilder(gui=self.__gui)
+        gui_builder = GuiBuilder(base_url_path=self.__base_url_path, gui=self.__gui)
 
         image_archiver = self.__image_archiver
         if image_archiver is None:
