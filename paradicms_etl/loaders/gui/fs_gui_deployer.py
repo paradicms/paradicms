@@ -59,8 +59,10 @@ class FsGuiDeployer(_GuiDeployer):
         else:
             current_gui_deploy_dir_path = self.__gui_deploy_dir_path
 
-        if self.__clean and current_gui_deploy_dir_path.is_dir():
-            self._logger.info("deleting existing %s", current_gui_deploy_dir_path)
+        if (self.__clean or not self.__copy) and current_gui_deploy_dir_path.is_dir():
+            self._logger.info(
+                "deleting existing %s before populating it", current_gui_deploy_dir_path
+            )
             rmtree(current_gui_deploy_dir_path)
 
         if self.__copy:
