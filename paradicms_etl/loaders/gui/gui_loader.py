@@ -63,7 +63,7 @@ class GuiLoader(_BufferingLoader):
         if image_archiver is None:
             # If no image archiver specified, "archive" copies of images to the Next.js public/ directory, which contains static assets.
             image_archiver = FsImageArchiver(
-                base_url="/img/archive/",
+                base_url=f"{self.__base_url_path.rstrip('/')}/img/archive/",
                 root_directory_path=gui_builder.gui_dir_path
                 / "public"
                 / "img"
