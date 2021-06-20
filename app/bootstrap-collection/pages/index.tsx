@@ -1,24 +1,15 @@
 import * as React from "react";
-import {
-  JoinedImage,
-  JoinedRights,
-  ObjectQuery,
-  Property,
-  PropertyDefinition,
-} from "@paradicms/models";
+import {JoinedImage, JoinedRights, ObjectQuery, Property, PropertyDefinition} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {Data} from "lib/Data";
 import {GetStaticProps} from "next";
 import {Col, Container, Row} from "reactstrap";
-import {ObjectsGallery} from "components/ObjectsGallery";
+import {ObjectFacetsControls, ObjectFiltersBadges, ObjectsGallery} from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {NumberParam, useQueryParam} from "use-query-params";
-import {ObjectFacetsControls} from "components/ObjectFacetsControls";
 import {JsonQueryParamConfig} from "@paradicms/base";
-import {ObjectFacetedSearchQuery} from "@paradicms/lunr";
-import {ObjectFiltersBadges} from "components/ObjectFiltersBadges";
-import {IndexedObject} from "@paradicms/lunr/dist/IndexedObject";
+import {IndexedObject, ObjectFacetedSearchQuery} from "@paradicms/lunr";
 import {joinImage, joinRights, selectThumbnail} from "@paradicms/model-utils";
 
 interface StaticProps {

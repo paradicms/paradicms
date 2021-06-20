@@ -1,19 +1,11 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
-import {
-  JoinedImage,
-  JoinedRights,
-  Property,
-  PropertyDefinition,
-} from "@paradicms/models";
+import {JoinedImage, JoinedRights, Property, PropertyDefinition} from "@paradicms/models";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Col, Container, Row} from "reactstrap";
-import {Accordion} from "components/Accordion";
-import {RightsTable} from "components/RightsTable";
-import {PropertiesTable} from "components/PropertiesTable";
-import {ObjectImagesCarousel} from "components/ObjectImagesCarousel";
+import {Accordion, ObjectImagesCarousel, PropertiesTable, RightsTable} from "@paradicms/bootstrap";
 import {joinImage, joinRights} from "@paradicms/model-utils";
 
 interface StaticProps {

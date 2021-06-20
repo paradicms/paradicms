@@ -14,7 +14,7 @@ import {
   NavItem,
   Row,
 } from "reactstrap";
-import {NavbarSearchForm} from "components/NavbarSearchForm";
+import {NavbarSearchForm} from "@paradicms/bootstrap";
 import {useRouter} from "next/router";
 import Link from "next/link";
 
