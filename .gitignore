@@ -7,5 +7,4 @@ dist/
 node_modules/
 null/
 out/
-package-lock.json
 !/integration/material-ui-union/package-lock.json
