@@ -8,6 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.1.11",
     "@paradicms/base": "1.0.3",
     "@paradicms/models": "1.0.3",
+    "@paradicms/model-utils": "1.0.3",
     "bootstrap": "^4.5.3",
     "react-reactstrap-pagination": "^2.0.3",
     "reactstrap": "^8.5.1",

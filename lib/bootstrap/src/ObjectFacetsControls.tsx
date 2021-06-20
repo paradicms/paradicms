@@ -1,12 +1,8 @@
 import * as React from "react";
-import {
-  ObjectFacets,
-  ObjectFilters,
-  ObjectFiltersState,
-} from "@paradicms/models";
+import {ObjectFacets, ObjectFilters, ObjectFiltersState} from "@paradicms/models";
 import {Col, Container, Row} from "reactstrap";
-import {Accordion} from "components/Accordion";
-import {StringFacetControls} from "components/StringFacetControls";
+import {Accordion} from "./Accordion";
+import {StringFacetControls} from "./StringFacetControls";
 
 export const ObjectFacetsControls: React.FunctionComponent<{
   facets: ObjectFacets;

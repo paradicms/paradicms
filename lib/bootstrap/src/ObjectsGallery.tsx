@@ -1,9 +1,9 @@
 import * as React from "react";
-import {Container, Row, Col} from "reactstrap";
+import {Col, Container, Row} from "reactstrap";
 import PaginationComponent from "react-reactstrap-pagination";
-import {ObjectCard} from "components/ObjectCard";
-import {ObjectCardObject} from "lib/ObjectCardObject";
-import {ObjectCardInstitution} from "lib/ObjectCardInstitution";
+import {ObjectCard} from "./ObjectCard";
+import {ObjectCardObject} from "./ObjectCardObject";
+import {ObjectCardInstitution} from "./ObjectCardInstitution";
 
 const OBJECTS_PER_PAGE = 10;
 
