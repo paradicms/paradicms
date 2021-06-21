@@ -1,0 +1,45 @@
+#!/bin/bash
+
+set -eu
+
+cd "$(dirname "$0")"
+cd ..
+export DATA_TTL_FILE_PATH=$PWD/../etl/data/test_data/loaded/data.ttl
+
+
+if [ ! -d node_modules ]; then
+    echo "Installing lerna and bootstrapping"
+    npm install
+    npm run lerna:bootstrap
+else
+    echo "Lerna already installed and bootstrapped"
+fi
+
+
+# Build lib
+cd lib
+./build.sh
+
+# Test lib
+cd rdf
+npm run test
+
+
+# Build apps
+# Run parallel commands and fail if any of them fails.
+cd ../app
+pids=()
+
+cd bootstrap-collection
+npm run build &
+pids+=($!)
+
+cd ..
+
+cd material-ui-union
+npm run build &
+pids+=($!)
+
+for pid in "${pids[@]}"; do
+  wait "$pid"
+done
