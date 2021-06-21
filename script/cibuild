@@ -24,6 +24,10 @@ cd lib
 cd rdf
 npm run test
 
+cd ..
+
+# Currently in gui/
+
 
 # Build apps
 # Run parallel commands and fail if any of them fails.
