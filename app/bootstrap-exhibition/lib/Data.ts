@@ -1,5 +1,5 @@
 import fs from "fs";
-import {Collection, Image, Institution, Object, PropertyDefinition} from "@paradicms/models";
+import {Collection, Image, Institution, Object} from "@paradicms/models";
 import {RdfData} from "@paradicms/rdf";
 import {graph, parse} from "rdflib";
 
@@ -43,9 +43,7 @@ export class Data {
     );
 
     this.licenseTitlesByUri = allData.licenseTitlesByUri;
-
-    this.propertyDefinitions = allData.propertyDefinitions;
-
+    
     this.rightsStatementPrefLabelsByUri =
       allData.rightsStatementPrefLabelsByUri;
   }
@@ -55,6 +53,5 @@ export class Data {
   readonly institution: Institution;
   readonly licenseTitlesByUri: {[index: string]: string};
   readonly objects: readonly Object[];
-  readonly propertyDefinitions: readonly PropertyDefinition[];
   readonly rightsStatementPrefLabelsByUri: {[index: string]: string};
 }
