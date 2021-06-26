@@ -1,0 +1,34 @@
+{
+  "name": "bootstrap-exhibition",
+  "description": "Bootstrap+Next.js exhibition GUI for paradicms",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Minor Gordon",
+  "license": "GPLv3",
+  "main": "n/a",
+  "dependencies": {
+    "@paradicms/base": "1.0.3",
+    "@paradicms/bootstrap": "1.0.3",
+    "@paradicms/lunr": "1.0.3",
+    "@paradicms/models": "1.0.3",
+    "@paradicms/model-utils": "1.0.3",
+    "@paradicms/next": "1.0.3",
+    "@paradicms/rdf": "1.0.3",
+    "@types/reactstrap": "^8.5.1",
+    "bootswatch": "^4.5.3",
+    "next": "10.0.1",
+    "reactstrap": "^8.5.1",
+    "sass": "^1.27.0"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
+  },
+  "scripts": {
+    "clean": "rimraf .next && rimraf out",
+    "dev": "next dev",
+    "build": "next build",
+    "export": "next export",
+    "serve": "serve out",
+    "start": "next start"
+  }
+}
