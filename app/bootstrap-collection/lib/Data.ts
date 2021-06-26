@@ -1,11 +1,5 @@
 import fs from "fs";
-import {
-  Collection,
-  Image,
-  Institution,
-  Object,
-  PropertyDefinition,
-} from "@paradicms/models";
+import {Collection, Image, Institution, Object, PropertyDefinition} from "@paradicms/models";
 import {RdfData} from "@paradicms/rdf";
 import {graph, parse} from "rdflib";
 
@@ -20,7 +14,7 @@ export class Data {
       fs.readFileSync(dataTtlFilePath).toString(),
       store,
       "http://example.org",
-      "text/turtle"
+      "text/turtle",
     );
     const allData = new RdfData(store);
 
@@ -28,29 +22,17 @@ export class Data {
     if (institutions.length === 0) {
       throw new EvalError("no institutions");
     }
-    // Ignore all but the first institution
-
-    // In production there should only be one institution.
-    // The test data has more than one institution.
     this.institution = institutions[0];
 
-    const collections = allData.collections;
-    // Ignore all but the first collection. See above.
-    const collection = collections.find(
-      collection => collection.institutionUri === this.institution.uri
-    );
-    if (!collection) {
+    const collections = allData.institutionCollections(this.institution.uri);
+    if (collections.length === 0) {
       throw new EvalError(
-        "no collection for institution " + this.institution.uri
+        "no collection for institution " + this.institution.uri,
       );
     }
-    this.collection = collection;
+    this.collection = collections[0];
 
-    this.objects = allData.objects.filter(object =>
-      object.collectionUris.some(
-        collectionUri => collectionUri === this.collection.uri
-      )
-    );
+    this.objects = allData.collectionObjects(this.collection.uri);
     if (this.objects.length === 0) {
       throw new EvalError("no objects for collection " + this.collection.uri);
     }
