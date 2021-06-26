@@ -1,3 +1,9 @@
 @import "bootstrap_variables";
 @import "~bootstrap/scss/bootstrap";
 @import "~bootswatch/dist/materia/bootswatch";
+
+ol.breadcrumb {
+  background-color: white;
+  margin-bottom: 0;
+  padding-bottom: 12px;
+}

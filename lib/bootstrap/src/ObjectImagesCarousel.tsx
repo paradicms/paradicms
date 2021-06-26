@@ -1,14 +1,62 @@
 import * as React from "react";
 import {useState} from "react";
 import {ImageDimensions, JoinedImage} from "@paradicms/models";
-import {Carousel, CarouselControl, CarouselItem} from "reactstrap";
-import {indexImagesByOriginalImageUri, selectThumbnail} from "@paradicms/model-utils";
-import {ObjectImageCard} from "./ObjectImageCard";
+import {Carousel, CarouselControl, CarouselItem, Col, Container, Row} from "reactstrap";
+import {getImageSrc, indexImagesByOriginalImageUri, selectThumbnail} from "@paradicms/model-utils";
+import ImageZoom from "react-medium-image-zoom";
+import {RightsTable} from "./RightsTable";
 
 export const ObjectImagesCarousel: React.FunctionComponent<{
   images: readonly JoinedImage[];
 }> = ({images}) => {
   const imagesByOriginalImageUri = indexImagesByOriginalImageUri(images);
+  const originalImageUris = Object.keys(imagesByOriginalImageUri);
+
+  const renderObjectImage = (originalImageUri: string) => {
+    const images = imagesByOriginalImageUri[originalImageUri];
+    const originalImage = images.find(
+      image => image.uri === originalImageUri,
+    );
+    const thumbnailTargetDimensions: ImageDimensions = {height: 600, width: 600};
+    const thumbnail = selectThumbnail({
+      images,
+      targetDimensions: thumbnailTargetDimensions,
+    });
+
+    return (
+      <Container fluid>
+        <Row>
+          <ImageZoom
+            image={{
+              className: "img",
+              src: getImageSrc({image: thumbnail, targetDimensions: thumbnailTargetDimensions}),
+              style: {
+                maxHeight: thumbnailTargetDimensions.height,
+                maxWidth: thumbnailTargetDimensions.width,
+              },
+            }}
+            zoomImage={{
+              className: "img--zoomed",
+              src: getImageSrc({image: originalImage, targetDimensions: thumbnailTargetDimensions}),
+              style: originalImage?.exactDimensions ?? undefined,
+            }}
+          />
+        </Row>
+        {originalImage && originalImage.rights ? (
+          <Row className="mt-2">
+            <Col xs={12}>
+              <h6 className="text-center">Image rights</h6>
+              <RightsTable rights={originalImage.rights} />
+            </Col>
+          </Row>
+        ) : null}
+      </Container>
+    );
+  };
+
+  if (originalImageUris.length === 1) {
+    return renderObjectImage(originalImageUris[0]);
+  }
 
   const items = Object.keys(imagesByOriginalImageUri).map(originalImageUri => ({
     key: originalImageUri,
@@ -46,20 +94,10 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
       {/*  items={items}*/}
       {/*  onClickHandler={goToIndex}*/}
       {/*/>*/}
-      {Object.keys(imagesByOriginalImageUri).map(originalImageUri => {
-        const images = imagesByOriginalImageUri[originalImageUri];
-        const originalImage = images.find(
-          image => image.uri === originalImageUri,
-        );
-        const thumbnailTargetDimensions: ImageDimensions = {height: 600, width: 600};
-        const thumbnail = selectThumbnail({
-          imagesByOriginalImageUri,
-          targetDimensions: thumbnailTargetDimensions,
-        });
+      {originalImageUris.map(originalImageUri => {
         return (
           <CarouselItem key={originalImageUri}>
-            <ObjectImageCard originalImage={originalImage!} thumbnail={thumbnail}
-                             thumbnailTargetDimensions={thumbnailTargetDimensions} />
+            {renderObjectImage(originalImageUri)}
           </CarouselItem>
         );
       })}

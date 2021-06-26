@@ -4,9 +4,10 @@ import {JoinedImage, JoinedRights, Object, Property} from "@paradicms/models";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {Col, Container, Row} from "reactstrap";
+import {Col, Container, Pagination, PaginationItem, PaginationLink, Row} from "reactstrap";
 import {Accordion, ObjectImagesCarousel, RightsTable} from "@paradicms/bootstrap";
 import {joinImage, joinRights} from "@paradicms/model-utils";
+import {Hrefs} from "lib/Hrefs";
 
 interface StaticProps {
   readonly institution: {
@@ -18,6 +19,8 @@ interface StaticProps {
         readonly title: string;
         readonly uri: string;
       };
+      readonly firstObjectUri: string | null;
+      readonly lastObjectUri: string | null;
       readonly nextObjectUri: string | null;
       readonly previousObjectUri: string | null;
       readonly title: string;
@@ -30,11 +33,11 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
                                                             institution,
                                                           }) => {
   const collection = institution.collection;
-  const currentObject = collection.currentObject;
+  const {currentObject, firstObjectUri, lastObjectUri, nextObjectUri, previousObjectUri} = collection;
   const rights = currentObject.rights ?? institution.rights ?? null;
 
   return (
-    <Layout collection={collection} documentTitle={currentObject.title}>
+    <Layout collection={collection} object={currentObject}>
       <Container fluid>
         <Row>
           <Col xs={12} style={{display: "flex", justifyContent: "center"}}>
@@ -50,6 +53,28 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
             </Col>
           </Row>
         ) : null}
+        {firstObjectUri || lastObjectUri || nextObjectUri || previousObjectUri ?
+          <Row className="m-4">
+            <Col style={{display: "flex", justifyContent: "center"}} xs={12}>
+              <Pagination size="lg">
+                {firstObjectUri ?
+                  <PaginationItem>
+                    <PaginationLink first href={Hrefs.object(firstObjectUri)} />
+                  </PaginationItem>
+                  : null}
+                {previousObjectUri ?
+                  <PaginationItem>
+                    <PaginationLink previous href={Hrefs.object(previousObjectUri)} />
+                  </PaginationItem> : null}
+                {nextObjectUri ?
+                  <PaginationItem>
+                    <PaginationLink next href={Hrefs.object(nextObjectUri)} />
+                  </PaginationItem> : null}
+                {lastObjectUri ?
+                  <PaginationItem>
+                    <PaginationLink last href={Hrefs.object(lastObjectUri)} />
+                  </PaginationItem> : null}
+              </Pagination></Col></Row> : null}
       </Container>
     </Layout>
   );
@@ -127,6 +152,8 @@ export const getStaticProps: GetStaticProps = async ({
             title: currentObject.title,
             uri: currentObject.uri,
           },
+          firstObjectUri: data.objects[0].uri,
+          lastObjectUri: data.objects[data.objects.length - 1].uri,
           nextObjectUri,
           previousObjectUri,
           title: collection.title,
