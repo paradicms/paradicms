@@ -5,7 +5,7 @@ import {Card, CardBody, CardHeader, CardTitle, Col, Container, Navbar, NavbarBra
 import Link from "next/link";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
-  collection: {readonly title: string; readonly uri: string};
+  collection: {readonly title: string;};
   cardTitle?: React.ReactNode;
   className?: string;
   documentTitle?: string;
