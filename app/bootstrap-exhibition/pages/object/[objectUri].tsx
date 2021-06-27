@@ -1,11 +1,11 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
-import {JoinedImage, JoinedRights, Object, Property} from "@paradicms/models";
+import {JoinedImage, JoinedRights, JoinedValue, Object} from "@paradicms/models";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {Col, Container, Pagination, PaginationItem, PaginationLink, Row} from "reactstrap";
-import {Accordion, ObjectImagesCarousel, RightsTable} from "@paradicms/bootstrap";
+import {Col, Container, Pagination, PaginationItem, PaginationLink, Row, Table} from "reactstrap";
+import {JoinedValueLink, ObjectImagesCarousel} from "@paradicms/bootstrap";
 import {joinImage, joinRights} from "@paradicms/model-utils";
 import {Hrefs} from "lib/Hrefs";
 
@@ -13,9 +13,9 @@ interface StaticProps {
   readonly institution: {
     readonly collection: {
       readonly currentObject: {
+        readonly abstract: string | null;
         readonly images: readonly JoinedImage[];
         readonly rights: JoinedRights | null;
-        readonly properties?: readonly Property[];
         readonly title: string;
         readonly uri: string;
       };
@@ -29,6 +29,25 @@ interface StaticProps {
   };
 }
 
+const RightsTableRow: React.FunctionComponent<{
+  label: string;
+  value: JoinedValue | null;
+}> = ({label, value}) => {
+  if (!value) {
+    return null;
+  }
+  return (
+    <tr>
+      <td>
+        <strong>{label}</strong>
+      </td>
+      <td>
+        <JoinedValueLink value={value} />
+      </td>
+    </tr>
+  );
+};
+
 const ObjectPage: React.FunctionComponent<StaticProps> = ({
                                                             institution,
                                                           }) => {
@@ -40,21 +59,50 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
     <Layout collection={collection} object={currentObject}>
       <Container fluid>
         <Row>
-          <Col xs={12} style={{display: "flex", justifyContent: "center"}}>
-            <ObjectImagesCarousel images={currentObject.images} />
+          {currentObject.images.length > 0 ?
+            <Col className="p-0" xs={6} style={{display: "flex", justifyContent: "center"}}>
+              <ObjectImagesCarousel images={currentObject.images} />
+            </Col> : null}
+          <Col className="p-0" xs={currentObject.images.length > 0 ? 6 : 12}>
+            <Container fluid>
+              <Row>
+                <Col className="p-0" xs={12}>
+                  <h1>{currentObject.title}</h1>
+                </Col>
+              </Row>
+              {currentObject.abstract ?
+                <Row className="mt-2">
+                  <Col className="p-0" xs={12}>{currentObject.abstract}</Col>
+                </Row>
+                : null}
+              {rights ?
+                <Row className="mt-4">
+                  <Col className="p-0" xs={12}>
+                    <Table striped>
+                      <tbody>
+                      {rights ? <>
+                        <RightsTableRow
+                          label="Rights statement"
+                          value={rights.statement}
+                        />
+                        <RightsTableRow
+                          label="Rights holder"
+                          value={rights.holder}
+                        />
+                        <RightsTableRow
+                          label="License"
+                          value={rights.license}
+                        />
+                      </> : null}
+                      </tbody>
+                    </Table>
+                  </Col>
+                </Row> : null}
+            </Container>
           </Col>
         </Row>
-        {rights ? (
-          <Row className="mt-4">
-            <Col xs={12}>
-              <Accordion title={<h4>Metadata rights</h4>}>
-                <RightsTable rights={rights} />
-              </Accordion>
-            </Col>
-          </Row>
-        ) : null}
         {firstObjectUri || lastObjectUri || nextObjectUri || previousObjectUri ?
-          <Row className="m-4">
+          <Row className="mt-4">
             <Col style={{display: "flex", justifyContent: "center"}} xs={12}>
               <Pagination size="lg">
                 {firstObjectUri ?
@@ -131,6 +179,7 @@ export const getStaticProps: GetStaticProps = async ({
       institution: {
         collection: {
           currentObject: {
+            abstract: currentObject.abstract,
             images: data.images
               .filter(image => image.depictsUri === objectUri)
               .map(image =>
