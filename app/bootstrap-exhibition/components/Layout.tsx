@@ -1,7 +1,7 @@
 import * as React from "react";
 import Helmet from "react-helmet";
 import {Hrefs} from "lib/Hrefs";
-import {Breadcrumb, BreadcrumbItem, Col, Container, Navbar, NavbarBrand, Row} from "reactstrap";
+import {Breadcrumb, BreadcrumbItem, Col, Container, Navbar, Row} from "reactstrap";
 import Link from "next/link";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
@@ -21,7 +21,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         <Row>
           <Col className="p-0">
             <Navbar className="p-0">
-              <NavbarBrand className="mr-auto p-0">
+              <div className="navbar-brand mr-auto p-0">
                 <Breadcrumb>
                   <BreadcrumbItem>
                     <Link href={Hrefs.home}>{collection.title}</Link>
@@ -32,7 +32,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
                     </BreadcrumbItem>
                     : null}
                 </Breadcrumb>
-              </NavbarBrand>
+              </div>
             </Navbar>
           </Col>
         </Row>

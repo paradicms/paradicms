@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
-import {JoinedImage, JoinedRights, JoinedValue, Object} from "@paradicms/models";
+import {JoinedImage, JoinedRights, JoinedValue, Object, Property} from "@paradicms/models";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {GetStaticPaths, GetStaticProps} from "next";
@@ -8,6 +8,7 @@ import {Col, Container, Pagination, PaginationItem, PaginationLink, Row, Table} 
 import {JoinedValueLink, ObjectImagesCarousel} from "@paradicms/bootstrap";
 import {joinImage, joinRights} from "@paradicms/model-utils";
 import {Hrefs} from "lib/Hrefs";
+import {DCTERMS} from "@paradicms/rdf";
 
 interface StaticProps {
   readonly institution: {
@@ -16,6 +17,7 @@ interface StaticProps {
         readonly abstract: string | null;
         readonly images: readonly JoinedImage[];
         readonly rights: JoinedRights | null;
+        readonly properties: readonly Property[] | null;
         readonly title: string;
         readonly uri: string;
       };
@@ -53,6 +55,16 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
   const {currentObject, nextObject, previousObject} = collection;
   const rights = currentObject.rights ?? institution.rights ?? null;
 
+  let abstract: string | null = currentObject.abstract;
+  if (!abstract) {
+    (currentObject.properties ?? []).map(property => {
+      if (property.uri === DCTERMS.description.value) {
+        console.log(property.uri);
+        abstract = property.value.toString();
+      }
+    });
+  }
+
   return (
     <Layout collection={collection} object={currentObject}>
       <Container fluid>
@@ -68,9 +80,9 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
                   <h1>{currentObject.title}</h1>
                 </Col>
               </Row>
-              {currentObject.abstract ?
+              {abstract ?
                 <Row className="mt-2">
-                  <Col className="p-0" xs={12}>{currentObject.abstract}</Col>
+                  <Col className="p-0" xs={12} dangerouslySetInnerHTML={{__html: abstract}}></Col>
                 </Row>
                 : null}
               {rights ?
@@ -180,6 +192,7 @@ export const getStaticProps: GetStaticProps = async ({
                   data.rightsStatementPrefLabelsByUri,
                 }),
               ),
+            properties: currentObject.properties,
             rights: currentObject.rights
               ? joinRights({
                 licenseTitlesByUri: data.licenseTitlesByUri,
