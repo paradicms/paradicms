@@ -3,7 +3,6 @@ import {Institution} from "@paradicms/models";
 import {FOAF, PARADICMS} from "./vocabularies";
 import {IndexedFormula} from "rdflib";
 import {RightsRdfReader} from "./RightsRdfReader";
-import {checkNotNullish} from "./checkNotNullish";
 import {ModelNode} from "./ModelNode";
 
 export class InstitutionRdfReader extends ModelRdfReader<Institution> {
@@ -14,10 +13,7 @@ export class InstitutionRdfReader extends ModelRdfReader<Institution> {
   read(): Institution {
     return {
       name: this.readRequiredLiteral(FOAF.name_).toString(),
-      rights: checkNotNullish(
-        new RightsRdfReader(this.node, this.store).read(),
-        "institution must have a non-nullish rights"
-      ),
+      rights: new RightsRdfReader(this.node, this.store).read() ?? null,
       uri: this.nodeUri,
     };
   }
