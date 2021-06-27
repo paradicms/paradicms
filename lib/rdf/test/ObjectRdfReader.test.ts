@@ -20,6 +20,7 @@ describe("Object RDF reader", () => {
     const models = ObjectRdfReader.readAll(store);
     expect(models).to.not.be.empty;
     models.forEach(model => {
+      expect(model.abstract).to.not.be.empty;
       expect(model.collectionUris).to.not.be.empty;
       expect(model.institutionUri).to.not.be.empty;
       expect(model.properties).to.not.be.empty;
