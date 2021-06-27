@@ -1,7 +1,7 @@
 import * as React from "react";
-import {JoinedRights} from "@paradicms/models";
-import {JoinedValue} from "@paradicms/models";
+import {JoinedRights, JoinedValue} from "@paradicms/models";
 import {Table} from "reactstrap";
+import {JoinedValueLink} from "./JoinedValueLink";
 
 const RightsTableRow: React.FunctionComponent<{
   cellClassName?: string;
@@ -24,16 +24,6 @@ const RightsTableRow: React.FunctionComponent<{
   );
 };
 
-const JoinedValueLink: React.FunctionComponent<{value: JoinedValue}> = ({
-  value,
-}) => {
-  const {text, uri} = value;
-  if (uri) {
-    return <a href={uri}>{text}</a>;
-  } else {
-    return <span>{text}</span>;
-  }
-};
 
 export const RightsTable: React.FunctionComponent<{
   cellClassName?: string;

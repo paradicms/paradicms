@@ -1,4 +1,5 @@
 export * from "./Accordion";
+export * from "./JoinedValueLink";
 export * from "./NavbarSearchForm";
 export * from "./ObjectCard";
 export * from "./ObjectCardInstitution";
