@@ -24,6 +24,8 @@ class Object(_NamedModel):
 
     def to_rdf(self, *, graph: Graph) -> Resource:
         resource = _NamedModel.to_rdf(self, graph=graph)
+        if self.abstract is not None:
+            resource.add(DCTERMS.abstract, Literal(self.abstract))
         for collection_uri in self.collection_uris:
             resource.add(CMS.collection, collection_uri)
         resource.add(CMS.institution, self.institution_uri)
