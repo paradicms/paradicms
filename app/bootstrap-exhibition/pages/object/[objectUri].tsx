@@ -19,10 +19,8 @@ interface StaticProps {
         readonly title: string;
         readonly uri: string;
       };
-      readonly firstObjectUri: string | null;
-      readonly lastObjectUri: string | null;
-      readonly nextObjectUri: string | null;
-      readonly previousObjectUri: string | null;
+      readonly nextObject: {readonly title: string; readonly uri: string;} | null;
+      readonly previousObject: {readonly title: string; readonly uri: string;} | null;
       readonly title: string;
     };
     readonly rights: JoinedRights | null;
@@ -52,7 +50,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
                                                             institution,
                                                           }) => {
   const collection = institution.collection;
-  const {currentObject, firstObjectUri, lastObjectUri, nextObjectUri, previousObjectUri} = collection;
+  const {currentObject, nextObject, previousObject} = collection;
   const rights = currentObject.rights ?? institution.rights ?? null;
 
   return (
@@ -101,26 +99,18 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
             </Container>
           </Col>
         </Row>
-        {firstObjectUri || lastObjectUri || nextObjectUri || previousObjectUri ?
+        {nextObject || previousObject ?
           <Row className="mt-4">
-            <Col style={{display: "flex", justifyContent: "center"}} xs={12}>
-              <Pagination size="lg">
-                {firstObjectUri ?
+            <Col xs={12}>
+              <Pagination size="lg" style={{display: "flex", justifyContent: "space-between", width: "100%"}}>
+                {previousObject ?
                   <PaginationItem>
-                    <PaginationLink first href={Hrefs.object(firstObjectUri)} />
-                  </PaginationItem>
-                  : null}
-                {previousObjectUri ?
-                  <PaginationItem>
-                    <PaginationLink previous href={Hrefs.object(previousObjectUri)} />
+                    <PaginationLink previous
+                                    href={Hrefs.object(previousObject.uri)}>‹ {previousObject.title}</PaginationLink>
                   </PaginationItem> : null}
-                {nextObjectUri ?
+                {nextObject ?
                   <PaginationItem>
-                    <PaginationLink next href={Hrefs.object(nextObjectUri)} />
-                  </PaginationItem> : null}
-                {lastObjectUri ?
-                  <PaginationItem>
-                    <PaginationLink last href={Hrefs.object(lastObjectUri)} />
+                    <PaginationLink next href={Hrefs.object(nextObject.uri)}>{nextObject.title} ›</PaginationLink>
                   </PaginationItem> : null}
               </Pagination></Col></Row> : null}
       </Container>
@@ -156,18 +146,18 @@ export const getStaticProps: GetStaticProps = async ({
   const institution = data.institution;
 
   let currentObject: Object | undefined;
-  let nextObjectUri: string | null = null;
-  let previousObjectUri: string | null = null;
+  let nextObject: Object | null = null;
+  let previousObject: Object | null = null;
   data.objects.forEach((object, objectIndex) => {
     if (object.uri !== objectUri) {
       return;
     }
     currentObject = object;
     if (objectIndex > 0) {
-      previousObjectUri = data.objects[objectIndex - 1].uri;
+      previousObject = data.objects[objectIndex - 1];
     }
     if (objectIndex + 1 < data.objects.length) {
-      nextObjectUri = data.objects[objectIndex + 1].uri;
+      nextObject = data.objects[objectIndex + 1];
     }
   });
   if (!currentObject) {
@@ -201,10 +191,8 @@ export const getStaticProps: GetStaticProps = async ({
             title: currentObject.title,
             uri: currentObject.uri,
           },
-          firstObjectUri: data.objects[0].uri,
-          lastObjectUri: data.objects[data.objects.length - 1].uri,
-          nextObjectUri,
-          previousObjectUri,
+          nextObject,
+          previousObject,
           title: collection.title,
         },
         rights: institution.rights
