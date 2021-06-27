@@ -1,18 +1,18 @@
-from typing import Dict, Generator, Optional, Tuple, Union
+from copy import deepcopy
+from typing import Dict, Optional, Tuple, Union
 from urllib.parse import quote
 
-from copy import deepcopy
 import rdflib.namespace
 import yaml
+from markdown_it import MarkdownIt
+from markdown_it.renderer import RendererHTML
+from markdown_it.tree import SyntaxTreeNode
 from mdit_py_plugins.front_matter import front_matter_plugin
 from rdflib import DCTERMS, Graph, Literal, URIRef
 from rdflib.resource import Resource
 from rdflib.term import Node
 
 import paradicms_etl
-from markdown_it import MarkdownIt
-from markdown_it.renderer import RendererHTML
-from markdown_it.tree import SyntaxTreeNode
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.collection import Collection
@@ -20,13 +20,11 @@ from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicens
 from paradicms_etl.models.creative_commons_rights_statements import (
     CreativeCommonsRightsStatements,
 )
-from paradicms_etl.models.institution import Institution
-from paradicms_etl.models.object import Object
-from paradicms_etl.models.opaque_named_model import OpaqueNamedModel
-from paradicms_etl.models.person import Person
 from paradicms_etl.models.dublin_core_property_definitions import (
     DublinCorePropertyDefinitions,
 )
+from paradicms_etl.models.institution import Institution
+from paradicms_etl.models.opaque_named_model import OpaqueNamedModel
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -200,7 +198,7 @@ class MarkdownDirectoryTransformer(_Transformer):
 
             key = self.__current_heading_id
             if key is None:
-                key = "description"
+                key = "abstract"
 
             property_uri = self._convert_key_to_property_uri(key)
 
