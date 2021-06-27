@@ -414,6 +414,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     paradicms:guiNavbarTitle "Test data" .
 
 <https://place-hold.it/1000x1000?text=Institution0Collection0Object0Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -422,6 +424,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0Collection0Object0Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0Collection0Object0Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -430,6 +434,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0Collection0Object0Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0Collection0Object1Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -438,6 +444,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0Collection0Object1Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0Collection0Object1Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -446,6 +454,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0Collection0Object1Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0Collection0Object2Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -454,6 +464,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0Collection0Object2Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0Collection0Object2Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -462,6 +474,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0Collection0Object2Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0Collection0Object3Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -470,6 +484,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0Collection0Object3Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0Collection0Object3Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -478,6 +494,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0Collection0Object3Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -486,6 +504,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -494,6 +514,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedObject0Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -502,6 +524,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0SharedObject0Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedObject0Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -510,6 +534,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0SharedObject0Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedObject1Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -518,6 +544,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0SharedObject1Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedObject1Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -526,6 +554,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0SharedObject1Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedObject2Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -534,6 +564,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0SharedObject2Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedObject2Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -542,6 +574,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0SharedObject2Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedObject3Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -550,6 +584,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0SharedObject3Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedObject3Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -558,6 +594,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution0SharedObject3Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution1Collection0Object0Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -566,6 +604,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1Collection0Object0Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution1Collection0Object0Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -574,6 +614,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1Collection0Object0Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution1Collection0Object1Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -582,6 +624,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1Collection0Object1Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution1Collection0Object1Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -590,6 +634,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1Collection0Object1Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution1Collection0Object2Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -598,6 +644,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1Collection0Object2Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution1Collection0Object2Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -606,6 +654,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1Collection0Object2Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution1Collection0Object3Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -614,6 +664,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1Collection0Object3Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution1Collection0Object3Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -622,6 +674,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1Collection0Object3Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution1Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -630,6 +684,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution1Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -638,6 +694,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution1SharedObject0Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -646,6 +704,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1SharedObject0Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution1SharedObject0Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -654,6 +714,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1SharedObject0Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution1SharedObject1Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -662,6 +724,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1SharedObject1Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution1SharedObject1Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -670,6 +734,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1SharedObject1Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution1SharedObject2Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -678,6 +744,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1SharedObject2Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution1SharedObject2Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -686,6 +754,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1SharedObject2Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution1SharedObject3Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -694,6 +764,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1SharedObject3Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution1SharedObject3Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -702,432 +774,576 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         <https://place-hold.it/75x75?text=Institution1SharedObject3Image1> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Object0Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/object0> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Object0Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/object0> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Object1Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/object1> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Object1Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/object1> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Object2Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/object2> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Object2Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/object2> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Object3Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/object3> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Object3Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/object3> .
 
 <https://place-hold.it/600x600?text=Institution0Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0> .
 
 <https://place-hold.it/600x600?text=Institution0Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0> .
 
 <https://place-hold.it/600x600?text=Institution0SharedObject0Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/object0> .
 
 <https://place-hold.it/600x600?text=Institution0SharedObject0Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/object0> .
 
 <https://place-hold.it/600x600?text=Institution0SharedObject1Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/object1> .
 
 <https://place-hold.it/600x600?text=Institution0SharedObject1Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/object1> .
 
 <https://place-hold.it/600x600?text=Institution0SharedObject2Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/object2> .
 
 <https://place-hold.it/600x600?text=Institution0SharedObject2Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/object2> .
 
 <https://place-hold.it/600x600?text=Institution0SharedObject3Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/object3> .
 
 <https://place-hold.it/600x600?text=Institution0SharedObject3Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/object3> .
 
 <https://place-hold.it/600x600?text=Institution1Collection0Object0Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/object0> .
 
 <https://place-hold.it/600x600?text=Institution1Collection0Object0Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/object0> .
 
 <https://place-hold.it/600x600?text=Institution1Collection0Object1Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/object1> .
 
 <https://place-hold.it/600x600?text=Institution1Collection0Object1Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/object1> .
 
 <https://place-hold.it/600x600?text=Institution1Collection0Object2Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/object2> .
 
 <https://place-hold.it/600x600?text=Institution1Collection0Object2Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/object2> .
 
 <https://place-hold.it/600x600?text=Institution1Collection0Object3Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/object3> .
 
 <https://place-hold.it/600x600?text=Institution1Collection0Object3Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/object3> .
 
 <https://place-hold.it/600x600?text=Institution1Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1> .
 
 <https://place-hold.it/600x600?text=Institution1Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1> .
 
 <https://place-hold.it/600x600?text=Institution1SharedObject0Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/object0> .
 
 <https://place-hold.it/600x600?text=Institution1SharedObject0Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/object0> .
 
 <https://place-hold.it/600x600?text=Institution1SharedObject1Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/object1> .
 
 <https://place-hold.it/600x600?text=Institution1SharedObject1Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/object1> .
 
 <https://place-hold.it/600x600?text=Institution1SharedObject2Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/object2> .
 
 <https://place-hold.it/600x600?text=Institution1SharedObject2Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/object2> .
 
 <https://place-hold.it/600x600?text=Institution1SharedObject3Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/object3> .
 
 <https://place-hold.it/600x600?text=Institution1SharedObject3Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/object3> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Object0Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/object0> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Object0Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/object0> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Object1Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/object1> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Object1Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/object1> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Object2Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/object2> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Object2Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/object2> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Object3Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/object3> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Object3Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/object3> .
 
 <https://place-hold.it/75x75?text=Institution0Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0> .
 
 <https://place-hold.it/75x75?text=Institution0Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0> .
 
 <https://place-hold.it/75x75?text=Institution0SharedObject0Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/object0> .
 
 <https://place-hold.it/75x75?text=Institution0SharedObject0Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/object0> .
 
 <https://place-hold.it/75x75?text=Institution0SharedObject1Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/object1> .
 
 <https://place-hold.it/75x75?text=Institution0SharedObject1Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/object1> .
 
 <https://place-hold.it/75x75?text=Institution0SharedObject2Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/object2> .
 
 <https://place-hold.it/75x75?text=Institution0SharedObject2Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/object2> .
 
 <https://place-hold.it/75x75?text=Institution0SharedObject3Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/object3> .
 
 <https://place-hold.it/75x75?text=Institution0SharedObject3Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:institution <http://example.com/institution0> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/object3> .
 
 <https://place-hold.it/75x75?text=Institution1Collection0Object0Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/object0> .
 
 <https://place-hold.it/75x75?text=Institution1Collection0Object0Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/object0> .
 
 <https://place-hold.it/75x75?text=Institution1Collection0Object1Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/object1> .
 
 <https://place-hold.it/75x75?text=Institution1Collection0Object1Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/object1> .
 
 <https://place-hold.it/75x75?text=Institution1Collection0Object2Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/object2> .
 
 <https://place-hold.it/75x75?text=Institution1Collection0Object2Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/object2> .
 
 <https://place-hold.it/75x75?text=Institution1Collection0Object3Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/object3> .
 
 <https://place-hold.it/75x75?text=Institution1Collection0Object3Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/object3> .
 
 <https://place-hold.it/75x75?text=Institution1Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1> .
 
 <https://place-hold.it/75x75?text=Institution1Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1> .
 
 <https://place-hold.it/75x75?text=Institution1SharedObject0Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/object0> .
 
 <https://place-hold.it/75x75?text=Institution1SharedObject0Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/object0> .
 
 <https://place-hold.it/75x75?text=Institution1SharedObject1Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/object1> .
 
 <https://place-hold.it/75x75?text=Institution1SharedObject1Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/object1> .
 
 <https://place-hold.it/75x75?text=Institution1SharedObject2Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/object2> .
 
 <https://place-hold.it/75x75?text=Institution1SharedObject2Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/object2> .
 
 <https://place-hold.it/75x75?text=Institution1SharedObject3Image0> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/object3> .
 
 <https://place-hold.it/75x75?text=Institution1SharedObject3Image1> a paradicms:Image ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:institution <http://example.com/institution1> ;
     exif:height 75 ;
     exif:width 75 ;
@@ -1861,6 +2077,16 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     dcterms:title "Institution1Collection0" ;
     paradicms:institution <http://example.com/institution1> .
 
+<http://example.com/institution0> a paradicms:Institution ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
+    foaf:name "Institution0" .
+
+<http://example.com/institution1> a paradicms:Institution ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
+    foaf:name "Institution1" .
+
 <http://rightsstatements.org/vocab/InC-EDU/1.0/> a paradicms:RightsStatement ;
     dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright but that educational use is allowed without the need to obtain additional permission." ;
     dcterms:identifier "InC-EDU" ;
@@ -1874,14 +2100,4 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
     skos:prefLabel "In Copyright - Educational Use Permitted" ;
     skos:scopeNote "This Rights Statement can be used only for copyrighted Items for which the organization making the Item available is the rights-holder or has been explicitly authorized by the rights-holder(s) to allow third parties to use their Work(s) for educational purposes without first obtaining permission." .
-
-<http://example.com/institution0> a paradicms:Institution ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Institution0 rights holder" ;
-    foaf:name "Institution0" .
-
-<http://example.com/institution1> a paradicms:Institution ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Institution1 rights holder" ;
-    foaf:name "Institution1" .
 
