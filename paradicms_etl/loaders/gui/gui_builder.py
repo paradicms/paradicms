@@ -71,18 +71,18 @@ class GuiBuilder:
 
         args = ["npm", "run", script]
         self.__logger.info("running %s", args)
-        subprocess_ret = subprocess.call(
+        completed_process = subprocess.run(
             args,
             cwd=str(self.__gui_dir_path),
             env=subprocess_env,
             shell=sys.platform == "win32",  # os.environ.get("CI") is None,
         )
 
-        if subprocess_ret != 0:
+        if completed_process.returncode != 0:
             self.__logger.warning(
                 "%s in %s returned non-zero: %d",
                 args,
                 self.__gui_dir_path,
-                subprocess_ret,
+                completed_process.returncode,
             )
-            sys.exit(subprocess_ret)
+            sys.exit(completed_process.returncode)
