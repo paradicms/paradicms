@@ -2,12 +2,11 @@ from dataclasses import dataclass
 from typing import Optional
 
 from rdflib import Graph, Literal
-from rdflib.namespace import FOAF, RDF
+from rdflib.namespace import FOAF
 from rdflib.resource import Resource
 
 from paradicms_etl.models._named_model import _NamedModel
-from paradicms_etl.namespace import CMS, CONTACT
-from paradicms_etl.utils.rdf_resource_wrapper import RdfResourceWrapper
+from paradicms_etl.namespace import CONTACT
 
 
 @dataclass(frozen=True)

@@ -1,5 +1,3 @@
-from typing import Optional
-
 from rdflib import Literal, URIRef
 from rdflib.resource import Resource
 
@@ -11,11 +9,26 @@ class RdfResourceWrapper:
     def __getattr__(self, item):
         return getattr(self.__resource, item)
 
-    def str_value(self, predicate: URIRef) -> Optional[str]:
-        value = self.value(predicate)
-        if not isinstance(value, Literal):
+    def optional_python_value(self, property_: URIRef, value_type):
+        o = self.value(property_)
+        if o is None:
             return None
-        value_str = value.toPython()
-        if not isinstance(value_str, str):
+        if not isinstance(o, Literal):
+            raise TypeError(
+                f"expected {property_} object to be a literal, not {type(o)}"
+            )
+        value = o.toPython()
+        if not isinstance(value, value_type):
+            raise TypeError(
+                f"expected {property_} object to be a {value_type}: {value}"
+            )
+        return value
+
+    def required_uri_value(self, property_: URIRef) -> URIRef:
+        o = self.value(property_)
+        if o is None:
             return None
-        return value_str
+        if not isinstance(o, Resource):
+            raise TypeError(f"expected {property_} object to be a URI: {o}")
+        assert isinstance(o.identifier, URIRef)
+        return o.identifier

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Union
+from typing import Optional, Union
 
 from rdflib import Literal, URIRef
 from rdflib.resource import Resource
@@ -23,6 +23,26 @@ class Rights:
         "license": DublinCorePropertyDefinitions.LICENSE.uri,
         "statement": DublinCorePropertyDefinitions.RIGHTS.uri,
     }
+
+    @classmethod
+    def from_rdf(cls, resource: Resource) -> Optional[object]:
+        kwds = {}
+        for property_name, property_uri in cls.__PROPERTY_URIS.items():
+            property_value = resource.value(property_uri)
+            if property_value is None:
+                continue
+            if isinstance(property_value, Literal):
+                property_value = property_value.toPython()
+            elif isinstance(property_value, Resource):
+                property_value = property_value.identifier
+                assert isinstance(property_value, URIRef)
+            else:
+                raise TypeError(f"expected {property_uri} to be a literal or a URI")
+            kwds[property_name] = property_value
+        if kwds:
+            return cls(**kwds)
+        else:
+            return None
 
     def to_rdf(self, *, add_to_resource: Resource) -> None:
         for property_name, property_uri in self.__PROPERTY_URIS.items():
