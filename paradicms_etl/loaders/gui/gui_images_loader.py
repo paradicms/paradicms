@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Generator, Optional, Tuple
 
 from pathvalidate import sanitize_filename
+from rdflib import URIRef
 from tqdm import tqdm
 
 from paradicms_etl._image_archiver import _ImageArchiver
@@ -65,6 +66,7 @@ class GuiImagesLoader(_Loader):
             image_file_path=original_image_file_path
         )
         assert archived_original_image_url
+        # The original image retains its URI but gets a new src
         return dataclasses.replace(original_image, src=archived_original_image_url)
 
     def __archive_thumbnail_images(
@@ -115,6 +117,8 @@ class GuiImagesLoader(_Loader):
                     max_dimensions=thumbnail_max_dimensions,
                     original_image_uri=original_image.uri,
                     src=archived_thumbnail_url,
+                    # Thumbnails are different images, so they need a new URI
+                    uri=URIRef(archived_thumbnail_url),
                 )
             )
         assert len(archived_thumbnail_images) == len(self.__thumbnail_max_dimensions)
