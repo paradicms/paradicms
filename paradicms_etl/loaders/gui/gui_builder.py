@@ -37,9 +37,20 @@ class GuiBuilder:
         """
 
         self.__logger.info("building GUI")
+
+        public_dir_size, public_file_count = self.__get_dir_size(
+            self.__gui_dir_path / "public"
+        )
+        self.__logger.info(
+            "public directory: file count=%d, size=%d",
+            public_file_count,
+            public_dir_size,
+        )
+
         self.__run_npm_script("build", data_ttl_file_path=data_ttl_file_path)
         self.__logger.info("built GUI")
         self.__logger.info("exporting GUI build")
+
         self.__run_npm_script("export", data_ttl_file_path=data_ttl_file_path)
         self.__logger.info("exported GUI build")
 
@@ -86,3 +97,16 @@ class GuiBuilder:
                 completed_process.returncode,
             )
             sys.exit(completed_process.returncode)
+
+    @staticmethod
+    def __get_dir_size(dir_path: Path):
+        dir_size = file_count = 0
+        for entry in os.scandir(dir_path):
+            if entry.is_file():
+                file_count += 1
+                dir_size += entry.stat().st_size
+            elif entry.is_dir():
+                subdir_size, subdir_file_count = GuiBuilder.__get_dir_size(entry.path)
+                dir_size += subdir_size
+                file_count += subdir_file_count
+        return dir_size, file_count
