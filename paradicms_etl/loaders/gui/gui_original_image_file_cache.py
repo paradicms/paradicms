@@ -23,11 +23,11 @@ class GuiOriginalImageFileCache:
         self,
         *,
         cache_dir_path: Path,
-        sleep_s_after_image_download: Optional[float] = None,
+        sleep_s_after_download: Optional[float] = None,
     ):
         self.__file_cache = FileCache(
             cache_dir_path=cache_dir_path,
-            sleep_s_after_download=sleep_s_after_image_download,
+            sleep_s_after_download=sleep_s_after_download,
         )
         self.__logger = logging.getLogger(self.__class__.__name__)
 
