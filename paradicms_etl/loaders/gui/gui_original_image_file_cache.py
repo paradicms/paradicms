@@ -41,9 +41,34 @@ class GuiOriginalImageFileCache:
 
         assert original_image.original_image_uri is None
 
-        original_image_uri_parsed = urlparse(str(original_image.uri))
-        if original_image_uri_parsed.scheme == "file":
-            original_image_file_path = unquote(original_image_uri_parsed.path)
+        # Prefer .src over .uri
+        original_image_url = original_image_url_parsed = None
+        for check_original_image_url in (original_image.src, original_image.uri):
+            check_original_image_url_parsed = urlparse(str(check_original_image_url))
+            if check_original_image_url_parsed.scheme in ("file", "http", "https"):
+                self.__logger.debug(
+                    "using original image URL %s for original image %s",
+                    check_original_image_url,
+                    original_image.uri,
+                )
+                original_image_url = check_original_image_url
+                original_image_url_parsed = check_original_image_url_parsed
+                break
+            else:
+                self.__logger.debug(
+                    "original image URL %s for original image %s has an unknown scheme",
+                    check_original_image_url,
+                    original_image.uri,
+                )
+                continue
+
+        if original_image_url is None:
+            raise self.CacheOriginalImageException(
+                f"original image has unrecognized URL scheme(s)"
+            )
+
+        if original_image_url_parsed.scheme == "file":
+            original_image_file_path = unquote(original_image_url_parsed.path)
             if isinstance(
                 PurePath(), PureWindowsPath
             ) and original_image_file_path.startswith("/"):
@@ -53,39 +78,40 @@ class GuiOriginalImageFileCache:
 
             if not os.path.isfile(original_image_file_path):
                 raise self.CacheOriginalImageException(
-                    f"original image {original_image.uri} not found"
+                    f"original image {original_image_url} not found"
                 )
 
             self.__logger.debug(
                 "using original image %s at %s",
-                original_image.uri,
+                original_image_url,
                 original_image_file_path,
             )
 
             assert original_image_file_path is not None
             return Path(original_image_file_path)
         else:
+            assert original_image_url_parsed.scheme in ("http", "https")
             try:
                 original_image_file_path = self.__file_cache.get_file(
-                    original_image.uri
+                    original_image_url
                 )
             except HTTPError as http_error:
                 if http_error.code == 404:
                     raise self.CacheOriginalImageException(
-                        f"original image {original_image.uri} not found"
+                        f"original image {original_image_url} not found"
                     ) from http_error
                 else:
                     raise self.CacheOriginalImageException(
-                        f"original image {original_image.uri} could not be retrieved"
+                        f"original image {original_image_url} could not be retrieved"
                     ) from http_error
             except ValueError as e:
                 raise self.CacheOriginalImageException(
-                    f"error caching original image {original_image.uri}"
+                    f"error caching original image {original_image_url}"
                 ) from e
 
             self.__logger.debug(
                 "cached original image %s at %s",
-                original_image.uri,
+                original_image_url,
                 original_image_file_path,
             )
 

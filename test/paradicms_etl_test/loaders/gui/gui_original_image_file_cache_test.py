@@ -73,7 +73,7 @@ def test_cache_original_image_http_absent(tmp_path):
         pass
 
 
-def test_cache_original_image_with_src(tmp_path):
+def test_cache_original_image_with_url_src(tmp_path):
     original_image_file_path = GuiOriginalImageFileCache(
         cache_dir_path=Path(tmp_path)
     ).cache_original_image(
@@ -82,6 +82,20 @@ def test_cache_original_image_with_src(tmp_path):
             institution_uri=URIRef("http://example.com"),
             src="https://place-hold.it/100x100",
             uri=URIRef("urn:example:nonextant"),
+        )
+    )
+    assert original_image_file_path.is_file()
+
+
+def test_cache_original_image_with_relative_src(tmp_path):
+    original_image_file_path = GuiOriginalImageFileCache(
+        cache_dir_path=Path(tmp_path)
+    ).cache_original_image(
+        Image(
+            depicts_uri=URIRef("http://example.com"),
+            institution_uri=URIRef("http://example.com"),
+            src="/nonextant",
+            uri=URIRef("https://place-hold.it/100x100"),
         )
     )
     assert original_image_file_path.is_file()
