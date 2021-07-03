@@ -395,19 +395,35 @@ class MarkdownDirectoryTransformer(_Transformer):
                     )
                 )
 
-                # If the image has no src and there is a sibling image file (i.e., a .jpg) with the same model id (i.e., file stem) as the Markdown file,
-                # use that image file as the src.
-                if model_resource.value(CMS.imageSrc) is None:
+                # Transform the Resource into an Image rather than an OpaqueNamedModel.
+                # The image archiver expects an Image model and won't recognize the OpaqueNamedModel.
+
+                depicts_uri = model_resource.value(rdflib.namespace.FOAF.depicts)
+                if depicts_uri is None:
+                    # No depicts URI explicitly set, check if there's a companion object .md file with the same model id (i.e., file stem).
+                    object_ = objects_by_model_id.get(markdown_file_entry.model_id)
+                    if object_ is None:
+                        raise ValueError(
+                            f"image .md {markdown_file_entry.model_id} has no depicts statement and no companion object with the same model id found"
+                        )
+                    depicts_uri = object_.uri
+                elif not isinstance(depicts_uri, URIRef):
+                    raise TypeError(type(depicts_uri))
+
+                src = model_resource.value(CMS.imageSrc)
+                if src is None:
+                    # If the image has no src and there is a sibling image file (i.e., a .jpg) with the same model id (i.e., file stem) as the Markdown file,
+                    # use that image file as the src.
                     image_file_entry = untransformed_image_file_entries_by_model_id.pop(
                         markdown_file_entry.model_id, None
                     )
                     if image_file_entry is not None:
-                        assert isinstance(
-                            image_file_entry, MarkdownDirectory.ImageFileEntry
-                        )
-                        model_resource.add(
-                            CMS.imageSrc, Literal(image_file_entry.path.as_uri())
-                        )
+                        src = Literal(image_file_entry.path.as_uri())
+                elif not isinstance(src, Literal):
+                    raise TypeError(type(src))
+
+                uri = model_resource.identifier
+                assert isinstance(uri, URIRef)
 
                 self.__buffer_transformed_model(
                     self.__transform_resource_to_model(
@@ -434,18 +450,15 @@ class MarkdownDirectoryTransformer(_Transformer):
                     "synthesizing an Image model for the object %s", object_.uri
                 )
                 self.__buffer_transformed_model(
-                    self.__opacify_model(
-                        Image(
-                            depicts_uri=object_.uri,
-                            institution_uri=self.__get_or_synthesize_default_institution().uri,
-                            src=image_file_entry.path.as_uri(),
-                            uri=URIRef(image_file_entry.path.as_uri()),
-                            # uri=MarkdownDirectoryTransformer.model_uri(
-                            #     pipeline_id=self.__pipeline_id,
-                            #     model_id=image_file_entry.model_id,
-                            #     model_type=self.__IMAGE_MODEL_TYPE,
-                            # ),
-                        )
+                    Image(
+                        depicts_uri=object_.uri,
+                        institution_uri=self.__get_or_synthesize_default_institution().uri,
+                        src=image_file_entry.path.as_uri(),
+                        uri=MarkdownDirectoryTransformer.model_uri(
+                            pipeline_id=self.__pipeline_id,
+                            model_id=image_file_entry.model_id,
+                            model_type=self.__IMAGE_MODEL_TYPE,
+                        ),
                     )
                 )
 
