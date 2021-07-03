@@ -1,4 +1,3 @@
-import dataclasses
 from logging import Logger
 from typing import Dict, Optional, Tuple, Union
 from urllib.parse import quote
@@ -380,7 +379,7 @@ class MarkdownDirectoryTransformer(_Transformer):
         def __transform_image_file_entries(
             self, *, objects_by_model_id: Dict[str, OpaqueNamedModel]
         ) -> None:
-            transformed_markdown_file_entry_model_ids = set()
+            transformed_model_ids = set()
             untransformed_image_file_entries_by_model_id = {
                 image_file_entry.model_id: image_file_entry
                 for image_file_entry in self.__markdown_directory.image_file_entries
@@ -396,13 +395,9 @@ class MarkdownDirectoryTransformer(_Transformer):
                     )
                 )
 
-                # The GuiImagesLoader looks for Image instances and doesn't check if OpaqueNamedModels are Images.
-                # Transform the Resource into an Image instead of an OpaqueNamedModel.
-                image = Image.from_rdf(model_resource)
-
                 # If the image has no src and there is a sibling image file (i.e., a .jpg) with the same model id (i.e., file stem) as the Markdown file,
                 # use that image file as the src.
-                if image.src is None:
+                if model_resource.value(CMS.imageSrc) is None:
                     image_file_entry = untransformed_image_file_entries_by_model_id.pop(
                         markdown_file_entry.model_id, None
                     )
@@ -410,25 +405,22 @@ class MarkdownDirectoryTransformer(_Transformer):
                         assert isinstance(
                             image_file_entry, MarkdownDirectory.ImageFileEntry
                         )
-                        image = dataclasses.replace(
-                            image, src=image_file_entry.path.as_uri()
+                        model_resource.add(
+                            CMS.imageSrc, Literal(image_file_entry.path.as_uri())
                         )
 
-                self.__buffer_transformed_model(image)
-                transformed_markdown_file_entry_model_ids.add(
-                    markdown_file_entry.model_id
+                self.__buffer_transformed_model(
+                    self.__transform_resource_to_model(
+                        model_resource=model_resource,
+                        model_type=markdown_file_entry.model_type,
+                    )
                 )
+                transformed_model_ids.add(markdown_file_entry.model_id)
 
             # Handle all image files that had no sibling Markdown files.
             for (
                 image_file_entry
             ) in untransformed_image_file_entries_by_model_id.values():
-                if (
-                    image_file_entry.model_id
-                    in transformed_markdown_file_entry_model_ids
-                ):
-                    continue
-
                 object_ = objects_by_model_id.get(image_file_entry.model_id)
                 if object_ is None:
                     self.__logger.warning(
@@ -442,15 +434,18 @@ class MarkdownDirectoryTransformer(_Transformer):
                     "synthesizing an Image model for the object %s", object_.uri
                 )
                 self.__buffer_transformed_model(
-                    Image(
-                        depicts_uri=object_.uri,
-                        institution_uri=self.__get_or_synthesize_default_institution().uri,
-                        src=image_file_entry.path.as_uri(),
-                        uri=MarkdownDirectoryTransformer.model_uri(
-                            pipeline_id=self.__pipeline_id,
-                            model_id=image_file_entry.model_id,
-                            model_type=self.__IMAGE_MODEL_TYPE,
-                        ),
+                    self.__opacify_model(
+                        Image(
+                            depicts_uri=object_.uri,
+                            institution_uri=self.__get_or_synthesize_default_institution().uri,
+                            src=image_file_entry.path.as_uri(),
+                            uri=URIRef(image_file_entry.path.as_uri()),
+                            # uri=MarkdownDirectoryTransformer.model_uri(
+                            #     pipeline_id=self.__pipeline_id,
+                            #     model_id=image_file_entry.model_id,
+                            #     model_type=self.__IMAGE_MODEL_TYPE,
+                            # ),
+                        )
                     )
                 )
 
