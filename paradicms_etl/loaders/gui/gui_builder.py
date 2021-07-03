@@ -38,14 +38,16 @@ class GuiBuilder:
 
         self.__logger.info("building GUI")
 
-        public_dir_size, public_file_count = self.__get_dir_size(
-            self.__gui_dir_path / "public"
-        )
-        self.__logger.info(
-            "public directory: file count=%d, size=%d",
-            public_file_count,
-            public_dir_size,
-        )
+        gui_public_dir_path = self.__gui_dir_path / "public"
+        if gui_public_dir_path.is_dir():
+            public_dir_size, public_file_count = self.__get_dir_size(
+                gui_public_dir_path
+            )
+            self.__logger.info(
+                "public directory: file count=%d, size=%d",
+                public_file_count,
+                public_dir_size,
+            )
 
         self.__run_npm_script("build", data_ttl_file_path=data_ttl_file_path)
         self.__logger.info("built GUI")
@@ -102,6 +104,7 @@ class GuiBuilder:
     def __get_dir_size(dir_path: Path):
         dir_size = file_count = 0
         for entry in os.scandir(dir_path):
+            assert not entry.is_symlink()
             if entry.is_file():
                 file_count += 1
                 dir_size += entry.stat().st_size
