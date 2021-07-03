@@ -1,16 +1,16 @@
 import dataclasses
 import os.path
-from pathlib import Path, PurePath, PureWindowsPath
+from pathlib import Path
 from typing import Generator, Optional, Tuple
-from urllib.error import HTTPError
-from urllib.parse import unquote, urlparse
 
 from pathvalidate import sanitize_filename
 from tqdm import tqdm
 
 from paradicms_etl._image_archiver import _ImageArchiver
 from paradicms_etl._loader import _Loader
-from paradicms_etl.file_cache import FileCache
+from paradicms_etl.loaders.gui.gui_original_image_file_cache import (
+    GuiOriginalImageFileCache,
+)
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.utils.thumbnail_image import thumbnail_image
@@ -25,7 +25,7 @@ class GuiImagesLoader(_Loader):
     Separated from GuiLoader for modularity and testability.
     """
 
-    class __Exception(Exception):
+    class __ArchiveThumbnailImagesException(Exception):
         pass
 
     THUMBNAIL_MAX_DIMENSIONS_DEFAULT = (
@@ -47,7 +47,7 @@ class GuiImagesLoader(_Loader):
 
         self.__image_archiver = image_archiver
 
-        self.__original_image_file_cache = FileCache(
+        self.__original_image_file_cache = GuiOriginalImageFileCache(
             cache_dir_path=self._loaded_data_dir_path / "original_image_cache",
             sleep_s_after_download=sleep_s_after_image_download,
         )
@@ -99,7 +99,7 @@ class GuiImagesLoader(_Loader):
                     output_thumbnail_file_path=thumbnail_file_path,
                 )
             except OSError as e:
-                raise self.__Exception(
+                raise self.__ArchiveThumbnailImagesException(
                     f"error thumbnailing {original_image_file_path} (from {original_image.uri})"
                 ) from e
 
@@ -120,49 +120,6 @@ class GuiImagesLoader(_Loader):
         assert len(archived_thumbnail_images) == len(self.__thumbnail_max_dimensions)
         return tuple(archived_thumbnail_images)
 
-    def __cache_original_image(self, original_image: Image) -> Optional[Path]:
-        original_image_uri_parsed = urlparse(str(original_image.uri))
-        if original_image_uri_parsed.scheme == "file":
-            original_image_file_path = unquote(original_image_uri_parsed.path)
-            if isinstance(
-                PurePath(), PureWindowsPath
-            ) and original_image_file_path.startswith("/"):
-                original_image_file_path = PurePath(original_image_file_path[1:])
-            else:
-                original_image_file_path = PurePath(original_image_file_path)
-
-            self._logger.debug(
-                "using original image %s at %s",
-                original_image.uri,
-                original_image_file_path,
-            )
-        else:
-            try:
-                original_image_file_path = self.__original_image_file_cache.get_file(
-                    original_image.uri
-                )
-            except HTTPError as http_error:
-                if http_error.code == 404:
-                    raise self.__Exception(
-                        f"original image {original_image.uri} not found"
-                    ) from http_error
-                else:
-                    raise self.__Exception(
-                        f"original image {original_image.uri} could not be retrieved"
-                    ) from http_error
-            except ValueError as e:
-                raise self.__Exception(
-                    f"error caching original image {original_image.uri}"
-                ) from e
-
-            self._logger.debug(
-                "cached original image %s at %s",
-                original_image.uri,
-                original_image_file_path,
-            )
-
-        return original_image_file_path
-
     def load(self, *, models) -> Generator[Image, None, None]:
         """
         Archive an original image and its thumbnails.
@@ -182,32 +139,36 @@ class GuiImagesLoader(_Loader):
                 )
 
             try:
-                original_image_file_path = self.__cache_original_image(original_image)
-            except self.__Exception:
+                original_image_file_path = (
+                    self.__original_image_file_cache.cache_original_image(
+                        original_image
+                    )
+                )
+                assert original_image_file_path
+            except GuiOriginalImageFileCache.CacheOriginalImageException:
                 self._logger.info(
                     "unable to cache original image %s, dropping image from GUI",
                     original_image.uri,
                     exc_info=True,
                 )
                 continue
-            assert original_image_file_path
 
             # Archive the original image and thumbnails of it
             # If we can't get through the whole process, then ignore this image entirely
             archived_images = []
 
-            try:
-                archived_original_image = self.__archive_original_image(
-                    original_image=original_image,
-                    original_image_file_path=original_image_file_path,
-                )
-            except self.__Exception:
-                self._logger.info(
-                    "unable to archive original image %s, dropping image from GUI",
-                    original_image.uri,
-                    exc_info=True,
-                )
-                continue
+            # try:
+            archived_original_image = self.__archive_original_image(
+                original_image=original_image,
+                original_image_file_path=original_image_file_path,
+            )
+            # except self.__Exception:
+            #     self._logger.info(
+            #         "unable to archive original image %s, dropping image from GUI",
+            #         original_image.uri,
+            #         exc_info=True,
+            #     )
+            #     continue
             assert archived_original_image
 
             archived_images.append(archived_original_image)
@@ -217,7 +178,7 @@ class GuiImagesLoader(_Loader):
                     original_image=original_image,
                     original_image_file_path=original_image_file_path,
                 )
-            except self.__Exception:
+            except self.__ArchiveThumbnailImagesException:
                 self._logger.info(
                     "unable to thumbnail original image %s, dropping image from GUI",
                     original_image.uri,
