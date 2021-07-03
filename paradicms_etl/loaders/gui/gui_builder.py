@@ -53,7 +53,9 @@ class GuiBuilder:
         self.__logger.info("built GUI")
         self.__logger.info("exporting GUI build")
 
-        self.__run_npm_script("export", data_ttl_file_path=data_ttl_file_path)
+        self.__run_npm_script(
+            "export", data_ttl_file_path=data_ttl_file_path, shell=True
+        )
         self.__logger.info("exported GUI build")
 
         gui_out_dir_path = self.__gui_dir_path / "out"
@@ -72,7 +74,9 @@ class GuiBuilder:
     def gui_dir_path(self) -> Path:
         return self.__gui_dir_path
 
-    def __run_npm_script(self, script, data_ttl_file_path: Optional[Path] = None):
+    def __run_npm_script(
+        self, script, data_ttl_file_path: Optional[Path] = None, shell=None
+    ):
         subprocess_env = os.environ.copy()
         if self.__base_url_path:
             subprocess_env["GUI_BASE_URL_PATH"] = self.__base_url_path
@@ -83,12 +87,16 @@ class GuiBuilder:
         subprocess_env["EDITOR"] = ""
 
         args = ["npm", "run", script]
+        if shell is None:
+            shell = sys.platform == "win32"
+        if shell:
+            args = " ".join(args)
         self.__logger.info("running %s", args)
         completed_process = subprocess.run(
             args,
             cwd=str(self.__gui_dir_path),
             env=subprocess_env,
-            shell=sys.platform == "win32",  # os.environ.get("CI") is None,
+            shell=shell,
         )
 
         if completed_process.returncode != 0:
