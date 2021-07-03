@@ -305,7 +305,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             if self.__default_collection is None:
                 self.__default_collection = self.__opacify_model(
                     Collection(
-                        institution_uri=self.__get_or_synthesize_default_institution(),
+                        institution_uri=self.__get_or_synthesize_default_institution().uri,
                         title="Default collection",
                         uri=MarkdownDirectoryTransformer.model_uri(
                             pipeline_id=self.__pipeline_id,
@@ -491,12 +491,18 @@ class MarkdownDirectoryTransformer(_Transformer):
             ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
                 self.__OBJECT_MODEL_TYPE, tuple()
             ):
+                object_resource = self.__set_resource_institution_uri(
+                    self.__transform_markdown_file_entry_to_resource(
+                        markdown_file_entry
+                    )
+                )
+                if object_resource.value(CMS.collection) is None:
+                    object_resource.add(
+                        CMS.collection,
+                        self.__get_or_synthesize_default_collection().uri,
+                    )
                 object_ = self.__transform_resource_to_model(
-                    model_resource=self.__set_resource_institution_uri(
-                        self.__transform_markdown_file_entry_to_resource(
-                            markdown_file_entry
-                        )
-                    ),
+                    model_resource=object_resource,
                     model_type=markdown_file_entry.model_type,
                 )
                 self.__buffer_transformed_model(object_)
