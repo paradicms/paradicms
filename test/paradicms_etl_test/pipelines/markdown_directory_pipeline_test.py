@@ -22,6 +22,7 @@ class MarkdownDirectoryPipeline(_Pipeline):
             id=self.ID,
             transformer=MarkdownDirectoryTransformer(pipeline_id=self.ID),
             loader=RdfFileLoader(data_dir_path=data_dir_path, pipeline_id=self.ID),
+            validate_transform=False,
         )
 
 

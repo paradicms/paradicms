@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Tuple
+from typing import List, Optional, Tuple
 
 from configargparse import ArgParser
 
@@ -22,6 +22,7 @@ class _CompositePipeline(_Pipeline):
         pipelines: Tuple[_Pipeline, ...],
         exclude_pipeline_id: Optional[List[str]] = None,
         include_pipeline_id: Optional[List[str]] = None,
+        validate_transform: bool = True,
         **kwds,
     ):
         _Pipeline.__init__(
@@ -57,6 +58,8 @@ class _CompositePipeline(_Pipeline):
             pipeline for pipeline in pipelines if pipeline.id in filtered_pipeline_ids
         )
 
+        self.__validate_transform = validate_transform
+
     @classmethod
     def add_arguments(cls, arg_parser: ArgParser) -> None:
         _Pipeline.add_arguments(arg_parser)
@@ -68,9 +71,13 @@ class _CompositePipeline(_Pipeline):
             for pipeline in self.__pipelines:
                 yield from pipeline.extract_transform(**kwds)
 
-        self.loader.load(ValidationTransformer(pipeline_id=self.id)).transform(
-            extract_transform()
-        )
+        transform_result = extract_transform()
+        if self.__validate_transform:
+            transform_result = ValidationTransformer(pipeline_id=self.id).transform(
+                transform_result
+            )
+
+        self.loader.load(transform_result)
         self.loader.flush()
 
     @property

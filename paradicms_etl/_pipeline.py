@@ -21,6 +21,7 @@ class _Pipeline(ABC):
         id: str,
         transformer: _Transformer,
         loader: Optional[_Loader] = None,
+        validate_transform: bool = True,
         **kwds,
     ):
         """
@@ -37,6 +38,7 @@ class _Pipeline(ABC):
         self.__loader = loader
         self.__logger = logging.getLogger(self.__class__.__name__)
         self.__transformer = transformer
+        self.__validate_transform = validate_transform
 
     @classmethod
     def add_arguments(cls, arg_parser: ArgParser) -> None:
@@ -88,9 +90,13 @@ class _Pipeline(ABC):
         extract_kwds = self.extractor.extract(force=force_extract)
         if not extract_kwds:
             extract_kwds = {}
-        return ValidationTransformer(pipeline_id=self.__id).transform(
-            self.transformer.transform(**extract_kwds)
-        )
+        transform_result = self.transformer.transform(**extract_kwds)
+        if self.__validate_transform:
+            return ValidationTransformer(pipeline_id=self.__id).transform(
+                transform_result
+            )
+        else:
+            return transform_result
 
     def extract_transform_load(self, *, force_extract: bool = False):
         models = self.extract_transform(force_extract=force_extract)

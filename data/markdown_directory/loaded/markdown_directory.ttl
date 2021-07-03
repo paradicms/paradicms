@@ -405,15 +405,15 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
 """ ;
     skos:prefLabel "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication" .
 
+<urn:markdown:markdown_directory:image:test_object> a paradicms:Image ;
+    paradicms:imageSrc "file:///C:/Users/minor/projects/personal/paradicms/etl/data/markdown_directory/extracted/image/test_object.gif" ;
+    paradicms:institution <urn:markdown:markdown_directory:institution:default> ;
+    foaf:depicts <urn:markdown:markdown_directory:object:test_object> .
+
 <urn:markdown:markdown_directory:object:test_object> a paradicms:Object ;
     dcterms:abstract "<p>Test object label</p>" ;
     dcterms:creator <urn:markdown:markdown_directory:person:test_person> ;
     dcterms:title "Test object" ;
-    paradicms:collection <urn:markdown:markdown_directory:collection:default> ;
-    paradicms:institution <urn:markdown:markdown_directory:institution:default> .
-
-<urn:markdown:markdown_directory:collection:default> a paradicms:Collection ;
-    dcterms:title "Default collection" ;
     paradicms:institution <urn:markdown:markdown_directory:institution:default> .
 
 <urn:markdown:markdown_directory:person:test_person> a paradicms:Person ;
