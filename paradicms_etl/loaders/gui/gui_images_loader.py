@@ -1,4 +1,5 @@
 import dataclasses
+import hashlib
 import os.path
 from pathlib import Path
 from typing import Generator, Optional, Tuple
@@ -105,10 +106,25 @@ class GuiImagesLoader(_Loader):
                     f"error thumbnailing {original_image_file_path} (from {original_image.uri})"
                 ) from e
 
-            archived_thumbnail_url = self.__image_archiver.archive_image(
+            archived_thumbnail_src = self.__image_archiver.archive_image(
                 image_file_path=thumbnail_file_path
             )
-            assert archived_thumbnail_url
+            assert archived_thumbnail_src
+
+            # Thumbnails are different Images, so they need new URIs in addition to their own src.
+            # The archiver may return a relative path rather than a full URI, so we have to synthesize a URI.
+            # We could use the UUID URI scheme as an easy out, but it wouldn't be deterministic.
+            # Tacking on a fragment or similar to an arbitrary original_image.uri is also dicey.
+            # Instead construct a URI from a hash.
+            archived_thumbnail_hash = hashlib.sha256()
+            # Prepend the original image's URI, since thumbnails of different original image URIs could have conceivably have the same contents.
+            archived_thumbnail_hash.update(str(original_image.uri).encode("utf-8"))
+            with open(thumbnail_file_path, "rb") as thumbnail_file:
+                for byte_block in iter(lambda: thumbnail_file.read(4096), b""):
+                    archived_thumbnail_hash.update(byte_block)
+            archived_thumbnail_uri = URIRef(
+                "urn:paradicms_etl:thumbnail:" + archived_thumbnail_hash.hexdigest()
+            )
 
             archived_thumbnail_images.append(
                 dataclasses.replace(
@@ -116,9 +132,8 @@ class GuiImagesLoader(_Loader):
                     exact_dimensions=thumbnail_exact_dimensions,
                     max_dimensions=thumbnail_max_dimensions,
                     original_image_uri=original_image.uri,
-                    src=archived_thumbnail_url,
-                    # Thumbnails are different images, so they need a new URI
-                    uri=URIRef(archived_thumbnail_url),
+                    src=archived_thumbnail_src,
+                    uri=archived_thumbnail_uri,
                 )
             )
         assert len(archived_thumbnail_images) == len(self.__thumbnail_max_dimensions)
