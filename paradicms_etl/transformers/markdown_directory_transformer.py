@@ -1,4 +1,4 @@
-from copy import deepcopy
+from logging import Logger
 from typing import Dict, Optional, Tuple, Union
 from urllib.parse import quote
 
@@ -23,7 +23,9 @@ from paradicms_etl.models.creative_commons_rights_statements import (
 from paradicms_etl.models.dublin_core_property_definitions import (
     DublinCorePropertyDefinitions,
 )
+from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
+from paradicms_etl.models.markdown_directory import MarkdownDirectory
 from paradicms_etl.models.opaque_named_model import OpaqueNamedModel
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
@@ -242,7 +244,7 @@ class MarkdownDirectoryTransformer(_Transformer):
         _Transformer.__init__(self, **kwds)
         if default_institution is None and default_collection is not None:
             raise ValueError(
-                "default institutin must be supplied if default collection is"
+                "default institution must be supplied if default collection is"
             )
         self.__default_collection = default_collection
         self.__default_institution = default_institution
@@ -253,194 +255,299 @@ class MarkdownDirectoryTransformer(_Transformer):
             f"urn:markdown:{pipeline_id}:{quote(model_type)}:{quote(model_id)}"
         )
 
-    def __opacify_model(self, model: _NamedModel) -> OpaqueNamedModel:
-        graph = Graph()
-        model_resource = model.to_rdf(graph=graph)
-        return self.__transform_resource_to_model(
-            model_resource=model_resource, model_type=model.__class__.__name__
-        )
+    # Rather than managing the state of the transform as variable assignments in a particular order,
+    # create a class instance per transform invocation.
+    # The state includes things like the default institution, which is synthesized if needed.
+    class __TransformInvocation:
+        # Constants
+        __COLLECTION_MODEL_TYPE = "collection"
+        __IMAGE_MODEL_TYPE = "image"
+        __INSTITUTION_MODEL_TYPE = "institution"
+        __OBJECT_MODEL_TYPE = "object"
 
-    def __synthesize_default_collection(
-        self, *, institution_uri: URIRef
-    ) -> OpaqueNamedModel:
-        return self.__opacify_model(
-            Collection(
-                institution_uri=institution_uri,
-                title="Default collection",
-                uri=self.model_uri(
-                    pipeline_id=self._pipeline_id,
-                    model_type="collection",
-                    model_id="default",
-                ),
+        def __init__(
+            self,
+            *,
+            default_collection: Optional[Collection],
+            default_institution: Optional[Institution],
+            logger: Logger,
+            markdown_directory: MarkdownDirectory,
+            pipeline_id: str,
+        ):
+            if default_collection is not None:
+                default_collection = self.__opacify_model(default_collection)
+            self.__default_collection = default_collection
+            if default_institution is not None:
+                self.__default_institution = self.__opacify_model(default_institution)
+            self.__default_institution = default_institution
+            self.__logger = logger
+            self.__markdown_directory = markdown_directory
+            self.__pipeline_id = pipeline_id
+            self.__transformed_models_by_uri = {}
+            self.__untransformed_markdown_file_entries_by_model_type = (
+                markdown_directory.markdown_file_entries_by_model_type.copy()
             )
-        )
 
-    def __synthesize_default_institution(self) -> OpaqueNamedModel:
-        return self.__opacify_model(
-            Institution(
-                name="Default institution",
-                uri=self.model_uri(
-                    pipeline_id=self._pipeline_id,
-                    model_type="institution",
-                    model_id="default",
-                ),
+        def __buffer_transformed_model(self, model: OpaqueNamedModel):
+            assert model.uri not in self.__transformed_models_by_uri, model.uri
+            self.__transformed_models_by_uri[model.uri] = model
+
+        def __call__(self) -> Tuple[OpaqueNamedModel, ...]:
+            # Order is important
+            self.__transform_institution_markdown_file_entries()
+            self.__transform_collection_markdown_file_entries()
+            objects_by_model_id = self.__transform_object_markdown_file_entries()
+            self.__transform_image_file_entries(objects_by_model_id=objects_by_model_id)
+            self.__transform_other_markdown_file_entries()
+            return tuple(self.__transformed_models_by_uri.values())
+
+        def __get_or_synthesize_default_collection(self) -> OpaqueNamedModel:
+            if self.__default_collection is None:
+                self.__default_collection = self.__opacify_model(
+                    Collection(
+                        institution_uri=self.__get_or_synthesize_default_institution(),
+                        title="Default collection",
+                        uri=MarkdownDirectoryTransformer.model_uri(
+                            pipeline_id=self.__pipeline_id,
+                            model_type=self.__COLLECTION_MODEL_TYPE,
+                            model_id="default",
+                        ),
+                    )
+                )
+                self.__buffer_transformed_model(self.__default_collection)
+            return self.__default_collection
+
+        def __get_or_synthesize_default_institution(self) -> OpaqueNamedModel:
+            if self.__default_institution is None:
+                self.__default_institution = self.__opacify_model(
+                    Institution(
+                        name="Default institution",
+                        uri=MarkdownDirectoryTransformer.model_uri(
+                            pipeline_id=self.__pipeline_id,
+                            model_type=self.__INSTITUTION_MODEL_TYPE,
+                            model_id="default",
+                        ),
+                    )
+                )
+                self.__buffer_transformed_model(self.__default_institution)
+            return self.__default_institution
+
+        def __opacify_model(self, model: _NamedModel) -> OpaqueNamedModel:
+            graph = Graph()
+            model_resource = model.to_rdf(graph=graph)
+            return self.__transform_resource_to_model(
+                model_resource=model_resource, model_type=model.__class__.__name__
             )
-        )
 
-    def transform(self, markdown: Dict[str, Dict[str, str]]):
+        def __set_resource_institution_uri(self, resource: Resource) -> Resource:
+            if resource.value(CMS.institution) is None:
+                resource.add(
+                    CMS.institution, self.__get_or_synthesize_default_institution().uri
+                )
+            return resource
+
+        def __transform_collection_markdown_file_entries(self) -> None:
+            for (
+                markdown_file_entry
+            ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
+                self.__COLLECTION_MODEL_TYPE, tuple()
+            ):
+                collection_resource = self.__set_resource_institution_uri(
+                    self.__transform_markdown_file_entry_to_resource(
+                        markdown_file_entry
+                    )
+                )
+                collection = self.__transform_resource_to_model(
+                    model_resource=collection_resource,
+                    model_type=markdown_file_entry.model_type,
+                )
+                if self.__default_collection is None:
+                    if self.__default_institution is not None:
+                        if (
+                            collection_resource.value(CMS.institution_uri)
+                            == self.__default_institution.uri
+                        ):
+                            self.__default_collection = collection
+                            self.__logger.debug(
+                                "using first collection %s that belongs to the default institution %s as the default collection",
+                                self.__default_collection.uri,
+                                self.__default_institution.uri,
+                            )
+
+                self.__buffer_transformed_model(collection)
+
+        def __transform_image_file_entries(
+            self, *, objects_by_model_id: Dict[str, OpaqueNamedModel]
+        ) -> None:
+            transformed_model_ids = set()
+            untransformed_image_file_entries_by_model_id = {
+                image_file_entry.model_id: image_file_entry
+                for image_file_entry in self.__markdown_directory.image_file_entries
+            }
+            for (
+                markdown_file_entry
+            ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
+                self.__IMAGE_MODEL_TYPE, tuple()
+            ):
+                model_resource = self.__set_resource_institution_uri(
+                    self.__transform_markdown_file_entry_to_resource(
+                        markdown_file_entry
+                    )
+                )
+
+                # If the image has no src and there is a sibling image file (i.e., a .jpg) with the same model id (i.e., file stem) as the Markdown file,
+                # use that image file as the src.
+                if model_resource.value(CMS.imageSrc) is None:
+                    image_file_entry = untransformed_image_file_entries_by_model_id.pop(
+                        markdown_file_entry.model_id, None
+                    )
+                    if image_file_entry is not None:
+                        assert isinstance(
+                            image_file_entry, MarkdownDirectory.ImageFileEntry
+                        )
+                        model_resource.add(
+                            CMS.imageSrc, Literal(image_file_entry.path.as_uri())
+                        )
+
+                self.__buffer_transformed_model(
+                    self.__transform_resource_to_model(
+                        model_resource=model_resource,
+                        model_type=markdown_file_entry.model_type,
+                    )
+                )
+                transformed_model_ids.add(markdown_file_entry.model_id)
+
+            # Handle all image files that had no sibling Markdown files.
+            for (
+                image_file_entry
+            ) in untransformed_image_file_entries_by_model_id.values():
+                object_ = objects_by_model_id.get(image_file_entry.model_id)
+                if object_ is None:
+                    self.__logger.warning(
+                        "image file %s has no companion .md file and does not correspond to an object",
+                        image_file_entry.path,
+                    )
+                    continue
+                # Image file corresponds to an object Markdown file
+                # Synthesize an Image model
+                self.__logger.debug(
+                    "synthesizing an Image model for the object %s", object_.uri
+                )
+                self.__buffer_transformed_model(
+                    self.__opacify_model(
+                        Image(
+                            depicts_uri=object_.uri,
+                            institution_uri=self.__get_or_synthesize_default_institution().uri,
+                            src=image_file_entry.path.as_uri(),
+                            uri=URIRef(image_file_entry.path.as_uri()),
+                            # uri=MarkdownDirectoryTransformer.model_uri(
+                            #     pipeline_id=self.__pipeline_id,
+                            #     model_id=image_file_entry.model_id,
+                            #     model_type=self.__IMAGE_MODEL_TYPE,
+                            # ),
+                        )
+                    )
+                )
+
+        def __transform_institution_markdown_file_entries(self) -> None:
+            for (
+                markdown_file_entry
+            ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
+                self.__INSTITUTION_MODEL_TYPE, tuple()
+            ):
+                institution = self.__transform_resource_to_model(
+                    model_resource=self.__transform_markdown_file_entry_to_resource(
+                        markdown_file_entry
+                    ),
+                    model_type=markdown_file_entry.model_type,
+                )
+                if self.__default_institution is None:
+                    self.__default_institution = institution
+                    self.__logger.debug(
+                        "using first institution %s as the default institution",
+                        self.__default_institution.uri,
+                    )
+                self.__buffer_transformed_model(institution)
+
+        def __transform_markdown_file_entry_to_resource(
+            self, markdown_file_entry: MarkdownDirectory.MarkdownFileEntry
+        ) -> Resource:
+            return MarkdownDirectoryTransformer._MarkdownToResourceTransformer.visit_document(
+                markdown_file_entry.markdown_source,
+                model_uri=MarkdownDirectoryTransformer.model_uri(
+                    pipeline_id=self.__pipeline_id,
+                    model_type=markdown_file_entry.model_type,
+                    model_id=markdown_file_entry.model_id,
+                ),
+                pipeline_id=self.__pipeline_id,
+            )
+
+        def __transform_object_markdown_file_entries(
+            self,
+        ) -> Dict[str, OpaqueNamedModel]:
+            objects_by_model_id = {}
+            for (
+                markdown_file_entry
+            ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
+                self.__OBJECT_MODEL_TYPE, tuple()
+            ):
+                object_ = self.__transform_resource_to_model(
+                    model_resource=self.__set_resource_institution_uri(
+                        self.__transform_markdown_file_entry_to_resource(
+                            markdown_file_entry
+                        )
+                    ),
+                    model_type=markdown_file_entry.model_type,
+                )
+                self.__buffer_transformed_model(object_)
+                assert markdown_file_entry.model_id not in objects_by_model_id
+                objects_by_model_id[markdown_file_entry.model_id] = object_
+            return objects_by_model_id
+
+        def __transform_other_markdown_file_entries(self) -> None:
+            for (
+                model_type,
+                markdown_file_entries,
+            ) in self.__untransformed_markdown_file_entries_by_model_type.items():
+                for markdown_file_entry in markdown_file_entries:
+                    self.__buffer_transformed_model(
+                        self.__transform_resource_to_model(
+                            model_resource=self.__transform_markdown_file_entry_to_resource(
+                                markdown_file_entry
+                            ),
+                            model_type=markdown_file_entry.model_type,
+                        )
+                    )
+
+        def __transform_resource_to_model(
+            self, *, model_resource: Resource, model_type: str
+        ) -> OpaqueNamedModel:
+            model_properties = []
+            for p, o in model_resource.predicate_objects():
+                if isinstance(o, Node):
+                    value = o
+                elif isinstance(o, Resource):
+                    value = o.identifier
+                else:
+                    raise TypeError(type(o))
+                model_properties.append(Property(p.identifier, value))
+
+            return OpaqueNamedModel(
+                properties=tuple(model_properties),
+                type=CMS[model_type.capitalize()],
+                uri=model_resource.identifier,
+            )
+
+    def transform(self, markdown_directory: MarkdownDirectory):
         yield from CreativeCommonsLicenses.as_tuple()
         yield from CreativeCommonsRightsStatements.as_tuple()
         yield from DublinCorePropertyDefinitions.as_tuple()
         yield from RightsStatementsDotOrgRightsStatements.as_tuple()
 
-        markdown = deepcopy(markdown)
-
-        # default_institution and default_collection are yielded when they're created or transformed
-        default_institution = self.__default_institution
-        if default_institution is not None:
-            yield default_institution
-        else:
-            # If the directory has institution models, use the first of them as the default institution
-            institutions = self.__transform_institutions(markdown)
-            if institutions:
-                yield from institutions
-                default_institution = institutions[0]
-                self._logger.debug(
-                    "using the first institution %s as the default institution",
-                    default_institution.uri,
-                )
-
-        default_collection = self.__default_collection
-        if default_collection is not None:
-            yield default_collection
-        else:
-            # If the directory has collection models, use the first that belongs to the default institution as the default collection
-            collections = self.__transform_collections(markdown)
-            if collections:
-                yield from collections
-                default_collection = next(
-                    (
-                        collection
-                        for collection in collections
-                        if collection.institution_uri == default_institution.uri
-                    ),
-                    None,
-                )
-                if default_collection is not None:
-                    self._logger.debug(
-                        "using first collection %s that belongs to the default institution %s as the default collection",
-                        default_collection.uri,
-                        default_institution.uri,
-                    )
-
-        for model_type in markdown.keys():
-            for model_id, markdown_str in markdown[model_type].items():
-                # Only certain model types should have the default collection and/or institution added to them
-                # if they have no explicit collection and/or institution statement
-                model_resource = self.__transform_markdown_to_resource(
-                    markdown_str=markdown_str, model_id=model_id, model_type=model_type
-                )
-
-                # Order is important: may need to synthesize the default institution before the default collection
-
-                # Add an institution statement to some models if none was made explicitly
-                if model_type in ("collection", "image", "object"):
-                    if model_resource.value(CMS.institution) is None:
-                        if default_institution is None:
-                            # No default institution was specified (see above)
-                            # Synthesize one and yield it
-                            default_institution = (
-                                self.__synthesize_default_institution()
-                            )
-                            yield default_institution
-
-                        model_resource.add(CMS.institution, default_institution.uri)
-
-                # Add a collection statement to some models if none was made explicitly
-                if model_type in ("object",):
-                    if model_resource.value(CMS.collection) is None:
-                        if default_collection is None:
-                            # No default collection was specified (see above)
-                            # Synthesize one and yield it
-                            default_collection = self.__synthesize_default_collection(
-                                institution_uri=default_institution.uri
-                            )
-                            yield default_collection
-
-                        model_resource.add(CMS.collection, default_collection.uri)
-
-                yield self.__transform_resource_to_model(
-                    model_resource=model_resource, model_type=model_type
-                )
-
-    def __transform_collections(
-        self, inout_markdown: Dict[str, Dict[str, str]]
-    ) -> Tuple[OpaqueNamedModel, ...]:
-        collection_model_type = "collection"
-        return tuple(
-            self.__transform_resource_to_model(
-                model_resource=self.__transform_markdown_to_resource(
-                    markdown_str=markdown_str,
-                    model_id=model_id,
-                    model_type=collection_model_type,
-                ),
-                model_type=collection_model_type,
-            )
-            for model_id, markdown_str in inout_markdown.pop(
-                collection_model_type, {}
-            ).items()
-        )
-
-    def __transform_institutions(
-        self, inout_markdown: Dict[str, Dict[str, str]]
-    ) -> Tuple[OpaqueNamedModel, ...]:
-        institution_model_type = "institution"
-        return tuple(
-            self.__transform_resource_to_model(
-                model_resource=self.__transform_markdown_to_resource(
-                    markdown_str=markdown_str,
-                    model_id=model_id,
-                    model_type=institution_model_type,
-                ),
-                model_type=institution_model_type,
-            )
-            for model_id, markdown_str in inout_markdown.pop(
-                institution_model_type, {}
-            ).items()
-        )
-
-    def __transform_markdown_to_resource(
-        self,
-        *,
-        markdown_str: str,
-        model_id: str,
-        model_type: str,
-    ) -> Resource:
-        return self._MarkdownToResourceTransformer.visit_document(
-            markdown_str,
-            model_uri=self.model_uri(
-                pipeline_id=self._pipeline_id,
-                model_type=model_type,
-                model_id=model_id,
-            ),
+        yield from self.__TransformInvocation(
+            default_collection=self.__default_collection,
+            default_institution=self.__default_institution,
+            logger=self._logger,
+            markdown_directory=markdown_directory,
             pipeline_id=self._pipeline_id,
-        )
-
-    def __transform_resource_to_model(
-        self, *, model_resource: Resource, model_type: str
-    ) -> OpaqueNamedModel:
-        model_properties = []
-        for p, o in model_resource.predicate_objects():
-            if isinstance(o, Node):
-                value = o
-            elif isinstance(o, Resource):
-                value = o.identifier
-            else:
-                raise TypeError(type(o))
-            model_properties.append(Property(p.identifier, value))
-
-        return OpaqueNamedModel(
-            properties=tuple(model_properties),
-            type=CMS[model_type.capitalize()],
-            uri=model_resource.identifier,
-        )
+        )()

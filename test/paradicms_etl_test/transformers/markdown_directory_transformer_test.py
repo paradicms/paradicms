@@ -1,9 +1,7 @@
 from rdflib import DCTERMS, FOAF, Literal
 
 from paradicms_etl.models._named_model import _NamedModel
-from paradicms_etl.models.object import Object
 from paradicms_etl.models.opaque_named_model import OpaqueNamedModel
-from paradicms_etl.models.person import Person
 from paradicms_etl.namespace import CMS
 from paradicms_etl.transformers.markdown_directory_transformer import (
     MarkdownDirectoryTransformer,
@@ -37,6 +35,18 @@ def test_transform():
     assert any(
         property_.uri == DCTERMS.title and property_.value == Literal("Test object")
         for property_ in object_.properties
+    )
+
+    images = [
+        model
+        for model in models
+        if isinstance(model, OpaqueNamedModel) and model.type == CMS.Image
+    ]
+    assert len(images) == 1
+    image = images[0]
+    assert any(
+        property_.uri == FOAF.depicts and property_.value == object_.uri
+        for property_ in image.properties
     )
 
     people = [
