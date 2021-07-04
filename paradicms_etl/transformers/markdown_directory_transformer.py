@@ -401,11 +401,24 @@ class MarkdownDirectoryTransformer(_Transformer):
                     )
                 )
 
+                if model_resource.value(rdflib.namespace.FOAF.depicts) is None:
+                    # If the .md image metadata has no depicts but its model_id corresponds with an Object's model_id,
+                    # synthesize a depicts.
+                    object_ = objects_by_model_id.get(markdown_file_entry.model_id)
+                    if object_ is None:
+                        self.__logger.warning(
+                            "image markdown %s has no depicts statement and does not correspond to an object",
+                            markdown_file_entry.model_id
+                        )
+                        continue
+                    model_resource.add(rdflib.namespace.FOAF.depicts, object_.uri)
+                    self.__logger.debug("image markdown %s has no depicts statement but corresponds to the object %s, adding depicts statement", markdown_file_entry.model_id, object_.uri)
+
                 # The GuiImagesLoader looks for Image instances and doesn't check if OpaqueNamedModels are Images.
                 # Transform the Resource into an Image instead of an OpaqueNamedModel.
-                image = Image.from_rdf(model_resource)
+                image = Image.from_rdf(resource=model_resource)
 
-                # If the image has no src and there is a sibling image file (i.e., a .jpg) with the same model id (i.e., file stem) as the Markdown file,
+                # If the .md image metadata has no src and there is a sibling image file (i.e., a .jpg) with the same model id (i.e., file stem) as the Markdown file,
                 # use that image file as the src.
                 if image.src is None:
                     image_file_entry = untransformed_image_file_entries_by_model_id.pop(
