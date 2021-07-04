@@ -1,5 +1,6 @@
 import logging
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -38,8 +39,11 @@ class GuiBuilder:
 
         self.__logger.info("building GUI")
 
+        gui_out_dir_path = self.__gui_dir_path / "out"
         gui_public_dir_path = self.__gui_dir_path / "public"
+
         if gui_public_dir_path.is_dir():
+            gui_public_dir_path_exists = True
             public_dir_size, public_file_count = self.__get_dir_size(
                 gui_public_dir_path
             )
@@ -52,13 +56,36 @@ class GuiBuilder:
         self.__run_npm_script("build", data_ttl_file_path=data_ttl_file_path)
         self.__logger.info("built GUI")
 
-        self.__logger.info("exporting GUI build")
-        self.__run_npm_script(
-            "export", data_ttl_file_path=data_ttl_file_path, timeout=45
-        )
-        self.__logger.info("exported GUI build")
+        # Hack: next export hangs if there is a public directory, but only in the GitHub Action
+        # Manually move the contents of the public directory over to the out directory
+        temp_gui_public_dir_path = self.__gui_dir_path / "public.bak"
+        if gui_public_dir_path_exists:
+            gui_public_dir_path.rename(temp_gui_public_dir_path)
+            self.__logger.info(
+                "renamed %s to %s", gui_public_dir_path, temp_gui_public_dir_path
+            )
+        try:
+            self.__logger.info("exporting GUI build")
+            self.__run_npm_script(
+                "export", data_ttl_file_path=data_ttl_file_path, timeout=45
+            )
+            self.__logger.info("exported GUI build")
+        finally:
+            if gui_public_dir_path_exists:
+                temp_gui_public_dir_path.rename(gui_public_dir_path)
+                self.__logger.info(
+                    "renamed %s to %s", temp_gui_public_dir_path, gui_public_dir_path
+                )
 
-        gui_out_dir_path = self.__gui_dir_path / "out"
+        if gui_public_dir_path_exists:
+            for file_name in os.listdir(gui_public_dir_path):
+                src_file_path = gui_public_dir_path / file_name
+                dst_file_path = gui_out_dir_path / file_name
+                if src_file_path.is_file():
+                    shutil.copyfile(src_file_path, dst_file_path)
+                elif src_file_path.is_dir():
+                    shutil.copytree(src_file_path, dst_file_path)
+                self.__logger.info("copied %s to %s", src_file_path, dst_file_path)
 
         if not gui_out_dir_path.is_dir():
             raise RuntimeError(
