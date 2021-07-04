@@ -25,7 +25,7 @@
     "clean": "rimraf .next && rimraf out",
     "dev": "next dev",
     "build": "next build",
-    "export": "next export -s",
+    "export": "next export",
     "serve": "serve out",
     "start": "next start"
   }
