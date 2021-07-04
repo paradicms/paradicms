@@ -364,10 +364,15 @@ class MarkdownDirectoryTransformer(_Transformer):
                 )
                 if self.__default_collection is None:
                     if self.__default_institution is not None:
-                        if (
-                            collection_resource.value(CMS.institution_uri)
-                            == self.__default_institution.uri
-                        ):
+                        collection_institution_uri = collection_resource.value(
+                            CMS.institution
+                        )
+                        if collection_institution_uri is not None:
+                            assert isinstance(collection_institution_uri, Resource)
+                            collection_institution_uri = (
+                                collection_institution_uri.identifier
+                            )
+                        if collection_institution_uri == self.__default_institution.uri:
                             self.__default_collection = collection
                             self.__logger.debug(
                                 "using first collection %s that belongs to the default institution %s as the default collection",
