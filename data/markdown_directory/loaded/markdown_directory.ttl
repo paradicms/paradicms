@@ -411,7 +411,7 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
     skos:prefLabel "Public Domain Mark 1.0" .
 
 <urn:markdown:markdown_directory:collection:default> a paradicms:Collection ;
-    dcterms:title "Default collection" ;
+    dcterms:title "Override default collection title" ;
     paradicms:institution <urn:markdown:markdown_directory:institution:default> .
 
 <urn:markdown:markdown_directory:object:test_object> a paradicms:Object ;
@@ -429,5 +429,5 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
     foaf:name "Test person" .
 
 <urn:markdown:markdown_directory:institution:default> a paradicms:Institution ;
-    foaf:name "Default institution" .
+    foaf:name "Override default institution name" .
 
