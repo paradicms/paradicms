@@ -54,10 +54,7 @@ class GuiBuilder:
 
         self.__logger.info("exporting GUI build")
         self.__run_npm_script(
-            "export",
-            data_ttl_file_path=data_ttl_file_path,
-            timeout=45,
-            script_args=("-s",)
+            "export", data_ttl_file_path=data_ttl_file_path, timeout=45
         )
         self.__logger.info("exported GUI build")
 
@@ -83,7 +80,6 @@ class GuiBuilder:
         check=True,
         data_ttl_file_path: Optional[Path] = None,
         shell=None,
-        script_args=None,
         **kwds,
     ):
         subprocess_env = os.environ.copy()
@@ -96,8 +92,6 @@ class GuiBuilder:
         subprocess_env["EDITOR"] = ""
 
         args = ["npm", "run", script]
-        if script_args:
-            args.extend(script_args)
 
         if shell is None:
             shell = sys.platform == "win32"
