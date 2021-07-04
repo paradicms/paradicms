@@ -70,10 +70,12 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
       <Container fluid>
         <Row>
           {currentObject.images.length > 0 ?
-            <Col className="p-0" xs={6} style={{display: "flex", justifyContent: "center"}}>
+            <Col className="d-flex justify-content-center pl-0 pr-0" xs={12} sm={12} lg={8} xl={6}
+                 style={{minHeight: 600, minWidth: 600}}>
               <ObjectImagesCarousel images={currentObject.images} />
             </Col> : null}
-          <Col className="p-0" xs={currentObject.images.length > 0 ? 6 : 12}>
+          <Col className="d-flex justify-content-center pl-0 pr-0 pt-2" xs={12} sm={12}
+               lg={currentObject.images.length > 0 ? 4 : 12} xl={currentObject.images.length > 0 ? 6 : 12}>
             <Container fluid>
               <Row>
                 <Col className="p-0" xs={12}>
@@ -82,7 +84,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
               </Row>
               {abstract ?
                 <Row className="mt-2">
-                  <Col className="p-0" xs={12} dangerouslySetInnerHTML={{__html: abstract}}></Col>
+                  <Col className="p-0 text-wrap" xs={12} dangerouslySetInnerHTML={{__html: abstract}}></Col>
                 </Row>
                 : null}
               {rights ?

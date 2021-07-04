@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useState} from "react";
 import {ImageDimensions, JoinedImage} from "@paradicms/models";
-import {Carousel, CarouselControl, CarouselItem, Col, Container, Row} from "reactstrap";
+import {Carousel, CarouselControl, CarouselItem} from "reactstrap";
 import {getImageSrc, indexImagesByOriginalImageUri, selectThumbnail} from "@paradicms/model-utils";
 import ImageZoom from "react-medium-image-zoom";
 import {RightsTable} from "./RightsTable";
@@ -24,8 +24,8 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
     });
 
     return (
-      <Container fluid>
-        <Row>
+      <div>
+        <div>
           <ImageZoom
             image={{
               className: "img",
@@ -41,16 +41,14 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
               style: originalImage?.exactDimensions ?? undefined,
             }}
           />
-        </Row>
+        </div>
         {originalImage && originalImage.rights ? (
-          <Row className="mt-2">
-            <Col xs={12}>
-              <h6 className="text-center">Image rights</h6>
-              <RightsTable rights={originalImage.rights} />
-            </Col>
-          </Row>
+          <div className="mt-2">
+            <h6 className="text-center">Image rights</h6>
+            <RightsTable rights={originalImage.rights} />
+          </div>
         ) : null}
-      </Container>
+      </div>
     );
   };
 
