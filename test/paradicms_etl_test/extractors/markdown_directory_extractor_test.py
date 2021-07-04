@@ -19,5 +19,5 @@ TEST_MARKDOWN_DIRECTORY_EXTRACTOR = MarkdownDirectoryExtractor(
 
 def test_extract():
     result = TEST_MARKDOWN_DIRECTORY_EXTRACTOR.extract()["markdown_directory"]
-    assert len(result.markdown_file_entries) == 2
+    assert len(result.markdown_file_entries) == 4
     assert len(result.image_file_entries) == 1
