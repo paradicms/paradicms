@@ -66,7 +66,7 @@ class Image(_NamedModel):
             institution_uri=resource_wrapper.required_uri_value(CMS.institution),
             max_dimensions=max_dimensions,
             modified=resource_wrapper.optional_python_value(DCTERMS.modified, datetime),
-            rights=Rights.from_rdf(resource),
+            rights=Rights.from_rdf(resource=resource),
             original_image_uri=original_image_uri,
             src=resource_wrapper.optional_python_value(CMS.imageSrc, str),
             uri=resource.identifier,
