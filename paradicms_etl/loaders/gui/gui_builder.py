@@ -1,5 +1,6 @@
 import logging
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -38,23 +39,53 @@ class GuiBuilder:
 
         self.__logger.info("building GUI")
 
-        public_dir_size, public_file_count = self.__get_dir_size(
-            self.__gui_dir_path / "public"
-        )
-        self.__logger.info(
-            "public directory: file count=%d, size=%d",
-            public_file_count,
-            public_dir_size,
-        )
+        gui_out_dir_path = self.__gui_dir_path / "out"
+        gui_public_dir_path = self.__gui_dir_path / "public"
+
+        if gui_public_dir_path.is_dir():
+            gui_public_dir_path_exists = True
+            public_dir_size, public_file_count = self.__get_dir_size(
+                gui_public_dir_path
+            )
+            self.__logger.info(
+                "public directory: file count=%d, size=%d",
+                public_file_count,
+                public_dir_size,
+            )
 
         self.__run_npm_script("build", data_ttl_file_path=data_ttl_file_path)
         self.__logger.info("built GUI")
-        self.__logger.info("exporting GUI build")
 
-        self.__run_npm_script("export", data_ttl_file_path=data_ttl_file_path)
-        self.__logger.info("exported GUI build")
+        # Hack: next export hangs if there is a public directory, but only in the GitHub Action
+        # Manually move the contents of the public directory over to the out directory
+        temp_gui_public_dir_path = self.__gui_dir_path / "public.bak"
+        if gui_public_dir_path_exists:
+            gui_public_dir_path.rename(temp_gui_public_dir_path)
+            self.__logger.info(
+                "renamed %s to %s", gui_public_dir_path, temp_gui_public_dir_path
+            )
+        try:
+            self.__logger.info("exporting GUI build")
+            self.__run_npm_script(
+                "export", data_ttl_file_path=data_ttl_file_path, timeout=45
+            )
+            self.__logger.info("exported GUI build")
+        finally:
+            if gui_public_dir_path_exists:
+                temp_gui_public_dir_path.rename(gui_public_dir_path)
+                self.__logger.info(
+                    "renamed %s to %s", temp_gui_public_dir_path, gui_public_dir_path
+                )
 
-        gui_out_dir_path = self.__gui_dir_path / "out"
+        if gui_public_dir_path_exists:
+            for file_name in os.listdir(gui_public_dir_path):
+                src_file_path = gui_public_dir_path / file_name
+                dst_file_path = gui_out_dir_path / file_name
+                if src_file_path.is_file():
+                    shutil.copyfile(src_file_path, dst_file_path)
+                elif src_file_path.is_dir():
+                    shutil.copytree(src_file_path, dst_file_path)
+                self.__logger.info("copied %s to %s", src_file_path, dst_file_path)
 
         if not gui_out_dir_path.is_dir():
             raise RuntimeError(
@@ -70,7 +101,14 @@ class GuiBuilder:
     def gui_dir_path(self) -> Path:
         return self.__gui_dir_path
 
-    def __run_npm_script(self, script, data_ttl_file_path: Optional[Path] = None):
+    def __run_npm_script(
+        self,
+        script,
+        check=True,
+        data_ttl_file_path: Optional[Path] = None,
+        shell=None,
+        **kwds,
+    ):
         subprocess_env = os.environ.copy()
         if self.__base_url_path:
             subprocess_env["GUI_BASE_URL_PATH"] = self.__base_url_path
@@ -81,27 +119,31 @@ class GuiBuilder:
         subprocess_env["EDITOR"] = ""
 
         args = ["npm", "run", script]
-        self.__logger.info("running %s", args)
-        completed_process = subprocess.run(
-            args,
-            cwd=str(self.__gui_dir_path),
-            env=subprocess_env,
-            shell=sys.platform == "win32",  # os.environ.get("CI") is None,
-        )
 
-        if completed_process.returncode != 0:
-            self.__logger.warning(
-                "%s in %s returned non-zero: %d",
+        if shell is None:
+            shell = sys.platform == "win32"
+        if shell and sys.platform != "win32":
+            args = " ".join(args)
+
+        self.__logger.info("running %s", args)
+        try:
+            subprocess.run(
                 args,
-                self.__gui_dir_path,
-                completed_process.returncode,
+                check=check,
+                cwd=str(self.__gui_dir_path),
+                env=subprocess_env,
+                shell=shell,
+                **kwds,
             )
-            sys.exit(completed_process.returncode)
+            self.__logger.info("completed %s", args)
+        except subprocess.TimeoutExpired:
+            self.__logger.warning("timed out on %s", args)
 
     @staticmethod
     def __get_dir_size(dir_path: Path):
         dir_size = file_count = 0
         for entry in os.scandir(dir_path):
+            assert not entry.is_symlink()
             if entry.is_file():
                 file_count += 1
                 dir_size += entry.stat().st_size
