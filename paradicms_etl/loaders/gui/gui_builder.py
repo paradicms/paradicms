@@ -51,10 +51,14 @@ class GuiBuilder:
 
         self.__run_npm_script("build", data_ttl_file_path=data_ttl_file_path)
         self.__logger.info("built GUI")
-        self.__logger.info("exporting GUI build")
 
+        self.__logger.info("exporting GUI build")
         self.__run_npm_script(
-            "export", data_ttl_file_path=data_ttl_file_path, shell=True
+            "export",
+            capture_output=True,
+            check=False,
+            data_ttl_file_path=data_ttl_file_path,
+            timeout=120,
         )
         self.__logger.info("exported GUI build")
 
@@ -75,7 +79,12 @@ class GuiBuilder:
         return self.__gui_dir_path
 
     def __run_npm_script(
-        self, script, data_ttl_file_path: Optional[Path] = None, shell=None
+        self,
+        script,
+        check=True,
+        data_ttl_file_path: Optional[Path] = None,
+        shell=None,
+        **kwds,
     ):
         subprocess_env = os.environ.copy()
         if self.__base_url_path:
@@ -89,24 +98,22 @@ class GuiBuilder:
         args = ["npm", "run", script]
         if shell is None:
             shell = sys.platform == "win32"
-        if shell:
+        if shell and sys.platform != "win32":
             args = " ".join(args)
-        self.__logger.info("running %s", args)
-        completed_process = subprocess.run(
-            args,
-            cwd=str(self.__gui_dir_path),
-            env=subprocess_env,
-            shell=shell,
-        )
 
-        if completed_process.returncode != 0:
-            self.__logger.warning(
-                "%s in %s returned non-zero: %d",
+        self.__logger.info("running %s", args)
+        try:
+            subprocess.run(
                 args,
-                self.__gui_dir_path,
-                completed_process.returncode,
+                check=check,
+                cwd=str(self.__gui_dir_path),
+                env=subprocess_env,
+                shell=shell,
+                **kwds,
             )
-            sys.exit(completed_process.returncode)
+            self.__logger.info("completed %s", args)
+        except subprocess.TimeoutExpired:
+            self.__logger.warning("timed out on %s", args)
 
     @staticmethod
     def __get_dir_size(dir_path: Path):
