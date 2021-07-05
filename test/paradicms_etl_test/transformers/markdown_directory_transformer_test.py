@@ -32,11 +32,17 @@ def test_transform():
         if isinstance(model, OpaqueNamedModel) and model.type == CMS.Object
     ]
     assert len(objects) == 2
-    object_ = objects[0]
-    assert any(
-        property_.uri == DCTERMS.title and property_.value == Literal("Test object 1")
-        for property_ in object_.properties
-    )
+    found_object = False
+    for object_ in objects:
+        for property_ in object_.properties:
+            if property_.uri == DCTERMS.title and property_.value == Literal(
+                "Test object 1"
+            ):
+                found_object = True
+                break
+        if found_object:
+            break
+    assert found_object
 
     images = [model for model in models if isinstance(model, Image)]
     assert len(images) == 1
