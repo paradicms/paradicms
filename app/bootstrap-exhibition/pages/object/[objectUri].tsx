@@ -4,6 +4,7 @@ import {JoinedImage, JoinedRights, JoinedValue, Object, Property} from "@paradic
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {GetStaticPaths, GetStaticProps} from "next";
+import Link from "next/link";
 import {Col, Container, Pagination, PaginationItem, PaginationLink, Row, Table} from "reactstrap";
 import {JoinedValueLink, ObjectImagesCarousel} from "@paradicms/bootstrap";
 import {joinImage, joinRights} from "@paradicms/model-utils";
@@ -119,12 +120,13 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
               <Pagination size="lg" style={{display: "flex", justifyContent: "space-between", width: "100%"}}>
                 {previousObject ?
                   <PaginationItem>
-                    <PaginationLink previous
-                                    href={Hrefs.object(previousObject.uri)}>‹ {previousObject.title}</PaginationLink>
+                    <PaginationLink previous><Link
+                      href={Hrefs.object(previousObject.uri)}>{"‹ " + previousObject.title}</Link></PaginationLink>
                   </PaginationItem> : null}
                 {nextObject ?
                   <PaginationItem>
-                    <PaginationLink next href={Hrefs.object(nextObject.uri)}>{nextObject.title} ›</PaginationLink>
+                    <PaginationLink next><Link
+                      href={Hrefs.object(nextObject.uri)}>{nextObject.title + " ›"}</Link></PaginationLink>
                   </PaginationItem> : null}
               </Pagination></Col></Row> : null}
       </Container>
