@@ -25,7 +25,7 @@ class Rights:
     }
 
     @classmethod
-    def from_rdf(cls, resource: Resource) -> Optional[object]:
+    def from_rdf(cls, *, resource: Resource) -> Optional[object]:
         kwds = {}
         for property_name, property_uri in cls.__PROPERTY_URIS.items():
             property_value = resource.value(property_uri)
