@@ -392,10 +392,28 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
 """ ;
     skos:prefLabel "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication" .
 
-<urn:markdown:markdown_directory:image:test_object> a paradicms:Image ;
-    paradicms:imageSrc "file:///C:/Users/minor/projects/personal/paradicms/etl/data/markdown_directory/extracted/image/test_object.gif" ;
+<urn:markdown:markdown_directory:image:test_object1> a paradicms:Image ;
+    paradicms:imageSrc "file:///C:/Users/minor/projects/personal/paradicms/etl/data/markdown_directory/extracted/image/test_object1.gif" ;
     paradicms:institution <urn:markdown:markdown_directory:institution:default> ;
-    foaf:depicts <urn:markdown:markdown_directory:object:test_object> .
+    foaf:depicts <urn:markdown:markdown_directory:object:test_object1> .
+
+<urn:markdown:markdown_directory:object:test_object2> a paradicms:Object ;
+    dcterms:abstract "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>" ;
+    dcterms:creator <urn:markdown:markdown_directory:person:test_person> ;
+    dcterms:license <http://creativecommons.org/licenses/publicdomain/> ;
+    dcterms:rights <https://creativecommons.org/publicdomain/mark/1.0/> ;
+    dcterms:title "Test object 2" ;
+    paradicms:collection <urn:markdown:markdown_directory:collection:default> ;
+    paradicms:institution <urn:markdown:markdown_directory:institution:default> .
+
+<urn:markdown:markdown_directory:object:test_object1> a paradicms:Object ;
+    dcterms:abstract "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>" ;
+    dcterms:creator <urn:markdown:markdown_directory:person:test_person> ;
+    dcterms:license <http://creativecommons.org/licenses/publicdomain/> ;
+    dcterms:rights <https://creativecommons.org/publicdomain/mark/1.0/> ;
+    dcterms:title "Test object 1" ;
+    paradicms:collection <urn:markdown:markdown_directory:collection:default> ;
+    paradicms:institution <urn:markdown:markdown_directory:institution:default> .
 
 <http://creativecommons.org/licenses/publicdomain/> a paradicms:License ;
     dcterms:identifier "publicdomain" ;
@@ -414,20 +432,11 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
     dcterms:title "Override default collection title" ;
     paradicms:institution <urn:markdown:markdown_directory:institution:default> .
 
-<urn:markdown:markdown_directory:object:test_object> a paradicms:Object ;
-    dcterms:abstract "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>" ;
-    dcterms:creator <urn:markdown:markdown_directory:person:test_person> ;
-    dcterms:license <http://creativecommons.org/licenses/publicdomain/> ;
-    dcterms:rights <https://creativecommons.org/publicdomain/mark/1.0/> ;
-    dcterms:title "Test object" ;
-    paradicms:collection <urn:markdown:markdown_directory:collection:default> ;
-    paradicms:institution <urn:markdown:markdown_directory:institution:default> .
-
 <urn:markdown:markdown_directory:person:test_person> a paradicms:Person ;
     dcterms:abstract "<p>Test person label</p>" ;
     dcterms:description "Test person description" ;
     foaf:name "Test person" .
 
 <urn:markdown:markdown_directory:institution:default> a paradicms:Institution ;
-    foaf:name "Override default institution name" .
+    foaf:name "Default institution" .
 

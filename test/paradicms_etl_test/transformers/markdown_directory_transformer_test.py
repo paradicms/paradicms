@@ -31,10 +31,10 @@ def test_transform():
         for model in models
         if isinstance(model, OpaqueNamedModel) and model.type == CMS.Object
     ]
-    assert len(objects) == 1
+    assert len(objects) == 2
     object_ = objects[0]
     assert any(
-        property_.uri == DCTERMS.title and property_.value == Literal("Test object")
+        property_.uri == DCTERMS.title and property_.value == Literal("Test object 1")
         for property_ in object_.properties
     )
 
