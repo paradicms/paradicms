@@ -2,12 +2,11 @@ from dataclasses import dataclass
 from typing import Optional, Tuple
 
 from rdflib import Graph, Literal
-from rdflib.namespace import FOAF, RDF
+from rdflib.namespace import FOAF
 from rdflib.resource import Resource
 
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.property import Property
-from paradicms_etl.models.property_definition import PropertyDefinition
 from paradicms_etl.models.rights import Rights
 
 

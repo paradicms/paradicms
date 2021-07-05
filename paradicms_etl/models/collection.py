@@ -7,7 +7,6 @@ from rdflib.resource import Resource
 
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.property import Property
-from paradicms_etl.models.property_definition import PropertyDefinition
 from paradicms_etl.namespace import CMS
 
 
