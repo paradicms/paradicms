@@ -4,6 +4,7 @@ from typing import Dict, Optional, Tuple, Union
 from urllib.parse import quote
 
 import rdflib.namespace
+import stringcase
 import yaml
 from markdown_it import MarkdownIt
 from markdown_it.renderer import RendererHTML
@@ -408,11 +409,15 @@ class MarkdownDirectoryTransformer(_Transformer):
                     if object_ is None:
                         self.__logger.warning(
                             "image markdown %s has no depicts statement and does not correspond to an object",
-                            markdown_file_entry.model_id
+                            markdown_file_entry.model_id,
                         )
                         continue
                     model_resource.add(rdflib.namespace.FOAF.depicts, object_.uri)
-                    self.__logger.debug("image markdown %s has no depicts statement but corresponds to the object %s, adding depicts statement", markdown_file_entry.model_id, object_.uri)
+                    self.__logger.debug(
+                        "image markdown %s has no depicts statement but corresponds to the object %s, adding depicts statement",
+                        markdown_file_entry.model_id,
+                        object_.uri,
+                    )
 
                 # The GuiImagesLoader looks for Image instances and doesn't check if OpaqueNamedModels are Images.
                 # Transform the Resource into an Image instead of an OpaqueNamedModel.
@@ -563,7 +568,7 @@ class MarkdownDirectoryTransformer(_Transformer):
 
             return OpaqueNamedModel(
                 properties=tuple(model_properties),
-                type=CMS[model_type.capitalize()],
+                type=CMS[stringcase.pascalcase(model_type)],
                 uri=model_resource.identifier,
             )
 
