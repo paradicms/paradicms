@@ -1,5 +1,4 @@
 import * as React from "react";
-import Helmet from "react-helmet";
 import {Hrefs} from "lib/Hrefs";
 import {
   Card,
@@ -17,6 +16,7 @@ import {
 import {NavbarSearchForm} from "@paradicms/bootstrap";
 import {useRouter} from "next/router";
 import Link from "next/link";
+import Head from "next/head";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string; readonly uri: string};
@@ -51,9 +51,9 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
 
   return (
     <>
-      <Helmet
-        title={collection.title + (documentTitle ? " - " + documentTitle : "")}
-      />
+      <Head>
+        <title>{collection.title + (documentTitle ? " - " + documentTitle : "")}</title>
+      </Head>
       <Container fluid>
         <Row>
           <Col>

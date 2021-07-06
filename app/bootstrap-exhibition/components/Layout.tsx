@@ -1,8 +1,8 @@
 import * as React from "react";
-import Helmet from "react-helmet";
 import {Hrefs} from "lib/Hrefs";
 import {Breadcrumb, BreadcrumbItem, Col, Container, Navbar, Row} from "reactstrap";
 import Link from "next/link";
+import Head from "next/head";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string;};
@@ -14,9 +14,9 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
        }) => {
   return (
     <>
-      <Helmet
-        title={collection.title + (object ? " - " + object.title : "")}
-      />
+      <Head>
+        <title>{collection.title + (object ? " - " + object.title : "")}</title>
+      </Head>
       <Container fluid>
         <Row>
           <Col className="p-0">

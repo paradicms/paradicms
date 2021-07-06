@@ -10,12 +10,12 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import Helmet from "react-helmet";
 import {Footer, NavbarSearchForm} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {GuiMetadata} from "@paradicms/models";
 import {useRouter} from "next/router";
+import Head from "next/head";
 
 const useStyles = makeStyles(theme => ({
   brand: {
@@ -155,16 +155,9 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
 
   return (
     <>
-      <Helmet
-        title={qualifiedDocumentTitle.join(" - ")}
-        // meta={[
-        //   {
-        //     name: "description",
-        //     content: "Paradicms union catalog",
-        //   },
-        //   // {name: "keywords", content: data.site!.siteMetadata!.keywords},
-        // ]}
-      />
+      <Head>
+        <title>{qualifiedDocumentTitle.join(" - ")}</title>
+      </Head>
       <Grid data-cy="frame" container direction="column" spacing={2}>
         <Grid item>
           <AppBar data-cy="navbar" position="static">
