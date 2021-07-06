@@ -6,6 +6,8 @@ import {IndexedFormula} from "rdflib";
 export class GuiMetadataRdfReader extends ModelRdfReader<GuiMetadata> {
   read(): GuiMetadata {
     return {
+      bootstrapStylesheetHref:
+        this.readOptionalLiteral(PARADICMS.guiBootstrapStylesheetHref)?.toString() ?? null,
       documentTitle:
         this.readOptionalLiteral(PARADICMS.guiDocumentTitle)?.toString() ??
         null,

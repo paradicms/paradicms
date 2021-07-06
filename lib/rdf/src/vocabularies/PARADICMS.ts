@@ -8,6 +8,7 @@ export class PARADICMS {
   static faceted = PARADICMS.NS("faceted");
   static fullTextSearchable = PARADICMS.NS("fullTextSearchable");
   static institution = PARADICMS.NS("institution");
+  static guiBootstrapStylesheetHref = PARADICMS.NS("guiBootstrapStylesheetHref");
   static guiDocumentTitle = PARADICMS.NS("guiDocumentTitle");
   static guiNavbarTitle = PARADICMS.NS("guiNavbarTitle");
   static imageMaxHeight = PARADICMS.NS("imageMaxHeight");

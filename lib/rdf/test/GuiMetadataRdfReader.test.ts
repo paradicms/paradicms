@@ -17,6 +17,7 @@ describe("GUI metadata RDF reader", () => {
     const models = GuiMetadataRdfReader.readAll(store);
     expect(models).to.have.length(1);
     models.forEach(model => {
+      expect(model.bootstrapStylesheetHref!.trim()).to.not.be.empty;
       expect(model.documentTitle!.trim()).to.not.be.empty;
       expect(model.navbarTitle!.trim()).to.not.be.empty;
     });
