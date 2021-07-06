@@ -71,7 +71,11 @@ class TestDataPipeline(_Pipeline):
             yield from RightsStatementsDotOrgRightsStatements.as_tuple()
             yield from VraCorePropertyDefinitions.as_tuple()
 
-            yield GuiMetadata(document_title="Test data", navbar_title="Test data")
+            yield GuiMetadata(
+                bootstrap_stylesheet_href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css",
+                document_title="Test data",
+                navbar_title="Test data",
+            )
 
             yield from self.__generate_institutions()
 
