@@ -4,6 +4,7 @@ import {Breadcrumb, BreadcrumbItem, Col, Container, Navbar, Row} from "reactstra
 import Link from "next/link";
 import Head from "next/head";
 import {GuiMetadata} from "@paradicms/models";
+import {STYLESHEET_HREF_DEFAULT} from "@paradicms/bootstrap";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string;};

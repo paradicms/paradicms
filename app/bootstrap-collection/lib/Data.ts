@@ -1,5 +1,5 @@
 import fs from "fs";
-import {Collection, Image, Institution, Object, PropertyDefinition} from "@paradicms/models";
+import {Collection, GuiMetadata, Image, Institution, Object, PropertyDefinition} from "@paradicms/models";
 import {RdfData} from "@paradicms/rdf";
 import {graph, parse} from "rdflib";
 
@@ -32,6 +32,8 @@ export class Data {
     }
     this.collection = collections[0];
 
+    this.guiMetadata = allData.guiMetadata;
+
     this.objects = allData.collectionObjects(this.collection.uri);
     if (this.objects.length === 0) {
       throw new EvalError("no objects for collection " + this.collection.uri);
@@ -39,7 +41,7 @@ export class Data {
 
     const objectUris = new Set<string>(this.objects.map(object => object.uri));
     this.images = allData.images.filter(image =>
-      objectUris.has(image.depictsUri)
+      objectUris.has(image.depictsUri),
     );
 
     this.licenseTitlesByUri = allData.licenseTitlesByUri;
@@ -51,6 +53,7 @@ export class Data {
   }
 
   readonly collection: Collection;
+  readonly guiMetadata: GuiMetadata | null;
   readonly images: readonly Image[];
   readonly institution: Institution;
   readonly licenseTitlesByUri: {[index: string]: string};

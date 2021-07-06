@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
-import {JoinedImage, JoinedRights, Property, PropertyDefinition} from "@paradicms/models";
+import {GuiMetadata, JoinedImage, JoinedRights, Property, PropertyDefinition} from "@paradicms/models";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {GetStaticPaths, GetStaticProps} from "next";
@@ -9,6 +9,7 @@ import {Accordion, ObjectImagesCarousel, PropertiesTable, RightsTable} from "@pa
 import {joinImage, joinRights} from "@paradicms/model-utils";
 
 interface StaticProps {
+  readonly guiMetadata: GuiMetadata | null;
   readonly institution: {
     readonly collection: {
       readonly object: {
@@ -29,15 +30,16 @@ interface StaticProps {
 }
 
 const ObjectPage: React.FunctionComponent<StaticProps> = ({
-  institution,
-  propertyDefinitions,
-}) => {
+                                                            guiMetadata,
+                                                            institution,
+                                                            propertyDefinitions,
+                                                          }) => {
   const collection = institution.collection;
   const object = collection.object;
   const rights = object.rights ?? institution.rights ?? null;
 
   return (
-    <Layout collection={collection} documentTitle={"Object - " + object.title}>
+    <Layout collection={collection} documentTitle={"Object - " + object.title} guiMetadata={guiMetadata}>
       <Container fluid>
         <Row>
           <Col xs={12} style={{display: "flex", justifyContent: "center"}}>
@@ -100,6 +102,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
+      guiMetadata: data.guiMetadata,
       institution: {
         collection: {
           object: {
