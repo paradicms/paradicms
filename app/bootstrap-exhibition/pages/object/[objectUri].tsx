@@ -1,17 +1,18 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
-import {JoinedImage, JoinedRights, JoinedValue, Object, Property} from "@paradicms/models";
+import {GuiMetadata, JoinedImage, JoinedRights, JoinedValue, Object, Property} from "@paradicms/models";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {GetStaticPaths, GetStaticProps} from "next";
 import Link from "next/link";
-import {Col, Container, Pagination, PaginationItem, PaginationLink, Row, Table} from "reactstrap";
+import {Col, Container, Pagination, PaginationItem, Row, Table} from "reactstrap";
 import {JoinedValueLink, ObjectImagesCarousel} from "@paradicms/bootstrap";
 import {joinImage, joinRights} from "@paradicms/model-utils";
 import {Hrefs} from "lib/Hrefs";
 import {DCTERMS} from "@paradicms/rdf";
 
 interface StaticProps {
+  readonly guiMetadata: GuiMetadata | null;
   readonly institution: {
     readonly collection: {
       readonly currentObject: {
@@ -50,6 +51,7 @@ const RightsTableRow: React.FunctionComponent<{
 };
 
 const ObjectPage: React.FunctionComponent<StaticProps> = ({
+                                                            guiMetadata,
                                                             institution,
                                                           }) => {
   const collection = institution.collection;
@@ -67,7 +69,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
   }
 
   return (
-    <Layout collection={collection} object={currentObject}>
+    <Layout collection={collection} guiMetadata={guiMetadata} object={currentObject}>
       <Container fluid>
         <Row>
           {currentObject.images.length > 0 ?
@@ -119,14 +121,13 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
             <Col xs={12}>
               <Pagination size="lg" style={{display: "flex", justifyContent: "space-between", width: "100%"}}>
                 {previousObject ?
-                  <PaginationItem>
-                    <PaginationLink previous><Link
-                      href={Hrefs.object(previousObject.uri)}>{"‹ " + previousObject.title}</Link></PaginationLink>
+                  <PaginationItem className="btn btn-lg btn-primary">
+                    <Link
+                      href={Hrefs.object(previousObject.uri)}>{"‹ " + previousObject.title}</Link>
                   </PaginationItem> : null}
                 {nextObject ?
-                  <PaginationItem>
-                    <PaginationLink next><Link
-                      href={Hrefs.object(nextObject.uri)}>{nextObject.title + " ›"}</Link></PaginationLink>
+                  <PaginationItem className="btn btn-lg btn-primary"><Link
+                    href={Hrefs.object(nextObject.uri)}>{nextObject.title + " ›"}</Link>
                   </PaginationItem> : null}
               </Pagination></Col></Row> : null}
       </Container>
@@ -182,6 +183,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
+      guiMetadata: data.guiMetadata,
       institution: {
         collection: {
           currentObject: {

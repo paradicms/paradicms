@@ -13,24 +13,27 @@ import {
   NavItem,
   Row,
 } from "reactstrap";
-import {NavbarSearchForm} from "@paradicms/bootstrap";
+import {NavbarSearchForm, STYLESHEET_HREF_DEFAULT} from "@paradicms/bootstrap";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";
+import {GuiMetadata} from "@paradicms/models";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string; readonly uri: string};
   cardTitle?: React.ReactNode;
   className?: string;
   documentTitle?: string;
+  guiMetadata: GuiMetadata | null;
   onSearch?: (text: string) => void;
 }>> = ({
-  collection,
-  cardTitle,
-  children,
-  documentTitle,
-  onSearch: onSearchUserDefined,
-}) => {
+         collection,
+         cardTitle,
+         children,
+         documentTitle,
+         guiMetadata,
+         onSearch: onSearchUserDefined,
+       }) => {
   const router = useRouter();
 
   // @ts-ignore
@@ -53,6 +56,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
     <>
       <Head>
         <title>{collection.title + (documentTitle ? " - " + documentTitle : "")}</title>
+        <link rel="stylesheet" href={guiMetadata?.bootstrapStylesheetHref ?? STYLESHEET_HREF_DEFAULT} />
       </Head>
       <Container fluid>
         <Row>
