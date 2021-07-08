@@ -124,7 +124,7 @@ class GuiLoader(_BufferingLoader):
         self._logger.info("loaded data to %s", data_ttl_file_path)
 
         if self.__dev:
-            gui_package.dev()
+            gui_package.dev(data_ttl_file_path=data_ttl_file_path)
         else:
             gui_package.clean()
 
