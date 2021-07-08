@@ -6,8 +6,8 @@ from paradicms_etl.image_archivers.fs_image_archiver import FsImageArchiver
 from paradicms_etl.loaders._buffering_loader import _BufferingLoader
 from paradicms_etl.loaders.gui._gui_deployer import _GuiDeployer
 from paradicms_etl.loaders.gui.fs_gui_deployer import FsGuiDeployer
-from paradicms_etl.loaders.gui.gui_package import GuiBuilder
 from paradicms_etl.loaders.gui.gui_images_loader import GuiImagesLoader
+from paradicms_etl.loaders.gui.gui_package import GuiBuilder
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
@@ -18,6 +18,7 @@ class GuiLoader(_BufferingLoader):
     Loader that statically generates a web site using one of the GUI implementations in gui/.
 
     The loader:
+    - Writes the input data to an rdf/turtle file
     - Archives original images (via an _ImageArchiver)
     - Thumbnails images and archives them (via GuiImagesLoader)
     - Calls npm to generate the site (via GuiBuilder)
@@ -32,6 +33,7 @@ class GuiLoader(_BufferingLoader):
         gui: Union[Path, str],
         base_url_path: str = "",
         deployer: Optional[_GuiDeployer] = None,
+        dev: bool = False,
         image_archiver: Optional[_ImageArchiver] = None,
         sleep_s_after_image_download: Optional[float] = None,
         thumbnail_max_dimensions: Tuple[
@@ -43,6 +45,7 @@ class GuiLoader(_BufferingLoader):
         :param base_url_path: Next.js basePath (https://nextjs.org/docs/api-reference/next.config.js/basepath)
         :param gui: name of a gui (in gui/ of this repository) or path to a gui
         :param deployer: optional deployer implementation; if not specified, defaults to a file system deployer that writes to the loaded data directory
+        :param dev: transform the input data to RDF and archive and thumbnail but run the Next.js dev server instead of generating and deploying static files
         :param image_archiver: optional image archiver implementation; if not specified, defaults to a file system archiver that writes to Next's public/ directory
         :param sleep_s_after_image_download: sleep this number of seconds after downloading each image, to avoid triggering denial of service mechanisms
         :param thumbnail_max_dimensions: maximum dimensions of amage thumbnails to use
@@ -51,6 +54,7 @@ class GuiLoader(_BufferingLoader):
         _BufferingLoader.__init__(self, **kwds)
         self.__base_url_path = base_url_path
         self.__deployer = deployer
+        self.__dev = dev
         self.__gui = gui
         self.__image_archiver = image_archiver
         self.__sleep_s_after_image_download = sleep_s_after_image_download
@@ -116,18 +120,20 @@ class GuiLoader(_BufferingLoader):
         )
         data_loader.load(models=models)
         data_loader.flush()
-        self._logger.info("loaded data to %s", data_dir_path)
+        data_ttl_file_path = data_dir_path / (self._pipeline_id + ".ttl")
+        self._logger.info("loaded data to %s", data_ttl_file_path)
 
-        gui_package.clean()
+        if self.__dev:
+            gui_package.dev()
+        else:
+            gui_package.clean()
 
-        gui_out_dir_path = gui_package.build(
-            data_ttl_file_path=data_dir_path / (self._pipeline_id + ".ttl")
-        )
+            gui_out_dir_path = gui_package.build(data_ttl_file_path=data_ttl_file_path)
 
-        deployer = self.__deployer
-        if deployer is None:
-            deployer = FsGuiDeployer(
-                gui_deploy_dir_path=self._loaded_data_dir_path / "deployed"
-            )
+            deployer = self.__deployer
+            if deployer is None:
+                deployer = FsGuiDeployer(
+                    gui_deploy_dir_path=self._loaded_data_dir_path / "deployed"
+                )
 
-        deployer.deploy(gui_out_dir_path=gui_out_dir_path)
+            deployer.deploy(gui_out_dir_path=gui_out_dir_path)
