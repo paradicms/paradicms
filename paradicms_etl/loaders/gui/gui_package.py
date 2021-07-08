@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Optional, Union
 
 
-class GuiBuilder:
+class GuiPackage:
     """
     Wrapper around the "script"'s of a package.json, which are invoked by running npm.
     The gui/app package.json's have a standard set of scripts, which invoke Next.js command line commands such as "build" and "dev".
@@ -156,7 +156,7 @@ class GuiBuilder:
                 file_count += 1
                 dir_size += entry.stat().st_size
             elif entry.is_dir():
-                subdir_size, subdir_file_count = GuiBuilder.__get_dir_size(entry.path)
+                subdir_size, subdir_file_count = GuiPackage.__get_dir_size(entry.path)
                 dir_size += subdir_size
                 file_count += subdir_file_count
         return dir_size, file_count

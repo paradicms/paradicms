@@ -7,7 +7,7 @@ from paradicms_etl.loaders._buffering_loader import _BufferingLoader
 from paradicms_etl.loaders.gui._gui_deployer import _GuiDeployer
 from paradicms_etl.loaders.gui.fs_gui_deployer import FsGuiDeployer
 from paradicms_etl.loaders.gui.gui_images_loader import GuiImagesLoader
-from paradicms_etl.loaders.gui.gui_package import GuiBuilder
+from paradicms_etl.loaders.gui.gui_package import GuiPackage
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
@@ -21,10 +21,10 @@ class GuiLoader(_BufferingLoader):
     - Writes the input data to an rdf/turtle file
     - Archives original images (via an _ImageArchiver)
     - Thumbnails images and archives them (via GuiImagesLoader)
-    - Calls npm to generate the site (via GuiBuilder)
+    - Calls npm to generate the site (via GuiPackage)
     - Optionally deploys the generated site (via a _GuiDeployer)
 
-    As noted, this class delegate most of its work to auxiliary classes such as GuiBuilder.
+    As noted, this class delegate most of its work to auxiliary classes such as GuiPackage.
     """
 
     def __init__(
@@ -61,7 +61,7 @@ class GuiLoader(_BufferingLoader):
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
 
     def _flush(self, models):
-        gui_package = GuiBuilder(base_url_path=self.__base_url_path, gui=self.__gui)
+        gui_package = GuiPackage(base_url_path=self.__base_url_path, gui=self.__gui)
 
         image_archiver = self.__image_archiver
         if image_archiver is None:
