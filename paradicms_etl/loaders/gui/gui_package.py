@@ -8,10 +8,15 @@ from typing import Optional, Union
 
 
 class GuiBuilder:
+    """
+    Wrapper around the "script"'s of a package.json, which are invoked by running npm.
+    The gui/app package.json's have a standard set of scripts, which invoke Next.js command line commands such as "build" and "dev".
+    """
+
     def __init__(self, *, gui: Union[str, Path], base_url_path: str = ""):
         """
         :param base_url_path: Next.js basePath (https://nextjs.org/docs/api-reference/next.config.js/basepath)
-        :param gui: name of a gui (in gui/ of this repository) or path to a gui
+        :param gui: name of a gui (in gui/app of this repository) or path to a gui
         """
 
         self.__logger = logging.getLogger(self.__class__.__name__)
@@ -96,6 +101,9 @@ class GuiBuilder:
 
     def clean(self):
         self.__run_npm_script("clean")
+
+    def dev(self, data_ttl_file_path: Path):
+        self.__run_npm_script("dev", data_ttl_file_path=data_ttl_file_path)
 
     @property
     def gui_dir_path(self) -> Path:

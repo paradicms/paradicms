@@ -6,7 +6,7 @@ from paradicms_etl.image_archivers.fs_image_archiver import FsImageArchiver
 from paradicms_etl.loaders._buffering_loader import _BufferingLoader
 from paradicms_etl.loaders.gui._gui_deployer import _GuiDeployer
 from paradicms_etl.loaders.gui.fs_gui_deployer import FsGuiDeployer
-from paradicms_etl.loaders.gui.gui_builder import GuiBuilder
+from paradicms_etl.loaders.gui.gui_package import GuiBuilder
 from paradicms_etl.loaders.gui.gui_images_loader import GuiImagesLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.image import Image
@@ -57,14 +57,14 @@ class GuiLoader(_BufferingLoader):
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
 
     def _flush(self, models):
-        gui_builder = GuiBuilder(base_url_path=self.__base_url_path, gui=self.__gui)
+        gui_package = GuiBuilder(base_url_path=self.__base_url_path, gui=self.__gui)
 
         image_archiver = self.__image_archiver
         if image_archiver is None:
             # If no image archiver specified, "archive" copies of images to the Next.js public/ directory, which contains static assets.
             image_archiver = FsImageArchiver(
                 base_url=f"{self.__base_url_path.rstrip('/')}/img/archive/",
-                root_directory_path=gui_builder.gui_dir_path
+                root_directory_path=gui_package.gui_dir_path
                 / "public"
                 / "img"
                 / "archive",
@@ -118,9 +118,9 @@ class GuiLoader(_BufferingLoader):
         data_loader.flush()
         self._logger.info("loaded data to %s", data_dir_path)
 
-        gui_builder.clean()
+        gui_package.clean()
 
-        gui_out_dir_path = gui_builder.build(
+        gui_out_dir_path = gui_package.build(
             data_ttl_file_path=data_dir_path / (self._pipeline_id + ".ttl")
         )
 
