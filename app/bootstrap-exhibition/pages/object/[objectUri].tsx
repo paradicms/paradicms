@@ -5,7 +5,7 @@ import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {GetStaticPaths, GetStaticProps} from "next";
 import Link from "next/link";
-import {Button, Col, Container, Row, Table} from "reactstrap";
+import {Col, Container, Pagination, PaginationItem, PaginationLink, Row, Table} from "reactstrap";
 import {JoinedValueLink, ObjectImagesCarousel} from "@paradicms/bootstrap";
 import {joinImage, joinRights} from "@paradicms/model-utils";
 import {Hrefs} from "lib/Hrefs";
@@ -119,13 +119,18 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
         {nextObject || previousObject ?
           <Row className="mt-4">
             <Col xs={12}>
-              {previousObject ?
-                <Link
-                  href={Hrefs.object(previousObject.uri)} passHref><Button color="secondary" size="lg">{"‹ " + previousObject.title}</Button></Link> : null}
-              {nextObject ? <Link
-                  href={Hrefs.object(nextObject.uri)} passHref><Button color="secondary" size="lg">{nextObject.title + " ›"}</Button></Link>
-                : null}
-            </Col></Row> : null}
+              <Pagination size="lg" style={{display: "flex", justifyContent: "space-between", width: "100%"}}>
+                {previousObject ?
+                  <PaginationItem>
+                    <Link
+                      href={Hrefs.object(previousObject.uri)}
+                      passHref><PaginationLink previous>{"‹ " + previousObject.title}</PaginationLink></Link>
+                  </PaginationItem> : null}
+                {nextObject ?
+                  <PaginationItem><Link
+                    href={Hrefs.object(nextObject.uri)} passHref><PaginationLink next>{nextObject.title + " ›"}</PaginationLink></Link>
+                  </PaginationItem> : null}
+              </Pagination></Col></Row> : null}
       </Container>
     </Layout>
   );
