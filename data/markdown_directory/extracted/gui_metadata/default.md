@@ -1,3 +1,3 @@
 ---
-cms_guiBootstrapStylesheetHref: "https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css"
+cms_guiBootstrapStylesheetHref: "https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/cosmo/bootstrap.min.css"
 ---

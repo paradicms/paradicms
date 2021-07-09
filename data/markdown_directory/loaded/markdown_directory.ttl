@@ -393,7 +393,7 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
     skos:prefLabel "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication" .
 
 <urn:markdown:markdown_directory:gui_metadata:default> a paradicms:GuiMetadata ;
-    paradicms:guiBootstrapStylesheetHref "https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" .
+    paradicms:guiBootstrapStylesheetHref "https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/cosmo/bootstrap.min.css" .
 
 <urn:markdown:markdown_directory:image:test_object1> a paradicms:Image ;
     paradicms:imageSrc "file:///C:/Users/minor/projects/personal/paradicms/etl/data/markdown_directory/extracted/image/test_object1.gif" ;
