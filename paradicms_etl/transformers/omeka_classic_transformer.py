@@ -1,19 +1,19 @@
 from datetime import datetime
 from typing import Dict, Optional, Tuple
 
+from pyformance import MetricsRegistry
+from rdflib import URIRef
+from tqdm import tqdm
+
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.dublin_core_property_definitions import (
+    DublinCorePropertyDefinitions,
+)
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.object import Object
 from paradicms_etl.models.property import Property
-from paradicms_etl.models.dublin_core_property_definitions import (
-    DublinCorePropertyDefinitions,
-)
-from paradicms_etl.models.rights import Rights
-from pyformance import MetricsRegistry
-from rdflib import URIRef
-from tqdm import tqdm
 
 ElementTextTree = Dict[str, Dict[str, str]]
 
@@ -273,6 +273,9 @@ class OmekaClassicTransformer(_Transformer):
     def _transform_item(
         self, *, collection_uris_by_id: Dict[int, URIRef], institution_uri: URIRef, item
     ) -> Optional[Object]:
+        if item["collection"] is None:
+            return None
+
         try:
             collection_uri = collection_uris_by_id[item["collection"]["id"]]
         except KeyError:
