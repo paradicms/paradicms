@@ -9,12 +9,9 @@
     "@types/qs": "^6.9.4",
     "base-x": "^3.0.8",
     "lodash": "^4.14.2",
-    "query-string": "^6.13.1",
     "qs": "^6.9.4",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "ts-invariant": "0.4.4",
-    "use-query-params": "^1.1.6"
   },
   "devDependencies": {
     "@types/node": "^12.12.54",
