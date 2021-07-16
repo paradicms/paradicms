@@ -1,4 +1,4 @@
-import {Namespace} from "rdflib";
+import Namespace from "../Namespace";
 
 export class DCTERMS {
   static NS = Namespace("http://purl.org/dc/terms/");

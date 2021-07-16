@@ -1,4 +1,4 @@
-import {Namespace} from "rdflib";
+import Namespace from "../Namespace";
 
 export class PARADICMS {
   static NS = Namespace("http://www.paradicms.org/ns#");

@@ -1,4 +1,4 @@
-import {Namespace} from "rdflib";
+import Namespace from "../Namespace";
 
 export class FOAF {
   static NS = Namespace("http://xmlns.com/foaf/0.1/");

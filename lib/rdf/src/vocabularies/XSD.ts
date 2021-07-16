@@ -1,4 +1,4 @@
-import {Namespace} from "rdflib";
+import Namespace from "../Namespace";
 
 export class XSD {
   static NS = Namespace("http://www.w3.org/2001/XMLSchema#");
