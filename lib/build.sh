@@ -8,7 +8,11 @@ cd "$(dirname "$0")"
 pids=()
 
 # No dependencies
-cd base
+cd models
+npm run build
+
+# No dependencies
+cd ../react
 npm run build &
 pids+=($!)
 
@@ -21,10 +25,6 @@ for pid in "${pids[@]}"; do
   wait "$pid"
 done
 
-
-# Depends on base
-cd ../models
-npm run build
 
 
 # Depends on models

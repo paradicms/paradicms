@@ -3,7 +3,6 @@
   "name": "@paradicms/model-utils",
   "description": "Paradicms model-utils library",
   "dependencies": {
-    "@paradicms/base": "1.0.3",
     "@paradicms/models": "1.0.3"
   },
   "devDependencies": {

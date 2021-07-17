@@ -7,7 +7,6 @@
   "license": "GPLv3",
   "main": "n/a",
   "dependencies": {
-    "@paradicms/base": "1.0.3",
     "@paradicms/bootstrap": "1.0.3",
     "@paradicms/lunr": "1.0.3",
     "@paradicms/models": "1.0.3",

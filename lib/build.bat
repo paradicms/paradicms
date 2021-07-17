@@ -3,10 +3,10 @@
 cd %~dp0
 REM Order is important
 
-cd base
+cd models
 CALL npm run build
 
-cd ..\models
+cd ..\lunr
 CALL npm run build
 
 cd ..\model-utils
@@ -15,10 +15,10 @@ CALL npm run build
 cd ..\rdf
 CALL npm run build
 
-cd ..\bootstrap
+cd ..\react
 CALL npm run build
 
-cd ..\lunr
+cd ..\bootstrap
 CALL npm run build
 
 cd ..\material-ui

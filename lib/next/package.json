@@ -3,6 +3,7 @@
   "name": "@paradicms/next",
   "description": "Paradicms Next.js library",
   "dependencies": {
+    "@paradicms/react": "1.0.3",
     "base-x": "^3.0.8",
     "next": "10.0.1"
   },
