@@ -20,13 +20,7 @@
   },
   "license": "GPLv3",
   "files": [
-    "dist",
-    ".eslintignore",
-    ".eslintrc.js",
-    ".graphqlconfig",
-    "README.md",
-    ".prettierrc",
-    "tsconfig.base.json"
+    "dist"
   ],
   "main": "dist/index.js",
   "scripts": {
