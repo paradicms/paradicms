@@ -1,3 +1,4 @@
+export * from "./DC";
 export * from "./DCTERMS";
 export * from "./EXIF";
 export * from "./FOAF";
