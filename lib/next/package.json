@@ -3,7 +3,7 @@
   "name": "@paradicms/next",
   "description": "Paradicms Next.js library",
   "dependencies": {
-    "@paradicms/react": "1.0.3",
+    "@paradicms/react": "1.0.4",
     "base-x": "^3.0.8",
     "next": "10.0.1"
   },
@@ -26,5 +26,5 @@
     "start": "rimraf dist && tsc -w"
   },
   "types": "dist/index.d.ts",
-  "version": "1.0.3"
+  "version": "1.0.4"
 }

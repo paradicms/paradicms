@@ -3,8 +3,8 @@
   "name": "@paradicms/material-ui-next",
   "description": "Paradicms @material-ui + Next.js integration library",
   "dependencies": {
-    "@paradicms/material-ui": "1.0.3",
-    "@paradicms/next": "1.0.3"
+    "@paradicms/material-ui": "1.0.4",
+    "@paradicms/next": "1.0.4"
   },
   "devDependencies": {
     "rimraf": "3.0.2",
@@ -22,5 +22,5 @@
     "start": "rimraf dist && tsc -w"
   },
   "types": "dist/index.d.ts",
-  "version": "1.0.3"
+  "version": "1.0.4"
 }
