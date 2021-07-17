@@ -13,6 +13,7 @@
     "@types/mocha": "^8.2.1",
     "chai": "^4.2.0",
     "mocha": "^8.2.1",
+    "rimraf": "3.0.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.5"
   },
@@ -22,8 +23,9 @@
   ],
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc -b",
-    "start": "tsc -w",
+    "build": "rimraf dist && tsc -b",
+    "clean": "rimraf dist",
+    "start": "rimraf dist && tsc -w",
     "test": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/**/*.ts'",
     "test-watch": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register -w 'test/**/*.ts'"
   },
