@@ -1,8 +1,8 @@
 import * as fs from "fs";
 import * as path from "path";
-import {graph, IndexedFormula, parse} from "rdflib";
+import {Parser, Store} from "n3";
 
-export const parseTestData = (): IndexedFormula => {
+export const parseTestData = (): Store => {
   const ttl = fs
     .readFileSync(
       path.join(
@@ -15,11 +15,12 @@ export const parseTestData = (): IndexedFormula => {
         "data",
         "test_data",
         "loaded",
-        "data.ttl"
-      )
+        "data.ttl",
+      ),
     )
     .toString();
-  const store = graph();
-  parse(ttl, store, "http://example.org", "text/turtle");
+  const parser = new Parser({format: "text/turtle"});
+  const store = new Store();
+  store.addQuads(parser.parse(ttl));
   return store;
 };

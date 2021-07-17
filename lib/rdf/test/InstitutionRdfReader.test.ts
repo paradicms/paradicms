@@ -1,11 +1,11 @@
 import {expect} from "chai";
 import {describe} from "mocha";
-import {IndexedFormula} from "rdflib";
 import {parseTestData} from "./parseTestData";
 import {InstitutionRdfReader} from "../src/InstitutionRdfReader";
+import {Store} from "n3";
 
 describe("Institution RDF reader", () => {
-  let store: IndexedFormula;
+  let store: Store;
 
   before(function(this: any) {
     // @ts-ignore
