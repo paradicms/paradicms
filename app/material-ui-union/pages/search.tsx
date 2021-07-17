@@ -1,21 +1,11 @@
-import {useQueryParam, NumberParam} from "use-query-params";
-import {JsonQueryParamConfig} from "@paradicms/base";
-import {
-  GuiMetadata,
-  JoinedImage,
-  JoinedRights,
-  ObjectQuery,
-  PropertyDefinition,
-} from "@paradicms/models";
+import {NumberParam, useQueryParam} from "use-query-params";
+import {JsonQueryParamConfig} from "@paradicms/react";
+import {GuiMetadata, JoinedImage, JoinedRights, ObjectQuery, PropertyDefinition} from "@paradicms/models";
 import * as React from "react";
 import {Layout} from "components/Layout";
 import {Data} from "lib/Data";
 import {GetStaticProps} from "next";
-import {
-  ObjectCardObject,
-  ObjectFacetedSearchGrid,
-  thumbnailTargetDimensions,
-} from "@paradicms/material-ui";
+import {ObjectCardObject, ObjectFacetedSearchGrid, thumbnailTargetDimensions} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {joinImage, joinRights, selectThumbnail} from "@paradicms/model-utils";

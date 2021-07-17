@@ -1,6 +1,6 @@
 import {NumberParam, useQueryParam} from "use-query-params";
 import {decodeFileName, encodeFileName} from "@paradicms/next";
-import {JsonQueryParamConfig} from "@paradicms/base";
+import {JsonQueryParamConfig} from "@paradicms/react";
 import * as React from "react";
 import {Layout} from "components/Layout";
 import {GuiMetadata, JoinedImage, JoinedRights, ObjectFilters, PropertyDefinition} from "@paradicms/models";

@@ -8,7 +8,7 @@ import {ObjectFacetsControls, ObjectFiltersBadges, ObjectsGallery} from "@paradi
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {NumberParam, useQueryParam} from "use-query-params";
-import {JsonQueryParamConfig} from "@paradicms/base";
+import {JsonQueryParamConfig} from "@paradicms/react";
 import {IndexedObject, ObjectFacetedSearchQuery} from "@paradicms/lunr";
 import {joinImage, joinRights, selectThumbnail} from "@paradicms/model-utils";
 
