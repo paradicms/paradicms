@@ -23,6 +23,7 @@
     "dist"
   ],
   "main": "dist/index.js",
+  "private": true,
   "scripts": {
     "build": "tsc -b",
     "start": "tsc -w"
