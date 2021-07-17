@@ -1,18 +1,14 @@
 import {ModelRdfReader} from "./ModelRdfReader";
 import {Image, ImageDimensions} from "@paradicms/models";
 import {EXIF, FOAF, PARADICMS} from "./vocabularies";
-import {IndexedFormula} from "rdflib";
 import {RightsRdfReader} from "./RightsRdfReader";
-import {NamedNode} from "rdflib/lib/tf-types";
 import {RdfReaderException} from "./RdfReaderException";
-import {ModelNode} from "./ModelNode";
+import {NamedNode, Store} from "n3";
 
 export class ImageRdfReader extends ModelRdfReader<Image> {
-  constructor(node: ModelNode, store: IndexedFormula) {
-    super(node, store);
-  }
-
   read(): Image {
+    const originalImageUriSubjects = this.store.getSubjects(FOAF.thumbnail, this.node, null);
+
     return {
       depictsUri: this.readRequiredParentNamedNode(FOAF.depicts).value,
       exactDimensions: this.readImageDimensions(EXIF.height, EXIF.width),
@@ -22,8 +18,7 @@ export class ImageRdfReader extends ModelRdfReader<Image> {
         PARADICMS.imageMaxHeight,
         PARADICMS.imageMaxWidth,
       ),
-      originalImageUri:
-        this.store.any(undefined, FOAF.thumbnail, this.node)?.value ?? null,
+      originalImageUri: originalImageUriSubjects.length > 0 ? originalImageUriSubjects[0].value : null,
       rights: new RightsRdfReader(this.node, this.store).read(),
       src: this.readOptionalLiteral(PARADICMS.imageSrc)?.toString() ?? null,
       uri: this.nodeUri,
@@ -57,7 +52,7 @@ export class ImageRdfReader extends ModelRdfReader<Image> {
     }
   }
 
-  static readAll(store: IndexedFormula) {
+  static readAll(store: Store) {
     return ModelRdfReader._readAll<Image>(
       node => new ImageRdfReader(node, store),
       store,

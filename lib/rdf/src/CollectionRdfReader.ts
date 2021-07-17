@@ -1,7 +1,7 @@
 import {ModelRdfReader} from "./ModelRdfReader";
 import {Collection} from "@paradicms/models";
 import {DCTERMS, PARADICMS} from "./vocabularies";
-import {IndexedFormula} from "rdflib";
+import {Store} from "n3";
 
 export class CollectionRdfReader extends ModelRdfReader<Collection> {
   read(): Collection {
@@ -13,11 +13,11 @@ export class CollectionRdfReader extends ModelRdfReader<Collection> {
     };
   }
 
-  static readAll(store: IndexedFormula) {
+  static readAll(store: Store) {
     return ModelRdfReader._readAll<Collection>(
       node => new CollectionRdfReader(node, store),
       store,
-      PARADICMS.Collection
+      PARADICMS.Collection,
     );
   }
 }

@@ -1,7 +1,7 @@
 import {ModelRdfReader} from "./ModelRdfReader";
 import {RightsStatement} from "@paradicms/models";
 import {DCTERMS, PARADICMS, SKOS} from "./vocabularies";
-import {IndexedFormula} from "rdflib";
+import {Store} from "n3";
 
 export class RightsStatementRdfReader extends ModelRdfReader<RightsStatement> {
   read(): RightsStatement {
@@ -15,11 +15,11 @@ export class RightsStatementRdfReader extends ModelRdfReader<RightsStatement> {
     };
   }
 
-  static readAll(store: IndexedFormula) {
+  static readAll(store: Store) {
     return ModelRdfReader._readAll<RightsStatement>(
       node => new RightsStatementRdfReader(node, store),
       store,
-      PARADICMS.RightsStatement
+      PARADICMS.RightsStatement,
     );
   }
 }

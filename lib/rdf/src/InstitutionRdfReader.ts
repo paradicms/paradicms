@@ -1,15 +1,10 @@
 import {ModelRdfReader} from "./ModelRdfReader";
 import {Institution} from "@paradicms/models";
 import {DCTERMS, FOAF, PARADICMS} from "./vocabularies";
-import {IndexedFormula} from "rdflib";
 import {RightsRdfReader} from "./RightsRdfReader";
-import {ModelNode} from "./ModelNode";
+import {Store} from "n3";
 
 export class InstitutionRdfReader extends ModelRdfReader<Institution> {
-  constructor(node: ModelNode, store: IndexedFormula) {
-    super(node, store);
-  }
-
   read(): Institution {
     let name = this.readOptionalLiteral(DCTERMS.title);
     if (!name) {
@@ -23,11 +18,11 @@ export class InstitutionRdfReader extends ModelRdfReader<Institution> {
     };
   }
 
-  static readAll(store: IndexedFormula) {
+  static readAll(store: Store) {
     return ModelRdfReader._readAll<Institution>(
       node => new InstitutionRdfReader(node, store),
       store,
-      PARADICMS.Institution
+      PARADICMS.Institution,
     );
   }
 }

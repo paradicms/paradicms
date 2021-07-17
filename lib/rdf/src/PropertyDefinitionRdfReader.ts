@@ -1,7 +1,7 @@
 import {ModelRdfReader} from "./ModelRdfReader";
 import {PropertyDefinition} from "@paradicms/models";
 import {PARADICMS, RDFS} from "./vocabularies";
-import {IndexedFormula} from "rdflib";
+import {Store} from "n3";
 
 export class PropertyDefinitionRdfReader extends ModelRdfReader<
   PropertyDefinition
@@ -18,11 +18,11 @@ export class PropertyDefinitionRdfReader extends ModelRdfReader<
     };
   }
 
-  static readAll(store: IndexedFormula) {
+  static readAll(store: Store) {
     return ModelRdfReader._readAll<PropertyDefinition>(
       node => new PropertyDefinitionRdfReader(node, store),
       store,
-      PARADICMS.PropertyDefinition
+      PARADICMS.PropertyDefinition,
     );
   }
 }

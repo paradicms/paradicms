@@ -1,17 +1,12 @@
 import {ModelRdfReader} from "./ModelRdfReader";
-import {
-  Object,
-  Property,
-  PropertyDefinition,
-  PropertyValue,
-} from "@paradicms/models";
+import {Object, Property, PropertyDefinition, PropertyValue} from "@paradicms/models";
 import {DCTERMS, PARADICMS} from "./vocabularies";
-import {IndexedFormula, Literal} from "rdflib";
 import {RightsRdfReader} from "./RightsRdfReader";
 import {ModelNode} from "./ModelNode";
 import {LiteralWrapper} from "./LiteralWrapper";
 import {PropertyDefinitionRdfReader} from "./PropertyDefinitionRdfReader";
 import {indexModelsByUri} from "@paradicms/model-utils";
+import {Literal, Store} from "n3";
 
 export class ObjectRdfReader extends ModelRdfReader<Object> {
   constructor(
@@ -19,7 +14,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
     private readonly propertyDefinitionsByUri: {
       [index: string]: PropertyDefinition;
     },
-    store: IndexedFormula
+    store: Store,
   ) {
     super(node, store);
   }
@@ -28,7 +23,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
     const properties: Property[] = [];
     // The number of properties per object is likely less than the number of property definitions available,
     // so loop on available properties (i.e., statements) rather than making a query per property definition.
-    const nodeStatements = this.store.match(this.node);
+    const nodeStatements = this.store.getQuads(this.node, null, null, null);
     for (const nodeStatement of nodeStatements) {
       if (nodeStatement.predicate.termType !== "NamedNode") {
         continue;
@@ -80,15 +75,15 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
     };
   }
 
-  static readAll(store: IndexedFormula) {
+  static readAll(store: Store) {
     const propertyDefinitionsByUri = indexModelsByUri(
-      PropertyDefinitionRdfReader.readAll(store)
+      PropertyDefinitionRdfReader.readAll(store),
     );
 
     return ModelRdfReader._readAll<Object>(
       node => new ObjectRdfReader(node, propertyDefinitionsByUri, store),
       store,
-      PARADICMS.Object
+      PARADICMS.Object,
     );
   }
 }

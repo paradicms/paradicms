@@ -1,21 +1,21 @@
-import {IndexedFormula, Literal as rdflibLiteral} from "rdflib";
-import {NamedNode, Quad} from "rdflib/lib/tf-types";
 import {RDF} from "./vocabularies";
 import {ModelNode} from "./ModelNode";
 import {LiteralWrapper} from "./LiteralWrapper";
 import {RdfReaderException} from "./RdfReaderException";
+import {NamedNode, Quad, Store} from "n3";
 
 export abstract class ModelRdfReader<ModelT> {
   protected constructor(
     protected readonly node: ModelNode,
-    protected readonly store: IndexedFormula
-  ) {}
+    protected readonly store: Store,
+  ) {
+  }
 
   protected indexNodeStatementsByPredicateUri(
-    nodeStatements?: readonly Quad[]
+    nodeStatements?: readonly Quad[],
   ): {[index: string]: readonly Quad[]} {
     if (!nodeStatements) {
-      nodeStatements = this.store.match(this.node);
+      nodeStatements = this.store.getQuads(this.node, null, null, null);
     }
 
     // Cache the node's statements from the store rather than doing multiple .each queries for each predicate
@@ -48,30 +48,32 @@ export abstract class ModelRdfReader<ModelT> {
 
   protected static _readAll<ModelT>(
     readerFactory: (node: ModelNode) => ModelRdfReader<ModelT>,
-    store: IndexedFormula,
-    type: NamedNode
+    store: Store,
+    type: NamedNode,
   ): ModelT[] {
-    return store.each(undefined, RDF.type, type).map(node => {
+    const models: ModelT[] = [];
+    store.forSubjects(node => {
       switch (node.termType) {
         case "BlankNode":
         case "NamedNode":
           break;
         default:
           throw new RdfReaderException(
-            `expected BlankNode or NamedNode, actual ${node.termType}`
+            `expected BlankNode or NamedNode, actual ${node.termType}`,
           );
       }
-      return readerFactory(node as ModelNode).read();
-    });
+      models.push(readerFactory(node as ModelNode).read());
+    }, RDF.type, type, null);
+    return models;
   }
 
   protected readAllParentNamedNodes(
     childToParentProperty: NamedNode
   ): NamedNode[] {
-    const parentNodes = this.store.each(
+    const parentNodes = this.store.getObjects(
       this.node,
       childToParentProperty,
-      undefined
+      null,
     );
     if (parentNodes.length === 0) {
       return [];
@@ -82,13 +84,13 @@ export abstract class ModelRdfReader<ModelT> {
   }
 
   protected readOptionalLiteral(property: NamedNode): LiteralWrapper | null {
-    const nodes = this.store.each(this.node, property, undefined);
+    const nodes = this.store.getObjects(this.node, property, null);
     if (nodes.length === 0) {
       return null;
     }
     for (const node of nodes) {
       if (node.termType === "Literal") {
-        return new LiteralWrapper(node as rdflibLiteral);
+        return new LiteralWrapper(node);
       }
     }
     return null;

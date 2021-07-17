@@ -14,7 +14,6 @@ import {ImageRdfReader} from "./ImageRdfReader";
 import {InstitutionRdfReader} from "./InstitutionRdfReader";
 import {ObjectRdfReader} from "./ObjectRdfReader";
 import {PropertyDefinitionRdfReader} from "./PropertyDefinitionRdfReader";
-import {IndexedFormula} from "rdflib";
 import {RightsStatementRdfReader} from "./RightsStatementRdfReader";
 import {
   indexImagesByDepictsUri,
@@ -25,6 +24,7 @@ import {
   indexRightsStatementPrefLabelsByUri,
 } from "@paradicms/model-utils";
 import {LicenseRdfReader} from "./LicenseRdfReader";
+import {Store} from "n3";
 
 /**
  * Class that aggregates models read from an RDF store.
@@ -71,11 +71,11 @@ export class RdfData {
   readonly rightsStatements: readonly RightsStatement[];
   readonly rightsStatementPrefLabelsByUri: {[index: string]: string};
 
-  constructor(store: IndexedFormula) {
+  constructor(store: Store) {
     this.collections = CollectionRdfReader.readAll(store);
     this.collectionsByUri = indexModelsByUri(this.collections);
     this.collectionsByInstitutionUri = indexModelsByInstitutionUri(
-      this.collections
+      this.collections,
     );
 
     const guiMetadata = GuiMetadataRdfReader.readAll(store);

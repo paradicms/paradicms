@@ -1,10 +1,9 @@
-import {IndexedFormula, Literal as rdflibLiteral} from "rdflib";
 import {ModelRdfReader} from "./ModelRdfReader";
 import {Rights, Value} from "@paradicms/models";
 import {DCTERMS} from "./vocabularies";
-import {NamedNode, Quad} from "rdflib/lib/tf-types";
 import {LiteralWrapper} from "./LiteralWrapper";
 import {ModelNode} from "ModelNode";
+import {Literal, NamedNode, Quad, Store} from "n3";
 
 export class RightsRdfReader extends ModelRdfReader<Rights | null> {
   private readonly nodeStatementsByPredicateUri: {
@@ -13,8 +12,8 @@ export class RightsRdfReader extends ModelRdfReader<Rights | null> {
 
   constructor(
     node: ModelNode,
-    store: IndexedFormula,
-    nodeStatements?: readonly Quad[]
+    store: Store,
+    nodeStatements?: readonly Quad[],
   ) {
     super(node, store);
 
@@ -57,7 +56,7 @@ export class RightsRdfReader extends ModelRdfReader<Rights | null> {
 
       switch (object.termType) {
         case "Literal":
-          const literal = new LiteralWrapper(object as rdflibLiteral);
+          const literal = new LiteralWrapper(object as Literal);
           if (literal.isString()) {
             const text = literal.toString().trim();
             if (text.length > 0) {

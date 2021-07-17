@@ -1,6 +1,6 @@
-import {Literal} from "rdflib/lib/tf-types";
 import {XSD} from "./vocabularies";
 import {RdfReaderException} from "./RdfReaderException";
+import {Literal} from "n3";
 
 export class LiteralWrapper {
   constructor(readonly literal: Literal) {}

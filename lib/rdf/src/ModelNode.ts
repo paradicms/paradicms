@@ -1,3 +1,3 @@
-import {BlankNode, NamedNode} from "rdflib/lib/tf-types";
+import {BlankNode, NamedNode} from "n3";
 
 export type ModelNode = BlankNode | NamedNode;

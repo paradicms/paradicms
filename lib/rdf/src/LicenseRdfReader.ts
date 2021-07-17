@@ -1,7 +1,7 @@
 import {ModelRdfReader} from "./ModelRdfReader";
 import {License} from "@paradicms/models";
 import {DCTERMS, PARADICMS} from "./vocabularies";
-import {IndexedFormula} from "rdflib";
+import {Store} from "n3";
 
 export class LicenseRdfReader extends ModelRdfReader<License> {
   read(): License {
@@ -12,11 +12,11 @@ export class LicenseRdfReader extends ModelRdfReader<License> {
     };
   }
 
-  static readAll(store: IndexedFormula) {
+  static readAll(store: Store) {
     return ModelRdfReader._readAll<License>(
       node => new LicenseRdfReader(node, store),
       store,
-      PARADICMS.License
+      PARADICMS.License,
     );
   }
 }
