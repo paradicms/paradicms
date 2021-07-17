@@ -1,1 +1,5 @@
-lib/base/.prettierrc
+{
+  "bracketSpacing": false,
+  "endOfLine": "lf",
+  "trailingComma": "es5"
+}
