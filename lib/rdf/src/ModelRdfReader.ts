@@ -52,18 +52,7 @@ export abstract class ModelRdfReader<ModelT> {
     type: NamedNode,
   ): ModelT[] {
     const models: ModelT[] = [];
-    store.forSubjects(node => {
-      switch (node.termType) {
-        case "BlankNode":
-        case "NamedNode":
-          break;
-        default:
-          throw new RdfReaderException(
-            `expected BlankNode or NamedNode, actual ${node.termType}`,
-          );
-      }
-      models.push(readerFactory(node as ModelNode).read());
-    }, RDF.type, type, null);
+    ModelRdfReader._readEach(model => models.push(model), readerFactory, store, type);
     return models;
   }
 
@@ -81,6 +70,26 @@ export abstract class ModelRdfReader<ModelT> {
     return parentNodes
       .filter(node => node.termType === "NamedNode")
       .map(node => node as NamedNode);
+  }
+
+  protected static _readEach<ModelT>(
+    callback: (model: ModelT) => void,
+    readerFactory: (node: ModelNode) => ModelRdfReader<ModelT>,
+    store: Store,
+    type: NamedNode,
+  ): void {
+    store.forSubjects(node => {
+      switch (node.termType) {
+        case "BlankNode":
+        case "NamedNode":
+          break;
+        default:
+          throw new RdfReaderException(
+            `expected BlankNode or NamedNode, actual ${node.termType}`,
+          );
+      }
+      callback(readerFactory(node as ModelNode).read());
+    }, RDF.type, type, null);
   }
 
   protected readOptionalLiteral(property: NamedNode): LiteralWrapper | null {

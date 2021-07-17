@@ -75,12 +75,19 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
     };
   }
 
-  static readAll(store: Store) {
+  static readAll(store: Store): Object[] {
+    const objects: Object[] = [];
+    ObjectRdfReader.readEach(store, object => objects.push(object));
+    return objects;
+  }
+
+  static readEach(store: Store, callback: (object: Object) => void): void {
     const propertyDefinitionsByUri = indexModelsByUri(
       PropertyDefinitionRdfReader.readAll(store),
     );
 
-    return ModelRdfReader._readAll<Object>(
+    return ModelRdfReader._readEach<Object>(
+      callback,
       node => new ObjectRdfReader(node, propertyDefinitionsByUri, store),
       store,
       PARADICMS.Object,
