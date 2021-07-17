@@ -13,6 +13,7 @@
     "@paradicms/model-utils": "1.0.3",
     "@paradicms/next": "1.0.3",
     "@paradicms/rdf": "1.0.3",
+    "@paradicms/react": "1.0.3",
     "bootswatch": "^4.5.3",
     "next": "10.0.1",
     "sass": "^1.27.0"
