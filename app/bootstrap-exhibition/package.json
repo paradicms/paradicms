@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "author": "Minor Gordon",
-  "license": "GPLv3",
+  "license": "GPL-3.0-only",
   "main": "n/a",
   "dependencies": {
     "@paradicms/bootstrap": "1.0.3",

@@ -14,7 +14,7 @@
     "typescript": "^4.1.5",
     "webpack": "^4.44.1"
   },
-  "license": "GPLv3",
+  "license": "GPL-3.0-only",
   "files": [
     "dist"
   ],
