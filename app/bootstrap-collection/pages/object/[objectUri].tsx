@@ -2,7 +2,7 @@ import * as React from "react";
 import {Layout} from "components/Layout";
 import {GuiMetadata, JoinedImage, JoinedRights, Property, PropertyDefinition} from "@paradicms/models";
 import {Data} from "lib/Data";
-import {decodeFileName, encodeFileName} from "@paradicms/base";
+import {decodeFileName, encodeFileName} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Col, Container, Row} from "reactstrap";
 import {Accordion, ObjectImagesCarousel, PropertiesTable, RightsTable} from "@paradicms/bootstrap";

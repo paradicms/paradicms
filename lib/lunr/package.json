@@ -7,6 +7,7 @@
     "@paradicms/models": "1.0.3",
     "@paradicms/model-utils": "1.0.3",
     "@types/lunr": "^2.3.3",
+    "base-x": "^3.0.8",
     "lunr": "^2.3.8"
   },
   "devDependencies": {

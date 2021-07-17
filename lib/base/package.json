@@ -7,11 +7,11 @@
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
     "@types/qs": "^6.9.4",
-    "base-x": "^3.0.8",
     "lodash": "^4.14.2",
     "qs": "^6.9.4",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "use-query-params": "^1.1.6"
   },
   "devDependencies": {
     "@types/node": "^12.12.54",

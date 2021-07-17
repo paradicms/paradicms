@@ -1,26 +1,11 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Grid,
-} from "@material-ui/core";
-import {
-  GuiMetadata,
-  JoinedImage,
-  JoinedRights,
-  Property,
-  PropertyDefinition,
-} from "@paradicms/models";
-import {
-  ObjectImagesCarousel,
-  PropertiesTable,
-  RightsTable,
-} from "@paradicms/material-ui";
+import {Accordion, AccordionDetails, AccordionSummary, Grid} from "@material-ui/core";
+import {GuiMetadata, JoinedImage, JoinedRights, Property, PropertyDefinition} from "@paradicms/models";
+import {ObjectImagesCarousel, PropertiesTable, RightsTable} from "@paradicms/material-ui";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Data} from "lib/Data";
-import {decodeFileName, encodeFileName} from "@paradicms/base";
+import {decodeFileName, encodeFileName} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {joinImage, joinRights} from "@paradicms/model-utils";
 

@@ -1,7 +1,14 @@
 import lunr, {Index} from "lunr";
 import {PropertyDefinition} from "@paradicms/models";
-import {encodeFileName} from "@paradicms/base";
 import {IndexedObject} from "./IndexedObject";
+
+const basex = require("base-x");
+const base58 = basex(
+  "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz",
+);
+
+const encodeFieldName = (value: string): string =>
+  base58.encode(Buffer.from(value, "utf-8"));
 
 export class ObjectIndex {
   private readonly index: Index;
@@ -9,14 +16,14 @@ export class ObjectIndex {
 
   constructor(
     objects: readonly IndexedObject[],
-    propertyDefinitions: readonly PropertyDefinition[]
+    propertyDefinitions: readonly PropertyDefinition[],
   ) {
     const fieldsByPropertyDefinitionUri = propertyDefinitions.reduce(
       (fieldsByPropertyDefinitionUri, propertyDefinition) => {
         if (propertyDefinition.fullTextSearchable) {
           fieldsByPropertyDefinitionUri[propertyDefinition.uri] = {
             propertyDefinition,
-            name: encodeFileName(propertyDefinition.uri),
+            name: encodeFieldName(propertyDefinition.uri),
           };
         }
         return fieldsByPropertyDefinitionUri;

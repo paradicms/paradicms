@@ -1,7 +1,7 @@
 import {ObjectQuery} from "@paradicms/models";
 import * as qs from "qs";
 import _ from "lodash";
-import {encodeFileName} from "@paradicms/base";
+import {encodeFileName} from "@paradicms/next";
 
 export class Hrefs {
   static get home(): string {

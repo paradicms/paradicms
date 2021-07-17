@@ -1,4 +1,4 @@
-import {encodeFileName} from "@paradicms/base";
+import {encodeFileName} from "@paradicms/next";
 
 export class Hrefs {
   static get home(): string {

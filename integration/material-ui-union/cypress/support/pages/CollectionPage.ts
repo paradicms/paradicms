@@ -1,6 +1,6 @@
 import {Page} from "./Page";
 import {ObjectFacets, ObjectsGallery} from "./SearchPage";
-import {encodeFileName} from "../../../../../lib/base/src";
+import {encodeFileName} from "../../../../../lib/next/src";
 
 export class CollectionPage extends Page {
   constructor(kwds: {collectionUri: string; institutionUri: string}) {

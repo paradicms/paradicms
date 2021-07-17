@@ -2,7 +2,7 @@ import * as React from "react";
 import {Layout} from "components/Layout";
 import {GuiMetadata, JoinedImage, JoinedRights, JoinedValue, Object, Property} from "@paradicms/models";
 import {Data} from "lib/Data";
-import {decodeFileName, encodeFileName} from "@paradicms/base";
+import {decodeFileName, encodeFileName} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import Link from "next/link";
 import {Col, Container, Pagination, PaginationItem, PaginationLink, Row, Table} from "reactstrap";

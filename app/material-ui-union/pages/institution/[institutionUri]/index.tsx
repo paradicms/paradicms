@@ -4,11 +4,8 @@ import {Hrefs} from "lib/Hrefs";
 import {GuiMetadata, JoinedImage} from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Data} from "lib/Data";
-import {decodeFileName, encodeFileName} from "@paradicms/base";
-import {
-  CollectionsGallery,
-  thumbnailTargetDimensions,
-} from "@paradicms/material-ui";
+import {decodeFileName, encodeFileName} from "@paradicms/next";
+import {CollectionsGallery, thumbnailTargetDimensions} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {
   indexImagesByDepictsUri,
