@@ -24,7 +24,7 @@ import {
   indexRightsStatementPrefLabelsByUri,
 } from "@paradicms/model-utils";
 import {LicenseRdfReader} from "./LicenseRdfReader";
-import {Store} from "n3";
+import {Parser, Store} from "n3";
 
 /**
  * Class that aggregates models read from an RDF store.
@@ -145,5 +145,12 @@ export class RdfData {
 
   objectByUri(uri: string): Object {
     return this.modelByUri(this.objectsByUri, uri);
+  }
+
+  static parseTurtle(ttl: string): Store {
+    const parser = new Parser({format: "text/turtle"});
+    const store = new Store();
+    store.addQuads(parser.parse(ttl));
+    return store;
   }
 }

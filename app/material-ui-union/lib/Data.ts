@@ -1,6 +1,6 @@
 import fs from "fs";
-import {graph, IndexedFormula, parse} from "rdflib";
 import {RdfData} from "@paradicms/rdf";
+import {Store} from "n3";
 
 export class Data extends RdfData {
   // private static instanceCount = 0;
@@ -12,18 +12,11 @@ export class Data extends RdfData {
     // console.info("Data instance:", Data.instanceCount);
   }
 
-  private static getStore(): IndexedFormula {
+  private static getStore(): Store {
     const dataTtlFilePath: string | undefined = process.env.DATA_TTL_FILE_PATH;
     if (!dataTtlFilePath) {
       throw new EvalError("must specify a data .ttl (text/turtle) file path");
     }
-    const store = graph();
-    parse(
-      fs.readFileSync(dataTtlFilePath).toString(),
-      store,
-      "http://example.org",
-      "text/turtle"
-    );
-    return store;
+    return RdfData.parseTurtle(fs.readFileSync(dataTtlFilePath).toString());
   }
 }
