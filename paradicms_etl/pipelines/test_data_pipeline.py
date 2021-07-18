@@ -314,6 +314,7 @@ class TestDataPipeline(_Pipeline):
                 abstract=self.__LOREM_IPSUM,
                 collection_uris=collection_uris,
                 institution_uri=institution.uri,
+                page="http://example.com/object/" + str(object_i),
                 properties=tuple(properties),
                 rights=Rights(
                     holder=f"{title} rights holder",

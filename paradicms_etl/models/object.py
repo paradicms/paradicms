@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Optional, Tuple
 
 from rdflib import Graph, Literal, URIRef
-from rdflib.namespace import DCTERMS
+from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
 from paradicms_etl.models._named_model import _NamedModel
@@ -19,6 +19,9 @@ class Object(_NamedModel):
     institution_uri: URIRef
     title: str
     abstract: Optional[str] = None
+    page: Optional[
+        str
+    ] = None  #  foaf:page, linking to a human-readable page; if not specified, defaults to URI
     properties: Tuple[Property, ...] = ()
     rights: Optional[Rights] = None
 
@@ -29,6 +32,8 @@ class Object(_NamedModel):
         for collection_uri in self.collection_uris:
             resource.add(CMS.collection, collection_uri)
         resource.add(CMS.institution, self.institution_uri)
+        if self.page is not None:
+            resource.add(FOAF.page, URIRef(self.page))
         for property_ in self.properties:
             resource.add(property_.uri, property_.value)
         if self.rights is not None:
