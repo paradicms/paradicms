@@ -1393,7 +1393,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     vra:material "Material 0",
         "Material 1" ;
     paradicms:collection <http://example.com/institution0/collection0> ;
-    paradicms:institution <http://example.com/institution0> .
+    paradicms:institution <http://example.com/institution0> ;
+    foaf:page <http://example.com/object/0> .
 
 <http://example.com/institution0/collection0/object1> a paradicms:Object ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
@@ -1438,7 +1439,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     vra:material "Material 1",
         "Material 2" ;
     paradicms:collection <http://example.com/institution0/collection0> ;
-    paradicms:institution <http://example.com/institution0> .
+    paradicms:institution <http://example.com/institution0> ;
+    foaf:page <http://example.com/object/1> .
 
 <http://example.com/institution0/collection0/object2> a paradicms:Object ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
@@ -1483,7 +1485,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     vra:material "Material 2",
         "Material 3" ;
     paradicms:collection <http://example.com/institution0/collection0> ;
-    paradicms:institution <http://example.com/institution0> .
+    paradicms:institution <http://example.com/institution0> ;
+    foaf:page <http://example.com/object/2> .
 
 <http://example.com/institution0/collection0/object3> a paradicms:Object ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
@@ -1528,7 +1531,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     vra:material "Material 3",
         "Material 4" ;
     paradicms:collection <http://example.com/institution0/collection0> ;
-    paradicms:institution <http://example.com/institution0> .
+    paradicms:institution <http://example.com/institution0> ;
+    foaf:page <http://example.com/object/3> .
 
 <http://example.com/institution0/shared/object0> a paradicms:Object ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
@@ -1573,7 +1577,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     vra:material "Material 0",
         "Material 1" ;
     paradicms:collection <http://example.com/institution0/collection0> ;
-    paradicms:institution <http://example.com/institution0> .
+    paradicms:institution <http://example.com/institution0> ;
+    foaf:page <http://example.com/object/0> .
 
 <http://example.com/institution0/shared/object1> a paradicms:Object ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
@@ -1618,7 +1623,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     vra:material "Material 1",
         "Material 2" ;
     paradicms:collection <http://example.com/institution0/collection0> ;
-    paradicms:institution <http://example.com/institution0> .
+    paradicms:institution <http://example.com/institution0> ;
+    foaf:page <http://example.com/object/1> .
 
 <http://example.com/institution0/shared/object2> a paradicms:Object ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
@@ -1663,7 +1669,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     vra:material "Material 2",
         "Material 3" ;
     paradicms:collection <http://example.com/institution0/collection0> ;
-    paradicms:institution <http://example.com/institution0> .
+    paradicms:institution <http://example.com/institution0> ;
+    foaf:page <http://example.com/object/2> .
 
 <http://example.com/institution0/shared/object3> a paradicms:Object ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
@@ -1708,7 +1715,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     vra:material "Material 3",
         "Material 4" ;
     paradicms:collection <http://example.com/institution0/collection0> ;
-    paradicms:institution <http://example.com/institution0> .
+    paradicms:institution <http://example.com/institution0> ;
+    foaf:page <http://example.com/object/3> .
 
 <http://example.com/institution1/collection0/object0> a paradicms:Object ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
@@ -1753,7 +1761,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     vra:material "Material 0",
         "Material 1" ;
     paradicms:collection <http://example.com/institution1/collection0> ;
-    paradicms:institution <http://example.com/institution1> .
+    paradicms:institution <http://example.com/institution1> ;
+    foaf:page <http://example.com/object/0> .
 
 <http://example.com/institution1/collection0/object1> a paradicms:Object ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
@@ -1798,7 +1807,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     vra:material "Material 1",
         "Material 2" ;
     paradicms:collection <http://example.com/institution1/collection0> ;
-    paradicms:institution <http://example.com/institution1> .
+    paradicms:institution <http://example.com/institution1> ;
+    foaf:page <http://example.com/object/1> .
 
 <http://example.com/institution1/collection0/object2> a paradicms:Object ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
@@ -1843,7 +1853,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     vra:material "Material 2",
         "Material 3" ;
     paradicms:collection <http://example.com/institution1/collection0> ;
-    paradicms:institution <http://example.com/institution1> .
+    paradicms:institution <http://example.com/institution1> ;
+    foaf:page <http://example.com/object/2> .
 
 <http://example.com/institution1/collection0/object3> a paradicms:Object ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
@@ -1888,7 +1899,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     vra:material "Material 3",
         "Material 4" ;
     paradicms:collection <http://example.com/institution1/collection0> ;
-    paradicms:institution <http://example.com/institution1> .
+    paradicms:institution <http://example.com/institution1> ;
+    foaf:page <http://example.com/object/3> .
 
 <http://example.com/institution1/shared/object0> a paradicms:Object ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
@@ -1933,7 +1945,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     vra:material "Material 0",
         "Material 1" ;
     paradicms:collection <http://example.com/institution1/collection0> ;
-    paradicms:institution <http://example.com/institution1> .
+    paradicms:institution <http://example.com/institution1> ;
+    foaf:page <http://example.com/object/0> .
 
 <http://example.com/institution1/shared/object1> a paradicms:Object ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
@@ -1978,7 +1991,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     vra:material "Material 1",
         "Material 2" ;
     paradicms:collection <http://example.com/institution1/collection0> ;
-    paradicms:institution <http://example.com/institution1> .
+    paradicms:institution <http://example.com/institution1> ;
+    foaf:page <http://example.com/object/1> .
 
 <http://example.com/institution1/shared/object2> a paradicms:Object ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
@@ -2023,7 +2037,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     vra:material "Material 2",
         "Material 3" ;
     paradicms:collection <http://example.com/institution1/collection0> ;
-    paradicms:institution <http://example.com/institution1> .
+    paradicms:institution <http://example.com/institution1> ;
+    foaf:page <http://example.com/object/2> .
 
 <http://example.com/institution1/shared/object3> a paradicms:Object ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
@@ -2068,7 +2083,8 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     vra:material "Material 3",
         "Material 4" ;
     paradicms:collection <http://example.com/institution1/collection0> ;
-    paradicms:institution <http://example.com/institution1> .
+    paradicms:institution <http://example.com/institution1> ;
+    foaf:page <http://example.com/object/3> .
 
 <http://example.com/institution0/collection0> a paradicms:Collection ;
     dcterms:title "Institution0Collection0" ;

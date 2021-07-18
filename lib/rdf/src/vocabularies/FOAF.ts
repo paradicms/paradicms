@@ -5,5 +5,6 @@ export class FOAF {
 
   static depicts = FOAF.NS("depicts");
   static name_ = FOAF.NS("name");
+  static page = FOAF.NS("page");
   static thumbnail = FOAF.NS("thumbnail");
 }

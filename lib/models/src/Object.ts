@@ -5,6 +5,7 @@ export interface Object {
   readonly abstract: string | null;
   readonly collectionUris: readonly string[];
   readonly institutionUri: string;
+  readonly page: string | null;
   readonly properties: readonly Property[] | null;
   readonly rights: Rights | null;
   readonly title: string;

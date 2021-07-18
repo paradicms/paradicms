@@ -1,6 +1,6 @@
 import {ModelRdfReader} from "./ModelRdfReader";
 import {Object, Property, PropertyDefinition, PropertyValue} from "@paradicms/models";
-import {DCTERMS, PARADICMS} from "./vocabularies";
+import {DCTERMS, FOAF, PARADICMS} from "./vocabularies";
 import {RightsRdfReader} from "./RightsRdfReader";
 import {ModelNode} from "./ModelNode";
 import {LiteralWrapper} from "./LiteralWrapper";
@@ -64,10 +64,11 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
     return {
       abstract: this.readOptionalLiteral(DCTERMS.abstract)?.toString() ?? null,
       collectionUris: this.readAllParentNamedNodes(PARADICMS.collection).map(
-        node => node.value
+        node => node.value,
       ),
       institutionUri: this.readRequiredParentNamedNode(PARADICMS.institution)
         .value,
+      page: this.readOptionalLiteral(FOAF.page)?.toString() ?? null,
       properties,
       rights: new RightsRdfReader(this.node, this.store, nodeStatements).read(),
       title: this.readRequiredLiteral(DCTERMS.title).toString(),
