@@ -23,6 +23,7 @@ describe("Object RDF reader", () => {
       expect(model.abstract).to.not.be.empty;
       expect(model.collectionUris).to.not.be.empty;
       expect(model.institutionUri).to.not.be.empty;
+      expect(model.page).to.not.be.empty;
       expect(model.properties).to.not.be.empty;
       model.properties!.forEach(property => {
         expect(property.uri.trim()).to.not.be.empty;

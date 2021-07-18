@@ -50,7 +50,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
           "unknown literal datatype",
           literal.literal.datatype,
           "for property",
-          propertyDefinition.uri
+          propertyDefinition.uri,
         );
         continue;
       }
@@ -61,6 +61,14 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
       });
     }
 
+    let page: string | null = null;
+    for (const pageObject of this.store.getObjects(this.node, FOAF.page, null)) {
+      if (pageObject.termType === "Literal" || pageObject.termType === "NamedNode") {
+        page = pageObject.value;
+        break;
+      }
+    }
+
     return {
       abstract: this.readOptionalLiteral(DCTERMS.abstract)?.toString() ?? null,
       collectionUris: this.readAllParentNamedNodes(PARADICMS.collection).map(
@@ -68,7 +76,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
       ),
       institutionUri: this.readRequiredParentNamedNode(PARADICMS.institution)
         .value,
-      page: this.readOptionalLiteral(FOAF.page)?.toString() ?? null,
+      page,
       properties,
       rights: new RightsRdfReader(this.node, this.store, nodeStatements).read(),
       title: this.readRequiredLiteral(DCTERMS.title).toString(),
