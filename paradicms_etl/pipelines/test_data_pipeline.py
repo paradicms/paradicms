@@ -310,11 +310,15 @@ class TestDataPipeline(_Pipeline):
                 )
             )
 
+            page = "http://example.com/object/" + str(object_i)
+            if object_i % 2 == 0:
+                page = URIRef(page)
+
             object_ = Object(
                 abstract=self.__LOREM_IPSUM,
                 collection_uris=collection_uris,
                 institution_uri=institution.uri,
-                page="http://example.com/object/" + str(object_i),
+                page=page,
                 properties=tuple(properties),
                 rights=Rights(
                     holder=f"{title} rights holder",
