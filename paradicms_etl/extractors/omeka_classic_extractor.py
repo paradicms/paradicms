@@ -68,4 +68,9 @@ class OmekaClassicExtractor(_Extractor):
             with open(items_file_path) as items_file:
                 items = json.load(items_file)
 
-        return {"collections": collections, "files": files, "items": items}
+        return {
+            "collections": collections,
+            "endpoint_url": self.__endpoint_url,
+            "files": files,
+            "items": items,
+        }

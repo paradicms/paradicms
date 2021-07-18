@@ -43,7 +43,7 @@ class OmekaClassicTransformer(_Transformer):
         self.__transform_item_timer = self._metrics_registry.timer("transform_item")
         self.__transform_file_timer = self._metrics_registry.timer("transform_file")
 
-    def transform(self, collections, files, items):
+    def transform(self, *, collections, endpoint_url, files, items):
         yield from DublinCorePropertyDefinitions.as_tuple()
 
         institution = self._transform_institution_from_arguments(
@@ -73,6 +73,7 @@ class OmekaClassicTransformer(_Transformer):
             with self.__transform_item_timer.time():
                 transformed_item = self._transform_item(
                     collection_uris_by_id=collection_uris_by_id,
+                    endpoint_url=endpoint_url,
                     institution_uri=institution.uri,
                     item=item,
                 )
@@ -271,7 +272,12 @@ class OmekaClassicTransformer(_Transformer):
         return tuple(images)
 
     def _transform_item(
-        self, *, collection_uris_by_id: Dict[int, URIRef], institution_uri: URIRef, item
+        self,
+        *,
+        collection_uris_by_id: Dict[int, URIRef],
+        endpoint_url: str,
+        institution_uri: URIRef,
+        item
     ) -> Optional[Object]:
         if item["collection"] is None:
             return None
@@ -281,6 +287,9 @@ class OmekaClassicTransformer(_Transformer):
         except KeyError:
             # Item belongs to a collection that was not transformed, ignore it
             return None
+
+        if not endpoint_url.endswith("/"):
+            endpoint_url = endpoint_url + "/"
 
         item_element_text_tree = self._get_element_texts_as_tree(item)
         properties = set()
@@ -298,6 +307,7 @@ class OmekaClassicTransformer(_Transformer):
         return Object(
             collection_uris=(collection_uri,),
             institution_uri=institution_uri,
+            page=URIRef(endpoint_url + "items/show/" + str(item["id"])),
             properties=properties,
             # rights=Rights.from_properties(properties),
             title=title,
