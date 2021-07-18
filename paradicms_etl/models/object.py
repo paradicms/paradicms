@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Union
 
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, FOAF
@@ -19,9 +19,9 @@ class Object(_NamedModel):
     institution_uri: URIRef
     title: str
     abstract: Optional[str] = None
-    page: Optional[
-        str
-    ] = None  #  foaf:page, linking to a human-readable page; if not specified, defaults to URI
+    page: Union[
+        str, URIRef, None
+    ] = None  # foaf:page, linking to a human-readable page; if not specified, defaults to URI
     properties: Tuple[Property, ...] = ()
     rights: Optional[Rights] = None
 
@@ -33,7 +33,10 @@ class Object(_NamedModel):
             resource.add(CMS.collection, collection_uri)
         resource.add(CMS.institution, self.institution_uri)
         if self.page is not None:
-            resource.add(FOAF.page, URIRef(self.page))
+            if isinstance(self.page, URIRef):
+                resource.add(FOAF.page, self.page)
+            else:
+                resource.add(FOAF.page, Literal(str(self.page)))
         for property_ in self.properties:
             resource.add(property_.uri, property_.value)
         if self.rights is not None:
