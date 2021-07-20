@@ -2,7 +2,7 @@ import * as React from "react";
 import {ObjectFacets, ObjectFilters, ObjectFiltersState} from "@paradicms/models";
 import {Col, Container, Row} from "reactstrap";
 import {Accordion} from "./Accordion";
-import {StringFacetControls} from "./StringFacetControls";
+import {ValueFacetControls} from "./ValueFacetControls";
 
 export const ObjectFacetsControls: React.FunctionComponent<{
   facets: ObjectFacets;
@@ -26,9 +26,9 @@ export const ObjectFacetsControls: React.FunctionComponent<{
           >
             <Col xs={12}>
               <Accordion title={propertyFacet.definition.label}>
-                <StringFacetControls
+                <ValueFacetControls
                   currentState={filtersState.propertyFilter(
-                    propertyFacet.definition.uri
+                    propertyFacet.definition.uri,
                   )}
                   onChange={newState => {
                     if (newState) {

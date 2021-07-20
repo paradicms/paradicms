@@ -1,16 +1,7 @@
 import * as React from "react";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Grid,
-} from "@material-ui/core";
-import {
-  ObjectFacets,
-  ObjectFilters,
-  ObjectFiltersState,
-} from "@paradicms/models";
-import {StringFacetControls} from "./StringFacetControls";
+import {Accordion, AccordionDetails, AccordionSummary, Grid} from "@material-ui/core";
+import {ObjectFacets, ObjectFilters, ObjectFiltersState} from "@paradicms/models";
+import {ValueFacetControls} from "ValueFacetControls";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 export const ObjectFacetsControls: React.FunctionComponent<{
@@ -39,9 +30,9 @@ export const ObjectFacetsControls: React.FunctionComponent<{
                 {propertyFacet.definition.label}
               </AccordionSummary>
               <AccordionDetails>
-                <StringFacetControls
+                <ValueFacetControls
                   currentState={filtersState.propertyFilter(
-                    propertyFacet.definition.uri
+                    propertyFacet.definition.uri,
                   )}
                   onChange={newState => {
                     if (newState) {

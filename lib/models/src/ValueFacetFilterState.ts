@@ -1,13 +1,13 @@
-import {StringValueFacetFilter} from "StringValueFacetFilter";
+import {ValueFacetFilter} from "ValueFacetFilter";
 
-export class StringValueFacetFilterState {
-  private readonly excludeValueSet: Set<string>;
-  private readonly includeValueSet: Set<string>;
-  private readonly valueUniverse: readonly string[];
+export class ValueFacetFilterState<T> {
+  private readonly excludeValueSet: Set<T>;
+  private readonly includeValueSet: Set<T>;
+  private readonly valueUniverse: readonly T[];
 
   constructor(kwds: {
-    filter: StringValueFacetFilter | null;
-    valueUniverse: readonly string[];
+    filter: ValueFacetFilter<T> | null;
+    valueUniverse: readonly T[];
   }) {
     const {filter} = kwds;
     this.valueUniverse = kwds.valueUniverse;
@@ -48,7 +48,7 @@ export class StringValueFacetFilterState {
     // console.info("Include: " + [...includeValueSet]);
   }
 
-  private change(include: boolean, value: string): void {
+  private change(include: boolean, value: T): void {
     this.excludeValueSet.delete(value);
     this.includeValueSet.delete(value);
     if (include) {
@@ -70,7 +70,7 @@ export class StringValueFacetFilterState {
     }
   }
 
-  excludeValue(value: string): void {
+  excludeValue(value: T): void {
     this.change(false, value);
   }
 
@@ -80,15 +80,15 @@ export class StringValueFacetFilterState {
     }
   }
 
-  includeValue(value: string): void {
+  includeValue(value: T): void {
     this.change(true, value);
   }
 
-  includesValue(value: string): boolean {
+  includesValue(value: T): boolean {
     return this.includeValueSet.has(value);
   }
 
-  get snapshot(): StringValueFacetFilter | null {
+  get snapshot(): ValueFacetFilter<T> | null {
     if (this.includeValueSet.size === this.valueUniverse.length) {
       return null; // Implicitly include all values
     } else if (this.excludeValueSet.size === this.valueUniverse.length) {

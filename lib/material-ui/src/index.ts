@@ -16,5 +16,5 @@ export * from "./ObjectImagesCarousel";
 export * from "./ObjectsGallery";
 export * from "./PropertiesTable";
 export * from "./RightsTable";
-export * from "./StringFacetControls";
+export * from "ValueFacetControls";
 export * from "./thumbnailTargetDimensions";

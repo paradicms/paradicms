@@ -1,15 +1,7 @@
 import * as React from "react";
 // import {Checkbox, FormControlLabel, List, ListItem} from "@material-ui/core";
-import {
-  StringFacetValue,
-  StringFilter,
-  StringFilterState,
-  // StringFilterState,
-} from "@paradicms/models";
-import MUIDatatable, {
-  MUIDataTableColumnDef,
-  MUIDataTableOptions,
-} from "mui-datatables";
+import {ValueFacetFilter, ValueFacetFilterState, ValueFacetValue} from "@paradicms/models";
+import MUIDatatable, {MUIDataTableColumnDef, MUIDataTableOptions} from "mui-datatables";
 import {createMuiTheme, ThemeProvider} from "@material-ui/core";
 
 const theme = createMuiTheme({
@@ -27,11 +19,11 @@ const theme = createMuiTheme({
   } as any,
 });
 
-export const StringFacetControls: React.FunctionComponent<{
-  currentState: StringFilter | null; // value id's only
-  onChange: (newState?: StringFilter) => void;
+export const ValueFacetControls: React.FunctionComponent<{
+  currentState: ValueFacetFilter<string> | null; // value id's only
+  onChange: (newState?: ValueFacetFilter<string>) => void;
   title: string;
-  valueUniverse: readonly StringFacetValue[];
+  valueUniverse: readonly ValueFacetValue<string>[];
 }> = ({currentState, onChange, title, valueUniverse}) => {
   const datatableColumns: MUIDataTableColumnDef[] = React.useMemo(
     () => [
@@ -72,7 +64,7 @@ export const StringFacetControls: React.FunctionComponent<{
 
   const datatableRowsPerPage = 5;
 
-  const state = new StringFilterState({
+  const state = new ValueFacetFilterState<string>({
     filter: currentState,
     valueUniverse: valueUniverse.map(value => value.value),
   });
@@ -92,7 +84,7 @@ export const StringFacetControls: React.FunctionComponent<{
         allRowsSelected,
         rowsSelected
       ) => {
-        const newState = new StringFilterState({
+        const newState = new ValueFacetFilterState<string>({
           filter: null,
           valueUniverse: valueUniverse.map(value => value.value),
         });

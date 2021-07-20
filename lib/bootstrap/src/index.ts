@@ -10,5 +10,5 @@ export * from "./ObjectImagesCarousel";
 export * from "./ObjectsGallery";
 export * from "./PropertiesTable";
 export * from "./RightsTable";
-export * from "./StringFacetControls";
+export * from "./ValueFacetControls";
 export const STYLESHEET_HREF_DEFAULT = "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css";

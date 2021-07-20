@@ -1,8 +1,8 @@
 import {ObjectFilters} from "./ObjectFilters";
 import {PropertyFilter} from "./PropertyFilter";
 import {Property} from "./Property";
-import {StringValueFacetFilterState} from "./StringValueFacetFilterState";
 import {ObjectFacets} from "./ObjectFacets";
+import {ValueFacetFilterState} from "ValueFacetFilterState";
 
 export class ObjectFiltersState {
   private readonly facets: ObjectFacets;
@@ -59,7 +59,7 @@ export class ObjectFiltersState {
 
   private includeOrExcludeProperty(include: boolean, property: Property): void {
     let propertyFilter = this.propertyFilter(property.uri);
-    const propertyFilterState = new StringValueFacetFilterState({
+    const propertyFilterState = new ValueFacetFilterState<string>({
       filter: propertyFilter,
       valueUniverse: this.propertyValueUniverse(property.uri),
     });

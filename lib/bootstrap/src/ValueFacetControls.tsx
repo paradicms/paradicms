@@ -1,24 +1,13 @@
 import * as React from "react";
-import {
-  StringFacetValue,
-  StringFilter,
-  StringFilterState,
-} from "@paradicms/models";
-import {
-  Button,
-  FormGroup,
-  Input,
-  Label,
-  ListGroup,
-  ListGroupItem,
-} from "reactstrap";
+import {ValueFacetFilter, ValueFacetFilterState, ValueFacetValue} from "@paradicms/models";
+import {Button, FormGroup, Input, Label, ListGroup, ListGroupItem} from "reactstrap";
 
-export const StringFacetControls: React.FunctionComponent<{
-  currentState: StringFilter | null; // value id's only
-  onChange: (newState?: StringFilter) => void;
-  valueUniverse: readonly StringFacetValue[];
+export const ValueFacetControls: React.FunctionComponent<{
+  currentState: ValueFacetFilter<string> | null; // value id's only
+  onChange: (newState?: ValueFacetFilter<string>) => void;
+  valueUniverse: readonly ValueFacetValue<string>[];
 }> = ({currentState, onChange, valueUniverse}) => {
-  const state = new StringFilterState({
+  const state = new ValueFacetFilterState<string>({
     filter: currentState,
     valueUniverse: valueUniverse.map(value => value.value),
   });

@@ -1,8 +1,8 @@
-import {StringValueFacetFilter} from "./StringValueFacetFilter";
 import {PropertyFilter} from "./PropertyFilter";
+import {ValueFacetFilter} from "./ValueFacetFilter";
 
 export interface ObjectFilters {
-  readonly collectionUris: StringValueFacetFilter | null;
-  readonly institutionUris: StringValueFacetFilter | null;
+  readonly collectionUris: ValueFacetFilter<string> | null;
+  readonly institutionUris: ValueFacetFilter<string> | null;
   readonly properties: readonly PropertyFilter[] | null;
 }

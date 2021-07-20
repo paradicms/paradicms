@@ -1,5 +1,5 @@
-import {StringValueFacetFilter} from "./StringValueFacetFilter";
+import {ValueFacetFilter} from "./ValueFacetFilter";
 
-export interface PropertyFilter extends StringValueFacetFilter {
+export interface PropertyFilter extends ValueFacetFilter<string> {
   readonly propertyDefinitionUri: string;
 }
