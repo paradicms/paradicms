@@ -1,7 +1,7 @@
 import {ObjectFilters} from "./ObjectFilters";
 import {PropertyFilter} from "./PropertyFilter";
 import {Property} from "./Property";
-import {StringFilterState} from "./StringFilterState";
+import {StringValueFacetFilterState} from "./StringValueFacetFilterState";
 import {ObjectFacets} from "./ObjectFacets";
 
 export class ObjectFiltersState {
@@ -21,10 +21,10 @@ export class ObjectFiltersState {
     const excludedProperties: Property[] = [];
     if (this.filters.properties) {
       for (const propertyFilter of this.filters.properties) {
-        if (!propertyFilter.exclude) {
+        if (!propertyFilter.excludeValues) {
           continue;
         }
-        for (const exclude of propertyFilter.exclude) {
+        for (const exclude of propertyFilter.excludeValues) {
           excludedProperties.push({
             uri: propertyFilter.propertyDefinitionUri,
             value: exclude,
@@ -39,10 +39,10 @@ export class ObjectFiltersState {
     const includedProperties: Property[] = [];
     if (this.filters.properties) {
       for (const propertyFilter of this.filters.properties) {
-        if (!propertyFilter.include) {
+        if (!propertyFilter.includeValues) {
           continue;
         }
-        for (const include of propertyFilter.include) {
+        for (const include of propertyFilter.includeValues) {
           includedProperties.push({
             uri: propertyFilter.propertyDefinitionUri,
             value: include,
@@ -59,7 +59,7 @@ export class ObjectFiltersState {
 
   private includeOrExcludeProperty(include: boolean, property: Property): void {
     let propertyFilter = this.propertyFilter(property.uri);
-    const propertyFilterState = new StringFilterState({
+    const propertyFilterState = new StringValueFacetFilterState({
       filter: propertyFilter,
       valueUniverse: this.propertyValueUniverse(property.uri),
     });

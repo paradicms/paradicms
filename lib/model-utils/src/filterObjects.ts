@@ -1,4 +1,4 @@
-import {ObjectFilters, Property, StringFilter} from "@paradicms/models";
+import {ObjectFilters, Property, ValueFacetFilter} from "@paradicms/models";
 
 export const filterObjects = <
   ObjectT extends {
@@ -12,17 +12,17 @@ export const filterObjects = <
 }): readonly ObjectT[] => {
   let {filters, objects} = kwds;
 
-  const filterStrings = (kwds: {
-    filter: StringFilter | null;
-    getObjectValues: (object: ObjectT) => readonly string[] | null;
+  const filterValues = <T>(kwds: {
+    filter: ValueFacetFilter<T> | null;
+    getObjectValues: (object: ObjectT) => readonly T[] | null;
     objects: readonly ObjectT[];
   }): readonly ObjectT[] => {
     const {filter, getObjectValues, objects} = kwds;
     if (!filter) {
       return objects;
     }
-    const excludeValues = filter.exclude ?? [];
-    const includeValues = filter.include ?? [];
+    const excludeValues: readonly T[] = filter.excludeValues ?? [];
+    const includeValues: readonly T[] = filter.includeValues ?? [];
     if (excludeValues.length === 0 && includeValues.length === 0) {
       return objects;
     }
@@ -64,13 +64,13 @@ export const filterObjects = <
     });
   };
 
-  objects = filterStrings({
+  objects = filterValues({
     filter: filters.collectionUris,
     getObjectValues: object => object.collectionUris,
     objects,
   });
 
-  objects = filterStrings({
+  objects = filterValues({
     filter: filters.institutionUris,
     getObjectValues: object => [object.institutionUri],
     objects,
@@ -78,12 +78,12 @@ export const filterObjects = <
 
   if (filters.properties) {
     for (const propertyFilter of filters.properties) {
-      objects = filterStrings({
+      objects = filterValues<string>({
         filter: propertyFilter,
         getObjectValues: object =>
           (object.properties ?? [])
             .filter(
-              property => property.uri === propertyFilter.propertyDefinitionUri
+              property => property.uri === propertyFilter.propertyDefinitionUri,
             )
             .map(property => property.value.toString()),
         objects,
