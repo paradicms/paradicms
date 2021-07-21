@@ -17,5 +17,5 @@
     "start": "rimraf dist && tsc -w"
   },
   "types": "dist/index.d.ts",
-  "version": "1.0.4"
+  "version": "1.0.5"
 }

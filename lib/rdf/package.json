@@ -3,8 +3,8 @@
   "name": "@paradicms/rdf",
   "description": "Paradicms RDF manipulation library",
   "dependencies": {
-    "@paradicms/models": "1.0.4",
-    "@paradicms/model-utils": "1.0.4",
+    "@paradicms/models": "1.0.5",
+    "@paradicms/model-utils": "1.0.5",
     "@types/n3": "1.10.2",
     "n3": "1.11.0"
   },
@@ -30,5 +30,5 @@
     "test-watch": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register -w 'test/**/*.ts'"
   },
   "types": "dist/index.d.ts",
-  "version": "1.0.4"
+  "version": "1.0.5"
 }
