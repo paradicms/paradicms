@@ -6,10 +6,10 @@ REM Order is important
 cd models
 CALL npm run build
 
-cd ..\lunr
+cd ..\model-utils
 CALL npm run build
 
-cd ..\model-utils
+cd ..\lunr
 CALL npm run build
 
 cd ..\rdf
