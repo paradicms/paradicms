@@ -21,7 +21,7 @@ const theme = createMuiTheme({
 
 export const ValueFacetControls: React.FunctionComponent<{
   currentState: ValueFacetFilter<string> | null; // value id's only
-  onChange: (newState?: ValueFacetFilter<string>) => void;
+  onChange: (newState: ValueFacetFilter<string> | null) => void;
   title: string;
   valueUniverse: readonly ValueFacetValue<string>[];
 }> = ({currentState, onChange, title, valueUniverse}) => {

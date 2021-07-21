@@ -2,7 +2,7 @@ import {ObjectFilters} from "./ObjectFilters";
 import {PropertyFilter} from "./PropertyFilter";
 import {Property} from "./Property";
 import {ObjectFacets} from "./ObjectFacets";
-import {ValueFacetFilterState} from "ValueFacetFilterState";
+import {ValueFacetFilterState} from "./ValueFacetFilterState";
 
 export class ObjectFiltersState {
   private readonly facets: ObjectFacets;

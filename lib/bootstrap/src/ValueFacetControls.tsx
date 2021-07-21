@@ -4,7 +4,7 @@ import {Button, FormGroup, Input, Label, ListGroup, ListGroupItem} from "reactst
 
 export const ValueFacetControls: React.FunctionComponent<{
   currentState: ValueFacetFilter<string> | null; // value id's only
-  onChange: (newState?: ValueFacetFilter<string>) => void;
+  onChange: (newState: ValueFacetFilter<string> | null) => void;
   valueUniverse: readonly ValueFacetValue<string>[];
 }> = ({currentState, onChange, valueUniverse}) => {
   const state = new ValueFacetFilterState<string>({

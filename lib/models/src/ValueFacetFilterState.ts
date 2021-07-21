@@ -1,4 +1,4 @@
-import {ValueFacetFilter} from "ValueFacetFilter";
+import {ValueFacetFilter} from "./ValueFacetFilter";
 
 export class ValueFacetFilterState<T> {
   private readonly excludeValueSet: Set<T>;
