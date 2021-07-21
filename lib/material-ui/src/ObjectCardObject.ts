@@ -1,5 +1,5 @@
 import {JoinedImage, JoinedRights} from "@paradicms/models";
-import {ObjectCardInstitution} from "ObjectCardInstitution";
+import {ObjectCardInstitution} from "./ObjectCardInstitution";
 
 export interface ObjectCardObject {
   readonly abstract: string | null;

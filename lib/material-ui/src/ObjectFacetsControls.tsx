@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Accordion, AccordionDetails, AccordionSummary, Grid} from "@material-ui/core";
 import {ObjectFacets, ObjectFilters, ObjectFiltersState} from "@paradicms/models";
-import {ValueFacetControls} from "ValueFacetControls";
+import {ValueFacetControls} from "./ValueFacetControls";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 export const ObjectFacetsControls: React.FunctionComponent<{
