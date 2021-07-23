@@ -3,19 +3,17 @@ from pathlib import Path
 from typing import Tuple
 
 import pytest
-
 from paradicms_etl._model import _Model
-from paradicms_gui.loaders.gui_loader import GuiLoader
 from paradicms_etl.models.image import Image
 from paradicms_etl.pipelines.test_data_pipeline import TestDataPipeline
+
+from paradicms_gui.loaders.gui_loader import GuiLoader
 from .nop_image_archiver import NopImageArchiver
 
 
 @pytest.mark.parametrize("gui", ["bootstrap-collection", "material-ui-union"])
 def test_load(gui: str, test_data_models: Tuple[_Model, ...], tmp_path):
-    gui_dir_path = (
-        Path(__file__).parent.parent.parent.parent.parent.parent / "gui" / "app" / gui
-    )
+    gui_dir_path = Path(__file__).parent.parent.parent.parent / "app" / gui
     assert gui_dir_path.is_dir(), gui_dir_path
 
     if not (gui_dir_path / "node_modules").is_dir():

@@ -28,9 +28,7 @@ class GuiPackage:
         elif os.path.isdir(gui):
             gui_dir_path = Path(self.__gui)
         else:
-            gui_dir_path = (
-                Path(__file__).parent.parent.parent.parent / "gui" / "app" / gui
-            )
+            gui_dir_path = Path(__file__).parent.parent.parent.parent / "app" / gui
         if not gui_dir_path.is_dir():
             raise ValueError(f"{gui_dir_path} does not exist")
 
