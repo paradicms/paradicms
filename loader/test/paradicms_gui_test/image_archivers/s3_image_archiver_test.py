@@ -4,8 +4,8 @@ from pathlib import Path
 
 from rdflib import URIRef
 
-from paradicms_etl.file_cache import FileCache
-from paradicms_etl.image_archivers.s3_image_archiver import S3ImageArchiver
+from paradicms_gui.file_cache import FileCache
+from paradicms_gui.image_archivers.s3_image_archiver import S3ImageArchiver
 
 
 def test_archive_image(tmp_path):

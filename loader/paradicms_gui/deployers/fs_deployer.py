@@ -2,10 +2,10 @@ from datetime import datetime
 from pathlib import Path
 from shutil import copytree, rmtree
 
-from paradicms_gui._gui_deployer import _GuiDeployer
+from paradicms_gui._deployer import _Deployer
 
 
-class FsGuiDeployer(_GuiDeployer):
+class FsDeployer(_Deployer):
     """
     Deployer to the file system.
 
@@ -32,7 +32,7 @@ class FsGuiDeployer(_GuiDeployer):
         :param gui_deploy_dir_path: directory to "deploy" the GUI to
         """
 
-        _GuiDeployer.__init__(self)
+        _Deployer.__init__(self)
         self.__archive = archive
         self.__clean = clean
         self.__copy = copy

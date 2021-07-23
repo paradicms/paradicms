@@ -2,7 +2,7 @@ from pathlib import Path
 
 from rdflib import URIRef
 
-from paradicms_etl._image_archiver import _ImageArchiver
+from paradicms_gui._image_archiver import _ImageArchiver
 
 
 class NopImageArchiver(_ImageArchiver):

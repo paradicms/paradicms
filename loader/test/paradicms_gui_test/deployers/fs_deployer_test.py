@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from shutil import rmtree
 
-from paradicms_gui.loaders.fs_gui_deployer import FsGuiDeployer
+from paradicms_gui.deployers.fs_deployer import FsDeployer
 
 
 def test_archive_rename(tmp_path):
@@ -13,9 +13,7 @@ def test_archive_rename(tmp_path):
     gui_out_dir_path.mkdir()
     (gui_out_dir_path / "temp.txt").touch()
 
-    sut = FsGuiDeployer(
-        archive=True, gui_deploy_dir_path=gui_deploy_dir_path, copy=False
-    )
+    sut = FsDeployer(archive=True, gui_deploy_dir_path=gui_deploy_dir_path, copy=False)
     sut.deploy(gui_out_dir_path=gui_out_dir_path)
     assert not gui_out_dir_path.exists()  # Should have been renamed
     assert (gui_deploy_dir_path / "current").is_dir()
@@ -47,9 +45,7 @@ def test_overwrite_copy(tmp_path):
     gui_out_dir_path.mkdir()
     (gui_out_dir_path / "temp.txt").touch()
 
-    sut = FsGuiDeployer(
-        archive=False, gui_deploy_dir_path=gui_deploy_dir_path, copy=True
-    )
+    sut = FsDeployer(archive=False, gui_deploy_dir_path=gui_deploy_dir_path, copy=True)
     sut.deploy(gui_out_dir_path=gui_out_dir_path)
     assert gui_deploy_dir_path.is_dir()
     assert gui_out_dir_path.exists()
@@ -69,7 +65,7 @@ def test_overwrite_rename(tmp_path):
     gui_out_dir_path.mkdir()
     (gui_out_dir_path / "temp.txt").touch()
 
-    sut = FsGuiDeployer(archive=False, gui_deploy_dir_path=gui_deploy_dir_path)
+    sut = FsDeployer(archive=False, gui_deploy_dir_path=gui_deploy_dir_path)
     sut.deploy(gui_out_dir_path=gui_out_dir_path)
     assert gui_deploy_dir_path.is_dir()
     assert not gui_out_dir_path.exists()  # Should have been renamed

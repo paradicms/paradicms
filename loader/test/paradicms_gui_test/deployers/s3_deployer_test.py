@@ -2,11 +2,7 @@ import os
 import urllib
 from pathlib import Path
 
-from rdflib import URIRef
-
-from paradicms_etl.file_cache import FileCache
-from paradicms_etl.image_archivers.s3_image_archiver import S3ImageArchiver
-from paradicms_gui.loaders.s3_gui_deployer import S3GuiDeployer
+from paradicms_gui.deployers.s3_deployer import S3Deployer
 
 
 def test_deploy(tmp_path):
@@ -18,7 +14,7 @@ def test_deploy(tmp_path):
     (tmp_dir_path / "subdir").mkdir()
     (tmp_dir_path / "subdir" / "test.txt").touch()
 
-    sut = S3GuiDeployer(s3_bucket_name="paradicms-test-deployment")
+    sut = S3Deployer(s3_bucket_name="paradicms-test-deployment")
     sut.deploy(gui_out_dir_path=tmp_dir_path)
 
     with urllib.request.urlopen(

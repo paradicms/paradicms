@@ -2,8 +2,8 @@ from pathlib import Path
 
 from rdflib import URIRef
 
-from paradicms_etl.file_cache import FileCache
-from paradicms_etl.image_archivers.fs_image_archiver import FsImageArchiver
+from paradicms_gui.file_cache import FileCache
+from paradicms_gui.image_archivers.fs_image_archiver import FsImageArchiver
 
 
 def test_archive_image(tmp_path):

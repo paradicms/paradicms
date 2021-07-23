@@ -3,7 +3,7 @@ from urllib.error import HTTPError
 
 from rdflib import URIRef
 
-from paradicms_etl.file_cache import FileCache
+from paradicms_gui.file_cache import FileCache
 
 
 def test_get_file_404(tmp_path):

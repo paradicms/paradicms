@@ -7,10 +7,10 @@ import boto3
 from rdflib import URIRef
 from tqdm import tqdm
 
-from paradicms_gui._gui_deployer import _GuiDeployer
+from paradicms_gui._deployer import _Deployer
 
 
-class S3GuiDeployer(_GuiDeployer):
+class S3Deployer(_Deployer):
     def __init__(
         self,
         *,
@@ -19,7 +19,7 @@ class S3GuiDeployer(_GuiDeployer):
         aws_secret_access_key: Optional[str] = None,
         **kwds,
     ):
-        _GuiDeployer.__init__(self, **kwds)
+        _Deployer.__init__(self, **kwds)
 
         self.__s3_bucket_name = s3_bucket_name
 

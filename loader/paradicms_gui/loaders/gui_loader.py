@@ -6,9 +6,9 @@ from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 
-from paradicms_gui._gui_deployer import _GuiDeployer
+from paradicms_gui._deployer import _Deployer
 from paradicms_gui._image_archiver import _ImageArchiver
-from paradicms_gui.gui_deployers.fs_gui_deployer import FsGuiDeployer
+from paradicms_gui.deployers.fs_deployer import FsDeployer
 from paradicms_gui.image_archivers.fs_image_archiver import FsImageArchiver
 from paradicms_gui.loaders.gui_images_loader import GuiImagesLoader
 from paradicms_gui.loaders.gui_package import GuiPackage
@@ -23,7 +23,7 @@ class GuiLoader(_BufferingLoader):
     - Archives original images (via an _ImageArchiver)
     - Thumbnails images and archives them (via GuiImagesLoader)
     - Calls npm to generate the site (via GuiPackage)
-    - Optionally deploys the generated site (via a _GuiDeployer)
+    - Optionally deploys the generated site (via a _Deployer)
 
     As noted, this class delegate most of its work to auxiliary classes such as GuiPackage.
     """
@@ -33,7 +33,7 @@ class GuiLoader(_BufferingLoader):
         *,
         gui: Union[Path, str],
         base_url_path: str = "",
-        deployer: Optional[_GuiDeployer] = None,
+        deployer: Optional[_Deployer] = None,
         dev: bool = False,
         image_archiver: Optional[_ImageArchiver] = None,
         sleep_s_after_image_download: Optional[float] = None,
@@ -133,7 +133,7 @@ class GuiLoader(_BufferingLoader):
 
             deployer = self.__deployer
             if deployer is None:
-                deployer = FsGuiDeployer(
+                deployer = FsDeployer(
                     gui_deploy_dir_path=self._loaded_data_dir_path / "deployed"
                 )
 

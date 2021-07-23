@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 
 
-class _GuiDeployer(ABC):
+class _Deployer(ABC):
     def __init__(self, **kwds):
         self.__logger = logging.getLogger(self.__class__.__name__)
 
