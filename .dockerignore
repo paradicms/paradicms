@@ -1,0 +1,11 @@
+/.circleci/
+/.git/
+/.github/
+/etl/data/
+/gui/integration/
+**/node_modules/
+**/*.pyc
+**/.vscode/
+/etl/test/
+/etl/venv/
+
