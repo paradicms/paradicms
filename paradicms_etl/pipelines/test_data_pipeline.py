@@ -15,7 +15,6 @@ from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicens
 from paradicms_etl.models.dublin_core_property_definitions import (
     DublinCorePropertyDefinitions,
 )
-from paradicms_etl.models.gui_metadata import GuiMetadata
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
@@ -71,11 +70,11 @@ class TestDataPipeline(_Pipeline):
             yield from RightsStatementsDotOrgRightsStatements.as_tuple()
             yield from VraCorePropertyDefinitions.as_tuple()
 
-            yield GuiMetadata(
-                bootstrap_stylesheet_href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css",
-                document_title="Test data",
-                navbar_title="Test data",
-            )
+            # yield GuiMetadata(
+            #     bootstrap_stylesheet_href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css",
+            #     document_title="Test data",
+            #     navbar_title="Test data",
+            # )
 
             yield from self.__generate_institutions()
 
@@ -354,16 +353,16 @@ class TestDataPipeline(_Pipeline):
         if loader is None:
             loader = CompositeLoader(
                 loaders=(
-                    RdfFileLoader(
-                        file_path=root_dir_path
-                        / "gui"
-                        / "integration"
-                        / "material-ui-union"
-                        / "cypress"
-                        / "fixtures"
-                        / "data.ttl",
-                        pipeline_id=self.ID,
-                    ),
+                    # RdfFileLoader(
+                    #     file_path=root_dir_path
+                    #     / "gui"
+                    #     / "integration"
+                    #     / "material-ui-union"
+                    #     / "cypress"
+                    #     / "fixtures"
+                    #     / "data.ttl",
+                    #     pipeline_id=self.ID,
+                    # ),
                     RdfFileLoader(
                         file_path=root_dir_path
                         / "etl"
