@@ -1,10 +1,8 @@
 name: Build
-on:
-  push:
-  workflow_dispatch:
+on: [ push, workflow_dispatch ]
 jobs:
-  etl:
-    name: Build and test etl
+  build:
+    name: Build and test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-python@v2
@@ -14,80 +12,18 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('etl/setup.cfg') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('setup.cfg') }}
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Install Python dependencies
         run: |
-          cd etl
           pip install -qqq .[testing]
       - name: Run Python unit tests
         run: |
-          cd etl
           mkdir test-results
           pytest --junitxml=test-results/junit.xml
       - name: Publish unit test results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-          files: etl/test-results/*.xml
-  gui:
-    name: Build and test gui
-    runs-on: ubuntu-latest
-    env:
-      NEXT_TELEMETRY_DISABLED: "1"
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-      - name: Cache Node.js modules and Next.js cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.npm
-            gui/node_modules
-            gui/*/*/node_modules
-            gui/app/*/.next/cache
-          key: ${{ runner.OS }}-node-${{ hashFiles('gui/package-lock.json') }}
-      - name: Build and test gui
-        run: |
-          cd gui
-          export PATH=$PATH:$PWD/node_modules/.bin
-          script/cibuild
-# Commented out to speed up the build
-#      - name: Test gui_loader
-#        run: |
-#          cd etl
-#          pytest --junitxml=test-results/gui_loader.xml test/paradicms_etl_test/loaders/gui/gui_builder_test.py test/paradicms_etl_test/loaders/gui/gui_loader_test.py
-  docker:
-    name: Push Docker image to GitHub Container Registry
-    needs:
-      - etl
-      - gui
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
-        id: extract_branch
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-        if: steps.extract_branch.outputs.branch == 'master'
-      - name: Build container image
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: |
-            ghcr.io/${{ github.repository }}:latest
-        if: steps.extract_branch.outputs.branch == 'master'
+          files: test-results/*.xml
