@@ -13,7 +13,7 @@ from .nop_image_archiver import NopImageArchiver
 
 @pytest.mark.parametrize("gui", ["bootstrap-collection", "material-ui-union"])
 def test_load(gui: str, test_data_models: Tuple[_Model, ...], tmp_path):
-    gui_dir_path = Path(__file__).parent.parent.parent.parent / "app" / gui
+    gui_dir_path = Path(__file__).parent.parent.parent.parent.parent / "app" / gui
     assert gui_dir_path.is_dir(), gui_dir_path
 
     if not (gui_dir_path / "node_modules").is_dir():
