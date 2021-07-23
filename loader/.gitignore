@@ -1,0 +1,7 @@
+/build/
+/config/
+/dist/
+*.egg-info/
+.mypy_cache/
+*.pyc
+/venv/
