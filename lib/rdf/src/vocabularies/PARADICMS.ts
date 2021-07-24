@@ -17,7 +17,7 @@ export class PARADICMS {
 
   // Resources
   static Collection = PARADICMS.NS("Collection");
-  static GuiMetadata = PARADICMS.NS("GuiMetadata");
+  static Configuration = PARADICMS.NS("Configuration");
   static Image = PARADICMS.NS("Image");
   static Institution = PARADICMS.NS("Institution");
   static License = PARADICMS.NS("License");

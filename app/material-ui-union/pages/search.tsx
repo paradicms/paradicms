@@ -1,6 +1,6 @@
 import {NumberParam, useQueryParam} from "use-query-params";
 import {JsonQueryParamConfig} from "@paradicms/react";
-import {GuiMetadata, JoinedImage, JoinedRights, ObjectQuery, PropertyDefinition} from "@paradicms/models";
+import {JoinedImage, JoinedRights, ObjectQuery, PropertyDefinition} from "@paradicms/models";
 import * as React from "react";
 import {Layout} from "components/Layout";
 import {Data} from "lib/Data";
@@ -11,7 +11,7 @@ import {Hrefs} from "lib/Hrefs";
 import {joinImage, joinRights, selectThumbnail} from "@paradicms/model-utils";
 
 interface StaticProps {
-  readonly guiMetadata: GuiMetadata | null;
+  readonly configuration: Configuration | null;
   readonly institutions: readonly {
     readonly objects: readonly {
       readonly abstract: string | null;
@@ -27,10 +27,10 @@ interface StaticProps {
 }
 
 const SearchPage: React.FunctionComponent<StaticProps> = ({
-  guiMetadata,
-  institutions,
-  propertyDefinitions,
-}) => {
+                                                            configuration,
+                                                            institutions,
+                                                            propertyDefinitions,
+                                                          }) => {
   // if (typeof window === "undefined") {
   //   return null; // Don't render on the server
   // }
@@ -73,7 +73,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
       documentTitle={
         query?.text ? `Search results for "${query.text}"` : "Search results"
       }
-      guiMetadata={guiMetadata}
+      configuration={configuration}
       onSearch={text => setQuery({filters: null, text})}
     >
       <ObjectFacetedSearchGrid
@@ -107,7 +107,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      guiMetadata: data.guiMetadata,
+      configuration: data.configuration,
       institutions: data.institutions.map(institution => ({
         name: institution.name,
         objects: data.institutionObjects(institution.uri).map(object => {

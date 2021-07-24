@@ -1,10 +1,10 @@
 import {ModelRdfReader} from "./ModelRdfReader";
-import {GuiMetadata} from "@paradicms/models";
+import {Configuration} from "@paradicms/models";
 import {PARADICMS} from "./vocabularies";
 import {Store} from "n3";
 
-export class GuiMetadataRdfReader extends ModelRdfReader<GuiMetadata> {
-  read(): GuiMetadata {
+export class ConfigurationRdfReader extends ModelRdfReader<Configuration> {
+  read(): Configuration {
     return {
       bootstrapStylesheetHref:
         this.readOptionalLiteral(PARADICMS.guiBootstrapStylesheetHref)?.toString() ?? null,
@@ -17,10 +17,10 @@ export class GuiMetadataRdfReader extends ModelRdfReader<GuiMetadata> {
   }
 
   static readAll(store: Store) {
-    return ModelRdfReader._readAll<GuiMetadata>(
-      node => new GuiMetadataRdfReader(node, store),
+    return ModelRdfReader._readAll<Configuration>(
+      node => new ConfigurationRdfReader(node, store),
       store,
-      PARADICMS.GuiMetadata,
+      PARADICMS.Configuration,
     );
   }
 }

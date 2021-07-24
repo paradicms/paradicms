@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
-import {GuiMetadata, JoinedImage, JoinedRights, JoinedValue, Object, Property} from "@paradicms/models";
+import {JoinedImage, JoinedRights, JoinedValue, Object, Property} from "@paradicms/models";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
@@ -12,7 +12,7 @@ import {Hrefs} from "lib/Hrefs";
 import {DCTERMS} from "@paradicms/rdf";
 
 interface StaticProps {
-  readonly guiMetadata: GuiMetadata | null;
+  readonly configuration: Configuration | null;
   readonly institution: {
     readonly collection: {
       readonly currentObject: {
@@ -51,7 +51,7 @@ const RightsTableRow: React.FunctionComponent<{
 };
 
 const ObjectPage: React.FunctionComponent<StaticProps> = ({
-                                                            guiMetadata,
+                                                            configuration,
                                                             institution,
                                                           }) => {
   const collection = institution.collection;
@@ -69,7 +69,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
   }
 
   return (
-    <Layout collection={collection} guiMetadata={guiMetadata} object={currentObject}>
+    <Layout collection={collection} configuration={configuration} object={currentObject}>
       <Container fluid>
         <Row>
           {currentObject.images.length > 0 ?
@@ -184,7 +184,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
-      guiMetadata: data.guiMetadata,
+      configuration: data.configuration,
       institution: {
         collection: {
           currentObject: {

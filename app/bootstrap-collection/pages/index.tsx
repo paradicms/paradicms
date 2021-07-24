@@ -1,5 +1,5 @@
 import * as React from "react";
-import {GuiMetadata, JoinedImage, JoinedRights, ObjectQuery, Property, PropertyDefinition} from "@paradicms/models";
+import {JoinedImage, JoinedRights, ObjectQuery, Property, PropertyDefinition} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {Data} from "lib/Data";
 import {GetStaticProps} from "next";
@@ -13,7 +13,7 @@ import {IndexedObject, ObjectFacetedSearchQuery} from "@paradicms/lunr";
 import {joinImage, joinRights, selectThumbnail} from "@paradicms/model-utils";
 
 interface StaticProps {
-  readonly guiMetadata: GuiMetadata | null;
+  readonly configuration: Configuration | null;
   readonly institution: {
     readonly collection: {
       readonly objects: readonly {
@@ -35,7 +35,7 @@ interface StaticProps {
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
-                                                           guiMetadata,
+                                                           configuration,
                                                            institution,
                                                            propertyDefinitions,
                                                          }) => {
@@ -74,7 +74,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
       {({objectFacets, objects}) => (
         <Layout
           collection={collection}
-          guiMetadata={guiMetadata}
+          configuration={configuration}
           onSearch={text => {
             setObjectQueryParam({filters: null, text});
             setPage(undefined);
@@ -171,7 +171,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      guiMetadata: data.guiMetadata,
+      configuration: data.configuration,
       institution: {
         collection: {
           objects: data.objects.map(object => {

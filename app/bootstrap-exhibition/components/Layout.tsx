@@ -3,23 +3,22 @@ import {Hrefs} from "lib/Hrefs";
 import {Breadcrumb, BreadcrumbItem, Col, Container, Navbar, Row} from "reactstrap";
 import Link from "next/link";
 import Head from "next/head";
-import {GuiMetadata} from "@paradicms/models";
 import {STYLESHEET_HREF_DEFAULT} from "@paradicms/bootstrap";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string;};
-  guiMetadata: GuiMetadata | null;
+  configuration: Configuration | null;
   object?: {readonly title: string; readonly uri: string;};
 }>> = ({
          collection,
          children,
-         guiMetadata,
+         configuration,
          object,
        }) => (
   <>
     <Head>
       <title>{collection.title + (object ? " - " + object.title : "")}</title>
-      <link rel="stylesheet" href={guiMetadata?.bootstrapStylesheetHref ?? STYLESHEET_HREF_DEFAULT} />
+      <link rel="stylesheet" href={configuration?.bootstrapStylesheetHref ?? STYLESHEET_HREF_DEFAULT} />
     </Head>
     <Container fluid>
       <Row>

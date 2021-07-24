@@ -1,5 +1,5 @@
 export * from "./CollectionRdfReader";
-export * from "./GuiMetadataRdfReader";
+export * from "ConfigurationRdfReader";
 export * from "./ImageRdfReader";
 export * from "./InstitutionRdfReader";
 export * from "./LicenseRdfReader";

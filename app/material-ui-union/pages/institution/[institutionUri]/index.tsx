@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
 import {Hrefs} from "lib/Hrefs";
-import {GuiMetadata, JoinedImage} from "@paradicms/models";
+import {JoinedImage} from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/next";
@@ -16,7 +16,7 @@ import {
 } from "@paradicms/model-utils";
 
 interface StaticProps {
-  readonly guiMetadata: GuiMetadata | null;
+  readonly configuration: Configuration | null;
   readonly institution: {
     readonly collections: readonly {
       readonly thumbnail: JoinedImage | null;
@@ -29,14 +29,14 @@ interface StaticProps {
 }
 
 const InstitutionPage: React.FunctionComponent<StaticProps> = ({
-  guiMetadata,
-  institution,
-}) => {
+                                                                 configuration,
+                                                                 institution,
+                                                               }) => {
   return (
     <Layout
       breadcrumbs={{institution}}
       documentTitle={`${institution.name} - Collections`}
-      guiMetadata={guiMetadata}
+      configuration={configuration}
     >
       <CollectionsGallery
         collections={institution.collections}
@@ -85,7 +85,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
-      guiMetadata: data.guiMetadata,
+      configuration: data.configuration,
       institution: {
         collections: institutionCollections.map(collection => {
           const thumbnail = selectThumbnail({
@@ -93,7 +93,7 @@ export const getStaticProps: GetStaticProps = async ({
               collection,
               imagesByDepictsUri: institutionImagesByDepictsUri,
               objectsByCollectionUri: indexObjectsByCollectionUri(
-                institutionObjects
+                institutionObjects,
               ),
             }),
             targetDimensions: thumbnailTargetDimensions,

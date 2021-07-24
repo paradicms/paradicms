@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
-import {GuiMetadata, JoinedImage, JoinedRights, Property, PropertyDefinition} from "@paradicms/models";
+import {JoinedImage, JoinedRights, Property, PropertyDefinition} from "@paradicms/models";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
@@ -9,7 +9,7 @@ import {Accordion, ObjectImagesCarousel, PropertiesTable, RightsTable} from "@pa
 import {joinImage, joinRights} from "@paradicms/model-utils";
 
 interface StaticProps {
-  readonly guiMetadata: GuiMetadata | null;
+  readonly configuration: Configuration | null;
   readonly institution: {
     readonly collection: {
       readonly object: {
@@ -30,7 +30,7 @@ interface StaticProps {
 }
 
 const ObjectPage: React.FunctionComponent<StaticProps> = ({
-                                                            guiMetadata,
+                                                            configuration,
                                                             institution,
                                                             propertyDefinitions,
                                                           }) => {
@@ -39,7 +39,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
   const rights = object.rights ?? institution.rights ?? null;
 
   return (
-    <Layout collection={collection} documentTitle={"Object - " + object.title} guiMetadata={guiMetadata}>
+    <Layout collection={collection} documentTitle={"Object - " + object.title} configuration={configuration}>
       <Container fluid>
         <Row>
           <Col xs={12} style={{display: "flex", justifyContent: "center"}}>
@@ -102,7 +102,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
-      guiMetadata: data.guiMetadata,
+      configuration: data.configuration,
       institution: {
         collection: {
           object: {

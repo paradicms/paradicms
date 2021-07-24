@@ -1,5 +1,5 @@
 export * from "./Collection";
-export * from "./GuiMetadata";
+export * from "./Configuration";
 export * from "./Image";
 export * from "./ImageDimensions";
 export * from "./Institution";
