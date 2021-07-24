@@ -4,6 +4,6 @@ COPY . /paradicms
 
 RUN cd /paradicms/etl && pip3 install . && cd /paradicms && rm -fr etl && rm -fr /root/.cache
 
-RUN cd /paradicms/gui && npm install && npm run lerna:bootstrap && cd lib && ./build.sh
+RUN cd /paradicms/gui && yarn install && cd lib && ./build.sh
 
 ENV NEXT_TELEMETRY_DISABLED 1
