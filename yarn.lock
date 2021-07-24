@@ -2168,13 +2168,6 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/reactstrap@^8.5.1":
-  version "8.7.2"
-  resolved "https://registry.yarnpkg.com/@types/reactstrap/-/reactstrap-8.7.2.tgz#0ab86f35e472e8f2002eaf8c7a42193c9cea6add"
-  integrity sha512-8sYGS/LhG+ic8vhLwxhuVn+TSqS1lKzplm9BHv4JaQoetStAi9uOqP2VREfefIRT3JnOq5Y+G7Afdryvn+UgZQ==
-  dependencies:
-    reactstrap "*"
-
 "@types/scheduler@*":
   version "0.16.2"
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
@@ -11089,7 +11082,7 @@ react@^16.3.0, react@^16.9.0:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
 
-reactstrap@*, reactstrap@^8.5.1:
+reactstrap@^8.5.1:
   version "8.9.0"
   resolved "https://registry.yarnpkg.com/reactstrap/-/reactstrap-8.9.0.tgz#bca4afa3f5cd18899ef9b33d877a141886d5abae"
   integrity sha512-pmf33YjpNZk1IfrjqpWCUMq9hk6GzSnMWBAofTBNIRJQB1zQ0Au2kzv3lPUAFsBYgWEuI9iYa/xKXHaboSiMkQ==
