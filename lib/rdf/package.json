@@ -11,6 +11,7 @@
   "devDependencies": {
     "@types/chai": "^4.2.15",
     "@types/mocha": "^8.2.1",
+    "@types/node": "12.12.6",
     "chai": "^4.2.0",
     "mocha": "^8.2.1",
     "rimraf": "3.0.2",
