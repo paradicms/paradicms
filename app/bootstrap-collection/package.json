@@ -19,7 +19,7 @@
     "sass": "^1.27.0"
   },
   "devDependencies": {
-    "rimraf": "^3.0.2"
+    "rimraf": "3.0.2"
   },
   "scripts": {
     "clean": "rimraf .next && rimraf out",
