@@ -17,13 +17,14 @@ import {NavbarSearchForm, STYLESHEET_HREF_DEFAULT} from "@paradicms/bootstrap";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";
+import {Configuration} from "@paradicms/models";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string; readonly uri: string};
+  configuration: Configuration;
   cardTitle?: React.ReactNode;
   className?: string;
   documentTitle?: string;
-  configuration: Configuration | null;
   onSearch?: (text: string) => void;
 }>> = ({
          collection,
@@ -55,7 +56,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
     <>
       <Head>
         <title>{collection.title + (documentTitle ? " - " + documentTitle : "")}</title>
-        <link rel="stylesheet" href={configuration?.bootstrapStylesheetHref ?? STYLESHEET_HREF_DEFAULT} />
+        <link rel="stylesheet" href={configuration.bootstrapStylesheetHref ?? STYLESHEET_HREF_DEFAULT} />
       </Head>
       <Container fluid>
         <Row>

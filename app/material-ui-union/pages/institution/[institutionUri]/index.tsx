@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
 import {Hrefs} from "lib/Hrefs";
-import {JoinedImage} from "@paradicms/models";
+import {Configuration, JoinedImage} from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/next";
@@ -16,7 +16,7 @@ import {
 } from "@paradicms/model-utils";
 
 interface StaticProps {
-  readonly configuration: Configuration | null;
+  readonly configuration: Configuration;
   readonly institution: {
     readonly collections: readonly {
       readonly thumbnail: JoinedImage | null;

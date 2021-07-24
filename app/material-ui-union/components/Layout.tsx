@@ -15,6 +15,7 @@ import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {useRouter} from "next/router";
 import Head from "next/head";
+import {Configuration} from "@paradicms/models";
 
 const useStyles = makeStyles(theme => ({
   brand: {
@@ -43,8 +44,8 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   };
   cardTitle?: React.ReactNode;
   className?: string;
+  configuration: Configuration;
   documentTitle?: string;
-  configuration: Configuration | null;
   onSearch?: (text: string) => void;
 }>> = ({
          breadcrumbs,
@@ -145,7 +146,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   }
 
   let qualifiedDocumentTitle: string[] = [];
-  if (configuration && configuration.documentTitle) {
+  if (configuration.documentTitle) {
     qualifiedDocumentTitle.push(configuration.documentTitle);
   }
   if (documentTitle) {
@@ -161,7 +162,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         <Grid item>
           <AppBar data-cy="navbar" position="static">
             <Toolbar>
-              {configuration?.navbarTitle ? (
+              {configuration.navbarTitle ? (
                 <Typography variant="h6" className={classes.brand}>
                   {configuration.navbarTitle}
                 </Typography>

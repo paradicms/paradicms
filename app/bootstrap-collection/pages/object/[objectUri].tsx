@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
-import {JoinedImage, JoinedRights, Property, PropertyDefinition} from "@paradicms/models";
+import {Configuration, JoinedImage, JoinedRights, Property, PropertyDefinition} from "@paradicms/models";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
@@ -9,7 +9,7 @@ import {Accordion, ObjectImagesCarousel, PropertiesTable, RightsTable} from "@pa
 import {joinImage, joinRights} from "@paradicms/model-utils";
 
 interface StaticProps {
-  readonly configuration: Configuration | null;
+  readonly configuration: Configuration;
   readonly institution: {
     readonly collection: {
       readonly object: {

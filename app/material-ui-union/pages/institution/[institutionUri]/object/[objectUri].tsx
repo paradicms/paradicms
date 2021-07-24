@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
 import {Accordion, AccordionDetails, AccordionSummary, Grid} from "@material-ui/core";
-import {JoinedImage, JoinedRights, Property, PropertyDefinition} from "@paradicms/models";
+import {Configuration, JoinedImage, JoinedRights, Property, PropertyDefinition} from "@paradicms/models";
 import {ObjectImagesCarousel, PropertiesTable, RightsTable} from "@paradicms/material-ui";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Data} from "lib/Data";
@@ -10,7 +10,7 @@ import {GetStaticPaths, GetStaticProps} from "next";
 import {joinImage, joinRights} from "@paradicms/model-utils";
 
 interface StaticProps {
-  readonly configuration: Configuration | null;
+  readonly configuration: Configuration;
   readonly institution: {
     readonly name: string;
     readonly object: {

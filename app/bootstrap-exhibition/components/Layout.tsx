@@ -4,10 +4,11 @@ import {Breadcrumb, BreadcrumbItem, Col, Container, Navbar, Row} from "reactstra
 import Link from "next/link";
 import Head from "next/head";
 import {STYLESHEET_HREF_DEFAULT} from "@paradicms/bootstrap";
+import {Configuration} from "@paradicms/models";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string;};
-  configuration: Configuration | null;
+  configuration: Configuration;
   object?: {readonly title: string; readonly uri: string;};
 }>> = ({
          collection,
@@ -18,7 +19,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   <>
     <Head>
       <title>{collection.title + (object ? " - " + object.title : "")}</title>
-      <link rel="stylesheet" href={configuration?.bootstrapStylesheetHref ?? STYLESHEET_HREF_DEFAULT} />
+      <link rel="stylesheet" href={configuration.bootstrapStylesheetHref ?? STYLESHEET_HREF_DEFAULT} />
     </Head>
     <Container fluid>
       <Row>

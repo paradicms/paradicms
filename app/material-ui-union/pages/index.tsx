@@ -6,9 +6,10 @@ import {Layout} from "components/Layout";
 import {Link} from "@paradicms/material-ui-next";
 import {InstitutionCardInstitution, InstitutionsGallery, thumbnailTargetDimensions} from "@paradicms/material-ui";
 import {joinImage, selectThumbnail} from "@paradicms/model-utils";
+import {Configuration} from "@paradicms/models";
 
 interface StaticProps {
-  readonly configuration: Configuration | null;
+  readonly configuration: Configuration;
   readonly institutions: readonly InstitutionCardInstitution[];
 }
 

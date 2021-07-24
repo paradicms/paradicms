@@ -1,6 +1,6 @@
 import {NumberParam, useQueryParam} from "use-query-params";
 import {JsonQueryParamConfig} from "@paradicms/react";
-import {JoinedImage, JoinedRights, ObjectQuery, PropertyDefinition} from "@paradicms/models";
+import {Configuration, JoinedImage, JoinedRights, ObjectQuery, PropertyDefinition} from "@paradicms/models";
 import * as React from "react";
 import {Layout} from "components/Layout";
 import {Data} from "lib/Data";
@@ -11,7 +11,7 @@ import {Hrefs} from "lib/Hrefs";
 import {joinImage, joinRights, selectThumbnail} from "@paradicms/model-utils";
 
 interface StaticProps {
-  readonly configuration: Configuration | null;
+  readonly configuration: Configuration;
   readonly institutions: readonly {
     readonly objects: readonly {
       readonly abstract: string | null;

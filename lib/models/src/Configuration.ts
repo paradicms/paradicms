@@ -1,5 +1,8 @@
+import {Facet} from "./Facet";
+
 export interface Configuration {
-  bootstrapStylesheetHref: string | null;
-  documentTitle: string | null;
-  navbarTitle: string | null;
+  readonly bootstrapStylesheetHref: string | null;
+  readonly documentTitle: string | null;
+  readonly navbarTitle: string | null;
+  readonly objectFacets: Facet[];
 }

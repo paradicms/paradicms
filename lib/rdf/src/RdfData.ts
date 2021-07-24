@@ -1,6 +1,7 @@
 import {
   Collection,
   Configuration,
+  defaultConfiguration,
   Image,
   Institution,
   License,
@@ -49,7 +50,7 @@ export class RdfData {
     [index: string]: readonly Collection[];
   };
   private readonly collectionsByUri: {[index: string]: Collection};
-  readonly configuration: Configuration | null;
+  readonly configuration: Configuration;
   readonly images: readonly Image[];
   // @ts-ignore
   private readonly imagesByDepictsUri: {[index: string]: readonly Image[]};
@@ -79,7 +80,7 @@ export class RdfData {
     );
 
     const configuration = ConfigurationRdfReader.readAll(store);
-    this.configuration = configuration.length > 0 ? configuration[0] : null;
+    this.configuration = configuration.length > 0 ? configuration[0] : defaultConfiguration;
 
     this.images = ImageRdfReader.readAll(store);
     this.imagesByDepictsUri = indexImagesByDepictsUri(this.images);

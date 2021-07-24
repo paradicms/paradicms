@@ -1,5 +1,5 @@
 import * as React from "react";
-import {JoinedImage, JoinedRights, ObjectQuery, Property, PropertyDefinition} from "@paradicms/models";
+import {Configuration, JoinedImage, JoinedRights, ObjectQuery, Property, PropertyDefinition} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {Data} from "lib/Data";
 import {GetStaticProps} from "next";
@@ -13,7 +13,7 @@ import {IndexedObject, ObjectFacetedSearchQuery} from "@paradicms/lunr";
 import {joinImage, joinRights, selectThumbnail} from "@paradicms/model-utils";
 
 interface StaticProps {
-  readonly configuration: Configuration | null;
+  readonly configuration: Configuration;
   readonly institution: {
     readonly collection: {
       readonly objects: readonly {

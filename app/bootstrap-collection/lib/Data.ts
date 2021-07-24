@@ -1,5 +1,5 @@
 import fs from "fs";
-import {Collection, Image, Institution, Object, PropertyDefinition} from "@paradicms/models";
+import {Collection, Configuration, Image, Institution, Object, PropertyDefinition} from "@paradicms/models";
 import {RdfData} from "@paradicms/rdf";
 
 export class Data {
@@ -45,7 +45,7 @@ export class Data {
   }
 
   readonly collection: Collection;
-  readonly configuration: Configuration | null;
+  readonly configuration: Configuration;
   readonly images: readonly Image[];
   readonly institution: Institution;
   readonly licenseTitlesByUri: {[index: string]: string};
