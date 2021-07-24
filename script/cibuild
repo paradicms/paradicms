@@ -4,7 +4,9 @@ set -eu
 
 cd "$(dirname "$0")"
 cd ..
-export DATA_TTL_FILE_PATH=$PWD/../etl/data/test_data/loaded/data.ttl
+echo "Current working directory: $PWD"
+export DATA_TTL_FILE_PATH=`realpath $PWD/../etl/data/test_data/loaded/data.ttl`
+echo "DATA_TTL_FILE_PATH: $DATA_TTL_FILE_PATH"
 
 
 yarn install
