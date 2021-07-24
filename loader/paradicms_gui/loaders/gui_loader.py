@@ -10,8 +10,8 @@ from paradicms_gui._deployer import _Deployer
 from paradicms_gui._image_archiver import _ImageArchiver
 from paradicms_gui.deployers.fs_deployer import FsDeployer
 from paradicms_gui.image_archivers.fs_image_archiver import FsImageArchiver
+from paradicms_gui.loaders.app_package import AppPackage
 from paradicms_gui.loaders.gui_images_loader import GuiImagesLoader
-from paradicms_gui.loaders.gui_package import GuiPackage
 
 
 class GuiLoader(_BufferingLoader):
@@ -22,16 +22,16 @@ class GuiLoader(_BufferingLoader):
     - Writes the input data to an rdf/turtle file
     - Archives original images (via an _ImageArchiver)
     - Thumbnails images and archives them (via GuiImagesLoader)
-    - Calls npm to generate the site (via GuiPackage)
+    - Calls npm to generate the site (via AppPackage)
     - Optionally deploys the generated site (via a _Deployer)
 
-    As noted, this class delegate most of its work to auxiliary classes such as GuiPackage.
+    As noted, this class delegate most of its work to auxiliary classes such as AppPackage.
     """
 
     def __init__(
         self,
         *,
-        gui: Union[Path, str],
+        app: Union[Path, str],
         base_url_path: str = "",
         deployer: Optional[_Deployer] = None,
         dev: bool = False,
@@ -43,8 +43,8 @@ class GuiLoader(_BufferingLoader):
         **kwds,
     ):
         """
+        :param app: name of an app (in pp/ of this repository) or path to an app
         :param base_url_path: Next.js basePath (https://nextjs.org/docs/api-reference/next.config.js/basepath)
-        :param gui: name of a gui (in gui/ of this repository) or path to a gui
         :param deployer: optional deployer implementation; if not specified, defaults to a file system deployer that writes to the loaded data directory
         :param dev: transform the input data to RDF and archive and thumbnail but run the Next.js dev server instead of generating and deploying static files
         :param image_archiver: optional image archiver implementation; if not specified, defaults to a file system archiver that writes to Next's public/ directory
@@ -53,23 +53,23 @@ class GuiLoader(_BufferingLoader):
         """
 
         _BufferingLoader.__init__(self, **kwds)
+        self.__app = app
         self.__base_url_path = base_url_path
         self.__deployer = deployer
         self.__dev = dev
-        self.__gui = gui
         self.__image_archiver = image_archiver
         self.__sleep_s_after_image_download = sleep_s_after_image_download
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
 
     def _flush(self, models):
-        gui_package = GuiPackage(base_url_path=self.__base_url_path, gui=self.__gui)
+        app_package = AppPackage(base_url_path=self.__base_url_path, app=self.__app)
 
         image_archiver = self.__image_archiver
         if image_archiver is None:
             # If no image archiver specified, "archive" copies of images to the Next.js public/ directory, which contains static assets.
             image_archiver = FsImageArchiver(
                 base_url=f"{self.__base_url_path.rstrip('/')}/img/archive/",
-                root_directory_path=gui_package.gui_dir_path
+                root_directory_path=app_package.app_dir_path
                 / "public"
                 / "img"
                 / "archive",
@@ -125,11 +125,11 @@ class GuiLoader(_BufferingLoader):
         self._logger.info("loaded data to %s", data_ttl_file_path)
 
         if self.__dev:
-            gui_package.dev(data_ttl_file_path=data_ttl_file_path)
+            app_package.dev(data_ttl_file_path=data_ttl_file_path)
         else:
-            gui_package.clean()
+            app_package.clean()
 
-            gui_out_dir_path = gui_package.build(data_ttl_file_path=data_ttl_file_path)
+            gui_out_dir_path = app_package.build(data_ttl_file_path=data_ttl_file_path)
 
             deployer = self.__deployer
             if deployer is None:

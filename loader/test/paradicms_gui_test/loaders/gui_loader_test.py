@@ -11,21 +11,21 @@ from paradicms_gui.loaders.gui_loader import GuiLoader
 from .nop_image_archiver import NopImageArchiver
 
 
-@pytest.mark.parametrize("gui", ["bootstrap-collection", "material-ui-union"])
-def test_load(gui: str, test_data_models: Tuple[_Model, ...], tmp_path):
-    gui_dir_path = Path(__file__).parent.parent.parent.parent.parent / "app" / gui
-    assert gui_dir_path.is_dir(), gui_dir_path
+@pytest.mark.parametrize("app", ["bootstrap-collection", "material-ui-union"])
+def test_load(app: str, test_data_models: Tuple[_Model, ...], tmp_path):
+    app_dir_path = Path(__file__).parent.parent.parent.parent.parent / "app" / app
+    assert app_dir_path.is_dir(), app_dir_path
 
-    if not (gui_dir_path / "node_modules").is_dir():
+    if not (app_dir_path / "node_modules").is_dir():
         # Must have built GUI externally
         return
 
     loaded_data_dir_path = Path(tmp_path)
 
     gui_loader = GuiLoader(
+        app=app,
         image_archiver=NopImageArchiver(),
         loaded_data_dir_path=loaded_data_dir_path,
-        gui=gui,
         pipeline_id="test",
     )
 
@@ -44,7 +44,7 @@ def test_load(gui: str, test_data_models: Tuple[_Model, ...], tmp_path):
     gui_loader.flush()
 
     assert (loaded_data_dir_path / "data" / "test.ttl").is_file()
-    assert (loaded_data_dir_path / "deployed" / "current" / "index.html").is_file()
+    assert (loaded_data_dir_path / "deployed" / "index.html").is_file()
 
 
 if False and os.environ.get("CI") is None:
