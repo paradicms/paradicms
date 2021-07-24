@@ -11,6 +11,10 @@ jobs:
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
         id: extract_branch
+      - name: Check out the etl repo
+        uses: actions/checkout@v2
+        with:
+          path: etl
       - name: Check out the gui repo
         uses: actions/checkout@v2
         with:
@@ -32,11 +36,6 @@ jobs:
           cd gui
           export PATH=$PATH:$PWD/node_modules/.bin
           script/cibuild
-      - name: Check out the etl repo
-        uses: actions/checkout@v2
-        with:
-          path: etl
-        if: steps.extract_branch.outputs.branch == 'master'
       # Commented out to speed up the build
       #      - name: Test gui_loader
       #        run: |
