@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: etl
+          repository: paradicms/etl
       - name: Check out the gui repo
         uses: actions/checkout@v2
         with:
@@ -22,15 +23,22 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-      - name: Cache Node.js modules and Next.js cache
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache yarn dependencies
+        uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('gui/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Cache Next.js cache
         uses: actions/cache@v2
         with:
-          path: |
-            ~/.npm
-            gui/node_modules
-            gui/*/*/node_modules
-            gui/app/*/.next/cache
-          key: ${{ runner.OS }}-node-${{ hashFiles('gui/package-lock.json') }}
+          path: gui/app/*/.next/cache
+          key: ${{ runner.OS }}-node-${{ hashFiles('gui/yarn.lock') }}
       - name: Build and test gui
         run: |
           cd gui

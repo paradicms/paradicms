@@ -13,8 +13,7 @@
     "react-medium-image-zoom": "3.1.2",
     "react-reactstrap-pagination": "^2.0.3",
     "reactstrap": "^8.5.1",
-    "@types/react-medium-image-zoom": "^3.0.0",
-    "@types/reactstrap": "^8.5.1"
+    "@types/react-medium-image-zoom": "^3.0.0"
   },
   "devDependencies": {
     "rimraf": "3.0.2",
