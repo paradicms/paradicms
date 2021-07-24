@@ -7,28 +7,28 @@ from pathlib import Path
 from typing import Optional, Union
 
 
-class GuiPackage:
+class AppPackage:
     """
     Wrapper around the "script"'s of a package.json, which are invoked by running npm.
     The gui/app package.json's have a standard set of scripts, which invoke Next.js command line commands such as "build" and "dev".
     """
 
-    def __init__(self, *, gui: Union[str, Path], base_url_path: str = ""):
+    def __init__(self, *, app: Union[str, Path], base_url_path: str = ""):
         """
         :param base_url_path: Next.js basePath (https://nextjs.org/docs/api-reference/next.config.js/basepath)
-        :param gui: name of a gui (in gui/app of this repository) or path to a gui
+        :param app: name of an app (in app/ of this repository) or path to an app
         """
 
         self.__logger = logging.getLogger(self.__class__.__name__)
 
         self.__base_url_path = base_url_path
 
-        if isinstance(gui, Path):
-            app_dir_path = gui
-        elif os.path.isdir(gui):
-            app_dir_path = Path(self.__gui)
+        if isinstance(app, Path):
+            app_dir_path = app
+        elif os.path.isdir(app):
+            app_dir_path = Path(self.__app)
         else:
-            app_dir_path = Path(__file__).parent.parent.parent.parent / "app" / gui
+            app_dir_path = Path(__file__).parent.parent.parent.parent / "app" / app
         if not app_dir_path.is_dir():
             raise ValueError(f"{app_dir_path} does not exist")
 
@@ -42,13 +42,13 @@ class GuiPackage:
 
         self.__logger.info("building GUI")
 
-        gui_out_dir_path = self.__app_dir_path / "out"
-        gui_public_dir_path = self.__app_dir_path / "public"
+        app_out_dir_path = self.__app_dir_path / "out"
+        app_public_dir_path = self.__app_dir_path / "public"
 
-        if gui_public_dir_path.is_dir():
-            gui_public_dir_path_exists = True
+        if app_public_dir_path.is_dir():
+            app_public_dir_path_exists = True
             public_dir_size, public_file_count = self.__get_dir_size(
-                gui_public_dir_path
+                app_public_dir_path
             )
             self.__logger.info(
                 "public directory: file count=%d, size=%d",
@@ -56,18 +56,18 @@ class GuiPackage:
                 public_dir_size,
             )
         else:
-            gui_public_dir_path_exists = False
+            app_public_dir_path_exists = False
 
         self.__run_script("build", data_ttl_file_path=data_ttl_file_path)
         self.__logger.info("built GUI")
 
         # Hack: next export hangs if there is a public directory, but only in the GitHub Action
         # Manually move the contents of the public directory over to the out directory
-        temp_gui_public_dir_path = self.__app_dir_path / "public.bak"
-        if gui_public_dir_path_exists:
-            gui_public_dir_path.rename(temp_gui_public_dir_path)
+        temp_app_public_dir_path = self.__app_dir_path / "public.bak"
+        if app_public_dir_path_exists:
+            app_public_dir_path.rename(temp_app_public_dir_path)
             self.__logger.info(
-                "renamed %s to %s", gui_public_dir_path, temp_gui_public_dir_path
+                "renamed %s to %s", app_public_dir_path, temp_app_public_dir_path
             )
         try:
             self.__logger.info("exporting GUI build")
@@ -76,28 +76,28 @@ class GuiPackage:
             )
             self.__logger.info("exported GUI build")
         finally:
-            if gui_public_dir_path_exists:
-                temp_gui_public_dir_path.rename(gui_public_dir_path)
+            if app_public_dir_path_exists:
+                temp_app_public_dir_path.rename(app_public_dir_path)
                 self.__logger.info(
-                    "renamed %s to %s", temp_gui_public_dir_path, gui_public_dir_path
+                    "renamed %s to %s", temp_app_public_dir_path, app_public_dir_path
                 )
 
-        if gui_public_dir_path_exists:
-            for file_name in os.listdir(gui_public_dir_path):
-                src_file_path = gui_public_dir_path / file_name
-                dst_file_path = gui_out_dir_path / file_name
+        if app_public_dir_path_exists:
+            for file_name in os.listdir(app_public_dir_path):
+                src_file_path = app_public_dir_path / file_name
+                dst_file_path = app_out_dir_path / file_name
                 if src_file_path.is_file():
                     shutil.copyfile(src_file_path, dst_file_path)
                 elif src_file_path.is_dir():
                     shutil.copytree(src_file_path, dst_file_path)
                 self.__logger.info("copied %s to %s", src_file_path, dst_file_path)
 
-        if not gui_out_dir_path.is_dir():
+        if not app_out_dir_path.is_dir():
             raise RuntimeError(
-                f"build command returned success but {gui_out_dir_path} does not exist"
+                f"build command returned success but {app_out_dir_path} does not exist"
             )
 
-        return gui_out_dir_path
+        return app_out_dir_path
 
     def clean(self):
         self.__run_script("clean")
@@ -156,7 +156,7 @@ class GuiPackage:
                 file_count += 1
                 dir_size += entry.stat().st_size
             elif entry.is_dir():
-                subdir_size, subdir_file_count = GuiPackage.__get_dir_size(entry.path)
+                subdir_size, subdir_file_count = AppPackage.__get_dir_size(entry.path)
                 dir_size += subdir_size
                 file_count += subdir_file_count
         return dir_size, file_count

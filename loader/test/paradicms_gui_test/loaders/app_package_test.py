@@ -4,17 +4,17 @@ from typing import Tuple
 from paradicms_etl._model import _Model
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 
-from paradicms_gui.loaders.app_package import GuiPackage
+from paradicms_gui.loaders.app_package import AppPackage
 
-GUI = "material-ui-union"
+APP = "material-ui-union"
 
 
 # def test_clean():
-#     GuiPackage(gui=GUI).clean()
+#     AppPackage(gui=GUI).clean()
 
 
 def test_build(test_data_models: Tuple[_Model, ...], tmp_path):
-    app_package = GuiPackage(gui=GUI)
+    app_package = AppPackage(app=APP)
 
     if not (app_package.app_dir_path / "node_modules").is_dir():
         # Must have built GUI externally
@@ -38,4 +38,4 @@ def test_build(test_data_models: Tuple[_Model, ...], tmp_path):
 
 
 # def test_install():
-#     GuiPackage(gui=GUI).install()
+#     AppPackage(gui=GUI).install()
