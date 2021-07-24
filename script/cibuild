@@ -9,7 +9,7 @@ export DATA_TTL_FILE_PATH=`realpath $PWD/../etl/data/test_data/loaded/data.ttl`
 echo "DATA_TTL_FILE_PATH: $DATA_TTL_FILE_PATH"
 
 
-yarn install
+time yarn install
 
 
 # Build lib
