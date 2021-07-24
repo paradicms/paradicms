@@ -7,13 +7,7 @@ cd ..
 export DATA_TTL_FILE_PATH=$PWD/../etl/data/test_data/loaded/data.ttl
 
 
-if [ ! -d node_modules ]; then
-    echo "Installing lerna and bootstrapping"
-    npm install
-    npm run lerna:bootstrap
-else
-    echo "Lerna already installed and bootstrapped"
-fi
+yarn install
 
 
 # Build lib
@@ -22,7 +16,7 @@ cd lib
 
 # Test lib
 cd rdf
-npm run test
+yarn test
 
 cd ..
 
@@ -35,13 +29,13 @@ cd ../app
 pids=()
 
 cd bootstrap-collection
-npm run build &
+yarn build &
 pids+=($!)
 
 cd ..
 
 cd material-ui-union
-npm run build &
+yarn build &
 pids+=($!)
 
 for pid in "${pids[@]}"; do
