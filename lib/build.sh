@@ -9,16 +9,16 @@ pids=()
 
 # No dependencies
 cd models
-npm run build
+yarn build
 
 # No dependencies
 cd ../react
-npm run build &
+yarn build &
 pids+=($!)
 
 # No dependencies
 cd ../next
-npm run build &
+yarn build &
 pids+=($!)
 
 for pid in "${pids[@]}"; do
@@ -29,18 +29,18 @@ done
 
 # Depends on models
 cd ../model-utils
-npm run build
+yarn build
 
 
 pids=()
 # Depend on models and model-utils
 cd ../lunr
-npm run build &
+yarn build &
 pids+=($!)
 
 # Depend on models and model-utils
 cd ../rdf
-npm run build &
+yarn build &
 pids+=($!)
 
 for pid in "${pids[@]}"; do
@@ -51,12 +51,12 @@ done
 pids=()
 # Depend on models, model-utils, and lunr
 cd ../bootstrap
-npm run build &
+yarn build &
 pids+=($!)
 
 # Depend on models, model-utils, and lunr
 cd ../material-ui
-npm run build &
+yarn build &
 pids+=($!)
 
 for pid in "${pids[@]}"; do
@@ -66,4 +66,4 @@ done
 
 # Depends on material-ui and next
 cd ../material-ui-next
-npm run build
+yarn build
