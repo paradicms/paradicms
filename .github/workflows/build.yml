@@ -1,44 +1,20 @@
 name: Build
-on:
-  push:
-  workflow_dispatch:
+on: [ push, workflow_dispatch ]
 jobs:
-  etl:
-    name: Build and test etl
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/setup-python@v2
-        with:
-          python-version: '3.9.x'
-      - name: Cache Python dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('etl/setup.cfg') }}
-      - name: Check out the repo
-        uses: actions/checkout@v2
-      - name: Install Python dependencies
-        run: |
-          cd etl
-          pip install -qqq .[testing]
-      - name: Run Python unit tests
-        run: |
-          cd etl
-          mkdir test-results
-          pytest --junitxml=test-results/junit.xml
-      - name: Publish unit test results
-        uses: EnricoMi/publish-unit-test-result-action@v1
-        if: always()
-        with:
-          files: etl/test-results/*.xml
-  gui:
+  build:
     name: Build and test gui
     runs-on: ubuntu-latest
     env:
       NEXT_TELEMETRY_DISABLED: "1"
     steps:
-      - name: Check out the repo
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
+        id: extract_branch
+      - name: Check out the gui repo
         uses: actions/checkout@v2
+        with:
+          path: gui
       - uses: actions/setup-node@v1
         with:
           node-version: '14.x'
@@ -56,27 +32,16 @@ jobs:
           cd gui
           export PATH=$PATH:$PWD/node_modules/.bin
           script/cibuild
-# Commented out to speed up the build
-#      - name: Test gui_loader
-#        run: |
-#          cd etl
-#          pytest --junitxml=test-results/gui_loader.xml test/paradicms_etl_test/loaders/gui/gui_builder_test.py test/paradicms_etl_test/loaders/gui/gui_loader_test.py
-  docker:
-    name: Push Docker image to GitHub Container Registry
-    needs:
-      - etl
-      - gui
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
-    steps:
-      - name: Check out the repo
+      - name: Check out the etl repo
         uses: actions/checkout@v2
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
-        id: extract_branch
+        with:
+          path: etl
+        if: steps.extract_branch.outputs.branch == 'master'
+      # Commented out to speed up the build
+      #      - name: Test gui_loader
+      #        run: |
+      #          cd etl
+      #          pytest --junitxml=test-results/gui_loader.xml test/paradicms_etl_test/loaders/gui/gui_builder_test.py test/paradicms_etl_test/loaders/gui/gui_loader_test.py
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v1
         with:
@@ -84,6 +49,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
         if: steps.extract_branch.outputs.branch == 'master'
+      - name: Move Dockerfile to be above both checkouts
+        run: |
+          mv gui/.dockerignore .
+          mv gui/Dockerfile .
       - name: Build container image
         uses: docker/build-push-action@v2
         with:
