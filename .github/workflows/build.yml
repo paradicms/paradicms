@@ -29,11 +29,11 @@ jobs:
         with:
           path: gui/app/*/.next/cache
           key: ${{ runner.OS }}-next
-      - name: Build and test gui
-        run: |
-          cd gui
-          export PATH=$PATH:$PWD/node_modules/.bin
-          script/cibuild
+      #      - name: Build and test gui
+      #        run: |
+      #          cd gui
+      #          export PATH=$PATH:$PWD/node_modules/.bin
+      #          script/cibuild
       # Commented out to speed up the build
       #      - name: Test gui_loader
       #        run: |
