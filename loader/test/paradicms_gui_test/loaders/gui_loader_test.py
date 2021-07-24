@@ -44,7 +44,7 @@ def test_load(gui: str, test_data_models: Tuple[_Model, ...], tmp_path):
     gui_loader.flush()
 
     assert (loaded_data_dir_path / "data" / "test.ttl").is_file()
-    assert (loaded_data_dir_path / "deployed" / "current" / "index.html").is_file()
+    assert (loaded_data_dir_path / "deployed" / "index.html").is_file()
 
 
 if False and os.environ.get("CI") is None:

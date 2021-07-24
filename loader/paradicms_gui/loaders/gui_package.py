@@ -55,8 +55,10 @@ class GuiPackage:
                 public_file_count,
                 public_dir_size,
             )
+        else:
+            gui_public_dir_path_exists = False
 
-        self.__run_npm_script("build", data_ttl_file_path=data_ttl_file_path)
+        self.__run_script("build", data_ttl_file_path=data_ttl_file_path)
         self.__logger.info("built GUI")
 
         # Hack: next export hangs if there is a public directory, but only in the GitHub Action
@@ -69,7 +71,7 @@ class GuiPackage:
             )
         try:
             self.__logger.info("exporting GUI build")
-            self.__run_npm_script(
+            self.__run_script(
                 "export", data_ttl_file_path=data_ttl_file_path, timeout=45
             )
             self.__logger.info("exported GUI build")
@@ -98,16 +100,16 @@ class GuiPackage:
         return gui_out_dir_path
 
     def clean(self):
-        self.__run_npm_script("clean")
+        self.__run_script("clean")
 
     def dev(self, data_ttl_file_path: Path):
-        self.__run_npm_script("dev", data_ttl_file_path=data_ttl_file_path)
+        self.__run_script("dev", data_ttl_file_path=data_ttl_file_path)
 
     @property
     def gui_dir_path(self) -> Path:
         return self.__gui_dir_path
 
-    def __run_npm_script(
+    def __run_script(
         self,
         script,
         check=True,
@@ -124,7 +126,7 @@ class GuiPackage:
             self.__logger.info("using DATA_TTL_FILE_PATH = %s", data_ttl_file_path)
         subprocess_env["EDITOR"] = ""
 
-        args = ["npm", "run", script]
+        args = ["yarn", script]
 
         if shell is None:
             shell = sys.platform == "win32"
