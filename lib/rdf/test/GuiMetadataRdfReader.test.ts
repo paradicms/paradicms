@@ -1,7 +1,5 @@
-import {expect} from "chai";
 import {describe} from "mocha";
 import {parseTestData} from "./parseTestData";
-import {GuiMetadataRdfReader} from "../src/GuiMetadataRdfReader";
 import {Store} from "n3";
 
 describe("GUI metadata RDF reader", () => {
@@ -13,13 +11,13 @@ describe("GUI metadata RDF reader", () => {
     store = parseTestData();
   });
 
-  it("should read all GUI metadata objects from the store", () => {
-    const models = GuiMetadataRdfReader.readAll(store);
-    expect(models).to.have.length(1);
-    models.forEach(model => {
-      expect(model.bootstrapStylesheetHref!.trim()).to.not.be.empty;
-      expect(model.documentTitle!.trim()).to.not.be.empty;
-      expect(model.navbarTitle!.trim()).to.not.be.empty;
-    });
-  });
+  // it("should read all GUI metadata objects from the store", () => {
+  //   const models = GuiMetadataRdfReader.readAll(store);
+  //   expect(models).to.have.length(1);
+  //   models.forEach(model => {
+  //     expect(model.bootstrapStylesheetHref!.trim()).to.not.be.empty;
+  //     expect(model.documentTitle!.trim()).to.not.be.empty;
+  //     expect(model.navbarTitle!.trim()).to.not.be.empty;
+  //   });
+  // });
 });
