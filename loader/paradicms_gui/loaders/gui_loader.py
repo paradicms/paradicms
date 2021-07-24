@@ -11,7 +11,7 @@ from paradicms_gui._image_archiver import _ImageArchiver
 from paradicms_gui.deployers.fs_deployer import FsDeployer
 from paradicms_gui.image_archivers.fs_image_archiver import FsImageArchiver
 from paradicms_gui.loaders.gui_images_loader import GuiImagesLoader
-from paradicms_gui.loaders.gui_package import GuiPackage
+from paradicms_gui.loaders.app_package import GuiPackage
 
 
 class GuiLoader(_BufferingLoader):
@@ -62,14 +62,14 @@ class GuiLoader(_BufferingLoader):
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
 
     def _flush(self, models):
-        gui_package = GuiPackage(base_url_path=self.__base_url_path, gui=self.__gui)
+        app_package = GuiPackage(base_url_path=self.__base_url_path, gui=self.__gui)
 
         image_archiver = self.__image_archiver
         if image_archiver is None:
             # If no image archiver specified, "archive" copies of images to the Next.js public/ directory, which contains static assets.
             image_archiver = FsImageArchiver(
                 base_url=f"{self.__base_url_path.rstrip('/')}/img/archive/",
-                root_directory_path=gui_package.gui_dir_path
+                root_directory_path=app_package.app_dir_path
                 / "public"
                 / "img"
                 / "archive",
@@ -125,11 +125,11 @@ class GuiLoader(_BufferingLoader):
         self._logger.info("loaded data to %s", data_ttl_file_path)
 
         if self.__dev:
-            gui_package.dev(data_ttl_file_path=data_ttl_file_path)
+            app_package.dev(data_ttl_file_path=data_ttl_file_path)
         else:
-            gui_package.clean()
+            app_package.clean()
 
-            gui_out_dir_path = gui_package.build(data_ttl_file_path=data_ttl_file_path)
+            gui_out_dir_path = app_package.build(data_ttl_file_path=data_ttl_file_path)
 
             deployer = self.__deployer
             if deployer is None:

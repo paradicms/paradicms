@@ -24,15 +24,15 @@ class GuiPackage:
         self.__base_url_path = base_url_path
 
         if isinstance(gui, Path):
-            gui_dir_path = gui
+            app_dir_path = gui
         elif os.path.isdir(gui):
-            gui_dir_path = Path(self.__gui)
+            app_dir_path = Path(self.__gui)
         else:
-            gui_dir_path = Path(__file__).parent.parent.parent.parent / "app" / gui
-        if not gui_dir_path.is_dir():
-            raise ValueError(f"{gui_dir_path} does not exist")
+            app_dir_path = Path(__file__).parent.parent.parent.parent / "app" / gui
+        if not app_dir_path.is_dir():
+            raise ValueError(f"{app_dir_path} does not exist")
 
-        self.__gui_dir_path = gui_dir_path
+        self.__app_dir_path = app_dir_path
 
     def build(self, data_ttl_file_path: Path) -> Path:
         """
@@ -42,8 +42,8 @@ class GuiPackage:
 
         self.__logger.info("building GUI")
 
-        gui_out_dir_path = self.__gui_dir_path / "out"
-        gui_public_dir_path = self.__gui_dir_path / "public"
+        gui_out_dir_path = self.__app_dir_path / "out"
+        gui_public_dir_path = self.__app_dir_path / "public"
 
         if gui_public_dir_path.is_dir():
             gui_public_dir_path_exists = True
@@ -63,7 +63,7 @@ class GuiPackage:
 
         # Hack: next export hangs if there is a public directory, but only in the GitHub Action
         # Manually move the contents of the public directory over to the out directory
-        temp_gui_public_dir_path = self.__gui_dir_path / "public.bak"
+        temp_gui_public_dir_path = self.__app_dir_path / "public.bak"
         if gui_public_dir_path_exists:
             gui_public_dir_path.rename(temp_gui_public_dir_path)
             self.__logger.info(
@@ -106,8 +106,8 @@ class GuiPackage:
         self.__run_script("dev", data_ttl_file_path=data_ttl_file_path)
 
     @property
-    def gui_dir_path(self) -> Path:
-        return self.__gui_dir_path
+    def app_dir_path(self) -> Path:
+        return self.__app_dir_path
 
     def __run_script(
         self,
@@ -138,7 +138,7 @@ class GuiPackage:
             subprocess.run(
                 args,
                 check=check,
-                cwd=str(self.__gui_dir_path),
+                cwd=str(self.__app_dir_path),
                 env=subprocess_env,
                 shell=shell,
                 **kwds,

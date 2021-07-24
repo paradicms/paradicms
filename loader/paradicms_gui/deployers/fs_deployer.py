@@ -28,7 +28,7 @@ class FsDeployer(_Deployer):
         """
         :param archive: archive old deployments to the same gui_deploy_dir_path rather than overwriting
         :param clean: if archive is False, delete the existing gui_deploy_dir_path before populating it
-        :param copy: copy gui_dir_path to gui_deploy_dir_path rather than renaming; used if a rename would cross mounts ("Invalid cross-device link")
+        :param copy: copy app_dir_path to gui_deploy_dir_path rather than renaming; used if a rename would cross mounts ("Invalid cross-device link")
         :param gui_deploy_dir_path: directory to "deploy" the GUI to
         """
 
