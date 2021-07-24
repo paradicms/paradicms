@@ -1,16 +1,14 @@
 import {describe} from "mocha";
-import {parseTestData} from "./parseTestData";
-import {Store} from "n3";
 
 describe("GUI metadata RDF reader", () => {
-  let store: Store;
-
-  before(function(this: any) {
-    // @ts-ignore
-    this.timeout(10000);
-    store = parseTestData();
-  });
-
+  // let store: Store;
+  //
+  // before(function(this: any) {
+  //   // @ts-ignore
+  //   this.timeout(10000);
+  //   store = parseTestData();
+  // });
+  //
   // it("should read all GUI metadata objects from the store", () => {
   //   const models = GuiMetadataRdfReader.readAll(store);
   //   expect(models).to.have.length(1);
