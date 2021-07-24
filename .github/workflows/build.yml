@@ -49,21 +49,21 @@ jobs:
       #        run: |
       #          cd etl
       #          pytest --junitxml=test-results/gui_loader.xml test/paradicms_etl_test/loaders/gui/gui_builder_test.py test/paradicms_etl_test/loaders/gui/gui_loader_test.py
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-        if: steps.extract_branch.outputs.branch == 'master'
-      - name: Move Dockerfile to be above both checkouts
-        run: |
-          mv gui/.dockerignore .
-          mv gui/Dockerfile .
-      - name: Build container image
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: |
-            ghcr.io/${{ github.repository }}:latest
-        if: steps.extract_branch.outputs.branch == 'master'
+#      - name: Log in to GitHub Container Registry
+#        uses: docker/login-action@v1
+#        with:
+#          registry: ghcr.io
+#          username: ${{ github.actor }}
+#          password: ${{ secrets.GITHUB_TOKEN }}
+#        if: steps.extract_branch.outputs.branch == 'master'
+#      - name: Move Dockerfile to be above both checkouts
+#        run: |
+#          mv gui/.dockerignore .
+#          mv gui/Dockerfile .
+#      - name: Build container image
+#        uses: docker/build-push-action@v2
+#        with:
+#          push: true
+#          tags: |
+#            ghcr.io/${{ github.repository }}:latest
+#        if: steps.extract_branch.outputs.branch == 'master'
