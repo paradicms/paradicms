@@ -1,12 +1,12 @@
-import {ValueFacetFilter} from "./ValueFacetFilter";
+import {ValueFilter} from "./ValueFilter";
 
-export class ValueFacetFilterState<T> {
+export class ValueFilterState<T> {
   private readonly excludeValueSet: Set<T>;
   private readonly includeValueSet: Set<T>;
   private readonly valueUniverse: readonly T[];
 
   constructor(kwds: {
-    filter: ValueFacetFilter<T> | null;
+    filter: ValueFilter<T> | null;
     valueUniverse: readonly T[];
   }) {
     const {filter} = kwds;
@@ -88,7 +88,7 @@ export class ValueFacetFilterState<T> {
     return this.includeValueSet.has(value);
   }
 
-  get snapshot(): ValueFacetFilter<T> | null {
+  get snapshot(): ValueFilter<T> | null {
     if (this.includeValueSet.size === this.valueUniverse.length) {
       return null; // Implicitly include all values
     } else if (this.excludeValueSet.size === this.valueUniverse.length) {

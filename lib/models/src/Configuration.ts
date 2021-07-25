@@ -4,5 +4,6 @@ export interface Configuration {
   readonly bootstrapStylesheetHref: string | null;
   readonly documentTitle: string | null;
   readonly navbarTitle: string | null;
-  readonly objectFacets: Facet[];
+  readonly objectFacets: readonly Facet[];
+  
 }
