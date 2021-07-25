@@ -1,119 +1,93 @@
-import {ObjectFilters, ObjectQuery, PropertyDefinition} from "@paradicms/models";
+import {Facet, Filter, ObjectsQuery} from "@paradicms/models";
 import * as React from "react";
-import {ObjectFacetedSearchQuery} from "@paradicms/lunr";
 import {Grid} from "@material-ui/core";
-import {ObjectFacetsControls} from "./ObjectFacetsControls";
+import {FiltersControls} from "./FiltersControls";
 import {ObjectsGallery} from "./ObjectsGallery";
 import {FiltersChips} from "FiltersChips";
 import {ObjectCardObject} from "./ObjectCardObject";
 import {ObjectCardInstitution} from "./ObjectCardInstitution";
-import {indexModelsByUri} from "@paradicms/model-utils";
 
 export const ObjectFacetedSearchGrid: React.FunctionComponent<{
+  facets: readonly Facet[];
   objects: readonly ObjectCardObject[];
-  onChangeFilters: (filters: ObjectFilters) => void;
+  objectsTotalCount: number;
+  onChangeFilters: (filters: readonly Filter[]) => void;
   onChangePage: (page: number) => void;
   page: number; // From 0
-  propertyDefinitions: readonly PropertyDefinition[];
-  query: ObjectQuery;
+  query: ObjectsQuery;
   renderInstitutionLink?: (
     institution: ObjectCardInstitution,
-    children: React.ReactNode
+    children: React.ReactNode,
   ) => React.ReactNode;
   renderObjectLink: (
     object: ObjectCardObject,
-    children: React.ReactNode
+    children: React.ReactNode,
   ) => React.ReactNode;
 }> = ({
-  objects,
-  onChangeFilters,
-  onChangePage,
-  page,
-  propertyDefinitions,
-  renderInstitutionLink,
-  renderObjectLink,
-  query,
-}) => {
-  const totalObjectsCount = objects.length;
-
-  const propertyDefinitionsByUri = React.useMemo(
-    () => indexModelsByUri(propertyDefinitions),
-    [propertyDefinitions]
-  );
-
+        facets,
+        objects,
+        objectsTotalCount,
+        onChangeFilters,
+        onChangePage,
+        page,
+        query,
+        renderInstitutionLink,
+        renderObjectLink,
+      }) => {
   return (
-    <ObjectFacetedSearchQuery
-      objects={objects}
-      propertyDefinitions={propertyDefinitions}
-      query={query}
-    >
-      {({objectFacets, objects}) => (
-        <Grid container direction="column" spacing={2}>
-          <Grid item>
-            <Grid container>
-              <Grid item xs={10}>
-                {objects.length > 0 ? (
-                  <ObjectsGallery
-                    objects={objects}
-                    onChangePage={onChangePage}
-                    page={page}
-                    renderInstitutionLink={renderInstitutionLink}
-                    renderObjectLink={renderObjectLink}
-                  />
-                ) : (
-                  <h2 style={{textAlign: "center"}}>
-                    No matching objects found.
-                  </h2>
-                )}
-              </Grid>
-              <Grid item xs={2}>
-                <Grid container direction="column" spacing={2}>
-                  {objects.length > 0 ? (
-                    <>
-                      <Grid item>
-                        <FiltersChips
-                          facets={objectFacets}
-                          filters={
-                            query.filters ?? {
-                              collectionUris: null,
-                              institutionUris: null,
-                              properties: null,
-                            }
-                          }
-                          onChange={onChangeFilters}
-                          propertyDefinitionsByUri={propertyDefinitionsByUri}
-                        />
-                      </Grid>
-                      <Grid item style={{textAlign: "center"}}>
-                        <span>Showing&nbsp;</span>
-                        <span data-cy="objects-count">{objects.length}</span>
-                        <span>&nbsp;of&nbsp;</span>
-                        <span data-cy="total-objects-count">
-                          {totalObjectsCount}
-                        </span>
-                        <span>&nbsp;objects</span>
-                      </Grid>
-                    </>
-                  ) : null}
+    <Grid container direction="column" spacing={2}>
+      <Grid item>
+        <Grid container>
+          <Grid item xs={10}>
+            {objectsTotalCount > 0 ? (
+              <ObjectsGallery
+                objects={objects}
+                onChangePage={onChangePage}
+                page={page}
+                renderInstitutionLink={renderInstitutionLink}
+                renderObjectLink={renderObjectLink}
+              />
+            ) : (
+              <h2 style={{textAlign: "center"}}>
+                No matching objects found.
+              </h2>
+            )}
+          </Grid>
+          <Grid item xs={2}>
+            <Grid container direction="column" spacing={2}>
+              {objectsTotalCount > 0 ? (
+                <>
                   <Grid item>
-                    <ObjectFacetsControls
-                      facets={objectFacets}
-                      filters={
-                        query.filters ?? {
-                          collectionUris: null,
-                          institutionUris: null,
-                          properties: null,
-                        }
-                      }
+                    <FiltersChips
+                      facets={facets}
+                      filters={query.filters}
                       onChange={onChangeFilters}
                     />
                   </Grid>
-                </Grid>
+                  <Grid item style={{textAlign: "center"}}>
+                    <span>Showing&nbsp;</span>
+                    <span data-cy="objects-count">{objects.length}</span>
+                    <span>&nbsp;of&nbsp;</span>
+                    <span data-cy="total-objects-count">
+                        {objectsTotalCount}
+                      </span>
+                    <span>&nbsp;objects</span>
+                  </Grid>
+                </>
+              ) : null}
+              <Grid item>
+                <FiltersControls
+                  facets={facets}
+                  filters={
+                    query.filters
+                  }
+                  onChange={onChangeFilters}
+                />
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-      )}
-    </ObjectFacetedSearchQuery>
+      </Grid>
+    </Grid>
   );
 };

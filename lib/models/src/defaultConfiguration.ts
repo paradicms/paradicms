@@ -3,16 +3,23 @@ import {StringPropertyValueFacet} from "StringPropertyValueFacet";
 import {Facet} from "./Facet";
 import {Filter} from "./Filter";
 import {StringPropertyValueFilter} from "./StringPropertyValueFilter";
+import {PropertyDefinition} from "./PropertyDefinition";
 
 const DCTERMS_NS = "http://purl.org/dc/terms/";
 
-const facetedStringPropertyUris = [DCTERMS_NS + "medium", DCTERMS_NS + "subject"];
+const facetedPropertyDefinitions: readonly PropertyDefinition[] = [{
+  label: "Medium",
+  uri: DCTERMS_NS + "medium",
+}, {
+  label: "Subject",
+  uri: DCTERMS_NS + "subject",
+}];
 
 const objectFacets = () => {
   const result: Facet[] = [];
-  for (const propertyUri of facetedStringPropertyUris) {
+  for (const propertyDefinition of facetedPropertyDefinitions) {
     const facet: StringPropertyValueFacet = {
-      propertyUri,
+      propertyUri: propertyDefinition.uri,
       type: "StringPropertyValue",
       values: [],
     };
@@ -23,9 +30,10 @@ const objectFacets = () => {
 
 const objectFilters = () => {
   const result: Filter[] = [];
-  for (const propertyUri of facetedStringPropertyUris) {
+  for (const propertyDefinition of facetedPropertyDefinitions) {
     const filter: StringPropertyValueFilter = {
-      propertyUri,
+      label: propertyDefinition.label,
+      propertyUri: propertyDefinition.uri,
       type: "StringPropertyValue",
       excludeValues: null,
       includeValues: null,

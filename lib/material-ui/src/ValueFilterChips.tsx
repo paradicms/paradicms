@@ -6,30 +6,29 @@ export const ValueFilterChips: React.FunctionComponent<{
   className: string;
   facet: ValueFacet<string>
   filter: ValueFilter<string>,
-  labelPrefix: string;
-  onChange: (filter: ValueFilter<string> | null) => void
-}> = ({className, facet, filter, labelPrefix, onChange}) => {
+  onChange: (filter: ValueFilter<string>) => void
+}> = ({className, facet, filter, onChange}) => {
   const filterState = new ValueFilterState({
-    filter: filter,
+    filter,
     valueUniverse: facet.values.map(value => value.value),
   });
 
   const filterChips: React.ReactNodeArray = [];
   (filter.excludeValues ?? []).forEach(
-    (excludePropertyValue, excludePropertyValueI) => {
+    (excludeValue, excludeValueI) => {
       filterChips.push(
         <Chip
           className={className}
           color="secondary"
-          key={`exclude-${excludePropertyValueI}`}
+          key={`exclude-${excludeValueI}`}
           label={
             <span>
               Exclude&nbsp;
-              {labelPrefix}:{" "}{excludePropertyValue}
+              {filter.label}:{" "}{excludeValue}
             </span>
           }
           onDelete={() => {
-            filterState.includeValue(excludePropertyValue);
+            filterState.includeValue(excludeValue);
             onChange(filterState.snapshot);
           }}
         />,
@@ -46,7 +45,7 @@ export const ValueFilterChips: React.FunctionComponent<{
           label={
             <span>
               Include&nbsp;
-              {labelPrefix}:{" "}
+              {filter.label}:{" "}
               {includeValue}
             </span>
           }

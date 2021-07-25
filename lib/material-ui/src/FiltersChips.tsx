@@ -1,10 +1,4 @@
-import {
-  Facet,
-  Filter,
-  PropertyDefinition,
-  StringPropertyValueFacet,
-  StringPropertyValueFilter,
-} from "@paradicms/models";
+import {Facet, Filter, StringPropertyValueFacet, StringPropertyValueFilter} from "@paradicms/models";
 import * as React from "react";
 import {makeStyles} from "@material-ui/core";
 import {ValueFilterChips} from "ValueFilterChips";
@@ -20,18 +14,13 @@ export const FiltersChips: React.FunctionComponent<{
   facets: readonly Facet[];
   filters: readonly Filter[];
   onChange: (filters: readonly Filter[]) => void;
-  propertyDefinitionsByUri: {[index: string]: PropertyDefinition};
-}> = ({facets, filters, onChange, propertyDefinitionsByUri}) => {
+}> = ({facets, filters, onChange}) => {
   const classes = useStyles();
 
   return <>{filters.map((filter, filterI) => {
-    const onChangeFilter = (newFilter: Filter | null) => {
+    const onChangeFilter = (newFilter: Filter) => {
       const filtersCopy = filters.concat();
-      if (newFilter) {
-        filtersCopy[filterI] = newFilter;
-      } else {
-        filtersCopy.splice(filterI, 1);
-      }
+      filtersCopy[filterI] = newFilter;
       onChange(filtersCopy);
     };
 
@@ -43,7 +32,6 @@ export const FiltersChips: React.FunctionComponent<{
           return;
         }
         return <ValueFilterChips className={classes.chip} facet={facet} filter={concreteFilter}
-                                 labelPrefix={propertyDefinitionsByUri[concreteFilter.propertyUri]!.label}
                                  onChange={onChangeFilter} />;
       }
     }
