@@ -27,5 +27,5 @@ export * from "./RightsStatement";
 export * from "./Value";
 export * from "./ValueFacet";
 export * from "./ValueFilter";
-export * from "./ValueFilterState";
 export * from "./ValueFacetValue";
+export * from "./ValueFilterState";
