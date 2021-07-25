@@ -349,7 +349,7 @@ class TestDataPipeline(_Pipeline):
                 )
 
     def __init__(self, loader: Optional[_Loader] = None, **kwds):
-        root_dir_path = Path(__file__).absolute().parent.parent.parent.parent
+        root_dir_path = Path(__file__).absolute().parent.parent.parent
         if loader is None:
             loader = CompositeLoader(
                 loaders=(
@@ -365,7 +365,6 @@ class TestDataPipeline(_Pipeline):
                     # ),
                     RdfFileLoader(
                         file_path=root_dir_path
-                        / "etl"
                         / "data"
                         / "test_data"
                         / "loaded"
