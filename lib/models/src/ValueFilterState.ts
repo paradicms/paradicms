@@ -1,22 +1,25 @@
 import {ValueFilter} from "./ValueFilter";
+import {FilterType} from "./FilterType";
 
 export class ValueFilterState<T> {
   private readonly excludeValueSet: Set<T>;
+  private readonly filterType: FilterType;
   private readonly includeValueSet: Set<T>;
   private readonly valueUniverse: readonly T[];
 
   constructor(kwds: {
-    filter: ValueFilter<T> | null;
+    filter: ValueFilter<T>;
     valueUniverse: readonly T[];
   }) {
     const {filter} = kwds;
+    this.filterType = filter.type;
     this.valueUniverse = kwds.valueUniverse;
 
     // Build sets of the excludeValueSet and includeValueSet values to avoid repeatedly iterating over the arrays.
     this.excludeValueSet =
-      filter && filter.excludeValues ? new Set(filter.excludeValues) : new Set();
+      filter.excludeValues ? new Set(filter.excludeValues) : new Set();
     this.includeValueSet =
-      filter && filter.includeValues ? new Set(filter.includeValues) : new Set();
+      filter.includeValues ? new Set(filter.includeValues) : new Set();
 
     // If a value is not in one of the sets it's implicitly included.
     this.valueUniverse.forEach(valueId => {
@@ -92,19 +95,19 @@ export class ValueFilterState<T> {
     if (this.includeValueSet.size === this.valueUniverse.length) {
       return null; // Implicitly include all values
     } else if (this.excludeValueSet.size === this.valueUniverse.length) {
-      return {excludeValues: [...this.excludeValueSet], includeValues: null}; // Explicitly exclude all values
+      return {excludeValues: [...this.excludeValueSet], includeValues: null, type: this.filterType}; // Explicitly exclude all values
     } else if (this.includeValueSet.size >= this.excludeValueSet.size) {
       if (this.excludeValueSet.size === 0) {
         throw new RangeError("must explicitly exclude");
       }
       // excludeValueSet includes fewer values. Those outside it will be included.
-      return {excludeValues: [...this.excludeValueSet], includeValues: null};
+      return {excludeValues: [...this.excludeValueSet], includeValues: null, type: this.filterType};
     } else {
       // includeValueIdSet includes fewer values. Those outside it will be excluded.
       if (this.includeValueSet.size === 0) {
         throw new EvalError("must explicitly include");
       }
-      return {excludeValues: null, includeValues: [...this.includeValueSet]};
+      return {excludeValues: null, includeValues: [...this.includeValueSet], type: this.filterType};
     }
   }
 }
