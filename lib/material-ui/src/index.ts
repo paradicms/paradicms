@@ -11,7 +11,7 @@ export * from "./ObjectCardInstitution";
 export * from "./ObjectCardObject";
 export * from "./ObjectFacetedSearchGrid";
 export * from "./ObjectFacetsControls";
-export * from "./ObjectFiltersChips";
+export * from "FiltersChips";
 export * from "./ObjectImagesCarousel";
 export * from "./ObjectsGallery";
 export * from "./PropertiesTable";

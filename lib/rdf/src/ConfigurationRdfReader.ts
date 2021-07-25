@@ -5,15 +5,7 @@ import {Store} from "n3";
 
 export class ConfigurationRdfReader extends ModelRdfReader<Configuration> {
   read(): Configuration {
-    return {
-      bootstrapStylesheetHref:
-        this.readOptionalLiteral(PARADICMS.guiBootstrapStylesheetHref)?.toString() ?? null,
-      documentTitle:
-        this.readOptionalLiteral(PARADICMS.guiDocumentTitle)?.toString() ??
-        null,
-      navbarTitle:
-        this.readOptionalLiteral(PARADICMS.guiNavbarTitle)?.toString() ?? null,
-    };
+    return JSON.parse(this.readRequiredLiteral(PARADICMS.configurationJson).toString());
   }
 
   static readAll(store: Store) {

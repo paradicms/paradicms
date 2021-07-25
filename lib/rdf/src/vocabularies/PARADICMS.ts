@@ -5,12 +5,10 @@ export class PARADICMS {
 
   // Properties
   static collection = PARADICMS.NS("collection");
+  static configurationJson = PARADICMS.NS("configurationJson");
   static faceted = PARADICMS.NS("faceted");
   static fullTextSearchable = PARADICMS.NS("fullTextSearchable");
   static institution = PARADICMS.NS("institution");
-  static guiBootstrapStylesheetHref = PARADICMS.NS("guiBootstrapStylesheetHref");
-  static guiDocumentTitle = PARADICMS.NS("guiDocumentTitle");
-  static guiNavbarTitle = PARADICMS.NS("guiNavbarTitle");
   static imageMaxHeight = PARADICMS.NS("imageMaxHeight");
   static imageMaxWidth = PARADICMS.NS("imageMaxWidth");
   static imageSrc = PARADICMS.NS("imageSrc");

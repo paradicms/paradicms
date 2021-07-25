@@ -8,12 +8,7 @@ export class PropertyDefinitionRdfReader extends ModelRdfReader<
 > {
   read(): PropertyDefinition {
     return {
-      faceted:
-        this.readOptionalLiteral(PARADICMS.faceted)?.toBoolean() ?? false,
       label: this.readRequiredLiteral(RDFS.label).toString(),
-      fullTextSearchable:
-        this.readOptionalLiteral(PARADICMS.fullTextSearchable)?.toBoolean() ??
-        false,
       uri: this.nodeUri,
     };
   }

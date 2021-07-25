@@ -1,14 +1,10 @@
-import {
-  ObjectFilters,
-  ObjectQuery,
-  PropertyDefinition,
-} from "@paradicms/models";
+import {ObjectFilters, ObjectQuery, PropertyDefinition} from "@paradicms/models";
 import * as React from "react";
 import {ObjectFacetedSearchQuery} from "@paradicms/lunr";
 import {Grid} from "@material-ui/core";
 import {ObjectFacetsControls} from "./ObjectFacetsControls";
 import {ObjectsGallery} from "./ObjectsGallery";
-import {ObjectFiltersChips} from "./ObjectFiltersChips";
+import {FiltersChips} from "FiltersChips";
 import {ObjectCardObject} from "./ObjectCardObject";
 import {ObjectCardInstitution} from "./ObjectCardInstitution";
 import {indexModelsByUri} from "@paradicms/model-utils";
@@ -75,7 +71,7 @@ export const ObjectFacetedSearchGrid: React.FunctionComponent<{
                   {objects.length > 0 ? (
                     <>
                       <Grid item>
-                        <ObjectFiltersChips
+                        <FiltersChips
                           facets={objectFacets}
                           filters={
                             query.filters ?? {
