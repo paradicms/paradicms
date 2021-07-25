@@ -7,12 +7,6 @@ import {
   ValueFacetValue,
 } from "@paradicms/models";
 
-interface FacetizableObject {
-  readonly collectionUris: readonly string[];
-  readonly institutionUri: string;
-  readonly properties: readonly Property[] | null;
-}
-
 const incrementValueCount = (countsByValue: {[index: string]: number}, value: string) => {
   const count = countsByValue[value];
   if (!count) {
@@ -28,9 +22,13 @@ const valuesFromMap = (countsByValue: {[index: string]: number}): ValueFacetValu
   value,
 }));
 
-export const facetizeObjects = (kwds: {
+export const facetizeObjects = <ObjectT extends {
+  readonly collectionUris: readonly string[];
+  readonly institutionUri: string;
+  readonly properties: readonly Property[] | null;
+}>(kwds: {
   facet: Facet,
-  objects: readonly FacetizableObject[]
+  objects: readonly ObjectT[]
 }): Facet => {
   const {facet, objects} = kwds;
 
