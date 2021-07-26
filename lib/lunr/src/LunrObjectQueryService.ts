@@ -57,7 +57,8 @@ export class LunrObjectQueryService implements ObjectQueryService {
     });
   }
 
-  getObjects(query: ObjectsQuery): Promise<ObjectsQueryResults> {
+  getObjects(kwds: {limit: number, offset: number, query: ObjectsQuery}): Promise<ObjectsQueryResults> {
+    const {limit, offset, query} = kwds;
     return new Promise((resolve, reject) => {
       // Calculate the universe of objects
       let allObjects: readonly Object[];
@@ -77,8 +78,8 @@ export class LunrObjectQueryService implements ObjectQueryService {
       return resolve({
         facets,
         objects: filteredObjects.slice(
-          query.offset,
-          query.offset + query.limit
+          offset,
+          offset + limit,
         ),
         totalCount: filteredObjects.length,
       })

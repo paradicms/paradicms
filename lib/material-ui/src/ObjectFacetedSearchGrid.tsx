@@ -10,10 +10,10 @@ import {ObjectCardInstitution} from "./ObjectCardInstitution";
 export const ObjectFacetedSearchGrid: React.FunctionComponent<{
   facets: readonly Facet[];
   objects: readonly ObjectCardObject[];
-  objectsTotalCount: number;
   onChangeFilters: (filters: readonly Filter[]) => void;
   onChangePage: (page: number) => void;
   page: number; // From 0
+  pageMax: number;
   query: ObjectsQuery;
   renderInstitutionLink?: (
     institution: ObjectCardInstitution,
@@ -26,10 +26,10 @@ export const ObjectFacetedSearchGrid: React.FunctionComponent<{
 }> = ({
         facets,
         objects,
-        objectsTotalCount,
         onChangeFilters,
         onChangePage,
         page,
+        pageMax,
         query,
         renderInstitutionLink,
         renderObjectLink,
@@ -39,11 +39,12 @@ export const ObjectFacetedSearchGrid: React.FunctionComponent<{
       <Grid item>
         <Grid container>
           <Grid item xs={10}>
-            {objectsTotalCount > 0 ? (
+            {objects.length > 0 ? (
               <ObjectsGallery
                 objects={objects}
                 onChangePage={onChangePage}
                 page={page}
+                pageMax={pageMax}
                 renderInstitutionLink={renderInstitutionLink}
                 renderObjectLink={renderObjectLink}
               />
@@ -55,26 +56,13 @@ export const ObjectFacetedSearchGrid: React.FunctionComponent<{
           </Grid>
           <Grid item xs={2}>
             <Grid container direction="column" spacing={2}>
-              {objectsTotalCount > 0 ? (
-                <>
-                  <Grid item>
-                    <FiltersChips
-                      facets={facets}
-                      filters={query.filters}
-                      onChange={onChangeFilters}
-                    />
-                  </Grid>
-                  <Grid item style={{textAlign: "center"}}>
-                    <span>Showing&nbsp;</span>
-                    <span data-cy="objects-count">{objects.length}</span>
-                    <span>&nbsp;of&nbsp;</span>
-                    <span data-cy="total-objects-count">
-                        {objectsTotalCount}
-                      </span>
-                    <span>&nbsp;objects</span>
-                  </Grid>
-                </>
-              ) : null}
+              <Grid item>
+                <FiltersChips
+                  facets={facets}
+                  filters={query.filters}
+                  onChange={onChangeFilters}
+                />
+              </Grid>
               <Grid item>
                 <FiltersControls
                   facets={facets}
