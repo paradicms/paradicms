@@ -1,4 +1,10 @@
-import {Collection, Image, Institution, License, Object, PropertyDefinition, RightsStatement} from "@paradicms/models";
+import {Collection} from "./Collection";
+import {Image} from "./Image";
+import {Institution} from "./Institution";
+import {License} from "./License";
+import {Object} from "./Object";
+import {PropertyDefinition} from "./PropertyDefinition";
+import {RightsStatement} from "./RightsStatement";
 
 /**
  * Interface that aggregates models.
