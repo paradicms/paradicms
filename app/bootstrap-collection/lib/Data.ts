@@ -1,5 +1,5 @@
 import fs from "fs";
-import {Collection, GuiMetadata, Image, Institution, Object, PropertyDefinition} from "@paradicms/models";
+import {Collection, Configuration, Image, Institution, Object, PropertyDefinition} from "@paradicms/models";
 import {RdfData} from "@paradicms/rdf";
 
 export class Data {
@@ -24,7 +24,7 @@ export class Data {
     }
     this.collection = collections[0];
 
-    this.guiMetadata = allData.guiMetadata;
+    this.configuration = allData.configuration;
 
     this.objects = allData.collectionObjects(this.collection.uri);
     if (this.objects.length === 0) {
@@ -45,7 +45,7 @@ export class Data {
   }
 
   readonly collection: Collection;
-  readonly guiMetadata: GuiMetadata | null;
+  readonly configuration: Configuration;
   readonly images: readonly Image[];
   readonly institution: Institution;
   readonly licenseTitlesByUri: {[index: string]: string};

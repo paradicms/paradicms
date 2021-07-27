@@ -1,6 +1,6 @@
 import * as React from "react";
 // import {Checkbox, FormControlLabel, List, ListItem} from "@material-ui/core";
-import {ValueFacetFilter, ValueFacetFilterState, ValueFacetValue} from "@paradicms/models";
+import {ValueFacet, ValueFilter, ValueFilterState} from "@paradicms/models";
 import MUIDatatable, {MUIDataTableColumnDef, MUIDataTableOptions} from "mui-datatables";
 import {createMuiTheme, ThemeProvider} from "@material-ui/core";
 
@@ -19,12 +19,12 @@ const theme = createMuiTheme({
   } as any,
 });
 
-export const ValueFacetControls: React.FunctionComponent<{
-  currentState: ValueFacetFilter<string> | null; // value id's only
-  onChange: (newState: ValueFacetFilter<string> | null) => void;
+export const ValueFilterControls: React.FunctionComponent<{
+  facet: ValueFacet<string>;
+  filter: ValueFilter<string>;
+  onChange: (newState: ValueFilter<string>) => void;
   title: string;
-  valueUniverse: readonly ValueFacetValue<string>[];
-}> = ({currentState, onChange, title, valueUniverse}) => {
+}> = ({facet, filter, onChange, title}) => {
   const datatableColumns: MUIDataTableColumnDef[] = React.useMemo(
     () => [
       {
@@ -58,19 +58,19 @@ export const ValueFacetControls: React.FunctionComponent<{
 
   const datatableData = React.useMemo(
     () =>
-      valueUniverse.concat().sort((left, right) => right.count - left.count),
-    [valueUniverse]
+      facet.values.concat().sort((left, right) => right.count - left.count),
+    [facet],
   );
 
   const datatableRowsPerPage = 5;
 
-  const state = new ValueFacetFilterState<string>({
-    filter: currentState,
-    valueUniverse: valueUniverse.map(value => value.value),
+  const state = new ValueFilterState<string>({
+    filter,
+    valueUniverse: facet.values.map(value => value.value),
   });
 
   const datatableRowsSelected = Array.from(
-    Array(datatableData.length).keys()
+    Array(datatableData.length).keys(),
   ).filter(dataIndex => state.includesValue(datatableData[dataIndex].value));
 
   const datatableOptions: MUIDataTableOptions = React.useMemo(
@@ -84,9 +84,9 @@ export const ValueFacetControls: React.FunctionComponent<{
         allRowsSelected,
         rowsSelected
       ) => {
-        const newState = new ValueFacetFilterState<string>({
-          filter: null,
-          valueUniverse: valueUniverse.map(value => value.value),
+        const newState = new ValueFilterState<string>({
+          filter,
+          valueUniverse: facet.values.map(value => value.value),
         });
         const rowsSelectedSet = new Set<number>(rowsSelected!);
         for (let dataIndex = 0; dataIndex < datatableData.length; dataIndex++) {

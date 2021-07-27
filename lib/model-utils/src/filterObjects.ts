@@ -1,95 +1,79 @@
-import {ObjectFilters, Property, ValueFacetFilter} from "@paradicms/models";
+import {
+  CollectionValueFilter,
+  Filter,
+  InstitutionValueFilter,
+  Property,
+  StringPropertyValueFilter,
+  ValueFilter,
+} from "@paradicms/models";
 
-export const filterObjects = <
-  ObjectT extends {
-    readonly collectionUris: readonly string[];
-    readonly institutionUri: string;
-    readonly properties: readonly Property[] | null;
+interface FilterableObject {
+  readonly collectionUris: readonly string[];
+  readonly institutionUri: string;
+  readonly properties: readonly Property[] | null;
+}
+
+const testValueFilter = <T>(
+  filter: ValueFilter<T>,
+  values: readonly T[],
+): boolean => {
+  const excludeValues: readonly T[] = filter.excludeValues ?? [];
+  const includeValues: readonly T[] = filter.includeValues ?? [];
+  if (excludeValues.length === 0 && includeValues.length === 0) {
+    return true;
   }
->(kwds: {
-  filters: ObjectFilters;
+  if (excludeValues.length > 0) {
+    // If an object has any value that is excluded, then exclude the object
+    for (const value of values) {
+      if (
+        excludeValues.some(excludeValue => excludeValue === value)
+      ) {
+        return false;
+      }
+    }
+  }
+
+  if (includeValues.length > 0) {
+    // If the object has any value that is included, then include the object
+    // Conversely, if any values are included and an object doesn't have one of them, exclude the object.
+    let include = false;
+    for (const value of values) {
+      if (
+        includeValues.some(includeValue => includeValue === value)
+      ) {
+        include = true;
+        break;
+      }
+    }
+    if (!include) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+const testFilter = <ObjectT extends FilterableObject>(filter: Filter, object: ObjectT): boolean => {
+  switch (filter.type) {
+    case "CollectionValue":
+      return testValueFilter(filter as CollectionValueFilter, object.collectionUris);
+    case "InstitutionValue":
+      return testValueFilter(filter as InstitutionValueFilter, [object.institutionUri]);
+    case "StringPropertyValue":
+      return testValueFilter(
+        filter as StringPropertyValueFilter,
+        (object.properties ?? []).filter(property => property.uri === (filter as StringPropertyValueFilter).propertyUri).map(property => property.value.toString()),
+      );
+  }
+};
+
+export const filterObjects = <ObjectT extends FilterableObject>(kwds: {
+  // Apply multiple filters at once to amortize passes over the objects
+  filters: readonly Filter[],
   objects: readonly ObjectT[];
 }): readonly ObjectT[] => {
   let {filters, objects} = kwds;
-
-  const filterValues = <T>(kwds: {
-    filter: ValueFacetFilter<T> | null;
-    getObjectValues: (object: ObjectT) => readonly T[] | null;
-    objects: readonly ObjectT[];
-  }): readonly ObjectT[] => {
-    const {filter, getObjectValues, objects} = kwds;
-    if (!filter) {
-      return objects;
-    }
-    const excludeValues: readonly T[] = filter.excludeValues ?? [];
-    const includeValues: readonly T[] = filter.includeValues ?? [];
-    if (excludeValues.length === 0 && includeValues.length === 0) {
-      return objects;
-    }
-    return objects.filter(object => {
-      let objectValues = getObjectValues(object);
-      if (!objectValues) {
-        objectValues = [];
-      }
-
-      if (excludeValues.length > 0) {
-        // If an object has any value that is excluded, then exclude the object
-        for (const objectValue of objectValues) {
-          if (
-            excludeValues.some(excludeValue => excludeValue === objectValue)
-          ) {
-            return false;
-          }
-        }
-      }
-
-      if (includeValues.length > 0) {
-        // If the object has any value that is included, then include the object
-        // Conversely, if any values are included and an object doesn't have one of them, exclude the object.
-        let include = false;
-        for (const objectValue of objectValues) {
-          if (
-            includeValues.some(includeValue => includeValue === objectValue)
-          ) {
-            include = true;
-            break;
-          }
-        }
-        if (!include) {
-          return false;
-        }
-      }
-
-      return true;
-    });
-  };
-
-  objects = filterValues({
-    filter: filters.collectionUris,
-    getObjectValues: object => object.collectionUris,
-    objects,
-  });
-
-  objects = filterValues({
-    filter: filters.institutionUris,
-    getObjectValues: object => [object.institutionUri],
-    objects,
-  });
-
-  if (filters.properties) {
-    for (const propertyFilter of filters.properties) {
-      objects = filterValues<string>({
-        filter: propertyFilter,
-        getObjectValues: object =>
-          (object.properties ?? [])
-            .filter(
-              property => property.uri === propertyFilter.propertyDefinitionUri,
-            )
-            .map(property => property.value.toString()),
-        objects,
-      });
-    }
-  }
-
-  return objects;
+  return objects.filter(
+    object => filters.every(filter => testFilter(filter, object)),
+  );
 };

@@ -4,30 +4,30 @@ cd %~dp0
 REM Order is important
 
 cd models
-CALL npm run build
+CALL yarn build
 
 cd ..\model-utils
-CALL npm run build
+CALL yarn build
 
 cd ..\lunr
-CALL npm run build
+CALL yarn build
 
 cd ..\rdf
-CALL npm run build
+CALL yarn build
 
 cd ..\react
-CALL npm run build
+CALL yarn build
 
 cd ..\bootstrap
-CALL npm run build
+CALL yarn build
 
 cd ..\material-ui
-CALL npm run build
+CALL yarn build
 
 cd ..\next
-CALL npm run build
+CALL yarn build
 
 cd ..\material-ui-next
-CALL npm run build
+CALL yarn build
 
 cd %~dp0

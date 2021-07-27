@@ -1,6 +1,6 @@
 import {describe} from "mocha";
 
-describe("GUI metadata RDF reader", () => {
+describe("Configuration RDF reader", () => {
   // let store: Store;
   //
   // before(function(this: any) {

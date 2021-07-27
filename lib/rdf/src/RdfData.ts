@@ -1,6 +1,7 @@
 import {
   Collection,
-  GuiMetadata,
+  Configuration,
+  defaultConfiguration,
   Image,
   Institution,
   License,
@@ -9,7 +10,7 @@ import {
   RightsStatement,
 } from "@paradicms/models";
 import {CollectionRdfReader} from "./CollectionRdfReader";
-import {GuiMetadataRdfReader} from "./GuiMetadataRdfReader";
+import {ConfigurationRdfReader} from "ConfigurationRdfReader";
 import {ImageRdfReader} from "./ImageRdfReader";
 import {InstitutionRdfReader} from "./InstitutionRdfReader";
 import {ObjectRdfReader} from "./ObjectRdfReader";
@@ -49,7 +50,7 @@ export class RdfData {
     [index: string]: readonly Collection[];
   };
   private readonly collectionsByUri: {[index: string]: Collection};
-  readonly guiMetadata: GuiMetadata | null;
+  readonly configuration: Configuration;
   readonly images: readonly Image[];
   // @ts-ignore
   private readonly imagesByDepictsUri: {[index: string]: readonly Image[]};
@@ -78,8 +79,8 @@ export class RdfData {
       this.collections,
     );
 
-    const guiMetadata = GuiMetadataRdfReader.readAll(store);
-    this.guiMetadata = guiMetadata.length > 0 ? guiMetadata[0] : null;
+    const configuration = ConfigurationRdfReader.readAll(store);
+    this.configuration = configuration.length > 0 ? configuration[0] : defaultConfiguration;
 
     this.images = ImageRdfReader.readAll(store);
     this.imagesByDepictsUri = indexImagesByDepictsUri(this.images);

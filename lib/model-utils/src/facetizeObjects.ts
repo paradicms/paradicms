@@ -1,54 +1,84 @@
 import {
-  ObjectFacets,
-  ObjectPropertyFacet,
+  CollectionValueFacet,
+  Facet,
+  InstitutionValueFacet,
   Property,
-  PropertyDefinition,
+  StringPropertyValueFacet,
+  ValueFacetValue,
 } from "@paradicms/models";
 
-interface FacetizableObject {
-  properties: readonly Property[] | null;
-}
+const incrementValueCount = (countsByValue: {[index: string]: number}, value: string) => {
+  const count = countsByValue[value];
+  if (!count) {
+    countsByValue[value] = 1;
+  } else {
+    countsByValue[value] = count + 1;
+  }
+};
 
-export const facetizeObjects = (
-  propertyDefinitions: readonly PropertyDefinition[],
-  objects: readonly FacetizableObject[]
-): ObjectFacets => {
-  const propertyFacets: ObjectPropertyFacet[] = [];
-  const objectsWithProperties = objects.filter(object => object.properties);
-  for (const propertyDefinition of propertyDefinitions) {
-    if (!propertyDefinition.faceted) {
-      continue;
-    }
-    const facetObjects: FacetizableObject[] = [];
-    const facetValues: {[index: string]: number} = {};
-    for (const object of objectsWithProperties) {
-      let includeObject = false;
-      for (const property of object.properties!) {
-        if (property.uri === propertyDefinition.uri) {
-          const count = facetValues[property.value.toString()];
-          if (!count) {
-            facetValues[property.value.toString()] = 1;
-          } else {
-            facetValues[property.value.toString()] = count + 1;
-          }
-          includeObject = true;
+const valuesFromMap = (countsByValue: {[index: string]: number}): ValueFacetValue<string>[] => Object.keys(countsByValue).map(value => ({
+  count: countsByValue[value],
+  label: null,
+  value,
+}));
+
+export const facetizeObjects = <ObjectT extends {
+  readonly collectionUris: readonly string[];
+  readonly institutionUri: string;
+  readonly properties: readonly Property[] | null;
+}>(kwds: {
+  facet: Facet,
+  objects: readonly ObjectT[]
+}): Facet => {
+  const {facet, objects} = kwds;
+
+  switch (facet.type) {
+    case "CollectionValue": {
+      const concreteFacet: CollectionValueFacet = facet as CollectionValueFacet;
+      const countsByValue: {[index: string]: number} = {};
+      for (const object of objects) {
+        for (const collectionUri of object.collectionUris ?? []) {
+          incrementValueCount(countsByValue, collectionUri);
         }
       }
-      if (includeObject) {
-        facetObjects.push(object);
-      }
+      const result: CollectionValueFacet = {
+        ...concreteFacet,
+        values: valuesFromMap(countsByValue),
+      };
+      return result;
     }
-    if (facetObjects.length > 0) {
-      propertyFacets.push({
-        definition: propertyDefinition,
-        objects: facetObjects,
-        values: Object.keys(facetValues).map(facetValue => ({
-          count: facetValues[facetValue],
-          label: null,
-          value: facetValue,
-        })),
-      });
+
+    case "InstitutionValue": {
+      const concreteFacet: InstitutionValueFacet = facet as InstitutionValueFacet;
+      const countsByValue: {[index: string]: number} = {};
+      for (const object of objects) {
+        incrementValueCount(countsByValue, object.institutionUri);
+      }
+      const result: InstitutionValueFacet = {
+        ...concreteFacet,
+        values: valuesFromMap(countsByValue),
+      };
+      return result;
+    }
+
+    case "StringPropertyValue": {
+      const concreteFacet: StringPropertyValueFacet = facet as StringPropertyValueFacet;
+      const countsByValue: {[index: string]: number} = {};
+      for (const object of objects) {
+        if (!object.properties) {
+          continue;
+        }
+        for (const property of object.properties!) {
+          if (property.uri === concreteFacet.propertyUri) {
+            incrementValueCount(countsByValue, property.value.toString());
+          }
+        }
+      }
+      const result: StringPropertyValueFacet = {
+        ...concreteFacet,
+        values: valuesFromMap(countsByValue),
+      };
+      return result;
     }
   }
-  return {properties: propertyFacets};
 };

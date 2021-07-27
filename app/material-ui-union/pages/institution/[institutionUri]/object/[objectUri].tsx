@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
 import {Accordion, AccordionDetails, AccordionSummary, Grid} from "@material-ui/core";
-import {GuiMetadata, JoinedImage, JoinedRights, Property, PropertyDefinition} from "@paradicms/models";
+import {Configuration, JoinedImage, JoinedRights, Property, PropertyDefinition} from "@paradicms/models";
 import {ObjectImagesCarousel, PropertiesTable, RightsTable} from "@paradicms/material-ui";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Data} from "lib/Data";
@@ -10,7 +10,7 @@ import {GetStaticPaths, GetStaticProps} from "next";
 import {joinImage, joinRights} from "@paradicms/model-utils";
 
 interface StaticProps {
-  readonly guiMetadata: GuiMetadata | null;
+  readonly configuration: Configuration;
   readonly institution: {
     readonly name: string;
     readonly object: {
@@ -27,10 +27,10 @@ interface StaticProps {
 }
 
 const ObjectPage: React.FunctionComponent<StaticProps> = ({
-  guiMetadata,
-  institution,
-  propertyDefinitions,
-}) => {
+                                                            configuration,
+                                                            institution,
+                                                            propertyDefinitions,
+                                                          }) => {
   const object = institution.object;
   const rights = object.rights ?? institution.rights ?? null;
 
@@ -38,7 +38,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
     <Layout
       breadcrumbs={{institution, object}}
       documentTitle={"Object - " + object.title}
-      guiMetadata={guiMetadata}
+      configuration={configuration}
     >
       <Grid container direction="column" spacing={2}>
         <Grid item>
@@ -112,7 +112,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
-      guiMetadata: data.guiMetadata,
+      configuration: data.configuration,
       institution: {
         name: institution.name,
         object: {
@@ -121,8 +121,8 @@ export const getStaticProps: GetStaticProps = async ({
               licenseTitlesByUri: data.licenseTitlesByUri,
               image,
               rightsStatementPrefLabelsByUri:
-                data.rightsStatementPrefLabelsByUri,
-            })
+              data.rightsStatementPrefLabelsByUri,
+            }),
           ),
           properties: object.properties,
           rights: object.rights

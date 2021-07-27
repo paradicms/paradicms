@@ -3,7 +3,7 @@ import {decodeFileName, encodeFileName} from "@paradicms/next";
 import {JsonQueryParamConfig} from "@paradicms/react";
 import * as React from "react";
 import {Layout} from "components/Layout";
-import {GuiMetadata, JoinedImage, JoinedRights, ObjectFilters, PropertyDefinition} from "@paradicms/models";
+import {Configuration, JoinedImage, JoinedRights, ObjectFilters, PropertyDefinition} from "@paradicms/models";
 import {Data} from "lib/Data";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {ObjectCardObject, ObjectFacetedSearchGrid, thumbnailTargetDimensions} from "@paradicms/material-ui";
@@ -12,7 +12,7 @@ import {Hrefs} from "lib/Hrefs";
 import {joinImage, joinRights, selectThumbnail} from "@paradicms/model-utils";
 
 interface StaticProps {
-  readonly guiMetadata: GuiMetadata | null;
+  readonly configuration: Configuration;
   readonly institution: {
     readonly collection: {
       readonly objects: readonly {
@@ -32,10 +32,10 @@ interface StaticProps {
 }
 
 const CollectionPage: React.FunctionComponent<StaticProps> = ({
-  guiMetadata,
-  institution,
-  propertyDefinitions,
-}) => {
+                                                                configuration,
+                                                                institution,
+                                                                propertyDefinitions,
+                                                              }) => {
   // if (typeof window === "undefined") {
   //   return null; // Don't render on the server
   // }
@@ -74,7 +74,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
         </span>
       }
       documentTitle={"Collection - " + collection.title}
-      guiMetadata={guiMetadata}
+      configuration={configuration}
     >
       <ObjectFacetedSearchGrid
         objects={objects}
@@ -130,7 +130,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
-      guiMetadata: data.guiMetadata,
+      configuration: data.configuration,
       institution: {
         collection: {
           objects: data.collectionObjects(collection.uri).map(object => {

@@ -1,15 +1,15 @@
 import * as React from "react";
-import {ValueFacetFilter, ValueFacetFilterState, ValueFacetValue} from "@paradicms/models";
+import {ValueFacet, ValueFilter, ValueFilterState} from "@paradicms/models";
 import {Button, FormGroup, Input, Label, ListGroup, ListGroupItem} from "reactstrap";
 
-export const ValueFacetControls: React.FunctionComponent<{
-  currentState: ValueFacetFilter<string> | null; // value id's only
-  onChange: (newState: ValueFacetFilter<string> | null) => void;
-  valueUniverse: readonly ValueFacetValue<string>[];
-}> = ({currentState, onChange, valueUniverse}) => {
-  const state = new ValueFacetFilterState<string>({
-    filter: currentState,
-    valueUniverse: valueUniverse.map(value => value.value),
+export const ValueFilterControls: React.FunctionComponent<{
+  facet: ValueFacet<string>;
+  filter: ValueFilter<string>;
+  onChange: (newFilter: ValueFilter<string>) => void;
+}> = ({facet, filter, onChange}) => {
+  const state = new ValueFilterState<string>({
+    filter,
+    valueUniverse: facet.values.map(value => value.value),
   });
 
   return (
@@ -37,12 +37,12 @@ export const ValueFacetControls: React.FunctionComponent<{
           Deselect all
         </Button>
       </ListGroupItem>
-      {valueUniverse
+      {facet.values
         .concat()
         .sort((left, right) => right.count - left.count)
         .map(value => {
           const onChangeValue = (
-            e: React.ChangeEvent<HTMLInputElement>
+            e: React.ChangeEvent<HTMLInputElement>,
           ): void => {
             const newChecked = e.target.checked;
             if (newChecked) {

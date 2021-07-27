@@ -1,28 +1,24 @@
 import * as React from "react";
 import {GetStaticProps} from "next";
-import {GuiMetadata} from "@paradicms/models";
 import {Hrefs} from "lib/Hrefs";
 import {Data} from "lib/Data";
 import {Layout} from "components/Layout";
 import {Link} from "@paradicms/material-ui-next";
-import {
-  InstitutionCardInstitution,
-  InstitutionsGallery,
-  thumbnailTargetDimensions,
-} from "@paradicms/material-ui";
+import {InstitutionCardInstitution, InstitutionsGallery, thumbnailTargetDimensions} from "@paradicms/material-ui";
 import {joinImage, selectThumbnail} from "@paradicms/model-utils";
+import {Configuration} from "@paradicms/models";
 
 interface StaticProps {
-  readonly guiMetadata: GuiMetadata | null;
+  readonly configuration: Configuration;
   readonly institutions: readonly InstitutionCardInstitution[];
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
-  guiMetadata,
-  institutions,
-}) => {
+                                                           configuration,
+                                                           institutions,
+                                                         }) => {
   return (
-    <Layout documentTitle="Institutions" guiMetadata={guiMetadata}>
+    <Layout documentTitle="Institutions" configuration={configuration}>
       <InstitutionsGallery
         institutions={institutions}
         renderInstitutionLink={(institution, children) => (
@@ -49,7 +45,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      guiMetadata: data.guiMetadata,
+      configuration: data.configuration,
       institutions: institutions.map(institution => {
         const thumbnail = selectThumbnail({
           images: data.institutionImages(institution.uri),

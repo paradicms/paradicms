@@ -17,21 +17,21 @@ import {NavbarSearchForm, STYLESHEET_HREF_DEFAULT} from "@paradicms/bootstrap";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";
-import {GuiMetadata} from "@paradicms/models";
+import {Configuration} from "@paradicms/models";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string; readonly uri: string};
+  configuration: Configuration;
   cardTitle?: React.ReactNode;
   className?: string;
   documentTitle?: string;
-  guiMetadata: GuiMetadata | null;
   onSearch?: (text: string) => void;
 }>> = ({
          collection,
          cardTitle,
          children,
          documentTitle,
-         guiMetadata,
+         configuration,
          onSearch: onSearchUserDefined,
        }) => {
   const router = useRouter();
@@ -43,7 +43,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   } else {
     onSearch = (text: string) => {
       const href = Hrefs.collection({
-        filters: null,
+        filters: [],
         text: text,
       }).toString();
       console.info("redirecting to search href", href);
@@ -56,7 +56,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
     <>
       <Head>
         <title>{collection.title + (documentTitle ? " - " + documentTitle : "")}</title>
-        <link rel="stylesheet" href={guiMetadata?.bootstrapStylesheetHref ?? STYLESHEET_HREF_DEFAULT} />
+        <link rel="stylesheet" href={configuration.bootstrapStylesheetHref ?? STYLESHEET_HREF_DEFAULT} />
       </Head>
       <Container fluid>
         <Row>

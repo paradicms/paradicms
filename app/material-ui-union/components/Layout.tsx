@@ -13,9 +13,9 @@ import {
 import {Footer, NavbarSearchForm} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
-import {GuiMetadata} from "@paradicms/models";
 import {useRouter} from "next/router";
 import Head from "next/head";
+import {Configuration} from "@paradicms/models";
 
 const useStyles = makeStyles(theme => ({
   brand: {
@@ -44,17 +44,17 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   };
   cardTitle?: React.ReactNode;
   className?: string;
+  configuration: Configuration;
   documentTitle?: string;
-  guiMetadata: GuiMetadata | null;
   onSearch?: (text: string) => void;
 }>> = ({
-  breadcrumbs,
-  cardTitle,
-  children,
-  documentTitle,
-  guiMetadata,
-  onSearch: onSearchUserDefined,
-}) => {
+         breadcrumbs,
+         cardTitle,
+         children,
+         documentTitle,
+         configuration,
+         onSearch: onSearchUserDefined,
+       }) => {
   const classes = useStyles();
   const router = useRouter();
 
@@ -146,8 +146,8 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   }
 
   let qualifiedDocumentTitle: string[] = [];
-  if (guiMetadata && guiMetadata.documentTitle) {
-    qualifiedDocumentTitle.push(guiMetadata.documentTitle);
+  if (configuration.documentTitle) {
+    qualifiedDocumentTitle.push(configuration.documentTitle);
   }
   if (documentTitle) {
     qualifiedDocumentTitle.push(documentTitle);
@@ -162,9 +162,9 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         <Grid item>
           <AppBar data-cy="navbar" position="static">
             <Toolbar>
-              {guiMetadata?.navbarTitle ? (
+              {configuration.navbarTitle ? (
                 <Typography variant="h6" className={classes.brand}>
-                  {guiMetadata.navbarTitle}
+                  {configuration.navbarTitle}
                 </Typography>
               ) : null}
               <Link className={classes.navLink} href={Hrefs.home}>

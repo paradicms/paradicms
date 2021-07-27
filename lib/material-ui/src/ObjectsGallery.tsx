@@ -5,40 +5,37 @@ import {ObjectCard} from "./ObjectCard";
 import {ObjectCardObject} from "./ObjectCardObject";
 import {ObjectCardInstitution} from "./ObjectCardInstitution";
 
-const OBJECTS_PER_PAGE = 10;
-
 /**
  * Objects gallery component.
  *
- * @param objects objects to render in the gallery, should not be sliced (limit + offset) beforehand
+ * @param objects current page of objects to render in the gallery
  */
 export const ObjectsGallery: React.FunctionComponent<{
   objects: readonly ObjectCardObject[];
   onChangePage: (page: number) => void;
   page: number; // From 0
+  pageMax: number; // From 0
   renderInstitutionLink?: (
     institution: ObjectCardInstitution,
-    children: React.ReactNode
+    children: React.ReactNode,
   ) => React.ReactNode;
   renderObjectLink: (
     object: ObjectCardObject,
-    children: React.ReactNode
+    children: React.ReactNode,
   ) => React.ReactNode;
 }> = ({
-  objects,
-  onChangePage,
-  page,
-  renderInstitutionLink,
-  renderObjectLink,
-}) => {
-  const maxPage = Math.ceil(objects.length / OBJECTS_PER_PAGE) - 1;
-
+        objects,
+        onChangePage,
+        page,
+        pageMax,
+        renderInstitutionLink,
+        renderObjectLink,
+      }) => {
   return (
     <Grid container direction="column" spacing={4}>
       <Grid item>
         <Grid container spacing={8}>
           {objects
-            .slice(page * OBJECTS_PER_PAGE, (page + 1) * OBJECTS_PER_PAGE)
             .map(object => (
               <Grid item key={object.uri}>
                 <ObjectCard
@@ -50,15 +47,13 @@ export const ObjectsGallery: React.FunctionComponent<{
             ))}
         </Grid>
       </Grid>
-      {maxPage > 0 ? (
-        <Grid item style={{alignSelf: "center"}}>
-          <Pagination
-            count={maxPage + 1}
-            page={page + 1}
-            onChange={(_, value) => onChangePage(value - 1)}
-          />
-        </Grid>
-      ) : null}
+      <Grid item style={{alignSelf: "center"}}>
+        <Pagination
+          count={pageMax + 1}
+          page={page + 1}
+          onChange={(_, value) => onChangePage(value - 1)}
+        />
+      </Grid>
     </Grid>
   );
 };

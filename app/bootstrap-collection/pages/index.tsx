@@ -1,29 +1,31 @@
 import * as React from "react";
-import {GuiMetadata, JoinedImage, JoinedRights, ObjectQuery, Property, PropertyDefinition} from "@paradicms/models";
+import {useEffect, useMemo, useState} from "react";
+import {Configuration, Image, JoinedRights, Object, ObjectsQuery, ObjectsQueryResults} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {Data} from "lib/Data";
 import {GetStaticProps} from "next";
 import {Col, Container, Row} from "reactstrap";
-import {ObjectFacetsControls, ObjectFiltersBadges, ObjectsGallery} from "@paradicms/bootstrap";
+import {FiltersBadges, FiltersControls, ObjectsGallery} from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {NumberParam, useQueryParam} from "use-query-params";
 import {JsonQueryParamConfig} from "@paradicms/react";
-import {IndexedObject, ObjectFacetedSearchQuery} from "@paradicms/lunr";
-import {joinImage, joinRights, selectThumbnail} from "@paradicms/model-utils";
+import {
+  indexImagesByDepictsUri,
+  indexModelsByUri,
+  joinImage,
+  joinRights,
+  selectThumbnail,
+} from "@paradicms/model-utils";
+import {LunrObjectQueryService} from "@paradicms/lunr";
+import {ObjectQueryService} from "@paradicms/services";
 
 interface StaticProps {
-  readonly guiMetadata: GuiMetadata | null;
+  readonly configuration: Configuration;
   readonly institution: {
     readonly collection: {
-      readonly objects: readonly {
-        readonly abstract: string | null;
-        readonly properties: readonly Property[] | null;
-        readonly rights: JoinedRights | null;
-        readonly thumbnail: JoinedImage | null;
-        readonly title: string;
-        readonly uri: string;
-      }[];
+      // The collectionUris and institutionUri properties are implied by the structure.
+      readonly objects: readonly (Omit<Object, "collectionUris" | "institutionUri"> & {thumbnail: Image | null})[];
       readonly title: string;
       readonly uri: string;
     };
@@ -31,82 +33,97 @@ interface StaticProps {
     readonly rights: JoinedRights | null;
     readonly uri: string;
   };
-  readonly propertyDefinitions: readonly PropertyDefinition[];
+  readonly licenseTitlesByUri: {[index: string]: string};
+  readonly rightsStatementPrefLabelsByUri: {[index: string]: string};
 }
 
+const OBJECTS_PER_PAGE = 10;
+
 const IndexPage: React.FunctionComponent<StaticProps> = ({
-                                                           guiMetadata,
+                                                           configuration,
                                                            institution,
-                                                           propertyDefinitions,
+                                                           licenseTitlesByUri,
+                                                           rightsStatementPrefLabelsByUri,
                                                          }) => {
   const collection = institution.collection;
 
-  const [objectQuery, setObjectQueryParam] = useQueryParam<ObjectQuery>(
+  // The collection and institution on the objects prop are implied
+  // Make them explicit here so we can have Object for other users.
+  const allObjects: readonly (Object & {thumbnail: Image | null})[] = useMemo(
+    () =>
+      collection.objects.map(object => ({
+        collectionUris: [collection.uri],
+        institutionUri: institution.uri,
+        ...object,
+      })),
+    [institution],
+  );
+  const allObjectsByUri: {[index: string]: (Object & {thumbnail: Image | null})} = useMemo(() => indexModelsByUri(allObjects), [allObjects]);
+
+  const [objectsQuery, setObjectsQueryParam] = useQueryParam<ObjectsQuery>(
     "query",
-    new JsonQueryParamConfig<ObjectQuery>(),
+    new JsonQueryParamConfig<ObjectsQuery>(),
   );
 
   let [pageQueryParam, setPage] = useQueryParam<number | null | undefined>(
     "page",
     NumberParam,
   );
-  const page = pageQueryParam ?? 0;
+  const page = useMemo<number>(() => pageQueryParam ?? 0, [pageQueryParam]);
 
-  const indexedObjects: readonly IndexedObject[] = React.useMemo(
-    () =>
-      collection.objects.map(object => ({
-        abstract: object.abstract,
-        collectionUris: [collection.uri],
-        institutionUri: institution.uri,
-        properties: object.properties,
-        title: object.title,
-        uri: object.uri,
-      })),
-    [institution]
-  );
+  const objectQueryService = useMemo<ObjectQueryService>(() => new LunrObjectQueryService({
+    configuration,
+    objects: allObjects,
+  }), [configuration, allObjects]);
+
+  const [objectsQueryResults, setObjectsQueryResults] = useState<ObjectsQueryResults | null>(null);
+
+  useEffect(() => {
+    objectQueryService.getObjects({
+      limit: OBJECTS_PER_PAGE,
+      offset: page * OBJECTS_PER_PAGE,
+      query: objectsQuery,
+    }).then(setObjectsQueryResults);
+  }, [objectsQuery, objectQueryService, page]);
+
+  if (objectsQueryResults === null) {
+    return null;
+  }
 
   return (
-    <ObjectFacetedSearchQuery
-      objects={indexedObjects}
-      propertyDefinitions={propertyDefinitions}
-      query={objectQuery ?? {}}
+    <Layout
+      collection={collection}
+      configuration={configuration}
+      onSearch={text => {
+        setObjectsQueryParam({filters: [], text});
+        setPage(undefined);
+      }}
     >
-      {({objectFacets, objects}) => (
-        <Layout
-          collection={collection}
-          guiMetadata={guiMetadata}
-          onSearch={text => {
-            setObjectQueryParam({filters: null, text});
-            setPage(undefined);
-          }}
-        >
-          <Container fluid>
-            {objects.length > 0 ? (
-              <>
-                <Row>
-                  <Col xs={12}>
-                    <h4 className="d-inline-block">
-                      <span>{objects.length}</span>&nbsp;
-                      <span>{objects.length === 1 ? "object" : "objects"}</span>
-                      &nbsp;
-                      {objectQuery && objectQuery.text ? (
-                        <span>
-                          matching <i>{objectQuery.text}</i>
+      <Container fluid>
+        {objectsQueryResults.totalCount > 0 ? (
+          <>
+            <Row>
+              <Col xs={12}>
+                <h4 className="d-inline-block">
+                  <span>{objectsQueryResults.totalCount}</span>&nbsp;
+                  <span>{objectsQueryResults.totalCount === 1 ? "object" : "objects"}</span>
+                  &nbsp;
+                  {objectsQuery.text ? (
+                    <span>
+                          matching <i>{objectsQuery.text}</i>
                         </span>
-                      ) : (
-                        <span>matched</span>
-                      )}
-                    </h4>
-                    {objectQuery?.filters ? (
-                      <div className="d-inline-block">
-                        <ObjectFiltersBadges
-                          facets={objectFacets}
-                          filters={objectQuery.filters}
-                          propertyDefinitions={propertyDefinitions}
-                        />
-                      </div>
-                    ) : null}
-                  </Col>
+                  ) : (
+                    <span>matched</span>
+                  )}
+                </h4>
+                {objectsQuery.filters.length > 0 ? (
+                  <div className="d-inline-block">
+                    <FiltersBadges
+                      filters={objectsQuery.filters}
+                    />
+                  </div>
+                ) : null}
+              </Col>
                 </Row>
                 <Row>
                   <Col xs={12}>
@@ -117,11 +134,29 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
             ) : null}
             <Row>
               <Col xs="10">
-                {objects.length > 0 ? (
+                {objectsQueryResults.objects.length > 0 ? (
                   <ObjectsGallery
-                    objects={objects}
+                    objects={objectsQueryResults.objects.map(object => ({
+                      abstract: object.abstract,
+                      institution,
+                      rights: object.rights ? joinRights({
+                        licenseTitlesByUri,
+                        rights: object.rights,
+                        rightsStatementPrefLabelsByUri,
+                      }) : null,
+                      title: object.title,
+                      thumbnail: allObjectsByUri[object.uri].thumbnail ? joinImage({
+                        licenseTitlesByUri,
+                        image: allObjectsByUri[object.uri].thumbnail!,
+                        rightsStatementPrefLabelsByUri,
+                      }) : null,
+                      uri: object.uri,
+                    }))}
+                    objectsPerPage={OBJECTS_PER_PAGE}
+                    objectsTotalCount={objectsQueryResults.totalCount}
                     onChangePage={setPage}
                     page={page}
+                    // pageMax={Math.ceil(objectsQueryResults.totalCount / OBJECTS_PER_PAGE) - 1}
                     renderObjectLink={(object, children) => (
                       <Link href={Hrefs.object(object.uri)}>
                         <a>{children}</a>
@@ -133,19 +168,13 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
                 )}
               </Col>
               <Col xs="2">
-                <ObjectFacetsControls
-                  facets={objectFacets}
-                  filters={
-                    objectQuery?.filters ?? {
-                      collectionUris: null,
-                      institutionUris: null,
-                      properties: null,
-                    }
-                  }
-                  onChange={newObjectFilters => {
-                    setObjectQueryParam({
-                      ...objectQuery,
-                      filters: newObjectFilters,
+                <FiltersControls
+                  facets={objectsQueryResults.facets}
+                  filters={objectsQuery.filters}
+                  onChange={newFilters => {
+                    setObjectsQueryParam({
+                      ...objectsQuery,
+                      filters: newFilters,
                     });
                     setPage(undefined);
                   }}
@@ -154,8 +183,6 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
             </Row>
           </Container>
         </Layout>
-      )}
-    </ObjectFacetedSearchQuery>
   );
 };
 
@@ -168,41 +195,21 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   const collection = data.collection;
   const institution = data.institution;
+  const imagesByDepictsUri = indexImagesByDepictsUri(data.images);
 
   return {
     props: {
-      guiMetadata: data.guiMetadata,
+      configuration: data.configuration,
       institution: {
         collection: {
           objects: data.objects.map(object => {
-            const images = data.images.filter(
-              image => image.depictsUri === object.uri,
-            );
-            const thumbnail = selectThumbnail({
-              images,
-              targetDimensions: {height: 200, width: 200},
-            });
+            const {collectionUris, institutionUri, ...otherObjectProps} = object;
             return {
-              abstract: object.abstract,
-              properties: object.properties,
-              rights: object.rights
-                ? joinRights({
-                    licenseTitlesByUri: data.licenseTitlesByUri,
-                    rights: object.rights,
-                    rightsStatementPrefLabelsByUri:
-                      data.rightsStatementPrefLabelsByUri,
-                  })
-                : null,
-              thumbnail: thumbnail
-                ? joinImage({
-                    image: thumbnail,
-                    licenseTitlesByUri: data.licenseTitlesByUri,
-                    rightsStatementPrefLabelsByUri:
-                      data.rightsStatementPrefLabelsByUri,
-                  })
-                : null,
-              title: object.title,
-              uri: object.uri,
+              thumbnail: selectThumbnail({
+                images: imagesByDepictsUri[object.uri] ?? [],
+                targetDimensions: {height: 200, width: 200},
+              }),
+              ...otherObjectProps,
             };
           }),
           title: collection.title,
@@ -211,15 +218,16 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
         name: institution.name,
         rights: institution.rights
           ? joinRights({
-              licenseTitlesByUri: data.licenseTitlesByUri,
-              rights: institution.rights,
-              rightsStatementPrefLabelsByUri:
-                data.rightsStatementPrefLabelsByUri,
-            })
+            licenseTitlesByUri: data.licenseTitlesByUri,
+            rights: institution.rights,
+            rightsStatementPrefLabelsByUri:
+            data.rightsStatementPrefLabelsByUri,
+          })
           : null,
         uri: institution.uri,
       },
-      propertyDefinitions: data.propertyDefinitions,
+      licenseTitlesByUri: data.licenseTitlesByUri,
+      rightsStatementPrefLabelsByUri: data.rightsStatementPrefLabelsByUri,
     },
   };
 };
