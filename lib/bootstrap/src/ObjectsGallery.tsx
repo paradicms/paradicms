@@ -11,7 +11,7 @@ import {ObjectCardInstitution} from "./ObjectCardInstitution";
  * @param objects current page of objects to render in the gallery
  */
 export const ObjectsGallery: React.FunctionComponent<{
-  objects: readonly ObjectCardObject[];
+  objects: readonly JoinedObject[],
   objectsPerPage: number;
   objectsTotalCount: number;
   onChangePage: (page: number) => void;
@@ -25,7 +25,7 @@ export const ObjectsGallery: React.FunctionComponent<{
     children: React.ReactNode,
   ) => React.ReactNode;
 }> = ({
-        objects,
+        dataset,
         objectsPerPage,
         objectsTotalCount,
         onChangePage,

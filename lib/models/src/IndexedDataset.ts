@@ -4,10 +4,10 @@ import {Image} from "./Image";
 import {Institution} from "./Institution";
 import {License} from "./License";
 import {Object} from "./Object";
-import {RightsStatement} from "RightsStatement";
+import {RightsStatement} from "./RightsStatement";
 
 /**
- * Lazily indexes the contents of a Dataset to provide quick lookups and subsetting.
+ * Lazily indexes the contents of an immutable Dataset to provide quick lookups and subsetting.
  *
  * For example, a GUI that has one object per page needs a quick objectByUri lookup in getStaticProps.
  *
@@ -21,6 +21,7 @@ export class IndexedDataset {
   private _collectionsByUri?: {[index: string]: Collection};
   private _imagesByDepictsUri?: {[index: string]: readonly Image[]};
   private _imagesByInstitutionUri?: {[index: string]: readonly Image[]};
+  private _imagesByUri?: {[index: string]: Image};
   private _institutionsByUri?: {[index: string]: Institution};
   private _licensesByUri?: {[index: string]: License};
   private _objectsByCollectionUri?: {[index: string]: readonly Object[]};
@@ -31,6 +32,36 @@ export class IndexedDataset {
   constructor(private readonly dataset: Dataset) {
   }
 
+  collectionImages(collectionUri: string): readonly Image[] {
+    let collectionImages = this.imagesByDepictsUri[collectionUri];
+    if (collectionImages) {
+      return collectionImages;
+    }
+
+    const collectionObjects = this.objectsByCollectionUri[collectionUri];
+    if (!collectionObjects) {
+      return [];
+    }
+
+    for (const object of collectionObjects) {
+      const objectImages = this.imagesByDepictsUri[object.uri];
+      if (objectImages) {
+        // Use the images of the first object with images as the collection's images
+        return objectImages;
+      }
+    }
+
+    return [];
+  }
+
+  collectionObjectsDataset(collectionUri: string): Dataset {
+    return this.objectsDataset(...this.collectionObjects(collectionUri).map(object => object.uri));
+  }
+
+  private collectionObjects(collectionUri: string): readonly Object[] {
+    return this.objectsByCollectionUri[collectionUri] ?? [];
+  }
+
   // @ts-ignore
   private get collectionsByInstitutionUri(): {[index: string]: readonly Collection[]} {
     if (!this._collectionsByInstitutionUri) {
@@ -39,12 +70,46 @@ export class IndexedDataset {
     return IndexedDataset.requireNotNullish(this._collectionsByInstitutionUri);
   }
 
-  // @ts-ignore
+  private collectionByUri(collectionUri: string): Collection {
+    const collection = this.collectionsByUri[collectionUri];
+    if (!collection) {
+      throw new RangeError("no such collection " + collectionUri);
+    }
+    return collection;
+  }
+
   private get collectionsByUri(): {[index: string]: Collection} {
     if (!this._collectionsByUri) {
       this.indexCollections();
     }
     return IndexedDataset.requireNotNullish(this._collectionsByUri);
+  }
+
+  // private get emptyDataset(): Dataset {
+  //   return {
+  //     collections: [],
+  //     images: [],
+  //     institutions: [],
+  //     licenses: [],
+  //     objects: [],
+  //     propertyDefinitions: [],
+  //     rightsStatements: [],
+  //   };
+  // }
+
+  get firstCollection(): Collection {
+    if (this.dataset.collections.length === 0) {
+      throw new RangeError("no collections");
+    }
+    return this.dataset.collections[0];
+  }
+
+  imageByUri(imageUri: string): Image {
+    const image = this.imagesByUri[imageUri];
+    if (!image) {
+      throw new RangeError("no such image " + imageUri);
+    }
+    return image;
   }
 
   // @ts-ignore
@@ -61,6 +126,14 @@ export class IndexedDataset {
       this.indexImages();
     }
     return IndexedDataset.requireNotNullish(this._imagesByInstitutionUri);
+  }
+
+  // @ts-ignore
+  private get imagesByUri(): {[index: string]: Image} {
+    if (!this._imagesByUri) {
+      this.indexImages();
+    }
+    return IndexedDataset.requireNotNullish(this._imagesByUri);
   }
 
   /**
@@ -87,6 +160,7 @@ export class IndexedDataset {
   private indexImages(): void {
     const imagesByDepictsUri: {[index: string]: Image[]} = {};
     const imagesByInstitutionUri: {[index: string]: Image[]} = {};
+    this._imagesByUri = {};
     for (const image of this.dataset.images) {
       const depictsUriImages = imagesByDepictsUri[image.depictsUri];
       if (depictsUriImages) {
@@ -101,6 +175,8 @@ export class IndexedDataset {
       } else {
         imagesByInstitutionUri[image.institutionUri] = [image];
       }
+
+      this._imagesByUri[image.uri] = image;
     }
     this._imagesByDepictsUri = imagesByDepictsUri;
     this._imagesByInstitutionUri = imagesByInstitutionUri;
@@ -159,6 +235,14 @@ export class IndexedDataset {
     this._objectsByInstitutionUri = objectsByInstitutionUri;
   }
 
+  institutionByUri(institutionUri: string): Institution {
+    const institution = this.institutionsByUri[institutionUri];
+    if (!institution) {
+      throw new RangeError("no such institution " + institutionUri);
+    }
+    return institution;
+  }
+
   // @ts-ignore
   private get institutionsByUri(): {[index: string]: Institution} {
     if (!this._institutionsByUri) {
@@ -167,12 +251,60 @@ export class IndexedDataset {
     return this._institutionsByUri;
   }
 
+  licenseByUri(licenseUri: string): License {
+    const license = this.licenseByUri(licenseUri);
+    if (!license) {
+      throw new RangeError("no such license " + licenseUri);
+    }
+    return license;
+  }
+
   // @ts-ignore
   private get licensesByUri(): {[index: string]: License} {
     if (!this._licensesByUri) {
       this._licensesByUri = IndexedDataset.indexModelsByUri(this.dataset.licenses);
     }
     return this._licensesByUri;
+  }
+
+  objectByUri(objectUri: string): Object {
+    const object = this.objectsByUri[objectUri];
+    if (!object) {
+      throw new RangeError("no such object " + objectUri);
+    }
+    return object;
+  }
+
+  objectImages(objectUri: string): readonly Image[] {
+    return this.imagesByDepictsUri[objectUri] ?? [];
+  }
+
+  get objects(): readonly Object[] {
+    return this.dataset.objects;
+  }
+
+  objectsDataset(...objectUris: readonly string[]): Dataset {
+    const objects = objectUris.map(objectUri => this.objectByUri(objectUri));
+
+    const collectionUris = new Set<string>();
+    const images: Image[] = [];
+    const institutionUris = new Set<string>();
+    for (const object of objects) {
+      for (const collectionUri of object.collectionUris) {
+        collectionUris.add(collectionUri);
+      }
+      images.push(...this.objectImages(object.uri));
+      institutionUris.add(object.institutionUri);
+    }
+    return {
+      collections: [...collectionUris].map(collectionUri => this.collectionByUri(collectionUri)),
+      images,
+      institutions: [...institutionUris].map(institutionUri => this.institutionByUri(institutionUri)),
+      licenses: this.dataset.licenses,
+      objects,
+      propertyDefinitions: this.dataset.propertyDefinitions,
+      rightsStatements: this.dataset.rightsStatements,
+    };
   }
 
   // @ts-ignore
@@ -204,6 +336,14 @@ export class IndexedDataset {
       throw new EvalError("expected value to be defined");
     }
     return value;
+  }
+
+  rightsStatementByUri(rightsStatementUri: string): RightsStatement {
+    const rightsStatement = this.rightsStatementsByUri[rightsStatementUri];
+    if (!rightsStatement) {
+      throw new RangeError("no such rights statement " + rightsStatementUri);
+    }
+    return rightsStatement;
   }
 
   // @ts-ignore

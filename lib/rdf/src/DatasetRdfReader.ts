@@ -9,6 +9,13 @@ import {ObjectRdfReader} from "./ObjectRdfReader";
 import {PropertyDefinitionRdfReader} from "./PropertyDefinitionRdfReader";
 
 export class DatasetRdfReader {
+  static parse(ttl: string): Dataset {
+    const parser = new Parser({format: "text/turtle"});
+    const store = new Store();
+    store.addQuads(parser.parse(ttl));
+    return DatasetRdfReader.read(store);
+  }
+
   static read(store: Store): Dataset {
     return {
       collections: CollectionRdfReader.readAll(store),
@@ -18,13 +25,6 @@ export class DatasetRdfReader {
       objects: ObjectRdfReader.readAll(store),
       propertyDefinitions: PropertyDefinitionRdfReader.readAll(store),
       rightsStatements: RightsStatementRdfReader.readAll(store),
-    }
-  }
-
-  static parseTurtle(ttl: string): Store {
-    const parser = new Parser({format: "text/turtle"});
-    const store = new Store();
-    store.addQuads(parser.parse(ttl));
-    return store;
+    };
   }
 }

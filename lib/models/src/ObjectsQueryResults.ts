@@ -1,8 +1,8 @@
 import {Facet} from "./Facet";
-import {Object} from "./Object";
+import {Dataset} from "./Dataset";
 
 export interface ObjectsQueryResults {
+  readonly dataset: Dataset;
   readonly facets: readonly Facet[];
-  readonly objects: readonly Object[];
-  readonly totalCount: number;
+  readonly totalObjectsCount: number;
 }

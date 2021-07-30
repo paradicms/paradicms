@@ -1,8 +1,16 @@
 import * as React from "react";
 import {useEffect, useMemo, useState} from "react";
-import {Configuration, Image, JoinedRights, Object, ObjectsQuery, ObjectsQueryResults} from "@paradicms/models";
+import {
+  Collection,
+  Configuration,
+  Dataset,
+  defaultConfiguration,
+  IndexedDataset,
+  JoinedDataset,
+  ObjectsQuery,
+  ObjectsQueryResults,
+} from "@paradicms/models";
 import {Layout} from "components/Layout";
-import {Data} from "lib/Data";
 import {GetStaticProps} from "next";
 import {Col, Container, Row} from "reactstrap";
 import {FiltersBadges, FiltersControls, ObjectsGallery} from "@paradicms/bootstrap";
@@ -10,56 +18,23 @@ import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {NumberParam, useQueryParam} from "use-query-params";
 import {JsonQueryParamConfig} from "@paradicms/react";
-import {
-  indexImagesByDepictsUri,
-  indexModelsByUri,
-  joinImage,
-  joinRights,
-  selectThumbnail,
-} from "@paradicms/model-utils";
 import {LunrObjectQueryService} from "@paradicms/lunr";
 import {ObjectQueryService} from "@paradicms/services";
+import {readDataset} from "lib/readDataset";
 
 interface StaticProps {
+  readonly collection: Collection;
   readonly configuration: Configuration;
-  readonly institution: {
-    readonly collection: {
-      // The collectionUris and institutionUri properties are implied by the structure.
-      readonly objects: readonly (Omit<Object, "collectionUris" | "institutionUri"> & {thumbnail: Image | null})[];
-      readonly title: string;
-      readonly uri: string;
-    };
-    readonly name: string;
-    readonly rights: JoinedRights | null;
-    readonly uri: string;
-  };
-  readonly licenseTitlesByUri: {[index: string]: string};
-  readonly rightsStatementPrefLabelsByUri: {[index: string]: string};
+  readonly dataset: Dataset;
 }
 
 const OBJECTS_PER_PAGE = 10;
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
+                                                           collection,
                                                            configuration,
-                                                           institution,
-                                                           licenseTitlesByUri,
-                                                           rightsStatementPrefLabelsByUri,
+                                                           dataset,
                                                          }) => {
-  const collection = institution.collection;
-
-  // The collection and institution on the objects prop are implied
-  // Make them explicit here so we can have Object for other users.
-  const allObjects: readonly (Object & {thumbnail: Image | null})[] = useMemo(
-    () =>
-      collection.objects.map(object => ({
-        collectionUris: [collection.uri],
-        institutionUri: institution.uri,
-        ...object,
-      })),
-    [institution],
-  );
-  const allObjectsByUri: {[index: string]: (Object & {thumbnail: Image | null})} = useMemo(() => indexModelsByUri(allObjects), [allObjects]);
-
   const [objectsQuery, setObjectsQueryParam] = useQueryParam<ObjectsQuery>(
     "query",
     new JsonQueryParamConfig<ObjectsQuery>(),
@@ -73,8 +48,8 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
 
   const objectQueryService = useMemo<ObjectQueryService>(() => new LunrObjectQueryService({
     configuration,
-    objects: allObjects,
-  }), [configuration, allObjects]);
+    dataset: new IndexedDataset(dataset),
+  }), [configuration, dataset]);
 
   const [objectsQueryResults, setObjectsQueryResults] = useState<ObjectsQueryResults | null>(null);
 
@@ -86,7 +61,9 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     }).then(setObjectsQueryResults);
   }, [objectsQuery, objectQueryService, page]);
 
-  if (objectsQueryResults === null) {
+  const objectsQueryResultsJoinedDataset = useMemo(() => objectsQueryResults !== null ? JoinedDataset.fromDataset(objectsQueryResults.dataset) : null, [objectsQueryResults]);
+
+  if (objectsQueryResults === null || objectsQueryResultsJoinedDataset === null) {
     return null;
   }
 
@@ -100,13 +77,13 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
       }}
     >
       <Container fluid>
-        {objectsQueryResults.totalCount > 0 ? (
+        {objectsQueryResults.totalObjectsCount > 0 ? (
           <>
             <Row>
               <Col xs={12}>
                 <h4 className="d-inline-block">
-                  <span>{objectsQueryResults.totalCount}</span>&nbsp;
-                  <span>{objectsQueryResults.totalCount === 1 ? "object" : "objects"}</span>
+                  <span>{objectsQueryResults.totalObjectsCount}</span>&nbsp;
+                  <span>{objectsQueryResults.totalObjectsCount === 1 ? "object" : "objects"}</span>
                   &nbsp;
                   {objectsQuery.text ? (
                     <span>
@@ -134,26 +111,11 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
             ) : null}
             <Row>
               <Col xs="10">
-                {objectsQueryResults.objects.length > 0 ? (
+                {objectsQueryResultsJoinedDataset.objects.length > 0 ? (
                   <ObjectsGallery
-                    objects={objectsQueryResults.objects.map(object => ({
-                      abstract: object.abstract,
-                      institution,
-                      rights: object.rights ? joinRights({
-                        licenseTitlesByUri,
-                        rights: object.rights,
-                        rightsStatementPrefLabelsByUri,
-                      }) : null,
-                      title: object.title,
-                      thumbnail: allObjectsByUri[object.uri].thumbnail ? joinImage({
-                        licenseTitlesByUri,
-                        image: allObjectsByUri[object.uri].thumbnail!,
-                        rightsStatementPrefLabelsByUri,
-                      }) : null,
-                      uri: object.uri,
-                    }))}
+                    objects={objectsQueryResultsJoinedDataset.objects}
                     objectsPerPage={OBJECTS_PER_PAGE}
-                    objectsTotalCount={objectsQueryResults.totalCount}
+                    objectsTotalCount={objectsQueryResults.totalObjectsCount}
                     onChangePage={setPage}
                     page={page}
                     // pageMax={Math.ceil(objectsQueryResults.totalCount / OBJECTS_PER_PAGE) - 1}
@@ -191,43 +153,14 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const data = new Data();
-
-  const collection = data.collection;
-  const institution = data.institution;
-  const imagesByDepictsUri = indexImagesByDepictsUri(data.images);
-
+  const dataset = readDataset();
+  const indexedDataset = new IndexedDataset(dataset);
+  const collection = indexedDataset.firstCollection;
   return {
     props: {
-      configuration: data.configuration,
-      institution: {
-        collection: {
-          objects: data.objects.map(object => {
-            const {collectionUris, institutionUri, ...otherObjectProps} = object;
-            return {
-              thumbnail: selectThumbnail({
-                images: imagesByDepictsUri[object.uri] ?? [],
-                targetDimensions: {height: 200, width: 200},
-              }),
-              ...otherObjectProps,
-            };
-          }),
-          title: collection.title,
-          uri: collection.uri,
-        },
-        name: institution.name,
-        rights: institution.rights
-          ? joinRights({
-            licenseTitlesByUri: data.licenseTitlesByUri,
-            rights: institution.rights,
-            rightsStatementPrefLabelsByUri:
-            data.rightsStatementPrefLabelsByUri,
-          })
-          : null,
-        uri: institution.uri,
-      },
-      licenseTitlesByUri: data.licenseTitlesByUri,
-      rightsStatementPrefLabelsByUri: data.rightsStatementPrefLabelsByUri,
+      collection,
+      configuration: defaultConfiguration,
+      dataset: indexedDataset.collectionObjectsDataset(collection.uri),
     },
   };
 };

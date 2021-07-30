@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Layout} from "components/Layout";
 import {Configuration, JoinedImage, JoinedRights, Property, PropertyDefinition} from "@paradicms/models";
-import {Data} from "lib/Data";
+import {ReadDataset} from "lib/readDataset";
 import {decodeFileName, encodeFileName} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Col, Container, Row} from "reactstrap";
@@ -76,7 +76,7 @@ export default ObjectPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {objectUri: string}}[] = [];
-  for (const object of new Data().objects) {
+  for (const object of new ReadDataset().objects) {
     paths.push({
       params: {
         objectUri: encodeFileName(object.uri),
@@ -93,7 +93,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const data = new Data();
+  const data = new ReadDataset();
   const objectUri = decodeFileName(params!.objectUri as string);
 
   const collection = data.collection;

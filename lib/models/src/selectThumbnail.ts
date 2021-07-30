@@ -1,5 +1,10 @@
-import {indexImagesByOriginalImageUri} from "./indexImagesByOriginalImageUri";
-import {ImageDimensions} from "@paradicms/models";
+import {ImageDimensions} from "./ImageDimensions";
+
+export interface ThumbnailSelector {
+  minDimensions?: ImageDimensions;
+  maxDimensions?: ImageDimensions;
+  targetDimensions: ImageDimensions;
+}
 
 /**
  * Select a thumbnail from an array of images, given target, minimum, and maximum dimensions.
@@ -9,15 +14,15 @@ import {ImageDimensions} from "@paradicms/models";
  * first thumbnail that fits the desired dimensions is returned, whichever original image that thumbnail
  * is derived from.
  */
-export const selectThumbnail = <ImageT extends {readonly exactDimensions: ImageDimensions | null; readonly maxDimensions: ImageDimensions | null; readonly originalImageUri: string | null; readonly uri: string;}>(kwds: {
-  images: readonly ImageT[];
-  minDimensions?: ImageDimensions;
-  maxDimensions?: ImageDimensions;
-  targetDimensions: ImageDimensions;
-}): ImageT | null => {
-  const {minDimensions, maxDimensions, targetDimensions} = kwds;
+export const selectThumbnail = <ImageT extends {readonly exactDimensions: ImageDimensions | null; readonly maxDimensions: ImageDimensions | null; readonly originalImageUri: string | null; readonly uri: string;}>(
+  images: readonly ImageT[], selector: ThumbnailSelector): ImageT | null => {
+  const {minDimensions, maxDimensions, targetDimensions} = selector;
 
-  const imagesByOriginalImageUri = indexImagesByOriginalImageUri(kwds.images);
+  const imagesByOriginalImageUri: {[index: string]: ImageT[]} = {};
+  for (const image of images) {
+    const originalImageUri = image.originalImageUri ?? image.uri;
+    (imagesByOriginalImageUri[originalImageUri] || (imagesByOriginalImageUri[originalImageUri] = [])).push(image);
+  }
 
   for (const originalImageUri of Object.keys(imagesByOriginalImageUri)) {
     const candidateImages: {

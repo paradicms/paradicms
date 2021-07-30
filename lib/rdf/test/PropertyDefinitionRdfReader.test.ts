@@ -20,7 +20,5 @@ describe("PropertyDefinition RDF reader", () => {
       expect(model.label.trim()).to.not.be.empty;
       expect(model.uri.trim()).to.not.be.empty;
     });
-    expect(models.some(model => model.faceted)).to.be.true;
-    expect(models.some(model => model.fullTextSearchable)).to.be.true;
   });
 });
