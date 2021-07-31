@@ -3,6 +3,7 @@ import {JoinedRights} from "./JoinedRights";
 import {JoinedDataset} from "./JoinedDataset";
 import {JoinedInstitution} from "./JoinedInstitution";
 import {Image} from "./Image";
+import invariant from "ts-invariant";
 
 export interface ThumbnailSelector {
   minDimensions?: ImageDimensions;
@@ -72,6 +73,8 @@ export class JoinedImage {
   thumbnail(selector: ThumbnailSelector): JoinedImage | null {
     const {minDimensions, maxDimensions, targetDimensions} = selector;
 
+    invariant(!!targetDimensions, "targetDimensions cannot be undefined");
+
     const originalImage = this.originalImage;
 
     const candidateImages: {
@@ -105,6 +108,8 @@ export class JoinedImage {
           continue;
         }
       }
+
+      invariant(!!imageDimensions, "undefined image dimensions");
 
       candidateImages.push({
         image,
