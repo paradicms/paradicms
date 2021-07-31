@@ -10,7 +10,6 @@
     "@paradicms/bootstrap": "1.0.5",
     "@paradicms/lunr": "1.0.5",
     "@paradicms/models": "1.0.5",
-    "@paradicms/model-utils": "1.0.5",
     "@paradicms/next": "1.0.5",
     "@paradicms/rdf": "1.0.5",
     "@paradicms/react": "1.0.5",

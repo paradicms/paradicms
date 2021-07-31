@@ -5,6 +5,8 @@ import {RightsStatement} from "./RightsStatement";
 import {JoinedImage} from "./JoinedImage";
 import {JoinedInstitution} from "./JoinedInstitution";
 import {JoinedObject} from "./JoinedObject";
+import {JoinedCollection} from "./JoinedCollection";
+import {PropertyDefinition} from "./PropertyDefinition";
 
 /**
  * Adapts/wraps models in Dataset to dynamically resolve references without copying.
@@ -20,8 +22,16 @@ export class JoinedDataset {
   constructor(private readonly indexedDataset: IndexedDataset) {
   }
 
+  collectionByUri(collectionUri: string): JoinedCollection {
+    return new JoinedCollection(this.indexedDataset.collectionByUri(collectionUri), this);
+  }
+
   collectionImages(collectionUri: string): readonly JoinedImage[] {
-    return this.indexedDataset.collectionImages(collectionUri).map(image => new JoinedImage(this, image));
+    return this.indexedDataset.collectionImages(collectionUri).map(image => new JoinedImage(image, this));
+  }
+
+  derivedImages(originalImageUri: string): readonly JoinedImage[] {
+    return this.indexedDataset.derivedImages(originalImageUri).map(image => new JoinedImage(image, this));
   }
 
   static fromDataset(dataset: Dataset): JoinedDataset {
@@ -29,7 +39,7 @@ export class JoinedDataset {
   }
 
   imageByUri(imageUri: string): JoinedImage {
-    return new JoinedImage(this, this.indexedDataset.imageByUri(imageUri));
+    return new JoinedImage(this.indexedDataset.imageByUri(imageUri), this);
   }
 
   institutionByUri(institutionUri: string): JoinedInstitution {
@@ -45,7 +55,15 @@ export class JoinedDataset {
   }
 
   objectImages(objectUri: string): readonly JoinedImage[] {
-    return this.indexedDataset.objectImages(objectUri).map(image => new JoinedImage(this, image));
+    return this.indexedDataset.objectImages(objectUri).map(image => new JoinedImage(image, this));
+  }
+
+  get objects(): readonly JoinedObject[] {
+    return this.indexedDataset.objects.map(object => new JoinedObject(this, object));
+  }
+
+  propertyDefinitionByUri(propertyDefinitionUri: string): PropertyDefinition | null {
+    return this.indexedDataset.propertyDefinitionByUri(propertyDefinitionUri);
   }
 
   rightsStatementByUri(rightsStatementUri: string): RightsStatement {

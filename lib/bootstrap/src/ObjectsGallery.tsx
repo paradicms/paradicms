@@ -2,8 +2,7 @@ import * as React from "react";
 import {Col, Container, Row} from "reactstrap";
 import PaginationComponent from "react-reactstrap-pagination";
 import {ObjectCard} from "./ObjectCard";
-import {ObjectCardObject} from "./ObjectCardObject";
-import {ObjectCardInstitution} from "./ObjectCardInstitution";
+import {JoinedInstitution, JoinedObject} from "@paradicms/models";
 
 /**
  * Objects gallery component.
@@ -17,15 +16,15 @@ export const ObjectsGallery: React.FunctionComponent<{
   onChangePage: (page: number) => void;
   page: number; // From 0
   renderInstitutionLink?: (
-    institution: ObjectCardInstitution,
+    institution: JoinedInstitution,
     children: React.ReactNode,
   ) => React.ReactNode;
   renderObjectLink: (
-    object: ObjectCardObject,
+    object: JoinedObject,
     children: React.ReactNode,
   ) => React.ReactNode;
 }> = ({
-        dataset,
+        objects,
         objectsPerPage,
         objectsTotalCount,
         onChangePage,

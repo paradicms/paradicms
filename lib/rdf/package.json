@@ -4,7 +4,6 @@
   "description": "Paradicms RDF manipulation library",
   "dependencies": {
     "@paradicms/models": "1.0.5",
-    "@paradicms/model-utils": "1.0.5",
     "@types/n3": "1.10.2",
     "n3": "1.11.0"
   },

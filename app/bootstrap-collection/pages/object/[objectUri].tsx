@@ -1,68 +1,52 @@
 import * as React from "react";
+import {useMemo} from "react";
 import {Layout} from "components/Layout";
-import {Configuration, JoinedImage, JoinedRights, Property, PropertyDefinition} from "@paradicms/models";
-import {ReadDataset} from "lib/readDataset";
+import {Configuration, Dataset, defaultConfiguration, IndexedDataset, JoinedDataset} from "@paradicms/models";
 import {decodeFileName, encodeFileName} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Col, Container, Row} from "reactstrap";
 import {Accordion, ObjectImagesCarousel, PropertiesTable, RightsTable} from "@paradicms/bootstrap";
-import {joinImage, joinRights} from "@paradicms/model-utils";
+import {readDataset} from "lib/readDataset";
 
 interface StaticProps {
   readonly configuration: Configuration;
-  readonly institution: {
-    readonly collection: {
-      readonly object: {
-        readonly images: readonly JoinedImage[];
-        readonly rights: JoinedRights | null;
-        readonly properties?: readonly Property[];
-        readonly title: string;
-        readonly uri: string;
-      };
-      readonly title: string;
-      readonly uri: string;
-    };
-    readonly name: string;
-    readonly rights: JoinedRights | null;
-    readonly uri: string;
-  };
-  readonly propertyDefinitions: readonly PropertyDefinition[];
+  readonly dataset: Dataset;
+  readonly objectUri: string;
 }
 
 const ObjectPage: React.FunctionComponent<StaticProps> = ({
                                                             configuration,
-                                                            institution,
-                                                            propertyDefinitions,
+                                                            dataset,
+                                                            objectUri,
                                                           }) => {
-  const collection = institution.collection;
-  const object = collection.object;
-  const rights = object.rights ?? institution.rights ?? null;
+  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [dataset]);
+  const object = joinedDataset.objectByUri(objectUri);
+  const collection = object.collections[0];
 
   return (
     <Layout collection={collection} documentTitle={"Object - " + object.title} configuration={configuration}>
       <Container fluid>
         <Row>
           <Col xs={12} style={{display: "flex", justifyContent: "center"}}>
-            <ObjectImagesCarousel images={object.images} />
+            <ObjectImagesCarousel object={object} />
           </Col>
         </Row>
-        {object.properties && object.properties.length > 0 ? (
+        {object.properties.length > 0 ? (
           <Row className="mt-4">
             <Col xs={12}>
               <Accordion defaultOpen={true} title={<h4>Properties</h4>}>
                 <PropertiesTable
                   properties={object.properties}
-                  propertyDefinitions={propertyDefinitions}
                 />
               </Accordion>
             </Col>
           </Row>
         ) : null}
-        {rights ? (
+        {object.rights ? (
           <Row className="mt-4">
             <Col xs={12}>
               <Accordion title={<h4>Metadata rights</h4>}>
-                <RightsTable rights={rights} />
+                <RightsTable rights={object.rights} />
               </Accordion>
             </Col>
           </Row>
@@ -76,7 +60,7 @@ export default ObjectPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {objectUri: string}}[] = [];
-  for (const object of new ReadDataset().objects) {
+  for (const object of readDataset().objects) {
     paths.push({
       params: {
         objectUri: encodeFileName(object.uri),
@@ -93,55 +77,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const data = new ReadDataset();
   const objectUri = decodeFileName(params!.objectUri as string);
-
-  const collection = data.collection;
-  const institution = data.institution;
-  const object = data.objects.find(object => object.uri === objectUri)!;
-
   return {
     props: {
-      configuration: data.configuration,
-      institution: {
-        collection: {
-          object: {
-            images: data.images
-              .filter(image => image.depictsUri === objectUri)
-              .map(image =>
-                joinImage({
-                  licenseTitlesByUri: data.licenseTitlesByUri,
-                  image,
-                  rightsStatementPrefLabelsByUri:
-                    data.rightsStatementPrefLabelsByUri,
-                })
-              ),
-            rights: object.rights
-              ? joinRights({
-                  licenseTitlesByUri: data.licenseTitlesByUri,
-                  rights: object.rights,
-                  rightsStatementPrefLabelsByUri:
-                    data.rightsStatementPrefLabelsByUri,
-                })
-              : null,
-            title: object.title,
-            uri: object.uri,
-          },
-          title: collection.title,
-          uri: collection.uri,
-        },
-        name: institution.name,
-        rights: institution.rights
-          ? joinRights({
-              licenseTitlesByUri: data.licenseTitlesByUri,
-              rights: institution.rights,
-              rightsStatementPrefLabelsByUri:
-                data.rightsStatementPrefLabelsByUri,
-            })
-          : null,
-        uri: institution.uri,
-      },
-      propertyDefinitions: data.propertyDefinitions,
+      configuration: defaultConfiguration,
+      dataset: new IndexedDataset(readDataset()).objectsDataset(objectUri),
+      objectUri,
     },
   };
 };

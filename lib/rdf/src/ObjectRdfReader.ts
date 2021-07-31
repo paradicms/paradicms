@@ -1,19 +1,14 @@
 import {ModelRdfReader} from "./ModelRdfReader";
-import {Object, Property, PropertyDefinition, PropertyValue} from "@paradicms/models";
+import {Object, Property, PropertyValue} from "@paradicms/models";
 import {DCTERMS, FOAF, PARADICMS} from "./vocabularies";
 import {RightsRdfReader} from "./RightsRdfReader";
 import {ModelNode} from "./ModelNode";
 import {LiteralWrapper} from "./LiteralWrapper";
-import {PropertyDefinitionRdfReader} from "./PropertyDefinitionRdfReader";
-import {indexModelsByUri} from "@paradicms/model-utils";
 import {Literal, Store} from "n3";
 
 export class ObjectRdfReader extends ModelRdfReader<Object> {
   constructor(
     node: ModelNode,
-    private readonly propertyDefinitionsByUri: {
-      [index: string]: PropertyDefinition;
-    },
     store: Store,
   ) {
     super(node, store);
@@ -28,12 +23,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
       if (nodeStatement.predicate.termType !== "NamedNode") {
         continue;
       }
-      const propertyDefinition = this.propertyDefinitionsByUri[
-        nodeStatement.predicate.value
-      ];
-      if (!propertyDefinition) {
-        continue;
-      }
+      const propertyUri = nodeStatement.predicate.value;
       if (nodeStatement.object.termType !== "Literal") {
         continue;
       }
@@ -50,13 +40,13 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
           "unknown literal datatype",
           literal.literal.datatype,
           "for property",
-          propertyDefinition.uri,
+          propertyUri,
         );
         continue;
       }
 
       properties.push({
-        uri: propertyDefinition.uri,
+        uri: propertyUri,
         value,
       });
     }
@@ -91,13 +81,9 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
   }
 
   static readEach(store: Store, callback: (object: Object) => void): void {
-    const propertyDefinitionsByUri = indexModelsByUri(
-      PropertyDefinitionRdfReader.readAll(store),
-    );
-
     return ModelRdfReader._readEach<Object>(
       callback,
-      node => new ObjectRdfReader(node, propertyDefinitionsByUri, store),
+      node => new ObjectRdfReader(node, store),
       store,
       PARADICMS.Object,
     );

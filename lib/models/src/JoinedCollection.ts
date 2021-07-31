@@ -15,6 +15,10 @@ export class JoinedCollection {
     return this.joinedDataset.institutionByUri(this.collection.institutionUri);
   }
 
+  get title(): string {
+    return this.collection.title;
+  }
+
   get uri(): string {
     return this.collection.uri;
   }

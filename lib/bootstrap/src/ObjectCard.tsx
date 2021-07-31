@@ -1,24 +1,23 @@
 import * as React from "react";
-import {ImageDimensions} from "@paradicms/models";
+import {ImageDimensions, JoinedImage, JoinedInstitution, JoinedObject} from "@paradicms/models";
 import {Card, CardBody, CardHeader, CardImg, Col, Container, Row, Table} from "reactstrap";
 import {Accordion} from "./Accordion";
 import {RightsTable} from "./RightsTable";
-import {getImageSrc} from "@paradicms/model-utils";
-import {ObjectCardObject} from "./ObjectCardObject";
-import {ObjectCardInstitution} from "./ObjectCardInstitution";
 
 export const ObjectCard: React.FunctionComponent<{
-  object: ObjectCardObject;
+  object: JoinedObject;
   renderInstitutionLink?: (
-    institution: ObjectCardInstitution,
+    institution: JoinedInstitution,
     children: React.ReactNode,
   ) => React.ReactNode;
   renderObjectLink: (
-    object: ObjectCardObject,
+    object: JoinedObject,
     children: React.ReactNode,
   ) => React.ReactNode;
 }> = ({object, renderInstitutionLink, renderObjectLink}) => {
   const thumbnailDimensions: ImageDimensions = {height: 200, width: 200};
+  const thumbnail = object.thumbnail({targetDimensions: thumbnailDimensions});
+  const thumbnailSrc = thumbnail?.src ?? JoinedImage.placeholderSrc(thumbnailDimensions);
 
   return (
     <Card className="object-card">
@@ -29,7 +28,7 @@ export const ObjectCard: React.FunctionComponent<{
         object,
         <CardImg
           className="thumbnail"
-          src={getImageSrc({image: object.thumbnail, targetDimensions: thumbnailDimensions})}
+          src={thumbnailSrc}
           title={object.title}
         />
       )}
@@ -63,12 +62,12 @@ export const ObjectCard: React.FunctionComponent<{
               </Col>
             </Row>
           ) : null}
-          {object.thumbnail && object.thumbnail.rights ? (
+          {thumbnail && thumbnail.rights ? (
             <Row>
               <Col xs={12}>
                 <Accordion title="Image rights">
                   <RightsTable
-                    rights={object.thumbnail.rights}
+                    rights={thumbnail.rights}
                     tableClassName="rights-table"
                   ></RightsTable>
                 </Accordion>

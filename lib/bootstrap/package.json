@@ -7,7 +7,6 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.11",
     "@paradicms/models": "1.0.5",
-    "@paradicms/model-utils": "1.0.5",
     "@paradicms/react": "1.0.5",
     "bootstrap": "^4.5.3",
     "react-medium-image-zoom": "3.1.2",
