@@ -1,11 +1,10 @@
 /app/bootstrap-collection/public/img/archive/
 /app/bootstrap-exhibition/public/img/archive/
 /app/material-ui-union/public/img/archive/
-debug.log
 dist/
-/lerna-debug.log
 .next/
 node_modules/
 null/
 out/
 !/integration/material-ui-union/package-lock.json
+yarn-error.log
