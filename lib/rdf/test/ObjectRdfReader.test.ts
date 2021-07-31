@@ -2,7 +2,6 @@ import {expect} from "chai";
 import {describe} from "mocha";
 import {parseTestData} from "./parseTestData";
 import {ObjectRdfReader} from "../src/ObjectRdfReader";
-import {PropertyDefinitionRdfReader} from "../src/PropertyDefinitionRdfReader";
 import {Store} from "n3";
 
 describe("Object RDF reader", () => {
@@ -16,7 +15,6 @@ describe("Object RDF reader", () => {
 
   it("should read all objects from the store", function(this: any) {
     this.timeout(10000);
-    const propertyDefinitions = PropertyDefinitionRdfReader.readAll(store);
     const models = ObjectRdfReader.readAll(store);
     expect(models).to.not.be.empty;
     models.forEach(model => {
@@ -27,11 +25,6 @@ describe("Object RDF reader", () => {
       expect(model.properties).to.not.be.empty;
       model.properties!.forEach(property => {
         expect(property.uri.trim()).to.not.be.empty;
-        expect(
-          propertyDefinitions.find(
-            propertyDefinition => propertyDefinition.uri === property.uri,
-          ),
-        ).to.not.be.undefined;
         if (typeof property.value === "string") {
           expect(property.value.trim()).to.not.be.empty;
         }
