@@ -5,13 +5,13 @@ set -eu
 cd "$(dirname "$0")"
 
 # Run parallel commands and fail if any of them fails.
-
+# Start in a lib/ subdirectory so that all commands look similar
 cd models
 
 
 pids=()
 # No dependencies
-cd models
+cd ../models
 yarn build &
 pids+=($!)
 
