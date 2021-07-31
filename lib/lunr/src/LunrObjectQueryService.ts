@@ -76,7 +76,7 @@ export class LunrObjectQueryService implements ObjectQueryService {
       );
 
       return resolve({
-        dataset: this.dataset.objectsDataset(...slicedObjects.map(object => object.uri)),
+        dataset: this.dataset.objectsDataset(slicedObjects.map(object => object.uri)),
         facets,
         totalObjectsCount: filteredObjects.length,
       });
