@@ -276,6 +276,10 @@ export class IndexedDataset {
     return this._institutionsByUriIndex;
   }
 
+  institutionCollections(institutionUri: string): readonly Collection[] {
+    return this.collectionsByInstitutionUriIndex[institutionUri] ?? [];
+  }
+
   institutionDataset(institutionUri: string): Dataset {
     return {
       collections: this.collectionsByInstitutionUriIndex[institutionUri] ?? [],
@@ -308,6 +312,10 @@ export class IndexedDataset {
     }
 
     return [];
+  }
+
+  institutionObjects(institutionUri: string): readonly Object[] {
+    return this.objectsByInstitutionUriIndex[institutionUri] ?? [];
   }
 
   get institutions(): readonly Institution[] {

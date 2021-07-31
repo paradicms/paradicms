@@ -3,7 +3,7 @@ import * as React from "react";
 import {Grid} from "@material-ui/core";
 import {FiltersControls} from "./FiltersControls";
 import {ObjectsGallery} from "./ObjectsGallery";
-import {FiltersChips} from "FiltersChips";
+import {FiltersChips} from "./FiltersChips";
 
 export const ObjectFacetedSearchGrid: React.FunctionComponent<{
   facets: readonly Facet[];

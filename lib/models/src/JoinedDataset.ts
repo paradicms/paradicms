@@ -46,6 +46,10 @@ export class JoinedDataset {
     return new JoinedInstitution(this.indexedDataset.institutionByUri(institutionUri), this);
   }
 
+  institutionCollections(institutionUri: string): readonly JoinedCollection[] {
+    return this.indexedDataset.institutionCollections(institutionUri).map(collection => new JoinedCollection(collection, this));
+  }
+
   institutionImages(institutionUri: string): readonly JoinedImage[] {
     return this.indexedDataset.institutionImages(institutionUri).map(image => new JoinedImage(image, this));
   }

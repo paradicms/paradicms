@@ -1,38 +1,27 @@
 import * as React from "react";
+import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {Accordion, AccordionDetails, AccordionSummary, Grid} from "@material-ui/core";
-import {Configuration, JoinedImage, JoinedRights, Property, PropertyDefinition} from "@paradicms/models";
+import {Configuration, Dataset, defaultConfiguration, IndexedDataset, JoinedDataset} from "@paradicms/models";
 import {ObjectImagesCarousel, PropertiesTable, RightsTable} from "@paradicms/material-ui";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {joinImage, joinRights} from "@paradicms/model-utils";
+import {readDataset} from "lib/readDataset";
 
 interface StaticProps {
   readonly configuration: Configuration;
-  readonly institution: {
-    readonly name: string;
-    readonly object: {
-      readonly images: readonly JoinedImage[];
-      readonly properties: readonly Property[] | null;
-      readonly rights: JoinedRights | null;
-      readonly title: string;
-      readonly uri: string;
-    };
-    readonly rights: JoinedRights | null;
-    readonly uri: string;
-  };
-  readonly propertyDefinitions: readonly PropertyDefinition[];
+  readonly dataset: Dataset;
+  readonly objectUri: string;
 }
 
 const ObjectPage: React.FunctionComponent<StaticProps> = ({
                                                             configuration,
-                                                            institution,
-                                                            propertyDefinitions,
+                                                            dataset, objectUri,
                                                           }) => {
-  const object = institution.object;
-  const rights = object.rights ?? institution.rights ?? null;
+  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [dataset]);
+  const object = joinedDataset.objectByUri(objectUri);
+  const institution = object.institution;
 
   return (
     <Layout
@@ -42,7 +31,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
     >
       <Grid container direction="column" spacing={2}>
         <Grid item>
-          <ObjectImagesCarousel images={object.images} />
+          <ObjectImagesCarousel object={object} />
         </Grid>
         {object.properties && object.properties.length > 0 ? (
           <Grid item>
@@ -53,20 +42,19 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
               <AccordionDetails>
                 <PropertiesTable
                   properties={object.properties}
-                  propertyDefinitions={propertyDefinitions}
                 />
               </AccordionDetails>
             </Accordion>
           </Grid>
         ) : null}
-        {rights ? (
+        {object.rights ? (
           <Grid item>
             <Accordion>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <h3>Metadata rights</h3>
               </AccordionSummary>
               <AccordionDetails>
-                <RightsTable rights={rights} />
+                <RightsTable rights={object.rights} />
               </AccordionDetails>
             </Accordion>
           </Grid>
@@ -79,11 +67,12 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
 export default ObjectPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const data = Data.instance;
+  const dataset = readDataset();
+  const indexedDataset = new IndexedDataset(dataset);
   const paths: {params: {institutionUri: string; objectUri: string}}[] = [];
-  for (const institution of data.institutions) {
+  for (const institution of dataset.institutions) {
     const encodedInstitutionUri = encodeFileName(institution.uri);
-    for (const object of data.institutionObjects(institution.uri)) {
+    for (const object of indexedDataset.institutionObjects(institution.uri)) {
       paths.push({
         params: {
           institutionUri: encodedInstitutionUri,
@@ -102,51 +91,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const data = Data.instance;
-  const institutionUri = decodeFileName(params!.institutionUri as string);
+  // const institutionUri = decodeFileName(params!.institutionUri as string);
   const objectUri = decodeFileName(params!.objectUri as string);
-
-  const institution = data.institutionByUri(institutionUri);
-  const object = data.objectByUri(objectUri);
-  const objectImages = data.imagesDepictingUri(objectUri);
 
   return {
     props: {
-      configuration: data.configuration,
-      institution: {
-        name: institution.name,
-        object: {
-          images: objectImages.map(image =>
-            joinImage({
-              licenseTitlesByUri: data.licenseTitlesByUri,
-              image,
-              rightsStatementPrefLabelsByUri:
-              data.rightsStatementPrefLabelsByUri,
-            }),
-          ),
-          properties: object.properties,
-          rights: object.rights
-            ? joinRights({
-                licenseTitlesByUri: data.licenseTitlesByUri,
-                rights: object.rights,
-                rightsStatementPrefLabelsByUri:
-                  data.rightsStatementPrefLabelsByUri,
-              })
-            : null,
-          title: object.title,
-          uri: object.uri,
-        },
-        rights: institution.rights
-          ? joinRights({
-              licenseTitlesByUri: data.licenseTitlesByUri,
-              rights: institution.rights,
-              rightsStatementPrefLabelsByUri:
-                data.rightsStatementPrefLabelsByUri,
-            })
-          : null,
-        uri: institution.uri,
-      },
-      propertyDefinitions: data.propertyDefinitions,
+      configuration: defaultConfiguration,
+      dataset: new IndexedDataset(readDataset()).objectDataset(objectUri),
+      objectUri,
     },
   };
 };

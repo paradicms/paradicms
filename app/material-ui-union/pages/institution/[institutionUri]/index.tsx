@@ -1,4 +1,5 @@
 import * as React from "react";
+import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {Hrefs} from "lib/Hrefs";
 import {Configuration, Dataset, defaultConfiguration, IndexedDataset, JoinedDataset} from "@paradicms/models";
@@ -7,7 +8,6 @@ import {decodeFileName, encodeFileName} from "@paradicms/next";
 import {CollectionsGallery} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {readDataset} from "lib/readDataset";
-import {useMemo} from "react";
 
 interface StaticProps {
   readonly configuration: Configuration;
@@ -68,5 +68,6 @@ export const getStaticProps: GetStaticProps = async ({
       configuration: defaultConfiguration,
       dataset: new IndexedDataset(readDataset()).institutionDataset(institutionUri),
       institutionUri,
-  };
+    },
+  }
 };

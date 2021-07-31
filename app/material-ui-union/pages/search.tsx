@@ -18,7 +18,15 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
                                                             dataset,
                                                           }) => (
   <NextSearchPage configuration={configuration} dataset={dataset}>
-    {({joinedDataset, objectsQuery, objectsQueryResults, page, pageMax, setObjectsQuery, setPage}) => (
+    {({
+        objectsQuery,
+        objectsQueryResults,
+        objectsQueryResultsJoinedDataset,
+        page,
+        pageMax,
+        setObjectsQuery,
+        setPage,
+      }) => (
       <Layout
         cardTitle={
           objectsQuery?.text ? (
@@ -35,11 +43,11 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
           objectsQuery?.text ? `Search results for "${objectsQuery.text}"` : "Search results"
         }
         configuration={configuration}
-        onSearch={text => setObjectsQuery({filters: null, text})}
+        onSearch={text => setObjectsQuery({filters: [], text})}
       >
         <ObjectFacetedSearchGrid
           facets={objectsQueryResults.facets}
-          objects={joinedDataset.objects}
+          objects={objectsQueryResultsJoinedDataset.objects}
           onChangeFilters={filters => setObjectsQuery({...objectsQuery, filters})}
           onChangePage={setPage}
           page={page}

@@ -19,9 +19,9 @@ export const NextSearchPage: React.FunctionComponent<{
   configuration: Configuration;
   dataset: Dataset;
   children: (kwds: {
-    joinedDataset: JoinedDataset;
     objectsQuery: ObjectsQuery;
     objectsQueryResults: ObjectsQueryResults;
+    objectsQueryResultsJoinedDataset: JoinedDataset;
     page: number;
     pageMax: number;
     setObjectsQuery: (objectsQuery: ObjectsQuery) => void;
@@ -59,11 +59,11 @@ export const NextSearchPage: React.FunctionComponent<{
   }
 
   return children({
-    joinedDataset: objectsQueryResultsJoinedDataset,
     page: pageQueryParam ?? 0,
     pageMax: Math.ceil(objectsQueryResults.totalObjectsCount / OBJECTS_PER_PAGE) - 1,
     objectsQuery,
     objectsQueryResults,
+    objectsQueryResultsJoinedDataset,
     setObjectsQuery,
     setPage,
   });

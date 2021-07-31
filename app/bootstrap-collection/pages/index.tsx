@@ -23,7 +23,15 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
                                                            dataset,
                                                          }) => (
   <NextSearchPage configuration={configuration} dataset={dataset}>
-    {({joinedDataset, objectsQuery, objectsQueryResults, page, pageMax, setObjectsQuery, setPage}) => (
+    {({
+        objectsQuery,
+        objectsQueryResults,
+        objectsQueryResultsJoinedDataset,
+        page,
+        pageMax,
+        setObjectsQuery,
+        setPage,
+      }) => (
       <Layout
         collection={collection}
         configuration={configuration}
@@ -67,9 +75,9 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
           ) : null}
           <Row>
             <Col xs="10">
-              {joinedDataset.objects.length > 0 ? (
+              {objectsQueryResultsJoinedDataset.objects.length > 0 ? (
                 <ObjectsGallery
-                  objects={joinedDataset.objects}
+                  objects={objectsQueryResultsJoinedDataset.objects}
                   objectsPerPage={OBJECTS_PER_PAGE}
                   objectsTotalCount={objectsQueryResults.totalObjectsCount}
                   onChangePage={setPage}
