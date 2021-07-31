@@ -26,7 +26,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
   const institution = useMemo(() => collection.institution, [collection]);
 
   return (
-    <LunrObjectSearchPage configuration={configuration} dataset={dataset}>
+    <LunrObjectSearchPage configuration={configuration} dataset={dataset} objectsPerPage={10}>
       {({
           objectsQuery,
           objectsQueryResults,

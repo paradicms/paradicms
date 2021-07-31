@@ -22,13 +22,12 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
                                                            configuration,
                                                            dataset,
                                                          }) => (
-  <LunrObjectSearchPage configuration={configuration} dataset={dataset}>
+  <LunrObjectSearchPage configuration={configuration} dataset={dataset} objectsPerPage={OBJECTS_PER_PAGE}>
     {({
         objectsQuery,
         objectsQueryResults,
         objectsQueryResultsJoinedDataset,
         page,
-        pageMax,
         setObjectsQuery,
         setPage,
       }) => (
@@ -82,7 +81,6 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
                   objectsTotalCount={objectsQueryResults.totalObjectsCount}
                   onChangePage={setPage}
                   page={page}
-                  // pageMax={Math.ceil(objectsQueryResults.totalCount / OBJECTS_PER_PAGE) - 1}
                   renderObjectLink={(object, children) => (
                     <Link href={Hrefs.object(object.uri)}>
                       <a>{children}</a>

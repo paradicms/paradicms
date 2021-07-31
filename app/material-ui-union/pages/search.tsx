@@ -17,7 +17,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
                                                             configuration,
                                                             dataset,
                                                           }) => (
-  <LunrObjectSearchPage configuration={configuration} dataset={dataset}>
+  <LunrObjectSearchPage configuration={configuration} dataset={dataset} objectsPerPage={10}>
     {({
         objectsQuery,
         objectsQueryResults,
