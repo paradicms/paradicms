@@ -6,7 +6,7 @@ import {ObjectFacetedSearchGrid} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {readDataset} from "lib/readDataset";
-import {NextSearchPage} from "@paradicms/next";
+import {LunrObjectSearchPage} from "@paradicms/lunr-react";
 
 interface StaticProps {
   readonly configuration: Configuration;
@@ -17,7 +17,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
                                                             configuration,
                                                             dataset,
                                                           }) => (
-  <NextSearchPage configuration={configuration} dataset={dataset}>
+  <LunrObjectSearchPage configuration={configuration} dataset={dataset}>
     {({
         objectsQuery,
         objectsQueryResults,
@@ -66,7 +66,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
         />
       </Layout>
     )}
-  </NextSearchPage>);
+  </LunrObjectSearchPage>);
 
 export default SearchPage;
 

@@ -6,9 +6,6 @@ REM Order is important
 cd models
 CALL yarn build
 
-cd ..\model-utils
-CALL yarn build
-
 cd ..\lunr
 CALL yarn build
 
@@ -19,6 +16,9 @@ cd ..\react
 CALL yarn build
 
 cd ..\bootstrap
+CALL yarn build
+
+cd ..\lunr-react
 CALL yarn build
 
 cd ..\material-ui

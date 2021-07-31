@@ -1,7 +1,8 @@
 import {ObjectQueryService} from "@paradicms/services";
 import {Configuration, IndexedDataset, Object, ObjectsQuery, ObjectsQueryResults} from "@paradicms/models";
 import lunr, {Index} from "lunr";
-import {facetizeObjects, filterObjects} from "@paradicms/model-utils";
+import {facetizeObjects} from "./facetizeObjects";
+import {filterObjects} from "./filterObjects";
 
 const basex = require("base-x");
 const base58 = basex(

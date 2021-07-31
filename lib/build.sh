@@ -21,24 +21,18 @@ for pid in "${pids[@]}"; do
 done
 
 
-# Depends on models
 pids=()
-cd ../model-utils
-yarn build
-
-
-pids=()
-# Depend on models and model-utils
+# Depend on models
 cd ../lunr
 yarn build &
 pids+=($!)
 
-# Depends on models and model-utils
+# Depends on models
 cd ../next
 yarn build &
 pids+=($!)
 
-# Depend on models and model-utils
+# Depend on models
 cd ../rdf
 yarn build &
 pids+=($!)
@@ -49,12 +43,18 @@ done
 
 
 pids=()
-# Depend on models, model-utils, and lunr
+
+# Depend on lunr and react
 cd ../bootstrap
 yarn build &
 pids+=($!)
 
-# Depend on models, model-utils, and lunr
+# Depend on models and react
+cd ../lunr-react
+yarn build &
+pids+=($!)
+
+# Depend on models and react
 cd ../material-ui
 yarn build &
 pids+=($!)

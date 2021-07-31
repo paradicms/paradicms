@@ -7,7 +7,7 @@ import {FiltersBadges, FiltersControls, ObjectsGallery} from "@paradicms/bootstr
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {readDataset} from "lib/readDataset";
-import {NextSearchPage} from "@paradicms/next";
+import {LunrObjectSearchPage} from "@paradicms/lunr-react";
 
 interface StaticProps {
   readonly collection: Collection;
@@ -22,7 +22,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
                                                            configuration,
                                                            dataset,
                                                          }) => (
-  <NextSearchPage configuration={configuration} dataset={dataset}>
+  <LunrObjectSearchPage configuration={configuration} dataset={dataset}>
     {({
         objectsQuery,
         objectsQueryResults,
@@ -110,7 +110,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
         </Container>
       </Layout>)
     }
-  </NextSearchPage>
+  </LunrObjectSearchPage>
   );
 
 export default IndexPage;

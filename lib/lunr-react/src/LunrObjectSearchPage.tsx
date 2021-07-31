@@ -13,11 +13,10 @@ import {JsonQueryParamConfig} from "@paradicms/react";
 import {ObjectQueryService} from "@paradicms/services";
 import {LunrObjectQueryService} from "@paradicms/lunr";
 
-const OBJECTS_PER_PAGE = 10;
-
-export const NextSearchPage: React.FunctionComponent<{
+export const LunrObjectSearchPage: React.FunctionComponent<{
   configuration: Configuration;
   dataset: Dataset;
+  objectsPerPage: number;
   children: (kwds: {
     objectsQuery: ObjectsQuery;
     objectsQueryResults: ObjectsQueryResults;
@@ -26,7 +25,8 @@ export const NextSearchPage: React.FunctionComponent<{
     pageMax: number;
     setObjectsQuery: (objectsQuery: ObjectsQuery) => void;
     setPage: (page: number | undefined) => void
-  }) => React.ReactElement}> = ({children, configuration, dataset}) => {
+  }) => React.ReactElement
+}> = ({children, configuration, dataset, objectsPerPage}) => {
   const [objectsQuery, setObjectsQuery] = useQueryParam<ObjectsQuery>(
     "query",
     new JsonQueryParamConfig<ObjectsQuery>(),
@@ -46,8 +46,8 @@ export const NextSearchPage: React.FunctionComponent<{
 
   useEffect(() => {
     objectQueryService.getObjects({
-      limit: OBJECTS_PER_PAGE,
-      offset: (pageQueryParam ?? 0) * OBJECTS_PER_PAGE,
+      limit: objectsPerPage,
+      offset: (pageQueryParam ?? 0) * objectsPerPage,
       query: objectsQuery,
     }).then(setObjectsQueryResults);
   }, [objectsQuery, objectQueryService, pageQueryParam]);
@@ -59,11 +59,11 @@ export const NextSearchPage: React.FunctionComponent<{
   }
 
   return children({
-    page: pageQueryParam ?? 0,
-    pageMax: Math.ceil(objectsQueryResults.totalObjectsCount / OBJECTS_PER_PAGE) - 1,
     objectsQuery,
     objectsQueryResults,
     objectsQueryResultsJoinedDataset,
+    page: pageQueryParam ?? 0,
+    pageMax: Math.ceil(objectsQueryResults.totalObjectsCount / objectsPerPage) - 1,
     setObjectsQuery,
     setPage,
   });

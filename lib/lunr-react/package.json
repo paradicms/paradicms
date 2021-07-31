@@ -1,9 +1,10 @@
 {
   "author": "Minor Gordon",
-  "name": "@paradicms/model-utils",
-  "description": "Paradicms model-utils library",
+  "name": "@paradicms/lunr-react",
+  "description": "Paradicms lunr-react integration",
   "dependencies": {
-    "@paradicms/models": "1.0.5"
+    "@paradicms/lunr": "1.0.5",
+    "@paradicms/react": "1.0.5"
   },
   "devDependencies": {
     "rimraf": "3.0.2",
@@ -14,6 +15,7 @@
     "dist"
   ],
   "main": "dist/index.js",
+  "private": true,
   "scripts": {
     "build": "rimraf dist && tsc -b",
     "clean": "rimraf dist",

@@ -1,4 +1,4 @@
-import {decodeFileName, encodeFileName, NextSearchPage} from "@paradicms/next";
+import {decodeFileName, encodeFileName} from "@paradicms/next";
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
@@ -8,6 +8,7 @@ import {ObjectFacetedSearchGrid} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {readDataset} from "lib/readDataset";
+import {LunrObjectSearchPage} from "@paradicms/lunr-react";
 
 interface StaticProps {
   readonly collectionUri: string;
@@ -25,7 +26,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
   const institution = useMemo(() => collection.institution, [collection]);
 
   return (
-    <NextSearchPage configuration={configuration} dataset={dataset}>
+    <LunrObjectSearchPage configuration={configuration} dataset={dataset}>
       {({
           objectsQuery,
           objectsQueryResults,
@@ -69,7 +70,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
           />
         </Layout>
       )}
-    </NextSearchPage>);
+    </LunrObjectSearchPage>);
 }
 
 export default CollectionPage;
