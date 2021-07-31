@@ -2,65 +2,73 @@ import {NumberParam, useQueryParam} from "use-query-params";
 import {decodeFileName, encodeFileName} from "@paradicms/next";
 import {JsonQueryParamConfig} from "@paradicms/react";
 import * as React from "react";
+import {useEffect, useMemo, useState} from "react";
 import {Layout} from "components/Layout";
-import {Configuration, JoinedImage, JoinedRights, ObjectFilters, PropertyDefinition} from "@paradicms/models";
-import {Data} from "lib/Data";
+import {
+  Configuration,
+  Dataset,
+  defaultConfiguration,
+  IndexedDataset,
+  JoinedDataset,
+  ObjectsQuery,
+  ObjectsQueryResults,
+} from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {ObjectCardObject, ObjectFacetedSearchGrid, thumbnailTargetDimensions} from "@paradicms/material-ui";
+import {ObjectFacetedSearchGrid} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
-import {joinImage, joinRights, selectThumbnail} from "@paradicms/model-utils";
+import {ObjectQueryService} from "@paradicms/services";
+import {LunrObjectQueryService} from "@paradicms/lunr";
+import {readDataset} from "lib/readDataset";
 
 interface StaticProps {
+  readonly collectionUri: string;
   readonly configuration: Configuration;
-  readonly institution: {
-    readonly collection: {
-      readonly objects: readonly {
-        readonly abstract: string | null;
-        readonly rights: JoinedRights | null;
-        readonly thumbnail: JoinedImage | null;
-        readonly title: string;
-        readonly uri: string;
-      }[];
-      readonly title: string;
-      readonly uri: string;
-    };
-    readonly name: string;
-    readonly uri: string;
-  };
-  propertyDefinitions: readonly PropertyDefinition[];
+  readonly dataset: Dataset;
 }
 
+const OBJECTS_PER_PAGE = 10;
+
 const CollectionPage: React.FunctionComponent<StaticProps> = ({
+                                                                collectionUri,
                                                                 configuration,
-                                                                institution,
-                                                                propertyDefinitions,
+                                                                dataset,
                                                               }) => {
-  // if (typeof window === "undefined") {
-  //   return null; // Don't render on the server
-  // }
+  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [dataset]);
+  const collection = useMemo(() => joinedDataset.collectionByUri(collectionUri), [collectionUri, joinedDataset]);
+  const institution = useMemo(() => collection.institution, [collection]);
 
-  const collection = institution.collection;
-
-  const [filters, setFilters] = useQueryParam<ObjectFilters>(
-    "filters",
-    new JsonQueryParamConfig<ObjectFilters>()
+  const [objectsQuery, setObjectsQueryParam] = useQueryParam<ObjectsQuery>(
+    "query",
+    new JsonQueryParamConfig<ObjectsQuery>(),
   );
-  const [page, setPage] = useQueryParam<number | null | undefined>(
+
+  let [pageQueryParam, setPage] = useQueryParam<number | null | undefined>(
     "page",
-    NumberParam
+    NumberParam,
   );
+  const page = useMemo<number>(() => pageQueryParam ?? 0, [pageQueryParam]);
 
-  // The gallery expects each Object to have a nested Institution,
-  // but we have an Institution->Object tree in order to save space.
-  const objects: readonly ObjectCardObject[] = React.useMemo(
-    () =>
-      institution.collection.objects.map(object => ({
-        ...object,
-        institution,
-      })),
-    [institution]
-  );
+  const objectQueryService = useMemo<ObjectQueryService>(() => new LunrObjectQueryService({
+    configuration,
+    dataset: new IndexedDataset(dataset),
+  }), [configuration, dataset]);
+
+  const [objectsQueryResults, setObjectsQueryResults] = useState<ObjectsQueryResults | null>(null);
+
+  useEffect(() => {
+    objectQueryService.getObjects({
+      limit: OBJECTS_PER_PAGE,
+      offset: page * OBJECTS_PER_PAGE,
+      query: objectsQuery,
+    }).then(setObjectsQueryResults);
+  }, [objectsQuery, objectQueryService, page]);
+
+  const objectsQueryResultsJoinedDataset = useMemo(() => objectsQueryResults !== null ? JoinedDataset.fromDataset(objectsQueryResults.dataset) : null, [objectsQueryResults]);
+
+  if (objectsQueryResults === null || objectsQueryResultsJoinedDataset === null) {
+    return null;
+  }
 
   return (
     <Layout
@@ -77,11 +85,15 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
       configuration={configuration}
     >
       <ObjectFacetedSearchGrid
-        objects={objects}
-        onChangeFilters={setFilters}
+        facets={objectsQueryResults.facets}
+        objects={objectsQueryResultsJoinedDataset.objects}
+        onChangeFilters={filters => setObjectsQueryParam({...objectsQuery, filters})}
         onChangePage={setPage}
         page={page ?? 0}
-        propertyDefinitions={propertyDefinitions}
+        pageMax={Math.ceil(objectsQueryResults.totalCount / OBJECTS_PER_PAGE) - 1}
+        renderInstitutionLink={(institution, children) => (
+          <Link href={Hrefs.institution(institution.uri).home}>{children}</Link>
+        )}
         renderObjectLink={(object, children) => (
           <Link
             href={Hrefs.institution(object.institution.uri).object(object.uri)}
@@ -89,7 +101,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
             {children}
           </Link>
         )}
-        query={{filters, text: null}}
+        query={objectsQuery}
       />
     </Layout>
   );
@@ -98,11 +110,13 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
 export default CollectionPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const data = Data.instance;
+  const dataset = readDataset();
+  const indexedDataset = new IndexedDataset(dataset);
+
   const paths: {params: {collectionUri: string; institutionUri: string}}[] = [];
-  for (const institution of data.institutions) {
+  for (const institution of dataset.institutions) {
     const encodedInstitutionUri = encodeFileName(institution.uri);
-    for (const collection of data.institutionCollections(institution.uri)) {
+    for (const collection of indexedDataset.institutionCollections(institution.uri)) {
       paths.push({
         params: {
           collectionUri: encodeFileName(collection.uri),
@@ -122,52 +136,13 @@ export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
   const collectionUri = decodeFileName(params!.collectionUri as string);
-  const institutionUri = decodeFileName(params!.institutionUri as string);
-
-  const data = Data.instance;
-  const collection = data.collectionByUri(collectionUri);
-  const institution = data.institutionByUri(institutionUri);
+  // const institutionUri = decodeFileName(params!.institutionUri as string);
 
   return {
     props: {
-      configuration: data.configuration,
-      institution: {
-        collection: {
-          objects: data.collectionObjects(collection.uri).map(object => {
-            const images = data.imagesDepictingUri(object.uri);
-            const thumbnail = selectThumbnail({
-              images,
-              targetDimensions: thumbnailTargetDimensions,
-            });
-            return {
-              abstract: object.abstract,
-              rights: object.rights
-                ? joinRights({
-                    licenseTitlesByUri: data.licenseTitlesByUri,
-                    rights: object.rights,
-                    rightsStatementPrefLabelsByUri:
-                      data.rightsStatementPrefLabelsByUri,
-                  })
-                : null,
-              thumbnail: thumbnail
-                ? joinImage({
-                    image: thumbnail,
-                    licenseTitlesByUri: data.licenseTitlesByUri,
-                    rightsStatementPrefLabelsByUri:
-                      data.rightsStatementPrefLabelsByUri,
-                  })
-                : null,
-              title: object.title,
-              uri: object.uri,
-            };
-          }),
-          title: collection.title,
-          uri: collection.uri,
-        },
-        name: institution.name,
-        uri: institution.uri,
-      },
-      propertyDefinitions: data.propertyDefinitions,
+      collectionUri,
+      configuration: defaultConfiguration,
+      dataset: new IndexedDataset(readDataset()).collectionDataset(collectionUri),
     },
   };
 };

@@ -81,7 +81,7 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       configuration: defaultConfiguration,
-      dataset: new IndexedDataset(readDataset()).objectsDataset(objectUri),
+      dataset: new IndexedDataset(readDataset()).objectDataset(objectUri),
       objectUri,
     },
   };

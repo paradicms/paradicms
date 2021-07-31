@@ -16,18 +16,13 @@ cd ../react
 yarn build &
 pids+=($!)
 
-# No dependencies
-cd ../next
-yarn build &
-pids+=($!)
-
 for pid in "${pids[@]}"; do
   wait "$pid"
 done
 
 
-
 # Depends on models
+pids=()
 cd ../model-utils
 yarn build
 
@@ -35,6 +30,11 @@ yarn build
 pids=()
 # Depend on models and model-utils
 cd ../lunr
+yarn build &
+pids+=($!)
+
+# Depends on models and model-utils
+cd ../next
 yarn build &
 pids+=($!)
 
