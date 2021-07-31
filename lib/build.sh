@@ -5,11 +5,15 @@ set -eu
 cd "$(dirname "$0")"
 
 # Run parallel commands and fail if any of them fails.
-pids=()
 
+cd models
+
+
+pids=()
 # No dependencies
 cd models
-yarn build
+yarn build &
+pids+=($!)
 
 # No dependencies
 cd ../react
@@ -22,18 +26,28 @@ done
 
 
 pids=()
-# Depend on models
-cd ../lunr
+# Depend on models and react
+cd ../bootstrap
 yarn build &
 pids+=($!)
 
-# Depends on models
-cd ../next
+# Depend on models and react
+cd ../material-ui
 yarn build &
 pids+=($!)
 
 # Depend on models
 cd ../rdf
+yarn build &
+pids+=($!)
+
+# Depends on react
+cd ../next
+yarn build &
+pids+=($!)
+
+# Depends on models
+cd ../services
 yarn build &
 pids+=($!)
 
@@ -43,19 +57,13 @@ done
 
 
 pids=()
-
-# Depend on lunr and react
-cd ../bootstrap
+# Depend on models and services
+cd ../lunr
 yarn build &
 pids+=($!)
 
-# Depend on models and react
-cd ../lunr-react
-yarn build &
-pids+=($!)
-
-# Depend on models and react
-cd ../material-ui
+# Depends on material-ui and next
+cd ../material-ui-next
 yarn build &
 pids+=($!)
 
@@ -64,6 +72,12 @@ for pid in "${pids[@]}"; do
 done
 
 
-# Depends on material-ui and next
-cd ../material-ui-next
-yarn build
+pids=()
+# Depend on lunr and react
+cd ../lunr-react
+yarn build &
+pids+=($!)
+
+for pid in "${pids[@]}"; do
+  wait "$pid"
+done
