@@ -9,10 +9,9 @@
     "@paradicms/models": "1.0.5",
     "@paradicms/react": "1.0.5",
     "bootstrap": "^4.5.3",
-    "react-medium-image-zoom": "3.1.2",
+    "react-medium-image-zoom": "4.3.4",
     "react-reactstrap-pagination": "^2.0.3",
-    "reactstrap": "^8.5.1",
-    "@types/react-medium-image-zoom": "^3.0.0"
+    "reactstrap": "^8.5.1"
   },
   "devDependencies": {
     "rimraf": "3.0.2",

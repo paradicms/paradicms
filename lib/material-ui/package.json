@@ -9,10 +9,9 @@
     "@paradicms/models": "1.0.5",
     "@paradicms/react": "1.0.5",
     "@types/mui-datatables": "^3.7.0",
-    "@types/react-medium-image-zoom": "^3.0.0",
     "mui-datatables": "^3.7.1",
     "react-material-ui-carousel": "1.4.5",
-    "react-medium-image-zoom": "3.1.2"
+    "react-medium-image-zoom": "4.3.4"
   },
   "devDependencies": {
     "rimraf": "3.0.2",
