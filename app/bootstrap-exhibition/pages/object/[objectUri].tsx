@@ -1,39 +1,36 @@
 import * as React from "react";
+import {useMemo} from "react";
 import {Layout} from "components/Layout";
-import {Configuration, JoinedImage, JoinedRights, JoinedValue, Object, Property} from "@paradicms/models";
-import {Data} from "lib/Data";
+import {
+  Configuration,
+  Dataset,
+  defaultConfiguration,
+  IndexedDataset,
+  JoinedDataset,
+  License,
+  RightsStatement,
+} from "@paradicms/models";
 import {decodeFileName, encodeFileName} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import Link from "next/link";
 import {Col, Container, Pagination, PaginationItem, PaginationLink, Row, Table} from "reactstrap";
-import {JoinedValueLink, ObjectImagesCarousel} from "@paradicms/bootstrap";
-import {joinImage, joinRights} from "@paradicms/model-utils";
+import {ObjectImagesCarousel} from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import {DCTERMS} from "@paradicms/rdf";
+import {readDataset} from "lib/readDataset";
 
 interface StaticProps {
+  readonly collectionUri: string;
   readonly configuration: Configuration;
-  readonly institution: {
-    readonly collection: {
-      readonly currentObject: {
-        readonly abstract: string | null;
-        readonly images: readonly JoinedImage[];
-        readonly rights: JoinedRights | null;
-        readonly properties: readonly Property[] | null;
-        readonly title: string;
-        readonly uri: string;
-      };
-      readonly nextObject: {readonly title: string; readonly uri: string;} | null;
-      readonly previousObject: {readonly title: string; readonly uri: string;} | null;
-      readonly title: string;
-    };
-    readonly rights: JoinedRights | null;
-  };
+  readonly currentObjectUri: string;
+  readonly dataset: Dataset;
+  readonly nextObjectUri: string | null;
+  readonly previousObjectUri: string | null;
 }
 
 const RightsTableRow: React.FunctionComponent<{
   label: string;
-  value: JoinedValue | null;
+  value: React.ReactNode;
 }> = ({label, value}) => {
   if (!value) {
     return null;
@@ -44,29 +41,65 @@ const RightsTableRow: React.FunctionComponent<{
         <strong>{label}</strong>
       </td>
       <td>
-        <JoinedValueLink value={value} />
+        {value}
       </td>
     </tr>
   );
 };
 
 const ObjectPage: React.FunctionComponent<StaticProps> = ({
+                                                            collectionUri,
                                                             configuration,
-                                                            institution,
+                                                            currentObjectUri,
+                                                            dataset,
+                                                            nextObjectUri,
+                                                            previousObjectUri,
                                                           }) => {
-  const collection = institution.collection;
-  const {currentObject, nextObject, previousObject} = collection;
-  const rights = currentObject.rights ?? institution.rights ?? null;
+  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [dataset]);
+  const collection = useMemo(() => joinedDataset.collectionByUri(collectionUri), [collectionUri, joinedDataset]);
+  const currentObject = useMemo(() => joinedDataset.objectByUri(currentObjectUri), [currentObjectUri, joinedDataset]);
+  const institution = useMemo(() => collection.institution, [collection]);
+  const nextObject = useMemo(() => nextObjectUri ? joinedDataset.objectByUri(nextObjectUri) : null, [nextObjectUri, joinedDataset]);
+  const previousObject = useMemo(() => previousObjectUri ? joinedDataset.objectByUri(previousObjectUri) : null, [nextObjectUri, joinedDataset]);
 
-  let abstract: string | null = currentObject.abstract;
-  if (!abstract) {
-    (currentObject.properties ?? []).map(property => {
-      if (property.uri === DCTERMS.description.value) {
-        console.log(property.uri);
-        abstract = property.value.toString();
+  const abstract: string | null = useMemo(() => {
+    if (currentObject.abstract) {
+      return currentObject.abstract;
+    } else if (currentObject.properties) {
+      for (const property of currentObject.properties) {
+        if (property.uri === DCTERMS.description.value) {
+          return property.value.toString();
+        }
       }
-    });
-  }
+      return null;
+    } else {
+      return null;
+    }
+  }, [currentObject]);
+
+  const rights = useMemo(() => currentObject.rights ?? institution.rights ?? null, [currentObject, institution]);
+
+  const licenseValue = useMemo(() => (): React.ReactNode | null => {
+    if (!rights || !rights.license) {
+      return null;
+    }
+    if (typeof (rights.license) === "string") {
+      return rights.license as string;
+    }
+    const license = rights.license as License;
+    return <a href={license.uri}>{license.title}</a>;
+  }, [rights]);
+
+  const rightsStatementValue = useMemo(() => (): React.ReactNode | null => {
+    if (!rights || !rights.statement) {
+      return null;
+    }
+    if (typeof (rights.statement) === "string") {
+      return rights.statement as string;
+    }
+    const rightsStatement = rights.statement as RightsStatement;
+    return <a href={rightsStatement.uri}>{rightsStatement.prefLabel}</a>;
+  }, [rights]);
 
   return (
     <Layout collection={collection} configuration={configuration} object={currentObject}>
@@ -75,7 +108,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
           {currentObject.images.length > 0 ?
             <Col className="d-flex justify-content-center pl-0 pr-0" xs={12} sm={12} lg={8} xl={6}
                  style={{minHeight: 600, minWidth: 600}}>
-              <ObjectImagesCarousel images={currentObject.images} />
+              <ObjectImagesCarousel object={currentObject} />
             </Col> : null}
           <Col className="d-flex justify-content-center pl-0 pr-0 pt-2" xs={12} sm={12}
                lg={currentObject.images.length > 0 ? 4 : 12} xl={currentObject.images.length > 0 ? 6 : 12}>
@@ -98,15 +131,15 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
                       {rights ? <>
                         <RightsTableRow
                           label="Rights statement"
-                          value={rights.statement}
+                          value={rightsStatementValue}
                         />
                         <RightsTableRow
                           label="Rights holder"
-                          value={rights.holder}
+                          value={rights?.holder?.value}
                         />
                         <RightsTableRow
                           label="License"
-                          value={rights.license}
+                          value={licenseValue}
                         />
                       </> : null}
                       </tbody>
@@ -140,7 +173,9 @@ export default ObjectPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {objectUri: string}}[] = [];
-  for (const object of new Data().objects) {
+
+
+  for (const object of readDataset().objects) {
     paths.push({
       params: {
         objectUri: encodeFileName(object.uri),
@@ -157,73 +192,50 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
                                                        params,
                                                      }): Promise<{props: StaticProps}> => {
-  const data = new Data();
   const objectUri = decodeFileName(params!.objectUri as string);
 
-  const collection = data.collection;
-  const institution = data.institution;
+  const dataset = readDataset();
+  const indexedDataset = new IndexedDataset(dataset);
+  const currentObject = indexedDataset.objectByUri(objectUri);
+  const collectionUri = currentObject.collectionUris[0];
+  const collectionObjects = indexedDataset.collectionObjects(collectionUri);
 
-  let currentObject: Object | undefined;
-  let nextObject: Object | null = null;
-  let previousObject: Object | null = null;
-  data.objects.forEach((object, objectIndex) => {
+  let nextObjectUri: string | null = null;
+  let previousObjectUri: string | null = null;
+  for (let objectI = 0; objectI < collectionObjects.length; objectI++) {
+    const object = collectionObjects[objectI];
     if (object.uri !== objectUri) {
-      return;
+      continue;
     }
-    currentObject = object;
-    if (objectIndex > 0) {
-      previousObject = data.objects[objectIndex - 1];
+
+    if (objectI > 0) {
+      previousObjectUri = dataset.objects[objectI - 1].uri;
     }
-    if (objectIndex + 1 < data.objects.length) {
-      nextObject = data.objects[objectIndex + 1];
+
+    if (objectI + 1 < dataset.objects.length) {
+      nextObjectUri = dataset.objects[objectI + 1].uri;
     }
-  });
-  if (!currentObject) {
-    throw new EvalError();
+
+    break;
+  }
+
+  const objectUris: string[] = [];
+  if (previousObjectUri) {
+    objectUris.push(previousObjectUri);
+  }
+  objectUris.push(objectUri);
+  if (nextObjectUri) {
+    objectUris.push(nextObjectUri);
   }
 
   return {
     props: {
-      configuration: data.configuration,
-      institution: {
-        collection: {
-          currentObject: {
-            abstract: currentObject.abstract,
-            images: data.images
-              .filter(image => image.depictsUri === objectUri)
-              .map(image =>
-                joinImage({
-                  licenseTitlesByUri: data.licenseTitlesByUri,
-                  image,
-                  rightsStatementPrefLabelsByUri:
-                  data.rightsStatementPrefLabelsByUri,
-                }),
-              ),
-            properties: currentObject.properties,
-            rights: currentObject.rights
-              ? joinRights({
-                licenseTitlesByUri: data.licenseTitlesByUri,
-                rights: currentObject.rights,
-                rightsStatementPrefLabelsByUri:
-                data.rightsStatementPrefLabelsByUri,
-              })
-              : null,
-            title: currentObject.title,
-            uri: currentObject.uri,
-          },
-          nextObject,
-          previousObject,
-          title: collection.title,
-        },
-        rights: institution.rights
-          ? joinRights({
-            licenseTitlesByUri: data.licenseTitlesByUri,
-            rights: institution.rights,
-            rightsStatementPrefLabelsByUri:
-            data.rightsStatementPrefLabelsByUri,
-          })
-          : null,
-      },
+      collectionUri,
+      configuration: defaultConfiguration,
+      currentObjectUri: objectUri,
+      dataset: indexedDataset.objectsDataset(objectUris),
+      nextObjectUri,
+      previousObjectUri,
     },
   };
 };

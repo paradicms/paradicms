@@ -65,6 +65,10 @@ export class IndexedDataset {
     return [];
   }
 
+  collectionObjects(collectionUri: string): readonly Object[] {
+    return this.objectsByCollectionUriIndex[collectionUri] ?? [];
+  }
+
   // @ts-ignore
   private get collectionsByInstitutionUriIndex(): {[index: string]: readonly Collection[]} {
     if (!this._collectionsByInstitutionUriIndex) {
@@ -401,7 +405,7 @@ export class IndexedDataset {
     }
 
     const objects = objectUris.map(objectUri => this.objectByUri(objectUri));
-    const institutionUris = new Set(...objects.map(object => object.institutionUri));
+    const institutionUris = new Set(objects.map(object => object.institutionUri));
     if (institutionUris.size === 1) {
       // All objects belong to the same institution
       for (const institutionUri of institutionUris) {
