@@ -46,6 +46,10 @@ export class JoinedDataset {
     return new JoinedInstitution(this.indexedDataset.institutionByUri(institutionUri), this);
   }
 
+  institutionImages(institutionUri: string): readonly JoinedImage[] {
+    return this.indexedDataset.institutionImages(institutionUri).map(image => new JoinedImage(image, this));
+  }
+
   licenseByUri(licenseUri: string): License {
     return this.indexedDataset.licenseByUri(licenseUri);
   }

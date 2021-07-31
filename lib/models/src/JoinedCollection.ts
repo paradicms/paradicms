@@ -1,7 +1,7 @@
 import {JoinedDataset} from "./JoinedDataset";
 import {Collection} from "./Collection";
 import {JoinedInstitution} from "./JoinedInstitution";
-import {JoinedImage} from "./JoinedImage";
+import {JoinedImage, ThumbnailSelector} from "./JoinedImage";
 
 export class JoinedCollection {
   constructor(private readonly collection: Collection, private readonly joinedDataset: JoinedDataset) {
@@ -13,6 +13,16 @@ export class JoinedCollection {
 
   get institution(): JoinedInstitution {
     return this.joinedDataset.institutionByUri(this.collection.institutionUri);
+  }
+
+  thumbnail(selector: ThumbnailSelector): JoinedImage | null {
+    for (const image of this.images) {
+      const thumbnail = image.thumbnail(selector);
+      if (thumbnail) {
+        return thumbnail;
+      }
+    }
+    return null;
   }
 
   get title(): string {

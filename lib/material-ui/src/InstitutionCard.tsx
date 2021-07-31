@@ -1,8 +1,7 @@
 import * as React from "react";
 import {Card, CardContent, CardHeader, Grid, makeStyles} from "@material-ui/core";
-import {InstitutionCardInstitution} from "./InstitutionCardInstitution";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
-import {getImageSrc} from "@paradicms/model-utils";
+import {JoinedImage, JoinedInstitution} from "@paradicms/models";
 
 const useStyles = makeStyles(theme => ({
   thumbnailImg: {
@@ -18,13 +17,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const InstitutionCard: React.FunctionComponent<{
-  institution: InstitutionCardInstitution;
+  institution: JoinedInstitution;
   renderInstitutionLink: (
-    institution: InstitutionCardInstitution,
-    children: React.ReactNode
+    institution: JoinedInstitution,
+    children: React.ReactNode,
   ) => React.ReactNode;
 }> = ({institution, renderInstitutionLink}) => {
   const classes = useStyles();
+  const thumbnail = institution.thumbnail(thumbnailTargetDimensions);
+  const thumbnailSrc = thumbnail.src ?? JoinedImage.placeholderSrc(thumbnailTargetDimensions);
 
   return (
     <Card className={classes.root}>
@@ -40,7 +41,7 @@ export const InstitutionCard: React.FunctionComponent<{
                 institution,
                 <img
                   className={classes.thumbnailImg}
-                  src={getImageSrc({image: institution.thumbnail, targetDimensions: thumbnailTargetDimensions})}
+                  src={thumbnailSrc}
                   title={institution.name}
                 />
               )}

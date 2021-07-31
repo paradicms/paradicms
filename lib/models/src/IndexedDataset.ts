@@ -279,6 +279,29 @@ export class IndexedDataset {
     return this._institutionsByUriIndex;
   }
 
+  institutionImages(institutionUri: string): readonly Image[] {
+    let institutionImages = this.imagesByDepictsUriIndex[institutionUri];
+    if (institutionImages) {
+      return institutionImages;
+    }
+
+    const institutionObjects = this.objectsByInstitutionUriIndex[institutionUri];
+    if (!institutionObjects) {
+      return [];
+    }
+
+    for (const object of institutionObjects) {
+      const objectImages = this.imagesByDepictsUriIndex[object.uri];
+      if (objectImages) {
+        // Use the images of the first object with images as the institution's images
+        return objectImages;
+      }
+    }
+
+    return [];
+  }
+
+
   licenseByUri(licenseUri: string): License {
     const license = this.licenseByUri(licenseUri);
     if (!license) {

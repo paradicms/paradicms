@@ -37,7 +37,8 @@ export const RightsTable: React.FunctionComponent<{
     if (typeof (rights.license) === "string") {
       return rights.license as string;
     }
-    return (rights.license as License).title;
+    const license = rights.license as License;
+    return <a href={license.uri}>{license.title}</a>;
   }, [rights]);
 
   const rightsStatementValue = React.useMemo(() => (): React.ReactNode | null => {
@@ -47,7 +48,8 @@ export const RightsTable: React.FunctionComponent<{
     if (typeof (rights.statement) === "string") {
       return rights.statement as string;
     }
-    return (rights.statement as RightsStatement).prefLabel;
+    const rightsStatement = rights.statement as RightsStatement;
+    return <a href={rightsStatement.uri}>{rightsStatement.prefLabel}</a>;
   }, [rights]);
 
   return (
