@@ -11,9 +11,8 @@ echo "DATA_TTL_FILE_PATH: $DATA_TTL_FILE_PATH"
 
 time yarn install
 
-
 # Build
-wsrun --stages build
+yarn build
 
 # Test
-wsrun --exclude-missing test
+yarn test
