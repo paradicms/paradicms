@@ -6,6 +6,7 @@ import {
   DataSubsetter,
   defaultConfiguration,
   IndexedDataset,
+  ObjectJoinSelector,
 } from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
@@ -25,12 +26,17 @@ interface StaticProps {
 
 const OBJECTS_PER_PAGE = 10;
 
+const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
+  thumbnail: {targetDimensions: thumbnailTargetDimensions},
+};
+
 const IndexPage: React.FunctionComponent<StaticProps> = ({
                                                            collection,
                                                            configuration,
                                                            dataset,
                                                          }) => (
-  <LunrObjectSearchPage configuration={configuration} dataset={dataset} objectsPerPage={OBJECTS_PER_PAGE}>
+  <LunrObjectSearchPage configuration={configuration} dataset={dataset} objectJoinSelector={OBJECT_JOIN_SELECTOR}
+                        objectsPerPage={OBJECTS_PER_PAGE}>
     {({
         objectsQuery,
         objectsQueryResults,
@@ -126,11 +132,12 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 }> => {
   const completeDataset = readDataset();
   const collection = completeDataset.collections[0];
+  // Must pass all of the collection's objects in to feed into the search service
   const collectionDataset = new DataSubsetter(new IndexedDataset(completeDataset)).collectionDataset(collection.uri, {
-    objects: {thumbnail: {targetDimensions: thumbnailTargetDimensions}},
+    objects: OBJECT_JOIN_SELECTOR,
   });
 
-  console.log("Collection dataset:", Object.keys(collectionDataset).map(key => `${key}: ${((collectionDataset as any)[key] as any[]).length}`).join(", "));
+  // console.debug("Collection dataset:", Object.keys(collectionDataset).map(key => `${key}: ${((collectionDataset as any)[key] as any[]).length}`).join(", "));
 
   return {
     props: {

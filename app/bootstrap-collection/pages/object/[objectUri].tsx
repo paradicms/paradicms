@@ -92,7 +92,7 @@ export const getStaticProps: GetStaticProps = async ({
     institution: {},
   });
 
-  console.log("Object dataset:", Object.keys(objectDataset).map(key => `${key}: ${((objectDataset as any)[key] as any[]).length}`).join(", "));
+  // console.debug("Object dataset:", Object.keys(objectDataset).map(key => `${key}: ${((objectDataset as any)[key] as any[]).length}`).join(", "));
 
   return {
     props: {

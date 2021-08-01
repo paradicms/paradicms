@@ -36,7 +36,6 @@ export class DataSubsetter {
     const collectionDataset = DataSubsetter.datasetFromPartial({
       collections: [collection],
       images,
-      propertyDefinitions: this.completeDataset.propertyDefinitions,
     });
 
     const datasets: Dataset[] = [collectionDataset];

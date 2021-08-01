@@ -2,6 +2,9 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
 import {CollectionJoinSelector} from "./CollectionJoinSelector";
 import {ObjectJoinSelector} from "./ObjectJoinSelector";
 
+/**
+ * See note in DataSubsetter re: the use of this interface.
+ */
 export interface InstitutionJoinSelector {
   // Return all Collections whose institutionUri refers to this Institution.
   collections?: CollectionJoinSelector;

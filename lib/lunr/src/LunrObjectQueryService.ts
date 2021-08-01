@@ -83,15 +83,25 @@ export class LunrObjectQueryService implements ObjectQueryService {
       // Calculate facets on the universe before filtering it
       const facets = this.configuration.objectFacets.map(facet => facetizeObjects({facet, objects: allObjects}));
 
+      console.debug("Search facets:", JSON.stringify(facets));
+
       const filteredObjects = filterObjects({filters: this.configuration.objectFilters, objects: allObjects});
+
+      console.debug("Search filtered objects count:", filteredObjects.length);
 
       const slicedObjects = filteredObjects.slice(
         offset,
         offset + limit,
       );
 
+      console.debug("Search sliced objects count:", slicedObjects.length);
+
+      const slicedObjectsDataset = new DataSubsetter(this.dataset).objectsDataset(slicedObjects.map(object => object.uri), this.objectJoinSelector);
+
+      console.debug("Search results dataset:", Object.keys(slicedObjectsDataset).map(key => `${key}: ${((slicedObjectsDataset as any)[key] as any[]).length}`).join(", "));
+
       return resolve({
-        dataset: new DataSubsetter(this.dataset).objectsDataset(slicedObjects.map(object => object.uri), this.objectJoinSelector),
+        dataset: slicedObjectsDataset,
         facets,
         totalObjectsCount: filteredObjects.length,
       });

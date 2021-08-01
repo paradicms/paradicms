@@ -2,6 +2,9 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
 import {CollectionJoinSelector} from "./CollectionJoinSelector";
 
 
+/**
+ * See note in DataSubsetter re: the use of this interface.
+ */
 export interface ObjectJoinSelector {
   // Return all Images that depict this Object.
   allImages?: boolean;

@@ -50,6 +50,8 @@ export const LunrObjectSearchPage: React.FunctionComponent<{
   const [objectsQueryResults, setObjectsQueryResults] = useState<ObjectsQueryResults | null>(null);
 
   useEffect(() => {
+    console.debug("Objects query:", JSON.stringify(objectsQuery));
+    console.debug("Page:", page);
     objectQueryService.getObjects({
       limit: objectsPerPage,
       offset: page * objectsPerPage,
