@@ -10,7 +10,7 @@ class DublinCorePropertyDefinitions(_ModelSingletons):
     ABSTRACT = PropertyDefinition(
         full_text_searchable=True,
         label="Abstract",
-        uri=DCTERMS.alternative,
+        uri=DCTERMS.abstract,
     )
     ALTERNATIVE_TITLE = PropertyDefinition(
         full_text_searchable=True,

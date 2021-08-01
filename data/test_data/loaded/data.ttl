@@ -99,6 +99,10 @@
     dcterms:identifier "CC0" ;
     dcterms:title "CC0 1.0 Universal" .
 
+dcterms:abstract a paradicms:PropertyDefinition ;
+    rdfs:label "Abstract" ;
+    paradicms:fullTextSearchable true .
+
 dcterms:alternative a paradicms:PropertyDefinition ;
     rdfs:label "Alternative title" ;
     paradicms:fullTextSearchable true .
