@@ -25,7 +25,7 @@
   "scripts": {
     "build": "tsc -b",
     "clean": "rimraf dist",
-    "watch": "tsc -w",
+    "watch": "tsc -w --preserveWatchOutput",
     "test": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/**/*.ts'",
     "test-watch": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register -w 'test/**/*.ts'"
   },

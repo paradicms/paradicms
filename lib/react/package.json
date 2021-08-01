@@ -26,7 +26,7 @@
   "scripts": {
     "build": "tsc -b",
     "clean": "rimraf dist",
-    "watch": "tsc -w"
+    "watch": "tsc -w --preserveWatchOutput"
   },
   "types": "dist/index.d.ts",
   "version": "1.0.5"

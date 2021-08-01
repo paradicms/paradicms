@@ -4,8 +4,8 @@
     "wsrun": "5.2.4"
   },
   "scripts": {
-    "build": "wsrun --exclude-missing build",
-    "watch": "wsrun --exclude-missing watch"
+    "build": "wsrun --exclude-missing --prefix build",
+    "watch": "wsrun --exclude-missing --prefix watch"
   },
   "workspaces": [
     "app/*",
