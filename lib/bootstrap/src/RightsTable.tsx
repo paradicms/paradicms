@@ -30,7 +30,7 @@ export const RightsTable: React.FunctionComponent<{
   rowClassName?: string;
   tableClassName?: string;
 }> = ({cellClassName, rights, rowClassName, tableClassName}) => {
-  const licenseValue = React.useMemo(() => (): React.ReactNode | null => {
+  const licenseValue = React.useMemo(() => {
     if (!rights.license) {
       return null;
     }
@@ -41,7 +41,7 @@ export const RightsTable: React.FunctionComponent<{
     return <a href={license.uri}>{license.title}</a>;
   }, [rights]);
 
-  const rightsStatementValue = React.useMemo(() => (): React.ReactNode | null => {
+  const rightsStatementValue = React.useMemo(() => {
     if (!rights.statement) {
       return null;
     }
