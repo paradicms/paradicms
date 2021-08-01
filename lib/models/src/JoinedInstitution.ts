@@ -1,8 +1,10 @@
 import {JoinedDataset} from "./JoinedDataset";
 import {Institution} from "./Institution";
 import {JoinedRights} from "./JoinedRights";
-import {JoinedImage, ThumbnailSelector} from "JoinedImage";
-import {JoinedCollection} from "JoinedCollection";
+import {JoinedImage} from "./JoinedImage";
+import {JoinedCollection} from "./JoinedCollection";
+import {ThumbnailSelector} from "./ThumbnailSelector";
+import {selectThumbnail} from "./selectThumbnail";
 
 export class JoinedInstitution {
   constructor(private readonly institution: Institution, private readonly joinedDataset: JoinedDataset) {
@@ -10,10 +12,6 @@ export class JoinedInstitution {
 
   get collections(): readonly JoinedCollection[] {
     return this.joinedDataset.institutionCollections(this.institution.uri);
-  }
-
-  get images(): readonly JoinedImage[] {
-    return this.joinedDataset.institutionImages(this.institution.uri);
   }
 
   get name(): string {
@@ -25,12 +23,21 @@ export class JoinedInstitution {
   }
 
   thumbnail(selector: ThumbnailSelector): JoinedImage | null {
-    for (const image of this.images) {
-      const thumbnail = image.thumbnail(selector);
+    const institutionImages = this.joinedDataset.depictingImages(this.uri);
+    if (institutionImages.length > 0) {
+      const thumbnail = selectThumbnail(institutionImages, selector);
       if (thumbnail) {
         return thumbnail;
       }
     }
+
+    for (const collection of this.collections) {
+      const thumbnail = collection.thumbnail(selector);
+      if (thumbnail) {
+        return thumbnail;
+      }
+    }
+
     return null;
   }
 

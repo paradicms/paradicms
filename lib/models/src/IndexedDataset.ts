@@ -5,7 +5,7 @@ import {Institution} from "./Institution";
 import {License} from "./License";
 import {Object} from "./Object";
 import {RightsStatement} from "./RightsStatement";
-import {PropertyDefinition} from "PropertyDefinition";
+import {PropertyDefinition} from "./PropertyDefinition";
 
 /**
  * Lazily indexes the contents of an immutable Dataset to provide quick lookups and subsetting.
@@ -37,28 +37,6 @@ export class IndexedDataset {
   constructor(private readonly dataset: Dataset) {
   }
 
-  collectionImages(collectionUri: string): readonly Image[] {
-    let collectionImages = this.imagesByDepictsUriIndex[collectionUri];
-    if (collectionImages) {
-      return collectionImages;
-    }
-
-    const collectionObjects = this.objectsByCollectionUriIndex[collectionUri];
-    if (!collectionObjects) {
-      return [];
-    }
-
-    for (const object of collectionObjects) {
-      const objectImages = this.imagesByDepictsUriIndex[object.uri];
-      if (objectImages) {
-        // Use the images of the first object with images as the collection's images
-        return objectImages;
-      }
-    }
-
-    return [];
-  }
-
   collectionObjects(collectionUri: string): readonly Object[] {
     return this.objectsByCollectionUriIndex[collectionUri] ?? [];
   }
@@ -84,6 +62,10 @@ export class IndexedDataset {
       this.indexCollections();
     }
     return IndexedDataset.requireNotNullish(this._collectionsByUriIndex);
+  }
+
+  depictingImages(depictsUri: string): readonly Image[] {
+    return this.imagesByDepictsUriIndex[depictsUri] ?? [];
   }
 
   derivedImages(originalImageUri: string): readonly Image[] {
@@ -252,28 +234,6 @@ export class IndexedDataset {
     return this.collectionsByInstitutionUriIndex[institutionUri] ?? [];
   }
 
-  institutionImages(institutionUri: string): readonly Image[] {
-    let institutionImages = this.imagesByDepictsUriIndex[institutionUri];
-    if (institutionImages) {
-      return institutionImages;
-    }
-
-    const institutionObjects = this.objectsByInstitutionUriIndex[institutionUri];
-    if (!institutionObjects) {
-      return [];
-    }
-
-    for (const object of institutionObjects) {
-      const objectImages = this.imagesByDepictsUriIndex[object.uri];
-      if (objectImages) {
-        // Use the images of the first object with images as the institution's images
-        return objectImages;
-      }
-    }
-
-    return [];
-  }
-
   institutionObjects(institutionUri: string): readonly Object[] {
     return this.objectsByInstitutionUriIndex[institutionUri] ?? [];
   }
@@ -309,10 +269,6 @@ export class IndexedDataset {
       throw new RangeError("no such object " + objectUri);
     }
     return object;
-  }
-
-  objectImages(objectUri: string): readonly Image[] {
-    return this.imagesByDepictsUriIndex[objectUri] ?? [];
   }
 
   get objects(): readonly Object[] {

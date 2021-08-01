@@ -1,10 +1,11 @@
 import {JoinedDataset} from "./JoinedDataset";
 import {Object} from "./Object";
 import {JoinedInstitution} from "./JoinedInstitution";
-import {JoinedImage, ThumbnailSelector} from "./JoinedImage";
+import {JoinedImage} from "./JoinedImage";
 import {JoinedCollection} from "./JoinedCollection";
 import {JoinedProperty} from "./JoinedProperty";
 import {JoinedRights} from "./JoinedRights";
+import {ThumbnailSelector} from "./ThumbnailSelector";
 
 export class JoinedObject {
   constructor(private readonly joinedDataset: JoinedDataset, private readonly object: Object) {
@@ -19,7 +20,7 @@ export class JoinedObject {
   }
 
   get images(): readonly JoinedImage[] {
-    return this.joinedDataset.objectImages(this.object.uri);
+    return this.joinedDataset.depictingImages(this.uri);
   }
 
   get originalImages(): readonly JoinedImage[] {
