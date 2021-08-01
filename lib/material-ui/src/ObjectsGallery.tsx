@@ -2,8 +2,7 @@ import * as React from "react";
 import {Grid} from "@material-ui/core";
 import {Pagination} from "@material-ui/lab";
 import {ObjectCard} from "./ObjectCard";
-import {ObjectCardObject} from "./ObjectCardObject";
-import {ObjectCardInstitution} from "./ObjectCardInstitution";
+import {JoinedInstitution, JoinedObject} from "@paradicms/models";
 
 /**
  * Objects gallery component.
@@ -11,16 +10,16 @@ import {ObjectCardInstitution} from "./ObjectCardInstitution";
  * @param objects current page of objects to render in the gallery
  */
 export const ObjectsGallery: React.FunctionComponent<{
-  objects: readonly ObjectCardObject[];
+  objects: readonly JoinedObject[];
   onChangePage: (page: number) => void;
   page: number; // From 0
   pageMax: number; // From 0
   renderInstitutionLink?: (
-    institution: ObjectCardInstitution,
+    institution: JoinedInstitution,
     children: React.ReactNode,
   ) => React.ReactNode;
   renderObjectLink: (
-    object: ObjectCardObject,
+    object: JoinedObject,
     children: React.ReactNode,
   ) => React.ReactNode;
 }> = ({

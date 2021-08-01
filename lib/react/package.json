@@ -3,15 +3,14 @@
   "name": "@paradicms/react",
   "description": "Paradicms React library",
   "dependencies": {
-    "@types/qs": "^6.9.4",
-    "@types/lodash": "^4.14.159",
-    "@types/react": "^16.9.43",
-    "@types/react-dom": "^16.9.8",
-    "lodash": "^4.14.2",
-    "qs": "^6.9.4",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "use-query-params": "^1.1.6"
+    "@types/qs": "6.9.7",
+    "@types/react": "16.8.25",
+    "@types/react-dom": "16.8.5",
+    "qs": "6.9.6",
+    "query-string": "5.1.1",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "use-query-params": "1.2.3"
   },
   "devDependencies": {
     "@types/node": "^12.12.54",
@@ -26,9 +25,9 @@
   "main": "dist/index.js",
   "private": true,
   "scripts": {
-    "build": "rimraf dist && tsc -b",
+    "build": "tsc -b",
     "clean": "rimraf dist",
-    "start": "rimraf dist && tsc -w"
+    "watch": "tsc -w --preserveWatchOutput"
   },
   "types": "dist/index.d.ts",
   "version": "1.0.5"

@@ -1,13 +1,13 @@
 import * as React from "react";
 import {Grid} from "@material-ui/core";
 import {InstitutionCard} from "./InstitutionCard";
-import {InstitutionCardInstitution} from "./InstitutionCardInstitution";
+import {JoinedInstitution} from "@paradicms/models";
 
 export const InstitutionsGallery: React.FunctionComponent<{
-  institutions: readonly InstitutionCardInstitution[];
+  institutions: readonly JoinedInstitution[];
   renderInstitutionLink: (
-    institution: InstitutionCardInstitution,
-    children: React.ReactNode
+    institution: JoinedInstitution,
+    children: React.ReactNode,
   ) => React.ReactNode;
 }> = ({institutions, renderInstitutionLink}) => (
   <Grid container direction="column" spacing={4}>

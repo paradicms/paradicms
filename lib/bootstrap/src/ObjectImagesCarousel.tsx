@@ -1,27 +1,30 @@
 import * as React from "react";
 import {useState} from "react";
-import {ImageDimensions, JoinedImage} from "@paradicms/models";
+import {ImageDimensions, JoinedImage, JoinedObject} from "@paradicms/models";
 import {Carousel, CarouselControl, CarouselItem} from "reactstrap";
-import {getImageSrc, indexImagesByOriginalImageUri, selectThumbnail} from "@paradicms/model-utils";
 import ImageZoom from "react-medium-image-zoom";
 import {RightsTable} from "./RightsTable";
 
-export const ObjectImagesCarousel: React.FunctionComponent<{
-  images: readonly JoinedImage[];
-}> = ({images}) => {
-  const imagesByOriginalImageUri = indexImagesByOriginalImageUri(images);
-  const originalImageUris = Object.keys(imagesByOriginalImageUri);
+const thumbnailTargetDimensions: ImageDimensions = {height: 600, width: 600};
 
-  const renderObjectImage = (originalImageUri: string) => {
-    const images = imagesByOriginalImageUri[originalImageUri];
-    const originalImage = images.find(
-      image => image.uri === originalImageUri,
-    );
-    const thumbnailTargetDimensions: ImageDimensions = {height: 600, width: 600};
-    const thumbnail = selectThumbnail({
-      images,
-      targetDimensions: thumbnailTargetDimensions,
-    });
+export const ObjectImagesCarousel: React.FunctionComponent<{
+  object: JoinedObject
+}> = ({object}) => {
+  const objectOriginalImages = object.originalImages;
+
+  const renderObjectOriginalImage = (originalImage: JoinedImage) => {
+    const originalImageSrc = originalImage.src;
+    if (!originalImageSrc) {
+      return null;
+    }
+    const thumbnail = originalImage.thumbnail({targetDimensions: thumbnailTargetDimensions});
+    const thumbnailSrc = thumbnail?.src;
+    if (!thumbnail || !thumbnailSrc) {
+      return (<img className="img" src={originalImageSrc} style={{
+        maxHeight: thumbnailTargetDimensions.height,
+        maxWidth: thumbnailTargetDimensions.width,
+      }} />);
+    }
 
     return (
       <div>
@@ -29,7 +32,7 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
           <ImageZoom
             image={{
               className: "img",
-              src: getImageSrc({image: thumbnail, targetDimensions: thumbnailTargetDimensions}),
+              src: thumbnailSrc,
               style: {
                 maxHeight: thumbnailTargetDimensions.height,
                 maxWidth: thumbnailTargetDimensions.width,
@@ -37,7 +40,7 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
             }}
             zoomImage={{
               className: "img--zoomed",
-              src: getImageSrc({image: originalImage, targetDimensions: thumbnailTargetDimensions}),
+              src: originalImageSrc,
               style: originalImage?.exactDimensions ?? undefined,
             }}
           />
@@ -52,25 +55,21 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
     );
   };
 
-  if (originalImageUris.length === 1) {
-    return renderObjectImage(originalImageUris[0]);
+  if (objectOriginalImages.length === 1) {
+    return renderObjectOriginalImage(objectOriginalImages[0]);
   }
-
-  const items = Object.keys(imagesByOriginalImageUri).map(originalImageUri => ({
-    key: originalImageUri,
-  }));
 
   const [activeIndex, setActiveIndex] = useState(0);
 
   const next = () => {
     // if (animating) return;
-    const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
+    const nextIndex = activeIndex === objectOriginalImages.length - 1 ? 0 : activeIndex + 1;
     setActiveIndex(nextIndex);
   };
 
   const previous = () => {
     // if (animating) return;
-    const nextIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
+    const nextIndex = activeIndex === 0 ? objectOriginalImages.length - 1 : activeIndex - 1;
     setActiveIndex(nextIndex);
   };
 
@@ -92,10 +91,14 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
       {/*  items={items}*/}
       {/*  onClickHandler={goToIndex}*/}
       {/*/>*/}
-      {originalImageUris.map(originalImageUri => {
+      {objectOriginalImages.map(originalImage => {
+        const renderedOriginalImage = renderObjectOriginalImage(originalImage);
+        if (!renderedOriginalImage) {
+          return null;
+        }
         return (
-          <CarouselItem key={originalImageUri}>
-            {renderObjectImage(originalImageUri)}
+          <CarouselItem key={originalImage.uri}>
+            {renderedOriginalImage}
           </CarouselItem>
         );
       })}

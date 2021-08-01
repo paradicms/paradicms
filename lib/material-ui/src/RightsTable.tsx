@@ -1,19 +1,12 @@
 import * as React from "react";
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-} from "@material-ui/core";
-import {JoinedRights, JoinedValue} from "@paradicms/models";
+import {Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core";
+import {JoinedRights, License, RightsStatement} from "@paradicms/models";
 
 const RightsTableRow: React.FunctionComponent<{
   cellClassName?: string;
   label: string;
   rowClassName?: string;
-  value: JoinedValue | null;
+  value: React.ReactNode | null | undefined;
 }> = ({cellClassName, label, rowClassName, value}) => {
   if (!value) {
     return null;
@@ -24,21 +17,10 @@ const RightsTableRow: React.FunctionComponent<{
         <strong>{label}</strong>
       </TableCell>
       <TableCell className={cellClassName}>
-        <JoinedValueLink value={value} />
+        {value}
       </TableCell>
     </TableRow>
   );
-};
-
-const JoinedValueLink: React.FunctionComponent<{value: JoinedValue}> = ({
-  value,
-}) => {
-  const {text, uri} = value;
-  if (uri) {
-    return <a href={uri}>{text}</a>;
-  } else {
-    return <span>{text}</span>;
-  }
 };
 
 export const RightsTable: React.FunctionComponent<{
@@ -47,6 +29,28 @@ export const RightsTable: React.FunctionComponent<{
   rowClassName?: string;
   tableClassName?: string;
 }> = ({cellClassName, rights, rowClassName, tableClassName}) => {
+  const licenseValue = React.useMemo(() => (): React.ReactNode | null => {
+    if (!rights.license) {
+      return null;
+    }
+    if (typeof (rights.license) === "string") {
+      return rights.license as string;
+    }
+    const license = rights.license as License;
+    return <a href={license.uri}>{license.title}</a>;
+  }, [rights]);
+
+  const rightsStatementValue = React.useMemo(() => (): React.ReactNode | null => {
+    if (!rights.statement) {
+      return null;
+    }
+    if (typeof (rights.statement) === "string") {
+      return rights.statement as string;
+    }
+    const rightsStatement = rights.statement as RightsStatement;
+    return <a href={rightsStatement.uri}>{rightsStatement.prefLabel}</a>;
+  }, [rights]);
+
   return (
     <TableContainer component={Paper}>
       <Table className={tableClassName}>
@@ -55,25 +59,25 @@ export const RightsTable: React.FunctionComponent<{
             cellClassName={cellClassName}
             label="Statement"
             rowClassName={rowClassName}
-            value={rights.statement}
+            value={rightsStatementValue()}
           />
           <RightsTableRow
             cellClassName={cellClassName}
             label="Creator"
             rowClassName={rowClassName}
-            value={rights.creator}
+            value={rights.creator?.value}
           />
           <RightsTableRow
             cellClassName={cellClassName}
             label="Holder"
             rowClassName={rowClassName}
-            value={rights.holder}
+            value={rights.holder?.value}
           />
           <RightsTableRow
             cellClassName={cellClassName}
             label="License"
             rowClassName={rowClassName}
-            value={rights.license}
+            value={licenseValue()}
           />
         </TableBody>
       </Table>

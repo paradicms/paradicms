@@ -1,37 +1,28 @@
 import * as React from "react";
+import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {Hrefs} from "lib/Hrefs";
-import {Configuration, JoinedImage} from "@paradicms/models";
+import {Configuration, Dataset, defaultConfiguration, IndexedDataset, JoinedDataset} from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/next";
-import {CollectionsGallery, thumbnailTargetDimensions} from "@paradicms/material-ui";
+import {CollectionsGallery} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
-import {
-  indexImagesByDepictsUri,
-  indexObjectsByCollectionUri,
-  joinImage,
-  selectCollectionImages,
-  selectThumbnail,
-} from "@paradicms/model-utils";
+import {readDataset} from "lib/readDataset";
 
 interface StaticProps {
   readonly configuration: Configuration;
-  readonly institution: {
-    readonly collections: readonly {
-      readonly thumbnail: JoinedImage | null;
-      readonly title: string;
-      readonly uri: string;
-    }[];
-    readonly name: string;
-    readonly uri: string;
-  };
+  readonly dataset: Dataset;
+  readonly institutionUri: string;
 }
 
 const InstitutionPage: React.FunctionComponent<StaticProps> = ({
                                                                  configuration,
-                                                                 institution,
+                                                                 dataset,
+  institutionUri
                                                                }) => {
+  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [dataset]);
+  const institution = useMemo(() => joinedDataset.institutionByUri(institutionUri), [institutionUri, joinedDataset]);
+
   return (
     <Layout
       breadcrumbs={{institution}}
@@ -58,10 +49,10 @@ const InstitutionPage: React.FunctionComponent<StaticProps> = ({
 export default InstitutionPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const data = Data.instance;
+  const dataset = readDataset();
   return {
     fallback: false,
-    paths: data.institutions.map(institution => ({
+    paths: dataset.institutions.map(institution => ({
       params: {institutionUri: encodeFileName(institution.uri)},
     })),
   };
@@ -70,50 +61,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const data = Data.instance;
   const institutionUri = decodeFileName(params!.institutionUri as string);
-
-  const institution = data.institutionByUri(institutionUri);
-
-  const institutionCollections = data.institutionCollections(institutionUri);
-
-  const institutionObjects = data.institutionObjects(institutionUri);
-
-  const institutionImagesByDepictsUri = indexImagesByDepictsUri(
-    data.institutionImages(institutionUri)
-  );
 
   return {
     props: {
-      configuration: data.configuration,
-      institution: {
-        collections: institutionCollections.map(collection => {
-          const thumbnail = selectThumbnail({
-            images: selectCollectionImages({
-              collection,
-              imagesByDepictsUri: institutionImagesByDepictsUri,
-              objectsByCollectionUri: indexObjectsByCollectionUri(
-                institutionObjects,
-              ),
-            }),
-            targetDimensions: thumbnailTargetDimensions,
-          });
-          return {
-            thumbnail: thumbnail
-              ? joinImage({
-                  image: thumbnail,
-                  licenseTitlesByUri: data.licenseTitlesByUri,
-                  rightsStatementPrefLabelsByUri:
-                    data.rightsStatementPrefLabelsByUri,
-                })
-              : null,
-            title: collection.title,
-            uri: collection.uri,
-          };
-        }),
-        name: institution.name,
-        uri: institution.uri,
-      },
+      configuration: defaultConfiguration,
+      dataset: new IndexedDataset(readDataset()).institutionDataset(institutionUri),
+      institutionUri,
     },
-  };
+  }
 };

@@ -15,10 +15,8 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {RightsTable} from "./RightsTable";
-import {ObjectCardObject} from "./ObjectCardObject";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
-import {ObjectCardInstitution} from "./ObjectCardInstitution";
-import {getImageSrc} from "@paradicms/model-utils";
+import {JoinedImage, JoinedInstitution, JoinedObject} from "@paradicms/models";
 
 const useStyles = makeStyles(theme => ({
   accordionTitle: {
@@ -45,17 +43,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const ObjectCard: React.FunctionComponent<{
-  object: ObjectCardObject;
+  object: JoinedObject;
   renderInstitutionLink?: (
-    institution: ObjectCardInstitution,
-    children: React.ReactNode
+    institution: JoinedInstitution,
+    children: React.ReactNode,
   ) => React.ReactNode;
   renderObjectLink: (
-    object: ObjectCardObject,
-    children: React.ReactNode
+    object: JoinedObject,
+    children: React.ReactNode,
   ) => React.ReactNode;
 }> = ({object, renderInstitutionLink, renderObjectLink}) => {
   const classes = useStyles();
+  const thumbnail = object.thumbnail({targetDimensions: thumbnailTargetDimensions});
+  const thumbnailSrc = thumbnail?.src ?? JoinedImage.placeholderSrc(thumbnailTargetDimensions);
 
   return (
     <Card className={classes.root}>
@@ -71,7 +71,7 @@ export const ObjectCard: React.FunctionComponent<{
                 object,
                 <img
                   className={classes.thumbnailImg}
-                  src={getImageSrc({image: object.thumbnail, targetDimensions: thumbnailTargetDimensions})}
+                  src={thumbnailSrc}
                   title={object.title}
                 />
               )}
@@ -111,7 +111,7 @@ export const ObjectCard: React.FunctionComponent<{
               </Accordion>
             </Grid>
           ) : null}
-          {object.thumbnail && object.thumbnail.rights ? (
+          {thumbnail && thumbnail.rights ? (
             <Grid item>
               <Accordion>
                 <AccordionSummary
@@ -123,7 +123,7 @@ export const ObjectCard: React.FunctionComponent<{
                 <AccordionDetails>
                   <RightsTable
                     cellClassName={classes.rightsTableCell}
-                    rights={object.thumbnail.rights}
+                    rights={thumbnail.rights}
                   ></RightsTable>
                 </AccordionDetails>
               </Accordion>

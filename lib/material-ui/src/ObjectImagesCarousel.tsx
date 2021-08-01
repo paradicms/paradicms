@@ -1,51 +1,57 @@
 import * as React from "react";
 import ImageZoom from "react-medium-image-zoom";
 import Carousel from "react-material-ui-carousel";
-import {ImageDimensions, JoinedImage} from "@paradicms/models";
+import {ImageDimensions, JoinedObject} from "@paradicms/models";
 import {Accordion, AccordionDetails, AccordionSummary, Grid} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {RightsTable} from "./RightsTable";
-import {getImageSrc, indexImagesByOriginalImageUri, selectThumbnail} from "@paradicms/model-utils";
 
 export const ObjectImagesCarousel: React.FunctionComponent<{
-  images: readonly JoinedImage[];
-}> = ({images}) => {
-  const imagesByOriginalImageUri = indexImagesByOriginalImageUri(images);
+  object: JoinedObject
+}> = ({object}) => {
+  const objectOriginalImages = object.originalImages;
+
   return (
     <Carousel autoPlay={false}>
-      {Object.keys(imagesByOriginalImageUri).map(originalImageUri => {
-        const images = imagesByOriginalImageUri[originalImageUri];
-        const originalImage = images.find(
-          image => image.uri === originalImageUri,
-        );
+      {objectOriginalImages.map(originalImage => {
+        const originalImageSrc = originalImage.src;
+        if (!originalImageSrc) {
+          return null;
+        }
         const thumbnailTargetDimensions: ImageDimensions = {height: 600, width: 600};
-        const thumbnail = selectThumbnail({
-          images,
+        const thumbnail = originalImage.thumbnail({
           targetDimensions: thumbnailTargetDimensions,
         });
+        const thumbnailSrc = thumbnail?.src;
+
         return (
           <Grid
             container
             alignContent="center"
             justify="center"
-            key={originalImageUri}
+            key={originalImage.uri}
           >
             <Grid item>
-              <ImageZoom
-                image={{
-                  className: "img",
-                  src: getImageSrc({image: thumbnail, targetDimensions: thumbnailTargetDimensions}),
-                  style: {
-                    maxHeight: 600,
-                    maxWidth: 600,
-                  },
-                }}
-                zoomImage={{
-                  className: "img--zoomed",
-                  src: getImageSrc({image: originalImage, targetDimensions: thumbnailTargetDimensions}) ?? undefined,
-                  style: originalImage?.exactDimensions ?? undefined,
-                }}
-              />
+              {thumbnailSrc ?
+                <ImageZoom
+                  image={{
+                    className: "img",
+                    src: thumbnailSrc,
+                    style: {
+                      maxHeight: thumbnailTargetDimensions.height,
+                      maxWidth: thumbnailTargetDimensions.width,
+                    },
+                  }}
+                  zoomImage={{
+                    className: "img--zoomed",
+                    src: originalImageSrc,
+                    style: originalImage?.exactDimensions ?? undefined,
+                  }}
+                />
+                : <img className="img" src={originalImageSrc} style={{
+                  maxHeight: thumbnailTargetDimensions.height,
+                  maxWidth: thumbnailTargetDimensions.width,
+                }} />}
               {originalImage && originalImage.rights ? (
                 <Accordion>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>

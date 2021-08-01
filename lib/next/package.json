@@ -5,7 +5,9 @@
   "dependencies": {
     "@paradicms/react": "1.0.5",
     "base-x": "^3.0.8",
-    "next": "10.0.1"
+    "next": "10.0.1",
+    "react": "16.8.6",
+    "react-dom": "16.8.6"
   },
   "devDependencies": {
     "react-refresh": "^0.8.3",
@@ -21,9 +23,9 @@
   "main": "dist/index.js",
   "private": true,
   "scripts": {
-    "build": "rimraf dist && tsc -b",
+    "build": "tsc -b",
     "clean": "rimraf dist",
-    "start": "rimraf dist && tsc -w"
+    "watch": "tsc -w --preserveWatchOutput"
   },
   "types": "dist/index.d.ts",
   "version": "1.0.5"

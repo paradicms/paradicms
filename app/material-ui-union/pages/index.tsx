@@ -1,26 +1,27 @@
 import * as React from "react";
 import {GetStaticProps} from "next";
 import {Hrefs} from "lib/Hrefs";
-import {Data} from "lib/Data";
 import {Layout} from "components/Layout";
 import {Link} from "@paradicms/material-ui-next";
-import {InstitutionCardInstitution, InstitutionsGallery, thumbnailTargetDimensions} from "@paradicms/material-ui";
-import {joinImage, selectThumbnail} from "@paradicms/model-utils";
-import {Configuration} from "@paradicms/models";
+import {InstitutionsGallery} from "@paradicms/material-ui";
+import {Configuration, Dataset, defaultConfiguration, JoinedDataset} from "@paradicms/models";
+import {readDataset} from "lib/readDataset";
 
 interface StaticProps {
   readonly configuration: Configuration;
-  readonly institutions: readonly InstitutionCardInstitution[];
+  readonly dataset: Dataset;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
                                                            configuration,
-                                                           institutions,
+                                                           dataset,
                                                          }) => {
+  const joinedDataset = React.useMemo(() => JoinedDataset.fromDataset(dataset), [dataset]);
+
   return (
     <Layout documentTitle="Institutions" configuration={configuration}>
       <InstitutionsGallery
-        institutions={institutions}
+        institutions={joinedDataset.institutions}
         renderInstitutionLink={(institution, children) => (
           <Link
             href={Hrefs.institution(institution.uri).home}
@@ -39,32 +40,10 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const data = Data.instance;
-
-  const institutions = data.institutions;
-
   return {
     props: {
-      configuration: data.configuration,
-      institutions: institutions.map(institution => {
-        const thumbnail = selectThumbnail({
-          images: data.institutionImages(institution.uri),
-          targetDimensions: thumbnailTargetDimensions,
-        });
-
-        return {
-          name: institution.name,
-          thumbnail: thumbnail
-            ? joinImage({
-                image: thumbnail,
-                licenseTitlesByUri: data.licenseTitlesByUri,
-                rightsStatementPrefLabelsByUri:
-                  data.rightsStatementPrefLabelsByUri,
-              })
-            : null,
-          uri: institution.uri,
-        };
-      }),
+      configuration: defaultConfiguration,
+      dataset: readDataset(),
     },
   };
 };

@@ -4,11 +4,11 @@
   "description": "Paradicms lunr library",
   "dependencies": {
     "@paradicms/models": "1.0.5",
-    "@paradicms/model-utils": "1.0.5",
     "@paradicms/services": "1.0.5",
     "@types/lunr": "^2.3.3",
     "base-x": "^3.0.8",
-    "lunr": "^2.3.8"
+    "lunr": "^2.3.8",
+    "ts-invariant": "0.9.0"
   },
   "devDependencies": {
     "rimraf": "3.0.2",
@@ -21,9 +21,9 @@
   "main": "dist/index.js",
   "private": true,
   "scripts": {
-    "build": "rimraf dist && tsc -b",
+    "build": "tsc -b",
     "clean": "rimraf dist",
-    "start": "rimraf dist && tsc -w"
+    "watch": "tsc -w --preserveWatchOutput"
   },
   "types": "dist/index.d.ts",
   "version": "1.0.5"

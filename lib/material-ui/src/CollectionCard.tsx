@@ -1,8 +1,7 @@
 import * as React from "react";
 import {Card, CardContent, CardHeader, Grid, makeStyles} from "@material-ui/core";
-import {CollectionCardCollection} from "./CollectionCardCollection";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
-import {getImageSrc} from "@paradicms/model-utils";
+import {JoinedCollection, JoinedImage} from "@paradicms/models";
 
 const useStyles = makeStyles(theme => ({
   thumbnailImg: {
@@ -23,13 +22,15 @@ const useStyles = makeStyles(theme => ({
 // });
 
 export const CollectionCard: React.FunctionComponent<{
-  collection: CollectionCardCollection;
+  collection: JoinedCollection;
   renderCollectionLink: (
-    collection: CollectionCardCollection,
-    children: React.ReactNode
+    collection: JoinedCollection,
+    children: React.ReactNode,
   ) => React.ReactNode;
 }> = ({collection, renderCollectionLink}) => {
   const classes = useStyles();
+  const thumbnail = collection.thumbnail({targetDimensions: thumbnailTargetDimensions});
+  const thumbnailSrc = thumbnail?.src ?? JoinedImage.placeholderSrc(thumbnailTargetDimensions);
 
   return (
     <Card className={classes.root}>
@@ -45,7 +46,7 @@ export const CollectionCard: React.FunctionComponent<{
                 collection,
                 <img
                   className={classes.thumbnailImg}
-                  src={getImageSrc({image: collection.thumbnail, targetDimensions: thumbnailTargetDimensions})}
+                  src={thumbnailSrc}
                   title={collection.title}
                 />
               )}

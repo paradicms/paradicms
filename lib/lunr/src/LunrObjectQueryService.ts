@@ -1,7 +1,9 @@
 import {ObjectQueryService} from "@paradicms/services";
-import {Configuration, Object, ObjectsQuery, ObjectsQueryResults} from "@paradicms/models";
+import {Configuration, IndexedDataset, Object, ObjectsQuery, ObjectsQueryResults} from "@paradicms/models";
 import lunr, {Index} from "lunr";
-import {facetizeObjects, filterObjects} from "@paradicms/model-utils";
+import {facetizeObjects} from "./facetizeObjects";
+import {filterObjects} from "./filterObjects";
+import invariant from "ts-invariant";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -13,18 +15,14 @@ const encodeFieldName = (value: string): string =>
 
 export class LunrObjectQueryService implements ObjectQueryService {
   private readonly configuration: Configuration;
+  private readonly dataset: IndexedDataset;
   private readonly index: Index;
-  private readonly objects: readonly Object[];
-  private readonly objectsByUri: {[index: string]: Object};
 
-  constructor(kwds: {configuration: Configuration, objects: readonly Object[]}) {
-    const {configuration, objects} = kwds;
+  constructor(kwds: {configuration: Configuration, dataset: IndexedDataset}) {
+    const {configuration, dataset} = kwds;
 
     this.configuration = configuration;
-    this.objects = objects;
-
-    const objectsByUri: {[index: string]: Object} = {};
-    this.objectsByUri = objectsByUri;
+    this.dataset = dataset;
 
     this.index = lunr(function() {
       this.field("abstract");
@@ -37,7 +35,7 @@ export class LunrObjectQueryService implements ObjectQueryService {
       }
       this.ref("uri");
 
-      for (const object of objects) {
+      for (const object of dataset.objects) {
         const doc: any = {title: object.title, uri: object.uri};
         if (object.abstract) {
           doc.abstract = object.abstract;
@@ -52,22 +50,26 @@ export class LunrObjectQueryService implements ObjectQueryService {
           }
         }
         this.add(doc);
-        objectsByUri[object.uri] = object;
       }
     });
   }
 
   getObjects(kwds: {limit: number, offset: number, query: ObjectsQuery}): Promise<ObjectsQueryResults> {
     const {limit, offset, query} = kwds;
+
+    invariant(!!query, "query must be defined");
+    invariant(limit > 0, "limit must be > 0");
+    invariant(offset >= 0, "offset must be >= 0");
+
     return new Promise((resolve, reject) => {
       // Calculate the universe of objects
       let allObjects: readonly Object[];
       if (query.text) {
         // Anything matching the fulltext search
-        allObjects = this.index.search(query.text).map(({ref}) => this.objectsByUri[ref]);
+        allObjects = this.index.search(query.text).map(({ref}) => this.dataset.objectByUri(ref));
       } else {
         // All objects
-        allObjects = this.objects;
+        allObjects = this.dataset.objects;
       }
 
       // Calculate facets on the universe before filtering it
@@ -75,14 +77,16 @@ export class LunrObjectQueryService implements ObjectQueryService {
 
       const filteredObjects = filterObjects({filters: this.configuration.objectFilters, objects: allObjects});
 
+      const slicedObjects = filteredObjects.slice(
+        offset,
+        offset + limit,
+      );
+
       return resolve({
+        dataset: this.dataset.objectsDataset(slicedObjects.map(object => object.uri)),
         facets,
-        objects: filteredObjects.slice(
-          offset,
-          offset + limit,
-        ),
-        totalCount: filteredObjects.length,
-      })
+        totalObjectsCount: filteredObjects.length,
+      });
     });
   }
 }

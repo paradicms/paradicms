@@ -1,7 +1,7 @@
 import {Facet, Filter, StringPropertyValueFacet, StringPropertyValueFilter} from "@paradicms/models";
 import * as React from "react";
 import {makeStyles} from "@material-ui/core";
-import {ValueFilterChips} from "ValueFilterChips";
+import {ValueFilterChips} from "./ValueFilterChips";
 
 const useStyles = makeStyles(theme => ({
   chip: {

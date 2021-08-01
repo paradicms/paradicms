@@ -1,13 +1,13 @@
 import * as React from "react";
 import {Grid} from "@material-ui/core";
 import {CollectionCard} from "./CollectionCard";
-import {CollectionCardCollection} from "./CollectionCardCollection";
+import {JoinedCollection} from "@paradicms/models";
 
 export const CollectionsGallery: React.FunctionComponent<{
-  collections: readonly CollectionCardCollection[];
+  collections: readonly JoinedCollection[];
   renderCollectionLink: (
-    collection: CollectionCardCollection,
-    children: React.ReactNode
+    collection: JoinedCollection,
+    children: React.ReactNode,
   ) => React.ReactNode;
 }> = ({collections, renderCollectionLink}) => (
   <Grid container direction="column" spacing={4}>
