@@ -9,7 +9,7 @@
     "@paradicms/models": "1.0.5",
     "@paradicms/react": "1.0.5",
     "@types/mui-datatables": "^3.7.0",
-    "mui-datatables": "^3.7.1",
+    "mui-datatables": "3.7.7",
     "react-material-ui-carousel": "1.4.5",
     "react-medium-image-zoom": "4.3.4"
   },
@@ -24,9 +24,9 @@
   "main": "dist/index.js",
   "private": true,
   "scripts": {
-    "build": "rimraf dist && tsc -b",
+    "build": "tsc -b",
     "clean": "rimraf dist",
-    "start": "rimraf dist && tsc -w"
+    "watch": "tsc -w"
   },
   "types": "dist/index.d.ts",
   "version": "1.0.5"

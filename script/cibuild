@@ -12,34 +12,8 @@ echo "DATA_TTL_FILE_PATH: $DATA_TTL_FILE_PATH"
 time yarn install
 
 
-# Build lib
-cd lib
-./build.sh
+# Build
+wsrun --stages build
 
-# Test lib
-cd rdf
-yarn test
-
-cd ..
-
-# Currently in gui/
-
-
-# Build apps
-# Run parallel commands and fail if any of them fails.
-cd ../app
-pids=()
-
-cd bootstrap-collection
-yarn build &
-pids+=($!)
-
-cd ..
-
-cd material-ui-union
-yarn build &
-pids+=($!)
-
-for pid in "${pids[@]}"; do
-  wait "$pid"
-done
+# Test
+wsrun --exclude-missing test

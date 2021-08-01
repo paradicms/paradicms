@@ -23,9 +23,9 @@
   ],
   "main": "dist/index.js",
   "scripts": {
-    "build": "rimraf dist && tsc -b",
+    "build": "tsc -b",
     "clean": "rimraf dist",
-    "start": "rimraf dist && tsc -w",
+    "watch": "tsc -w",
     "test": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/**/*.ts'",
     "test-watch": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register -w 'test/**/*.ts'"
   },

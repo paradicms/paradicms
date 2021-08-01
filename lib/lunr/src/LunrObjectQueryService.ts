@@ -3,6 +3,7 @@ import {Configuration, IndexedDataset, Object, ObjectsQuery, ObjectsQueryResults
 import lunr, {Index} from "lunr";
 import {facetizeObjects} from "./facetizeObjects";
 import {filterObjects} from "./filterObjects";
+import invariant from "ts-invariant";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -55,6 +56,11 @@ export class LunrObjectQueryService implements ObjectQueryService {
 
   getObjects(kwds: {limit: number, offset: number, query: ObjectsQuery}): Promise<ObjectsQueryResults> {
     const {limit, offset, query} = kwds;
+
+    invariant(!!query, "query must be defined");
+    invariant(limit > 0, "limit must be > 0");
+    invariant(offset >= 0, "offset must be >= 0");
+
     return new Promise((resolve, reject) => {
       // Calculate the universe of objects
       let allObjects: readonly Object[];

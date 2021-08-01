@@ -27,15 +27,17 @@ export const LunrObjectSearchPage: React.FunctionComponent<{
     setPage: (page: number | undefined) => void
   }) => React.ReactElement
 }> = ({children, configuration, dataset, objectsPerPage}) => {
-  const [objectsQuery, setObjectsQuery] = useQueryParam<ObjectsQuery>(
+  const [objectsQueryQueryParam, setObjectsQuery] = useQueryParam<ObjectsQuery | undefined>(
     "query",
     new JsonQueryParamConfig<ObjectsQuery>(),
   );
+  const objectsQuery = useMemo(() => objectsQueryQueryParam ?? {filters: [], text: null}, [objectsQueryQueryParam]);
 
   let [pageQueryParam, setPage] = useQueryParam<number | null | undefined>(
     "page",
     NumberParam,
   );
+  const page = useMemo(() => pageQueryParam ?? 0, [pageQueryParam]);
 
   const objectQueryService = useMemo<ObjectQueryService>(() => new LunrObjectQueryService({
     configuration,
@@ -47,7 +49,7 @@ export const LunrObjectSearchPage: React.FunctionComponent<{
   useEffect(() => {
     objectQueryService.getObjects({
       limit: objectsPerPage,
-      offset: (pageQueryParam ?? 0) * objectsPerPage,
+      offset: page * objectsPerPage,
       query: objectsQuery,
     }).then(setObjectsQueryResults);
   }, [objectsQuery, objectQueryService, pageQueryParam]);
@@ -62,7 +64,7 @@ export const LunrObjectSearchPage: React.FunctionComponent<{
     objectsQuery,
     objectsQueryResults,
     objectsQueryResultsJoinedDataset,
-    page: pageQueryParam ?? 0,
+    page,
     pageMax: Math.ceil(objectsQueryResults.totalObjectsCount / objectsPerPage) - 1,
     setObjectsQuery,
     setPage,

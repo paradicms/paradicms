@@ -1,6 +1,5 @@
 import {ObjectsQuery} from "@paradicms/models";
 import * as qs from "qs";
-import _ from "lodash";
 import {encodeFileName} from "@paradicms/next";
 
 export class Hrefs {
@@ -35,7 +34,7 @@ export class Hrefs {
 
   static search(query?: ObjectsQuery): string {
     const href = "/search";
-    if (_.isEmpty(query)) {
+    if (!query) {
       return href;
     }
     return (

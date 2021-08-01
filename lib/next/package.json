@@ -21,9 +21,9 @@
   "main": "dist/index.js",
   "private": true,
   "scripts": {
-    "build": "rimraf dist && tsc -b",
+    "build": "tsc -b",
     "clean": "rimraf dist",
-    "start": "rimraf dist && tsc -w"
+    "watch": "tsc -w"
   },
   "types": "dist/index.d.ts",
   "version": "1.0.5"
