@@ -59,7 +59,7 @@ export const RightsTable: React.FunctionComponent<{
             cellClassName={cellClassName}
             label="Statement"
             rowClassName={rowClassName}
-            value={rightsStatementValue()}
+            value={rightsStatementValue}
           />
           <RightsTableRow
             cellClassName={cellClassName}
@@ -77,7 +77,7 @@ export const RightsTable: React.FunctionComponent<{
             cellClassName={cellClassName}
             label="License"
             rowClassName={rowClassName}
-            value={licenseValue()}
+            value={licenseValue}
           />
         </TableBody>
       </Table>

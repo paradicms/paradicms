@@ -77,6 +77,10 @@ export class DataSubsetter {
     return DataSubsetter.datasetFromPartial({});
   }
 
+  static fromDataset(dataset: Dataset) {
+    return new DataSubsetter(new IndexedDataset(dataset));
+  }
+
   institutionDataset(institutionUri: string, joinSelector?: InstitutionJoinSelector): Dataset {
     const institution = this.completeDataset.institutionByUri(institutionUri);
 

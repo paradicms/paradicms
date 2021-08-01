@@ -5,7 +5,6 @@ import {
   Dataset,
   DataSubsetter,
   defaultConfiguration,
-  IndexedDataset,
   ObjectJoinSelector,
 } from "@paradicms/models";
 import {Layout} from "components/Layout";
@@ -133,7 +132,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   const completeDataset = readDataset();
   const collection = completeDataset.collections[0];
   // Must pass all of the collection's objects in to feed into the search service
-  const collectionDataset = new DataSubsetter(new IndexedDataset(completeDataset)).collectionDataset(collection.uri, {
+  const collectionDataset = DataSubsetter.fromDataset(completeDataset).collectionDataset(collection.uri, {
     objects: OBJECT_JOIN_SELECTOR,
   });
 

@@ -2,10 +2,10 @@ import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {Hrefs} from "lib/Hrefs";
-import {Configuration, Dataset, defaultConfiguration, IndexedDataset, JoinedDataset} from "@paradicms/models";
+import {Configuration, Dataset, DataSubsetter, defaultConfiguration, JoinedDataset} from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {decodeFileName, encodeFileName} from "@paradicms/next";
-import {CollectionsGallery} from "@paradicms/material-ui";
+import {CollectionsGallery, thumbnailTargetDimensions} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {readDataset} from "lib/readDataset";
 
@@ -63,11 +63,20 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const institutionUri = decodeFileName(params!.institutionUri as string);
 
+  const institutionDataset = DataSubsetter.fromDataset(readDataset()).institutionDataset(institutionUri, {
+    collections: {
+      institution: {},
+      thumbnail: {targetDimensions: thumbnailTargetDimensions},
+    },
+  });
+
+  console.debug("Institution dataset:", Object.keys(institutionDataset).map(key => `${key}: ${((institutionDataset as any)[key] as any[]).length}`).join(", "));
+
   return {
     props: {
       configuration: defaultConfiguration,
-      dataset: new IndexedDataset(readDataset()).institutionDataset(institutionUri),
+      dataset: institutionDataset,
       institutionUri,
     },
-  }
+  };
 };
