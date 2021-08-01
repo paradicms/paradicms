@@ -1,5 +1,12 @@
 import * as React from "react";
-import {Collection, Configuration, Dataset, defaultConfiguration, IndexedDataset} from "@paradicms/models";
+import {
+  Collection,
+  Configuration,
+  Dataset,
+  DataSubsetter,
+  defaultConfiguration,
+  IndexedDataset,
+} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {Col, Container, Row} from "reactstrap";
@@ -8,6 +15,7 @@ import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {readDataset} from "lib/readDataset";
 import {LunrObjectSearchPage} from "@paradicms/lunr-react";
+import {thumbnailTargetDimensions} from "@paradicms/material-ui";
 
 interface StaticProps {
   readonly collection: Collection;
@@ -116,14 +124,19 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const dataset = readDataset();
-  const indexedDataset = new IndexedDataset(dataset);
-  const collection = indexedDataset.firstCollection;
+  const completeDataset = readDataset();
+  const collection = completeDataset.collections[0];
+  const collectionDataset = new DataSubsetter(new IndexedDataset(completeDataset)).collectionDataset(collection.uri, {
+    objects: {thumbnail: {targetDimensions: thumbnailTargetDimensions}},
+  });
+
+  console.log("Collection dataset:", Object.keys(collectionDataset).map(key => `${key}: ${((collectionDataset as any)[key] as any[]).length}`).join(", "));
+
   return {
     props: {
       collection,
       configuration: defaultConfiguration,
-      dataset: indexedDataset.collectionDataset(collection.uri),
+      dataset: collectionDataset,
     },
   };
 };

@@ -1,56 +1,33 @@
 import {IndexedDataset} from "./IndexedDataset";
 import {Dataset} from "./Dataset";
-import {ThumbnailSelector} from "./ThumbnailSelector";
 import {Image} from "./Image";
 import {JoinedDataset} from "./JoinedDataset";
 import {Rights} from "./Rights";
 import {Property} from "./Property";
+import {CollectionJoinSelector} from "CollectionJoinSelector";
+import {InstitutionJoinSelector} from "InstitutionJoinSelector";
+import {ObjectJoinSelector} from "ObjectJoinSelector";
 
-// A caller can select which connected models to include in a Dataset.
-// For example, return a collection's institution along with the collection.
-// An undefined selector means don't return any connected models.
-// An empty selector ({}) means return the connected models themselves but none of their connected models (i.e., no recursion).
-// For example, a selector on Institution with collections: {} will return all of the Collection instances associated with that Institution,
-// but no models connected to the Collections (i.e., their Objects).
-interface CollectionDataSelector {
-  // Return the Institution referred to by the Collection's institutionUri.
-  institution?: InstitutionDataSelector;
-  // Return all objects that have a collectionUri referring to this Collection.
-  objects?: ObjectDataSelector;
-  // Return a single thumbnail Image for this Collection.
-  thumbnail?: ThumbnailSelector;
-}
-
-interface InstitutionDataSelector {
-  // Return all Collections whose institutionUri refers to this Institution.
-  collections?: CollectionDataSelector;
-  // Return all Objects whose institutionUri refers to this Institution.
-  objects?: ObjectDataSelector;
-  // Return a single thumbnail Image for this Institution.
-  thumbnail?: ThumbnailSelector;
-}
-
-interface ObjectDataSelector {
-  // Return all Images that depict this Object.
-  allImages?: boolean;
-  // Return all collections referred to by this Object's collectionUris.
-  collections?: CollectionDataSelector;
-  // Return the Institution referred to by this Object's institutionUri.
-  institution?: InstitutionDataSelector;
-  // Return a single thumbnail Image for this Object.
-  thumbnail?: ThumbnailSelector;
-}
-
+/**
+ * Subset a Dataset to reduce the amount of data passed between getStaticProps and the component.
+ *
+ * Re: join selectors. A caller can select which connected models to include in a Dataset.
+ * For example, return a collection's institution along with the collection.
+ * An undefined joinSelector means don't return any connected models.
+ * An empty joinSelector ({}) means return the connected models themselves but none of their connected models (i.e., no recursion).
+ * For example, a joinSelector on Institution with collections: {} will return all of the Collection instances associated with that Institution,
+ * but no models connected to the Collections (i.e., their Objects).
+ */
 export class DataSubsetter {
   constructor(private readonly completeDataset: IndexedDataset) {
   }
 
-  collectionDataset(collectionUri: string, selector: CollectionDataSelector): Dataset {
+  collectionDataset(collectionUri: string, joinSelector?: CollectionJoinSelector): Dataset {
     const collection = this.completeDataset.collectionByUri(collectionUri);
 
     let images: Image[] = [];
-    if (selector.thumbnail) {
-      const thumbnailImage = new JoinedDataset(this.completeDataset).collectionByUri(collectionUri).thumbnail(selector.thumbnail);
+    if (joinSelector?.thumbnail) {
+      const thumbnailImage = new JoinedDataset(this.completeDataset).collectionByUri(collectionUri).thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
         images.push(thumbnailImage.asImage);
       }
@@ -64,29 +41,25 @@ export class DataSubsetter {
 
     const datasets: Dataset[] = [collectionDataset];
 
-    if (selector.institution) {
-      datasets.push(this.institutionDataset(collection.institutionUri, selector.institution));
+    if (joinSelector?.institution) {
+      datasets.push(this.institutionDataset(collection.institutionUri, joinSelector.institution));
     }
 
-    if (selector.objects) {
-      datasets.push(this.objectsDataset(this.completeDataset.collectionObjects(collectionUri).map(object => object.uri), selector.objects));
+    if (joinSelector?.objects) {
+      datasets.push(this.objectsDataset(this.completeDataset.collectionObjects(collectionUri).map(object => object.uri), joinSelector.objects));
     }
 
     return DataSubsetter.mergeDatasets(datasets);
   }
 
-  collectionsDataset(collectionUris: readonly string[], selector: CollectionDataSelector): Dataset {
+  collectionsDataset(collectionUris: readonly string[], joinSelector?: CollectionJoinSelector): Dataset {
     if (collectionUris.length === 0) {
       return DataSubsetter.emptyDataset;
     } else if (collectionUris.length === 1) {
-      return this.collectionDataset(collectionUris[0], selector);
+      return this.collectionDataset(collectionUris[0], joinSelector);
     } else {
-      return DataSubsetter.mergeDatasets(collectionUris.map(collectionUri => this.collectionDataset(collectionUri, selector)));
+      return DataSubsetter.mergeDatasets(collectionUris.map(collectionUri => this.collectionDataset(collectionUri, joinSelector)));
     }
-  }
-
-  private static get emptyDataset() {
-    return DataSubsetter.datasetFromPartial({});
   }
 
   private static datasetFromPartial(partialDataset: Partial<Dataset>): Dataset {
@@ -101,12 +74,16 @@ export class DataSubsetter {
     };
   }
 
-  institutionDataset(institutionUri: string, selector: InstitutionDataSelector): Dataset {
+  private static get emptyDataset() {
+    return DataSubsetter.datasetFromPartial({});
+  }
+
+  institutionDataset(institutionUri: string, joinSelector?: InstitutionJoinSelector): Dataset {
     const institution = this.completeDataset.institutionByUri(institutionUri);
 
     let images: Image[] = [];
-    if (selector.thumbnail) {
-      const thumbnailImage = new JoinedDataset(this.completeDataset).institutionByUri(institutionUri).thumbnail(selector.thumbnail);
+    if (joinSelector?.thumbnail) {
+      const thumbnailImage = new JoinedDataset(this.completeDataset).institutionByUri(institutionUri).thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
         images.push(thumbnailImage.asImage);
       }
@@ -123,24 +100,24 @@ export class DataSubsetter {
       datasets.push(this.rightsDataset(institution.rights));
     }
 
-    if (selector.collections) {
-      datasets.push(this.collectionsDataset(this.completeDataset.institutionCollections(institutionUri).map(collection => collection.uri), selector.collections));
+    if (joinSelector?.collections) {
+      datasets.push(this.collectionsDataset(this.completeDataset.institutionCollections(institutionUri).map(collection => collection.uri), joinSelector.collections));
     }
 
-    if (selector.objects) {
-      datasets.push(this.objectsDataset(this.completeDataset.institutionObjects(institutionUri).map(object => object.uri), selector.objects));
+    if (joinSelector?.objects) {
+      datasets.push(this.objectsDataset(this.completeDataset.institutionObjects(institutionUri).map(object => object.uri), joinSelector.objects));
     }
 
     return DataSubsetter.mergeDatasets(datasets);
   }
 
-  institutionsDataset(institutionUris: readonly string[], selector: InstitutionDataSelector): Dataset {
+  institutionsDataset(institutionUris: readonly string[], joinSelector?: InstitutionJoinSelector): Dataset {
     if (institutionUris.length === 0) {
       return DataSubsetter.emptyDataset;
     } else if (institutionUris.length === 1) {
-      return this.institutionDataset(institutionUris[0], selector);
+      return this.institutionDataset(institutionUris[0], joinSelector);
     } else {
-      return DataSubsetter.mergeDatasets(institutionUris.map(institutionUri => this.institutionDataset(institutionUri, selector)));
+      return DataSubsetter.mergeDatasets(institutionUris.map(institutionUri => this.institutionDataset(institutionUri, joinSelector)));
     }
   }
 
@@ -181,14 +158,14 @@ export class DataSubsetter {
     };
   }
 
-  objectDataset(objectUri: string, selector: ObjectDataSelector): Dataset {
+  objectDataset(objectUri: string, joinSelector?: ObjectJoinSelector): Dataset {
     const object = this.completeDataset.objectByUri(objectUri);
 
     let images: readonly Image[];
-    if (selector.allImages) {
+    if (joinSelector?.allImages) {
       images = this.completeDataset.depictingImages(objectUri);
-    } else if (selector.thumbnail) {
-      const thumbnailImage = new JoinedDataset(this.completeDataset).objectByUri(objectUri).thumbnail(selector.thumbnail);
+    } else if (joinSelector?.thumbnail) {
+      const thumbnailImage = new JoinedDataset(this.completeDataset).objectByUri(objectUri).thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
         images = [thumbnailImage.asImage];
       } else {
@@ -205,12 +182,12 @@ export class DataSubsetter {
 
     const datasets: Dataset[] = [objectDataset];
 
-    if (selector.collections) {
-      datasets.push(this.collectionsDataset(object.collectionUris, selector.collections));
+    if (joinSelector?.collections) {
+      datasets.push(this.collectionsDataset(object.collectionUris, joinSelector.collections));
     }
 
-    if (selector.institution) {
-      datasets.push(this.institutionDataset(object.institutionUri, selector.institution));
+    if (joinSelector?.institution) {
+      datasets.push(this.institutionDataset(object.institutionUri, joinSelector.institution));
     }
 
     if (object.properties && object.properties.length > 0) {
@@ -224,13 +201,13 @@ export class DataSubsetter {
     return DataSubsetter.mergeDatasets(datasets);
   }
 
-  objectsDataset(objectUris: readonly string[], selector: ObjectDataSelector): Dataset {
+  objectsDataset(objectUris: readonly string[], joinSelector?: ObjectJoinSelector): Dataset {
     if (objectUris.length === 0) {
       return DataSubsetter.emptyDataset;
     } else if (objectUris.length === 1) {
-      return this.objectDataset(objectUris[0], selector);
+      return this.objectDataset(objectUris[0], joinSelector);
     } else {
-      return DataSubsetter.mergeDatasets(objectUris.map(objectUri => this.objectDataset(objectUri, selector)));
+      return DataSubsetter.mergeDatasets(objectUris.map(objectUri => this.objectDataset(objectUri, joinSelector)));
     }
   }
 

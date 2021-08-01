@@ -73,13 +73,6 @@ export class IndexedDataset {
     return (this.imagesByOriginalImageUriIndex[originalImageUri] ?? []).filter(image => image.originalImageUri === originalImageUri);
   }
 
-  get firstCollection(): Collection {
-    if (this.dataset.collections.length === 0) {
-      throw new RangeError("no collections");
-    }
-    return this.dataset.collections[0];
-  }
-
   imageByUri(imageUri: string): Image {
     const image = this.imagesByUriIndex[imageUri];
     if (!image) {

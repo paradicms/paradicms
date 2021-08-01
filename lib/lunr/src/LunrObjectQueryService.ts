@@ -1,5 +1,13 @@
 import {ObjectQueryService} from "@paradicms/services";
-import {Configuration, IndexedDataset, Object, ObjectsQuery, ObjectsQueryResults} from "@paradicms/models";
+import {
+  Configuration,
+  DataSubsetter,
+  IndexedDataset,
+  Object,
+  ObjectJoinSelector,
+  ObjectsQuery,
+  ObjectsQueryResults,
+} from "@paradicms/models";
 import lunr, {Index} from "lunr";
 import {facetizeObjects} from "./facetizeObjects";
 import {filterObjects} from "./filterObjects";
@@ -17,25 +25,25 @@ export class LunrObjectQueryService implements ObjectQueryService {
   private readonly configuration: Configuration;
   private readonly dataset: IndexedDataset;
   private readonly index: Index;
+  private readonly objectJoinSelector?: ObjectJoinSelector;
 
-  constructor(kwds: {configuration: Configuration, dataset: IndexedDataset}) {
-    const {configuration, dataset} = kwds;
-
-    this.configuration = configuration;
-    this.dataset = dataset;
+  constructor(kwds: {configuration: Configuration, dataset: IndexedDataset, objectJoinSelector?: ObjectJoinSelector}) {
+    this.configuration = kwds.configuration;
+    this.dataset = kwds.dataset;
+    this.objectJoinSelector = kwds.objectJoinSelector;
 
     this.index = lunr(function() {
       this.field("abstract");
       this.field("title");
       const propertyFieldNamesByUri: {[index: string]: string} = {};
-      for (const propertyUri of configuration.objectFullTextSearchablePropertyUris) {
+      for (const propertyUri of kwds.configuration.objectFullTextSearchablePropertyUris) {
         const fieldName = encodeFieldName(propertyUri);
         propertyFieldNamesByUri[propertyUri] = fieldName;
         this.field(fieldName);
       }
       this.ref("uri");
 
-      for (const object of dataset.objects) {
+      for (const object of kwds.dataset.objects) {
         const doc: any = {title: object.title, uri: object.uri};
         if (object.abstract) {
           doc.abstract = object.abstract;
@@ -83,7 +91,7 @@ export class LunrObjectQueryService implements ObjectQueryService {
       );
 
       return resolve({
-        dataset: this.dataset.objectsDataset(slicedObjects.map(object => object.uri)),
+        dataset: new DataSubsetter(this.dataset).objectsDataset(slicedObjects.map(object => object.uri), this.objectJoinSelector),
         facets,
         totalObjectsCount: filteredObjects.length,
       });
