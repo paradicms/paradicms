@@ -39,8 +39,6 @@ jobs:
         with:
           path: gui/app/*/.next/cache
           key: ${{ runner.OS }}-next
-      - name: Install wsrun globally
-        run: npm install -g wsrun
       - name: Build and test gui
         run: |
           cd gui
