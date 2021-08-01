@@ -20,7 +20,7 @@ import {LunrObjectSearchPage} from "@paradicms/lunr-react";
 
 const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
   collections: {},
-  institution: {},
+  institution: {rights: true},
   thumbnail: {targetDimensions: thumbnailTargetDimensions},
 };
 
@@ -121,13 +121,17 @@ export const getStaticProps: GetStaticProps = async ({
   const collectionUri = decodeFileName(params!.collectionUri as string);
   // const institutionUri = decodeFileName(params!.institutionUri as string);
 
+  const collectionDataset = DataSubsetter.fromDataset(readDataset()).collectionDataset(collectionUri, {
+    objects: OBJECT_JOIN_SELECTOR,
+  });
+
+  console.log("Collection dataset:", Object.keys(collectionDataset).map(key => `${key}: ${((collectionDataset as any)[key] as any[]).length}`).join(", "));
+
   return {
     props: {
       collectionUri,
       configuration: defaultConfiguration,
-      dataset: DataSubsetter.fromDataset(readDataset()).collectionDataset(collectionUri, {
-        objects: OBJECT_JOIN_SELECTOR,
-      }),
+      dataset: collectionDataset,
     },
   };
 };

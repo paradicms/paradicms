@@ -4,9 +4,11 @@ import {Image} from "./Image";
 import {JoinedDataset} from "./JoinedDataset";
 import {Rights} from "./Rights";
 import {Property} from "./Property";
-import {CollectionJoinSelector} from "CollectionJoinSelector";
-import {InstitutionJoinSelector} from "InstitutionJoinSelector";
-import {ObjectJoinSelector} from "ObjectJoinSelector";
+import {CollectionJoinSelector} from "./CollectionJoinSelector";
+import {InstitutionJoinSelector} from "./InstitutionJoinSelector";
+import {ObjectJoinSelector} from "./ObjectJoinSelector";
+import {Collection} from "./Collection";
+import {Object} from "./Object";
 
 /**
  * Subset a Dataset to reduce the amount of data passed between getStaticProps and the component.
@@ -26,16 +28,24 @@ export class DataSubsetter {
     const collection = this.completeDataset.collectionByUri(collectionUri);
 
     let images: Image[] = [];
+    let objects: Object[] = [];
     if (joinSelector?.thumbnail) {
+      console.log("Looking for collection thumbnail");
       const thumbnailImage = new JoinedDataset(this.completeDataset).collectionByUri(collectionUri).thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
         images.push(thumbnailImage.asImage);
+        if (thumbnailImage.asImage.depictsUri !== collectionUri) {
+          // The thumbnail either depicts the collection or one of the collection's objects.
+          // If the latter case we need to include the object in the dataset.
+          objects.push(this.completeDataset.objectByUri(thumbnailImage.asImage.depictsUri));
+        }
       }
     }
 
     const collectionDataset = DataSubsetter.datasetFromPartial({
       collections: [collection],
       images,
+      objects,
     });
 
     const datasets: Dataset[] = [collectionDataset];
@@ -84,24 +94,34 @@ export class DataSubsetter {
   institutionDataset(institutionUri: string, joinSelector?: InstitutionJoinSelector): Dataset {
     const institution = this.completeDataset.institutionByUri(institutionUri);
 
+    let collections: Collection[] = [];
     let images: Image[] = [];
+    let objects: Object[] = [];
     if (joinSelector?.thumbnail) {
       const thumbnailImage = new JoinedDataset(this.completeDataset).institutionByUri(institutionUri).thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
         images.push(thumbnailImage.asImage);
+        if (thumbnailImage.asImage.depictsUri !== institutionUri) {
+          // The thumbnail either depicts the institution, one of the institution's collections, or one of the institution's objects.
+          // In the latter cases we need to include the depicted collection or object
+          // TODO: this should call an IndexedDataset.modelByUri(depictsUri), then use the NamedModel discriminated union to include the model in the right array
+          try {
+            objects.push(this.completeDataset.objectByUri(thumbnailImage.asImage.depictsUri));
+          } catch (e) {
+            collections.push(this.completeDataset.collectionByUri(thumbnailImage.asImage.depictsUri));
+          }
+        }
       }
     }
 
     const institutionDataset = DataSubsetter.datasetFromPartial({
+      collections,
       images,
       institutions: [institution],
+      objects,
     });
 
     const datasets: Dataset[] = [institutionDataset];
-
-    if (institution.rights) {
-      datasets.push(this.rightsDataset(institution.rights));
-    }
 
     if (joinSelector?.collections) {
       datasets.push(this.collectionsDataset(this.completeDataset.institutionCollections(institutionUri).map(collection => collection.uri), joinSelector.collections));
@@ -109,6 +129,10 @@ export class DataSubsetter {
 
     if (joinSelector?.objects) {
       datasets.push(this.objectsDataset(this.completeDataset.institutionObjects(institutionUri).map(object => object.uri), joinSelector.objects));
+    }
+
+    if (joinSelector?.rights && institution.rights) {
+      datasets.push(this.rightsDataset(institution.rights));
     }
 
     return DataSubsetter.mergeDatasets(datasets);

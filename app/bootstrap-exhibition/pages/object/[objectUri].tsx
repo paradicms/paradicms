@@ -237,7 +237,7 @@ export const getStaticProps: GetStaticProps = async ({
       dataset: new DataSubsetter(indexedDataset).objectsDataset(objectUris, {
         allImages: true,
         collections: {},
-        institution: {},
+        institution: {rights: true},
       }),
       nextObjectUri,
       previousObjectUri,

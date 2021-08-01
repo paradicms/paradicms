@@ -6,6 +6,7 @@ import {JoinedCollection} from "./JoinedCollection";
 import {JoinedProperty} from "./JoinedProperty";
 import {JoinedRights} from "./JoinedRights";
 import {ThumbnailSelector} from "./ThumbnailSelector";
+import {selectThumbnail} from "./selectThumbnail";
 
 export class JoinedObject {
   constructor(private readonly joinedDataset: JoinedDataset, private readonly object: Object) {
@@ -47,13 +48,7 @@ export class JoinedObject {
   }
 
   thumbnail(selector: ThumbnailSelector): JoinedImage | null {
-    for (const originalImage of this.originalImages) {
-      const thumbnail = originalImage.thumbnail(selector);
-      if (thumbnail) {
-        return thumbnail;
-      }
-    }
-    return null;
+    return selectThumbnail(this.images, selector);
   }
 
   get title(): string {

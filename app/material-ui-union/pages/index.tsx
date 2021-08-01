@@ -45,7 +45,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     thumbnail: {targetDimensions: thumbnailTargetDimensions},
   });
 
-  console.debug("Institutions dataset:", Object.keys(institutionsDataset).map(key => `${key}: ${((institutionsDataset as any)[key] as any[]).length}`).join(", "));
+  console.log("Institutions dataset:", Object.keys(institutionsDataset).map(key => `${key}: ${((institutionsDataset as any)[key] as any[]).length}`).join(", "));
 
   return {
     props: {

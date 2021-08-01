@@ -10,6 +10,8 @@ export interface InstitutionJoinSelector {
   collections?: CollectionJoinSelector;
   // Return all Objects whose institutionUri refers to this Institution.
   objects?: ObjectJoinSelector;
+  // Return licenses, rights statements, etc. that the institution's Rights refer to.
+  rights?: boolean;
   // Return a single thumbnail Image for this Institution.
   thumbnail?: ThumbnailSelector;
 }

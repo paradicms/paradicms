@@ -107,7 +107,7 @@ export const getStaticProps: GetStaticProps = async ({
       dataset: DataSubsetter.fromDataset(readDataset()).objectDataset(objectUri, {
         allImages: true,
         collections: {},
-        institution: {},
+        institution: {rights: true},
       }),
       objectUri,
     },

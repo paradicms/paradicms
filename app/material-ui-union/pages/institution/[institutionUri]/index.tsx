@@ -70,7 +70,7 @@ export const getStaticProps: GetStaticProps = async ({
     },
   });
 
-  console.debug("Institution dataset:", Object.keys(institutionDataset).map(key => `${key}: ${((institutionDataset as any)[key] as any[]).length}`).join(", "));
+  console.log("Institution dataset:", Object.keys(institutionDataset).map(key => `${key}: ${((institutionDataset as any)[key] as any[]).length}`).join(", "));
 
   return {
     props: {

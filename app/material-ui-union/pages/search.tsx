@@ -14,8 +14,8 @@ interface StaticProps {
 }
 
 const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
-  institution: {},
   collections: {},
+  institution: {rights: true},
   thumbnail: {targetDimensions: thumbnailTargetDimensions},
 };
 
@@ -83,7 +83,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   const dataset = readDataset();
   const searchDataset = DataSubsetter.fromDataset(dataset).objectsDataset(dataset.objects.map(object => object.uri), OBJECT_JOIN_SELECTOR);
 
-  console.debug("Search dataset:", Object.keys(searchDataset).map(key => `${key}: ${((searchDataset as any)[key] as any[]).length}`).join(", "));
+  console.log("Search dataset:", Object.keys(searchDataset).map(key => `${key}: ${((searchDataset as any)[key] as any[]).length}`).join(", "));
 
   return {
     props: {

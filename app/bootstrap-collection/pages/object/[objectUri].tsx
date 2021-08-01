@@ -82,7 +82,7 @@ export const getStaticProps: GetStaticProps = async ({
   const objectDataset = DataSubsetter.fromDataset(readDataset()).objectDataset(objectUri, {
     allImages: true,
     collections: {},
-    institution: {},
+    institution: {rights: true},
   });
 
   // console.debug("Object dataset:", Object.keys(objectDataset).map(key => `${key}: ${((objectDataset as any)[key] as any[]).length}`).join(", "));
