@@ -1,4 +1,14 @@
 {
   "private": true,
-  "workspaces": ["app/*", "lib/*"]
+  "dependencies": {
+    "wsrun": "5.2.4"
+  },
+  "scripts": {
+    "build": "wsrun --exclude-missing build",
+    "watch": "wsrun --exclude-missing watch"
+  },
+  "workspaces": [
+    "app/*",
+    "lib/*"
+  ]
 }
