@@ -1,15 +1,17 @@
-from typing import Tuple
-
 from rdflib.namespace import DCTERMS
 
 from paradicms_etl.models._model_singletons import _ModelSingletons
 from paradicms_etl.models.property_definition import PropertyDefinition
-from paradicms_etl.namespace import VRA
 
 
 class DublinCorePropertyDefinitions(_ModelSingletons):
     _MODEL_CLASS = PropertyDefinition
 
+    ABSTRACT = PropertyDefinition(
+        full_text_searchable=True,
+        label="Abstract",
+        uri=DCTERMS.alternative,
+    )
     ALTERNATIVE_TITLE = PropertyDefinition(
         full_text_searchable=True,
         label="Alternative title",
