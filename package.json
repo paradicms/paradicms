@@ -5,7 +5,8 @@
   },
   "scripts": {
     "build": "wsrun --exclude-missing --prefix --stages build",
-    "watch": "wsrun --exclude-missing --prefix watch"
+    "watch": "wsrun --exclude-missing --prefix watch",
+    "test": "wsrun --exclude-missing test"
   },
   "workspaces": [
     "app/*",

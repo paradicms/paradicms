@@ -24,9 +24,6 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
         });
         const thumbnailSrc = thumbnail?.src;
 
-        console.info("Original image src:", originalImageSrc);
-        console.info("Thumbnail src:", thumbnailSrc);
-
         return (
           <Grid
             container
