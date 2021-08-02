@@ -1,5 +1,6 @@
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {CollectionJoinSelector} from "./CollectionJoinSelector";
+import {InstitutionJoinSelector} from "./InstitutionJoinSelector";
 
 
 /**
@@ -11,7 +12,7 @@ export interface ObjectJoinSelector {
   // Return all collections referred to by this Object's collectionUris.
   collections?: CollectionJoinSelector;
   // Return the Institution referred to by this Object's institutionUri.
-  institution?: CollectionJoinSelector;
+  institution?: InstitutionJoinSelector;
   // Return a single thumbnail Image for this Object.
   thumbnail?: ThumbnailSelector;
 }
