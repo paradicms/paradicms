@@ -15,7 +15,7 @@ describe("PropertyDefinition RDF reader", () => {
 
   it("should read all property definitions from the store", () => {
     const models = PropertyDefinitionRdfReader.readAll(store);
-    expect(models).to.have.length(37);
+    expect(models).to.have.length(38);
     models.forEach(model => {
       expect(model.label.trim()).to.not.be.empty;
       expect(model.uri.trim()).to.not.be.empty;
