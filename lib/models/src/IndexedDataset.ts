@@ -236,7 +236,7 @@ export class IndexedDataset {
   }
 
   licenseByUri(licenseUri: string): License {
-    const license = this.licenseByUri(licenseUri);
+    const license = this.licensesByUriIndex[licenseUri];
     if (!license) {
       throw new RangeError("no such license " + licenseUri);
     }
@@ -254,7 +254,6 @@ export class IndexedDataset {
     }
     return this._licensesByUriIndex;
   }
-
 
   objectByUri(objectUri: string): Object {
     const object = this.objectsByUriIndex[objectUri];
