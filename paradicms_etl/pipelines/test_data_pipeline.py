@@ -95,6 +95,7 @@ class TestDataPipeline(_Pipeline):
         ):
             rights = Rights(
                 holder=f"{institution.name} rights holder",
+                license=CreativeCommonsLicenses.NC.uri,
                 statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
             )
 
@@ -154,6 +155,7 @@ class TestDataPipeline(_Pipeline):
                     name=institution_name,
                     rights=Rights(
                         holder=f"{institution_name} rights holder",
+                        license=CreativeCommonsLicenses.NC.uri,
                         statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
                     ),
                     uri=URIRef(f"http://example.com/institution{institution_i}"),
@@ -321,6 +323,7 @@ class TestDataPipeline(_Pipeline):
                 properties=tuple(properties),
                 rights=Rights(
                     holder=f"{title} rights holder",
+                    license=CreativeCommonsLicenses.NC.uri,
                     statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
                 ),
                 title=title,
