@@ -2,7 +2,7 @@ import {IndexedDataset} from "../src/IndexedDataset";
 import {expect} from "chai";
 import {testDataset} from "./testDataset";
 
-describe("IndexedDataset test", () => {
+describe("IndexedDataset", () => {
   const sut = new IndexedDataset(testDataset);
 
   it("should exercise all indices", () => {

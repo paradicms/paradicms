@@ -2,7 +2,7 @@ import {expect} from "chai";
 import {testDataset} from "./testDataset";
 import {JoinedDataset} from "../src/JoinedDataset";
 
-describe("JoinedInstitution test", () => {
+describe("JoinedInstitution", () => {
   const institution = testDataset.institutions[0];
   const sut = JoinedDataset.fromDataset(testDataset).institutionByUri(institution.uri);
 
@@ -12,7 +12,7 @@ describe("JoinedInstitution test", () => {
 
   it("should get the institution's name", () => {
     expect(sut.name).to.eq(institution.name);
-  })
+  });
 
   it("should get the institution's rights", () => {
     expect(sut.rights!.statement).to.not.be.null;

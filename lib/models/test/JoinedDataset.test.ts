@@ -2,7 +2,7 @@ import {expect} from "chai";
 import {testDataset} from "./testDataset";
 import {JoinedDataset} from "../src/JoinedDataset";
 
-describe("JoinedDataset test", () => {
+describe("JoinedDataset", () => {
   const sut = JoinedDataset.fromDataset(testDataset);
 
   it("should get a collection by URI", () => {
