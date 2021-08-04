@@ -19,7 +19,7 @@ describe("JoinedInstitution", () => {
   })
 
   it("should get the institution's thumbnail", () => {
-    const thumbnail = sut.thumbnail({targetDimensions: {height: 200, width: 200}});
+    const thumbnail = sut.thumbnail(THUMBNAIL_SELECTOR);
     expect(thumbnail).to.not.be.null;
     expect(thumbnail!.asImage.depictsUri).to.eq(institution.uri);
   });

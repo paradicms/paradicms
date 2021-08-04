@@ -19,7 +19,7 @@ describe("JoinedCollection", () => {
   });
 
   it("should get the collection's thumbnail", () => {
-    const thumbnail = sut.thumbnail({targetDimensions: {height: 200, width: 200}});
+    const thumbnail = sut.thumbnail(THUMBNAIL_SELECTOR);
     expect(thumbnail).to.not.be.null;
     expect(thumbnail!.asImage.depictsUri).to.not.eq(collection.uri);
     expect(sut.objects.some(object => object.uri === thumbnail!.asImage.depictsUri)).to.be.true;
