@@ -24,12 +24,12 @@ export class JoinedObject {
     return this.joinedDataset.depictingImages(this.uri);
   }
 
-  get originalImages(): readonly JoinedImage[] {
-    return this.images.filter(image => image.isOriginal);
-  }
-
   get institution(): JoinedInstitution {
     return this.joinedDataset.institutionByUri(this.object.institutionUri);
+  }
+
+  get originalImages(): readonly JoinedImage[] {
+    return this.images.filter(image => image.isOriginal);
   }
 
   get page(): string | null {
