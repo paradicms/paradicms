@@ -1,6 +1,9 @@
 import {expect} from "chai";
 import {testDataset} from "./testDataset";
 import {JoinedDataset} from "../src/JoinedDataset";
+import {ThumbnailSelector} from "../src/ThumbnailSelector";
+
+const THUMBNAIL_SELECTOR: ThumbnailSelector = {targetDimensions: {height: 200, width: 200}};
 
 describe("JoinedCollection", () => {
   const collection = testDataset.collections[0];
