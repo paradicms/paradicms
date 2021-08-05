@@ -6,33 +6,25 @@
     "@fortawesome/fontawesome-svg-core": "1.2.35",
     "@fortawesome/free-solid-svg-icons": "5.15.3",
     "@fortawesome/react-fontawesome": "0.1.14",
-    "@paradicms/rdf": "1.0.4",
-    "base-x": "3.0.8",
-    "lunr": "2.3.9",
-    "n3": "1.11.0",
-    "pullstate": "1.22.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-reactstrap-pagination": "2.0.3",
-    "reactstrap": "8.9.0"
+    "@paradicms/bootstrap": "1.0.5",
+    "@paradicms/lunr": "1.0.5",
+    "@paradicms/models": "1.0.5",
+    "@paradicms/react": "1.0.5",
+    "@paradicms/rdf": "1.0.5",
+    "pullstate": "1.22.1"
   },
   "devDependencies": {
     "@types/chai": "4.2.21",
-    "@types/n3": "1.10.0",
     "@types/mocha": "8.2.3",
-    "@types/lunr": "2.3.4",
-    "@types/react": "17.0.14",
-    "@types/react-dom": "17.0.9",
     "buffer": "6.0.3",
     "chai": "4.2.0",
     "copy-webpack-plugin": "9.0.1",
     "html-webpack-plugin": "5.3.2",
     "mocha": "8.2.1",
     "mochapack": "2.1.2",
-    "prettier": "2.3.2",
     "raw-loader": "4.0.2",
     "ts-loader": "9.2.3",
-    "typescript": "4.3.5",
+    "typescript": "^4.1.5",
     "webpack": "5.44.0",
     "webpack-cleanup-plugin": "0.5.1",
     "webpack-cli": "4.7.2",
@@ -41,9 +33,9 @@
   "license": "GPLv3",
   "private": true,
   "scripts": {
-    "start": "webpack serve --mode development",
     "build": "webpack --mode production",
     "test": "mochapack \"test/**/*.ts\"",
-    "test-watch": " mochapack --watch \"test/**/*.ts\""
+    "test-watch": " mochapack --watch \"test/**/*.ts\"",
+    "watch": "webpack serve --mode development"
   }
 }

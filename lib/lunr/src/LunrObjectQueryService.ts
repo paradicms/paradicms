@@ -1,6 +1,5 @@
 import {ObjectQueryService} from "@paradicms/services";
 import {
-  Configuration,
   DataSubsetter,
   IndexedDataset,
   Object,
@@ -12,6 +11,7 @@ import lunr, {Index} from "lunr";
 import {facetizeObjects} from "./facetizeObjects";
 import {filterObjects} from "./filterObjects";
 import invariant from "ts-invariant";
+import {ObjectQueryConfiguration} from "@paradicms/models/dist/ObjectQueryConfiguration";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -21,13 +21,25 @@ const base58 = basex(
 const encodeFieldName = (value: string): string =>
   base58.encode(Buffer.from(value, "utf-8"));
 
+// function intersection<T>(a: Set<T>, b: Set<T>) {
+//   if (a.size === 0) {
+//     return a;
+//   } else if (b.size === 0) {
+//     return b;
+//   } else if (a.size <= b.size) {
+//     return new Set([...a].filter((value) => b.has(value)));
+//   } else {
+//     return new Set([...b].filter((value) => a.has(value)));
+//   }
+// }
+
 export class LunrObjectQueryService implements ObjectQueryService {
-  private readonly configuration: Configuration;
+  private readonly configuration: ObjectQueryConfiguration;
   private readonly dataset: IndexedDataset;
   private readonly index: Index;
   private readonly objectJoinSelector?: ObjectJoinSelector;
 
-  constructor(kwds: {configuration: Configuration, dataset: IndexedDataset, objectJoinSelector?: ObjectJoinSelector}) {
+  constructor(kwds: {configuration: ObjectQueryConfiguration, dataset: IndexedDataset, objectJoinSelector?: ObjectJoinSelector}) {
     this.configuration = kwds.configuration;
     this.dataset = kwds.dataset;
     this.objectJoinSelector = kwds.objectJoinSelector;
@@ -36,7 +48,7 @@ export class LunrObjectQueryService implements ObjectQueryService {
       this.field("abstract");
       this.field("title");
       const propertyFieldNamesByUri: {[index: string]: string} = {};
-      for (const propertyUri of kwds.configuration.objectFullTextSearchablePropertyUris) {
+      for (const propertyUri of kwds.configuration.fullTextSearchablePropertyUris) {
         const fieldName = encodeFieldName(propertyUri);
         propertyFieldNamesByUri[propertyUri] = fieldName;
         this.field(fieldName);
@@ -81,11 +93,11 @@ export class LunrObjectQueryService implements ObjectQueryService {
       }
 
       // Calculate facets on the universe before filtering it
-      const facets = this.configuration.objectFacets.map(facet => facetizeObjects({facet, objects: allObjects}));
+      const facets = this.configuration.facets.map(facet => facetizeObjects({facet, objects: allObjects}));
 
       console.debug("Search facets:", JSON.stringify(facets));
 
-      const filteredObjects = filterObjects({filters: this.configuration.objectFilters, objects: allObjects});
+      const filteredObjects = filterObjects({filters: query.filters, objects: allObjects});
 
       console.debug("Search filtered objects count:", filteredObjects.length);
 

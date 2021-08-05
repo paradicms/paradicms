@@ -5,6 +5,7 @@
   },
   "scripts": {
     "build": "wsrun --exclude-missing --prefix --stages build",
+    "build-lib": "wsrun --exclude-missing -p '@paradicms/*' --prefix --stages build ",
     "watch": "wsrun --exclude-missing --prefix watch",
     "test": "wsrun --exclude-missing test"
   },
