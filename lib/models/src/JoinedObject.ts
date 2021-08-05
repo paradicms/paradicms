@@ -1,10 +1,12 @@
 import {JoinedDataset} from "./JoinedDataset";
 import {Object} from "./Object";
 import {JoinedInstitution} from "./JoinedInstitution";
-import {JoinedImage, ThumbnailSelector} from "./JoinedImage";
+import {JoinedImage} from "./JoinedImage";
 import {JoinedCollection} from "./JoinedCollection";
 import {JoinedProperty} from "./JoinedProperty";
 import {JoinedRights} from "./JoinedRights";
+import {ThumbnailSelector} from "./ThumbnailSelector";
+import {selectThumbnail} from "./selectThumbnail";
 
 export class JoinedObject {
   constructor(private readonly joinedDataset: JoinedDataset, private readonly object: Object) {
@@ -19,15 +21,15 @@ export class JoinedObject {
   }
 
   get images(): readonly JoinedImage[] {
-    return this.joinedDataset.objectImages(this.object.uri);
-  }
-
-  get originalImages(): readonly JoinedImage[] {
-    return this.images.filter(image => image.isOriginal);
+    return this.joinedDataset.depictingImages(this.uri);
   }
 
   get institution(): JoinedInstitution {
     return this.joinedDataset.institutionByUri(this.object.institutionUri);
+  }
+
+  get originalImages(): readonly JoinedImage[] {
+    return this.images.filter(image => image.isOriginal);
   }
 
   get page(): string | null {
@@ -46,13 +48,7 @@ export class JoinedObject {
   }
 
   thumbnail(selector: ThumbnailSelector): JoinedImage | null {
-    for (const originalImage of this.originalImages) {
-      const thumbnail = originalImage.thumbnail(selector);
-      if (thumbnail) {
-        return thumbnail;
-      }
-    }
-    return null;
+    return selectThumbnail(this.images, selector);
   }
 
   get title(): string {

@@ -4,6 +4,7 @@ import {Layout} from "components/Layout";
 import {
   Configuration,
   Dataset,
+  DataSubsetter,
   defaultConfiguration,
   IndexedDataset,
   JoinedDataset,
@@ -79,7 +80,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
 
   const rights = useMemo(() => currentObject.rights ?? institution.rights ?? null, [currentObject, institution]);
 
-  const licenseValue = useMemo(() => (): React.ReactNode | null => {
+  const licenseValue = useMemo(() => {
     if (!rights || !rights.license) {
       return null;
     }
@@ -90,7 +91,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
     return <a href={license.uri}>{license.title}</a>;
   }, [rights]);
 
-  const rightsStatementValue = useMemo(() => (): React.ReactNode | null => {
+  const rightsStatementValue = useMemo(() => {
     if (!rights || !rights.statement) {
       return null;
     }
@@ -233,7 +234,11 @@ export const getStaticProps: GetStaticProps = async ({
       collectionUri,
       configuration: defaultConfiguration,
       currentObjectUri: objectUri,
-      dataset: indexedDataset.objectsDataset(objectUris),
+      dataset: new DataSubsetter(indexedDataset).objectsDataset(objectUris, {
+        allImages: true,
+        collections: {},
+        institution: {rights: true},
+      }),
       nextObjectUri,
       previousObjectUri,
     },

@@ -2,7 +2,14 @@ import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {Accordion, AccordionDetails, AccordionSummary, Grid} from "@material-ui/core";
-import {Configuration, Dataset, defaultConfiguration, IndexedDataset, JoinedDataset} from "@paradicms/models";
+import {
+  Configuration,
+  Dataset,
+  DataSubsetter,
+  defaultConfiguration,
+  IndexedDataset,
+  JoinedDataset,
+} from "@paradicms/models";
 import {ObjectImagesCarousel, PropertiesTable, RightsTable} from "@paradicms/material-ui";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {decodeFileName, encodeFileName} from "@paradicms/next";
@@ -97,7 +104,11 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       configuration: defaultConfiguration,
-      dataset: new IndexedDataset(readDataset()).objectDataset(objectUri),
+      dataset: DataSubsetter.fromDataset(readDataset()).objectDataset(objectUri, {
+        allImages: true,
+        collections: {},
+        institution: {rights: true},
+      }),
       objectUri,
     },
   };

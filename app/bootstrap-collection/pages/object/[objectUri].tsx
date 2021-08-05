@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
-import {Configuration, Dataset, defaultConfiguration, IndexedDataset, JoinedDataset} from "@paradicms/models";
+import {Configuration, Dataset, DataSubsetter, defaultConfiguration, JoinedDataset} from "@paradicms/models";
 import {decodeFileName, encodeFileName} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Col, Container, Row} from "reactstrap";
@@ -78,10 +78,19 @@ export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
   const objectUri = decodeFileName(params!.objectUri as string);
+
+  const objectDataset = DataSubsetter.fromDataset(readDataset()).objectDataset(objectUri, {
+    allImages: true,
+    collections: {},
+    institution: {rights: true},
+  });
+
+  // console.debug("Object dataset:", Object.keys(objectDataset).map(key => `${key}: ${((objectDataset as any)[key] as any[]).length}`).join(", "));
+
   return {
     props: {
       configuration: defaultConfiguration,
-      dataset: new IndexedDataset(readDataset()).objectDataset(objectUri),
+      dataset: objectDataset,
       objectUri,
     },
   };

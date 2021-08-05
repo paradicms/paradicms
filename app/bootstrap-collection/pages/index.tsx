@@ -1,5 +1,12 @@
 import * as React from "react";
-import {Collection, Configuration, Dataset, defaultConfiguration, IndexedDataset} from "@paradicms/models";
+import {
+  Collection,
+  Configuration,
+  Dataset,
+  DataSubsetter,
+  defaultConfiguration,
+  ObjectJoinSelector,
+} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {Col, Container, Row} from "reactstrap";
@@ -8,6 +15,7 @@ import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {readDataset} from "lib/readDataset";
 import {LunrObjectSearchPage} from "@paradicms/lunr-react";
+import {thumbnailTargetDimensions} from "@paradicms/material-ui";
 
 interface StaticProps {
   readonly collection: Collection;
@@ -17,12 +25,17 @@ interface StaticProps {
 
 const OBJECTS_PER_PAGE = 10;
 
+const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
+  thumbnail: {targetDimensions: thumbnailTargetDimensions},
+};
+
 const IndexPage: React.FunctionComponent<StaticProps> = ({
                                                            collection,
                                                            configuration,
                                                            dataset,
                                                          }) => (
-  <LunrObjectSearchPage configuration={configuration} dataset={dataset} objectsPerPage={OBJECTS_PER_PAGE}>
+  <LunrObjectSearchPage configuration={configuration} dataset={dataset} objectJoinSelector={OBJECT_JOIN_SELECTOR}
+                        objectsPerPage={OBJECTS_PER_PAGE}>
     {({
         objectsQuery,
         objectsQueryResults,
@@ -116,14 +129,20 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const dataset = readDataset();
-  const indexedDataset = new IndexedDataset(dataset);
-  const collection = indexedDataset.firstCollection;
+  const completeDataset = readDataset();
+  const collection = completeDataset.collections[0];
+  // Must pass all of the collection's objects in to feed into the search service
+  const collectionDataset = DataSubsetter.fromDataset(completeDataset).collectionDataset(collection.uri, {
+    objects: OBJECT_JOIN_SELECTOR,
+  });
+
+  // console.debug("Collection dataset:", Object.keys(collectionDataset).map(key => `${key}: ${((collectionDataset as any)[key] as any[]).length}`).join(", "));
+
   return {
     props: {
       collection,
       configuration: defaultConfiguration,
-      dataset: indexedDataset.collectionDataset(collection.uri),
+      dataset: collectionDataset,
     },
   };
 };

@@ -25,7 +25,7 @@ export const InstitutionCard: React.FunctionComponent<{
 }> = ({institution, renderInstitutionLink}) => {
   const classes = useStyles();
   const thumbnail = institution.thumbnail({targetDimensions: thumbnailTargetDimensions});
-  const thumbnailSrc = thumbnail.src ?? JoinedImage.placeholderSrc(thumbnailTargetDimensions);
+  const thumbnailSrc = thumbnail?.src ?? JoinedImage.placeholderSrc(thumbnailTargetDimensions);
 
   return (
     <Card className={classes.root}>

@@ -3,8 +3,8 @@ import {GetStaticProps} from "next";
 import {Hrefs} from "lib/Hrefs";
 import {Layout} from "components/Layout";
 import {Link} from "@paradicms/material-ui-next";
-import {InstitutionsGallery} from "@paradicms/material-ui";
-import {Configuration, Dataset, defaultConfiguration, JoinedDataset} from "@paradicms/models";
+import {InstitutionsGallery, thumbnailTargetDimensions} from "@paradicms/material-ui";
+import {Configuration, Dataset, DataSubsetter, defaultConfiguration, JoinedDataset} from "@paradicms/models";
 import {readDataset} from "lib/readDataset";
 
 interface StaticProps {
@@ -40,10 +40,17 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
+  const dataset = readDataset();
+  const institutionsDataset = DataSubsetter.fromDataset(dataset).institutionsDataset(dataset.institutions.map(institution => institution.uri), {
+    thumbnail: {targetDimensions: thumbnailTargetDimensions},
+  });
+
+  console.log("Institutions dataset:", Object.keys(institutionsDataset).map(key => `${key}: ${((institutionsDataset as any)[key] as any[]).length}`).join(", "));
+
   return {
     props: {
       configuration: defaultConfiguration,
-      dataset: readDataset(),
+      dataset: institutionsDataset,
     },
   };
 };

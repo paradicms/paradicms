@@ -2,13 +2,29 @@ import {decodeFileName, encodeFileName} from "@paradicms/next";
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
-import {Configuration, Dataset, defaultConfiguration, IndexedDataset, JoinedDataset} from "@paradicms/models";
+import {
+  Configuration,
+  Dataset,
+  DataSubsetter,
+  defaultConfiguration,
+  IndexedDataset,
+  JoinedDataset,
+  ObjectJoinSelector,
+} from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {ObjectFacetedSearchGrid} from "@paradicms/material-ui";
+import {ObjectFacetedSearchGrid, thumbnailTargetDimensions} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {readDataset} from "lib/readDataset";
 import {LunrObjectSearchPage} from "@paradicms/lunr-react";
+
+const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
+  collections: {},
+  institution: {rights: true},
+  thumbnail: {targetDimensions: thumbnailTargetDimensions},
+};
+
+const OBJECTS_PER_PAGE = 10;
 
 interface StaticProps {
   readonly collectionUri: string;
@@ -26,7 +42,8 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
   const institution = useMemo(() => collection.institution, [collection]);
 
   return (
-    <LunrObjectSearchPage configuration={configuration} dataset={dataset} objectsPerPage={10}>
+    <LunrObjectSearchPage configuration={configuration} dataset={dataset} objectJoinSelector={OBJECT_JOIN_SELECTOR}
+                          objectsPerPage={OBJECTS_PER_PAGE}>
       {({
           objectsQuery,
           objectsQueryResults,
@@ -104,11 +121,17 @@ export const getStaticProps: GetStaticProps = async ({
   const collectionUri = decodeFileName(params!.collectionUri as string);
   // const institutionUri = decodeFileName(params!.institutionUri as string);
 
+  const collectionDataset = DataSubsetter.fromDataset(readDataset()).collectionDataset(collectionUri, {
+    objects: OBJECT_JOIN_SELECTOR,
+  });
+
+  console.log("Collection dataset:", Object.keys(collectionDataset).map(key => `${key}: ${((collectionDataset as any)[key] as any[]).length}`).join(", "));
+
   return {
     props: {
       collectionUri,
       configuration: defaultConfiguration,
-      dataset: new IndexedDataset(readDataset()).collectionDataset(collectionUri),
+      dataset: collectionDataset,
     },
   };
 };

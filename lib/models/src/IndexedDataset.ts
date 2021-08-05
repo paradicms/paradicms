@@ -5,7 +5,7 @@ import {Institution} from "./Institution";
 import {License} from "./License";
 import {Object} from "./Object";
 import {RightsStatement} from "./RightsStatement";
-import {PropertyDefinition} from "PropertyDefinition";
+import {PropertyDefinition} from "./PropertyDefinition";
 
 /**
  * Lazily indexes the contents of an immutable Dataset to provide quick lookups and subsetting.
@@ -37,34 +37,6 @@ export class IndexedDataset {
   constructor(private readonly dataset: Dataset) {
   }
 
-  collectionDataset(collectionUri: string): Dataset {
-    // Collection is connected to institution, which connects to all other collection in the institution, so the collection dataset is equivalent to its institution's dataset
-    const collection = this.collectionByUri(collectionUri);
-    return this.institutionDataset(collection.institutionUri);
-  }
-
-  collectionImages(collectionUri: string): readonly Image[] {
-    let collectionImages = this.imagesByDepictsUriIndex[collectionUri];
-    if (collectionImages) {
-      return collectionImages;
-    }
-
-    const collectionObjects = this.objectsByCollectionUriIndex[collectionUri];
-    if (!collectionObjects) {
-      return [];
-    }
-
-    for (const object of collectionObjects) {
-      const objectImages = this.imagesByDepictsUriIndex[object.uri];
-      if (objectImages) {
-        // Use the images of the first object with images as the collection's images
-        return objectImages;
-      }
-    }
-
-    return [];
-  }
-
   collectionObjects(collectionUri: string): readonly Object[] {
     return this.objectsByCollectionUriIndex[collectionUri] ?? [];
   }
@@ -92,28 +64,13 @@ export class IndexedDataset {
     return IndexedDataset.requireNotNullish(this._collectionsByUriIndex);
   }
 
+  depictingImages(depictsUri: string): readonly Image[] {
+    return this.imagesByDepictsUriIndex[depictsUri] ?? [];
+  }
+
   derivedImages(originalImageUri: string): readonly Image[] {
     // Exclude the original image itself
     return (this.imagesByOriginalImageUriIndex[originalImageUri] ?? []).filter(image => image.originalImageUri === originalImageUri);
-  }
-
-  private get emptyDataset(): Dataset {
-    return {
-      collections: [],
-      images: [],
-      institutions: [],
-      licenses: [],
-      objects: [],
-      propertyDefinitions: [],
-      rightsStatements: [],
-    };
-  }
-
-  get firstCollection(): Collection {
-    if (this.dataset.collections.length === 0) {
-      throw new RangeError("no collections");
-    }
-    return this.dataset.collections[0];
   }
 
   imageByUri(imageUri: string): Image {
@@ -211,20 +168,6 @@ export class IndexedDataset {
     this._imagesByOriginalImageUriIndex = imagesByOriginalImageUriIndex;
   }
 
-  // private static indexModelsByInstitutionUri<ModelT extends {institutionUri: string}>(
-  //   models: readonly ModelT[]
-  // ): {[index: string]: readonly ModelT[]} {
-  //   return models.reduce((map: {[index: string]: ModelT[]}, model: ModelT) => {
-  //     const models = map[model.institutionUri];
-  //     if (!models) {
-  //       map[model.institutionUri] = [model];
-  //     } else {
-  //       models.push(model);
-  //     }
-  //     return map;
-  //   }, {});
-  // };
-
   private static indexModelsByUri<ModelT extends {uri: string}>(
     models: readonly ModelT[]
   ): {[index: string]: ModelT} {
@@ -284,40 +227,6 @@ export class IndexedDataset {
     return this.collectionsByInstitutionUriIndex[institutionUri] ?? [];
   }
 
-  institutionDataset(institutionUri: string): Dataset {
-    return {
-      collections: this.collectionsByInstitutionUriIndex[institutionUri] ?? [],
-      images: this.imagesByInstitutionUriIndex[institutionUri] ?? [],
-      institutions: [this.institutionByUri(institutionUri)],
-      licenses: this.dataset.licenses,
-      objects: this.objectsByInstitutionUriIndex[institutionUri] ?? [],
-      propertyDefinitions: this.dataset.propertyDefinitions,
-      rightsStatements: this.dataset.rightsStatements,
-    };
-  }
-
-  institutionImages(institutionUri: string): readonly Image[] {
-    let institutionImages = this.imagesByDepictsUriIndex[institutionUri];
-    if (institutionImages) {
-      return institutionImages;
-    }
-
-    const institutionObjects = this.objectsByInstitutionUriIndex[institutionUri];
-    if (!institutionObjects) {
-      return [];
-    }
-
-    for (const object of institutionObjects) {
-      const objectImages = this.imagesByDepictsUriIndex[object.uri];
-      if (objectImages) {
-        // Use the images of the first object with images as the institution's images
-        return objectImages;
-      }
-    }
-
-    return [];
-  }
-
   institutionObjects(institutionUri: string): readonly Object[] {
     return this.objectsByInstitutionUriIndex[institutionUri] ?? [];
   }
@@ -327,11 +236,15 @@ export class IndexedDataset {
   }
 
   licenseByUri(licenseUri: string): License {
-    const license = this.licenseByUri(licenseUri);
+    const license = this.licensesByUriIndex[licenseUri];
     if (!license) {
       throw new RangeError("no such license " + licenseUri);
     }
     return license;
+  }
+
+  get licenses(): readonly License[] {
+    return this.dataset.licenses;
   }
 
   // @ts-ignore
@@ -342,39 +255,6 @@ export class IndexedDataset {
     return this._licensesByUriIndex;
   }
 
-  private static mergeDatasets(datasets: readonly Dataset[]): Dataset {
-    const indexedDatasets = datasets.map(dataset => new IndexedDataset(dataset));
-    return {
-      collections: IndexedDataset.mergeModelsByUriIndices(indexedDatasets.map(indexedDataset => indexedDataset.collectionsByUriIndex)),
-      institutions: IndexedDataset.mergeModelsByUriIndices(indexedDatasets.map(indexedDataset => indexedDataset.institutionsByUriIndex)),
-      images: IndexedDataset.mergeModelsByUriIndices(indexedDatasets.map(indexedDataset => indexedDataset.imagesByUriIndex)),
-      licenses: IndexedDataset.mergeModelsByUriIndices(indexedDatasets.map(indexedDataset => indexedDataset.licensesByUriIndex)),
-      objects: IndexedDataset.mergeModelsByUriIndices(indexedDatasets.map(indexedDataset => indexedDataset.objectsByUriIndex)),
-      rightsStatements: IndexedDataset.mergeModelsByUriIndices(indexedDatasets.map(indexedDataset => indexedDataset.rightsStatementsByUriIndex)),
-      propertyDefinitions: IndexedDataset.mergeModelsByUriIndices(indexedDatasets.map(indexedDataset => indexedDataset.propertyDefinitionsByUriIndex)),
-    };
-  }
-
-  private static mergeModelsByUriIndices<ModelT extends {institutionUri?: string; uri: string}>(modelsByUriIndices: readonly {[index: string]: ModelT}[]): readonly ModelT[] {
-    const merged: {[index: string]: ModelT} = {};
-    for (const modelsByUriIndex of modelsByUriIndices) {
-      for (const modelUri of Object.keys(modelsByUriIndex)) {
-        const model = modelsByUriIndex[modelUri];
-        const existingModel = merged[modelUri];
-        if (existingModel) {
-          // Simple check on the invariant that collection, object, et al. URIs aren't reused between institutions
-          // This doesn't do a deep duplication check.
-          if (existingModel.institutionUri !== model.institutionUri) {
-            throw new EvalError(`models with the same URI ${modelUri} but different institution URIs (${existingModel.institutionUri} vs. ${model.institutionUri}`);
-          }
-        } else {
-          merged[modelUri] = model;
-        }
-      }
-    }
-    return Object.keys(merged).map(modelUri => merged[modelUri]);
-  }
-
   objectByUri(objectUri: string): Object {
     const object = this.objectsByUriIndex[objectUri];
     if (!object) {
@@ -383,38 +263,8 @@ export class IndexedDataset {
     return object;
   }
 
-  objectImages(objectUri: string): readonly Image[] {
-    return this.imagesByDepictsUriIndex[objectUri] ?? [];
-  }
-
   get objects(): readonly Object[] {
     return this.dataset.objects;
-  }
-
-  objectDataset(objectUri: string): Dataset {
-    // Object is connected to institution, which connects to all other objects in the institution, so the object dataset is equivalent to its institution's dataset
-    const object = this.objectByUri(objectUri);
-    return this.institutionDataset(object.institutionUri);
-  }
-
-  objectsDataset(objectUris: readonly string[]): Dataset {
-    if (objectUris.length === 0) {
-      return this.emptyDataset;
-    } else if (objectUris.length === 1) {
-      return this.objectDataset(objectUris[0]);
-    }
-
-    const objects = objectUris.map(objectUri => this.objectByUri(objectUri));
-    const institutionUris = new Set(objects.map(object => object.institutionUri));
-    if (institutionUris.size === 1) {
-      // All objects belong to the same institution
-      for (const institutionUri of institutionUris) {
-        return this.institutionDataset(institutionUri);
-      }
-    }
-
-    // Objects belong to multiple institutions
-    return IndexedDataset.mergeDatasets([...institutionUris].map(institutionUri => this.institutionDataset(institutionUri)));
   }
 
   // @ts-ignore
@@ -460,11 +310,19 @@ export class IndexedDataset {
     return this.propertyDefinitionsByUriIndex[propertyDefinitionUri] ?? null;
   }
 
+  get propertyDefinitions(): readonly PropertyDefinition[] {
+    return this.dataset.propertyDefinitions;
+  }
+
   private get propertyDefinitionsByUriIndex(): {[index: string]: PropertyDefinition} {
     if (!this._propertyDefinitionsByUriIndex) {
       this._propertyDefinitionsByUriIndex = IndexedDataset.indexModelsByUri(this.dataset.propertyDefinitions);
     }
     return this._propertyDefinitionsByUriIndex;
+  }
+
+  get rightsStatements(): readonly RightsStatement[] {
+    return this.dataset.rightsStatements;
   }
 
   private get rightsStatementsByUriIndex(): {[index: string]: RightsStatement} {

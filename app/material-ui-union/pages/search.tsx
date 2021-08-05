@@ -1,8 +1,8 @@
-import {Configuration, Dataset, defaultConfiguration} from "@paradicms/models";
+import {Configuration, Dataset, DataSubsetter, defaultConfiguration, ObjectJoinSelector} from "@paradicms/models";
 import * as React from "react";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
-import {ObjectFacetedSearchGrid} from "@paradicms/material-ui";
+import {ObjectFacetedSearchGrid, thumbnailTargetDimensions} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {readDataset} from "lib/readDataset";
@@ -13,11 +13,18 @@ interface StaticProps {
   readonly dataset: Dataset;
 }
 
+const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
+  collections: {},
+  institution: {rights: true},
+  thumbnail: {targetDimensions: thumbnailTargetDimensions},
+};
+
 const SearchPage: React.FunctionComponent<StaticProps> = ({
                                                             configuration,
                                                             dataset,
                                                           }) => (
-  <LunrObjectSearchPage configuration={configuration} dataset={dataset} objectsPerPage={10}>
+  <LunrObjectSearchPage configuration={configuration} dataset={dataset} objectJoinSelector={OBJECT_JOIN_SELECTOR}
+                        objectsPerPage={10}>
     {({
         objectsQuery,
         objectsQueryResults,
@@ -73,10 +80,15 @@ export default SearchPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
+  const dataset = readDataset();
+  const searchDataset = DataSubsetter.fromDataset(dataset).objectsDataset(dataset.objects.map(object => object.uri), OBJECT_JOIN_SELECTOR);
+
+  console.log("Search dataset:", Object.keys(searchDataset).map(key => `${key}: ${((searchDataset as any)[key] as any[]).length}`).join(", "));
+
   return {
     props: {
       configuration: defaultConfiguration,
-      dataset: readDataset(),
+      dataset: searchDataset,
     },
   };
 };

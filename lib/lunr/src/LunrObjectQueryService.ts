@@ -1,5 +1,13 @@
 import {ObjectQueryService} from "@paradicms/services";
-import {Configuration, IndexedDataset, Object, ObjectsQuery, ObjectsQueryResults} from "@paradicms/models";
+import {
+  Configuration,
+  DataSubsetter,
+  IndexedDataset,
+  Object,
+  ObjectJoinSelector,
+  ObjectsQuery,
+  ObjectsQueryResults,
+} from "@paradicms/models";
 import lunr, {Index} from "lunr";
 import {facetizeObjects} from "./facetizeObjects";
 import {filterObjects} from "./filterObjects";
@@ -17,25 +25,25 @@ export class LunrObjectQueryService implements ObjectQueryService {
   private readonly configuration: Configuration;
   private readonly dataset: IndexedDataset;
   private readonly index: Index;
+  private readonly objectJoinSelector?: ObjectJoinSelector;
 
-  constructor(kwds: {configuration: Configuration, dataset: IndexedDataset}) {
-    const {configuration, dataset} = kwds;
-
-    this.configuration = configuration;
-    this.dataset = dataset;
+  constructor(kwds: {configuration: Configuration, dataset: IndexedDataset, objectJoinSelector?: ObjectJoinSelector}) {
+    this.configuration = kwds.configuration;
+    this.dataset = kwds.dataset;
+    this.objectJoinSelector = kwds.objectJoinSelector;
 
     this.index = lunr(function() {
       this.field("abstract");
       this.field("title");
       const propertyFieldNamesByUri: {[index: string]: string} = {};
-      for (const propertyUri of configuration.objectFullTextSearchablePropertyUris) {
+      for (const propertyUri of kwds.configuration.objectFullTextSearchablePropertyUris) {
         const fieldName = encodeFieldName(propertyUri);
         propertyFieldNamesByUri[propertyUri] = fieldName;
         this.field(fieldName);
       }
       this.ref("uri");
 
-      for (const object of dataset.objects) {
+      for (const object of kwds.dataset.objects) {
         const doc: any = {title: object.title, uri: object.uri};
         if (object.abstract) {
           doc.abstract = object.abstract;
@@ -75,15 +83,25 @@ export class LunrObjectQueryService implements ObjectQueryService {
       // Calculate facets on the universe before filtering it
       const facets = this.configuration.objectFacets.map(facet => facetizeObjects({facet, objects: allObjects}));
 
+      console.debug("Search facets:", JSON.stringify(facets));
+
       const filteredObjects = filterObjects({filters: this.configuration.objectFilters, objects: allObjects});
+
+      console.debug("Search filtered objects count:", filteredObjects.length);
 
       const slicedObjects = filteredObjects.slice(
         offset,
         offset + limit,
       );
 
+      console.debug("Search sliced objects count:", slicedObjects.length);
+
+      const slicedObjectsDataset = new DataSubsetter(this.dataset).objectsDataset(slicedObjects.map(object => object.uri), this.objectJoinSelector);
+
+      console.debug("Search results dataset:", Object.keys(slicedObjectsDataset).map(key => `${key}: ${((slicedObjectsDataset as any)[key] as any[]).length}`).join(", "));
+
       return resolve({
-        dataset: this.dataset.objectsDataset(slicedObjects.map(object => object.uri)),
+        dataset: slicedObjectsDataset,
         facets,
         totalObjectsCount: filteredObjects.length,
       });

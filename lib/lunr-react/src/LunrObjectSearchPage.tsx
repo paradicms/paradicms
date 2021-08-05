@@ -5,6 +5,7 @@ import {
   Dataset,
   IndexedDataset,
   JoinedDataset,
+  ObjectJoinSelector,
   ObjectsQuery,
   ObjectsQueryResults,
 } from "@paradicms/models";
@@ -16,6 +17,7 @@ import {LunrObjectQueryService} from "@paradicms/lunr";
 export const LunrObjectSearchPage: React.FunctionComponent<{
   configuration: Configuration;
   dataset: Dataset;
+  objectJoinSelector: ObjectJoinSelector;
   objectsPerPage: number;
   children: (kwds: {
     objectsQuery: ObjectsQuery;
@@ -26,7 +28,7 @@ export const LunrObjectSearchPage: React.FunctionComponent<{
     setObjectsQuery: (objectsQuery: ObjectsQuery) => void;
     setPage: (page: number | undefined) => void
   }) => React.ReactElement
-}> = ({children, configuration, dataset, objectsPerPage}) => {
+}> = ({children, configuration, dataset, objectJoinSelector, objectsPerPage}) => {
   const [objectsQueryQueryParam, setObjectsQuery] = useQueryParam<ObjectsQuery | undefined>(
     "query",
     new JsonQueryParamConfig<ObjectsQuery>(),
@@ -42,11 +44,14 @@ export const LunrObjectSearchPage: React.FunctionComponent<{
   const objectQueryService = useMemo<ObjectQueryService>(() => new LunrObjectQueryService({
     configuration,
     dataset: new IndexedDataset(dataset),
+    objectJoinSelector,
   }), [configuration, dataset]);
 
   const [objectsQueryResults, setObjectsQueryResults] = useState<ObjectsQueryResults | null>(null);
 
   useEffect(() => {
+    console.debug("Objects query:", JSON.stringify(objectsQuery));
+    console.debug("Page:", page);
     objectQueryService.getObjects({
       limit: objectsPerPage,
       offset: page * objectsPerPage,

@@ -26,8 +26,12 @@ export class JoinedDataset {
     return new JoinedCollection(this.indexedDataset.collectionByUri(collectionUri), this);
   }
 
-  collectionImages(collectionUri: string): readonly JoinedImage[] {
-    return this.indexedDataset.collectionImages(collectionUri).map(image => new JoinedImage(image, this));
+  collectionObjects(collectionUri: string): readonly JoinedObject[] {
+    return this.indexedDataset.collectionObjects(collectionUri).map(object => new JoinedObject(this, object));
+  }
+
+  depictingImages(depictsUri: string): readonly JoinedImage[] {
+    return this.indexedDataset.depictingImages(depictsUri).map(image => new JoinedImage(image, this));
   }
 
   derivedImages(originalImageUri: string): readonly JoinedImage[] {
@@ -50,10 +54,6 @@ export class JoinedDataset {
     return this.indexedDataset.institutionCollections(institutionUri).map(collection => new JoinedCollection(collection, this));
   }
 
-  institutionImages(institutionUri: string): readonly JoinedImage[] {
-    return this.indexedDataset.institutionImages(institutionUri).map(image => new JoinedImage(image, this));
-  }
-
   get institutions(): readonly JoinedInstitution[] {
     return this.indexedDataset.institutions.map(institution => new JoinedInstitution(institution, this));
   }
@@ -65,11 +65,7 @@ export class JoinedDataset {
   objectByUri(objectUri: string): JoinedObject {
     return new JoinedObject(this, this.indexedDataset.objectByUri(objectUri));
   }
-
-  objectImages(objectUri: string): readonly JoinedImage[] {
-    return this.indexedDataset.objectImages(objectUri).map(image => new JoinedImage(image, this));
-  }
-
+  
   get objects(): readonly JoinedObject[] {
     return this.indexedDataset.objects.map(object => new JoinedObject(this, object));
   }
