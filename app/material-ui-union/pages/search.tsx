@@ -26,36 +26,36 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
   <LunrObjectSearchPage configuration={configuration} dataset={dataset} objectJoinSelector={OBJECT_JOIN_SELECTOR}
                         objectsPerPage={10}>
     {({
-        objectsQuery,
-        objectsQueryResults,
-        objectsQueryResultsJoinedDataset,
+        objectQuery,
+        objectQueryResults,
+        objectQueryResultsJoinedDataset,
         page,
         pageMax,
-        setObjectsQuery,
+        setObjectQuery,
         setPage,
       }) => (
       <Layout
         cardTitle={
-          objectsQuery?.text ? (
+          objectQuery?.text ? (
             <span>
             <span>Search results for</span>
               &nbsp;
-              <i data-cy="query-text">{objectsQuery.text}</i>
+              <i data-cy="query-text">{objectQuery.text}</i>
           </span>
           ) : (
             "Search results"
           )
         }
         documentTitle={
-          objectsQuery?.text ? `Search results for "${objectsQuery.text}"` : "Search results"
+          objectQuery?.text ? `Search results for "${objectQuery.text}"` : "Search results"
         }
         configuration={configuration}
-        onSearch={text => setObjectsQuery({filters: [], text})}
+        onSearch={text => setObjectQuery({filters: [], text})}
       >
         <ObjectFacetedSearchGrid
-          facets={objectsQueryResults.facets}
-          objects={objectsQueryResultsJoinedDataset.objects}
-          onChangeFilters={filters => setObjectsQuery({...objectsQuery, filters})}
+          facets={objectQueryResults.facets}
+          objects={objectQueryResultsJoinedDataset.objects}
+          onChangeFilters={filters => setObjectQuery({...objectQuery, filters})}
           onChangePage={setPage}
           page={page}
           pageMax={pageMax}
@@ -69,7 +69,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
               {children}
             </Link>
           )}
-          query={objectsQuery}
+          query={objectQuery}
         />
       </Layout>
     )}

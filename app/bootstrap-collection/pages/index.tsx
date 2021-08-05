@@ -37,42 +37,42 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   <LunrObjectSearchPage configuration={configuration} dataset={dataset} objectJoinSelector={OBJECT_JOIN_SELECTOR}
                         objectsPerPage={OBJECTS_PER_PAGE}>
     {({
-        objectsQuery,
-        objectsQueryResults,
-        objectsQueryResultsJoinedDataset,
+        objectQuery,
+        objectQueryResults,
+        objectQueryResultsJoinedDataset,
         page,
-        setObjectsQuery,
+        setObjectQuery,
         setPage,
       }) => (
       <Layout
         collection={collection}
         configuration={configuration}
         onSearch={text => {
-          setObjectsQuery({filters: [], text});
+          setObjectQuery({filters: [], text});
           setPage(undefined);
         }}
       >
         <Container fluid>
-          {objectsQueryResults.totalObjectsCount > 0 ? (
+          {objectQueryResults.totalObjectsCount > 0 ? (
             <>
               <Row>
                 <Col xs={12}>
                   <h4 className="d-inline-block">
-                    <span>{objectsQueryResults.totalObjectsCount}</span>&nbsp;
-                    <span>{objectsQueryResults.totalObjectsCount === 1 ? "object" : "objects"}</span>
+                    <span>{objectQueryResults.totalObjectsCount}</span>&nbsp;
+                    <span>{objectQueryResults.totalObjectsCount === 1 ? "object" : "objects"}</span>
                     &nbsp;
-                    {objectsQuery.text ? (
+                    {objectQuery.text ? (
                       <span>
-                          matching <i>{objectsQuery.text}</i>
+                          matching <i>{objectQuery.text}</i>
                         </span>
                     ) : (
                       <span>matched</span>
                     )}
                   </h4>
-                  {objectsQuery.filters.length > 0 ? (
+                  {objectQuery.filters.length > 0 ? (
                     <div className="d-inline-block">
                       <FiltersBadges
-                        filters={objectsQuery.filters}
+                        filters={objectQuery.filters}
                       />
                     </div>
                   ) : null}
@@ -87,11 +87,11 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
           ) : null}
           <Row>
             <Col xs="10">
-              {objectsQueryResultsJoinedDataset.objects.length > 0 ? (
+              {objectQueryResultsJoinedDataset.objects.length > 0 ? (
                 <ObjectsGallery
-                  objects={objectsQueryResultsJoinedDataset.objects}
+                  objects={objectQueryResultsJoinedDataset.objects}
                   objectsPerPage={OBJECTS_PER_PAGE}
-                  objectsTotalCount={objectsQueryResults.totalObjectsCount}
+                  objectsTotalCount={objectQueryResults.totalObjectsCount}
                   onChangePage={setPage}
                   page={page}
                   renderObjectLink={(object, children) => (
@@ -106,11 +106,11 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
             </Col>
             <Col xs="2">
               <FiltersControls
-                facets={objectsQueryResults.facets}
-                filters={objectsQuery.filters}
+                facets={objectQueryResults.facets}
+                filters={objectQuery.filters}
                 onChange={newFilters => {
-                  setObjectsQuery({
-                    ...objectsQuery,
+                  setObjectQuery({
+                    ...objectQuery,
                     filters: newFilters,
                   });
                   setPage(undefined);

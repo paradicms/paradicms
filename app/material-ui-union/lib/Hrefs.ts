@@ -1,4 +1,4 @@
-import {ObjectsQuery} from "@paradicms/models";
+import {ObjectQuery} from "@paradicms/models";
 import * as qs from "qs";
 import {encodeFileName} from "@paradicms/next";
 
@@ -18,7 +18,7 @@ export class Hrefs {
           get home(): string {
             return collectionHref;
           },
-          objects(query?: ObjectsQuery): string {
+          objects(query?: ObjectQuery): string {
             return `${collectionHref}${qs.stringify(query, {
               addQueryPrefix: true,
             })}`;
@@ -32,7 +32,7 @@ export class Hrefs {
     };
   }
 
-  static search(query?: ObjectsQuery): string {
+  static search(query?: ObjectQuery): string {
     const href = "/search";
     if (!query) {
       return href;

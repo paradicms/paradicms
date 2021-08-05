@@ -6,8 +6,8 @@ import {
   IndexedDataset,
   JoinedDataset,
   ObjectJoinSelector,
-  ObjectsQuery,
-  ObjectsQueryResults,
+  ObjectQuery,
+  ObjectQueryResults,
 } from "@paradicms/models";
 import {NumberParam, useQueryParam} from "use-query-params";
 import {JsonQueryParamConfig} from "@paradicms/react";
@@ -20,20 +20,20 @@ export const LunrObjectSearchPage: React.FunctionComponent<{
   objectJoinSelector: ObjectJoinSelector;
   objectsPerPage: number;
   children: (kwds: {
-    objectsQuery: ObjectsQuery;
-    objectsQueryResults: ObjectsQueryResults;
-    objectsQueryResultsJoinedDataset: JoinedDataset;
+    objectQuery: ObjectQuery;
+    objectQueryResults: ObjectQueryResults;
+    objectQueryResultsJoinedDataset: JoinedDataset;
     page: number;
     pageMax: number;
-    setObjectsQuery: (objectsQuery: ObjectsQuery) => void;
+    setObjectQuery: (objectQuery: ObjectQuery) => void;
     setPage: (page: number | undefined) => void
   }) => React.ReactElement
 }> = ({children, configuration, dataset, objectJoinSelector, objectsPerPage}) => {
-  const [objectsQueryQueryParam, setObjectsQuery] = useQueryParam<ObjectsQuery | undefined>(
+  const [objectQueryQueryParam, setObjectQuery] = useQueryParam<ObjectQuery | undefined>(
     "query",
-    new JsonQueryParamConfig<ObjectsQuery>(),
+    new JsonQueryParamConfig<ObjectQuery>(),
   );
-  const objectsQuery = useMemo(() => objectsQueryQueryParam ?? {filters: [], text: null}, [objectsQueryQueryParam]);
+  const objectQuery = useMemo(() => objectQueryQueryParam ?? {filters: [], text: null}, [objectQueryQueryParam]);
 
   let [pageQueryParam, setPage] = useQueryParam<number | null | undefined>(
     "page",
@@ -47,31 +47,31 @@ export const LunrObjectSearchPage: React.FunctionComponent<{
     objectJoinSelector,
   }), [configuration, dataset]);
 
-  const [objectsQueryResults, setObjectsQueryResults] = useState<ObjectsQueryResults | null>(null);
+  const [objectQueryResults, setObjectQueryResults] = useState<ObjectQueryResults | null>(null);
 
   useEffect(() => {
-    console.debug("Objects query:", JSON.stringify(objectsQuery));
+    console.debug("Objects query:", JSON.stringify(objectQuery));
     console.debug("Page:", page);
     objectQueryService.getObjects({
       limit: objectsPerPage,
       offset: page * objectsPerPage,
-      query: objectsQuery,
-    }).then(setObjectsQueryResults);
-  }, [objectsQuery, objectQueryService, pageQueryParam]);
+      query: objectQuery,
+    }).then(setObjectQueryResults);
+  }, [objectQuery, objectQueryService, pageQueryParam]);
 
-  const objectsQueryResultsJoinedDataset = useMemo(() => objectsQueryResults !== null ? JoinedDataset.fromDataset(objectsQueryResults.dataset) : null, [objectsQueryResults]);
+  const objectQueryResultsJoinedDataset = useMemo(() => objectQueryResults !== null ? JoinedDataset.fromDataset(objectQueryResults.dataset) : null, [objectQueryResults]);
 
-  if (objectsQueryResults === null || objectsQueryResultsJoinedDataset === null) {
+  if (objectQueryResults === null || objectQueryResultsJoinedDataset === null) {
     return null;
   }
 
   return children({
-    objectsQuery,
-    objectsQueryResults,
-    objectsQueryResultsJoinedDataset,
+    objectQuery,
+    objectQueryResults,
+    objectQueryResultsJoinedDataset,
     page,
-    pageMax: Math.ceil(objectsQueryResults.totalObjectsCount / objectsPerPage) - 1,
-    setObjectsQuery,
+    pageMax: Math.ceil(objectQueryResults.totalObjectsCount / objectsPerPage) - 1,
+    setObjectQuery,
     setPage,
   });
 }

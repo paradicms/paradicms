@@ -45,12 +45,12 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
     <LunrObjectSearchPage configuration={configuration} dataset={dataset} objectJoinSelector={OBJECT_JOIN_SELECTOR}
                           objectsPerPage={OBJECTS_PER_PAGE}>
       {({
-          objectsQuery,
-          objectsQueryResults,
-          objectsQueryResultsJoinedDataset,
+          objectQuery,
+          objectQueryResults,
+          objectQueryResultsJoinedDataset,
           page,
           pageMax,
-          setObjectsQuery,
+          setObjectQuery,
           setPage,
         }) => (
         <Layout
@@ -67,9 +67,9 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
           configuration={configuration}
         >
           <ObjectFacetedSearchGrid
-            facets={objectsQueryResults.facets}
-            objects={objectsQueryResultsJoinedDataset.objects}
-            onChangeFilters={filters => setObjectsQuery({...objectsQuery, filters})}
+            facets={objectQueryResults.facets}
+            objects={objectQueryResultsJoinedDataset.objects}
+            onChangeFilters={filters => setObjectQuery({...objectQuery, filters})}
             onChangePage={setPage}
             page={page}
             pageMax={pageMax}
@@ -83,7 +83,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
                 {children}
               </Link>
             )}
-            query={objectsQuery}
+            query={objectQuery}
           />
         </Layout>
       )}

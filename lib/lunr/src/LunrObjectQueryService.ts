@@ -4,8 +4,8 @@ import {
   IndexedDataset,
   Object,
   ObjectJoinSelector,
-  ObjectsQuery,
-  ObjectsQueryResults,
+  ObjectQuery,
+  ObjectQueryResults,
 } from "@paradicms/models";
 import lunr, {Index} from "lunr";
 import {facetizeObjects} from "./facetizeObjects";
@@ -74,7 +74,7 @@ export class LunrObjectQueryService implements ObjectQueryService {
     });
   }
 
-  getObjects(kwds: {limit: number, offset: number, query: ObjectsQuery}): Promise<ObjectsQueryResults> {
+  getObjects(kwds: {limit: number, offset: number, query: ObjectQuery}): Promise<ObjectQueryResults> {
     const {limit, offset, query} = kwds;
 
     invariant(!!query, "query must be defined");
