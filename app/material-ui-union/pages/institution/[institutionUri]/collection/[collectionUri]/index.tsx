@@ -66,7 +66,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
           documentTitle={"Collection - " + collection.title}
           configuration={configuration}
         >
-          <ObjectFacetedSearchGrid
+          <ObjectSearchGrid
             facets={objectQueryResults.facets}
             objects={objectQueryResultsJoinedDataset.objects}
             onChangeFilters={filters => setObjectQuery({...objectQuery, filters})}

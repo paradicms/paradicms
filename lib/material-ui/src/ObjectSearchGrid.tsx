@@ -5,7 +5,7 @@ import {FiltersControls} from "./FiltersControls";
 import {ObjectsGallery} from "./ObjectsGallery";
 import {FiltersChips} from "./FiltersChips";
 
-export const ObjectFacetedSearchGrid: React.FunctionComponent<{
+export const ObjectSearchGrid: React.FunctionComponent<{
   facets: readonly Facet[];
   objects: readonly JoinedObject[];
   onChangeFilters: (filters: readonly Filter[]) => void;
