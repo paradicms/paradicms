@@ -1,3 +1,3 @@
-import {datasetFromPartial} from "datasetFromPartial";
+import {datasetFromPartial} from "./datasetFromPartial";
 
 export const emptyDataset = datasetFromPartial({});
