@@ -15,6 +15,7 @@ import vcccTtl from "../data/vccc.ttl";
 import {DatasetRdfReader} from "@paradicms/rdf";
 import {IndexedDataset} from "@paradicms/models";
 import {QueryParamProvider} from "use-query-params";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 
 const configurationQueryService: ConfigurationQueryService = new HardCodedConfigurationQueryService();
 
@@ -29,13 +30,15 @@ configurationQueryService.getConfiguration().then(
     });
 
     ReactDOM.render(
-      <ConfigurationContext.Provider value={configuration}>
-        <ObjectQueryServiceContext.Provider value={objectQueryService}>
-          <QueryParamProvider>
-            <Application />
-          </QueryParamProvider>
-        </ObjectQueryServiceContext.Provider>
-      </ConfigurationContext.Provider>,
+      <Router>
+        <ConfigurationContext.Provider value={configuration}>
+          <ObjectQueryServiceContext.Provider value={objectQueryService}>
+            <QueryParamProvider ReactRouterRoute={Route}>
+              <Application />
+            </QueryParamProvider>
+          </ObjectQueryServiceContext.Provider>
+        </ConfigurationContext.Provider>
+      </Router>,
       document.getElementById("root")
     );
   },

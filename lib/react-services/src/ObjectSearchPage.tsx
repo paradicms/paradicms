@@ -21,7 +21,7 @@ export const ObjectSearchPage: React.FunctionComponent<ObjectSearchPageProps> = 
     [objectQueryQueryParam]
   );
 
-  let [pageQueryParam, setPage] = useQueryParam<number | null | undefined>(
+  const [pageQueryParam, setPage] = useQueryParam<number | null | undefined>(
     "page",
     NumberParam
   );
@@ -48,7 +48,7 @@ export const ObjectSearchPage: React.FunctionComponent<ObjectSearchPageProps> = 
           ...otherObjectQueryResults,
         });
       });
-  }, [objectQuery, objectQueryService, pageQueryParam]);
+  }, [objectQuery, objectQueryService, objectsPerPage, page]);
 
   if (objectQueryResults === null) {
     return null;
