@@ -1,8 +1,15 @@
 import * as React from "react";
 import {ValueFacet, ValueFilter, ValueFilterState} from "@paradicms/models";
-import {Button, FormGroup, Input, Label, ListGroup, ListGroupItem} from "reactstrap";
+import {
+  Button,
+  FormGroup,
+  Input,
+  Label,
+  ListGroup,
+  ListGroupItem,
+} from "reactstrap";
 
-export const ValueFilterControls: React.FunctionComponent<{
+export const ValueFilterControl: React.FunctionComponent<{
   facet: ValueFacet<string>;
   filter: ValueFilter<string>;
   onChange: (newFilter: ValueFilter<string>) => void;
@@ -42,7 +49,7 @@ export const ValueFilterControls: React.FunctionComponent<{
         .sort((left, right) => right.count - left.count)
         .map(value => {
           const onChangeValue = (
-            e: React.ChangeEvent<HTMLInputElement>,
+            e: React.ChangeEvent<HTMLInputElement>
           ): void => {
             const newChecked = e.target.checked;
             if (newChecked) {
