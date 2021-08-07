@@ -31,6 +31,7 @@ export * from "./Object";
 export * from "./ObjectJoinSelector";
 export * from "./ObjectQuery";
 export * from "./ObjectQueryResults";
+export * from "./ObjectSearchConfiguration";
 export * from "./Property";
 export * from "./PropertyDefinition";
 export * from "./PropertyValueFacet";

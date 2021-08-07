@@ -7,19 +7,23 @@ import {PropertyDefinition} from "./PropertyDefinition";
 
 const DCTERMS_NS = "http://purl.org/dc/terms/";
 
-const facetedObjectPropertyDefinitions: readonly PropertyDefinition[] = [{
-  label: "Medium",
-  uri: DCTERMS_NS + "medium",
-}, {
-  label: "Subject",
-  uri: DCTERMS_NS + "subject",
-}];
+const facetedObjectPropertyDefinitions: readonly PropertyDefinition[] = [
+  {
+    label: "Medium",
+    uri: DCTERMS_NS + "medium",
+  },
+  {
+    label: "Subject",
+    uri: DCTERMS_NS + "subject",
+  },
+];
 
 export const defaultConfiguration: Configuration = {
-  bootstrapStylesheetHref: "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css",
+  bootstrapStylesheetHref:
+    "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css",
   documentTitle: null,
   navbarTitle: null,
-  objectQuery: (() => {
+  objectSearch: (() => {
     const facets: Facet[] = [];
     const filters: Filter[] = [];
     for (const propertyDefinition of facetedObjectPropertyDefinitions) {
@@ -42,7 +46,10 @@ export const defaultConfiguration: Configuration = {
     return {
       facets,
       filters,
-      fullTextSearchablePropertyUris: [DCTERMS_NS + "description", DCTERMS_NS + "title"],
+      fullTextSearchablePropertyUris: [
+        DCTERMS_NS + "description",
+        DCTERMS_NS + "title",
+      ],
     };
   })(),
 };
