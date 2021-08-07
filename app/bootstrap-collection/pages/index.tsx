@@ -34,7 +34,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   dataset,
 }) => (
   <LunrObjectSearchPage
-    configuration={configuration}
+    configuration={configuration.objectSearch}
     dataset={dataset}
     objectJoinSelector={OBJECT_JOIN_SELECTOR}
     objectsPerPage={OBJECTS_PER_PAGE}

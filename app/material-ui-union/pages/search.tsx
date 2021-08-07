@@ -9,13 +9,13 @@ import * as React from "react";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {
-  ObjectFacetedSearchGrid,
-  thumbnailTargetDimensions,
+\  thumbnailTargetDimensions,
 } from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {readDataset} from "lib/readDataset";
 import {LunrObjectSearchPage} from "@paradicms/react-services";
+import {ObjectSearchGrid} from "@paradicms/material-ui";
 
 interface StaticProps {
   readonly configuration: Configuration;
@@ -33,7 +33,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
   dataset,
 }) => (
   <LunrObjectSearchPage
-    configuration={configuration}
+    configuration={configuration.objectSearch}
     dataset={dataset}
     objectJoinSelector={OBJECT_JOIN_SELECTOR}
     objectsPerPage={10}

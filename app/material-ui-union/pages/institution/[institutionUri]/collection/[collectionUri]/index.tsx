@@ -12,10 +12,7 @@ import {
   ObjectJoinSelector,
 } from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {
-  ObjectFacetedSearchGrid,
-  thumbnailTargetDimensions,
-} from "@paradicms/material-ui";
+import {thumbnailTargetDimensions} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {readDataset} from "lib/readDataset";
@@ -51,7 +48,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
 
   return (
     <LunrObjectSearchPage
-      configuration={configuration}
+      configuration={configuration.objectSearch}
       dataset={dataset}
       objectJoinSelector={OBJECT_JOIN_SELECTOR}
       objectsPerPage={OBJECTS_PER_PAGE}
