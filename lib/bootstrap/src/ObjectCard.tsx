@@ -89,8 +89,12 @@ export const ObjectCard: React.FunctionComponent<{
               <Col xs={12}>
                 <Accordion title="Image rights">
                   <RightsTable
+                    cellStyle={{
+                      padding: 0,
+                      textAlign: "left",
+                    }}
                     rights={thumbnail.rights}
-                    tableClassName="rights-table"
+                    tableStyle={{fontSize: "xx-small"}}
                   ></RightsTable>
                 </Accordion>
               </Col>
@@ -101,8 +105,12 @@ export const ObjectCard: React.FunctionComponent<{
               <Col xs={12}>
                 <Accordion title="Metadata rights">
                   <RightsTable
+                    cellStyle={{
+                      padding: 0,
+                      textAlign: "left",
+                    }}
                     rights={object.rights}
-                    tableClassName="rights-table"
+                    tableStyle={{fontSize: "xx-small"}}
                   ></RightsTable>
                 </Accordion>
               </Col>
