@@ -42,7 +42,7 @@ export const LunrObjectSearchPage: React.FunctionComponent<{
   const page = useMemo(() => pageQueryParam ?? 0, [pageQueryParam]);
 
   const objectQueryService = useMemo<ObjectQueryService>(() => new LunrObjectQueryService({
-    configuration,
+    configuration: configuration.objectQuery,
     dataset: new IndexedDataset(dataset),
     objectJoinSelector,
   }), [configuration, dataset]);
