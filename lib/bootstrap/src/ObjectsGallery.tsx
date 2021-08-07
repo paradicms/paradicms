@@ -1,6 +1,4 @@
 import * as React from "react";
-import {Col, Container, Row} from "reactstrap";
-import PaginationComponent from "react-reactstrap-pagination";
 import {ObjectCard} from "./ObjectCard";
 import {JoinedInstitution, JoinedObject} from "@paradicms/models";
 
@@ -10,50 +8,25 @@ import {JoinedInstitution, JoinedObject} from "@paradicms/models";
  * @param objects current page of objects to render in the gallery
  */
 export const ObjectsGallery: React.FunctionComponent<{
-  objects: readonly JoinedObject[],
-  objectsPerPage: number;
-  objectsTotalCount: number;
-  onChangePage: (page: number) => void;
-  page: number; // From 0
+  objects: readonly JoinedObject[];
   renderInstitutionLink?: (
     institution: JoinedInstitution,
-    children: React.ReactNode,
+    children: React.ReactNode
   ) => React.ReactNode;
   renderObjectLink: (
     object: JoinedObject,
-    children: React.ReactNode,
+    children: React.ReactNode
   ) => React.ReactNode;
-}> = ({
-        objects,
-        objectsPerPage,
-        objectsTotalCount,
-        onChangePage,
-        page,
-        renderInstitutionLink,
-        renderObjectLink,
-      }) => (
-  <Container className="objects-gallery" fluid>
-    <Row>
-      {objects
-        .map(object => (
-          <div className="object-card-container" key={object.uri}>
-            <ObjectCard
-              object={object}
-              renderInstitutionLink={renderInstitutionLink}
-              renderObjectLink={renderObjectLink}
-            />
-          </div>
-        ))}
-    </Row>
-    <Row className="pagination-row">
-      <Col className="pagination-col" xs={12}>
-        <PaginationComponent
-          defaultActivePage={page + 1}
-          onSelect={page => onChangePage(page - 1)}
-          pageSize={objectsPerPage}
-          totalItems={objectsTotalCount}
+}> = ({objects, renderInstitutionLink, renderObjectLink}) => (
+  <>
+    {objects.map(object => (
+      <div className="object-card-container" key={object.uri}>
+        <ObjectCard
+          object={object}
+          renderInstitutionLink={renderInstitutionLink}
+          renderObjectLink={renderObjectLink}
         />
-      </Col>
-    </Row>
-  </Container>
+      </div>
+    ))}
+  </>
 );

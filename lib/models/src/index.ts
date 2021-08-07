@@ -24,6 +24,7 @@ export * from "./JoinedDataset";
 export * from "./JoinedImage";
 export * from "./JoinedInstitution";
 export * from "./JoinedObject";
+export * from "./JoinedObjectQueryResults";
 export * from "./JoinedProperty";
 export * from "./JoinedRights";
 export * from "./License";

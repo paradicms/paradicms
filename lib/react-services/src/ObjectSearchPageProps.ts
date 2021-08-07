@@ -1,8 +1,4 @@
-import {
-  JoinedDataset,
-  ObjectQuery,
-  ObjectQueryResults,
-} from "@paradicms/models";
+import {JoinedObjectQueryResults, ObjectQuery} from "@paradicms/models";
 import * as React from "react";
 import {ObjectQueryService} from "@paradicms/services";
 
@@ -11,8 +7,7 @@ export interface ObjectSearchPageProps {
   objectsPerPage: number;
   children: (kwds: {
     objectQuery: ObjectQuery;
-    objectQueryResults: ObjectQueryResults;
-    objectQueryResultsJoinedDataset: JoinedDataset;
+    objectQueryResults: JoinedObjectQueryResults;
     page: number;
     pageMax: number;
     setObjectQuery: (objectQuery: ObjectQuery) => void;

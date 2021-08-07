@@ -19,7 +19,7 @@ const base58 = basex(
 );
 
 const encodeFieldName = (value: string): string =>
-  base58.encode(Buffer.from(value, "utf-8"));
+  base58.encode(new TextEncoder().encode(value));
 
 // function intersection<T>(a: Set<T>, b: Set<T>) {
 //   if (a.size === 0) {

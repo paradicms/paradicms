@@ -1,20 +1,18 @@
 import {Col, Container, Row} from "reactstrap";
 import * as React from "react";
 import {
-  JoinedDataset,
   JoinedInstitution,
   JoinedObject,
+  JoinedObjectQueryResults,
   ObjectQuery,
-  ObjectQueryResults,
 } from "@paradicms/models";
 import {FiltersControls} from "./FiltersControls";
 import {FiltersBadges} from "./FiltersBadges";
-import {ObjectsGallery} from "./ObjectsGallery";
+import {ObjectQueryResultsContainer} from "./ObjectQueryResultsContainer";
 
 export const ObjectSearchContainer: React.FunctionComponent<{
   objectQuery: ObjectQuery;
-  objectQueryResults: ObjectQueryResults;
-  objectQueryResultsJoinedDataset: JoinedDataset;
+  objectQueryResults: JoinedObjectQueryResults;
   objectsPerPage: number;
   page: number;
   renderInstitutionLink?: (
@@ -30,7 +28,6 @@ export const ObjectSearchContainer: React.FunctionComponent<{
 }> = ({
   objectQuery,
   objectQueryResults,
-  objectQueryResultsJoinedDataset,
   objectsPerPage,
   page,
   renderInstitutionLink,
@@ -88,19 +85,14 @@ export const ObjectSearchContainer: React.FunctionComponent<{
         />
       </Col>
       <Col xs="10">
-        {objectQueryResultsJoinedDataset.objects.length > 0 ? (
-          <ObjectsGallery
-            objects={objectQueryResultsJoinedDataset.objects}
-            objectsPerPage={objectsPerPage}
-            objectsTotalCount={objectQueryResults.totalObjectsCount}
-            onChangePage={setPage}
-            page={page}
-            renderInstitutionLink={renderInstitutionLink}
-            renderObjectLink={renderObjectLink}
-          />
-        ) : (
-          <h3>No matching objects found.</h3>
-        )}
+        <ObjectQueryResultsContainer
+          objectQueryResults={objectQueryResults}
+          objectsPerPage={objectsPerPage}
+          onChangePage={setPage}
+          page={page}
+          renderInstitutionLink={renderInstitutionLink}
+          renderObjectLink={renderObjectLink}
+        />
       </Col>
     </Row>
   </Container>
