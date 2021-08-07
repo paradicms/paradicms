@@ -10,7 +10,7 @@ import {
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {readDataset} from "lib/readDataset";
-import {LunrObjectSearchPage} from "@paradicms/lunr-react";
+import {LunrObjectSearchPage} from "@paradicms/react-services";
 import {thumbnailTargetDimensions} from "@paradicms/material-ui";
 import {ObjectSearchContainer} from "@paradicms/bootstrap/dist/ObjectSearchContainer";
 import {Hrefs} from "lib/Hrefs";

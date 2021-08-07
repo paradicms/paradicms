@@ -10,8 +10,7 @@
     "@paradicms/lunr": "1.0.5",
     "@paradicms/models": "1.0.5",
     "@paradicms/react": "1.0.5",
-    "@paradicms/rdf": "1.0.5",
-    "pullstate": "1.22.1"
+    "@paradicms/rdf": "1.0.5"
   },
   "devDependencies": {
     "@types/chai": "4.2.21",
