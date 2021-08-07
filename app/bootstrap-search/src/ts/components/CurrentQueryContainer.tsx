@@ -2,7 +2,7 @@ import * as React from "react";
 import {CurrentQueryStore} from "~/stores/CurrentQueryStore";
 import {Col, Container, Row} from "reactstrap";
 import {createFilterComponent} from "~/components/createFilterComponent";
-import {Filter} from "~/models/Filter";
+import {Filter} from "@paradicms/models";
 
 export const CurrentQueryContainer: React.FunctionComponent = () => {
   // @ts-ignore

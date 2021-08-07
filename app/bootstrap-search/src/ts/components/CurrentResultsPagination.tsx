@@ -1,14 +1,13 @@
 import {CurrentQueryStore} from "~/stores/CurrentQueryStore";
-import {CurrentResultStore} from "~/stores/CurrentResultStore";
 import React, {useCallback} from "react";
 import PaginationComponent from "react-reactstrap-pagination";
 
-export const CurrentResultPagination: React.FunctionComponent = () => {
+export const CurrentResultsPagination: React.FunctionComponent = () => {
   const currentQuery = CurrentQueryStore.useState(
-    (state) => state.currentQuery
+    (state) => state.currentQuery,
   );
-  const currentResult = CurrentResultStore.useState(
-    (state) => state.currentResult
+  const currentResult = CurrentResultsStore.useState(
+    (state) => state.currentResult,
   );
 
   const onChangePage = useCallback((page: number) => {
@@ -17,7 +16,7 @@ export const CurrentResultPagination: React.FunctionComponent = () => {
     });
   }, []);
 
-  if (currentResult.objects.length === 0) {
+  if (currentResults.objects.length === 0) {
     return null;
   }
 
@@ -32,7 +31,7 @@ export const CurrentResultPagination: React.FunctionComponent = () => {
       pageSize={10}
       previousPageText="‹"
       onSelect={(page) => onChangePage(page - 1)}
-      totalItems={currentResult.totalObjectsCount}
+      totalItems={currentResults.totalObjectsCount}
     />
   );
 };

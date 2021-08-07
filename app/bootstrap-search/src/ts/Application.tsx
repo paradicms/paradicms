@@ -6,18 +6,11 @@ import {Query} from "~/models/Query";
 import {ConfigurationContext} from "~/contexts/ConfigurationContext";
 import {ObjectQueryServiceContext} from "~/contexts/ObjectQueryServiceContext";
 import {createAsyncAction, errorResult, successResult} from "pullstate";
-import {
-  GetObjectsResult,
-  ObjectQueryService,
-} from "~/services/ObjectQueryService";
-import {CurrentResultStore} from "~/stores/CurrentResultStore";
-import {CurrentResultContainer} from "~/components/CurrentResultContainer";
+import {GetObjectsResult, ObjectQueryService} from "~/services/ObjectQueryService";
 import {CurrentQueryContainer} from "~/components/CurrentQueryContainer";
 
-const getObjectsAsyncAction = createAsyncAction<
-  {objectQueryService: ObjectQueryService; query: Query | null},
-  {result: GetObjectsResult | null}
->(
+const getObjectsAsyncAction = createAsyncAction<{objectQueryService: ObjectQueryService; query: Query | null},
+  {result: GetObjectsResult | null}>(
   async ({objectQueryService, query}) => {
     if (!query) {
       console.debug("query is null, returning null result");
@@ -39,7 +32,7 @@ const getObjectsAsyncAction = createAsyncAction<
       } else if (!result.payload.result) {
         return;
       }
-      CurrentResultStore.update((state) => {
+      CurrentResultsStore.update((state) => {
         state.initialized = true;
         state.currentResult = result.payload.result!;
       });
@@ -64,7 +57,7 @@ export const Application: React.FunctionComponent = () => {
 
   // @ts-ignore
   const {currentResult, initialized: currentResultInitialized} =
-    CurrentResultStore.useState((state) => state);
+    CurrentResultsStore.useState((state) => state);
   console.debug("Current result:", JSON.stringify(currentResult));
   console.debug("Current result initialized:", currentResultInitialized);
   console.debug("");
@@ -115,7 +108,7 @@ export const Application: React.FunctionComponent = () => {
           <CurrentQueryContainer />
         </Col>
         <Col className="px-0" xs={8}>
-          <CurrentResultContainer />
+          <CurrentResultsContainer />
         </Col>
       </Row>
     </Container>

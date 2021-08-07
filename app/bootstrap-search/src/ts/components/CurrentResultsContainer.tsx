@@ -6,7 +6,7 @@ import {CurrentResultGallery} from "~/components/CurrentResultGallery";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {CurrentResultList} from "~/components/CurrentResultList";
 
-export const CurrentResultContainer: React.FunctionComponent = () => {
+export const CurrentResultsContainer: React.FunctionComponent = () => {
   const [view, setView] = useState<"gallery" | "list">("gallery");
 
   return (
@@ -36,13 +36,13 @@ export const CurrentResultContainer: React.FunctionComponent = () => {
       </Row>
       <Row className="mt-2">
         <Col xs={12}>
-          {view === "gallery" ? <CurrentResultGallery /> : null}
-          {view === "list" ? <CurrentResultList /> : null}
+          {view === "gallery" ? <CurrentResultsGallery /> : null}
+          {view === "list" ? <CurrentResultsList /> : null}
         </Col>
       </Row>
       <Row className="mt-4">
         <Col className="d-flex justify-content-center" xs={12}>
-          <CurrentResultPagination />
+          <CurrentResultsPagination />
         </Col>
       </Row>
     </Container>

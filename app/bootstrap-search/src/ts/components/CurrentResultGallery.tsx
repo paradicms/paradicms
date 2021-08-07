@@ -1,10 +1,9 @@
-import {CurrentResultStore} from "~/stores/CurrentResultStore";
 import {Card, CardHeader, CardImg, Container, Row} from "reactstrap";
 import React from "react";
 
-export const CurrentResultGallery: React.FunctionComponent = () => {
-  const objects = CurrentResultStore.useState(
-    (state) => state.currentResult.objects
+export const CurrentResultsGallery: React.FunctionComponent = () => {
+  const objects = CurrentResultsStore.useState(
+    (state) => state.currentResults.objects,
   );
 
   return (

@@ -6,6 +6,8 @@ export * from "./Configuration";
 export * from "./defaultConfiguration";
 export * from "./Dataset";
 export * from "./DataSubsetter";
+export * from "./datasetFromPartial";
+export * from "./emptyDataset";
 export * from "./Facet";
 export * from "./FacetType";
 export * from "./Filter";
