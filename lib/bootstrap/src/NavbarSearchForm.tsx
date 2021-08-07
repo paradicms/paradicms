@@ -1,6 +1,7 @@
 import {Button, Form, Input} from "reactstrap";
 import * as React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSearch} from "@fortawesome/free-solid-svg-icons";
 
 export const NavbarSearchForm: React.FunctionComponent<{
   onSearch: (text: string) => void;
@@ -24,7 +25,7 @@ export const NavbarSearchForm: React.FunctionComponent<{
         value={text}
       />
       <Button className="btn-outline-success my-2 my-sm-0" type="submit">
-        <FontAwesomeIcon icon="search" />
+        <FontAwesomeIcon icon={faSearch} />
       </Button>
     </Form>
   );

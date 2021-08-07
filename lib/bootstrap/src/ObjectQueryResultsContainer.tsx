@@ -69,16 +69,18 @@ export const ObjectQueryResultsContainer: React.FunctionComponent<{
         </Col>
       </Row>
       <Row className="mt-2">
-        <Col xs={12}>
-          {view === "gallery" ? (
-            <ObjectsGallery
-              objects={objectQueryResults.joinedDataset.objects}
-              renderInstitutionLink={renderInstitutionLink}
-              renderObjectLink={renderObjectLink}
-            />
-          ) : null}
-          {view === "list" ? <ObjectsListGroup objects={objects} /> : null}
-        </Col>
+        {view === "gallery" ? (
+          <ObjectsGallery
+            objects={objectQueryResults.joinedDataset.objects}
+            renderInstitutionLink={renderInstitutionLink}
+            renderObjectLink={renderObjectLink}
+          />
+        ) : null}
+        {view === "list" ? (
+          <Col xs={12}>
+            <ObjectsListGroup objects={objects} />
+          </Col>
+        ) : null}
       </Row>
       <Row className="mt-4">
         <Col className="d-flex justify-content-center" xs={12}>

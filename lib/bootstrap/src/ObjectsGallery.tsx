@@ -20,7 +20,14 @@ export const ObjectsGallery: React.FunctionComponent<{
 }> = ({objects, renderInstitutionLink, renderObjectLink}) => (
   <>
     {objects.map(object => (
-      <div className="object-card-container" key={object.uri}>
+      <div
+        key={object.uri}
+        style={{
+          marginLeft: "20px",
+          marginBottom: "20px",
+          width: "400px",
+        }}
+      >
         <ObjectCard
           object={object}
           renderInstitutionLink={renderInstitutionLink}

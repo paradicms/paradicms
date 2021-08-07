@@ -10,11 +10,13 @@
     "@paradicms/lunr": "1.0.5",
     "@paradicms/models": "1.0.5",
     "@paradicms/react": "1.0.5",
-    "@paradicms/rdf": "1.0.5"
+    "@paradicms/rdf": "1.0.5",
+    "react-helmet": "6.1.0"
   },
   "devDependencies": {
     "@types/chai": "4.2.21",
     "@types/mocha": "8.2.3",
+    "@types/react-helmet": "6.1.2",
     "chai": "4.2.0",
     "copy-webpack-plugin": "9.0.1",
     "html-webpack-plugin": "5.3.2",

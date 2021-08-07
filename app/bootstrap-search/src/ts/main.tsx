@@ -16,11 +16,6 @@ import {DatasetRdfReader} from "@paradicms/rdf";
 import {IndexedDataset} from "@paradicms/models";
 import {QueryParamProvider} from "use-query-params";
 
-// // Set up FontAwesome
-// library.add(faImages);
-// library.add(faList);
-// dom.watch();
-
 const configurationQueryService: ConfigurationQueryService = new HardCodedConfigurationQueryService();
 
 configurationQueryService.getConfiguration().then(

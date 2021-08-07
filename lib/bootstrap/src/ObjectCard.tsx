@@ -1,6 +1,20 @@
 import * as React from "react";
-import {ImageDimensions, JoinedImage, JoinedInstitution, JoinedObject} from "@paradicms/models";
-import {Card, CardBody, CardHeader, CardImg, Col, Container, Row, Table} from "reactstrap";
+import {
+  ImageDimensions,
+  JoinedImage,
+  JoinedInstitution,
+  JoinedObject,
+} from "@paradicms/models";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  CardImg,
+  Col,
+  Container,
+  Row,
+  Table,
+} from "reactstrap";
 import {Accordion} from "./Accordion";
 import {RightsTable} from "./RightsTable";
 
@@ -8,27 +22,35 @@ export const ObjectCard: React.FunctionComponent<{
   object: JoinedObject;
   renderInstitutionLink?: (
     institution: JoinedInstitution,
-    children: React.ReactNode,
+    children: React.ReactNode
   ) => React.ReactNode;
   renderObjectLink: (
     object: JoinedObject,
-    children: React.ReactNode,
+    children: React.ReactNode
   ) => React.ReactNode;
 }> = ({object, renderInstitutionLink, renderObjectLink}) => {
   const thumbnailDimensions: ImageDimensions = {height: 200, width: 200};
-  const thumbnail = object.thumbnail({targetDimensions: thumbnailDimensions});
-  const thumbnailSrc = thumbnail?.src ?? JoinedImage.placeholderSrc(thumbnailDimensions);
+  const thumbnail = object.thumbnail({
+    targetDimensions: thumbnailDimensions,
+  });
+  const thumbnailSrc =
+    thumbnail?.src ?? JoinedImage.placeholderSrc(thumbnailDimensions);
 
   return (
-    <Card className="object-card">
+    <Card className="object-card text-center">
       <CardHeader tag="h3">
         {renderObjectLink(object, <>{object.title}</>)}
       </CardHeader>
       {renderObjectLink(
         object,
         <CardImg
-          className="thumbnail"
           src={thumbnailSrc}
+          style={{
+            height: thumbnailDimensions.height,
+            marginBottom: "20px",
+            marginTop: "20px",
+            width: thumbnailDimensions.width,
+          }}
           title={object.title}
         />
       )}
