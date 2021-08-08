@@ -41,7 +41,6 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
     {({
       objectQuery,
       objectQueryResults,
-      objectQueryResultsJoinedDataset,
       page,
       pageMax,
       setObjectQuery,
@@ -69,7 +68,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
       >
         <ObjectSearchGrid
           facets={objectQueryResults.facets}
-          objects={objectQueryResultsJoinedDataset.objects}
+          objects={objectQueryResults.joinedDataset.objects}
           onChangeFilters={filters => setObjectQuery({...objectQuery, filters})}
           onChangePage={setPage}
           page={page}

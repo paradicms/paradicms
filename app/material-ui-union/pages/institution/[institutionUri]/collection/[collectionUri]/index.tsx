@@ -12,7 +12,10 @@ import {
   ObjectJoinSelector,
 } from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {thumbnailTargetDimensions} from "@paradicms/material-ui";
+import {
+  ObjectSearchGrid,
+  thumbnailTargetDimensions,
+} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {readDataset} from "lib/readDataset";
@@ -56,7 +59,6 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
       {({
         objectQuery,
         objectQueryResults,
-        objectQueryResultsJoinedDataset,
         page,
         pageMax,
         setObjectQuery,
@@ -77,7 +79,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
         >
           <ObjectSearchGrid
             facets={objectQueryResults.facets}
-            objects={objectQueryResultsJoinedDataset.objects}
+            objects={objectQueryResults.joinedDataset.objects}
             onChangeFilters={filters =>
               setObjectQuery({...objectQuery, filters})
             }
