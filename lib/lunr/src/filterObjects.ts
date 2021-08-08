@@ -18,6 +18,10 @@ const testValueFilter = <T extends PrimitiveType>(
   filter: ValueFilter<T>,
   values: readonly T[]
 ): boolean => {
+  if (values.length === 0 && filter.excludeUnknown) {
+    return false;
+  }
+
   const excludeValues: readonly T[] = filter.excludeValues ?? [];
   const includeValues: readonly T[] = filter.includeValues ?? [];
   if (excludeValues.length === 0 && includeValues.length === 0) {
@@ -64,7 +68,7 @@ const testFilter = <ObjectT extends FilterableObject>(
       return testValueFilter(filter as InstitutionValueFilter, [
         object.institutionUri,
       ]);
-    case "StringPropertyValue":
+    case "StringPropertyValue": {
       return testValueFilter(
         filter as StringPropertyValueFilter,
         (object.properties ?? [])
@@ -74,6 +78,7 @@ const testFilter = <ObjectT extends FilterableObject>(
           )
           .map(property => property.value.toString())
       );
+    }
   }
 };
 
