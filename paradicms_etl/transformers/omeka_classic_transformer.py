@@ -25,6 +25,10 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 ElementTextTree = Dict[str, Dict[str, str]]
 
 
+def is_uri(value: str):
+    return value.startswith("http://") or value.startswith("https://")
+
+
 class OmekaClassicTransformer(_Transformer):
     def __init__(
         self,
@@ -165,9 +169,6 @@ class OmekaClassicTransformer(_Transformer):
         if not dc_element_text_tree:
             return ()
 
-        # def is_uri(value: str):
-        #     return value.startswith("http://") or value.startswith("https://")
-        #
         # The items JSON from the API has display name element identifiers instead of the Dublin Core URIs,
         # so we have to map back here.
         properties = set()
@@ -185,13 +186,11 @@ class OmekaClassicTransformer(_Transformer):
             ("Identifier", DublinCorePropertyDefinitions.IDENTIFIER),
             ("Is Referenced By", DublinCorePropertyDefinitions.IS_REFERENCED_BY),
             ("Language", DublinCorePropertyDefinitions.LANGUAGE),
-            ("License", DublinCorePropertyDefinitions.LICENSE),
             ("Medium", DublinCorePropertyDefinitions.MEDIUM),
             ("Provenance", DublinCorePropertyDefinitions.PROVENANCE),
             ("Publisher", DublinCorePropertyDefinitions.PUBLISHER),
             ("References", DublinCorePropertyDefinitions.IS_REFERENCED_BY),
             ("Relation", DublinCorePropertyDefinitions.RELATION),
-            ("Rights", DublinCorePropertyDefinitions.RIGHTS),
             ("Rights Holder", DublinCorePropertyDefinitions.RIGHTS_HOLDER),
             ("Source", DublinCorePropertyDefinitions.SOURCE),
             ("Spatial Coverage", DublinCorePropertyDefinitions.SPATIAL),
@@ -202,6 +201,16 @@ class OmekaClassicTransformer(_Transformer):
         ):
             for value in dc_element_text_tree.pop(key, []):
                 properties.add(Property(property_definition, value))
+
+        for (key, property_definition) in (
+            ("License", DublinCorePropertyDefinitions.LICENSE),
+            ("Rights", DublinCorePropertyDefinitions.RIGHTS),
+        ):
+            for value in dc_element_text_tree.pop(key, []):
+                if is_uri(value):
+                    properties.add(Property(property_definition, URIRef(value)))
+                else:
+                    properties.add(Property(property_definition, value))
 
         if dc_element_text_tree:
             self._logger.warn(
