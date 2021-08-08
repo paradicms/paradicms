@@ -38,13 +38,18 @@ module.exports = (env, argv) => {
       // public: "tunnel.minorgordon.net",
       stats: "minimal",
     },
-    devtool: mode === "production" ? "hidden-source-map" : "eval",
+    devtool: mode === "production" ? "hidden-source-map" : "eval-source-map",
     entry: {
       app: "./ts/main.tsx",
     },
     mode,
     module: {
       rules: [
+        {
+          test: /\.js$/,
+          enforce: "pre",
+          use: ["source-map-loader"],
+        },
         {
           test: /\.ttl$/i,
           use: "raw-loader",
