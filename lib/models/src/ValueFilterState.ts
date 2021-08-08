@@ -1,13 +1,16 @@
 import {ValueFilter} from "./ValueFilter";
 import {PrimitiveType} from "./PrimitiveType";
 
-export class ValueFilterState<T extends PrimitiveType> {
-  private readonly excludeValueSet: Set<T>;
-  private readonly includeValueSet: Set<T>;
-  private readonly initialFilter: ValueFilter<T>;
-  private readonly valueUniverse: readonly T[];
+export class ValueFilterState<
+  ValueT extends PrimitiveType,
+  ValueFilterT extends ValueFilter<ValueT>
+> {
+  private readonly excludeValueSet: Set<ValueT>;
+  private readonly includeValueSet: Set<ValueT>;
+  private readonly initialFilter: ValueFilterT;
+  private readonly valueUniverse: readonly ValueT[];
 
-  constructor(kwds: {filter: ValueFilter<T>; valueUniverse: readonly T[]}) {
+  constructor(kwds: {filter: ValueFilterT; valueUniverse: readonly ValueT[]}) {
     this.initialFilter = kwds.filter;
     this.valueUniverse = kwds.valueUniverse;
 
@@ -52,7 +55,7 @@ export class ValueFilterState<T extends PrimitiveType> {
     // console.info("Include: " + [...includeValueSet]);
   }
 
-  private change(include: boolean, value: T): void {
+  private change(include: boolean, value: ValueT): void {
     this.excludeValueSet.delete(value);
     this.includeValueSet.delete(value);
     if (include) {
@@ -74,7 +77,7 @@ export class ValueFilterState<T extends PrimitiveType> {
     }
   }
 
-  excludeValue(value: T): void {
+  excludeValue(value: ValueT): void {
     this.change(false, value);
   }
 
@@ -84,22 +87,26 @@ export class ValueFilterState<T extends PrimitiveType> {
     }
   }
 
-  includeValue(value: T): void {
+  includeValue(value: ValueT): void {
     this.change(true, value);
   }
 
-  includesValue(value: T): boolean {
+  includesValue(value: ValueT): boolean {
     return this.includeValueSet.has(value);
   }
 
-  get snapshot(): ValueFilter<T> {
+  get snapshot(): ValueFilterT {
     if (this.includeValueSet.size === this.valueUniverse.length) {
-      return {...this.initialFilter, excludeValues: null, includeValues: null};
+      return {
+        ...this.initialFilter,
+        excludeValues: undefined,
+        includeValues: undefined,
+      };
     } else if (this.excludeValueSet.size === this.valueUniverse.length) {
       return {
         ...this.initialFilter,
         excludeValues: [...this.excludeValueSet],
-        includeValues: null,
+        includeValues: undefined,
       }; // Explicitly exclude all values
     } else if (this.includeValueSet.size >= this.excludeValueSet.size) {
       if (this.excludeValueSet.size === 0) {
@@ -109,7 +116,7 @@ export class ValueFilterState<T extends PrimitiveType> {
       return {
         ...this.initialFilter,
         excludeValues: [...this.excludeValueSet],
-        includeValues: null,
+        includeValues: undefined,
       };
     } else {
       // includeValueIdSet includes fewer values. Those outside it will be excluded.
@@ -118,7 +125,7 @@ export class ValueFilterState<T extends PrimitiveType> {
       }
       return {
         ...this.initialFilter,
-        excludeValues: null,
+        excludeValues: undefined,
         includeValues: [...this.includeValueSet],
       };
     }

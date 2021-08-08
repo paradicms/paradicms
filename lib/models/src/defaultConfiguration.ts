@@ -30,6 +30,7 @@ export const defaultConfiguration: Configuration = {
       const facet: StringPropertyValueFacet = {
         propertyUri: propertyDefinition.uri,
         type: "StringPropertyValue",
+        unknownCount: 0,
         values: [],
       };
       facets.push(facet);
@@ -38,8 +39,6 @@ export const defaultConfiguration: Configuration = {
         label: propertyDefinition.label,
         propertyUri: propertyDefinition.uri,
         type: "StringPropertyValue",
-        excludeValues: null,
-        includeValues: null,
       };
       filters.push(filter);
     }
