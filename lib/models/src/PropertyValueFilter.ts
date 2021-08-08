@@ -1,7 +1,7 @@
 import {ValueFilter} from "./ValueFilter";
-import {PrimitiveValue} from "./PrimitiveValue";
+import {PrimitiveType} from "./PrimitiveType";
 
-export interface PropertyValueFilter<T extends PrimitiveValue>
+export interface PropertyValueFilter<T extends PrimitiveType>
   extends ValueFilter<T> {
   readonly propertyUri: string;
 }

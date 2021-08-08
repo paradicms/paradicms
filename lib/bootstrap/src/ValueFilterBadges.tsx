@@ -1,9 +1,9 @@
 import * as React from "react";
-import {PrimitiveValue, ValueFilter} from "@paradicms/models";
+import {PrimitiveType, ValueFilter} from "@paradicms/models";
 import {Badge} from "reactstrap";
 
 export class ValueFilterBadges<
-  T extends PrimitiveValue
+  T extends PrimitiveType
 > extends React.Component<{
   filter: ValueFilter<T>;
 }> {

@@ -1,5 +1,5 @@
 import {ModelRdfReader} from "./ModelRdfReader";
-import {Object, PrimitiveValue, Property} from "@paradicms/models";
+import {Object, PrimitiveType, Property} from "@paradicms/models";
 import {DCTERMS, FOAF, PARADICMS} from "./vocabularies";
 import {RightsRdfReader} from "./RightsRdfReader";
 import {ModelNode} from "./ModelNode";
@@ -25,7 +25,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
         continue;
       }
       const literal = new LiteralWrapper(nodeStatement.object as Literal);
-      let value: PrimitiveValue;
+      let value: PrimitiveType;
       if (literal.isBoolean()) {
         value = literal.toBoolean();
       } else if (literal.isInteger()) {

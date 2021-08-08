@@ -2,7 +2,7 @@ import {
   CollectionValueFilter,
   Filter,
   InstitutionValueFilter,
-  PrimitiveValue,
+  PrimitiveType,
   Property,
   StringPropertyValueFilter,
   ValueFilter,
@@ -14,7 +14,7 @@ interface FilterableObject {
   readonly properties: readonly Property[] | null;
 }
 
-const testValueFilter = <T extends PrimitiveValue>(
+const testValueFilter = <T extends PrimitiveType>(
   filter: ValueFilter<T>,
   values: readonly T[]
 ): boolean => {

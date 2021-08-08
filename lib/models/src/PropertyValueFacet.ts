@@ -1,7 +1,7 @@
 import {ValueFacet} from "./ValueFacet";
-import {PrimitiveValue} from "./PrimitiveValue";
+import {PrimitiveType} from "./PrimitiveType";
 
-export interface PropertyValueFacet<T extends PrimitiveValue>
+export interface PropertyValueFacet<T extends PrimitiveType>
   extends ValueFacet<T> {
   readonly propertyUri: string;
 }

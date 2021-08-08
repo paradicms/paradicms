@@ -1,6 +1,6 @@
 import * as React from "react";
 import {
-  PrimitiveValue,
+  PrimitiveType,
   ValueFacet,
   ValueFilter,
   ValueFilterState,
@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 
 export class ValueFilterControl<
-  T extends PrimitiveValue
+  T extends PrimitiveType
 > extends React.Component<{
   facet: ValueFacet<T>;
   filter: ValueFilter<T>;

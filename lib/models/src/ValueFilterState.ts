@@ -1,7 +1,7 @@
 import {ValueFilter} from "./ValueFilter";
-import {PrimitiveValue} from "./PrimitiveValue";
+import {PrimitiveType} from "./PrimitiveType";
 
-export class ValueFilterState<T extends PrimitiveValue> {
+export class ValueFilterState<T extends PrimitiveType> {
   private readonly excludeValueSet: Set<T>;
   private readonly includeValueSet: Set<T>;
   private readonly initialFilter: ValueFilter<T>;

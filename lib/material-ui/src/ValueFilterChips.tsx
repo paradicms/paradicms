@@ -1,15 +1,13 @@
 import * as React from "react";
 import {
-  PrimitiveValue,
+  PrimitiveType,
   ValueFacet,
   ValueFilter,
   ValueFilterState,
 } from "@paradicms/models";
 import {Chip} from "@material-ui/core";
 
-export class ValueFilterChips<
-  T extends PrimitiveValue
-> extends React.Component<{
+export class ValueFilterChips<T extends PrimitiveType> extends React.Component<{
   className: string;
   facet: ValueFacet<T>;
   filter: ValueFilter<T>;

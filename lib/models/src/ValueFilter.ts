@@ -1,7 +1,7 @@
 import {Filter} from "./Filter";
-import {PrimitiveValue} from "./PrimitiveValue";
+import {PrimitiveType} from "./PrimitiveType";
 
-export interface ValueFilter<T extends PrimitiveValue> extends Filter {
+export interface ValueFilter<T extends PrimitiveType> extends Filter {
   readonly excludeValues: readonly T[] | null;
   readonly includeValues: readonly T[] | null;
 }

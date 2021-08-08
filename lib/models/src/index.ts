@@ -37,7 +37,7 @@ export * from "./Property";
 export * from "./PropertyDefinition";
 export * from "./PropertyValueFacet";
 export * from "./PropertyValueFilter";
-export * from "./PrimitiveValue";
+export * from "./PrimitiveType";
 export * from "./PropertyValueFacet";
 export * from "./Rights";
 export * from "./RightsStatement";
