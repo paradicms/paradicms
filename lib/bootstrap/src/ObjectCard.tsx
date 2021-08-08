@@ -33,7 +33,7 @@ export const ObjectCard: React.FunctionComponent<{
 
   return (
     <Card className="object-card text-center">
-      <CardHeader tag="h3">
+      <CardHeader tag="h4">
         {renderObjectLink(object, <>{object.title}</>)}
       </CardHeader>
       {renderObjectLink(

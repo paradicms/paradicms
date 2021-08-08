@@ -12,7 +12,10 @@ export class ValueFilterBadges<
     const filterBadges: React.ReactNodeArray = [];
     (filter.excludeValues ?? []).forEach((excludeValue, excludeValueI) => {
       filterBadges.push(
-        <h5 className="d-inline-block ml-2" key={`exclude-${excludeValueI}`}>
+        <h5
+          className="d-inline-block ml-2"
+          key={`${filter.label}-excludeValue-${excludeValueI}`}
+        >
           <Badge className="p-2" color="warning" pill>
             Exclude&nbsp;
             {filter.label}: {excludeValue}
@@ -22,7 +25,10 @@ export class ValueFilterBadges<
     });
     (filter.includeValues ?? []).forEach((includeValue, includeValueI) => {
       filterBadges.push(
-        <h5 className="d-inline-block ml-2" key={`include-${includeValueI}`}>
+        <h5
+          className="d-inline-block ml-2"
+          key={`${filter.label}-includeValue-${includeValueI}`}
+        >
           <Badge className="p-2" color="warning" pill>
             Include&nbsp;
             {filter.label}: {includeValue}
