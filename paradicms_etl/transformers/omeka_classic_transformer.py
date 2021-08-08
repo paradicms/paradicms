@@ -7,6 +7,10 @@ from tqdm import tqdm
 
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
+from paradicms_etl.models.creative_commons_rights_statements import (
+    CreativeCommonsRightsStatements,
+)
 from paradicms_etl.models.dublin_core_property_definitions import (
     DublinCorePropertyDefinitions,
 )
@@ -14,6 +18,9 @@ from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.object import Object
 from paradicms_etl.models.property import Property
+from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
+    RightsStatementsDotOrgRightsStatements,
+)
 
 ElementTextTree = Dict[str, Dict[str, str]]
 
@@ -44,6 +51,9 @@ class OmekaClassicTransformer(_Transformer):
         self.__transform_file_timer = self._metrics_registry.timer("transform_file")
 
     def transform(self, *, collections, endpoint_url, files, items):
+        yield from CreativeCommonsLicenses.as_tuple()
+        yield from CreativeCommonsRightsStatements.as_tuple()
+        yield from RightsStatementsDotOrgRightsStatements.as_tuple()
         yield from DublinCorePropertyDefinitions.as_tuple()
 
         institution = self._transform_institution_from_arguments(
