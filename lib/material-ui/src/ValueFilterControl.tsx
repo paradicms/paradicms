@@ -22,7 +22,7 @@ const theme = createMuiTheme({
   } as any,
 });
 
-export const ValueFilterControls: React.FunctionComponent<{
+export const ValueFilterControl: React.FunctionComponent<{
   facet: ValueFacet<string>;
   filter: ValueFilter<string>;
   onChange: (newState: ValueFilter<string>) => void;

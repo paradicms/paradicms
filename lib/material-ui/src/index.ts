@@ -13,5 +13,5 @@ export * from "./ObjectsGallery";
 export * from "./PropertiesTable";
 export * from "./RightsTable";
 export * from "./ValueFilterChips";
-export * from "./ValueFilterControls";
+export * from "./ValueFilterControl";
 export * from "./thumbnailTargetDimensions";
