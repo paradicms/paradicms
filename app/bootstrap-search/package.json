@@ -11,6 +11,8 @@
     "@paradicms/models": "1.0.5",
     "@paradicms/react": "1.0.5",
     "@paradicms/rdf": "1.0.5",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
     "react-helmet": "6.1.0"
   },
   "devDependencies": {
