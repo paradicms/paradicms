@@ -16,6 +16,7 @@ import {DatasetRdfReader} from "@paradicms/rdf";
 import {IndexedDataset} from "@paradicms/models";
 import {QueryParamProvider} from "use-query-params";
 import {BrowserRouter as Router, Route} from "react-router-dom";
+import {thumbnailTargetDimensions} from "@paradicms/bootstrap";
 
 const configurationQueryService: ConfigurationQueryService = new HardCodedConfigurationQueryService();
 
@@ -26,7 +27,9 @@ configurationQueryService.getConfiguration().then(
     const objectQueryService = new LunrObjectQueryService({
       configuration: configuration.objectSearch,
       dataset: new IndexedDataset(dataset),
-      objectJoinSelector: {},
+      objectJoinSelector: {
+        thumbnail: {targetDimensions: thumbnailTargetDimensions},
+      },
     });
 
     ReactDOM.render(

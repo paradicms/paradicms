@@ -10,6 +10,7 @@ export * from "./ObjectQueryResultsContainer";
 export * from "./ObjectSearchContainer";
 export * from "./PropertiesTable";
 export * from "./RightsTable";
+export * from "./thumbnailTargetDimensions";
 export * from "./ValueFilterBadges";
 export * from "./ValueFilterControl";
 export const STYLESHEET_HREF_DEFAULT =

@@ -1,10 +1,5 @@
 import * as React from "react";
-import {
-  ImageDimensions,
-  JoinedImage,
-  JoinedInstitution,
-  JoinedObject,
-} from "@paradicms/models";
+import {JoinedImage, JoinedInstitution, JoinedObject} from "@paradicms/models";
 import {
   Card,
   CardBody,
@@ -17,6 +12,7 @@ import {
 } from "reactstrap";
 import {Accordion} from "./Accordion";
 import {RightsTable} from "./RightsTable";
+import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 
 export const ObjectCard: React.FunctionComponent<{
   object: JoinedObject;
@@ -29,12 +25,11 @@ export const ObjectCard: React.FunctionComponent<{
     children: React.ReactNode
   ) => React.ReactNode;
 }> = ({object, renderInstitutionLink, renderObjectLink}) => {
-  const thumbnailDimensions: ImageDimensions = {height: 200, width: 200};
   const thumbnail = object.thumbnail({
-    targetDimensions: thumbnailDimensions,
+    targetDimensions: thumbnailTargetDimensions,
   });
   const thumbnailSrc =
-    thumbnail?.src ?? JoinedImage.placeholderSrc(thumbnailDimensions);
+    thumbnail?.src ?? JoinedImage.placeholderSrc(thumbnailTargetDimensions);
 
   return (
     <Card className="object-card text-center">
@@ -46,10 +41,10 @@ export const ObjectCard: React.FunctionComponent<{
         <CardImg
           src={thumbnailSrc}
           style={{
-            height: thumbnailDimensions.height,
+            height: thumbnailTargetDimensions.height,
             marginBottom: "20px",
             marginTop: "20px",
-            width: thumbnailDimensions.width,
+            width: thumbnailTargetDimensions.width,
           }}
           title={object.title}
         />
