@@ -278,20 +278,6 @@ vra:worktype a paradicms:PropertyDefinition ;
     skos:prefLabel "Copyright Not Evaluated" ;
     skos:scopeNote "This Rights Statement should be used for Items for which the copyright status is unknown and for which the organization that intends to make the Item available has not undertaken an effort to determine the copyright status of the underlying Work." .
 
-<http://rightsstatements.org/vocab/InC-EDU/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright but that educational use is allowed without the need to obtain additional permission." ;
-    dcterms:identifier "InC-EDU" ;
-    skos:definition """This Item is protected by copyright and/or related rights.
-
-  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use. In addition, no permission is required from the rights-holder(s) for educational uses.
-
-  For other uses, you need to obtain permission from the rights-holder(s).""" ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
-    skos:prefLabel "In Copyright - Educational Use Permitted" ;
-    skos:scopeNote "This Rights Statement can be used only for copyrighted Items for which the organization making the Item available is the rights-holder or has been explicitly authorized by the rights-holder(s) to allow third parties to use their Work(s) for educational purposes without first obtaining permission." .
-
 <http://rightsstatements.org/vocab/InC-NC/1.0/> a paradicms:RightsStatement ;
     dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright but that non-commercial use is allowed without the need to obtain additional permission." ;
     dcterms:identifier "InC-NC" ;
@@ -468,7 +454,7 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
     dcterms:medium "glass",
         "metal",
         "silk" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:subject "Clothing and dress" ;
     dcterms:temporal "1910s" ;
@@ -494,7 +480,7 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
     dcterms:medium "China silk",
         "cotton",
         "metal" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "England",
         "United Kingdom" ;
@@ -524,6 +510,48 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
     ns1:waistline "natural waistline" ;
     ns1:workType "dress" .
 
+<https://vcomeka.com/vccc/api/items/2869> a paradicms:Object ;
+    dcterms:date "1872" ;
+    dcterms:description "Off-white silk gauze and lace blouse with metal snaps, hook-eye closure, and silk-covered buttons; button-up front to V-neck collar with beige trim; six snap closures at center front along with five decorative silk-colored buttons; fitted sleeves with possible cuff alteration; gathering at waist with hook-eye closure at center front; fagoting stitch at arms-eye, center back, shoulder, back of collar; lace covers whole blouse except for triangle at center back, panels on either side of center front opening." ;
+    dcterms:extent "36 inches (chest), 30 inches (waist), 15.5 inches (center front length), 16.5 inches (center back length), 8 inches (underarm to waist). other measurements: 22 inches (sleeve length)" ;
+    dcterms:identifier "VC2012054",
+        "VC2012066" ;
+    dcterms:medium "gauze",
+        "lace",
+        "metal",
+        "silk" ;
+    dcterms:provenance "Owned by Emily McHuaine DuBois Mackay" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
+    dcterms:spatial "Minnesota",
+        "Rice County",
+        "United States" ;
+    dcterms:subject "Clothing and dress",
+        "Tops" ;
+    dcterms:temporal "1870s",
+        "1880s" ;
+    dcterms:title "Off-White Lace Bodice" ;
+    dcterms:type "Physical Object" ;
+    vra:culturalContext "American" ;
+    vra:earliestDate "1872" ;
+    vra:hasTechnique "machine sewing" ;
+    vra:latestDate "1872" ;
+    paradicms:collection <https://vcomeka.com/vccc/api/collections/1> ;
+    paradicms:institution <https://vcomeka.com/vccc/> ;
+    foaf:page <https://vcomeka.com/vccc/items/show/2869> ;
+    ns1:classification "clothing",
+        "costume" ;
+    ns1:closure "snaps" ;
+    ns1:closurePlacement "center front closure" ;
+    ns1:colorMain "cream" ;
+    ns1:colorSecondary "beige" ;
+    ns1:condition "good" ;
+    ns1:costumeComponents "buttons" ;
+    ns1:gender "womenswear" ;
+    ns1:neckline "v-neck" ;
+    ns1:sleeveType "straight" ;
+    ns1:workType "blouse" .
+
 <https://vcomeka.com/vccc/api/items/2870> a paradicms:Object ;
     dcterms:date "1872" ;
     dcterms:description "Cream and blue striped silk voile bodice (a) with matching cream and blue fichu (b), lace details, cotton or lawn lining, metal and boning; band collar neckline; fitted torso with natural waist and two back pleats; two piece sleeve with seams at top and bottom; green (once blue) taffeta at top sleeve, cuff, and arms-eye; lace detail at top arm seam and arms-eye; seven bones; seven hook-and-eye closures center front; two hook-and-eye at front waist; eight large missing buttons at center front; fichu (b) has ribbon border and black velvet alteration." ;
@@ -540,7 +568,7 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
         "velvet",
         "voile" ;
     dcterms:provenance "Worn by Emily McHuaine DuBois Mackay" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "United States" ;
     dcterms:subject "Clothing and dress",
@@ -579,7 +607,7 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
     dcterms:medium "cotton",
         "elastic",
         "metal" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "United States" ;
     dcterms:subject "Clothing and dress",
@@ -629,7 +657,7 @@ D: 11 inches (center front length); 11 inches (neck)""" ;
     dcterms:medium "faille",
         "mesh",
         "taffeta" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "District of Columbia",
         "United States",
@@ -671,7 +699,7 @@ D: 11 inches (center front length); 11 inches (neck)""" ;
     dcterms:provenance """This ensemble belonged to Jane MacCoy Bars (1874-1961) from Argyle, NY.  It was donated by her granddaughter Nancy Fogle, Vassar Class of 1979.\r
 \r
 A note came with the dress reading, "Dress belonged to my grandmother -- Jane MacCoy Bars 1874-1961 from Argyle, NY  Nancy Fogle Class of 1979.\"""" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "Argyle",
         "New York",
@@ -765,18 +793,6 @@ A note came with the dress reading, "Dress belonged to my grandmother -- Jane Ma
     foaf:thumbnail <https://vcomeka.com/vccc/files/fullsize/033a1caff9f8090c31c37e23d753bf2d.jpg>,
         <https://vcomeka.com/vccc/files/square_thumbnails/033a1caff9f8090c31c37e23d753bf2d.jpg>,
         <https://vcomeka.com/vccc/files/thumbnails/033a1caff9f8090c31c37e23d753bf2d.jpg> .
-
-<https://vcomeka.com/vccc/files/original/040bfdad9e28d1faa08cb221de28b585.JPG> a paradicms:Image ;
-    dcterms:created "2020-02-14T20:37:25+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:59:11+00:00"^^xsd:dateTime ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    exif:height 3888 ;
-    exif:width 5184 ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> ;
-    foaf:thumbnail <https://vcomeka.com/vccc/files/fullsize/040bfdad9e28d1faa08cb221de28b585.jpg>,
-        <https://vcomeka.com/vccc/files/square_thumbnails/040bfdad9e28d1faa08cb221de28b585.jpg>,
-        <https://vcomeka.com/vccc/files/thumbnails/040bfdad9e28d1faa08cb221de28b585.jpg> .
 
 <https://vcomeka.com/vccc/files/original/0431ea5ba1e28c679b9a795cddfecfdc.JPG> a paradicms:Image ;
     dcterms:created "2020-01-31T03:17:29+00:00"^^xsd:dateTime ;
@@ -1766,18 +1782,6 @@ A note came with the dress reading, "Dress belonged to my grandmother -- Jane Ma
         <https://vcomeka.com/vccc/files/square_thumbnails/2eecc14491c0813606320a1c10e19ec7.jpg>,
         <https://vcomeka.com/vccc/files/thumbnails/2eecc14491c0813606320a1c10e19ec7.jpg> .
 
-<https://vcomeka.com/vccc/files/original/2f07d16539141e73fd168c311813cbc5.JPG> a paradicms:Image ;
-    dcterms:created "2020-02-12T21:14:50+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:58:56+00:00"^^xsd:dateTime ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    exif:height 3888 ;
-    exif:width 5184 ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> ;
-    foaf:thumbnail <https://vcomeka.com/vccc/files/fullsize/2f07d16539141e73fd168c311813cbc5.jpg>,
-        <https://vcomeka.com/vccc/files/square_thumbnails/2f07d16539141e73fd168c311813cbc5.jpg>,
-        <https://vcomeka.com/vccc/files/thumbnails/2f07d16539141e73fd168c311813cbc5.jpg> .
-
 <https://vcomeka.com/vccc/files/original/2fb0072c9d93ad0982916a06cf7042c1.JPG> a paradicms:Image ;
     dcterms:created "2020-01-30T03:05:01+00:00"^^xsd:dateTime ;
     dcterms:format "image/jpeg" ;
@@ -2217,18 +2221,6 @@ A note came with the dress reading, "Dress belonged to my grandmother -- Jane Ma
     foaf:thumbnail <https://vcomeka.com/vccc/files/fullsize/3e87261b1ca689fb84cab361f1a3e377.jpg>,
         <https://vcomeka.com/vccc/files/square_thumbnails/3e87261b1ca689fb84cab361f1a3e377.jpg>,
         <https://vcomeka.com/vccc/files/thumbnails/3e87261b1ca689fb84cab361f1a3e377.jpg> .
-
-<https://vcomeka.com/vccc/files/original/3ef6db19f9e77986745a7ccf85198deb.JPG> a paradicms:Image ;
-    dcterms:created "2020-02-14T20:37:49+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:59:25+00:00"^^xsd:dateTime ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    exif:height 3888 ;
-    exif:width 5184 ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> ;
-    foaf:thumbnail <https://vcomeka.com/vccc/files/fullsize/3ef6db19f9e77986745a7ccf85198deb.jpg>,
-        <https://vcomeka.com/vccc/files/square_thumbnails/3ef6db19f9e77986745a7ccf85198deb.jpg>,
-        <https://vcomeka.com/vccc/files/thumbnails/3ef6db19f9e77986745a7ccf85198deb.jpg> .
 
 <https://vcomeka.com/vccc/files/original/3f603b79994d2ce49f27a9dc30d7959a.JPG> a paradicms:Image ;
     dcterms:created "2020-01-30T03:04:05+00:00"^^xsd:dateTime ;
@@ -2705,18 +2697,6 @@ A note came with the dress reading, "Dress belonged to my grandmother -- Jane Ma
     foaf:thumbnail <https://vcomeka.com/vccc/files/fullsize/5482a7583d3c3556998d929782812e08.jpg>,
         <https://vcomeka.com/vccc/files/square_thumbnails/5482a7583d3c3556998d929782812e08.jpg>,
         <https://vcomeka.com/vccc/files/thumbnails/5482a7583d3c3556998d929782812e08.jpg> .
-
-<https://vcomeka.com/vccc/files/original/54e323f5e6be418cac7bfdab9a562002.JPG> a paradicms:Image ;
-    dcterms:created "2020-02-14T20:37:42+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:59:20+00:00"^^xsd:dateTime ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    exif:height 3888 ;
-    exif:width 5184 ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> ;
-    foaf:thumbnail <https://vcomeka.com/vccc/files/fullsize/54e323f5e6be418cac7bfdab9a562002.jpg>,
-        <https://vcomeka.com/vccc/files/square_thumbnails/54e323f5e6be418cac7bfdab9a562002.jpg>,
-        <https://vcomeka.com/vccc/files/thumbnails/54e323f5e6be418cac7bfdab9a562002.jpg> .
 
 <https://vcomeka.com/vccc/files/original/555e686c39485b34ec373bec2eb03a5a.jpg> a paradicms:Image ;
     dcterms:created "2015-12-02T22:23:23+00:00"^^xsd:dateTime ;
@@ -3337,18 +3317,6 @@ A note came with the dress reading, "Dress belonged to my grandmother -- Jane Ma
     foaf:thumbnail <https://vcomeka.com/vccc/files/fullsize/6eb25f674c40ecff761a16fcd3a7e31f.jpg>,
         <https://vcomeka.com/vccc/files/square_thumbnails/6eb25f674c40ecff761a16fcd3a7e31f.jpg>,
         <https://vcomeka.com/vccc/files/thumbnails/6eb25f674c40ecff761a16fcd3a7e31f.jpg> .
-
-<https://vcomeka.com/vccc/files/original/6eb3c1ab46e803b62dc8abc4ccfa67de.JPG> a paradicms:Image ;
-    dcterms:created "2020-02-12T21:14:41+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:58:51+00:00"^^xsd:dateTime ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    exif:height 3888 ;
-    exif:width 5184 ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> ;
-    foaf:thumbnail <https://vcomeka.com/vccc/files/fullsize/6eb3c1ab46e803b62dc8abc4ccfa67de.jpg>,
-        <https://vcomeka.com/vccc/files/square_thumbnails/6eb3c1ab46e803b62dc8abc4ccfa67de.jpg>,
-        <https://vcomeka.com/vccc/files/thumbnails/6eb3c1ab46e803b62dc8abc4ccfa67de.jpg> .
 
 <https://vcomeka.com/vccc/files/original/6f7a4e48b60e5f3f4061c2dd995e9d36.jpg> a paradicms:Image ;
     dcterms:created "2020-02-01T16:05:46+00:00"^^xsd:dateTime ;
@@ -5654,18 +5622,6 @@ A note came with the dress reading, "Dress belonged to my grandmother -- Jane Ma
         <https://vcomeka.com/vccc/files/square_thumbnails/c2d2ce878d010aa49520eda3a4e317e6.jpg>,
         <https://vcomeka.com/vccc/files/thumbnails/c2d2ce878d010aa49520eda3a4e317e6.jpg> .
 
-<https://vcomeka.com/vccc/files/original/c4a9c04365c540802d5013077f373537.JPG> a paradicms:Image ;
-    dcterms:created "2020-02-14T20:37:35+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:59:15+00:00"^^xsd:dateTime ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    exif:height 3888 ;
-    exif:width 5184 ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> ;
-    foaf:thumbnail <https://vcomeka.com/vccc/files/fullsize/c4a9c04365c540802d5013077f373537.jpg>,
-        <https://vcomeka.com/vccc/files/square_thumbnails/c4a9c04365c540802d5013077f373537.jpg>,
-        <https://vcomeka.com/vccc/files/thumbnails/c4a9c04365c540802d5013077f373537.jpg> .
-
 <https://vcomeka.com/vccc/files/original/c4ceee785b76785c92c81548113fa591.JPG> a paradicms:Image ;
     dcterms:created "2020-02-01T06:12:01+00:00"^^xsd:dateTime ;
     dcterms:format "image/jpeg" ;
@@ -7526,15 +7482,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     paradicms:institution <https://vcomeka.com/vccc/> ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/797> .
 
-<https://vcomeka.com/vccc/files/fullsize/040bfdad9e28d1faa08cb221de28b585.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-14T20:37:25+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:59:11+00:00"^^xsd:dateTime ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
-
 <https://vcomeka.com/vccc/files/fullsize/0431ea5ba1e28c679b9a795cddfecfdc.jpg> a paradicms:Image ;
     dcterms:created "2020-01-31T03:17:29+00:00"^^xsd:dateTime ;
     dcterms:format "image/jpeg" ;
@@ -8291,15 +8238,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     paradicms:institution <https://vcomeka.com/vccc/> ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/1157> .
 
-<https://vcomeka.com/vccc/files/fullsize/2f07d16539141e73fd168c311813cbc5.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-12T21:14:50+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:58:56+00:00"^^xsd:dateTime ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
-
 <https://vcomeka.com/vccc/files/fullsize/2fb0072c9d93ad0982916a06cf7042c1.jpg> a paradicms:Image ;
     dcterms:created "2020-01-30T03:05:01+00:00"^^xsd:dateTime ;
     dcterms:format "image/jpeg" ;
@@ -8632,15 +8570,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     paradicms:imageMaxWidth 600 ;
     paradicms:institution <https://vcomeka.com/vccc/> ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/921> .
-
-<https://vcomeka.com/vccc/files/fullsize/3ef6db19f9e77986745a7ccf85198deb.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-14T20:37:49+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:59:25+00:00"^^xsd:dateTime ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
 
 <https://vcomeka.com/vccc/files/fullsize/3f603b79994d2ce49f27a9dc30d7959a.jpg> a paradicms:Image ;
     dcterms:created "2020-01-30T03:04:05+00:00"^^xsd:dateTime ;
@@ -9001,15 +8930,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     paradicms:imageMaxWidth 600 ;
     paradicms:institution <https://vcomeka.com/vccc/> ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/6213> .
-
-<https://vcomeka.com/vccc/files/fullsize/54e323f5e6be418cac7bfdab9a562002.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-14T20:37:42+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:59:20+00:00"^^xsd:dateTime ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
 
 <https://vcomeka.com/vccc/files/fullsize/555e686c39485b34ec373bec2eb03a5a.jpg> a paradicms:Image ;
     dcterms:created "2015-12-02T22:23:23+00:00"^^xsd:dateTime ;
@@ -9487,15 +9407,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     paradicms:imageMaxWidth 600 ;
     paradicms:institution <https://vcomeka.com/vccc/> ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/1147> .
-
-<https://vcomeka.com/vccc/files/fullsize/6eb3c1ab46e803b62dc8abc4ccfa67de.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-12T21:14:41+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:58:51+00:00"^^xsd:dateTime ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
 
 <https://vcomeka.com/vccc/files/fullsize/6f7a4e48b60e5f3f4061c2dd995e9d36.jpg> a paradicms:Image ;
     dcterms:created "2020-02-01T16:05:46+00:00"^^xsd:dateTime ;
@@ -11252,15 +11163,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     paradicms:institution <https://vcomeka.com/vccc/> ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/1156> .
 
-<https://vcomeka.com/vccc/files/fullsize/c4a9c04365c540802d5013077f373537.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-14T20:37:35+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:59:15+00:00"^^xsd:dateTime ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
-
 <https://vcomeka.com/vccc/files/fullsize/c4ceee785b76785c92c81548113fa591.jpg> a paradicms:Image ;
     dcterms:created "2020-02-01T06:12:01+00:00"^^xsd:dateTime ;
     dcterms:format "image/jpeg" ;
@@ -12539,15 +12441,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     exif:width 150 ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/797> .
 
-<https://vcomeka.com/vccc/files/square_thumbnails/040bfdad9e28d1faa08cb221de28b585.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-14T20:37:25+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:59:11+00:00"^^xsd:dateTime ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    exif:height 150 ;
-    exif:width 150 ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
-
 <https://vcomeka.com/vccc/files/square_thumbnails/0431ea5ba1e28c679b9a795cddfecfdc.jpg> a paradicms:Image ;
     dcterms:created "2020-01-31T03:17:29+00:00"^^xsd:dateTime ;
     dcterms:format "image/jpeg" ;
@@ -13304,15 +13197,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     exif:width 150 ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/1157> .
 
-<https://vcomeka.com/vccc/files/square_thumbnails/2f07d16539141e73fd168c311813cbc5.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-12T21:14:50+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:58:56+00:00"^^xsd:dateTime ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    exif:height 150 ;
-    exif:width 150 ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
-
 <https://vcomeka.com/vccc/files/square_thumbnails/2fb0072c9d93ad0982916a06cf7042c1.jpg> a paradicms:Image ;
     dcterms:created "2020-01-30T03:05:01+00:00"^^xsd:dateTime ;
     dcterms:format "image/jpeg" ;
@@ -13645,15 +13529,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     exif:height 150 ;
     exif:width 150 ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/921> .
-
-<https://vcomeka.com/vccc/files/square_thumbnails/3ef6db19f9e77986745a7ccf85198deb.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-14T20:37:49+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:59:25+00:00"^^xsd:dateTime ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    exif:height 150 ;
-    exif:width 150 ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
 
 <https://vcomeka.com/vccc/files/square_thumbnails/3f603b79994d2ce49f27a9dc30d7959a.jpg> a paradicms:Image ;
     dcterms:created "2020-01-30T03:04:05+00:00"^^xsd:dateTime ;
@@ -14014,15 +13889,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     exif:height 150 ;
     exif:width 150 ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/6213> .
-
-<https://vcomeka.com/vccc/files/square_thumbnails/54e323f5e6be418cac7bfdab9a562002.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-14T20:37:42+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:59:20+00:00"^^xsd:dateTime ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    exif:height 150 ;
-    exif:width 150 ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
 
 <https://vcomeka.com/vccc/files/square_thumbnails/555e686c39485b34ec373bec2eb03a5a.jpg> a paradicms:Image ;
     dcterms:created "2015-12-02T22:23:23+00:00"^^xsd:dateTime ;
@@ -14500,15 +14366,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     exif:height 150 ;
     exif:width 150 ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/1147> .
-
-<https://vcomeka.com/vccc/files/square_thumbnails/6eb3c1ab46e803b62dc8abc4ccfa67de.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-12T21:14:41+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:58:51+00:00"^^xsd:dateTime ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    exif:height 150 ;
-    exif:width 150 ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
 
 <https://vcomeka.com/vccc/files/square_thumbnails/6f7a4e48b60e5f3f4061c2dd995e9d36.jpg> a paradicms:Image ;
     dcterms:created "2020-02-01T16:05:46+00:00"^^xsd:dateTime ;
@@ -16265,15 +16122,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     exif:width 150 ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/1156> .
 
-<https://vcomeka.com/vccc/files/square_thumbnails/c4a9c04365c540802d5013077f373537.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-14T20:37:35+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:59:15+00:00"^^xsd:dateTime ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    exif:height 150 ;
-    exif:width 150 ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
-
 <https://vcomeka.com/vccc/files/square_thumbnails/c4ceee785b76785c92c81548113fa591.jpg> a paradicms:Image ;
     dcterms:created "2020-02-01T06:12:01+00:00"^^xsd:dateTime ;
     dcterms:format "image/jpeg" ;
@@ -17552,15 +17400,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     paradicms:institution <https://vcomeka.com/vccc/> ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/797> .
 
-<https://vcomeka.com/vccc/files/thumbnails/040bfdad9e28d1faa08cb221de28b585.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-14T20:37:25+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:59:11+00:00"^^xsd:dateTime ;
-    paradicms:imageMaxHeight 200 ;
-    paradicms:imageMaxWidth 200 ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
-
 <https://vcomeka.com/vccc/files/thumbnails/0431ea5ba1e28c679b9a795cddfecfdc.jpg> a paradicms:Image ;
     dcterms:created "2020-01-31T03:17:29+00:00"^^xsd:dateTime ;
     dcterms:format "image/jpeg" ;
@@ -18317,15 +18156,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     paradicms:institution <https://vcomeka.com/vccc/> ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/1157> .
 
-<https://vcomeka.com/vccc/files/thumbnails/2f07d16539141e73fd168c311813cbc5.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-12T21:14:50+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:58:56+00:00"^^xsd:dateTime ;
-    paradicms:imageMaxHeight 200 ;
-    paradicms:imageMaxWidth 200 ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
-
 <https://vcomeka.com/vccc/files/thumbnails/2fb0072c9d93ad0982916a06cf7042c1.jpg> a paradicms:Image ;
     dcterms:created "2020-01-30T03:05:01+00:00"^^xsd:dateTime ;
     dcterms:format "image/jpeg" ;
@@ -18658,15 +18488,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     paradicms:imageMaxWidth 200 ;
     paradicms:institution <https://vcomeka.com/vccc/> ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/921> .
-
-<https://vcomeka.com/vccc/files/thumbnails/3ef6db19f9e77986745a7ccf85198deb.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-14T20:37:49+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:59:25+00:00"^^xsd:dateTime ;
-    paradicms:imageMaxHeight 200 ;
-    paradicms:imageMaxWidth 200 ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
 
 <https://vcomeka.com/vccc/files/thumbnails/3f603b79994d2ce49f27a9dc30d7959a.jpg> a paradicms:Image ;
     dcterms:created "2020-01-30T03:04:05+00:00"^^xsd:dateTime ;
@@ -19027,15 +18848,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     paradicms:imageMaxWidth 200 ;
     paradicms:institution <https://vcomeka.com/vccc/> ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/6213> .
-
-<https://vcomeka.com/vccc/files/thumbnails/54e323f5e6be418cac7bfdab9a562002.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-14T20:37:42+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:59:20+00:00"^^xsd:dateTime ;
-    paradicms:imageMaxHeight 200 ;
-    paradicms:imageMaxWidth 200 ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
 
 <https://vcomeka.com/vccc/files/thumbnails/555e686c39485b34ec373bec2eb03a5a.jpg> a paradicms:Image ;
     dcterms:created "2015-12-02T22:23:23+00:00"^^xsd:dateTime ;
@@ -19513,15 +19325,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     paradicms:imageMaxWidth 200 ;
     paradicms:institution <https://vcomeka.com/vccc/> ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/1147> .
-
-<https://vcomeka.com/vccc/files/thumbnails/6eb3c1ab46e803b62dc8abc4ccfa67de.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-12T21:14:41+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:58:51+00:00"^^xsd:dateTime ;
-    paradicms:imageMaxHeight 200 ;
-    paradicms:imageMaxWidth 200 ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
 
 <https://vcomeka.com/vccc/files/thumbnails/6f7a4e48b60e5f3f4061c2dd995e9d36.jpg> a paradicms:Image ;
     dcterms:created "2020-02-01T16:05:46+00:00"^^xsd:dateTime ;
@@ -21278,15 +21081,6 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     paradicms:institution <https://vcomeka.com/vccc/> ;
     foaf:depicts <https://vcomeka.com/vccc/api/items/1156> .
 
-<https://vcomeka.com/vccc/files/thumbnails/c4a9c04365c540802d5013077f373537.jpg> a paradicms:Image ;
-    dcterms:created "2020-02-14T20:37:35+00:00"^^xsd:dateTime ;
-    dcterms:format "image/jpeg" ;
-    dcterms:modified "2021-01-17T02:59:15+00:00"^^xsd:dateTime ;
-    paradicms:imageMaxHeight 200 ;
-    paradicms:imageMaxWidth 200 ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    foaf:depicts <https://vcomeka.com/vccc/api/items/6297> .
-
 <https://vcomeka.com/vccc/files/thumbnails/c4ceee785b76785c92c81548113fa591.jpg> a paradicms:Image ;
     dcterms:created "2020-02-01T06:12:01+00:00"^^xsd:dateTime ;
     dcterms:format "image/jpeg" ;
@@ -22531,7 +22325,7 @@ ns1:wornBy a paradicms:PropertyDefinition ;
         "silk",
         "taffeta",
         "velvet" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "United States" ;
     dcterms:subject "Clothing and dress",
@@ -22570,7 +22364,7 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     dcterms:medium "cotton",
         "lace",
         "net" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:subject "Clothing and dress" ;
     dcterms:temporal "1900s",
@@ -22606,7 +22400,7 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     dcterms:identifier "VC2015024" ;
     dcterms:medium "cotton",
         "silk" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:subject "Clothing and dress",
         "Underwear" ;
@@ -22640,7 +22434,7 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     dcterms:extent "48.25 inches (center front length), 51.75 inches (center back length), 120.75 inches (hem circumference)," ;
     dcterms:identifier "VC2015022" ;
     dcterms:medium "wool" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "United States" ;
     dcterms:subject "Clothing and dress",
@@ -22688,7 +22482,7 @@ ns1:wornBy a paradicms:PropertyDefinition ;
         "net",
         "ribbon",
         "silk" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "United States" ;
     dcterms:subject "Clothing and dress",
@@ -22728,7 +22522,7 @@ ns1:wornBy a paradicms:PropertyDefinition ;
         "metal",
         "velvet",
         "wool" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:subject "Bustle Ensembles",
         "Clothing and dress" ;
@@ -22770,7 +22564,7 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     dcterms:identifier "VC2011009" ;
     dcterms:medium "cotton",
         "wool" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "United States" ;
     dcterms:subject "Clothing and dress",
@@ -22807,7 +22601,7 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     dcterms:medium "cotton",
         "silk",
         "wool" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "Italy" ;
     dcterms:subject "Clothing and dress",
@@ -22852,7 +22646,7 @@ ns1:wornBy a paradicms:PropertyDefinition ;
         "leather",
         "metal",
         "wool" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "Scotland",
         "United Kingdom" ;
@@ -22898,7 +22692,7 @@ ns1:wornBy a paradicms:PropertyDefinition ;
     dcterms:language "english" ;
     dcterms:medium "cotton",
         "lace" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "United States" ;
     dcterms:subject "Clothing and dress",
@@ -22947,7 +22741,7 @@ Skirt: 30 inches (waist), 2 inch extension added; 41 inches (center front length
         "muslin",
         "satin",
         "silk" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:subject "Clothing and dress",
         "Evening Ensembles" ;
@@ -22988,7 +22782,7 @@ Skirt: 30 inches (waist), 2 inch extension added; 41 inches (center front length
     dcterms:language "eng" ;
     dcterms:medium "cotton",
         "twill" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "United States" ;
     dcterms:subject "Clothing and dress",
@@ -23024,7 +22818,7 @@ Skirt: 30 inches (waist), 2 inch extension added; 41 inches (center front length
     dcterms:identifier "VC2001038" ;
     dcterms:language "eng" ;
     dcterms:medium "cotton" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:subject "Clothing and dress",
         "Sport" ;
@@ -23058,7 +22852,7 @@ Skirt: 30 inches (waist), 2 inch extension added; 41 inches (center front length
     dcterms:extent "28 inches (waist), 34 inches (hips), 19.25 inches (center front length), 21.5 inches (center back length), 19 inches (hem circumference)," ;
     dcterms:identifier "VC2001044" ;
     dcterms:language "eng" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "United States" ;
     dcterms:subject "Clothing and dress",
@@ -23091,7 +22885,7 @@ Skirt: 30 inches (waist), 2 inch extension added; 41 inches (center front length
     dcterms:extent "31 inches (waist), 33 inches (hips), 19.75 inches (center front length), 20.5 inches (center back length), other measurements: 23'' (leg hem circumference)" ;
     dcterms:identifier "VC2001045" ;
     dcterms:language "eng" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "United States" ;
     dcterms:subject "Clothing and dress",
@@ -23125,7 +22919,7 @@ Skirt: 30 inches (waist), 2 inch extension added; 41 inches (center front length
     dcterms:medium "dupioni",
         "metal",
         "silk" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "Taiwan" ;
     dcterms:subject "Clothing and dress",
@@ -23161,7 +22955,7 @@ Skirt: 30 inches (waist), 2 inch extension added; 41 inches (center front length
 \r
 width at hem: 20\"""" ;
     dcterms:identifier "VC2017003" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "United States" ;
     dcterms:subject "Accessories",
@@ -23208,7 +23002,7 @@ width at hem: 20\"""" ;
         "starch",
         "synthetic fiber",
         "velvet" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:subject "Clothing and dress",
         "Day Ensembles" ;
@@ -23252,7 +23046,7 @@ width at hem: 20\"""" ;
     dcterms:medium "plastic",
         "rayon",
         "wool" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "Chicago",
         "Cook",
@@ -23295,7 +23089,7 @@ width at hem: 20\"""" ;
         "satin",
         "silk" ;
     dcterms:relation "VC2016001; VC2016002; VC2017003; VC2017004; VC2017005; VC2017007; VC2017008; VC2017009; VC2017010" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:subject "Clothing and Dress",
         "Tops" ;
@@ -23337,7 +23131,7 @@ width at hem: 20\"""" ;
     dcterms:identifier "VC2001043" ;
     dcterms:language "eng" ;
     dcterms:medium "cotton" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "United States" ;
     dcterms:subject "Clothing and dress",
@@ -23379,7 +23173,7 @@ width at hem: 20\"""" ;
         "satin",
         "silk",
         "tulle" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "United States" ;
     dcterms:subject "Clothing and dress",
@@ -23411,53 +23205,6 @@ width at hem: 20\"""" ;
     ns1:waistline "dropped" ;
     ns1:workType "dress" .
 
-<https://vcomeka.com/vccc/api/items/6297> a paradicms:Object ;
-    dcterms:creator "Carolyne Roehm",
-        "Nordstrom Couture" ;
-    dcterms:date "Late 80s" ;
-    dcterms:description "Cream Satin top and Black Velvet Skirt, Empire waist w/ puff sleeves. Pleats on top Center Front and Center Back, with rouching on arms eye" ;
-    dcterms:extent "28 (Chest), 32 (Waist), 35.5 (Hips), 49.5 (Center Front Length), 51 (Center Back Length), 73 (Hem Circumference), 17.5 (Sleeve Length), 22 (Sleeve Circumference)" ;
-    dcterms:identifier "VC20200010",
-        "VC2020010" ;
-    dcterms:medium "mesh",
-        "polyester",
-        "satin",
-        "velvet" ;
-    dcterms:spatial "USA" ;
-    dcterms:subject "Clothing and Dress",
-        "Evening dresses" ;
-    dcterms:temporal "1980s" ;
-    dcterms:title "Cream Satin and Black Velvet Dress" ;
-    dcterms:type "Physical Object" ;
-    vra:earliestDate "1985" ;
-    vra:hasTechnique "bias-cut",
-        "darts",
-        "gathering",
-        "hand sewing",
-        "machine sewing",
-        "pleating",
-        "princess seams" ;
-    vra:latestDate "1989" ;
-    paradicms:collection <https://vcomeka.com/vccc/api/collections/1> ;
-    paradicms:institution <https://vcomeka.com/vccc/> ;
-    foaf:page <https://vcomeka.com/vccc/items/show/6297> ;
-    ns1:classification "costume" ;
-    ns1:closure "zipper" ;
-    ns1:closurePlacement "center back closure" ;
-    ns1:colorMain "black" ;
-    ns1:colorSecondary "cream" ;
-    ns1:condition "excellent" ;
-    ns1:costumeComponents "lining" ;
-    ns1:function "evening dress" ;
-    ns1:gender "womenswear" ;
-    ns1:neckline "v-neck" ;
-    ns1:skirtType "trumpet skirt" ;
-    ns1:sleeveLength "elbow-length sleeve" ;
-    ns1:sleeveType "puff sleeve" ;
-    ns1:socioEconomicClass "upper class" ;
-    ns1:waistline "high" ;
-    ns1:workType "dress" .
-
 <https://vcomeka.com/vccc/api/items/882> a paradicms:Object ;
     dcterms:creator "Alexander Taylor & Co." ;
     dcterms:date "1910-1919" ;
@@ -23471,7 +23218,7 @@ width at hem: 20\"""" ;
         "plastic",
         "twill",
         "wood" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "United States" ;
     dcterms:subject "Clothing and dress",
@@ -23515,7 +23262,7 @@ width at hem: 20\"""" ;
         "net",
         "rhinestones",
         "silk" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "Pennsylvania",
         "Ravine",
@@ -23622,7 +23369,7 @@ width at hem: 20\"""" ;
     dcterms:identifier "VC2015001" ;
     dcterms:medium "cotton",
         "plain weave" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:subject "Clothing and dress",
         "Tops" ;
@@ -23656,7 +23403,7 @@ width at hem: 20\"""" ;
         "lace",
         "satin",
         "velvet" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "Michigan",
         "United States" ;
@@ -23687,6 +23434,20 @@ width at hem: 20\"""" ;
     ns1:waistline "natural waistline" ;
     ns1:workType "bodice" .
 
+<http://rightsstatements.org/vocab/InC-EDU/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright but that educational use is allowed without the need to obtain additional permission." ;
+    dcterms:identifier "InC-EDU" ;
+    skos:definition """This Item is protected by copyright and/or related rights.
+
+  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use. In addition, no permission is required from the rights-holder(s) for educational uses.
+
+  For other uses, you need to obtain permission from the rights-holder(s).""" ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
+    skos:prefLabel "In Copyright - Educational Use Permitted" ;
+    skos:scopeNote "This Rights Statement can be used only for copyrighted Items for which the organization making the Item available is the rights-holder or has been explicitly authorized by the rights-holder(s) to allow third parties to use their Work(s) for educational purposes without first obtaining permission." .
+
 <https://vcomeka.com/vccc/api/items/6213> a paradicms:Object ;
     dcterms:alternative "Child's Detachable Sleeve Blouse" ;
     dcterms:date "1890-1910" ;
@@ -23697,7 +23458,7 @@ width at hem: 20\"""" ;
     dcterms:medium "cotton",
         "lace" ;
     dcterms:provenance "N/A" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:subject "Childrenswear",
         "Clothing and dress" ;
@@ -23741,7 +23502,7 @@ width at hem: 20\"""" ;
         "silk",
         "taffeta",
         "velvet" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:subject "Clothing and dress",
         "Day Ensembles" ;
@@ -23790,7 +23551,7 @@ width at hem: 20\"""" ;
         "nylon",
         "polyester",
         "synthetic fiber" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "New York",
         "United States" ;
@@ -23835,7 +23596,7 @@ width at hem: 20\"""" ;
         "lace",
         "metal" ;
     dcterms:relation "http://vcomeka.com/vccc/items/show/1187; http://vcomeka.com/vccc/items/show/1186; http://vcomeka.com/vccc/items/show/1184; For Better and For Worse" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:subject "Clothing and dress",
         "Wedding" ;
@@ -23875,7 +23636,7 @@ width at hem: 20\"""" ;
     dcterms:medium "Dacron",
         "cotton",
         "plastic" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "New York",
         "Poughkeepsie",
@@ -23916,7 +23677,7 @@ width at hem: 20\"""" ;
         "metal",
         "silk",
         "taffeta" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "Pennsylvania",
         "United States" ;
@@ -23963,7 +23724,7 @@ width at hem: 20\"""" ;
         "rhinestones",
         "satin" ;
     dcterms:relation "http://vcomeka.com/vccc/items/show/1187; http://vcomeka.com/vccc/items/show/1186; http://vcomeka.com/vccc/items/show/1185; For Better and For Worse" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "New York",
         "United States" ;
@@ -24005,7 +23766,7 @@ width at hem: 20\"""" ;
         "lace",
         "silk" ;
     dcterms:relation "http://vcomeka.com/vccc/items/show/1187; http://vcomeka.com/vccc/items/show/1184; http://vcomeka.com/vccc/items/show/1185; For Better and For Worse" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "New York",
         "United States" ;
@@ -24046,7 +23807,7 @@ width at hem: 20\"""" ;
         "natural fiber",
         "satin",
         "velvet" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:subject "Clothing and dress" ;
     dcterms:title "Cream Lace Tea Dress with Lavender Accents" ;
@@ -24086,7 +23847,7 @@ width at hem: 20\"""" ;
         "metal",
         "silk",
         "wool" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:subject "Clothing and dress" ;
     dcterms:temporal "1850s",
@@ -24123,7 +23884,7 @@ width at hem: 20\"""" ;
     dcterms:medium "lace",
         "metal",
         "satin" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "New York",
         "United States" ;
@@ -24170,7 +23931,7 @@ width at hem: 20\"""" ;
         "satin",
         "silk",
         "wax" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "California",
         "United States" ;
@@ -24214,7 +23975,7 @@ width at hem: 20\"""" ;
         "satin",
         "sequins",
         "tulle" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "New York",
         "United States" ;
@@ -24259,7 +24020,7 @@ width at hem: 20\"""" ;
         "metal",
         "silk",
         "taffeta" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "United States" ;
     dcterms:subject "Clothing and dress",
@@ -24305,7 +24066,7 @@ width at hem: 20\"""" ;
     dcterms:medium "cotton",
         "metal",
         "silk" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:subject "Clothing and dress",
         "Evening Dresses" ;
@@ -24346,7 +24107,7 @@ width at hem: 20\"""" ;
         "chiffon",
         "crepe",
         "silk" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:spatial "New York",
         "United States" ;
@@ -24388,7 +24149,7 @@ width at hem: 20\"""" ;
         "silk",
         "wire",
         "wool" ;
-    dcterms:rights "http://rightsstatements.org/vocab/InC-EDU/1.0/" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "© Vassar College Costume Collection. Images in this collection may be used for teaching, classroom presentation, and research purposes only. For other reuse, reproduction and publication of these images, contact costumeshop@vassar.edu." ;
     dcterms:subject "Clothing and dress",
         "Wedding" ;
