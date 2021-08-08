@@ -1,7 +1,10 @@
 import * as React from "react";
 // import {Checkbox, FormControlLabel, List, ListItem} from "@material-ui/core";
 import {ValueFacet, ValueFilter, ValueFilterState} from "@paradicms/models";
-import MUIDatatable, {MUIDataTableColumnDef, MUIDataTableOptions} from "mui-datatables";
+import MUIDatatable, {
+  MUIDataTableColumnDef,
+  MUIDataTableOptions,
+} from "mui-datatables";
 import {createMuiTheme, ThemeProvider} from "@material-ui/core";
 
 const theme = createMuiTheme({
@@ -57,20 +60,19 @@ export const ValueFilterControls: React.FunctionComponent<{
   );
 
   const datatableData = React.useMemo(
-    () =>
-      facet.values.concat().sort((left, right) => right.count - left.count),
-    [facet],
+    () => facet.values.concat().sort((left, right) => right.count - left.count),
+    [facet]
   );
 
   const datatableRowsPerPage = 5;
 
-  const state = new ValueFilterState<string>({
+  const state = new ValueFilterState({
     filter,
     valueUniverse: facet.values.map(value => value.value),
   });
 
   const datatableRowsSelected = Array.from(
-    Array(datatableData.length).keys(),
+    Array(datatableData.length).keys()
   ).filter(dataIndex => state.includesValue(datatableData[dataIndex].value));
 
   const datatableOptions: MUIDataTableOptions = React.useMemo(
@@ -84,7 +86,7 @@ export const ValueFilterControls: React.FunctionComponent<{
         allRowsSelected,
         rowsSelected
       ) => {
-        const newState = new ValueFilterState<string>({
+        const newState = new ValueFilterState({
           filter,
           valueUniverse: facet.values.map(value => value.value),
         });

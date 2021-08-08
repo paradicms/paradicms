@@ -24,7 +24,7 @@ export class ValueFilterControl<
   render() {
     const {facet, filter, onChange} = this.props;
 
-    const state = new ValueFilterState<T>({
+    const state = new ValueFilterState({
       filter,
       valueUniverse: facet.values.map(value => value.value),
     });
