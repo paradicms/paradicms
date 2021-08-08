@@ -6,7 +6,6 @@ export * from "./NavbarSearchForm";
 export * from "./ObjectCard";
 export * from "./ObjectImagesCarousel";
 export * from "./ObjectsGallery";
-export * from "./ObjectQueryResultsContainer";
 export * from "./ObjectSearchContainer";
 export * from "./PropertiesTable";
 export * from "./RightsTable";
