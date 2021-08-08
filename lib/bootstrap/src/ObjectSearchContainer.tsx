@@ -73,7 +73,9 @@ export const ObjectSearchContainer: React.FunctionComponent<{
                 )}
               </h4>
               {objectQuery.filters.length > 0 ? (
-                <FiltersBadges filters={objectQuery.filters} />
+                <div>
+                  <FiltersBadges filters={objectQuery.filters} />
+                </div>
               ) : null}
               <ButtonGroup>
                 <Button
