@@ -1,8 +1,13 @@
-import {JoinedObjectQueryResults, ObjectQuery} from "@paradicms/models";
+import {
+  JoinedObjectQueryResults,
+  ObjectQuery,
+  ObjectSearchConfiguration,
+} from "@paradicms/models";
 import * as React from "react";
 import {ObjectQueryService} from "@paradicms/services";
 
 export interface ObjectSearchPageProps {
+  configuration: ObjectSearchConfiguration;
   objectQueryService: ObjectQueryService;
   objectsPerPage: number;
   children: (kwds: {

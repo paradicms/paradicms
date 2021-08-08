@@ -44,7 +44,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
         collection={collection}
         configuration={configuration}
         onSearch={text => {
-          setObjectQuery({filters: [], text});
+          setObjectQuery({filters: configuration.objectSearch.filters, text});
           setPage(undefined);
         }}
       >

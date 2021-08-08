@@ -10,6 +10,7 @@ import {useEffect, useMemo, useState} from "react";
 
 export const ObjectSearchPage: React.FunctionComponent<ObjectSearchPageProps> = ({
   children,
+  configuration,
   objectsPerPage,
   objectQueryService,
 }) => {
@@ -17,7 +18,11 @@ export const ObjectSearchPage: React.FunctionComponent<ObjectSearchPageProps> = 
     ObjectQuery | undefined
   >("query", new JsonQueryParamConfig<ObjectQuery>());
   const objectQuery = useMemo(
-    () => objectQueryQueryParam ?? {filters: [], text: null},
+    () =>
+      objectQueryQueryParam ?? {
+        filters: configuration.filters,
+        text: null,
+      },
     [objectQueryQueryParam]
   );
 

@@ -35,6 +35,7 @@ export const LunrObjectSearchPage: React.FunctionComponent<Props> = ({
 
   return (
     <ObjectSearchPage
+      configuration={configuration}
       objectQueryService={objectQueryService}
       {...objectSearchPageProps}
     />

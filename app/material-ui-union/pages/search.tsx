@@ -65,7 +65,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
             : "Search results"
         }
         configuration={configuration}
-        onSearch={text => setObjectQuery({filters: [], text})}
+        onSearch={text => setObjectQuery({filters: configuration.objectSearch.filters, text})}
       >
         <ObjectSearchGrid
           facets={objectQueryResults.facets}

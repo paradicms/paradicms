@@ -48,13 +48,13 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   documentTitle?: string;
   onSearch?: (text: string) => void;
 }>> = ({
-         breadcrumbs,
-         cardTitle,
-         children,
-         documentTitle,
-         configuration,
-         onSearch: onSearchUserDefined,
-       }) => {
+  breadcrumbs,
+  cardTitle,
+  children,
+  configuration,
+  documentTitle,
+  onSearch: onSearchUserDefined,
+}) => {
   const classes = useStyles();
   const router = useRouter();
 
@@ -136,7 +136,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   } else {
     onSearch = (text: string) => {
       const href = Hrefs.search({
-        filters: [],
+        filters: configuration.objectSearch.filters,
         text,
       });
       console.info("redirecting to search href", href);

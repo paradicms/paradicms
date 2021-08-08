@@ -32,6 +32,7 @@ export const Application: React.FunctionComponent = () => {
         <title>{documentTitle}</title>
       </Helmet>
       <ObjectSearchPage
+        configuration={configuration.objectSearch}
         objectQueryService={objectQueryService}
         objectsPerPage={OBJECTS_PER_PAGE}
       >
