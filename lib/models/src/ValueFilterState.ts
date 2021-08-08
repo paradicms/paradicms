@@ -8,11 +8,14 @@ export class ValueFilterState<
   private readonly excludeValueSet: Set<ValueT>;
   private readonly includeValueSet: Set<ValueT>;
   private readonly initialFilter: ValueFilterT;
+  private _includeUnknown: boolean;
   private readonly valueUniverse: readonly ValueT[];
 
   constructor(kwds: {filter: ValueFilterT; valueUniverse: readonly ValueT[]}) {
     this.initialFilter = kwds.filter;
     this.valueUniverse = kwds.valueUniverse;
+
+    this._includeUnknown = !this.initialFilter.excludeUnknown;
 
     // Build sets of the excludeValueSet and includeValueSet values to avoid repeatedly iterating over the arrays.
     this.excludeValueSet = this.initialFilter.excludeValues
@@ -75,6 +78,15 @@ export class ValueFilterState<
     for (const value of this.valueUniverse) {
       this.excludeValue(value);
     }
+    this.excludeUnknown = true;
+  }
+
+  get excludeUnknown() {
+    return !this.includeUnknown;
+  }
+
+  set excludeUnknown(value: boolean) {
+    this._includeUnknown = !value;
   }
 
   excludeValue(value: ValueT): void {
@@ -85,6 +97,15 @@ export class ValueFilterState<
     for (const value of this.valueUniverse) {
       this.includeValue(value);
     }
+    this.includeUnknown = true;
+  }
+
+  get includeUnknown() {
+    return this._includeUnknown;
+  }
+
+  set includeUnknown(value: boolean) {
+    this._includeUnknown = value;
   }
 
   includeValue(value: ValueT): void {
@@ -96,38 +117,34 @@ export class ValueFilterState<
   }
 
   get snapshot(): ValueFilterT {
+    let excludeValues: ValueT[] | undefined = undefined;
+    let includeValues: ValueT[] | undefined = undefined;
+
     if (this.includeValueSet.size === this.valueUniverse.length) {
-      return {
-        ...this.initialFilter,
-        excludeValues: undefined,
-        includeValues: undefined,
-      };
+      // Include every value = nothing set
     } else if (this.excludeValueSet.size === this.valueUniverse.length) {
-      return {
-        ...this.initialFilter,
-        excludeValues: [...this.excludeValueSet],
-        includeValues: undefined,
-      }; // Explicitly exclude all values
+      // Exclude every value = explicitly exclude every value
+      excludeValues = [...this.excludeValueSet];
     } else if (this.includeValueSet.size >= this.excludeValueSet.size) {
       if (this.excludeValueSet.size === 0) {
         throw new RangeError("must explicitly exclude");
       }
       // excludeValueSet includes fewer values. Those outside it will be included.
-      return {
-        ...this.initialFilter,
-        excludeValues: [...this.excludeValueSet],
-        includeValues: undefined,
-      };
+      excludeValues = [...this.excludeValueSet];
     } else {
       // includeValueIdSet includes fewer values. Those outside it will be excluded.
       if (this.includeValueSet.size === 0) {
         throw new EvalError("must explicitly include");
       }
-      return {
-        ...this.initialFilter,
-        excludeValues: undefined,
-        includeValues: [...this.includeValueSet],
-      };
+      includeValues = [...this.includeValueSet];
     }
+
+    return {
+      ...this.initialFilter,
+      excludeUnknown: this.excludeUnknown ? true : undefined,
+      excludeValues,
+      includeUnknown: this.includeUnknown ? true : undefined,
+      includeValues,
+    };
   }
 }

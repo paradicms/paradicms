@@ -5,7 +5,7 @@ import {
   StringPropertyValueFilter,
 } from "@paradicms/models";
 import * as React from "react";
-import {ValueFilterControl} from "./ValueFilterControl";
+import {ValueFilterControl} from "@paradicms/react-data-table";
 
 export const createFilterControl: (kwds: {
   facets: readonly Facet[];
