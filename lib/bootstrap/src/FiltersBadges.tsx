@@ -11,7 +11,10 @@ export const FiltersBadges: React.FunctionComponent<{
         switch (filter.type) {
           case "StringPropertyValue": {
             return (
-              <ValueFilterBadges filter={filter as StringPropertyValueFilter} />
+              <ValueFilterBadges
+                filter={filter as StringPropertyValueFilter}
+                key={filterI}
+              />
             );
           }
         }
