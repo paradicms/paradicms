@@ -1,23 +1,23 @@
 import {ValueFilter} from "./ValueFilter";
+import {PrimitiveValue} from "./PrimitiveValue";
 
-export class ValueFilterState<T> {
+export class ValueFilterState<T extends PrimitiveValue> {
   private readonly excludeValueSet: Set<T>;
   private readonly includeValueSet: Set<T>;
   private readonly initialFilter: ValueFilter<T>;
   private readonly valueUniverse: readonly T[];
 
-  constructor(kwds: {
-    filter: ValueFilter<T>;
-    valueUniverse: readonly T[];
-  }) {
+  constructor(kwds: {filter: ValueFilter<T>; valueUniverse: readonly T[]}) {
     this.initialFilter = kwds.filter;
     this.valueUniverse = kwds.valueUniverse;
 
     // Build sets of the excludeValueSet and includeValueSet values to avoid repeatedly iterating over the arrays.
-    this.excludeValueSet =
-      this.initialFilter.excludeValues ? new Set(this.initialFilter.excludeValues) : new Set();
-    this.includeValueSet =
-      this.initialFilter.includeValues ? new Set(this.initialFilter.includeValues) : new Set();
+    this.excludeValueSet = this.initialFilter.excludeValues
+      ? new Set(this.initialFilter.excludeValues)
+      : new Set();
+    this.includeValueSet = this.initialFilter.includeValues
+      ? new Set(this.initialFilter.includeValues)
+      : new Set();
 
     // If a value is not in one of the sets it's implicitly included.
     this.valueUniverse.forEach(valueId => {
@@ -26,7 +26,10 @@ export class ValueFilterState<T> {
           throw new RangeError("value ${valueId} both included and excluded");
         }
       } else if (this.includeValueSet.has(valueId)) {
-      } else if (this.initialFilter?.includeValues && this.initialFilter.includeValues.length > 0) {
+      } else if (
+        this.initialFilter?.includeValues &&
+        this.initialFilter.includeValues.length > 0
+      ) {
         // If the current state explicitly included something then everything not explicitly included is excluded
         this.excludeValueSet.add(valueId);
       } else {
@@ -93,19 +96,31 @@ export class ValueFilterState<T> {
     if (this.includeValueSet.size === this.valueUniverse.length) {
       return {...this.initialFilter, excludeValues: null, includeValues: null};
     } else if (this.excludeValueSet.size === this.valueUniverse.length) {
-      return {...this.initialFilter, excludeValues: [...this.excludeValueSet], includeValues: null}; // Explicitly exclude all values
+      return {
+        ...this.initialFilter,
+        excludeValues: [...this.excludeValueSet],
+        includeValues: null,
+      }; // Explicitly exclude all values
     } else if (this.includeValueSet.size >= this.excludeValueSet.size) {
       if (this.excludeValueSet.size === 0) {
         throw new RangeError("must explicitly exclude");
       }
       // excludeValueSet includes fewer values. Those outside it will be included.
-      return {...this.initialFilter, excludeValues: [...this.excludeValueSet], includeValues: null};
+      return {
+        ...this.initialFilter,
+        excludeValues: [...this.excludeValueSet],
+        includeValues: null,
+      };
     } else {
       // includeValueIdSet includes fewer values. Those outside it will be excluded.
       if (this.includeValueSet.size === 0) {
         throw new EvalError("must explicitly include");
       }
-      return {...this.initialFilter, excludeValues: null, includeValues: [...this.includeValueSet]};
+      return {
+        ...this.initialFilter,
+        excludeValues: null,
+        includeValues: [...this.includeValueSet],
+      };
     }
   }
 }

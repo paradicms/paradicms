@@ -22,6 +22,10 @@ export const createFilterControl: (kwds: {
             concreteFilter.propertyUri
       ) as StringPropertyValueFacet | undefined;
       if (!facet) {
+        console.warn(
+          "no matching facet for filter on property",
+          concreteFilter.propertyUri
+        );
         return null;
       }
       return (
