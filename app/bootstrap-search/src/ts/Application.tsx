@@ -36,7 +36,7 @@ export const Application: React.FunctionComponent = () => {
         objectQueryService={objectQueryService}
         objectsPerPage={OBJECTS_PER_PAGE}
       >
-        {({objectQuery, setObjectQuery, ...objectSearchProps}) => (
+        {({objectQuery, setObjectQuery, setPage, ...objectSearchProps}) => (
           <Container fluid>
             <Row>
               <Col>
@@ -47,9 +47,10 @@ export const Application: React.FunctionComponent = () => {
                   <Nav navbar>
                     <NavItem>
                       <NavbarSearchForm
-                        onSearch={text =>
-                          setObjectQuery({...objectQuery, text})
-                        }
+                        onSearch={text => {
+                          setObjectQuery({...objectQuery, text});
+                          setPage(undefined);
+                        }}
                       />
                     </NavItem>
                   </Nav>
@@ -68,6 +69,7 @@ export const Application: React.FunctionComponent = () => {
                         <a href={object.page ?? object.uri}>{children}</a>
                       )}
                       setObjectQuery={setObjectQuery}
+                      setPage={setPage}
                     />
                   </CardBody>
                 </Card>
