@@ -1,7 +1,7 @@
 {
   "author": "Minor Gordon",
-  "name": "@paradicms/lunr-react",
-  "description": "Paradicms lunr-react integration",
+  "name": "@paradicms/react-services",
+  "description": "Paradicms React integrations for services",
   "dependencies": {
     "@paradicms/lunr": "1.0.5",
     "@paradicms/react": "1.0.5"

@@ -1,5 +1,5 @@
 import {ModelRdfReader} from "./ModelRdfReader";
-import {Object, Property, PropertyValue} from "@paradicms/models";
+import {Object, PrimitiveType, Property} from "@paradicms/models";
 import {DCTERMS, FOAF, PARADICMS} from "./vocabularies";
 import {RightsRdfReader} from "./RightsRdfReader";
 import {ModelNode} from "./ModelNode";
@@ -7,10 +7,7 @@ import {LiteralWrapper} from "./LiteralWrapper";
 import {Literal, Store} from "n3";
 
 export class ObjectRdfReader extends ModelRdfReader<Object> {
-  constructor(
-    node: ModelNode,
-    store: Store,
-  ) {
+  constructor(node: ModelNode, store: Store) {
     super(node, store);
   }
 
@@ -28,7 +25,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
         continue;
       }
       const literal = new LiteralWrapper(nodeStatement.object as Literal);
-      let value: PropertyValue;
+      let value: PrimitiveType;
       if (literal.isBoolean()) {
         value = literal.toBoolean();
       } else if (literal.isInteger()) {
@@ -40,7 +37,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
           "unknown literal datatype",
           literal.literal.datatype,
           "for property",
-          propertyUri,
+          propertyUri
         );
         continue;
       }
@@ -52,8 +49,15 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
     }
 
     let page: string | null = null;
-    for (const pageObject of this.store.getObjects(this.node, FOAF.page, null)) {
-      if (pageObject.termType === "Literal" || pageObject.termType === "NamedNode") {
+    for (const pageObject of this.store.getObjects(
+      this.node,
+      FOAF.page,
+      null
+    )) {
+      if (
+        pageObject.termType === "Literal" ||
+        pageObject.termType === "NamedNode"
+      ) {
         page = pageObject.value;
         break;
       }
@@ -62,7 +66,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
     return {
       abstract: this.readOptionalLiteral(DCTERMS.abstract)?.toString() ?? null,
       collectionUris: this.readAllParentNamedNodes(PARADICMS.collection).map(
-        node => node.value,
+        node => node.value
       ),
       institutionUri: this.readRequiredParentNamedNode(PARADICMS.institution)
         .value,
@@ -85,7 +89,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
       callback,
       node => new ObjectRdfReader(node, store),
       store,
-      PARADICMS.Object,
+      PARADICMS.Object
     );
   }
 }

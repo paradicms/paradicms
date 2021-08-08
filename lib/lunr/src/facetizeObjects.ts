@@ -7,7 +7,10 @@ import {
   ValueFacetValue,
 } from "@paradicms/models";
 
-const incrementValueCount = (countsByValue: {[index: string]: number}, value: string) => {
+const incrementValueCount = (
+  countsByValue: {[index: string]: number},
+  value: string
+) => {
   const count = countsByValue[value];
   if (!count) {
     countsByValue[value] = 1;
@@ -16,19 +19,24 @@ const incrementValueCount = (countsByValue: {[index: string]: number}, value: st
   }
 };
 
-const valuesFromMap = (countsByValue: {[index: string]: number}): ValueFacetValue<string>[] => Object.keys(countsByValue).map(value => ({
-  count: countsByValue[value],
-  label: null,
-  value,
-}));
+const valuesFromMap = (countsByValue: {
+  [index: string]: number;
+}): ValueFacetValue<string>[] =>
+  Object.keys(countsByValue).map(value => ({
+    count: countsByValue[value],
+    label: null,
+    value,
+  }));
 
-export const facetizeObjects = <ObjectT extends {
-  readonly collectionUris: readonly string[];
-  readonly institutionUri: string;
-  readonly properties: readonly Property[] | null;
-}>(kwds: {
-  facet: Facet,
-  objects: readonly ObjectT[]
+export const facetizeObjects = <
+  ObjectT extends {
+    readonly collectionUris: readonly string[];
+    readonly institutionUri: string;
+    readonly properties: readonly Property[] | null;
+  }
+>(kwds: {
+  facet: Facet;
+  objects: readonly ObjectT[];
 }): Facet => {
   const {facet, objects} = kwds;
 
@@ -63,19 +71,23 @@ export const facetizeObjects = <ObjectT extends {
 
     case "StringPropertyValue": {
       const concreteFacet: StringPropertyValueFacet = facet as StringPropertyValueFacet;
+      let unknownCount: number = 0;
       const countsByValue: {[index: string]: number} = {};
       for (const object of objects) {
-        if (!object.properties) {
-          continue;
-        }
-        for (const property of object.properties!) {
+        let objectHasProperty = false;
+        for (const property of object.properties ?? []) {
           if (property.uri === concreteFacet.propertyUri) {
             incrementValueCount(countsByValue, property.value.toString());
+            objectHasProperty = true;
           }
+        }
+        if (!objectHasProperty) {
+          unknownCount++;
         }
       }
       const result: StringPropertyValueFacet = {
         ...concreteFacet,
+        unknownCount,
         values: valuesFromMap(countsByValue),
       };
       return result;

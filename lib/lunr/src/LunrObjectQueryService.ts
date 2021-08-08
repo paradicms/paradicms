@@ -1,12 +1,12 @@
 import {ObjectQueryService} from "@paradicms/services";
 import {
-  Configuration,
   DataSubsetter,
   IndexedDataset,
   Object,
   ObjectJoinSelector,
-  ObjectsQuery,
-  ObjectsQueryResults,
+  ObjectQuery,
+  ObjectQueryResults,
+  ObjectSearchConfiguration,
 } from "@paradicms/models";
 import lunr, {Index} from "lunr";
 import {facetizeObjects} from "./facetizeObjects";
@@ -15,19 +15,35 @@ import invariant from "ts-invariant";
 
 const basex = require("base-x");
 const base58 = basex(
-  "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz",
+  "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 );
 
 const encodeFieldName = (value: string): string =>
-  base58.encode(Buffer.from(value, "utf-8"));
+  base58.encode(new TextEncoder().encode(value));
+
+// function intersection<T>(a: Set<T>, b: Set<T>) {
+//   if (a.size === 0) {
+//     return a;
+//   } else if (b.size === 0) {
+//     return b;
+//   } else if (a.size <= b.size) {
+//     return new Set([...a].filter((value) => b.has(value)));
+//   } else {
+//     return new Set([...b].filter((value) => a.has(value)));
+//   }
+// }
 
 export class LunrObjectQueryService implements ObjectQueryService {
-  private readonly configuration: Configuration;
+  private readonly configuration: ObjectSearchConfiguration;
   private readonly dataset: IndexedDataset;
   private readonly index: Index;
   private readonly objectJoinSelector?: ObjectJoinSelector;
 
-  constructor(kwds: {configuration: Configuration, dataset: IndexedDataset, objectJoinSelector?: ObjectJoinSelector}) {
+  constructor(kwds: {
+    configuration: ObjectSearchConfiguration;
+    dataset: IndexedDataset;
+    objectJoinSelector?: ObjectJoinSelector;
+  }) {
     this.configuration = kwds.configuration;
     this.dataset = kwds.dataset;
     this.objectJoinSelector = kwds.objectJoinSelector;
@@ -36,7 +52,8 @@ export class LunrObjectQueryService implements ObjectQueryService {
       this.field("abstract");
       this.field("title");
       const propertyFieldNamesByUri: {[index: string]: string} = {};
-      for (const propertyUri of kwds.configuration.objectFullTextSearchablePropertyUris) {
+      for (const propertyUri of kwds.configuration
+        .fullTextSearchablePropertyUris) {
         const fieldName = encodeFieldName(propertyUri);
         propertyFieldNamesByUri[propertyUri] = fieldName;
         this.field(fieldName);
@@ -62,7 +79,11 @@ export class LunrObjectQueryService implements ObjectQueryService {
     });
   }
 
-  getObjects(kwds: {limit: number, offset: number, query: ObjectsQuery}): Promise<ObjectsQueryResults> {
+  getObjects(kwds: {
+    limit: number;
+    offset: number;
+    query: ObjectQuery;
+  }): Promise<ObjectQueryResults> {
     const {limit, offset, query} = kwds;
 
     invariant(!!query, "query must be defined");
@@ -74,31 +95,48 @@ export class LunrObjectQueryService implements ObjectQueryService {
       let allObjects: readonly Object[];
       if (query.text) {
         // Anything matching the fulltext search
-        allObjects = this.index.search(query.text).map(({ref}) => this.dataset.objectByUri(ref));
+        allObjects = this.index
+          .search(query.text)
+          .map(({ref}) => this.dataset.objectByUri(ref));
       } else {
         // All objects
         allObjects = this.dataset.objects;
       }
 
       // Calculate facets on the universe before filtering it
-      const facets = this.configuration.objectFacets.map(facet => facetizeObjects({facet, objects: allObjects}));
+      const facets = this.configuration.facets.map(facet =>
+        facetizeObjects({facet, objects: allObjects})
+      );
 
       console.debug("Search facets:", JSON.stringify(facets));
 
-      const filteredObjects = filterObjects({filters: this.configuration.objectFilters, objects: allObjects});
+      const filteredObjects = filterObjects({
+        filters: query.filters,
+        objects: allObjects,
+      });
 
       console.debug("Search filtered objects count:", filteredObjects.length);
 
-      const slicedObjects = filteredObjects.slice(
-        offset,
-        offset + limit,
-      );
+      const slicedObjects = filteredObjects.slice(offset, offset + limit);
 
       console.debug("Search sliced objects count:", slicedObjects.length);
 
-      const slicedObjectsDataset = new DataSubsetter(this.dataset).objectsDataset(slicedObjects.map(object => object.uri), this.objectJoinSelector);
+      const slicedObjectsDataset = new DataSubsetter(
+        this.dataset
+      ).objectsDataset(
+        slicedObjects.map(object => object.uri),
+        this.objectJoinSelector
+      );
 
-      console.debug("Search results dataset:", Object.keys(slicedObjectsDataset).map(key => `${key}: ${((slicedObjectsDataset as any)[key] as any[]).length}`).join(", "));
+      console.debug(
+        "Search results dataset:",
+        Object.keys(slicedObjectsDataset)
+          .map(
+            key =>
+              `${key}: ${((slicedObjectsDataset as any)[key] as any[]).length}`
+          )
+          .join(", ")
+      );
 
       return resolve({
         dataset: slicedObjectsDataset,

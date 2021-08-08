@@ -1,34 +1,51 @@
 import * as React from "react";
-import {ImageDimensions, JoinedImage, JoinedInstitution, JoinedObject} from "@paradicms/models";
-import {Card, CardBody, CardHeader, CardImg, Col, Container, Row, Table} from "reactstrap";
+import {JoinedImage, JoinedInstitution, JoinedObject} from "@paradicms/models";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  CardImg,
+  Col,
+  Container,
+  Row,
+  Table,
+} from "reactstrap";
 import {Accordion} from "./Accordion";
 import {RightsTable} from "./RightsTable";
+import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 
 export const ObjectCard: React.FunctionComponent<{
   object: JoinedObject;
   renderInstitutionLink?: (
     institution: JoinedInstitution,
-    children: React.ReactNode,
+    children: React.ReactNode
   ) => React.ReactNode;
   renderObjectLink: (
     object: JoinedObject,
-    children: React.ReactNode,
+    children: React.ReactNode
   ) => React.ReactNode;
 }> = ({object, renderInstitutionLink, renderObjectLink}) => {
-  const thumbnailDimensions: ImageDimensions = {height: 200, width: 200};
-  const thumbnail = object.thumbnail({targetDimensions: thumbnailDimensions});
-  const thumbnailSrc = thumbnail?.src ?? JoinedImage.placeholderSrc(thumbnailDimensions);
+  const thumbnail = object.thumbnail({
+    targetDimensions: thumbnailTargetDimensions,
+  });
+  const thumbnailSrc =
+    thumbnail?.src ?? JoinedImage.placeholderSrc(thumbnailTargetDimensions);
 
   return (
-    <Card className="object-card">
-      <CardHeader tag="h3">
+    <Card className="object-card text-center">
+      <CardHeader tag="h4">
         {renderObjectLink(object, <>{object.title}</>)}
       </CardHeader>
       {renderObjectLink(
         object,
         <CardImg
-          className="thumbnail"
           src={thumbnailSrc}
+          style={{
+            height: thumbnailTargetDimensions.height,
+            marginBottom: "20px",
+            marginTop: "20px",
+            width: thumbnailTargetDimensions.width,
+          }}
           title={object.title}
         />
       )}
@@ -67,8 +84,12 @@ export const ObjectCard: React.FunctionComponent<{
               <Col xs={12}>
                 <Accordion title="Image rights">
                   <RightsTable
+                    cellStyle={{
+                      padding: 0,
+                      textAlign: "left",
+                    }}
                     rights={thumbnail.rights}
-                    tableClassName="rights-table"
+                    tableStyle={{fontSize: "xx-small"}}
                   ></RightsTable>
                 </Accordion>
               </Col>
@@ -79,8 +100,12 @@ export const ObjectCard: React.FunctionComponent<{
               <Col xs={12}>
                 <Accordion title="Metadata rights">
                   <RightsTable
+                    cellStyle={{
+                      padding: 0,
+                      textAlign: "left",
+                    }}
                     rights={object.rights}
-                    tableClassName="rights-table"
+                    tableStyle={{fontSize: "xx-small"}}
                   ></RightsTable>
                 </Accordion>
               </Col>

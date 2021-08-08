@@ -1,18 +1,18 @@
-import {Facet, Filter, JoinedInstitution, JoinedObject, ObjectsQuery} from "@paradicms/models";
+import {Facet, Filter, JoinedInstitution, JoinedObject, ObjectQuery} from "@paradicms/models";
 import * as React from "react";
 import {Grid} from "@material-ui/core";
 import {FiltersControls} from "./FiltersControls";
 import {ObjectsGallery} from "./ObjectsGallery";
 import {FiltersChips} from "./FiltersChips";
 
-export const ObjectFacetedSearchGrid: React.FunctionComponent<{
+export const ObjectSearchGrid: React.FunctionComponent<{
   facets: readonly Facet[];
   objects: readonly JoinedObject[];
   onChangeFilters: (filters: readonly Filter[]) => void;
   onChangePage: (page: number) => void;
   page: number; // From 0
   pageMax: number;
-  query: ObjectsQuery;
+  query: ObjectQuery;
   renderInstitutionLink?: (
     institution: JoinedInstitution,
     children: React.ReactNode,

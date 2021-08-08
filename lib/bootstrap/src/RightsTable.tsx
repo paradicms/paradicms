@@ -1,40 +1,51 @@
 import * as React from "react";
+import {CSSProperties} from "react";
 import {JoinedRights, License, RightsStatement} from "@paradicms/models";
 import {Table} from "reactstrap";
 
 const RightsTableRow: React.FunctionComponent<{
   cellClassName?: string;
+  cellStyle?: CSSProperties;
   label: string;
   rowClassName?: string;
+  rowStyle?: CSSProperties;
   value: React.ReactNode | null | undefined;
-}> = ({cellClassName, label, rowClassName, value}) => {
+}> = ({cellClassName, cellStyle, label, rowClassName, rowStyle, value}) => {
   if (!value) {
     return null;
   }
   return (
-    <tr className={rowClassName}>
-      <td className={cellClassName}>
+    <tr className={rowClassName} style={rowStyle}>
+      <td className={cellClassName} style={cellStyle}>
         <strong>{label}</strong>
       </td>
-      <td className={cellClassName}>
-        {value}
-      </td>
+      <td className={cellClassName}>{value}</td>
     </tr>
   );
 };
 
-
 export const RightsTable: React.FunctionComponent<{
   cellClassName?: string;
+  cellStyle?: CSSProperties;
   rights: JoinedRights;
   rowClassName?: string;
+  rowStyle?: CSSProperties;
   tableClassName?: string;
-}> = ({cellClassName, rights, rowClassName, tableClassName}) => {
+  tableStyle?: CSSProperties;
+}> = ({
+  cellClassName,
+  cellStyle,
+  rights,
+  rowClassName,
+  rowStyle,
+  tableClassName,
+  tableStyle,
+}) => {
   const licenseValue = React.useMemo(() => {
     if (!rights.license) {
       return null;
     }
-    if (typeof (rights.license) === "string") {
+    if (typeof rights.license === "string") {
       return rights.license as string;
     }
     const license = rights.license as License;
@@ -45,40 +56,34 @@ export const RightsTable: React.FunctionComponent<{
     if (!rights.statement) {
       return null;
     }
-    if (typeof (rights.statement) === "string") {
+    if (typeof rights.statement === "string") {
       return rights.statement as string;
     }
     const rightsStatement = rights.statement as RightsStatement;
     return <a href={rightsStatement.uri}>{rightsStatement.prefLabel}</a>;
   }, [rights]);
 
+  const rowProps = {cellClassName, cellStyle, rowClassName, rowStyle};
+
   return (
-    <Table className={tableClassName} size="sm">
+    <Table className={tableClassName} size="sm" style={tableStyle}>
       <tbody>
-      <RightsTableRow
-        cellClassName={cellClassName}
-        label="Statement"
-        rowClassName={rowClassName}
-        value={rightsStatementValue}
-      />
-      <RightsTableRow
-        cellClassName={cellClassName}
-        label="Creator"
-        rowClassName={rowClassName}
-        value={rights.creator?.value}
-      />
-      <RightsTableRow
-        cellClassName={cellClassName}
-        label="Holder"
-        rowClassName={rowClassName}
-        value={rights.holder?.value}
-      />
-      <RightsTableRow
-        cellClassName={cellClassName}
-        label="License"
-        rowClassName={rowClassName}
-        value={licenseValue}
-      />
+        <RightsTableRow
+          {...rowProps}
+          label="Statement"
+          value={rightsStatementValue}
+        />
+        <RightsTableRow
+          {...rowProps}
+          label="Creator"
+          value={rights.creator?.value}
+        />
+        <RightsTableRow
+          {...rowProps}
+          label="Holder"
+          value={rights.holder?.value}
+        />
+        <RightsTableRow {...rowProps} label="License" value={licenseValue} />
       </tbody>
     </Table>
   );

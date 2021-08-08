@@ -1,6 +1,6 @@
-import {PropertyValue} from "./PropertyValue";
+import {PrimitiveType} from "./PrimitiveType";
 
 export interface Property {
   readonly uri: string;
-  readonly value: PropertyValue;
+  readonly value: PrimitiveType;
 }

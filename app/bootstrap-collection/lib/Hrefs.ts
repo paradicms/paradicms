@@ -1,13 +1,13 @@
 import {encodeFileName} from "@paradicms/next";
-import {ObjectsQuery} from "@paradicms/models";
+import {ObjectQuery} from "@paradicms/models";
 import * as qs from "qs";
 
 export class Hrefs {
-  static collection(objectsQuery?: ObjectsQuery): string {
+  static collection(objectQuery?: ObjectQuery): string {
     return (
       "/" +
       qs.stringify(
-        {query: JSON.stringify(objectsQuery)},
+        {query: JSON.stringify(objectQuery)},
         {
           addQueryPrefix: true,
         },

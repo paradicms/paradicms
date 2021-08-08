@@ -1,14 +1,24 @@
 import * as React from "react";
-import {Col, Container, Row} from "reactstrap";
-import {Accordion} from "./Accordion";
-import {ValueFilterControls} from "./ValueFilterControls";
-import {Facet, Filter, StringPropertyValueFacet, StringPropertyValueFilter} from "@paradicms/models";
+import {useState} from "react";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  Collapse,
+  Container,
+  Row,
+} from "reactstrap";
+import {Facet, Filter} from "@paradicms/models";
+import {createFilterControl} from "./createFilterControl";
 
 export const FiltersControls: React.FunctionComponent<{
   facets: readonly Facet[];
   filters: readonly Filter[];
   onChange: (filters: readonly Filter[]) => void;
 }> = ({facets, filters, onChange}) => {
+  const [openFilterIndex, setOpenFilterIndex] = useState<number>(-1);
+
   return (
     <Container fluid>
       {filters.map((filter, filterI) => {
@@ -18,32 +28,39 @@ export const FiltersControls: React.FunctionComponent<{
           onChange(filtersCopy);
         };
 
-        switch (filter.type) {
-          case "StringPropertyValue": {
-            const concreteFilter: StringPropertyValueFilter = filter as StringPropertyValueFilter;
-            const facet: StringPropertyValueFacet | undefined = facets.find(facet => facet.type === "StringPropertyValue" && (facet as StringPropertyValueFacet).propertyUri === concreteFilter.propertyUri) as StringPropertyValueFacet | undefined;
-            if (!facet) {
-              return;
-            }
-            return (
-              <Row
-                className="facet"
-                // data-cy={propertyFacet.definition.uri + "-facet"}
-                key={filterI.toFixed()}
-              >
-                <Col xs={12}>
-                  <Accordion title={filter.label}>
-                    <ValueFilterControls
-                      facet={facet}
-                      filter={concreteFilter}
-                      onChange={onChangeFilter}
-                    />
-                  </Accordion>
-                </Col>
-              </Row>
-            );
-          }
+        const filterControl = createFilterControl({
+          facets,
+          filter,
+          onChangeFilter,
+        });
+        if (!filterControl) {
+          return;
         }
+
+        return (
+          <Row
+            className="facet"
+            // data-cy={propertyFacet.definition.uri + "-facet"}
+            key={filterI.toFixed()}
+          >
+            <Col xs={12}>
+              <Card>
+                <CardHeader
+                  onClick={() =>
+                    setOpenFilterIndex(
+                      openFilterIndex === filterI ? -1 : filterI
+                    )
+                  }
+                >
+                  {filter.label}
+                </CardHeader>
+                <Collapse isOpen={openFilterIndex === filterI}>
+                  <CardBody className="p-0">{filterControl}</CardBody>
+                </Collapse>
+              </Card>
+            </Col>
+          </Row>
+        );
       })}
     </Container>
   );

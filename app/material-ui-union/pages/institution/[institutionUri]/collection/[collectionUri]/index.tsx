@@ -12,11 +12,14 @@ import {
   ObjectJoinSelector,
 } from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {ObjectFacetedSearchGrid, thumbnailTargetDimensions} from "@paradicms/material-ui";
+import {
+  ObjectSearchGrid,
+  thumbnailTargetDimensions,
+} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {readDataset} from "lib/readDataset";
-import {LunrObjectSearchPage} from "@paradicms/lunr-react";
+import {LunrObjectSearchPage} from "@paradicms/react-services";
 
 const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
   collections: {},
@@ -33,62 +36,77 @@ interface StaticProps {
 }
 
 const CollectionPage: React.FunctionComponent<StaticProps> = ({
-                                                                collectionUri,
-                                                                configuration,
-                                                                dataset,
-                                                              }) => {
-  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [dataset]);
-  const collection = useMemo(() => joinedDataset.collectionByUri(collectionUri), [collectionUri, joinedDataset]);
+  collectionUri,
+  configuration,
+  dataset,
+}) => {
+  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [
+    dataset,
+  ]);
+  const collection = useMemo(
+    () => joinedDataset.collectionByUri(collectionUri),
+    [collectionUri, joinedDataset]
+  );
   const institution = useMemo(() => collection.institution, [collection]);
 
   return (
-    <LunrObjectSearchPage configuration={configuration} dataset={dataset} objectJoinSelector={OBJECT_JOIN_SELECTOR}
-                          objectsPerPage={OBJECTS_PER_PAGE}>
+    <LunrObjectSearchPage
+      configuration={configuration.objectSearch}
+      dataset={dataset}
+      objectJoinSelector={OBJECT_JOIN_SELECTOR}
+      objectsPerPage={OBJECTS_PER_PAGE}
+    >
       {({
-          objectsQuery,
-          objectsQueryResults,
-          objectsQueryResultsJoinedDataset,
-          page,
-          pageMax,
-          setObjectsQuery,
-          setPage,
-        }) => (
+        objectQuery,
+        objectQueryResults,
+        page,
+        pageMax,
+        setObjectQuery,
+        setPage,
+      }) => (
         <Layout
           breadcrumbs={{collection, institution}}
           cardTitle={
             <span>
-          <span>
-            Collection&nbsp;&mdash;&nbsp;
-            <span data-cy="collection-title">{collection.title}</span>
-          </span>
-        </span>
+              <span>
+                Collection&nbsp;&mdash;&nbsp;
+                <span data-cy="collection-title">{collection.title}</span>
+              </span>
+            </span>
           }
           documentTitle={"Collection - " + collection.title}
           configuration={configuration}
         >
-          <ObjectFacetedSearchGrid
-            facets={objectsQueryResults.facets}
-            objects={objectsQueryResultsJoinedDataset.objects}
-            onChangeFilters={filters => setObjectsQuery({...objectsQuery, filters})}
+          <ObjectSearchGrid
+            facets={objectQueryResults.facets}
+            objects={objectQueryResults.joinedDataset.objects}
+            onChangeFilters={filters =>
+              setObjectQuery({...objectQuery, filters})
+            }
             onChangePage={setPage}
             page={page}
             pageMax={pageMax}
             renderInstitutionLink={(institution, children) => (
-              <Link href={Hrefs.institution(institution.uri).home}>{children}</Link>
+              <Link href={Hrefs.institution(institution.uri).home}>
+                {children}
+              </Link>
             )}
             renderObjectLink={(object, children) => (
               <Link
-                href={Hrefs.institution(object.institution.uri).object(object.uri)}
+                href={Hrefs.institution(object.institution.uri).object(
+                  object.uri
+                )}
               >
                 {children}
               </Link>
             )}
-            query={objectsQuery}
+            query={objectQuery}
           />
         </Layout>
       )}
-    </LunrObjectSearchPage>);
-}
+    </LunrObjectSearchPage>
+  );
+};
 
 export default CollectionPage;
 
@@ -99,7 +117,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {collectionUri: string; institutionUri: string}}[] = [];
   for (const institution of dataset.institutions) {
     const encodedInstitutionUri = encodeFileName(institution.uri);
-    for (const collection of indexedDataset.institutionCollections(institution.uri)) {
+    for (const collection of indexedDataset.institutionCollections(
+      institution.uri
+    )) {
       paths.push({
         params: {
           collectionUri: encodeFileName(collection.uri),
@@ -121,11 +141,20 @@ export const getStaticProps: GetStaticProps = async ({
   const collectionUri = decodeFileName(params!.collectionUri as string);
   // const institutionUri = decodeFileName(params!.institutionUri as string);
 
-  const collectionDataset = DataSubsetter.fromDataset(readDataset()).collectionDataset(collectionUri, {
+  const collectionDataset = DataSubsetter.fromDataset(
+    readDataset()
+  ).collectionDataset(collectionUri, {
     objects: OBJECT_JOIN_SELECTOR,
   });
 
-  console.log("Collection dataset:", Object.keys(collectionDataset).map(key => `${key}: ${((collectionDataset as any)[key] as any[]).length}`).join(", "));
+  console.log(
+    "Collection dataset:",
+    Object.keys(collectionDataset)
+      .map(
+        key => `${key}: ${((collectionDataset as any)[key] as any[]).length}`
+      )
+      .join(", ")
+  );
 
   return {
     props: {

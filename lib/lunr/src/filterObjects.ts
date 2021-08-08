@@ -2,6 +2,7 @@ import {
   CollectionValueFilter,
   Filter,
   InstitutionValueFilter,
+  PrimitiveType,
   Property,
   StringPropertyValueFilter,
   ValueFilter,
@@ -13,10 +14,14 @@ interface FilterableObject {
   readonly properties: readonly Property[] | null;
 }
 
-const testValueFilter = <T>(
+const testValueFilter = <T extends PrimitiveType>(
   filter: ValueFilter<T>,
-  values: readonly T[],
+  values: readonly T[]
 ): boolean => {
+  if (values.length === 0 && filter.excludeUnknown) {
+    return false;
+  }
+
   const excludeValues: readonly T[] = filter.excludeValues ?? [];
   const includeValues: readonly T[] = filter.includeValues ?? [];
   if (excludeValues.length === 0 && includeValues.length === 0) {
@@ -25,9 +30,7 @@ const testValueFilter = <T>(
   if (excludeValues.length > 0) {
     // If an object has any value that is excluded, then exclude the object
     for (const value of values) {
-      if (
-        excludeValues.some(excludeValue => excludeValue === value)
-      ) {
+      if (excludeValues.some(excludeValue => excludeValue === value)) {
         return false;
       }
     }
@@ -38,9 +41,7 @@ const testValueFilter = <T>(
     // Conversely, if any values are included and an object doesn't have one of them, exclude the object.
     let include = false;
     for (const value of values) {
-      if (
-        includeValues.some(includeValue => includeValue === value)
-      ) {
+      if (includeValues.some(includeValue => includeValue === value)) {
         include = true;
         break;
       }
@@ -53,27 +54,41 @@ const testValueFilter = <T>(
   return true;
 };
 
-const testFilter = <ObjectT extends FilterableObject>(filter: Filter, object: ObjectT): boolean => {
+const testFilter = <ObjectT extends FilterableObject>(
+  filter: Filter,
+  object: ObjectT
+): boolean => {
   switch (filter.type) {
     case "CollectionValue":
-      return testValueFilter(filter as CollectionValueFilter, object.collectionUris);
+      return testValueFilter(
+        filter as CollectionValueFilter,
+        object.collectionUris
+      );
     case "InstitutionValue":
-      return testValueFilter(filter as InstitutionValueFilter, [object.institutionUri]);
-    case "StringPropertyValue":
+      return testValueFilter(filter as InstitutionValueFilter, [
+        object.institutionUri,
+      ]);
+    case "StringPropertyValue": {
       return testValueFilter(
         filter as StringPropertyValueFilter,
-        (object.properties ?? []).filter(property => property.uri === (filter as StringPropertyValueFilter).propertyUri).map(property => property.value.toString()),
+        (object.properties ?? [])
+          .filter(
+            property =>
+              property.uri === (filter as StringPropertyValueFilter).propertyUri
+          )
+          .map(property => property.value.toString())
       );
+    }
   }
 };
 
 export const filterObjects = <ObjectT extends FilterableObject>(kwds: {
   // Apply multiple filters at once to amortize passes over the objects
-  filters: readonly Filter[],
+  filters: readonly Filter[];
   objects: readonly ObjectT[];
 }): readonly ObjectT[] => {
   let {filters, objects} = kwds;
-  return objects.filter(
-    object => filters.every(filter => testFilter(filter, object)),
+  return objects.filter(object =>
+    filters.every(filter => testFilter(filter, object))
   );
 };

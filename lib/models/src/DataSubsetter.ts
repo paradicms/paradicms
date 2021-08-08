@@ -9,6 +9,8 @@ import {InstitutionJoinSelector} from "./InstitutionJoinSelector";
 import {ObjectJoinSelector} from "./ObjectJoinSelector";
 import {Collection} from "./Collection";
 import {Object} from "./Object";
+import {emptyDataset} from "./emptyDataset";
+import {datasetFromPartial} from "./datasetFromPartial";
 
 /**
  * Subset a Dataset to reduce the amount of data passed between getStaticProps and the component.
@@ -42,7 +44,7 @@ export class DataSubsetter {
       }
     }
 
-    const collectionDataset = DataSubsetter.datasetFromPartial({
+    const collectionDataset = datasetFromPartial({
       collections: [collection],
       images,
       objects,
@@ -63,28 +65,12 @@ export class DataSubsetter {
 
   collectionsDataset(collectionUris: readonly string[], joinSelector?: CollectionJoinSelector): Dataset {
     if (collectionUris.length === 0) {
-      return DataSubsetter.emptyDataset;
+      return emptyDataset;
     } else if (collectionUris.length === 1) {
       return this.collectionDataset(collectionUris[0], joinSelector);
     } else {
       return DataSubsetter.mergeDatasets(collectionUris.map(collectionUri => this.collectionDataset(collectionUri, joinSelector)));
     }
-  }
-
-  private static datasetFromPartial(partialDataset: Partial<Dataset>): Dataset {
-    return {
-      collections: partialDataset.collections ?? [],
-      images: partialDataset.images ?? [],
-      institutions: partialDataset.institutions ?? [],
-      licenses: partialDataset.licenses ?? [],
-      objects: partialDataset.objects ?? [],
-      propertyDefinitions: partialDataset.propertyDefinitions ?? [],
-      rightsStatements: partialDataset.rightsStatements ?? [],
-    };
-  }
-
-  private static get emptyDataset() {
-    return DataSubsetter.datasetFromPartial({});
   }
 
   static fromDataset(dataset: Dataset) {
@@ -114,7 +100,7 @@ export class DataSubsetter {
       }
     }
 
-    const institutionDataset = DataSubsetter.datasetFromPartial({
+    const institutionDataset = datasetFromPartial({
       collections,
       images,
       institutions: [institution],
@@ -140,7 +126,7 @@ export class DataSubsetter {
 
   institutionsDataset(institutionUris: readonly string[], joinSelector?: InstitutionJoinSelector): Dataset {
     if (institutionUris.length === 0) {
-      return DataSubsetter.emptyDataset;
+      return emptyDataset;
     } else if (institutionUris.length === 1) {
       return this.institutionDataset(institutionUris[0], joinSelector);
     } else {
@@ -150,7 +136,7 @@ export class DataSubsetter {
 
   private static mergeDatasets(datasets: readonly Dataset[]): Dataset {
     if (datasets.length === 0) {
-      return DataSubsetter.emptyDataset;
+      return emptyDataset;
     } else if (datasets.length === 1) {
       return datasets[0];
     }
@@ -202,7 +188,7 @@ export class DataSubsetter {
       images = [];
     }
 
-    const objectDataset: Dataset = DataSubsetter.datasetFromPartial({
+    const objectDataset: Dataset = datasetFromPartial({
       images,
       objects: [object],
     });
@@ -230,7 +216,7 @@ export class DataSubsetter {
 
   objectsDataset(objectUris: readonly string[], joinSelector?: ObjectJoinSelector): Dataset {
     if (objectUris.length === 0) {
-      return DataSubsetter.emptyDataset;
+      return emptyDataset;
     } else if (objectUris.length === 1) {
       return this.objectDataset(objectUris[0], joinSelector);
     } else {
@@ -239,13 +225,13 @@ export class DataSubsetter {
   }
 
   private propertiesDataset(properties: readonly Property[]): Dataset {
-    return DataSubsetter.datasetFromPartial({
+    return datasetFromPartial({
       propertyDefinitions: this.completeDataset.propertyDefinitions,
     });
   }
 
   private rightsDataset(rights: Rights): Dataset {
-    return DataSubsetter.datasetFromPartial({
+    return datasetFromPartial({
       licenses: this.completeDataset.licenses,
       rightsStatements: this.completeDataset.rightsStatements,
     });

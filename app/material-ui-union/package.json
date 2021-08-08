@@ -7,7 +7,7 @@
   "license": "GPL-3.0-only",
   "main": "n/a",
   "dependencies": {
-    "@paradicms/lunr-react": "1.0.5",
+    "@paradicms/react-services": "1.0.5",
     "@paradicms/material-ui": "1.0.5",
     "@paradicms/material-ui-next": "1.0.5",
     "@paradicms/models": "1.0.5",

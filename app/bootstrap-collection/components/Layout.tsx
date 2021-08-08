@@ -27,13 +27,13 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   documentTitle?: string;
   onSearch?: (text: string) => void;
 }>> = ({
-         collection,
-         cardTitle,
-         children,
-         documentTitle,
-         configuration,
-         onSearch: onSearchUserDefined,
-       }) => {
+  collection,
+  cardTitle,
+  children,
+  documentTitle,
+  configuration,
+  onSearch: onSearchUserDefined,
+}) => {
   const router = useRouter();
 
   // @ts-ignore
@@ -43,7 +43,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   } else {
     onSearch = (text: string) => {
       const href = Hrefs.collection({
-        filters: [],
+        filters: configuration.objectSearch.filters,
         text: text,
       }).toString();
       console.info("redirecting to search href", href);
@@ -55,8 +55,15 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   return (
     <>
       <Head>
-        <title>{collection.title + (documentTitle ? " - " + documentTitle : "")}</title>
-        <link rel="stylesheet" href={configuration.bootstrapStylesheetHref ?? STYLESHEET_HREF_DEFAULT} />
+        <title>
+          {collection.title + (documentTitle ? " - " + documentTitle : "")}
+        </title>
+        <link
+          rel="stylesheet"
+          href={
+            configuration.bootstrapStylesheetHref ?? STYLESHEET_HREF_DEFAULT
+          }
+        />
       </Head>
       <Container fluid>
         <Row>

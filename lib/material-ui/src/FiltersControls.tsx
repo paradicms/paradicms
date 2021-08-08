@@ -1,8 +1,18 @@
 import * as React from "react";
-import {Accordion, AccordionDetails, AccordionSummary, Grid} from "@material-ui/core";
-import {Facet, Filter, StringPropertyValueFacet, StringPropertyValueFilter} from "@paradicms/models";
-import {ValueFilterControls} from "./ValueFilterControls";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Grid,
+} from "@material-ui/core";
+import {
+  Facet,
+  Filter,
+  StringPropertyValueFacet,
+  StringPropertyValueFilter,
+} from "@paradicms/models";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import {ValueFilterControl} from "@paradicms/react-data-table";
 
 export const FiltersControls: React.FunctionComponent<{
   facets: readonly Facet[];
@@ -21,7 +31,12 @@ export const FiltersControls: React.FunctionComponent<{
         switch (filter.type) {
           case "StringPropertyValue": {
             const concreteFilter: StringPropertyValueFilter = filter as StringPropertyValueFilter;
-            const facet: StringPropertyValueFacet | undefined = facets.find(facet => facet.type === "StringPropertyValue" && (facet as StringPropertyValueFacet).propertyUri === concreteFilter.propertyUri) as StringPropertyValueFacet | undefined;
+            const facet: StringPropertyValueFacet | undefined = facets.find(
+              facet =>
+                facet.type === "StringPropertyValue" &&
+                (facet as StringPropertyValueFacet).propertyUri ===
+                  concreteFilter.propertyUri
+            ) as StringPropertyValueFacet | undefined;
             if (!facet) {
               return;
             }
@@ -37,15 +52,15 @@ export const FiltersControls: React.FunctionComponent<{
                     {filter.label}
                   </AccordionSummary>
                   <AccordionDetails>
-                    <ValueFilterControls
+                    <ValueFilterControl
                       facet={facet}
                       filter={concreteFilter}
                       onChange={onChangeFilter}
-                      title={filter.label}
                     />
                   </AccordionDetails>
-                </Accordion>{" "}
-              </Grid>);
+                </Accordion>
+              </Grid>
+            );
           }
         }
       })}

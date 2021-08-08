@@ -9,13 +9,12 @@ import {
 } from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
-import {Col, Container, Row} from "reactstrap";
-import {FiltersBadges, FiltersControls, ObjectsGallery} from "@paradicms/bootstrap";
+import {readDataset} from "lib/readDataset";
+import {LunrObjectSearchPage} from "@paradicms/react-services";
+import {thumbnailTargetDimensions} from "@paradicms/material-ui";
+import {ObjectSearchContainer} from "@paradicms/bootstrap/dist/ObjectSearchContainer";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
-import {readDataset} from "lib/readDataset";
-import {LunrObjectSearchPage} from "@paradicms/lunr-react";
-import {thumbnailTargetDimensions} from "@paradicms/material-ui";
 
 interface StaticProps {
   readonly collection: Collection;
@@ -30,99 +29,40 @@ const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
 };
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
-                                                           collection,
-                                                           configuration,
-                                                           dataset,
-                                                         }) => (
-  <LunrObjectSearchPage configuration={configuration} dataset={dataset} objectJoinSelector={OBJECT_JOIN_SELECTOR}
-                        objectsPerPage={OBJECTS_PER_PAGE}>
-    {({
-        objectsQuery,
-        objectsQueryResults,
-        objectsQueryResultsJoinedDataset,
-        page,
-        setObjectsQuery,
-        setPage,
-      }) => (
+  collection,
+  configuration,
+  dataset,
+}) => (
+  <LunrObjectSearchPage
+    configuration={configuration.objectSearch}
+    dataset={dataset}
+    objectJoinSelector={OBJECT_JOIN_SELECTOR}
+    objectsPerPage={OBJECTS_PER_PAGE}
+  >
+    {({setObjectQuery, setPage, ...lunrObjectSearchProps}) => (
       <Layout
         collection={collection}
         configuration={configuration}
         onSearch={text => {
-          setObjectsQuery({filters: [], text});
+          setObjectQuery({filters: configuration.objectSearch.filters, text});
           setPage(undefined);
         }}
       >
-        <Container fluid>
-          {objectsQueryResults.totalObjectsCount > 0 ? (
-            <>
-              <Row>
-                <Col xs={12}>
-                  <h4 className="d-inline-block">
-                    <span>{objectsQueryResults.totalObjectsCount}</span>&nbsp;
-                    <span>{objectsQueryResults.totalObjectsCount === 1 ? "object" : "objects"}</span>
-                    &nbsp;
-                    {objectsQuery.text ? (
-                      <span>
-                          matching <i>{objectsQuery.text}</i>
-                        </span>
-                    ) : (
-                      <span>matched</span>
-                    )}
-                  </h4>
-                  {objectsQuery.filters.length > 0 ? (
-                    <div className="d-inline-block">
-                      <FiltersBadges
-                        filters={objectsQuery.filters}
-                      />
-                    </div>
-                  ) : null}
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12}>
-                  <hr />
-                </Col>
-              </Row>
-            </>
-          ) : null}
-          <Row>
-            <Col xs="10">
-              {objectsQueryResultsJoinedDataset.objects.length > 0 ? (
-                <ObjectsGallery
-                  objects={objectsQueryResultsJoinedDataset.objects}
-                  objectsPerPage={OBJECTS_PER_PAGE}
-                  objectsTotalCount={objectsQueryResults.totalObjectsCount}
-                  onChangePage={setPage}
-                  page={page}
-                  renderObjectLink={(object, children) => (
-                    <Link href={Hrefs.object(object.uri)}>
-                      <a>{children}</a>
-                    </Link>
-                  )}
-                />
-              ) : (
-                <h3>No matching objects found.</h3>
-              )}
-            </Col>
-            <Col xs="2">
-              <FiltersControls
-                facets={objectsQueryResults.facets}
-                filters={objectsQuery.filters}
-                onChange={newFilters => {
-                  setObjectsQuery({
-                    ...objectsQuery,
-                    filters: newFilters,
-                  });
-                  setPage(undefined);
-                }}
-              />
-            </Col>
-          </Row>
-        </Container>
-      </Layout>)
-    }
+        <ObjectSearchContainer
+          objectsPerPage={OBJECTS_PER_PAGE}
+          renderObjectLink={(object, children) => (
+            <Link href={Hrefs.object(object.uri)}>
+              <a>{children}</a>
+            </Link>
+          )}
+          setObjectQuery={setObjectQuery}
+          setPage={setPage}
+          {...lunrObjectSearchProps}
+        />
+      </Layout>
+    )}
   </LunrObjectSearchPage>
-  );
+);
 
 export default IndexPage;
 
@@ -132,11 +72,13 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   const completeDataset = readDataset();
   const collection = completeDataset.collections[0];
   // Must pass all of the collection's objects in to feed into the search service
-  const collectionDataset = DataSubsetter.fromDataset(completeDataset).collectionDataset(collection.uri, {
+  const collectionDataset = DataSubsetter.fromDataset(
+    completeDataset
+  ).collectionDataset(collection.uri, {
     objects: OBJECT_JOIN_SELECTOR,
   });
 
-  // console.debug("Collection dataset:", Object.keys(collectionDataset).map(key => `${key}: ${((collectionDataset as any)[key] as any[]).length}`).join(", "));
+  // console.debug("Collection dataset:", Object.keys(collectionDataset).map(key => `${key}: ${((collection,Dataset as any)[key] as any[]).length,,,,,,}`).join(", "));
 
   return {
     props: {

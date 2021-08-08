@@ -1,61 +1,87 @@
 import * as React from "react";
-import {ValueFacet, ValueFilter, ValueFilterState} from "@paradicms/models";
+import {
+  PrimitiveType,
+  ValueFacet,
+  ValueFilter,
+  ValueFilterState,
+} from "@paradicms/models";
 import {Chip} from "@material-ui/core";
 
-export const ValueFilterChips: React.FunctionComponent<{
+export class ValueFilterChips<T extends PrimitiveType> extends React.Component<{
   className: string;
-  facet: ValueFacet<string>
-  filter: ValueFilter<string>,
-  onChange: (filter: ValueFilter<string>) => void
-}> = ({className, facet, filter, onChange}) => {
-  const filterState = new ValueFilterState({
-    filter,
-    valueUniverse: facet.values.map(value => value.value),
-  });
+  facet: ValueFacet<T>;
+  filter: ValueFilter<T>;
+  onChange: (filter: ValueFilter<T>) => void;
+}> {
+  render() {
+    const {className, facet, filter, onChange} = this.props;
+    const filterState = new ValueFilterState({
+      filter,
+      valueUniverse: facet.values.map(value => value.value),
+    });
 
-  const filterChips: React.ReactNodeArray = [];
-  (filter.excludeValues ?? []).forEach(
-    (excludeValue, excludeValueI) => {
+    const filterChips: React.ReactNodeArray = [];
+
+    if (filter.excludeUnknown) {
       filterChips.push(
         <Chip
           className={className}
           color="secondary"
-          key={`exclude-${excludeValueI}`}
+          key={`${filter.label}-excludeUnknown`}
           label={
             <span>
               Exclude&nbsp;
-              {filter.label}:{" "}{excludeValue}
+              {filter.label}: Unknown
+            </span>
+          }
+          onDelete={() => {
+            filterState.excludeUnknown = !filterState.excludeUnknown;
+            onChange(filterState.snapshot);
+          }}
+        />
+      );
+    }
+
+    (filter.excludeValues ?? []).forEach((excludeValue, excludeValueI) => {
+      filterChips.push(
+        <Chip
+          className={className}
+          color="secondary"
+          key={`${filter.label}-excludeValue-${excludeValueI}`}
+          label={
+            <span>
+              Exclude&nbsp;
+              {filter.label}: {excludeValue}
             </span>
           }
           onDelete={() => {
             filterState.includeValue(excludeValue);
             onChange(filterState.snapshot);
           }}
-        />,
+        />
       );
-    },
-  );
-  (filter.includeValues ?? []).forEach(
-    (includeValue, includeValueI) => {
+    });
+
+    (filter.includeValues ?? []).forEach((includeValue, includeValueI) => {
       filterChips.push(
         <Chip
           className={className}
           color="primary"
-          key={`include-${includeValueI}`}
+          key={`${filter.label}-includeValue-${includeValueI}`}
           label={
             <span>
               Include&nbsp;
-              {filter.label}:{" "}
-              {includeValue}
+              {filter.label}: {includeValue}
             </span>
           }
           onDelete={() => {
             filterState.excludeValue(includeValue);
             onChange(filterState.snapshot);
           }}
-        />,
+        />
       );
-    },
-  );
-  return <>{filterChips}</>;
+    });
+
+    return <>{filterChips}</>;
+  }
 }

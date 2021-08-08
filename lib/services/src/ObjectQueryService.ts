@@ -1,5 +1,5 @@
-import {ObjectsQuery, ObjectsQueryResults} from "@paradicms/models";
+import {ObjectQuery, ObjectQueryResults} from "@paradicms/models";
 
 export interface ObjectQueryService {
-  getObjects(kwds: {limit: number, offset: number, query: ObjectsQuery}): Promise<ObjectsQueryResults>;
+  getObjects(kwds: {limit: number, offset: number, query: ObjectQuery}): Promise<ObjectQueryResults>;
 }
