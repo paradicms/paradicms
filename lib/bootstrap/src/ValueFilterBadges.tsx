@@ -9,7 +9,23 @@ export class ValueFilterBadges<
 }> {
   render() {
     const {filter} = this.props;
+
     const filterBadges: React.ReactNodeArray = [];
+
+    if (filter.excludeUnknown) {
+      filterBadges.push(
+        <h5
+          className="d-inline-block ml-2"
+          key={`${filter.label}-excludeUnknown`}
+        >
+          <Badge className="p-2" color="warning" pill>
+            Exclude&nbsp;
+            {filter.label}: Unknown
+          </Badge>
+        </h5>
+      );
+    }
+
     (filter.excludeValues ?? []).forEach((excludeValue, excludeValueI) => {
       filterBadges.push(
         <h5
@@ -23,6 +39,7 @@ export class ValueFilterBadges<
         </h5>
       );
     });
+
     (filter.includeValues ?? []).forEach((includeValue, includeValueI) => {
       filterBadges.push(
         <h5
@@ -36,6 +53,7 @@ export class ValueFilterBadges<
         </h5>
       );
     });
+
     return <>{filterBadges}</>;
   }
 }

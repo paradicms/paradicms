@@ -21,12 +21,33 @@ export class ValueFilterChips<T extends PrimitiveType> extends React.Component<{
     });
 
     const filterChips: React.ReactNodeArray = [];
+
+    if (filter.excludeUnknown) {
+      filterChips.push(
+        <Chip
+          className={className}
+          color="secondary"
+          key={`${filter.label}-excludeUnknown`}
+          label={
+            <span>
+              Exclude&nbsp;
+              {filter.label}: Unknown
+            </span>
+          }
+          onDelete={() => {
+            filterState.excludeUnknown = !filterState.excludeUnknown;
+            onChange(filterState.snapshot);
+          }}
+        />
+      );
+    }
+
     (filter.excludeValues ?? []).forEach((excludeValue, excludeValueI) => {
       filterChips.push(
         <Chip
           className={className}
           color="secondary"
-          key={`exclude-${excludeValueI}`}
+          key={`${filter.label}-excludeValue-${excludeValueI}`}
           label={
             <span>
               Exclude&nbsp;
@@ -40,12 +61,13 @@ export class ValueFilterChips<T extends PrimitiveType> extends React.Component<{
         />
       );
     });
+
     (filter.includeValues ?? []).forEach((includeValue, includeValueI) => {
       filterChips.push(
         <Chip
           className={className}
           color="primary"
-          key={`include-${includeValueI}`}
+          key={`${filter.label}-includeValue-${includeValueI}`}
           label={
             <span>
               Include&nbsp;
@@ -59,6 +81,7 @@ export class ValueFilterChips<T extends PrimitiveType> extends React.Component<{
         />
       );
     });
+
     return <>{filterChips}</>;
   }
 }
