@@ -8,9 +8,7 @@ import {
 import * as React from "react";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
-import {
-\  thumbnailTargetDimensions,
-} from "@paradicms/material-ui";
+import {thumbnailTargetDimensions} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {readDataset} from "lib/readDataset";
@@ -64,7 +62,9 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
             : "Search results"
         }
         configuration={configuration}
-        onSearch={text => setObjectQuery({filters: configuration.objectSearch.filters, text})}
+        onSearch={text =>
+          setObjectQuery({filters: configuration.objectSearch.filters, text})
+        }
       >
         <ObjectSearchGrid
           facets={objectQueryResults.facets}
