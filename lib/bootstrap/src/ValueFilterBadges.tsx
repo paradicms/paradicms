@@ -12,6 +12,20 @@ export class ValueFilterBadges<
 
     const filterBadges: React.ReactNodeArray = [];
 
+    if (filter.excludeKnown) {
+      filterBadges.push(
+        <h5
+          className="d-inline-block ml-2"
+          key={`${filter.label}-excludeKnown`}
+        >
+          <Badge className="p-2" color="warning" pill>
+            Exclude&nbsp;
+            {filter.label}: Known
+          </Badge>
+        </h5>
+      );
+    }
+
     if (filter.excludeUnknown) {
       filterBadges.push(
         <h5

@@ -54,14 +54,15 @@ export const ValueFilterControl = <T extends PrimitiveType>(
 
   const dataTableRows = useMemo((): DataTableRow<T>[] => {
     const rows: DataTableRow<T>[] = [];
-    if (facet.unknownCount > 0) {
-      rows.push({
-        count: facet.unknownCount,
-        id: "unknown",
-        label: "Unknown",
-        selected: state.includeUnknown,
-      });
-    }
+    // Always include the Unknown row even if the count is 0
+    // The onChange logic all first excludes all known and unknown values, then re-includes rows that are checked.
+    // If Unknown is not represented in a row it's excluded by that logic. This is confusing to the user.
+    rows.push({
+      count: facet.unknownCount,
+      id: "unknown",
+      label: "Unknown",
+      selected: state.includeUnknown,
+    });
     for (const value of facet.values) {
       rows.push({
         count: value.count,

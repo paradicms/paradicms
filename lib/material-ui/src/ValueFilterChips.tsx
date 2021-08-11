@@ -22,6 +22,26 @@ export class ValueFilterChips<T extends PrimitiveType> extends React.Component<{
 
     const filterChips: React.ReactNodeArray = [];
 
+    if (filter.excludeKnown) {
+      filterChips.push(
+        <Chip
+          className={className}
+          color="secondary"
+          key={`${filter.label}-excludeKnown`}
+          label={
+            <span>
+              Exclude&nbsp;
+              {filter.label}: Known
+            </span>
+          }
+          onDelete={() => {
+            filterState.includeKnown();
+            onChange(filterState.snapshot);
+          }}
+        />
+      );
+    }
+
     if (filter.excludeUnknown) {
       filterChips.push(
         <Chip

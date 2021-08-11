@@ -4,16 +4,17 @@ import {defaultConfiguration, IndexedDataset} from "@paradicms/models";
 import {testDataset} from "../../models/test/testDataset";
 
 describe("LunrObjectQueryService", () => {
-  const configuration = defaultConfiguration;
+  const configuration = defaultConfiguration.objectSearch;
   const dataset = new IndexedDataset(testDataset);
   const sut = new LunrObjectQueryService({
-    configuration, dataset,
+    configuration,
+    dataset,
   });
 
   it("should return at least one object from an empty query", async () => {
     const result = await sut.getObjects({
       query: {
-        filters: configuration.objectFilters,
+        filters: configuration.filters,
         text: null,
       },
       offset: 0,
@@ -25,7 +26,7 @@ describe("LunrObjectQueryService", () => {
   it("should return fewer objects from a freetext query", async () => {
     const allResult = await sut.getObjects({
       query: {
-        filters: configuration.objectFilters,
+        filters: configuration.filters,
         text: null,
       },
       offset: 0,
@@ -34,7 +35,7 @@ describe("LunrObjectQueryService", () => {
 
     const fewerResult = await sut.getObjects({
       query: {
-        filters: configuration.objectFilters,
+        filters: configuration.filters,
         text: "Institution0Collection0Object2",
       },
       offset: 0,
@@ -43,6 +44,8 @@ describe("LunrObjectQueryService", () => {
 
     expect(allResult.dataset.objects).to.not.be.empty;
     expect(fewerResult.dataset.objects).to.not.be.empty;
-    expect(fewerResult.dataset.objects.length).to.be.lessThan(allResult.dataset.objects.length);
+    expect(fewerResult.dataset.objects.length).to.be.lessThan(
+      allResult.dataset.objects.length
+    );
   });
 });

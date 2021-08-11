@@ -18,12 +18,17 @@ export class ValueFilterState<
     this._includeUnknown = !this.initialFilter.excludeUnknown;
 
     // Build sets of the excludeValueSet and includeValueSet values to avoid repeatedly iterating over the arrays.
-    this.excludeValueSet = this.initialFilter.excludeValues
-      ? new Set(this.initialFilter.excludeValues)
-      : new Set();
-    this.includeValueSet = this.initialFilter.includeValues
-      ? new Set(this.initialFilter.includeValues)
-      : new Set();
+    if (this.initialFilter.excludeKnown) {
+      this.excludeValueSet = new Set(this.valueUniverse);
+      this.includeValueSet = new Set();
+    } else {
+      this.excludeValueSet = this.initialFilter.excludeValues
+        ? new Set(this.initialFilter.excludeValues)
+        : new Set();
+      this.includeValueSet = this.initialFilter.includeValues
+        ? new Set(this.initialFilter.includeValues)
+        : new Set();
+    }
 
     // If a value is not in one of the sets it's implicitly included.
     this.valueUniverse.forEach(valueId => {
@@ -75,10 +80,14 @@ export class ValueFilterState<
   }
 
   excludeAll(): void {
+    this.excludeKnown();
+    this.excludeUnknown = true;
+  }
+
+  excludeKnown(): void {
     for (const value of this.valueUniverse) {
       this.excludeValue(value);
     }
-    this.excludeUnknown = true;
   }
 
   get excludeUnknown() {
@@ -94,10 +103,14 @@ export class ValueFilterState<
   }
 
   includeAll(): void {
+    this.includeKnown();
+    this.includeUnknown = true;
+  }
+
+  includeKnown(): void {
     for (const value of this.valueUniverse) {
       this.includeValue(value);
     }
-    this.includeUnknown = true;
   }
 
   get includeUnknown() {
@@ -117,6 +130,7 @@ export class ValueFilterState<
   }
 
   get snapshot(): ValueFilterT {
+    let excludeKnown: boolean | undefined = undefined;
     let excludeValues: ValueT[] | undefined = undefined;
     let includeValues: ValueT[] | undefined = undefined;
 
@@ -124,7 +138,7 @@ export class ValueFilterState<
       // Include every value = nothing set
     } else if (this.excludeValueSet.size === this.valueUniverse.length) {
       // Exclude every value = explicitly exclude every value
-      excludeValues = [...this.excludeValueSet];
+      excludeKnown = true;
     } else if (this.includeValueSet.size >= this.excludeValueSet.size) {
       if (this.excludeValueSet.size === 0) {
         throw new RangeError("must explicitly exclude");
@@ -139,12 +153,15 @@ export class ValueFilterState<
       includeValues = [...this.includeValueSet];
     }
 
-    return {
-      ...this.initialFilter,
-      excludeUnknown: this.excludeUnknown ? true : undefined,
-      excludeValues,
-      includeUnknown: this.includeUnknown ? true : undefined,
-      includeValues,
-    };
+    // Remove undefined values
+    return JSON.parse(
+      JSON.stringify({
+        ...this.initialFilter,
+        excludeKnown,
+        excludeUnknown: this.excludeUnknown ? true : undefined,
+        excludeValues,
+        includeValues,
+      })
+    );
   }
 }
