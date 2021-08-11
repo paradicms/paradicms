@@ -80,10 +80,14 @@ export class ValueFilterState<
   }
 
   excludeAll(): void {
+    this.excludeKnown();
+    this.excludeUnknown = true;
+  }
+
+  excludeKnown(): void {
     for (const value of this.valueUniverse) {
       this.excludeValue(value);
     }
-    this.excludeUnknown = true;
   }
 
   get excludeUnknown() {
@@ -99,10 +103,14 @@ export class ValueFilterState<
   }
 
   includeAll(): void {
+    this.includeKnown();
+    this.includeUnknown = true;
+  }
+
+  includeKnown(): void {
     for (const value of this.valueUniverse) {
       this.includeValue(value);
     }
-    this.includeUnknown = true;
   }
 
   get includeUnknown() {
@@ -145,13 +153,15 @@ export class ValueFilterState<
       includeValues = [...this.includeValueSet];
     }
 
-    return {
-      ...this.initialFilter,
-      excludeKnown,
-      excludeUnknown: this.excludeUnknown ? true : undefined,
-      excludeValues,
-      includeUnknown: this.includeUnknown ? true : undefined,
-      includeValues,
-    };
+    // Remove undefined values
+    return JSON.parse(
+      JSON.stringify({
+        ...this.initialFilter,
+        excludeKnown,
+        excludeUnknown: this.excludeUnknown ? true : undefined,
+        excludeValues,
+        includeValues,
+      })
+    );
   }
 }
