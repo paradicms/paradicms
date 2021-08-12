@@ -1,7 +1,7 @@
 import {JoinedDataset} from "./JoinedDataset";
 import {Property} from "./Property";
 import {PropertyDefinition} from "./PropertyDefinition";
-import {PrimitiveType} from "./PrimitiveType";
+import {PropertyValue} from "./PropertyValue";
 
 export class JoinedProperty {
   constructor(
@@ -17,7 +17,7 @@ export class JoinedProperty {
     return this.property.uri;
   }
 
-  get value(): PrimitiveType {
+  get value(): PropertyValue {
     return this.property.value;
   }
 }

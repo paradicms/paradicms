@@ -18,7 +18,7 @@ export const PropertiesTable: React.FunctionComponent<{
                 <TableCell>
                   <strong>{propertyDefinition?.label ?? property.uri}</strong>
                 </TableCell>
-                <TableCell>{property.value}</TableCell>
+                <TableCell>{property.value.value}</TableCell>
               </TableRow>
             </React.Fragment>
           );

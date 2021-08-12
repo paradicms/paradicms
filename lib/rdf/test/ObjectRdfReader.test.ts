@@ -25,8 +25,8 @@ describe("Object RDF reader", () => {
       expect(model.properties).to.not.be.empty;
       model.properties!.forEach(property => {
         expect(property.uri.trim()).to.not.be.empty;
-        if (typeof property.value === "string") {
-          expect(property.value.trim()).to.not.be.empty;
+        if (typeof property.value.value === "string") {
+          expect(property.value.value.trim()).to.not.be.empty;
         }
       });
       expect(model.rights).to.not.be.null;

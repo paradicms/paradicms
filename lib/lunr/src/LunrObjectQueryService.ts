@@ -71,7 +71,7 @@ export class LunrObjectQueryService implements ObjectQueryService {
             if (!fieldName) {
               continue;
             }
-            doc[fieldName] = property.value;
+            doc[fieldName] = property.value.value.toString();
           }
         }
         this.add(doc);

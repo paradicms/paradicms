@@ -5,7 +5,9 @@ import {License} from "../src/License";
 import {RightsStatement} from "../src/RightsStatement";
 
 describe("JoinedRights", () => {
-  const sut = JoinedDataset.fromDataset(testDataset).institutionByUri(testDataset.institutions[0].uri).rights!;
+  const sut = JoinedDataset.fromDataset(testDataset).institutionByUri(
+    testDataset.institutions[0].uri
+  ).rights!;
 
   it("should have a joined license", () => {
     expect(sut.license).to.not.be.empty;
@@ -21,7 +23,7 @@ describe("JoinedRights", () => {
 
   it("should have a text holder", () => {
     expect(sut.holder).to.not.be.null;
-    expect(sut.holder!.type).to.eq("text");
+    expect(sut.holder!.type).to.eq("string");
     expect(sut.holder!.value).to.not.be.empty;
   });
 });
