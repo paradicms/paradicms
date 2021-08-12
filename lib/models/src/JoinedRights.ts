@@ -28,10 +28,10 @@ export class JoinedRights {
     }
     switch (this.rights.license.type) {
       case "string":
-        return (this.rights.statement as StringPropertyValue).value;
+        return (this.rights.license as StringPropertyValue).value;
       case "uri":
         return this.joinedDataset.licenseByUri(
-          (this.rights.statement as UriPropertyValue).value
+          (this.rights.license as UriPropertyValue).value
         );
       default:
         return null;
