@@ -21,7 +21,6 @@ export const ObjectSearchPage: React.FunctionComponent<ObjectSearchPageProps> = 
     () =>
       objectQueryQueryParam ?? {
         filters: configuration.filters,
-        text: null,
       },
     [objectQueryQueryParam]
   );
