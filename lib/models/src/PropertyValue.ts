@@ -1,6 +1,9 @@
 // Discriminated union that captures an RDF literal or an RDF named node
+import {PrimitiveType} from "./PrimitiveType";
+
 export interface PropertyValue {
   readonly type: "boolean" | "number" | "string" | "uri";
+  readonly value: PrimitiveType;
 }
 
 export interface BooleanPropertyValue extends PropertyValue {

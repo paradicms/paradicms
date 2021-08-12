@@ -76,7 +76,7 @@ const testFilter = <ObjectT extends FilterableObject>(
             property =>
               property.uri === (filter as StringPropertyValueFilter).propertyUri
           )
-          .map(property => property.value.toString())
+          .map(property => property.value.value.toString())
       );
     }
   }

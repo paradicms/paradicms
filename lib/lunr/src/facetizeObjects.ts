@@ -77,7 +77,7 @@ export const facetizeObjects = <
         let objectHasProperty = false;
         for (const property of object.properties ?? []) {
           if (property.uri === concreteFacet.propertyUri) {
-            incrementValueCount(countsByValue, property.value.toString());
+            incrementValueCount(countsByValue, property.value.value.toString());
             objectHasProperty = true;
           }
         }
