@@ -7,6 +7,7 @@ export * from "./ObjectCard";
 export * from "./ObjectImagesCarousel";
 export * from "./ObjectsGallery";
 export * from "./ObjectSearchContainer";
+export * from "./ObjectsTable";
 export * from "./PropertiesTable";
 export * from "./RightsTable";
 export * from "./thumbnailTargetDimensions";

@@ -1,6 +1,6 @@
 import {Button, ButtonGroup, Col, Container, Row} from "reactstrap";
 import * as React from "react";
-import {useMemo, useState} from "react";
+import {useMemo} from "react";
 import {
   JoinedInstitution,
   JoinedObject,
@@ -12,8 +12,9 @@ import {FiltersBadges} from "./FiltersBadges";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faImages, faList} from "@fortawesome/free-solid-svg-icons";
 import {ObjectsGallery} from "./ObjectsGallery";
-import {ObjectsListGroup} from "./ObjectsListGroup";
+import {ObjectsTable} from "./ObjectsTable";
 import PaginationComponent from "react-reactstrap-pagination";
+import {useQueryParam} from "use-query-params";
 
 export const ObjectSearchContainer: React.FunctionComponent<{
   objectQuery: ObjectQuery;
@@ -40,7 +41,8 @@ export const ObjectSearchContainer: React.FunctionComponent<{
   setObjectQuery,
   setPage,
 }) => {
-  const [view, setView] = useState<"gallery" | "list">("gallery");
+  const [viewQueryParam, setView] = useQueryParam<"gallery" | "table">("view");
+  const view = viewQueryParam ?? "gallery";
 
   const objects = useMemo(() => objectQueryResults.joinedDataset.objects, [
     objectQueryResults,
@@ -86,9 +88,9 @@ export const ObjectSearchContainer: React.FunctionComponent<{
                   <FontAwesomeIcon icon={faImages} />
                 </Button>
                 <Button
-                  color={view === "list" ? "primary" : undefined}
-                  onClick={() => setView("list")}
-                  title="list view"
+                  color={view === "table" ? "primary" : undefined}
+                  onClick={() => setView("table")}
+                  title="table view"
                 >
                   <FontAwesomeIcon icon={faList} />
                 </Button>
@@ -121,14 +123,18 @@ export const ObjectSearchContainer: React.FunctionComponent<{
             <Row>
               {view === "gallery" ? (
                 <ObjectsGallery
-                  objects={objectQueryResults.joinedDataset.objects}
+                  objects={objects}
                   renderInstitutionLink={renderInstitutionLink}
                   renderObjectLink={renderObjectLink}
                 />
               ) : null}
-              {view === "list" ? (
+              {view === "table" ? (
                 <Col xs={12}>
-                  <ObjectsListGroup objects={objects} />
+                  <ObjectsTable
+                    objects={objects}
+                    renderInstitutionLink={renderInstitutionLink}
+                    renderObjectLink={renderObjectLink}
+                  />
                 </Col>
               ) : null}
             </Row>
