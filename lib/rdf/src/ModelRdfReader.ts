@@ -2,22 +2,28 @@ import {RDF} from "./vocabularies";
 import {ModelNode} from "./ModelNode";
 import {LiteralWrapper} from "./LiteralWrapper";
 import {RdfReaderException} from "./RdfReaderException";
-import {NamedNode, Quad, Store} from "n3";
+import {Literal, NamedNode, Quad, Store, Term} from "n3";
+import {
+  BooleanPropertyValue,
+  NumberPropertyValue,
+  PropertyValue,
+  StringPropertyValue,
+  UriPropertyValue,
+} from "@paradicms/models";
 
 export abstract class ModelRdfReader<ModelT> {
+  protected _nodeStatementsByPredicateUri:
+    | {[index: string]: readonly Quad[]}
+    | undefined;
+
   protected constructor(
     protected readonly node: ModelNode,
-    protected readonly store: Store,
-  ) {
-  }
+    protected readonly store: Store
+  ) {}
 
-  protected indexNodeStatementsByPredicateUri(
-    nodeStatements?: readonly Quad[],
+  private static indexNodeStatementsByPredicateUri(
+    nodeStatements: readonly Quad[]
   ): {[index: string]: readonly Quad[]} {
-    if (!nodeStatements) {
-      nodeStatements = this.store.getQuads(this.node, null, null, null);
-    }
-
     // Cache the node's statements from the store rather than doing multiple .each queries for each predicate
     return nodeStatements.reduce((nodeStatementsByPredicateUri, statement) => {
       if (statement.predicate.termType === "NamedNode") {
@@ -35,6 +41,17 @@ export abstract class ModelRdfReader<ModelT> {
     }, {} as {[index: string]: readonly Quad[]});
   }
 
+  protected get nodeStatementsByPredicateUri(): {
+    [index: string]: readonly Quad[];
+  } {
+    if (!this._nodeStatementsByPredicateUri) {
+      this._nodeStatementsByPredicateUri = ModelRdfReader.indexNodeStatementsByPredicateUri(
+        this.store.getQuads(this.node, null, null, null)
+      );
+    }
+    return this._nodeStatementsByPredicateUri;
+  }
+
   get nodeUri(): string {
     switch (this.node.termType) {
       case "BlankNode":
@@ -49,10 +66,15 @@ export abstract class ModelRdfReader<ModelT> {
   protected static _readAll<ModelT>(
     readerFactory: (node: ModelNode) => ModelRdfReader<ModelT>,
     store: Store,
-    type: NamedNode,
+    type: NamedNode
   ): ModelT[] {
     const models: ModelT[] = [];
-    ModelRdfReader._readEach(model => models.push(model), readerFactory, store, type);
+    ModelRdfReader._readEach(
+      model => models.push(model),
+      readerFactory,
+      store,
+      type
+    );
     return models;
   }
 
@@ -62,7 +84,7 @@ export abstract class ModelRdfReader<ModelT> {
     const parentNodes = this.store.getObjects(
       this.node,
       childToParentProperty,
-      null,
+      null
     );
     if (parentNodes.length === 0) {
       return [];
@@ -76,20 +98,25 @@ export abstract class ModelRdfReader<ModelT> {
     callback: (model: ModelT) => void,
     readerFactory: (node: ModelNode) => ModelRdfReader<ModelT>,
     store: Store,
-    type: NamedNode,
+    type: NamedNode
   ): void {
-    store.forSubjects(node => {
-      switch (node.termType) {
-        case "BlankNode":
-        case "NamedNode":
-          break;
-        default:
-          throw new RdfReaderException(
-            `expected BlankNode or NamedNode, actual ${node.termType}`,
-          );
-      }
-      callback(readerFactory(node as ModelNode).read());
-    }, RDF.type, type, null);
+    store.forSubjects(
+      node => {
+        switch (node.termType) {
+          case "BlankNode":
+          case "NamedNode":
+            break;
+          default:
+            throw new RdfReaderException(
+              `expected BlankNode or NamedNode, actual ${node.termType}`
+            );
+        }
+        callback(readerFactory(node as ModelNode).read());
+      },
+      RDF.type,
+      type,
+      null
+    );
   }
 
   protected readOptionalLiteral(property: NamedNode): LiteralWrapper | null {
@@ -102,6 +129,22 @@ export abstract class ModelRdfReader<ModelT> {
         return new LiteralWrapper(node);
       }
     }
+    return null;
+  }
+
+  protected readPropertyValue(property: NamedNode): PropertyValue | null {
+    const nodeStatements = this.nodeStatementsByPredicateUri[property.value];
+    if (!nodeStatements) {
+      return null;
+    }
+
+    for (const nodeStatement of nodeStatements) {
+      const propertyValue = this.toPropertyValue(nodeStatement.object);
+      if (propertyValue) {
+        return propertyValue;
+      }
+    }
+
     return null;
   }
 
@@ -131,4 +174,40 @@ export abstract class ModelRdfReader<ModelT> {
   }
 
   abstract read(): ModelT;
+
+  protected toPropertyValue(term: Term): PropertyValue | null {
+    switch (term.termType) {
+      case "Literal":
+        const literal = new LiteralWrapper(term as Literal);
+        if (literal.isBoolean()) {
+          const booleanValue: BooleanPropertyValue = {
+            type: "boolean",
+            value: literal.toBoolean(),
+          };
+          return booleanValue;
+        } else if (literal.isInteger()) {
+          const numberValue: NumberPropertyValue = {
+            type: "number",
+            value: literal.toInteger(),
+          };
+          return numberValue;
+        } else if (literal.isString()) {
+          const stringValue: StringPropertyValue = {
+            type: "string",
+            value: literal.toString(),
+          };
+          return stringValue;
+        } else {
+          console.warn("unknown literal datatype", literal.literal.datatype);
+          return null;
+        }
+        throw new EvalError();
+      case "NamedNode": {
+        const uriValue: UriPropertyValue = {type: "uri", value: term.value};
+        return uriValue;
+      }
+      default:
+        return null;
+    }
+  }
 }

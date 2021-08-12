@@ -1,18 +1,24 @@
 import {JoinedDataset} from "./JoinedDataset";
 import {Rights} from "./Rights";
-import {Value} from "./Value";
+import {
+  PropertyValue,
+  StringPropertyValue,
+  UriPropertyValue,
+} from "./PropertyValue";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
 
 export class JoinedRights {
-  constructor(private readonly joinedDataset: JoinedDataset, private readonly rights: Rights) {
-  }
+  constructor(
+    private readonly joinedDataset: JoinedDataset,
+    private readonly rights: Rights
+  ) {}
 
-  get creator(): Value | null {
+  get creator(): PropertyValue | null {
     return this.rights.creator;
   }
 
-  get holder(): Value | null {
+  get holder(): PropertyValue | null {
     return this.rights.holder;
   }
 
@@ -21,10 +27,14 @@ export class JoinedRights {
       return null;
     }
     switch (this.rights.license.type) {
-      case "text":
-        return this.rights.license.value;
+      case "string":
+        return (this.rights.statement as StringPropertyValue).value;
       case "uri":
-        return this.joinedDataset.licenseByUri(this.rights.license.value);
+        return this.joinedDataset.licenseByUri(
+          (this.rights.statement as UriPropertyValue).value
+        );
+      default:
+        return null;
     }
   }
 
@@ -33,10 +43,14 @@ export class JoinedRights {
       return null;
     }
     switch (this.rights.statement.type) {
-      case "text":
-        return this.rights.statement.value;
+      case "string":
+        return (this.rights.statement as StringPropertyValue).value;
       case "uri":
-        return this.joinedDataset.rightsStatementByUri(this.rights.statement.value);
+        return this.joinedDataset.rightsStatementByUri(
+          (this.rights.statement as UriPropertyValue).value
+        );
+      default:
+        return null;
     }
   }
 }

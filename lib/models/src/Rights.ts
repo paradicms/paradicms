@@ -1,8 +1,8 @@
-import {Value} from "./Value";
+import {PropertyValue} from "./PropertyValue";
 
 export interface Rights {
-  creator: Value | null;
-  holder: Value | null;
-  license: Value | null;
-  statement: Value | null;
+  creator: PropertyValue | null;
+  holder: PropertyValue | null;
+  license: PropertyValue | null;
+  statement: PropertyValue | null;
 }
