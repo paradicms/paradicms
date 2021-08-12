@@ -15,7 +15,6 @@ describe("LunrObjectQueryService", () => {
     const result = await sut.getObjects({
       query: {
         filters: configuration.filters,
-        text: null,
       },
       offset: 0,
       limit: Number.MAX_SAFE_INTEGER,
@@ -27,7 +26,6 @@ describe("LunrObjectQueryService", () => {
     const allResult = await sut.getObjects({
       query: {
         filters: configuration.filters,
-        text: null,
       },
       offset: 0,
       limit: Number.MAX_SAFE_INTEGER,
