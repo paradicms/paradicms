@@ -1,8 +1,8 @@
 from datetime import date, timedelta
 from pathlib import Path
-from typing import List, Optional, Tuple, Union
+from typing import Optional, Tuple
 
-from rdflib import URIRef
+from rdflib import Literal, URIRef
 
 from paradicms_etl._loader import _Loader
 from paradicms_etl._pipeline import _Pipeline
@@ -20,7 +20,7 @@ from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.object import Object
 from paradicms_etl.models.property import Property
-from paradicms_etl.models.property_definition import PropertyDefinition
+from paradicms_etl.models.property_value_definition import PropertyValueDefinition
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -34,20 +34,58 @@ class TestDataPipeline(_Pipeline):
     ID = "test_data"
 
     class __TestDataTransformer(_Transformer):
-        __CREATORS = tuple(f"Creator {i}" for i in range(10))
-        __CULTURAL_CONTEXTS = tuple(f"Cultural context {i}" for i in range(10))
-        __EXTENTS = tuple(f"Extent {i}" for i in range(10))
-        __LANGUAGES = tuple(f"Language {i}" for i in range(10))
+        __FACETED_PROPERTY_DEFINITIONS = (
+            (
+                DublinCorePropertyDefinitions.CREATOR,
+                tuple(f"Creator {i}" for i in range(10)),
+            ),
+            (
+                VraCorePropertyDefinitions.CULTURAL_CONTEXT,
+                tuple(f"Cultural context {i}" for i in range(10)),
+            ),
+            (
+                DublinCorePropertyDefinitions.EXTENT,
+                tuple(f"Extent {i}" for i in range(10)),
+            ),
+            (
+                DublinCorePropertyDefinitions.LANGUAGE,
+                tuple(f"Language {i}" for i in range(10)),
+            ),
+            (
+                VraCorePropertyDefinitions.MATERIAL,
+                tuple(f"Material {i}" for i in range(10)),
+            ),
+            (
+                DublinCorePropertyDefinitions.MEDIUM,
+                tuple(f"Medium {i}" for i in range(10)),
+            )(
+                DublinCorePropertyDefinitions.PUBLISHER,
+                tuple(f"Publisher {i}" for i in range(10)),
+            ),
+            (
+                DublinCorePropertyDefinitions.SOURCE,
+                tuple(f"Source {i}" for i in range(10)),
+            ),
+            (
+                DublinCorePropertyDefinitions.SPATIAL,
+                tuple(f"Spatial {i}" for i in range(10)),
+            ),
+            (
+                DublinCorePropertyDefinitions.SUBJECT,
+                tuple(f"Subject {i}" for i in range(10)),
+            ),
+            (
+                VraCorePropertyDefinitions.TECHNIQUE,
+                tuple(f"Technique {i}" for i in range(10)),
+            ),
+            (
+                DublinCorePropertyDefinitions.TEMPORAL,
+                tuple(f"Temporal {i}" for i in range(10)),
+            ),
+            (DublinCorePropertyDefinitions.TYPE, tuple(f"Type {i}" for i in range(10))),
+        )
+
         __LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae."
-        __MATERIALS = tuple(f"Material {i}" for i in range(10))
-        __MEDIA = tuple(f"Medium {i}" for i in range(10))
-        __PUBLISHERS = tuple(f"Publisher {i}" for i in range(10))
-        __SOURCES = tuple(f"Source {i}" for i in range(10))
-        __SPATIALS = tuple(f"Spatial {i}" for i in range(10))
-        __SUBJECTS = tuple(f"Subject {i}" for i in range(10))
-        __TECHNIQUES = tuple(f"Technique {i}" for i in range(10))
-        __TEMPORALS = tuple(f"Temporal {i}" for i in range(10))
-        __TYPES = tuple(f"Type {i}" for i in range(10))
 
         def __init__(
             self,
@@ -69,6 +107,8 @@ class TestDataPipeline(_Pipeline):
             yield from DublinCorePropertyDefinitions.as_tuple()
             yield from RightsStatementsDotOrgRightsStatements.as_tuple()
             yield from VraCorePropertyDefinitions.as_tuple()
+
+            yield from self.__generate_property_definitions()
 
             # yield GuiMetadata(
             #     bootstrap_stylesheet_href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css",
@@ -189,48 +229,15 @@ class TestDataPipeline(_Pipeline):
             title: str,
             uri: URIRef,
         ):
-            def object_property_values(
-                all_property_values: List[Union[URIRef, str]],
-                count,
-                property_definition: PropertyDefinition,
-            ):
-                return tuple(
-                    Property(
-                        property_definition,
-                        all_property_values[(object_i + i) % len(all_property_values)],
-                    )
-                    for i in range(count)
-                )
-
             properties = []
+
+            # Properties that depend on the object title
             properties.extend(
                 Property(
                     DublinCorePropertyDefinitions.ALTERNATIVE_TITLE,
                     f"{title} alternative title {i}",
                 )
                 for i in range(2)
-            )
-            properties.extend(
-                object_property_values(
-                    self.__CREATORS, 2, DublinCorePropertyDefinitions.CREATOR
-                )
-            )
-            properties.extend(
-                object_property_values(
-                    self.__CULTURAL_CONTEXTS,
-                    2,
-                    VraCorePropertyDefinitions.CULTURAL_CONTEXT,
-                )
-            )
-            properties.extend(
-                Property(
-                    DublinCorePropertyDefinitions.DATE,
-                    (
-                        date(year=2020, month=8, day=9)
-                        - timedelta(minutes=(60 * 24 * (object_i + date_i)))
-                    ).isoformat(),
-                )
-                for date_i in range(2)
             )
             properties.append(
                 Property(
@@ -246,28 +253,8 @@ class TestDataPipeline(_Pipeline):
                 for i in range(2)
             )
             properties.extend(
-                object_property_values(
-                    self.__EXTENTS, 2, DublinCorePropertyDefinitions.EXTENT
-                )
-            )
-            properties.extend(
                 Property(DublinCorePropertyDefinitions.IDENTIFIER, f"{title}Id{i}")
                 for i in range(2)
-            )
-            properties.extend(
-                object_property_values(
-                    self.__LANGUAGES, 2, DublinCorePropertyDefinitions.LANGUAGE
-                )
-            )
-            properties.extend(
-                object_property_values(
-                    self.__MATERIALS, 2, VraCorePropertyDefinitions.MATERIAL
-                )
-            )
-            properties.extend(
-                object_property_values(
-                    self.__MEDIA, 2, DublinCorePropertyDefinitions.MEDIUM
-                )
             )
             properties.extend(
                 Property(
@@ -275,41 +262,31 @@ class TestDataPipeline(_Pipeline):
                 )
                 for i in range(2)
             )
+
+            # Properties that depend on the date
             properties.extend(
-                object_property_values(
-                    self.__PUBLISHERS, 2, DublinCorePropertyDefinitions.PUBLISHER
+                Property(
+                    DublinCorePropertyDefinitions.DATE,
+                    (
+                        date(year=2020, month=8, day=9)
+                        - timedelta(minutes=(60 * 24 * (object_i + date_i)))
+                    ).isoformat(),
                 )
+                for date_i in range(2)
             )
-            properties.extend(
-                object_property_values(
-                    self.__SOURCES, 2, DublinCorePropertyDefinitions.SOURCE
+
+            # Faceted properties, which are the same across objects
+            for (
+                property_definition,
+                property_values,
+            ) in self.__FACETED_PROPERTY_DEFINITIONS:
+                properties.append(
+                    Property(
+                        property_definition,
+                        property_values[(object_i + i) % len(property_values)],
+                    )
+                    for i in range(2)
                 )
-            )
-            properties.extend(
-                object_property_values(
-                    self.__SPATIALS, 2, DublinCorePropertyDefinitions.SPATIAL
-                )
-            )
-            properties.extend(
-                object_property_values(
-                    self.__SUBJECTS, 2, DublinCorePropertyDefinitions.SUBJECT
-                )
-            )
-            properties.extend(
-                object_property_values(
-                    self.__TECHNIQUES, 2, VraCorePropertyDefinitions.TECHNIQUE
-                )
-            )
-            properties.extend(
-                object_property_values(
-                    self.__TEMPORALS, 2, DublinCorePropertyDefinitions.TEMPORAL
-                )
-            )
-            properties.extend(
-                object_property_values(
-                    self.__TYPES, 2, DublinCorePropertyDefinitions.TYPE
-                )
-            )
 
             page = "http://example.com/object/" + str(object_i)
             if object_i % 2 == 0:
@@ -336,6 +313,26 @@ class TestDataPipeline(_Pipeline):
                 institution=institution,
                 text_prefix=object_.title,
             )
+
+        def __generate_property_definitions(self):
+            property_value_urn_i = 0
+            for (
+                property_definition,
+                property_values,
+            ) in self.__FACETED_PROPERTY_DEFINITIONS:
+                for property_value in property_values:
+                    property_value_definition = PropertyValueDefinition(
+                        label=property_value,
+                        property_uri=property_definition.uri,
+                        uri=URIRef(
+                            f"urn:paradicms_etl:pipeline:test_data:property_value:{property_value_urn_i}"
+                        ),
+                        value=Literal(property_value),
+                    )
+                    yield property_value_definition
+                    property_value_urn_i += 1
+
+                    yield Image(depicts_uri=property_value_definition.uri)
 
         def __generate_shared_objects(
             self, *, collections: Tuple[Collection, ...], institution: Institution
