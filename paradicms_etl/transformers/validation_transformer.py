@@ -44,7 +44,6 @@ class ValidationTransformer(_Transformer):
             elif isinstance(model, Image):
                 image = model
                 image_depicts_uris.add(image.depicts_uri)
-                referenced_institution_uris.add(image.institution_uri)
             elif isinstance(model, Institution):
                 institution = model
                 assert institution.uri not in institutions_by_uri

@@ -1,6 +1,7 @@
 from datetime import date, timedelta
 from pathlib import Path
 from typing import Optional, Tuple
+from urllib.parse import quote
 
 from rdflib import Literal, URIRef
 
@@ -58,7 +59,8 @@ class TestDataPipeline(_Pipeline):
             (
                 DublinCorePropertyDefinitions.MEDIUM,
                 tuple(f"Medium {i}" for i in range(10)),
-            )(
+            ),
+            (
                 DublinCorePropertyDefinitions.PUBLISHER,
                 tuple(f"Publisher {i}" for i in range(10)),
             ),
@@ -139,7 +141,7 @@ class TestDataPipeline(_Pipeline):
                     exact_dimensions=ImageDimensions(height=1000, width=1000),
                     rights=rights,
                     uri=URIRef(
-                        f"https://place-hold.it/1000x1000?text={text_prefix}Image{image_i}"
+                        f"https://place-hold.it/1000x1000?text={quote(text_prefix)}Image{image_i}"
                     ),
                 )
                 yield original
@@ -154,7 +156,7 @@ class TestDataPipeline(_Pipeline):
                         original_image_uri=original.uri,
                         rights=rights,
                         uri=URIRef(
-                            f"https://place-hold.it/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}?text={text_prefix}Image{image_i}"
+                            f"https://place-hold.it/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}?text={quote(text_prefix)}Image{image_i}"
                         ),
                     )
 
@@ -272,7 +274,7 @@ class TestDataPipeline(_Pipeline):
                 property_definition,
                 property_values,
             ) in self.__FACETED_PROPERTY_DEFINITIONS:
-                properties.append(
+                properties.extend(
                     Property(
                         property_definition,
                         property_values[(object_i + i) % len(property_values)],
@@ -307,6 +309,12 @@ class TestDataPipeline(_Pipeline):
             )
 
         def __generate_property_definitions(self):
+            rights = Rights(
+                holder=f"Property definition rights holder",
+                license=CreativeCommonsLicenses.NC.uri,
+                statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
+            )
+
             property_value_urn_i = 0
             for (
                 property_definition,
@@ -314,7 +322,7 @@ class TestDataPipeline(_Pipeline):
             ) in self.__FACETED_PROPERTY_DEFINITIONS:
                 for property_value in property_values:
                     property_value_definition = PropertyValueDefinition(
-                        label=property_value,
+                        # label=property_value,
                         property_uri=property_definition.uri,
                         uri=URIRef(
                             f"urn:paradicms_etl:pipeline:test_data:property_value:{property_value_urn_i}"
@@ -322,9 +330,14 @@ class TestDataPipeline(_Pipeline):
                         value=Literal(property_value),
                     )
                     yield property_value_definition
-                    property_value_urn_i += 1
 
-                    yield Image(depicts_uri=property_value_definition.uri)
+                    yield from self.__generate_images(
+                        depicts_uri=property_value_definition.uri,
+                        rights=rights,
+                        text_prefix=property_value,
+                    )
+
+                    property_value_urn_i += 1
 
         def __generate_shared_objects(
             self, *, collections: Tuple[Collection, ...], institution: Institution
