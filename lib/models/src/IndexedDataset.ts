@@ -23,7 +23,6 @@ export class IndexedDataset {
   };
   private _collectionsByUriIndex?: {[index: string]: Collection};
   private _imagesByDepictsUriIndex?: {[index: string]: readonly Image[]};
-  private _imagesByInstitutionUriIndex?: {[index: string]: readonly Image[]};
   private _imagesByOriginalImageUriIndex?: {[index: string]: readonly Image[]};
   private _imagesByUriIndex?: {[index: string]: Image};
   private _institutionsByUriIndex?: {[index: string]: Institution};
@@ -31,22 +30,27 @@ export class IndexedDataset {
   private _objectsByCollectionUriIndex?: {[index: string]: readonly Object[]};
   private _objectsByInstitutionUriIndex?: {[index: string]: readonly Object[]};
   private _objectsByUriIndex?: {[index: string]: Object};
-  private _propertyDefinitionsByUriIndex?: {[index: string]: PropertyDefinition};
+  private _propertyDefinitionsByUriIndex?: {
+    [index: string]: PropertyDefinition;
+  };
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
 
-  constructor(private readonly dataset: Dataset) {
-  }
+  constructor(private readonly dataset: Dataset) {}
 
   collectionObjects(collectionUri: string): readonly Object[] {
     return this.objectsByCollectionUriIndex[collectionUri] ?? [];
   }
 
   // @ts-ignore
-  private get collectionsByInstitutionUriIndex(): {[index: string]: readonly Collection[]} {
+  private get collectionsByInstitutionUriIndex(): {
+    [index: string]: readonly Collection[];
+  } {
     if (!this._collectionsByInstitutionUriIndex) {
       this.indexCollections();
     }
-    return IndexedDataset.requireNotNullish(this._collectionsByInstitutionUriIndex);
+    return IndexedDataset.requireNotNullish(
+      this._collectionsByInstitutionUriIndex
+    );
   }
 
   collectionByUri(collectionUri: string): Collection {
@@ -70,7 +74,9 @@ export class IndexedDataset {
 
   derivedImages(originalImageUri: string): readonly Image[] {
     // Exclude the original image itself
-    return (this.imagesByOriginalImageUriIndex[originalImageUri] ?? []).filter(image => image.originalImageUri === originalImageUri);
+    return (this.imagesByOriginalImageUriIndex[originalImageUri] ?? []).filter(
+      image => image.originalImageUri === originalImageUri
+    );
   }
 
   imageByUri(imageUri: string): Image {
@@ -89,19 +95,15 @@ export class IndexedDataset {
     return IndexedDataset.requireNotNullish(this._imagesByDepictsUriIndex);
   }
 
-  // @ts-ignore
-  private get imagesByInstitutionUriIndex(): {[index: string]: readonly Image[]} {
-    if (!this._imagesByInstitutionUriIndex) {
-      this.indexImages();
-    }
-    return IndexedDataset.requireNotNullish(this._imagesByInstitutionUriIndex);
-  }
-
-  private get imagesByOriginalImageUriIndex(): {[index: string]: readonly Image[]} {
+  private get imagesByOriginalImageUriIndex(): {
+    [index: string]: readonly Image[];
+  } {
     if (!this._imagesByOriginalImageUriIndex) {
       this.indexImages();
     }
-    return IndexedDataset.requireNotNullish(this._imagesByOriginalImageUriIndex);
+    return IndexedDataset.requireNotNullish(
+      this._imagesByOriginalImageUriIndex
+    );
   }
 
   // @ts-ignore
@@ -117,14 +119,19 @@ export class IndexedDataset {
    */
   private indexCollections(): void {
     this._collectionsByUriIndex = {};
-    const collectionsByInstitutionUriIndex: {[index: string]: Collection[]} = {};
+    const collectionsByInstitutionUriIndex: {
+      [index: string]: Collection[];
+    } = {};
     for (const collection of this.dataset.collections) {
       this._collectionsByUriIndex[collection.uri] = collection;
-      const institutionCollections = collectionsByInstitutionUriIndex[collection.institutionUri];
+      const institutionCollections =
+        collectionsByInstitutionUriIndex[collection.institutionUri];
       if (institutionCollections) {
         institutionCollections.push(collection);
       } else {
-        collectionsByInstitutionUriIndex[collection.institutionUri] = [collection];
+        collectionsByInstitutionUriIndex[collection.institutionUri] = [
+          collection,
+        ];
       }
     }
     this._collectionsByInstitutionUriIndex = collectionsByInstitutionUriIndex;
@@ -135,7 +142,6 @@ export class IndexedDataset {
    */
   private indexImages(): void {
     const imagesByDepictsUriIndex: {[index: string]: Image[]} = {};
-    const imagesByInstitutionUriIndex: {[index: string]: Image[]} = {};
     const imagesByOriginalImageUriIndex: {[index: string]: Image[]} = {};
     this._imagesByUriIndex = {};
     for (const image of this.dataset.images) {
@@ -146,15 +152,9 @@ export class IndexedDataset {
         imagesByDepictsUriIndex[image.depictsUri] = [image];
       }
 
-      const institutionImages = imagesByInstitutionUriIndex[image.institutionUri];
-      if (institutionImages) {
-        institutionImages.push(image);
-      } else {
-        imagesByInstitutionUriIndex[image.institutionUri] = [image];
-      }
-
       const originalImageUri = image.originalImageUri ?? image.uri;
-      const originalImageUriImages = imagesByOriginalImageUriIndex[originalImageUri];
+      const originalImageUriImages =
+        imagesByOriginalImageUriIndex[originalImageUri];
       if (originalImageUriImages) {
         originalImageUriImages.push(image);
       } else {
@@ -164,7 +164,6 @@ export class IndexedDataset {
       this._imagesByUriIndex[image.uri] = image;
     }
     this._imagesByDepictsUriIndex = imagesByDepictsUriIndex;
-    this._imagesByInstitutionUriIndex = imagesByInstitutionUriIndex;
     this._imagesByOriginalImageUriIndex = imagesByOriginalImageUriIndex;
   }
 
@@ -194,7 +193,8 @@ export class IndexedDataset {
         }
       }
 
-      const institutionObjects = objectsByInstitutionUriIndex[object.institutionUri];
+      const institutionObjects =
+        objectsByInstitutionUriIndex[object.institutionUri];
       if (institutionObjects) {
         institutionObjects.push(object);
       } else {
@@ -218,7 +218,9 @@ export class IndexedDataset {
   // @ts-ignore
   private get institutionsByUriIndex(): {[index: string]: Institution} {
     if (!this._institutionsByUriIndex) {
-      this._institutionsByUriIndex = IndexedDataset.indexModelsByUri(this.dataset.institutions);
+      this._institutionsByUriIndex = IndexedDataset.indexModelsByUri(
+        this.dataset.institutions
+      );
     }
     return this._institutionsByUriIndex;
   }
@@ -250,7 +252,9 @@ export class IndexedDataset {
   // @ts-ignore
   private get licensesByUriIndex(): {[index: string]: License} {
     if (!this._licensesByUriIndex) {
-      this._licensesByUriIndex = IndexedDataset.indexModelsByUri(this.dataset.licenses);
+      this._licensesByUriIndex = IndexedDataset.indexModelsByUri(
+        this.dataset.licenses
+      );
     }
     return this._licensesByUriIndex;
   }
@@ -268,7 +272,9 @@ export class IndexedDataset {
   }
 
   // @ts-ignore
-  private get objectsByCollectionUriIndex(): {[index: string]: readonly Object[]} {
+  private get objectsByCollectionUriIndex(): {
+    [index: string]: readonly Object[];
+  } {
     if (!this._objectsByCollectionUriIndex) {
       this.indexObjects();
     }
@@ -276,7 +282,9 @@ export class IndexedDataset {
   }
 
   // @ts-ignore
-  private get objectsByInstitutionUriIndex(): {[index: string]: readonly Object[]} {
+  private get objectsByInstitutionUriIndex(): {
+    [index: string]: readonly Object[];
+  } {
     if (!this._objectsByInstitutionUriIndex) {
       this.indexObjects();
     }
@@ -306,7 +314,9 @@ export class IndexedDataset {
     return rightsStatement;
   }
 
-  propertyDefinitionByUri(propertyDefinitionUri: string): PropertyDefinition | null {
+  propertyDefinitionByUri(
+    propertyDefinitionUri: string
+  ): PropertyDefinition | null {
     return this.propertyDefinitionsByUriIndex[propertyDefinitionUri] ?? null;
   }
 
@@ -314,9 +324,13 @@ export class IndexedDataset {
     return this.dataset.propertyDefinitions;
   }
 
-  private get propertyDefinitionsByUriIndex(): {[index: string]: PropertyDefinition} {
+  private get propertyDefinitionsByUriIndex(): {
+    [index: string]: PropertyDefinition;
+  } {
     if (!this._propertyDefinitionsByUriIndex) {
-      this._propertyDefinitionsByUriIndex = IndexedDataset.indexModelsByUri(this.dataset.propertyDefinitions);
+      this._propertyDefinitionsByUriIndex = IndexedDataset.indexModelsByUri(
+        this.dataset.propertyDefinitions
+      );
     }
     return this._propertyDefinitionsByUriIndex;
   }
@@ -327,7 +341,9 @@ export class IndexedDataset {
 
   private get rightsStatementsByUriIndex(): {[index: string]: RightsStatement} {
     if (!this._rightsStatementsByUriIndex) {
-      this._rightsStatementsByUriIndex = IndexedDataset.indexModelsByUri(this.dataset.rightsStatements);
+      this._rightsStatementsByUriIndex = IndexedDataset.indexModelsByUri(
+        this.dataset.rightsStatements
+      );
     }
     return this._rightsStatementsByUriIndex;
   }

@@ -1,14 +1,15 @@
 import {ImageDimensions} from "./ImageDimensions";
 import {JoinedRights} from "./JoinedRights";
 import {JoinedDataset} from "./JoinedDataset";
-import {JoinedInstitution} from "./JoinedInstitution";
 import {Image} from "./Image";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 
 export class JoinedImage {
-  constructor(private readonly image: Image, private readonly joinedDataset: JoinedDataset) {
-  }
+  constructor(
+    private readonly image: Image,
+    private readonly joinedDataset: JoinedDataset
+  ) {}
 
   get asImage(): Image {
     return this.image;
@@ -30,10 +31,6 @@ export class JoinedImage {
     return this.image.exactDimensions;
   }
 
-  get institution(): JoinedInstitution {
-    return this.joinedDataset.institutionByUri(this.image.institutionUri);
-  }
-
   get isOriginal(): boolean {
     return this.image.originalImageUri === null;
   }
@@ -43,7 +40,9 @@ export class JoinedImage {
   }
 
   get originalImage(): JoinedImage {
-    return this.image.originalImageUri ? this.joinedDataset.imageByUri(this.image.originalImageUri) : this;
+    return this.image.originalImageUri
+      ? this.joinedDataset.imageByUri(this.image.originalImageUri)
+      : this;
   }
 
   get originalImageUri(): string {
@@ -57,13 +56,18 @@ export class JoinedImage {
   }
 
   get rights(): JoinedRights | null {
-    return this.image.rights ? new JoinedRights(this.joinedDataset, this.image.rights) : null;
+    return this.image.rights
+      ? new JoinedRights(this.joinedDataset, this.image.rights)
+      : null;
   }
 
   get src(): string | null {
     if (this.image.src) {
       return this.image.src;
-    } else if (this.image.uri.startsWith("http://") || this.image.uri.startsWith("https://")) {
+    } else if (
+      this.image.uri.startsWith("http://") ||
+      this.image.uri.startsWith("https://")
+    ) {
       return this.image.uri;
     } else {
       return null;
@@ -74,7 +78,7 @@ export class JoinedImage {
     const originalImage = this.originalImage;
     return selectThumbnail(
       [originalImage].concat(originalImage.derivedImages),
-      selector,
+      selector
     );
   }
 

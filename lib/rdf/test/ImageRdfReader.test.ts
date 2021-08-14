@@ -18,10 +18,11 @@ describe("Image RDF reader", () => {
     expect(models).to.not.be.empty;
     models.forEach(model => {
       expect(model.depictsUri.trim()).to.not.be.empty;
-      expect(model.institutionUri.trim()).to.not.be.empty;
       expect(model.rights).to.not.be.null;
       expect(model.rights!.statement!.type).to.equal("uri");
-      expect(model.rights!.statement!.value).to.equal("http://rightsstatements.org/vocab/InC-EDU/1.0/");
+      expect(model.rights!.statement!.value).to.equal(
+        "http://rightsstatements.org/vocab/InC-EDU/1.0/"
+      );
       expect(model.uri.trim()).to.not.be.empty;
     });
   });
