@@ -467,7 +467,6 @@ class MarkdownDirectoryTransformer(_Transformer):
                 self.__buffer_transformed_model(
                     Image(
                         depicts_uri=object_.uri,
-                        institution_uri=self.__get_or_synthesize_default_institution().uri,
                         src=image_file_entry.path.as_uri(),
                         uri=MarkdownDirectoryTransformer.model_uri(
                             pipeline_id=self.__pipeline_id,

@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Dict, Generator, List, Optional, Tuple
+from typing import Dict, Generator, List, Tuple
 
 from rdflib import URIRef
 
@@ -7,16 +7,15 @@ from paradicms_etl._model import _Model
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.extractors.luna_extractor import LunaExtractor
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.dublin_core_property_definitions import (
+    DublinCorePropertyDefinitions,
+)
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.object import Object
 from paradicms_etl.models.property import Property
-from paradicms_etl.models.dublin_core_property_definitions import (
-    DublinCorePropertyDefinitions,
-)
 from paradicms_etl.models.rights import Rights
-
 from paradicms_etl.models.vra_core_property_definitions import (
     VraCorePropertyDefinitions,
 )
@@ -174,7 +173,6 @@ class LunaTransformer(_Transformer):
 
         yield from self._transform_object_images(
             field_values=field_values_dict,
-            institution=institution,
             luna_object=luna_object,
             object_=object_,
         )
@@ -252,7 +250,6 @@ class LunaTransformer(_Transformer):
         self,
         *,
         field_values: Dict[str, List[str]],
-        institution: Institution,
         luna_object,
         object_: Object,
     ) -> Generator[Image, None, None]:
@@ -303,7 +300,6 @@ class LunaTransformer(_Transformer):
             yield Image(
                 created=image_created,
                 depicts_uri=object_.uri,
-                institution_uri=institution.uri,
                 max_dimensions=ImageDimensions(
                     height=image_dimension_max,
                     width=image_dimension_max,

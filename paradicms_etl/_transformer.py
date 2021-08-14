@@ -64,6 +64,5 @@ class _Transformer(_PipelinePhase):
             return None
         return Image(
             depicts_uri=URIRef(institution_uri),
-            institution_uri=URIRef(institution_uri),
             uri=URIRef(institution_image_uri),
         )

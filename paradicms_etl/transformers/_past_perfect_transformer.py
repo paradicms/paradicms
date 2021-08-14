@@ -4,14 +4,13 @@ from urllib.parse import quote
 from rdflib import URIRef
 
 from paradicms_etl._transformer import _Transformer
-from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.dublin_core_property_definitions import (
+    DublinCorePropertyDefinitions,
+)
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.object import Object
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definition import PropertyDefinition
-from paradicms_etl.models.dublin_core_property_definitions import (
-    DublinCorePropertyDefinitions,
-)
 
 
 class _PastPerfectTransformer(_Transformer):
@@ -106,14 +105,12 @@ class _PastPerfectTransformer(_Transformer):
 
                 full_size_image = Image(
                     depicts_uri=object_.uri,
-                    institution_uri=institution.uri,
                     uri=URIRef(database_image.full_size_url),
                 )
                 yield full_size_image
 
                 yield Image(
                     depicts_uri=object_.uri,
-                    institution_uri=institution.uri,
                     original_image_uri=full_size_image.uri,
                     uri=URIRef(database_image.thumbnail_url),
                 )

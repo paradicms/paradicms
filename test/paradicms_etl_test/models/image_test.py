@@ -18,7 +18,6 @@ def test_to_rdf():
         exact_dimensions=ImageDimensions(height=300, width=300),
         format="image/gif",
         modified=datetime.now(),
-        institution_uri=URIRef("http://example.com/institution"),
         original_image_uri=URIRef("http://example.com/originalImage"),
         # max_dimensions=ImageDimensions(height=600, width=600),
         rights=Rights(

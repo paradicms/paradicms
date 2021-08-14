@@ -131,19 +131,12 @@ class TestDataPipeline(_Pipeline):
                 )
 
         def __generate_images(
-            self, *, depicts_uri: URIRef, institution: Institution, text_prefix: str
+            self, *, depicts_uri: URIRef, rights: Rights, text_prefix: str
         ):
-            rights = Rights(
-                holder=f"{institution.name} rights holder",
-                license=CreativeCommonsLicenses.NC.uri,
-                statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-            )
-
             for image_i in range(self.__images_per_object):
                 original = Image(
                     depicts_uri=depicts_uri,
                     exact_dimensions=ImageDimensions(height=1000, width=1000),
-                    institution_uri=institution.uri,
                     rights=rights,
                     uri=URIRef(
                         f"https://place-hold.it/1000x1000?text={text_prefix}Image{image_i}"
@@ -158,7 +151,6 @@ class TestDataPipeline(_Pipeline):
                     yield Image(
                         depicts_uri=depicts_uri,
                         exact_dimensions=thumbnail_dimensions,
-                        institution_uri=institution.uri,
                         original_image_uri=original.uri,
                         rights=rights,
                         uri=URIRef(
@@ -179,7 +171,7 @@ class TestDataPipeline(_Pipeline):
                 if collection_i > 0:
                     yield from self.__generate_images(
                         depicts_uri=collection.uri,
-                        institution=institution,
+                        rights=institution.rights,
                         text_prefix=collection.title,
                     )
                 # For collection 0, force the GUI to use an object image
@@ -204,7 +196,7 @@ class TestDataPipeline(_Pipeline):
 
                 yield from self.__generate_images(
                     depicts_uri=institution.uri,
-                    institution=institution,
+                    rights=institution.rights,
                     text_prefix=institution.name,
                 )
 
@@ -310,7 +302,7 @@ class TestDataPipeline(_Pipeline):
 
             yield from self.__generate_images(
                 depicts_uri=object_.uri,
-                institution=institution,
+                rights=object_.rights,
                 text_prefix=object_.title,
             )
 
