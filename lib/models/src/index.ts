@@ -35,6 +35,7 @@ export * from "./ObjectQueryResults";
 export * from "./ObjectSearchConfiguration";
 export * from "./Property";
 export * from "./PropertyDefinition";
+export * from "./PropertyValueDefinition";
 export * from "./PropertyValueFacet";
 export * from "./PropertyValueFilter";
 export * from "./PrimitiveType";

@@ -1,5 +1,5 @@
 import {ModelRdfReader} from "./ModelRdfReader";
-import {Object, Property} from "@paradicms/models";
+import {Object} from "@paradicms/models";
 import {DCTERMS, FOAF, PARADICMS} from "./vocabularies";
 import {RightsRdfReader} from "./RightsRdfReader";
 import {ModelNode} from "./ModelNode";
@@ -11,23 +11,6 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
   }
 
   read(): Object {
-    const properties: Property[] = [];
-    const nodeStatements = this.store.getQuads(this.node, null, null, null);
-    for (const nodeStatement of nodeStatements) {
-      if (nodeStatement.predicate.termType !== "NamedNode") {
-        continue;
-      }
-      const propertyUri = nodeStatement.predicate.value;
-      const propertyValue = this.toPropertyValue(nodeStatement.object);
-      if (!propertyValue) {
-        continue;
-      }
-      properties.push({
-        uri: propertyUri,
-        value: propertyValue,
-      });
-    }
-
     let page: string | null = null;
     for (const pageObject of this.store.getObjects(
       this.node,
@@ -51,8 +34,12 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
       institutionUri: this.readRequiredParentNamedNode(PARADICMS.institution)
         .value,
       page,
-      properties,
-      rights: new RightsRdfReader(this.node, this.store, nodeStatements).read(),
+      properties: this.readProperties(),
+      rights: new RightsRdfReader(
+        this.node,
+        this.store,
+        this.nodeStatements
+      ).read(),
       title: this.readRequiredLiteral(DCTERMS.title).toString(),
       uri: this.nodeUri,
     };

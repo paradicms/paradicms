@@ -21,5 +21,6 @@ export class PARADICMS {
   static License = PARADICMS.NS("License");
   static Object = PARADICMS.NS("Object");
   static PropertyDefinition = PARADICMS.NS("PropertyDefinition");
+  static PropertyValueDefinition = PARADICMS.NS("PropertyValueDefinition");
   static RightsStatement = PARADICMS.NS("RightsStatement");
 }

@@ -6,13 +6,16 @@ import {Literal, NamedNode, Quad, Store, Term} from "n3";
 import {
   BooleanPropertyValue,
   NumberPropertyValue,
+  Property,
   PropertyValue,
   StringPropertyValue,
   UriPropertyValue,
 } from "@paradicms/models";
 
 export abstract class ModelRdfReader<ModelT> {
-  protected _nodeStatementsByPredicateUri:
+  private _nodeStatements: readonly Quad[] | undefined;
+
+  private _nodeStatementsByPredicateUri:
     | {[index: string]: readonly Quad[]}
     | undefined;
 
@@ -41,12 +44,19 @@ export abstract class ModelRdfReader<ModelT> {
     }, {} as {[index: string]: readonly Quad[]});
   }
 
+  protected get nodeStatements(): readonly Quad[] {
+    if (!this._nodeStatements) {
+      this._nodeStatements = this.store.getQuads(this.node, null, null, null);
+    }
+    return this._nodeStatements;
+  }
+
   protected get nodeStatementsByPredicateUri(): {
     [index: string]: readonly Quad[];
   } {
     if (!this._nodeStatementsByPredicateUri) {
       this._nodeStatementsByPredicateUri = ModelRdfReader.indexNodeStatementsByPredicateUri(
-        this.store.getQuads(this.node, null, null, null)
+        this.nodeStatements
       );
     }
     return this._nodeStatementsByPredicateUri;
@@ -130,6 +140,25 @@ export abstract class ModelRdfReader<ModelT> {
       }
     }
     return null;
+  }
+
+  protected readProperties(): readonly Property[] {
+    const properties: Property[] = [];
+    for (const nodeStatement of this.nodeStatements) {
+      if (nodeStatement.predicate.termType !== "NamedNode") {
+        continue;
+      }
+      const propertyUri = nodeStatement.predicate.value;
+      const propertyValue = this.toPropertyValue(nodeStatement.object);
+      if (!propertyValue) {
+        continue;
+      }
+      properties.push({
+        uri: propertyUri,
+        value: propertyValue,
+      });
+    }
+    return properties;
   }
 
   protected readPropertyValue(property: NamedNode): PropertyValue | null {
