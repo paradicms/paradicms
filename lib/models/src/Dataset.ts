@@ -5,6 +5,7 @@ import {License} from "./License";
 import {Object} from "./Object";
 import {PropertyDefinition} from "./PropertyDefinition";
 import {RightsStatement} from "./RightsStatement";
+import {PropertyValueDefinition} from "./PropertyValueDefinition";
 
 /**
  * Immutable aggregation of models.
@@ -29,5 +30,6 @@ export interface Dataset {
   readonly licenses: readonly License[];
   readonly objects: readonly Object[];
   readonly propertyDefinitions: readonly PropertyDefinition[];
+  readonly propertyValueDefinitions: readonly PropertyValueDefinition[];
   readonly rightsStatements: readonly RightsStatement[];
 }

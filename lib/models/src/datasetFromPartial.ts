@@ -1,6 +1,8 @@
 import {Dataset} from "./Dataset";
 
-export const datasetFromPartial = (partialDataset: Partial<Dataset>): Dataset => {
+export const datasetFromPartial = (
+  partialDataset: Partial<Dataset>
+): Dataset => {
   return {
     collections: partialDataset.collections ?? [],
     images: partialDataset.images ?? [],
@@ -8,6 +10,7 @@ export const datasetFromPartial = (partialDataset: Partial<Dataset>): Dataset =>
     licenses: partialDataset.licenses ?? [],
     objects: partialDataset.objects ?? [],
     propertyDefinitions: partialDataset.propertyDefinitions ?? [],
+    propertyValueDefinitions: partialDataset.propertyValueDefinitions ?? [],
     rightsStatements: partialDataset.rightsStatements ?? [],
   };
 };

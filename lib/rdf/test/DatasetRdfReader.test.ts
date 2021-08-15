@@ -21,6 +21,7 @@ describe("Dataset RDF reader", () => {
     expect(model.licenses).to.not.be.empty;
     expect(model.objects).to.not.be.empty;
     expect(model.propertyDefinitions).to.not.be.empty;
+    expect(model.propertyValueDefinitions).to.not.be.empty;
     expect(model.rightsStatements).to.not.be.empty;
     // console.log(JSON.stringify(model));
   });

@@ -7,6 +7,7 @@ import {LicenseRdfReader} from "./LicenseRdfReader";
 import {ImageRdfReader} from "./ImageRdfReader";
 import {ObjectRdfReader} from "./ObjectRdfReader";
 import {PropertyDefinitionRdfReader} from "./PropertyDefinitionRdfReader";
+import {PropertyValueDefinitionRdfReader} from "./PropertyValueDefinitionRdfReader";
 
 export class DatasetRdfReader {
   static parse(ttl: string): Dataset {
@@ -24,6 +25,7 @@ export class DatasetRdfReader {
       licenses: LicenseRdfReader.readAll(store),
       objects: ObjectRdfReader.readAll(store),
       propertyDefinitions: PropertyDefinitionRdfReader.readAll(store),
+      propertyValueDefinitions: PropertyValueDefinitionRdfReader.readAll(store),
       rightsStatements: RightsStatementRdfReader.readAll(store),
     };
   }
