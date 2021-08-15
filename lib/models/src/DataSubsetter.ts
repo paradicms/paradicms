@@ -145,9 +145,9 @@ export class DataSubsetter {
     builder.addObject(object);
 
     if (joinSelector?.allImages) {
-      this.completeIndexedDataset
-        .depictingImages(object.uri)
-        .forEach(image => builder.addImage(image));
+      builder.addImages(
+        this.completeIndexedDataset.depictingImages(object.uri)
+      );
     } else if (joinSelector?.thumbnail) {
       const thumbnailImage = this.completeJoinedDataset
         .objectByUri(object.uri)
@@ -186,10 +186,9 @@ export class DataSubsetter {
     properties: readonly Property[] | null
   ): DatasetBuilder {
     if (properties) {
-      for (const propertyDefinition of this.completeIndexedDataset
-        .propertyDefinitions) {
-        builder.addPropertyDefinition(propertyDefinition);
-      }
+      builder.addPropertyDefinitions(
+        this.completeIndexedDataset.propertyDefinitions
+      );
     }
     return builder;
   }

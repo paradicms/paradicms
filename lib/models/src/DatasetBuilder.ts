@@ -30,10 +30,26 @@ export class DatasetBuilder {
     return this;
   }
 
+  addCollections(collections: readonly Collection[]) {
+    this.collectionsByUri = DatasetBuilder.addNamedModels(
+      this.collectionsByUri,
+      collections
+    );
+    return this;
+  }
+
   addInstitution(institution: Institution) {
     this.institutionsByUri = DatasetBuilder.addNamedModel(
       this.institutionsByUri,
       institution
+    );
+    return this;
+  }
+
+  addInstitutions(institutions: readonly Institution[]) {
+    this.institutionsByUri = DatasetBuilder.addNamedModels(
+      this.institutionsByUri,
+      institutions
     );
     return this;
   }
@@ -43,10 +59,23 @@ export class DatasetBuilder {
     return this;
   }
 
+  addImages(images: readonly Image[]) {
+    this.imagesByUri = DatasetBuilder.addNamedModels(this.imagesByUri, images);
+    return this;
+  }
+
   addLicense(license: License) {
     this.licensesByUri = DatasetBuilder.addNamedModel(
       this.licensesByUri,
       license
+    );
+    return this;
+  }
+
+  addLicenses(licenses: readonly License[]) {
+    this.licensesByUri = DatasetBuilder.addNamedModels(
+      this.licensesByUri,
+      licenses
     );
     return this;
   }
@@ -65,8 +94,32 @@ export class DatasetBuilder {
     return addedModels;
   }
 
+  private static addNamedModels<ModelT extends {uri: string}>(
+    addedModels: {[index: string]: ModelT} | undefined,
+    newModels: readonly ModelT[]
+  ): {[index: string]: ModelT} {
+    if (!addedModels) {
+      addedModels = {};
+    }
+    for (const newModel of newModels) {
+      const addedModel = addedModels[newModel.uri];
+      if (!addedModel) {
+        addedModels[newModel.uri] = newModel;
+      }
+    }
+    return addedModels;
+  }
+
   addObject(object: Object) {
     this.objectsByUri = DatasetBuilder.addNamedModel(this.objectsByUri, object);
+    return this;
+  }
+
+  addObjects(objects: readonly Object[]) {
+    this.objectsByUri = DatasetBuilder.addNamedModels(
+      this.objectsByUri,
+      objects
+    );
     return this;
   }
 
@@ -74,6 +127,14 @@ export class DatasetBuilder {
     this.propertyDefinitionsByUri = DatasetBuilder.addNamedModel(
       this.propertyDefinitionsByUri,
       propertyDefinition
+    );
+    return this;
+  }
+
+  addPropertyDefinitions(propertyDefinitions: readonly PropertyDefinition[]) {
+    this.propertyDefinitionsByUri = DatasetBuilder.addNamedModels(
+      this.propertyDefinitionsByUri,
+      propertyDefinitions
     );
     return this;
   }
@@ -86,10 +147,28 @@ export class DatasetBuilder {
     return this;
   }
 
+  addPropertyValueDefinitions(
+    propertyValueDefinitions: readonly PropertyValueDefinition[]
+  ) {
+    this.propertyValueDefinitionsByUri = DatasetBuilder.addNamedModels(
+      this.propertyValueDefinitionsByUri,
+      propertyValueDefinitions
+    );
+    return this;
+  }
+
   addRightsStatement(rightsStatement: RightsStatement) {
     this.rightsStatementsByUri = DatasetBuilder.addNamedModel(
       this.rightsStatementsByUri,
       rightsStatement
+    );
+    return this;
+  }
+
+  addRightsStatements(rightsStatements: readonly RightsStatement[]) {
+    this.rightsStatementsByUri = DatasetBuilder.addNamedModels(
+      this.rightsStatementsByUri,
+      rightsStatements
     );
     return this;
   }
