@@ -45,7 +45,6 @@ export class IndexedDataset {
     return this.objectsByCollectionUriIndex[collectionUri] ?? [];
   }
 
-  // @ts-ignore
   private get collectionsByInstitutionUriIndex(): {
     [index: string]: readonly Collection[];
   } {
@@ -84,7 +83,6 @@ export class IndexedDataset {
     return this.imagesByDepictsUriIndex[depictsUri] ?? [];
   }
 
-  // @ts-ignore
   private get imagesByDepictsUriIndex(): {[index: string]: readonly Image[]} {
     if (!this._imagesByDepictsUriIndex) {
       this.indexImages();
@@ -110,7 +108,6 @@ export class IndexedDataset {
     );
   }
 
-  // @ts-ignore
   private get imagesByUriIndex(): {[index: string]: Image} {
     if (!this._imagesByUriIndex) {
       this.indexImages();
@@ -219,7 +216,6 @@ export class IndexedDataset {
     return institution;
   }
 
-  // @ts-ignore
   private get institutionsByUriIndex(): {[index: string]: Institution} {
     if (!this._institutionsByUriIndex) {
       this._institutionsByUriIndex = IndexedDataset.indexModelsByUri(
@@ -253,7 +249,6 @@ export class IndexedDataset {
     return this.dataset.licenses;
   }
 
-  // @ts-ignore
   private get licensesByUriIndex(): {[index: string]: License} {
     if (!this._licensesByUriIndex) {
       this._licensesByUriIndex = IndexedDataset.indexModelsByUri(
@@ -275,7 +270,6 @@ export class IndexedDataset {
     return this.dataset.objects;
   }
 
-  // @ts-ignore
   private get objectsByCollectionUriIndex(): {
     [index: string]: readonly Object[];
   } {
@@ -285,7 +279,6 @@ export class IndexedDataset {
     return IndexedDataset.requireNotNullish(this._objectsByCollectionUriIndex);
   }
 
-  // @ts-ignore
   private get objectsByInstitutionUriIndex(): {
     [index: string]: readonly Object[];
   } {
@@ -295,7 +288,6 @@ export class IndexedDataset {
     return IndexedDataset.requireNotNullish(this._objectsByInstitutionUriIndex);
   }
 
-  // @ts-ignore
   private get objectsByUriIndex(): {[index: string]: Object} {
     if (!this._objectsByUriIndex) {
       this.indexObjects();
