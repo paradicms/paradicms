@@ -62,13 +62,24 @@ describe("DataSubsetter", () => {
         images: joinedDaset
           .collectionObjects(collection.uri)
           .map(object => object.thumbnail(THUMBNAIL_SELECTOR)!.asImage),
-        licenses: testDataset.licenses,
+        licenses: [
+          testDataset.licenses.find(
+            license =>
+              license.uri === "http://creativecommons.org/licenses/nc/1.0/"
+          )!,
+        ],
         objects: testDataset.objects.filter(object =>
           object.collectionUris.some(
             collectionUri => collectionUri === collection.uri
           )
         ),
-        rightsStatements: testDataset.rightsStatements,
+        rightsStatements: [
+          testDataset.rightsStatements.find(
+            rightsStatement =>
+              rightsStatement.uri ===
+              "http://rightsstatements.org/vocab/InC-EDU/1.0/"
+          )!,
+        ],
         propertyDefinitions: testDataset.propertyDefinitions,
       })
     );
@@ -96,10 +107,19 @@ describe("DataSubsetter", () => {
             institution => institution.uri === object.institutionUri
           )!,
         ],
-        licenses: testDataset.licenses,
+        licenses: [
+          testDataset.licenses.find(
+            license => license.uri === object.rights!.license!.value
+          )!,
+        ],
         objects: [object],
-        rightsStatements: testDataset.rightsStatements,
         propertyDefinitions: testDataset.propertyDefinitions,
+        rightsStatements: [
+          testDataset.rightsStatements.find(
+            rightsStatement =>
+              rightsStatement.uri === object.rights!.statement!.value
+          )!,
+        ],
       })
     );
   });
