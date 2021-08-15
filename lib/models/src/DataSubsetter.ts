@@ -11,6 +11,8 @@ import {JoinedRights} from "./JoinedRights";
 import {DatasetBuilder} from "./DatasetBuilder";
 import {Institution} from "./Institution";
 import {Object} from "./Object";
+import {PropertyDefinitionJoinSelector} from "./PropertyDefinitionJoinSelector";
+import {selectThumbnail} from "./selectThumbnail";
 
 /**
  * Subset a Dataset to reduce the amount of data passed between getStaticProps and the component.
@@ -39,7 +41,6 @@ export class DataSubsetter {
     builder.addCollection(collection);
 
     if (joinSelector?.thumbnail) {
-      console.log("Looking for collection thumbnail");
       const thumbnailImage = this.completeJoinedDataset
         .collectionByUri(collection.uri)
         .thumbnail(joinSelector.thumbnail);
@@ -146,7 +147,7 @@ export class DataSubsetter {
 
     if (joinSelector?.allImages) {
       builder.addImages(
-        this.completeIndexedDataset.depictingImages(object.uri)
+        this.completeIndexedDataset.imagesByDepictsUri(object.uri)
       );
     } else if (joinSelector?.thumbnail) {
       const thumbnailImage = this.completeJoinedDataset
@@ -175,21 +176,66 @@ export class DataSubsetter {
       );
     }
 
-    this.addPropertiesDataset(builder, object.properties);
+    if (joinSelector?.propertyDefinitions) {
+      this.addPropertyDefinitionsDataset(
+        builder,
+        object.properties,
+        joinSelector.propertyDefinitions
+      );
+    }
     this.addRightsDataset(builder, object.rights);
 
     return builder;
   }
 
-  private addPropertiesDataset(
+  private addPropertyDefinitionsDataset(
     builder: DatasetBuilder,
-    properties: readonly Property[] | null
+    properties: readonly Property[] | null,
+    joinSelector?: PropertyDefinitionJoinSelector
   ): DatasetBuilder {
-    if (properties) {
-      builder.addPropertyDefinitions(
-        this.completeIndexedDataset.propertyDefinitions
-      );
+    if (!properties) {
+      return builder;
     }
+
+    for (const property of properties) {
+      const propertyDefinition = this.completeIndexedDataset.propertyDefinitionByUri(
+        property.uri
+      );
+      if (!propertyDefinition) {
+        continue;
+      }
+      builder.addPropertyDefinition(propertyDefinition);
+
+      if (joinSelector?.values) {
+        const propertyValueDefinitions = this.completeIndexedDataset.propertyValueDefinitionsByPropertyUri(
+          propertyDefinition.uri
+        );
+        builder.addPropertyValueDefinitions(propertyValueDefinitions);
+
+        if (joinSelector.values.allImages) {
+          for (const propertyValueDefinition of propertyValueDefinitions) {
+            builder.addImages(
+              this.completeIndexedDataset.imagesByDepictsUri(
+                propertyValueDefinition.uri
+              )
+            );
+          }
+        } else if (joinSelector.values.thumbnail) {
+          for (const propertyValueDefinition of propertyValueDefinitions) {
+            const thumbnail = selectThumbnail(
+              this.completeIndexedDataset.imagesByDepictsUri(
+                propertyValueDefinition.uri
+              ),
+              joinSelector.values.thumbnail
+            );
+            if (thumbnail) {
+              builder.addImage(thumbnail);
+            }
+          }
+        }
+      }
+    }
+
     return builder;
   }
 

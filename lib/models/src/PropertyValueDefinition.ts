@@ -1,8 +1,8 @@
 import {PropertyValue} from "./PropertyValue";
 
 export interface PropertyValueDefinition {
-  // If the label is undefined, use the value
-  readonly label?: string;
+  // If the label is null, use the value
+  readonly label: string | null;
 
   // Child -> parent reference
   readonly propertyUri: string;

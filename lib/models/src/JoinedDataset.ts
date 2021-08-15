@@ -6,7 +6,8 @@ import {JoinedImage} from "./JoinedImage";
 import {JoinedInstitution} from "./JoinedInstitution";
 import {JoinedObject} from "./JoinedObject";
 import {JoinedCollection} from "./JoinedCollection";
-import {PropertyDefinition} from "./PropertyDefinition";
+import {JoinedPropertyValueDefinition} from "./JoinedPropertyValueDefinition";
+import {JoinedPropertyDefinition} from "./JoinedPropertyDefinition";
 
 /**
  * Adapts/wraps models in Dataset to dynamically resolve references without copying.
@@ -89,8 +90,24 @@ export class JoinedDataset {
 
   propertyDefinitionByUri(
     propertyDefinitionUri: string
-  ): PropertyDefinition | null {
-    return this.indexedDataset.propertyDefinitionByUri(propertyDefinitionUri);
+  ): JoinedPropertyDefinition | null {
+    const propertyDefinition = this.indexedDataset.propertyDefinitionByUri(
+      propertyDefinitionUri
+    );
+    return propertyDefinition
+      ? new JoinedPropertyDefinition(this, propertyDefinition)
+      : null;
+  }
+
+  propertyValueDefinitionsByPropertyUri(
+    propertyUri: string
+  ): readonly JoinedPropertyValueDefinition[] {
+    return this.indexedDataset
+      .propertyValueDefinitionsByPropertyUri(propertyUri)
+      .map(
+        propertyValueDefinition =>
+          new JoinedPropertyValueDefinition(this, propertyValueDefinition)
+      );
   }
 
   rightsStatementByUri(rightsStatementUri: string): RightsStatement {

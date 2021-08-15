@@ -25,7 +25,7 @@ const THUMBNAIL_SELECTOR: ThumbnailSelector = {
 
 describe("DataSubsetter", () => {
   const indexedDataset = new IndexedDataset(testDataset);
-  const joinedDaset = new JoinedDataset(indexedDataset);
+  const joinedDataset = new JoinedDataset(indexedDataset);
   const sut = new DataSubsetter(indexedDataset);
 
   it("should get institutions with thumbnails (institutions page)", () => {
@@ -35,7 +35,7 @@ describe("DataSubsetter", () => {
     );
     expect(dataset).to.deep.eq(
       datasetFromPartial({
-        images: joinedDaset.institutions.map(
+        images: joinedDataset.institutions.map(
           institution => institution.thumbnail(THUMBNAIL_SELECTOR)!.asImage
         ),
         institutions: testDataset.institutions,
@@ -67,35 +67,52 @@ describe("DataSubsetter", () => {
   it("should get a collection with its objects and their thumbnails (collection page)", () => {
     const collection = testDataset.collections[0];
     const dataset = sut.collectionDataset(collection.uri, {
-      objects: {thumbnail: THUMBNAIL_SELECTOR},
+      objects: {
+        propertyDefinitions: {values: {thumbnail: THUMBNAIL_SELECTOR}},
+        thumbnail: THUMBNAIL_SELECTOR,
+      },
     });
-    expect(dataset).to.deep.eq(
-      datasetFromPartial({
-        collections: [collection],
-        images: joinedDaset
-          .collectionObjects(collection.uri)
-          .map(object => object.thumbnail(THUMBNAIL_SELECTOR)!.asImage),
-        licenses: [
-          testDataset.licenses.find(
-            license =>
-              license.uri === "http://creativecommons.org/licenses/nc/1.0/"
-          )!,
-        ],
-        objects: testDataset.objects.filter(object =>
-          object.collectionUris.some(
-            collectionUri => collectionUri === collection.uri
-          )
-        ),
-        rightsStatements: [
-          testDataset.rightsStatements.find(
-            rightsStatement =>
-              rightsStatement.uri ===
-              "http://rightsstatements.org/vocab/InC-EDU/1.0/"
-          )!,
-        ],
-        propertyDefinitions: testDataset.propertyDefinitions,
-      })
+    expect(dataset.collections).to.deep.eq([collection]);
+    const images = joinedDataset
+      .collectionObjects(collection.uri)
+      .map(object => object.thumbnail(THUMBNAIL_SELECTOR)!.asImage);
+    for (const propertyDefinition of dataset.propertyDefinitions) {
+      for (const propertyDefinitionValue of joinedDataset.propertyDefinitionByUri(
+        propertyDefinition.uri
+      )!.values) {
+        images.push(
+          propertyDefinitionValue.thumbnail(THUMBNAIL_SELECTOR)!.asImage
+        );
+      }
+    }
+    expect(
+      dataset.images
+        .concat()
+        .sort((left, right) => left.uri.localeCompare(right.uri))
+    ).to.deep.eq(
+      images.sort((left, right) => left.uri.localeCompare(right.uri))
     );
+    expect(dataset.licenses).to.deep.eq([
+      testDataset.licenses.find(
+        license => license.uri === "http://creativecommons.org/licenses/nc/1.0/"
+      )!,
+    ]);
+    expect(dataset.objects).to.deep.eq(
+      testDataset.objects.filter(object =>
+        object.collectionUris.some(
+          collectionUri => collectionUri === collection.uri
+        )
+      )
+    );
+    expect(dataset.propertyDefinitions).to.not.be.empty;
+    expect(dataset.propertyValueDefinitions).to.not.be.empty;
+    expect(dataset.rightsStatements).to.deep.eq([
+      testDataset.rightsStatements.find(
+        rightsStatement =>
+          rightsStatement.uri ===
+          "http://rightsstatements.org/vocab/InC-EDU/1.0/"
+      )!,
+    ]);
   });
 
   it("should get an object with its institution, collections, and all images (object page)", () => {
@@ -104,36 +121,36 @@ describe("DataSubsetter", () => {
       collections: {},
       institution: {},
       allImages: true,
+      propertyDefinitions: {},
     });
-    expect(dataset).to.deep.eq(
-      datasetFromPartial({
-        collections: testDataset.collections.filter(collection =>
-          object.collectionUris.some(
-            objectCollectionUri => objectCollectionUri === collection.uri
-          )
-        ),
-        images: testDataset.images.filter(
-          image => image.depictsUri === object.uri
-        ),
-        institutions: [
-          testDataset.institutions.find(
-            institution => institution.uri === object.institutionUri
-          )!,
-        ],
-        licenses: [
-          testDataset.licenses.find(
-            license => license.uri === object.rights!.license!.value
-          )!,
-        ],
-        objects: [object],
-        propertyDefinitions: testDataset.propertyDefinitions,
-        rightsStatements: [
-          testDataset.rightsStatements.find(
-            rightsStatement =>
-              rightsStatement.uri === object.rights!.statement!.value
-          )!,
-        ],
-      })
+    expect(dataset.collections).to.deep.eq(
+      testDataset.collections.filter(collection =>
+        object.collectionUris.some(
+          objectCollectionUri => objectCollectionUri === collection.uri
+        )
+      )
     );
+    expect(dataset.images).to.deep.eq(
+      testDataset.images.filter(image => image.depictsUri === object.uri)
+    );
+    expect(dataset.institutions).to.deep.eq([
+      testDataset.institutions.find(
+        institution => institution.uri === object.institutionUri
+      )!,
+    ]);
+    expect(dataset.licenses).to.deep.eq([
+      testDataset.licenses.find(
+        license => license.uri === object.rights!.license!.value
+      )!,
+    ]);
+    expect(dataset.objects).to.deep.eq([object]);
+    expect(dataset.propertyDefinitions).to.not.be.empty;
+    expect(dataset.propertyValueDefinitions).to.be.empty;
+    expect(dataset.rightsStatements).to.deep.eq([
+      testDataset.rightsStatements.find(
+        rightsStatement =>
+          rightsStatement.uri === object.rights!.statement!.value
+      )!,
+    ]);
   });
 });

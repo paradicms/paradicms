@@ -21,7 +21,7 @@ export class PropertyValueDefinitionRdfReader extends ModelRdfReader<
     }
 
     return {
-      label: this.readOptionalLiteral(RDFS.label)?.toString(),
+      label: this.readOptionalLiteral(RDFS.label)?.toString() ?? null,
       propertyUri: this.readRequiredParentNamedNode(RDF.predicate).value,
       uri: this.nodeUri,
       value,
