@@ -24,7 +24,7 @@ export class JoinedImage {
       // This is a derived image
       return [];
     }
-    return this.joinedDataset.derivedImages(this.image.uri);
+    return this.joinedDataset.imagesByOriginalImageUri(this.image.uri);
   }
 
   get exactDimensions(): ImageDimensions | null {

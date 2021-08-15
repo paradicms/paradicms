@@ -6,6 +6,7 @@ import {License} from "./License";
 import {Object} from "./Object";
 import {RightsStatement} from "./RightsStatement";
 import {PropertyDefinition} from "./PropertyDefinition";
+import {PropertyValueDefinition} from "./PropertyValueDefinition";
 
 /**
  * Lazily indexes the contents of an immutable Dataset to provide quick lookups and subsetting.
@@ -32,6 +33,9 @@ export class IndexedDataset {
   private _objectsByUriIndex?: {[index: string]: Object};
   private _propertyDefinitionsByUriIndex?: {
     [index: string]: PropertyDefinition;
+  };
+  private _propertyValueDefinitionsByPropertyUriIndex?: {
+    [index: string]: readonly PropertyValueDefinition[];
   };
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
 
@@ -68,17 +72,6 @@ export class IndexedDataset {
     return IndexedDataset.requireNotNullish(this._collectionsByUriIndex);
   }
 
-  depictingImages(depictsUri: string): readonly Image[] {
-    return this.imagesByDepictsUriIndex[depictsUri] ?? [];
-  }
-
-  derivedImages(originalImageUri: string): readonly Image[] {
-    // Exclude the original image itself
-    return (this.imagesByOriginalImageUriIndex[originalImageUri] ?? []).filter(
-      image => image.originalImageUri === originalImageUri
-    );
-  }
-
   imageByUri(imageUri: string): Image {
     const image = this.imagesByUriIndex[imageUri];
     if (!image) {
@@ -87,12 +80,23 @@ export class IndexedDataset {
     return image;
   }
 
+  imagesByDepictsUri(depictsUri: string): readonly Image[] {
+    return this.imagesByDepictsUriIndex[depictsUri] ?? [];
+  }
+
   // @ts-ignore
   private get imagesByDepictsUriIndex(): {[index: string]: readonly Image[]} {
     if (!this._imagesByDepictsUriIndex) {
       this.indexImages();
     }
     return IndexedDataset.requireNotNullish(this._imagesByDepictsUriIndex);
+  }
+
+  imagesByOriginalImageUri(originalImageUri: string): readonly Image[] {
+    // Exclude the original image itself
+    return (this.imagesByOriginalImageUriIndex[originalImageUri] ?? []).filter(
+      image => image.originalImageUri === originalImageUri
+    );
   }
 
   private get imagesByOriginalImageUriIndex(): {
@@ -299,21 +303,6 @@ export class IndexedDataset {
     return IndexedDataset.requireNotNullish(this._objectsByUriIndex);
   }
 
-  private static requireNotNullish<T>(value: T | undefined): T {
-    if (typeof value === "undefined") {
-      throw new EvalError("expected value to be defined");
-    }
-    return value;
-  }
-
-  rightsStatementByUri(rightsStatementUri: string): RightsStatement {
-    const rightsStatement = this.rightsStatementsByUriIndex[rightsStatementUri];
-    if (!rightsStatement) {
-      throw new RangeError("no such rights statement " + rightsStatementUri);
-    }
-    return rightsStatement;
-  }
-
   propertyDefinitionByUri(
     propertyDefinitionUri: string
   ): PropertyDefinition | null {
@@ -333,6 +322,53 @@ export class IndexedDataset {
       );
     }
     return this._propertyDefinitionsByUriIndex;
+  }
+
+  propertyValueDefinitionsByPropertyUri(
+    propertyUri: string
+  ): readonly PropertyValueDefinition[] {
+    return this.propertyValueDefinitionsByPropertyUriIndex[propertyUri] ?? [];
+  }
+
+  private get propertyValueDefinitionsByPropertyUriIndex(): {
+    [index: string]: readonly PropertyValueDefinition[];
+  } {
+    if (!this._propertyValueDefinitionsByPropertyUriIndex) {
+      const propertyValueDefinitionsByPropertyUriIndex: {
+        [index: string]: PropertyValueDefinition[];
+      } = {};
+      for (const propertyValueDefinition of this.dataset
+        .propertyValueDefinitions) {
+        const existingPropertyValueDefinitions =
+          propertyValueDefinitionsByPropertyUriIndex[
+            propertyValueDefinition.propertyUri
+          ];
+        if (existingPropertyValueDefinitions) {
+          existingPropertyValueDefinitions.push(propertyValueDefinition);
+        } else {
+          propertyValueDefinitionsByPropertyUriIndex[
+            propertyValueDefinition.propertyUri
+          ] = [propertyValueDefinition];
+        }
+      }
+      this._propertyValueDefinitionsByPropertyUriIndex = propertyValueDefinitionsByPropertyUriIndex;
+    }
+    return this._propertyValueDefinitionsByPropertyUriIndex;
+  }
+
+  private static requireNotNullish<T>(value: T | undefined): T {
+    if (typeof value === "undefined") {
+      throw new EvalError("expected value to be defined");
+    }
+    return value;
+  }
+
+  rightsStatementByUri(rightsStatementUri: string): RightsStatement {
+    const rightsStatement = this.rightsStatementsByUriIndex[rightsStatementUri];
+    if (!rightsStatement) {
+      throw new RangeError("no such rights statement " + rightsStatementUri);
+    }
+    return rightsStatement;
   }
 
   get rightsStatements(): readonly RightsStatement[] {
