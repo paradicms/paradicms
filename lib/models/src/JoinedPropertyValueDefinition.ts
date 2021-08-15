@@ -26,6 +26,7 @@ export class JoinedPropertyValueDefinition {
   }
 
   get value(): PropertyValue {
+    // This returns PropertyValue and not JoinedPropertyValue, since the latter is designed for use by JoinedProperty.
     return this.propertyValueDefinition.value;
   }
 }

@@ -1,4 +1,4 @@
-import {PropertyValue} from "./PropertyValue";
+import {PropertyValue, propertyValueEquals} from "./PropertyValue";
 import {PrimitiveType} from "./PrimitiveType";
 import {JoinedProperty} from "./JoinedProperty";
 import {JoinedPropertyValueDefinition} from "./JoinedPropertyValueDefinition";
@@ -15,10 +15,7 @@ export class JoinedPropertyValue {
       return null;
     }
     for (const propertyValueDefinition of propertyDefinition.values) {
-      if (
-        propertyValueDefinition.value.type === this.type &&
-        propertyValueDefinition.value.value === this.value
-      ) {
+      if (propertyValueEquals(propertyValueDefinition.value, this)) {
         return propertyValueDefinition;
       }
     }

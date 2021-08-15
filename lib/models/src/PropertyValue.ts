@@ -25,3 +25,10 @@ export interface UriPropertyValue extends PropertyValue {
   readonly type: "uri";
   readonly value: string;
 }
+
+export const propertyValueEquals = (
+  left: PropertyValue,
+  right: PropertyValue
+) => {
+  return left.type === right.type && left.value === right.value;
+};
