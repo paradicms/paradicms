@@ -15,8 +15,7 @@ from paradicms_etl.utils.rdf_resource_wrapper import RdfResourceWrapper
 
 @dataclass(frozen=True)
 class Image(_NamedModel):
-    depicts_uri: URIRef  # Collection, institution, or object
-    institution_uri: URIRef  # So images can be grouped by institution
+    depicts_uri: URIRef
     copyable: bool = True  # Can this image be copied from its source (for GUI building), or does it have to be hot linked in order to use it?
     created: Optional[datetime] = None
     exact_dimensions: Optional[ImageDimensions] = None
@@ -63,7 +62,6 @@ class Image(_NamedModel):
             depicts_uri=resource_wrapper.required_uri_value(FOAF.depicts),
             exact_dimensions=exact_dimensions,
             format=resource_wrapper.optional_python_value(DCTERMS["format"], str),
-            institution_uri=resource_wrapper.required_uri_value(CMS.institution),
             max_dimensions=max_dimensions,
             modified=resource_wrapper.optional_python_value(DCTERMS.modified, datetime),
             rights=Rights.from_rdf(resource=resource),
@@ -85,7 +83,6 @@ class Image(_NamedModel):
         elif self.max_dimensions is not None:
             resource.add(CMS.imageMaxHeight, Literal(self.max_dimensions.height))
             resource.add(CMS.imageMaxWidth, Literal(self.max_dimensions.width))
-        resource.add(CMS.institution, self.institution_uri)
         if self.modified is not None:
             resource.add(DCTERMS.modified, Literal(self.modified))
         if self.original_image_uri is not None:

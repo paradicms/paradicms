@@ -100,7 +100,6 @@ class OmekaClassicTransformer(_Transformer):
                 with self.__transform_file_timer.time():
                     transformed_files = self._transform_file(
                         file_=file_,
-                        institution_uri=institution.uri,
                         object_uri=transformed_item.uri,
                     )
                 yield from transformed_files
@@ -220,9 +219,7 @@ class OmekaClassicTransformer(_Transformer):
 
         return tuple(properties)
 
-    def _transform_file(
-        self, *, institution_uri: URIRef, file_, object_uri: URIRef
-    ) -> Tuple[Image, ...]:
+    def _transform_file(self, *, file_, object_uri: URIRef) -> Tuple[Image, ...]:
         """
         Transform a file JSON object into a sequence of images.
 
@@ -277,7 +274,6 @@ class OmekaClassicTransformer(_Transformer):
                 depicts_uri=object_uri,
                 exact_dimensions=exact_dimensions,
                 format=file_["mime_type"],
-                institution_uri=institution_uri,
                 max_dimensions=max_dimensions,
                 modified=file_modified,
                 original_image_uri=original_image_uri,
