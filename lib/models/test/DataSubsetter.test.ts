@@ -4,7 +4,20 @@ import {testDataset} from "./testDataset";
 import {DataSubsetter} from "../src/DataSubsetter";
 import {JoinedDataset} from "../src/JoinedDataset";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
-import {datasetFromPartial} from "../src/datasetFromPartial";
+import {Dataset} from "../src";
+
+const datasetFromPartial = (partialDataset: Partial<Dataset>): Dataset => {
+  return {
+    collections: partialDataset.collections ?? [],
+    images: partialDataset.images ?? [],
+    institutions: partialDataset.institutions ?? [],
+    licenses: partialDataset.licenses ?? [],
+    objects: partialDataset.objects ?? [],
+    propertyDefinitions: partialDataset.propertyDefinitions ?? [],
+    propertyValueDefinitions: partialDataset.propertyValueDefinitions ?? [],
+    rightsStatements: partialDataset.rightsStatements ?? [],
+  };
+};
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
