@@ -1,4 +1,4 @@
-import {RDF} from "./vocabularies";
+import {PARADICMS, RDF} from "./vocabularies";
 import {ModelNode} from "./ModelNode";
 import {LiteralWrapper} from "./LiteralWrapper";
 import {RdfReaderException} from "./RdfReaderException";
@@ -13,6 +13,16 @@ import {
 } from "@paradicms/models";
 
 export abstract class ModelRdfReader<ModelT> {
+  private static createIgnoredPropertyUris(): Set<string> {
+    const result = new Set<string>();
+    result.add(PARADICMS.collection.value);
+    result.add(PARADICMS.institution.value);
+    result.add(RDF.type.value);
+    return result;
+  }
+
+  private static readonly IGNORED_PROPERTY_URIS = ModelRdfReader.createIgnoredPropertyUris();
+
   private _nodeStatements: readonly Quad[] | undefined;
 
   private _nodeStatementsByPredicateUri:
@@ -149,6 +159,9 @@ export abstract class ModelRdfReader<ModelT> {
         continue;
       }
       const propertyUri = nodeStatement.predicate.value;
+      if (ModelRdfReader.IGNORED_PROPERTY_URIS.has(propertyUri)) {
+        continue;
+      }
       const propertyValue = this.toPropertyValue(nodeStatement.object);
       if (!propertyValue) {
         continue;

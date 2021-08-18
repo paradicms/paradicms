@@ -1,6 +1,5 @@
-import {Dataset} from "../src/Dataset";
+import {Dataset} from "../src";
 
-// Obtained by logging a JSON.stringify in the DatasetRdfReader test
 export const testDataset: Dataset = {
   collections: [
     {
@@ -18720,10 +18719,6 @@ export const testDataset: Dataset = {
       page: "http://example.com/object/0",
       properties: [
         {
-          uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-          value: {type: "uri", value: "http://www.paradicms.org/ns#Object"},
-        },
-        {
           uri: "http://purl.org/dc/terms/identifier",
           value: {type: "string", value: "Institution0Collection0Object0Id0"},
         },
@@ -18927,17 +18922,6 @@ export const testDataset: Dataset = {
           value: {type: "string", value: "Material 1"},
         },
         {
-          uri: "http://www.paradicms.org/ns#collection",
-          value: {
-            type: "uri",
-            value: "http://example.com/institution0/collection0",
-          },
-        },
-        {
-          uri: "http://www.paradicms.org/ns#institution",
-          value: {type: "uri", value: "http://example.com/institution0"},
-        },
-        {
           uri: "http://xmlns.com/foaf/0.1/page",
           value: {type: "uri", value: "http://example.com/object/0"},
         },
@@ -18967,10 +18951,6 @@ export const testDataset: Dataset = {
       institutionUri: "http://example.com/institution0",
       page: "http://example.com/object/1",
       properties: [
-        {
-          uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-          value: {type: "uri", value: "http://www.paradicms.org/ns#Object"},
-        },
         {
           uri: "http://purl.org/dc/terms/identifier",
           value: {type: "string", value: "Institution0Collection0Object1Id0"},
@@ -19175,17 +19155,6 @@ export const testDataset: Dataset = {
           value: {type: "string", value: "Material 2"},
         },
         {
-          uri: "http://www.paradicms.org/ns#collection",
-          value: {
-            type: "uri",
-            value: "http://example.com/institution0/collection0",
-          },
-        },
-        {
-          uri: "http://www.paradicms.org/ns#institution",
-          value: {type: "uri", value: "http://example.com/institution0"},
-        },
-        {
           uri: "http://xmlns.com/foaf/0.1/page",
           value: {type: "string", value: "http://example.com/object/1"},
         },
@@ -19215,10 +19184,6 @@ export const testDataset: Dataset = {
       institutionUri: "http://example.com/institution0",
       page: "http://example.com/object/2",
       properties: [
-        {
-          uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-          value: {type: "uri", value: "http://www.paradicms.org/ns#Object"},
-        },
         {
           uri: "http://purl.org/dc/terms/identifier",
           value: {type: "string", value: "Institution0Collection0Object2Id0"},
@@ -19423,17 +19388,6 @@ export const testDataset: Dataset = {
           value: {type: "string", value: "Material 3"},
         },
         {
-          uri: "http://www.paradicms.org/ns#collection",
-          value: {
-            type: "uri",
-            value: "http://example.com/institution0/collection0",
-          },
-        },
-        {
-          uri: "http://www.paradicms.org/ns#institution",
-          value: {type: "uri", value: "http://example.com/institution0"},
-        },
-        {
           uri: "http://xmlns.com/foaf/0.1/page",
           value: {type: "uri", value: "http://example.com/object/2"},
         },
@@ -19463,10 +19417,6 @@ export const testDataset: Dataset = {
       institutionUri: "http://example.com/institution0",
       page: "http://example.com/object/3",
       properties: [
-        {
-          uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-          value: {type: "uri", value: "http://www.paradicms.org/ns#Object"},
-        },
         {
           uri: "http://purl.org/dc/terms/identifier",
           value: {type: "string", value: "Institution0Collection0Object3Id0"},
@@ -19671,17 +19621,6 @@ export const testDataset: Dataset = {
           value: {type: "string", value: "Material 4"},
         },
         {
-          uri: "http://www.paradicms.org/ns#collection",
-          value: {
-            type: "uri",
-            value: "http://example.com/institution0/collection0",
-          },
-        },
-        {
-          uri: "http://www.paradicms.org/ns#institution",
-          value: {type: "uri", value: "http://example.com/institution0"},
-        },
-        {
           uri: "http://xmlns.com/foaf/0.1/page",
           value: {type: "string", value: "http://example.com/object/3"},
         },
@@ -19711,10 +19650,6 @@ export const testDataset: Dataset = {
       institutionUri: "http://example.com/institution0",
       page: "http://example.com/object/0",
       properties: [
-        {
-          uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-          value: {type: "uri", value: "http://www.paradicms.org/ns#Object"},
-        },
         {
           uri: "http://purl.org/dc/terms/identifier",
           value: {type: "string", value: "Institution0SharedObject0Id0"},
@@ -19919,17 +19854,6 @@ export const testDataset: Dataset = {
           value: {type: "string", value: "Material 1"},
         },
         {
-          uri: "http://www.paradicms.org/ns#collection",
-          value: {
-            type: "uri",
-            value: "http://example.com/institution0/collection0",
-          },
-        },
-        {
-          uri: "http://www.paradicms.org/ns#institution",
-          value: {type: "uri", value: "http://example.com/institution0"},
-        },
-        {
           uri: "http://xmlns.com/foaf/0.1/page",
           value: {type: "uri", value: "http://example.com/object/0"},
         },
@@ -19959,10 +19883,6 @@ export const testDataset: Dataset = {
       institutionUri: "http://example.com/institution0",
       page: "http://example.com/object/1",
       properties: [
-        {
-          uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-          value: {type: "uri", value: "http://www.paradicms.org/ns#Object"},
-        },
         {
           uri: "http://purl.org/dc/terms/identifier",
           value: {type: "string", value: "Institution0SharedObject1Id0"},
@@ -20167,17 +20087,6 @@ export const testDataset: Dataset = {
           value: {type: "string", value: "Material 2"},
         },
         {
-          uri: "http://www.paradicms.org/ns#collection",
-          value: {
-            type: "uri",
-            value: "http://example.com/institution0/collection0",
-          },
-        },
-        {
-          uri: "http://www.paradicms.org/ns#institution",
-          value: {type: "uri", value: "http://example.com/institution0"},
-        },
-        {
           uri: "http://xmlns.com/foaf/0.1/page",
           value: {type: "string", value: "http://example.com/object/1"},
         },
@@ -20207,10 +20116,6 @@ export const testDataset: Dataset = {
       institutionUri: "http://example.com/institution0",
       page: "http://example.com/object/2",
       properties: [
-        {
-          uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-          value: {type: "uri", value: "http://www.paradicms.org/ns#Object"},
-        },
         {
           uri: "http://purl.org/dc/terms/identifier",
           value: {type: "string", value: "Institution0SharedObject2Id0"},
@@ -20415,17 +20320,6 @@ export const testDataset: Dataset = {
           value: {type: "string", value: "Material 3"},
         },
         {
-          uri: "http://www.paradicms.org/ns#collection",
-          value: {
-            type: "uri",
-            value: "http://example.com/institution0/collection0",
-          },
-        },
-        {
-          uri: "http://www.paradicms.org/ns#institution",
-          value: {type: "uri", value: "http://example.com/institution0"},
-        },
-        {
           uri: "http://xmlns.com/foaf/0.1/page",
           value: {type: "uri", value: "http://example.com/object/2"},
         },
@@ -20455,10 +20349,6 @@ export const testDataset: Dataset = {
       institutionUri: "http://example.com/institution0",
       page: "http://example.com/object/3",
       properties: [
-        {
-          uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-          value: {type: "uri", value: "http://www.paradicms.org/ns#Object"},
-        },
         {
           uri: "http://purl.org/dc/terms/identifier",
           value: {type: "string", value: "Institution0SharedObject3Id0"},
@@ -20663,17 +20553,6 @@ export const testDataset: Dataset = {
           value: {type: "string", value: "Material 4"},
         },
         {
-          uri: "http://www.paradicms.org/ns#collection",
-          value: {
-            type: "uri",
-            value: "http://example.com/institution0/collection0",
-          },
-        },
-        {
-          uri: "http://www.paradicms.org/ns#institution",
-          value: {type: "uri", value: "http://example.com/institution0"},
-        },
-        {
           uri: "http://xmlns.com/foaf/0.1/page",
           value: {type: "string", value: "http://example.com/object/3"},
         },
@@ -20703,10 +20582,6 @@ export const testDataset: Dataset = {
       institutionUri: "http://example.com/institution1",
       page: "http://example.com/object/0",
       properties: [
-        {
-          uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-          value: {type: "uri", value: "http://www.paradicms.org/ns#Object"},
-        },
         {
           uri: "http://purl.org/dc/terms/identifier",
           value: {type: "string", value: "Institution1Collection0Object0Id0"},
@@ -20911,17 +20786,6 @@ export const testDataset: Dataset = {
           value: {type: "string", value: "Material 1"},
         },
         {
-          uri: "http://www.paradicms.org/ns#collection",
-          value: {
-            type: "uri",
-            value: "http://example.com/institution1/collection0",
-          },
-        },
-        {
-          uri: "http://www.paradicms.org/ns#institution",
-          value: {type: "uri", value: "http://example.com/institution1"},
-        },
-        {
           uri: "http://xmlns.com/foaf/0.1/page",
           value: {type: "uri", value: "http://example.com/object/0"},
         },
@@ -20951,10 +20815,6 @@ export const testDataset: Dataset = {
       institutionUri: "http://example.com/institution1",
       page: "http://example.com/object/1",
       properties: [
-        {
-          uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-          value: {type: "uri", value: "http://www.paradicms.org/ns#Object"},
-        },
         {
           uri: "http://purl.org/dc/terms/identifier",
           value: {type: "string", value: "Institution1Collection0Object1Id0"},
@@ -21159,17 +21019,6 @@ export const testDataset: Dataset = {
           value: {type: "string", value: "Material 2"},
         },
         {
-          uri: "http://www.paradicms.org/ns#collection",
-          value: {
-            type: "uri",
-            value: "http://example.com/institution1/collection0",
-          },
-        },
-        {
-          uri: "http://www.paradicms.org/ns#institution",
-          value: {type: "uri", value: "http://example.com/institution1"},
-        },
-        {
           uri: "http://xmlns.com/foaf/0.1/page",
           value: {type: "string", value: "http://example.com/object/1"},
         },
@@ -21199,10 +21048,6 @@ export const testDataset: Dataset = {
       institutionUri: "http://example.com/institution1",
       page: "http://example.com/object/2",
       properties: [
-        {
-          uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-          value: {type: "uri", value: "http://www.paradicms.org/ns#Object"},
-        },
         {
           uri: "http://purl.org/dc/terms/identifier",
           value: {type: "string", value: "Institution1Collection0Object2Id0"},
@@ -21407,17 +21252,6 @@ export const testDataset: Dataset = {
           value: {type: "string", value: "Material 3"},
         },
         {
-          uri: "http://www.paradicms.org/ns#collection",
-          value: {
-            type: "uri",
-            value: "http://example.com/institution1/collection0",
-          },
-        },
-        {
-          uri: "http://www.paradicms.org/ns#institution",
-          value: {type: "uri", value: "http://example.com/institution1"},
-        },
-        {
           uri: "http://xmlns.com/foaf/0.1/page",
           value: {type: "uri", value: "http://example.com/object/2"},
         },
@@ -21447,10 +21281,6 @@ export const testDataset: Dataset = {
       institutionUri: "http://example.com/institution1",
       page: "http://example.com/object/3",
       properties: [
-        {
-          uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-          value: {type: "uri", value: "http://www.paradicms.org/ns#Object"},
-        },
         {
           uri: "http://purl.org/dc/terms/identifier",
           value: {type: "string", value: "Institution1Collection0Object3Id0"},
@@ -21655,17 +21485,6 @@ export const testDataset: Dataset = {
           value: {type: "string", value: "Material 4"},
         },
         {
-          uri: "http://www.paradicms.org/ns#collection",
-          value: {
-            type: "uri",
-            value: "http://example.com/institution1/collection0",
-          },
-        },
-        {
-          uri: "http://www.paradicms.org/ns#institution",
-          value: {type: "uri", value: "http://example.com/institution1"},
-        },
-        {
           uri: "http://xmlns.com/foaf/0.1/page",
           value: {type: "string", value: "http://example.com/object/3"},
         },
@@ -21695,10 +21514,6 @@ export const testDataset: Dataset = {
       institutionUri: "http://example.com/institution1",
       page: "http://example.com/object/0",
       properties: [
-        {
-          uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-          value: {type: "uri", value: "http://www.paradicms.org/ns#Object"},
-        },
         {
           uri: "http://purl.org/dc/terms/identifier",
           value: {type: "string", value: "Institution1SharedObject0Id0"},
@@ -21903,17 +21718,6 @@ export const testDataset: Dataset = {
           value: {type: "string", value: "Material 1"},
         },
         {
-          uri: "http://www.paradicms.org/ns#collection",
-          value: {
-            type: "uri",
-            value: "http://example.com/institution1/collection0",
-          },
-        },
-        {
-          uri: "http://www.paradicms.org/ns#institution",
-          value: {type: "uri", value: "http://example.com/institution1"},
-        },
-        {
           uri: "http://xmlns.com/foaf/0.1/page",
           value: {type: "uri", value: "http://example.com/object/0"},
         },
@@ -21943,10 +21747,6 @@ export const testDataset: Dataset = {
       institutionUri: "http://example.com/institution1",
       page: "http://example.com/object/1",
       properties: [
-        {
-          uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-          value: {type: "uri", value: "http://www.paradicms.org/ns#Object"},
-        },
         {
           uri: "http://purl.org/dc/terms/identifier",
           value: {type: "string", value: "Institution1SharedObject1Id0"},
@@ -22151,17 +21951,6 @@ export const testDataset: Dataset = {
           value: {type: "string", value: "Material 2"},
         },
         {
-          uri: "http://www.paradicms.org/ns#collection",
-          value: {
-            type: "uri",
-            value: "http://example.com/institution1/collection0",
-          },
-        },
-        {
-          uri: "http://www.paradicms.org/ns#institution",
-          value: {type: "uri", value: "http://example.com/institution1"},
-        },
-        {
           uri: "http://xmlns.com/foaf/0.1/page",
           value: {type: "string", value: "http://example.com/object/1"},
         },
@@ -22191,10 +21980,6 @@ export const testDataset: Dataset = {
       institutionUri: "http://example.com/institution1",
       page: "http://example.com/object/2",
       properties: [
-        {
-          uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-          value: {type: "uri", value: "http://www.paradicms.org/ns#Object"},
-        },
         {
           uri: "http://purl.org/dc/terms/identifier",
           value: {type: "string", value: "Institution1SharedObject2Id0"},
@@ -22399,17 +22184,6 @@ export const testDataset: Dataset = {
           value: {type: "string", value: "Material 3"},
         },
         {
-          uri: "http://www.paradicms.org/ns#collection",
-          value: {
-            type: "uri",
-            value: "http://example.com/institution1/collection0",
-          },
-        },
-        {
-          uri: "http://www.paradicms.org/ns#institution",
-          value: {type: "uri", value: "http://example.com/institution1"},
-        },
-        {
           uri: "http://xmlns.com/foaf/0.1/page",
           value: {type: "uri", value: "http://example.com/object/2"},
         },
@@ -22439,10 +22213,6 @@ export const testDataset: Dataset = {
       institutionUri: "http://example.com/institution1",
       page: "http://example.com/object/3",
       properties: [
-        {
-          uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
-          value: {type: "uri", value: "http://www.paradicms.org/ns#Object"},
-        },
         {
           uri: "http://purl.org/dc/terms/identifier",
           value: {type: "string", value: "Institution1SharedObject3Id0"},
@@ -22645,17 +22415,6 @@ export const testDataset: Dataset = {
         {
           uri: "http://purl.org/vra/material",
           value: {type: "string", value: "Material 4"},
-        },
-        {
-          uri: "http://www.paradicms.org/ns#collection",
-          value: {
-            type: "uri",
-            value: "http://example.com/institution1/collection0",
-          },
-        },
-        {
-          uri: "http://www.paradicms.org/ns#institution",
-          value: {type: "uri", value: "http://example.com/institution1"},
         },
         {
           uri: "http://xmlns.com/foaf/0.1/page",
