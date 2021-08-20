@@ -38,10 +38,10 @@ class S3Deployer(_Deployer):
     def s3_bucket_url(self) -> str:
         return URIRef(f"https://{self.__s3_bucket_name}.s3.amazonaws.com")
 
-    def deploy(self, *, gui_out_dir_path: Path) -> None:
+    def deploy(self, *, app_out_dir_path: Path) -> None:
         gui_out_file_paths = []
 
-        for dir_path, sub_dir_names, file_names in os.walk(gui_out_dir_path):
+        for dir_path, sub_dir_names, file_names in os.walk(app_out_dir_path):
             for file_name in file_names:
                 if file_name[0] == ".":
                     continue
@@ -50,11 +50,11 @@ class S3Deployer(_Deployer):
         self._logger.info(
             "uploading %d files from %s to %s",
             len(gui_out_file_paths),
-            gui_out_dir_path,
+            app_out_dir_path,
             self.s3_bucket_url,
         )
         for file_path in tqdm(gui_out_file_paths, desc=self.__class__.__name__):
-            key = str(file_path.relative_to(gui_out_dir_path)).replace(os.path.sep, "/")
+            key = str(file_path.relative_to(app_out_dir_path)).replace(os.path.sep, "/")
 
             guess_mime_type, _ = mimetypes.guess_type(file_path.as_uri(), strict=False)
             if guess_mime_type is None:
@@ -71,6 +71,6 @@ class S3Deployer(_Deployer):
         self._logger.info(
             "uploaded %d files from %s to %s",
             len(gui_out_file_paths),
-            gui_out_dir_path,
+            app_out_dir_path,
             self.s3_bucket_url,
         )

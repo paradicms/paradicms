@@ -30,11 +30,11 @@ def test_build(test_data_models: Tuple[_Model, ...], tmp_path):
     gui_data_loader.load(models=test_data_models)
     gui_data_loader.flush()
 
-    gui_out_dir_path = app_package.build(
+    app_out_dir_path = app_package.build(
         data_ttl_file_path=Path(tmp_path) / (pipeline_id + ".ttl")
     )
-    assert gui_out_dir_path == (app_package.app_dir_path / "out")
-    assert gui_out_dir_path.is_dir()
+    assert app_out_dir_path == (app_package.app_dir_path / "out")
+    assert app_out_dir_path.is_dir()
 
 
 # def test_install():

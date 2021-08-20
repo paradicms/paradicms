@@ -9,21 +9,21 @@ def test_archive_rename(tmp_path):
     tmp_dir_path = Path(tmp_path)
     gui_deploy_dir_path = tmp_dir_path / "deploy"
     gui_deploy_dir_path.mkdir()
-    gui_out_dir_path = tmp_dir_path / "out"
-    gui_out_dir_path.mkdir()
-    (gui_out_dir_path / "temp.txt").touch()
+    app_out_dir_path = tmp_dir_path / "out"
+    app_out_dir_path.mkdir()
+    (app_out_dir_path / "temp.txt").touch()
 
     sut = FsDeployer(archive=True, gui_deploy_dir_path=gui_deploy_dir_path, copy=False)
-    sut.deploy(gui_out_dir_path=gui_out_dir_path)
-    assert not gui_out_dir_path.exists()  # Should have been renamed
+    sut.deploy(app_out_dir_path=app_out_dir_path)
+    assert not app_out_dir_path.exists()  # Should have been renamed
     assert (gui_deploy_dir_path / "current").is_dir()
     assert (gui_deploy_dir_path / "current" / "temp.txt").is_file()
 
     # Deploy again, which should create an archive
-    gui_out_dir_path.mkdir()
-    (gui_out_dir_path / "temp.txt").touch()
-    sut.deploy(gui_out_dir_path=gui_out_dir_path)
-    assert not gui_out_dir_path.exists()  # Should have been renamed
+    app_out_dir_path.mkdir()
+    (app_out_dir_path / "temp.txt").touch()
+    sut.deploy(app_out_dir_path=app_out_dir_path)
+    assert not app_out_dir_path.exists()  # Should have been renamed
     assert (gui_deploy_dir_path / "current" / "temp.txt").is_file()
 
     gui_deploy_dir_path_subdirs = [
@@ -41,38 +41,38 @@ def test_archive_rename(tmp_path):
 def test_overwrite_copy(tmp_path):
     tmp_dir_path = Path(tmp_path)
     gui_deploy_dir_path = tmp_dir_path / "deploy"
-    gui_out_dir_path = tmp_dir_path / "out"
-    gui_out_dir_path.mkdir()
-    (gui_out_dir_path / "temp.txt").touch()
+    app_out_dir_path = tmp_dir_path / "out"
+    app_out_dir_path.mkdir()
+    (app_out_dir_path / "temp.txt").touch()
 
     sut = FsDeployer(archive=False, gui_deploy_dir_path=gui_deploy_dir_path, copy=True)
-    sut.deploy(gui_out_dir_path=gui_out_dir_path)
+    sut.deploy(app_out_dir_path=app_out_dir_path)
     assert gui_deploy_dir_path.is_dir()
-    assert gui_out_dir_path.exists()
+    assert app_out_dir_path.exists()
 
     # Deploy again
     rmtree(gui_deploy_dir_path)
     assert not gui_deploy_dir_path.exists()
-    sut.deploy(gui_out_dir_path=gui_out_dir_path)
+    sut.deploy(app_out_dir_path=app_out_dir_path)
     assert gui_deploy_dir_path.is_dir()
-    assert gui_out_dir_path.exists()
+    assert app_out_dir_path.exists()
 
 
 def test_overwrite_rename(tmp_path):
     tmp_dir_path = Path(tmp_path)
     gui_deploy_dir_path = tmp_dir_path / "deploy"
-    gui_out_dir_path = tmp_dir_path / "out"
-    gui_out_dir_path.mkdir()
-    (gui_out_dir_path / "temp.txt").touch()
+    app_out_dir_path = tmp_dir_path / "out"
+    app_out_dir_path.mkdir()
+    (app_out_dir_path / "temp.txt").touch()
 
     sut = FsDeployer(archive=False, gui_deploy_dir_path=gui_deploy_dir_path)
-    sut.deploy(gui_out_dir_path=gui_out_dir_path)
+    sut.deploy(app_out_dir_path=app_out_dir_path)
     assert gui_deploy_dir_path.is_dir()
-    assert not gui_out_dir_path.exists()  # Should have been renamed
+    assert not app_out_dir_path.exists()  # Should have been renamed
 
     # Deploy again
-    gui_out_dir_path.mkdir()
-    (gui_out_dir_path / "temp.txt").touch()
-    sut.deploy(gui_out_dir_path=gui_out_dir_path)
+    app_out_dir_path.mkdir()
+    (app_out_dir_path / "temp.txt").touch()
+    sut.deploy(app_out_dir_path=app_out_dir_path)
     assert gui_deploy_dir_path.is_dir()
-    assert not gui_out_dir_path.exists()  # Should have been renamed
+    assert not app_out_dir_path.exists()  # Should have been renamed

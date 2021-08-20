@@ -15,7 +15,7 @@ def test_deploy(tmp_path):
     (tmp_dir_path / "subdir" / "test.txt").touch()
 
     sut = S3Deployer(s3_bucket_name="paradicms-test-deployment")
-    sut.deploy(gui_out_dir_path=tmp_dir_path)
+    sut.deploy(app_out_dir_path=tmp_dir_path)
 
     with urllib.request.urlopen(
         urllib.request.Request(
