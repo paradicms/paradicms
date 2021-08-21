@@ -7,7 +7,7 @@ describe("JoinedPropertyValueDefinition", () => {
   const propertyDefinition = new IndexedDataset(
     testDataset
   ).propertyDefinitionByUri(
-    testDataset.propertyValueDefinitions[0].propertyUri
+    testDataset.propertyValueDefinitions[0].propertyUris[0]
   )!;
   const sut = JoinedDataset.fromDataset(testDataset).propertyDefinitionByUri(
     propertyDefinition.uri
