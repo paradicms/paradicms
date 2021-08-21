@@ -23,7 +23,7 @@ def test_to_rdf():
         rights=Rights(
             creator="Test creator",
             holder="Test holder",
-            license=CreativeCommonsLicenses.BY.uri,
+            license=CreativeCommonsLicenses.BY_1_0.uri,
             statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
         ),
         src="http://example.com/imagesrc",

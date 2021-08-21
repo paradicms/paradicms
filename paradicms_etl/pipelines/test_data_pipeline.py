@@ -189,7 +189,7 @@ class TestDataPipeline(_Pipeline):
                     name=institution_name,
                     rights=Rights(
                         holder=f"{institution_name} rights holder",
-                        license=CreativeCommonsLicenses.NC.uri,
+                        license=CreativeCommonsLicenses.NC_1_0.uri,
                         statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
                     ),
                     uri=URIRef(f"http://example.com/institution{institution_i}"),
@@ -294,7 +294,7 @@ class TestDataPipeline(_Pipeline):
                 properties=tuple(properties),
                 rights=Rights(
                     holder=f"{title} rights holder",
-                    license=CreativeCommonsLicenses.NC.uri,
+                    license=CreativeCommonsLicenses.NC_1_0.uri,
                     statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
                 ),
                 title=title,
@@ -311,7 +311,7 @@ class TestDataPipeline(_Pipeline):
         def __generate_property_definitions(self):
             rights = Rights(
                 holder=f"Property definition rights holder",
-                license=CreativeCommonsLicenses.NC.uri,
+                license=CreativeCommonsLicenses.NC_1_0.uri,
                 statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
             )
 
@@ -323,7 +323,7 @@ class TestDataPipeline(_Pipeline):
                 for property_value in property_values:
                     property_value_definition = PropertyValueDefinition(
                         # label=property_value,
-                        property_uri=property_definition.uri,
+                        property_uris=(property_definition.uri,),
                         uri=URIRef(
                             f"urn:paradicms_etl:pipeline:test_data:property_value:{property_value_urn_i}"
                         ),

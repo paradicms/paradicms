@@ -3,17 +3,18 @@
 @prefix paradicms: <http://www.paradicms.org/ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://creativecommons.org/licenses/BSD/> a paradicms:License ;
     dcterms:identifier "BSD" ;
     dcterms:title "BSD" .
 
 <http://creativecommons.org/licenses/GPL/2.0/> a paradicms:License ;
+    dcterms:hasVersion "2.0" ;
     dcterms:identifier "GPL" ;
     dcterms:title "GNU General Public License" .
 
 <http://creativecommons.org/licenses/LGPL/2.1/> a paradicms:License ;
+    dcterms:hasVersion "2.1" ;
     dcterms:identifier "LGPL" ;
     dcterms:title "GNU Lesser General Public License" .
 
@@ -21,99 +22,228 @@
     dcterms:identifier "MIT" ;
     dcterms:title "MIT" .
 
+<http://creativecommons.org/licenses/by-nc-nd/2.0/> a paradicms:License ;
+    dcterms:hasVersion "2.0" ;
+    dcterms:identifier "by-nc-nd" ;
+    dcterms:title "Attribution-NonCommercial-NoDerivs 2.0 Generic" .
+
+<http://creativecommons.org/licenses/by-nc-nd/2.5/> a paradicms:License ;
+    dcterms:hasVersion "2.5" ;
+    dcterms:identifier "by-nc-nd" ;
+    dcterms:title "Attribution-NonCommercial-NoDerivs 2.5 Generic" .
+
+<http://creativecommons.org/licenses/by-nc-nd/3.0/> a paradicms:License ;
+    dcterms:hasVersion "3.0" ;
+    dcterms:identifier "by-nc-nd" ;
+    dcterms:title "Attribution-NonCommercial-NoDerivs 3.0 Unported" .
+
 <http://creativecommons.org/licenses/by-nc-nd/4.0/> a paradicms:License ;
+    dcterms:hasVersion "4.0" ;
     dcterms:identifier "by-nc-nd" ;
     dcterms:title "Attribution-NonCommercial-NoDerivatives 4.0 International" .
 
+<http://creativecommons.org/licenses/by-nc-sa/1.0/> a paradicms:License ;
+    dcterms:hasVersion "1.0" ;
+    dcterms:identifier "by-nc-sa" ;
+    dcterms:title "Attribution-NonCommercial-ShareAlike 1.0 Generic" .
+
+<http://creativecommons.org/licenses/by-nc-sa/2.0/> a paradicms:License ;
+    dcterms:hasVersion "2.0" ;
+    dcterms:identifier "by-nc-sa" ;
+    dcterms:title "Attribution-NonCommercial-ShareAlike 2.0 Generic" .
+
+<http://creativecommons.org/licenses/by-nc-sa/2.5/> a paradicms:License ;
+    dcterms:hasVersion "2.5" ;
+    dcterms:identifier "by-nc-sa" ;
+    dcterms:title "Attribution-NonCommercial-ShareAlike 2.5 Generic" .
+
+<http://creativecommons.org/licenses/by-nc-sa/3.0/> a paradicms:License ;
+    dcterms:hasVersion "3.0" ;
+    dcterms:identifier "by-nc-sa" ;
+    dcterms:title "Attribution-NonCommercial-ShareAlike 3.0 Unported" .
+
 <http://creativecommons.org/licenses/by-nc-sa/4.0/> a paradicms:License ;
+    dcterms:hasVersion "4.0" ;
     dcterms:identifier "by-nc-sa" ;
     dcterms:title "Attribution-NonCommercial-ShareAlike 4.0 International" .
 
+<http://creativecommons.org/licenses/by-nc/1.0/> a paradicms:License ;
+    dcterms:hasVersion "1.0" ;
+    dcterms:identifier "by-nc" ;
+    dcterms:title "Attribution-NonCommercial 1.0 Generic" .
+
+<http://creativecommons.org/licenses/by-nc/2.0/> a paradicms:License ;
+    dcterms:hasVersion "2.0" ;
+    dcterms:identifier "by-nc" ;
+    dcterms:title "Attribution-NonCommercial 2.0 Generic" .
+
+<http://creativecommons.org/licenses/by-nc/2.5/> a paradicms:License ;
+    dcterms:hasVersion "2.5" ;
+    dcterms:identifier "by-nc" ;
+    dcterms:title "Attribution-NonCommercial 2.5 Generic" .
+
+<http://creativecommons.org/licenses/by-nc/3.0/> a paradicms:License ;
+    dcterms:hasVersion "3.0" ;
+    dcterms:identifier "by-nc" ;
+    dcterms:title "Attribution-NonCommercial 3.0 Unported" .
+
 <http://creativecommons.org/licenses/by-nc/4.0/> a paradicms:License ;
+    dcterms:hasVersion "4.0" ;
     dcterms:identifier "by-nc" ;
     dcterms:title "Attribution-NonCommercial 4.0 International" .
 
 <http://creativecommons.org/licenses/by-nd-nc/1.0/> a paradicms:License ;
+    dcterms:hasVersion "1.0" ;
     dcterms:identifier "by-nd-nc" ;
     dcterms:title "Attribution-NoDerivs-NonCommercial 1.0 Generic" .
 
+<http://creativecommons.org/licenses/by-nd/1.0/> a paradicms:License ;
+    dcterms:hasVersion "1.0" ;
+    dcterms:identifier "by-nd" ;
+    dcterms:title "Attribution-NoDerivs 1.0 Generic" .
+
+<http://creativecommons.org/licenses/by-nd/2.0/> a paradicms:License ;
+    dcterms:hasVersion "2.0" ;
+    dcterms:identifier "by-nd" ;
+    dcterms:title "Attribution-NoDerivs 2.0 Generic" .
+
+<http://creativecommons.org/licenses/by-nd/2.5/> a paradicms:License ;
+    dcterms:hasVersion "2.5" ;
+    dcterms:identifier "by-nd" ;
+    dcterms:title "Attribution-NoDerivs 2.5 Generic" .
+
+<http://creativecommons.org/licenses/by-nd/3.0/> a paradicms:License ;
+    dcterms:hasVersion "3.0" ;
+    dcterms:identifier "by-nd" ;
+    dcterms:title "Attribution-NoDerivs 3.0 Unported" .
+
 <http://creativecommons.org/licenses/by-nd/4.0/> a paradicms:License ;
+    dcterms:hasVersion "4.0" ;
     dcterms:identifier "by-nd" ;
     dcterms:title "Attribution-NoDerivatives 4.0 International" .
 
+<http://creativecommons.org/licenses/by-sa/1.0/> a paradicms:License ;
+    dcterms:hasVersion "1.0" ;
+    dcterms:identifier "by-sa" ;
+    dcterms:title "Attribution-ShareAlike 1.0 Generic" .
+
+<http://creativecommons.org/licenses/by-sa/2.0/> a paradicms:License ;
+    dcterms:hasVersion "2.0" ;
+    dcterms:identifier "by-sa" ;
+    dcterms:title "Attribution-ShareAlike 2.0 Generic" .
+
+<http://creativecommons.org/licenses/by-sa/2.5/> a paradicms:License ;
+    dcterms:hasVersion "2.5" ;
+    dcterms:identifier "by-sa" ;
+    dcterms:title "Attribution-ShareAlike 2.5 Generic" .
+
+<http://creativecommons.org/licenses/by-sa/3.0/> a paradicms:License ;
+    dcterms:hasVersion "3.0" ;
+    dcterms:identifier "by-sa" ;
+    dcterms:title "Attribution-ShareAlike 3.0 Unported" .
+
 <http://creativecommons.org/licenses/by-sa/4.0/> a paradicms:License ;
+    dcterms:hasVersion "4.0" ;
     dcterms:identifier "by-sa" ;
     dcterms:title "Attribution-ShareAlike 4.0 International" .
 
+<http://creativecommons.org/licenses/by/1.0/> a paradicms:License ;
+    dcterms:hasVersion "1.0" ;
+    dcterms:identifier "by" ;
+    dcterms:title "Attribution 1.0 Generic" .
+
+<http://creativecommons.org/licenses/by/2.0/> a paradicms:License ;
+    dcterms:hasVersion "2.0" ;
+    dcterms:identifier "by" ;
+    dcterms:title "Attribution 2.0 Generic" .
+
+<http://creativecommons.org/licenses/by/2.5/> a paradicms:License ;
+    dcterms:hasVersion "2.5" ;
+    dcterms:identifier "by" ;
+    dcterms:title "Attribution 2.5 Generic" .
+
+<http://creativecommons.org/licenses/by/3.0/> a paradicms:License ;
+    dcterms:hasVersion "3.0" ;
+    dcterms:identifier "by" ;
+    dcterms:title "Attribution 3.0 Unported" .
+
 <http://creativecommons.org/licenses/by/4.0/> a paradicms:License ;
+    dcterms:hasVersion "4.0" ;
     dcterms:identifier "by" ;
     dcterms:title "Attribution 4.0 International" .
 
 <http://creativecommons.org/licenses/devnations/2.0/> a paradicms:License ;
+    dcterms:hasVersion "2.0" ;
     dcterms:identifier "devnations" ;
     dcterms:title "Developing Nations License" .
 
 <http://creativecommons.org/licenses/nc-sa/1.0/> a paradicms:License ;
+    dcterms:hasVersion "1.0" ;
     dcterms:identifier "nc-sa" ;
     dcterms:title "NonCommercial-ShareAlike 1.0 Generic" .
 
 <http://creativecommons.org/licenses/nc-sampling+/1.0/> a paradicms:License ;
+    dcterms:hasVersion "1.0" ;
     dcterms:identifier "nc-sampling+" ;
     dcterms:title "NonCommercial Sampling Plus 1.0" .
 
 <http://creativecommons.org/licenses/nc/1.0/> a paradicms:License ;
+    dcterms:hasVersion "1.0" ;
     dcterms:identifier "nc" ;
     dcterms:title "NonCommercial 1.0 Generic" .
 
 <http://creativecommons.org/licenses/nd-nc/1.0/> a paradicms:License ;
+    dcterms:hasVersion "1.0" ;
     dcterms:identifier "nd-nc" ;
     dcterms:title "NoDerivs-NonCommercial 1.0 Generic" .
 
 <http://creativecommons.org/licenses/nd/1.0/> a paradicms:License ;
+    dcterms:hasVersion "1.0" ;
     dcterms:identifier "nd" ;
     dcterms:title "NoDerivs 1.0 Generic" .
 
 <http://creativecommons.org/licenses/sa/1.0/> a paradicms:License ;
+    dcterms:hasVersion "1.0" ;
     dcterms:identifier "sa" ;
     dcterms:title "ShareAlike 1.0 Generic" .
 
 <http://creativecommons.org/licenses/sampling+/1.0/> a paradicms:License ;
+    dcterms:hasVersion "1.0" ;
     dcterms:identifier "sampling+" ;
     dcterms:title "Sampling Plus 1.0" .
 
 <http://creativecommons.org/licenses/sampling/1.0/> a paradicms:License ;
+    dcterms:hasVersion "1.0" ;
     dcterms:identifier "sampling" ;
     dcterms:title "Sampling 1.0" .
 
 <http://creativecommons.org/publicdomain/mark/1.0/> a paradicms:License ;
+    dcterms:hasVersion "1.0" ;
     dcterms:identifier "mark" ;
     dcterms:title "Public Domain Mark 1.0" .
 
 <http://creativecommons.org/publicdomain/zero/1.0/> a paradicms:License ;
+    dcterms:hasVersion "1.0" ;
     dcterms:identifier "CC0" ;
     dcterms:title "CC0 1.0 Universal" .
 
+dcterms:abstract a paradicms:PropertyDefinition ;
+    rdfs:label "Abstract" .
+
 dcterms:alternative a paradicms:PropertyDefinition ;
-    rdfs:label "Alternative title" ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Alternative title" .
 
 dcterms:bibliographicCitation a paradicms:PropertyDefinition ;
-    rdfs:label "Bibliographic citation" ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Bibliographic citation" .
 
 dcterms:contributor a paradicms:PropertyDefinition ;
-    rdfs:label "Contributor" ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Contributor" .
 
 dcterms:coverage a paradicms:PropertyDefinition ;
-    rdfs:label "Coverage" ;
-    paradicms:faceted true ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Coverage" .
 
 dcterms:creator a paradicms:PropertyDefinition ;
-    rdfs:label "Creator" ;
-    paradicms:faceted true ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Creator" .
 
 dcterms:date a paradicms:PropertyDefinition ;
     rdfs:label "Date" .
@@ -125,44 +255,34 @@ dcterms:dateSubmitted a paradicms:PropertyDefinition ;
     rdfs:label "Date submitted" .
 
 dcterms:description a paradicms:PropertyDefinition ;
-    rdfs:label "Description" ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Description" .
 
 dcterms:extent a paradicms:PropertyDefinition ;
-    rdfs:label "Extent" ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Extent" .
 
 dcterms:format a paradicms:PropertyDefinition ;
-    rdfs:label "Format" ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Format" .
 
 dcterms:identifier a paradicms:PropertyDefinition ;
-    rdfs:label "Identifier" ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Identifier" .
 
 dcterms:isReferencedBy a paradicms:PropertyDefinition ;
     rdfs:label "Referenced by" .
 
 dcterms:language a paradicms:PropertyDefinition ;
-    rdfs:label "Language" ;
-    paradicms:faceted true .
+    rdfs:label "Language" .
 
 dcterms:license a paradicms:PropertyDefinition ;
     rdfs:label "License" .
 
 dcterms:medium a paradicms:PropertyDefinition ;
-    rdfs:label "Medium" ;
-    paradicms:faceted true ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Medium" .
 
 dcterms:provenance a paradicms:PropertyDefinition ;
-    rdfs:label "Provenance" ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Provenance" .
 
 dcterms:publisher a paradicms:PropertyDefinition ;
-    rdfs:label "Publisher" ;
-    paradicms:faceted true ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Publisher" .
 
 dcterms:references a paradicms:PropertyDefinition ;
     rdfs:label "References" .
@@ -177,32 +297,22 @@ dcterms:rightsHolder a paradicms:PropertyDefinition ;
     rdfs:label "Rights holder" .
 
 dcterms:source a paradicms:PropertyDefinition ;
-    rdfs:label "Source" ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Source" .
 
 dcterms:spatial a paradicms:PropertyDefinition ;
-    rdfs:label "Spatial coverage" ;
-    paradicms:faceted true ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Spatial coverage" .
 
 dcterms:subject a paradicms:PropertyDefinition ;
-    rdfs:label "Subject" ;
-    paradicms:faceted true ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Subject" .
 
 dcterms:temporal a paradicms:PropertyDefinition ;
-    rdfs:label "Temporal coverage" ;
-    paradicms:faceted true ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Temporal coverage" .
 
 dcterms:title a paradicms:PropertyDefinition ;
-    rdfs:label "Title" ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Title" .
 
 dcterms:type a paradicms:PropertyDefinition ;
-    rdfs:label "Type" ;
-    paradicms:faceted true ;
-    paradicms:fullTextSearchable true .
+    rdfs:label "Type" .
 
 <http://rightsstatements.org/vocab/CNE/1.0/> a paradicms:RightsStatement ;
     dcterms:description "This Rights Statement indicates that the organization that has published the Item has not evaluated the copyright and related rights status of the Item." ;
@@ -397,7 +507,6 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
 
 <urn:markdown:markdown_directory:image:test_object1> a paradicms:Image ;
     paradicms:imageSrc "file:///C:/Users/minor/projects/personal/paradicms/etl/data/markdown_directory/extracted/image/test_object1.gif" ;
-    paradicms:institution <urn:markdown:markdown_directory:institution:default> ;
     foaf:depicts <urn:markdown:markdown_directory:object:test_object1> .
 
 <urn:markdown:markdown_directory:object:test_object2> a paradicms:Object ;
