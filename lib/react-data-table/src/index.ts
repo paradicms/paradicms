@@ -1,1 +1,1 @@
-export * from "./ValueFilterControl";
+export * from "./ValueFilterTable";

@@ -16,14 +16,14 @@ type DataTableRow<T extends PrimitiveType> = {
   value?: T;
 };
 
-interface ValueFilterControlProps<T extends PrimitiveType> {
+interface ValueFilterTableProps<T extends PrimitiveType> {
   facet: ValueFacet<T>;
   filter: ValueFilter<T>;
   onChange: (newFilter: ValueFilter<T>) => void;
 }
 
-export const ValueFilterControl = <T extends PrimitiveType>(
-  props: ValueFilterControlProps<T>
+export const ValueFilterTable = <T extends PrimitiveType>(
+  props: ValueFilterTableProps<T>
 ) => {
   // @ts-ignore
   const {facet, filter, onChange} = props;
