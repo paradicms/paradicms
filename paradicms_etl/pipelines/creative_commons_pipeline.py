@@ -4,16 +4,13 @@ from typing import Dict, Generator
 from zipfile import ZipFile
 
 from rdflib import DC, DCTERMS, Graph, Literal, Namespace
-import rdflib_jsonld
 from rdflib.resource import Resource
 
 from paradicms_etl._extractor import _Extractor
 from paradicms_etl._loader import _Loader
 from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl._transformer import _Transformer
-from paradicms_etl.loaders.nop_loader import NopLoader
 from paradicms_etl.models.license import License
-from paradicms_etl.models.rights_statement import RightsStatement
 
 
 class CreativeCommonsPipeline(_Pipeline):
@@ -76,10 +73,17 @@ class CreativeCommonsPipeline(_Pipeline):
             if title is None:
                 raise ValueError("license must have literal dcterms:title")
 
+            version_literal = resource.value(DCTERMS.hasVersion, any=False)
+            if version_literal is not None:
+                version = version_literal.value
+            else:
+                version = None
+
             return License(
                 identifier=identifier,
                 title=title,
                 uri=resource.identifier,
+                version=version,
             )
 
         def transform(self, rdf_file_contents: Dict[str, bytes]):
@@ -107,10 +111,23 @@ class CreativeCommonsPipeline(_Pipeline):
             creative_commons_licenses_py_file_path = (
                 Path(__file__).parent.parent / "models" / "creative_commons_licenses.py"
             )
-            license_reprs = "\n".join(
-                f"    {license.identifier.replace('-', '_').replace('+', '_plus').upper()} = {repr(license)}"
-                for license in models
-            )
+            py_license_identifiers = set()
+            py_license_reprs = []
+            for license in models:
+                py_license_identifier = (
+                    license.identifier.replace("-", "_").replace("+", "_plus").upper()
+                )
+                if license.version is not None:
+                    py_license_identifier += "_" + license.version.replace(".", "_")
+                assert (
+                    py_license_identifier not in py_license_identifiers
+                ), py_license_identifier
+                py_license_identifiers.add(py_license_identifier)
+                py_license_reprs.append(
+                    f"    {py_license_identifier} = {repr(license)}"
+                )
+            py_license_reprs = "\n".join(py_license_reprs)
+
             with open(
                 creative_commons_licenses_py_file_path, "w+", encoding="utf-8"
             ) as licenses_py_file:
@@ -128,7 +145,7 @@ from paradicms_etl.models._model_singletons import _ModelSingletons
 class CreativeCommonsLicenses(_ModelSingletons):
     _MODEL_CLASS = License
 
-{license_reprs}
+{py_license_reprs}
 """
                 )
 

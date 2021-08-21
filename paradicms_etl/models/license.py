@@ -1,7 +1,7 @@
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Optional
 
-from rdflib import DC, DCTERMS, Graph, Literal, SKOS, URIRef
+from rdflib import DCTERMS, Graph, Literal
 from rdflib.resource import Resource
 
 from paradicms_etl.models._named_model import _NamedModel
@@ -15,9 +15,12 @@ class License(_NamedModel):
 
     identifier: str
     title: str
+    version: Optional[str] = None
 
     def to_rdf(self, *, graph: Graph) -> Resource:
         resource = _NamedModel.to_rdf(self, graph=graph)
         resource.add(DCTERMS.identifier, Literal(self.identifier))
         resource.add(DCTERMS.title, Literal(self.title))
+        if self.version is not None:
+            resource.add(DCTERMS.hasVersion, Literal(self.version))
         return resource
