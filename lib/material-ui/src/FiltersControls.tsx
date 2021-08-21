@@ -12,7 +12,7 @@ import {
   StringPropertyValueFilter,
 } from "@paradicms/models";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {ValueFilterControl} from "@paradicms/react-data-table";
+import {ValueFilterTable} from "@paradicms/react-data-table";
 
 export const FiltersControls: React.FunctionComponent<{
   facets: readonly Facet[];
@@ -52,7 +52,7 @@ export const FiltersControls: React.FunctionComponent<{
                     {filter.label}
                   </AccordionSummary>
                   <AccordionDetails>
-                    <ValueFilterControl
+                    <ValueFilterTable
                       facet={facet}
                       filter={concreteFilter}
                       onChange={onChangeFilter}
