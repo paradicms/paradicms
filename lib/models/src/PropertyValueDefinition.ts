@@ -4,8 +4,8 @@ export interface PropertyValueDefinition {
   // If the label is null, use the value
   readonly label: string | null;
 
-  // Child -> parent reference
-  readonly propertyUri: string;
+  // 1+ child -> parent references
+  readonly propertyUris: readonly string[];
 
   readonly value: PropertyValue;
 

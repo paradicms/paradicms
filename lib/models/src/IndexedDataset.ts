@@ -331,16 +331,16 @@ export class IndexedDataset {
       } = {};
       for (const propertyValueDefinition of this.dataset
         .propertyValueDefinitions) {
-        const existingPropertyValueDefinitions =
-          propertyValueDefinitionsByPropertyUriIndex[
-            propertyValueDefinition.propertyUri
-          ];
-        if (existingPropertyValueDefinitions) {
-          existingPropertyValueDefinitions.push(propertyValueDefinition);
-        } else {
-          propertyValueDefinitionsByPropertyUriIndex[
-            propertyValueDefinition.propertyUri
-          ] = [propertyValueDefinition];
+        for (const propertyUri of propertyValueDefinition.propertyUris) {
+          const existingPropertyValueDefinitions =
+            propertyValueDefinitionsByPropertyUriIndex[propertyUri];
+          if (existingPropertyValueDefinitions) {
+            existingPropertyValueDefinitions.push(propertyValueDefinition);
+          } else {
+            propertyValueDefinitionsByPropertyUriIndex[propertyUri] = [
+              propertyValueDefinition,
+            ];
+          }
         }
       }
       this._propertyValueDefinitionsByPropertyUriIndex = propertyValueDefinitionsByPropertyUriIndex;
