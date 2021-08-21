@@ -1,9 +1,11 @@
+**/dist/
 /etl/test/
-/etl/venv/
-/.git/
-/.github/
+**/.git/
+**/.github/
 /gui/integration-test/
+/gui/loader/test/
 **/node_modules/
 **/*.pyc
+**/script/
+**/venv/
 **/.vscode/
-

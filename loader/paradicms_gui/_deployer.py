@@ -8,11 +8,11 @@ class _Deployer(ABC):
         self.__logger = logging.getLogger(self.__class__.__name__)
 
     @abstractmethod
-    def deploy(self, *, gui_out_dir_path: Path) -> None:
+    def deploy(self, *, app_out_dir_path: Path) -> None:
         """
         Deploy a previously-built GUI.
 
-        :param gui_out_dir_path: path to the Next.js "out" directory produced by a build + export.
+        :param app_out_dir_path: path to the Next.js "out" directory produced by a build + export.
         """
 
     @property

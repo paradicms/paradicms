@@ -129,7 +129,7 @@ class GuiLoader(_BufferingLoader):
         else:
             app_package.clean()
 
-            gui_out_dir_path = app_package.build(data_ttl_file_path=data_ttl_file_path)
+            app_out_dir_path = app_package.build(data_ttl_file_path=data_ttl_file_path)
 
             deployer = self.__deployer
             if deployer is None:
@@ -137,4 +137,4 @@ class GuiLoader(_BufferingLoader):
                     gui_deploy_dir_path=self._loaded_data_dir_path / "deployed"
                 )
 
-            deployer.deploy(gui_out_dir_path=gui_out_dir_path)
+            deployer.deploy(app_out_dir_path=app_out_dir_path)
