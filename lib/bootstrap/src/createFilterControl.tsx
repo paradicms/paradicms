@@ -1,10 +1,6 @@
-import {
-  Filter,
-  JoinedFacet,
-  JoinedStringPropertyValueFacet,
-  StringPropertyValueFilter,
-} from "@paradicms/models";
+import {Filter, JoinedFacet} from "@paradicms/models";
 import * as React from "react";
+import {createFilterControl as createFilterControlDelegate} from "@paradicms/react-data-table";
 import {ValueFilterControl} from "./ValueFilterControl";
 
 export const createFilterControl: (kwds: {
@@ -12,29 +8,17 @@ export const createFilterControl: (kwds: {
   filter: Filter;
   onChangeFilter: (newFilter: Filter) => void;
 }) => React.ReactNode = ({facets, filter, onChangeFilter}) => {
-  switch (filter.type) {
-    case "StringPropertyValue": {
-      const concreteFilter: StringPropertyValueFilter = filter as StringPropertyValueFilter;
-      const facet: JoinedStringPropertyValueFacet | undefined = facets.find(
-        facet =>
-          facet.type === "StringPropertyValue" &&
-          (facet as JoinedStringPropertyValueFacet).propertyUri ===
-            concreteFilter.propertyUri
-      ) as JoinedStringPropertyValueFacet | undefined;
-      if (!facet) {
-        console.warn(
-          "no matching facet for filter on property",
-          concreteFilter.propertyUri
-        );
-        return null;
-      }
-      return (
+  return createFilterControlDelegate({
+    facets,
+    filter,
+    factory: {
+      createStringPropertyValueFilterControl: (facet, filter) => (
         <ValueFilterControl
           facet={facet}
-          filter={concreteFilter}
+          filter={filter}
           onChange={onChangeFilter}
         />
-      );
-    }
-  }
+      ),
+    },
+  });
 };
