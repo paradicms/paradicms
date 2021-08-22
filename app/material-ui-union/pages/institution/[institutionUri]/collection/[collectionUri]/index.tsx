@@ -70,7 +70,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
     <ObjectSearchPage
       configuration={configuration.objectSearch}
       objectQueryService={objectQueryService}
-      objectsPerPage={10}
+      objectsPerPage={OBJECTS_PER_PAGE}
     >
       {({
         objectQuery,

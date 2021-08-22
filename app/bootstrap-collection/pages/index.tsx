@@ -13,8 +13,10 @@ import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {readDataset} from "lib/readDataset";
 import {ObjectSearchPage} from "@paradicms/react-search";
-import {thumbnailTargetDimensions} from "@paradicms/material-ui";
-import {ObjectSearchContainer} from "@paradicms/bootstrap";
+import {
+  ObjectSearchContainer,
+  thumbnailTargetDimensions,
+} from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {ObjectQueryService} from "@paradicms/services";
@@ -56,7 +58,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     <ObjectSearchPage
       configuration={configuration.objectSearch}
       objectQueryService={objectQueryService}
-      objectsPerPage={10}
+      objectsPerPage={OBJECTS_PER_PAGE}
     >
       {({setObjectQuery, setPage, ...lunrObjectSearchProps}) => (
         <Layout

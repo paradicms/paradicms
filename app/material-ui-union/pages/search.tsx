@@ -37,6 +37,8 @@ const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
   thumbnail: {targetDimensions: thumbnailTargetDimensions},
 };
 
+const OBJECTS_PER_PAGE = 10;
+
 const SearchPage: React.FunctionComponent<StaticProps> = ({
   configuration,
   dataset,
@@ -55,7 +57,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
     <ObjectSearchPage
       configuration={configuration.objectSearch}
       objectQueryService={objectQueryService}
-      objectsPerPage={10}
+      objectsPerPage={OBJECTS_PER_PAGE}
     >
       {({
         objectQuery,
