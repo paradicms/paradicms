@@ -13,6 +13,8 @@ export abstract class JoinedValueFacetValue<T extends PrimitiveType>
     return this.valueFacetValue.count;
   }
 
+  abstract readonly label: string;
+
   get value(): T {
     return this.valueFacetValue.value;
   }

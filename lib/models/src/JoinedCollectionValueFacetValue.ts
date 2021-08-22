@@ -7,4 +7,8 @@ export class JoinedCollectionValueFacetValue extends JoinedValueFacetValue<
   get collection(): JoinedCollection {
     return this.joinedDataset.collectionByUri(this.valueFacetValue.value);
   }
+
+  get label() {
+    return this.collection.title;
+  }
 }

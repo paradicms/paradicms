@@ -1,8 +1,8 @@
 import * as React from "react";
 import {useCallback, useMemo} from "react";
 import {
+  JoinedValueFacet,
   PrimitiveType,
-  ValueFacet,
   ValueFilter,
   ValueFilterState,
 } from "@paradicms/models";
@@ -17,7 +17,7 @@ type DataTableRow<T extends PrimitiveType> = {
 };
 
 interface ValueFilterTableProps<T extends PrimitiveType> {
-  facet: ValueFacet<T>;
+  facet: JoinedValueFacet<T>;
   filter: ValueFilter<T>;
   onChange: (newFilter: ValueFilter<T>) => void;
 }
@@ -63,11 +63,11 @@ export const ValueFilterTable = <T extends PrimitiveType>(
       label: "Unknown",
       selected: state.includeUnknown,
     });
-    for (const value of facet.values) {
+    for (const value of facet.joinedValues) {
       rows.push({
         count: value.count,
         id: value.value.toString(),
-        label: value.value.toString(),
+        label: value.label,
         selected: state.includesValue(value.value),
         value: value.value,
       });

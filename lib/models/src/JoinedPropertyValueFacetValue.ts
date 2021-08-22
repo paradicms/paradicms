@@ -16,6 +16,14 @@ export class JoinedPropertyValueFacetValue<
     super(joinedDataset, valueFacetValue);
   }
 
+  get label() {
+    const definition = this.valueDefinition;
+    if (definition && definition.label) {
+      return definition.label;
+    }
+    return this.value.toString();
+  }
+
   get valueDefinition(): JoinedPropertyValueDefinition | null {
     for (const propertyValueDefinition of this.joinedDataset.propertyValueDefinitionsByPropertyUri(
       this.joinedPropertyValueFacet.propertyUri

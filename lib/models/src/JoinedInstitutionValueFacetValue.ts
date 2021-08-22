@@ -7,4 +7,8 @@ export class JoinedInstitutionValueFacetValue extends JoinedValueFacetValue<
   get institution(): JoinedInstitution {
     return this.joinedDataset.institutionByUri(this.valueFacetValue.value);
   }
+
+  get label() {
+    return this.institution.name;
+  }
 }
