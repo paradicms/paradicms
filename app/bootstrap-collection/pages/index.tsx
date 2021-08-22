@@ -12,7 +12,7 @@ import {GetStaticProps} from "next";
 import {readDataset} from "lib/readDataset";
 import {LunrObjectSearchPage} from "@paradicms/react-services";
 import {thumbnailTargetDimensions} from "@paradicms/material-ui";
-import {ObjectSearchContainer} from "@paradicms/bootstrap/dist/ObjectSearchContainer";
+import {ObjectSearchContainer} from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 

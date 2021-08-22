@@ -8,6 +8,14 @@ import {JoinedObject} from "./JoinedObject";
 import {JoinedCollection} from "./JoinedCollection";
 import {JoinedPropertyValueDefinition} from "./JoinedPropertyValueDefinition";
 import {JoinedPropertyDefinition} from "./JoinedPropertyDefinition";
+import {JoinedFacet} from "./JoinedFacet";
+import {Facet} from "./Facet";
+import {JoinedCollectionValueFacet} from "./JoinedCollectionValueFacet";
+import {CollectionValueFacet} from "./CollectionValueFacet";
+import {JoinedInstitutionValueFacet} from "./JoinedInstitutionValueFacet";
+import {InstitutionValueFacet} from "./InstitutionValueFacet";
+import {JoinedStringPropertyValueFacet} from "./JoinedStringPropertyValueFacet";
+import {StringPropertyValueFacet} from "./StringPropertyValueFacet";
 
 /**
  * Adapts/wraps models in Dataset to dynamically resolve references without copying.
@@ -37,6 +45,26 @@ export class JoinedDataset {
 
   static fromDataset(dataset: Dataset): JoinedDataset {
     return new JoinedDataset(new IndexedDataset(dataset));
+  }
+
+  facet(facet: Facet): JoinedFacet {
+    switch (facet.type) {
+      case "CollectionValue":
+        return new JoinedCollectionValueFacet(
+          this,
+          facet as CollectionValueFacet
+        );
+      case "InstitutionValue":
+        return new JoinedInstitutionValueFacet(
+          this,
+          facet as InstitutionValueFacet
+        );
+      case "StringPropertyValue":
+        return new JoinedStringPropertyValueFacet(
+          this,
+          facet as StringPropertyValueFacet
+        );
+    }
   }
 
   imageByUri(imageUri: string): JoinedImage {
