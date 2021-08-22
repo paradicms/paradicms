@@ -12,6 +12,22 @@ export const createFilterControl: (kwds: {
     facets,
     filter,
     factory: {
+      createCollectionValueFilterControl: (facet, filter) => (
+        <ValueFilterControl
+          facet={facet}
+          filter={filter}
+          onChange={onChangeFilter}
+        />
+      ),
+
+      createInstitutionValueFilterControl: (facet, filter) => (
+        <ValueFilterControl
+          facet={facet}
+          filter={filter}
+          onChange={onChangeFilter}
+        />
+      ),
+
       createStringPropertyValueFilterControl: (facet, filter) => (
         <ValueFilterControl
           facet={facet}
