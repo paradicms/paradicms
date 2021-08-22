@@ -5,6 +5,7 @@
   "dependencies": {
     "@paradicms/models": "1.0.5",
     "@paradicms/react": "1.0.5",
+    "@paradicms/services": "1.0.5",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-data-table-component": "6.11.7",
