@@ -4,6 +4,8 @@ import {JoinedPropertyValueDefinition} from "./JoinedPropertyValueDefinition";
 import {JoinedDataset} from "./JoinedDataset";
 import {JoinedPropertyValueFacet} from "./JoinedPropertyValueFacet";
 import {ValueFacetValue} from "./ValueFacetValue";
+import {ThumbnailSelector} from "./ThumbnailSelector";
+import {JoinedImage} from "./JoinedImage";
 
 export class JoinedPropertyValueFacetValue<
   T extends PrimitiveType
@@ -22,6 +24,10 @@ export class JoinedPropertyValueFacetValue<
       return definition.label;
     }
     return this.value.toString();
+  }
+
+  thumbnail(selector: ThumbnailSelector): JoinedImage | null {
+    return this.valueDefinition?.thumbnail(selector) ?? null;
   }
 
   get valueDefinition(): JoinedPropertyValueDefinition | null {

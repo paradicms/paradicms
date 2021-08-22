@@ -1,5 +1,7 @@
 import {JoinedValueFacetValue} from "./JoinedValueFacetValue";
 import {JoinedCollection} from "./JoinedCollection";
+import {ThumbnailSelector} from "./ThumbnailSelector";
+import {JoinedImage} from "./JoinedImage";
 
 export class JoinedCollectionValueFacetValue extends JoinedValueFacetValue<
   string
@@ -10,5 +12,9 @@ export class JoinedCollectionValueFacetValue extends JoinedValueFacetValue<
 
   get label() {
     return this.collection.title;
+  }
+
+  thumbnail(selector: ThumbnailSelector): JoinedImage | null {
+    return this.collection.thumbnail(selector);
   }
 }
