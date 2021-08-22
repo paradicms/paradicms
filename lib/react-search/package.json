@@ -3,7 +3,6 @@
   "name": "@paradicms/react-search",
   "description": "Paradicms React search functionality",
   "dependencies": {
-    "@paradicms/lunr": "1.0.5",
     "@paradicms/models": "1.0.5",
     "@paradicms/react": "1.0.5",
     "react": "16.8.6",

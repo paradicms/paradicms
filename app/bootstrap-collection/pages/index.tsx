@@ -1,20 +1,24 @@
 import * as React from "react";
+import {useMemo} from "react";
 import {
   Collection,
   Configuration,
   Dataset,
   DataSubsetter,
   defaultConfiguration,
+  IndexedDataset,
   ObjectJoinSelector,
 } from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {readDataset} from "lib/readDataset";
-import {LunrObjectSearchPage} from "@paradicms/react-search";
+import {ObjectSearchPage} from "@paradicms/react-search";
 import {thumbnailTargetDimensions} from "@paradicms/material-ui";
 import {ObjectSearchContainer} from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
+import {ObjectQueryService} from "@paradicms/services";
+import {LunrObjectQueryService} from "@paradicms/lunr";
 
 interface StaticProps {
   readonly collection: Collection;
@@ -37,37 +41,48 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   collection,
   configuration,
   dataset,
-}) => (
-  <LunrObjectSearchPage
-    configuration={configuration.objectSearch}
-    dataset={dataset}
-    objectJoinSelector={OBJECT_JOIN_SELECTOR}
-    objectsPerPage={OBJECTS_PER_PAGE}
-  >
-    {({setObjectQuery, setPage, ...lunrObjectSearchProps}) => (
-      <Layout
-        collection={collection}
-        configuration={configuration}
-        onSearch={text => {
-          setObjectQuery({filters: configuration.objectSearch.filters, text});
-          setPage(undefined);
-        }}
-      >
-        <ObjectSearchContainer
-          objectsPerPage={OBJECTS_PER_PAGE}
-          renderObjectLink={(object, children) => (
-            <Link href={Hrefs.object(object.uri)}>
-              <a>{children}</a>
-            </Link>
-          )}
-          setObjectQuery={setObjectQuery}
-          setPage={setPage}
-          {...lunrObjectSearchProps}
-        />
-      </Layout>
-    )}
-  </LunrObjectSearchPage>
-);
+}) => {
+  const objectQueryService = useMemo<ObjectQueryService>(
+    () =>
+      new LunrObjectQueryService({
+        configuration: configuration.objectSearch,
+        dataset: new IndexedDataset(dataset),
+        objectJoinSelector: OBJECT_JOIN_SELECTOR,
+      }),
+    [configuration, dataset]
+  );
+
+  return (
+    <ObjectSearchPage
+      configuration={configuration.objectSearch}
+      objectQueryService={objectQueryService}
+      objectsPerPage={10}
+    >
+      {({setObjectQuery, setPage, ...lunrObjectSearchProps}) => (
+        <Layout
+          collection={collection}
+          configuration={configuration}
+          onSearch={text => {
+            setObjectQuery({filters: configuration.objectSearch.filters, text});
+            setPage(undefined);
+          }}
+        >
+          <ObjectSearchContainer
+            objectsPerPage={OBJECTS_PER_PAGE}
+            renderObjectLink={(object, children) => (
+              <Link href={Hrefs.object(object.uri)}>
+                <a>{children}</a>
+              </Link>
+            )}
+            setObjectQuery={setObjectQuery}
+            setPage={setPage}
+            {...lunrObjectSearchProps}
+          />
+        </Layout>
+      )}
+    </ObjectSearchPage>
+  );
+};
 
 export default IndexPage;
 

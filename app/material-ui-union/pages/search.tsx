@@ -3,9 +3,11 @@ import {
   Dataset,
   DataSubsetter,
   defaultConfiguration,
+  IndexedDataset,
   ObjectJoinSelector,
 } from "@paradicms/models";
 import * as React from "react";
+import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {
@@ -15,7 +17,9 @@ import {
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {readDataset} from "lib/readDataset";
-import {LunrObjectSearchPage} from "@paradicms/react-search";
+import {ObjectSearchPage} from "@paradicms/react-search";
+import {ObjectQueryService} from "@paradicms/services";
+import {LunrObjectQueryService} from "@paradicms/lunr";
 
 interface StaticProps {
   readonly configuration: Configuration;
@@ -36,70 +40,83 @@ const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
 const SearchPage: React.FunctionComponent<StaticProps> = ({
   configuration,
   dataset,
-}) => (
-  <LunrObjectSearchPage
-    configuration={configuration.objectSearch}
-    dataset={dataset}
-    objectJoinSelector={OBJECT_JOIN_SELECTOR}
-    objectsPerPage={10}
-  >
-    {({
-      objectQuery,
-      objectQueryResults,
-      page,
-      pageMax,
-      setObjectQuery,
-      setPage,
-    }) => (
-      <Layout
-        cardTitle={
-          objectQuery?.text ? (
-            <span>
-              <span>Search results for</span>
-              &nbsp;
-              <i data-cy="query-text">{objectQuery.text}</i>
-            </span>
-          ) : (
-            "Search results"
-          )
-        }
-        documentTitle={
-          objectQuery?.text
-            ? `Search results for "${objectQuery.text}"`
-            : "Search results"
-        }
-        configuration={configuration}
-        onSearch={text =>
-          setObjectQuery({filters: configuration.objectSearch.filters, text})
-        }
-      >
-        <ObjectSearchGrid
-          facets={objectQueryResults.facets}
-          objects={objectQueryResults.dataset.objects}
-          onChangeFilters={filters => setObjectQuery({...objectQuery, filters})}
-          onChangePage={setPage}
-          page={page}
-          pageMax={pageMax}
-          renderInstitutionLink={(institution, children) => (
-            <Link href={Hrefs.institution(institution.uri).home}>
-              {children}
-            </Link>
-          )}
-          renderObjectLink={(object, children) => (
-            <Link
-              href={Hrefs.institution(object.institution.uri).object(
-                object.uri
-              )}
-            >
-              {children}
-            </Link>
-          )}
-          query={objectQuery}
-        />
-      </Layout>
-    )}
-  </LunrObjectSearchPage>
-);
+}) => {
+  const objectQueryService = useMemo<ObjectQueryService>(
+    () =>
+      new LunrObjectQueryService({
+        configuration: configuration.objectSearch,
+        dataset: new IndexedDataset(dataset),
+        objectJoinSelector: OBJECT_JOIN_SELECTOR,
+      }),
+    [configuration, dataset]
+  );
+
+  return (
+    <ObjectSearchPage
+      configuration={configuration.objectSearch}
+      objectQueryService={objectQueryService}
+      objectsPerPage={10}
+    >
+      {({
+        objectQuery,
+        objectQueryResults,
+        page,
+        pageMax,
+        setObjectQuery,
+        setPage,
+      }) => (
+        <Layout
+          cardTitle={
+            objectQuery?.text ? (
+              <span>
+                <span>Search results for</span>
+                &nbsp;
+                <i data-cy="query-text">{objectQuery.text}</i>
+              </span>
+            ) : (
+              "Search results"
+            )
+          }
+          documentTitle={
+            objectQuery?.text
+              ? `Search results for "${objectQuery.text}"`
+              : "Search results"
+          }
+          configuration={configuration}
+          onSearch={text =>
+            setObjectQuery({filters: configuration.objectSearch.filters, text})
+          }
+        >
+          <ObjectSearchGrid
+            facets={objectQueryResults.facets}
+            objects={objectQueryResults.dataset.objects}
+            onChangeFilters={filters =>
+              setObjectQuery({...objectQuery, filters})
+            }
+            onChangePage={setPage}
+            page={page}
+            pageMax={pageMax}
+            renderInstitutionLink={(institution, children) => (
+              <Link href={Hrefs.institution(institution.uri).home}>
+                {children}
+              </Link>
+            )}
+            renderObjectLink={(object, children) => (
+              <Link
+                href={Hrefs.institution(object.institution.uri).object(
+                  object.uri
+                )}
+              >
+                {children}
+              </Link>
+            )}
+            query={objectQuery}
+          />
+        </Layout>
+      )}
+    </ObjectSearchPage>
+  );
+};
 
 export default SearchPage;
 
