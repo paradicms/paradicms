@@ -32,7 +32,7 @@ export const ObjectCard: React.FunctionComponent<{
     thumbnail?.src ?? JoinedImage.placeholderSrc(thumbnailTargetDimensions);
 
   return (
-    <Card className="object-card text-center">
+    <Card className="text-center">
       <CardHeader tag="h4">
         {renderObjectLink(object, <>{object.title}</>)}
       </CardHeader>

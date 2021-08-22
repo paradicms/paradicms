@@ -14,6 +14,7 @@ import {
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faImages} from "@fortawesome/free-solid-svg-icons";
 import {ValueFilterGallery} from "./ValueFilterGallery";
+import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 
 interface ValueFilterControlProps<T extends PrimitiveType> {
   facet: JoinedValueFacet<T>;
@@ -36,7 +37,11 @@ export const ValueFilterControl = <T extends PrimitiveType>(
     <ValueFilterTable facet={facet} filter={filter} onChange={onChange} />
   );
 
-  if (!facet.joinedValues.some(value => !!value.thumbnail)) {
+  if (
+    !facet.joinedValues.some(
+      value => !!value.thumbnail({targetDimensions: thumbnailTargetDimensions})
+    )
+  ) {
     return valueFilterTable;
   }
 
@@ -64,7 +69,6 @@ export const ValueFilterControl = <T extends PrimitiveType>(
         centered={true}
         isOpen={galleryModalOpen}
         keyboard={true}
-        size="lg"
         toggle={toggleGalleryModal}
       >
         <ModalHeader toggle={toggleGalleryModal}>{filter.label}</ModalHeader>
