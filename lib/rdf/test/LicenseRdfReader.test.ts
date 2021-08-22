@@ -15,7 +15,7 @@ describe("License RDF reader", () => {
 
   it("should read all licenses from the store", () => {
     const models = LicenseRdfReader.readAll(store);
-    expect(models).to.have.length(23);
+    expect(models).to.have.length(46);
     models.forEach(model => {
       expect(model.identifier.trim()).to.not.be.empty;
       expect(model.title.trim()).to.not.be.empty;
