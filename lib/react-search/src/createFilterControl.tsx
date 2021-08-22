@@ -58,7 +58,7 @@ export const createFilterControl = (kwds: {
         return null;
       }
       if (facet.values.length + (facet.unknownCount ? 1 : 0) <= 1) {
-        console.info("institution values facet has <= 1 values, eliding");
+        console.debug("institution values facet has <= 1 values, eliding");
         return null;
       }
       return factory.createInstitutionValueFilterControl(facet, concreteFilter);
@@ -81,7 +81,7 @@ export const createFilterControl = (kwds: {
         return null;
       }
       if (facet.values.length + (facet.unknownCount ? 1 : 0) <= 1) {
-        console.info(
+        console.debug(
           "facet for property",
           concreteFilter.propertyUri,
           "has <= 1 values, eliding"
