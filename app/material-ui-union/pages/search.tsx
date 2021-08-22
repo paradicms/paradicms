@@ -8,12 +8,14 @@ import {
 import * as React from "react";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
-import {thumbnailTargetDimensions} from "@paradicms/material-ui";
+import {
+  ObjectSearchGrid,
+  thumbnailTargetDimensions,
+} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {readDataset} from "lib/readDataset";
 import {LunrObjectSearchPage} from "@paradicms/react-services";
-import {ObjectSearchGrid} from "@paradicms/material-ui";
 
 interface StaticProps {
   readonly configuration: Configuration;
@@ -23,6 +25,11 @@ interface StaticProps {
 const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
   collections: {},
   institution: {rights: true},
+  propertyDefinitions: {
+    values: {
+      thumbnail: {targetDimensions: thumbnailTargetDimensions},
+    },
+  },
   thumbnail: {targetDimensions: thumbnailTargetDimensions},
 };
 

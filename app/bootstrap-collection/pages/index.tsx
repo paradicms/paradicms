@@ -25,6 +25,11 @@ interface StaticProps {
 const OBJECTS_PER_PAGE = 10;
 
 const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
+  propertyDefinitions: {
+    values: {
+      thumbnail: {targetDimensions: thumbnailTargetDimensions},
+    },
+  },
   thumbnail: {targetDimensions: thumbnailTargetDimensions},
 };
 

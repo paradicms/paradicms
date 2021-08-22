@@ -28,6 +28,11 @@ configurationQueryService.getConfiguration().then(
       configuration: configuration.objectSearch,
       dataset: new IndexedDataset(dataset),
       objectJoinSelector: {
+        propertyDefinitions: {
+          values: {
+            thumbnail: {targetDimensions: thumbnailTargetDimensions},
+          },
+        },
         thumbnail: {targetDimensions: thumbnailTargetDimensions},
       },
     });

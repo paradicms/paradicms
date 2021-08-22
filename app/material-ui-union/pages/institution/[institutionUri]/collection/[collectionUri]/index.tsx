@@ -24,6 +24,11 @@ import {LunrObjectSearchPage} from "@paradicms/react-services";
 const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
   collections: {},
   institution: {rights: true},
+  propertyDefinitions: {
+    values: {
+      thumbnail: {targetDimensions: thumbnailTargetDimensions},
+    },
+  },
   thumbnail: {targetDimensions: thumbnailTargetDimensions},
 };
 
