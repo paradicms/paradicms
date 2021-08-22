@@ -67,7 +67,7 @@ export const ValueFilterTable = <T extends PrimitiveType>(
       rows.push({
         count: value.count,
         id: value.value.toString(),
-        label: value.label ?? value.value.toString(),
+        label: value.value.toString(),
         selected: state.includesValue(value.value),
         value: value.value,
       });
