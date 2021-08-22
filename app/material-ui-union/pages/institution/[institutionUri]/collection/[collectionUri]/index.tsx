@@ -19,7 +19,7 @@ import {
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {readDataset} from "lib/readDataset";
-import {LunrObjectSearchPage} from "@paradicms/react-services";
+import {LunrObjectSearchPage} from "@paradicms/react-search";
 
 const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
   collections: {},

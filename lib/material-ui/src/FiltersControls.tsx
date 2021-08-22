@@ -12,7 +12,7 @@ import {
   StringPropertyValueFilter,
 } from "@paradicms/models";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {ValueFilterTable} from "@paradicms/react-data-table";
+import {ValueFilterTable} from "@paradicms/react-search";
 
 export const FiltersControls: React.FunctionComponent<{
   facets: readonly Facet[];

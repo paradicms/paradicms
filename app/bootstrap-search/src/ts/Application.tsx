@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useContext} from "react";
 import {ObjectQueryServiceContext} from "~/contexts/ObjectQueryServiceContext";
-import {ObjectSearchPage} from "@paradicms/react-services";
+import {ObjectSearchPage} from "@paradicms/react-search";
 import {NavbarSearchForm, ObjectSearchContainer} from "@paradicms/bootstrap";
 import {
   Card,

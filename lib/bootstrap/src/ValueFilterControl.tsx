@@ -1,6 +1,6 @@
 import * as React from "react";
 import {PrimitiveType, ValueFacet, ValueFilter} from "@paradicms/models";
-import {ValueFilterTable} from "@paradicms/react-data-table";
+import {ValueFilterTable} from "@paradicms/react-search";
 
 interface ValueFilterControlProps<T extends PrimitiveType> {
   facet: ValueFacet<T>;

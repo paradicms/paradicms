@@ -1,6 +1,6 @@
 import {Filter, JoinedFacet} from "@paradicms/models";
 import * as React from "react";
-import {createFilterControl as createFilterControlDelegate} from "@paradicms/react-data-table";
+import {createFilterControl as createFilterControlDelegate} from "@paradicms/react-search";
 import {ValueFilterControl} from "./ValueFilterControl";
 
 export const createFilterControl: (kwds: {

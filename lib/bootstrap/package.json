@@ -8,7 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.1.11",
     "@paradicms/models": "1.0.5",
     "@paradicms/react": "1.0.5",
-    "@paradicms/react-data-table": "1.0.5",
+    "@paradicms/react-search": "1.0.5",
     "@types/react-medium-image-zoom": "3.0.1",
     "prop-types": "15.7.2",
     "react": "16.8.6",
