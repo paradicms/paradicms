@@ -1,6 +1,4 @@
 import * as React from "react";
-import {useContext} from "react";
-import {ObjectQueryServiceContext} from "~/contexts/ObjectQueryServiceContext";
 import {ObjectSearchPage} from "@paradicms/react-search";
 import {NavbarSearchForm, ObjectSearchContainer} from "@paradicms/bootstrap";
 import {
@@ -14,15 +12,16 @@ import {
   NavItem,
   Row,
 } from "reactstrap";
-import {ConfigurationContext} from "~/contexts/ConfigurationContext";
 import {Helmet} from "react-helmet";
+import {Configuration} from "@paradicms/models";
+import {ObjectQueryService} from "@paradicms/services";
 
 const OBJECTS_PER_PAGE = 10;
 
-export const Application: React.FunctionComponent = () => {
-  const configuration = useContext(ConfigurationContext);
-  const objectQueryService = useContext(ObjectQueryServiceContext);
-
+export const Application: React.FunctionComponent<{
+  configuration: Configuration;
+  objectQueryService: ObjectQueryService;
+}> = ({configuration, objectQueryService}) => {
   const documentTitle = configuration.documentTitle ?? "Search";
   const navbarTitle = configuration.navbarTitle ?? documentTitle;
 

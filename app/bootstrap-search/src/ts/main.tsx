@@ -1,33 +1,50 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {Application} from "~/Application";
-import {ObjectQueryServiceContext} from "~/contexts/ObjectQueryServiceContext";
-import {ConfigurationContext} from "~/contexts/ConfigurationContext";
 // import {dom, library} from "@fortawesome/fontawesome-svg-core";
 // import {faImages, faList} from "@fortawesome/free-solid-svg-icons";
-import {
-  ConfigurationQueryService,
-  HardCodedConfigurationQueryService,
-} from "@paradicms/services";
 import {LunrObjectQueryService} from "@paradicms/lunr";
-// @ts-ignore
-import vcccTtl from "../data/vccc.ttl";
 import {DatasetRdfReader} from "@paradicms/rdf";
-import {IndexedDataset} from "@paradicms/models";
+import {
+  Configuration,
+  Dataset,
+  defaultConfiguration,
+  IndexedDataset,
+} from "@paradicms/models";
 import {QueryParamProvider} from "use-query-params";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import {thumbnailTargetDimensions} from "@paradicms/bootstrap";
 
-const configurationQueryService: ConfigurationQueryService = new HardCodedConfigurationQueryService();
+const fetchConfiguration = (): Promise<Configuration> => {
+  return fetch("./configuration.json").then(
+    response =>
+      response.json().then(
+        configuration => configuration,
+        () => Promise.resolve(defaultConfiguration)
+      ),
+    () => Promise.resolve(defaultConfiguration)
+  );
+};
 
-configurationQueryService.getConfiguration().then(
-  configuration => {
-    const dataset = DatasetRdfReader.parse(vcccTtl);
+const fetchDataset = (): Promise<Dataset> =>
+  fetch("./data.ttl").then(response =>
+    response.text().then(ttl => DatasetRdfReader.parse(ttl))
+  );
 
+fetchConfiguration().then(configuration => {
+  console.info("configuration:\n", JSON.stringify(configuration));
+
+  fetchDataset().then(dataset => {
     const objectQueryService = new LunrObjectQueryService({
       configuration: configuration.objectSearch,
       dataset: new IndexedDataset(dataset),
       objectJoinSelector: {
+        collections: {
+          thumbnail: {targetDimensions: thumbnailTargetDimensions},
+        },
+        institution: {
+          thumbnail: {targetDimensions: thumbnailTargetDimensions},
+        },
         propertyDefinitions: {
           values: {
             thumbnail: {targetDimensions: thumbnailTargetDimensions},
@@ -39,18 +56,14 @@ configurationQueryService.getConfiguration().then(
 
     ReactDOM.render(
       <Router>
-        <ConfigurationContext.Provider value={configuration}>
-          <ObjectQueryServiceContext.Provider value={objectQueryService}>
-            <QueryParamProvider ReactRouterRoute={Route}>
-              <Application />
-            </QueryParamProvider>
-          </ObjectQueryServiceContext.Provider>
-        </ConfigurationContext.Provider>
+        <QueryParamProvider ReactRouterRoute={Route}>
+          <Application
+            configuration={configuration}
+            objectQueryService={objectQueryService}
+          />
+        </QueryParamProvider>
       </Router>,
       document.getElementById("root")
     );
-  },
-  error => {
-    alert("Unable to retrieve configuration: " + error);
-  }
-);
+  });
+});

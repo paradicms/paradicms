@@ -1,5 +1,6 @@
 const webpack = require("webpack");
 const path = require("path");
+const fs = require("fs");
 
 // variables
 const distPath = path.join(__dirname, "./dist");
@@ -11,6 +12,22 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = (env, argv) => {
   const mode = argv && argv.mode ? argv.mode : "development";
+
+  const copyFilePathPatterns = [];
+  const configurationJsonFilePath = process.env.CONFIGURATION_JSON_FILE_PATH;
+  if (configurationJsonFilePath) {
+    copyFilePathPatterns.push({
+      from: configurationJsonFilePath,
+      to: path.join(distPath, "configuration.json"),
+    });
+  }
+  const dataTtlFilePath = process.env.DATA_TTL_FILE_PATH;
+  if (dataTtlFilePath) {
+    copyFilePathPatterns.push({
+      from: dataTtlFilePath,
+      to: path.join(distPath, "data.ttl"),
+    });
+  }
 
   return {
     context: srcPath,
@@ -74,6 +91,7 @@ module.exports = (env, argv) => {
             from: "img",
             to: path.join(distPath, "img/"),
           },
+          ...copyFilePathPatterns,
         ],
       }),
       new HtmlWebpackPlugin({
