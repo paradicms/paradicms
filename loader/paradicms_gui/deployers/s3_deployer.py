@@ -1,4 +1,3 @@
-import mimetypes
 import os.path
 from pathlib import Path
 from typing import Optional
@@ -8,6 +7,7 @@ from rdflib import URIRef
 from tqdm import tqdm
 
 from paradicms_gui._deployer import _Deployer
+from paradicms_gui.utils.get_generic_file_mime_type import get_generic_file_mime_type
 
 
 class S3Deployer(_Deployer):
@@ -56,16 +56,14 @@ class S3Deployer(_Deployer):
         for file_path in tqdm(gui_out_file_paths, desc=self.__class__.__name__):
             key = str(file_path.relative_to(app_out_dir_path)).replace(os.path.sep, "/")
 
-            guess_mime_type, _ = mimetypes.guess_type(file_path.as_uri(), strict=False)
-            if guess_mime_type is None:
-                raise ValueError(f"unable to guess MIME type for the file {file_path}")
+            mime_type = get_generic_file_mime_type(file_path)
 
             self._logger.debug("uploading %s to %s", file_path, key)
             self.__s3_client.upload_file(
                 str(file_path),
                 self.__s3_bucket_name,
                 key,
-                ExtraArgs={"ContentType": guess_mime_type},
+                ExtraArgs={"ContentType": mime_type},
             )
             self._logger.debug("uploaded %s to %s", file_path, key)
         self._logger.info(
