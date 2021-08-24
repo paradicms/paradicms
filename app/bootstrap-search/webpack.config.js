@@ -3,7 +3,8 @@ const path = require("path");
 const fs = require("fs");
 
 // variables
-const distPath = path.join(__dirname, "./dist");
+// Use "out" instead of "dist" so that the names are the same as Next's.
+const distPath = path.join(__dirname, "./out");
 const srcPath = path.join(__dirname, "./src");
 
 // plugins
