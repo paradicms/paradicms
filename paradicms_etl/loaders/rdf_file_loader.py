@@ -1,13 +1,10 @@
 from pathlib import Path
-from typing import Generator, Optional
+from typing import Optional
 
 from pathvalidate import sanitize_filename
 from rdflib import Graph
 
-from paradicms_etl._loader import _Loader
-from paradicms_etl._model import _Model
 from paradicms_etl.loaders._buffering_loader import _BufferingLoader
-from paradicms_etl.models.property_definition import PropertyDefinition
 from paradicms_etl.namespace import bind_namespaces
 
 
