@@ -6,8 +6,6 @@ export class PARADICMS {
   // Properties
   static collection = PARADICMS.NS("collection");
   static configurationJson = PARADICMS.NS("configurationJson");
-  static faceted = PARADICMS.NS("faceted");
-  static fullTextSearchable = PARADICMS.NS("fullTextSearchable");
   static institution = PARADICMS.NS("institution");
   static imageMaxHeight = PARADICMS.NS("imageMaxHeight");
   static imageMaxWidth = PARADICMS.NS("imageMaxWidth");
@@ -21,5 +19,6 @@ export class PARADICMS {
   static License = PARADICMS.NS("License");
   static Object = PARADICMS.NS("Object");
   static PropertyDefinition = PARADICMS.NS("PropertyDefinition");
+  static PropertyValueDefinition = PARADICMS.NS("PropertyValueDefinition");
   static RightsStatement = PARADICMS.NS("RightsStatement");
 }

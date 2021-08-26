@@ -1,4 +1,10 @@
-import {Facet, Filter, JoinedInstitution, JoinedObject, ObjectQuery} from "@paradicms/models";
+import {
+  Filter,
+  JoinedFacet,
+  JoinedInstitution,
+  JoinedObject,
+  ObjectQuery,
+} from "@paradicms/models";
 import * as React from "react";
 import {Grid} from "@material-ui/core";
 import {FiltersControls} from "./FiltersControls";
@@ -6,7 +12,7 @@ import {ObjectsGallery} from "./ObjectsGallery";
 import {FiltersChips} from "./FiltersChips";
 
 export const ObjectSearchGrid: React.FunctionComponent<{
-  facets: readonly Facet[];
+  facets: readonly JoinedFacet[];
   objects: readonly JoinedObject[];
   onChangeFilters: (filters: readonly Filter[]) => void;
   onChangePage: (page: number) => void;
@@ -15,23 +21,23 @@ export const ObjectSearchGrid: React.FunctionComponent<{
   query: ObjectQuery;
   renderInstitutionLink?: (
     institution: JoinedInstitution,
-    children: React.ReactNode,
+    children: React.ReactNode
   ) => React.ReactNode;
   renderObjectLink: (
     object: JoinedObject,
-    children: React.ReactNode,
+    children: React.ReactNode
   ) => React.ReactNode;
 }> = ({
-        facets,
-        objects,
-        onChangeFilters,
-        onChangePage,
-        page,
-        pageMax,
-        query,
-        renderInstitutionLink,
-        renderObjectLink,
-      }) => {
+  facets,
+  objects,
+  onChangeFilters,
+  onChangePage,
+  page,
+  pageMax,
+  query,
+  renderInstitutionLink,
+  renderObjectLink,
+}) => {
   return (
     <Grid container direction="column" spacing={2}>
       <Grid item>
@@ -47,9 +53,7 @@ export const ObjectSearchGrid: React.FunctionComponent<{
                 renderObjectLink={renderObjectLink}
               />
             ) : (
-              <h2 style={{textAlign: "center"}}>
-                No matching objects found.
-              </h2>
+              <h2 style={{textAlign: "center"}}>No matching objects found.</h2>
             )}
           </Grid>
           <Grid item xs={2}>
@@ -64,9 +68,7 @@ export const ObjectSearchGrid: React.FunctionComponent<{
               <Grid item>
                 <FiltersControls
                   facets={facets}
-                  filters={
-                    query.filters
-                  }
+                  filters={query.filters}
                   onChange={onChangeFilters}
                 />
               </Grid>

@@ -1,0 +1,47 @@
+import {testDataset} from "./testDataset";
+import {JoinedDataset} from "../src/JoinedDataset";
+import {expect} from "chai";
+
+describe("JoinedImage", () => {
+  // sut should be an original image
+  const sut = JoinedDataset.fromDataset(testDataset).objects[0].images.find(
+    image => image.isOriginal
+  )!;
+
+  it("should get as an Image interface", () => {
+    expect(sut.asImage.uri).to.eq(sut.uri);
+  });
+
+  it("should get the image's original image", () => {
+    expect(sut.originalImage.uri).to.eq(sut.uri);
+  });
+
+  it("should get derived images", () => {
+    expect(sut.derivedImages).to.not.be.empty;
+    for (const derivedImage of sut.derivedImages) {
+      expect(derivedImage.originalImageUri).to.eq(sut.uri);
+    }
+  });
+
+  it("should get image's dimensions", () => {
+    expect(sut.exactDimensions).to.not.be.null;
+    expect(sut.maxDimensions).to.be.null;
+  });
+
+  it("should get image's rights", () => {
+    expect(sut.rights).to.not.be.null;
+  });
+
+  it("should get the image's src", () => {
+    expect(sut.src).to.not.be.empty;
+  });
+
+  it("should get a thumbnail", () => {
+    expect(sut.thumbnail({targetDimensions: {height: 200, width: 200}})).to.not
+      .be.null;
+  });
+
+  it("should get the image's URI", () => {
+    expect(sut.uri).to.not.be.empty;
+  });
+});

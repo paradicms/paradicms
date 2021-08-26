@@ -7,18 +7,23 @@ import {NamedNode, Store} from "n3";
 
 export class ImageRdfReader extends ModelRdfReader<Image> {
   read(): Image {
-    const originalImageUriSubjects = this.store.getSubjects(FOAF.thumbnail, this.node, null);
+    const originalImageUriSubjects = this.store.getSubjects(
+      FOAF.thumbnail,
+      this.node,
+      null
+    );
 
     return {
       depictsUri: this.readRequiredParentNamedNode(FOAF.depicts).value,
       exactDimensions: this.readImageDimensions(EXIF.height, EXIF.width),
-      institutionUri: this.readRequiredParentNamedNode(PARADICMS.institution)
-        .value,
       maxDimensions: this.readImageDimensions(
         PARADICMS.imageMaxHeight,
-        PARADICMS.imageMaxWidth,
+        PARADICMS.imageMaxWidth
       ),
-      originalImageUri: originalImageUriSubjects.length > 0 ? originalImageUriSubjects[0].value : null,
+      originalImageUri:
+        originalImageUriSubjects.length > 0
+          ? originalImageUriSubjects[0].value
+          : null,
       rights: new RightsRdfReader(this.node, this.store).read(),
       src: this.readOptionalLiteral(PARADICMS.imageSrc)?.toString() ?? null,
       uri: this.nodeUri,
@@ -56,7 +61,7 @@ export class ImageRdfReader extends ModelRdfReader<Image> {
     return ModelRdfReader._readAll<Image>(
       node => new ImageRdfReader(node, store),
       store,
-      PARADICMS.Image,
+      PARADICMS.Image
     );
   }
 }

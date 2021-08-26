@@ -1,13 +1,22 @@
 import {Configuration} from "./Configuration";
-import {StringPropertyValueFacet} from "StringPropertyValueFacet";
-import {Facet} from "./Facet";
-import {Filter} from "./Filter";
-import {StringPropertyValueFilter} from "./StringPropertyValueFilter";
 import {PropertyDefinition} from "./PropertyDefinition";
+import {InstitutionValueFilter} from "./InstitutionValueFilter";
+import {CollectionValueFilter} from "./CollectionValueFilter";
+import {StringPropertyValueFilter} from "./StringPropertyValueFilter";
 
 const DCTERMS_NS = "http://purl.org/dc/terms/";
 
-const facetedObjectPropertyDefinitions: readonly PropertyDefinition[] = [
+const collectionValueFilter: CollectionValueFilter = {
+  label: "Collection",
+  type: "CollectionValue",
+};
+
+const institutionValueFilter: InstitutionValueFilter = {
+  label: "Institution",
+  type: "InstitutionValue",
+};
+
+const filterablePropertyDefinitions: readonly PropertyDefinition[] = [
   {
     label: "Medium",
     uri: DCTERMS_NS + "medium",
@@ -18,37 +27,25 @@ const facetedObjectPropertyDefinitions: readonly PropertyDefinition[] = [
   },
 ];
 
+const stringPropertyValueFilters: readonly StringPropertyValueFilter[] = filterablePropertyDefinitions.map(
+  propertyDefinition => ({
+    label: propertyDefinition.label,
+    propertyUri: propertyDefinition.uri,
+    type: "StringPropertyValue",
+  })
+);
+
 export const defaultConfiguration: Configuration = {
   bootstrapStylesheetHref:
     "https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css",
   documentTitle: null,
   navbarTitle: null,
-  objectSearch: (() => {
-    const facets: Facet[] = [];
-    const filters: Filter[] = [];
-    for (const propertyDefinition of facetedObjectPropertyDefinitions) {
-      const facet: StringPropertyValueFacet = {
-        propertyUri: propertyDefinition.uri,
-        type: "StringPropertyValue",
-        unknownCount: 0,
-        values: [],
-      };
-      facets.push(facet);
-
-      const filter: StringPropertyValueFilter = {
-        label: propertyDefinition.label,
-        propertyUri: propertyDefinition.uri,
-        type: "StringPropertyValue",
-      };
-      filters.push(filter);
-    }
-    return {
-      facets,
-      filters,
-      fullTextSearchablePropertyUris: [
-        DCTERMS_NS + "description",
-        DCTERMS_NS + "title",
-      ],
-    };
-  })(),
+  objectSearch: {
+    filters: [
+      collectionValueFilter,
+      institutionValueFilter,
+      ...stringPropertyValueFilters,
+    ],
+    searchablePropertyUris: [DCTERMS_NS + "description", DCTERMS_NS + "title"],
+  },
 };

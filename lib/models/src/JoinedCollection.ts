@@ -7,8 +7,10 @@ import {JoinedObject} from "./JoinedObject";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 
 export class JoinedCollection {
-  constructor(private readonly collection: Collection, private readonly joinedDataset: JoinedDataset) {
-  }
+  constructor(
+    private readonly collection: Collection,
+    private readonly joinedDataset: JoinedDataset
+  ) {}
 
   get institution(): JoinedInstitution {
     return this.joinedDataset.institutionByUri(this.collection.institutionUri);
@@ -19,7 +21,7 @@ export class JoinedCollection {
   }
 
   thumbnail(selector: ThumbnailSelector): JoinedImage | null {
-    const collectionImages = this.joinedDataset.depictingImages(this.uri);
+    const collectionImages = this.joinedDataset.imagesByDepictsUri(this.uri);
     if (collectionImages.length > 0) {
       const thumbnail = selectThumbnail(collectionImages, selector);
       if (thumbnail) {

@@ -6,7 +6,16 @@ import {JoinedImage} from "./JoinedImage";
 import {JoinedInstitution} from "./JoinedInstitution";
 import {JoinedObject} from "./JoinedObject";
 import {JoinedCollection} from "./JoinedCollection";
-import {PropertyDefinition} from "./PropertyDefinition";
+import {JoinedPropertyValueDefinition} from "./JoinedPropertyValueDefinition";
+import {JoinedPropertyDefinition} from "./JoinedPropertyDefinition";
+import {JoinedFacet} from "./JoinedFacet";
+import {Facet} from "./Facet";
+import {JoinedCollectionValueFacet} from "./JoinedCollectionValueFacet";
+import {CollectionValueFacet} from "./CollectionValueFacet";
+import {JoinedInstitutionValueFacet} from "./JoinedInstitutionValueFacet";
+import {InstitutionValueFacet} from "./InstitutionValueFacet";
+import {JoinedStringPropertyValueFacet} from "./JoinedStringPropertyValueFacet";
+import {StringPropertyValueFacet} from "./StringPropertyValueFacet";
 
 /**
  * Adapts/wraps models in Dataset to dynamically resolve references without copying.
@@ -19,43 +28,78 @@ import {PropertyDefinition} from "./PropertyDefinition";
  */
 export class JoinedDataset {
   // @ts-ignore
-  constructor(private readonly indexedDataset: IndexedDataset) {
-  }
+  constructor(private readonly indexedDataset: IndexedDataset) {}
 
   collectionByUri(collectionUri: string): JoinedCollection {
-    return new JoinedCollection(this.indexedDataset.collectionByUri(collectionUri), this);
+    return new JoinedCollection(
+      this.indexedDataset.collectionByUri(collectionUri),
+      this
+    );
   }
 
   collectionObjects(collectionUri: string): readonly JoinedObject[] {
-    return this.indexedDataset.collectionObjects(collectionUri).map(object => new JoinedObject(this, object));
-  }
-
-  depictingImages(depictsUri: string): readonly JoinedImage[] {
-    return this.indexedDataset.depictingImages(depictsUri).map(image => new JoinedImage(image, this));
-  }
-
-  derivedImages(originalImageUri: string): readonly JoinedImage[] {
-    return this.indexedDataset.derivedImages(originalImageUri).map(image => new JoinedImage(image, this));
+    return this.indexedDataset
+      .collectionObjects(collectionUri)
+      .map(object => new JoinedObject(this, object));
   }
 
   static fromDataset(dataset: Dataset): JoinedDataset {
     return new JoinedDataset(new IndexedDataset(dataset));
   }
 
+  facet(facet: Facet): JoinedFacet {
+    switch (facet.type) {
+      case "CollectionValue":
+        return new JoinedCollectionValueFacet(
+          this,
+          facet as CollectionValueFacet
+        );
+      case "InstitutionValue":
+        return new JoinedInstitutionValueFacet(
+          this,
+          facet as InstitutionValueFacet
+        );
+      case "StringPropertyValue":
+        return new JoinedStringPropertyValueFacet(
+          this,
+          facet as StringPropertyValueFacet
+        );
+    }
+  }
+
   imageByUri(imageUri: string): JoinedImage {
     return new JoinedImage(this.indexedDataset.imageByUri(imageUri), this);
   }
 
+  imagesByDepictsUri(depictsUri: string): readonly JoinedImage[] {
+    return this.indexedDataset
+      .imagesByDepictsUri(depictsUri)
+      .map(image => new JoinedImage(image, this));
+  }
+
+  imagesByOriginalImageUri(originalImageUri: string): readonly JoinedImage[] {
+    return this.indexedDataset
+      .imagesByOriginalImageUri(originalImageUri)
+      .map(image => new JoinedImage(image, this));
+  }
+
   institutionByUri(institutionUri: string): JoinedInstitution {
-    return new JoinedInstitution(this.indexedDataset.institutionByUri(institutionUri), this);
+    return new JoinedInstitution(
+      this.indexedDataset.institutionByUri(institutionUri),
+      this
+    );
   }
 
   institutionCollections(institutionUri: string): readonly JoinedCollection[] {
-    return this.indexedDataset.institutionCollections(institutionUri).map(collection => new JoinedCollection(collection, this));
+    return this.indexedDataset
+      .institutionCollections(institutionUri)
+      .map(collection => new JoinedCollection(collection, this));
   }
 
   get institutions(): readonly JoinedInstitution[] {
-    return this.indexedDataset.institutions.map(institution => new JoinedInstitution(institution, this));
+    return this.indexedDataset.institutions.map(
+      institution => new JoinedInstitution(institution, this)
+    );
   }
 
   licenseByUri(licenseUri: string): License {
@@ -65,13 +109,33 @@ export class JoinedDataset {
   objectByUri(objectUri: string): JoinedObject {
     return new JoinedObject(this, this.indexedDataset.objectByUri(objectUri));
   }
-  
+
   get objects(): readonly JoinedObject[] {
-    return this.indexedDataset.objects.map(object => new JoinedObject(this, object));
+    return this.indexedDataset.objects.map(
+      object => new JoinedObject(this, object)
+    );
   }
 
-  propertyDefinitionByUri(propertyDefinitionUri: string): PropertyDefinition | null {
-    return this.indexedDataset.propertyDefinitionByUri(propertyDefinitionUri);
+  propertyDefinitionByUri(
+    propertyDefinitionUri: string
+  ): JoinedPropertyDefinition | null {
+    const propertyDefinition = this.indexedDataset.propertyDefinitionByUri(
+      propertyDefinitionUri
+    );
+    return propertyDefinition
+      ? new JoinedPropertyDefinition(this, propertyDefinition)
+      : null;
+  }
+
+  propertyValueDefinitionsByPropertyUri(
+    propertyUri: string
+  ): readonly JoinedPropertyValueDefinition[] {
+    return this.indexedDataset
+      .propertyValueDefinitionsByPropertyUri(propertyUri)
+      .map(
+        propertyValueDefinition =>
+          new JoinedPropertyValueDefinition(this, propertyValueDefinition)
+      );
   }
 
   rightsStatementByUri(rightsStatementUri: string): RightsStatement {

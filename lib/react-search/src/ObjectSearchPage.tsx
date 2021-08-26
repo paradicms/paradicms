@@ -46,10 +46,15 @@ export const ObjectSearchPage: React.FunctionComponent<ObjectSearchPageProps> = 
         query: objectQuery,
       })
       .then(objectQueryResults => {
-        const {dataset, ...otherObjectQueryResults} = objectQueryResults;
+        const joinedDataset = JoinedDataset.fromDataset(
+          objectQueryResults.dataset
+        );
         setObjectQueryResults({
-          joinedDataset: JoinedDataset.fromDataset(dataset),
-          ...otherObjectQueryResults,
+          dataset: joinedDataset,
+          facets: objectQueryResults.facets.map(facet =>
+            joinedDataset.facet(facet)
+          ),
+          totalObjectsCount: objectQueryResults.totalObjectsCount,
         });
       });
   }, [objectQuery, objectQueryService, objectsPerPage, page]);

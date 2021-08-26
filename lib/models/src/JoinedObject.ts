@@ -9,19 +9,23 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 
 export class JoinedObject {
-  constructor(private readonly joinedDataset: JoinedDataset, private readonly object: Object) {
-  }
+  constructor(
+    private readonly joinedDataset: JoinedDataset,
+    private readonly object: Object
+  ) {}
 
   get abstract(): string | null {
     return this.object.abstract;
   }
 
   get collections(): readonly JoinedCollection[] {
-    return this.object.collectionUris.map(collectionUri => this.joinedDataset.collectionByUri(collectionUri));
+    return this.object.collectionUris.map(collectionUri =>
+      this.joinedDataset.collectionByUri(collectionUri)
+    );
   }
 
   get images(): readonly JoinedImage[] {
-    return this.joinedDataset.depictingImages(this.uri);
+    return this.joinedDataset.imagesByDepictsUri(this.uri);
   }
 
   get institution(): JoinedInstitution {
@@ -37,14 +41,21 @@ export class JoinedObject {
   }
 
   get properties(): readonly JoinedProperty[] {
-    if (this.object.properties === null || this.object.properties.length === 0) {
+    if (
+      this.object.properties === null ||
+      this.object.properties.length === 0
+    ) {
       return [];
     }
-    return this.object.properties.map(property => new JoinedProperty(this.joinedDataset, property));
+    return this.object.properties.map(
+      property => new JoinedProperty(this.joinedDataset, property)
+    );
   }
 
   get rights(): JoinedRights | null {
-    return this.object.rights ? new JoinedRights(this.joinedDataset, this.object.rights) : null;
+    return this.object.rights
+      ? new JoinedRights(this.joinedDataset, this.object.rights)
+      : null;
   }
 
   thumbnail(selector: ThumbnailSelector): JoinedImage | null {

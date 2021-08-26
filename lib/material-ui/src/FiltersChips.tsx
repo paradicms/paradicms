@@ -1,12 +1,8 @@
-import {
-  Facet,
-  Filter,
-  StringPropertyValueFacet,
-  StringPropertyValueFilter,
-} from "@paradicms/models";
+import {Filter, JoinedFacet} from "@paradicms/models";
 import * as React from "react";
 import {makeStyles} from "@material-ui/core";
 import {ValueFilterChips} from "./ValueFilterChips";
+import {createFilterControl} from "@paradicms/react-search";
 
 const useStyles = makeStyles(theme => ({
   chip: {
@@ -16,7 +12,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const FiltersChips: React.FunctionComponent<{
-  facets: readonly Facet[];
+  facets: readonly JoinedFacet[];
   filters: readonly Filter[];
   onChange: (filters: readonly Filter[]) => void;
 }> = ({facets, filters, onChange}) => {
@@ -31,28 +27,28 @@ export const FiltersChips: React.FunctionComponent<{
           onChange(filtersCopy);
         };
 
-        switch (filter.type) {
-          case "StringPropertyValue": {
-            const concreteFilter: StringPropertyValueFilter = filter as StringPropertyValueFilter;
-            const facet: StringPropertyValueFacet | undefined = facets.find(
-              facet =>
-                facet.type === "StringPropertyValue" &&
-                (facet as StringPropertyValueFacet).propertyUri ===
-                  concreteFilter.propertyUri
-            ) as StringPropertyValueFacet | undefined;
-            if (!facet) {
-              return;
-            }
-            return (
-              <ValueFilterChips
-                className={classes.chip}
-                facet={facet}
-                filter={concreteFilter}
-                onChange={onChangeFilter}
-              />
-            );
-          }
-        }
+        return createFilterControl({
+          facets,
+          factory: {
+            createCollectionValueFilterControl(facet, filter) {
+              throw new EvalError("not implemented");
+            },
+            createInstitutionValueFilterControl(facet, filter) {
+              throw new EvalError("not implemented");
+            },
+            createStringPropertyValueFilterControl(facet, filter) {
+              return (
+                <ValueFilterChips
+                  className={classes.chip}
+                  facet={facet}
+                  filter={filter}
+                  onChange={onChangeFilter}
+                />
+              );
+            },
+          },
+          filter,
+        });
       })}
     </>
   );

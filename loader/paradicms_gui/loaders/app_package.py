@@ -34,13 +34,18 @@ class AppPackage:
 
         self.__app_dir_path = app_dir_path
 
-    def build(self, data_ttl_file_path: Path) -> Path:
+    def build(
+        self,
+        *,
+        data_ttl_file_path: Path,
+        configuration_json_file_path: Optional[Path] = None,
+    ) -> Path:
         """
-        Build the GUI
+        Build the app
         :return: directory path to the built site
         """
 
-        self.__logger.info("building GUI")
+        self.__logger.info("building app")
 
         app_out_dir_path = self.__app_dir_path / "out"
         app_public_dir_path = self.__app_dir_path / "public"
@@ -58,7 +63,11 @@ class AppPackage:
         else:
             app_public_dir_path_exists = False
 
-        self.__run_script("build", data_ttl_file_path=data_ttl_file_path)
+        self.__run_script(
+            "build",
+            configuration_json_file_path=configuration_json_file_path,
+            data_ttl_file_path=data_ttl_file_path,
+        )
         self.__logger.info("built GUI")
 
         # Hack: next export hangs if there is a public directory, but only in the GitHub Action
@@ -71,9 +80,7 @@ class AppPackage:
             )
         try:
             self.__logger.info("exporting GUI build")
-            self.__run_script(
-                "export", data_ttl_file_path=data_ttl_file_path, timeout=45
-            )
+            self.__run_script("export", timeout=45)
             self.__logger.info("exported GUI build")
         finally:
             if app_public_dir_path_exists:
@@ -102,8 +109,17 @@ class AppPackage:
     def clean(self):
         self.__run_script("clean")
 
-    def dev(self, data_ttl_file_path: Path):
-        self.__run_script("dev", data_ttl_file_path=data_ttl_file_path)
+    def dev(
+        self,
+        *,
+        data_ttl_file_path: Path,
+        configuration_json_file_path: Optional[Path] = None,
+    ):
+        self.__run_script(
+            "dev",
+            configuration_json_file_path=configuration_json_file_path,
+            data_ttl_file_path=data_ttl_file_path,
+        )
 
     @property
     def app_dir_path(self) -> Path:
@@ -113,6 +129,7 @@ class AppPackage:
         self,
         script,
         check=True,
+        configuration_json_file_path: Optional[Path] = None,
         data_ttl_file_path: Optional[Path] = None,
         shell=None,
         **kwds,
@@ -120,11 +137,14 @@ class AppPackage:
         subprocess_env = os.environ.copy()
         if self.__base_url_path:
             subprocess_env["GUI_BASE_URL_PATH"] = self.__base_url_path
-            self.__logger.info("using GUI_BASE_URL_PATH = %s", self.__base_url_path)
+        if configuration_json_file_path is not None:
+            subprocess_env["CONFIGURATION_JSON_FILE_PATH"] = str(
+                configuration_json_file_path
+            )
         if data_ttl_file_path is not None:
             subprocess_env["DATA_TTL_FILE_PATH"] = str(data_ttl_file_path)
-            self.__logger.info("using DATA_TTL_FILE_PATH = %s", data_ttl_file_path)
         subprocess_env["EDITOR"] = ""
+        self.__logger.info("subprocess environment variables: %s", subprocess_env)
 
         args = ["yarn", script]
 

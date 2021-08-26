@@ -1,7 +1,9 @@
 import {JoinedDataset} from "./JoinedDataset";
 import {ObjectQueryResults} from "./ObjectQueryResults";
+import {JoinedFacet} from "./JoinedFacet";
 
 export interface JoinedObjectQueryResults
-  extends Omit<ObjectQueryResults, "dataset"> {
-  readonly joinedDataset: JoinedDataset;
+  extends Pick<ObjectQueryResults, "totalObjectsCount"> {
+  readonly dataset: JoinedDataset;
+  readonly facets: readonly JoinedFacet[];
 }

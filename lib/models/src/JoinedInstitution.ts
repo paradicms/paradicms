@@ -7,8 +7,10 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 
 export class JoinedInstitution {
-  constructor(private readonly institution: Institution, private readonly joinedDataset: JoinedDataset) {
-  }
+  constructor(
+    private readonly institution: Institution,
+    private readonly joinedDataset: JoinedDataset
+  ) {}
 
   get collections(): readonly JoinedCollection[] {
     return this.joinedDataset.institutionCollections(this.institution.uri);
@@ -19,11 +21,13 @@ export class JoinedInstitution {
   }
 
   get rights(): JoinedRights | null {
-    return this.institution.rights ? new JoinedRights(this.joinedDataset, this.institution.rights) : null;
+    return this.institution.rights
+      ? new JoinedRights(this.joinedDataset, this.institution.rights)
+      : null;
   }
 
   thumbnail(selector: ThumbnailSelector): JoinedImage | null {
-    const institutionImages = this.joinedDataset.depictingImages(this.uri);
+    const institutionImages = this.joinedDataset.imagesByDepictsUri(this.uri);
     if (institutionImages.length > 0) {
       const thumbnail = selectThumbnail(institutionImages, selector);
       if (thumbnail) {

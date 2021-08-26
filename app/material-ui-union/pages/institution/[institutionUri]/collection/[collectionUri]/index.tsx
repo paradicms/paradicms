@@ -19,11 +19,18 @@ import {
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {readDataset} from "lib/readDataset";
-import {LunrObjectSearchPage} from "@paradicms/react-services";
+import {ObjectSearchPage} from "@paradicms/react-search";
+import {ObjectQueryService} from "@paradicms/services";
+import {LunrObjectQueryService} from "@paradicms/lunr";
 
 const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
   collections: {},
   institution: {rights: true},
+  propertyDefinitions: {
+    values: {
+      thumbnail: {targetDimensions: thumbnailTargetDimensions},
+    },
+  },
   thumbnail: {targetDimensions: thumbnailTargetDimensions},
 };
 
@@ -40,20 +47,29 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
   configuration,
   dataset,
 }) => {
-  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [
-    dataset,
+  const indexedDataset = useMemo(() => new IndexedDataset(dataset), [dataset]);
+  const joinedDataset = useMemo(() => new JoinedDataset(indexedDataset), [
+    indexedDataset,
   ]);
   const collection = useMemo(
     () => joinedDataset.collectionByUri(collectionUri),
     [collectionUri, joinedDataset]
   );
   const institution = useMemo(() => collection.institution, [collection]);
+  const objectQueryService = useMemo<ObjectQueryService>(
+    () =>
+      new LunrObjectQueryService({
+        configuration: configuration.objectSearch,
+        dataset: indexedDataset,
+        objectJoinSelector: OBJECT_JOIN_SELECTOR,
+      }),
+    [configuration, indexedDataset]
+  );
 
   return (
-    <LunrObjectSearchPage
+    <ObjectSearchPage
       configuration={configuration.objectSearch}
-      dataset={dataset}
-      objectJoinSelector={OBJECT_JOIN_SELECTOR}
+      objectQueryService={objectQueryService}
       objectsPerPage={OBJECTS_PER_PAGE}
     >
       {({
@@ -79,7 +95,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
         >
           <ObjectSearchGrid
             facets={objectQueryResults.facets}
-            objects={objectQueryResults.joinedDataset.objects}
+            objects={objectQueryResults.dataset.objects}
             onChangeFilters={filters =>
               setObjectQuery({...objectQuery, filters})
             }
@@ -104,7 +120,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
           />
         </Layout>
       )}
-    </LunrObjectSearchPage>
+    </ObjectSearchPage>
   );
 };
 

@@ -1,4 +1,5 @@
 import * as React from "react";
+import {useMemo} from "react";
 import {
   PrimitiveType,
   ValueFacet,
@@ -15,10 +16,14 @@ export class ValueFilterChips<T extends PrimitiveType> extends React.Component<{
 }> {
   render() {
     const {className, facet, filter, onChange} = this.props;
-    const filterState = new ValueFilterState({
-      filter,
-      valueUniverse: facet.values.map(value => value.value),
-    });
+    const filterState = useMemo(
+      () =>
+        new ValueFilterState({
+          filter,
+          valueUniverse: facet.values.map(value => value.value),
+        }),
+      [facet, filter]
+    );
 
     const filterChips: React.ReactNodeArray = [];
 

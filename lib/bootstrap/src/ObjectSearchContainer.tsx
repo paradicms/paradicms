@@ -44,7 +44,7 @@ export const ObjectSearchContainer: React.FunctionComponent<{
   const [viewQueryParam, setView] = useQueryParam<"gallery" | "table">("view");
   const view = viewQueryParam ?? "gallery";
 
-  const objects = useMemo(() => objectQueryResults.joinedDataset.objects, [
+  const objects = useMemo(() => objectQueryResults.dataset.objects, [
     objectQueryResults,
   ]);
 

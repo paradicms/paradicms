@@ -1,7 +1,7 @@
 import {JoinedDataset} from "./JoinedDataset";
 import {Property} from "./Property";
-import {PropertyDefinition} from "./PropertyDefinition";
-import {PropertyValue} from "./PropertyValue";
+import {JoinedPropertyDefinition} from "./JoinedPropertyDefinition";
+import {JoinedPropertyValue} from "./JoinedPropertyValue";
 
 export class JoinedProperty {
   constructor(
@@ -9,7 +9,7 @@ export class JoinedProperty {
     private readonly property: Property
   ) {}
 
-  get definition(): PropertyDefinition | null {
+  get definition(): JoinedPropertyDefinition | null {
     return this.joinedDataset.propertyDefinitionByUri(this.property.uri);
   }
 
@@ -17,7 +17,7 @@ export class JoinedProperty {
     return this.property.uri;
   }
 
-  get value(): PropertyValue {
-    return this.property.value;
+  get value(): JoinedPropertyValue {
+    return new JoinedPropertyValue(this, this.property.value);
   }
 }
