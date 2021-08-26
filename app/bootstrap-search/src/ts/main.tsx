@@ -31,10 +31,10 @@ const fetchDataset = (): Promise<Dataset> =>
     response.text().then(ttl => DatasetRdfReader.parse(ttl))
   );
 
-fetchConfiguration().then(configuration => {
-  console.info("configuration:\n", JSON.stringify(configuration));
+Promise.all([fetchConfiguration(), fetchDataset()]).then(
+  ([configuration, dataset]) => {
+    console.info("configuration:\n", JSON.stringify(configuration));
 
-  fetchDataset().then(dataset => {
     const objectQueryService = new LunrObjectQueryService({
       configuration: configuration.objectSearch,
       dataset: new IndexedDataset(dataset),
@@ -65,5 +65,5 @@ fetchConfiguration().then(configuration => {
       </Router>,
       document.getElementById("root")
     );
-  });
-});
+  }
+);
