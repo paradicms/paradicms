@@ -2,7 +2,10 @@ import * as React from "react";
 import {GetStaticProps} from "next";
 import {useRouter} from "next/router";
 import {Hrefs} from "lib/Hrefs";
-import {readDataset} from "lib/readDataset";
+import fs from "fs";
+import {readDatasetFile} from "@paradicms/next";
+
+const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 // import {useRouter} from "next/router";
 
@@ -15,15 +18,17 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({firstObjectUri}) => {
   React.useEffect(() => {
     router.push(Hrefs.object(firstObjectUri));
   }, []);
-  return (<div></div>);
+  return <div></div>;
 };
 
 export default IndexPage;
 
-export const getStaticProps: GetStaticProps = async (): Promise<{props: StaticProps}> => {
+export const getStaticProps: GetStaticProps = async (): Promise<{
+  props: StaticProps;
+}> => {
   return {
     props: {
-      firstObjectUri: readDataset().objects[0].uri,
+      firstObjectUri: readDatasetFile(readFileSync).objects[0].uri,
     },
   };
 };

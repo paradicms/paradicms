@@ -1,4 +1,4 @@
-import {decodeFileName, encodeFileName} from "@paradicms/next";
+import {decodeFileName, encodeFileName, readDatasetFile} from "@paradicms/next";
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
@@ -18,10 +18,12 @@ import {
 } from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
-import {readDataset} from "lib/readDataset";
 import {ObjectSearchPage} from "@paradicms/react-search";
 import {ObjectQueryService} from "@paradicms/services";
 import {LunrObjectQueryService} from "@paradicms/lunr";
+import fs from "fs";
+
+const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
   collections: {},
@@ -127,7 +129,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
 export default CollectionPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const dataset = readDataset();
+  const dataset = readDatasetFile(readFileSync);
   const indexedDataset = new IndexedDataset(dataset);
 
   const paths: {params: {collectionUri: string; institutionUri: string}}[] = [];
@@ -158,7 +160,7 @@ export const getStaticProps: GetStaticProps = async ({
   // const institutionUri = decodeFileName(params!.institutionUri as string);
 
   const collectionDataset = DataSubsetter.fromDataset(
-    readDataset()
+    readDatasetFile(readFileSync)
   ).collectionDataset(collectionUri, {
     objects: OBJECT_JOIN_SELECTOR,
   });

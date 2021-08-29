@@ -1,7 +1,12 @@
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
-import {Accordion, AccordionDetails, AccordionSummary, Grid} from "@material-ui/core";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Grid,
+} from "@material-ui/core";
 import {
   Configuration,
   Dataset,
@@ -10,11 +15,17 @@ import {
   IndexedDataset,
   JoinedDataset,
 } from "@paradicms/models";
-import {ObjectImagesCarousel, PropertiesTable, RightsTable} from "@paradicms/material-ui";
+import {
+  ObjectImagesCarousel,
+  PropertiesTable,
+  RightsTable,
+} from "@paradicms/material-ui";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {decodeFileName, encodeFileName} from "@paradicms/next";
+import {decodeFileName, encodeFileName, readDatasetFile} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {readDataset} from "lib/readDataset";
+import fs from "fs";
+
+const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly configuration: Configuration;
@@ -23,10 +34,13 @@ interface StaticProps {
 }
 
 const ObjectPage: React.FunctionComponent<StaticProps> = ({
-                                                            configuration,
-                                                            dataset, objectUri,
-                                                          }) => {
-  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [dataset]);
+  configuration,
+  dataset,
+  objectUri,
+}) => {
+  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [
+    dataset,
+  ]);
   const object = joinedDataset.objectByUri(objectUri);
   const institution = object.institution;
 
@@ -47,9 +61,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
                 <h3>Properties</h3>
               </AccordionSummary>
               <AccordionDetails>
-                <PropertiesTable
-                  properties={object.properties}
-                />
+                <PropertiesTable properties={object.properties} />
               </AccordionDetails>
             </Accordion>
           </Grid>
@@ -74,7 +86,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
 export default ObjectPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const dataset = readDataset();
+  const dataset = readDatasetFile(readFileSync);
   const indexedDataset = new IndexedDataset(dataset);
   const paths: {params: {institutionUri: string; objectUri: string}}[] = [];
   for (const institution of dataset.institutions) {
@@ -104,7 +116,9 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       configuration: defaultConfiguration,
-      dataset: DataSubsetter.fromDataset(readDataset()).objectDataset(objectUri, {
+      dataset: DataSubsetter.fromDataset(
+        readDatasetFile(readFileSync)
+      ).objectDataset(objectUri, {
         allImages: true,
         collections: {},
         institution: {rights: true},

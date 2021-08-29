@@ -11,7 +11,7 @@ import {
   License,
   RightsStatement,
 } from "@paradicms/models";
-import {decodeFileName, encodeFileName} from "@paradicms/next";
+import {decodeFileName, encodeFileName, readDatasetFile} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import Link from "next/link";
 import {
@@ -26,7 +26,9 @@ import {
 import {ObjectImagesCarousel} from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import {DCTERMS} from "@paradicms/rdf";
-import {readDataset} from "lib/readDataset";
+import fs from "fs";
+
+const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly collectionUri: string;
@@ -240,7 +242,7 @@ export default ObjectPage;
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {objectUri: string}}[] = [];
 
-  for (const object of readDataset().objects) {
+  for (const object of readDatasetFile(readFileSync).objects) {
     paths.push({
       params: {
         objectUri: encodeFileName(object.uri),
@@ -259,7 +261,7 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const objectUri = decodeFileName(params!.objectUri as string);
 
-  const dataset = readDataset();
+  const dataset = readDatasetFile(readFileSync);
   const indexedDataset = new IndexedDataset(dataset);
   const currentObject = indexedDataset.objectByUri(objectUri);
   const collectionUri = currentObject.collectionUris[0];

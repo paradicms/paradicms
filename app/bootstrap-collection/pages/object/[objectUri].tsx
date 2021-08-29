@@ -1,12 +1,25 @@
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
-import {Configuration, Dataset, DataSubsetter, defaultConfiguration, JoinedDataset} from "@paradicms/models";
-import {decodeFileName, encodeFileName} from "@paradicms/next";
+import {
+  Configuration,
+  Dataset,
+  DataSubsetter,
+  defaultConfiguration,
+  JoinedDataset,
+} from "@paradicms/models";
+import {decodeFileName, encodeFileName, readDatasetFile} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Col, Container, Row} from "reactstrap";
-import {Accordion, ObjectImagesCarousel, PropertiesTable, RightsTable} from "@paradicms/bootstrap";
-import {readDataset} from "lib/readDataset";
+import {
+  Accordion,
+  ObjectImagesCarousel,
+  PropertiesTable,
+  RightsTable,
+} from "@paradicms/bootstrap";
+import * as fs from "fs";
+
+const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly configuration: Configuration;
@@ -15,16 +28,22 @@ interface StaticProps {
 }
 
 const ObjectPage: React.FunctionComponent<StaticProps> = ({
-                                                            configuration,
-                                                            dataset,
-                                                            objectUri,
-                                                          }) => {
-  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [dataset]);
+  configuration,
+  dataset,
+  objectUri,
+}) => {
+  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [
+    dataset,
+  ]);
   const object = joinedDataset.objectByUri(objectUri);
   const collection = object.collections[0];
 
   return (
-    <Layout collection={collection} documentTitle={"Object - " + object.title} configuration={configuration}>
+    <Layout
+      collection={collection}
+      documentTitle={"Object - " + object.title}
+      configuration={configuration}
+    >
       <Container fluid>
         <Row>
           <Col xs={12} style={{display: "flex", justifyContent: "center"}}>
@@ -35,9 +54,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
           <Row className="mt-4">
             <Col xs={12}>
               <Accordion defaultOpen={true} title={<h4>Properties</h4>}>
-                <PropertiesTable
-                  properties={object.properties}
-                />
+                <PropertiesTable properties={object.properties} />
               </Accordion>
             </Col>
           </Row>
@@ -60,7 +77,7 @@ export default ObjectPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {objectUri: string}}[] = [];
-  for (const object of readDataset().objects) {
+  for (const object of readDatasetFile(readFileSync).objects) {
     paths.push({
       params: {
         objectUri: encodeFileName(object.uri),
@@ -79,7 +96,9 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const objectUri = decodeFileName(params!.objectUri as string);
 
-  const objectDataset = DataSubsetter.fromDataset(readDataset()).objectDataset(objectUri, {
+  const objectDataset = DataSubsetter.fromDataset(
+    readDatasetFile(readFileSync)
+  ).objectDataset(objectUri, {
     allImages: true,
     collections: {},
     institution: {rights: true},
