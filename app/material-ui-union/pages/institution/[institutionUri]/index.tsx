@@ -6,11 +6,15 @@ import {
   Configuration,
   Dataset,
   DataSubsetter,
-  defaultConfiguration,
   JoinedDataset,
 } from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {decodeFileName, encodeFileName, readDatasetFile} from "@paradicms/next";
+import {
+  decodeFileName,
+  encodeFileName,
+  readConfigurationFile,
+  readDatasetFile,
+} from "@paradicms/next";
 import {
   CollectionsGallery,
   thumbnailTargetDimensions,
@@ -99,7 +103,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
-      configuration: defaultConfiguration,
+      configuration: readConfigurationFile(readFileSync),
       dataset: institutionDataset,
       institutionUri,
     },

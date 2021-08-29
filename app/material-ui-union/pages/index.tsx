@@ -11,11 +11,10 @@ import {
   Configuration,
   Dataset,
   DataSubsetter,
-  defaultConfiguration,
   JoinedDataset,
 } from "@paradicms/models";
 import fs from "fs";
-import {readDatasetFile} from "@paradicms/next";
+import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
@@ -76,7 +75,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      configuration: defaultConfiguration,
+      configuration: readConfigurationFile(readFileSync),
       dataset: institutionsDataset,
     },
   };

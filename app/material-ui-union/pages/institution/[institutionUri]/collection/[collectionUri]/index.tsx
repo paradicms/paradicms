@@ -1,4 +1,9 @@
-import {decodeFileName, encodeFileName, readDatasetFile} from "@paradicms/next";
+import {
+  decodeFileName,
+  encodeFileName,
+  readConfigurationFile,
+  readDatasetFile,
+} from "@paradicms/next";
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
@@ -6,7 +11,6 @@ import {
   Configuration,
   Dataset,
   DataSubsetter,
-  defaultConfiguration,
   IndexedDataset,
   JoinedDataset,
   ObjectJoinSelector,
@@ -177,7 +181,7 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       collectionUri,
-      configuration: defaultConfiguration,
+      configuration: readConfigurationFile(readFileSync),
       dataset: collectionDataset,
     },
   };

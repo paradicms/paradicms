@@ -11,7 +11,6 @@ import {
   Configuration,
   Dataset,
   DataSubsetter,
-  defaultConfiguration,
   IndexedDataset,
   JoinedDataset,
 } from "@paradicms/models";
@@ -21,7 +20,12 @@ import {
   RightsTable,
 } from "@paradicms/material-ui";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {decodeFileName, encodeFileName, readDatasetFile} from "@paradicms/next";
+import {
+  decodeFileName,
+  encodeFileName,
+  readConfigurationFile,
+  readDatasetFile,
+} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import fs from "fs";
 
@@ -115,7 +119,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
-      configuration: defaultConfiguration,
+      configuration: readConfigurationFile(readFileSync),
       dataset: DataSubsetter.fromDataset(
         readDatasetFile(readFileSync)
       ).objectDataset(objectUri, {

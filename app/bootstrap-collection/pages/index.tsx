@@ -5,7 +5,6 @@ import {
   Configuration,
   Dataset,
   DataSubsetter,
-  defaultConfiguration,
   IndexedDataset,
   ObjectJoinSelector,
 } from "@paradicms/models";
@@ -20,7 +19,7 @@ import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {ObjectQueryService} from "@paradicms/services";
 import {LunrObjectQueryService} from "@paradicms/lunr";
-import {readDatasetFile} from "@paradicms/next";
+import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
 import fs from "fs";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
@@ -108,7 +107,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   return {
     props: {
       collection,
-      configuration: defaultConfiguration,
+      configuration: readConfigurationFile(readFileSync),
       dataset: collectionDataset,
     },
   };

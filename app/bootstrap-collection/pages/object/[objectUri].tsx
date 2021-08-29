@@ -5,10 +5,14 @@ import {
   Configuration,
   Dataset,
   DataSubsetter,
-  defaultConfiguration,
   JoinedDataset,
 } from "@paradicms/models";
-import {decodeFileName, encodeFileName, readDatasetFile} from "@paradicms/next";
+import {
+  decodeFileName,
+  encodeFileName,
+  readConfigurationFile,
+  readDatasetFile,
+} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Col, Container, Row} from "reactstrap";
 import {
@@ -108,7 +112,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
-      configuration: defaultConfiguration,
+      configuration: readConfigurationFile(readFileSync),
       dataset: objectDataset,
       objectUri,
     },

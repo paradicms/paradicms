@@ -5,13 +5,17 @@ import {
   Configuration,
   Dataset,
   DataSubsetter,
-  defaultConfiguration,
   IndexedDataset,
   JoinedDataset,
   License,
   RightsStatement,
 } from "@paradicms/models";
-import {decodeFileName, encodeFileName, readDatasetFile} from "@paradicms/next";
+import {
+  decodeFileName,
+  encodeFileName,
+  readConfigurationFile,
+  readDatasetFile,
+} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import Link from "next/link";
 import {
@@ -298,7 +302,7 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       collectionUri,
-      configuration: defaultConfiguration,
+      configuration: readConfigurationFile(readFileSync),
       currentObjectUri: objectUri,
       dataset: new DataSubsetter(indexedDataset).objectsDataset(objectUris, {
         allImages: true,
