@@ -5,13 +5,11 @@ import {
   Configuration,
   Dataset,
   DataSubsetter,
-  defaultConfiguration,
   IndexedDataset,
   ObjectJoinSelector,
 } from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
-import {readDataset} from "lib/readDataset";
 import {ObjectSearchPage} from "@paradicms/react-search";
 import {
   ObjectSearchContainer,
@@ -21,6 +19,10 @@ import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {ObjectQueryService} from "@paradicms/services";
 import {LunrObjectQueryService} from "@paradicms/lunr";
+import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
+import fs from "fs";
+
+const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly collection: Collection;
@@ -91,7 +93,7 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const completeDataset = readDataset();
+  const completeDataset = readDatasetFile(readFileSync);
   const collection = completeDataset.collections[0];
   // Must pass all of the collection's objects in to feed into the search service
   const collectionDataset = DataSubsetter.fromDataset(
@@ -105,7 +107,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   return {
     props: {
       collection,
-      configuration: defaultConfiguration,
+      configuration: readConfigurationFile(readFileSync),
       dataset: collectionDataset,
     },
   };

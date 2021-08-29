@@ -2,12 +2,27 @@ import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {Hrefs} from "lib/Hrefs";
-import {Configuration, Dataset, DataSubsetter, defaultConfiguration, JoinedDataset} from "@paradicms/models";
+import {
+  Configuration,
+  Dataset,
+  DataSubsetter,
+  JoinedDataset,
+} from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {decodeFileName, encodeFileName} from "@paradicms/next";
-import {CollectionsGallery, thumbnailTargetDimensions} from "@paradicms/material-ui";
+import {
+  decodeFileName,
+  encodeFileName,
+  readConfigurationFile,
+  readDatasetFile,
+} from "@paradicms/next";
+import {
+  CollectionsGallery,
+  thumbnailTargetDimensions,
+} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
-import {readDataset} from "lib/readDataset";
+import fs from "fs";
+
+const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly configuration: Configuration;
@@ -16,12 +31,17 @@ interface StaticProps {
 }
 
 const InstitutionPage: React.FunctionComponent<StaticProps> = ({
-                                                                 configuration,
-                                                                 dataset,
-  institutionUri
-                                                               }) => {
-  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [dataset]);
-  const institution = useMemo(() => joinedDataset.institutionByUri(institutionUri), [institutionUri, joinedDataset]);
+  configuration,
+  dataset,
+  institutionUri,
+}) => {
+  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [
+    dataset,
+  ]);
+  const institution = useMemo(
+    () => joinedDataset.institutionByUri(institutionUri),
+    [institutionUri, joinedDataset]
+  );
 
   return (
     <Layout
@@ -49,7 +69,7 @@ const InstitutionPage: React.FunctionComponent<StaticProps> = ({
 export default InstitutionPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const dataset = readDataset();
+  const dataset = readDatasetFile(readFileSync);
   return {
     fallback: false,
     paths: dataset.institutions.map(institution => ({
@@ -63,18 +83,27 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const institutionUri = decodeFileName(params!.institutionUri as string);
 
-  const institutionDataset = DataSubsetter.fromDataset(readDataset()).institutionDataset(institutionUri, {
+  const institutionDataset = DataSubsetter.fromDataset(
+    readDatasetFile(readFileSync)
+  ).institutionDataset(institutionUri, {
     collections: {
       institution: {},
       thumbnail: {targetDimensions: thumbnailTargetDimensions},
     },
   });
 
-  console.log("Institution dataset:", Object.keys(institutionDataset).map(key => `${key}: ${((institutionDataset as any)[key] as any[]).length}`).join(", "));
+  console.log(
+    "Institution dataset:",
+    Object.keys(institutionDataset)
+      .map(
+        key => `${key}: ${((institutionDataset as any)[key] as any[]).length}`
+      )
+      .join(", ")
+  );
 
   return {
     props: {
-      configuration: defaultConfiguration,
+      configuration: readConfigurationFile(readFileSync),
       dataset: institutionDataset,
       institutionUri,
     },
