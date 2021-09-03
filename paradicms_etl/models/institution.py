@@ -1,28 +1,29 @@
-from dataclasses import dataclass
 from typing import Optional, Tuple
 
-from rdflib import Graph, Literal
+from rdflib import Literal, URIRef
 from rdflib.namespace import FOAF
-from rdflib.resource import Resource
 
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
 
 
-@dataclass(frozen=True)
 class Institution(_NamedModel):
-    # See note in Collection re: why there are no links to collections here.
-    name: str
-    abstract: Optional[str] = None
-    properties: Tuple[Property, ...] = ()
-    rights: Optional[Rights] = None
-
-    def to_rdf(self, *, graph: Graph) -> Resource:
-        resource = _NamedModel.to_rdf(self, graph=graph)
-        resource.add(FOAF.name, Literal(self.name))
-        for property_ in self.properties:
-            resource.add(property_.uri, property_.value)
-        if self.rights is not None:
-            self.rights.to_rdf(add_to_resource=resource)
-        return resource
+    def __init__(
+        self,
+        *,
+        # See note in Collection re: why there are no links to collections here.
+        name: str,
+        uri: URIRef,
+        abstract: Optional[str] = None,
+        properties: Tuple[Property, ...] = (),
+        rights: Optional[Rights] = None,
+    ):
+        _NamedModel.__init__(self, uri=uri)
+        if abstract is not None:
+            self.resource.add(DCTERMS.abstract, Literal(abstract))
+        self.resource.add(FOAF.name, Literal(name))
+        for property_ in properties:
+            self.resource.add(property_.uri, property_.value)
+        if rights is not None:
+            rights.to_rdf(add_to_resource=self.resource)

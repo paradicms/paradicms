@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional
 
@@ -13,20 +12,50 @@ from paradicms_etl.namespace import CMS, EXIF
 from paradicms_etl.utils.rdf_resource_wrapper import RdfResourceWrapper
 
 
-@dataclass(frozen=True)
 class Image(_NamedModel):
-    depicts_uri: URIRef
-    copyable: bool = True  # Can this image be copied from its source (for GUI building), or does it have to be hot linked in order to use it?
-    created: Optional[datetime] = None
-    exact_dimensions: Optional[ImageDimensions] = None
-    format: Optional[str] = None
-    max_dimensions: Optional[ImageDimensions] = None
-    modified: Optional[datetime] = None
-    original_image_uri: Optional[URIRef] = None
-    rights: Optional[Rights] = None
-    src: Optional[
-        str
-    ] = None  # src that can be used in an <img> tag; if not specified, defaults to URI
+    def __init__(
+        self,
+        *,
+        depicts_uri: URIRef,
+        uri: URIRef,
+        copyable: bool = True,
+        # Can this image be copied from its source (for GUI building), or does it have to be hot linked in order to use it?
+        created: Optional[datetime] = None,
+        exact_dimensions: Optional[ImageDimensions] = None,
+        format: Optional[str] = None,
+        max_dimensions: Optional[ImageDimensions] = None,
+        modified: Optional[datetime] = None,
+        original_image_uri: Optional[URIRef] = None,
+        rights: Optional[Rights] = None,
+        src: Optional[
+            str
+        ] = None,  # src that can be used in an <img> tag; if not specified, defaults to URI
+    ):
+        _NamedModel.__init__(self, uri=uri)
+        self.__copyable = copyable
+        if created is not None:
+            self.resource.add(DCTERMS.created, Literal(created))
+        self.resource.add(FOAF.depicts, depicts_uri)
+        if format is not None:
+            self.resource.add(DCTERMS["format"], Literal(format))
+        if exact_dimensions is not None:
+            self.resource.add(EXIF.height, Literal(exact_dimensions.height))
+            self.resource.add(EXIF.width, Literal(exact_dimensions.width))
+        elif max_dimensions is not None:
+            self.resource.add(CMS.imageMaxHeight, Literal(max_dimensions.height))
+            self.resource.add(CMS.imageMaxWidth, Literal(max_dimensions.width))
+        if modified is not None:
+            self.resource.add(DCTERMS.modified, Literal(modified))
+        if original_image_uri is not None:
+            self.resource.graph.add((original_image_uri, FOAF.thumbnail, uri))
+        if rights is not None:
+            rights.to_rdf(add_to_resource=self.resource)
+        if src is not None:
+            self.resource.add(CMS.imageSrc, Literal(src))
+
+    @property
+    def copyable(self):
+        return self.__copyable
 
     @classmethod
     def from_rdf(cls, *, resource: Resource):
@@ -69,26 +98,3 @@ class Image(_NamedModel):
             src=resource_wrapper.optional_python_value(CMS.imageSrc, str),
             uri=resource.identifier,
         )
-
-    def to_rdf(self, *, graph: Graph) -> Resource:
-        resource = _NamedModel.to_rdf(self, graph=graph)
-        if self.created is not None:
-            resource.add(DCTERMS.created, Literal(self.created))
-        resource.add(FOAF.depicts, self.depicts_uri)
-        if self.format is not None:
-            resource.add(DCTERMS["format"], Literal(self.format))
-        if self.exact_dimensions is not None:
-            resource.add(EXIF.height, Literal(self.exact_dimensions.height))
-            resource.add(EXIF.width, Literal(self.exact_dimensions.width))
-        elif self.max_dimensions is not None:
-            resource.add(CMS.imageMaxHeight, Literal(self.max_dimensions.height))
-            resource.add(CMS.imageMaxWidth, Literal(self.max_dimensions.width))
-        if self.modified is not None:
-            resource.add(DCTERMS.modified, Literal(self.modified))
-        if self.original_image_uri is not None:
-            graph.add((self.original_image_uri, FOAF.thumbnail, self.uri))
-        if self.rights is not None:
-            self.rights.to_rdf(add_to_resource=resource)
-        if self.src is not None:
-            resource.add(CMS.imageSrc, Literal(self.src))
-        return resource
