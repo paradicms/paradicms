@@ -1,28 +1,27 @@
-from dataclasses import dataclass
 from typing import Optional
 
-from rdflib import Graph, Literal
+from rdflib import Literal, URIRef
 from rdflib.namespace import FOAF
-from rdflib.resource import Resource
 
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.namespace import CONTACT
 
 
-@dataclass(frozen=True)
 class Person(_NamedModel):
-    name: str
-    family_name: Optional[str] = None
-    given_name: Optional[str] = None
-    sort_name: Optional[str] = None
-
-    def to_rdf(self, *, graph: Graph) -> Resource:
-        resource = _NamedModel.to_rdf(self, graph=graph)
-        if self.family_name is not None:
-            resource.add(FOAF.familyName, Literal(self.family_name))
-        if self.given_name is not None:
-            resource.add(FOAF.givenName, Literal(self.given_name))
-        resource.add(FOAF.name, Literal(self.name))
-        if self.sort_name is not None:
-            resource.add(CONTACT.sortName, Literal(self.sort_name))
-        return resource
+    def ___init__(
+        self,
+        *,
+        name: str,
+        uri: URIRef,
+        family_name: Optional[str] = None,
+        given_name: Optional[str] = None,
+        sort_name: Optional[str] = None,
+    ):
+        _NamedModel.__init__(self, uri=uri)
+        if family_name is not None:
+            self.resource.add(FOAF.familyName, Literal(family_name))
+        if given_name is not None:
+            self.resource.add(FOAF.givenName, Literal(given_name))
+        self.resource.add(FOAF.name, Literal(name))
+        if sort_name is not None:
+            self.resource.add(CONTACT.sortName, Literal(sort_name))

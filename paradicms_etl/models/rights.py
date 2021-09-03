@@ -10,7 +10,7 @@ from paradicms_etl.models.dublin_core_property_definitions import (
 )
 
 
-@dataclass
+@dataclass(frozen=True)
 class Rights:
     creator: Union[None, str, URIRef] = None
     holder: Union[None, str, URIRef] = None

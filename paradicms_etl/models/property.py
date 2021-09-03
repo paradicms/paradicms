@@ -15,7 +15,7 @@ class Property:
     def __init__(
         self,
         uri: Union[PropertyDefinition, URIRef],
-        value: Union[bool, int, str, Node],
+        value: Any,
     ):
         if isinstance(uri, PropertyDefinition):
             property_definition = uri

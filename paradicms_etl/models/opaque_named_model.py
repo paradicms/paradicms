@@ -1,28 +1,32 @@
-from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Tuple
 
-from rdflib import Graph, RDF, URIRef
-from rdflib.resource import Resource
+from rdflib import RDF, URIRef
 
-from paradicms_etl.models._named_model import _NamedModel
+from paradicms_etl._model import _Model
 from paradicms_etl.models.property import Property
 
 
-@dataclass(frozen=True)
-class OpaqueNamedModel(_NamedModel):
+class OpaqueNamedModel(_Model):
     """
     A model that simply passes through properties.
 
     Used to send RDF directly to the loader rather than deserializing it into a dataclass and reserializing it (#149).
+
+    It's not a subclass of _NamedModel, since it needs to specified its own rdf:type.
     """
 
-    type: URIRef
-    properties: Tuple[Property, ...] = ()
+    def __init__(
+        self, *, type: URIRef, uri: URIRef, properties: Tuple[Property, ...] = ()
+    ):
+        _Model.__init__(self, uri=uri)
+        for property_ in properties:
+            self.resource.add(property_.uri, property_.value)
+        self.resource.add(RDF.type, type)
 
-    def to_rdf(self, *, graph: Graph) -> Resource:
-        # Don't call the superclass, since it would add an rdf:type with the __class__.__name__
-        resource = graph.resource(self.uri)
-        for property_ in self.properties:
-            resource.add(property_.uri, property_.value)
-        resource.add(RDF.type, self.type)
-        return resource
+    @property
+    def type(self) -> URIRef:
+        return self._required_uri_value(RDF.type)
+
+    @property
+    def uri(self) -> URIRef:
+        return self.resource.identifier

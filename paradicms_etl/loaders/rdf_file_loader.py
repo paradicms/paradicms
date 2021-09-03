@@ -33,7 +33,7 @@ class RdfFileLoader(_BufferingLoader):
         self._logger.debug("serializing %d models to a graph", len(models))
         graph = self._new_graph()
         for model in models:
-            model.to_rdf(graph=graph)
+            graph += model.resource.graph
         self._logger.debug("serialized %d models to a graph", len(models))
         self._logger.debug("writing %d models to %s", len(models), file_path)
         with open(file_path, "w+b") as file_:

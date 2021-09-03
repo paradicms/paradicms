@@ -1,21 +1,12 @@
-from dataclasses import dataclass
-
-from rdflib import Graph, RDF, URIRef
-from rdflib.resource import Resource
+from rdflib import URIRef
 
 from paradicms_etl._model import _Model
-from paradicms_etl.namespace import CMS
 
 
-@dataclass(frozen=True)
 class _NamedModel(_Model):
-    uri: URIRef
+    def __init__(self, *, uri: URIRef):
+        _Model.__init__(self, uri=uri)
 
-    def to_rdf(self, *, graph: Graph) -> Resource:
-        """
-        Convert this model to RDF.
-        """
-
-        resource = graph.resource(self.uri)
-        resource.add(RDF.type, CMS[self.__class__.__name__])
-        return resource
+    @property
+    def uri(self) -> URIRef:
+        return self.resource.identifier

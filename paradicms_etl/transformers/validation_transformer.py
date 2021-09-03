@@ -107,19 +107,3 @@ class ValidationTransformer(_Transformer):
         #     universe_uris=model_uris,
         #     uri_type="image depicts",
         # )
-
-        for models_by_uri in (collections_by_uri, institutions_by_uri, objects_by_uri):
-            for model in models_by_uri.values():
-                properties_set = set()
-                for property_ in model.properties:
-                    if property_ not in properties_set:
-                        properties_set.add(property_)
-                    else:
-                        raise ValueError(
-                            f"{model.uri} has duplicate property {property_.uri}: {model.properties}"
-                        )
-
-                    if property_.uri not in property_definitions_by_uri:
-                        raise ValueError(
-                            f"{model.uri} uses undefined property {property_.uri}"
-                        )
