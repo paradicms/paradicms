@@ -27,3 +27,11 @@ class Collection(_NamedModel):
         for property_ in properties:
             self.resource.add(property_.uri, property_.value)
         self.resource.add(DCTERMS.title, Literal(title))
+
+    @property
+    def institution_uri(self):
+        return self._required_uri_value(CMS.institution)
+
+    @property
+    def title(self):
+        return self._required_str_value(DCTERMS.title)

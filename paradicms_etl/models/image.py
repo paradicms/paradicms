@@ -57,6 +57,10 @@ class Image(_NamedModel):
     def copyable(self):
         return self.__copyable
 
+    @property
+    def depicts_uri(self) -> URIRef:
+        return self._required_uri_value(FOAF.depicts)
+
     @classmethod
     def from_rdf(cls, *, resource: Resource):
         resource_wrapper = RdfResourceWrapper(resource)

@@ -1,7 +1,7 @@
 from typing import Optional, Tuple
 
 from rdflib import Literal, URIRef
-from rdflib.namespace import FOAF
+from rdflib.namespace import DCTERMS, FOAF
 
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.property import Property
@@ -27,3 +27,11 @@ class Institution(_NamedModel):
             self.resource.add(property_.uri, property_.value)
         if rights is not None:
             rights.to_rdf(add_to_resource=self.resource)
+
+    @property
+    def name(self) -> str:
+        return self._required_str_value(FOAF.name)
+
+    @property
+    def rights(self) -> Optional[Rights]:
+        return Rights.from_rdf(resource=self.resource)

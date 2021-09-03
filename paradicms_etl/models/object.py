@@ -2,6 +2,7 @@ from typing import Optional, Tuple, Union
 
 from rdflib import Literal, URIRef
 from rdflib.namespace import DCTERMS, FOAF
+from rdflib.resource import Resource
 
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.property import Property
@@ -42,3 +43,24 @@ class Object(_NamedModel):
         if rights is not None:
             rights.to_rdf(add_to_resource=self.resource)
         self.resource.add(DCTERMS.title, Literal(title))
+
+    @property
+    def collection_uris(self) -> Tuple[URIRef, ...]:
+        return tuple(
+            resource.identifier
+            for resource in self.resource.objects(CMS.collection)
+            if isinstance(resource, Resource)
+            and isinstance(resource.identifier, URIRef)
+        )
+
+    @property
+    def institution_uri(self):
+        return self._required_uri_value(CMS.institution)
+
+    @property
+    def rights(self) -> Optional[Rights]:
+        return Rights.from_rdf(resource=self.resource)
+
+    @property
+    def title(self) -> str:
+        return self._required_str_value(DCTERMS.title)
