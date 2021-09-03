@@ -24,5 +24,9 @@ class OpaqueNamedModel(_Model):
         self.resource.add(RDF.type, type)
 
     @property
+    def type(self) -> URIRef:
+        return self._required_uri_value(RDF.type)
+
+    @property
     def uri(self) -> URIRef:
         return self.resource.identifier
