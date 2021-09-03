@@ -335,10 +335,8 @@ class MarkdownDirectoryTransformer(_Transformer):
             return self.__default_institution
 
         def __opacify_model(self, model: _NamedModel) -> OpaqueNamedModel:
-            graph = Graph()
-            model_resource = model.to_rdf(graph=graph)
             return self.__transform_resource_to_model(
-                model_resource=model_resource, model_type=model.__class__.__name__
+                model_resource=model.resource, model_type=model.__class__.__name__
             )
 
         def __set_resource_institution_uri(self, resource: Resource) -> Resource:

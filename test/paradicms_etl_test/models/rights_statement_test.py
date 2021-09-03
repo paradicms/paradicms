@@ -1,10 +1,10 @@
-from rdflib import Graph, URIRef
+from rdflib import URIRef
 
 from paradicms_etl.models.rights_statement import RightsStatement
 
 
-def test_to_rdf():
-    expected = RightsStatement(
+def test_init():
+    RightsStatement(
         definition="Test definition",
         description="Test description",
         identifier="testidentifier",
@@ -15,10 +15,3 @@ def test_to_rdf():
         scope_note="Test scope note",
         uri=URIRef("http://example.com"),
     )
-
-    graph = Graph()
-    expected.to_rdf(graph=graph)
-    # resource = graph.resource(expected.uri)
-    # actual = RightsStatement.from_rdf(resource=resource)
-    #
-    # assert actual == expected
