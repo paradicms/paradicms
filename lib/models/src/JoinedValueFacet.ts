@@ -8,10 +8,7 @@ import {Dataset} from "./Dataset";
 export abstract class JoinedValueFacet<T extends PrimitiveType>
   extends JoinedFacet
   implements ValueFacet<T> {
-  protected constructor(
-    dataset: Dataset,
-    protected readonly valueFacet: ValueFacet<T>
-  ) {
+  constructor(dataset: Dataset, protected readonly valueFacet: ValueFacet<T>) {
     super(dataset);
   }
 
