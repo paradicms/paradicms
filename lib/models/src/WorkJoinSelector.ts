@@ -6,15 +6,15 @@ import {PropertyDefinitionJoinSelector} from "./PropertyDefinitionJoinSelector";
 /**
  * See note in DataSubsetter re: the use of this interface.
  */
-export interface ObjectJoinSelector {
-  // Return all Images that depict this Object.
+export interface WorkJoinSelector {
+  // Return all Images that depict this Work.
   allImages?: boolean;
-  // Return all collections referred to by this Object's collectionUris.
+  // Return all collections referred to by this Work's collectionUris.
   collections?: CollectionJoinSelector;
-  // Return the Institution referred to by this Object's institutionUri.
+  // Return the Institution referred to by this Work's institutionUri.
   institution?: InstitutionJoinSelector;
-  // Return definitions for the Object's properties
+  // Return definitions for the Work's properties
   propertyDefinitions?: PropertyDefinitionJoinSelector;
-  // Return a single thumbnail Image for this Object.
+  // Return a single thumbnail Image for this Work.
   thumbnail?: ThumbnailSelector;
 }

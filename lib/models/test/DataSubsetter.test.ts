@@ -37,27 +37,27 @@ describe("DataSubsetter", () => {
     );
     // One thumbnail per collection
     expect(dataset.images).to.have.length(dataset.collections.length);
-    // The collections themselves don't have Images that depict the collection. A thumbnail is picked up from an object.
-    // That object must be included in the dataset for the thumbnail selection to work after subsetting.
-    expect(dataset.objects).to.have.length(dataset.objects.length);
-    // One object per collection
-    expect(dataset.objects.map(object => object.collectionUris[0])).to.deep.eq(
+    // The collections themselves don't have Images that depict the collection. A thumbnail is picked up from an work.
+    // That work must be included in the dataset for the thumbnail selection to work after subsetting.
+    expect(dataset.works).to.have.length(dataset.works.length);
+    // One work per collection
+    expect(dataset.works.map(work => work.collectionUris[0])).to.deep.eq(
       dataset.collections.map(collection => collection.uri)
     );
   });
 
-  it("should get a collection with its objects and their thumbnails (collection page)", () => {
+  it("should get a collection with its works and their thumbnails (collection page)", () => {
     const collection = testDataset.collections[0];
     const dataset = sut.collectionDataset(collection.uri, {
-      objects: {
+      works: {
         propertyDefinitions: {values: {thumbnail: THUMBNAIL_SELECTOR}},
         thumbnail: THUMBNAIL_SELECTOR,
       },
     });
     expect(dataset.collections).to.deep.eq([collection]);
     const images = testDataset
-      .collectionObjects(collection.uri)
-      .map(object => object.thumbnail(THUMBNAIL_SELECTOR)!);
+      .collectionWorks(collection.uri)
+      .map(work => work.thumbnail(THUMBNAIL_SELECTOR)!);
     for (const propertyDefinition of dataset.propertyDefinitions) {
       for (const propertyDefinitionValue of testDataset.propertyDefinitionByUri(
         propertyDefinition.uri
@@ -77,9 +77,9 @@ describe("DataSubsetter", () => {
         license => license.uri === "http://creativecommons.org/licenses/nc/1.0/"
       )!,
     ]);
-    expect(dataset.objects).to.deep.eq(
-      testDataset.objects.filter(object =>
-        object.collectionUris.some(
+    expect(dataset.works).to.deep.eq(
+      testDataset.works.filter(work =>
+        work.collectionUris.some(
           collectionUri => collectionUri === collection.uri
         )
       )
@@ -95,9 +95,9 @@ describe("DataSubsetter", () => {
     ]);
   });
 
-  it("should get an object with its institution, collections, and all images (object page)", () => {
-    const object = testDataset.objects[0];
-    const dataset = sut.objectDataset(object.uri, {
+  it("should get an work with its institution, collections, and all images (work page)", () => {
+    const work = testDataset.works[0];
+    const dataset = sut.workDataset(work.uri, {
       collections: {},
       institution: {},
       allImages: true,
@@ -105,31 +105,30 @@ describe("DataSubsetter", () => {
     });
     expect(dataset.collections).to.deep.eq(
       testDataset.collections.filter(collection =>
-        object.collectionUris.some(
-          objectCollectionUri => objectCollectionUri === collection.uri
+        work.collectionUris.some(
+          workCollectionUri => workCollectionUri === collection.uri
         )
       )
     );
     expect(dataset.images).to.deep.eq(
-      testDataset.images.filter(image => image.depictsUri === object.uri)
+      testDataset.images.filter(image => image.depictsUri === work.uri)
     );
     expect(dataset.institutions).to.deep.eq([
       testDataset.institutions.find(
-        institution => institution.uri === object.institutionUri
+        institution => institution.uri === work.institutionUri
       )!,
     ]);
     expect(dataset.licenses).to.deep.eq([
       testDataset.licenses.find(
-        license => license.uri === object.rights!.license!.value
+        license => license.uri === work.rights!.license!.value
       )!,
     ]);
-    expect(dataset.objects).to.deep.eq([object]);
+    expect(dataset.works).to.deep.eq([work]);
     expect(dataset.propertyDefinitions).to.not.be.empty;
     expect(dataset.propertyValueDefinitions).to.be.empty;
     expect(dataset.rightsStatements).to.deep.eq([
       testDataset.rightsStatements.find(
-        rightsStatement =>
-          rightsStatement.uri === object.rights!.statement!.value
+        rightsStatement => rightsStatement.uri === work.rights!.statement!.value
       )!,
     ]);
   });

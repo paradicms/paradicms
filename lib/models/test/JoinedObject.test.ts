@@ -2,21 +2,21 @@ import {expect} from "chai";
 import {testDatasetTtl} from "./testDataset";
 import {JoinedDataset} from "../src/JoinedDataset";
 
-describe("JoinedObject", () => {
-  const object = testDatasetTtl.objects[0];
-  const sut = JoinedDataset.fromDataset(testDatasetTtl).objectByUri(object.uri);
+describe("JoinedWork", () => {
+  const work = testDatasetTtl.works[0];
+  const sut = JoinedDataset.fromDataset(testDatasetTtl).workByUri(work.uri);
 
-  it("should get the object's abstract", () => {
-    expect(sut.abstract).to.eq(object.abstract);
+  it("should get the work's abstract", () => {
+    expect(sut.abstract).to.eq(work.abstract);
   });
 
-  it("should get the object's collections", () => {
+  it("should get the work's collections", () => {
     expect(sut.collections.map(collection => collection.uri)).to.deep.eq(
-      object.collectionUris
+      work.collectionUris
     );
   });
 
-  it("should get the object's images", () => {
+  it("should get the work's images", () => {
     expect(sut.images.map(image => image.uri).sort()).to.deep.eq(
       testDatasetTtl.images
         .filter(image => image.depictsUri === sut.uri)
@@ -25,11 +25,11 @@ describe("JoinedObject", () => {
     );
   });
 
-  it("should get the object's's institution", () => {
-    expect(sut.institution.uri).to.eq(object.institutionUri);
+  it("should get the work's's institution", () => {
+    expect(sut.institution.uri).to.eq(work.institutionUri);
   });
 
-  it("should get the object's images", () => {
+  it("should get the work's images", () => {
     expect(sut.originalImages.map(image => image.uri).sort()).to.deep.eq(
       testDatasetTtl.images
         .filter(
@@ -41,26 +41,26 @@ describe("JoinedObject", () => {
     );
   });
 
-  it("should get the object's page", () => {
-    expect(sut.page).to.eq(object.page);
+  it("should get the work's page", () => {
+    expect(sut.page).to.eq(work.page);
   });
 
-  it("should get the object's properties", () => {
+  it("should get the work's properties", () => {
     expect(sut.properties.map(property => property.uri).sort()).to.deep.eq(
-      (object.properties ?? []).map(property => property.uri).sort()
+      (work.properties ?? []).map(property => property.uri).sort()
     );
   });
 
-  it("should get the object's rights", () => {
+  it("should get the work's rights", () => {
     expect(sut.rights!.statement).to.not.be.null;
   });
 
-  it("should get the object's title", () => {
+  it("should get the work's title", () => {
     expect(sut.title).to.not.be.empty;
-    expect(sut.title).to.eq(object.title);
+    expect(sut.title).to.eq(work.title);
   });
 
-  it("should get the object's URI", () => {
-    expect(sut.uri).to.eq(object.uri);
+  it("should get the work's URI", () => {
+    expect(sut.uri).to.eq(work.uri);
   });
 });

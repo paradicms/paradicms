@@ -8,7 +8,7 @@ import {Image} from "./Image";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 
-export class Object extends NamedModel {
+export class Work extends NamedModel {
   get abstract(): string | null {
     return this.optionalString(DCTERMS.abstract);
   }

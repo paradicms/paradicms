@@ -29,8 +29,7 @@ describe("JoinedCollection", () => {
     const thumbnail = sut.thumbnail(THUMBNAIL_SELECTOR);
     expect(thumbnail).to.not.be.null;
     expect(thumbnail!.asImage.depictsUri).to.not.eq(collection.uri);
-    expect(
-      sut.objects.some(object => object.uri === thumbnail!.asImage.depictsUri)
-    ).to.be.true;
+    expect(sut.works.some(work => work.uri === thumbnail!.asImage.depictsUri))
+      .to.be.true;
   });
 });

@@ -1,6 +1,5 @@
 import {Institution} from "./Institution";
 import {Image} from "./Image";
-import {Object as ObjectModel} from "./Object";
 import {Dataset} from "./Dataset";
 import {Collection} from "./Collection";
 import {License} from "./License";
@@ -8,13 +7,13 @@ import {RightsStatement} from "./RightsStatement";
 import {PropertyDefinition} from "./PropertyDefinition";
 import {PropertyValueDefinition} from "./PropertyValueDefinition";
 import {Store} from "n3";
+import {Work} from "./Work";
 
 export class DatasetBuilder {
   private collectionsByUri: {[index: string]: Collection} | undefined;
   private institutionsByUri: {[index: string]: Institution} | undefined;
   private imagesByUri: {[index: string]: Image} | undefined;
   private licensesByUri: {[index: string]: License} | undefined;
-  private objectsByUri: {[index: string]: ObjectModel} | undefined;
   private propertyDefinitionsByUri:
     | {[index: string]: PropertyDefinition}
     | undefined;
@@ -22,6 +21,7 @@ export class DatasetBuilder {
     | {[index: string]: PropertyValueDefinition}
     | undefined;
   private rightsStatementsByUri: {[index: string]: RightsStatement} | undefined;
+  private worksByUri: {[index: string]: Work} | undefined;
 
   addCollection(collection: Collection) {
     this.collectionsByUri = DatasetBuilder.addNamedModel(
@@ -111,16 +111,13 @@ export class DatasetBuilder {
     return addedModels;
   }
 
-  addObject(object: ObjectModel) {
-    this.objectsByUri = DatasetBuilder.addNamedModel(this.objectsByUri, object);
+  addWork(work: Work) {
+    this.worksByUri = DatasetBuilder.addNamedModel(this.worksByUri, work);
     return this;
   }
 
-  addObjects(objects: readonly ObjectModel[]) {
-    this.objectsByUri = DatasetBuilder.addNamedModels(
-      this.objectsByUri,
-      objects
-    );
+  addWorks(works: readonly Work[]) {
+    this.worksByUri = DatasetBuilder.addNamedModels(this.worksByUri, works);
     return this;
   }
 
@@ -181,7 +178,7 @@ export class DatasetBuilder {
       this.imagesByUri,
       this.institutionsByUri,
       this.licensesByUri,
-      this.objectsByUri,
+      this.worksByUri,
       this.propertyDefinitionsByUri,
       this.propertyValueDefinitionsByUri,
       this.rightsStatementsByUri,

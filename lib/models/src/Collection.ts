@@ -4,7 +4,7 @@ import {DCTERMS, PARADICMS} from "./vocabularies";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Image} from "./Image";
-import {Object} from "./Object";
+import {Work} from "./Work";
 
 export class Collection extends NamedModel {
   get institution(): Institution {
@@ -15,8 +15,8 @@ export class Collection extends NamedModel {
     return this.requiredParentNamedNode(PARADICMS.institution).value;
   }
 
-  get objects(): readonly Object[] {
-    return this.dataset.collectionObjects(this.uri);
+  get works(): readonly Work[] {
+    return this.dataset.collectionWorks(this.uri);
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {
@@ -29,8 +29,8 @@ export class Collection extends NamedModel {
         return thumbnail;
       }
     }
-    for (const object of this.objects) {
-      const thumbnail = object.thumbnail(selector);
+    for (const work of this.works) {
+      const thumbnail = work.thumbnail(selector);
       if (thumbnail) {
         return thumbnail;
       }

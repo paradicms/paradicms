@@ -54,9 +54,9 @@ export class Model {
   }
 
   protected optionalTerm(property: NamedNode): Term | null {
-    const objects = this.store.getObjects(this.node, property, null);
-    for (const object of objects) {
-      return object;
+    const works = this.store.getObjects(this.node, property, null);
+    for (const work of works) {
+      return work;
     }
     return null;
   }

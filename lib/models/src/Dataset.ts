@@ -2,47 +2,61 @@ import {Collection} from "./Collection";
 import {Image} from "./Image";
 import {Institution} from "./Institution";
 import {License} from "./License";
-import {Object} from "./Object";
 import {RightsStatement} from "./RightsStatement";
 import {PropertyDefinition} from "./PropertyDefinition";
 import {PropertyValueDefinition} from "./PropertyValueDefinition";
 import {NamedNode, Parser, ParserOptions, Store} from "n3";
 import {PARADICMS, RDF} from "./vocabularies";
+import {Work} from "./Work";
 
 /**
  * Lazily indexes the contents of an immutable Dataset to provide quick lookups and subsetting.
  *
- * For example, a GUI that has one object per page needs a quick objectByUri lookup in getStaticProps.
+ * For example, a GUI that has one work per page needs a quick workByUri lookup in getStaticProps.
  *
- * IndexedDataset is used by getStaticProps to cut down Datasets, which means it must deal in JSON-serializable interfaces/objects rather than classes.
+ * IndexedDataset is used by getStaticProps to cut down Datasets, which means it must deal in JSON-serializable interfaces/works rather than classes.
  * (JoinedDataset does the latter, because it is only used on the component side.)
  */
 export class Dataset {
+  private _collections?: readonly Collection[];
   private _collectionsByInstitutionUriIndex?: {
     [index: string]: readonly Collection[];
   };
   private _collectionsByUriIndex?: {[index: string]: Collection};
+  private _images?: readonly Image[];
   private _imagesByDepictsUriIndex?: {[index: string]: readonly Image[]};
   private _imagesByOriginalImageUriIndex?: {[index: string]: readonly Image[]};
   private _imagesByUriIndex?: {[index: string]: Image};
   private _institutions?: readonly Institution[];
   private _institutionsByUriIndex?: {[index: string]: Institution};
+  private _licenses?: readonly License[];
   private _licensesByUriIndex?: {[index: string]: License};
-  private _objectsByCollectionUriIndex?: {[index: string]: readonly Object[]};
-  private _objectsByInstitutionUriIndex?: {[index: string]: readonly Object[]};
-  private _objectsByUriIndex?: {[index: string]: Object};
+  private _propertyDefinitions?: readonly PropertyDefinition[];
   private _propertyDefinitionsByUriIndex?: {
     [index: string]: PropertyDefinition;
   };
+  private _propertyValueDefinitions?: readonly PropertyValueDefinition[];
   private _propertyValueDefinitionsByPropertyUriIndex?: {
     [index: string]: readonly PropertyValueDefinition[];
   };
+  private _rightsStatements?: readonly RightsStatement[];
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
+  private _works?: readonly Work[];
+  private _worksByCollectionUriIndex?: {[index: string]: readonly Work[]};
+  private _worksByInstitutionUriIndex?: {[index: string]: readonly Work[]};
+  private _worksByUriIndex?: {[index: string]: Work};
 
   constructor(readonly store: Store) {}
 
-  collectionObjects(collectionUri: string): readonly Object[] {
-    return this.objectsByCollectionUriIndex[collectionUri] ?? [];
+  collectionWorks(collectionUri: string): readonly Work[] {
+    return this.worksByCollectionUriIndex[collectionUri] ?? [];
+  }
+
+  get collections(): readonly Collection[] {
+    if (!this._collections) {
+      this.readCollections();
+    }
+    return this._collections!;
   }
 
   private get collectionsByInstitutionUriIndex(): {
@@ -75,6 +89,13 @@ export class Dataset {
       throw new RangeError("no such image " + imageUri);
     }
     return image;
+  }
+
+  get images(): readonly Image[] {
+    if (!this._images) {
+      this.readImages();
+    }
+    return this._images!;
   }
 
   imagesByDepictsUri(depictsUri: string): readonly Image[] {
@@ -130,8 +151,8 @@ export class Dataset {
     return this.collectionsByInstitutionUriIndex[institutionUri] ?? [];
   }
 
-  institutionObjects(institutionUri: string): readonly Object[] {
-    return this.objectsByInstitutionUriIndex[institutionUri] ?? [];
+  institutionWorks(institutionUri: string): readonly Work[] {
+    return this.worksByInstitutionUriIndex[institutionUri] ?? [];
   }
 
   private get institutionsByUriIndex(): {[index: string]: Institution} {
@@ -149,44 +170,18 @@ export class Dataset {
     return license;
   }
 
+  get licenses(): readonly License[] {
+    if (!this._licenses) {
+      this.readLicenses();
+    }
+    return this._licenses!;
+  }
+
   private get licensesByUriIndex(): {[index: string]: License} {
     if (!this._licensesByUriIndex) {
       this.readLicenses();
     }
     return this._licensesByUriIndex!;
-  }
-
-  objectByUri(objectUri: string): Object {
-    const object = this.objectsByUriIndex[objectUri];
-    if (!object) {
-      throw new RangeError("no such object " + objectUri);
-    }
-    return object;
-  }
-
-  private get objectsByCollectionUriIndex(): {
-    [index: string]: readonly Object[];
-  } {
-    if (!this._objectsByCollectionUriIndex) {
-      this.readObjects();
-    }
-    return Dataset.requireNotNullish(this._objectsByCollectionUriIndex);
-  }
-
-  private get objectsByInstitutionUriIndex(): {
-    [index: string]: readonly Object[];
-  } {
-    if (!this._objectsByInstitutionUriIndex) {
-      this.readObjects();
-    }
-    return Dataset.requireNotNullish(this._objectsByInstitutionUriIndex);
-  }
-
-  private get objectsByUriIndex(): {[index: string]: Object} {
-    if (!this._objectsByUriIndex) {
-      this.readObjects();
-    }
-    return Dataset.requireNotNullish(this._objectsByUriIndex);
   }
 
   static parse(input: string, options?: ParserOptions): Dataset {
@@ -202,6 +197,13 @@ export class Dataset {
     return this.propertyDefinitionsByUriIndex[propertyDefinitionUri] ?? null;
   }
 
+  get propertyDefinitions(): readonly PropertyDefinition[] {
+    if (!this._propertyDefinitions) {
+      this.readPropertyDefinitions();
+    }
+    return this._propertyDefinitions!;
+  }
+
   private get propertyDefinitionsByUriIndex(): {
     [index: string]: PropertyDefinition;
   } {
@@ -209,6 +211,13 @@ export class Dataset {
       this.readPropertyDefinitions();
     }
     return this._propertyDefinitionsByUriIndex!;
+  }
+
+  get propertyValueDefinitions(): readonly PropertyValueDefinition[] {
+    if (!this._propertyValueDefinitions) {
+      this.readPropertyValueDefinitions();
+    }
+    return this._propertyValueDefinitions!;
   }
 
   propertyValueDefinitionsByPropertyUri(
@@ -231,12 +240,15 @@ export class Dataset {
   }
 
   private readCollections(): void {
+    const collections: Collection[] = [];
     this._collectionsByUriIndex = {};
     const collectionsByInstitutionUriIndex: {
       [index: string]: Collection[];
     } = {};
     this.readModelNodes(node => {
       const collection = this.readCollection(node);
+
+      collections.push(collection);
 
       this._collectionsByUriIndex![collection.uri] = collection;
 
@@ -250,6 +262,7 @@ export class Dataset {
         ];
       }
     }, PARADICMS.Collection);
+    this._collections = collections;
     this._collectionsByInstitutionUriIndex = collectionsByInstitutionUriIndex;
   }
 
@@ -258,11 +271,14 @@ export class Dataset {
   }
 
   private readImages(): void {
+    const images: Image[] = [];
     const imagesByDepictsUriIndex: {[index: string]: Image[]} = {};
     const imagesByOriginalImageUriIndex: {[index: string]: Image[]} = {};
     this._imagesByUriIndex = {};
     this.readModelNodes(node => {
       const image = this.readImage(node);
+
+      images.push(image);
 
       const depictsUriImages = imagesByDepictsUriIndex[image.depictsUri];
       if (depictsUriImages) {
@@ -282,6 +298,7 @@ export class Dataset {
 
       this._imagesByUriIndex![image.uri] = image;
     }, PARADICMS.Image);
+    this._images = images;
     this._imagesByDepictsUriIndex = imagesByDepictsUriIndex;
     this._imagesByOriginalImageUriIndex = imagesByOriginalImageUriIndex;
   }
@@ -297,7 +314,7 @@ export class Dataset {
       const institution = this.readInstitution(node);
       institutions.push(institution);
       this._institutionsByUriIndex![institution.uri] = institution;
-    }, PARADICMS.institution);
+    }, PARADICMS.Institution);
     this._institutions = institutions;
   }
 
@@ -306,11 +323,14 @@ export class Dataset {
   }
 
   private readLicenses() {
+    const licenses: License[] = [];
     this._licensesByUriIndex = {};
     this.readModelNodes(node => {
       const license = this.readLicense(node);
+      licenses.push(license);
       this._licensesByUriIndex![license.uri] = license;
     }, PARADICMS.License);
+    this._licenses = licenses;
   }
 
   private readModelNodes(
@@ -319,11 +339,8 @@ export class Dataset {
   ): void {
     this.store.forSubjects(
       node => {
-        switch (node.termType) {
-          case "NamedNode":
-            break;
-          default:
-            throw new RangeError(`expected NamedNode, actual ${node.termType}`);
+        if (node.termType !== "NamedNode") {
+          throw new RangeError(`expected NamedNode, actual ${node.termType}`);
         }
         callback(node);
       },
@@ -333,53 +350,21 @@ export class Dataset {
     );
   }
 
-  protected readObject(node: NamedNode): Object {
-    return new Object({dataset: this, node});
-  }
-
-  private readObjects(): void {
-    const objectsByCollectionUriIndex: {[index: string]: Object[]} = {};
-    const objectsByInstitutionUriIndex: {[index: string]: Object[]} = {};
-    this._objectsByUriIndex = {};
-    this.readModelNodes(node => {
-      const object = this.readObject(node);
-
-      for (const collectionUri of object.collectionUris) {
-        const collectionObjects = objectsByCollectionUriIndex[collectionUri];
-        if (collectionObjects) {
-          collectionObjects.push(object);
-        } else {
-          objectsByCollectionUriIndex[collectionUri] = [object];
-        }
-      }
-
-      const institutionObjects =
-        objectsByInstitutionUriIndex[object.institutionUri];
-      if (institutionObjects) {
-        institutionObjects.push(object);
-      } else {
-        objectsByInstitutionUriIndex[object.institutionUri] = [object];
-      }
-
-      this._objectsByUriIndex![object.uri] = object;
-    }, PARADICMS.Object);
-    this._objectsByCollectionUriIndex = objectsByCollectionUriIndex;
-    this._objectsByInstitutionUriIndex = objectsByInstitutionUriIndex;
-  }
-
   protected readPropertyDefinition(node: NamedNode): PropertyDefinition {
     return new PropertyDefinition({dataset: this, node});
   }
 
   private readPropertyDefinitions() {
+    const propertyDefinitions: PropertyDefinition[] = [];
     this._propertyDefinitionsByUriIndex = {};
     this.readModelNodes(node => {
       const propertyDefinition = this.readPropertyDefinition(node);
-
+      propertyDefinitions.push(propertyDefinition);
       this._propertyDefinitionsByUriIndex![
         propertyDefinition.uri
       ] = propertyDefinition;
     }, PARADICMS.PropertyDefinition);
+    this._propertyDefinitions = propertyDefinitions;
   }
 
   protected readPropertyValueDefinition(
@@ -389,11 +374,14 @@ export class Dataset {
   }
 
   private readPropertyValueDefinitions() {
+    const propertyValueDefinitions: PropertyValueDefinition[] = [];
     const propertyValueDefinitionsByPropertyUriIndex: {
       [index: string]: PropertyValueDefinition[];
     } = {};
     this.readModelNodes(node => {
       const propertyValueDefinition = this.readPropertyValueDefinition(node);
+
+      propertyValueDefinitions.push(propertyValueDefinition);
 
       for (const propertyUri of propertyValueDefinition.propertyUris) {
         const existingPropertyValueDefinitions =
@@ -407,6 +395,7 @@ export class Dataset {
         }
       }
     }, PARADICMS.PropertyValueDefinition);
+    this._propertyValueDefinitions = propertyValueDefinitions;
     this._propertyValueDefinitionsByPropertyUriIndex = propertyValueDefinitionsByPropertyUriIndex;
   }
 
@@ -415,11 +404,51 @@ export class Dataset {
   }
 
   private readRightsStatements() {
+    const rightsStatements: RightsStatement[] = [];
     this._rightsStatementsByUriIndex = {};
     this.readModelNodes(node => {
       const rightsStatement = this.readRightsStatement(node);
+      rightsStatements.push(rightsStatement);
       this._rightsStatementsByUriIndex![rightsStatement.uri] = rightsStatement;
     }, PARADICMS.RightsStatement);
+    this._rightsStatements = rightsStatements;
+  }
+
+  protected readWork(node: NamedNode): Work {
+    return new Work({dataset: this, node});
+  }
+
+  private readWorks(): void {
+    const works: Work[] = [];
+    const worksByCollectionUriIndex: {[index: string]: Work[]} = {};
+    const worksByInstitutionUriIndex: {[index: string]: Work[]} = {};
+    this._worksByUriIndex = {};
+    this.readModelNodes(node => {
+      const work = this.readWork(node);
+
+      works.push(work);
+
+      for (const collectionUri of work.collectionUris) {
+        const collectionWorks = worksByCollectionUriIndex[collectionUri];
+        if (collectionWorks) {
+          collectionWorks.push(work);
+        } else {
+          worksByCollectionUriIndex[collectionUri] = [work];
+        }
+      }
+
+      const institutionWorks = worksByInstitutionUriIndex[work.institutionUri];
+      if (institutionWorks) {
+        institutionWorks.push(work);
+      } else {
+        worksByInstitutionUriIndex[work.institutionUri] = [work];
+      }
+
+      this._worksByUriIndex![work.uri] = work;
+    }, PARADICMS.Work);
+    this._works = works;
+    this._worksByCollectionUriIndex = worksByCollectionUriIndex;
+    this._worksByInstitutionUriIndex = worksByInstitutionUriIndex;
   }
 
   private static requireNotNullish<T>(value: T | undefined): T {
@@ -427,6 +456,13 @@ export class Dataset {
       throw new EvalError("expected value to be defined");
     }
     return value;
+  }
+
+  get rightsStatements(): readonly RightsStatement[] {
+    if (!this._rightsStatements) {
+      this.readRightsStatements();
+    }
+    return this._rightsStatements!;
   }
 
   rightsStatementByUri(rightsStatementUri: string): RightsStatement {
@@ -442,5 +478,45 @@ export class Dataset {
       this.readRightsStatements();
     }
     return this._rightsStatementsByUriIndex!;
+  }
+
+  workByUri(workUri: string): Work {
+    const work = this.worksByUriIndex[workUri];
+    if (!work) {
+      throw new RangeError("no such work " + workUri);
+    }
+    return work;
+  }
+
+  get works(): readonly Work[] {
+    if (!this._works) {
+      this.readWorks();
+    }
+    return this._works!;
+  }
+
+  private get worksByCollectionUriIndex(): {
+    [index: string]: readonly Work[];
+  } {
+    if (!this._worksByCollectionUriIndex) {
+      this.readWorks();
+    }
+    return Dataset.requireNotNullish(this._worksByCollectionUriIndex);
+  }
+
+  private get worksByInstitutionUriIndex(): {
+    [index: string]: readonly Work[];
+  } {
+    if (!this._worksByInstitutionUriIndex) {
+      this.readWorks();
+    }
+    return Dataset.requireNotNullish(this._worksByInstitutionUriIndex);
+  }
+
+  private get worksByUriIndex(): {[index: string]: Work} {
+    if (!this._worksByUriIndex) {
+      this.readWorks();
+    }
+    return Dataset.requireNotNullish(this._worksByUriIndex);
   }
 }

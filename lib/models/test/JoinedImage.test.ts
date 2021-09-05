@@ -4,7 +4,7 @@ import {expect} from "chai";
 
 describe("JoinedImage", () => {
   // sut should be an original image
-  const sut = JoinedDataset.fromDataset(testDatasetTtl).objects[0].images.find(
+  const sut = JoinedDataset.fromDataset(testDatasetTtl).works[0].images.find(
     image => image.isOriginal
   )!;
 

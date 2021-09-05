@@ -18,14 +18,14 @@ describe("Dataset", () => {
       for (const collection of collections) {
         expect(sut.collectionByUri(collection.uri)).to.eq(collection);
 
-        const collectionObjects = sut.collectionObjects(collection.uri);
-        expect(collectionObjects).to.have.length(8);
-        for (const object of collectionObjects) {
-          expect(sut.objectByUri(object.uri)).to.eq(object);
+        const collectionWorks = sut.collectionWorks(collection.uri);
+        expect(collectionWorks).to.have.length(8);
+        for (const work of collectionWorks) {
+          expect(sut.workByUri(work.uri)).to.eq(work);
 
-          const objectImages = sut.imagesByDepictsUri(object.uri);
-          expect(objectImages).to.have.length(6);
-          for (const image of objectImages) {
+          const workImages = sut.imagesByDepictsUri(work.uri);
+          expect(workImages).to.have.length(6);
+          for (const image of workImages) {
             expect(sut.imageByUri(image.uri)).to.eq(image);
           }
         }
@@ -34,11 +34,11 @@ describe("Dataset", () => {
       const institutionImages = sut.imagesByDepictsUri(institution.uri);
       expect(institutionImages).to.have.length(6);
 
-      const institutionObjects = sut.institutionObjects(institution.uri);
-      expect(institutionObjects).to.have.length(8);
+      const institutionWorks = sut.institutionWorks(institution.uri);
+      expect(institutionWorks).to.have.length(8);
 
-      for (const object of institutionObjects) {
-        const rights = object.rights;
+      for (const work of institutionWorks) {
+        const rights = work.rights;
         expect(rights).to.not.be.null;
         expect(rights!.license).to.not.be.null;
         expect((rights!.license! as License).uri).to.not.be.empty;

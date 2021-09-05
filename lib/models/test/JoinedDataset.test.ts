@@ -11,14 +11,13 @@ describe("JoinedDataset", () => {
     );
   });
 
-  it("should get collection objects by URI", () => {
-    expect(sut.collectionObjects(testDatasetTtl.collections[0].uri)).to.not.be
+  it("should get collection works by URI", () => {
+    expect(sut.collectionWorks(testDatasetTtl.collections[0].uri)).to.not.be
       .empty;
   });
 
   it("should get depicting images", () => {
-    expect(sut.imagesByDepictsUri(testDatasetTtl.objects[0].uri)).to.not.be
-      .empty;
+    expect(sut.imagesByDepictsUri(testDatasetTtl.works[0].uri)).to.not.be.empty;
   });
 
   it("should get derived images", () => {
@@ -63,14 +62,14 @@ describe("JoinedDataset", () => {
     );
   });
 
-  it("should get an object by URI", () => {
-    expect(sut.objectByUri(testDatasetTtl.objects[0].uri).uri).to.eq(
-      testDatasetTtl.objects[0].uri
+  it("should get an work by URI", () => {
+    expect(sut.workByUri(testDatasetTtl.works[0].uri).uri).to.eq(
+      testDatasetTtl.works[0].uri
     );
   });
 
-  it("should get objects", () => {
-    expect(sut.objects).to.have.length(testDatasetTtl.objects.length);
+  it("should get works", () => {
+    expect(sut.works).to.have.length(testDatasetTtl.works.length);
   });
 
   it("should get a property definition by URI", () => {
