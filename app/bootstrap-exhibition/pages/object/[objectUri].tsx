@@ -5,6 +5,7 @@ import {
   Configuration,
   Dataset,
   DataSubsetter,
+  DCTERMS,
   IndexedDataset,
   JoinedDataset,
   License,
@@ -29,7 +30,6 @@ import {
 } from "reactstrap";
 import {ObjectImagesCarousel} from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
-import {DCTERMS} from "@paradicms/rdf";
 import fs from "fs";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();

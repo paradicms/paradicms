@@ -10,8 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@paradicms/models": "1.0.5",
-    "@paradicms/rdf": "1.0.5"
+    "@paradicms/models": "1.0.5"
   },
   "devDependencies": {
     "@types/qs": "^6.9.4",

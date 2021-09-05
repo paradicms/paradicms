@@ -1,7 +1,6 @@
 import {NamedModel} from "./NamedModel";
-import {RDFS} from "./vocabularies";
+import {RDF, RDFS} from "./vocabularies";
 import {Term} from "n3";
-import {RDF} from "@paradicms/rdf";
 import {Image} from "./Image";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
