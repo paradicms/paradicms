@@ -7,7 +7,6 @@ import {RightsStatement} from "./RightsStatement";
 import {PropertyDefinition} from "./PropertyDefinition";
 import {PropertyValueDefinition} from "./PropertyValueDefinition";
 import {NamedNode, Parser, ParserOptions, Store} from "n3";
-import {ModelNode} from "@paradicms/rdf/dist/ModelNode";
 import {PARADICMS, RDF} from "./vocabularies";
 
 /**
@@ -287,7 +286,7 @@ export class Dataset {
     this._imagesByOriginalImageUriIndex = imagesByOriginalImageUriIndex;
   }
 
-  protected readInstitution(node: ModelNode): Institution {
+  protected readInstitution(node: NamedNode): Institution {
     throw new EvalError();
   }
 

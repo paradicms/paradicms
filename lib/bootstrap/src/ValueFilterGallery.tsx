@@ -3,11 +3,11 @@ import {useCallback, useMemo} from "react";
 import {
   JoinedImage,
   JoinedValueFacet,
+  JoinedValueFacetValue,
   PrimitiveType,
   ValueFilter,
   ValueFilterState,
 } from "@paradicms/models";
-import {JoinedValueFacetValue} from "@paradicms/models/dist/JoinedValueFacetValue";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 import classNames from "classnames";
 import {
