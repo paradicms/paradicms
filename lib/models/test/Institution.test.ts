@@ -1,19 +1,16 @@
 import {expect} from "chai";
-import {testDatasetTtl} from "./testDataset";
-import {JoinedDataset} from "../src/JoinedDataset";
+import {testDataTtl} from "./testDataTtl";
+import {Dataset} from "../src";
 
-describe("JoinedInstitution", () => {
-  const institution = testDatasetTtl.institutions[0];
-  const sut = JoinedDataset.fromDataset(testDatasetTtl).institutionByUri(
-    institution.uri
-  );
+describe("Institution", () => {
+  const sut = Dataset.parse(testDataTtl).institutions[0];
 
   it("should get the institution's collections", () => {
     expect(sut.collections).to.not.be.empty;
   });
 
   it("should get the institution's name", () => {
-    expect(sut.name).to.eq(institution.name);
+    expect(sut.name).to.not.be.empty;
   });
 
   it("should get the institution's rights", () => {
@@ -25,10 +22,10 @@ describe("JoinedInstitution", () => {
       targetDimensions: {height: 200, width: 200},
     });
     expect(thumbnail).to.not.be.null;
-    expect(thumbnail!.asImage.depictsUri).to.eq(institution.uri);
+    expect(thumbnail!.depictsUri).to.eq(sut.uri);
   });
 
   it("should get the institution's uri", () => {
-    expect(sut.uri).to.eq(institution.uri);
+    expect(sut.uri).to.not.be.empty;
   });
 });

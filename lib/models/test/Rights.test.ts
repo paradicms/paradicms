@@ -1,13 +1,11 @@
 import {expect} from "chai";
-import {testDatasetTtl} from "./testDataset";
-import {JoinedDataset} from "../src/JoinedDataset";
 import {License} from "../src/License";
 import {RightsStatement} from "../src/RightsStatement";
+import {Dataset} from "../src";
+import {testDataTtl} from "./testDataTtl";
 
-describe("JoinedRights", () => {
-  const sut = JoinedDataset.fromDataset(testDatasetTtl).institutionByUri(
-    testDatasetTtl.institutions[0].uri
-  ).rights!;
+describe("Rights", () => {
+  const sut = Dataset.parse(testDataTtl).institutions[0].rights!;
 
   it("should have a joined license", () => {
     expect(sut.license).to.not.be.empty;
@@ -23,7 +21,6 @@ describe("JoinedRights", () => {
 
   it("should have a text holder", () => {
     expect(sut.holder).to.not.be.null;
-    expect(sut.holder!.type).to.eq("string");
-    expect(sut.holder!.value).to.not.be.empty;
+    expect(sut.holder!).to.not.be.empty;
   });
 });

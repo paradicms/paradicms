@@ -35,6 +35,10 @@ export class Work extends NamedModel {
     return this.requiredParentNamedNode(PARADICMS.institution).value;
   }
 
+  get originalImages(): readonly Image[] {
+    return this.images.filter(image => image.isOriginal);
+  }
+
   get page(): string | null {
     return this.optionalString(FOAF.page);
   }

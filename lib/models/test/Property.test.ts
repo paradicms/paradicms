@@ -1,14 +1,12 @@
 import {expect} from "chai";
-import {testDatasetTtl} from "./testDataset";
-import {JoinedDataset} from "../src/JoinedDataset";
 import {Dataset} from "../src";
+import {testDataTtl} from "./testDataTtl";
 
-describe("JoinedProperty", () => {
-  const work = testDatasetTtl.works[0];
-  const indexedTestDataset = new Dataset(testDatasetTtl);
-  const sut = new JoinedDataset(indexedTestDataset).workByUri(work.uri)
-    .properties[0];
-  const definition = indexedTestDataset.propertyDefinitionByUri(sut.uri)!;
+describe("Property", () => {
+  const dataset = Dataset.parse(testDataTtl);
+  const work = dataset.works[0];
+  const sut = work.properties[0];
+  const definition = dataset.propertyDefinitionByUri(sut.uri)!;
 
   it("should get the definition", () => {
     expect(sut.definition).to.not.be.null;

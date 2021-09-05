@@ -1,16 +1,12 @@
-import {testDatasetTtl} from "./testDataset";
-import {JoinedDataset} from "../src/JoinedDataset";
 import {expect} from "chai";
+import {testDataTtl} from "./testDataTtl";
+import {Dataset} from "../src";
 
-describe("JoinedImage", () => {
+describe("Image", () => {
   // sut should be an original image
-  const sut = JoinedDataset.fromDataset(testDatasetTtl).works[0].images.find(
+  const sut = Dataset.parse(testDataTtl).works[0].images.find(
     image => image.isOriginal
   )!;
-
-  it("should get as an Image interface", () => {
-    expect(sut.asImage.uri).to.eq(sut.uri);
-  });
 
   it("should get the image's original image", () => {
     expect(sut.originalImage.uri).to.eq(sut.uri);

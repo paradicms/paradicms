@@ -1,16 +1,11 @@
 import {expect} from "chai";
-import {testDatasetTtl} from "./testDataset";
-import {JoinedDataset} from "../src/JoinedDataset";
 import {Dataset} from "../src";
+import {testDataTtl} from "./testDataTtl";
 
-describe("JoinedPropertyValueDefinition", () => {
-  const propertyDefinition = new Dataset(
-    testDatasetTtl
-  ).propertyDefinitionByUri(
-    testDatasetTtl.propertyValueDefinitions[0].propertyUris[0]
-  )!;
-  const sut = JoinedDataset.fromDataset(testDatasetTtl).propertyDefinitionByUri(
-    propertyDefinition.uri
+describe("PropertyValueDefinition", () => {
+  const dataset = Dataset.parse(testDataTtl);
+  const sut = dataset.propertyDefinitionByUri(
+    dataset.propertyValueDefinitions[0].propertyUris[0]
   )!.values[0];
 
   it("should get the value", () => {
