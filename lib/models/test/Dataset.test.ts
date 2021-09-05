@@ -1,12 +1,14 @@
+import {Dataset} from "../src/Dataset";
+import {License} from "../src/License";
+import {RightsStatement} from "../src/RightsStatement";
+import {testDataTtl} from "./testDataTtl";
 import {expect} from "chai";
-import {testDataset} from "./testDataset";
-import {License, RightsStatement} from "../src";
 
 describe("Dataset", () => {
-  const sut = testDataset;
+  const sut = Dataset.parse(testDataTtl);
 
   it("should exercise all indices", () => {
-    const institutions = testDataset.institutions;
+    const institutions = sut.institutions;
     expect(institutions).to.have.length(2);
     for (const institution of institutions) {
       expect(sut.institutionByUri(institution.uri)).to.eq(institution);

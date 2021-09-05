@@ -227,7 +227,7 @@ export class Dataset {
   }
 
   protected readCollection(node: NamedNode): Collection {
-    throw new EvalError();
+    return new Collection({dataset: this, node});
   }
 
   private readCollections(): void {
@@ -254,7 +254,7 @@ export class Dataset {
   }
 
   protected readImage(node: NamedNode): Image {
-    throw new EvalError();
+    return new Image({dataset: this, node});
   }
 
   private readImages(): void {
@@ -287,7 +287,7 @@ export class Dataset {
   }
 
   protected readInstitution(node: NamedNode): Institution {
-    throw new EvalError();
+    return new Institution({dataset: this, node});
   }
 
   private readInstitutions() {
@@ -302,7 +302,7 @@ export class Dataset {
   }
 
   protected readLicense(node: NamedNode): License {
-    throw new EvalError();
+    return new License({dataset: this, node});
   }
 
   private readLicenses() {
@@ -334,7 +334,7 @@ export class Dataset {
   }
 
   protected readObject(node: NamedNode): Object {
-    throw new EvalError();
+    return new Object({dataset: this, node});
   }
 
   private readObjects(): void {
@@ -368,7 +368,7 @@ export class Dataset {
   }
 
   protected readPropertyDefinition(node: NamedNode): PropertyDefinition {
-    throw new EvalError();
+    return new PropertyDefinition({dataset: this, node});
   }
 
   private readPropertyDefinitions() {
@@ -385,7 +385,7 @@ export class Dataset {
   protected readPropertyValueDefinition(
     node: NamedNode
   ): PropertyValueDefinition {
-    throw new EvalError();
+    return new PropertyValueDefinition({dataset: this, node});
   }
 
   private readPropertyValueDefinitions() {
@@ -411,7 +411,7 @@ export class Dataset {
   }
 
   protected readRightsStatement(node: NamedNode): RightsStatement {
-    throw new EvalError();
+    return new RightsStatement({dataset: this, node});
   }
 
   private readRightsStatements() {
