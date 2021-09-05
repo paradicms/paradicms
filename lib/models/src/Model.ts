@@ -4,7 +4,7 @@ import {PARADICMS, RDF} from "./vocabularies";
 import {Property} from "./Property";
 
 export class Model {
-  protected readonly dataset: Dataset;
+  readonly dataset: Dataset;
   protected readonly _node: BlankNode | NamedNode;
   protected readonly store: Store;
 

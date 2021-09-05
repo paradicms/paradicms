@@ -39,7 +39,7 @@ export class Dataset {
   };
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
 
-  constructor(private readonly store: Store) {}
+  constructor(readonly store: Store) {}
 
   collectionObjects(collectionUri: string): readonly Object[] {
     return this.objectsByCollectionUriIndex[collectionUri] ?? [];

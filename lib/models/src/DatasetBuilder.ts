@@ -1,19 +1,20 @@
 import {Institution} from "./Institution";
 import {Image} from "./Image";
-import {Object} from "./Object";
+import {Object as ObjectModel} from "./Object";
 import {Dataset} from "./Dataset";
 import {Collection} from "./Collection";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
 import {PropertyDefinition} from "./PropertyDefinition";
 import {PropertyValueDefinition} from "./PropertyValueDefinition";
+import {Store} from "n3";
 
 export class DatasetBuilder {
   private collectionsByUri: {[index: string]: Collection} | undefined;
   private institutionsByUri: {[index: string]: Institution} | undefined;
   private imagesByUri: {[index: string]: Image} | undefined;
   private licensesByUri: {[index: string]: License} | undefined;
-  private objectsByUri: {[index: string]: Object} | undefined;
+  private objectsByUri: {[index: string]: ObjectModel} | undefined;
   private propertyDefinitionsByUri:
     | {[index: string]: PropertyDefinition}
     | undefined;
@@ -110,12 +111,12 @@ export class DatasetBuilder {
     return addedModels;
   }
 
-  addObject(object: Object) {
+  addObject(object: ObjectModel) {
     this.objectsByUri = DatasetBuilder.addNamedModel(this.objectsByUri, object);
     return this;
   }
 
-  addObjects(objects: readonly Object[]) {
+  addObjects(objects: readonly ObjectModel[]) {
     this.objectsByUri = DatasetBuilder.addNamedModels(
       this.objectsByUri,
       objects
@@ -174,31 +175,27 @@ export class DatasetBuilder {
   }
 
   build(): Dataset {
-    throw new EvalError();
-    // return {
-    //   collections: DatasetBuilder.buildNamedModels(this.collectionsByUri),
-    //   images: DatasetBuilder.buildNamedModels(this.imagesByUri),
-    //   institutions: DatasetBuilder.buildNamedModels(this.institutionsByUri),
-    //   licenses: DatasetBuilder.buildNamedModels(this.licensesByUri),
-    //   objects: DatasetBuilder.buildNamedModels(this.objectsByUri),
-    //   propertyDefinitions: DatasetBuilder.buildNamedModels(
-    //     this.propertyDefinitionsByUri
-    //   ),
-    //   propertyValueDefinitions: DatasetBuilder.buildNamedModels(
-    //     this.propertyValueDefinitionsByUri
-    //   ),
-    //   rightsStatements: DatasetBuilder.buildNamedModels(
-    //     this.rightsStatementsByUri
-    //   ),
-    // };
+    const store = new Store();
+    for (const modelsByUri of [
+      this.collectionsByUri,
+      this.imagesByUri,
+      this.institutionsByUri,
+      this.licensesByUri,
+      this.objectsByUri,
+      this.propertyDefinitionsByUri,
+      this.propertyValueDefinitionsByUri,
+      this.rightsStatementsByUri,
+    ]) {
+      if (!modelsByUri) {
+        continue;
+      }
+      for (const modelUri of Object.keys(modelsByUri)) {
+        const model = modelsByUri[modelUri];
+        store.addQuads(
+          model.dataset.store.getQuads(model.node, null, null, null)
+        );
+      }
+    }
+    return new Dataset(store);
   }
-  //
-  // private static buildNamedModels<ModelT extends {uri: string}>(
-  //   addedModels: {[index: string]: ModelT} | undefined
-  // ): readonly ModelT[] {
-  //   if (!addedModels) {
-  //     return [];
-  //   }
-  //   return Object.keys(addedModels).map(uri => addedModels[uri]);
-  // }
 }
