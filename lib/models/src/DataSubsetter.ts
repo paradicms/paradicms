@@ -1,4 +1,4 @@
-import {IndexedDataset} from "./IndexedDataset";
+import {Dataset} from "./IndexedDataset";
 import {Dataset} from "./Dataset";
 import {JoinedDataset} from "./JoinedDataset";
 import {Rights} from "./Rights";
@@ -27,7 +27,7 @@ import {selectThumbnail} from "./selectThumbnail";
 export class DataSubsetter {
   private readonly completeJoinedDataset: JoinedDataset;
 
-  constructor(private readonly completeIndexedDataset: IndexedDataset) {
+  constructor(private readonly completeIndexedDataset: Dataset) {
     this.completeJoinedDataset = new JoinedDataset(completeIndexedDataset);
   }
 
@@ -289,7 +289,7 @@ export class DataSubsetter {
   }
 
   static fromDataset(dataset: Dataset) {
-    return new DataSubsetter(new IndexedDataset(dataset));
+    return new DataSubsetter(new Dataset(dataset));
   }
 
   institutionDataset(

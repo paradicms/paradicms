@@ -1,11 +1,11 @@
 import {expect} from "chai";
 import {LunrObjectQueryService} from "../src/LunrObjectQueryService";
 import {defaultConfiguration, IndexedDataset} from "@paradicms/models";
-import {testDataset} from "../../models/test/testDataset";
+import {testDatasetTtl} from "../../models/test/testDataset";
 
 describe("LunrObjectQueryService", () => {
   const configuration = defaultConfiguration.objectSearch;
-  const dataset = new IndexedDataset(testDataset);
+  const dataset = new IndexedDataset(testDatasetTtl);
   const sut = new LunrObjectQueryService({
     configuration,
     dataset,

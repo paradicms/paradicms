@@ -1,10 +1,10 @@
-import {testDataset} from "./testDataset";
+import {testDatasetTtl} from "./testDataset";
 import {JoinedDataset} from "../src/JoinedDataset";
 import {expect} from "chai";
 
 describe("JoinedImage", () => {
   // sut should be an original image
-  const sut = JoinedDataset.fromDataset(testDataset).objects[0].images.find(
+  const sut = JoinedDataset.fromDataset(testDatasetTtl).objects[0].images.find(
     image => image.isOriginal
   )!;
 

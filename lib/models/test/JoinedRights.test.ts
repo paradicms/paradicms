@@ -1,12 +1,12 @@
 import {expect} from "chai";
-import {testDataset} from "./testDataset";
+import {testDatasetTtl} from "./testDataset";
 import {JoinedDataset} from "../src/JoinedDataset";
 import {License} from "../src/License";
 import {RightsStatement} from "../src/RightsStatement";
 
 describe("JoinedRights", () => {
-  const sut = JoinedDataset.fromDataset(testDataset).institutionByUri(
-    testDataset.institutions[0].uri
+  const sut = JoinedDataset.fromDataset(testDatasetTtl).institutionByUri(
+    testDatasetTtl.institutions[0].uri
   ).rights!;
 
   it("should have a joined license", () => {

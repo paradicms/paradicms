@@ -1,15 +1,15 @@
 import {expect} from "chai";
-import {testDataset} from "./testDataset";
+import {testDatasetTtl} from "./testDataset";
 import {JoinedDataset} from "../src/JoinedDataset";
-import {IndexedDataset} from "../src";
+import {Dataset} from "../src";
 
 describe("JoinedPropertyDefinition", () => {
-  const propertyDefinition = new IndexedDataset(
-    testDataset
+  const propertyDefinition = new Dataset(
+    testDatasetTtl
   ).propertyDefinitionByUri(
-    testDataset.propertyValueDefinitions[0].propertyUris[0]
+    testDatasetTtl.propertyValueDefinitions[0].propertyUris[0]
   )!;
-  const sut = JoinedDataset.fromDataset(testDataset).propertyDefinitionByUri(
+  const sut = JoinedDataset.fromDataset(testDatasetTtl).propertyDefinitionByUri(
     propertyDefinition.uri
   )!;
 

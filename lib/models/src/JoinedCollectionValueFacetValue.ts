@@ -1,20 +1,20 @@
 import {JoinedValueFacetValue} from "./JoinedValueFacetValue";
-import {JoinedCollection} from "./JoinedCollection";
 import {ThumbnailSelector} from "./ThumbnailSelector";
-import {JoinedImage} from "./JoinedImage";
+import {Image} from "./Image";
+import {Collection} from "./Collection";
 
 export class JoinedCollectionValueFacetValue extends JoinedValueFacetValue<
   string
 > {
-  get collection(): JoinedCollection {
-    return this.joinedDataset.collectionByUri(this.valueFacetValue.value);
+  get collection(): Collection {
+    return this.dataset.collectionByUri(this.valueFacetValue.value);
   }
 
-  get label() {
+  get label(): string {
     return this.collection.title;
   }
 
-  thumbnail(selector: ThumbnailSelector): JoinedImage | null {
+  thumbnail(selector: ThumbnailSelector): Image | null {
     return this.collection.thumbnail(selector);
   }
 }

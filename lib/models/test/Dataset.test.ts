@@ -1,12 +1,12 @@
-import {IndexedDataset} from "../src/IndexedDataset";
+import {Dataset} from "../src/IndexedDataset";
 import {expect} from "chai";
-import {testDataset} from "./testDataset";
+import {testDatasetTtl} from "./testDataset";
 
-describe("IndexedDataset", () => {
-  const sut = new IndexedDataset(testDataset);
+describe("Dataset", () => {
+  const sut = new Dataset(testDatasetTtl);
 
   it("should exercise all indices", () => {
-    const institutions = testDataset.institutions;
+    const institutions = testDatasetTtl.institutions;
     expect(institutions).to.have.length(2);
     for (const institution of institutions) {
       expect(sut.institutionByUri(institution.uri)).to.eq(institution);
