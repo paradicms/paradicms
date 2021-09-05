@@ -1,26 +1,26 @@
-import {ObjectQueryService} from "@paradicms/services";
 import {
   CollectionValueFacet,
   CollectionValueFilter,
+  Dataset,
   DataSubsetter,
   Facet,
   Filter,
-  IndexedDataset,
   InstitutionValueFacet,
   InstitutionValueFilter,
-  Object,
-  ObjectJoinSelector,
-  ObjectQuery,
-  ObjectQueryResults,
-  ObjectSearchConfiguration,
   PrimitiveType,
   StringPropertyValueFacet,
   StringPropertyValueFilter,
   ValueFacetValue,
   ValueFilter,
+  Work,
+  WorkJoinSelector,
+  WorkQuery,
+  WorkQueryResults,
+  WorkSearchConfiguration,
 } from "@paradicms/models";
 import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
+import {WorkQueryService} from "@paradicms/services";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -56,7 +56,7 @@ const testValueFilter = <T extends PrimitiveType>(
     return true;
   }
   if (excludeValues.length > 0) {
-    // If an object has any value that is excluded, then exclude the object
+    // If an work has any value that is excluded, then exclude the work
     for (const value of values) {
       if (excludeValues.some(excludeValue => excludeValue === value)) {
         return false;
@@ -65,8 +65,8 @@ const testValueFilter = <T extends PrimitiveType>(
   }
 
   if (includeValues.length > 0) {
-    // If the object has any value that is included, then include the object
-    // Conversely, if any values are included and an object doesn't have one of them, exclude the object.
+    // If the work has any value that is included, then include the work
+    // Conversely, if any values are included and an work doesn't have one of them, exclude the work.
     let include = false;
     for (const value of values) {
       if (includeValues.some(includeValue => includeValue === value)) {
@@ -82,18 +82,18 @@ const testValueFilter = <T extends PrimitiveType>(
   return true;
 };
 
-export class LunrObjectQueryService implements ObjectQueryService {
-  private readonly dataset: IndexedDataset;
+export class LunrWorkQueryService implements WorkQueryService {
+  private readonly dataset: Dataset;
   private readonly index: Index;
-  private readonly objectJoinSelector?: ObjectJoinSelector;
+  private readonly workJoinSelector?: WorkJoinSelector;
 
   constructor(kwds: {
-    configuration: ObjectSearchConfiguration;
-    dataset: IndexedDataset;
-    objectJoinSelector?: ObjectJoinSelector;
+    configuration: WorkSearchConfiguration;
+    dataset: Dataset;
+    workJoinSelector?: WorkJoinSelector;
   }) {
     this.dataset = kwds.dataset;
-    this.objectJoinSelector = kwds.objectJoinSelector;
+    this.workJoinSelector = kwds.workJoinSelector;
 
     this.index = lunr(function() {
       this.field("abstract");
@@ -106,13 +106,13 @@ export class LunrObjectQueryService implements ObjectQueryService {
       }
       this.ref("uri");
 
-      for (const object of kwds.dataset.objects) {
-        const doc: any = {title: object.title, uri: object.uri};
-        if (object.abstract) {
-          doc.abstract = object.abstract;
+      for (const work of kwds.dataset.works) {
+        const doc: any = {title: work.title, uri: work.uri};
+        if (work.abstract) {
+          doc.abstract = work.abstract;
         }
-        if (object.properties && object.properties.length > 0) {
-          for (const property of object.properties) {
+        if (work.properties && work.properties.length > 0) {
+          for (const property of work.properties) {
             const fieldName = propertyFieldNamesByUri[property.uri];
             if (!fieldName) {
               continue;
@@ -125,9 +125,9 @@ export class LunrObjectQueryService implements ObjectQueryService {
     });
   }
 
-  private facetizeObjects(kwds: {
+  private facetizeWorks(kwds: {
     filters: readonly Filter[];
-    objects: readonly Object[];
+    works: readonly Work[];
   }): readonly Facet[] {
     const incrementValueCount = (
       countsByValue: {[index: string]: number},
@@ -150,16 +150,16 @@ export class LunrObjectQueryService implements ObjectQueryService {
         value,
       }));
 
-    const {filters, objects} = kwds;
+    const {filters, works} = kwds;
     const facets: Facet[] = [];
     for (const filter of filters) {
       switch (filter.type) {
         case "CollectionValue": {
           const countsByValue: {[index: string]: number} = {};
           let unknownCount: number = 0;
-          for (const object of objects) {
-            if (object.collectionUris) {
-              for (const collectionUri of object.collectionUris) {
+          for (const work of works) {
+            if (work.collectionUris) {
+              for (const collectionUri of work.collectionUris) {
                 incrementValueCount(countsByValue, collectionUri);
               }
             } else {
@@ -176,8 +176,8 @@ export class LunrObjectQueryService implements ObjectQueryService {
         }
         case "InstitutionValue": {
           const countsByValue: {[index: string]: number} = {};
-          for (const object of objects) {
-            incrementValueCount(countsByValue, object.institutionUri);
+          for (const work of works) {
+            incrementValueCount(countsByValue, work.institutionUri);
           }
           const facet: InstitutionValueFacet = {
             type: "InstitutionValue",
@@ -191,18 +191,18 @@ export class LunrObjectQueryService implements ObjectQueryService {
           const concreteFilter: StringPropertyValueFilter = filter as StringPropertyValueFilter;
           let unknownCount: number = 0;
           const countsByValue: {[index: string]: number} = {};
-          for (const object of objects) {
-            let objectHasProperty = false;
-            for (const property of object.properties ?? []) {
+          for (const work of works) {
+            let workHasProperty = false;
+            for (const property of work.properties ?? []) {
               if (property.uri === concreteFilter.propertyUri) {
                 incrementValueCount(
                   countsByValue,
                   property.value.value.toString()
                 );
-                objectHasProperty = true;
+                workHasProperty = true;
               }
             }
-            if (!objectHasProperty) {
+            if (!workHasProperty) {
               unknownCount++;
             }
           }
@@ -220,34 +220,34 @@ export class LunrObjectQueryService implements ObjectQueryService {
     return facets;
   }
 
-  private filterObjects(kwds: {
+  private filterWorks(kwds: {
     filters: readonly Filter[];
-    objects: readonly Object[];
-  }): readonly Object[] {
-    const {filters, objects} = kwds;
-    let filteredObjects = objects;
+    works: readonly Work[];
+  }): readonly Work[] {
+    const {filters, works} = kwds;
+    let filteredWorks = works;
     for (const filter of filters) {
       switch (filter.type) {
         case "CollectionValue":
-          filteredObjects = filteredObjects.filter(object =>
+          filteredWorks = filteredWorks.filter(work =>
             testValueFilter(
               filter as CollectionValueFilter,
-              object.collectionUris
+              work.collectionUris
             )
           );
           break;
         case "InstitutionValue":
-          filteredObjects = filteredObjects.filter(object =>
+          filteredWorks = filteredWorks.filter(work =>
             testValueFilter(filter as InstitutionValueFilter, [
-              object.institutionUri,
+              work.institutionUri,
             ])
           );
           break;
         case "StringPropertyValue": {
-          filteredObjects = filteredObjects.filter(object =>
+          filteredWorks = filteredWorks.filter(work =>
             testValueFilter(
               filter as StringPropertyValueFilter,
-              (object.properties ?? [])
+              (work.properties ?? [])
                 .filter(
                   property =>
                     property.uri ===
@@ -259,14 +259,14 @@ export class LunrObjectQueryService implements ObjectQueryService {
         }
       }
     }
-    return filteredObjects;
+    return filteredWorks;
   }
 
-  getObjects(kwds: {
+  getWorks(kwds: {
     limit: number;
     offset: number;
-    query: ObjectQuery;
-  }): Promise<ObjectQueryResults> {
+    query: WorkQuery;
+  }): Promise<WorkQueryResults> {
     const {limit, offset, query} = kwds;
 
     invariant(!!query, "query must be defined");
@@ -274,58 +274,56 @@ export class LunrObjectQueryService implements ObjectQueryService {
     invariant(offset >= 0, "offset must be >= 0");
 
     return new Promise((resolve, reject) => {
-      // Calculate the universe of objects
-      let allObjects: readonly Object[];
+      // Calculate the universe of works
+      let allWorks: readonly Work[];
       if (query.text) {
         // Anything matching the fulltext search
-        allObjects = this.index
+        allWorks = this.index
           .search(query.text)
-          .map(({ref}) => this.dataset.objectByUri(ref));
+          .map(({ref}) => this.dataset.workByUri(ref));
       } else {
-        // All objects
-        allObjects = this.dataset.objects;
+        // All works
+        allWorks = this.dataset.works;
       }
 
       // Calculate facets on the universe before filtering it
-      const facets = this.facetizeObjects({
+      const facets = this.facetizeWorks({
         filters: query.filters,
-        objects: allObjects,
+        works: allWorks,
       });
 
       console.debug("Search facets:", JSON.stringify(facets));
 
-      const filteredObjects = this.filterObjects({
+      const filteredWorks = this.filterWorks({
         filters: query.filters,
-        objects: allObjects,
+        works: allWorks,
       });
 
-      console.debug("Search filtered objects count:", filteredObjects.length);
+      console.debug("Search filtered works count:", filteredWorks.length);
 
-      const slicedObjects = filteredObjects.slice(offset, offset + limit);
+      const slicedWorks = filteredWorks.slice(offset, offset + limit);
 
-      console.debug("Search sliced objects count:", slicedObjects.length);
+      console.debug("Search sliced works count:", slicedWorks.length);
 
-      const slicedObjectsDataset = new DataSubsetter(
-        this.dataset
-      ).objectsDataset(
-        slicedObjects.map(object => object.uri),
-        this.objectJoinSelector
+      const slicedWorksDataset = new DataSubsetter(this.dataset).worksDataset(
+        slicedWorks.map(work => work.uri),
+        this.workJoinSelector
       );
 
       console.debug(
         "Search results dataset:",
-        Object.keys(slicedObjectsDataset)
+        Object.keys(slicedWorksDataset)
           .map(
             key =>
-              `${key}: ${((slicedObjectsDataset as any)[key] as any[]).length}`
+              `${key}: ${((slicedWorksDataset as any)[key] as any[]).length}`
           )
           .join(", ")
       );
 
       return resolve({
-        dataset: slicedObjectsDataset,
+        dataset: slicedWorksDataset,
         facets,
-        totalObjectsCount: filteredObjects.length,
+        totalWorksCount: filteredWorks.length,
       });
     });
   }

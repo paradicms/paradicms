@@ -1,29 +1,29 @@
 import {expect} from "chai";
-import {LunrObjectQueryService} from "../src/LunrObjectQueryService";
-import {defaultConfiguration, IndexedDataset} from "@paradicms/models";
-import {testDatasetTtl} from "../../models/test/testDataset";
+import {LunrWorkQueryService} from "../src/LunrWorkQueryService";
+import {Dataset, defaultConfiguration} from "@paradicms/models";
+import {testDataTtl} from "../../models/test/testDataTtl";
 
-describe("LunrObjectQueryService", () => {
-  const configuration = defaultConfiguration.objectSearch;
-  const dataset = new IndexedDataset(testDatasetTtl);
-  const sut = new LunrObjectQueryService({
+describe("LunrWorkQueryService", () => {
+  const configuration = defaultConfiguration.workSearch;
+  const dataset = Dataset.parse(testDataTtl);
+  const sut = new LunrWorkQueryService({
     configuration,
     dataset,
   });
 
-  it("should return at least one object from an empty query", async () => {
-    const result = await sut.getObjects({
+  it("should return at least one work from an empty query", async () => {
+    const result = await sut.getWorks({
       query: {
         filters: configuration.filters,
       },
       offset: 0,
       limit: Number.MAX_SAFE_INTEGER,
     });
-    expect(result.dataset.objects).to.not.be.empty;
+    expect(result.dataset.works).to.not.be.empty;
   });
 
-  it("should return fewer objects from a freetext query", async () => {
-    const allResult = await sut.getObjects({
+  it("should return fewer works from a freetext query", async () => {
+    const allResult = await sut.getWorks({
       query: {
         filters: configuration.filters,
       },
@@ -31,19 +31,19 @@ describe("LunrObjectQueryService", () => {
       limit: Number.MAX_SAFE_INTEGER,
     });
 
-    const fewerResult = await sut.getObjects({
+    const fewerResult = await sut.getWorks({
       query: {
         filters: configuration.filters,
-        text: "Institution0Collection0Object2",
+        text: "Institution0Collection0Work2",
       },
       offset: 0,
       limit: Number.MAX_SAFE_INTEGER,
     });
 
-    expect(allResult.dataset.objects).to.not.be.empty;
-    expect(fewerResult.dataset.objects).to.not.be.empty;
-    expect(fewerResult.dataset.objects.length).to.be.lessThan(
-      allResult.dataset.objects.length
+    expect(allResult.dataset.works).to.not.be.empty;
+    expect(fewerResult.dataset.works).to.not.be.empty;
+    expect(fewerResult.dataset.works.length).to.be.lessThan(
+      allResult.dataset.works.length
     );
   });
 });
