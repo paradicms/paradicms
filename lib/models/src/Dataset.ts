@@ -6,7 +6,7 @@ import {Object} from "./Object";
 import {RightsStatement} from "./RightsStatement";
 import {PropertyDefinition} from "./PropertyDefinition";
 import {PropertyValueDefinition} from "./PropertyValueDefinition";
-import {NamedNode, Store} from "n3";
+import {NamedNode, Parser, ParserOptions, Store} from "n3";
 import {ModelNode} from "@paradicms/rdf/dist/ModelNode";
 import {PARADICMS, RDF} from "./vocabularies";
 
@@ -188,6 +188,13 @@ export class Dataset {
       this.readObjects();
     }
     return Dataset.requireNotNullish(this._objectsByUriIndex);
+  }
+
+  static parse(input: string, options?: ParserOptions): Dataset {
+    const parser = new Parser(options);
+    const store = new Store();
+    store.addQuads(parser.parse(input));
+    return new Dataset(store);
   }
 
   propertyDefinitionByUri(

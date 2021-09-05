@@ -4,6 +4,7 @@ import {DCTERMS, PARADICMS} from "./vocabularies";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Image} from "./Image";
+import {Object} from "./Object";
 
 export class Collection extends NamedModel {
   get institution(): Institution {

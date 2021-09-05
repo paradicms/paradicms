@@ -1,5 +1,4 @@
 import {Configuration} from "./Configuration";
-import {PropertyDefinition} from "./PropertyDefinition";
 import {InstitutionValueFilter} from "./InstitutionValueFilter";
 import {CollectionValueFilter} from "./CollectionValueFilter";
 import {StringPropertyValueFilter} from "./StringPropertyValueFilter";
@@ -16,7 +15,7 @@ const institutionValueFilter: InstitutionValueFilter = {
   type: "InstitutionValue",
 };
 
-const filterablePropertyDefinitions: readonly PropertyDefinition[] = [
+const filterablePropertyDefinitions = [
   {
     label: "Medium",
     uri: DCTERMS_NS + "medium",

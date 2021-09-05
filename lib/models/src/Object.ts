@@ -5,6 +5,8 @@ import {Institution} from "./Institution";
 import {Property} from "./Property";
 import {Rights} from "./Rights";
 import {Image} from "./Image";
+import {ThumbnailSelector} from "./ThumbnailSelector";
+import {selectThumbnail} from "./selectThumbnail";
 
 export class Object extends NamedModel {
   get abstract(): string | null {
@@ -43,6 +45,10 @@ export class Object extends NamedModel {
 
   get rights(): Rights | null {
     return this._rights;
+  }
+
+  thumbnail(selector: ThumbnailSelector): Image | null {
+    return selectThumbnail(this.images, selector);
   }
 
   get title(): string {

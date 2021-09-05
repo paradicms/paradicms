@@ -174,30 +174,31 @@ export class DatasetBuilder {
   }
 
   build(): Dataset {
-    return {
-      collections: DatasetBuilder.buildNamedModels(this.collectionsByUri),
-      images: DatasetBuilder.buildNamedModels(this.imagesByUri),
-      institutions: DatasetBuilder.buildNamedModels(this.institutionsByUri),
-      licenses: DatasetBuilder.buildNamedModels(this.licensesByUri),
-      objects: DatasetBuilder.buildNamedModels(this.objectsByUri),
-      propertyDefinitions: DatasetBuilder.buildNamedModels(
-        this.propertyDefinitionsByUri
-      ),
-      propertyValueDefinitions: DatasetBuilder.buildNamedModels(
-        this.propertyValueDefinitionsByUri
-      ),
-      rightsStatements: DatasetBuilder.buildNamedModels(
-        this.rightsStatementsByUri
-      ),
-    };
+    throw new EvalError();
+    // return {
+    //   collections: DatasetBuilder.buildNamedModels(this.collectionsByUri),
+    //   images: DatasetBuilder.buildNamedModels(this.imagesByUri),
+    //   institutions: DatasetBuilder.buildNamedModels(this.institutionsByUri),
+    //   licenses: DatasetBuilder.buildNamedModels(this.licensesByUri),
+    //   objects: DatasetBuilder.buildNamedModels(this.objectsByUri),
+    //   propertyDefinitions: DatasetBuilder.buildNamedModels(
+    //     this.propertyDefinitionsByUri
+    //   ),
+    //   propertyValueDefinitions: DatasetBuilder.buildNamedModels(
+    //     this.propertyValueDefinitionsByUri
+    //   ),
+    //   rightsStatements: DatasetBuilder.buildNamedModels(
+    //     this.rightsStatementsByUri
+    //   ),
+    // };
   }
-
-  private static buildNamedModels<ModelT extends {uri: string}>(
-    addedModels: {[index: string]: ModelT} | undefined
-  ): readonly ModelT[] {
-    if (!addedModels) {
-      return [];
-    }
-    return Object.keys(addedModels).map(uri => addedModels[uri]);
-  }
+  //
+  // private static buildNamedModels<ModelT extends {uri: string}>(
+  //   addedModels: {[index: string]: ModelT} | undefined
+  // ): readonly ModelT[] {
+  //   if (!addedModels) {
+  //     return [];
+  //   }
+  //   return Object.keys(addedModels).map(uri => addedModels[uri]);
+  // }
 }

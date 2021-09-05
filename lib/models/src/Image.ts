@@ -8,7 +8,7 @@ import {selectThumbnail} from "./selectThumbnail";
 
 export class Image extends NamedModel {
   get depictsUri() {
-    return this.requiredParentNamedNode(FOAF.depicts);
+    return this.requiredParentNamedNode(FOAF.depicts).value;
   }
 
   get derivedImages(): readonly Image[] {
@@ -72,9 +72,9 @@ export class Image extends NamedModel {
       : null;
   }
 
-  get originalImage(): Image | null {
+  get originalImage(): Image {
     const originalImageUri = this.originalImageUri;
-    return originalImageUri ? this.dataset.imageByUri(originalImageUri) : null;
+    return originalImageUri ? this.dataset.imageByUri(originalImageUri) : this;
   }
 
   static placeholderSrc(dimensions: ImageDimensions) {

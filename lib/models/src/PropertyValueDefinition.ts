@@ -15,14 +15,14 @@ export class PropertyValueDefinition extends NamedModel {
     return this.optionalString(RDFS.label);
   }
 
-  get propertyUris(): string | null {
-    const propertyUris = this.parentNamedNodes(RDF.predicate);
-    if (propertyUris.length === 0) {
+  get propertyUris(): readonly string[] {
+    const propertyNamedNodes = this.parentNamedNodes(RDF.predicate);
+    if (propertyNamedNodes.length === 0) {
       throw new RangeError(
         "property value definition must link to one or more property definitions"
       );
     }
-    return propertyUris[0].value;
+    return propertyNamedNodes.map(node => node.value);
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {
