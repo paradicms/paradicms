@@ -8,14 +8,6 @@ import {PropertyValueDefinition} from "./PropertyValueDefinition";
 import {NamedNode, Parser, ParserOptions, Store} from "n3";
 import {PARADICMS, RDF} from "./vocabularies";
 import {Work} from "./Work";
-import {Facet} from "./Facet";
-import {JoinedFacet} from "./JoinedFacet";
-import {JoinedCollectionValueFacet} from "./JoinedCollectionValueFacet";
-import {CollectionValueFacet} from "./CollectionValueFacet";
-import {JoinedInstitutionValueFacet} from "./JoinedInstitutionValueFacet";
-import {InstitutionValueFacet} from "./InstitutionValueFacet";
-import {JoinedStringPropertyValueFacet} from "./JoinedStringPropertyValueFacet";
-import {StringPropertyValueFacet} from "./StringPropertyValueFacet";
 
 /**
  * Lazily indexes the contents of an immutable Dataset to provide quick lookups and subsetting.
@@ -89,26 +81,6 @@ export class Dataset {
       this.readCollections();
     }
     return Dataset.requireNotNullish(this._collectionsByUriIndex);
-  }
-
-  facet(facet: Facet): JoinedFacet {
-    switch (facet.type) {
-      case "CollectionValue":
-        return new JoinedCollectionValueFacet(
-          this,
-          facet as CollectionValueFacet
-        );
-      case "InstitutionValue":
-        return new JoinedInstitutionValueFacet(
-          this,
-          facet as InstitutionValueFacet
-        );
-      case "StringPropertyValue":
-        return new JoinedStringPropertyValueFacet(
-          this,
-          facet as StringPropertyValueFacet
-        );
-    }
   }
 
   imageByUri(imageUri: string): Image {
