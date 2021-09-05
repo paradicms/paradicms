@@ -6,7 +6,6 @@ import {Property} from "./Property";
 export class Model {
   readonly dataset: Dataset;
   protected readonly _node: BlankNode | NamedNode;
-  protected readonly store: Store;
 
   private static createIgnoredPropertyUris(): Set<string> {
     const result = new Set<string>();
@@ -18,14 +17,9 @@ export class Model {
 
   private static readonly IGNORED_PROPERTY_URIS = Model.createIgnoredPropertyUris();
 
-  constructor(kwds: {
-    dataset: Dataset;
-    node: BlankNode | NamedNode;
-    store: Store;
-  }) {
+  constructor(kwds: {dataset: Dataset; node: BlankNode | NamedNode}) {
     this.dataset = kwds.dataset;
     this._node = kwds.node;
-    this.store = kwds.store;
   }
 
   get node(): BlankNode | NamedNode {
@@ -126,5 +120,9 @@ export class Model {
       );
     }
     return term;
+  }
+
+  protected get store(): Store {
+    return this.dataset.store;
   }
 }

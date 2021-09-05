@@ -1,12 +1,12 @@
-import {Dataset} from "../src/IndexedDataset";
 import {expect} from "chai";
-import {testDatasetTtl} from "./testDataset";
+import {testDataset} from "./testDataset";
+import {License, RightsStatement} from "../src";
 
 describe("Dataset", () => {
-  const sut = new Dataset(testDatasetTtl);
+  const sut = testDataset;
 
   it("should exercise all indices", () => {
-    const institutions = testDatasetTtl.institutions;
+    const institutions = testDataset.institutions;
     expect(institutions).to.have.length(2);
     for (const institution of institutions) {
       expect(sut.institutionByUri(institution.uri)).to.eq(institution);
@@ -34,18 +34,15 @@ describe("Dataset", () => {
 
       const institutionObjects = sut.institutionObjects(institution.uri);
       expect(institutionObjects).to.have.length(8);
-    }
 
-    expect(sut.licenses).to.not.be.empty;
-    for (const license of sut.licenses) {
-      expect(sut.licenseByUri(license.uri)).to.eq(license);
-    }
-
-    expect(sut.rightsStatements).to.not.be.empty;
-    for (const rightsStatement of sut.rightsStatements) {
-      expect(sut.rightsStatementByUri(rightsStatement.uri)).to.eq(
-        rightsStatement
-      );
+      for (const object of institutionObjects) {
+        const rights = object.rights;
+        expect(rights).to.not.be.null;
+        expect(rights!.license).to.not.be.null;
+        expect((rights!.license! as License).uri).to.not.be.empty;
+        expect(rights!.statement).to.not.be.null;
+        expect((rights!.statement! as RightsStatement).uri).to.not.be.empty;
+      }
     }
   });
 });

@@ -11,7 +11,6 @@ export class NamedModel extends Model {
     const rights = new Rights({
       dataset: this.dataset,
       node: this.node,
-      store: this.store,
     });
 
     if (rights.creator || rights.holder || rights.license || rights.statement) {

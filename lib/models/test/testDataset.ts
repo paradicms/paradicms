@@ -1,4 +1,6 @@
-export const testDataTtl: string = ` 
+import {Dataset} from "../src";
+
+export const testDataset: Dataset = Dataset.parse(` 
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix exif: <http://www.w3.org/2003/12/exif/ns#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -9612,4 +9614,4 @@ vra:material a paradicms:PropertyDefinition ;
         "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
     skos:prefLabel "In Copyright - Educational Use Permitted" ;
     skos:scopeNote "This Rights Statement can be used only for copyrighted Items for which the organization making the Item available is the rights-holder or has been explicitly authorized by the rights-holder(s) to allow third parties to use their Work(s) for educational purposes without first obtaining permission." .
-`;
+`);

@@ -20,7 +20,9 @@ export class Collection extends NamedModel {
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {
-    const collectionImages = this.dataset.imagesByDepictsUri(this.uri);
+    const collectionImages: readonly Image[] = this.dataset.imagesByDepictsUri(
+      this.uri
+    );
     if (collectionImages.length > 0) {
       const thumbnail = selectThumbnail(collectionImages, selector);
       if (thumbnail) {

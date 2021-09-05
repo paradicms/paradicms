@@ -6,7 +6,7 @@
     "downlevelIteration": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "module": "es2015",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitThis": true,
     "noImplicitAny": true,

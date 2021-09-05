@@ -20,7 +20,9 @@ export class Institution extends NamedModel {
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {
-    const institutionImages = this.dataset.imagesByDepictsUri(this.uri);
+    const institutionImages: readonly Image[] = this.dataset.imagesByDepictsUri(
+      this.uri
+    );
     if (institutionImages.length > 0) {
       const thumbnail = selectThumbnail(institutionImages, selector);
       if (thumbnail) {
