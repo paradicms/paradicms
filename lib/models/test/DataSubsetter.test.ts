@@ -2,11 +2,28 @@ import {expect} from "chai";
 import {DataSubsetter} from "../src/DataSubsetter";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {testDataTtl} from "./testDataTtl";
-import {Dataset} from "../src";
+import {Dataset, License, RightsStatement} from "../src";
+import {NamedModel} from "../src/NamedModel";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
 };
+
+const expectModelsDeepEq = <ModelT extends NamedModel>(
+  leftModels: readonly ModelT[],
+  rightModels: readonly ModelT[]
+) =>
+  expect(
+    leftModels
+      .map(model => model.uri)
+      .concat()
+      .sort()
+  ).to.deep.eq(
+    rightModels
+      .map(model => model.uri)
+      .concat()
+      .sort()
+  );
 
 describe("DataSubsetter", () => {
   const testDataset = Dataset.parse(testDataTtl);
@@ -17,12 +34,13 @@ describe("DataSubsetter", () => {
       testDataset.institutions.map(institution => institution.uri),
       {thumbnail: THUMBNAIL_SELECTOR}
     );
-    expect(dataset.images).to.deep.eq(
+    expectModelsDeepEq(
+      dataset.images,
       testDataset.institutions.map(
         institution => institution.thumbnail(THUMBNAIL_SELECTOR)!
       )
     );
-    expect(dataset.institutions).to.deep.eq(testDataset.institutions);
+    expectModelsDeepEq(dataset.institutions, testDataset.institutions);
   });
 
   it("should get an institution with its collections and their thumbnails (institution page)", () => {
@@ -30,7 +48,8 @@ describe("DataSubsetter", () => {
     const dataset = sut.institutionDataset(institution.uri, {
       collections: {thumbnail: THUMBNAIL_SELECTOR},
     });
-    expect(dataset.collections).to.deep.eq(
+    expectModelsDeepEq(
+      dataset.collections,
       testDataset.collections.filter(
         collection => collection.institutionUri === institution.uri
       )
@@ -54,7 +73,7 @@ describe("DataSubsetter", () => {
         thumbnail: THUMBNAIL_SELECTOR,
       },
     });
-    expect(dataset.collections).to.deep.eq([collection]);
+    expectModelsDeepEq(dataset.collections, [collection]);
     const images = testDataset
       .collectionWorks(collection.uri)
       .map(work => work.thumbnail(THUMBNAIL_SELECTOR)!);
@@ -65,19 +84,14 @@ describe("DataSubsetter", () => {
         images.push(propertyDefinitionValue.thumbnail(THUMBNAIL_SELECTOR)!);
       }
     }
-    expect(
-      dataset.images
-        .concat()
-        .sort((left, right) => left.uri.localeCompare(right.uri))
-    ).to.deep.eq(
-      images.sort((left, right) => left.uri.localeCompare(right.uri))
-    );
-    expect(dataset.licenses).to.deep.eq([
+    expectModelsDeepEq(dataset.images, images);
+    expectModelsDeepEq(dataset.licenses, [
       testDataset.licenses.find(
         license => license.uri === "http://creativecommons.org/licenses/nc/1.0/"
       )!,
     ]);
-    expect(dataset.works).to.deep.eq(
+    expectModelsDeepEq(
+      dataset.works,
       testDataset.works.filter(work =>
         work.collectionUris.some(
           collectionUri => collectionUri === collection.uri
@@ -86,7 +100,7 @@ describe("DataSubsetter", () => {
     );
     expect(dataset.propertyDefinitions).to.not.be.empty;
     expect(dataset.propertyValueDefinitions).to.not.be.empty;
-    expect(dataset.rightsStatements).to.deep.eq([
+    expectModelsDeepEq(dataset.rightsStatements, [
       testDataset.rightsStatements.find(
         rightsStatement =>
           rightsStatement.uri ===
@@ -103,32 +117,36 @@ describe("DataSubsetter", () => {
       allImages: true,
       propertyDefinitions: {},
     });
-    expect(dataset.collections).to.deep.eq(
+    expectModelsDeepEq(
+      dataset.collections,
       testDataset.collections.filter(collection =>
         work.collectionUris.some(
           workCollectionUri => workCollectionUri === collection.uri
         )
       )
     );
-    expect(dataset.images).to.deep.eq(
+    expectModelsDeepEq(
+      dataset.images,
       testDataset.images.filter(image => image.depictsUri === work.uri)
     );
-    expect(dataset.institutions).to.deep.eq([
+    expectModelsDeepEq(dataset.institutions, [
       testDataset.institutions.find(
         institution => institution.uri === work.institutionUri
       )!,
     ]);
-    expect(dataset.licenses).to.deep.eq([
+    expectModelsDeepEq(dataset.licenses, [
       testDataset.licenses.find(
-        license => license.uri === work.rights!.license!.value
+        license => license.uri === (work.rights!.license! as License).uri
       )!,
     ]);
-    expect(dataset.works).to.deep.eq([work]);
+    expectModelsDeepEq(dataset.works, [work]);
     expect(dataset.propertyDefinitions).to.not.be.empty;
     expect(dataset.propertyValueDefinitions).to.be.empty;
-    expect(dataset.rightsStatements).to.deep.eq([
+    expectModelsDeepEq(dataset.rightsStatements, [
       testDataset.rightsStatements.find(
-        rightsStatement => rightsStatement.uri === work.rights!.statement!.value
+        rightsStatement =>
+          rightsStatement.uri ===
+          (work.rights!.statement! as RightsStatement).uri
       )!,
     ]);
   });
