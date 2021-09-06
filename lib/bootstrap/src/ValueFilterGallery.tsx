@@ -1,10 +1,10 @@
 import * as React from "react";
 import {useCallback, useMemo} from "react";
 import {
-  JoinedImage,
-  JoinedValueFacet,
-  JoinedValueFacetValue,
+  Image,
   PrimitiveType,
+  ValueFacet,
+  ValueFacetValue,
   ValueFilter,
   ValueFilterState,
 } from "@paradicms/models";
@@ -20,12 +20,11 @@ import {
   Label,
 } from "reactstrap";
 import {Accordion} from "./Accordion";
-import {RightsTable} from "./RightsTable";
 
 interface ValueFacetValueCardProps<T extends PrimitiveType> {
   filterState: ValueFilterState<T, ValueFilter<T>>;
   onChange: (newFilter: ValueFilter<T>) => void;
-  value: JoinedValueFacetValue<T>;
+  value: ValueFacetValue<T>;
 }
 
 const ValueFacetValueCard = <T extends PrimitiveType>(
@@ -33,11 +32,9 @@ const ValueFacetValueCard = <T extends PrimitiveType>(
 ) => {
   const {filterState, onChange, value} = props;
 
-  const thumbnail = value.thumbnail({
-    targetDimensions: thumbnailTargetDimensions,
-  });
-  const thumbnailSrc =
-    thumbnail?.src ?? JoinedImage.placeholderSrc(thumbnailTargetDimensions);
+  const thumbnailSrc = value.thumbnail
+    ? value.thumbnail.src
+    : Image.placeholderSrc(thumbnailTargetDimensions);
 
   const onToggle = useCallback(() => {
     if (filterState.includesValue(value.value)) {
@@ -81,20 +78,32 @@ const ValueFacetValueCard = <T extends PrimitiveType>(
             marginTop: "20px",
             width: thumbnailTargetDimensions.width,
           }}
-          title={value.label}
+          title={value.label ?? value.value.toString()}
         />
       </a>
-      {thumbnail && thumbnail.rights ? (
+      {value.thumbnail && value.thumbnail.rights ? (
         <CardBody>
           <Accordion title="Image rights">
-            <RightsTable
-              cellStyle={{
-                padding: 0,
-                textAlign: "left",
-              }}
-              rights={thumbnail.rights}
-              tableStyle={{fontSize: "xx-small"}}
-            ></RightsTable>
+            <table style={{fontSize: "xx-small"}}>
+              {Object.keys(value.thumbnail.rights).map(rightsKey => {
+                const rightsValue = value.thumbnail.rights[rightsKey];
+                if (!rightsValue) {
+                  return;
+                }
+                return (
+                  <tr>
+                    <td style={{padding: 0, textAlign: "left"}}>
+                      <strong>
+                        {rightsKey[0].toUpperCase() + rightsKey.substring(1)}
+                      </strong>
+                    </td>
+                    <td style={{padding: 0, textAlign: "left"}}>
+                      {rightsValue}
+                    </td>
+                  </tr>
+                );
+              })}
+            </table>
           </Accordion>
         </CardBody>
       ) : null}
@@ -103,7 +112,7 @@ const ValueFacetValueCard = <T extends PrimitiveType>(
 };
 
 interface ValueFilterGalleryProps<T extends PrimitiveType> {
-  facet: JoinedValueFacet<T>;
+  facet: ValueFacet<T>;
   filter: ValueFilter<T>;
   onChange: (newFilter: ValueFilter<T>) => void;
 }
@@ -124,7 +133,7 @@ export const ValueFilterGallery = <T extends PrimitiveType>(
 
   return (
     <>
-      {facet.joinedValues.map(value => (
+      {facet.values.map(value => (
         <div
           key={value.value.toString()}
           style={{

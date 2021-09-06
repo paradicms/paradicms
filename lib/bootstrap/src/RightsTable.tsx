@@ -1,6 +1,6 @@
 import * as React from "react";
 import {CSSProperties} from "react";
-import {JoinedRights, License, RightsStatement} from "@paradicms/models";
+import {License, Rights, RightsStatement} from "@paradicms/models";
 import {Table} from "reactstrap";
 
 const RightsTableRow: React.FunctionComponent<{
@@ -27,7 +27,7 @@ const RightsTableRow: React.FunctionComponent<{
 export const RightsTable: React.FunctionComponent<{
   cellClassName?: string;
   cellStyle?: CSSProperties;
-  rights: JoinedRights;
+  rights: Rights;
   rowClassName?: string;
   rowStyle?: CSSProperties;
   tableClassName?: string;
@@ -73,16 +73,8 @@ export const RightsTable: React.FunctionComponent<{
           label="Statement"
           value={rightsStatementValue}
         />
-        <RightsTableRow
-          {...rowProps}
-          label="Creator"
-          value={rights.creator?.value}
-        />
-        <RightsTableRow
-          {...rowProps}
-          label="Holder"
-          value={rights.holder?.value}
-        />
+        <RightsTableRow {...rowProps} label="Creator" value={rights.creator} />
+        <RightsTableRow {...rowProps} label="Holder" value={rights.holder} />
         <RightsTableRow {...rowProps} label="License" value={licenseValue} />
       </tbody>
     </Table>

@@ -4,14 +4,14 @@ import {JoinedInstitution, JoinedObject} from "@paradicms/models";
 
 export const ObjectsTable: React.FunctionComponent<{
   renderInstitutionLink?: (
-    institution: JoinedInstitution,
+    institution: Institution,
     children: React.ReactNode
   ) => React.ReactNode;
   renderObjectLink: (
-    object: JoinedObject,
+    object: Object,
     children: React.ReactNode
   ) => React.ReactNode;
-  objects: readonly JoinedObject[];
+  objects: readonly Object[];
 }> = ({objects, renderInstitutionLink, renderObjectLink}) => (
   <Table className="table-bordered table-striped">
     {renderInstitutionLink ? (

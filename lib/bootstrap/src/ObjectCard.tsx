@@ -1,5 +1,5 @@
 import * as React from "react";
-import {JoinedImage, JoinedInstitution, JoinedObject} from "@paradicms/models";
+import {Institution} from "@paradicms/models";
 import {
   Card,
   CardBody,
@@ -15,13 +15,13 @@ import {RightsTable} from "./RightsTable";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 
 export const ObjectCard: React.FunctionComponent<{
-  object: JoinedObject;
+  object: Object;
   renderInstitutionLink?: (
-    institution: JoinedInstitution,
+    institution: Institution,
     children: React.ReactNode
   ) => React.ReactNode;
   renderObjectLink: (
-    object: JoinedObject,
+    object: Object,
     children: React.ReactNode
   ) => React.ReactNode;
 }> = ({object, renderInstitutionLink, renderObjectLink}) => {
@@ -29,7 +29,7 @@ export const ObjectCard: React.FunctionComponent<{
     targetDimensions: thumbnailTargetDimensions,
   });
   const thumbnailSrc =
-    thumbnail?.src ?? JoinedImage.placeholderSrc(thumbnailTargetDimensions);
+    thumbnail?.src ?? Image.placeholderSrc(thumbnailTargetDimensions);
 
   return (
     <Card className="text-center">

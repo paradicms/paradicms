@@ -18,15 +18,15 @@ import {useQueryParam} from "use-query-params";
 
 export const ObjectSearchContainer: React.FunctionComponent<{
   objectQuery: ObjectQuery;
-  objectQueryResults: JoinedObjectQueryResults;
+  objectQueryResults: ObjectQueryResults;
   objectsPerPage: number;
   page: number;
   renderInstitutionLink?: (
-    institution: JoinedInstitution,
+    institution: Institution,
     children: React.ReactNode
   ) => React.ReactNode;
   renderObjectLink: (
-    object: JoinedObject,
+    object: Object,
     children: React.ReactNode
   ) => React.ReactNode;
   setObjectQuery: (objectQuery: ObjectQuery) => void;

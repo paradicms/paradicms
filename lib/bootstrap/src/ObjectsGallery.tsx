@@ -8,13 +8,13 @@ import {JoinedInstitution, JoinedObject} from "@paradicms/models";
  * @param objects current page of objects to render in the gallery
  */
 export const ObjectsGallery: React.FunctionComponent<{
-  objects: readonly JoinedObject[];
+  objects: readonly Object[];
   renderInstitutionLink?: (
-    institution: JoinedInstitution,
+    institution: Institution,
     children: React.ReactNode
   ) => React.ReactNode;
   renderObjectLink: (
-    object: JoinedObject,
+    object: Object,
     children: React.ReactNode
   ) => React.ReactNode;
 }> = ({objects, renderInstitutionLink, renderObjectLink}) => (

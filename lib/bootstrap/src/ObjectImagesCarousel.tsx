@@ -8,22 +8,30 @@ import {RightsTable} from "./RightsTable";
 const thumbnailTargetDimensions: ImageDimensions = {height: 600, width: 600};
 
 export const ObjectImagesCarousel: React.FunctionComponent<{
-  object: JoinedObject
+  object: Object;
 }> = ({object}) => {
   const objectOriginalImages = object.originalImages;
 
-  const renderObjectOriginalImage = (originalImage: JoinedImage) => {
+  const renderObjectOriginalImage = (originalImage: Image) => {
     const originalImageSrc = originalImage.src;
     if (!originalImageSrc) {
       return null;
     }
-    const thumbnail = originalImage.thumbnail({targetDimensions: thumbnailTargetDimensions});
+    const thumbnail = originalImage.thumbnail({
+      targetDimensions: thumbnailTargetDimensions,
+    });
     const thumbnailSrc = thumbnail?.src;
     if (!thumbnail || !thumbnailSrc) {
-      return (<img className="img" src={originalImageSrc} style={{
-        maxHeight: thumbnailTargetDimensions.height,
-        maxWidth: thumbnailTargetDimensions.width,
-      }} />);
+      return (
+        <img
+          className="img"
+          src={originalImageSrc}
+          style={{
+            maxHeight: thumbnailTargetDimensions.height,
+            maxWidth: thumbnailTargetDimensions.width,
+          }}
+        />
+      );
     }
 
     return (
@@ -63,13 +71,15 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
 
   const next = () => {
     // if (animating) return;
-    const nextIndex = activeIndex === objectOriginalImages.length - 1 ? 0 : activeIndex + 1;
+    const nextIndex =
+      activeIndex === objectOriginalImages.length - 1 ? 0 : activeIndex + 1;
     setActiveIndex(nextIndex);
   };
 
   const previous = () => {
     // if (animating) return;
-    const nextIndex = activeIndex === 0 ? objectOriginalImages.length - 1 : activeIndex - 1;
+    const nextIndex =
+      activeIndex === 0 ? objectOriginalImages.length - 1 : activeIndex - 1;
     setActiveIndex(nextIndex);
   };
 

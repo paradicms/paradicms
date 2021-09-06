@@ -1,9 +1,9 @@
 import * as React from "react";
 import {Table} from "reactstrap";
-import {JoinedProperty} from "@paradicms/models";
+import {Property} from "@paradicms/models";
 
 export const PropertiesTable: React.FunctionComponent<{
-  properties: readonly JoinedProperty[];
+  properties: readonly Property[];
 }> = ({properties}) => (
   <Table>
     <tbody>
