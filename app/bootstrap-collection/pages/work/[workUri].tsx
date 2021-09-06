@@ -1,12 +1,7 @@
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
-import {
-  Configuration,
-  Dataset,
-  DataSubsetter,
-  JoinedDataset,
-} from "@paradicms/models";
+import {Configuration, Dataset, DataSubsetter} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
@@ -15,59 +10,53 @@ import {
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Col, Container, Row} from "reactstrap";
-import {
-  Accordion,
-  ObjectImagesCarousel,
-  PropertiesTable,
-  RightsTable,
-} from "@paradicms/bootstrap";
+import {Accordion, PropertiesTable, RightsTable} from "@paradicms/bootstrap";
 import * as fs from "fs";
+import {WorkImagesCarousel} from "@paradicms/material-ui";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly configuration: Configuration;
-  readonly dataset: Dataset;
-  readonly objectUri: string;
+  readonly datasetString: string;
+  readonly workUri: string;
 }
 
-const ObjectPage: React.FunctionComponent<StaticProps> = ({
+const WorkPage: React.FunctionComponent<StaticProps> = ({
   configuration,
-  dataset,
-  objectUri,
+  datasetString,
+  workUri,
 }) => {
-  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [
-    dataset,
-  ]);
-  const object = joinedDataset.objectByUri(objectUri);
-  const collection = object.collections[0];
+  const dataset = useMemo(() => Dataset.parse(datasetString), [datasetString]);
+  const work = dataset.workByUri(workUri);
+  const collection = work.collections[0];
 
   return (
     <Layout
       collection={collection}
-      documentTitle={"Object - " + object.title}
+      documentTitle={"Work - " + work.title}
       configuration={configuration}
     >
       <Container fluid>
         <Row>
           <Col xs={12} style={{display: "flex", justifyContent: "center"}}>
-            <ObjectImagesCarousel object={object} />
+            <WorkImagesCarousel work={work} />
           </Col>
         </Row>
-        {object.properties.length > 0 ? (
+        {work.properties.length > 0 ? (
           <Row className="mt-4">
             <Col xs={12}>
               <Accordion defaultOpen={true} title={<h4>Properties</h4>}>
-                <PropertiesTable properties={object.properties} />
+                <PropertiesTable properties={work.properties} />
               </Accordion>
             </Col>
           </Row>
         ) : null}
-        {object.rights ? (
+        {work.rights ? (
           <Row className="mt-4">
             <Col xs={12}>
               <Accordion title={<h4>Metadata rights</h4>}>
-                <RightsTable rights={object.rights} />
+                <RightsTable rights={work.rights} />
               </Accordion>
             </Col>
           </Row>
@@ -77,14 +66,14 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
   );
 };
 
-export default ObjectPage;
+export default WorkPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths: {params: {objectUri: string}}[] = [];
-  for (const object of readDatasetFile(readFileSync).objects) {
+  const paths: {params: {workUri: string}}[] = [];
+  for (const work of readDatasetFile(readFileSync).works) {
     paths.push({
       params: {
-        objectUri: encodeFileName(object.uri),
+        workUri: encodeFileName(work.uri),
       },
     });
   }
@@ -98,23 +87,23 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const objectUri = decodeFileName(params!.objectUri as string);
+  const workUri = decodeFileName(params!.workUri as string);
 
-  const objectDataset = DataSubsetter.fromDataset(
+  const workDataset = new DataSubsetter(
     readDatasetFile(readFileSync)
-  ).objectDataset(objectUri, {
+  ).workDataset(workUri, {
     allImages: true,
     collections: {},
     institution: {rights: true},
   });
 
-  // console.debug("Object dataset:", Object.keys(objectDataset).map(key => `${key}: ${((objectDataset as any)[key] as any[]).length}`).join(", "));
+  // console.debug("Work dataset:", Object.keys(workDataset).map(key => `${key}: ${((workDataset as any)[key] as any[]).length}`).join(", "));
 
   return {
     props: {
       configuration: readConfigurationFile(readFileSync),
-      dataset: objectDataset,
-      objectUri,
+      datasetString: workDataset.stringify(),
+      workUri,
     },
   };
 };
