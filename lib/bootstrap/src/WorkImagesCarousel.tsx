@@ -1,18 +1,18 @@
 import * as React from "react";
 import {useState} from "react";
-import {ImageDimensions, JoinedImage, JoinedObject} from "@paradicms/models";
+import {Image, ImageDimensions, Work} from "@paradicms/models";
 import {Carousel, CarouselControl, CarouselItem} from "reactstrap";
 import ImageZoom from "react-medium-image-zoom";
 import {RightsTable} from "./RightsTable";
 
 const thumbnailTargetDimensions: ImageDimensions = {height: 600, width: 600};
 
-export const ObjectImagesCarousel: React.FunctionComponent<{
-  object: Object;
-}> = ({object}) => {
-  const objectOriginalImages = object.originalImages;
+export const WorkImagesCarousel: React.FunctionComponent<{
+  work: Work;
+}> = ({work}) => {
+  const workOriginalImages = work.originalImages;
 
-  const renderObjectOriginalImage = (originalImage: Image) => {
+  const renderWorkOriginalImage = (originalImage: Image) => {
     const originalImageSrc = originalImage.src;
     if (!originalImageSrc) {
       return null;
@@ -63,8 +63,8 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
     );
   };
 
-  if (objectOriginalImages.length === 1) {
-    return renderObjectOriginalImage(objectOriginalImages[0]);
+  if (workOriginalImages.length === 1) {
+    return renderWorkOriginalImage(workOriginalImages[0]);
   }
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -72,14 +72,14 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
   const next = () => {
     // if (animating) return;
     const nextIndex =
-      activeIndex === objectOriginalImages.length - 1 ? 0 : activeIndex + 1;
+      activeIndex === workOriginalImages.length - 1 ? 0 : activeIndex + 1;
     setActiveIndex(nextIndex);
   };
 
   const previous = () => {
     // if (animating) return;
     const nextIndex =
-      activeIndex === 0 ? objectOriginalImages.length - 1 : activeIndex - 1;
+      activeIndex === 0 ? workOriginalImages.length - 1 : activeIndex - 1;
     setActiveIndex(nextIndex);
   };
 
@@ -101,8 +101,8 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
       {/*  items={items}*/}
       {/*  onClickHandler={goToIndex}*/}
       {/*/>*/}
-      {objectOriginalImages.map(originalImage => {
-        const renderedOriginalImage = renderObjectOriginalImage(originalImage);
+      {workOriginalImages.map(originalImage => {
+        const renderedOriginalImage = renderWorkOriginalImage(originalImage);
         if (!renderedOriginalImage) {
           return null;
         }

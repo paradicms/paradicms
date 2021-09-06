@@ -1,82 +1,77 @@
 import {Button, ButtonGroup, Col, Container, Row} from "reactstrap";
 import * as React from "react";
 import {useMemo} from "react";
-import {
-  JoinedInstitution,
-  JoinedObject,
-  JoinedObjectQueryResults,
-  ObjectQuery,
-} from "@paradicms/models";
 import {FiltersControls} from "./FiltersControls";
 import {FiltersBadges} from "./FiltersBadges";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faImages, faList} from "@fortawesome/free-solid-svg-icons";
-import {ObjectsGallery} from "./ObjectsGallery";
-import {ObjectsTable} from "./ObjectsTable";
+import {WorksGallery} from "./WorksGallery";
+import {WorksTable} from "./WorksTable";
 import PaginationComponent from "react-reactstrap-pagination";
 import {useQueryParam} from "use-query-params";
+import {
+  Institution,
+  Work,
+  WorkQuery,
+  WorkQueryResults,
+} from "@paradicms/models";
 
-export const ObjectSearchContainer: React.FunctionComponent<{
-  objectQuery: ObjectQuery;
-  objectQueryResults: ObjectQueryResults;
-  objectsPerPage: number;
+export const WorkSearchContainer: React.FunctionComponent<{
+  workQuery: WorkQuery;
+  workQueryResults: WorkQueryResults;
+  worksPerPage: number;
   page: number;
   renderInstitutionLink?: (
     institution: Institution,
     children: React.ReactNode
   ) => React.ReactNode;
-  renderObjectLink: (
-    object: Object,
-    children: React.ReactNode
-  ) => React.ReactNode;
-  setObjectQuery: (objectQuery: ObjectQuery) => void;
+  renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactNode;
+  setWorkQuery: (workQuery: WorkQuery) => void;
   setPage: (page: number | undefined) => void;
 }> = ({
-  objectQuery,
-  objectQueryResults,
-  objectsPerPage,
+  workQuery,
+  workQueryResults,
+  worksPerPage,
   page,
   renderInstitutionLink,
-  renderObjectLink,
-  setObjectQuery,
+  renderWorkLink,
+  setWorkQuery,
   setPage,
 }) => {
   const [viewQueryParam, setView] = useQueryParam<"gallery" | "table">("view");
   const view = viewQueryParam ?? "gallery";
 
-  const objects = useMemo(() => objectQueryResults.dataset.objects, [
-    objectQueryResults,
+  const works = useMemo(() => workQueryResults.dataset.works, [
+    workQueryResults,
   ]);
 
-  // if (objects.length === 0) {
-  //   return <h3>No matching objects found.</h3>;
+  // if (works.length === 0) {
+  //   return <h3>No matching works found.</h3>;
   // }
 
   return (
     <Container fluid>
-      {objectQueryResults.totalObjectsCount > 0 ? (
+      {workQueryResults.totalWorksCount > 0 ? (
         <>
           <Row>
             <Col className="d-flex justify-content-between" xs={12}>
               <h4>
-                <span>{objectQueryResults.totalObjectsCount}</span>&nbsp;
+                <span>{workQueryResults.totalWorksCount}</span>&nbsp;
                 <span>
-                  {objectQueryResults.totalObjectsCount === 1
-                    ? "object"
-                    : "objects"}
+                  {workQueryResults.totalWorksCount === 1 ? "work" : "works"}
                 </span>
                 &nbsp;
-                {objectQuery.text ? (
+                {workQuery.text ? (
                   <span>
-                    matching <i>{objectQuery.text}</i>
+                    matching <i>{workQuery.text}</i>
                   </span>
                 ) : (
                   <span>matched</span>
                 )}
               </h4>
-              {objectQuery.filters.length > 0 ? (
+              {workQuery.filters.length > 0 ? (
                 <div>
-                  <FiltersBadges filters={objectQuery.filters} />
+                  <FiltersBadges filters={workQuery.filters} />
                 </div>
               ) : null}
               <ButtonGroup>
@@ -107,11 +102,11 @@ export const ObjectSearchContainer: React.FunctionComponent<{
       <Row>
         <Col xs="2">
           <FiltersControls
-            facets={objectQueryResults.facets}
-            filters={objectQuery.filters}
+            facets={workQueryResults.facets}
+            filters={workQuery.filters}
             onChange={newFilters => {
-              setObjectQuery({
-                ...objectQuery,
+              setWorkQuery({
+                ...workQuery,
                 filters: newFilters,
               });
               setPage(undefined);
@@ -122,18 +117,18 @@ export const ObjectSearchContainer: React.FunctionComponent<{
           <Container fluid>
             <Row>
               {view === "gallery" ? (
-                <ObjectsGallery
-                  objects={objects}
+                <WorksGallery
+                  works={works}
                   renderInstitutionLink={renderInstitutionLink}
-                  renderObjectLink={renderObjectLink}
+                  renderWorkLink={renderWorkLink}
                 />
               ) : null}
               {view === "table" ? (
                 <Col xs={12}>
-                  <ObjectsTable
-                    objects={objects}
+                  <WorksTable
+                    works={works}
                     renderInstitutionLink={renderInstitutionLink}
-                    renderObjectLink={renderObjectLink}
+                    renderWorkLink={renderWorkLink}
                   />
                 </Col>
               ) : null}
@@ -146,9 +141,9 @@ export const ObjectSearchContainer: React.FunctionComponent<{
                   lastPageText="»"
                   nextPageText="›"
                   onSelect={page => setPage(page - 1)}
-                  pageSize={objectsPerPage}
+                  pageSize={worksPerPage}
                   previousPageText="‹"
-                  totalItems={objectQueryResults.totalObjectsCount}
+                  totalItems={workQueryResults.totalWorksCount}
                 />
               </Col>
             </Row>

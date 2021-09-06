@@ -1,39 +1,36 @@
 import {Table} from "reactstrap";
 import * as React from "react";
-import {JoinedInstitution, JoinedObject} from "@paradicms/models";
+import {Institution, Work} from "@paradicms/models";
 
-export const ObjectsTable: React.FunctionComponent<{
+export const WorksTable: React.FunctionComponent<{
   renderInstitutionLink?: (
     institution: Institution,
     children: React.ReactNode
   ) => React.ReactNode;
-  renderObjectLink: (
-    object: Object,
-    children: React.ReactNode
-  ) => React.ReactNode;
-  objects: readonly Object[];
-}> = ({objects, renderInstitutionLink, renderObjectLink}) => (
+  renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactNode;
+  works: readonly Work[];
+}> = ({works, renderInstitutionLink, renderWorkLink}) => (
   <Table className="table-bordered table-striped">
     {renderInstitutionLink ? (
       <thead>
         <tr>
           <th>Institution</th>
-          <td>Object</td>
+          <td>Work</td>
         </tr>
       </thead>
     ) : null}
     <tbody>
-      {objects.map(object => (
-        <tr key={object.uri}>
+      {works.map(work => (
+        <tr key={work.uri}>
           {renderInstitutionLink ? (
             <td>
               {renderInstitutionLink(
-                object.institution,
-                <span>{object.institution.name}</span>
+                work.institution,
+                <span>{work.institution.name}</span>
               )}
             </td>
           ) : null}
-          <td>{renderObjectLink(object, <span>{object.title}</span>)}</td>
+          <td>{renderWorkLink(work, <span>{work.title}</span>)}</td>
         </tr>
       ))}
     </tbody>

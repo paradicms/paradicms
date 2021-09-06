@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Institution} from "@paradicms/models";
+import {Image, Institution, Work} from "@paradicms/models";
 import {
   Card,
   CardBody,
@@ -14,18 +14,15 @@ import {Accordion} from "./Accordion";
 import {RightsTable} from "./RightsTable";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 
-export const ObjectCard: React.FunctionComponent<{
-  object: Object;
+export const WorkCard: React.FunctionComponent<{
+  work: Work;
   renderInstitutionLink?: (
     institution: Institution,
     children: React.ReactNode
   ) => React.ReactNode;
-  renderObjectLink: (
-    object: Object,
-    children: React.ReactNode
-  ) => React.ReactNode;
-}> = ({object, renderInstitutionLink, renderObjectLink}) => {
-  const thumbnail = object.thumbnail({
+  renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactNode;
+}> = ({work, renderInstitutionLink, renderWorkLink}) => {
+  const thumbnail = work.thumbnail({
     targetDimensions: thumbnailTargetDimensions,
   });
   const thumbnailSrc =
@@ -34,10 +31,10 @@ export const ObjectCard: React.FunctionComponent<{
   return (
     <Card className="text-center">
       <CardHeader tag="h4">
-        {renderObjectLink(object, <>{object.title}</>)}
+        {renderWorkLink(work, <>{work.title}</>)}
       </CardHeader>
-      {renderObjectLink(
-        object,
+      {renderWorkLink(
+        work,
         <CardImg
           src={thumbnailSrc}
           style={{
@@ -46,7 +43,7 @@ export const ObjectCard: React.FunctionComponent<{
             marginTop: "20px",
             width: thumbnailTargetDimensions.width,
           }}
-          title={object.title}
+          title={work.title}
         />
       )}
       <CardBody>
@@ -62,8 +59,8 @@ export const ObjectCard: React.FunctionComponent<{
                       </td>
                       <td>
                         {renderInstitutionLink(
-                          object.institution,
-                          <span>{object.institution.name}</span>
+                          work.institution,
+                          <span>{work.institution.name}</span>
                         )}
                       </td>
                     </tr>
@@ -72,10 +69,10 @@ export const ObjectCard: React.FunctionComponent<{
               </Col>
             </Row>
           ) : null}
-          {object.abstract ? (
+          {work.abstract ? (
             <Row>
               <Col xs={12}>
-                <Accordion title="Summary">{object.abstract}</Accordion>
+                <Accordion title="Summary">{work.abstract}</Accordion>
               </Col>
             </Row>
           ) : null}
@@ -95,7 +92,7 @@ export const ObjectCard: React.FunctionComponent<{
               </Col>
             </Row>
           ) : null}
-          {object.rights ? (
+          {work.rights ? (
             <Row>
               <Col xs={12}>
                 <Accordion title="Metadata rights">
@@ -104,7 +101,7 @@ export const ObjectCard: React.FunctionComponent<{
                       padding: 0,
                       textAlign: "left",
                     }}
-                    rights={object.rights}
+                    rights={work.rights}
                     tableStyle={{fontSize: "xx-small"}}
                   ></RightsTable>
                 </Accordion>

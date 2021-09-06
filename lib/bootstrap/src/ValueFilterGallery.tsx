@@ -86,7 +86,7 @@ const ValueFacetValueCard = <T extends PrimitiveType>(
           <Accordion title="Image rights">
             <table style={{fontSize: "xx-small"}}>
               {Object.keys(value.thumbnail.rights).map(rightsKey => {
-                const rightsValue = value.thumbnail.rights[rightsKey];
+                const rightsValue = (value.thumbnail!.rights as any)[rightsKey];
                 if (!rightsValue) {
                   return;
                 }
