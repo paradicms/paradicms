@@ -37,10 +37,10 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 interface StaticProps {
   readonly collectionUri: string;
   readonly configuration: Configuration;
-  readonly currentObjectUri: string;
+  readonly currentWorkUri: string;
   readonly dataset: Dataset;
-  readonly nextObjectUri: string | null;
-  readonly previousObjectUri: string | null;
+  readonly nextWorkUri: string | null;
+  readonly previousWorkUri: string | null;
 }
 
 const RightsTableRow: React.FunctionComponent<{
@@ -60,13 +60,13 @@ const RightsTableRow: React.FunctionComponent<{
   );
 };
 
-const ObjectPage: React.FunctionComponent<StaticProps> = ({
+const WorkPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
   configuration,
-  currentObjectUri,
+  currentWorkUri,
   dataset,
-  nextObjectUri,
-  previousObjectUri,
+  nextWorkUri,
+  previousWorkUri,
 }) => {
   const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [
     dataset,
@@ -75,26 +75,25 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
     () => joinedDataset.collectionByUri(collectionUri),
     [collectionUri, joinedDataset]
   );
-  const currentObject = useMemo(
-    () => joinedDataset.objectByUri(currentObjectUri),
-    [currentObjectUri, joinedDataset]
-  );
+  const currentWork = useMemo(() => joinedDataset.workByUri(currentWorkUri), [
+    currentWorkUri,
+    joinedDataset,
+  ]);
   const institution = useMemo(() => collection.institution, [collection]);
-  const nextObject = useMemo(
-    () => (nextObjectUri ? joinedDataset.objectByUri(nextObjectUri) : null),
-    [nextObjectUri, joinedDataset]
+  const nextWork = useMemo(
+    () => (nextWorkUri ? joinedDataset.workByUri(nextWorkUri) : null),
+    [nextWorkUri, joinedDataset]
   );
-  const previousObject = useMemo(
-    () =>
-      previousObjectUri ? joinedDataset.objectByUri(previousObjectUri) : null,
-    [nextObjectUri, joinedDataset]
+  const previousWork = useMemo(
+    () => (previousWorkUri ? joinedDataset.workByUri(previousWorkUri) : null),
+    [nextWorkUri, joinedDataset]
   );
 
   const abstract: string | null = useMemo(() => {
-    if (currentObject.abstract) {
-      return currentObject.abstract;
-    } else if (currentObject.properties) {
-      for (const property of currentObject.properties) {
+    if (currentWork.abstract) {
+      return currentWork.abstract;
+    } else if (currentWork.properties) {
+      for (const property of currentWork.properties) {
         if (property.uri === DCTERMS.description.value) {
           return property.value.value.toString();
         }
@@ -103,11 +102,11 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
     } else {
       return null;
     }
-  }, [currentObject]);
+  }, [currentWork]);
 
   const rights = useMemo(
-    () => currentObject.rights ?? institution.rights ?? null,
-    [currentObject, institution]
+    () => currentWork.rights ?? institution.rights ?? null,
+    [currentWork, institution]
   );
 
   const licenseValue = useMemo(() => {
@@ -136,11 +135,11 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
     <Layout
       collection={collection}
       configuration={configuration}
-      object={currentObject}
+      work={currentWork}
     >
       <Container fluid>
         <Row>
-          {currentObject.images.length > 0 ? (
+          {currentWork.images.length > 0 ? (
             <Col
               className="d-flex justify-content-center pl-0 pr-0"
               xs={12}
@@ -149,20 +148,20 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
               xl={6}
               style={{minHeight: 600, minWidth: 600}}
             >
-              <ObjectImagesCarousel object={currentObject} />
+              <WorkImagesCarousel work={currentWork} />
             </Col>
           ) : null}
           <Col
             className="d-flex justify-content-center pl-0 pr-0 pt-2"
             xs={12}
             sm={12}
-            lg={currentObject.images.length > 0 ? 4 : 12}
-            xl={currentObject.images.length > 0 ? 6 : 12}
+            lg={currentWork.images.length > 0 ? 4 : 12}
+            xl={currentWork.images.length > 0 ? 6 : 12}
           >
             <Container fluid>
               <Row>
                 <Col className="p-0" xs={12}>
-                  <h1>{currentObject.title}</h1>
+                  <h1>{currentWork.title}</h1>
                 </Col>
               </Row>
               {abstract ? (
@@ -203,7 +202,7 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
             </Container>
           </Col>
         </Row>
-        {nextObject || previousObject ? (
+        {nextWork || previousWork ? (
           <Row className="mt-4">
             <Col xs={12}>
               <Pagination
@@ -214,20 +213,20 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
                   width: "100%",
                 }}
               >
-                {previousObject ? (
+                {previousWork ? (
                   <PaginationItem>
-                    <Link href={Hrefs.object(previousObject.uri)} passHref>
+                    <Link href={Hrefs.work(previousWork.uri)} passHref>
                       <PaginationLink previous>
-                        {"‹ " + previousObject.title}
+                        {"‹ " + previousWork.title}
                       </PaginationLink>
                     </Link>
                   </PaginationItem>
                 ) : null}
-                {nextObject ? (
+                {nextWork ? (
                   <PaginationItem>
-                    <Link href={Hrefs.object(nextObject.uri)} passHref>
+                    <Link href={Hrefs.work(nextWork.uri)} passHref>
                       <PaginationLink next>
-                        {nextObject.title + " ›"}
+                        {nextWork.title + " ›"}
                       </PaginationLink>
                     </Link>
                   </PaginationItem>
@@ -241,15 +240,15 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
   );
 };
 
-export default ObjectPage;
+export default WorkPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths: {params: {objectUri: string}}[] = [];
+  const paths: {params: {workUri: string}}[] = [];
 
-  for (const object of readDatasetFile(readFileSync).objects) {
+  for (const work of readDatasetFile(readFileSync).works) {
     paths.push({
       params: {
-        objectUri: encodeFileName(object.uri),
+        workUri: encodeFileName(work.uri),
       },
     });
   }
@@ -263,54 +262,54 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const objectUri = decodeFileName(params!.objectUri as string);
+  const workUri = decodeFileName(params!.workUri as string);
 
   const dataset = readDatasetFile(readFileSync);
   const indexedDataset = new IndexedDataset(dataset);
-  const currentObject = indexedDataset.objectByUri(objectUri);
-  const collectionUri = currentObject.collectionUris[0];
-  const collectionObjects = indexedDataset.collectionObjects(collectionUri);
+  const currentWork = indexedDataset.workByUri(workUri);
+  const collectionUri = currentWork.collectionUris[0];
+  const collectionWorks = indexedDataset.collectionWorks(collectionUri);
 
-  let nextObjectUri: string | null = null;
-  let previousObjectUri: string | null = null;
-  for (let objectI = 0; objectI < collectionObjects.length; objectI++) {
-    const object = collectionObjects[objectI];
-    if (object.uri !== objectUri) {
+  let nextWorkUri: string | null = null;
+  let previousWorkUri: string | null = null;
+  for (let workI = 0; workI < collectionWorks.length; workI++) {
+    const work = collectionWorks[workI];
+    if (work.uri !== workUri) {
       continue;
     }
 
-    if (objectI > 0) {
-      previousObjectUri = dataset.objects[objectI - 1].uri;
+    if (workI > 0) {
+      previousWorkUri = dataset.works[workI - 1].uri;
     }
 
-    if (objectI + 1 < dataset.objects.length) {
-      nextObjectUri = dataset.objects[objectI + 1].uri;
+    if (workI + 1 < dataset.works.length) {
+      nextWorkUri = dataset.works[workI + 1].uri;
     }
 
     break;
   }
 
-  const objectUris: string[] = [];
-  if (previousObjectUri) {
-    objectUris.push(previousObjectUri);
+  const workUris: string[] = [];
+  if (previousWorkUri) {
+    workUris.push(previousWorkUri);
   }
-  objectUris.push(objectUri);
-  if (nextObjectUri) {
-    objectUris.push(nextObjectUri);
+  workUris.push(workUri);
+  if (nextWorkUri) {
+    workUris.push(nextWorkUri);
   }
 
   return {
     props: {
       collectionUri,
       configuration: readConfigurationFile(readFileSync),
-      currentObjectUri: objectUri,
-      dataset: new DataSubsetter(indexedDataset).objectsDataset(objectUris, {
+      currentWorkUri: workUri,
+      dataset: new DataSubsetter(indexedDataset).worksDataset(workUris, {
         allImages: true,
         collections: {},
         institution: {rights: true},
       }),
-      nextObjectUri,
-      previousObjectUri,
+      nextWorkUri,
+      previousWorkUri,
     },
   };
 };

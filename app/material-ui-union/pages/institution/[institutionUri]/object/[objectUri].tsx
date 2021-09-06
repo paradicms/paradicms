@@ -34,50 +34,50 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 interface StaticProps {
   readonly configuration: Configuration;
   readonly dataset: Dataset;
-  readonly objectUri: string;
+  readonly workUri: string;
 }
 
-const ObjectPage: React.FunctionComponent<StaticProps> = ({
+const WorkPage: React.FunctionComponent<StaticProps> = ({
   configuration,
   dataset,
-  objectUri,
+  workUri,
 }) => {
   const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [
     dataset,
   ]);
-  const object = joinedDataset.objectByUri(objectUri);
-  const institution = object.institution;
+  const work = joinedDataset.workByUri(workUri);
+  const institution = work.institution;
 
   return (
     <Layout
-      breadcrumbs={{institution, object}}
-      documentTitle={"Object - " + object.title}
+      breadcrumbs={{institution, work}}
+      documentTitle={"Work - " + work.title}
       configuration={configuration}
     >
       <Grid container direction="column" spacing={2}>
         <Grid item>
-          <ObjectImagesCarousel object={object} />
+          <WorkImagesCarousel work={work} />
         </Grid>
-        {object.properties && object.properties.length > 0 ? (
+        {work.properties && work.properties.length > 0 ? (
           <Grid item>
             <Accordion defaultExpanded={true}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <h3>Properties</h3>
               </AccordionSummary>
               <AccordionDetails>
-                <PropertiesTable properties={object.properties} />
+                <PropertiesTable properties={work.properties} />
               </AccordionDetails>
             </Accordion>
           </Grid>
         ) : null}
-        {object.rights ? (
+        {work.rights ? (
           <Grid item>
             <Accordion>
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <h3>Metadata rights</h3>
               </AccordionSummary>
               <AccordionDetails>
-                <RightsTable rights={object.rights} />
+                <RightsTable rights={work.rights} />
               </AccordionDetails>
             </Accordion>
           </Grid>
@@ -87,19 +87,19 @@ const ObjectPage: React.FunctionComponent<StaticProps> = ({
   );
 };
 
-export default ObjectPage;
+export default WorkPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const dataset = readDatasetFile(readFileSync);
   const indexedDataset = new IndexedDataset(dataset);
-  const paths: {params: {institutionUri: string; objectUri: string}}[] = [];
+  const paths: {params: {institutionUri: string; workUri: string}}[] = [];
   for (const institution of dataset.institutions) {
     const encodedInstitutionUri = encodeFileName(institution.uri);
-    for (const object of indexedDataset.institutionObjects(institution.uri)) {
+    for (const work of indexedDataset.institutionWorks(institution.uri)) {
       paths.push({
         params: {
           institutionUri: encodedInstitutionUri,
-          objectUri: encodeFileName(object.uri),
+          workUri: encodeFileName(work.uri),
         },
       });
     }
@@ -115,19 +115,19 @@ export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
   // const institutionUri = decodeFileName(params!.institutionUri as string);
-  const objectUri = decodeFileName(params!.objectUri as string);
+  const workUri = decodeFileName(params!.workUri as string);
 
   return {
     props: {
       configuration: readConfigurationFile(readFileSync),
       dataset: DataSubsetter.fromDataset(
         readDatasetFile(readFileSync)
-      ).objectDataset(objectUri, {
+      ).workDataset(workUri, {
         allImages: true,
         collections: {},
         institution: {rights: true},
       }),
-      objectUri,
+      workUri,
     },
   };
 };

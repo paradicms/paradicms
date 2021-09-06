@@ -40,7 +40,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   breadcrumbs?: {
     collection?: {title: string; uri: string};
     institution?: {name: string; uri: string};
-    object?: {title: string; uri: string};
+    work?: {title: string; uri: string};
   };
   cardTitle?: React.ReactNode;
   className?: string;
@@ -65,7 +65,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         Home
       </Link>
     );
-    const {collection, institution, object} = breadcrumbs;
+    const {collection, institution, work} = breadcrumbs;
     if (institution) {
       breadcrumbNodes.push(
         <Link href={Hrefs.home} key="institutions">
@@ -102,27 +102,27 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         );
       }
 
-      if (object) {
+      if (work) {
         if (collection) {
           breadcrumbNodes.push(
             <Link
               href={Hrefs.institution(institution.uri)
                 .collection(collection.uri)
-                .objects()}
-              key="objects"
+                .works()}
+              key="works"
             >
-              Objects
+              Works
             </Link>
           );
         } else {
-          breadcrumbNodes.push(<span key="objects">Objects</span>);
+          breadcrumbNodes.push(<span key="works">Works</span>);
         }
         breadcrumbNodes.push(
           <Link
-            href={Hrefs.institution(institution.uri).object(object.uri)}
-            key={`object-${object.uri}`}
+            href={Hrefs.institution(institution.uri).work(work.uri)}
+            key={`work-${work.uri}`}
           >
-            {object.title}
+            {work.title}
           </Link>
         );
       }
@@ -136,7 +136,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   } else {
     onSearch = (text: string) => {
       const href = Hrefs.search({
-        filters: configuration.objectSearch.filters,
+        filters: configuration.workSearch.filters,
         text,
       });
       console.info("redirecting to search href", href);

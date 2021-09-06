@@ -3,21 +3,14 @@ import {
   Dataset,
   DataSubsetter,
   IndexedDataset,
-  ObjectJoinSelector,
 } from "@paradicms/models";
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
-import {
-  ObjectSearchGrid,
-  thumbnailTargetDimensions,
-} from "@paradicms/material-ui";
+import {thumbnailTargetDimensions} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
-import {ObjectSearchPage} from "@paradicms/react-search";
-import {ObjectQueryService} from "@paradicms/services";
-import {LunrObjectQueryService} from "@paradicms/lunr";
 import fs from "fs";
 import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
 
@@ -28,7 +21,7 @@ interface StaticProps {
   readonly dataset: Dataset;
 }
 
-const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
+const WORK_JOIN_SELECTOR: WorkJoinSelector = {
   collections: {},
   institution: {rights: true},
   propertyDefinitions: {
@@ -39,64 +32,62 @@ const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
   thumbnail: {targetDimensions: thumbnailTargetDimensions},
 };
 
-const OBJECTS_PER_PAGE = 10;
+const WORKS_PER_PAGE = 10;
 
 const SearchPage: React.FunctionComponent<StaticProps> = ({
   configuration,
   dataset,
 }) => {
-  const objectQueryService = useMemo<ObjectQueryService>(
+  const workQueryService = useMemo<WorkQueryService>(
     () =>
-      new LunrObjectQueryService({
-        configuration: configuration.objectSearch,
+      new LunrWorkQueryService({
+        configuration: configuration.workSearch,
         dataset: new IndexedDataset(dataset),
-        objectJoinSelector: OBJECT_JOIN_SELECTOR,
+        workJoinSelector: WORK_JOIN_SELECTOR,
       }),
     [configuration, dataset]
   );
 
   return (
-    <ObjectSearchPage
-      configuration={configuration.objectSearch}
-      objectQueryService={objectQueryService}
-      objectsPerPage={OBJECTS_PER_PAGE}
+    <WorkSearchPage
+      configuration={configuration.workSearch}
+      workQueryService={workQueryService}
+      worksPerPage={WORKS_PER_PAGE}
     >
       {({
-        objectQuery,
-        objectQueryResults,
+        workQuery,
+        workQueryResults,
         page,
         pageMax,
-        setObjectQuery,
+        setWorkQuery,
         setPage,
       }) => (
         <Layout
           cardTitle={
-            objectQuery?.text ? (
+            workQuery?.text ? (
               <span>
                 <span>Search results for</span>
                 &nbsp;
-                <i data-cy="query-text">{objectQuery.text}</i>
+                <i data-cy="query-text">{workQuery.text}</i>
               </span>
             ) : (
               "Search results"
             )
           }
           documentTitle={
-            objectQuery?.text
-              ? `Search results for "${objectQuery.text}"`
+            workQuery?.text
+              ? `Search results for "${workQuery.text}"`
               : "Search results"
           }
           configuration={configuration}
           onSearch={text =>
-            setObjectQuery({filters: configuration.objectSearch.filters, text})
+            setWorkQuery({filters: configuration.workSearch.filters, text})
           }
         >
-          <ObjectSearchGrid
-            facets={objectQueryResults.facets}
-            objects={objectQueryResults.dataset.objects}
-            onChangeFilters={filters =>
-              setObjectQuery({...objectQuery, filters})
-            }
+          <WorkSearchGrid
+            facets={workQueryResults.facets}
+            works={workQueryResults.dataset.works}
+            onChangeFilters={filters => setWorkQuery({...workQuery, filters})}
             onChangePage={setPage}
             page={page}
             pageMax={pageMax}
@@ -105,20 +96,18 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
                 {children}
               </Link>
             )}
-            renderObjectLink={(object, children) => (
+            renderWorkLink={(work, children) => (
               <Link
-                href={Hrefs.institution(object.institution.uri).object(
-                  object.uri
-                )}
+                href={Hrefs.institution(work.institution.uri).work(work.uri)}
               >
                 {children}
               </Link>
             )}
-            query={objectQuery}
+            query={workQuery}
           />
         </Layout>
       )}
-    </ObjectSearchPage>
+    </WorkSearchPage>
   );
 };
 
@@ -128,9 +117,9 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
   const dataset = readDatasetFile(readFileSync);
-  const searchDataset = DataSubsetter.fromDataset(dataset).objectsDataset(
-    dataset.objects.map(object => object.uri),
-    OBJECT_JOIN_SELECTOR
+  const searchDataset = DataSubsetter.fromDataset(dataset).worksDataset(
+    dataset.works.map(work => work.uri),
+    WORK_JOIN_SELECTOR
   );
 
   console.log(

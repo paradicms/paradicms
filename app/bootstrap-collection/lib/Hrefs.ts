@@ -1,16 +1,16 @@
 import {encodeFileName} from "@paradicms/next";
-import {ObjectQuery} from "@paradicms/models";
+import {WorkQuery} from "@paradicms/models";
 import * as qs from "qs";
 
 export class Hrefs {
-  static collection(objectQuery?: ObjectQuery): string {
+  static collection(workQuery?: WorkQuery): string {
     return (
       "/" +
       qs.stringify(
-        {query: JSON.stringify(objectQuery)},
+        {query: JSON.stringify(workQuery)},
         {
           addQueryPrefix: true,
-        },
+        }
       )
     );
   }
@@ -19,7 +19,7 @@ export class Hrefs {
     return Hrefs.collection();
   }
 
-  static object(objectUri: string): string {
-    return `/object/${encodeFileName(objectUri)}/`;
+  static work(workUri: string): string {
+    return `/work/${encodeFileName(workUri)}/`;
   }
 }

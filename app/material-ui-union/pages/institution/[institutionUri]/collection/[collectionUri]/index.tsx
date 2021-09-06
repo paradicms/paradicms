@@ -13,23 +13,16 @@ import {
   DataSubsetter,
   IndexedDataset,
   JoinedDataset,
-  ObjectJoinSelector,
 } from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {
-  ObjectSearchGrid,
-  thumbnailTargetDimensions,
-} from "@paradicms/material-ui";
+import {thumbnailTargetDimensions} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
-import {ObjectSearchPage} from "@paradicms/react-search";
-import {ObjectQueryService} from "@paradicms/services";
-import {LunrObjectQueryService} from "@paradicms/lunr";
 import fs from "fs";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
-const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
+const WORK_JOIN_SELECTOR: WorkJoinSelector = {
   collections: {},
   institution: {rights: true},
   propertyDefinitions: {
@@ -40,7 +33,7 @@ const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
   thumbnail: {targetDimensions: thumbnailTargetDimensions},
 };
 
-const OBJECTS_PER_PAGE = 10;
+const WORKS_PER_PAGE = 10;
 
 interface StaticProps {
   readonly collectionUri: string;
@@ -62,28 +55,28 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
     [collectionUri, joinedDataset]
   );
   const institution = useMemo(() => collection.institution, [collection]);
-  const objectQueryService = useMemo<ObjectQueryService>(
+  const workQueryService = useMemo<WorkQueryService>(
     () =>
-      new LunrObjectQueryService({
-        configuration: configuration.objectSearch,
+      new LunrWorkQueryService({
+        configuration: configuration.workSearch,
         dataset: indexedDataset,
-        objectJoinSelector: OBJECT_JOIN_SELECTOR,
+        workJoinSelector: WORK_JOIN_SELECTOR,
       }),
     [configuration, indexedDataset]
   );
 
   return (
-    <ObjectSearchPage
-      configuration={configuration.objectSearch}
-      objectQueryService={objectQueryService}
-      objectsPerPage={OBJECTS_PER_PAGE}
+    <WorkSearchPage
+      configuration={configuration.workSearch}
+      workQueryService={workQueryService}
+      worksPerPage={WORKS_PER_PAGE}
     >
       {({
-        objectQuery,
-        objectQueryResults,
+        workQuery,
+        workQueryResults,
         page,
         pageMax,
-        setObjectQuery,
+        setWorkQuery,
         setPage,
       }) => (
         <Layout
@@ -99,12 +92,10 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
           documentTitle={"Collection - " + collection.title}
           configuration={configuration}
         >
-          <ObjectSearchGrid
-            facets={objectQueryResults.facets}
-            objects={objectQueryResults.dataset.objects}
-            onChangeFilters={filters =>
-              setObjectQuery({...objectQuery, filters})
-            }
+          <WorkSearchGrid
+            facets={workQueryResults.facets}
+            works={workQueryResults.dataset.works}
+            onChangeFilters={filters => setWorkQuery({...workQuery, filters})}
             onChangePage={setPage}
             page={page}
             pageMax={pageMax}
@@ -113,20 +104,18 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
                 {children}
               </Link>
             )}
-            renderObjectLink={(object, children) => (
+            renderWorkLink={(work, children) => (
               <Link
-                href={Hrefs.institution(object.institution.uri).object(
-                  object.uri
-                )}
+                href={Hrefs.institution(work.institution.uri).work(work.uri)}
               >
                 {children}
               </Link>
             )}
-            query={objectQuery}
+            query={workQuery}
           />
         </Layout>
       )}
-    </ObjectSearchPage>
+    </WorkSearchPage>
   );
 };
 
@@ -166,7 +155,7 @@ export const getStaticProps: GetStaticProps = async ({
   const collectionDataset = DataSubsetter.fromDataset(
     readDatasetFile(readFileSync)
   ).collectionDataset(collectionUri, {
-    objects: OBJECT_JOIN_SELECTOR,
+    works: WORK_JOIN_SELECTOR,
   });
 
   console.log(

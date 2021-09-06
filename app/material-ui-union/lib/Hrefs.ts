@@ -18,7 +18,7 @@ export class Hrefs {
           get home(): string {
             return collectionHref;
           },
-          objects(query?: ObjectQuery): string {
+          works(query?: WorkQuery): string {
             return `${collectionHref}${qs.stringify(query, {
               addQueryPrefix: true,
             })}`;
@@ -26,13 +26,13 @@ export class Hrefs {
         };
       },
       home: institutionHref,
-      object(objectUri: string): string {
-        return `${institutionHref}/object/${encodeFileName(objectUri)}/`;
+      work(workUri: string): string {
+        return `${institutionHref}/work/${encodeFileName(workUri)}/`;
       },
     };
   }
 
-  static search(query?: ObjectQuery): string {
+  static search(query?: WorkQuery): string {
     const href = "/search";
     if (!query) {
       return href;

@@ -35,10 +35,10 @@ Promise.all([fetchConfiguration(), fetchDataset()]).then(
   ([configuration, dataset]) => {
     console.info("configuration:\n", JSON.stringify(configuration));
 
-    const objectQueryService = new LunrObjectQueryService({
-      configuration: configuration.objectSearch,
+    const workQueryService = new LunrWorkQueryService({
+      configuration: configuration.workSearch,
       dataset: new IndexedDataset(dataset),
-      objectJoinSelector: {
+      workJoinSelector: {
         collections: {
           thumbnail: {targetDimensions: thumbnailTargetDimensions},
         },
@@ -59,7 +59,7 @@ Promise.all([fetchConfiguration(), fetchDataset()]).then(
         <QueryParamProvider ReactRouterRoute={Route}>
           <Application
             configuration={configuration}
-            objectQueryService={objectQueryService}
+            workQueryService={workQueryService}
           />
         </QueryParamProvider>
       </Router>,
