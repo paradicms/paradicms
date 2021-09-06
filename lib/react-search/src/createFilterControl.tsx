@@ -1,29 +1,29 @@
 import {
+  CollectionValueFacet,
   CollectionValueFilter,
+  Facet,
   Filter,
+  InstitutionValueFacet,
   InstitutionValueFilter,
-  JoinedCollectionValueFacet,
-  JoinedFacet,
-  JoinedInstitutionValueFacet,
-  JoinedStringPropertyValueFacet,
+  StringPropertyValueFacet,
   StringPropertyValueFilter,
 } from "@paradicms/models";
 
 export const createFilterControl = (kwds: {
-  facets: readonly JoinedFacet[];
+  facets: readonly Facet[];
   factory: {
     createCollectionValueFilterControl(
-      facet: JoinedCollectionValueFacet,
+      facet: CollectionValueFacet,
       filter: CollectionValueFilter
     ): React.ReactNode;
 
     createInstitutionValueFilterControl(
-      facet: JoinedInstitutionValueFacet,
+      facet: InstitutionValueFacet,
       filter: InstitutionValueFilter
     ): React.ReactNode;
 
     createStringPropertyValueFilterControl(
-      facet: JoinedStringPropertyValueFacet,
+      facet: StringPropertyValueFacet,
       filter: StringPropertyValueFilter
     ): React.ReactNode;
   };
@@ -34,9 +34,9 @@ export const createFilterControl = (kwds: {
   switch (filter.type) {
     case "CollectionValue": {
       const concreteFilter: CollectionValueFilter = filter as CollectionValueFilter;
-      const facet: JoinedCollectionValueFacet | undefined = facets.find(
+      const facet: CollectionValueFacet | undefined = facets.find(
         facet => facet.type === "CollectionValue"
-      ) as JoinedCollectionValueFacet | undefined;
+      ) as CollectionValueFacet | undefined;
       if (!facet) {
         console.warn("no matching facet for filter on collections");
         return null;
@@ -50,9 +50,9 @@ export const createFilterControl = (kwds: {
 
     case "InstitutionValue": {
       const concreteFilter: InstitutionValueFilter = filter as InstitutionValueFilter;
-      const facet: JoinedInstitutionValueFacet | undefined = facets.find(
+      const facet: InstitutionValueFacet | undefined = facets.find(
         facet => facet.type === "InstitutionValue"
-      ) as JoinedInstitutionValueFacet | undefined;
+      ) as InstitutionValueFacet | undefined;
       if (!facet) {
         console.warn("no matching facet for filter on institutions");
         return null;
@@ -67,12 +67,12 @@ export const createFilterControl = (kwds: {
     case "StringPropertyValue": {
       const concreteFilter: StringPropertyValueFilter = filter as StringPropertyValueFilter;
 
-      const facet: JoinedStringPropertyValueFacet | undefined = facets.find(
+      const facet: StringPropertyValueFacet | undefined = facets.find(
         facet =>
           facet.type === "StringPropertyValue" &&
-          (facet as JoinedStringPropertyValueFacet).propertyUri ===
+          (facet as StringPropertyValueFacet).propertyUri ===
             concreteFilter.propertyUri
-      ) as JoinedStringPropertyValueFacet | undefined;
+      ) as StringPropertyValueFacet | undefined;
       if (!facet) {
         console.warn(
           "no matching facet for filter on property",

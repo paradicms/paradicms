@@ -3,8 +3,8 @@ import {JsonQueryParamConfig} from "@paradicms/react";
 import * as React from "react";
 import {useEffect, useMemo, useState} from "react";
 import {
-  JoinedWorkQueryResults,
   WorkQuery,
+  WorkQueryResults,
   WorkSearchConfiguration,
 } from "@paradicms/models";
 import {WorkQueryService} from "@paradicms/services";
@@ -15,7 +15,7 @@ export const WorkSearchPage: React.FunctionComponent<{
   worksPerPage: number;
   children: (kwds: {
     workQuery: WorkQuery;
-    workQueryResults: JoinedWorkQueryResults;
+    workQueryResults: WorkQueryResults;
     page: number;
     pageMax: number;
     setWorkQuery: (workQuery: WorkQuery) => void;
@@ -42,7 +42,7 @@ export const WorkSearchPage: React.FunctionComponent<{
   const [
     workQueryResults,
     setWorkQueryResults,
-  ] = useState<JoinedWorkQueryResults | null>(null);
+  ] = useState<WorkQueryResults | null>(null);
 
   useEffect(() => {
     console.debug("Works query:", JSON.stringify(workQuery));
@@ -53,15 +53,7 @@ export const WorkSearchPage: React.FunctionComponent<{
         offset: page * worksPerPage,
         query: workQuery,
       })
-      .then(workQueryResults => {
-        setWorkQueryResults({
-          dataset: workQueryResults.dataset,
-          facets: workQueryResults.facets.map(facet =>
-            workQueryResults.dataset.facet(facet)
-          ),
-          totalWorksCount: workQueryResults.totalWorksCount,
-        });
-      });
+      .then(setWorkQueryResults);
   }, [workQuery, workQueryService, worksPerPage, page]);
 
   if (workQueryResults === null) {
