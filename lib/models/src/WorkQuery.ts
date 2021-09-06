@@ -1,4 +1,5 @@
 import {Filter} from "./Filter";
+import {ThumbnailSelector} from "./ThumbnailSelector";
 
 /**
  * Query passed to the WorkQueryService.
@@ -9,4 +10,5 @@ import {Filter} from "./Filter";
 export interface WorkQuery {
   readonly filters: readonly Filter[];
   readonly text?: string;
+  readonly valueFacetValueThumbnailSelector?: ThumbnailSelector;
 }

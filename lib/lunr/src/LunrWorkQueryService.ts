@@ -5,12 +5,16 @@ import {
   DataSubsetter,
   Facet,
   Filter,
+  Image,
   InstitutionValueFacet,
   InstitutionValueFilter,
   PrimitiveType,
+  PropertyValueDefinition,
   StringPropertyValueFacet,
   StringPropertyValueFilter,
+  ThumbnailSelector,
   ValueFacetValue,
+  ValueFacetValueThumbnail,
   ValueFilter,
   Work,
   WorkJoinSelector,
@@ -27,9 +31,6 @@ const base58 = basex(
   "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 );
 
-const encodeFieldName = (value: string): string =>
-  base58.encode(new TextEncoder().encode(value));
-
 // function intersection<T>(a: Set<T>, b: Set<T>) {
 //   if (a.size === 0) {
 //     return a;
@@ -42,45 +43,10 @@ const encodeFieldName = (value: string): string =>
 //   }
 // }
 
-const testValueFilter = <T extends PrimitiveType>(
-  filter: ValueFilter<T>,
-  values: readonly T[]
-): boolean => {
-  if (values.length === 0 && filter.excludeUnknown) {
-    return false;
-  }
-
-  const excludeValues: readonly T[] = filter.excludeValues ?? [];
-  const includeValues: readonly T[] = filter.includeValues ?? [];
-  if (excludeValues.length === 0 && includeValues.length === 0) {
-    return true;
-  }
-  if (excludeValues.length > 0) {
-    // If an work has any value that is excluded, then exclude the work
-    for (const value of values) {
-      if (excludeValues.some(excludeValue => excludeValue === value)) {
-        return false;
-      }
-    }
-  }
-
-  if (includeValues.length > 0) {
-    // If the work has any value that is included, then include the work
-    // Conversely, if any values are included and an work doesn't have one of them, exclude the work.
-    let include = false;
-    for (const value of values) {
-      if (includeValues.some(includeValue => includeValue === value)) {
-        include = true;
-        break;
-      }
-    }
-    if (!include) {
-      return false;
-    }
-  }
-
-  return true;
-};
+interface MutableValueFacetValue<ValueT extends PrimitiveType>
+  extends Omit<ValueFacetValue<ValueT>, "count"> {
+  count: number;
+}
 
 export class LunrWorkQueryService implements WorkQueryService {
   private readonly dataset: Dataset;
@@ -100,7 +66,7 @@ export class LunrWorkQueryService implements WorkQueryService {
       this.field("title");
       const propertyFieldNamesByUri: {[index: string]: string} = {};
       for (const propertyUri of kwds.configuration.searchablePropertyUris) {
-        const fieldName = encodeFieldName(propertyUri);
+        const fieldName = LunrWorkQueryService.encodeFieldName(propertyUri);
         propertyFieldNamesByUri[propertyUri] = fieldName;
         this.field(fieldName);
       }
@@ -125,64 +91,83 @@ export class LunrWorkQueryService implements WorkQueryService {
     });
   }
 
+  private static encodeFieldName(value: string) {
+    return base58.encode(new TextEncoder().encode(value));
+  }
+
   private facetizeWorks(kwds: {
     filters: readonly Filter[];
+    valueFacetValueThumbnailSelector?: ThumbnailSelector;
     works: readonly Work[];
   }): readonly Facet[] {
-    const incrementValueCount = (
-      countsByValue: {[index: string]: number},
-      value: string
-    ) => {
-      const count = countsByValue[value];
-      if (!count) {
-        countsByValue[value] = 1;
-      } else {
-        countsByValue[value] = count + 1;
-      }
-    };
-
-    const valuesFromMap = (countsByValue: {
-      [index: string]: number;
-    }): ValueFacetValue<string>[] =>
-      Object.keys(countsByValue).map(value => ({
-        count: countsByValue[value],
-        label: null,
-        value,
-      }));
-
-    const {filters, works} = kwds;
+    const {filters, valueFacetValueThumbnailSelector, works} = kwds;
     const facets: Facet[] = [];
     for (const filter of filters) {
       switch (filter.type) {
         case "CollectionValue": {
-          const countsByValue: {[index: string]: number} = {};
+          const values: {
+            [index: string]: MutableValueFacetValue<string>;
+          } = {};
           let unknownCount: number = 0;
           for (const work of works) {
-            if (work.collectionUris) {
-              for (const collectionUri of work.collectionUris) {
-                incrementValueCount(countsByValue, collectionUri);
-              }
-            } else {
+            if (!work.collectionUris || work.collectionUris.length === 0) {
               unknownCount++;
+            }
+            for (const collectionUri of work.collectionUris) {
+              const value = values[collectionUri];
+              if (value) {
+                value.count++;
+              } else {
+                const collection = this.dataset.collectionByUri(collectionUri);
+                values[collectionUri] = {
+                  count: 1,
+                  label: collection.title,
+                  thumbnail: valueFacetValueThumbnailSelector
+                    ? LunrWorkQueryService.toValueFacetValueThumbnail(
+                        collection.thumbnail(valueFacetValueThumbnailSelector)
+                      )
+                    : null,
+                  value: collectionUri,
+                };
+              }
             }
           }
           const facet: CollectionValueFacet = {
             type: "CollectionValue",
             unknownCount,
-            values: valuesFromMap(countsByValue),
+            values: Object.keys(values).map(value => values[value]),
           };
           facets.push(facet);
           break;
         }
         case "InstitutionValue": {
-          const countsByValue: {[index: string]: number} = {};
+          const values: {
+            [index: string]: MutableValueFacetValue<string>;
+          } = {};
           for (const work of works) {
-            incrementValueCount(countsByValue, work.institutionUri);
+            const value = values[work.institutionUri];
+            if (value) {
+              value.count++;
+            } else {
+              const institution = this.dataset.institutionByUri(
+                work.institutionUri
+              );
+              values[work.institutionUri] = {
+                count: 1,
+                label: institution.name,
+                thumbnail: valueFacetValueThumbnailSelector
+                  ? LunrWorkQueryService.toValueFacetValueThumbnail(
+                      institution.thumbnail(valueFacetValueThumbnailSelector)
+                    )
+                  : null,
+                value: work.institutionUri,
+              };
+            }
           }
           const facet: InstitutionValueFacet = {
             type: "InstitutionValue",
             unknownCount: 0,
-            values: valuesFromMap(countsByValue),
+            values: Object.keys(values).map(value => values[value]),
           };
           facets.push(facet);
           break;
@@ -190,15 +175,47 @@ export class LunrWorkQueryService implements WorkQueryService {
         case "StringPropertyValue": {
           const concreteFilter: StringPropertyValueFilter = filter as StringPropertyValueFilter;
           let unknownCount: number = 0;
-          const countsByValue: {[index: string]: number} = {};
+          const facetValues: {
+            [index: string]: MutableValueFacetValue<string>;
+          } = {};
           for (const work of works) {
             let workHasProperty = false;
             for (const property of work.properties ?? []) {
               if (property.uri === concreteFilter.propertyUri) {
-                incrementValueCount(
-                  countsByValue,
-                  property.value.value.toString()
-                );
+                const propertyValueString: string = property.value.value;
+                const facetValue = facetValues[propertyValueString];
+                if (facetValue) {
+                  facetValue.count++;
+                } else {
+                  const propertyDefinition = this.dataset.propertyDefinitionByUri(
+                    property.uri
+                  );
+                  let propertyValueDefinition:
+                    | PropertyValueDefinition
+                    | undefined;
+                  if (propertyDefinition) {
+                    propertyValueDefinition = propertyDefinition.values.find(
+                      propertyValueDefinition =>
+                        propertyValueDefinition.value.equals(property.value)
+                    );
+                  }
+                  facetValues[propertyValueString] = {
+                    count: 1,
+                    label: propertyValueDefinition
+                      ? propertyValueDefinition.label
+                      : null,
+                    value: propertyValueString,
+                    thumbnail:
+                      propertyValueDefinition &&
+                      valueFacetValueThumbnailSelector
+                        ? LunrWorkQueryService.toValueFacetValueThumbnail(
+                            propertyValueDefinition.thumbnail(
+                              valueFacetValueThumbnailSelector
+                            )
+                          )
+                        : null,
+                  };
+                }
                 workHasProperty = true;
               }
             }
@@ -210,7 +227,7 @@ export class LunrWorkQueryService implements WorkQueryService {
             propertyUri: concreteFilter.propertyUri,
             type: "StringPropertyValue",
             unknownCount,
-            values: valuesFromMap(countsByValue),
+            values: Object.keys(facetValues).map(value => facetValues[value]),
           };
           facets.push(facet);
           break;
@@ -230,7 +247,7 @@ export class LunrWorkQueryService implements WorkQueryService {
       switch (filter.type) {
         case "CollectionValue":
           filteredWorks = filteredWorks.filter(work =>
-            testValueFilter(
+            LunrWorkQueryService.testValueFilter(
               filter as CollectionValueFilter,
               work.collectionUris
             )
@@ -238,14 +255,15 @@ export class LunrWorkQueryService implements WorkQueryService {
           break;
         case "InstitutionValue":
           filteredWorks = filteredWorks.filter(work =>
-            testValueFilter(filter as InstitutionValueFilter, [
-              work.institutionUri,
-            ])
+            LunrWorkQueryService.testValueFilter(
+              filter as InstitutionValueFilter,
+              [work.institutionUri]
+            )
           );
           break;
         case "StringPropertyValue": {
           filteredWorks = filteredWorks.filter(work =>
-            testValueFilter(
+            LunrWorkQueryService.testValueFilter(
               filter as StringPropertyValueFilter,
               (work.properties ?? [])
                 .filter(
@@ -326,5 +344,62 @@ export class LunrWorkQueryService implements WorkQueryService {
         totalWorksCount: filteredWorks.length,
       });
     });
+  }
+
+  private static testValueFilter<T extends PrimitiveType>(
+    filter: ValueFilter<T>,
+    values: readonly T[]
+  ): boolean {
+    if (values.length === 0 && filter.excludeUnknown) {
+      return false;
+    }
+
+    const excludeValues: readonly T[] = filter.excludeValues ?? [];
+    const includeValues: readonly T[] = filter.includeValues ?? [];
+    if (excludeValues.length === 0 && includeValues.length === 0) {
+      return true;
+    }
+    if (excludeValues.length > 0) {
+      // If an work has any value that is excluded, then exclude the work
+      for (const value of values) {
+        if (excludeValues.some(excludeValue => excludeValue === value)) {
+          return false;
+        }
+      }
+    }
+
+    if (includeValues.length > 0) {
+      // If the work has any value that is included, then include the work
+      // Conversely, if any values are included and an work doesn't have one of them, exclude the work.
+      let include = false;
+      for (const value of values) {
+        if (includeValues.some(includeValue => includeValue === value)) {
+          include = true;
+          break;
+        }
+      }
+      if (!include) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  private static toValueFacetValueThumbnail(
+    image: Image | null
+  ): ValueFacetValueThumbnail | null {
+    if (!image) {
+      return null;
+    }
+    const imageSrc = image.src;
+    if (!imageSrc) {
+      return null;
+    }
+    return {
+      exactDimensions: image.exactDimensions,
+      maxDimensions: image.maxDimensions,
+      src: imageSrc,
+    };
   }
 }

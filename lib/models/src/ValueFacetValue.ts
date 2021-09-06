@@ -1,5 +1,5 @@
 import {PrimitiveType} from "./PrimitiveType";
-import {ImageDimensions} from "./ImageDimensions";
+import {ValueFacetValueThumbnail} from "./ValueFacetValueThumbnail";
 
 export interface ValueFacetValue<T extends PrimitiveType> {
   // label and thumbnail are drawn from linked models, such as the name of a collection,
@@ -8,10 +8,6 @@ export interface ValueFacetValue<T extends PrimitiveType> {
   // in the Dataset returned in a query.
   readonly label: string | null; // If null, use the value
   readonly count: number;
-  readonly thumbnail: {
-    exactDimensions: ImageDimensions | null;
-    maxDimensions: ImageDimensions | null;
-    src: string;
-  } | null;
+  readonly thumbnail: ValueFacetValueThumbnail | null;
   readonly value: T;
 }
