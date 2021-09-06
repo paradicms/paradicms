@@ -1,9 +1,9 @@
-import {JoinedProperty} from "@paradicms/models";
+import {Property} from "@paradicms/models";
 import * as React from "react";
 import {Table, TableBody, TableCell, TableRow} from "@material-ui/core";
 
 export const PropertiesTable: React.FunctionComponent<{
-  properties: readonly JoinedProperty[];
+  properties: readonly Property[];
 }> = ({properties}) => (
   <Table>
     <TableBody>

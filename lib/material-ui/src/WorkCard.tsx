@@ -16,13 +16,13 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {RightsTable} from "./RightsTable";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
-import {JoinedImage, JoinedInstitution, JoinedObject} from "@paradicms/models";
+import {Image, Institution, Work} from "@paradicms/models";
 
 const useStyles = makeStyles(theme => ({
   accordionTitle: {
     fontSize: "smaller",
   },
-  objectSummary: {
+  workSummary: {
     fontSize: "x-small",
     maxWidth: "32em",
   },
@@ -42,37 +42,37 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const ObjectCard: React.FunctionComponent<{
-  object: JoinedObject;
+export const WorkCard: React.FunctionComponent<{
+  work: Work;
   renderInstitutionLink?: (
-    institution: JoinedInstitution,
-    children: React.ReactNode,
+    institution: Institution,
+    children: React.ReactNode
   ) => React.ReactNode;
-  renderObjectLink: (
-    object: JoinedObject,
-    children: React.ReactNode,
-  ) => React.ReactNode;
-}> = ({object, renderInstitutionLink, renderObjectLink}) => {
+  renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactNode;
+}> = ({work, renderInstitutionLink, renderWorkLink}) => {
   const classes = useStyles();
-  const thumbnail = object.thumbnail({targetDimensions: thumbnailTargetDimensions});
-  const thumbnailSrc = thumbnail?.src ?? JoinedImage.placeholderSrc(thumbnailTargetDimensions);
+  const thumbnail = work.thumbnail({
+    targetDimensions: thumbnailTargetDimensions,
+  });
+  const thumbnailSrc =
+    thumbnail?.src ?? Image.placeholderSrc(thumbnailTargetDimensions);
 
   return (
     <Card className={classes.root}>
       <CardHeader
         className={classes.title}
-        title={renderObjectLink(object, <>{object.title}</>)}
+        title={renderWorkLink(work, <>{work.title}</>)}
       />
       <CardContent>
         <Grid container direction="column" spacing={2}>
           <Grid item container alignItems="center" justify="center">
             <Grid item>
-              {renderObjectLink(
-                object,
+              {renderWorkLink(
+                work,
                 <img
                   className={classes.thumbnailImg}
                   src={thumbnailSrc}
-                  title={object.title}
+                  title={work.title}
                 />
               )}
             </Grid>
@@ -87,8 +87,8 @@ export const ObjectCard: React.FunctionComponent<{
                     </TableCell>
                     <TableCell>
                       {renderInstitutionLink(
-                        object.institution,
-                        <span>{object.institution.name}</span>
+                        work.institution,
+                        <span>{work.institution.name}</span>
                       )}
                     </TableCell>
                   </TableRow>
@@ -96,7 +96,7 @@ export const ObjectCard: React.FunctionComponent<{
               </Table>
             </Grid>
           ) : null}
-          {object.abstract ? (
+          {work.abstract ? (
             <Grid item>
               <Accordion>
                 <AccordionSummary
@@ -105,8 +105,8 @@ export const ObjectCard: React.FunctionComponent<{
                 >
                   Summary
                 </AccordionSummary>
-                <AccordionDetails className={classes.objectSummary}>
-                  {object.abstract}
+                <AccordionDetails className={classes.workSummary}>
+                  {work.abstract}
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -129,7 +129,7 @@ export const ObjectCard: React.FunctionComponent<{
               </Accordion>
             </Grid>
           ) : null}
-          {object.rights ? (
+          {work.rights ? (
             <Grid item>
               <Accordion>
                 <AccordionSummary
@@ -141,7 +141,7 @@ export const ObjectCard: React.FunctionComponent<{
                 <AccordionDetails>
                   <RightsTable
                     cellClassName={classes.rightsTableCell}
-                    rights={object.rights}
+                    rights={work.rights}
                   ></RightsTable>
                 </AccordionDetails>
               </Accordion>

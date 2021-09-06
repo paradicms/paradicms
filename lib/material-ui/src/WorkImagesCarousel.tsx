@@ -1,24 +1,32 @@
 import * as React from "react";
 import ImageZoom from "react-medium-image-zoom";
 import Carousel from "react-material-ui-carousel";
-import {ImageDimensions, JoinedObject} from "@paradicms/models";
-import {Accordion, AccordionDetails, AccordionSummary, Grid} from "@material-ui/core";
+import {ImageDimensions, Work} from "@paradicms/models";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Grid,
+} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {RightsTable} from "./RightsTable";
 
-export const ObjectImagesCarousel: React.FunctionComponent<{
-  object: JoinedObject
-}> = ({object}) => {
-  const objectOriginalImages = object.originalImages;
+export const WorkImagesCarousel: React.FunctionComponent<{
+  work: Work;
+}> = ({work}) => {
+  const workOriginalImages = work.originalImages;
 
   return (
     <Carousel autoPlay={false}>
-      {objectOriginalImages.map(originalImage => {
+      {workOriginalImages.map(originalImage => {
         const originalImageSrc = originalImage.src;
         if (!originalImageSrc) {
           return null;
         }
-        const thumbnailTargetDimensions: ImageDimensions = {height: 600, width: 600};
+        const thumbnailTargetDimensions: ImageDimensions = {
+          height: 600,
+          width: 600,
+        };
         const thumbnail = originalImage.thumbnail({
           targetDimensions: thumbnailTargetDimensions,
         });
@@ -32,7 +40,7 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
             key={originalImage.uri}
           >
             <Grid item>
-              {thumbnailSrc ?
+              {thumbnailSrc ? (
                 <ImageZoom
                   image={{
                     className: "img",
@@ -48,10 +56,16 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
                     style: originalImage?.exactDimensions ?? undefined,
                   }}
                 />
-                : <img className="img" src={originalImageSrc} style={{
-                  maxHeight: thumbnailTargetDimensions.height,
-                  maxWidth: thumbnailTargetDimensions.width,
-                }} />}
+              ) : (
+                <img
+                  className="img"
+                  src={originalImageSrc}
+                  style={{
+                    maxHeight: thumbnailTargetDimensions.height,
+                    maxWidth: thumbnailTargetDimensions.width,
+                  }}
+                />
+              )}
               {originalImage && originalImage.rights ? (
                 <Accordion>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>

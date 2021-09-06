@@ -1,59 +1,50 @@
-import {
-  Filter,
-  JoinedFacet,
-  JoinedInstitution,
-  JoinedObject,
-  ObjectQuery,
-} from "@paradicms/models";
+import {Facet, Filter, Institution, Work, WorkQuery} from "@paradicms/models";
 import * as React from "react";
 import {Grid} from "@material-ui/core";
 import {FiltersControls} from "./FiltersControls";
-import {ObjectsGallery} from "./ObjectsGallery";
+import {WorksGallery} from "./WorksGallery";
 import {FiltersChips} from "./FiltersChips";
 
-export const ObjectSearchGrid: React.FunctionComponent<{
-  facets: readonly JoinedFacet[];
-  objects: readonly JoinedObject[];
+export const WorkSearchGrid: React.FunctionComponent<{
+  facets: readonly Facet[];
   onChangeFilters: (filters: readonly Filter[]) => void;
   onChangePage: (page: number) => void;
   page: number; // From 0
   pageMax: number;
-  query: ObjectQuery;
+  query: WorkQuery;
   renderInstitutionLink?: (
-    institution: JoinedInstitution,
+    institution: Institution,
     children: React.ReactNode
   ) => React.ReactNode;
-  renderObjectLink: (
-    object: JoinedObject,
-    children: React.ReactNode
-  ) => React.ReactNode;
+  renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactNode;
+  works: readonly Work[];
 }> = ({
   facets,
-  objects,
+  works,
   onChangeFilters,
   onChangePage,
   page,
   pageMax,
   query,
   renderInstitutionLink,
-  renderObjectLink,
+  renderWorkLink,
 }) => {
   return (
     <Grid container direction="column" spacing={2}>
       <Grid item>
         <Grid container>
           <Grid item xs={10}>
-            {objects.length > 0 ? (
-              <ObjectsGallery
-                objects={objects}
+            {works.length > 0 ? (
+              <WorksGallery
+                works={works}
                 onChangePage={onChangePage}
                 page={page}
                 pageMax={pageMax}
                 renderInstitutionLink={renderInstitutionLink}
-                renderObjectLink={renderObjectLink}
+                renderWorkLink={renderWorkLink}
               />
             ) : (
-              <h2 style={{textAlign: "center"}}>No matching objects found.</h2>
+              <h2 style={{textAlign: "center"}}>No matching works found.</h2>
             )}
           </Grid>
           <Grid item xs={2}>
