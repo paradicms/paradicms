@@ -3,6 +3,7 @@ export * from "./DCTERMS";
 export * from "./EXIF";
 export * from "./FOAF";
 export * from "./PARADICMS";
+export * from "./prefixes";
 export * from "./RDF";
 export * from "./RDFS";
 export * from "./SKOS";

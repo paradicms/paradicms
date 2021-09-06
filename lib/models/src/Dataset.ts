@@ -5,8 +5,15 @@ import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
 import {PropertyDefinition} from "./PropertyDefinition";
 import {PropertyValueDefinition} from "./PropertyValueDefinition";
-import {NamedNode, Parser, ParserOptions, Store} from "n3";
-import {PARADICMS, RDF} from "./vocabularies";
+import {
+  NamedNode,
+  Parser,
+  ParserOptions,
+  Store,
+  Writer,
+  WriterOptions,
+} from "n3";
+import {PARADICMS, prefixes, RDF} from "./vocabularies";
 import {Work} from "./Work";
 
 /**
@@ -478,6 +485,21 @@ export class Dataset {
       this.readRightsStatements();
     }
     return this._rightsStatementsByUriIndex!;
+  }
+
+  stringify(options?: WriterOptions): string {
+    const augmentedOptions: WriterOptions = {...options};
+    if (!augmentedOptions.format) {
+      augmentedOptions.format = "Turtle";
+    }
+    if (!augmentedOptions.prefixes) {
+      augmentedOptions.prefixes = prefixes;
+    }
+    const writer = new Writer(augmentedOptions);
+    writer.addQuads(this.store.getQuads(null, null, null, null));
+    let resultString: string;
+    writer.end((error, result: string) => (resultString = result));
+    return resultString!;
   }
 
   workByUri(workUri: string): Work {
