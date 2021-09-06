@@ -6,8 +6,6 @@ import {
   Dataset,
   DataSubsetter,
   DCTERMS,
-  IndexedDataset,
-  JoinedDataset,
   License,
   RightsStatement,
 } from "@paradicms/models";
@@ -28,9 +26,9 @@ import {
   Row,
   Table,
 } from "reactstrap";
-import {ObjectImagesCarousel} from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
+import {WorkImagesCarousel} from "@paradicms/bootstrap";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
@@ -38,7 +36,7 @@ interface StaticProps {
   readonly collectionUri: string;
   readonly configuration: Configuration;
   readonly currentWorkUri: string;
-  readonly dataset: Dataset;
+  readonly datasetString: string;
   readonly nextWorkUri: string | null;
   readonly previousWorkUri: string | null;
 }
@@ -64,29 +62,29 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
   configuration,
   currentWorkUri,
-  dataset,
+  datasetString,
   nextWorkUri,
   previousWorkUri,
 }) => {
-  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [
+  const dataset = useMemo<Dataset>(() => Dataset.parse(datasetString), [
+    datasetString,
+  ]);
+  const collection = useMemo(() => dataset.collectionByUri(collectionUri), [
+    collectionUri,
     dataset,
   ]);
-  const collection = useMemo(
-    () => joinedDataset.collectionByUri(collectionUri),
-    [collectionUri, joinedDataset]
-  );
-  const currentWork = useMemo(() => joinedDataset.workByUri(currentWorkUri), [
+  const currentWork = useMemo(() => dataset.workByUri(currentWorkUri), [
     currentWorkUri,
-    joinedDataset,
+    dataset,
   ]);
   const institution = useMemo(() => collection.institution, [collection]);
   const nextWork = useMemo(
-    () => (nextWorkUri ? joinedDataset.workByUri(nextWorkUri) : null),
-    [nextWorkUri, joinedDataset]
+    () => (nextWorkUri ? dataset.workByUri(nextWorkUri) : null),
+    [nextWorkUri, dataset]
   );
   const previousWork = useMemo(
-    () => (previousWorkUri ? joinedDataset.workByUri(previousWorkUri) : null),
-    [nextWorkUri, joinedDataset]
+    () => (previousWorkUri ? dataset.workByUri(previousWorkUri) : null),
+    [nextWorkUri, dataset]
   );
 
   const abstract: string | null = useMemo(() => {
@@ -186,7 +184,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                             />
                             <RightsTableRow
                               label="Rights holder"
-                              value={rights?.holder?.value}
+                              value={rights?.holder}
                             />
                             <RightsTableRow
                               label="License"
@@ -265,10 +263,9 @@ export const getStaticProps: GetStaticProps = async ({
   const workUri = decodeFileName(params!.workUri as string);
 
   const dataset = readDatasetFile(readFileSync);
-  const indexedDataset = new IndexedDataset(dataset);
-  const currentWork = indexedDataset.workByUri(workUri);
+  const currentWork = dataset.workByUri(workUri);
   const collectionUri = currentWork.collectionUris[0];
-  const collectionWorks = indexedDataset.collectionWorks(collectionUri);
+  const collectionWorks = dataset.collectionWorks(collectionUri);
 
   let nextWorkUri: string | null = null;
   let previousWorkUri: string | null = null;
@@ -303,11 +300,13 @@ export const getStaticProps: GetStaticProps = async ({
       collectionUri,
       configuration: readConfigurationFile(readFileSync),
       currentWorkUri: workUri,
-      dataset: new DataSubsetter(indexedDataset).worksDataset(workUris, {
-        allImages: true,
-        collections: {},
-        institution: {rights: true},
-      }),
+      datasetString: new DataSubsetter(dataset)
+        .worksDataset(workUris, {
+          allImages: true,
+          collections: {},
+          institution: {rights: true},
+        })
+        .stringify(),
       nextWorkUri,
       previousWorkUri,
     },

@@ -10,9 +10,13 @@ import {
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Col, Container, Row} from "reactstrap";
-import {Accordion, PropertiesTable, RightsTable} from "@paradicms/bootstrap";
+import {
+  Accordion,
+  PropertiesTable,
+  RightsTable,
+  WorkImagesCarousel,
+} from "@paradicms/bootstrap";
 import * as fs from "fs";
-import {WorkImagesCarousel} from "@paradicms/material-ui";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
