@@ -9,4 +9,8 @@ export class License extends NamedModel {
   get title(): string {
     return this.requiredString(DCTERMS.title);
   }
+
+  toString() {
+    return this.title;
+  }
 }

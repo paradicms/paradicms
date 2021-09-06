@@ -17,4 +17,8 @@ export class RightsStatement extends NamedModel {
   get prefLabel(): string {
     return this.requiredString(SKOS.prefLabel);
   }
+
+  toString() {
+    return this.prefLabel;
+  }
 }
