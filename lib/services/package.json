@@ -17,6 +17,7 @@
   "scripts": {
     "build": "tsc -b",
     "clean": "rimraf dist",
+    "rebuild": "rimraf dist && tsc -b",
     "watch": "tsc -w --preserveWatchOutput"
   },
   "types": "dist/index.d.ts",
