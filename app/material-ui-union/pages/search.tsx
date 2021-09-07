@@ -125,22 +125,16 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
   const dataset = readDatasetFile(readFileSync);
-  const searchDataset = new DataSubsetter(dataset).worksDataset(
-    dataset.works.map(work => work.uri),
-    WORK_JOIN_SELECTOR
-  );
-
-  console.log(
-    "Search dataset:",
-    Object.keys(searchDataset)
-      .map(key => `${key}: ${((searchDataset as any)[key] as any[]).length}`)
-      .join(", ")
-  );
 
   return {
     props: {
       configuration: readConfigurationFile(readFileSync),
-      datasetString: searchDataset.stringify(),
+      datasetString: new DataSubsetter(dataset)
+        .worksDataset(
+          dataset.works.map(work => work.uri),
+          WORK_JOIN_SELECTOR
+        )
+        .stringify(),
     },
   };
 };
