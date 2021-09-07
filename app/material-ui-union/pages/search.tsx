@@ -2,23 +2,29 @@ import {
   Configuration,
   Dataset,
   DataSubsetter,
-  IndexedDataset,
+  WorkJoinSelector,
 } from "@paradicms/models";
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
-import {thumbnailTargetDimensions} from "@paradicms/material-ui";
+import {
+  thumbnailTargetDimensions,
+  WorkSearchGrid,
+} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
 import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
+import {WorkQueryService} from "@paradicms/services";
+import {LunrWorkQueryService} from "@paradicms/lunr";
+import {WorkSearchPage} from "@paradicms/react-search";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly configuration: Configuration;
-  readonly dataset: Dataset;
+  readonly datasetString: string;
 }
 
 const WORK_JOIN_SELECTOR: WorkJoinSelector = {
@@ -36,13 +42,15 @@ const WORKS_PER_PAGE = 10;
 
 const SearchPage: React.FunctionComponent<StaticProps> = ({
   configuration,
-  dataset,
+  datasetString,
 }) => {
+  const dataset = useMemo(() => Dataset.parse(datasetString), [datasetString]);
+
   const workQueryService = useMemo<WorkQueryService>(
     () =>
       new LunrWorkQueryService({
         configuration: configuration.workSearch,
-        dataset: new IndexedDataset(dataset),
+        dataset,
         workJoinSelector: WORK_JOIN_SELECTOR,
       }),
     [configuration, dataset]
@@ -117,7 +125,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
   const dataset = readDatasetFile(readFileSync);
-  const searchDataset = DataSubsetter.fromDataset(dataset).worksDataset(
+  const searchDataset = new DataSubsetter(dataset).worksDataset(
     dataset.works.map(work => work.uri),
     WORK_JOIN_SELECTOR
   );
@@ -132,7 +140,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   return {
     props: {
       configuration: readConfigurationFile(readFileSync),
-      dataset: searchDataset,
+      datasetString: searchDataset.stringify(),
     },
   };
 };

@@ -2,12 +2,7 @@ import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {Hrefs} from "lib/Hrefs";
-import {
-  Configuration,
-  Dataset,
-  DataSubsetter,
-  JoinedDataset,
-} from "@paradicms/models";
+import {Configuration, Dataset, DataSubsetter} from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {
   decodeFileName,
@@ -26,22 +21,17 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly configuration: Configuration;
-  readonly dataset: Dataset;
+  readonly datasetString: string;
   readonly institutionUri: string;
 }
 
 const InstitutionPage: React.FunctionComponent<StaticProps> = ({
   configuration,
-  dataset,
+  datasetString,
   institutionUri,
 }) => {
-  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [
-    dataset,
-  ]);
-  const institution = useMemo(
-    () => joinedDataset.institutionByUri(institutionUri),
-    [institutionUri, joinedDataset]
-  );
+  const dataset = useMemo(() => Dataset.parse(datasetString), [datasetString]);
+  const institution = dataset.institutionByUri(institutionUri);
 
   return (
     <Layout
@@ -83,7 +73,7 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const institutionUri = decodeFileName(params!.institutionUri as string);
 
-  const institutionDataset = DataSubsetter.fromDataset(
+  const institutionDataset = new DataSubsetter(
     readDatasetFile(readFileSync)
   ).institutionDataset(institutionUri, {
     collections: {
@@ -104,7 +94,7 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       configuration: readConfigurationFile(readFileSync),
-      dataset: institutionDataset,
+      datasetString: institutionDataset.stringify(),
       institutionUri,
     },
   };

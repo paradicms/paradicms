@@ -11,14 +11,19 @@ import {
   Configuration,
   Dataset,
   DataSubsetter,
-  IndexedDataset,
-  JoinedDataset,
+  WorkJoinSelector,
 } from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {thumbnailTargetDimensions} from "@paradicms/material-ui";
+import {
+  thumbnailTargetDimensions,
+  WorkSearchGrid,
+} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
+import {WorkQueryService} from "@paradicms/services";
+import {LunrWorkQueryService} from "@paradicms/lunr";
+import {WorkSearchPage} from "@paradicms/react-search";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
@@ -38,31 +43,29 @@ const WORKS_PER_PAGE = 10;
 interface StaticProps {
   readonly collectionUri: string;
   readonly configuration: Configuration;
-  readonly dataset: Dataset;
+  readonly datasetString: string;
 }
 
 const CollectionPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
   configuration,
-  dataset,
+  datasetString,
 }) => {
-  const indexedDataset = useMemo(() => new IndexedDataset(dataset), [dataset]);
-  const joinedDataset = useMemo(() => new JoinedDataset(indexedDataset), [
-    indexedDataset,
+  const dataset = useMemo(() => Dataset.parse(datasetString), [datasetString]);
+
+  const collection = useMemo(() => dataset.collectionByUri(collectionUri), [
+    collectionUri,
+    dataset,
   ]);
-  const collection = useMemo(
-    () => joinedDataset.collectionByUri(collectionUri),
-    [collectionUri, joinedDataset]
-  );
   const institution = useMemo(() => collection.institution, [collection]);
   const workQueryService = useMemo<WorkQueryService>(
     () =>
       new LunrWorkQueryService({
         configuration: configuration.workSearch,
-        dataset: indexedDataset,
+        dataset,
         workJoinSelector: WORK_JOIN_SELECTOR,
       }),
-    [configuration, indexedDataset]
+    [configuration, dataset]
   );
 
   return (
@@ -123,14 +126,11 @@ export default CollectionPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const dataset = readDatasetFile(readFileSync);
-  const indexedDataset = new IndexedDataset(dataset);
 
   const paths: {params: {collectionUri: string; institutionUri: string}}[] = [];
   for (const institution of dataset.institutions) {
     const encodedInstitutionUri = encodeFileName(institution.uri);
-    for (const collection of indexedDataset.institutionCollections(
-      institution.uri
-    )) {
+    for (const collection of dataset.institutionCollections(institution.uri)) {
       paths.push({
         params: {
           collectionUri: encodeFileName(collection.uri),
@@ -152,7 +152,7 @@ export const getStaticProps: GetStaticProps = async ({
   const collectionUri = decodeFileName(params!.collectionUri as string);
   // const institutionUri = decodeFileName(params!.institutionUri as string);
 
-  const collectionDataset = DataSubsetter.fromDataset(
+  const collectionDataset = new DataSubsetter(
     readDatasetFile(readFileSync)
   ).collectionDataset(collectionUri, {
     works: WORK_JOIN_SELECTOR,
@@ -171,7 +171,7 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       collectionUri,
       configuration: readConfigurationFile(readFileSync),
-      dataset: collectionDataset,
+      datasetString: collectionDataset.stringify(),
     },
   };
 };

@@ -7,17 +7,11 @@ import {
   AccordionSummary,
   Grid,
 } from "@material-ui/core";
+import {Configuration, Dataset, DataSubsetter} from "@paradicms/models";
 import {
-  Configuration,
-  Dataset,
-  DataSubsetter,
-  IndexedDataset,
-  JoinedDataset,
-} from "@paradicms/models";
-import {
-  ObjectImagesCarousel,
   PropertiesTable,
   RightsTable,
+  WorkImagesCarousel,
 } from "@paradicms/material-ui";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {
@@ -33,19 +27,17 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly configuration: Configuration;
-  readonly dataset: Dataset;
+  readonly datasetString: string;
   readonly workUri: string;
 }
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
   configuration,
-  dataset,
+  datasetString,
   workUri,
 }) => {
-  const joinedDataset = useMemo(() => JoinedDataset.fromDataset(dataset), [
-    dataset,
-  ]);
-  const work = joinedDataset.workByUri(workUri);
+  const dataset = useMemo(() => Dataset.parse(datasetString), [datasetString]);
+  const work = dataset.workByUri(workUri);
   const institution = work.institution;
 
   return (
@@ -91,11 +83,10 @@ export default WorkPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const dataset = readDatasetFile(readFileSync);
-  const indexedDataset = new IndexedDataset(dataset);
   const paths: {params: {institutionUri: string; workUri: string}}[] = [];
   for (const institution of dataset.institutions) {
     const encodedInstitutionUri = encodeFileName(institution.uri);
-    for (const work of indexedDataset.institutionWorks(institution.uri)) {
+    for (const work of dataset.institutionWorks(institution.uri)) {
       paths.push({
         params: {
           institutionUri: encodedInstitutionUri,
@@ -120,13 +111,13 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       configuration: readConfigurationFile(readFileSync),
-      dataset: DataSubsetter.fromDataset(
-        readDatasetFile(readFileSync)
-      ).workDataset(workUri, {
-        allImages: true,
-        collections: {},
-        institution: {rights: true},
-      }),
+      datasetString: new DataSubsetter(readDatasetFile(readFileSync))
+        .workDataset(workUri, {
+          allImages: true,
+          collections: {},
+          institution: {rights: true},
+        })
+        .stringify(),
       workUri,
     },
   };

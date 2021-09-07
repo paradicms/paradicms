@@ -1,4 +1,4 @@
-import {ObjectQuery} from "@paradicms/models";
+import {WorkQuery} from "@paradicms/models";
 import * as qs from "qs";
 import {encodeFileName} from "@paradicms/next";
 
