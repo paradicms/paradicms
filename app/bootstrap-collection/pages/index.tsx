@@ -110,6 +110,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
       configuration: readConfigurationFile(readFileSync),
       datasetString: new DataSubsetter(completeDataset)
         .collectionDataset(collectionUri, {
+          institution: {},
           works: WORK_JOIN_SELECTOR,
         })
         .stringify(),
