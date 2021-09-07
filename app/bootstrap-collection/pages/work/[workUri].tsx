@@ -101,6 +101,7 @@ export const getStaticProps: GetStaticProps = async ({
           allImages: true,
           collections: {},
           institution: {rights: true},
+          propertyDefinitions: {},
         })
         .stringify(),
       workUri,
