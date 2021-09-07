@@ -41,6 +41,7 @@ export const FiltersChips: React.FunctionComponent<{
                 <ValueFilterChips
                   className={classes.chip}
                   facet={facet}
+                  key={filterI}
                   filter={filter}
                   onChange={onChangeFilter}
                 />
