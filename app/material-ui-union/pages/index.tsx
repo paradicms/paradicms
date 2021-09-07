@@ -1,4 +1,5 @@
 import * as React from "react";
+import {useMemo} from "react";
 import {GetStaticProps} from "next";
 import {Hrefs} from "lib/Hrefs";
 import {Layout} from "components/Layout";
@@ -7,12 +8,7 @@ import {
   InstitutionsGallery,
   thumbnailTargetDimensions,
 } from "@paradicms/material-ui";
-import {
-  Configuration,
-  Dataset,
-  DataSubsetter,
-  JoinedDataset,
-} from "@paradicms/models";
+import {Configuration, Dataset, DataSubsetter} from "@paradicms/models";
 import fs from "fs";
 import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
 
@@ -20,22 +16,19 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly configuration: Configuration;
-  readonly dataset: Dataset;
+  readonly datasetString: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   configuration,
-  dataset,
+  datasetString,
 }) => {
-  const joinedDataset = React.useMemo(
-    () => JoinedDataset.fromDataset(dataset),
-    [dataset]
-  );
+  const dataset = useMemo(() => Dataset.parse(datasetString), [datasetString]);
 
   return (
     <Layout documentTitle="Institutions" configuration={configuration}>
       <InstitutionsGallery
-        institutions={joinedDataset.institutions}
+        institutions={dataset.institutions}
         renderInstitutionLink={(institution, children) => (
           <Link
             href={Hrefs.institution(institution.uri).home}
@@ -55,9 +48,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
   const dataset = readDatasetFile(readFileSync);
-  const institutionsDataset = DataSubsetter.fromDataset(
-    dataset
-  ).institutionsDataset(
+  const institutionsDataset = new DataSubsetter(dataset).institutionsDataset(
     dataset.institutions.map(institution => institution.uri),
     {
       thumbnail: {targetDimensions: thumbnailTargetDimensions},
@@ -76,7 +67,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   return {
     props: {
       configuration: readConfigurationFile(readFileSync),
-      dataset: institutionsDataset,
+      datasetString: institutionsDataset.stringify(),
     },
   };
 };

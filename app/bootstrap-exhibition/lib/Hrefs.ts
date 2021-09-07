@@ -5,7 +5,7 @@ export class Hrefs {
     return "/";
   }
 
-  static object(objectUri: string): string {
-    return `/object/${encodeFileName(objectUri)}/`;
+  static work(workUri: string): string {
+    return `/work/${encodeFileName(workUri)}/`;
   }
 }

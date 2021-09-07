@@ -1,6 +1,13 @@
 import * as React from "react";
-import {Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@material-ui/core";
-import {JoinedRights, License, RightsStatement} from "@paradicms/models";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+} from "@material-ui/core";
+import {License, Rights, RightsStatement} from "@paradicms/models";
 
 const RightsTableRow: React.FunctionComponent<{
   cellClassName?: string;
@@ -16,16 +23,14 @@ const RightsTableRow: React.FunctionComponent<{
       <TableCell className={cellClassName}>
         <strong>{label}</strong>
       </TableCell>
-      <TableCell className={cellClassName}>
-        {value}
-      </TableCell>
+      <TableCell className={cellClassName}>{value}</TableCell>
     </TableRow>
   );
 };
 
 export const RightsTable: React.FunctionComponent<{
   cellClassName?: string;
-  rights: JoinedRights;
+  rights: Rights;
   rowClassName?: string;
   tableClassName?: string;
 }> = ({cellClassName, rights, rowClassName, tableClassName}) => {
@@ -33,7 +38,7 @@ export const RightsTable: React.FunctionComponent<{
     if (!rights.license) {
       return null;
     }
-    if (typeof (rights.license) === "string") {
+    if (typeof rights.license === "string") {
       return rights.license as string;
     }
     const license = rights.license as License;
@@ -44,7 +49,7 @@ export const RightsTable: React.FunctionComponent<{
     if (!rights.statement) {
       return null;
     }
-    if (typeof (rights.statement) === "string") {
+    if (typeof rights.statement === "string") {
       return rights.statement as string;
     }
     const rightsStatement = rights.statement as RightsStatement;
@@ -65,13 +70,13 @@ export const RightsTable: React.FunctionComponent<{
             cellClassName={cellClassName}
             label="Creator"
             rowClassName={rowClassName}
-            value={rights.creator?.value}
+            value={rights.creator}
           />
           <RightsTableRow
             cellClassName={cellClassName}
             label="Holder"
             rowClassName={rowClassName}
-            value={rights.holder?.value}
+            value={rights.holder}
           />
           <RightsTableRow
             cellClassName={cellClassName}

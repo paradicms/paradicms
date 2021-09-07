@@ -1,6 +1,5 @@
 import * as React from "react";
-import {ObjectSearchPage} from "@paradicms/react-search";
-import {NavbarSearchForm, ObjectSearchContainer} from "@paradicms/bootstrap";
+import {NavbarSearchForm, WorkSearchContainer} from "@paradicms/bootstrap";
 import {
   Card,
   CardBody,
@@ -14,14 +13,15 @@ import {
 } from "reactstrap";
 import {Helmet} from "react-helmet";
 import {Configuration} from "@paradicms/models";
-import {ObjectQueryService} from "@paradicms/services";
+import {WorkQueryService} from "@paradicms/services";
+import {WorkSearchPage} from "@paradicms/react-search";
 
-const OBJECTS_PER_PAGE = 10;
+const WORKS_PER_PAGE = 10;
 
 export const Application: React.FunctionComponent<{
   configuration: Configuration;
-  objectQueryService: ObjectQueryService;
-}> = ({configuration, objectQueryService}) => {
+  workQueryService: WorkQueryService;
+}> = ({configuration, workQueryService}) => {
   const documentTitle = configuration.documentTitle ?? "Search";
   const navbarTitle = configuration.navbarTitle ?? documentTitle;
 
@@ -30,12 +30,12 @@ export const Application: React.FunctionComponent<{
       <Helmet>
         <title>{documentTitle}</title>
       </Helmet>
-      <ObjectSearchPage
-        configuration={configuration.objectSearch}
-        objectQueryService={objectQueryService}
-        objectsPerPage={OBJECTS_PER_PAGE}
+      <WorkSearchPage
+        configuration={configuration.workSearch}
+        workQueryService={workQueryService}
+        worksPerPage={WORKS_PER_PAGE}
       >
-        {({objectQuery, setObjectQuery, setPage, ...objectSearchProps}) => (
+        {({workQuery, setWorkQuery, setPage, ...workSearchProps}) => (
           <Container fluid>
             <Row>
               <Col>
@@ -47,7 +47,7 @@ export const Application: React.FunctionComponent<{
                     <NavItem>
                       <NavbarSearchForm
                         onSearch={text => {
-                          setObjectQuery({...objectQuery, text});
+                          setWorkQuery({...workQuery, text});
                           setPage(undefined);
                         }}
                       />
@@ -60,14 +60,14 @@ export const Application: React.FunctionComponent<{
               <Col>
                 <Card>
                   <CardBody>
-                    <ObjectSearchContainer
-                      {...objectSearchProps}
-                      objectQuery={objectQuery}
-                      objectsPerPage={OBJECTS_PER_PAGE}
-                      renderObjectLink={(object, children) => (
-                        <a href={object.page ?? object.uri}>{children}</a>
+                    <WorkSearchContainer
+                      {...workSearchProps}
+                      workQuery={workQuery}
+                      worksPerPage={WORKS_PER_PAGE}
+                      renderWorkLink={(work, children) => (
+                        <a href={work.page ?? work.uri}>{children}</a>
                       )}
-                      setObjectQuery={setObjectQuery}
+                      setWorkQuery={setWorkQuery}
                       setPage={setPage}
                     />
                   </CardBody>
@@ -76,7 +76,7 @@ export const Application: React.FunctionComponent<{
             </Row>
           </Container>
         )}
-      </ObjectSearchPage>
+      </WorkSearchPage>
     </>
   );
 };

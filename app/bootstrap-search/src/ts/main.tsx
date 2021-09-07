@@ -3,14 +3,8 @@ import * as ReactDOM from "react-dom";
 import {Application} from "~/Application";
 // import {dom, library} from "@fortawesome/fontawesome-svg-core";
 // import {faImages, faList} from "@fortawesome/free-solid-svg-icons";
-import {LunrObjectQueryService} from "@paradicms/lunr";
-import {DatasetRdfReader} from "@paradicms/rdf";
-import {
-  Configuration,
-  Dataset,
-  defaultConfiguration,
-  IndexedDataset,
-} from "@paradicms/models";
+import {LunrWorkQueryService} from "@paradicms/lunr";
+import {Configuration, Dataset, defaultConfiguration} from "@paradicms/models";
 import {QueryParamProvider} from "use-query-params";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import {thumbnailTargetDimensions} from "@paradicms/bootstrap";
@@ -28,17 +22,17 @@ const fetchConfiguration = (): Promise<Configuration> => {
 
 const fetchDataset = (): Promise<Dataset> =>
   fetch("./data.ttl").then(response =>
-    response.text().then(ttl => DatasetRdfReader.parse(ttl))
+    response.text().then(ttl => Dataset.parse(ttl))
   );
 
 Promise.all([fetchConfiguration(), fetchDataset()]).then(
   ([configuration, dataset]) => {
     console.info("configuration:\n", JSON.stringify(configuration));
 
-    const objectQueryService = new LunrObjectQueryService({
-      configuration: configuration.objectSearch,
-      dataset: new IndexedDataset(dataset),
-      objectJoinSelector: {
+    const workQueryService = new LunrWorkQueryService({
+      configuration: configuration.workSearch,
+      dataset,
+      workJoinSelector: {
         collections: {
           thumbnail: {targetDimensions: thumbnailTargetDimensions},
         },
@@ -59,7 +53,7 @@ Promise.all([fetchConfiguration(), fetchDataset()]).then(
         <QueryParamProvider ReactRouterRoute={Route}>
           <Application
             configuration={configuration}
-            objectQueryService={objectQueryService}
+            workQueryService={workQueryService}
           />
         </QueryParamProvider>
       </Router>,

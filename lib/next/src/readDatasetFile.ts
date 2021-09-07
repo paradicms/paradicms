@@ -1,5 +1,4 @@
 import {Dataset} from "@paradicms/models";
-import {DatasetRdfReader} from "@paradicms/rdf";
 
 let _dataset: Dataset | undefined;
 
@@ -13,7 +12,7 @@ export const readDatasetFile = (
     if (!dataTtlFilePath) {
       throw new EvalError("must specify a data .ttl (text/turtle) file path");
     }
-    _dataset = DatasetRdfReader.parse(readFileSync(dataTtlFilePath).toString());
+    _dataset = Dataset.parse(readFileSync(dataTtlFilePath).toString());
   }
   return _dataset;
 };

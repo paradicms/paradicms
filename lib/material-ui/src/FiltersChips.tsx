@@ -1,4 +1,4 @@
-import {Filter, JoinedFacet} from "@paradicms/models";
+import {Facet, Filter} from "@paradicms/models";
 import * as React from "react";
 import {makeStyles} from "@material-ui/core";
 import {ValueFilterChips} from "./ValueFilterChips";
@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const FiltersChips: React.FunctionComponent<{
-  facets: readonly JoinedFacet[];
+  facets: readonly Facet[];
   filters: readonly Filter[];
   onChange: (filters: readonly Filter[]) => void;
 }> = ({facets, filters, onChange}) => {

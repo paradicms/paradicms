@@ -1,7 +1,6 @@
 import {ImageDimensions} from "./ImageDimensions";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 
-
 /**
  * Select a thumbnail from an array of images, given target, minimum, and maximum dimensions.
  *
@@ -10,14 +9,26 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
  * first thumbnail that fits the desired dimensions is returned, whichever original image that thumbnail
  * is derived from.
  */
-export const selectThumbnail = <ImageT extends {readonly exactDimensions: ImageDimensions | null; readonly maxDimensions: ImageDimensions | null; readonly originalImageUri: string | null; readonly uri: string;}>(
-  images: readonly ImageT[], selector: ThumbnailSelector): ImageT | null => {
+export const selectThumbnail = <
+  ImageT extends {
+    readonly exactDimensions: ImageDimensions | null;
+    readonly maxDimensions: ImageDimensions | null;
+    readonly originalImageUri: string | null;
+    readonly uri: string;
+  }
+>(
+  images: readonly ImageT[],
+  selector: ThumbnailSelector
+): ImageT | null => {
   const {minDimensions, maxDimensions, targetDimensions} = selector;
 
   const imagesByOriginalImageUri: {[index: string]: ImageT[]} = {};
   for (const image of images) {
     const originalImageUri = image.originalImageUri ?? image.uri;
-    (imagesByOriginalImageUri[originalImageUri] || (imagesByOriginalImageUri[originalImageUri] = [])).push(image);
+    (
+      imagesByOriginalImageUri[originalImageUri] ||
+      (imagesByOriginalImageUri[originalImageUri] = [])
+    ).push(image);
   }
 
   for (const originalImageUri of Object.keys(imagesByOriginalImageUri)) {

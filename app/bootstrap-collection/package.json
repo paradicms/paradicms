@@ -11,7 +11,6 @@
     "@paradicms/lunr": "1.0.5",
     "@paradicms/models": "1.0.5",
     "@paradicms/next": "1.0.5",
-    "@paradicms/rdf": "1.0.5",
     "@paradicms/react": "1.0.5",
     "@paradicms/react-search": "1.0.5",
     "bootswatch": "^4.5.3",

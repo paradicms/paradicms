@@ -1,8 +1,9 @@
-import {ObjectSearchConfiguration} from "./ObjectSearchConfiguration";
+import {WorkSearchConfiguration} from "./WorkSearchConfiguration";
 
 export interface Configuration {
+  // Configuration is passed over getStaticProps, so must use nulls instead of undefined
   readonly bootstrapStylesheetHref: string | null;
   readonly documentTitle: string | null;
   readonly navbarTitle: string | null;
-  readonly objectSearch: ObjectSearchConfiguration;
+  readonly workSearch: WorkSearchConfiguration;
 }

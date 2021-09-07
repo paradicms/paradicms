@@ -43,7 +43,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   } else {
     onSearch = (text: string) => {
       const href = Hrefs.collection({
-        filters: configuration.objectSearch.filters,
+        filters: configuration.workSearch.filters,
         text: text,
       }).toString();
       console.info("redirecting to search href", href);

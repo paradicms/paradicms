@@ -1,9 +1,24 @@
-export interface RightsStatement {
-  readonly identifier: string;
-  readonly prefLabel: string;
-  readonly definition: string | null;
-  readonly description: string | null;
-  // Ignore notes
-  // Ignore scopeNote
-  readonly uri: string;
+import {NamedModel} from "./NamedModel";
+import {DCTERMS, SKOS} from "./vocabularies";
+
+export class RightsStatement extends NamedModel {
+  get definition(): string | null {
+    return this.optionalString(SKOS.definition);
+  }
+
+  get description(): string | null {
+    return this.optionalString(DCTERMS.description);
+  }
+
+  get identifier(): string {
+    return this.requiredString(DCTERMS.identifier);
+  }
+
+  get prefLabel(): string {
+    return this.requiredString(SKOS.prefLabel);
+  }
+
+  toString() {
+    return this.prefLabel;
+  }
 }

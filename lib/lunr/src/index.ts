@@ -1,1 +1,1 @@
-export * from "./LunrObjectQueryService";
+export * from "./LunrWorkQueryService";

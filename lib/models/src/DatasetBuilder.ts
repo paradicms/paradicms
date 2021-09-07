@@ -1,19 +1,19 @@
 import {Institution} from "./Institution";
 import {Image} from "./Image";
-import {Object} from "./Object";
 import {Dataset} from "./Dataset";
 import {Collection} from "./Collection";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
 import {PropertyDefinition} from "./PropertyDefinition";
 import {PropertyValueDefinition} from "./PropertyValueDefinition";
+import {Store} from "n3";
+import {Work} from "./Work";
 
 export class DatasetBuilder {
   private collectionsByUri: {[index: string]: Collection} | undefined;
   private institutionsByUri: {[index: string]: Institution} | undefined;
   private imagesByUri: {[index: string]: Image} | undefined;
   private licensesByUri: {[index: string]: License} | undefined;
-  private objectsByUri: {[index: string]: Object} | undefined;
   private propertyDefinitionsByUri:
     | {[index: string]: PropertyDefinition}
     | undefined;
@@ -21,6 +21,7 @@ export class DatasetBuilder {
     | {[index: string]: PropertyValueDefinition}
     | undefined;
   private rightsStatementsByUri: {[index: string]: RightsStatement} | undefined;
+  private worksByUri: {[index: string]: Work} | undefined;
 
   addCollection(collection: Collection) {
     this.collectionsByUri = DatasetBuilder.addNamedModel(
@@ -110,16 +111,13 @@ export class DatasetBuilder {
     return addedModels;
   }
 
-  addObject(object: Object) {
-    this.objectsByUri = DatasetBuilder.addNamedModel(this.objectsByUri, object);
+  addWork(work: Work) {
+    this.worksByUri = DatasetBuilder.addNamedModel(this.worksByUri, work);
     return this;
   }
 
-  addObjects(objects: readonly Object[]) {
-    this.objectsByUri = DatasetBuilder.addNamedModels(
-      this.objectsByUri,
-      objects
-    );
+  addWorks(works: readonly Work[]) {
+    this.worksByUri = DatasetBuilder.addNamedModels(this.worksByUri, works);
     return this;
   }
 
@@ -174,30 +172,27 @@ export class DatasetBuilder {
   }
 
   build(): Dataset {
-    return {
-      collections: DatasetBuilder.buildNamedModels(this.collectionsByUri),
-      images: DatasetBuilder.buildNamedModels(this.imagesByUri),
-      institutions: DatasetBuilder.buildNamedModels(this.institutionsByUri),
-      licenses: DatasetBuilder.buildNamedModels(this.licensesByUri),
-      objects: DatasetBuilder.buildNamedModels(this.objectsByUri),
-      propertyDefinitions: DatasetBuilder.buildNamedModels(
-        this.propertyDefinitionsByUri
-      ),
-      propertyValueDefinitions: DatasetBuilder.buildNamedModels(
-        this.propertyValueDefinitionsByUri
-      ),
-      rightsStatements: DatasetBuilder.buildNamedModels(
-        this.rightsStatementsByUri
-      ),
-    };
-  }
-
-  private static buildNamedModels<ModelT extends {uri: string}>(
-    addedModels: {[index: string]: ModelT} | undefined
-  ): readonly ModelT[] {
-    if (!addedModels) {
-      return [];
+    const store = new Store();
+    for (const modelsByUri of [
+      this.collectionsByUri,
+      this.imagesByUri,
+      this.institutionsByUri,
+      this.licensesByUri,
+      this.worksByUri,
+      this.propertyDefinitionsByUri,
+      this.propertyValueDefinitionsByUri,
+      this.rightsStatementsByUri,
+    ]) {
+      if (!modelsByUri) {
+        continue;
+      }
+      for (const modelUri of Object.keys(modelsByUri)) {
+        const model = modelsByUri[modelUri];
+        store.addQuads(
+          model.dataset.store.getQuads(model.node, null, null, null)
+        );
+      }
     }
-    return Object.keys(addedModels).map(uri => addedModels[uri]);
+    return new Dataset(store);
   }
 }

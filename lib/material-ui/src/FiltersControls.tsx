@@ -5,21 +5,12 @@ import {
   AccordionSummary,
   Grid,
 } from "@material-ui/core";
-import {
-  CollectionValueFilter,
-  Filter,
-  InstitutionValueFilter,
-  JoinedCollectionValueFacet,
-  JoinedFacet,
-  JoinedInstitutionValueFacet,
-  JoinedStringPropertyValueFacet,
-  StringPropertyValueFilter,
-} from "@paradicms/models";
+import {Facet, Filter} from "@paradicms/models";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {createFilterControl, ValueFilterTable} from "@paradicms/react-search";
 
 export const FiltersControls: React.FunctionComponent<{
-  facets: readonly JoinedFacet[];
+  facets: readonly Facet[];
   filters: readonly Filter[];
   onChange: (filters: readonly Filter[]) => void;
 }> = ({facets, filters, onChange}) => {
@@ -35,24 +26,15 @@ export const FiltersControls: React.FunctionComponent<{
         return createFilterControl({
           facets,
           factory: {
-            createCollectionValueFilterControl(
-              facet: JoinedCollectionValueFacet,
-              filter: CollectionValueFilter
-            ): React.ReactNode {
+            createCollectionValueFilterControl(facet, filter) {
               throw new EvalError("not implemented");
             },
 
-            createInstitutionValueFilterControl(
-              facet: JoinedInstitutionValueFacet,
-              filter: InstitutionValueFilter
-            ): React.ReactNode {
+            createInstitutionValueFilterControl(facet, filter) {
               throw new EvalError("not implemented");
             },
 
-            createStringPropertyValueFilterControl(
-              facet: JoinedStringPropertyValueFacet,
-              filter: StringPropertyValueFilter
-            ): React.ReactNode {
+            createStringPropertyValueFilterControl(facet, filter) {
               return (
                 <Grid
                   className="facet"

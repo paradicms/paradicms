@@ -9,11 +9,11 @@ import {
   Container,
   Row,
 } from "reactstrap";
-import {Filter, JoinedFacet} from "@paradicms/models";
+import {Facet, Filter} from "@paradicms/models";
 import {createFilterControl} from "./createFilterControl";
 
 export const FiltersControls: React.FunctionComponent<{
-  facets: readonly JoinedFacet[];
+  facets: readonly Facet[];
   filters: readonly Filter[];
   onChange: (filters: readonly Filter[]) => void;
 }> = ({facets, filters, onChange}) => {

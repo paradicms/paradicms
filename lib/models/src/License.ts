@@ -1,5 +1,16 @@
-export interface License {
-  readonly identifier: string;
-  readonly title: string;
-  readonly uri: string;
+import {NamedModel} from "./NamedModel";
+import {DCTERMS} from "./vocabularies";
+
+export class License extends NamedModel {
+  get identifier(): string {
+    return this.requiredString(DCTERMS.identifier);
+  }
+
+  get title(): string {
+    return this.requiredString(DCTERMS.title);
+  }
+
+  toString() {
+    return this.title;
+  }
 }

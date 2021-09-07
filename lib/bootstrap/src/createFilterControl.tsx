@@ -1,10 +1,10 @@
-import {Filter, JoinedFacet} from "@paradicms/models";
+import {Facet, Filter} from "@paradicms/models";
 import * as React from "react";
 import {createFilterControl as createFilterControlDelegate} from "@paradicms/react-search";
 import {ValueFilterControl} from "./ValueFilterControl";
 
 export const createFilterControl: (kwds: {
-  facets: readonly JoinedFacet[];
+  facets: readonly Facet[];
   filter: Filter;
   onChangeFilter: (newFilter: Filter) => void;
 }) => React.ReactNode = ({facets, filter, onChangeFilter}) => {

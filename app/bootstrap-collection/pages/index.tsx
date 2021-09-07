@@ -5,34 +5,33 @@ import {
   Configuration,
   Dataset,
   DataSubsetter,
-  IndexedDataset,
-  ObjectJoinSelector,
+  WorkJoinSelector,
 } from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
-import {ObjectSearchPage} from "@paradicms/react-search";
 import {
-  ObjectSearchContainer,
   thumbnailTargetDimensions,
+  WorkSearchContainer,
 } from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
-import {ObjectQueryService} from "@paradicms/services";
-import {LunrObjectQueryService} from "@paradicms/lunr";
 import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
 import fs from "fs";
+import {WorkQueryService} from "@paradicms/services";
+import {LunrWorkQueryService} from "@paradicms/lunr";
+import {WorkSearchPage} from "@paradicms/react-search";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
-  readonly collection: Collection;
+  readonly collectionUri: string;
   readonly configuration: Configuration;
-  readonly dataset: Dataset;
+  readonly datasetString: string;
 }
 
-const OBJECTS_PER_PAGE = 10;
+const WORKS_PER_PAGE = 10;
 
-const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
+const WORK_JOIN_SELECTOR: WorkJoinSelector = {
   propertyDefinitions: {
     values: {
       thumbnail: {targetDimensions: thumbnailTargetDimensions},
@@ -42,49 +41,58 @@ const OBJECT_JOIN_SELECTOR: ObjectJoinSelector = {
 };
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
-  collection,
+  collectionUri,
   configuration,
-  dataset,
+  datasetString,
 }) => {
-  const objectQueryService = useMemo<ObjectQueryService>(
+  const dataset = useMemo<Dataset>(() => Dataset.parse(datasetString), [
+    datasetString,
+  ]);
+
+  const collection = useMemo<Collection>(
+    () => dataset.collectionByUri(collectionUri),
+    [collectionUri, datasetString]
+  );
+
+  const workQueryService = useMemo<WorkQueryService>(
     () =>
-      new LunrObjectQueryService({
-        configuration: configuration.objectSearch,
-        dataset: new IndexedDataset(dataset),
-        objectJoinSelector: OBJECT_JOIN_SELECTOR,
+      new LunrWorkQueryService({
+        configuration: configuration.workSearch,
+        dataset,
+        workJoinSelector: WORK_JOIN_SELECTOR,
       }),
     [configuration, dataset]
   );
 
   return (
-    <ObjectSearchPage
-      configuration={configuration.objectSearch}
-      objectQueryService={objectQueryService}
-      objectsPerPage={OBJECTS_PER_PAGE}
+    <WorkSearchPage
+      configuration={configuration.workSearch}
+      workQueryService={workQueryService}
+      worksPerPage={WORKS_PER_PAGE}
     >
-      {({setObjectQuery, setPage, ...lunrObjectSearchProps}) => (
+      {({setWorkQuery, setPage, ...lunrWorkSearchProps}) => (
         <Layout
           collection={collection}
           configuration={configuration}
           onSearch={text => {
-            setObjectQuery({filters: configuration.objectSearch.filters, text});
+            setWorkQuery({filters: configuration.workSearch.filters, text});
             setPage(undefined);
           }}
         >
-          <ObjectSearchContainer
-            objectsPerPage={OBJECTS_PER_PAGE}
-            renderObjectLink={(object, children) => (
-              <Link href={Hrefs.object(object.uri)}>
+          <WorkSearchContainer
+            worksPerPage={WORKS_PER_PAGE}
+            renderWorkLink={(work, children) => (
+              <Link href={Hrefs.work(work.uri)}>
                 <a>{children}</a>
               </Link>
             )}
-            setObjectQuery={setObjectQuery}
+            setWorkQuery={setWorkQuery}
             setPage={setPage}
-            {...lunrObjectSearchProps}
+            {...lunrWorkSearchProps}
           />
         </Layout>
       )}
-    </ObjectSearchPage>
+    </WorkSearchPage>
   );
 };
 
@@ -94,21 +102,21 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
   const completeDataset = readDatasetFile(readFileSync);
-  const collection = completeDataset.collections[0];
-  // Must pass all of the collection's objects in to feed into the search service
-  const collectionDataset = DataSubsetter.fromDataset(
+  const collectionUri = completeDataset.collections[0].uri;
+  // Must pass all of the collection's works in to feed into the search service
+  const collectionDataset = new DataSubsetter(
     completeDataset
-  ).collectionDataset(collection.uri, {
-    objects: OBJECT_JOIN_SELECTOR,
+  ).collectionDataset(collectionUri, {
+    works: WORK_JOIN_SELECTOR,
   });
 
   // console.debug("Collection dataset:", Object.keys(collectionDataset).map(key => `${key}: ${((collection,Dataset as any)[key] as any[]).length,,,,,,}`).join(", "));
 
   return {
     props: {
-      collection,
+      collectionUri,
       configuration: readConfigurationFile(readFileSync),
-      dataset: collectionDataset,
+      datasetString: collectionDataset.stringify(),
     },
   };
 };

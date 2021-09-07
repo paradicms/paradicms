@@ -1,3 +1,3 @@
 export * from "./createFilterControl";
-export * from "./ObjectSearchPage";
+export * from "./WorkSearchPage";
 export * from "./ValueFilterTable";

@@ -1,18 +1,15 @@
-import {IndexedDataset} from "./IndexedDataset";
 import {Dataset} from "./Dataset";
-import {JoinedDataset} from "./JoinedDataset";
 import {Rights} from "./Rights";
 import {Property} from "./Property";
 import {CollectionJoinSelector} from "./CollectionJoinSelector";
 import {InstitutionJoinSelector} from "./InstitutionJoinSelector";
-import {ObjectJoinSelector} from "./ObjectJoinSelector";
 import {Collection} from "./Collection";
-import {JoinedRights} from "./JoinedRights";
 import {DatasetBuilder} from "./DatasetBuilder";
 import {Institution} from "./Institution";
-import {Object} from "./Object";
 import {PropertyDefinitionJoinSelector} from "./PropertyDefinitionJoinSelector";
 import {selectThumbnail} from "./selectThumbnail";
+import {WorkJoinSelector} from "./WorkJoinSelector";
+import {Work} from "./Work";
 
 /**
  * Subset a Dataset to reduce the amount of data passed between getStaticProps and the component.
@@ -22,14 +19,10 @@ import {selectThumbnail} from "./selectThumbnail";
  * An undefined joinSelector means don't return any connected models.
  * An empty joinSelector ({}) means return the connected models themselves but none of their connected models (i.e., no recursion).
  * For example, a joinSelector on Institution with collections: {} will return all of the Collection instances associated with that Institution,
- * but no models connected to the Collections (i.e., their Objects).
+ * but no models connected to the Collections (i.e., their Works).
  */
 export class DataSubsetter {
-  private readonly completeJoinedDataset: JoinedDataset;
-
-  constructor(private readonly completeIndexedDataset: IndexedDataset) {
-    this.completeJoinedDataset = new JoinedDataset(completeIndexedDataset);
-  }
+  constructor(private readonly completeDataset: Dataset) {}
 
   // Use the builder pattern internally rather than a more functional algorithm, such as merging datasets,
   // which was the initial implementation
@@ -41,18 +34,16 @@ export class DataSubsetter {
     builder.addCollection(collection);
 
     if (joinSelector?.thumbnail) {
-      const thumbnailImage = this.completeJoinedDataset
+      const thumbnailImage = this.completeDataset
         .collectionByUri(collection.uri)
         .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        builder.addImage(thumbnailImage.asImage);
-        if (thumbnailImage.asImage.depictsUri !== collection.uri) {
-          // The thumbnail either depicts the collection or one of the collection's objects.
-          // If the latter case we need to include the object in the dataset.
-          builder.addObject(
-            this.completeIndexedDataset.objectByUri(
-              thumbnailImage.asImage.depictsUri
-            )
+        builder.addImage(thumbnailImage);
+        if (thumbnailImage.depictsUri !== collection.uri) {
+          // The thumbnail either depicts the collection or one of the collection's works.
+          // If the latter case we need to include the work in the dataset.
+          builder.addWork(
+            this.completeDataset.workByUri(thumbnailImage.depictsUri)
           );
         }
       }
@@ -61,16 +52,14 @@ export class DataSubsetter {
     if (joinSelector?.institution) {
       this.addInstitutionDataset(
         builder,
-        this.completeIndexedDataset.institutionByUri(collection.institutionUri),
+        this.completeDataset.institutionByUri(collection.institutionUri),
         joinSelector.institution
       );
     }
 
-    if (joinSelector?.objects) {
-      for (const object of this.completeIndexedDataset.collectionObjects(
-        collection.uri
-      )) {
-        this.addObjectDataset(builder, object, joinSelector.objects);
+    if (joinSelector?.works) {
+      for (const work of this.completeDataset.collectionWorks(collection.uri)) {
+        this.addWorkDataset(builder, work, joinSelector.works);
       }
     }
 
@@ -85,26 +74,22 @@ export class DataSubsetter {
     builder.addInstitution(institution);
 
     if (joinSelector?.thumbnail) {
-      const thumbnailImage = this.completeJoinedDataset
+      const thumbnailImage = this.completeDataset
         .institutionByUri(institution.uri)
         .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        builder.addImage(thumbnailImage.asImage);
-        if (thumbnailImage.asImage.depictsUri !== institution.uri) {
-          // The thumbnail either depicts the institution, one of the institution's collections, or one of the institution's objects.
-          // In the latter cases we need to include the depicted collection or object
+        builder.addImage(thumbnailImage);
+        if (thumbnailImage.depictsUri !== institution.uri) {
+          // The thumbnail either depicts the institution, one of the institution's collections, or one of the institution's works.
+          // In the latter cases we need to include the depicted collection or work
           // TODO: this should call an IndexedDataset.modelByUri(depictsUri), then use the NamedModel discriminated union to include the model in the right array
           try {
-            builder.addObject(
-              this.completeIndexedDataset.objectByUri(
-                thumbnailImage.asImage.depictsUri
-              )
+            builder.addWork(
+              this.completeDataset.workByUri(thumbnailImage.depictsUri)
             );
           } catch (e) {
             builder.addCollection(
-              this.completeIndexedDataset.collectionByUri(
-                thumbnailImage.asImage.depictsUri
-              )
+              this.completeDataset.collectionByUri(thumbnailImage.depictsUri)
             );
           }
         }
@@ -112,7 +97,7 @@ export class DataSubsetter {
     }
 
     if (joinSelector?.collections) {
-      for (const collection of this.completeIndexedDataset.institutionCollections(
+      for (const collection of this.completeDataset.institutionCollections(
         institution.uri
       )) {
         this.addCollectionDataset(
@@ -123,11 +108,11 @@ export class DataSubsetter {
       }
     }
 
-    if (joinSelector?.objects) {
-      for (const object of this.completeIndexedDataset.institutionObjects(
+    if (joinSelector?.works) {
+      for (const work of this.completeDataset.institutionWorks(
         institution.uri
       )) {
-        this.addObjectDataset(builder, object, joinSelector.objects);
+        this.addWorkDataset(builder, work, joinSelector.works);
       }
     }
 
@@ -138,31 +123,29 @@ export class DataSubsetter {
     return builder;
   }
 
-  private addObjectDataset(
+  private addWorkDataset(
     builder: DatasetBuilder,
-    object: Object,
-    joinSelector?: ObjectJoinSelector
+    work: Work,
+    joinSelector?: WorkJoinSelector
   ): DatasetBuilder {
-    builder.addObject(object);
+    builder.addWork(work);
 
     if (joinSelector?.allImages) {
-      builder.addImages(
-        this.completeIndexedDataset.imagesByDepictsUri(object.uri)
-      );
+      builder.addImages(this.completeDataset.imagesByDepictsUri(work.uri));
     } else if (joinSelector?.thumbnail) {
-      const thumbnailImage = this.completeJoinedDataset
-        .objectByUri(object.uri)
+      const thumbnailImage = this.completeDataset
+        .workByUri(work.uri)
         .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        builder.addImage(thumbnailImage.asImage);
+        builder.addImage(thumbnailImage);
       }
     }
 
     if (joinSelector?.collections) {
-      for (const collectionUri of object.collectionUris) {
+      for (const collectionUri of work.collectionUris) {
         this.addCollectionDataset(
           builder,
-          this.completeIndexedDataset.collectionByUri(collectionUri),
+          this.completeDataset.collectionByUri(collectionUri),
           joinSelector.collections
         );
       }
@@ -171,7 +154,7 @@ export class DataSubsetter {
     if (joinSelector?.institution) {
       this.addInstitutionDataset(
         builder,
-        this.completeIndexedDataset.institutionByUri(object.institutionUri),
+        this.completeDataset.institutionByUri(work.institutionUri),
         joinSelector.institution
       );
     }
@@ -179,11 +162,11 @@ export class DataSubsetter {
     if (joinSelector?.propertyDefinitions) {
       this.addPropertyDefinitionsDataset(
         builder,
-        object.properties,
+        work.properties,
         joinSelector.propertyDefinitions
       );
     }
-    this.addRightsDataset(builder, object.rights);
+    this.addRightsDataset(builder, work.rights);
 
     return builder;
   }
@@ -198,7 +181,7 @@ export class DataSubsetter {
     }
 
     for (const property of properties) {
-      const propertyDefinition = this.completeIndexedDataset.propertyDefinitionByUri(
+      const propertyDefinition = this.completeDataset.propertyDefinitionByUri(
         property.uri
       );
       if (!propertyDefinition) {
@@ -207,7 +190,7 @@ export class DataSubsetter {
       builder.addPropertyDefinition(propertyDefinition);
 
       if (joinSelector?.values) {
-        const propertyValueDefinitions = this.completeIndexedDataset.propertyValueDefinitionsByPropertyUri(
+        const propertyValueDefinitions = this.completeDataset.propertyValueDefinitionsByPropertyUri(
           propertyDefinition.uri
         );
         builder.addPropertyValueDefinitions(propertyValueDefinitions);
@@ -215,7 +198,7 @@ export class DataSubsetter {
         if (joinSelector.values.allImages) {
           for (const propertyValueDefinition of propertyValueDefinitions) {
             builder.addImages(
-              this.completeIndexedDataset.imagesByDepictsUri(
+              this.completeDataset.imagesByDepictsUri(
                 propertyValueDefinition.uri
               )
             );
@@ -223,7 +206,7 @@ export class DataSubsetter {
         } else if (joinSelector.values.thumbnail) {
           for (const propertyValueDefinition of propertyValueDefinitions) {
             const thumbnail = selectThumbnail(
-              this.completeIndexedDataset.imagesByDepictsUri(
+              this.completeDataset.imagesByDepictsUri(
                 propertyValueDefinition.uri
               ),
               joinSelector.values.thumbnail
@@ -247,14 +230,12 @@ export class DataSubsetter {
       return builder;
     }
 
-    const joinedRights = new JoinedRights(this.completeJoinedDataset, rights);
-
-    const license = joinedRights.license;
+    const license = rights.license;
     if (license && typeof license !== "string") {
       builder.addLicense(license);
     }
 
-    const rightsStatement = joinedRights.statement;
+    const rightsStatement = rights.statement;
     if (rightsStatement && typeof rightsStatement !== "string") {
       builder.addRightsStatement(rightsStatement);
     }
@@ -268,7 +249,7 @@ export class DataSubsetter {
   ): Dataset {
     return this.addCollectionDataset(
       new DatasetBuilder(),
-      this.completeIndexedDataset.collectionByUri(collectionUri),
+      this.completeDataset.collectionByUri(collectionUri),
       joinSelector
     ).build();
   }
@@ -281,15 +262,11 @@ export class DataSubsetter {
     for (const collectionUri of collectionUris) {
       this.addCollectionDataset(
         builder,
-        this.completeIndexedDataset.collectionByUri(collectionUri),
+        this.completeDataset.collectionByUri(collectionUri),
         joinSelector
       );
     }
     return builder.build();
-  }
-
-  static fromDataset(dataset: Dataset) {
-    return new DataSubsetter(new IndexedDataset(dataset));
   }
 
   institutionDataset(
@@ -298,7 +275,7 @@ export class DataSubsetter {
   ): Dataset {
     return this.addInstitutionDataset(
       new DatasetBuilder(),
-      this.completeIndexedDataset.institutionByUri(institutionUri),
+      this.completeDataset.institutionByUri(institutionUri),
       joinSelector
     ).build();
   }
@@ -311,30 +288,30 @@ export class DataSubsetter {
     for (const institutionUri of institutionUris) {
       this.addInstitutionDataset(
         builder,
-        this.completeIndexedDataset.institutionByUri(institutionUri),
+        this.completeDataset.institutionByUri(institutionUri),
         joinSelector
       );
     }
     return builder.build();
   }
 
-  objectDataset(objectUri: string, joinSelector?: ObjectJoinSelector): Dataset {
-    return this.addObjectDataset(
+  workDataset(workUri: string, joinSelector?: WorkJoinSelector): Dataset {
+    return this.addWorkDataset(
       new DatasetBuilder(),
-      this.completeIndexedDataset.objectByUri(objectUri),
+      this.completeDataset.workByUri(workUri),
       joinSelector
     ).build();
   }
 
-  objectsDataset(
-    objectUris: readonly string[],
-    joinSelector?: ObjectJoinSelector
+  worksDataset(
+    workUris: readonly string[],
+    joinSelector?: WorkJoinSelector
   ): Dataset {
     const builder = new DatasetBuilder();
-    for (const objectUri of objectUris) {
-      this.addObjectDataset(
+    for (const workUri of workUris) {
+      this.addWorkDataset(
         builder,
-        this.completeIndexedDataset.objectByUri(objectUri),
+        this.completeDataset.workByUri(workUri),
         joinSelector
       );
     }

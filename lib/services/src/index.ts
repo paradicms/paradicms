@@ -1,1 +1,1 @@
-export * from "./ObjectQueryService";
+export * from "./WorkQueryService";

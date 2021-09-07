@@ -10,13 +10,13 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 // import {useRouter} from "next/router";
 
 interface StaticProps {
-  readonly firstObjectUri: string;
+  readonly firstWorkUri: string;
 }
 
-const IndexPage: React.FunctionComponent<StaticProps> = ({firstObjectUri}) => {
+const IndexPage: React.FunctionComponent<StaticProps> = ({firstWorkUri}) => {
   const router = useRouter();
   React.useEffect(() => {
-    router.push(Hrefs.object(firstObjectUri));
+    router.push(Hrefs.work(firstWorkUri));
   }, []);
   return <div></div>;
 };
@@ -28,7 +28,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 }> => {
   return {
     props: {
-      firstObjectUri: readDatasetFile(readFileSync).objects[0].uri,
+      firstWorkUri: readDatasetFile(readFileSync).works[0].uri,
     },
   };
 };
