@@ -1,5 +1,5 @@
 import * as React from "react";
-import {NavbarSearchForm} from "@paradicms/bootstrap";
+import {NavbarSearchForm, WorkSearchContainer} from "@paradicms/bootstrap";
 import {
   Card,
   CardBody,
@@ -13,6 +13,8 @@ import {
 } from "reactstrap";
 import {Helmet} from "react-helmet";
 import {Configuration} from "@paradicms/models";
+import {WorkQueryService} from "@paradicms/services";
+import {WorkSearchPage} from "@paradicms/react-search";
 
 const WORKS_PER_PAGE = 10;
 

@@ -3,14 +3,8 @@ import * as ReactDOM from "react-dom";
 import {Application} from "~/Application";
 // import {dom, library} from "@fortawesome/fontawesome-svg-core";
 // import {faImages, faList} from "@fortawesome/free-solid-svg-icons";
-import {LunrObjectQueryService} from "@paradicms/lunr";
-import {DatasetRdfReader} from "@paradicms/rdf";
-import {
-  Configuration,
-  Dataset,
-  defaultConfiguration,
-  IndexedDataset,
-} from "@paradicms/models";
+import {LunrWorkQueryService} from "@paradicms/lunr";
+import {Configuration, Dataset, defaultConfiguration} from "@paradicms/models";
 import {QueryParamProvider} from "use-query-params";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import {thumbnailTargetDimensions} from "@paradicms/bootstrap";
@@ -28,7 +22,7 @@ const fetchConfiguration = (): Promise<Configuration> => {
 
 const fetchDataset = (): Promise<Dataset> =>
   fetch("./data.ttl").then(response =>
-    response.text().then(ttl => DatasetRdfReader.parse(ttl))
+    response.text().then(ttl => Dataset.parse(ttl))
   );
 
 Promise.all([fetchConfiguration(), fetchDataset()]).then(
@@ -37,7 +31,7 @@ Promise.all([fetchConfiguration(), fetchDataset()]).then(
 
     const workQueryService = new LunrWorkQueryService({
       configuration: configuration.workSearch,
-      dataset: new IndexedDataset(dataset),
+      dataset,
       workJoinSelector: {
         collections: {
           thumbnail: {targetDimensions: thumbnailTargetDimensions},
