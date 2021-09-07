@@ -8262,7 +8262,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:129> .
 
-<http://example.com/institution0/collection0/object0> a paradicms:Object ;
+<http://example.com/institution0/collection0/object0> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0Collection0Object0 alternative title 0",
         "Institution0Collection0Object0 alternative title 1" ;
@@ -8309,7 +8309,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     paradicms:institution <http://example.com/institution0> ;
     foaf:page <http://example.com/object/0> .
 
-<http://example.com/institution0/collection0/object1> a paradicms:Object ;
+<http://example.com/institution0/collection0/object1> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0Collection0Object1 alternative title 0",
         "Institution0Collection0Object1 alternative title 1" ;
@@ -8356,7 +8356,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     paradicms:institution <http://example.com/institution0> ;
     foaf:page "http://example.com/object/1" .
 
-<http://example.com/institution0/collection0/object2> a paradicms:Object ;
+<http://example.com/institution0/collection0/object2> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0Collection0Object2 alternative title 0",
         "Institution0Collection0Object2 alternative title 1" ;
@@ -8403,7 +8403,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     paradicms:institution <http://example.com/institution0> ;
     foaf:page <http://example.com/object/2> .
 
-<http://example.com/institution0/collection0/object3> a paradicms:Object ;
+<http://example.com/institution0/collection0/object3> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0Collection0Object3 alternative title 0",
         "Institution0Collection0Object3 alternative title 1" ;
@@ -8450,7 +8450,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     paradicms:institution <http://example.com/institution0> ;
     foaf:page "http://example.com/object/3" .
 
-<http://example.com/institution0/shared/object0> a paradicms:Object ;
+<http://example.com/institution0/shared/object0> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0SharedObject0 alternative title 0",
         "Institution0SharedObject0 alternative title 1" ;
@@ -8497,7 +8497,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     paradicms:institution <http://example.com/institution0> ;
     foaf:page <http://example.com/object/0> .
 
-<http://example.com/institution0/shared/object1> a paradicms:Object ;
+<http://example.com/institution0/shared/object1> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0SharedObject1 alternative title 0",
         "Institution0SharedObject1 alternative title 1" ;
@@ -8544,7 +8544,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     paradicms:institution <http://example.com/institution0> ;
     foaf:page "http://example.com/object/1" .
 
-<http://example.com/institution0/shared/object2> a paradicms:Object ;
+<http://example.com/institution0/shared/object2> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0SharedObject2 alternative title 0",
         "Institution0SharedObject2 alternative title 1" ;
@@ -8591,7 +8591,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     paradicms:institution <http://example.com/institution0> ;
     foaf:page <http://example.com/object/2> .
 
-<http://example.com/institution0/shared/object3> a paradicms:Object ;
+<http://example.com/institution0/shared/object3> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0SharedObject3 alternative title 0",
         "Institution0SharedObject3 alternative title 1" ;
@@ -8638,7 +8638,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     paradicms:institution <http://example.com/institution0> ;
     foaf:page "http://example.com/object/3" .
 
-<http://example.com/institution1/collection0/object0> a paradicms:Object ;
+<http://example.com/institution1/collection0/object0> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1Collection0Object0 alternative title 0",
         "Institution1Collection0Object0 alternative title 1" ;
@@ -8685,7 +8685,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     paradicms:institution <http://example.com/institution1> ;
     foaf:page <http://example.com/object/0> .
 
-<http://example.com/institution1/collection0/object1> a paradicms:Object ;
+<http://example.com/institution1/collection0/object1> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1Collection0Object1 alternative title 0",
         "Institution1Collection0Object1 alternative title 1" ;
@@ -8732,7 +8732,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     paradicms:institution <http://example.com/institution1> ;
     foaf:page "http://example.com/object/1" .
 
-<http://example.com/institution1/collection0/object2> a paradicms:Object ;
+<http://example.com/institution1/collection0/object2> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1Collection0Object2 alternative title 0",
         "Institution1Collection0Object2 alternative title 1" ;
@@ -8779,7 +8779,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     paradicms:institution <http://example.com/institution1> ;
     foaf:page <http://example.com/object/2> .
 
-<http://example.com/institution1/collection0/object3> a paradicms:Object ;
+<http://example.com/institution1/collection0/object3> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1Collection0Object3 alternative title 0",
         "Institution1Collection0Object3 alternative title 1" ;
@@ -8826,7 +8826,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     paradicms:institution <http://example.com/institution1> ;
     foaf:page "http://example.com/object/3" .
 
-<http://example.com/institution1/shared/object0> a paradicms:Object ;
+<http://example.com/institution1/shared/object0> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1SharedObject0 alternative title 0",
         "Institution1SharedObject0 alternative title 1" ;
@@ -8873,7 +8873,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     paradicms:institution <http://example.com/institution1> ;
     foaf:page <http://example.com/object/0> .
 
-<http://example.com/institution1/shared/object1> a paradicms:Object ;
+<http://example.com/institution1/shared/object1> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1SharedObject1 alternative title 0",
         "Institution1SharedObject1 alternative title 1" ;
@@ -8920,7 +8920,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     paradicms:institution <http://example.com/institution1> ;
     foaf:page "http://example.com/object/1" .
 
-<http://example.com/institution1/shared/object2> a paradicms:Object ;
+<http://example.com/institution1/shared/object2> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1SharedObject2 alternative title 0",
         "Institution1SharedObject2 alternative title 1" ;
@@ -8967,7 +8967,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     paradicms:institution <http://example.com/institution1> ;
     foaf:page <http://example.com/object/2> .
 
-<http://example.com/institution1/shared/object3> a paradicms:Object ;
+<http://example.com/institution1/shared/object3> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1SharedObject3 alternative title 0",
         "Institution1SharedObject3 alternative title 1" ;
