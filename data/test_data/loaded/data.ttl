@@ -1077,7 +1077,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution0/collection0/object0> ;
+    foaf:depicts <http://example.com/institution0/collection0/work0> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Work0Image0>,
         <https://place-hold.it/75x75?text=Institution0Collection0Work0Image0> .
 
@@ -1088,29 +1088,29 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution0/collection0/object0> ;
+    foaf:depicts <http://example.com/institution0/collection0/work0> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Work0Image1>,
         <https://place-hold.it/75x75?text=Institution0Collection0Work0Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0Collection0Work1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution0/collection0/object1> ;
+    foaf:depicts <http://example.com/institution0/collection0/work1> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Work1Image0>,
         <https://place-hold.it/75x75?text=Institution0Collection0Work1Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0Collection0Work1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution0/collection0/object1> ;
+    foaf:depicts <http://example.com/institution0/collection0/work1> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Work1Image1>,
         <https://place-hold.it/75x75?text=Institution0Collection0Work1Image1> .
 
@@ -1121,7 +1121,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution0/collection0/object2> ;
+    foaf:depicts <http://example.com/institution0/collection0/work2> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Work2Image0>,
         <https://place-hold.it/75x75?text=Institution0Collection0Work2Image0> .
 
@@ -1132,29 +1132,29 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution0/collection0/object2> ;
+    foaf:depicts <http://example.com/institution0/collection0/work2> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Work2Image1>,
         <https://place-hold.it/75x75?text=Institution0Collection0Work2Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0Collection0Work3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution0/collection0/object3> ;
+    foaf:depicts <http://example.com/institution0/collection0/work3> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Work3Image0>,
         <https://place-hold.it/75x75?text=Institution0Collection0Work3Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0Collection0Work3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution0/collection0/object3> ;
+    foaf:depicts <http://example.com/institution0/collection0/work3> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Work3Image1>,
         <https://place-hold.it/75x75?text=Institution0Collection0Work3Image1> .
 
@@ -1179,90 +1179,90 @@ vra:worktype a paradicms:PropertyDefinition ;
         <https://place-hold.it/75x75?text=Institution0Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedWork0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 0" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution0/shared/object0> ;
+    foaf:depicts <http://example.com/institution0/shared/work0> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedWork0Image0>,
         <https://place-hold.it/75x75?text=Institution0SharedWork0Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedWork0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 0" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution0/shared/object0> ;
+    foaf:depicts <http://example.com/institution0/shared/work0> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedWork0Image1>,
         <https://place-hold.it/75x75?text=Institution0SharedWork0Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedWork1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution0/shared/object1> ;
+    foaf:depicts <http://example.com/institution0/shared/work1> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedWork1Image0>,
         <https://place-hold.it/75x75?text=Institution0SharedWork1Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedWork1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution0/shared/object1> ;
+    foaf:depicts <http://example.com/institution0/shared/work1> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedWork1Image1>,
         <https://place-hold.it/75x75?text=Institution0SharedWork1Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedWork2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution0/shared/object2> ;
+    foaf:depicts <http://example.com/institution0/shared/work2> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedWork2Image0>,
         <https://place-hold.it/75x75?text=Institution0SharedWork2Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedWork2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution0/shared/object2> ;
+    foaf:depicts <http://example.com/institution0/shared/work2> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedWork2Image1>,
         <https://place-hold.it/75x75?text=Institution0SharedWork2Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedWork3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution0/shared/object3> ;
+    foaf:depicts <http://example.com/institution0/shared/work3> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedWork3Image0>,
         <https://place-hold.it/75x75?text=Institution0SharedWork3Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedWork3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution0/shared/object3> ;
+    foaf:depicts <http://example.com/institution0/shared/work3> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedWork3Image1>,
         <https://place-hold.it/75x75?text=Institution0SharedWork3Image1> .
 
@@ -1273,7 +1273,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution1/collection0/object0> ;
+    foaf:depicts <http://example.com/institution1/collection0/work0> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Work0Image0>,
         <https://place-hold.it/75x75?text=Institution1Collection0Work0Image0> .
 
@@ -1284,29 +1284,29 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution1/collection0/object0> ;
+    foaf:depicts <http://example.com/institution1/collection0/work0> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Work0Image1>,
         <https://place-hold.it/75x75?text=Institution1Collection0Work0Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution1Collection0Work1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 2" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution1/collection0/object1> ;
+    foaf:depicts <http://example.com/institution1/collection0/work1> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Work1Image0>,
         <https://place-hold.it/75x75?text=Institution1Collection0Work1Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution1Collection0Work1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 2" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution1/collection0/object1> ;
+    foaf:depicts <http://example.com/institution1/collection0/work1> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Work1Image1>,
         <https://place-hold.it/75x75?text=Institution1Collection0Work1Image1> .
 
@@ -1317,7 +1317,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution1/collection0/object2> ;
+    foaf:depicts <http://example.com/institution1/collection0/work2> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Work2Image0>,
         <https://place-hold.it/75x75?text=Institution1Collection0Work2Image0> .
 
@@ -1328,29 +1328,29 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution1/collection0/object2> ;
+    foaf:depicts <http://example.com/institution1/collection0/work2> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Work2Image1>,
         <https://place-hold.it/75x75?text=Institution1Collection0Work2Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution1Collection0Work3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution1/collection0/object3> ;
+    foaf:depicts <http://example.com/institution1/collection0/work3> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Work3Image0>,
         <https://place-hold.it/75x75?text=Institution1Collection0Work3Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution1Collection0Work3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution1/collection0/object3> ;
+    foaf:depicts <http://example.com/institution1/collection0/work3> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Work3Image1>,
         <https://place-hold.it/75x75?text=Institution1Collection0Work3Image1> .
 
@@ -1375,24 +1375,24 @@ vra:worktype a paradicms:PropertyDefinition ;
         <https://place-hold.it/75x75?text=Institution1Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution1SharedWork0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution1/shared/object0> ;
+    foaf:depicts <http://example.com/institution1/shared/work0> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedWork0Image0>,
         <https://place-hold.it/75x75?text=Institution1SharedWork0Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution1SharedWork0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution1/shared/object0> ;
+    foaf:depicts <http://example.com/institution1/shared/work0> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedWork0Image1>,
         <https://place-hold.it/75x75?text=Institution1SharedWork0Image1> .
 
@@ -1403,7 +1403,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution1/shared/object1> ;
+    foaf:depicts <http://example.com/institution1/shared/work1> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedWork1Image0>,
         <https://place-hold.it/75x75?text=Institution1SharedWork1Image0> .
 
@@ -1414,29 +1414,29 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution1/shared/object1> ;
+    foaf:depicts <http://example.com/institution1/shared/work1> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedWork1Image1>,
         <https://place-hold.it/75x75?text=Institution1SharedWork1Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution1SharedWork2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution1/shared/object2> ;
+    foaf:depicts <http://example.com/institution1/shared/work2> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedWork2Image0>,
         <https://place-hold.it/75x75?text=Institution1SharedWork2Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution1SharedWork2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution1/shared/object2> ;
+    foaf:depicts <http://example.com/institution1/shared/work2> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedWork2Image1>,
         <https://place-hold.it/75x75?text=Institution1SharedWork2Image1> .
 
@@ -1447,7 +1447,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution1/shared/object3> ;
+    foaf:depicts <http://example.com/institution1/shared/work3> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedWork3Image0>,
         <https://place-hold.it/75x75?text=Institution1SharedWork3Image0> .
 
@@ -1458,7 +1458,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:depicts <http://example.com/institution1/shared/object3> ;
+    foaf:depicts <http://example.com/institution1/shared/work3> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedWork3Image1>,
         <https://place-hold.it/75x75?text=Institution1SharedWork3Image1> .
 
@@ -3949,7 +3949,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution0/collection0/object0> .
+    foaf:depicts <http://example.com/institution0/collection0/work0> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Work0Image1> a paradicms:Image ;
     dcterms:creator "Creator 1" ;
@@ -3958,25 +3958,25 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution0/collection0/object0> .
+    foaf:depicts <http://example.com/institution0/collection0/work0> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Work1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution0/collection0/object1> .
+    foaf:depicts <http://example.com/institution0/collection0/work1> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Work1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution0/collection0/object1> .
+    foaf:depicts <http://example.com/institution0/collection0/work1> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Work2Image0> a paradicms:Image ;
     dcterms:creator "Creator 3" ;
@@ -3985,7 +3985,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution0/collection0/object2> .
+    foaf:depicts <http://example.com/institution0/collection0/work2> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Work2Image1> a paradicms:Image ;
     dcterms:creator "Creator 3" ;
@@ -3994,25 +3994,25 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution0/collection0/object2> .
+    foaf:depicts <http://example.com/institution0/collection0/work2> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Work3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution0/collection0/object3> .
+    foaf:depicts <http://example.com/institution0/collection0/work3> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Work3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution0/collection0/object3> .
+    foaf:depicts <http://example.com/institution0/collection0/work3> .
 
 <https://place-hold.it/600x600?text=Institution0Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
@@ -4031,76 +4031,76 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:depicts <http://example.com/institution0> .
 
 <https://place-hold.it/600x600?text=Institution0SharedWork0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 0" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution0/shared/object0> .
+    foaf:depicts <http://example.com/institution0/shared/work0> .
 
 <https://place-hold.it/600x600?text=Institution0SharedWork0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 0" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution0/shared/object0> .
+    foaf:depicts <http://example.com/institution0/shared/work0> .
 
 <https://place-hold.it/600x600?text=Institution0SharedWork1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution0/shared/object1> .
+    foaf:depicts <http://example.com/institution0/shared/work1> .
 
 <https://place-hold.it/600x600?text=Institution0SharedWork1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution0/shared/object1> .
+    foaf:depicts <http://example.com/institution0/shared/work1> .
 
 <https://place-hold.it/600x600?text=Institution0SharedWork2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution0/shared/object2> .
+    foaf:depicts <http://example.com/institution0/shared/work2> .
 
 <https://place-hold.it/600x600?text=Institution0SharedWork2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution0/shared/object2> .
+    foaf:depicts <http://example.com/institution0/shared/work2> .
 
 <https://place-hold.it/600x600?text=Institution0SharedWork3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution0/shared/object3> .
+    foaf:depicts <http://example.com/institution0/shared/work3> .
 
 <https://place-hold.it/600x600?text=Institution0SharedWork3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution0/shared/object3> .
+    foaf:depicts <http://example.com/institution0/shared/work3> .
 
 <https://place-hold.it/600x600?text=Institution1Collection0Work0Image0> a paradicms:Image ;
     dcterms:creator "Creator 1" ;
@@ -4109,7 +4109,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution1/collection0/object0> .
+    foaf:depicts <http://example.com/institution1/collection0/work0> .
 
 <https://place-hold.it/600x600?text=Institution1Collection0Work0Image1> a paradicms:Image ;
     dcterms:creator "Creator 1" ;
@@ -4118,25 +4118,25 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution1/collection0/object0> .
+    foaf:depicts <http://example.com/institution1/collection0/work0> .
 
 <https://place-hold.it/600x600?text=Institution1Collection0Work1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 2" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution1/collection0/object1> .
+    foaf:depicts <http://example.com/institution1/collection0/work1> .
 
 <https://place-hold.it/600x600?text=Institution1Collection0Work1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 2" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution1/collection0/object1> .
+    foaf:depicts <http://example.com/institution1/collection0/work1> .
 
 <https://place-hold.it/600x600?text=Institution1Collection0Work2Image0> a paradicms:Image ;
     dcterms:creator "Creator 3" ;
@@ -4145,7 +4145,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution1/collection0/object2> .
+    foaf:depicts <http://example.com/institution1/collection0/work2> .
 
 <https://place-hold.it/600x600?text=Institution1Collection0Work2Image1> a paradicms:Image ;
     dcterms:creator "Creator 3" ;
@@ -4154,25 +4154,25 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution1/collection0/object2> .
+    foaf:depicts <http://example.com/institution1/collection0/work2> .
 
 <https://place-hold.it/600x600?text=Institution1Collection0Work3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution1/collection0/object3> .
+    foaf:depicts <http://example.com/institution1/collection0/work3> .
 
 <https://place-hold.it/600x600?text=Institution1Collection0Work3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution1/collection0/object3> .
+    foaf:depicts <http://example.com/institution1/collection0/work3> .
 
 <https://place-hold.it/600x600?text=Institution1Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
@@ -4191,22 +4191,22 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:depicts <http://example.com/institution1> .
 
 <https://place-hold.it/600x600?text=Institution1SharedWork0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution1/shared/object0> .
+    foaf:depicts <http://example.com/institution1/shared/work0> .
 
 <https://place-hold.it/600x600?text=Institution1SharedWork0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution1/shared/object0> .
+    foaf:depicts <http://example.com/institution1/shared/work0> .
 
 <https://place-hold.it/600x600?text=Institution1SharedWork1Image0> a paradicms:Image ;
     dcterms:creator "Creator 1" ;
@@ -4215,7 +4215,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution1/shared/object1> .
+    foaf:depicts <http://example.com/institution1/shared/work1> .
 
 <https://place-hold.it/600x600?text=Institution1SharedWork1Image1> a paradicms:Image ;
     dcterms:creator "Creator 1" ;
@@ -4224,25 +4224,25 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution1/shared/object1> .
+    foaf:depicts <http://example.com/institution1/shared/work1> .
 
 <https://place-hold.it/600x600?text=Institution1SharedWork2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution1/shared/object2> .
+    foaf:depicts <http://example.com/institution1/shared/work2> .
 
 <https://place-hold.it/600x600?text=Institution1SharedWork2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution1/shared/object2> .
+    foaf:depicts <http://example.com/institution1/shared/work2> .
 
 <https://place-hold.it/600x600?text=Institution1SharedWork3Image0> a paradicms:Image ;
     dcterms:creator "Creator 3" ;
@@ -4251,7 +4251,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution1/shared/object3> .
+    foaf:depicts <http://example.com/institution1/shared/work3> .
 
 <https://place-hold.it/600x600?text=Institution1SharedWork3Image1> a paradicms:Image ;
     dcterms:creator "Creator 3" ;
@@ -4260,7 +4260,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
     exif:height 600 ;
     exif:width 600 ;
-    foaf:depicts <http://example.com/institution1/shared/object3> .
+    foaf:depicts <http://example.com/institution1/shared/work3> .
 
 <https://place-hold.it/600x600?text=Language%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
@@ -6349,7 +6349,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution0/collection0/object0> .
+    foaf:depicts <http://example.com/institution0/collection0/work0> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Work0Image1> a paradicms:Image ;
     dcterms:creator "Creator 1" ;
@@ -6358,25 +6358,25 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution0/collection0/object0> .
+    foaf:depicts <http://example.com/institution0/collection0/work0> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Work1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution0/collection0/object1> .
+    foaf:depicts <http://example.com/institution0/collection0/work1> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Work1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution0/collection0/object1> .
+    foaf:depicts <http://example.com/institution0/collection0/work1> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Work2Image0> a paradicms:Image ;
     dcterms:creator "Creator 3" ;
@@ -6385,7 +6385,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution0/collection0/object2> .
+    foaf:depicts <http://example.com/institution0/collection0/work2> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Work2Image1> a paradicms:Image ;
     dcterms:creator "Creator 3" ;
@@ -6394,25 +6394,25 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution0/collection0/object2> .
+    foaf:depicts <http://example.com/institution0/collection0/work2> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Work3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution0/collection0/object3> .
+    foaf:depicts <http://example.com/institution0/collection0/work3> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Work3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution0/collection0/object3> .
+    foaf:depicts <http://example.com/institution0/collection0/work3> .
 
 <https://place-hold.it/75x75?text=Institution0Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
@@ -6431,76 +6431,76 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:depicts <http://example.com/institution0> .
 
 <https://place-hold.it/75x75?text=Institution0SharedWork0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 0" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution0/shared/object0> .
+    foaf:depicts <http://example.com/institution0/shared/work0> .
 
 <https://place-hold.it/75x75?text=Institution0SharedWork0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 0" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution0/shared/object0> .
+    foaf:depicts <http://example.com/institution0/shared/work0> .
 
 <https://place-hold.it/75x75?text=Institution0SharedWork1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution0/shared/object1> .
+    foaf:depicts <http://example.com/institution0/shared/work1> .
 
 <https://place-hold.it/75x75?text=Institution0SharedWork1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution0/shared/object1> .
+    foaf:depicts <http://example.com/institution0/shared/work1> .
 
 <https://place-hold.it/75x75?text=Institution0SharedWork2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution0/shared/object2> .
+    foaf:depicts <http://example.com/institution0/shared/work2> .
 
 <https://place-hold.it/75x75?text=Institution0SharedWork2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution0/shared/object2> .
+    foaf:depicts <http://example.com/institution0/shared/work2> .
 
 <https://place-hold.it/75x75?text=Institution0SharedWork3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution0/shared/object3> .
+    foaf:depicts <http://example.com/institution0/shared/work3> .
 
 <https://place-hold.it/75x75?text=Institution0SharedWork3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution0/shared/object3> .
+    foaf:depicts <http://example.com/institution0/shared/work3> .
 
 <https://place-hold.it/75x75?text=Institution1Collection0Work0Image0> a paradicms:Image ;
     dcterms:creator "Creator 1" ;
@@ -6509,7 +6509,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution1/collection0/object0> .
+    foaf:depicts <http://example.com/institution1/collection0/work0> .
 
 <https://place-hold.it/75x75?text=Institution1Collection0Work0Image1> a paradicms:Image ;
     dcterms:creator "Creator 1" ;
@@ -6518,25 +6518,25 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution1/collection0/object0> .
+    foaf:depicts <http://example.com/institution1/collection0/work0> .
 
 <https://place-hold.it/75x75?text=Institution1Collection0Work1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 2" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution1/collection0/object1> .
+    foaf:depicts <http://example.com/institution1/collection0/work1> .
 
 <https://place-hold.it/75x75?text=Institution1Collection0Work1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 2" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution1/collection0/object1> .
+    foaf:depicts <http://example.com/institution1/collection0/work1> .
 
 <https://place-hold.it/75x75?text=Institution1Collection0Work2Image0> a paradicms:Image ;
     dcterms:creator "Creator 3" ;
@@ -6545,7 +6545,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution1/collection0/object2> .
+    foaf:depicts <http://example.com/institution1/collection0/work2> .
 
 <https://place-hold.it/75x75?text=Institution1Collection0Work2Image1> a paradicms:Image ;
     dcterms:creator "Creator 3" ;
@@ -6554,25 +6554,25 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution1/collection0/object2> .
+    foaf:depicts <http://example.com/institution1/collection0/work2> .
 
 <https://place-hold.it/75x75?text=Institution1Collection0Work3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution1/collection0/object3> .
+    foaf:depicts <http://example.com/institution1/collection0/work3> .
 
 <https://place-hold.it/75x75?text=Institution1Collection0Work3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution1/collection0/object3> .
+    foaf:depicts <http://example.com/institution1/collection0/work3> .
 
 <https://place-hold.it/75x75?text=Institution1Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
@@ -6591,22 +6591,22 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:depicts <http://example.com/institution1> .
 
 <https://place-hold.it/75x75?text=Institution1SharedWork0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution1/shared/object0> .
+    foaf:depicts <http://example.com/institution1/shared/work0> .
 
 <https://place-hold.it/75x75?text=Institution1SharedWork0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+    dcterms:creator "Creator 1" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution1/shared/object0> .
+    foaf:depicts <http://example.com/institution1/shared/work0> .
 
 <https://place-hold.it/75x75?text=Institution1SharedWork1Image0> a paradicms:Image ;
     dcterms:creator "Creator 1" ;
@@ -6615,7 +6615,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution1/shared/object1> .
+    foaf:depicts <http://example.com/institution1/shared/work1> .
 
 <https://place-hold.it/75x75?text=Institution1SharedWork1Image1> a paradicms:Image ;
     dcterms:creator "Creator 1" ;
@@ -6624,25 +6624,25 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution1/shared/object1> .
+    foaf:depicts <http://example.com/institution1/shared/work1> .
 
 <https://place-hold.it/75x75?text=Institution1SharedWork2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution1/shared/object2> .
+    foaf:depicts <http://example.com/institution1/shared/work2> .
 
 <https://place-hold.it/75x75?text=Institution1SharedWork2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution1/shared/object2> .
+    foaf:depicts <http://example.com/institution1/shared/work2> .
 
 <https://place-hold.it/75x75?text=Institution1SharedWork3Image0> a paradicms:Image ;
     dcterms:creator "Creator 3" ;
@@ -6651,7 +6651,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution1/shared/object3> .
+    foaf:depicts <http://example.com/institution1/shared/work3> .
 
 <https://place-hold.it/75x75?text=Institution1SharedWork3Image1> a paradicms:Image ;
     dcterms:creator "Creator 3" ;
@@ -6660,7 +6660,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
     exif:height 75 ;
     exif:width 75 ;
-    foaf:depicts <http://example.com/institution1/shared/object3> .
+    foaf:depicts <http://example.com/institution1/shared/work3> .
 
 <https://place-hold.it/75x75?text=Language%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
@@ -8262,7 +8262,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:129> .
 
-<http://example.com/institution0/collection0/object0> a paradicms:Work ;
+<http://example.com/institution0/collection0/work0> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0Collection0Work0 alternative title 0",
         "Institution0Collection0Work0 alternative title 1" ;
@@ -8307,9 +8307,9 @@ vra:worktype a paradicms:PropertyDefinition ;
         "Material 1" ;
     paradicms:collection <http://example.com/institution0/collection0> ;
     paradicms:institution <http://example.com/institution0> ;
-    foaf:page <http://example.com/object/0> .
+    foaf:page <http://example.com/work/0> .
 
-<http://example.com/institution0/collection0/object1> a paradicms:Work ;
+<http://example.com/institution0/collection0/work1> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0Collection0Work1 alternative title 0",
         "Institution0Collection0Work1 alternative title 1" ;
@@ -8354,9 +8354,9 @@ vra:worktype a paradicms:PropertyDefinition ;
         "Material 2" ;
     paradicms:collection <http://example.com/institution0/collection0> ;
     paradicms:institution <http://example.com/institution0> ;
-    foaf:page "http://example.com/object/1" .
+    foaf:page "http://example.com/work/1" .
 
-<http://example.com/institution0/collection0/object2> a paradicms:Work ;
+<http://example.com/institution0/collection0/work2> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0Collection0Work2 alternative title 0",
         "Institution0Collection0Work2 alternative title 1" ;
@@ -8401,9 +8401,9 @@ vra:worktype a paradicms:PropertyDefinition ;
         "Material 3" ;
     paradicms:collection <http://example.com/institution0/collection0> ;
     paradicms:institution <http://example.com/institution0> ;
-    foaf:page <http://example.com/object/2> .
+    foaf:page <http://example.com/work/2> .
 
-<http://example.com/institution0/collection0/object3> a paradicms:Work ;
+<http://example.com/institution0/collection0/work3> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0Collection0Work3 alternative title 0",
         "Institution0Collection0Work3 alternative title 1" ;
@@ -8448,9 +8448,9 @@ vra:worktype a paradicms:PropertyDefinition ;
         "Material 4" ;
     paradicms:collection <http://example.com/institution0/collection0> ;
     paradicms:institution <http://example.com/institution0> ;
-    foaf:page "http://example.com/object/3" .
+    foaf:page "http://example.com/work/3" .
 
-<http://example.com/institution0/shared/object0> a paradicms:Work ;
+<http://example.com/institution0/shared/work0> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0SharedWork0 alternative title 0",
         "Institution0SharedWork0 alternative title 1" ;
@@ -8495,9 +8495,9 @@ vra:worktype a paradicms:PropertyDefinition ;
         "Material 1" ;
     paradicms:collection <http://example.com/institution0/collection0> ;
     paradicms:institution <http://example.com/institution0> ;
-    foaf:page <http://example.com/object/0> .
+    foaf:page <http://example.com/work/0> .
 
-<http://example.com/institution0/shared/object1> a paradicms:Work ;
+<http://example.com/institution0/shared/work1> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0SharedWork1 alternative title 0",
         "Institution0SharedWork1 alternative title 1" ;
@@ -8542,9 +8542,9 @@ vra:worktype a paradicms:PropertyDefinition ;
         "Material 2" ;
     paradicms:collection <http://example.com/institution0/collection0> ;
     paradicms:institution <http://example.com/institution0> ;
-    foaf:page "http://example.com/object/1" .
+    foaf:page "http://example.com/work/1" .
 
-<http://example.com/institution0/shared/object2> a paradicms:Work ;
+<http://example.com/institution0/shared/work2> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0SharedWork2 alternative title 0",
         "Institution0SharedWork2 alternative title 1" ;
@@ -8589,9 +8589,9 @@ vra:worktype a paradicms:PropertyDefinition ;
         "Material 3" ;
     paradicms:collection <http://example.com/institution0/collection0> ;
     paradicms:institution <http://example.com/institution0> ;
-    foaf:page <http://example.com/object/2> .
+    foaf:page <http://example.com/work/2> .
 
-<http://example.com/institution0/shared/object3> a paradicms:Work ;
+<http://example.com/institution0/shared/work3> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0SharedWork3 alternative title 0",
         "Institution0SharedWork3 alternative title 1" ;
@@ -8636,9 +8636,9 @@ vra:worktype a paradicms:PropertyDefinition ;
         "Material 4" ;
     paradicms:collection <http://example.com/institution0/collection0> ;
     paradicms:institution <http://example.com/institution0> ;
-    foaf:page "http://example.com/object/3" .
+    foaf:page "http://example.com/work/3" .
 
-<http://example.com/institution1/collection0/object0> a paradicms:Work ;
+<http://example.com/institution1/collection0/work0> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1Collection0Work0 alternative title 0",
         "Institution1Collection0Work0 alternative title 1" ;
@@ -8683,9 +8683,9 @@ vra:worktype a paradicms:PropertyDefinition ;
         "Material 1" ;
     paradicms:collection <http://example.com/institution1/collection0> ;
     paradicms:institution <http://example.com/institution1> ;
-    foaf:page <http://example.com/object/0> .
+    foaf:page <http://example.com/work/0> .
 
-<http://example.com/institution1/collection0/object1> a paradicms:Work ;
+<http://example.com/institution1/collection0/work1> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1Collection0Work1 alternative title 0",
         "Institution1Collection0Work1 alternative title 1" ;
@@ -8730,9 +8730,9 @@ vra:worktype a paradicms:PropertyDefinition ;
         "Material 2" ;
     paradicms:collection <http://example.com/institution1/collection0> ;
     paradicms:institution <http://example.com/institution1> ;
-    foaf:page "http://example.com/object/1" .
+    foaf:page "http://example.com/work/1" .
 
-<http://example.com/institution1/collection0/object2> a paradicms:Work ;
+<http://example.com/institution1/collection0/work2> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1Collection0Work2 alternative title 0",
         "Institution1Collection0Work2 alternative title 1" ;
@@ -8777,9 +8777,9 @@ vra:worktype a paradicms:PropertyDefinition ;
         "Material 3" ;
     paradicms:collection <http://example.com/institution1/collection0> ;
     paradicms:institution <http://example.com/institution1> ;
-    foaf:page <http://example.com/object/2> .
+    foaf:page <http://example.com/work/2> .
 
-<http://example.com/institution1/collection0/object3> a paradicms:Work ;
+<http://example.com/institution1/collection0/work3> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1Collection0Work3 alternative title 0",
         "Institution1Collection0Work3 alternative title 1" ;
@@ -8824,9 +8824,9 @@ vra:worktype a paradicms:PropertyDefinition ;
         "Material 4" ;
     paradicms:collection <http://example.com/institution1/collection0> ;
     paradicms:institution <http://example.com/institution1> ;
-    foaf:page "http://example.com/object/3" .
+    foaf:page "http://example.com/work/3" .
 
-<http://example.com/institution1/shared/object0> a paradicms:Work ;
+<http://example.com/institution1/shared/work0> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1SharedWork0 alternative title 0",
         "Institution1SharedWork0 alternative title 1" ;
@@ -8871,9 +8871,9 @@ vra:worktype a paradicms:PropertyDefinition ;
         "Material 1" ;
     paradicms:collection <http://example.com/institution1/collection0> ;
     paradicms:institution <http://example.com/institution1> ;
-    foaf:page <http://example.com/object/0> .
+    foaf:page <http://example.com/work/0> .
 
-<http://example.com/institution1/shared/object1> a paradicms:Work ;
+<http://example.com/institution1/shared/work1> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1SharedWork1 alternative title 0",
         "Institution1SharedWork1 alternative title 1" ;
@@ -8918,9 +8918,9 @@ vra:worktype a paradicms:PropertyDefinition ;
         "Material 2" ;
     paradicms:collection <http://example.com/institution1/collection0> ;
     paradicms:institution <http://example.com/institution1> ;
-    foaf:page "http://example.com/object/1" .
+    foaf:page "http://example.com/work/1" .
 
-<http://example.com/institution1/shared/object2> a paradicms:Work ;
+<http://example.com/institution1/shared/work2> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1SharedWork2 alternative title 0",
         "Institution1SharedWork2 alternative title 1" ;
@@ -8965,9 +8965,9 @@ vra:worktype a paradicms:PropertyDefinition ;
         "Material 3" ;
     paradicms:collection <http://example.com/institution1/collection0> ;
     paradicms:institution <http://example.com/institution1> ;
-    foaf:page <http://example.com/object/2> .
+    foaf:page <http://example.com/work/2> .
 
-<http://example.com/institution1/shared/object3> a paradicms:Work ;
+<http://example.com/institution1/shared/work3> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1SharedWork3 alternative title 0",
         "Institution1SharedWork3 alternative title 1" ;
@@ -9012,7 +9012,7 @@ vra:worktype a paradicms:PropertyDefinition ;
         "Material 4" ;
     paradicms:collection <http://example.com/institution1/collection0> ;
     paradicms:institution <http://example.com/institution1> ;
-    foaf:page "http://example.com/object/3" .
+    foaf:page "http://example.com/work/3" .
 
 <urn:paradicms_etl:pipeline:test_data:property_value:0> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:creator ;

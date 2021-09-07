@@ -56,10 +56,10 @@ class OmekaSTransformer(_Transformer):
             if not item_resource.value(O.is_public).toPython():
                 # Will still have the data, but won't be visible because it won't have the rdf:type CMS:Work
                 continue
-            object_ = self.__transform_item(item_resource, media_by_item_id)
+            work_ = self.__transform_item(item_resource, media_by_item_id)
             for item_set_resource in item_resource.objects(O.item_set):
                 item_set_id = item_set_resource.value(O.id).toPython()
-                collections_by_id[item_set_id].add_object(object_)
+                collections_by_id[item_set_id].add_work(work_)
 
         for collection in collections_by_id.values():
             institution.add_collection(collection)
@@ -70,15 +70,15 @@ class OmekaSTransformer(_Transformer):
         self, item: Resource, media_by_item_id: Dict[int, Resource]
     ) -> Work:
         item_id = item.value(O.id).toPython()
-        object_ = Work(resource=item)
-        object_.owner = CMS.inherit
+        work_ = Work(resource=item)
+        work_.owner = CMS.inherit
         for media in media_by_item_id.get(item_id, []):
             original_image, thumbnail_image = self.__transform_media(media)
             if not original_image:
                 continue
-            original_image.resource.add(FOAF.depicts, object_.uri)
-            object_.resource.add(FOAF.depiction, original_image.uri)
-        return object_
+            original_image.resource.add(FOAF.depicts, work_.uri)
+            work_.resource.add(FOAF.depiction, original_image.uri)
+        return work_
 
     def __transform_item_set(self, item_set: Resource) -> Collection:
         collection = Collection(resource=item_set)

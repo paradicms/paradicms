@@ -265,7 +265,7 @@ class MarkdownDirectoryTransformer(_Transformer):
         __COLLECTION_MODEL_TYPE = "collection"
         __IMAGE_MODEL_TYPE = "image"
         __INSTITUTION_MODEL_TYPE = "institution"
-        __OBJECT_MODEL_TYPE = "object"
+        __OBJECT_MODEL_TYPE = "work"
 
         def __init__(
             self,
@@ -298,8 +298,8 @@ class MarkdownDirectoryTransformer(_Transformer):
             # Order is important
             self.__transform_institution_markdown_file_entries()
             self.__transform_collection_markdown_file_entries()
-            objects_by_model_id = self.__transform_object_markdown_file_entries()
-            self.__transform_image_file_entries(objects_by_model_id=objects_by_model_id)
+            works_by_model_id = self.__transform_work_markdown_file_entries()
+            self.__transform_image_file_entries(works_by_model_id=works_by_model_id)
             self.__transform_other_markdown_file_entries()
             return tuple(self.__transformed_models_by_uri.values())
 
@@ -382,7 +382,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                 self.__buffer_transformed_model(collection)
 
         def __transform_image_file_entries(
-            self, *, objects_by_model_id: Dict[str, OpaqueNamedModel]
+            self, *, works_by_model_id: Dict[str, OpaqueNamedModel]
         ) -> None:
             transformed_markdown_file_entry_model_ids = set()
             untransformed_image_file_entries_by_model_id = {
@@ -403,18 +403,18 @@ class MarkdownDirectoryTransformer(_Transformer):
                 if model_resource.value(rdflib.namespace.FOAF.depicts) is None:
                     # If the .md image metadata has no depicts but its model_id corresponds with an Work's model_id,
                     # synthesize a depicts.
-                    object_ = objects_by_model_id.get(markdown_file_entry.model_id)
-                    if object_ is None:
+                    work_ = works_by_model_id.get(markdown_file_entry.model_id)
+                    if work_ is None:
                         self.__logger.warning(
-                            "image markdown %s has no depicts statement and does not correspond to an object",
+                            "image markdown %s has no depicts statement and does not correspond to an work",
                             markdown_file_entry.model_id,
                         )
                         continue
-                    model_resource.add(rdflib.namespace.FOAF.depicts, object_.uri)
+                    model_resource.add(rdflib.namespace.FOAF.depicts, work_.uri)
                     self.__logger.debug(
-                        "image markdown %s has no depicts statement but corresponds to the object %s, adding depicts statement",
+                        "image markdown %s has no depicts statement but corresponds to the work %s, adding depicts statement",
                         markdown_file_entry.model_id,
-                        object_.uri,
+                        work_.uri,
                     )
 
                 # The GuiImagesLoader looks for Image instances and doesn't check if OpaqueNamedModels are Images.
@@ -450,21 +450,21 @@ class MarkdownDirectoryTransformer(_Transformer):
                 ):
                     continue
 
-                object_ = objects_by_model_id.get(image_file_entry.model_id)
-                if object_ is None:
+                work_ = works_by_model_id.get(image_file_entry.model_id)
+                if work_ is None:
                     self.__logger.warning(
-                        "image file %s has no companion .md file and does not correspond to an object",
+                        "image file %s has no companion .md file and does not correspond to an work",
                         image_file_entry.path,
                     )
                     continue
-                # Image file corresponds to an object Markdown file
+                # Image file corresponds to an work Markdown file
                 # Synthesize an Image model
                 self.__logger.debug(
-                    "synthesizing an Image model for the object %s", object_.uri
+                    "synthesizing an Image model for the work %s", work_.uri
                 )
                 self.__buffer_transformed_model(
                     Image(
-                        depicts_uri=object_.uri,
+                        depicts_uri=work_.uri,
                         src=image_file_entry.path.as_uri(),
                         uri=MarkdownDirectoryTransformer.model_uri(
                             pipeline_id=self.__pipeline_id,
@@ -507,33 +507,33 @@ class MarkdownDirectoryTransformer(_Transformer):
                 pipeline_id=self.__pipeline_id,
             )
 
-        def __transform_object_markdown_file_entries(
+        def __transform_work_markdown_file_entries(
             self,
         ) -> Dict[str, OpaqueNamedModel]:
-            objects_by_model_id = {}
+            works_by_model_id = {}
             for (
                 markdown_file_entry
             ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
                 self.__OBJECT_MODEL_TYPE, tuple()
             ):
-                object_resource = self.__set_resource_institution_uri(
+                work_resource = self.__set_resource_institution_uri(
                     self.__transform_markdown_file_entry_to_resource(
                         markdown_file_entry
                     )
                 )
-                if object_resource.value(CMS.collection) is None:
-                    object_resource.add(
+                if work_resource.value(CMS.collection) is None:
+                    work_resource.add(
                         CMS.collection,
                         self.__get_or_synthesize_default_collection().uri,
                     )
-                object_ = self.__transform_resource_to_model(
-                    model_resource=object_resource,
+                work_ = self.__transform_resource_to_model(
+                    model_resource=work_resource,
                     model_type=markdown_file_entry.model_type,
                 )
-                self.__buffer_transformed_model(object_)
-                assert markdown_file_entry.model_id not in objects_by_model_id
-                objects_by_model_id[markdown_file_entry.model_id] = object_
-            return objects_by_model_id
+                self.__buffer_transformed_model(work_)
+                assert markdown_file_entry.model_id not in works_by_model_id
+                works_by_model_id[markdown_file_entry.model_id] = work_
+            return works_by_model_id
 
         def __transform_other_markdown_file_entries(self) -> None:
             for (

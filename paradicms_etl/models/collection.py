@@ -12,7 +12,7 @@ class Collection(_NamedModel):
     def __init__(
         self,
         *,
-        # Linking up to the parent (relational style )instead of down to child objects
+        # Linking up to the parent (relational style )instead of down to child works
         # makes it easier to do page generation and search indexing downstream.
         institution_uri: URIRef,
         title: str,

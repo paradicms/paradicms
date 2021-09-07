@@ -32,15 +32,15 @@ def test_transform():
     # assert len(works) == 2
     # found_work = False
     # for work in works:
-    #     if work.resource.value(DCTERMS.title, Literal("Test object 1")) is not None:
-    #         found_object = True
+    #     if work.resource.value(DCTERMS.title, Literal("Test work 1")) is not None:
+    #         found_work = True
     #         break
-    # assert found_object
+    # assert found_work
     #
     # images = [model for model in models if isinstance(model, Image)]
     # assert len(images) == 1
     # image = images[0]
-    # assert image.depicts_uri == object_.uri
+    # assert image.depicts_uri == work_.uri
     #
     # people = [
     #     model
