@@ -19,7 +19,7 @@ from paradicms_etl.models.dublin_core_property_definitions import (
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
-from paradicms_etl.models.object import Object
+from paradicms_etl.models.work import Work
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_value_definition import PropertyValueDefinition
 from paradicms_etl.models.rights import Rights
@@ -95,7 +95,7 @@ class TestDataPipeline(_Pipeline):
             collections_per_institution=1,
             images_per_object=2,
             institutions=2,
-            objects_per_institution=4,  # Objects per page is 20
+            objects_per_institution=4,  # Works per page is 20
             **kwds,
         ):
             _Transformer.__init__(self, **kwds)
@@ -128,7 +128,7 @@ class TestDataPipeline(_Pipeline):
                     collection_uris=(collection.uri,),
                     institution=institution,
                     object_i=object_i,
-                    title=f"{collection.title}Object{object_i}",
+                    title=f"{collection.title}Work{object_i}",
                     uri=URIRef(f"{collection.uri}/object{object_i}"),
                 )
 
@@ -286,7 +286,7 @@ class TestDataPipeline(_Pipeline):
             if object_i % 2 == 0:
                 page = URIRef(page)
 
-            object_ = Object(
+            object_ = Work(
                 abstract=self.__LOREM_IPSUM,
                 collection_uris=collection_uris,
                 institution_uri=institution.uri,
@@ -349,7 +349,7 @@ class TestDataPipeline(_Pipeline):
                     ),
                     institution=institution,
                     object_i=object_i,
-                    title=f"{institution.name}SharedObject{object_i}",
+                    title=f"{institution.name}SharedWork{object_i}",
                     uri=URIRef(f"{institution.uri}/shared/object{object_i}"),
                 )
 

@@ -8,16 +8,16 @@ from paradicms_etl.models.dublin_core_property_definitions import (
     DublinCorePropertyDefinitions,
 )
 from paradicms_etl.models.image import Image
-from paradicms_etl.models.object import Object
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definition import PropertyDefinition
+from paradicms_etl.models.work import Work
 
 
 class _PastPerfectTransformer(_Transformer):
-    def __init__(self, object_uri_prefix: str, **kwds):
+    def __init__(self, work_uri_prefix: str, **kwds):
         _Transformer.__init__(self, **kwds)
         self.__kwds = kwds
-        self.__object_uri_prefix = object_uri_prefix
+        self.__work_uri_prefix = work_uri_prefix
 
     def _convert_database_object_attribute_values_to_properties(
         self,
@@ -82,14 +82,14 @@ class _PastPerfectTransformer(_Transformer):
 
             assert database_object.name is not None
 
-            object_ = Object(
+            work = Work(
                 collection_uris=(collection.uri,),
                 institution_uri=institution.uri,
                 properties=self._get_database_object_properties(database_object),
                 title=database_object.name,
-                uri=URIRef(self.__object_uri_prefix + quote(database_object.id)),
+                uri=URIRef(self.__work_uri_prefix + quote(database_work.id)),
             )
-            yield object_
+            yield work
 
             for database_image in database_object.images:
                 assert isinstance(database_image, DatabaseImage)
@@ -104,13 +104,13 @@ class _PastPerfectTransformer(_Transformer):
                     continue
 
                 full_size_image = Image(
-                    depicts_uri=object_.uri,
+                    depicts_uri=work.uri,
                     uri=URIRef(database_image.full_size_url),
                 )
                 yield full_size_image
 
                 yield Image(
-                    depicts_uri=object_.uri,
+                    depicts_uri=work.uri,
                     original_image_uri=full_size_image.uri,
                     uri=URIRef(database_image.thumbnail_url),
                 )

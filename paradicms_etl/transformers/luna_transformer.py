@@ -13,7 +13,7 @@ from paradicms_etl.models.dublin_core_property_definitions import (
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
-from paradicms_etl.models.object import Object
+from paradicms_etl.models.work import Work
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.vra_core_property_definitions import (
@@ -161,7 +161,7 @@ class LunaTransformer(_Transformer):
 
         properties = self._transform_object_field_values(field_values=field_values_dict)
 
-        object_ = Object(
+        object_ = Work(
             abstract=description,
             collection_uris=collection_uris,
             institution_uri=institution.uri,
@@ -251,7 +251,7 @@ class LunaTransformer(_Transformer):
         *,
         field_values: Dict[str, List[str]],
         luna_object,
-        object_: Object,
+        object_: Work,
     ) -> Generator[Image, None, None]:
         def pop_qualified_field_values(*args):
             return self._pop_qualified_field_values(field_values, *args)

@@ -401,7 +401,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                 )
 
                 if model_resource.value(rdflib.namespace.FOAF.depicts) is None:
-                    # If the .md image metadata has no depicts but its model_id corresponds with an Object's model_id,
+                    # If the .md image metadata has no depicts but its model_id corresponds with an Work's model_id,
                     # synthesize a depicts.
                     object_ = objects_by_model_id.get(markdown_file_entry.model_id)
                     if object_ is None:

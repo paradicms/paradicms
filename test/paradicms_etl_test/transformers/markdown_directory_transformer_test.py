@@ -24,15 +24,15 @@ def test_transform():
             model, OpaqueNamedModel
         ), type(model)
 
-    # objects = [
+    # works = [
     #     model
     #     for model in models
-    #     if isinstance(model, OpaqueNamedModel) and model.type == CMS.Object
+    #     if isinstance(model, OpaqueNamedModel) and model.type == CMS.Work
     # ]
-    # assert len(objects) == 2
-    # found_object = False
-    # for object_ in objects:
-    #     if object_.resource.value(DCTERMS.title, Literal("Test object 1")) is not None:
+    # assert len(works) == 2
+    # found_work = False
+    # for work in works:
+    #     if work.resource.value(DCTERMS.title, Literal("Test object 1")) is not None:
     #         found_object = True
     #         break
     # assert found_object

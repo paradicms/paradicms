@@ -10,7 +10,7 @@ from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.institution import Institution
-from paradicms_etl.models.object import Object
+from paradicms_etl.models.work import Work
 from paradicms_etl.models.person import Person
 from paradicms_etl.namespace import CMS, SCHEMA
 
@@ -25,11 +25,7 @@ class BookCollectorTransformer(_Transformer):
         etree = ElementTree.parse(export_xml_file_path).getroot()
         graph = self._new_graph
 
-        institution = \
-            Institution(
-                graph=graph,
-                uri=CMS.bookCollectorInstitution
-            )
+        institution = Institution(graph=graph, uri=CMS.bookCollectorInstitution)
         institution.name = "Book Collector"
         institution.owner = CMS.public
 
@@ -38,9 +34,11 @@ class BookCollectorTransformer(_Transformer):
             for bookinfo_etree in data_etree.iter("bookinfo"):
                 for booklist_etree in data_etree.iter("booklist"):
                     for book_etree in booklist_etree.iter("book"):
-                        transformed_book = \
-                            self.__transform_book(collections_by_hash=collections_by_hash,
-                                                  etree=book_etree, graph=graph)
+                        transformed_book = self.__transform_book(
+                            collections_by_hash=collections_by_hash,
+                            etree=book_etree,
+                            graph=graph,
+                        )
                         if not transformed_book:
                             continue
                         assert str(transformed_book.uri) not in book_uris
@@ -51,8 +49,12 @@ class BookCollectorTransformer(_Transformer):
 
         return graph
 
-    def __transform_book(self, collections_by_hash: Dict[str, Collection], etree: ElementTree, graph: Graph) -> \
-            Optional[Object]:
+    def __transform_book(
+        self,
+        collections_by_hash: Dict[str, Collection],
+        etree: ElementTree,
+        graph: Graph,
+    ) -> Optional[Work]:
         # print(ElementTree.tostring(etree))
         # clzbookid = etree.findtext("clzbookid")
         # assert clzbookid
@@ -60,11 +62,7 @@ class BookCollectorTransformer(_Transformer):
         hash_ = etree.findtext("hash")
         assert hash_
         hash_ = hash_.lstrip("{").rstrip("}")
-        object_ = \
-            Object(
-                graph=graph,
-                uri=URIRef("urn:clzbook:" + hash_)
-            )
+        object_ = Work(graph=graph, uri=URIRef("urn:clzbook:" + hash_))
         object_.owner = CMS.inherit
         object_.resource.add(RDF.type, SCHEMA.Book)
 
@@ -87,7 +85,9 @@ class BookCollectorTransformer(_Transformer):
 
         for credits_etree in mainsection_etree.iter("credits"):
             for credit_etree in credits_etree.iter("credit"):
-                self.__transform_book_credit(credit_etree=credit_etree, graph=graph, object_=object_)
+                self.__transform_book_credit(
+                    credit_etree=credit_etree, graph=graph, object_=object_
+                )
 
         for publisher_etree in etree.iter("publisher"):
             displayname = publisher_etree.findtext("displayname")
@@ -117,7 +117,9 @@ class BookCollectorTransformer(_Transformer):
 
         publicationdate_etree = etree.find("publicationdate")
         if publicationdate_etree:
-            publicationdate = self.__transform_date_time_description(publicationdate_etree)
+            publicationdate = self.__transform_date_time_description(
+                publicationdate_etree
+            )
             if publicationdate:
                 object_.resource.add(DCTERMS.date, publicationdate)
 
@@ -126,10 +128,18 @@ class BookCollectorTransformer(_Transformer):
 
         collections = []
         for collection_etree in etree.iter("collection"):
-            collections.append(self.__transform_book_collection(collection_etree=collection_etree,
-                                                                collections_by_hash=collections_by_hash, graph=graph))
+            collections.append(
+                self.__transform_book_collection(
+                    collection_etree=collection_etree,
+                    collections_by_hash=collections_by_hash,
+                    graph=graph,
+                )
+            )
 
-        for (date_tag, date_property) in (("addeddate", DCTERMS.created), ("modifieddate", DCTERMS.modified)):
+        for (date_tag, date_property) in (
+            ("addeddate", DCTERMS.created),
+            ("modifieddate", DCTERMS.modified),
+        ):
             date_etree = etree.find(date_tag)
             if date_etree:
                 date_literal = self.__transform_timestamp(date_etree)
@@ -141,8 +151,13 @@ class BookCollectorTransformer(_Transformer):
 
         return object_
 
-    def __transform_book_collection(self, *, collection_etree: ElementTree, collections_by_hash: Dict[str, Collection],
-                                    graph: Graph) -> Collection:
+    def __transform_book_collection(
+        self,
+        *,
+        collection_etree: ElementTree,
+        collections_by_hash: Dict[str, Collection],
+        graph: Graph
+    ) -> Collection:
         displayname = collection_etree.findtext("displayname")
         assert displayname
         hash_ = collection_etree.findtext("hash")
@@ -151,17 +166,18 @@ class BookCollectorTransformer(_Transformer):
         collection = collections_by_hash.get(hash_)
         if collection is not None:
             return collection
-        collection = \
-            Collection(
-                graph=graph,
-                uri=URIRef(str(self.__pipeline_uri) + ":clzcollection:" + hash_)
-            )
+        collection = Collection(
+            graph=graph,
+            uri=URIRef(str(self.__pipeline_uri) + ":clzcollection:" + hash_),
+        )
         collection.title = displayname
         collection.owner = self.__owner if self.__owner else CMS.public
         collections_by_hash[hash_] = collection
         return collection
 
-    def __transform_book_credit(self, credit_etree: ElementTree, graph: Graph, object_: Object) -> None:
+    def __transform_book_credit(
+        self, credit_etree: ElementTree, graph: Graph, object_: Work
+    ) -> None:
         roleid = credit_etree.findtext("roleid")
         if not roleid:
             return
@@ -177,8 +193,9 @@ class BookCollectorTransformer(_Transformer):
                 if not displayname:
                     continue
 
-                person = Person(graph=graph,
-                                uri=URIRef("urn:clzperson:" + quote_plus(displayname)))
+                person = Person(
+                    graph=graph, uri=URIRef("urn:clzperson:" + quote_plus(displayname))
+                )
 
                 for person_attr_etree in person_etree.iter():
                     if not person_attr_etree.text:
@@ -206,7 +223,9 @@ class BookCollectorTransformer(_Transformer):
         else:
             raise NotImplementedError(roleid)
 
-    def __transform_date_time_description(self, etree: ElementTree) -> Optional[DateTimeDescription]:
+    def __transform_date_time_description(
+        self, etree: ElementTree
+    ) -> Optional[DateTimeDescription]:
         year_etree = etree.find("year")
         if not year_etree:
             return None

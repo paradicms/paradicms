@@ -8,7 +8,7 @@ from rdflib.resource import Resource
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
-from paradicms_etl.models.object import Object
+from paradicms_etl.models.work import Work
 from paradicms_etl.namespace import CMS, PROV
 
 # Omeka namespace
@@ -54,7 +54,7 @@ class OmekaSTransformer(_Transformer):
         for item_uri in graph.subjects(RDF.type, O.Item):
             item_resource = graph.resource(item_uri)
             if not item_resource.value(O.is_public).toPython():
-                # Will still have the data, but won't be visible because it won't have the rdf:type CMS:Object
+                # Will still have the data, but won't be visible because it won't have the rdf:type CMS:Work
                 continue
             object_ = self.__transform_item(item_resource, media_by_item_id)
             for item_set_resource in item_resource.objects(O.item_set):
@@ -68,9 +68,9 @@ class OmekaSTransformer(_Transformer):
 
     def __transform_item(
         self, item: Resource, media_by_item_id: Dict[int, Resource]
-    ) -> Object:
+    ) -> Work:
         item_id = item.value(O.id).toPython()
-        object_ = Object(resource=item)
+        object_ = Work(resource=item)
         object_.owner = CMS.inherit
         for media in media_by_item_id.get(item_id, []):
             original_image, thumbnail_image = self.__transform_media(media)
