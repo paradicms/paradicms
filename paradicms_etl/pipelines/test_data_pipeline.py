@@ -286,7 +286,7 @@ class TestDataPipeline(_Pipeline):
             if work_i % 2 == 0:
                 page = URIRef(page)
 
-            work_ = Work(
+            work_ = Work.from_fields(
                 abstract=self.__LOREM_IPSUM,
                 collection_uris=collection_uris,
                 institution_uri=institution.uri,
