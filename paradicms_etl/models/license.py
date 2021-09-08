@@ -20,10 +20,10 @@ class License(_NamedModel):
         cls, *, identifier: str, title: str, uri: URIRef, version: Optional[str] = None
     ):
         resource = cls._create_resource(identifier=uri)
-        cls.add(DCTERMS.identifier, Literal(identifier))
-        cls.add(DCTERMS.title, Literal(title))
+        resource.add(DCTERMS.identifier, Literal(identifier))
+        resource.add(DCTERMS.title, Literal(title))
         if version is not None:
-            cls.add(DCTERMS.hasVersion, Literal(version))
+            resource.add(DCTERMS.hasVersion, Literal(version))
         return cls(resource)
 
     @property

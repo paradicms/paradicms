@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from rdflib import URIRef
+from rdflib import Graph, URIRef
 
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
@@ -30,6 +30,6 @@ def test_to_rdf():
         uri=URIRef("http://example.com/image"),
     )
 
-    actual = Image.from_rdf(resource=expected.resource)
+    actual = Image.from_rdf(resource=expected.to_rdf(Graph()))
 
     assert actual.uri == expected.uri
