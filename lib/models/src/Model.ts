@@ -1,6 +1,6 @@
 import {BlankNode, Literal, NamedNode, Store, Term} from "n3";
 import {Dataset} from "./Dataset";
-import {PARADICMS, RDF} from "./vocabularies";
+import {FOAF, PARADICMS, RDF} from "./vocabularies";
 import {Property} from "./Property";
 
 export class Model {
@@ -9,6 +9,7 @@ export class Model {
 
   private static createIgnoredPropertyUris(): Set<string> {
     const result = new Set<string>();
+    result.add(FOAF.page.value);
     result.add(PARADICMS.collection.value);
     result.add(PARADICMS.institution.value);
     result.add(RDF.type.value);

@@ -103,20 +103,17 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 }> => {
   const completeDataset = readDatasetFile(readFileSync);
   const collectionUri = completeDataset.collections[0].uri;
-  // Must pass all of the collection's works in to feed into the search service
-  const collectionDataset = new DataSubsetter(
-    completeDataset
-  ).collectionDataset(collectionUri, {
-    works: WORK_JOIN_SELECTOR,
-  });
-
-  // console.debug("Collection dataset:", Object.keys(collectionDataset).map(key => `${key}: ${((collection,Dataset as any)[key] as any[]).length,,,,,,}`).join(", "));
 
   return {
     props: {
       collectionUri,
       configuration: readConfigurationFile(readFileSync),
-      datasetString: collectionDataset.stringify(),
+      datasetString: new DataSubsetter(completeDataset)
+        .collectionDataset(collectionUri, {
+          institution: {},
+          works: WORK_JOIN_SELECTOR,
+        })
+        .stringify(),
     },
   };
 };

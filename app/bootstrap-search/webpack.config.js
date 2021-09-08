@@ -15,19 +15,27 @@ module.exports = (env, argv) => {
   const mode = argv && argv.mode ? argv.mode : "development";
 
   const copyFilePathPatterns = [];
+
   const configurationJsonFilePath = process.env.CONFIGURATION_JSON_FILE_PATH;
   if (configurationJsonFilePath) {
+    console.info("configuration.json file path:", configurationJsonFilePath);
     copyFilePathPatterns.push({
       from: configurationJsonFilePath,
       to: path.join(distPath, "configuration.json"),
     });
+  } else {
+    console.warn("no configuration.json file path specified");
   }
+
   const dataTtlFilePath = process.env.DATA_TTL_FILE_PATH;
   if (dataTtlFilePath) {
+    console.info("data.ttl file path:", dataTtlFilePath);
     copyFilePathPatterns.push({
       from: dataTtlFilePath,
       to: path.join(distPath, "data.ttl"),
     });
+  } else {
+    console.warn("no data.ttl file path specified");
   }
 
   return {

@@ -48,26 +48,18 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
   const dataset = readDatasetFile(readFileSync);
-  const institutionsDataset = new DataSubsetter(dataset).institutionsDataset(
-    dataset.institutions.map(institution => institution.uri),
-    {
-      thumbnail: {targetDimensions: thumbnailTargetDimensions},
-    }
-  );
-
-  console.log(
-    "Institutions dataset:",
-    Object.keys(institutionsDataset)
-      .map(
-        key => `${key}: ${((institutionsDataset as any)[key] as any[]).length}`
-      )
-      .join(", ")
-  );
 
   return {
     props: {
       configuration: readConfigurationFile(readFileSync),
-      datasetString: institutionsDataset.stringify(),
+      datasetString: new DataSubsetter(dataset)
+        .institutionsDataset(
+          dataset.institutions.map(institution => institution.uri),
+          {
+            thumbnail: {targetDimensions: thumbnailTargetDimensions},
+          }
+        )
+        .stringify(),
     },
   };
 };
