@@ -9,6 +9,7 @@ from markdown_it import MarkdownIt
 from markdown_it.renderer import RendererHTML
 from markdown_it.tree import SyntaxTreeNode
 from mdit_py_plugins.front_matter import front_matter_plugin
+from paradicms_etl.models.opaque_named_model import OpaqueNamedModel
 from rdflib import DCTERMS, Graph, Literal, URIRef
 from rdflib.resource import Resource
 from rdflib.term import Node
@@ -27,7 +28,6 @@ from paradicms_etl.models.dublin_core_property_definitions import (
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.markdown_directory import MarkdownDirectory
-from paradicms_etl.models.opaque_named_model import OpaqueNamedModel
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -305,7 +305,7 @@ class MarkdownDirectoryTransformer(_Transformer):
         def __get_or_synthesize_default_collection(self) -> OpaqueNamedModel:
             if self.__default_collection is None:
                 self.__default_collection = self.__opacify_model(
-                    Collection(
+                    Collection.from_fields(
                         institution_uri=self.__get_or_synthesize_default_institution().uri,
                         title="Default collection",
                         uri=MarkdownDirectoryTransformer.model_uri(
@@ -321,7 +321,7 @@ class MarkdownDirectoryTransformer(_Transformer):
         def __get_or_synthesize_default_institution(self) -> OpaqueNamedModel:
             if self.__default_institution is None:
                 self.__default_institution = self.__opacify_model(
-                    Institution(
+                    Institution.from_fields(
                         name="Default institution",
                         uri=MarkdownDirectoryTransformer.model_uri(
                             pipeline_id=self.__pipeline_id,
@@ -460,7 +460,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                     "synthesizing an Image model for the work %s", work_.uri
                 )
                 self.__buffer_transformed_model(
-                    Image(
+                    Image.from_fields(
                         depicts_uri=work_.uri,
                         src=image_file_entry.path.as_uri(),
                         uri=MarkdownDirectoryTransformer.model_uri(

@@ -4,14 +4,12 @@ from typing import Dict, Generator
 from zipfile import ZipFile
 
 from rdflib import DCTERMS, Graph, Literal, SKOS, URIRef
-import rdflib_jsonld
 from rdflib.resource import Resource
 
 from paradicms_etl._extractor import _Extractor
 from paradicms_etl._loader import _Loader
 from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl._transformer import _Transformer
-from paradicms_etl.loaders.nop_loader import NopLoader
 from paradicms_etl.models.rights_statement import RightsStatement
 
 
@@ -76,7 +74,7 @@ class RightsStatementsDotOrgPipeline(_Pipeline):
 
             assert isinstance(resource.identifier, URIRef)
 
-            return RightsStatement(
+            return RightsStatement.from_fields(
                 definition=definition,
                 description=description,
                 identifier=identifier,

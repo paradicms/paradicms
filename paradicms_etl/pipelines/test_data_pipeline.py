@@ -136,7 +136,7 @@ class TestDataPipeline(_Pipeline):
             self, *, depicts_uri: URIRef, rights: Rights, text_prefix: str
         ):
             for image_i in range(self.__images_per_work):
-                original = Image(
+                original = Image.from_fields(
                     depicts_uri=depicts_uri,
                     exact_dimensions=ImageDimensions(height=1000, width=1000),
                     rights=rights,
@@ -150,7 +150,7 @@ class TestDataPipeline(_Pipeline):
                     ImageDimensions(75, 75),
                     ImageDimensions(600, 600),
                 ):
-                    yield Image(
+                    yield Image.from_fields(
                         depicts_uri=depicts_uri,
                         exact_dimensions=thumbnail_dimensions,
                         original_image_uri=original.uri,
@@ -163,7 +163,7 @@ class TestDataPipeline(_Pipeline):
         def __generate_institution_collections(self, institution: Institution):
             for collection_i in range(self.__collections_per_institution):
                 collection_title = f"{institution.name}Collection{collection_i}"
-                collection = Collection(
+                collection = Collection.from_fields(
                     institution_uri=institution.uri,
                     title=collection_title,
                     uri=URIRef(f"{institution.uri}/collection{collection_i}"),
@@ -185,7 +185,7 @@ class TestDataPipeline(_Pipeline):
         def __generate_institutions(self):
             for institution_i in range(self.__institutions):
                 institution_name = f"Institution{institution_i}"
-                institution = Institution(
+                institution = Institution.from_fields(
                     name=institution_name,
                     rights=Rights(
                         holder=f"{institution_name} rights holder",
@@ -321,7 +321,7 @@ class TestDataPipeline(_Pipeline):
                 property_values,
             ) in self.__FACETED_PROPERTY_DEFINITIONS:
                 for property_value in property_values:
-                    property_value_definition = PropertyValueDefinition(
+                    property_value_definition = PropertyValueDefinition.from_fields(
                         # label=property_value,
                         property_uris=(property_definition.uri,),
                         uri=URIRef(

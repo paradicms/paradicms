@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from typing import Tuple
-
 import rdflib.term
-from paradicms_etl.models.rights_statement import RightsStatement
+
 from paradicms_etl.models._model_singletons import _ModelSingletons
+from paradicms_etl.models.rights_statement import RightsStatement
 
 
 class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
     _MODEL_CLASS = RightsStatement
 
-    CNE = RightsStatement(
+    CNE = RightsStatement.from_fields(
         uri=rdflib.term.URIRef("http://rightsstatements.org/vocab/CNE/1.0/"),
         identifier="CNE",
         pref_label="Copyright Not Evaluated",
@@ -24,7 +23,7 @@ class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
         scope_note="This Rights Statement should be used for Items for which the copyright status is unknown and for which the organization that intends to make the Item available has not undertaken an effort to determine the copyright status of the underlying Work.",
     )
 
-    InC_EDU = RightsStatement(
+    InC_EDU = RightsStatement.from_fields(
         uri=rdflib.term.URIRef("http://rightsstatements.org/vocab/InC-EDU/1.0/"),
         identifier="InC-EDU",
         pref_label="In Copyright - Educational Use Permitted",
@@ -38,7 +37,7 @@ class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
         scope_note="This Rights Statement can be used only for copyrighted Items for which the organization making the Item available is the rights-holder or has been explicitly authorized by the rights-holder(s) to allow third parties to use their Work(s) for educational purposes without first obtaining permission.",
     )
 
-    InC_NC = RightsStatement(
+    InC_NC = RightsStatement.from_fields(
         uri=rdflib.term.URIRef("http://rightsstatements.org/vocab/InC-NC/1.0/"),
         identifier="InC-NC",
         pref_label="In Copyright - Non-Commercial Use Permitted",
@@ -52,7 +51,7 @@ class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
         scope_note="This Rights Statement can be used only for copyrighted Items for which the organization making the Item available is the rights-holder or has been explicitly authorized by the rights-holder(s) to allow third parties to use their Work(s) for non-commercial purposes without obtaining permission first.",
     )
 
-    InC_OW_EU = RightsStatement(
+    InC_OW_EU = RightsStatement.from_fields(
         uri=rdflib.term.URIRef("http://rightsstatements.org/vocab/InC-OW-EU/1.0/"),
         identifier="InC-OW-EU",
         pref_label="In Copyright - EU Orphan Work",
@@ -67,7 +66,7 @@ class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
         scope_note="This Rights Statement is intended for use with Items for which the underlying Work has been identified as an Orphan Work in accordance with Directive 2012/28/EU of the European Parliament and of the Council of 25 October 2012 on certain permitted uses of Orphan Works. It can only be applied to Items derived from Works that are covered by the Directive: Works published in the form of books, journals, newspapers, magazines or other writings as well as cinematographic or audiovisual works and phonograms (note: this excludes photography and visual arts). It can only be applied by organizations that are beneficiaries of the Directive: publicly accessible libraries, educational establishments and museums, archives, film or audio heritage institutions and public-service broadcasting organizations, established in one of the EU member states. The beneficiary is also expected to have registered the work in the EU Orphan Works Database maintained by EUIPO.",
     )
 
-    InC_RUU = RightsStatement(
+    InC_RUU = RightsStatement.from_fields(
         uri=rdflib.term.URIRef("http://rightsstatements.org/vocab/InC-RUU/1.0/"),
         identifier="InC-RUU",
         pref_label="In Copyright - Rights-holder(s) Unlocatable or Unidentifiable",
@@ -82,7 +81,7 @@ class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
         scope_note="This Rights Statement is intended for use with an Item that has been identified as in copyright but for which no rights-holder(s) has been identified or located after some reasonable investigation. This Rights Statement should only be used if the organization that intends to make the Item available is reasonably sure that the underlying Work is in copyright. This Rights Statement is not intended for use by EU-based organizations who have identified works as Orphan Works in accordance with the EU Orphan Works Directive (they must use InC-OW-EU instead).",
     )
 
-    InC = RightsStatement(
+    InC = RightsStatement.from_fields(
         uri=rdflib.term.URIRef("http://rightsstatements.org/vocab/InC/1.0/"),
         identifier="InC",
         pref_label="In Copyright",
@@ -96,7 +95,7 @@ class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
         scope_note="This Rights Statement can be used for an Item that is in copyright. Using this statement implies that the organization making this Item available has determined that the Item is in copyright and either is the rights-holder, has obtained permission from the rights-holder(s) to make their Work(s) available, or makes the Item available under an exception or limitation to copyright (including Fair Use) that entitles it to make the Item available.",
     )
 
-    NKC = RightsStatement(
+    NKC = RightsStatement.from_fields(
         uri=rdflib.term.URIRef("http://rightsstatements.org/vocab/NKC/1.0/"),
         identifier="NKC",
         pref_label="No Known Copyright",
@@ -110,7 +109,7 @@ class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
         scope_note="This Rights Statement should be used for Items for which the copyright status has not been determined conclusively, but for which the organization that intends to make the Item available has reasonable cause to believe that the underlying Work is not covered by copyright or related rights anymore. This Rights Statement should not be used for Orphan Works (which are assumed to be in-copyright) or for Items where the organization that intends to make the Item available has not undertaken an effort to ascertain the copyright status of the underlying Work.",
     )
 
-    NoC_CR = RightsStatement(
+    NoC_CR = RightsStatement.from_fields(
         uri=rdflib.term.URIRef("http://rightsstatements.org/vocab/NoC-CR/1.0/"),
         identifier="NoC-CR",
         pref_label="No Copyright - Contractual Restrictions",
@@ -124,7 +123,7 @@ class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
         scope_note="This Rights Statement can only be used for Items that are in the Public Domain but for which the organization that intends to make the Item available has entered into contractual agreement that requires it to take steps to restrict third party uses of the Item. In order for this Rights Statement to be conclusive, the organization that intends to make the Item available should provide a link to a page detailing the contractual restrictions that apply to the use of the Item.",
     )
 
-    NoC_NC = RightsStatement(
+    NoC_NC = RightsStatement.from_fields(
         uri=rdflib.term.URIRef("http://rightsstatements.org/vocab/NoC-NC/1.0/"),
         identifier="NoC-NC",
         pref_label="No Copyright - Non-Commercial Use Only",
@@ -138,7 +137,7 @@ class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
         scope_note="This Rights Statement can only be used for Works that are in the Public Domain and have been digitized in a public-private partnership as part of which, the partners have agreed to limit commercial uses of this digital representation of the Work by third parties. It has been developed specifically to allow the inclusion of Works that have been digitized as part of the partnerships between European Libraries and Google, but can in theory be applied to Items that have been digitized in similar public-private partnerships.",
     )
 
-    NoC_OKLR = RightsStatement(
+    NoC_OKLR = RightsStatement.from_fields(
         uri=rdflib.term.URIRef("http://rightsstatements.org/vocab/NoC-OKLR/1.0/"),
         identifier="NoC-OKLR",
         pref_label="No Copyright - Other Known Legal Restrictions",
@@ -152,7 +151,7 @@ class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
         scope_note="This Rights Statement should be used for Items that are in the Public Domain but that cannot be freely re-used as the consequence of known legal restrictions that prevent the organization that intends to make the Item available from allowing free re-use of the Item, such as cultural heritage or traditional cultural expression protections. In order for this Rights Statement to be conclusive, the organization that intends to make the Item available should provide a link to a page detailing the legal restrictions that limit re-use of the Item.",
     )
 
-    NoC_US = RightsStatement(
+    NoC_US = RightsStatement.from_fields(
         uri=rdflib.term.URIRef("http://rightsstatements.org/vocab/NoC-US/1.0/"),
         identifier="NoC-US",
         pref_label="No Copyright - United States",
@@ -166,7 +165,7 @@ class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
         scope_note="This Rights Statement should be used for Items for which the organization that intends to make the Item available has determined are free of copyright under the laws of the United States. This Rights Statement should not be used for Orphan Works (which are assumed to be in-copyright) or for Items where the organization that intends to make the Item available has not undertaken an effort to ascertain the copyright status of the underlying Work.",
     )
 
-    UND = RightsStatement(
+    UND = RightsStatement.from_fields(
         uri=rdflib.term.URIRef("http://rightsstatements.org/vocab/UND/1.0/"),
         identifier="UND",
         pref_label="Copyright Undetermined",
@@ -180,7 +179,7 @@ class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
         scope_note="This Rights Statement should be used for Items for which the copyright status is unknown and for which the organization that has made the Item available has undertaken an (unsuccessful) effort to determine the copyright status of the underlying Work. Typically, this Rights Statement is used when the organization is missing key facts essential to making an accurate copyright status determination.",
     )
 
-    collection_ic = RightsStatement(
+    collection_ic = RightsStatement.from_fields(
         uri=rdflib.term.URIRef("http://rightsstatements.org/vocab/collection-ic/1.0/"),
         identifier="collection-ic",
         pref_label="Statements for works that are in copyright",
@@ -190,7 +189,7 @@ class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
         scope_note=None,
     )
 
-    collection_nc = RightsStatement(
+    collection_nc = RightsStatement.from_fields(
         uri=rdflib.term.URIRef("http://rightsstatements.org/vocab/collection-nc/1.0/"),
         identifier="collection-nc",
         pref_label="Statements for works that are not in copyright",
@@ -200,7 +199,7 @@ class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
         scope_note=None,
     )
 
-    collection_other = RightsStatement(
+    collection_other = RightsStatement.from_fields(
         uri=rdflib.term.URIRef(
             "http://rightsstatements.org/vocab/collection-other/1.0/"
         ),

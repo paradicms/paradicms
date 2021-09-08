@@ -79,7 +79,7 @@ class CreativeCommonsPipeline(_Pipeline):
             else:
                 version = None
 
-            return License(
+            return License.from_fields(
                 identifier=identifier,
                 title=title,
                 uri=resource.identifier,

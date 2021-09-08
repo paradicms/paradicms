@@ -12,7 +12,7 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 
 
 def test_to_rdf():
-    expected = Image(
+    expected = Image.from_fields(
         created=datetime.now(),
         depicts_uri=URIRef("http://example.com/work"),
         exact_dimensions=ImageDimensions(height=300, width=300),

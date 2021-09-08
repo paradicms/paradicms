@@ -6,39 +6,39 @@ from paradicms_etl.namespace import VRA
 class VraCorePropertyDefinitions(_ModelSingletons):
     _MODEL_CLASS = PropertyDefinition
 
-    CULTURAL_CONTEXT = PropertyDefinition(
+    CULTURAL_CONTEXT = PropertyDefinition.from_fields(
         label="Cultural context",
         uri=VRA.culturalContext,
     )
-    EARLIEST_DATE = PropertyDefinition(
+    EARLIEST_DATE = PropertyDefinition.from_fields(
         label="Earliest date",
         uri=VRA.earliestDate,
     )
-    INSCRIPTION = PropertyDefinition(
+    INSCRIPTION = PropertyDefinition.from_fields(
         label="Inscription",
         uri=VRA.inscription,
     )
-    LATEST_DATE = PropertyDefinition(
+    LATEST_DATE = PropertyDefinition.from_fields(
         label="Latest date",
         uri=VRA.latestDate,
     )
-    MATERIAL = PropertyDefinition(
+    MATERIAL = PropertyDefinition.from_fields(
         label="Material",
         uri=VRA.material,
     )
-    MEASUREMENTS = PropertyDefinition(
+    MEASUREMENTS = PropertyDefinition.from_fields(
         label="Measurements",
         uri=VRA.measurements,
     )
-    STYLE_PERIOD = PropertyDefinition(
+    STYLE_PERIOD = PropertyDefinition.from_fields(
         label="Style Period",
         uri=VRA.stylePeriod,
     )
-    TECHNIQUE = PropertyDefinition(
+    TECHNIQUE = PropertyDefinition.from_fields(
         label="Technique",
         uri=VRA.hasTechnique,
     )
-    WORK_TYPE = PropertyDefinition(
+    WORK_TYPE = PropertyDefinition.from_fields(
         label="Work type",
         uri=VRA.worktype,
     )

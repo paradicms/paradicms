@@ -154,7 +154,7 @@ class OmekaClassicTransformer(_Transformer):
         )
         self._log_unknown_element_texts(element_text_tree)
         title, properties = self._get_title(properties)
-        return Collection(
+        return Collection.from_fields(
             institution_uri=institution_uri,
             properties=properties,
             title=title,
@@ -269,7 +269,7 @@ class OmekaClassicTransformer(_Transformer):
                     )
                 original_image_uri = URIRef(file_["file_urls"]["original"])
 
-            image = Image(
+            image = Image.from_fields(
                 created=file_added,
                 depicts_uri=work_uri,
                 exact_dimensions=exact_dimensions,

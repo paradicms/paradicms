@@ -7,113 +7,113 @@ from paradicms_etl.models.property_definition import PropertyDefinition
 class DublinCorePropertyDefinitions(_ModelSingletons):
     _MODEL_CLASS = PropertyDefinition
 
-    ABSTRACT = PropertyDefinition(
+    ABSTRACT = PropertyDefinition.from_fields(
         label="Abstract",
         uri=DCTERMS.abstract,
     )
-    ALTERNATIVE_TITLE = PropertyDefinition(
+    ALTERNATIVE_TITLE = PropertyDefinition.from_fields(
         label="Alternative title",
         uri=DCTERMS.alternative,
     )
-    BIBLIOGRAPHIC_CITATION = PropertyDefinition(
+    BIBLIOGRAPHIC_CITATION = PropertyDefinition.from_fields(
         label="Bibliographic citation",
         uri=DCTERMS.bibliographicCitation,
     )
-    CONTRIBUTOR = PropertyDefinition(
+    CONTRIBUTOR = PropertyDefinition.from_fields(
         label="Contributor",
         uri=DCTERMS.contributor,
     )
-    COVERAGE = PropertyDefinition(
+    COVERAGE = PropertyDefinition.from_fields(
         label="Coverage",
         uri=DCTERMS.coverage,
     )
-    CREATOR = PropertyDefinition(
+    CREATOR = PropertyDefinition.from_fields(
         label="Creator",
         uri=DCTERMS.creator,
     )
-    DATE = PropertyDefinition(label="Date", uri=DCTERMS.date)
-    DATE_CREATED = PropertyDefinition(
+    DATE = PropertyDefinition.from_fields(label="Date", uri=DCTERMS.date)
+    DATE_CREATED = PropertyDefinition.from_fields(
         label="Date created",
         uri=DCTERMS.dateCreated,
     )
-    DATE_SUBMITTED = PropertyDefinition(
+    DATE_SUBMITTED = PropertyDefinition.from_fields(
         label="Date submitted",
         uri=DCTERMS.dateSubmitted,
     )
-    DESCRIPTION = PropertyDefinition(
+    DESCRIPTION = PropertyDefinition.from_fields(
         label="Description",
         uri=DCTERMS.description,
     )
-    EXTENT = PropertyDefinition(
+    EXTENT = PropertyDefinition.from_fields(
         label="Extent",
         uri=DCTERMS.extent,
     )
-    FORMAT = PropertyDefinition(
+    FORMAT = PropertyDefinition.from_fields(
         label="Format",
         uri=DCTERMS["format"],
     )
-    IDENTIFIER = PropertyDefinition(
+    IDENTIFIER = PropertyDefinition.from_fields(
         label="Identifier",
         uri=DCTERMS.identifier,
     )
-    IS_REFERENCED_BY = PropertyDefinition(
+    IS_REFERENCED_BY = PropertyDefinition.from_fields(
         label="Referenced by",
         uri=DCTERMS.isReferencedBy,
     )
-    LANGUAGE = PropertyDefinition(
+    LANGUAGE = PropertyDefinition.from_fields(
         label="Language",
         uri=DCTERMS.language,
     )
-    LICENSE = PropertyDefinition(
+    LICENSE = PropertyDefinition.from_fields(
         label="License",
         uri=DCTERMS.license,
     )
-    MEDIUM = PropertyDefinition(
+    MEDIUM = PropertyDefinition.from_fields(
         label="Medium",
         uri=DCTERMS.medium,
     )
-    PROVENANCE = PropertyDefinition(
+    PROVENANCE = PropertyDefinition.from_fields(
         label="Provenance",
         uri=DCTERMS.provenance,
     )
-    PUBLISHER = PropertyDefinition(
+    PUBLISHER = PropertyDefinition.from_fields(
         label="Publisher",
         uri=DCTERMS.publisher,
     )
-    REFERENCES = PropertyDefinition(
+    REFERENCES = PropertyDefinition.from_fields(
         label="References",
         uri=DCTERMS.references,
     )
-    RELATION = PropertyDefinition(
+    RELATION = PropertyDefinition.from_fields(
         label="Relation",
         uri=DCTERMS.relation,
     )
-    RIGHTS = PropertyDefinition(label="Rights", uri=DCTERMS.rights)
-    RIGHTS_HOLDER = PropertyDefinition(
+    RIGHTS = PropertyDefinition.from_fields(label="Rights", uri=DCTERMS.rights)
+    RIGHTS_HOLDER = PropertyDefinition.from_fields(
         label="Rights holder",
         uri=DCTERMS.rightsHolder,
     )
-    SOURCE = PropertyDefinition(
+    SOURCE = PropertyDefinition.from_fields(
         label="Source",
         uri=DCTERMS.source,
     )
-    SPATIAL = PropertyDefinition(
+    SPATIAL = PropertyDefinition.from_fields(
         label="Spatial coverage",
         uri=DCTERMS.spatial,
     )
-    SUBJECT = PropertyDefinition(
+    SUBJECT = PropertyDefinition.from_fields(
         label="Subject",
         uri=DCTERMS.subject,
     )
-    TEMPORAL = PropertyDefinition(
+    TEMPORAL = PropertyDefinition.from_fields(
         label="Temporal coverage",
         uri=DCTERMS.temporal,
     )
-    TITLE = PropertyDefinition(
+    TITLE = PropertyDefinition.from_fields(
         label="Title",
         uri=DCTERMS.title,
     )
-    TYPE = PropertyDefinition(
+    TYPE = PropertyDefinition.from_fields(
         label="Type",
         uri=DCTERMS.type,
     )

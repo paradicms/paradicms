@@ -166,7 +166,7 @@ class BookCollectorTransformer(_Transformer):
         collection = collections_by_hash.get(hash_)
         if collection is not None:
             return collection
-        collection = Collection(
+        collection = Collection.from_fields(
             graph=graph,
             uri=URIRef(str(self.__pipeline_uri) + ":clzcollection:" + hash_),
         )
