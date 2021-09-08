@@ -3,7 +3,6 @@ from typing import Optional
 
 from rdflib import Literal, URIRef
 from rdflib.namespace import DCTERMS, FOAF
-from rdflib.resource import Resource
 
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.image_dimensions import ImageDimensions
@@ -83,10 +82,6 @@ class Image(_NamedModel):
     @property
     def depicts_uri(self) -> URIRef:
         return self._required_uri_value(FOAF.depicts)
-
-    @classmethod
-    def from_rdf(cls, *, resource: Resource):
-        return cls(cls._copy_resource(resource))
 
     @property
     def original_image_uri(self) -> Optional[URIRef]:
