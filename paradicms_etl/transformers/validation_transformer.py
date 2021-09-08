@@ -8,8 +8,8 @@ from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
-from paradicms_etl.models.object import Object
 from paradicms_etl.models.property_definition import PropertyDefinition
+from paradicms_etl.models.work import Work
 
 
 class ValidationTransformer(_Transformer):
@@ -25,7 +25,7 @@ class ValidationTransformer(_Transformer):
         institutions_by_uri = {}
         property_definitions_by_uri = {}
         model_uris = set()
-        objects_by_uri = {}
+        works_by_uri = {}
         referenced_collection_uris = set()
         referenced_institution_uris = set()
 
@@ -48,13 +48,13 @@ class ValidationTransformer(_Transformer):
                 institution = model
                 assert institution.uri not in institutions_by_uri
                 institutions_by_uri[institution.uri] = institution
-            elif isinstance(model, Object):
-                object_ = model
-                for collection_uri in object_.collection_uris:
+            elif isinstance(model, Work):
+                work = model
+                for collection_uri in work.collection_uris:
                     referenced_collection_uris.add(collection_uri)
-                referenced_institution_uris.add(object_.institution_uri)
-                assert object_.uri not in objects_by_uri
-                objects_by_uri[object_.uri] = object_
+                referenced_institution_uris.add(work.institution_uri)
+                assert work.uri not in works_by_uri
+                works_by_uri[work.uri] = work
             elif isinstance(model, PropertyDefinition):
                 property_definition = model
                 existing_property_definition = property_definitions_by_uri.get(

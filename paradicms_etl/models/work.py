@@ -10,7 +10,7 @@ from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespace import CMS
 
 
-class Object(_NamedModel):
+class Work(_NamedModel):
     def __init__(
         self,
         *,

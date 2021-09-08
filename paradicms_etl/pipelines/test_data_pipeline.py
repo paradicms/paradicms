@@ -19,7 +19,6 @@ from paradicms_etl.models.dublin_core_property_definitions import (
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
-from paradicms_etl.models.object import Object
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_value_definition import PropertyValueDefinition
 from paradicms_etl.models.rights import Rights
@@ -29,6 +28,7 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 from paradicms_etl.models.vra_core_property_definitions import (
     VraCorePropertyDefinitions,
 )
+from paradicms_etl.models.work import Work
 
 
 class TestDataPipeline(_Pipeline):
@@ -93,16 +93,16 @@ class TestDataPipeline(_Pipeline):
             self,
             *,
             collections_per_institution=1,
-            images_per_object=2,
+            images_per_work=2,
             institutions=2,
-            objects_per_institution=4,  # Objects per page is 20
+            works_per_institution=4,  # Works per page is 20
             **kwds,
         ):
             _Transformer.__init__(self, **kwds)
             self.__institutions = institutions
             self.__collections_per_institution = collections_per_institution
-            self.__images_per_object = images_per_object
-            self.__objects_per_institution = objects_per_institution
+            self.__images_per_work = images_per_work
+            self.__works_per_institution = works_per_institution
 
         def transform(self):
             yield from CreativeCommonsLicenses.as_tuple()
@@ -120,22 +120,22 @@ class TestDataPipeline(_Pipeline):
 
             yield from self.__generate_institutions()
 
-        def __generate_collection_objects(
+        def __generate_collection_works(
             self, *, collection: Collection, institution: Institution
         ):
-            for object_i in range(self.__objects_per_institution):
-                yield from self.__generate_object(
+            for work_i in range(self.__works_per_institution):
+                yield from self.__generate_work(
                     collection_uris=(collection.uri,),
                     institution=institution,
-                    object_i=object_i,
-                    title=f"{collection.title}Object{object_i}",
-                    uri=URIRef(f"{collection.uri}/object{object_i}"),
+                    work_i=work_i,
+                    title=f"{collection.title}Work{work_i}",
+                    uri=URIRef(f"{collection.uri}/work{work_i}"),
                 )
 
         def __generate_images(
             self, *, depicts_uri: URIRef, rights: Rights, text_prefix: str
         ):
-            for image_i in range(self.__images_per_object):
+            for image_i in range(self.__images_per_work):
                 original = Image(
                     depicts_uri=depicts_uri,
                     exact_dimensions=ImageDimensions(height=1000, width=1000),
@@ -176,9 +176,9 @@ class TestDataPipeline(_Pipeline):
                         rights=institution.rights,
                         text_prefix=collection.title,
                     )
-                # For collection 0, force the GUI to use an object image
+                # For collection 0, force the GUI to use an work image
 
-                yield from self.__generate_collection_objects(
+                yield from self.__generate_collection_works(
                     collection=collection, institution=institution
                 )
 
@@ -210,22 +210,22 @@ class TestDataPipeline(_Pipeline):
                         collections.append(model)
                     yield model
 
-                yield from self.__generate_shared_objects(
+                yield from self.__generate_shared_works(
                     collections=tuple(collections), institution=institution
                 )
 
-        def __generate_object(
+        def __generate_work(
             self,
             *,
             collection_uris: Tuple[URIRef, ...],
             institution: Institution,
-            object_i: int,
+            work_i: int,
             title: str,
             uri: URIRef,
         ):
             properties = []
 
-            # Properties that depend on the object title
+            # Properties that depend on the work title
             properties.extend(
                 Property(
                     DublinCorePropertyDefinitions.ALTERNATIVE_TITLE,
@@ -263,13 +263,13 @@ class TestDataPipeline(_Pipeline):
                     DublinCorePropertyDefinitions.DATE,
                     (
                         date(year=2020, month=8, day=9)
-                        - timedelta(minutes=(60 * 24 * (object_i + date_i)))
+                        - timedelta(minutes=(60 * 24 * (work_i + date_i)))
                     ).isoformat(),
                 )
                 for date_i in range(2)
             )
 
-            # Faceted properties, which are the same across objects
+            # Faceted properties, which are the same across works
             for (
                 property_definition,
                 property_values,
@@ -277,16 +277,16 @@ class TestDataPipeline(_Pipeline):
                 properties.extend(
                     Property(
                         property_definition,
-                        property_values[(object_i + i) % len(property_values)],
+                        property_values[(work_i + i) % len(property_values)],
                     )
                     for i in range(2)
                 )
 
-            page = "http://example.com/object/" + str(object_i)
-            if object_i % 2 == 0:
+            page = "http://example.com/work/" + str(work_i)
+            if work_i % 2 == 0:
                 page = URIRef(page)
 
-            object_ = Object(
+            work_ = Work(
                 abstract=self.__LOREM_IPSUM,
                 collection_uris=collection_uris,
                 institution_uri=institution.uri,
@@ -300,12 +300,12 @@ class TestDataPipeline(_Pipeline):
                 title=title,
                 uri=uri,
             )
-            yield object_
+            yield work_
 
             yield from self.__generate_images(
-                depicts_uri=object_.uri,
-                rights=object_.rights,
-                text_prefix=object_.title,
+                depicts_uri=work_.uri,
+                rights=work_.rights,
+                text_prefix=work_.title,
             )
 
         def __generate_property_definitions(self):
@@ -339,18 +339,18 @@ class TestDataPipeline(_Pipeline):
 
                     property_value_urn_i += 1
 
-        def __generate_shared_objects(
+        def __generate_shared_works(
             self, *, collections: Tuple[Collection, ...], institution: Institution
         ):
-            for object_i in range(self.__objects_per_institution):  # Per institution
-                yield from self.__generate_object(
+            for work_i in range(self.__works_per_institution):  # Per institution
+                yield from self.__generate_work(
                     collection_uris=tuple(
                         map(lambda collection: collection.uri, collections)
                     ),
                     institution=institution,
-                    object_i=object_i,
-                    title=f"{institution.name}SharedObject{object_i}",
-                    uri=URIRef(f"{institution.uri}/shared/object{object_i}"),
+                    work_i=work_i,
+                    title=f"{institution.name}SharedWork{work_i}",
+                    uri=URIRef(f"{institution.uri}/shared/work{work_i}"),
                 )
 
     def __init__(self, loader: Optional[_Loader] = None, **kwds):

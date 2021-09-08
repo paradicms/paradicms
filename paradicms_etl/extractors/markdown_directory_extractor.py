@@ -10,13 +10,13 @@ from paradicms_etl.models.markdown_directory import MarkdownDirectory
 class MarkdownDirectoryExtractor(_Extractor):
     """
     Extract entries from a directory with the structure:
-    object/id1.md
-    object/id2.md
+    work/id1.md
+    work/id2.md
     person/id1.md
     person/id2.md
     other/id.md
 
-    Returns a dict of {"markdown": {"person": {"id1": contents, "id2": contents}, "object": {"id1", contents, "id2": contents}, "other": {"id": contents}}}
+    Returns a dict of {"markdown": {"person": {"id1": contents, "id2": contents}, "work": {"id1", contents, "id2": contents}, "other": {"id": contents}}}
     """
 
     def extract(self, **kwds):

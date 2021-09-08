@@ -13,12 +13,12 @@ from paradicms_etl.models.dublin_core_property_definitions import (
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
-from paradicms_etl.models.object import Object
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.vra_core_property_definitions import (
     VraCorePropertyDefinitions,
 )
+from paradicms_etl.models.work import Work
 
 
 class LunaTransformer(_Transformer):
@@ -161,7 +161,7 @@ class LunaTransformer(_Transformer):
 
         properties = self._transform_object_field_values(field_values=field_values_dict)
 
-        object_ = Object(
+        work_ = Work(
             abstract=description,
             collection_uris=collection_uris,
             institution_uri=institution.uri,
@@ -169,17 +169,17 @@ class LunaTransformer(_Transformer):
             title=display_name,
             uri=URIRef(luna_object["iiifManifest"]),
         )
-        yield object_
+        yield work_
 
         yield from self._transform_object_images(
             field_values=field_values_dict,
             luna_object=luna_object,
-            object_=object_,
+            work_=work_,
         )
 
         for field_name, field_values in field_values_dict.items():
             self._logger.warning(
-                "object %s: untransformed field %s = %s", id_, field_name, field_values
+                "work %s: untransformed field %s = %s", id_, field_name, field_values
             )
 
     def _transform_object_field_values(
@@ -251,7 +251,7 @@ class LunaTransformer(_Transformer):
         *,
         field_values: Dict[str, List[str]],
         luna_object,
-        object_: Object,
+        work_: Work,
     ) -> Generator[Image, None, None]:
         def pop_qualified_field_values(*args):
             return self._pop_qualified_field_values(field_values, *args)
@@ -299,7 +299,7 @@ class LunaTransformer(_Transformer):
             image_uri = URIRef(image_url)
             yield Image(
                 created=image_created,
-                depicts_uri=object_.uri,
+                depicts_uri=work_.uri,
                 max_dimensions=ImageDimensions(
                     height=image_dimension_max,
                     width=image_dimension_max,

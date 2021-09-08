@@ -16,11 +16,11 @@ from paradicms_etl.models.dublin_core_property_definitions import (
 )
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.object import Object
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
+from paradicms_etl.models.work import Work
 
 ElementTextTree = Dict[str, Dict[str, str]]
 
@@ -100,7 +100,7 @@ class OmekaClassicTransformer(_Transformer):
                 with self.__transform_file_timer.time():
                     transformed_files = self._transform_file(
                         file_=file_,
-                        object_uri=transformed_item.uri,
+                        work_uri=transformed_item.uri,
                     )
                 yield from transformed_files
 
@@ -219,7 +219,7 @@ class OmekaClassicTransformer(_Transformer):
 
         return tuple(properties)
 
-    def _transform_file(self, *, file_, object_uri: URIRef) -> Tuple[Image, ...]:
+    def _transform_file(self, *, file_, work_uri: URIRef) -> Tuple[Image, ...]:
         """
         Transform a file JSON object into a sequence of images.
 
@@ -271,7 +271,7 @@ class OmekaClassicTransformer(_Transformer):
 
             image = Image(
                 created=file_added,
-                depicts_uri=object_uri,
+                depicts_uri=work_uri,
                 exact_dimensions=exact_dimensions,
                 format=file_["mime_type"],
                 max_dimensions=max_dimensions,
@@ -293,7 +293,7 @@ class OmekaClassicTransformer(_Transformer):
         endpoint_url: str,
         institution_uri: URIRef,
         item
-    ) -> Optional[Object]:
+    ) -> Optional[Work]:
         if item["collection"] is None:
             return None
 
@@ -319,7 +319,7 @@ class OmekaClassicTransformer(_Transformer):
         properties = tuple(properties)
         self._log_unknown_element_texts(item_element_text_tree)
         title, properties = self._get_title(properties)
-        return Object(
+        return Work(
             collection_uris=(collection_uri,),
             institution_uri=institution_uri,
             page=URIRef(endpoint_url + "items/show/" + str(item["id"])),
