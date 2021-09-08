@@ -9,8 +9,14 @@ from paradicms_etl.namespace import CMS
 
 
 class Collection(_NamedModel):
-    def __init__(
-        self,
+    def __init__(self, *args, **kwds):
+        _NamedModel.__init__(self, *args, **kwds)
+        self.institution_uri
+        self.title
+
+    @classmethod
+    def from_fields(
+        cls,
         *,
         # Linking up to the parent (relational style) instead of down to child works
         # makes it easier to do page generation and search indexing downstream.
@@ -20,13 +26,14 @@ class Collection(_NamedModel):
         abstract: Optional[str] = None,
         properties: Tuple[Property, ...] = ()
     ):
-        _NamedModel.__init__(self, uri=uri)
+        resource = cls._create_resource(identifier=uri)
         if abstract is not None:
-            self.resource.add(DCTERMS.abstract, Literal(abstract))
-        self.resource.add(CMS.institution, institution_uri)
+            resource.add(DCTERMS.abstract, Literal(abstract))
+        resource.add(CMS.institution, institution_uri)
         for property_ in properties:
-            self.resource.add(property_.uri, property_.value)
-        self.resource.add(DCTERMS.title, Literal(title))
+            resource.add(property_.uri, property_.value)
+        resource.add(DCTERMS.title, Literal(title))
+        return cls(resource=resource)
 
     @property
     def institution_uri(self):

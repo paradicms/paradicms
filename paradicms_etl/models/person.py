@@ -8,8 +8,9 @@ from paradicms_etl.namespace import CONTACT
 
 
 class Person(_NamedModel):
-    def ___init__(
-        self,
+    @classmethod
+    def from_fields(
+        cls,
         *,
         name: str,
         uri: URIRef,
@@ -17,11 +18,12 @@ class Person(_NamedModel):
         given_name: Optional[str] = None,
         sort_name: Optional[str] = None,
     ):
-        _NamedModel.__init__(self, uri=uri)
+        resource = cls._create_resource(identifier=uri)
         if family_name is not None:
-            self.resource.add(FOAF.familyName, Literal(family_name))
+            resource.add(FOAF.familyName, Literal(family_name))
         if given_name is not None:
-            self.resource.add(FOAF.givenName, Literal(given_name))
-        self.resource.add(FOAF.name, Literal(name))
+            resource.add(FOAF.givenName, Literal(given_name))
+        resource.add(FOAF.name, Literal(name))
         if sort_name is not None:
-            self.resource.add(CONTACT.sortName, Literal(sort_name))
+            resource.add(CONTACT.sortName, Literal(sort_name))
+        return cls(resource)

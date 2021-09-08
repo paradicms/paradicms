@@ -7,8 +7,9 @@ from paradicms_etl.namespace import TIME
 
 
 class DateTimeDescription(_Model):
-    def __init__(
-        self,
+    @classmethod
+    def from_fields(
+        cls,
         *,
         day: Optional[int] = None,
         hour: Optional[int] = None,
@@ -17,17 +18,16 @@ class DateTimeDescription(_Model):
         month: Optional[int] = None,
         year: Optional[int] = None,
     ):
-        _Model.__init__(self)
-        self.resource.add(RDF.type, TIME.DateTimeDescription)
+        resource = cls._create_resource()
+        resource.add(RDF.type, TIME.DateTimeDescription)
         if day is not None:
-            self.resource.add(TIME.day, Literal("---" + str(day), datatype=XSD.gDay))
+            resource.add(TIME.day, Literal("---" + str(day), datatype=XSD.gDay))
         if hour is not None:
-            self.resource.add(TIME.hour, Literal(hour))
+            resource.add(TIME.hour, Literal(hour))
         if minute is not None:
-            self.resource.add(TIME.minute, Literal(minute))
+            resource.add(TIME.minute, Literal(minute))
         if month is not None:
-            self.resource.add(
-                TIME.month, Literal("---" + str(month), datatype=XSD.gMonth)
-            )
+            resource.add(TIME.month, Literal("---" + str(month), datatype=XSD.gMonth))
         if year is not None:
-            self.resource.add(TIME.year, Literal(str(year), datatype=XSD.gYear))
+            resource.add(TIME.year, Literal(str(year), datatype=XSD.gYear))
+        return cls(resource=resource)
