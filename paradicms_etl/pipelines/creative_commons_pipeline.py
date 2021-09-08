@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Dict, Generator
 from zipfile import ZipFile
 
-from rdflib import Graph, Namespace
+from rdflib import Graph, Literal, Namespace
 
 from paradicms_etl._extractor import _Extractor
 from paradicms_etl._loader import _Loader
@@ -75,8 +75,17 @@ class CreativeCommonsPipeline(_Pipeline):
                     py_license_identifier not in py_license_identifiers
                 ), py_license_identifier
                 py_license_identifiers.add(py_license_identifier)
+
+                license_graph = license.to_rdf(Graph()).graph
+                en_license_graph = bind_namespaces(Graph())
+                for s, p, o in license_graph:
+                    if isinstance(o, Literal):
+                        if o.language is not None and o.language != "en":
+                            continue
+                    en_license_graph.add((s, p, o))
+
                 py_license_reprs.append(
-                    f"    {py_license_identifier} = License.from_rdf(Graph().parse(data=r'''{license.to_rdf(bind_namespaces(Graph())).graph.serialize(format='ttl').decode('utf-8')}''', format='ttl').resource(URIRef('{license.uri}')))"
+                    f"    {py_license_identifier} = License.from_rdf(Graph().parse(data=r'''{en_license_graph.serialize(format='ttl').decode('utf-8')}''', format='ttl').resource(URIRef('{license.uri}')))"
                 )
             py_license_reprs = "\n".join(py_license_reprs)
 
