@@ -10,6 +10,7 @@ from paradicms_etl._loader import _Loader
 from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.license import License
+from paradicms_etl.namespace import bind_namespaces
 
 
 class CreativeCommonsPipeline(_Pipeline):
@@ -75,7 +76,7 @@ class CreativeCommonsPipeline(_Pipeline):
                 ), py_license_identifier
                 py_license_identifiers.add(py_license_identifier)
                 py_license_reprs.append(
-                    f"    {py_license_identifier} = License.from_rdf(Graph().parse(data=r'''{license.to_rdf(Graph()).graph.serialize(format='nt').decode('utf-8')}''', format='nt').resource(URIRef('{license.uri}')))"
+                    f"    {py_license_identifier} = License.from_rdf(Graph().parse(data=r'''{license.to_rdf(bind_namespaces(Graph())).graph.serialize(format='ttl').decode('utf-8')}''', format='ttl').resource(URIRef('{license.uri}')))"
                 )
             py_license_reprs = "\n".join(py_license_reprs)
 
