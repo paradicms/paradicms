@@ -57,6 +57,10 @@ class Image(_NamedModel):
     def copyable(self):
         return self.__copyable
 
+    @copyable.setter
+    def copyable(self, value: bool) -> None:
+        self.__copyable = value
+
     @property
     def depicts_uri(self) -> URIRef:
         return self._required_uri_value(FOAF.depicts)
@@ -82,14 +86,6 @@ class Image(_NamedModel):
             else None
         )
 
-        graph = resource.graph
-        assert isinstance(graph, Graph)
-        original_image_uri = graph.value(None, FOAF.thumbnail, resource.identifier)
-        if original_image_uri is not None and not isinstance(
-            original_image_uri, URIRef
-        ):
-            raise TypeError("expected original image URI to be a URIRef")
-
         return cls(
             created=resource_wrapper.optional_python_value(DCTERMS.created, datetime),
             depicts_uri=resource_wrapper.required_uri_value(FOAF.depicts),
@@ -98,7 +94,37 @@ class Image(_NamedModel):
             max_dimensions=max_dimensions,
             modified=resource_wrapper.optional_python_value(DCTERMS.modified, datetime),
             rights=Rights.from_rdf(resource=resource),
-            original_image_uri=original_image_uri,
+            original_image_uri=Image._original_image_uri(resource),
             src=resource_wrapper.optional_python_value(CMS.imageSrc, str),
             uri=resource.identifier,
         )
+
+    @property
+    def original_image_uri(self) -> Optional[URIRef]:
+        return self._original_image_uri(self.resource)
+
+    @staticmethod
+    def _original_image_uri(resource: Resource) -> Optional[URIRef]:
+        graph = resource.graph
+        assert isinstance(graph, Graph)
+        original_image_uri = graph.value(None, FOAF.thumbnail, resource.identifier)
+        if original_image_uri is not None and not isinstance(
+            original_image_uri, URIRef
+        ):
+            raise TypeError("expected original image URI to be a URIRef")
+        return original_image_uri
+
+    @property
+    def rights(self) -> Optional[Rights]:
+        return Rights.from_rdf(resource=self.resource)
+
+    @property
+    def src(self) -> Optional[str]:
+        return self._optional_str_value(CMS.imageSrc)
+
+    @src.setter
+    def src(self, value: Optional[str]) -> None:
+        if not value:
+            return
+        self.resource.remove(CMS.imageSrc)
+        self.resource.add(CMS.imageSrc, Literal(value))

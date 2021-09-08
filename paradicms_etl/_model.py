@@ -18,6 +18,8 @@ class _Model:
         self, p: URIRef, expected_type=None
     ) -> Optional[object]:
         value = self.resource.value(p)
+        if value is None:
+            return None
         if not isinstance(value, Literal):
             raise TypeError(f"expected {p} to have a literal value")
         python_value = value.toPython()
@@ -30,6 +32,8 @@ class _Model:
 
     def _optional_uri_value(self, p: URIRef) -> Optional[URIRef]:
         value = self.resource.value(p)
+        if value is None:
+            return None
         if not isinstance(value, Resource) or not isinstance(value.identifier, URIRef):
             raise TypeError(f"expected {p} to have a URI value")
         return value.identifier
