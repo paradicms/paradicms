@@ -3,19 +3,19 @@ from typing import Dict, List, NamedTuple, Optional, Tuple
 
 from rdflib import Graph, Literal, RDF, RDFS, SKOS, URIRef
 
-from paradicms_etl.models.labels import Labels
-from paradicms_etl.namespace import SCHEMA
 from paradicms_etl.models.wikidata.wikidata_direct_claim import WikidataDirectClaim
 from paradicms_etl.models.wikidata.wikidata_full_statement import WikidataFullStatement
+from paradicms_etl.models.wikidata.wikidata_item_labels import WikidataItemLabels
 from paradicms_etl.models.wikidata.wikidata_namespace import WIKIBASE
 from paradicms_etl.models.wikidata.wikidata_property_definition import (
     WikidataPropertyDefinition,
 )
 from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
+from paradicms_etl.namespace import SCHEMA
 
 
 class WikidataItem(NamedTuple):
-    labels: Labels
+    labels: WikidataItemLabels
     statements: Tuple[WikidataStatement, ...]
     uri: URIRef
     description: Optional[str] = None
@@ -202,7 +202,7 @@ class WikidataItem(NamedTuple):
 
         return cls(
             description=description,
-            labels=Labels(
+            labels=WikidataItemLabels(
                 alt_labels=tuple(sorted(alt_labels)) if alt_labels else None,
                 pref_label=pref_label,
             ),
