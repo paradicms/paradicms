@@ -10,6 +10,11 @@ class RightsStatement(_NamedModel):
     A rights statement. Adapted from the rightsstatements.org data model (https://github.com/rightsstatements/data-model).
     """
 
+    def __init__(self, *args, **kwds):
+        _NamedModel.__init__(self, *args, **kwds)
+        self.identifier
+        self.pref_label
+
     @classmethod
     def from_fields(
         cls,
@@ -33,3 +38,11 @@ class RightsStatement(_NamedModel):
         if scope_note is not None:
             resource.add(SKOS.scopeNote, Literal(scope_note))
         return cls(resource)
+
+    @property
+    def identifier(self) -> str:
+        return self._required_str_value(DCTERMS.identifier)
+
+    @property
+    def pref_label(self) -> str:
+        return self._required_str_value(SKOS.prefLabel)
