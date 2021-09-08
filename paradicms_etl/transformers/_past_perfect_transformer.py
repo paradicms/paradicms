@@ -82,7 +82,7 @@ class _PastPerfectTransformer(_Transformer):
 
             assert database_object.name is not None
 
-            work = Work(
+            work = Work.from_fields(
                 collection_uris=(collection.uri,),
                 institution_uri=institution.uri,
                 properties=self._get_database_object_properties(database_object),

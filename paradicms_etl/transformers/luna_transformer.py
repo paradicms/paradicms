@@ -161,7 +161,7 @@ class LunaTransformer(_Transformer):
 
         properties = self._transform_object_field_values(field_values=field_values_dict)
 
-        work_ = Work(
+        work_ = Work.from_fields(
             abstract=description,
             collection_uris=collection_uris,
             institution_uri=institution.uri,

@@ -70,7 +70,7 @@ class OmekaSTransformer(_Transformer):
         self, item: Resource, media_by_item_id: Dict[int, Resource]
     ) -> Work:
         item_id = item.value(O.id).toPython()
-        work_ = Work(resource=item)
+        work_ = Work.from_fields(resource=item)
         work_.owner = CMS.inherit
         for media in media_by_item_id.get(item_id, []):
             original_image, thumbnail_image = self.__transform_media(media)

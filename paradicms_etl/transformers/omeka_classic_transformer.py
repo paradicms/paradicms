@@ -319,7 +319,7 @@ class OmekaClassicTransformer(_Transformer):
         properties = tuple(properties)
         self._log_unknown_element_texts(item_element_text_tree)
         title, properties = self._get_title(properties)
-        return Work(
+        return Work.from_fields(
             collection_uris=(collection_uri,),
             institution_uri=institution_uri,
             page=URIRef(endpoint_url + "items/show/" + str(item["id"])),
