@@ -1,4 +1,3 @@
-import dataclasses
 import hashlib
 import os.path
 from pathlib import Path
@@ -68,7 +67,8 @@ class GuiImagesLoader(_Loader):
         )
         assert archived_original_image_url
         # The original image retains its URI but gets a new src
-        return dataclasses.replace(original_image, src=archived_original_image_url)
+        original_image.src = archived_original_image_url
+        return original_image
 
     def __archive_thumbnail_images(
         self,
@@ -127,11 +127,12 @@ class GuiImagesLoader(_Loader):
             )
 
             archived_thumbnail_images.append(
-                dataclasses.replace(
-                    original_image,
+                Image(
+                    depicts_uri=original_image.depicts_uri,
                     exact_dimensions=thumbnail_exact_dimensions,
                     max_dimensions=thumbnail_max_dimensions,
                     original_image_uri=original_image.uri,
+                    rights=original_image.rights,
                     src=archived_thumbnail_src,
                     uri=archived_thumbnail_uri,
                 )
