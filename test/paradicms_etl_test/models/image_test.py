@@ -32,4 +32,4 @@ def test_to_rdf():
 
     actual = Image.from_rdf(resource=expected.resource)
 
-    # assert actual == expected
+    assert actual.uri == expected.uri
