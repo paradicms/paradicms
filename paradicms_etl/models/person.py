@@ -27,3 +27,7 @@ class Person(_NamedModel):
         if sort_name is not None:
             resource.add(CONTACT.sortName, Literal(sort_name))
         return cls(resource)
+
+    @property
+    def name(self) -> str:
+        return self._required_str_value(FOAF.name)
