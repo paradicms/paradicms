@@ -67,8 +67,7 @@ class GuiImagesLoader(_Loader):
         )
         assert archived_original_image_url
         # The original image retains its URI but gets a new src
-        original_image.src = archived_original_image_url
-        return original_image
+        return original_image.replace(src=archived_original_image_url)
 
     def __archive_thumbnail_images(
         self,
