@@ -1,13 +1,13 @@
-import {NamedModel} from "./NamedModel";
-import {DCTERMS} from "./vocabularies";
+import { NamedModel } from "./NamedModel";
+import { DC } from "./vocabularies";
 
 export class License extends NamedModel {
   get identifier(): string {
-    return this.requiredString(DCTERMS.identifier);
+    return this.requiredString(DC.identifier);
   }
 
   get title(): string {
-    return this.requiredString(DCTERMS.title);
+    return this.requiredString(DC.title);
   }
 
   toString() {
