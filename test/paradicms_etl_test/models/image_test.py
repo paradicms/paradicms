@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import pytest
 from rdflib import Graph, URIRef
 
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
@@ -11,8 +12,9 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 )
 
 
-def test_to_rdf():
-    expected = Image.from_fields(
+@pytest.fixture
+def test_image() -> Image:
+    return Image.from_fields(
         created=datetime.now(),
         depicts_uri=URIRef("http://example.com/work"),
         exact_dimensions=ImageDimensions(height=300, width=300),
@@ -29,6 +31,22 @@ def test_to_rdf():
         src="http://example.com/imagesrc",
         uri=URIRef("http://example.com/image"),
     )
+
+
+def test_replace_copyable(test_image: Image):
+    assert test_image.copyable
+    actual = test_image.replace(copyable=False)
+    assert not actual.copyable
+
+
+def test_replace_src(test_image: Image):
+    assert test_image.src == "http://example.com/imagesrc"
+    actual = test_image.replace(src="http://example.com/newsrc")
+    assert actual.src == "http://example.com/newsrc"
+
+
+def test_to_rdf(test_image: Image):
+    expected = test_image
 
     actual = Image.from_rdf(resource=expected.to_rdf(Graph()))
 
