@@ -126,7 +126,7 @@ class GuiImagesLoader(_Loader):
             )
 
             archived_thumbnail_images.append(
-                Image(
+                Image.from_fields(
                     depicts_uri=original_image.depicts_uri,
                     exact_dimensions=thumbnail_exact_dimensions,
                     max_dimensions=thumbnail_max_dimensions,

@@ -15,7 +15,7 @@ def test_cache_original_image_file_absent(tmp_path):
     assert not downloaded_image_file_path.is_file()
     try:
         GuiOriginalImageFileCache(cache_dir_path=tmp_dir_path).cache_original_image(
-            Image(
+            Image.from_fields(
                 depicts_uri=URIRef("http://example.com"),
                 institution_uri=URIRef("http://example.com"),
                 uri=URIRef(downloaded_image_file_path.as_uri()),
@@ -50,7 +50,7 @@ def test_cache_original_image_http_present(tmp_path):
     original_image_file_path = GuiOriginalImageFileCache(
         cache_dir_path=Path(tmp_path)
     ).cache_original_image(
-        Image(
+        Image.from_fields(
             depicts_uri=URIRef("http://example.com"),
             institution_uri=URIRef("http://example.com"),
             uri=URIRef("https://place-hold.it/100x100"),
@@ -77,7 +77,7 @@ def test_cache_original_image_with_url_src(tmp_path):
     original_image_file_path = GuiOriginalImageFileCache(
         cache_dir_path=Path(tmp_path)
     ).cache_original_image(
-        Image(
+        Image.from_fields(
             depicts_uri=URIRef("http://example.com"),
             institution_uri=URIRef("http://example.com"),
             src="https://place-hold.it/100x100",
@@ -91,7 +91,7 @@ def test_cache_original_image_with_relative_src(tmp_path):
     original_image_file_path = GuiOriginalImageFileCache(
         cache_dir_path=Path(tmp_path)
     ).cache_original_image(
-        Image(
+        Image.from_fields(
             depicts_uri=URIRef("http://example.com"),
             institution_uri=URIRef("http://example.com"),
             src="/nonextant",
