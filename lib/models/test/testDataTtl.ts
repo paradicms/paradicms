@@ -1,5 +1,7 @@
 // Trying to Dataset.parse in the const declaration causes circular dependency issues
 export const testDataTtl = ` 
+@prefix creativecommons: <http://creativecommons.org/ns#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix exif: <http://www.w3.org/2003/12/exif/ns#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -10,227 +12,434 @@ export const testDataTtl = `
 @prefix vra: <http://purl.org/vra/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://creativecommons.org/licenses/BSD/> a paradicms:License ;
-    dcterms:identifier "BSD" ;
-    dcterms:title "BSD" .
+<http://creativecommons.org/licenses/BSD/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://opensource.org/licenses/bsd-license.php> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/software> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Notice ;
+    dc:identifier "BSD" ;
+    dc:title "BSD License",
+        "BSD"@en .
 
-<http://creativecommons.org/licenses/GPL/2.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/GPL/2.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/GPL/2.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/software> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Notice,
+        creativecommons:ShareAlike,
+        creativecommons:SourceCode ;
+    dc:creator <http://fsf.org> ;
+    dc:identifier "GPL" ;
+    dc:title "GNU General Public License"@en ;
     dcterms:hasVersion "2.0" ;
-    dcterms:identifier "GPL" ;
-    dcterms:title "GNU General Public License" .
+    foaf:logo <http://i.creativecommons.org/l/GPL/2.0/88x62.png> .
 
-<http://creativecommons.org/licenses/LGPL/2.1/> a paradicms:License ;
+<http://creativecommons.org/licenses/LGPL/2.1/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/LGPL/2.1/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/software> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Notice,
+        creativecommons:ShareAlike,
+        creativecommons:SourceCode ;
+    dc:creator <http://fsf.org> ;
+    dc:identifier "LGPL" ;
+    dc:title "GNU Lesser General Public License"@en ;
     dcterms:hasVersion "2.1" ;
-    dcterms:identifier "LGPL" ;
-    dcterms:title "GNU Lesser General Public License" .
+    foaf:logo <http://i.creativecommons.org/l/LGPL/2.1/88x62.png> .
 
-<http://creativecommons.org/licenses/MIT/> a paradicms:License ;
-    dcterms:identifier "MIT" ;
-    dcterms:title "MIT" .
+<http://creativecommons.org/licenses/MIT/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://opensource.org/licenses/mit-license.php> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/software> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Notice ;
+    dc:identifier "MIT" ;
+    dc:title "MIT License",
+        "MIT"@en .
 
-<http://creativecommons.org/licenses/by-nc-nd/2.0/> a paradicms:License ;
-    dcterms:hasVersion "2.0" ;
-    dcterms:identifier "by-nc-nd" ;
-    dcterms:title "Attribution-NonCommercial-NoDerivs 2.0 Generic" .
-
-<http://creativecommons.org/licenses/by-nc-nd/2.5/> a paradicms:License ;
-    dcterms:hasVersion "2.5" ;
-    dcterms:identifier "by-nc-nd" ;
-    dcterms:title "Attribution-NonCommercial-NoDerivs 2.5 Generic" .
-
-<http://creativecommons.org/licenses/by-nc-nd/3.0/> a paradicms:License ;
-    dcterms:hasVersion "3.0" ;
-    dcterms:identifier "by-nc-nd" ;
-    dcterms:title "Attribution-NonCommercial-NoDerivs 3.0 Unported" .
-
-<http://creativecommons.org/licenses/by-nc-nd/4.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/by-nc-nd/4.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nc-nd/4.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nc-nd" ;
+    dc:title "Attribution-NonCommercial-NoDerivatives 4.0 International"@en ;
     dcterms:hasVersion "4.0" ;
-    dcterms:identifier "by-nc-nd" ;
-    dcterms:title "Attribution-NonCommercial-NoDerivatives 4.0 International" .
+    foaf:logo <http://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png> .
 
-<http://creativecommons.org/licenses/by-nc-sa/1.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/by-nc-sa/1.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nc-sa/1.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice,
+        creativecommons:ShareAlike ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nc-sa" ;
+    dc:title "Attribution-NonCommercial-ShareAlike 1.0 Generic"@en ;
     dcterms:hasVersion "1.0" ;
-    dcterms:identifier "by-nc-sa" ;
-    dcterms:title "Attribution-NonCommercial-ShareAlike 1.0 Generic" .
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc-sa/2.0/> ;
+    foaf:logo <http://i.creativecommons.org/l/by-nc-sa/1.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-nc-sa/1.0/88x31.png> .
 
-<http://creativecommons.org/licenses/by-nc-sa/2.0/> a paradicms:License ;
-    dcterms:hasVersion "2.0" ;
-    dcterms:identifier "by-nc-sa" ;
-    dcterms:title "Attribution-NonCommercial-ShareAlike 2.0 Generic" .
-
-<http://creativecommons.org/licenses/by-nc-sa/2.5/> a paradicms:License ;
-    dcterms:hasVersion "2.5" ;
-    dcterms:identifier "by-nc-sa" ;
-    dcterms:title "Attribution-NonCommercial-ShareAlike 2.5 Generic" .
-
-<http://creativecommons.org/licenses/by-nc-sa/3.0/> a paradicms:License ;
-    dcterms:hasVersion "3.0" ;
-    dcterms:identifier "by-nc-sa" ;
-    dcterms:title "Attribution-NonCommercial-ShareAlike 3.0 Unported" .
-
-<http://creativecommons.org/licenses/by-nc-sa/4.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/by-nc-sa/4.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nc-sa/4.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice,
+        creativecommons:ShareAlike ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nc-sa" ;
+    dc:title "Attribution-NonCommercial-ShareAlike 4.0 International"@en ;
     dcterms:hasVersion "4.0" ;
-    dcterms:identifier "by-nc-sa" ;
-    dcterms:title "Attribution-NonCommercial-ShareAlike 4.0 International" .
+    foaf:logo <http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png> .
 
-<http://creativecommons.org/licenses/by-nc/1.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/by-nc/1.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nc/1.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nc" ;
+    dc:title "Attribution-NonCommercial 1.0 Generic"@en ;
     dcterms:hasVersion "1.0" ;
-    dcterms:identifier "by-nc" ;
-    dcterms:title "Attribution-NonCommercial 1.0 Generic" .
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc/2.0/> ;
+    foaf:logo <http://i.creativecommons.org/l/by-nc/1.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-nc/1.0/88x31.png> .
 
-<http://creativecommons.org/licenses/by-nc/2.0/> a paradicms:License ;
-    dcterms:hasVersion "2.0" ;
-    dcterms:identifier "by-nc" ;
-    dcterms:title "Attribution-NonCommercial 2.0 Generic" .
-
-<http://creativecommons.org/licenses/by-nc/2.5/> a paradicms:License ;
-    dcterms:hasVersion "2.5" ;
-    dcterms:identifier "by-nc" ;
-    dcterms:title "Attribution-NonCommercial 2.5 Generic" .
-
-<http://creativecommons.org/licenses/by-nc/3.0/> a paradicms:License ;
-    dcterms:hasVersion "3.0" ;
-    dcterms:identifier "by-nc" ;
-    dcterms:title "Attribution-NonCommercial 3.0 Unported" .
-
-<http://creativecommons.org/licenses/by-nc/4.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/by-nc/4.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nc/4.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nc" ;
+    dc:title "Attribution-NonCommercial 4.0 International"@en ;
     dcterms:hasVersion "4.0" ;
-    dcterms:identifier "by-nc" ;
-    dcterms:title "Attribution-NonCommercial 4.0 International" .
+    foaf:logo <http://i.creativecommons.org/l/by-nc/4.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-nc/4.0/88x31.png> .
 
-<http://creativecommons.org/licenses/by-nd-nc/1.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/by-nd-nc/1.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nd-nc/1.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nd-nc" ;
+    dc:title "Attribution-NoDerivs-NonCommercial 1.0 Generic"@en ;
     dcterms:hasVersion "1.0" ;
-    dcterms:identifier "by-nd-nc" ;
-    dcterms:title "Attribution-NoDerivs-NonCommercial 1.0 Generic" .
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc-nd/2.0/> ;
+    foaf:logo <http://i.creativecommons.org/l/by-nd-nc/1.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-nd-nc/1.0/88x31.png> .
 
-<http://creativecommons.org/licenses/by-nd/1.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/by-nd/1.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nd/1.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nd" ;
+    dc:title "Attribution-NoDerivs 1.0 Generic"@en ;
     dcterms:hasVersion "1.0" ;
-    dcterms:identifier "by-nd" ;
-    dcterms:title "Attribution-NoDerivs 1.0 Generic" .
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nd/2.0/> ;
+    foaf:logo <http://i.creativecommons.org/l/by-nd/1.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-nd/1.0/88x31.png> .
 
-<http://creativecommons.org/licenses/by-nd/2.0/> a paradicms:License ;
-    dcterms:hasVersion "2.0" ;
-    dcterms:identifier "by-nd" ;
-    dcterms:title "Attribution-NoDerivs 2.0 Generic" .
-
-<http://creativecommons.org/licenses/by-nd/2.5/> a paradicms:License ;
-    dcterms:hasVersion "2.5" ;
-    dcterms:identifier "by-nd" ;
-    dcterms:title "Attribution-NoDerivs 2.5 Generic" .
-
-<http://creativecommons.org/licenses/by-nd/3.0/> a paradicms:License ;
-    dcterms:hasVersion "3.0" ;
-    dcterms:identifier "by-nd" ;
-    dcterms:title "Attribution-NoDerivs 3.0 Unported" .
-
-<http://creativecommons.org/licenses/by-nd/4.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/by-nd/4.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nd/4.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nd" ;
+    dc:title "Attribution-NoDerivatives 4.0 International"@en ;
     dcterms:hasVersion "4.0" ;
-    dcterms:identifier "by-nd" ;
-    dcterms:title "Attribution-NoDerivatives 4.0 International" .
+    foaf:logo <http://i.creativecommons.org/l/by-nd/4.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-nd/4.0/88x31.png> .
 
-<http://creativecommons.org/licenses/by-sa/1.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/by-sa/1.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-sa/1.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice,
+        creativecommons:ShareAlike ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-sa" ;
+    dc:title "Attribution-ShareAlike 1.0 Generic"@en ;
     dcterms:hasVersion "1.0" ;
-    dcterms:identifier "by-sa" ;
-    dcterms:title "Attribution-ShareAlike 1.0 Generic" .
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-sa/2.0/> ;
+    foaf:logo <http://i.creativecommons.org/l/by-sa/1.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-sa/1.0/88x31.png> .
 
-<http://creativecommons.org/licenses/by-sa/2.0/> a paradicms:License ;
-    dcterms:hasVersion "2.0" ;
-    dcterms:identifier "by-sa" ;
-    dcterms:title "Attribution-ShareAlike 2.0 Generic" .
-
-<http://creativecommons.org/licenses/by-sa/2.5/> a paradicms:License ;
-    dcterms:hasVersion "2.5" ;
-    dcterms:identifier "by-sa" ;
-    dcterms:title "Attribution-ShareAlike 2.5 Generic" .
-
-<http://creativecommons.org/licenses/by-sa/3.0/> a paradicms:License ;
-    dcterms:hasVersion "3.0" ;
-    dcterms:identifier "by-sa" ;
-    dcterms:title "Attribution-ShareAlike 3.0 Unported" .
-
-<http://creativecommons.org/licenses/by-sa/4.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/by-sa/4.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-sa/4.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice,
+        creativecommons:ShareAlike ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-sa" ;
+    dc:title "Attribution-ShareAlike 4.0 International"@en ;
     dcterms:hasVersion "4.0" ;
-    dcterms:identifier "by-sa" ;
-    dcterms:title "Attribution-ShareAlike 4.0 International" .
+    foaf:logo <http://i.creativecommons.org/l/by-sa/4.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-sa/4.0/88x31.png> .
 
-<http://creativecommons.org/licenses/by/1.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/by/1.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by/1.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by" ;
+    dc:title "Attribution 1.0 Generic"@en ;
     dcterms:hasVersion "1.0" ;
-    dcterms:identifier "by" ;
-    dcterms:title "Attribution 1.0 Generic" .
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by/2.0/> ;
+    foaf:logo <http://i.creativecommons.org/l/by/1.0/80x15.png>,
+        <http://i.creativecommons.org/l/by/1.0/88x31.png> .
 
-<http://creativecommons.org/licenses/by/2.0/> a paradicms:License ;
-    dcterms:hasVersion "2.0" ;
-    dcterms:identifier "by" ;
-    dcterms:title "Attribution 2.0 Generic" .
-
-<http://creativecommons.org/licenses/by/2.5/> a paradicms:License ;
-    dcterms:hasVersion "2.5" ;
-    dcterms:identifier "by" ;
-    dcterms:title "Attribution 2.5 Generic" .
-
-<http://creativecommons.org/licenses/by/3.0/> a paradicms:License ;
-    dcterms:hasVersion "3.0" ;
-    dcterms:identifier "by" ;
-    dcterms:title "Attribution 3.0 Unported" .
-
-<http://creativecommons.org/licenses/by/4.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/by/4.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by/4.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by" ;
+    dc:title "Attribution 4.0 International"@en ;
     dcterms:hasVersion "4.0" ;
-    dcterms:identifier "by" ;
-    dcterms:title "Attribution 4.0 International" .
+    foaf:logo <http://i.creativecommons.org/l/by/4.0/80x15.png>,
+        <http://i.creativecommons.org/l/by/4.0/88x31.png> .
 
-<http://creativecommons.org/licenses/devnations/2.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/devnations/2.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:deprecatedOn "2007-06-04"^^<http://www.w3.org/2001/XMLSchema-datatypes#date> ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/devnations/2.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:HighIncomeNationUse ;
+    creativecommons:requires creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "devnations" ;
+    dc:title "Developing Nations License"@en ;
     dcterms:hasVersion "2.0" ;
-    dcterms:identifier "devnations" ;
-    dcterms:title "Developing Nations License" .
+    foaf:logo <http://i.creativecommons.org/l/devnations/2.0/80x15.png>,
+        <http://i.creativecommons.org/l/devnations/2.0/88x31.png> .
 
-<http://creativecommons.org/licenses/nc-sa/1.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/nc-sa/1.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:deprecatedOn "2004-05-25"^^<http://www.w3.org/2001/XMLSchema-datatypes#date> ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/nc-sa/1.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Notice,
+        creativecommons:ShareAlike ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "nc-sa" ;
+    dc:title "NonCommercial-ShareAlike 1.0 Generic"@en ;
     dcterms:hasVersion "1.0" ;
-    dcterms:identifier "nc-sa" ;
-    dcterms:title "NonCommercial-ShareAlike 1.0 Generic" .
+    foaf:logo <http://i.creativecommons.org/l/nc-sa/1.0/88x31.png> .
 
-<http://creativecommons.org/licenses/nc-sampling+/1.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/nc-sampling+/1.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:deprecatedOn "2011-09-09"^^<http://www.w3.org/2001/XMLSchema-datatypes#date> ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/nc-sampling+/1.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/sampling/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "nc-sampling+" ;
+    dc:title "NonCommercial Sampling Plus 1.0"@en ;
     dcterms:hasVersion "1.0" ;
-    dcterms:identifier "nc-sampling+" ;
-    dcterms:title "NonCommercial Sampling Plus 1.0" .
+    foaf:logo <http://i.creativecommons.org/l/nc-sampling+/1.0/80x15.png>,
+        <http://i.creativecommons.org/l/nc-sampling+/1.0/88x31.png> .
 
-<http://creativecommons.org/licenses/nd-nc/1.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/nd-nc/1.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:deprecatedOn "2004-05-25"^^<http://www.w3.org/2001/XMLSchema-datatypes#date> ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/nd-nc/1.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "nd-nc" ;
+    dc:title "NoDerivs-NonCommercial 1.0 Generic"@en ;
     dcterms:hasVersion "1.0" ;
-    dcterms:identifier "nd-nc" ;
-    dcterms:title "NoDerivs-NonCommercial 1.0 Generic" .
+    foaf:logo <http://i.creativecommons.org/l/nd-nc/1.0/88x31.png> .
 
-<http://creativecommons.org/licenses/nd/1.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/nd/1.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:deprecatedOn "2004-05-25"^^<http://www.w3.org/2001/XMLSchema-datatypes#date> ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/nd/1.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "nd" ;
+    dc:title "NoDerivs 1.0 Generic"@en ;
     dcterms:hasVersion "1.0" ;
-    dcterms:identifier "nd" ;
-    dcterms:title "NoDerivs 1.0 Generic" .
+    foaf:logo <http://i.creativecommons.org/l/nd/1.0/88x31.png> .
 
-<http://creativecommons.org/licenses/publicdomain/> a paradicms:License ;
-    dcterms:identifier "publicdomain" ;
-    dcterms:title "Public Domain" .
+<http://creativecommons.org/licenses/publicdomain/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:deprecatedOn "2010-10-05"^^<http://www.w3.org/2001/XMLSchema-datatypes#date> ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/publicdomain/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/publicdomain/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    dc:identifier "publicdomain" ;
+    dc:title "Public Domain"@en ;
+    foaf:logo <http://i.creativecommons.org/l/publicdomain/80x15.png>,
+        <http://i.creativecommons.org/l/publicdomain/88x31.png> .
 
-<http://creativecommons.org/licenses/sa/1.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/sa/1.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:deprecatedOn "2004-05-25"^^<http://www.w3.org/2001/XMLSchema-datatypes#date> ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/sa/1.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Notice,
+        creativecommons:ShareAlike ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "sa" ;
+    dc:title "ShareAlike 1.0 Generic"@en ;
     dcterms:hasVersion "1.0" ;
-    dcterms:identifier "sa" ;
-    dcterms:title "ShareAlike 1.0 Generic" .
+    foaf:logo <http://i.creativecommons.org/l/sa/1.0/88x31.png> .
 
-<http://creativecommons.org/licenses/sampling+/1.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/sampling+/1.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:deprecatedOn "2011-09-09"^^<http://www.w3.org/2001/XMLSchema-datatypes#date> ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/sampling+/1.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/sampling/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Reproduction,
+        creativecommons:Sharing ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "sampling+" ;
+    dc:title "Sampling Plus 1.0"@en ;
     dcterms:hasVersion "1.0" ;
-    dcterms:identifier "sampling+" ;
-    dcterms:title "Sampling Plus 1.0" .
+    foaf:logo <http://i.creativecommons.org/l/sampling+/1.0/80x15.png>,
+        <http://i.creativecommons.org/l/sampling+/1.0/88x31.png> .
 
-<http://creativecommons.org/licenses/sampling/1.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/sampling/1.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:deprecatedOn "2007-06-04"^^<http://www.w3.org/2001/XMLSchema-datatypes#date> ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/sampling/1.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/sampling/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "sampling" ;
+    dc:title "Sampling 1.0"@en ;
     dcterms:hasVersion "1.0" ;
-    dcterms:identifier "sampling" ;
-    dcterms:title "Sampling 1.0" .
+    foaf:logo <http://i.creativecommons.org/l/sampling/1.0/80x15.png>,
+        <http://i.creativecommons.org/l/sampling/1.0/88x31.png> .
 
-<http://creativecommons.org/publicdomain/mark/1.0/> a paradicms:License ;
+<http://creativecommons.org/publicdomain/mark/1.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/publicdomain/zero/1.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/choose/mark/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    dc:identifier "mark" ;
+    dc:title "Public Domain Mark 1.0"@en ;
     dcterms:hasVersion "1.0" ;
-    dcterms:identifier "mark" ;
-    dcterms:title "Public Domain Mark 1.0" .
+    foaf:logo <http://i.creativecommons.org/p/mark/1.0/80x15.png>,
+        <http://i.creativecommons.org/p/mark/1.0/88x31.png> .
 
-<http://creativecommons.org/publicdomain/zero/1.0/> a paradicms:License ;
+<http://creativecommons.org/publicdomain/zero/1.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/publicdomain/zero/1.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/choose/zero/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    dc:identifier "CC0" ;
+    dc:title "CC0 1.0 Universal"@en ;
     dcterms:hasVersion "1.0" ;
-    dcterms:identifier "CC0" ;
-    dcterms:title "CC0 1.0 Universal" .
+    foaf:logo <http://i.creativecommons.org/p/zero/1.0/80x15.png>,
+        <http://i.creativecommons.org/p/zero/1.0/88x31.png> .
 
 dcterms:abstract a paradicms:PropertyDefinition ;
     rdfs:label "Abstract" .
@@ -308,174 +517,172 @@ vra:worktype a paradicms:PropertyDefinition ;
     rdfs:label "Work type" .
 
 <http://rightsstatements.org/vocab/CNE/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the organization that has published the Item has not evaluated the copyright and related rights status of the Item." ;
+    dcterms:description "This Rights Statement indicates that the organization that has published the Item has not evaluated the copyright and related rights status of the Item."@en ;
     dcterms:identifier "CNE" ;
     skos:definition """The copyright and related rights status of this Item has not been evaluated.
 
   Please refer to the organization that has made the Item available for more information.
 
-  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use.""" ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
-    skos:prefLabel "Copyright Not Evaluated" ;
-    skos:scopeNote "This Rights Statement should be used for Items for which the copyright status is unknown and for which the organization that intends to make the Item available has not undertaken an effort to determine the copyright status of the underlying Work." .
+  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use."""@en ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
+    skos:prefLabel "Copyright Not Evaluated"@en ;
+    skos:scopeNote "This Rights Statement should be used for Items for which the copyright status is unknown and for which the organization that intends to make the Item available has not undertaken an effort to determine the copyright status of the underlying Work."@en .
 
 <http://rightsstatements.org/vocab/InC-NC/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright but that non-commercial use is allowed without the need to obtain additional permission." ;
+    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright but that non-commercial use is allowed without the need to obtain additional permission."@en ;
     dcterms:identifier "InC-NC" ;
     skos:definition """This Item is protected by copyright and/or related rights.
 
   You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use. In addition, no permission is required from the rights-holder(s) for non-commercial uses.
 
-  For other uses you need to obtain permission from the rights-holder(s).""" ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
-    skos:prefLabel "In Copyright - Non-Commercial Use Permitted" ;
-    skos:scopeNote "This Rights Statement can be used only for copyrighted Items for which the organization making the Item available is the rights-holder or has been explicitly authorized by the rights-holder(s) to allow third parties to use their Work(s) for non-commercial purposes without obtaining permission first." .
+  For other uses you need to obtain permission from the rights-holder(s)."""@en ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
+    skos:prefLabel "In Copyright - Non-Commercial Use Permitted"@en ;
+    skos:scopeNote "This Rights Statement can be used only for copyrighted Items for which the organization making the Item available is the rights-holder or has been explicitly authorized by the rights-holder(s) to allow third parties to use their Work(s) for non-commercial purposes without obtaining permission first."@en .
 
 <http://rightsstatements.org/vocab/InC-OW-EU/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement has been identified as an ‘Orphan Work’ under the terms of the EU Orphan Works Directive." ;
+    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement has been identified as an ‘Orphan Work’ under the terms of the EU Orphan Works Directive."@en ;
     dcterms:identifier "InC-OW-EU" ;
     skos:definition """This Item has been identified as an orphan work in the country of first publication and in line with Directive 2012/28/EU of the European Parliament and of the Council of 25 October 2012 on certain permitted uses of orphan works.
 
   For this Item, either (a) no rights-holder(s) have been identified or (b) one or more rights-holder(s) have been identified but none have been located even though a diligent search for the rights-holder(s) has been conducted. The results of the diligent search are available in the EU Orphan Works Database.
 
-  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use.""" ;
-    skos:note "If you have any information that can contribute to identifying or locating the rights-holder(s), please notify the organization that has made the Item available.",
-        "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
-    skos:prefLabel "In Copyright - EU Orphan Work" ;
-    skos:scopeNote "This Rights Statement is intended for use with Items for which the underlying Work has been identified as an Orphan Work in accordance with Directive 2012/28/EU of the European Parliament and of the Council of 25 October 2012 on certain permitted uses of Orphan Works. It can only be applied to Items derived from Works that are covered by the Directive: Works published in the form of books, journals, newspapers, magazines or other writings as well as cinematographic or audiovisual works and phonograms (note: this excludes photography and visual arts). It can only be applied by organizations that are beneficiaries of the Directive: publicly accessible libraries, educational establishments and museums, archives, film or audio heritage institutions and public-service broadcasting organizations, established in one of the EU member states. The beneficiary is also expected to have registered the work in the EU Orphan Works Database maintained by EUIPO." .
+  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use."""@en ;
+    skos:note "If you have any information that can contribute to identifying or locating the rights-holder(s), please notify the organization that has made the Item available."@en,
+        "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
+    skos:prefLabel "In Copyright - EU Orphan Work"@en ;
+    skos:scopeNote "This Rights Statement is intended for use with Items for which the underlying Work has been identified as an Orphan Work in accordance with Directive 2012/28/EU of the European Parliament and of the Council of 25 October 2012 on certain permitted uses of Orphan Works. It can only be applied to Items derived from Works that are covered by the Directive: Works published in the form of books, journals, newspapers, magazines or other writings as well as cinematographic or audiovisual works and phonograms (note: this excludes photography and visual arts). It can only be applied by organizations that are beneficiaries of the Directive: publicly accessible libraries, educational establishments and museums, archives, film or audio heritage institutions and public-service broadcasting organizations, established in one of the EU member states. The beneficiary is also expected to have registered the work in the EU Orphan Works Database maintained by EUIPO."@en .
 
 <http://rightsstatements.org/vocab/InC-RUU/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement has been identified as in copyright, but its rights-holder(s) either cannot be identified or cannot be located." ;
+    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement has been identified as in copyright, but its rights-holder(s) either cannot be identified or cannot be located."@en ;
     dcterms:identifier "InC-RUU" ;
     skos:definition """This Item is protected by copyright and/or related rights. However, for this Item, either (a) no rights-holder(s) have been identified or (b) one or more rights-holder(s) have been identified but none have been located.
 
-  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use.""" ;
-    skos:note "If you have any information that can contribute to identifying or locating the rights-holder(s) please notify the organization that has made the Item available.",
-        "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
-    skos:prefLabel "In Copyright - Rights-holder(s) Unlocatable or Unidentifiable" ;
-    skos:scopeNote "This Rights Statement is intended for use with an Item that has been identified as in copyright but for which no rights-holder(s) has been identified or located after some reasonable investigation. This Rights Statement should only be used if the organization that intends to make the Item available is reasonably sure that the underlying Work is in copyright. This Rights Statement is not intended for use by EU-based organizations who have identified works as Orphan Works in accordance with the EU Orphan Works Directive (they must use InC-OW-EU instead)." .
+  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use."""@en ;
+    skos:note "If you have any information that can contribute to identifying or locating the rights-holder(s) please notify the organization that has made the Item available."@en,
+        "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
+    skos:prefLabel "In Copyright - Rights-holder(s) Unlocatable or Unidentifiable"@en ;
+    skos:scopeNote "This Rights Statement is intended for use with an Item that has been identified as in copyright but for which no rights-holder(s) has been identified or located after some reasonable investigation. This Rights Statement should only be used if the organization that intends to make the Item available is reasonably sure that the underlying Work is in copyright. This Rights Statement is not intended for use by EU-based organizations who have identified works as Orphan Works in accordance with the EU Orphan Works Directive (they must use InC-OW-EU instead)."@en .
 
 <http://rightsstatements.org/vocab/InC/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright." ;
+    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright."@en ;
     dcterms:identifier "InC" ;
     skos:definition """This Item is protected by copyright and/or related rights.
 
   You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use.
 
-  For other uses you need to obtain permission from the rights-holder(s).""" ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
-    skos:prefLabel "In Copyright" ;
-    skos:scopeNote "This Rights Statement can be used for an Item that is in copyright. Using this statement implies that the organization making this Item available has determined that the Item is in copyright and either is the rights-holder, has obtained permission from the rights-holder(s) to make their Work(s) available, or makes the Item available under an exception or limitation to copyright (including Fair Use) that entitles it to make the Item available." .
+  For other uses you need to obtain permission from the rights-holder(s)."""@en ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
+    skos:prefLabel "In Copyright"@en ;
+    skos:scopeNote "This Rights Statement can be used for an Item that is in copyright. Using this statement implies that the organization making this Item available has determined that the Item is in copyright and either is the rights-holder, has obtained permission from the rights-holder(s) to make their Work(s) available, or makes the Item available under an exception or limitation to copyright (including Fair Use) that entitles it to make the Item available."@en .
 
 <http://rightsstatements.org/vocab/NKC/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the organization that has published the Item believes that no copyright or related rights are known to exist for the Item, but that a conclusive determination could not be made." ;
+    dcterms:description "This Rights Statement indicates that the organization that has published the Item believes that no copyright or related rights are known to exist for the Item, but that a conclusive determination could not be made."@en ;
     dcterms:identifier "NKC" ;
     skos:definition """The organization that has made the Item available reasonably believes that the Item is not restricted by copyright or related rights, but a conclusive determination could not be made.
 
   Please refer to the organization that has made the Item available for more information.
 
-  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use.""" ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
-    skos:prefLabel "No Known Copyright" ;
-    skos:scopeNote "This Rights Statement should be used for Items for which the copyright status has not been determined conclusively, but for which the organization that intends to make the Item available has reasonable cause to believe that the underlying Work is not covered by copyright or related rights anymore. This Rights Statement should not be used for Orphan Works (which are assumed to be in-copyright) or for Items where the organization that intends to make the Item available has not undertaken an effort to ascertain the copyright status of the underlying Work." .
+  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use."""@en ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
+    skos:prefLabel "No Known Copyright"@en ;
+    skos:scopeNote "This Rights Statement should be used for Items for which the copyright status has not been determined conclusively, but for which the organization that intends to make the Item available has reasonable cause to believe that the underlying Work is not covered by copyright or related rights anymore. This Rights Statement should not be used for Orphan Works (which are assumed to be in-copyright) or for Items where the organization that intends to make the Item available has not undertaken an effort to ascertain the copyright status of the underlying Work."@en .
 
 <http://rightsstatements.org/vocab/NoC-CR/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the underlying Work is in the Public Domain, but the organization that has published the Item is contractually required to restrict certain forms of use by third parties." ;
+    dcterms:description "This Rights Statement indicates that the underlying Work is in the Public Domain, but the organization that has published the Item is contractually required to restrict certain forms of use by third parties."@en ;
     dcterms:identifier "NoC-CR" ;
     skos:definition """Use of this Item is not restricted by copyright and/or related rights.
 
   As part of the acquisition or digitization of this Work, the organization that has made the Item available is contractually required to limit the use of this Item. Limitations may include, but are not limited to, privacy issues, cultural protections, digitization agreements or donor agreements.
 
-  Please refer to the organization that has made the Item available for more information.""" ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
-    skos:prefLabel "No Copyright - Contractual Restrictions" ;
-    skos:scopeNote "This Rights Statement can only be used for Items that are in the Public Domain but for which the organization that intends to make the Item available has entered into contractual agreement that requires it to take steps to restrict third party uses of the Item. In order for this Rights Statement to be conclusive, the organization that intends to make the Item available should provide a link to a page detailing the contractual restrictions that apply to the use of the Item." .
+  Please refer to the organization that has made the Item available for more information."""@en ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
+    skos:prefLabel "No Copyright - Contractual Restrictions"@en ;
+    skos:scopeNote "This Rights Statement can only be used for Items that are in the Public Domain but for which the organization that intends to make the Item available has entered into contractual agreement that requires it to take steps to restrict third party uses of the Item. In order for this Rights Statement to be conclusive, the organization that intends to make the Item available should provide a link to a page detailing the contractual restrictions that apply to the use of the Item."@en .
 
 <http://rightsstatements.org/vocab/NoC-NC/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the underlying Work is in the Public Domain, but the organization that has published the Item is contractually required to allow only non-commercial use by third parties." ;
+    dcterms:description "This Rights Statement indicates that the underlying Work is in the Public Domain, but the organization that has published the Item is contractually required to allow only non-commercial use by third parties."@en ;
     dcterms:identifier "NoC-NC" ;
     skos:definition """This Work has been digitized in a public-private partnership. As part of this partnership, the partners have agreed to limit commercial uses of this digital representation of the Work by third parties.
 
-  You can, without permission, copy, modify, distribute, display, or perform the Item, for non-commercial uses. For any other permissible uses, please review the terms and conditions of the organization that has made the Item available.""" ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy, or moral rights may limit how you may use the material." ;
-    skos:prefLabel "No Copyright - Non-Commercial Use Only" ;
-    skos:scopeNote "This Rights Statement can only be used for Works that are in the Public Domain and have been digitized in a public-private partnership as part of which, the partners have agreed to limit commercial uses of this digital representation of the Work by third parties. It has been developed specifically to allow the inclusion of Works that have been digitized as part of the partnerships between European Libraries and Google, but can in theory be applied to Items that have been digitized in similar public-private partnerships." .
+  You can, without permission, copy, modify, distribute, display, or perform the Item, for non-commercial uses. For any other permissible uses, please review the terms and conditions of the organization that has made the Item available."""@en ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy, or moral rights may limit how you may use the material."@en ;
+    skos:prefLabel "No Copyright - Non-Commercial Use Only"@en ;
+    skos:scopeNote "This Rights Statement can only be used for Works that are in the Public Domain and have been digitized in a public-private partnership as part of which, the partners have agreed to limit commercial uses of this digital representation of the Work by third parties. It has been developed specifically to allow the inclusion of Works that have been digitized as part of the partnerships between European Libraries and Google, but can in theory be applied to Items that have been digitized in similar public-private partnerships."@en .
 
 <http://rightsstatements.org/vocab/NoC-OKLR/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the underlying Work is in the Public Domain, but that there are known restrictions imposed by laws other than copyright and/or related rights on the use of the Item by third parties." ;
+    dcterms:description "This Rights Statement indicates that the underlying Work is in the Public Domain, but that there are known restrictions imposed by laws other than copyright and/or related rights on the use of the Item by third parties."@en ;
     dcterms:identifier "NoC-OKLR" ;
     skos:definition """Use of this Item is not restricted by copyright and/or related rights.
 
   In one or more jurisdictions, laws other than copyright are known to impose restrictions on the use of this Item.
 
-  Please refer to the organization that has made the Item available for more information.""" ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
-    skos:prefLabel "No Copyright - Other Known Legal Restrictions" ;
-    skos:scopeNote "This Rights Statement should be used for Items that are in the Public Domain but that cannot be freely re-used as the consequence of known legal restrictions that prevent the organization that intends to make the Item available from allowing free re-use of the Item, such as cultural heritage or traditional cultural expression protections. In order for this Rights Statement to be conclusive, the organization that intends to make the Item available should provide a link to a page detailing the legal restrictions that limit re-use of the Item." .
+  Please refer to the organization that has made the Item available for more information."""@en ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
+    skos:prefLabel "No Copyright - Other Known Legal Restrictions"@en ;
+    skos:scopeNote "This Rights Statement should be used for Items that are in the Public Domain but that cannot be freely re-used as the consequence of known legal restrictions that prevent the organization that intends to make the Item available from allowing free re-use of the Item, such as cultural heritage or traditional cultural expression protections. In order for this Rights Statement to be conclusive, the organization that intends to make the Item available should provide a link to a page detailing the legal restrictions that limit re-use of the Item."@en .
 
 <http://rightsstatements.org/vocab/NoC-US/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the Item is in the Public Domain under the laws of the United States, but that a determination was not made as to its copyright status under the copyright laws of other countries." ;
+    dcterms:description "This Rights Statement indicates that the Item is in the Public Domain under the laws of the United States, but that a determination was not made as to its copyright status under the copyright laws of other countries."@en ;
     dcterms:identifier "NoC-US" ;
     skos:definition """The organization that has made the Item available believes that the Item is in the Public Domain under the laws of the United States, but a determination was not made as to its copyright status under the copyright laws of other countries. The Item may not be in the Public Domain under the laws of other countries.
 
-  Please refer to the organization that has made the Item available for more information.""" ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
-    skos:prefLabel "No Copyright - United States" ;
-    skos:scopeNote "This Rights Statement should be used for Items for which the organization that intends to make the Item available has determined are free of copyright under the laws of the United States. This Rights Statement should not be used for Orphan Works (which are assumed to be in-copyright) or for Items where the organization that intends to make the Item available has not undertaken an effort to ascertain the copyright status of the underlying Work." .
+  Please refer to the organization that has made the Item available for more information."""@en ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
+    skos:prefLabel "No Copyright - United States"@en ;
+    skos:scopeNote "This Rights Statement should be used for Items for which the organization that intends to make the Item available has determined are free of copyright under the laws of the United States. This Rights Statement should not be used for Orphan Works (which are assumed to be in-copyright) or for Items where the organization that intends to make the Item available has not undertaken an effort to ascertain the copyright status of the underlying Work."@en .
 
 <http://rightsstatements.org/vocab/UND/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the organization that has made the Item available has reviewed the copyright and related rights status of the Item, but was unable to determine the copyright status of the Item." ;
+    dcterms:description "This Rights Statement indicates that the organization that has made the Item available has reviewed the copyright and related rights status of the Item, but was unable to determine the copyright status of the Item."@en ;
     dcterms:identifier "UND" ;
     skos:definition """The copyright and related rights status of this Item has been reviewed by the organization that has made the Item available, but the organization was unable to make a conclusive determination as to the copyright status of the Item.
 
   Please refer to the organization that has made the Item available for more information.
 
-  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use.""" ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
-    skos:prefLabel "Copyright Undetermined" ;
-    skos:scopeNote "This Rights Statement should be used for Items for which the copyright status is unknown and for which the organization that has made the Item available has undertaken an (unsuccessful) effort to determine the copyright status of the underlying Work. Typically, this Rights Statement is used when the organization is missing key facts essential to making an accurate copyright status determination." .
+  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use."""@en ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
+    skos:prefLabel "Copyright Undetermined"@en ;
+    skos:scopeNote "This Rights Statement should be used for Items for which the copyright status is unknown and for which the organization that has made the Item available has undertaken an (unsuccessful) effort to determine the copyright status of the underlying Work. Typically, this Rights Statement is used when the organization is missing key facts essential to making an accurate copyright status determination."@en .
 
 <http://rightsstatements.org/vocab/collection-ic/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "None" ;
     dcterms:identifier "collection-ic" ;
-    skos:prefLabel "Statements for works that are in copyright" .
+    skos:prefLabel "Statements for works that are in copyright"@en .
 
 <http://rightsstatements.org/vocab/collection-nc/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "None" ;
     dcterms:identifier "collection-nc" ;
-    skos:prefLabel "Statements for works that are not in copyright" .
+    skos:prefLabel "Statements for works that are not in copyright"@en .
 
 <http://rightsstatements.org/vocab/collection-other/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "None" ;
     dcterms:identifier "collection-other" ;
-    skos:prefLabel "Statements for works where the copyright status is unclear" .
+    skos:prefLabel "Statements for works where the copyright status is unclear"@en .
 
 <https://place-hold.it/1000x1000?text=Creator%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:0> ;
@@ -486,6 +693,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:0> ;
@@ -496,6 +704,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:1> ;
@@ -506,6 +715,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:1> ;
@@ -516,6 +726,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:2> ;
@@ -526,6 +737,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:2> ;
@@ -536,6 +748,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:3> ;
@@ -546,6 +759,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:3> ;
@@ -556,6 +770,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:4> ;
@@ -566,6 +781,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:4> ;
@@ -576,6 +792,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:5> ;
@@ -586,6 +803,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:5> ;
@@ -596,6 +814,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:6> ;
@@ -606,6 +825,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:6> ;
@@ -616,6 +836,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:7> ;
@@ -626,6 +847,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:7> ;
@@ -636,6 +858,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:8> ;
@@ -646,6 +869,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:8> ;
@@ -656,6 +880,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:9> ;
@@ -666,6 +891,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:9> ;
@@ -676,6 +902,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:10> ;
@@ -686,6 +913,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:10> ;
@@ -696,6 +924,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:11> ;
@@ -706,6 +935,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:11> ;
@@ -716,6 +946,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:12> ;
@@ -726,6 +957,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:12> ;
@@ -736,6 +968,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:13> ;
@@ -746,6 +979,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:13> ;
@@ -756,6 +990,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:14> ;
@@ -766,6 +1001,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:14> ;
@@ -776,6 +1012,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:15> ;
@@ -786,6 +1023,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:15> ;
@@ -796,6 +1034,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:16> ;
@@ -806,6 +1045,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:16> ;
@@ -816,6 +1056,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:17> ;
@@ -826,6 +1067,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:17> ;
@@ -836,6 +1078,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:18> ;
@@ -846,6 +1089,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:18> ;
@@ -856,6 +1100,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:19> ;
@@ -866,6 +1111,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:19> ;
@@ -876,6 +1122,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> ;
@@ -886,6 +1133,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> ;
@@ -896,6 +1144,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> ;
@@ -906,6 +1155,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> ;
@@ -916,6 +1166,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> ;
@@ -926,6 +1177,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> ;
@@ -936,6 +1188,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> ;
@@ -946,6 +1199,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> ;
@@ -956,6 +1210,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> ;
@@ -966,6 +1221,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> ;
@@ -976,6 +1232,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> ;
@@ -986,6 +1243,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> ;
@@ -996,6 +1254,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> ;
@@ -1006,6 +1265,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> ;
@@ -1016,6 +1276,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> ;
@@ -1026,6 +1287,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> ;
@@ -1036,6 +1298,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> ;
@@ -1046,6 +1309,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> ;
@@ -1056,6 +1320,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> ;
@@ -1066,6 +1331,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> ;
@@ -1077,6 +1343,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/collection0/work0> ;
@@ -1088,6 +1355,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/collection0/work0> ;
@@ -1099,6 +1367,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/collection0/work1> ;
@@ -1110,6 +1379,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/collection0/work1> ;
@@ -1121,6 +1391,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/collection0/work2> ;
@@ -1132,6 +1403,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/collection0/work2> ;
@@ -1139,10 +1411,11 @@ vra:worktype a paradicms:PropertyDefinition ;
         <https://place-hold.it/75x75?text=Institution0Collection0Work2Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0Collection0Work3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+    dcterms:creator "Creator 4" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/collection0/work3> ;
@@ -1150,10 +1423,11 @@ vra:worktype a paradicms:PropertyDefinition ;
         <https://place-hold.it/75x75?text=Institution0Collection0Work3Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0Collection0Work3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+    dcterms:creator "Creator 4" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/collection0/work3> ;
@@ -1164,6 +1438,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0> ;
@@ -1174,6 +1449,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0> ;
@@ -1181,10 +1457,11 @@ vra:worktype a paradicms:PropertyDefinition ;
         <https://place-hold.it/75x75?text=Institution0Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedWork0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 0" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/shared/work0> ;
@@ -1192,10 +1469,11 @@ vra:worktype a paradicms:PropertyDefinition ;
         <https://place-hold.it/75x75?text=Institution0SharedWork0Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedWork0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 0" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/shared/work0> ;
@@ -1207,6 +1485,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/shared/work1> ;
@@ -1218,6 +1497,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/shared/work1> ;
@@ -1229,6 +1509,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/shared/work2> ;
@@ -1240,6 +1521,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/shared/work2> ;
@@ -1247,10 +1529,11 @@ vra:worktype a paradicms:PropertyDefinition ;
         <https://place-hold.it/75x75?text=Institution0SharedWork2Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedWork3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/shared/work3> ;
@@ -1258,10 +1541,11 @@ vra:worktype a paradicms:PropertyDefinition ;
         <https://place-hold.it/75x75?text=Institution0SharedWork3Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution0SharedWork3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/shared/work3> ;
@@ -1273,6 +1557,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/collection0/work0> ;
@@ -1284,6 +1569,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/collection0/work0> ;
@@ -1295,6 +1581,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/collection0/work1> ;
@@ -1306,6 +1593,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/collection0/work1> ;
@@ -1317,6 +1605,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/collection0/work2> ;
@@ -1328,6 +1617,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/collection0/work2> ;
@@ -1339,6 +1629,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/collection0/work3> ;
@@ -1350,6 +1641,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/collection0/work3> ;
@@ -1360,6 +1652,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1> ;
@@ -1370,6 +1663,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1> ;
@@ -1381,6 +1675,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/shared/work0> ;
@@ -1392,6 +1687,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/shared/work0> ;
@@ -1399,10 +1695,11 @@ vra:worktype a paradicms:PropertyDefinition ;
         <https://place-hold.it/75x75?text=Institution1SharedWork0Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution1SharedWork1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 2" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/shared/work1> ;
@@ -1410,10 +1707,11 @@ vra:worktype a paradicms:PropertyDefinition ;
         <https://place-hold.it/75x75?text=Institution1SharedWork1Image0> .
 
 <https://place-hold.it/1000x1000?text=Institution1SharedWork1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 2" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/shared/work1> ;
@@ -1425,6 +1723,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/shared/work2> ;
@@ -1436,6 +1735,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/shared/work2> ;
@@ -1447,6 +1747,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/shared/work3> ;
@@ -1458,6 +1759,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/shared/work3> ;
@@ -1468,6 +1770,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:30> ;
@@ -1478,6 +1781,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:30> ;
@@ -1488,6 +1792,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:31> ;
@@ -1498,6 +1803,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:31> ;
@@ -1508,6 +1814,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:32> ;
@@ -1518,6 +1825,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:32> ;
@@ -1528,6 +1836,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:33> ;
@@ -1538,6 +1847,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:33> ;
@@ -1548,6 +1858,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:34> ;
@@ -1558,6 +1869,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:34> ;
@@ -1568,6 +1880,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:35> ;
@@ -1578,6 +1891,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:35> ;
@@ -1588,6 +1902,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:36> ;
@@ -1598,6 +1913,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:36> ;
@@ -1608,6 +1924,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:37> ;
@@ -1618,6 +1935,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:37> ;
@@ -1628,6 +1946,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:38> ;
@@ -1638,6 +1957,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:38> ;
@@ -1648,6 +1968,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:39> ;
@@ -1658,6 +1979,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:39> ;
@@ -1668,6 +1990,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:40> ;
@@ -1678,6 +2001,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:40> ;
@@ -1688,6 +2012,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:41> ;
@@ -1698,6 +2023,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:41> ;
@@ -1708,6 +2034,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:42> ;
@@ -1718,6 +2045,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:42> ;
@@ -1728,6 +2056,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:43> ;
@@ -1738,6 +2067,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:43> ;
@@ -1748,6 +2078,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:44> ;
@@ -1758,6 +2089,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:44> ;
@@ -1768,6 +2100,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:45> ;
@@ -1778,6 +2111,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:45> ;
@@ -1788,6 +2122,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:46> ;
@@ -1798,6 +2133,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:46> ;
@@ -1808,6 +2144,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:47> ;
@@ -1818,6 +2155,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:47> ;
@@ -1828,6 +2166,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:48> ;
@@ -1838,6 +2177,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:48> ;
@@ -1848,6 +2188,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:49> ;
@@ -1858,6 +2199,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:49> ;
@@ -1868,6 +2210,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:50> ;
@@ -1878,6 +2221,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:50> ;
@@ -1888,6 +2232,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:51> ;
@@ -1898,6 +2243,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:51> ;
@@ -1908,6 +2254,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:52> ;
@@ -1918,6 +2265,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:52> ;
@@ -1928,6 +2276,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:53> ;
@@ -1938,6 +2287,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:53> ;
@@ -1948,6 +2298,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:54> ;
@@ -1958,6 +2309,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:54> ;
@@ -1968,6 +2320,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:55> ;
@@ -1978,6 +2331,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:55> ;
@@ -1988,6 +2342,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:56> ;
@@ -1998,6 +2353,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:56> ;
@@ -2008,6 +2364,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:57> ;
@@ -2018,6 +2375,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:57> ;
@@ -2028,6 +2386,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:58> ;
@@ -2038,6 +2397,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:58> ;
@@ -2048,6 +2408,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:59> ;
@@ -2058,6 +2419,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:59> ;
@@ -2068,6 +2430,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:60> ;
@@ -2078,6 +2441,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:60> ;
@@ -2088,6 +2452,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:61> ;
@@ -2098,6 +2463,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:61> ;
@@ -2108,6 +2474,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:62> ;
@@ -2118,6 +2485,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:62> ;
@@ -2128,6 +2496,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:63> ;
@@ -2138,6 +2507,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:63> ;
@@ -2148,6 +2518,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:64> ;
@@ -2158,6 +2529,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:64> ;
@@ -2168,6 +2540,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:65> ;
@@ -2178,6 +2551,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:65> ;
@@ -2188,6 +2562,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:66> ;
@@ -2198,6 +2573,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:66> ;
@@ -2208,6 +2584,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:67> ;
@@ -2218,6 +2595,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:67> ;
@@ -2228,6 +2606,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:68> ;
@@ -2238,6 +2617,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:68> ;
@@ -2248,6 +2628,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:69> ;
@@ -2258,6 +2639,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:69> ;
@@ -2268,6 +2650,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:70> ;
@@ -2278,6 +2661,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:70> ;
@@ -2288,6 +2672,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:71> ;
@@ -2298,6 +2683,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:71> ;
@@ -2308,6 +2694,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:72> ;
@@ -2318,6 +2705,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:72> ;
@@ -2328,6 +2716,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:73> ;
@@ -2338,6 +2727,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:73> ;
@@ -2348,6 +2738,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:74> ;
@@ -2358,6 +2749,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:74> ;
@@ -2368,6 +2760,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:75> ;
@@ -2378,6 +2771,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:75> ;
@@ -2388,6 +2782,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:76> ;
@@ -2398,6 +2793,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:76> ;
@@ -2408,6 +2804,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:77> ;
@@ -2418,6 +2815,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:77> ;
@@ -2428,6 +2826,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:78> ;
@@ -2438,6 +2837,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:78> ;
@@ -2448,6 +2848,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:79> ;
@@ -2458,6 +2859,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:79> ;
@@ -2468,6 +2870,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:80> ;
@@ -2478,6 +2881,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:80> ;
@@ -2488,6 +2892,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:81> ;
@@ -2498,6 +2903,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:81> ;
@@ -2508,6 +2914,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:82> ;
@@ -2518,6 +2925,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:82> ;
@@ -2528,6 +2936,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:83> ;
@@ -2538,6 +2947,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:83> ;
@@ -2548,6 +2958,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:84> ;
@@ -2558,6 +2969,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:84> ;
@@ -2568,6 +2980,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:85> ;
@@ -2578,6 +2991,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:85> ;
@@ -2588,6 +3002,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:86> ;
@@ -2598,6 +3013,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:86> ;
@@ -2608,6 +3024,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:87> ;
@@ -2618,6 +3035,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:87> ;
@@ -2628,6 +3046,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:88> ;
@@ -2638,6 +3057,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:88> ;
@@ -2648,6 +3068,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:89> ;
@@ -2658,6 +3079,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:89> ;
@@ -2668,6 +3090,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:90> ;
@@ -2678,6 +3101,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:90> ;
@@ -2688,6 +3112,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:91> ;
@@ -2698,6 +3123,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:91> ;
@@ -2708,6 +3134,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:92> ;
@@ -2718,6 +3145,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:92> ;
@@ -2728,6 +3156,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:93> ;
@@ -2738,6 +3167,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:93> ;
@@ -2748,6 +3178,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:94> ;
@@ -2758,6 +3189,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:94> ;
@@ -2768,6 +3200,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:95> ;
@@ -2778,6 +3211,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:95> ;
@@ -2788,6 +3222,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:96> ;
@@ -2798,6 +3233,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:96> ;
@@ -2808,6 +3244,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:97> ;
@@ -2818,6 +3255,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:97> ;
@@ -2828,6 +3266,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:98> ;
@@ -2838,6 +3277,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:98> ;
@@ -2848,6 +3288,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:99> ;
@@ -2858,6 +3299,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:99> ;
@@ -2868,6 +3310,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:100> ;
@@ -2878,6 +3321,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:100> ;
@@ -2888,6 +3332,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:101> ;
@@ -2898,6 +3343,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:101> ;
@@ -2908,6 +3354,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:102> ;
@@ -2918,6 +3365,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:102> ;
@@ -2928,6 +3376,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:103> ;
@@ -2938,6 +3387,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:103> ;
@@ -2948,6 +3398,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:104> ;
@@ -2958,6 +3409,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:104> ;
@@ -2968,6 +3420,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:105> ;
@@ -2978,6 +3431,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:105> ;
@@ -2988,6 +3442,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:106> ;
@@ -2998,6 +3453,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:106> ;
@@ -3008,6 +3464,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:107> ;
@@ -3018,6 +3475,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:107> ;
@@ -3028,6 +3486,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:108> ;
@@ -3038,6 +3497,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:108> ;
@@ -3048,6 +3508,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:109> ;
@@ -3058,6 +3519,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:109> ;
@@ -3068,6 +3530,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:110> ;
@@ -3078,6 +3541,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:110> ;
@@ -3088,6 +3552,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:111> ;
@@ -3098,6 +3563,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:111> ;
@@ -3108,6 +3574,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:112> ;
@@ -3118,6 +3585,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:112> ;
@@ -3128,6 +3596,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:113> ;
@@ -3138,6 +3607,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:113> ;
@@ -3148,6 +3618,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:114> ;
@@ -3158,6 +3629,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:114> ;
@@ -3168,6 +3640,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:115> ;
@@ -3178,6 +3651,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:115> ;
@@ -3188,6 +3662,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:116> ;
@@ -3198,6 +3673,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:116> ;
@@ -3208,6 +3684,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:117> ;
@@ -3218,6 +3695,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:117> ;
@@ -3228,6 +3706,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:118> ;
@@ -3238,6 +3717,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:118> ;
@@ -3248,6 +3728,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:119> ;
@@ -3258,6 +3739,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:119> ;
@@ -3268,6 +3750,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:120> ;
@@ -3278,6 +3761,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:120> ;
@@ -3288,6 +3772,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:121> ;
@@ -3298,6 +3783,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:121> ;
@@ -3308,6 +3794,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:122> ;
@@ -3318,6 +3805,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:122> ;
@@ -3328,6 +3816,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:123> ;
@@ -3338,6 +3827,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:123> ;
@@ -3348,6 +3838,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:124> ;
@@ -3358,6 +3849,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:124> ;
@@ -3368,6 +3860,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:125> ;
@@ -3378,6 +3871,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:125> ;
@@ -3388,6 +3882,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:126> ;
@@ -3398,6 +3893,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:126> ;
@@ -3408,6 +3904,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:127> ;
@@ -3418,6 +3915,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:127> ;
@@ -3428,6 +3926,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:128> ;
@@ -3438,6 +3937,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:128> ;
@@ -3448,6 +3948,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:129> ;
@@ -3458,16 +3959,327 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:129> ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Type%209Image1>,
         <https://place-hold.it/75x75?text=Type%209Image1> .
 
+<http://creativecommons.org/licenses/by-nc-nd/2.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nc-nd/2.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nc-nd" ;
+    dc:title "Attribution-NonCommercial-NoDerivs 2.0 Generic"@en ;
+    dcterms:hasVersion "2.0" ;
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc-nd/2.5/> ;
+    foaf:logo <http://i.creativecommons.org/l/by-nc-nd/2.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-nc-nd/2.0/88x31.png> .
+
+<http://creativecommons.org/licenses/by-nc-nd/2.5/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nc-nd/2.5/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nc-nd" ;
+    dc:title "Attribution-NonCommercial-NoDerivs 2.5 Generic"@en ;
+    dcterms:hasVersion "2.5" ;
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc-nd/3.0/> ;
+    foaf:logo <http://i.creativecommons.org/l/by-nc-nd/2.5/80x15.png>,
+        <http://i.creativecommons.org/l/by-nc-nd/2.5/88x31.png> .
+
+<http://creativecommons.org/licenses/by-nc-nd/3.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nc-nd" ;
+    dc:title "Attribution-NonCommercial-NoDerivs 3.0 Unported"@en ;
+    dcterms:hasVersion "3.0" ;
+    foaf:logo <http://i.creativecommons.org/l/by-nc-nd/3.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png> .
+
+<http://creativecommons.org/licenses/by-nc-sa/2.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nc-sa/2.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice,
+        creativecommons:ShareAlike ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nc-sa" ;
+    dc:title "Attribution-NonCommercial-ShareAlike 2.0 Generic"@en ;
+    dcterms:hasVersion "2.0" ;
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc-sa/2.5/> ;
+    foaf:logo <http://i.creativecommons.org/l/by-nc-sa/2.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-nc-sa/2.0/88x31.png> .
+
+<http://creativecommons.org/licenses/by-nc-sa/2.5/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nc-sa/2.5/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice,
+        creativecommons:ShareAlike ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nc-sa" ;
+    dc:title "Attribution-NonCommercial-ShareAlike 2.5 Generic"@en ;
+    dcterms:hasVersion "2.5" ;
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc-sa/3.0/> ;
+    foaf:logo <http://i.creativecommons.org/l/by-nc-sa/2.5/80x15.png>,
+        <http://i.creativecommons.org/l/by-nc-sa/2.5/88x31.png> .
+
+<http://creativecommons.org/licenses/by-nc-sa/3.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nc-sa/3.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice,
+        creativecommons:ShareAlike ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nc-sa" ;
+    dc:title "Attribution-NonCommercial-ShareAlike 3.0 Unported"@en ;
+    dcterms:hasVersion "3.0" ;
+    foaf:logo <http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png> .
+
+<http://creativecommons.org/licenses/by-nc/2.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nc/2.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nc" ;
+    dc:title "Attribution-NonCommercial 2.0 Generic"@en ;
+    dcterms:hasVersion "2.0" ;
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc/2.5/> ;
+    foaf:logo <http://i.creativecommons.org/l/by-nc/2.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-nc/2.0/88x31.png> .
+
+<http://creativecommons.org/licenses/by-nc/2.5/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nc/2.5/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nc" ;
+    dc:title "Attribution-NonCommercial 2.5 Generic"@en ;
+    dcterms:hasVersion "2.5" ;
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc/3.0/> ;
+    foaf:logo <http://i.creativecommons.org/l/by-nc/2.5/80x15.png>,
+        <http://i.creativecommons.org/l/by-nc/2.5/88x31.png> .
+
+<http://creativecommons.org/licenses/by-nc/3.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nc/3.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nc" ;
+    dc:title "Attribution-NonCommercial 3.0 Unported"@en ;
+    dcterms:hasVersion "3.0" ;
+    foaf:logo <http://i.creativecommons.org/l/by-nc/3.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-nc/3.0/88x31.png> .
+
+<http://creativecommons.org/licenses/by-nd/2.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nd/2.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nd" ;
+    dc:title "Attribution-NoDerivs 2.0 Generic"@en ;
+    dcterms:hasVersion "2.0" ;
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nd/2.5/> ;
+    foaf:logo <http://i.creativecommons.org/l/by-nd/2.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-nd/2.0/88x31.png> .
+
+<http://creativecommons.org/licenses/by-nd/2.5/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nd/2.5/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nd" ;
+    dc:title "Attribution-NoDerivs 2.5 Generic"@en ;
+    dcterms:hasVersion "2.5" ;
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nd/3.0/> ;
+    foaf:logo <http://i.creativecommons.org/l/by-nd/2.5/80x15.png>,
+        <http://i.creativecommons.org/l/by-nd/2.5/88x31.png> .
+
+<http://creativecommons.org/licenses/by-nd/3.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-nd/3.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-nd" ;
+    dc:title "Attribution-NoDerivs 3.0 Unported"@en ;
+    dcterms:hasVersion "3.0" ;
+    foaf:logo <http://i.creativecommons.org/l/by-nd/3.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-nd/3.0/88x31.png> .
+
+<http://creativecommons.org/licenses/by-sa/2.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-sa/2.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice,
+        creativecommons:ShareAlike ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-sa" ;
+    dc:title "Attribution-ShareAlike 2.0 Generic"@en ;
+    dcterms:hasVersion "2.0" ;
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-sa/2.5/> ;
+    foaf:logo <http://i.creativecommons.org/l/by-sa/2.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-sa/2.0/88x31.png> .
+
+<http://creativecommons.org/licenses/by-sa/2.5/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-sa/2.5/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice,
+        creativecommons:ShareAlike ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-sa" ;
+    dc:title "Attribution-ShareAlike 2.5 Generic"@en ;
+    dcterms:hasVersion "2.5" ;
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-sa/3.0/> ;
+    foaf:logo <http://i.creativecommons.org/l/by-sa/2.5/80x15.png>,
+        <http://i.creativecommons.org/l/by-sa/2.5/88x31.png> .
+
+<http://creativecommons.org/licenses/by-sa/3.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-sa/3.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice,
+        creativecommons:ShareAlike ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-sa" ;
+    dc:title "Attribution-ShareAlike 3.0 Unported"@en ;
+    dcterms:hasVersion "3.0" ;
+    foaf:logo <http://i.creativecommons.org/l/by-sa/3.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-sa/3.0/88x31.png> .
+
+<http://creativecommons.org/licenses/by/2.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by/2.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by" ;
+    dc:title "Attribution 2.0 Generic"@en ;
+    dcterms:hasVersion "2.0" ;
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by/2.5/> ;
+    foaf:logo <http://i.creativecommons.org/l/by/2.0/80x15.png>,
+        <http://i.creativecommons.org/l/by/2.0/88x31.png> .
+
+<http://creativecommons.org/licenses/by/2.5/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by/2.5/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by" ;
+    dc:title "Attribution 2.5 Generic"@en ;
+    dcterms:hasVersion "2.5" ;
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by/3.0/> ;
+    foaf:logo <http://i.creativecommons.org/l/by/2.5/80x15.png>,
+        <http://i.creativecommons.org/l/by/2.5/88x31.png> .
+
+<http://creativecommons.org/licenses/by/3.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by/3.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by" ;
+    dc:title "Attribution 3.0 Unported"@en ;
+    dcterms:hasVersion "3.0" ;
+    foaf:logo <http://i.creativecommons.org/l/by/3.0/80x15.png>,
+        <http://i.creativecommons.org/l/by/3.0/88x31.png> .
+
 <https://place-hold.it/600x600?text=Creator%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:0> .
@@ -3476,6 +4288,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:0> .
@@ -3484,6 +4297,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:1> .
@@ -3492,6 +4306,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:1> .
@@ -3500,6 +4315,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:2> .
@@ -3508,6 +4324,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:2> .
@@ -3516,6 +4333,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:3> .
@@ -3524,6 +4342,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:3> .
@@ -3532,6 +4351,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:4> .
@@ -3540,6 +4360,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:4> .
@@ -3548,6 +4369,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:5> .
@@ -3556,6 +4378,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:5> .
@@ -3564,6 +4387,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:6> .
@@ -3572,6 +4396,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:6> .
@@ -3580,6 +4405,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:7> .
@@ -3588,6 +4414,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:7> .
@@ -3596,6 +4423,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:8> .
@@ -3604,6 +4432,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:8> .
@@ -3612,6 +4441,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:9> .
@@ -3620,6 +4450,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:9> .
@@ -3628,6 +4459,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:10> .
@@ -3636,6 +4468,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:10> .
@@ -3644,6 +4477,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:11> .
@@ -3652,6 +4486,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:11> .
@@ -3660,6 +4495,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:12> .
@@ -3668,6 +4504,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:12> .
@@ -3676,6 +4513,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:13> .
@@ -3684,6 +4522,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:13> .
@@ -3692,6 +4531,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:14> .
@@ -3700,6 +4540,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:14> .
@@ -3708,6 +4549,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:15> .
@@ -3716,6 +4558,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:15> .
@@ -3724,6 +4567,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:16> .
@@ -3732,6 +4576,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:16> .
@@ -3740,6 +4585,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:17> .
@@ -3748,6 +4594,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:17> .
@@ -3756,6 +4603,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:18> .
@@ -3764,6 +4612,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:18> .
@@ -3772,6 +4621,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:19> .
@@ -3780,6 +4630,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:19> .
@@ -3788,6 +4639,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> .
@@ -3796,6 +4648,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> .
@@ -3804,6 +4657,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> .
@@ -3812,6 +4666,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> .
@@ -3820,6 +4675,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> .
@@ -3828,6 +4684,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> .
@@ -3836,6 +4693,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> .
@@ -3844,6 +4702,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> .
@@ -3852,6 +4711,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> .
@@ -3860,6 +4720,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> .
@@ -3868,6 +4729,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> .
@@ -3876,6 +4738,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> .
@@ -3884,6 +4747,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> .
@@ -3892,6 +4756,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> .
@@ -3900,6 +4765,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> .
@@ -3908,6 +4774,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> .
@@ -3916,6 +4783,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> .
@@ -3924,6 +4792,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> .
@@ -3932,6 +4801,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> .
@@ -3940,6 +4810,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> .
@@ -3949,6 +4820,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/work0> .
@@ -3958,6 +4830,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/work0> .
@@ -3967,6 +4840,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/work1> .
@@ -3976,6 +4850,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/work1> .
@@ -3985,6 +4860,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/work2> .
@@ -3994,24 +4870,27 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/work2> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Work3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+    dcterms:creator "Creator 4" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/work3> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Work3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+    dcterms:creator "Creator 4" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/work3> .
@@ -4020,6 +4899,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0> .
@@ -4028,24 +4908,27 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0> .
 
 <https://place-hold.it/600x600?text=Institution0SharedWork0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 0" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/work0> .
 
 <https://place-hold.it/600x600?text=Institution0SharedWork0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 0" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/work0> .
@@ -4055,6 +4938,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/work1> .
@@ -4064,6 +4948,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/work1> .
@@ -4073,6 +4958,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/work2> .
@@ -4082,24 +4968,27 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/work2> .
 
 <https://place-hold.it/600x600?text=Institution0SharedWork3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/work3> .
 
 <https://place-hold.it/600x600?text=Institution0SharedWork3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/work3> .
@@ -4109,6 +4998,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/work0> .
@@ -4118,6 +5008,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/work0> .
@@ -4127,6 +5018,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/work1> .
@@ -4136,6 +5028,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/work1> .
@@ -4145,6 +5038,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/work2> .
@@ -4154,6 +5048,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/work2> .
@@ -4163,6 +5058,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/work3> .
@@ -4172,6 +5068,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/work3> .
@@ -4180,6 +5077,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1> .
@@ -4188,6 +5086,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1> .
@@ -4197,6 +5096,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/work0> .
@@ -4206,24 +5106,27 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/work0> .
 
 <https://place-hold.it/600x600?text=Institution1SharedWork1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 2" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/work1> .
 
 <https://place-hold.it/600x600?text=Institution1SharedWork1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 2" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/work1> .
@@ -4233,6 +5136,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/work2> .
@@ -4242,6 +5146,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/work2> .
@@ -4251,6 +5156,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/work3> .
@@ -4260,6 +5166,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/work3> .
@@ -4268,6 +5175,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:30> .
@@ -4276,6 +5184,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:30> .
@@ -4284,6 +5193,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:31> .
@@ -4292,6 +5202,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:31> .
@@ -4300,6 +5211,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:32> .
@@ -4308,6 +5220,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:32> .
@@ -4316,6 +5229,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:33> .
@@ -4324,6 +5238,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:33> .
@@ -4332,6 +5247,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:34> .
@@ -4340,6 +5256,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:34> .
@@ -4348,6 +5265,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:35> .
@@ -4356,6 +5274,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:35> .
@@ -4364,6 +5283,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:36> .
@@ -4372,6 +5292,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:36> .
@@ -4380,6 +5301,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:37> .
@@ -4388,6 +5310,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:37> .
@@ -4396,6 +5319,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:38> .
@@ -4404,6 +5328,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:38> .
@@ -4412,6 +5337,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:39> .
@@ -4420,6 +5346,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:39> .
@@ -4428,6 +5355,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:40> .
@@ -4436,6 +5364,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:40> .
@@ -4444,6 +5373,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:41> .
@@ -4452,6 +5382,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:41> .
@@ -4460,6 +5391,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:42> .
@@ -4468,6 +5400,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:42> .
@@ -4476,6 +5409,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:43> .
@@ -4484,6 +5418,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:43> .
@@ -4492,6 +5427,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:44> .
@@ -4500,6 +5436,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:44> .
@@ -4508,6 +5445,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:45> .
@@ -4516,6 +5454,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:45> .
@@ -4524,6 +5463,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:46> .
@@ -4532,6 +5472,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:46> .
@@ -4540,6 +5481,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:47> .
@@ -4548,6 +5490,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:47> .
@@ -4556,6 +5499,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:48> .
@@ -4564,6 +5508,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:48> .
@@ -4572,6 +5517,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:49> .
@@ -4580,6 +5526,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:49> .
@@ -4588,6 +5535,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:50> .
@@ -4596,6 +5544,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:50> .
@@ -4604,6 +5553,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:51> .
@@ -4612,6 +5562,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:51> .
@@ -4620,6 +5571,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:52> .
@@ -4628,6 +5580,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:52> .
@@ -4636,6 +5589,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:53> .
@@ -4644,6 +5598,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:53> .
@@ -4652,6 +5607,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:54> .
@@ -4660,6 +5616,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:54> .
@@ -4668,6 +5625,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:55> .
@@ -4676,6 +5634,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:55> .
@@ -4684,6 +5643,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:56> .
@@ -4692,6 +5652,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:56> .
@@ -4700,6 +5661,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:57> .
@@ -4708,6 +5670,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:57> .
@@ -4716,6 +5679,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:58> .
@@ -4724,6 +5688,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:58> .
@@ -4732,6 +5697,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:59> .
@@ -4740,6 +5706,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:59> .
@@ -4748,6 +5715,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:60> .
@@ -4756,6 +5724,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:60> .
@@ -4764,6 +5733,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:61> .
@@ -4772,6 +5742,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:61> .
@@ -4780,6 +5751,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:62> .
@@ -4788,6 +5760,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:62> .
@@ -4796,6 +5769,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:63> .
@@ -4804,6 +5778,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:63> .
@@ -4812,6 +5787,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:64> .
@@ -4820,6 +5796,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:64> .
@@ -4828,6 +5805,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:65> .
@@ -4836,6 +5814,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:65> .
@@ -4844,6 +5823,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:66> .
@@ -4852,6 +5832,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:66> .
@@ -4860,6 +5841,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:67> .
@@ -4868,6 +5850,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:67> .
@@ -4876,6 +5859,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:68> .
@@ -4884,6 +5868,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:68> .
@@ -4892,6 +5877,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:69> .
@@ -4900,6 +5886,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:69> .
@@ -4908,6 +5895,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:70> .
@@ -4916,6 +5904,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:70> .
@@ -4924,6 +5913,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:71> .
@@ -4932,6 +5922,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:71> .
@@ -4940,6 +5931,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:72> .
@@ -4948,6 +5940,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:72> .
@@ -4956,6 +5949,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:73> .
@@ -4964,6 +5958,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:73> .
@@ -4972,6 +5967,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:74> .
@@ -4980,6 +5976,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:74> .
@@ -4988,6 +5985,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:75> .
@@ -4996,6 +5994,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:75> .
@@ -5004,6 +6003,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:76> .
@@ -5012,6 +6012,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:76> .
@@ -5020,6 +6021,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:77> .
@@ -5028,6 +6030,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:77> .
@@ -5036,6 +6039,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:78> .
@@ -5044,6 +6048,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:78> .
@@ -5052,6 +6057,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:79> .
@@ -5060,6 +6066,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:79> .
@@ -5068,6 +6075,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:80> .
@@ -5076,6 +6084,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:80> .
@@ -5084,6 +6093,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:81> .
@@ -5092,6 +6102,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:81> .
@@ -5100,6 +6111,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:82> .
@@ -5108,6 +6120,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:82> .
@@ -5116,6 +6129,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:83> .
@@ -5124,6 +6138,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:83> .
@@ -5132,6 +6147,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:84> .
@@ -5140,6 +6156,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:84> .
@@ -5148,6 +6165,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:85> .
@@ -5156,6 +6174,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:85> .
@@ -5164,6 +6183,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:86> .
@@ -5172,6 +6192,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:86> .
@@ -5180,6 +6201,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:87> .
@@ -5188,6 +6210,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:87> .
@@ -5196,6 +6219,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:88> .
@@ -5204,6 +6228,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:88> .
@@ -5212,6 +6237,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:89> .
@@ -5220,6 +6246,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:89> .
@@ -5228,6 +6255,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:90> .
@@ -5236,6 +6264,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:90> .
@@ -5244,6 +6273,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:91> .
@@ -5252,6 +6282,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:91> .
@@ -5260,6 +6291,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:92> .
@@ -5268,6 +6300,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:92> .
@@ -5276,6 +6309,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:93> .
@@ -5284,6 +6318,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:93> .
@@ -5292,6 +6327,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:94> .
@@ -5300,6 +6336,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:94> .
@@ -5308,6 +6345,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:95> .
@@ -5316,6 +6354,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:95> .
@@ -5324,6 +6363,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:96> .
@@ -5332,6 +6372,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:96> .
@@ -5340,6 +6381,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:97> .
@@ -5348,6 +6390,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:97> .
@@ -5356,6 +6399,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:98> .
@@ -5364,6 +6408,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:98> .
@@ -5372,6 +6417,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:99> .
@@ -5380,6 +6426,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:99> .
@@ -5388,6 +6435,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:100> .
@@ -5396,6 +6444,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:100> .
@@ -5404,6 +6453,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:101> .
@@ -5412,6 +6462,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:101> .
@@ -5420,6 +6471,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:102> .
@@ -5428,6 +6480,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:102> .
@@ -5436,6 +6489,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:103> .
@@ -5444,6 +6498,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:103> .
@@ -5452,6 +6507,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:104> .
@@ -5460,6 +6516,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:104> .
@@ -5468,6 +6525,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:105> .
@@ -5476,6 +6534,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:105> .
@@ -5484,6 +6543,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:106> .
@@ -5492,6 +6552,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:106> .
@@ -5500,6 +6561,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:107> .
@@ -5508,6 +6570,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:107> .
@@ -5516,6 +6579,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:108> .
@@ -5524,6 +6588,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:108> .
@@ -5532,6 +6597,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:109> .
@@ -5540,6 +6606,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:109> .
@@ -5548,6 +6615,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:110> .
@@ -5556,6 +6624,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:110> .
@@ -5564,6 +6633,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:111> .
@@ -5572,6 +6642,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:111> .
@@ -5580,6 +6651,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:112> .
@@ -5588,6 +6660,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:112> .
@@ -5596,6 +6669,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:113> .
@@ -5604,6 +6678,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:113> .
@@ -5612,6 +6687,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:114> .
@@ -5620,6 +6696,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:114> .
@@ -5628,6 +6705,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:115> .
@@ -5636,6 +6714,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:115> .
@@ -5644,6 +6723,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:116> .
@@ -5652,6 +6732,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:116> .
@@ -5660,6 +6741,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:117> .
@@ -5668,6 +6750,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:117> .
@@ -5676,6 +6759,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:118> .
@@ -5684,6 +6768,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:118> .
@@ -5692,6 +6777,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:119> .
@@ -5700,6 +6786,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:119> .
@@ -5708,6 +6795,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:120> .
@@ -5716,6 +6804,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:120> .
@@ -5724,6 +6813,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:121> .
@@ -5732,6 +6822,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:121> .
@@ -5740,6 +6831,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:122> .
@@ -5748,6 +6840,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:122> .
@@ -5756,6 +6849,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:123> .
@@ -5764,6 +6858,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:123> .
@@ -5772,6 +6867,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:124> .
@@ -5780,6 +6876,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:124> .
@@ -5788,6 +6885,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:125> .
@@ -5796,6 +6894,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:125> .
@@ -5804,6 +6903,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:126> .
@@ -5812,6 +6912,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:126> .
@@ -5820,6 +6921,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:127> .
@@ -5828,6 +6930,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:127> .
@@ -5836,6 +6939,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:128> .
@@ -5844,6 +6948,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:128> .
@@ -5852,6 +6957,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:129> .
@@ -5860,6 +6966,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 600 ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:129> .
@@ -5868,6 +6975,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:0> .
@@ -5876,6 +6984,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:0> .
@@ -5884,6 +6993,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:1> .
@@ -5892,6 +7002,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:1> .
@@ -5900,6 +7011,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:2> .
@@ -5908,6 +7020,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:2> .
@@ -5916,6 +7029,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:3> .
@@ -5924,6 +7038,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:3> .
@@ -5932,6 +7047,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:4> .
@@ -5940,6 +7056,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:4> .
@@ -5948,6 +7065,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:5> .
@@ -5956,6 +7074,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:5> .
@@ -5964,6 +7083,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:6> .
@@ -5972,6 +7092,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:6> .
@@ -5980,6 +7101,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:7> .
@@ -5988,6 +7110,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:7> .
@@ -5996,6 +7119,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:8> .
@@ -6004,6 +7128,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:8> .
@@ -6012,6 +7137,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:9> .
@@ -6020,6 +7146,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:9> .
@@ -6028,6 +7155,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:10> .
@@ -6036,6 +7164,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:10> .
@@ -6044,6 +7173,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:11> .
@@ -6052,6 +7182,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:11> .
@@ -6060,6 +7191,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:12> .
@@ -6068,6 +7200,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:12> .
@@ -6076,6 +7209,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:13> .
@@ -6084,6 +7218,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:13> .
@@ -6092,6 +7227,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:14> .
@@ -6100,6 +7236,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:14> .
@@ -6108,6 +7245,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:15> .
@@ -6116,6 +7254,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:15> .
@@ -6124,6 +7263,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:16> .
@@ -6132,6 +7272,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:16> .
@@ -6140,6 +7281,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:17> .
@@ -6148,6 +7290,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:17> .
@@ -6156,6 +7299,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:18> .
@@ -6164,6 +7308,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:18> .
@@ -6172,6 +7317,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:19> .
@@ -6180,6 +7326,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:19> .
@@ -6188,6 +7335,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> .
@@ -6196,6 +7344,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> .
@@ -6204,6 +7353,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> .
@@ -6212,6 +7362,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> .
@@ -6220,6 +7371,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> .
@@ -6228,6 +7380,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> .
@@ -6236,6 +7389,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> .
@@ -6244,6 +7398,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> .
@@ -6252,6 +7407,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> .
@@ -6260,6 +7416,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> .
@@ -6268,6 +7425,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> .
@@ -6276,6 +7434,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> .
@@ -6284,6 +7443,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> .
@@ -6292,6 +7452,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> .
@@ -6300,6 +7461,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> .
@@ -6308,6 +7470,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> .
@@ -6316,6 +7479,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> .
@@ -6324,6 +7488,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> .
@@ -6332,6 +7497,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> .
@@ -6340,6 +7506,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> .
@@ -6349,6 +7516,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/work0> .
@@ -6358,6 +7526,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/work0> .
@@ -6367,6 +7536,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/work1> .
@@ -6376,6 +7546,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/work1> .
@@ -6385,6 +7556,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/work2> .
@@ -6394,24 +7566,27 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/work2> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Work3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+    dcterms:creator "Creator 4" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/work3> .
 
 <https://place-hold.it/75x75?text=Institution0Collection0Work3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+    dcterms:creator "Creator 4" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/work3> .
@@ -6420,6 +7595,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0> .
@@ -6428,24 +7604,27 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0> .
 
 <https://place-hold.it/75x75?text=Institution0SharedWork0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 0" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/work0> .
 
 <https://place-hold.it/75x75?text=Institution0SharedWork0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 0" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/work0> .
@@ -6455,6 +7634,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/work1> .
@@ -6464,6 +7644,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/work1> .
@@ -6473,6 +7654,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/work2> .
@@ -6482,24 +7664,27 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/work2> .
 
 <https://place-hold.it/75x75?text=Institution0SharedWork3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/work3> .
 
 <https://place-hold.it/75x75?text=Institution0SharedWork3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+    dcterms:creator "Creator 3" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/work3> .
@@ -6509,6 +7694,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/work0> .
@@ -6518,6 +7704,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/work0> .
@@ -6527,6 +7714,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/work1> .
@@ -6536,6 +7724,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/work1> .
@@ -6545,6 +7734,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/work2> .
@@ -6554,6 +7744,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/work2> .
@@ -6563,6 +7754,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/work3> .
@@ -6572,6 +7764,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/work3> .
@@ -6580,6 +7773,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1> .
@@ -6588,6 +7782,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1> .
@@ -6597,6 +7792,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/work0> .
@@ -6606,24 +7802,27 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/work0> .
 
 <https://place-hold.it/75x75?text=Institution1SharedWork1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 2" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/work1> .
 
 <https://place-hold.it/75x75?text=Institution1SharedWork1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+    dcterms:creator "Creator 2" ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/work1> .
@@ -6633,6 +7832,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/work2> .
@@ -6642,6 +7842,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/work2> .
@@ -6651,6 +7852,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/work3> .
@@ -6660,6 +7862,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/work3> .
@@ -6668,6 +7871,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:30> .
@@ -6676,6 +7880,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:30> .
@@ -6684,6 +7889,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:31> .
@@ -6692,6 +7898,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:31> .
@@ -6700,6 +7907,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:32> .
@@ -6708,6 +7916,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:32> .
@@ -6716,6 +7925,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:33> .
@@ -6724,6 +7934,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:33> .
@@ -6732,6 +7943,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:34> .
@@ -6740,6 +7952,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:34> .
@@ -6748,6 +7961,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:35> .
@@ -6756,6 +7970,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:35> .
@@ -6764,6 +7979,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:36> .
@@ -6772,6 +7988,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:36> .
@@ -6780,6 +7997,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:37> .
@@ -6788,6 +8006,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:37> .
@@ -6796,6 +8015,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:38> .
@@ -6804,6 +8024,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:38> .
@@ -6812,6 +8033,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:39> .
@@ -6820,6 +8042,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:39> .
@@ -6828,6 +8051,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:40> .
@@ -6836,6 +8060,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:40> .
@@ -6844,6 +8069,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:41> .
@@ -6852,6 +8078,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:41> .
@@ -6860,6 +8087,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:42> .
@@ -6868,6 +8096,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:42> .
@@ -6876,6 +8105,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:43> .
@@ -6884,6 +8114,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:43> .
@@ -6892,6 +8123,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:44> .
@@ -6900,6 +8132,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:44> .
@@ -6908,6 +8141,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:45> .
@@ -6916,6 +8150,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:45> .
@@ -6924,6 +8159,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:46> .
@@ -6932,6 +8168,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:46> .
@@ -6940,6 +8177,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:47> .
@@ -6948,6 +8186,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:47> .
@@ -6956,6 +8195,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:48> .
@@ -6964,6 +8204,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:48> .
@@ -6972,6 +8213,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:49> .
@@ -6980,6 +8222,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:49> .
@@ -6988,6 +8231,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:50> .
@@ -6996,6 +8240,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:50> .
@@ -7004,6 +8249,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:51> .
@@ -7012,6 +8258,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:51> .
@@ -7020,6 +8267,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:52> .
@@ -7028,6 +8276,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:52> .
@@ -7036,6 +8285,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:53> .
@@ -7044,6 +8294,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:53> .
@@ -7052,6 +8303,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:54> .
@@ -7060,6 +8312,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:54> .
@@ -7068,6 +8321,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:55> .
@@ -7076,6 +8330,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:55> .
@@ -7084,6 +8339,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:56> .
@@ -7092,6 +8348,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:56> .
@@ -7100,6 +8357,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:57> .
@@ -7108,6 +8366,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:57> .
@@ -7116,6 +8375,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:58> .
@@ -7124,6 +8384,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:58> .
@@ -7132,6 +8393,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:59> .
@@ -7140,6 +8402,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:59> .
@@ -7148,6 +8411,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:60> .
@@ -7156,6 +8420,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:60> .
@@ -7164,6 +8429,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:61> .
@@ -7172,6 +8438,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:61> .
@@ -7180,6 +8447,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:62> .
@@ -7188,6 +8456,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:62> .
@@ -7196,6 +8465,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:63> .
@@ -7204,6 +8474,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:63> .
@@ -7212,6 +8483,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:64> .
@@ -7220,6 +8492,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:64> .
@@ -7228,6 +8501,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:65> .
@@ -7236,6 +8510,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:65> .
@@ -7244,6 +8519,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:66> .
@@ -7252,6 +8528,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:66> .
@@ -7260,6 +8537,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:67> .
@@ -7268,6 +8546,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:67> .
@@ -7276,6 +8555,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:68> .
@@ -7284,6 +8564,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:68> .
@@ -7292,6 +8573,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:69> .
@@ -7300,6 +8582,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:69> .
@@ -7308,6 +8591,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:70> .
@@ -7316,6 +8600,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:70> .
@@ -7324,6 +8609,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:71> .
@@ -7332,6 +8618,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:71> .
@@ -7340,6 +8627,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:72> .
@@ -7348,6 +8636,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:72> .
@@ -7356,6 +8645,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:73> .
@@ -7364,6 +8654,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:73> .
@@ -7372,6 +8663,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:74> .
@@ -7380,6 +8672,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:74> .
@@ -7388,6 +8681,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:75> .
@@ -7396,6 +8690,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:75> .
@@ -7404,6 +8699,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:76> .
@@ -7412,6 +8708,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:76> .
@@ -7420,6 +8717,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:77> .
@@ -7428,6 +8726,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:77> .
@@ -7436,6 +8735,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:78> .
@@ -7444,6 +8744,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:78> .
@@ -7452,6 +8753,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:79> .
@@ -7460,6 +8762,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:79> .
@@ -7468,6 +8771,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:80> .
@@ -7476,6 +8780,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:80> .
@@ -7484,6 +8789,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:81> .
@@ -7492,6 +8798,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:81> .
@@ -7500,6 +8807,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:82> .
@@ -7508,6 +8816,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:82> .
@@ -7516,6 +8825,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:83> .
@@ -7524,6 +8834,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:83> .
@@ -7532,6 +8843,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:84> .
@@ -7540,6 +8852,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:84> .
@@ -7548,6 +8861,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:85> .
@@ -7556,6 +8870,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:85> .
@@ -7564,6 +8879,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:86> .
@@ -7572,6 +8888,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:86> .
@@ -7580,6 +8897,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:87> .
@@ -7588,6 +8906,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:87> .
@@ -7596,6 +8915,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:88> .
@@ -7604,6 +8924,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:88> .
@@ -7612,6 +8933,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:89> .
@@ -7620,6 +8942,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:89> .
@@ -7628,6 +8951,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:90> .
@@ -7636,6 +8960,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:90> .
@@ -7644,6 +8969,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:91> .
@@ -7652,6 +8978,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:91> .
@@ -7660,6 +8987,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:92> .
@@ -7668,6 +8996,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:92> .
@@ -7676,6 +9005,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:93> .
@@ -7684,6 +9014,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:93> .
@@ -7692,6 +9023,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:94> .
@@ -7700,6 +9032,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:94> .
@@ -7708,6 +9041,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:95> .
@@ -7716,6 +9050,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:95> .
@@ -7724,6 +9059,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:96> .
@@ -7732,6 +9068,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:96> .
@@ -7740,6 +9077,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:97> .
@@ -7748,6 +9086,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:97> .
@@ -7756,6 +9095,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:98> .
@@ -7764,6 +9104,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:98> .
@@ -7772,6 +9113,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:99> .
@@ -7780,6 +9122,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:99> .
@@ -7788,6 +9131,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:100> .
@@ -7796,6 +9140,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:100> .
@@ -7804,6 +9149,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:101> .
@@ -7812,6 +9158,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:101> .
@@ -7820,6 +9167,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:102> .
@@ -7828,6 +9176,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:102> .
@@ -7836,6 +9185,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:103> .
@@ -7844,6 +9194,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:103> .
@@ -7852,6 +9203,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:104> .
@@ -7860,6 +9212,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:104> .
@@ -7868,6 +9221,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:105> .
@@ -7876,6 +9230,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:105> .
@@ -7884,6 +9239,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:106> .
@@ -7892,6 +9248,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:106> .
@@ -7900,6 +9257,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:107> .
@@ -7908,6 +9266,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:107> .
@@ -7916,6 +9275,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:108> .
@@ -7924,6 +9284,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:108> .
@@ -7932,6 +9293,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:109> .
@@ -7940,6 +9302,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:109> .
@@ -7948,6 +9311,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:110> .
@@ -7956,6 +9320,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:110> .
@@ -7964,6 +9329,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:111> .
@@ -7972,6 +9338,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:111> .
@@ -7980,6 +9347,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:112> .
@@ -7988,6 +9356,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:112> .
@@ -7996,6 +9365,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:113> .
@@ -8004,6 +9374,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:113> .
@@ -8012,6 +9383,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:114> .
@@ -8020,6 +9392,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:114> .
@@ -8028,6 +9401,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:115> .
@@ -8036,6 +9410,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:115> .
@@ -8044,6 +9419,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:116> .
@@ -8052,6 +9428,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:116> .
@@ -8060,6 +9437,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:117> .
@@ -8068,6 +9446,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:117> .
@@ -8076,6 +9455,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:118> .
@@ -8084,6 +9464,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:118> .
@@ -8092,6 +9473,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:119> .
@@ -8100,6 +9482,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:119> .
@@ -8108,6 +9491,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:120> .
@@ -8116,6 +9500,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:120> .
@@ -8124,6 +9509,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:121> .
@@ -8132,6 +9518,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:121> .
@@ -8140,6 +9527,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:122> .
@@ -8148,6 +9536,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:122> .
@@ -8156,6 +9545,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:123> .
@@ -8164,6 +9554,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:123> .
@@ -8172,6 +9563,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:124> .
@@ -8180,6 +9572,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:124> .
@@ -8188,6 +9581,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:125> .
@@ -8196,6 +9590,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:125> .
@@ -8204,6 +9599,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:126> .
@@ -8212,6 +9608,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:126> .
@@ -8220,6 +9617,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:127> .
@@ -8228,6 +9626,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:127> .
@@ -8236,6 +9635,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:128> .
@@ -8244,6 +9644,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:128> .
@@ -8252,6 +9653,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:129> .
@@ -8260,6 +9662,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
     exif:height 75 ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:129> .
@@ -9595,22 +10998,33 @@ vra:material a paradicms:PropertyDefinition ;
     dcterms:rightsHolder "Institution1 rights holder" ;
     foaf:name "Institution1" .
 
-<http://creativecommons.org/licenses/nc/1.0/> a paradicms:License ;
+<http://creativecommons.org/licenses/nc/1.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:deprecatedOn "2004-05-25"^^<http://www.w3.org/2001/XMLSchema-datatypes#date> ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/nc/1.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:prohibits creativecommons:CommercialUse ;
+    creativecommons:requires creativecommons:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "nc" ;
+    dc:title "NonCommercial 1.0 Generic"@en ;
     dcterms:hasVersion "1.0" ;
-    dcterms:identifier "nc" ;
-    dcterms:title "NonCommercial 1.0 Generic" .
+    foaf:logo <http://i.creativecommons.org/l/nc/1.0/88x31.png> .
 
 <http://rightsstatements.org/vocab/InC-EDU/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright but that educational use is allowed without the need to obtain additional permission." ;
+    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright but that educational use is allowed without the need to obtain additional permission."@en ;
     dcterms:identifier "InC-EDU" ;
     skos:definition """This Item is protected by copyright and/or related rights.
 
   You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use. In addition, no permission is required from the rights-holder(s) for educational uses.
 
-  For other uses, you need to obtain permission from the rights-holder(s).""" ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
-    skos:prefLabel "In Copyright - Educational Use Permitted" ;
-    skos:scopeNote "This Rights Statement can be used only for copyrighted Items for which the organization making the Item available is the rights-holder or has been explicitly authorized by the rights-holder(s) to allow third parties to use their Work(s) for educational purposes without first obtaining permission." .
+  For other uses, you need to obtain permission from the rights-holder(s)."""@en ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
+    skos:prefLabel "In Copyright - Educational Use Permitted"@en ;
+    skos:scopeNote "This Rights Statement can be used only for copyrighted Items for which the organization making the Item available is the rights-holder or has been explicitly authorized by the rights-holder(s) to allow third parties to use their Work(s) for educational purposes without first obtaining permission."@en .
 `;
