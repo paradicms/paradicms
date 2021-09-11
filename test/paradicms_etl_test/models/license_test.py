@@ -4,7 +4,7 @@ from paradicms_etl.models.license import License
 
 
 def test_init():
-    License(
+    License.from_fields(
         identifier="testidentifier",
         title="Test title",
         uri=URIRef("http://example.com"),

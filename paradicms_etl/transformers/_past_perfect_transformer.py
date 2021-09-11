@@ -82,7 +82,7 @@ class _PastPerfectTransformer(_Transformer):
 
             assert database_object.name is not None
 
-            work = Work(
+            work = Work.from_fields(
                 collection_uris=(collection.uri,),
                 institution_uri=institution.uri,
                 properties=self._get_database_object_properties(database_object),
@@ -103,13 +103,13 @@ class _PastPerfectTransformer(_Transformer):
                     )
                     continue
 
-                full_size_image = Image(
+                full_size_image = Image.from_fields(
                     depicts_uri=work.uri,
                     uri=URIRef(database_image.full_size_url),
                 )
                 yield full_size_image
 
-                yield Image(
+                yield Image.from_fields(
                     depicts_uri=work.uri,
                     original_image_uri=full_size_image.uri,
                     uri=URIRef(database_image.thumbnail_url),

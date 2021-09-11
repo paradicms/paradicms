@@ -11,8 +11,15 @@ from paradicms_etl.namespace import CMS
 
 
 class Work(_NamedModel):
-    def __init__(
-        self,
+    def __init__(self, *args, **kwds):
+        _NamedModel.__init__(self, *args, **kwds)
+        self.collection_uris
+        self.institution_uri
+        self.title
+
+    @classmethod
+    def from_fields(
+        cls,
         *,
         # Linking up to the parent (relational style) and grandparent makes it easier to do
         # page generation and search indexing downstream.
@@ -27,28 +34,29 @@ class Work(_NamedModel):
         properties: Tuple[Property, ...] = (),
         rights: Optional[Rights] = None,
     ):
-        _NamedModel.__init__(self, uri=uri)
+        resource = cls._create_resource(identifier=uri)
         if abstract is not None:
-            self.resource.add(DCTERMS.abstract, Literal(abstract))
+            resource.add(DCTERMS.abstract, Literal(abstract))
         for collection_uri in collection_uris:
-            self.resource.add(CMS.collection, collection_uri)
-        self.resource.add(CMS.institution, institution_uri)
+            resource.add(CMS.collection, collection_uri)
+        resource.add(CMS.institution, institution_uri)
         if page is not None:
             if isinstance(page, URIRef):
-                self.resource.add(FOAF.page, page)
+                resource.add(FOAF.page, page)
             else:
-                self.resource.add(FOAF.page, Literal(str(page)))
+                resource.add(FOAF.page, Literal(str(page)))
         for property_ in properties:
-            self.resource.add(property_.uri, property_.value)
+            resource.add(property_.uri, property_.value)
         if rights is not None:
-            rights.to_rdf(add_to_resource=self.resource)
-        self.resource.add(DCTERMS.title, Literal(title))
+            rights.to_rdf(add_to_resource=resource)
+        resource.add(DCTERMS.title, Literal(title))
+        return cls(resource)
 
     @property
     def collection_uris(self) -> Tuple[URIRef, ...]:
         return tuple(
             resource.identifier
-            for resource in self.resource.objects(CMS.collection)
+            for resource in self._resource.objects(CMS.collection)
             if isinstance(resource, Resource)
             and isinstance(resource.identifier, URIRef)
         )
@@ -59,7 +67,7 @@ class Work(_NamedModel):
 
     @property
     def rights(self) -> Optional[Rights]:
-        return Rights.from_rdf(resource=self.resource)
+        return Rights.from_rdf(resource=self._resource)
 
     @property
     def title(self) -> str:

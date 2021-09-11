@@ -9,8 +9,13 @@ from paradicms_etl.models.rights import Rights
 
 
 class Institution(_NamedModel):
-    def __init__(
-        self,
+    def __init__(self, *args, **kwds):
+        _NamedModel.__init__(self, *args, **kwds)
+        self.name
+
+    @classmethod
+    def from_fields(
+        cls,
         *,
         # See note in Collection re: why there are no links to collections here.
         name: str,
@@ -19,14 +24,15 @@ class Institution(_NamedModel):
         properties: Tuple[Property, ...] = (),
         rights: Optional[Rights] = None,
     ):
-        _NamedModel.__init__(self, uri=uri)
+        resource = cls._create_resource(identifier=uri)
         if abstract is not None:
-            self.resource.add(DCTERMS.abstract, Literal(abstract))
-        self.resource.add(FOAF.name, Literal(name))
+            resource.add(DCTERMS.abstract, Literal(abstract))
+        resource.add(FOAF.name, Literal(name))
         for property_ in properties:
-            self.resource.add(property_.uri, property_.value)
+            resource.add(property_.uri, property_.value)
         if rights is not None:
-            rights.to_rdf(add_to_resource=self.resource)
+            rights.to_rdf(add_to_resource=resource)
+        return cls(resource)
 
     @property
     def name(self) -> str:
@@ -34,4 +40,4 @@ class Institution(_NamedModel):
 
     @property
     def rights(self) -> Optional[Rights]:
-        return Rights.from_rdf(resource=self.resource)
+        return Rights.from_rdf(resource=self._resource)

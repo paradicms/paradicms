@@ -4,7 +4,7 @@ from paradicms_etl.models.rights_statement import RightsStatement
 
 
 def test_init():
-    RightsStatement(
+    RightsStatement.from_fields(
         definition="Test definition",
         description="Test description",
         identifier="testidentifier",

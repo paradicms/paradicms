@@ -70,7 +70,7 @@ class OmekaSTransformer(_Transformer):
         self, item: Resource, media_by_item_id: Dict[int, Resource]
     ) -> Work:
         item_id = item.value(O.id).toPython()
-        work_ = Work(resource=item)
+        work_ = Work.from_fields(resource=item)
         work_.owner = CMS.inherit
         for media in media_by_item_id.get(item_id, []):
             original_image, thumbnail_image = self.__transform_media(media)
@@ -91,11 +91,13 @@ class OmekaSTransformer(_Transformer):
         if not media.value(O.is_public).toPython():
             return None, None
 
-        original = Image(graph=media.graph, uri=URIRef(media.value(O.original_url)))
+        original = Image.from_fields(
+            graph=media.graph, uri=URIRef(media.value(O.original_url))
+        )
 
         # thumbnail_urls is a JSON payload that rdflib can't read
         # Reconstruct the square thumbnail URL from the original
-        thumbnail = Image(
+        thumbnail = Image.from_fields(
             graph=media.graph,
             uri=URIRef(str(original.uri).replace("/files/original/", "/files/square/")),
         )

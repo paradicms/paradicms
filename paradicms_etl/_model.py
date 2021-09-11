@@ -1,23 +1,65 @@
-from typing import Optional
+from typing import Optional, Tuple, Union
 
-from rdflib import BNode, Graph, Literal, RDF, URIRef
+from rdflib import BNode, ConjunctiveGraph, Graph, Literal, RDF, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.namespace import CMS
 
 
 class _Model:
-    def __init__(self, *, uri: Optional[URIRef] = None):
-        self.__graph = Graph()
-        self.__resource = self.__graph.resource(
-            uri if uri is not None else BNode().skolemize()
-        )
+    def __init__(self, resource: Resource):
+        if not isinstance(resource.identifier, URIRef):
+            raise ValueError("resource must have a URI")
+        self.__resource = resource
         self.__resource.add(RDF.type, CMS[self.__class__.__name__])
+        # print(self.__class__.__name__, "resource:")
+        # print(self.__resource.graph.serialize().decode("utf-8"))
+
+    @classmethod
+    def _copy_resource(cls, resource) -> Resource:
+        if not isinstance(resource.identifier, URIRef):
+            raise ValueError("resource must have a URI")
+        graph = Graph()
+        graph += resource.graph
+        return graph.resource(resource.identifier)
+
+    @classmethod
+    def _create_resource(cls, identifier: Union[None, BNode, URIRef]) -> Resource:
+        if identifier is None:
+            identifier = BNode()
+        if isinstance(identifier, BNode):
+            identifier = identifier.skolemize()
+        if not isinstance(identifier, URIRef):
+            raise ValueError("identifier must be a URI")
+        graph = Graph()
+        resource = graph.resource(identifier)
+        return resource
+
+    @classmethod
+    def from_rdf(cls, resource: Resource):
+        return cls(cls._copy_resource(resource))
+
+    def _optional_bool_value(
+        self, p: Union[URIRef, Tuple[URIRef, ...]]
+    ) -> Optional[str]:
+        return self._optional_literal_value(p, bool)
+
+    def _optional_literal_value(
+        self, p: Union[URIRef, Tuple[URIRef, ...]], expected_type=None
+    ) -> Optional[object]:
+        if isinstance(p, URIRef):
+            return self.__optional_literal_value(p, expected_type=expected_type)
+        else:
+            for p in p:
+                value = self.__optional_literal_value(p, expected_type=expected_type)
+                if value is not None:
+                    return value
+            return None
 
     def __optional_literal_value(
         self, p: URIRef, expected_type=None
     ) -> Optional[object]:
-        value = self.resource.value(p)
+        value = self._resource.value(p)
         if value is None:
             return None
         if not isinstance(value, Literal):
@@ -27,28 +69,56 @@ class _Model:
             raise TypeError(f"expected {p} to have a {expected_type} value")
         return python_value
 
-    def _optional_str_value(self, p: URIRef) -> Optional[str]:
-        return self.__optional_literal_value(p, str)
+    def _optional_str_value(
+        self, p: Union[URIRef, Tuple[URIRef, ...]]
+    ) -> Optional[str]:
+        return self._optional_literal_value(p, str)
 
-    def _optional_uri_value(self, p: URIRef) -> Optional[URIRef]:
-        value = self.resource.value(p)
+    def _optional_uri_value(
+        self, p: Union[URIRef, Tuple[URIRef, ...]]
+    ) -> Optional[URIRef]:
+        if isinstance(p, URIRef):
+            return self.__optional_uri_value(p)
+        else:
+            for p in p:
+                value = self.__optional_uri_value(p)
+                if value is not None:
+                    return value
+            return None
+
+    def __optional_uri_value(self, p: URIRef) -> Optional[URIRef]:
+        value = self._resource.value(p)
         if value is None:
             return None
         if not isinstance(value, Resource) or not isinstance(value.identifier, URIRef):
             raise TypeError(f"expected {p} to have a URI value")
         return value.identifier
 
-    @property
-    def resource(self) -> Resource:
-        return self.__resource
+    def _required_bool_value(self, p: Union[URIRef, Tuple[URIRef, ...]]) -> bool:
+        return self.__required_value(p, self._optional_bool_value(p))
 
-    def __required_value(self, p: URIRef, optional_value: Optional[object]) -> object:
+    def _required_str_value(self, p: Union[URIRef, Tuple[URIRef, ...]]) -> str:
+        return self.__required_value(p, self._optional_str_value(p))
+
+    def _required_uri_value(self, p: Union[URIRef, Tuple[URIRef, ...]]) -> URIRef:
+        return self.__required_value(p, self._optional_uri_value(p))
+
+    def __required_value(
+        self, p: Union[URIRef, Tuple[URIRef, ...]], optional_value: Optional[object]
+    ) -> object:
         if optional_value is None:
             raise KeyError(f"missing {p}")
         return optional_value
 
-    def _required_str_value(self, p: URIRef) -> str:
-        return self.__required_value(p, self._optional_str_value(p))
+    @property
+    def _resource(self) -> Resource:
+        return self.__resource
 
-    def _required_uri_value(self, p: URIRef) -> URIRef:
-        return self.__required_value(p, self._optional_uri_value(p))
+    def to_rdf(self, graph: Graph) -> Resource:
+        if isinstance(graph, ConjunctiveGraph):
+            context = graph.get_context(self._resource.identifier())
+            context += self._resource.graph
+            return context.resource(self._resource.identifier)
+        else:
+            graph += self._resource.graph
+            return graph.resource(self._resource.identifier)

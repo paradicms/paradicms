@@ -3,14 +3,14 @@ from pathlib import Path
 from typing import Dict, Generator
 from zipfile import ZipFile
 
-from rdflib import DC, DCTERMS, Graph, Literal, Namespace
-from rdflib.resource import Resource
+from rdflib import Graph, Literal, Namespace
 
 from paradicms_etl._extractor import _Extractor
 from paradicms_etl._loader import _Loader
 from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.license import License
+from paradicms_etl.namespace import bind_namespaces
 
 
 class CreativeCommonsPipeline(_Pipeline):
@@ -39,53 +39,6 @@ class CreativeCommonsPipeline(_Pipeline):
             return {"rdf_file_contents": rdf_file_contents}
 
     class _CreativeCommonsTransformer(_Transformer):
-        def __license_from_rdf(self, resource: Resource) -> License:
-            # <cc:License rdf:about="http://creativecommons.org/licenses/BSD/">
-            # <cc:permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
-            # <cc:permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
-            # <cc:permits rdf:resource="http://creativecommons.org/ns#DerivativeWorks"/>
-            # <cc:legalcode rdf:resource="http://opensource.org/licenses/bsd-license.php"/>
-            # <cc:requires rdf:resource="http://creativecommons.org/ns#Notice"/>
-            # <cc:licenseClass rdf:resource="http://creativecommons.org/license/software"/>
-            # <dc:title>BSD License</dc:title>
-            # <dc:identifier>BSD</dc:identifier>
-            # </cc:License>
-
-            identifier_literal = resource.value(DCTERMS.identifier, any=False)
-            if identifier_literal is None:
-                identifier_literal = resource.value(DC.identifier)
-            if not isinstance(identifier_literal, Literal):
-                raise ValueError("license must have literal dcterms:identifier")
-            identifier = identifier_literal.value
-
-            title = None
-            for property_ in (DCTERMS.title, DC.title):
-                for title_node in resource.objects(property_):
-                    if not isinstance(title_node, Literal):
-                        continue
-                    title_literal = title_node
-                    if title_literal.language != "en":
-                        continue
-                    title = title_literal.value
-                    break
-                if title is not None:
-                    break
-            if title is None:
-                raise ValueError("license must have literal dcterms:title")
-
-            version_literal = resource.value(DCTERMS.hasVersion, any=False)
-            if version_literal is not None:
-                version = version_literal.value
-            else:
-                version = None
-
-            return License(
-                identifier=identifier,
-                title=title,
-                uri=resource.identifier,
-                version=version,
-            )
-
         def transform(self, rdf_file_contents: Dict[str, bytes]):
             CC = Namespace("http://creativecommons.org/ns#")
             for rdf_file_name, rdf_file_bytes in rdf_file_contents.items():
@@ -103,8 +56,7 @@ class CreativeCommonsPipeline(_Pipeline):
                         "skipping .rdf with jurisdiction %s", rdf_file_name
                     )
                     continue
-
-                yield self.__license_from_rdf(resource=graph.resource(uri))
+                yield License.from_rdf(graph.resource(uri))
 
     class _CreativeCommonsLoader(_Loader):
         def load(self, *, models: Generator[License, None, None]):
@@ -123,8 +75,17 @@ class CreativeCommonsPipeline(_Pipeline):
                     py_license_identifier not in py_license_identifiers
                 ), py_license_identifier
                 py_license_identifiers.add(py_license_identifier)
+
+                license_graph = license.to_rdf(Graph()).graph
+                en_license_graph = bind_namespaces(Graph())
+                for s, p, o in license_graph:
+                    if isinstance(o, Literal):
+                        if o.language is not None and o.language != "en":
+                            continue
+                    en_license_graph.add((s, p, o))
+
                 py_license_reprs.append(
-                    f"    {py_license_identifier} = {repr(license)}"
+                    f"    {py_license_identifier} = License.from_rdf(Graph().parse(data=r'''{en_license_graph.serialize(format='ttl').decode('utf-8')}''', format='ttl').resource(URIRef('{license.uri}')))"
                 )
             py_license_reprs = "\n".join(py_license_reprs)
 
@@ -137,7 +98,7 @@ class CreativeCommonsPipeline(_Pipeline):
 
 from typing import Tuple
 
-import rdflib.term
+from rdflib import Graph, URIRef
 from paradicms_etl.models.license import License
 from paradicms_etl.models._model_singletons import _ModelSingletons
 

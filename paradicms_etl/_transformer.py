@@ -31,7 +31,7 @@ class _Transformer(_PipelinePhase):
         if not isinstance(institution_uri, URIRef):
             institution_uri = URIRef(str(institution_uri))
 
-        return Collection(
+        return Collection.from_fields(
             institution_uri=institution_uri,
             title=collection_title,
             uri=URIRef(collection_uri),
@@ -45,7 +45,7 @@ class _Transformer(_PipelinePhase):
         institution_rights: Optional[str] = None,
         **kwds
     ) -> Institution:
-        return Institution(
+        return Institution.from_fields(
             name=institution_name,
             rights=Rights(holder=institution_name, statement=institution_rights)
             if institution_rights is not None
@@ -62,7 +62,7 @@ class _Transformer(_PipelinePhase):
     ) -> Optional[Image]:
         if institution_image_uri is None:
             return None
-        return Image(
+        return Image.from_fields(
             depicts_uri=URIRef(institution_uri),
             uri=URIRef(institution_image_uri),
         )

@@ -62,7 +62,7 @@ class BookCollectorTransformer(_Transformer):
         hash_ = etree.findtext("hash")
         assert hash_
         hash_ = hash_.lstrip("{").rstrip("}")
-        work_ = Work(graph=graph, uri=URIRef("urn:clzbook:" + hash_))
+        work_ = Work.from_fields(graph=graph, uri=URIRef("urn:clzbook:" + hash_))
         work_.owner = CMS.inherit
         work_.resource.add(RDF.type, SCHEMA.Book)
 
@@ -166,7 +166,7 @@ class BookCollectorTransformer(_Transformer):
         collection = collections_by_hash.get(hash_)
         if collection is not None:
             return collection
-        collection = Collection(
+        collection = Collection.from_fields(
             graph=graph,
             uri=URIRef(str(self.__pipeline_uri) + ":clzcollection:" + hash_),
         )

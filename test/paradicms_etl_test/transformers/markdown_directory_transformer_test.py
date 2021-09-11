@@ -1,5 +1,7 @@
 from paradicms_etl.models._named_model import _NamedModel
-from paradicms_etl.models.opaque_named_model import OpaqueNamedModel
+from paradicms_etl.models.image import Image
+from paradicms_etl.models.person import Person
+from paradicms_etl.models.work import Work
 from paradicms_etl.transformers.markdown_directory_transformer import (
     MarkdownDirectoryTransformer,
 )
@@ -20,36 +22,19 @@ def test_transform():
     )
     assert models
     for model in models:
-        assert isinstance(model, _NamedModel) or isinstance(
-            model, OpaqueNamedModel
-        ), type(model)
+        assert isinstance(model, _NamedModel), type(model)
 
-    # works = [
-    #     model
-    #     for model in models
-    #     if isinstance(model, OpaqueNamedModel) and model.type == CMS.Work
-    # ]
-    # assert len(works) == 2
-    # found_work = False
-    # for work in works:
-    #     if work.resource.value(DCTERMS.title, Literal("Test work 1")) is not None:
-    #         found_work = True
-    #         break
-    # assert found_work
-    #
-    # images = [model for model in models if isinstance(model, Image)]
-    # assert len(images) == 1
-    # image = images[0]
-    # assert image.depicts_uri == work_.uri
-    #
-    # people = [
-    #     model
-    #     for model in models
-    #     if isinstance(model, OpaqueNamedModel) and model.type == CMS.Person
-    # ]
-    # assert len(people) == 1
-    # person = people[0]
-    # assert any(
-    #     property_.uri == FOAF.name and property_.value == Literal("Test person")
-    #     for property_ in person.properties
-    # )
+    works = [model for model in models if isinstance(model, Work)]
+    assert len(works) == 2
+    work = next(filter(lambda work: work.title == "Test work 1", works), None)
+    assert work
+
+    images = [model for model in models if isinstance(model, Image)]
+    assert len(images) == 1
+    image = images[0]
+    assert image.depicts_uri == work.uri
+
+    people = [model for model in models if isinstance(model, Person)]
+    assert len(people) == 1
+    person = people[0]
+    assert person.name == "Test person"

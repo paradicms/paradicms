@@ -109,7 +109,7 @@ class LunaTransformer(_Transformer):
         luna_collection: Dict[str, str],
     ) -> Collection:
         description = luna_collection.get("description", "").strip()
-        return Collection(
+        return Collection.from_fields(
             abstract=description if description else None,
             institution_uri=institution.uri,
             title=luna_collection["name"],
@@ -121,7 +121,7 @@ class LunaTransformer(_Transformer):
     def _transform_institution(
         self, *, base_url: str, institution_name: str
     ) -> Institution:
-        return Institution(name=institution_name, uri=URIRef(base_url))
+        return Institution.from_fields(name=institution_name, uri=URIRef(base_url))
 
     def _transform_object(
         self,
@@ -161,7 +161,7 @@ class LunaTransformer(_Transformer):
 
         properties = self._transform_object_field_values(field_values=field_values_dict)
 
-        work_ = Work(
+        work_ = Work.from_fields(
             abstract=description,
             collection_uris=collection_uris,
             institution_uri=institution.uri,
@@ -297,7 +297,7 @@ class LunaTransformer(_Transformer):
         for url_size_i, image_url in enumerate(image_urls):
             image_dimension_max = self.__URL_SIZES[url_size_i]
             image_uri = URIRef(image_url)
-            yield Image(
+            yield Image.from_fields(
                 created=image_created,
                 depicts_uri=work_.uri,
                 max_dimensions=ImageDimensions(
