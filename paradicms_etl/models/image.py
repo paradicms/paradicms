@@ -77,7 +77,8 @@ class Image(_NamedModel):
 
     @property
     def copyable(self) -> bool:
-        return self._required_bool_value(CMS.imageCopyable)
+        copyable = self._optional_bool_value(CMS.imageCopyable)
+        return copyable if copyable is not None else True
 
     @property
     def depicts_uri(self) -> URIRef:

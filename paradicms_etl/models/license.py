@@ -20,19 +20,19 @@ class License(_NamedModel):
         cls, *, identifier: str, title: str, uri: URIRef, version: Optional[str] = None
     ):
         resource = cls._create_resource(identifier=uri)
-        resource.add(DCTERMS.identifier, Literal(identifier))
-        resource.add(DCTERMS.title, Literal(title))
+        resource.add(DC.identifier, Literal(identifier))
+        resource.add(DC.title, Literal(title))
         if version is not None:
             resource.add(DCTERMS.hasVersion, Literal(version))
         return cls(resource)
 
     @property
     def identifier(self) -> str:
-        return self._required_str_value((DC.identifier, DCTERMS.identifier))
+        return self._required_str_value(DC.identifier)
 
     @property
     def title(self) -> str:
-        return self._required_str_value((DC.title, DCTERMS.title))
+        return self._required_str_value(DC.title)
 
     @property
     def version(self) -> Optional[str]:
