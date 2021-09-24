@@ -466,7 +466,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                         assert isinstance(
                             image_file_entry, MarkdownDirectory.ImageFileEntry
                         )
-                        image.replace(src=image_file_entry.path.as_uri())
+                        image = image.replace(src=image_file_entry.path.as_uri())
 
                 self.__buffer_transformed_model(
                     model_id=markdown_file_entry.model_id,
@@ -592,6 +592,8 @@ class MarkdownDirectoryTransformer(_Transformer):
                 model_type,
                 markdown_file_entries,
             ) in self.__untransformed_markdown_file_entries_by_model_type.items():
+                if model_type == self.__IMAGE_MODEL_TYPE:
+                    continue
                 for markdown_file_entry in markdown_file_entries:
                     self.__buffer_transformed_model(
                         model_id=markdown_file_entry.model_id,
