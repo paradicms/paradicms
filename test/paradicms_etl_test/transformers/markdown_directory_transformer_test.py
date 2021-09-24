@@ -1,3 +1,5 @@
+from rdflib import URIRef
+
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.person import Person
@@ -24,15 +26,16 @@ def test_transform():
     for model in models:
         assert isinstance(model, _NamedModel), type(model)
 
-    works = [model for model in models if isinstance(model, Work)]
+    works = {model.uri: model for model in models if isinstance(model, Work)}
     assert len(works) == 2
-    work = next(filter(lambda work: work.title == "Test work 1", works), None)
-    assert work
+    work1 = works[URIRef("urn:markdown:test:work:test_work1")]
+    work2 = works[URIRef("urn:markdown:test:work:test_work2")]
 
-    images = [model for model in models if isinstance(model, Image)]
-    assert len(images) == 1
-    image = images[0]
-    assert image.depicts_uri == work.uri
+    images = {model.uri: model for model in models if isinstance(model, Image)}
+    assert len(images) == 2
+    assert images[URIRef("urn:markdown:test:image:test_work1")].depicts_uri == work1.uri
+    assert images[URIRef("urn:markdown:test:image:test_work2")].depicts_uri == work2.uri
+    assert images[URIRef("urn:markdown:test:image:test_work2")].src
 
     people = [model for model in models if isinstance(model, Person)]
     assert len(people) == 1
