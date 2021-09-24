@@ -31,6 +31,7 @@ class MarkdownDirectoryExtractor(_Extractor):
                 file_name = Path(file_name)
                 file_path = dir_path / file_name
                 model_id = str(file_name.stem)
+
                 if file_name.suffix == ".md":
                     with open(file_path) as md_file:
                         markdown_source = md_file.read()
@@ -41,29 +42,26 @@ class MarkdownDirectoryExtractor(_Extractor):
                             model_type=model_type,
                         )
                     )
-                elif model_type == "image":
-                    try:
-                        with Image.open(str(file_path)) as image:
-                            image_format = image.format
-                    except UnidentifiedImageError:
-                        self._logger.warning(
-                            "non-Markdown, non-image file in Markdown directory: %s",
-                            file_path,
-                        )
-                        continue
-                    image_file_entries.append(
-                        MarkdownDirectory.ImageFileEntry(
-                            mime_type="image/" + image_format.lower(),
-                            model_id=model_id,
-                            path=file_path,
-                        )
-                    )
-                else:
+                    continue
+
+                try:
+                    with Image.open(str(file_path)) as image:
+                        image_format = image.format
+                except UnidentifiedImageError:
                     self._logger.warning(
                         "non-Markdown, non-image file in Markdown directory: %s",
                         file_path,
                     )
                     continue
+
+                image_file_entries.append(
+                    MarkdownDirectory.ImageFileEntry(
+                        mime_type="image/" + image_format.lower(),
+                        model_id=model_id,
+                        model_type=model_type,
+                        path=file_path,
+                    )
+                )
         return {
             "markdown_directory": MarkdownDirectory(
                 image_file_entries=tuple(image_file_entries),
