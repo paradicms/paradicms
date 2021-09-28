@@ -384,6 +384,12 @@ class MarkdownDirectoryTransformer(_Transformer):
                         markdown_file_entry
                     )
                 )
+                if collection_resource.value(DCTERMS.title) is None:
+                    collection_resource.add(
+                        rdflib.namespace.FOAF.depicts,
+                        Literal(markdown_file_entry.model_id),
+                    )
+
                 collection = self.__transform_resource_to_model(
                     model_resource=collection_resource,
                     model_type=markdown_file_entry.model_type,
@@ -418,13 +424,13 @@ class MarkdownDirectoryTransformer(_Transformer):
             ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
                 self.__IMAGE_MODEL_TYPE, tuple()
             ):
-                model_resource = self.__set_resource_institution_uri(
+                image_resource = self.__set_resource_institution_uri(
                     self.__transform_markdown_file_entry_to_resource(
                         markdown_file_entry
                     )
                 )
 
-                if model_resource.value(rdflib.namespace.FOAF.depicts) is None:
+                if image_resource.value(rdflib.namespace.FOAF.depicts) is None:
                     # If the .md image metadata has no depicts but its model_id corresponds with a model_id of another type,
                     # synthesize a depicts.
                     for (
@@ -442,7 +448,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                                 markdown_file_entry.model_id,
                             )
                             continue
-                        model_resource.add(
+                        image_resource.add(
                             rdflib.namespace.FOAF.depicts, transformed_model.uri
                         )
                         self.__logger.debug(
@@ -452,7 +458,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                         )
                         break
 
-                image = Image.from_rdf(resource=model_resource)
+                image = Image.from_rdf(resource=image_resource)
 
                 # If the .md image metadata has no src and there is a sibling image file (i.e., a .jpg) with the same model id (i.e., file stem) as the Markdown file,
                 # use that image file as the src.
@@ -528,10 +534,17 @@ class MarkdownDirectoryTransformer(_Transformer):
             ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
                 self.__INSTITUTION_MODEL_TYPE, tuple()
             ):
+                institution_resource = self.__transform_markdown_file_entry_to_resource(
+                    markdown_file_entry
+                )
+                if institution_resource.value(rdflib.namespace.FOAF.name) is None:
+                    institution_resource.add(
+                        rdflib.namespace.FOAF.name,
+                        Literal(markdown_file_entry.model_id),
+                    )
+
                 institution = self.__transform_resource_to_model(
-                    model_resource=self.__transform_markdown_file_entry_to_resource(
-                        markdown_file_entry
-                    ),
+                    model_resource=institution_resource,
                     model_type=markdown_file_entry.model_type,
                 )
                 if self.__default_institution is None:
@@ -577,6 +590,11 @@ class MarkdownDirectoryTransformer(_Transformer):
                         CMS.collection,
                         self.__get_or_synthesize_default_collection().uri,
                     )
+                if work_resource.value(DCTERMS.title) is None:
+                    work_resource.add(
+                        DCTERMS.title, Literal(markdown_file_entry.model_id)
+                    )
+
                 work_ = self.__transform_resource_to_model(
                     model_resource=work_resource,
                     model_type=markdown_file_entry.model_type,
