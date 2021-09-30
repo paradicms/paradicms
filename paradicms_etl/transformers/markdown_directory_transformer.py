@@ -329,11 +329,11 @@ class MarkdownDirectoryTransformer(_Transformer):
 
         def __get_or_synthesize_default_collection(self) -> Collection:
             if self.__default_collection is None:
-                model_id = "default"
+                model_id = self.__markdown_directory.name
                 model_type = self.__COLLECTION_MODEL_TYPE
                 self.__default_collection = Collection.from_fields(
                     institution_uri=self.__get_or_synthesize_default_institution().uri,
-                    title="Default collection",
+                    title=self.__markdown_directory.name,
                     uri=MarkdownDirectoryTransformer.model_uri(
                         pipeline_id=self.__pipeline_id,
                         model_type=model_type,
@@ -345,6 +345,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                     model_type=model_type,
                     transformed_model=self.__default_collection,
                 )
+                self.__logger.info("synthesized default collection %s", model_id)
             return self.__default_collection
 
         def __get_or_synthesize_default_institution(self) -> Institution:
