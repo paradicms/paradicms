@@ -1,5 +1,5 @@
 name: Build
-on: [ push, workflow_dispatch ]
+on: [push, workflow_dispatch]
 jobs:
   build:
     name: Build and test
@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/setup-python@v2
         with:
-          python-version: '3.9.x'
+          python-version: "3.9.x"
       - name: Cache Python dependencies
         uses: actions/cache@v2
         with:
@@ -27,3 +27,10 @@ jobs:
         if: always()
         with:
           files: test-results/*.xml
+      - name: Repository dispatch to gui
+        uses: peter-evans/repository-dispatch@v1
+        if: github.ref == 'refs/heads/master'
+        with:
+          event-type: etl-build-event
+          repository: paradicms/gui
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
