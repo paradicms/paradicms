@@ -16,7 +16,7 @@ class MarkdownDirectoryExtractor(_Extractor):
     person/id2.md
     other/id.md
 
-    Returns a dict of {"markdown": {"person": {"id1": contents, "id2": contents}, "work": {"id1", contents, "id2": contents}, "other": {"id": contents}}}
+    into a MarkdownDirectory dataclass.
     """
 
     def extract(self, **kwds):
@@ -66,5 +66,6 @@ class MarkdownDirectoryExtractor(_Extractor):
             "markdown_directory": MarkdownDirectory(
                 image_file_entries=tuple(image_file_entries),
                 markdown_file_entries=tuple(markdown_file_entries),
+                name=str(root_dir_path.name),
             )
         }

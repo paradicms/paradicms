@@ -20,3 +20,4 @@ class MarkdownDirectory:
 
     image_file_entries: Tuple[ImageFileEntry, ...]
     markdown_file_entries: Tuple[MarkdownFileEntry, ...]
+    name: str
