@@ -1,5 +1,9 @@
 name: Build
-on: [ push, workflow_dispatch ]
+on:
+  push:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [etl-build-event]
 jobs:
   build:
     name: Build and test gui
@@ -22,7 +26,7 @@ jobs:
           path: gui
       - uses: actions/setup-node@v2
         with:
-          node-version: '12'
+          node-version: "12"
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
