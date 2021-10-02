@@ -107,7 +107,7 @@ class TestDataPipeline(_Pipeline):
         def transform(self):
             yield from CreativeCommonsLicenses.as_tuple()
             yield from DublinCorePropertyDefinitions.as_tuple()
-            yield from RightsStatementsDotOrgRightsStatements.as_tuple()
+            yield RightsStatementsDotOrgRightsStatements.InC_EDU
             yield from VraCorePropertyDefinitions.as_tuple()
 
             yield from self.__generate_property_definitions()

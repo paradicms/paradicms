@@ -1,4 +1,4 @@
-from typing import Generator, Set
+from typing import Generator, Optional, Set
 
 from rdflib import URIRef
 from stringcase import snakecase
@@ -9,6 +9,11 @@ from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
+from paradicms_etl.models.license import License
+from paradicms_etl.models.property_definition import PropertyDefinition
+from paradicms_etl.models.property_value_definition import PropertyValueDefinition
+from paradicms_etl.models.rights import Rights
+from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.work import Work
 
 
@@ -19,15 +24,20 @@ class ValidationTransformer(_Transformer):
 
     class __Validator:
         def __init__(self, logger):
-            self.__collections_by_uri = {}
+            self.__collection_uris = set()
             self.__image_depicts_uris = set()
-            self.__institutions_by_uri = {}
-            self.__property_definitions_by_uri = {}
+            self.__institution_uris = set()
+            self.__license_uris = set()
             self.__logger = logger
             self.__model_uris = set()
+            self.__property_definition_uris = set()
             self.__referenced_collection_uris = set()
             self.__referenced_institution_uris = set()
-            self.__works_by_uri = {}
+            self.__referenced_license_uris = set()
+            self.__referenced_property_definition_uris = set()
+            self.__referenced_rights_statement_uris = set()
+            self.__rights_statement_uris = set()
+            self.__work_uris = set()
 
         def validate(
             self, models: Generator[_Model, None, None]
@@ -49,7 +59,7 @@ class ValidationTransformer(_Transformer):
                     validate_method = getattr(self, validate_method_name)
                 except AttributeError:
                     if validate_method_name not in missing_method_names:
-                        self.__logger.debug("missing %s method", validate_method_name)
+                        self.__logger.warning("missing %s method", validate_method_name)
                         missing_method_names.add(validate_method_name)
                     validate_method = None
 
@@ -66,9 +76,9 @@ class ValidationTransformer(_Transformer):
                     validate_references_method = getattr(
                         self, validate_references_method_name
                     )
-                except:
+                except AttributeError:
                     if validate_references_method_name not in missing_method_names:
-                        self.__logger.debug(
+                        self.__logger.warning(
                             "missing %s method", validate_references_method_name
                         )
                         missing_method_names.add(validate_references_method_name)
@@ -78,36 +88,46 @@ class ValidationTransformer(_Transformer):
                     validate_references_method()
 
         def _validate_collection(self, collection: Collection):
-            assert collection.uri not in self.__collections_by_uri
-            self.__collections_by_uri[collection.uri] = collection
+            assert collection.uri not in self.__collection_uris
+            self.__collection_uris.add(collection.uri)
             self.__referenced_institution_uris.add(collection.institution_uri)
 
         def _validate_collection_references(self):
             self.__validate_uri_references(
                 referenced_uris=self.__referenced_collection_uris,
-                universe_uris=set(self.__collections_by_uri.keys()),
+                universe_uris=self.__collection_uris,
                 uri_type="collection",
             )
 
         def _validate_image(self, image: Image):
             self.__image_depicts_uris.add(image.depicts_uri)
+            self.__validate_rights(image.rights)
 
-        # def _validate_image_references(self):
-        # check_uri_references(
-        #     referenced_uris=image_depicts_uris,
-        #     universe_uris=model_uris,
-        #     uri_type="image depicts",
-        # )
+        def _validate_image_references(self):
+            pass
 
         def _validate_institution(self, institution: Institution):
-            assert institution.uri not in self.__institutions_by_uri
-            self.__institutions_by_uri[institution.uri] = institution
+            assert institution.uri not in self.__institution_uris
+            self.__institution_uris.add(institution.uri)
+            self.__validate_rights(institution.rights)
 
         def _validate_institution_references(self):
             self.__validate_uri_references(
                 referenced_uris=self.__referenced_institution_uris,
-                universe_uris=set(self.__institutions_by_uri.keys()),
+                universe_uris=self.__institution_uris,
                 uri_type="institution",
+            )
+
+        def _validate_license(self, license: License):
+            assert license.uri not in self.__license_uris
+            self.__license_uris.add(license.uri)
+
+        def _validate_license_references(self):
+            self.__validate_uri_references(
+                referenced_uris=self.__referenced_license_uris,
+                universe_uris=self.__license_uris,
+                uri_type="license",
+                warn=False,
             )
 
         def _validate_named_model(self, model: _NamedModel):
@@ -117,25 +137,47 @@ class ValidationTransformer(_Transformer):
                 # elif not isinstance(model, PropertyDefinition):
                 raise ValueError(f"duplicate model URI: {model.uri}")
 
-        # def _validate_property_definition(self, property_definition: PropertyDefinition):
-        #     existing_property_definition = self.__property_definitions_by_uri.get(
-        #         property_definition.uri
-        #     )
-        #     if existing_property_definition is not None:
-        #         if property_definition != existing_property_definition:
-        #             raise ValueError(
-        #                 f"conflicting definition of property {property_definition.uri}: {property_definition} vs. {existing_property_definition}"
-        #             )
-        #         self._logger.info(
-        #             "ignoring exact duplicate property definition for %s",
-        #             property_definition.uri,
-        #         )
-        #         continue  # Don't yield twice
-        #     else:
-        #         property_definitions_by_uri[
-        #             property_definition.uri
-        #         ] = property_definition
-        #     pass
+        def _validate_property_definition(
+            self, property_definition: PropertyDefinition
+        ):
+            assert property_definition.uri not in self.__property_definition_uris
+            self.__property_definition_uris.add(property_definition.uri)
+
+        def _validate_property_definition_references(self):
+            self.__validate_uri_references(
+                referenced_uris=self.__referenced_property_definition_uris,
+                universe_uris=self.__property_definition_uris,
+                uri_type="property definition",
+                warn=False,
+            )
+
+        def _validate_property_value_definition(
+            self, property_value_definition: PropertyValueDefinition
+        ):
+            for property_uri in property_value_definition.property_uris:
+                self.__referenced_property_definition_uris.add(property_uri)
+
+        def _validate_property_value_definition_references(self):
+            pass
+
+        def __validate_rights(self, rights: Optional[Rights]):
+            if rights is None:
+                return
+            if isinstance(rights.license, URIRef):
+                self.__referenced_license_uris.add(rights.license)
+            if isinstance(rights.statement, URIRef):
+                self.__referenced_rights_statement_uris.add(rights.statement)
+
+        def _validate_rights_statement(self, rights_statement: RightsStatement):
+            assert rights_statement.uri not in self.__rights_statement_uris
+            self.__rights_statement_uris.add(rights_statement.uri)
+
+        def _validate_rights_statement_references(self):
+            self.__validate_uri_references(
+                referenced_uris=self.__referenced_rights_statement_uris,
+                universe_uris=self.__rights_statement_uris,
+                uri_type="rights statement",
+            )
 
         def __validate_uri_references(
             self,
@@ -143,16 +185,17 @@ class ValidationTransformer(_Transformer):
             referenced_uris: Set[URIRef],
             universe_uris: Set[URIRef],
             uri_type: str,
+            warn: bool = True,
         ):
             if universe_uris.intersection(referenced_uris) != len(universe_uris):
                 for referenced_uri in referenced_uris:
                     if referenced_uri not in universe_uris:
                         raise ValueError(
-                            f"dangling {uri_type} URI reference: {referenced_uri} (universe: {universe_uris})"
+                            f"dangling {uri_type} URI reference: {referenced_uri} (universe: {' '.join(sorted(universe_uris))})"
                         )
                 for universe_uri in universe_uris:
                     if universe_uri not in referenced_uris:
-                        self.__logger.warning(
+                        (self.__logger.warning if warn else self.__logger.debug)(
                             f"unreferenced {uri_type} URI: %s", universe_uri
                         )
 
@@ -160,8 +203,12 @@ class ValidationTransformer(_Transformer):
             for collection_uri in work.collection_uris:
                 self.__referenced_collection_uris.add(collection_uri)
             self.__referenced_institution_uris.add(work.institution_uri)
-            assert work.uri not in self.__works_by_uri
-            self.__works_by_uri[work.uri] = work
+            assert work.uri not in self.__work_uris
+            self.__work_uris.add(work.uri)
+            self.__validate_rights(work.rights)
+
+        def _validate_work_references(self):
+            pass
 
     def transform(
         self, models: Generator[_Model, None, None]

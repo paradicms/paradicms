@@ -82,6 +82,11 @@ class _Model:
     def _required_uri_value(self, p: Union[URIRef, Tuple[URIRef, ...]]) -> URIRef:
         return self.__required_value(self.__uri_values(p))
 
+    def _required_uri_values(
+        self, p: Union[URIRef, Tuple[URIRef, ...]]
+    ) -> Tuple[URIRef, ...]:
+        return self.__required_values(self.__uri_values(p))
+
     @staticmethod
     def __required_value(values: Generator[object, None, None]) -> object:
         for value in values:
@@ -115,7 +120,7 @@ class _Model:
     ) -> Generator[URIRef, None, None]:
         for value in self.__values(p):
             if isinstance(value, Resource) and isinstance(value.identifier, URIRef):
-                yield value
+                yield value.identifier
 
     def __values(
         self, p: Union[URIRef, Tuple[URIRef, ...]]

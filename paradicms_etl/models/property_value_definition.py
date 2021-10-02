@@ -26,3 +26,7 @@ class PropertyValueDefinition(_NamedModel):
             resource.add(RDF.predicate, property_uri)
         resource.add(RDF.value, value)
         return cls(resource)
+
+    @property
+    def property_uris(self) -> Tuple[URIRef, ...]:
+        return self._required_uri_values(RDF.predicate)
