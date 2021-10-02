@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Optional, Tuple
 from urllib.parse import quote
 
-from rdflib import Literal, URIRef
+from rdflib import DCTERMS, Literal, URIRef
 
 from paradicms_etl._loader import _Loader
 from paradicms_etl._pipeline import _Pipeline
@@ -19,6 +19,7 @@ from paradicms_etl.models.dublin_core_property_definitions import (
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
+from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_value_definition import PropertyValueDefinition
 from paradicms_etl.models.rights import Rights
@@ -36,10 +37,6 @@ class TestDataPipeline(_Pipeline):
 
     class __TestDataTransformer(_Transformer):
         __FACETED_PROPERTY_DEFINITIONS = (
-            (
-                DublinCorePropertyDefinitions.CREATOR,
-                tuple(f"Creator {i}" for i in range(10)),
-            ),
             (
                 VraCorePropertyDefinitions.CULTURAL_CONTEXT,
                 tuple(f"Cultural context {i}" for i in range(10)),
@@ -112,21 +109,23 @@ class TestDataPipeline(_Pipeline):
 
             yield from self.__generate_property_definitions()
 
-            # yield GuiMetadata(
-            #     bootstrap_stylesheet_href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css",
-            #     document_title="Test data",
-            #     navbar_title="Test data",
-            # )
+            people = tuple(self.__generate_people())
+            yield from people
 
-            yield from self.__generate_institutions()
+            yield from self.__generate_institutions(people=people)
 
         def __generate_collection_works(
-            self, *, collection: Collection, institution: Institution
+            self,
+            *,
+            collection: Collection,
+            institution: Institution,
+            people: Tuple[Person, ...],
         ):
             for work_i in range(self.__works_per_institution):
                 yield from self.__generate_work(
                     collection_uris=(collection.uri,),
                     institution=institution,
+                    people=people,
                     work_i=work_i,
                     title=f"{collection.title}Work{work_i}",
                     uri=URIRef(f"{collection.uri}/work{work_i}"),
@@ -160,7 +159,9 @@ class TestDataPipeline(_Pipeline):
                         ),
                     )
 
-        def __generate_institution_collections(self, institution: Institution):
+        def __generate_institution_collections(
+            self, *, institution: Institution, people: Tuple[Person, ...]
+        ):
             for collection_i in range(self.__collections_per_institution):
                 collection_title = f"{institution.name}Collection{collection_i}"
                 collection = Collection.from_fields(
@@ -179,10 +180,10 @@ class TestDataPipeline(_Pipeline):
                 # For collection 0, force the GUI to use an work image
 
                 yield from self.__generate_collection_works(
-                    collection=collection, institution=institution
+                    collection=collection, institution=institution, people=people
                 )
 
-        def __generate_institutions(self):
+        def __generate_institutions(self, people: Tuple[Person, ...]):
             for institution_i in range(self.__institutions):
                 institution_name = f"Institution{institution_i}"
                 institution = Institution.from_fields(
@@ -204,14 +205,23 @@ class TestDataPipeline(_Pipeline):
 
                 collections = []
                 for model in self.__generate_institution_collections(
-                    institution=institution
+                    institution=institution, people=people
                 ):
                     if isinstance(model, Collection):
                         collections.append(model)
                     yield model
 
                 yield from self.__generate_shared_works(
-                    collections=tuple(collections), institution=institution
+                    collections=tuple(collections),
+                    institution=institution,
+                    people=people,
+                )
+
+        def __generate_people(self):
+            for person_i in range(10):
+                yield Person.from_fields(
+                    name=f"Person {person_i}",
+                    uri=URIRef(f"http://example.com/person{person_i}"),
                 )
 
         def __generate_work(
@@ -219,6 +229,7 @@ class TestDataPipeline(_Pipeline):
             *,
             collection_uris: Tuple[URIRef, ...],
             institution: Institution,
+            people: Tuple[Person, ...],
             work_i: int,
             title: str,
             uri: URIRef,
@@ -269,7 +280,7 @@ class TestDataPipeline(_Pipeline):
                 for date_i in range(2)
             )
 
-            # Faceted properties, which are the same across works
+            # Faceted literal properties, which are the same across works
             for (
                 property_definition,
                 property_values,
@@ -281,6 +292,15 @@ class TestDataPipeline(_Pipeline):
                     )
                     for i in range(2)
                 )
+
+            # dcterms:creator
+            properties.extend(
+                Property(
+                    DublinCorePropertyDefinitions.CREATOR,
+                    people[(work_i + 1) % len(people)].uri,
+                )
+                for i in range(2)
+            )
 
             page = "http://example.com/work/" + str(work_i)
             if work_i % 2 == 0:
@@ -320,6 +340,8 @@ class TestDataPipeline(_Pipeline):
                 property_definition,
                 property_values,
             ) in self.__FACETED_PROPERTY_DEFINITIONS:
+                if property_definition.uri == DCTERMS.creator:
+                    continue
                 for property_value in property_values:
                     property_value_definition = PropertyValueDefinition.from_fields(
                         # label=property_value,
@@ -340,7 +362,11 @@ class TestDataPipeline(_Pipeline):
                     property_value_urn_i += 1
 
         def __generate_shared_works(
-            self, *, collections: Tuple[Collection, ...], institution: Institution
+            self,
+            *,
+            collections: Tuple[Collection, ...],
+            institution: Institution,
+            people: Tuple[Person, ...],
         ):
             for work_i in range(self.__works_per_institution):  # Per institution
                 yield from self.__generate_work(
@@ -348,6 +374,7 @@ class TestDataPipeline(_Pipeline):
                         map(lambda collection: collection.uri, collections)
                     ),
                     institution=institution,
+                    people=people,
                     work_i=work_i,
                     title=f"{institution.name}SharedWork{work_i}",
                     uri=URIRef(f"{institution.uri}/shared/work{work_i}"),
