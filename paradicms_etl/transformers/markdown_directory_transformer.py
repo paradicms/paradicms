@@ -34,6 +34,21 @@ from paradicms_etl.models.work import Work
 from paradicms_etl.namespace import CMS
 
 
+def _create_namespaces_by_prefix_default() -> Dict[str, rdflib.Namespace]:
+    namespaces_by_prefix = {}
+    for namespace_module in (rdflib.namespace, paradicms_etl.namespace):
+        for attr in dir(namespace_module):
+            if attr.upper() != attr:
+                continue
+            value = getattr(namespace_module, attr)
+            if not isinstance(value, rdflib.Namespace) and not isinstance(
+                value, rdflib.namespace.ClosedNamespace
+            ):
+                continue
+            namespaces_by_prefix[attr.lower()] = value
+    return namespaces_by_prefix
+
+
 class MarkdownDirectoryTransformer(_Transformer):
     """
     Transform a directory of Markdown files to a set of models.
@@ -57,32 +72,22 @@ class MarkdownDirectoryTransformer(_Transformer):
     3. Transform the RDF graph to a model.
     """
 
+    NAMESPACES_BY_PREFIX_DEFAULT = _create_namespaces_by_prefix_default()
+
     class _MarkdownToResourceTransformer:
         def __init__(
             self,
             *,
+            default_namespace: rdflib.Namespace,
             markdown_it: MarkdownIt,
             model_uri: URIRef,
+            namespaces_by_prefix: Dict[str, rdflib.Namespace],
             pipeline_id: str,
-            default_namespace: rdflib.Namespace = DCTERMS,
-            namespaces_by_prefix: Optional[Dict[str, rdflib.Namespace]] = None,
         ):
             self.__current_heading_id = None
             self.__markdown_it = markdown_it
             self.__default_namespace = default_namespace
-            if namespaces_by_prefix is None:
-                namespaces_by_prefix = {}
-                for namespace_module in (rdflib.namespace, paradicms_etl.namespace):
-                    for attr in dir(namespace_module):
-                        if attr.upper() != attr:
-                            continue
-                        value = getattr(namespace_module, attr)
-                        if not isinstance(value, rdflib.Namespace) and not isinstance(
-                            value, rdflib.namespace.ClosedNamespace
-                        ):
-                            continue
-                        namespaces_by_prefix[attr.lower()] = value
-            self.__namespaces_by_prefix = namespaces_by_prefix.copy()
+            self.__namespaces_by_prefix = namespaces_by_prefix
             self.__pipeline_id = pipeline_id
             self.__result = Graph().resource(model_uri)
 
@@ -239,6 +244,8 @@ class MarkdownDirectoryTransformer(_Transformer):
         self,
         default_institution: Optional[Institution] = None,
         default_collection: Optional[Collection] = None,
+        default_namespace=DCTERMS,
+        namespaces_by_prefix: Optional[Dict[str, rdflib.Namespace]] = None,
         **kwds,
     ):
         _Transformer.__init__(self, **kwds)
@@ -248,6 +255,10 @@ class MarkdownDirectoryTransformer(_Transformer):
             )
         self.__default_collection = default_collection
         self.__default_institution = default_institution
+        self.__default_namespace = default_namespace
+        if namespaces_by_prefix is None:
+            namespaces_by_prefix = self.NAMESPACES_BY_PREFIX_DEFAULT
+        self.__namespaces_by_prefix = namespaces_by_prefix.copy()
 
     @staticmethod
     def model_uri(*, pipeline_id: str, model_type: str, model_id: str) -> URIRef:
@@ -278,18 +289,18 @@ class MarkdownDirectoryTransformer(_Transformer):
             *,
             default_collection: Optional[Collection],
             default_institution: Optional[Institution],
+            default_namespace: rdflib.Namespace,
             logger: Logger,
             markdown_directory: MarkdownDirectory,
+            namespaces_by_prefix: Dict[str, rdflib.Namespace],
             pipeline_id: str,
         ):
-            if default_collection is not None:
-                default_collection = default_collection
             self.__default_collection = default_collection
-            if default_institution is not None:
-                self.__default_institution = default_institution
             self.__default_institution = default_institution
+            self.__default_namespace = default_namespace
             self.__logger = logger
             self.__markdown_directory = markdown_directory
+            self.__namespaces_by_prefix = namespaces_by_prefix
             self.__pipeline_id = pipeline_id
             self.__transformed_models_by_type = {}  # Then by id
             self.__transformed_models_by_uri = {}
@@ -566,11 +577,13 @@ class MarkdownDirectoryTransformer(_Transformer):
         ) -> Resource:
             return MarkdownDirectoryTransformer._MarkdownToResourceTransformer.visit_document(
                 markdown_file_entry.markdown_source,
+                default_namespace=self.__default_namespace,
                 model_uri=MarkdownDirectoryTransformer.model_uri(
                     pipeline_id=self.__pipeline_id,
                     model_type=markdown_file_entry.model_type,
                     model_id=markdown_file_entry.model_id,
                 ),
+                namespaces_by_prefix=self.__namespaces_by_prefix,
                 pipeline_id=self.__pipeline_id,
             )
 
@@ -642,7 +655,9 @@ class MarkdownDirectoryTransformer(_Transformer):
         yield from self.__TransformInvocation(
             default_collection=self.__default_collection,
             default_institution=self.__default_institution,
+            default_namespace=self.__default_namespace,
             logger=self._logger,
             markdown_directory=markdown_directory,
+            namespaces_by_prefix=self.__namespaces_by_prefix,
             pipeline_id=self._pipeline_id,
         )()
