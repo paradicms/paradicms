@@ -80,16 +80,19 @@ class MarkdownDirectoryTransformer(_Transformer):
             *,
             default_namespace: rdflib.Namespace,
             markdown_it: MarkdownIt,
-            model_uri: URIRef,
+            model_id: str,
+            model_type: str,
             namespaces_by_prefix: Dict[str, rdflib.Namespace],
             pipeline_id: str,
         ):
             self.__current_heading_id = None
             self.__markdown_it = markdown_it
             self.__default_namespace = default_namespace
+            self.__model_id = model_id
+            self.__model_type = model_type
             self.__namespaces_by_prefix = namespaces_by_prefix
             self.__pipeline_id = pipeline_id
-            self.__result = Graph().resource(model_uri)
+            self.__result = None  # Create lazily
 
         def _convert_front_matter_value_to_rdf_node(
             self, value: object
@@ -152,17 +155,58 @@ class MarkdownDirectoryTransformer(_Transformer):
                 .strip()
             )
 
+        @property
+        def _result(self) -> Resource:
+            """
+            Lazily create the result rdflib Resource.
+
+            The front matter can specify an identifier (URIRef) for the Resource, in which case the
+            front matter visitor preemptively creates the result rdflib Resource.
+
+            If the
+            """
+            if self.__result is None:
+                model_uri = MarkdownDirectoryTransformer.model_uri(
+                    pipeline_id=self.__pipeline_id,
+                    model_type=self.__model_type,
+                    model_id=self.__model_id,
+                )
+                self.__result = Graph().resource(model_uri)
+            return self.__result
+
         def _visit_front_matter_node(self, front_matter_node: SyntaxTreeNode):
             front_matter_dict = yaml.load(
                 front_matter_node.content, Loader=yaml.FullLoader
             )
+
+            # Buffer the statements so that we can handle the model's URI first
+            front_matter_statements = []
             for key, value in front_matter_dict.items():
                 property_uri = self._convert_key_to_property_uri(key)
                 value_nodes = self._convert_front_matter_value_to_rdf_node(value)
                 if isinstance(value_nodes, Node):
                     value_nodes = (value_nodes,)
+
+                if property_uri == rdflib.RDF.subject:
+                    # Front matter specifies the model's URI
+                    # Preemptively create the result rdflib Resource so it doesn't use the default URI (synthesized from the model id and type)
+                    if self.__result is not None:
+                        raise ValueError("only one subject URI can be specified")
+                    if len(value_nodes) > 1:
+                        raise ValueError("only one subject URI can be specified")
+                    if not isinstance(value_nodes[0], URIRef):
+                        raise TypeError(
+                            "subject URI must be a URIRef, not a "
+                            + type(value_nodes[0])
+                        )
+                    self.__result = Graph().resource(value_nodes[0])
+                    continue
+
                 for value_node in value_nodes:
-                    self.__result.add(property_uri, value_node)
+                    front_matter_statements.append((property_uri, value_node))
+
+            for property_uri, value_node in front_matter_statements:
+                self._result.add(property_uri, value_node)
 
         def _visit_heading_node(self, heading_node: SyntaxTreeNode):
             if len(heading_node.children) != 1:
@@ -209,16 +253,16 @@ class MarkdownDirectoryTransformer(_Transformer):
 
             property_uri = self._convert_key_to_property_uri(key)
 
-            existing_value = self.__result.value(property_uri)
+            existing_value = self._result.value(property_uri)
             if existing_value is None:
-                self.__result.add(property_uri, Literal(html))
+                self._result.add(property_uri, Literal(html))
             elif isinstance(existing_value, Literal):
                 # Concatenate multiple paragraphs under the same header
-                self.__result.set(
+                self._result.set(
                     property_uri, Literal(existing_value.toPython() + html)
                 )
             else:
-                self.__result.set(property_uri, Literal(html))
+                self._result.set(property_uri, Literal(html))
 
         @classmethod
         def visit_document(cls, markdown: str, **kwds) -> Resource:
@@ -578,11 +622,8 @@ class MarkdownDirectoryTransformer(_Transformer):
             return MarkdownDirectoryTransformer._MarkdownToResourceTransformer.visit_document(
                 markdown_file_entry.markdown_source,
                 default_namespace=self.__default_namespace,
-                model_uri=MarkdownDirectoryTransformer.model_uri(
-                    pipeline_id=self.__pipeline_id,
-                    model_type=markdown_file_entry.model_type,
-                    model_id=markdown_file_entry.model_id,
-                ),
+                model_id=markdown_file_entry.model_id,
+                model_type=markdown_file_entry.model_type,
                 namespaces_by_prefix=self.__namespaces_by_prefix,
                 pipeline_id=self.__pipeline_id,
             )
@@ -628,15 +669,24 @@ class MarkdownDirectoryTransformer(_Transformer):
                 if model_type == self.__IMAGE_MODEL_TYPE:
                     continue
                 for markdown_file_entry in markdown_file_entries:
+                    model_resource = self.__transform_markdown_file_entry_to_resource(
+                        markdown_file_entry
+                    )
+                    try:
+                        transformed_model = self.__transform_resource_to_model(
+                            model_resource=model_resource,
+                            model_type=markdown_file_entry.model_type,
+                        )
+                    except KeyError:
+                        self.__logger.warning(
+                            "unknown model type: %s", markdown_file_entry.model_type
+                        )
+                        continue
+
                     self.__buffer_transformed_model(
                         model_id=markdown_file_entry.model_id,
                         model_type=markdown_file_entry.model_type,
-                        transformed_model=self.__transform_resource_to_model(
-                            model_resource=self.__transform_markdown_file_entry_to_resource(
-                                markdown_file_entry
-                            ),
-                            model_type=markdown_file_entry.model_type,
-                        ),
+                        transformed_model=transformed_model,
                     )
 
         def __transform_resource_to_model(

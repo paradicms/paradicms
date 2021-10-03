@@ -10,7 +10,7 @@ from paradicms_etl.transformers.markdown_directory_transformer import (
 )
 
 
-class MarkdownDirectoryPipeline(_Pipeline):
+class __MarkdownDirectoryPipeline(_Pipeline):
     ID = "markdown_directory"
 
     def __init__(self, data_dir_path: Path):
@@ -30,13 +30,13 @@ def test_extract_transform_load():
     data_dir_path = Path(__file__).absolute().parent.parent.parent.parent / "data"
     data_ttl_file_path = (
         data_dir_path
-        / MarkdownDirectoryPipeline.ID
+        / __MarkdownDirectoryPipeline.ID
         / "loaded"
         / "markdown_directory.ttl"
     )
     data_ttl_file_path.unlink(missing_ok=True)
 
-    MarkdownDirectoryPipeline(data_dir_path=data_dir_path).extract_transform_load(
+    __MarkdownDirectoryPipeline(data_dir_path=data_dir_path).extract_transform_load(
         force_extract=False
     )
 
