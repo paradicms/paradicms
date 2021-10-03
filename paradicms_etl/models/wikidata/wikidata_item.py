@@ -232,6 +232,10 @@ class WikidataItem(_NamedModel):
         )
 
     @property
+    def label(self):
+        return self.labels.pref_label
+
+    @property
     def labels(self) -> WikidataItemLabels:
         return self.__labels
 

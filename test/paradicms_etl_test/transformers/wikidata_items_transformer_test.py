@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 
 from paradicms_etl.extractors.wikidata_qid_extractor import WikidataQidExtractor
+from paradicms_etl.models.person import Person
 from paradicms_etl.transformers.wikidata_items_transformer import (
     WikidataItemsTransformer,
 )
@@ -19,4 +20,13 @@ def test_transform(tmpdir):
 
     sut = WikidataItemsTransformer(pipeline_id="test")
     models = tuple(sut.transform(graph=graph))
-    assert models
+    assert len(models) == 2
+    people = tuple(
+        sorted(
+            (person for person in models if isinstance(person, Person)),
+            key=lambda person: person.label,
+        )
+    )
+    assert len(people) == 2
+    assert people[0].name == "Jack Kerouac"
+    assert people[1].name == "Neal Cassady"
