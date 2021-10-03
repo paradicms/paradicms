@@ -271,7 +271,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             ast = SyntaxTreeNode(tokens)
             inst = cls(markdown_it=markdown_it, **kwds)
             inst._visit_node(ast)
-            return inst.__result
+            return inst._result
 
         def _visit_node(self, node: SyntaxTreeNode):
             try:
