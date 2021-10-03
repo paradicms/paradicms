@@ -1,8 +1,10 @@
 from logging import Logger
-from typing import Dict, List, NamedTuple, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
-from rdflib import Graph, Literal, RDF, RDFS, SKOS, URIRef
+from rdflib import Graph, Literal, RDF, RDFS, SKOS
+from rdflib.resource import Resource
 
+from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.wikidata.wikidata_direct_claim import WikidataDirectClaim
 from paradicms_etl.models.wikidata.wikidata_full_statement import WikidataFullStatement
 from paradicms_etl.models.wikidata.wikidata_item_labels import WikidataItemLabels
@@ -14,16 +16,28 @@ from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
 from paradicms_etl.namespace import SCHEMA
 
 
-class WikidataItem(NamedTuple):
-    labels: WikidataItemLabels
-    statements: Tuple[WikidataStatement, ...]
-    uri: URIRef
-    description: Optional[str] = None
+class WikidataItem(_NamedModel):
+    def __init__(
+        self,
+        *,
+        description: Optional[str],
+        labels: WikidataItemLabels,
+        statements: Tuple[WikidataStatement, ...],
+        resource: Resource,
+    ):
+        _NamedModel.__init__(self, resource=resource)
+        self.__description = description
+        self.__labels = labels
+        self.__statements = statements
 
     def __eq__(self, other):
         if not isinstance(other, WikidataItem):
             return False
         return self.uri == other.uri
+
+    @property
+    def description(self) -> Optional[str]:
+        return self.__description
 
     @classmethod
     def from_rdf(
@@ -44,10 +58,9 @@ class WikidataItem(NamedTuple):
         for item_subject in graph.subjects(predicate=RDF.type, object=WIKIBASE.Item):
             items.append(
                 cls.__from_rdf(
-                    graph=graph,
                     logger=logger,
                     property_definitions=property_definitions,
-                    uri=item_subject,
+                    resource=graph.resource(item_subject),
                 )
             )
 
@@ -91,10 +104,9 @@ class WikidataItem(NamedTuple):
     def __from_rdf(
         cls,
         *,
-        graph: Graph,
         logger: Logger,
         property_definitions: Tuple[WikidataPropertyDefinition, ...],
-        uri: URIRef,
+        resource: Resource,
     ):
         """
         Read the item corresponding to the given URI.
@@ -108,13 +120,21 @@ class WikidataItem(NamedTuple):
 
         direct_claims = []
         full_statements = []
-        for predicate, object_ in graph.predicate_objects(subject=uri):
+        for predicate, object_ in resource.graph.predicate_objects(
+            subject=resource.identifier
+        ):
             if predicate in IGNORE_PREDICATES:
-                logger.debug("item %s: ignoring predicate %s", uri, predicate)
+                logger.debug(
+                    "item %s: ignoring predicate %s", resource.identifier, predicate
+                )
                 continue
 
             if isinstance(object_, Literal) and object_.language != "en":
-                logger.debug("item %s: ignoring non-English literal: %s", uri, object_)
+                logger.debug(
+                    "item %s: ignoring non-English literal: %s",
+                    resource.identifier,
+                    object_,
+                )
                 continue
 
             if predicate == SKOS.altLabel:
@@ -137,10 +157,9 @@ class WikidataItem(NamedTuple):
                 if predicate == property_definition.claim_uri:
                     full_statements.append(
                         WikidataFullStatement.from_rdf(
-                            graph=graph,
                             logger=logger,
                             property_definitions=property_definitions,
-                            uri=object_,
+                            resource=resource.graph.resource(object_),
                         )
                     )
                     added_property = True
@@ -148,11 +167,10 @@ class WikidataItem(NamedTuple):
                 elif predicate == property_definition.direct_claim_uri:
                     direct_claims.append(
                         WikidataDirectClaim.from_rdf(
-                            graph=graph,
                             object_=object_,
                             predicate=predicate,
                             property_definition=property_definition,
-                            subject=uri,
+                            subject=resource.identifier,
                         )
                     )
                     added_property = True
@@ -187,18 +205,18 @@ class WikidataItem(NamedTuple):
             if duplicate:
                 logger.debug(
                     "item %s: direct claim %s has a corresponding full statement, eliding",
-                    uri,
+                    resource.identifier,
                     direct_claim.property_definition.direct_claim_uri,
                 )
             else:
                 logger.debug(
                     "item %s: direct claim %s has no corresponding full statement",
-                    uri,
+                    resource.identifier,
                     direct_claim.property_definition.direct_claim_uri,
                 )
                 statements.append(direct_claim)
 
-        assert pref_label is not None, uri
+        assert pref_label is not None, resource.identifier
 
         return cls(
             description=description,
@@ -206,12 +224,23 @@ class WikidataItem(NamedTuple):
                 alt_labels=tuple(sorted(alt_labels)) if alt_labels else None,
                 pref_label=pref_label,
             ),
+            resource=resource,
             statements=tuple(statements),
-            uri=uri,
         )
+
+    @property
+    def labels(self) -> WikidataItemLabels:
+        return self.__labels
+
+    @property
+    def statements(self) -> Tuple[WikidataStatement, ...]:
+        return self.__statements
 
     def statements_by_property_label(self) -> Dict[str, List[WikidataStatement]]:
         result = {}
         for statement in self.statements:
             result.setdefault(statement.property_definition.label, []).append(statement)
         return result
+
+    def to_rdf(self, graph: Graph) -> Resource:
+        raise NotImplementedError

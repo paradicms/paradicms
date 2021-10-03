@@ -1,11 +1,13 @@
-from typing import NamedTuple, Optional, Tuple
+from dataclasses import dataclass
+from typing import Optional, Tuple
 
 from rdflib import Graph, Literal, RDF, RDFS, URIRef
 
 from paradicms_etl.models.wikidata.wikidata_namespace import WIKIBASE
 
 
-class WikidataPropertyDefinition(NamedTuple):
+@dataclass(frozen=True)
+class WikidataPropertyDefinition:
     entity_uri: URIRef
     label: str
     claim_uri: Optional[URIRef] = None
