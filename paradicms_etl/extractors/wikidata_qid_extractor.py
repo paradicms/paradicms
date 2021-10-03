@@ -1,4 +1,5 @@
 import shutil
+import ssl
 from typing import Tuple
 from urllib.request import urlopen
 
@@ -18,6 +19,12 @@ class WikidataQidExtractor(_Extractor):
 
     def extract(self, *, force: bool):
         rdf_file_paths = []
+
+        # 20211003 Python thinks the Wikidata certificate is expired, so ignore it
+        ssl_ctx = ssl.create_default_context()
+        ssl_ctx.check_hostname = False
+        ssl_ctx.verify_mode = ssl.CERT_NONE
+
         for qid in self.__qids:
             file_name = f"{qid}.ttl"
             file_path = self._extracted_data_dir_path / file_name
@@ -26,9 +33,11 @@ class WikidataQidExtractor(_Extractor):
                 self._logger.info("%s already downloaded, skipping", file_path)
                 continue
 
-            url = f"http://www.wikidata.org/entity/{file_name}"
+            url = f"https://www.wikidata.org/entity/{file_name}"
             self._logger.debug("downloading %s to %s", url, file_path)
-            with urlopen(url) as response, open(file_path, "wb") as file_:
+            with urlopen(url, context=ssl_ctx) as response, open(
+                file_path, "wb"
+            ) as file_:
                 shutil.copyfileobj(response, file_)
             self._logger.info("downloaded %s to %s", url, file_path)
             rdf_file_paths.append(file_path)
