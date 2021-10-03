@@ -263,13 +263,14 @@ class MarkdownDirectoryTransformer(_Transformer):
         __COLLECTION_MODEL_TYPE = "collection"
         __IMAGE_MODEL_TYPE = "image"
         __INSTITUTION_MODEL_TYPE = "institution"
+        __PERSON_MODEL_TYPE = "person"
         __WORK_MODEL_TYPE = "work"
 
         __MODEL_CLASSES_BY_TYPE = {}
         __MODEL_CLASSES_BY_TYPE[__COLLECTION_MODEL_TYPE] = Collection
         __MODEL_CLASSES_BY_TYPE[__IMAGE_MODEL_TYPE] = Image
         __MODEL_CLASSES_BY_TYPE[__INSTITUTION_MODEL_TYPE] = Institution
-        __MODEL_CLASSES_BY_TYPE["person"] = Person
+        __MODEL_CLASSES_BY_TYPE[__PERSON_MODEL_TYPE] = Person
         __MODEL_CLASSES_BY_TYPE[__WORK_MODEL_TYPE] = Work
 
         def __init__(
