@@ -56,13 +56,13 @@ class WikidataItem(_NamedModel):
 
         items = []
         for item_subject in graph.subjects(predicate=RDF.type, object=WIKIBASE.Item):
-            items.append(
-                cls.__from_rdf(
-                    logger=logger,
-                    property_definitions=property_definitions,
-                    resource=graph.resource(item_subject),
-                )
+            item = cls.__from_rdf(
+                logger=logger,
+                property_definitions=property_definitions,
+                resource=graph.resource(item_subject),
             )
+            if item is not None:
+                items.append(item)
 
         # Make another pass on items, substituting a WikidataItem instance for an (internal) URIRef to it
         items_by_uri = {item.uri: item for item in items}
@@ -167,6 +167,7 @@ class WikidataItem(_NamedModel):
                 elif predicate == property_definition.direct_claim_uri:
                     direct_claims.append(
                         WikidataDirectClaim.from_rdf(
+                            graph=resource.graph,
                             object_=object_,
                             predicate=predicate,
                             property_definition=property_definition,
@@ -216,7 +217,9 @@ class WikidataItem(_NamedModel):
                 )
                 statements.append(direct_claim)
 
-        assert pref_label is not None, resource.identifier
+        if pref_label is None:
+            logger.warning("item %s: no pref_label detected", resource.identifier)
+            return None
 
         return cls(
             description=description,

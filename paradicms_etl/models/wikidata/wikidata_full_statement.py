@@ -180,7 +180,7 @@ class WikidataFullStatement(WikidataStatement):
             if time_precision >= 14:
                 second = time_value.second
 
-            parsed_value = DateTimeDescription(
+            parsed_value = DateTimeDescription.from_fields(
                 year=year, month=month, day=day, hour=hour, minute=minute, second=second
             )
             logger.debug(
