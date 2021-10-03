@@ -73,6 +73,10 @@ class Work(_NamedModel):
         return self._required_uri_value(CMS.institution)
 
     @property
+    def label(self) -> str:
+        return self.title
+
+    @property
     def rights(self) -> Optional[Rights]:
         return Rights.from_rdf(resource=self._resource)
 

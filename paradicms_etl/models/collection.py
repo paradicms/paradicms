@@ -36,9 +36,13 @@ class Collection(_NamedModel):
         return cls(resource=resource)
 
     @property
-    def institution_uri(self):
+    def label(self) -> str:
+        return self.title
+
+    @property
+    def institution_uri(self) -> URIRef:
         return self._required_uri_value(CMS.institution)
 
     @property
-    def title(self):
+    def title(self) -> str:
         return self._required_str_value(DCTERMS.title)

@@ -35,6 +35,10 @@ class Institution(_NamedModel):
         return cls(resource)
 
     @property
+    def label(self) -> str:
+        return self.name
+
+    @property
     def name(self) -> str:
         return self._required_str_value(FOAF.name)
 

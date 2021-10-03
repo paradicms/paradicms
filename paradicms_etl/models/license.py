@@ -31,6 +31,10 @@ class License(_NamedModel):
         return self._required_str_value(DC.identifier)
 
     @property
+    def label(self) -> str:
+        return self.title
+
+    @property
     def title(self) -> str:
         return self._required_str_value(DC.title)
 

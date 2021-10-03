@@ -44,5 +44,9 @@ class RightsStatement(_NamedModel):
         return self._required_str_value(DCTERMS.identifier)
 
     @property
+    def label(self) -> str:
+        return self.pref_label
+
+    @property
     def pref_label(self) -> str:
         return self._required_str_value(SKOS.prefLabel)
