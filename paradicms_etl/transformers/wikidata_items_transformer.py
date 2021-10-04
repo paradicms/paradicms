@@ -49,7 +49,7 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
             *,
             item: WikidataItem,
             item_model: _NamedModel,
-            statement: WikidataStatement
+            statement: WikidataStatement,
         ):
             yield Image.from_fields(depicts_uri=item_model.uri, uri=statement.value)
 
@@ -65,6 +65,13 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
                 title=item.label,
                 uri=item.uri,
             )
+
+    def _log_missing_transform_method(
+        self, *, item: WikidataItem, transform_method_name: str
+    ):
+        raise NotImplementedError(
+            f"unable to find method {transform_method_name} to transform item {item.uri}",
+        )
 
     def transform(self, **kwds):
         yield CreativeCommonsLicenses.BY_SA_3_0

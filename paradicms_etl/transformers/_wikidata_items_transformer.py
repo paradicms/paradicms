@@ -24,6 +24,15 @@ class _WikidataItemsTransformer(_Transformer):
     of _WikidataItemTransformer.
     """
 
+    def _log_missing_transform_method(
+        self, *, item: WikidataItem, transform_method_name: str
+    ):
+        self._logger.warning(
+            "unable to find method %s to transform item %s",
+            transform_method_name,
+            item.uri,
+        )
+
     def transform(self, *, graph: Graph) -> Generator[_Model, None, None]:
         yield from self._transform_items(
             WikidataItem.from_rdf(graph=graph, logger=self._logger)
@@ -45,11 +54,8 @@ class _WikidataItemsTransformer(_Transformer):
         try:
             transform_method = getattr(self, transform_method_name)
         except AttributeError:
-            self._logger.warning(
-                "unable to find method %s to transform %s item %s",
-                transform_method_name,
-                instance_of_value,
-                item.uri,
+            self._log_missing_transform_method(
+                item=item, transform_method_name=transform_method_name
             )
             return
 
