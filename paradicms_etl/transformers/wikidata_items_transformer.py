@@ -1,3 +1,5 @@
+from typing import Optional
+
 from rdflib import URIRef
 
 from paradicms_etl.models._named_model import _NamedModel
@@ -28,19 +30,9 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
     Transforms each item to a paradicms Model, ignoring statements.
     """
 
-    _INSTITUTION = Institution.from_fields(
-        name="Wikidata",
-        rights=Rights(
-            license=CreativeCommonsLicenses.BY_SA_3_0.uri,
-            statement=RightsStatementsDotOrgRightsStatements.InC.uri,
-        ),
-        uri=URIRef("https://www.wikidata.org/"),
-    )
-
-    _COLLECTION = Collection.from_fields(
-        institution_uri=_INSTITUTION.uri,
-        title="Wikidata",
-        uri=URIRef("https://www.wikidata.org/entity/"),
+    _RIGHTS = Rights(
+        license=CreativeCommonsLicenses.BY_SA_3_0.uri,
+        statement=RightsStatementsDotOrgRightsStatements.InC.uri,
     )
 
     class __WikidataItemTransformer(_WikidataItemTransformer):
@@ -58,13 +50,30 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
             return Person.from_fields(name=item.label, uri=item.uri)
 
     class __WorkWikidataItemTransformer(__WikidataItemTransformer):
+        def __init__(self, *, collection_uri: URIRef, institution_uri: URIRef, **kwds):
+            super().__init__(**kwds)
+            self.__collection_uri = collection_uri
+            self.__institution_uri = institution_uri
+
         def _transform_item(self, item: WikidataItem):
             return Work.from_fields(
-                collection_uris=(WikidataItemsTransformer._COLLECTION.uri,),
-                institution_uri=WikidataItemsTransformer._INSTITUTION.uri,
+                collection_uris=(self.__collection_uri,),
+                institution_uri=self.__institution_uri,
+                rights=WikidataItemsTransformer._RIGHTS,
                 title=item.label,
                 uri=item.uri,
             )
+
+    def __init__(
+        self,
+        *,
+        collection_uri: Optional[URIRef] = None,
+        institution_uri: Optional[URIRef] = None,
+        **kwds,
+    ):
+        _WikidataItemsTransformer.__init__(self, **kwds)
+        self.__collection_uri = collection_uri
+        self.__institution_uri = institution_uri
 
     def _log_missing_transform_method(
         self, *, item: WikidataItem, transform_method_name: str
@@ -77,17 +86,39 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
         yield CreativeCommonsLicenses.BY_SA_3_0
         yield RightsStatementsDotOrgRightsStatements.InC
 
-        yield self._COLLECTION
-        yield self._INSTITUTION
-
         yield from _WikidataItemsTransformer.transform(self, **kwds)
 
     def _transform_human_item(self, item: WikidataItem):
         yield from self.__PersonWikidataItemTransformer(
-            pipeline_id=self._pipeline_id
+            collection_uri=self.__collection_uri,
+            institution_uri=self.__institution_uri,
+            pipeline_id=self._pipeline_id,
         ).transform(item)
 
     def _transform_painting_item(self, item: WikidataItem):
+        yield from self.__transform_work_item(item=item)
+
+    def __transform_work_item(self, item: WikidataItem):
+        if self.__institution_uri is None:
+            institution = Institution.from_fields(
+                name="Wikidata",
+                rights=self._RIGHTS,
+                uri=URIRef("https://www.wikidata.org/"),
+            )
+            yield institution
+            self.__institution_uri = institution.uri
+
+        if self.__collection_uri is None:
+            collection = Collection.from_fields(
+                institution_uri=self.__institution_uri,
+                title="Wikidata",
+                uri=URIRef("https://www.wikidata.org/entity/"),
+            )
+            yield collection
+            self.__collection_uri = collection.uri
+
         yield from self.__WorkWikidataItemTransformer(
-            pipeline_id=self._pipeline_id
+            collection_uri=self.__collection_uri,
+            institution_uri=self.__institution_uri,
+            pipeline_id=self._pipeline_id,
         ).transform(item)
