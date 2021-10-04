@@ -21,13 +21,13 @@ class WikidataQidToMarkdownDirectoryPipeline(_Pipeline):
     def __init__(
         self,
         *,
+        institution_uri: str,
+        markdown_directory_path: str,
         qid: List[str],
         collection_uri: Optional[str] = None,
-        institution_uri: Optional[str] = None,
-        markdown_directory_path: Optional[str] = None,
         **kwds
     ):
-        if collection_uri is None and markdown_directory_path is not None:
+        if collection_uri is None:
             collection_uri = str(
                 MarkdownDirectoryTransformer.default_collection_uri(
                     markdown_directory_name=str(
@@ -43,10 +43,7 @@ class WikidataQidToMarkdownDirectoryPipeline(_Pipeline):
             ),
             id=self.ID,
             loader=MarkdownDirectoryLoader(
-                loaded_data_dir_path=Path(markdown_directory_path)
-                if markdown_directory_path is not None
-                else None,
-                **kwds
+                loaded_data_dir_path=Path(markdown_directory_path), **kwds
             ),
             transformer=WikidataItemsTransformer(
                 collection_uri=URIRef(collection_uri) if collection_uri else None,
@@ -67,7 +64,7 @@ class WikidataQidToMarkdownDirectoryPipeline(_Pipeline):
                 MarkdownDirectoryTransformer.default_institution_uri(pipeline_id=cls.ID)
             ),
         )
-        arg_parser.add_argument("--markdown-directory-path")
+        arg_parser.add_argument("--markdown-directory-path", required=True)
         arg_parser.add_argument("qid", nargs="+")
 
 
