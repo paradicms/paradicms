@@ -32,7 +32,7 @@ class WikidataQidToMarkdownDirectoryPipeline(_Pipeline):
                     markdown_directory_name=str(
                         Path(markdown_directory_path).absolute().name
                     ),
-                    pipeline_id=self.ID,
+                    pipeline_id=pipeline_id,
                 )
             )
 
@@ -44,12 +44,15 @@ class WikidataQidToMarkdownDirectoryPipeline(_Pipeline):
             )
 
         _Pipeline.__init__(
+            self,
             extractor=WikidataQidExtractor(
                 qids=tuple(qid), pipeline_id=pipeline_id, **kwds
             ),
             id=pipeline_id,
             loader=MarkdownDirectoryLoader(
-                loaded_data_dir_path=Path(markdown_directory_path), **kwds
+                loaded_data_dir_path=Path(markdown_directory_path),
+                pipeline_id=pipeline_id,
+                **kwds
             ),
             transformer=WikidataItemsTransformer(
                 collection_uri=URIRef(collection_uri),
