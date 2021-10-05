@@ -16,14 +16,13 @@ from paradicms_etl.transformers.wikidata_items_transformer import (
 
 
 class WikidataQidToMarkdownDirectoryPipeline(_Pipeline):
-    ID = "wikidata_qid_to_markdown_directory"
-
     def __init__(
         self,
         *,
-        institution_uri: str,
         markdown_directory_path: str,
+        pipeline_id: str,
         qid: List[str],
+        institution_uri: Optional[str] = None,
         collection_uri: Optional[str] = None,
         **kwds
     ):
@@ -37,18 +36,25 @@ class WikidataQidToMarkdownDirectoryPipeline(_Pipeline):
                 )
             )
 
+        if institution_uri is None:
+            institution_uri = str(
+                MarkdownDirectoryTransformer.default_institution_uri(
+                    pipeline_id=pipeline_id
+                )
+            )
+
         _Pipeline.__init__(
             extractor=WikidataQidExtractor(
-                qids=tuple(qid), pipeline_id=self.ID, **kwds
+                qids=tuple(qid), pipeline_id=pipeline_id, **kwds
             ),
-            id=self.ID,
+            id=pipeline_id,
             loader=MarkdownDirectoryLoader(
                 loaded_data_dir_path=Path(markdown_directory_path), **kwds
             ),
             transformer=WikidataItemsTransformer(
-                collection_uri=URIRef(collection_uri) if collection_uri else None,
-                institution_uri=URIRef(institution_uri) if institution_uri else None,
-                pipeline_id=self.ID,
+                collection_uri=URIRef(collection_uri),
+                institution_uri=URIRef(institution_uri),
+                pipeline_id=pipeline_id,
                 **kwds
             ),
             **kwds
@@ -58,13 +64,9 @@ class WikidataQidToMarkdownDirectoryPipeline(_Pipeline):
     def add_arguments(cls, arg_parser: ArgParser) -> None:
         _Pipeline.add_arguments(arg_parser)
         arg_parser.add_argument("--collection-uri")
-        arg_parser.add_argument(
-            "--institution-uri",
-            default=str(
-                MarkdownDirectoryTransformer.default_institution_uri(pipeline_id=cls.ID)
-            ),
-        )
+        arg_parser.add_argument("--institution-uri")
         arg_parser.add_argument("--markdown-directory-path", required=True)
+        arg_parser.add_argument("--pipeline-id", required=True)
         arg_parser.add_argument("qid", nargs="+")
 
 
