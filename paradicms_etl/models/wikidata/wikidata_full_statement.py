@@ -1,9 +1,10 @@
 from dataclasses import dataclass
 from datetime import datetime
 from logging import Logger
-from typing import Dict, Optional, Tuple
+from typing import Optional, Tuple
 
 from rdflib import Graph, Literal, PROV, RDF, URIRef
+from rdflib.resource import Resource
 
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.wikidata.wikidata_namespace import WIKIBASE
@@ -19,10 +20,9 @@ class WikidataFullStatement(WikidataStatement):
     def from_rdf(
         cls,
         *,
-        graph: Graph,
         logger: Logger,
         property_definitions: Tuple[WikidataPropertyDefinition, ...],
-        uri: URIRef
+        resource: Resource
     ):
         IGNORE_PREDICATES = {PROV.wasDerivedFrom, WIKIBASE.rank}
 
@@ -35,7 +35,11 @@ class WikidataFullStatement(WikidataStatement):
             if predicate is None:
                 return None
             value_objects = tuple(
-                object_ for object_ in graph.objects(subject=uri, predicate=predicate,)
+                object_
+                for object_ in resource.graph.objects(
+                    subject=resource.identifier,
+                    predicate=predicate,
+                )
             )
             if not value_objects:
                 return None
@@ -45,14 +49,23 @@ class WikidataFullStatement(WikidataStatement):
                 return value_object
             assert isinstance(value_object, URIRef)
             return cls.__parse_value(
-                graph=graph, logger=logger, value_uri=value_object,
+                graph=resource.graph,
+                logger=logger,
+                value_uri=value_object,
             )
 
         handled_predicates = set()
-        for (predicate, object_,) in graph.predicate_objects(subject=uri):
+        for (
+            predicate,
+            object_,
+        ) in resource.graph.predicate_objects(subject=resource.identifier):
             if predicate in IGNORE_PREDICATES:
                 handled_predicates.add(predicate)
-                logger.debug("full statement %s: ignoring predicate %s", uri, predicate)
+                logger.debug(
+                    "full statement %s: ignoring predicate %s",
+                    resource.identifier,
+                    predicate,
+                )
                 continue
             if predicate == RDF.type:
                 assert object_ == WIKIBASE.Statement or object_ == WIKIBASE.BestRank
@@ -107,12 +120,12 @@ class WikidataFullStatement(WikidataStatement):
 
                     break
 
-        for predicate in graph.predicates(subject=uri):
+        for predicate in resource.graph.predicates(subject=resource.identifier):
             if predicate in handled_predicates:
                 continue
             logger.warning(
                 "full statement parser: unknown triple (%s, %s, %s)",
-                uri,
+                resource.identifier,
                 predicate,
                 object_,
             )
@@ -167,7 +180,7 @@ class WikidataFullStatement(WikidataStatement):
             if time_precision >= 14:
                 second = time_value.second
 
-            parsed_value = DateTimeDescription(
+            parsed_value = DateTimeDescription.from_fields(
                 year=year, month=month, day=day, hour=hour, minute=minute, second=second
             )
             logger.debug(

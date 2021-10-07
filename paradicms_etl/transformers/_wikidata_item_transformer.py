@@ -9,7 +9,23 @@ from paradicms_etl.utils.sanitize_method_name import sanitize_method_name
 
 
 class _WikidataItemTransformer(_Transformer):
-    def transform(self, item: WikidataItem):
+    """
+    Abstract base class for transformers that accept a single WikidataItem and transform it into zero or more paradicms Models.
+
+    The base class works by passing the WikidataItem down to _transform_item, which produces a single paradicms Model.
+
+    The base class then invokes _transform_statements with the WikidataItem and the transformed paradicms Model. This method
+    generates zero or more paradicms Models. The latter are typically connected models as well as CIDOC-CRM type events. For example,
+    if the WikidataItem is a Person, transforming an "employed by" statement about the item could generate an Organization
+    (the organization the Person was employed by) and an EmployedBy event connected the Person and the Organization.
+
+    _transform_statements in turn delegates each statement to _transform_statement, which delegates to concrete methods of the form
+    _transform_{statement type}_statement if such a method exists.
+
+    There is a similar process for _transform_statement_qualifiers.
+    """
+
+    def transform(self, item: WikidataItem) -> Generator[_Model, None, None]:
         item_model = self._transform_item(item=item)
 
         for model in self._transform_statements(

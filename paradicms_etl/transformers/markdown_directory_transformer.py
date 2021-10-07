@@ -34,6 +34,29 @@ from paradicms_etl.models.work import Work
 from paradicms_etl.namespace import CMS
 
 
+def _create_namespaces_by_prefix_default() -> Dict[str, rdflib.Namespace]:
+    namespaces_by_prefix = {}
+    for namespace_module in (rdflib.namespace, paradicms_etl.namespace):
+        for attr in dir(namespace_module):
+            if attr.upper() != attr:
+                continue
+            value = getattr(namespace_module, attr)
+            if not isinstance(value, rdflib.Namespace) and not isinstance(
+                value, rdflib.namespace.ClosedNamespace
+            ):
+                continue
+            namespaces_by_prefix[attr.lower()] = value
+    return namespaces_by_prefix
+
+
+# Constants
+_COLLECTION_MODEL_TYPE = "collection"
+_IMAGE_MODEL_TYPE = "image"
+_INSTITUTION_MODEL_TYPE = "institution"
+_PERSON_MODEL_TYPE = "person"
+_WORK_MODEL_TYPE = "work"
+
+
 class MarkdownDirectoryTransformer(_Transformer):
     """
     Transform a directory of Markdown files to a set of models.
@@ -57,34 +80,28 @@ class MarkdownDirectoryTransformer(_Transformer):
     3. Transform the RDF graph to a model.
     """
 
+    _DEFAULT_INSTITUTION_MODEL_ID = "default"
+    NAMESPACES_BY_PREFIX_DEFAULT = _create_namespaces_by_prefix_default()
+
     class _MarkdownToResourceTransformer:
         def __init__(
             self,
             *,
+            default_namespace: rdflib.Namespace,
             markdown_it: MarkdownIt,
-            model_uri: URIRef,
+            model_id: str,
+            model_type: str,
+            namespaces_by_prefix: Dict[str, rdflib.Namespace],
             pipeline_id: str,
-            default_namespace: rdflib.Namespace = DCTERMS,
-            namespaces_by_prefix: Optional[Dict[str, rdflib.Namespace]] = None,
         ):
             self.__current_heading_id = None
             self.__markdown_it = markdown_it
             self.__default_namespace = default_namespace
-            if namespaces_by_prefix is None:
-                namespaces_by_prefix = {}
-                for namespace_module in (rdflib.namespace, paradicms_etl.namespace):
-                    for attr in dir(namespace_module):
-                        if attr.upper() != attr:
-                            continue
-                        value = getattr(namespace_module, attr)
-                        if not isinstance(value, rdflib.Namespace) and not isinstance(
-                            value, rdflib.namespace.ClosedNamespace
-                        ):
-                            continue
-                        namespaces_by_prefix[attr.lower()] = value
-            self.__namespaces_by_prefix = namespaces_by_prefix.copy()
+            self.__model_id = model_id
+            self.__model_type = model_type
+            self.__namespaces_by_prefix = namespaces_by_prefix
             self.__pipeline_id = pipeline_id
-            self.__result = Graph().resource(model_uri)
+            self.__result = None  # Create lazily
 
         def _convert_front_matter_value_to_rdf_node(
             self, value: object
@@ -147,17 +164,58 @@ class MarkdownDirectoryTransformer(_Transformer):
                 .strip()
             )
 
+        @property
+        def _result(self) -> Resource:
+            """
+            Lazily create the result rdflib Resource.
+
+            The front matter can specify an identifier (URIRef) for the Resource, in which case the
+            front matter visitor preemptively creates the result rdflib Resource.
+
+            If the
+            """
+            if self.__result is None:
+                model_uri = MarkdownDirectoryTransformer.model_uri(
+                    pipeline_id=self.__pipeline_id,
+                    model_type=self.__model_type,
+                    model_id=self.__model_id,
+                )
+                self.__result = Graph().resource(model_uri)
+            return self.__result
+
         def _visit_front_matter_node(self, front_matter_node: SyntaxTreeNode):
             front_matter_dict = yaml.load(
                 front_matter_node.content, Loader=yaml.FullLoader
             )
+
+            # Buffer the statements so that we can handle the model's URI first
+            front_matter_statements = []
             for key, value in front_matter_dict.items():
                 property_uri = self._convert_key_to_property_uri(key)
                 value_nodes = self._convert_front_matter_value_to_rdf_node(value)
                 if isinstance(value_nodes, Node):
                     value_nodes = (value_nodes,)
+
+                if property_uri == rdflib.RDF.subject:
+                    # Front matter specifies the model's URI
+                    # Preemptively create the result rdflib Resource so it doesn't use the default URI (synthesized from the model id and type)
+                    if self.__result is not None:
+                        raise ValueError("only one subject URI can be specified")
+                    if len(value_nodes) > 1:
+                        raise ValueError("only one subject URI can be specified")
+                    if not isinstance(value_nodes[0], URIRef):
+                        raise TypeError(
+                            "subject URI must be a URIRef, not a "
+                            + type(value_nodes[0])
+                        )
+                    self.__result = Graph().resource(value_nodes[0])
+                    continue
+
                 for value_node in value_nodes:
-                    self.__result.add(property_uri, value_node)
+                    front_matter_statements.append((property_uri, value_node))
+
+            for property_uri, value_node in front_matter_statements:
+                self._result.add(property_uri, value_node)
 
         def _visit_heading_node(self, heading_node: SyntaxTreeNode):
             if len(heading_node.children) != 1:
@@ -204,16 +262,16 @@ class MarkdownDirectoryTransformer(_Transformer):
 
             property_uri = self._convert_key_to_property_uri(key)
 
-            existing_value = self.__result.value(property_uri)
+            existing_value = self._result.value(property_uri)
             if existing_value is None:
-                self.__result.add(property_uri, Literal(html))
+                self._result.add(property_uri, Literal(html))
             elif isinstance(existing_value, Literal):
                 # Concatenate multiple paragraphs under the same header
-                self.__result.set(
+                self._result.set(
                     property_uri, Literal(existing_value.toPython() + html)
                 )
             else:
-                self.__result.set(property_uri, Literal(html))
+                self._result.set(property_uri, Literal(html))
 
         @classmethod
         def visit_document(cls, markdown: str, **kwds) -> Resource:
@@ -222,7 +280,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             ast = SyntaxTreeNode(tokens)
             inst = cls(markdown_it=markdown_it, **kwds)
             inst._visit_node(ast)
-            return inst.__result
+            return inst._result
 
         def _visit_node(self, node: SyntaxTreeNode):
             try:
@@ -239,6 +297,8 @@ class MarkdownDirectoryTransformer(_Transformer):
         self,
         default_institution: Optional[Institution] = None,
         default_collection: Optional[Collection] = None,
+        default_namespace=DCTERMS,
+        namespaces_by_prefix: Optional[Dict[str, rdflib.Namespace]] = None,
         **kwds,
     ):
         _Transformer.__init__(self, **kwds)
@@ -248,6 +308,26 @@ class MarkdownDirectoryTransformer(_Transformer):
             )
         self.__default_collection = default_collection
         self.__default_institution = default_institution
+        self.__default_namespace = default_namespace
+        if namespaces_by_prefix is None:
+            namespaces_by_prefix = self.NAMESPACES_BY_PREFIX_DEFAULT
+        self.__namespaces_by_prefix = namespaces_by_prefix.copy()
+
+    @staticmethod
+    def default_collection_uri(*, markdown_directory_name: str, pipeline_id: str):
+        return MarkdownDirectoryTransformer.model_uri(
+            pipeline_id=pipeline_id,
+            model_type=_COLLECTION_MODEL_TYPE,
+            model_id=markdown_directory_name,
+        )
+
+    @staticmethod
+    def default_institution_uri(*, pipeline_id: str):
+        return MarkdownDirectoryTransformer.model_uri(
+            pipeline_id=pipeline_id,
+            model_type=_INSTITUTION_MODEL_TYPE,
+            model_id=MarkdownDirectoryTransformer._DEFAULT_INSTITUTION_MODEL_ID,
+        )
 
     @staticmethod
     def model_uri(*, pipeline_id: str, model_type: str, model_id: str) -> URIRef:
@@ -260,35 +340,30 @@ class MarkdownDirectoryTransformer(_Transformer):
     # The state includes things like the default institution, which is synthesized if needed.
     class __TransformInvocation:
         # Constants
-        __COLLECTION_MODEL_TYPE = "collection"
-        __IMAGE_MODEL_TYPE = "image"
-        __INSTITUTION_MODEL_TYPE = "institution"
-        __WORK_MODEL_TYPE = "work"
-
         __MODEL_CLASSES_BY_TYPE = {}
-        __MODEL_CLASSES_BY_TYPE[__COLLECTION_MODEL_TYPE] = Collection
-        __MODEL_CLASSES_BY_TYPE[__IMAGE_MODEL_TYPE] = Image
-        __MODEL_CLASSES_BY_TYPE[__INSTITUTION_MODEL_TYPE] = Institution
-        __MODEL_CLASSES_BY_TYPE["person"] = Person
-        __MODEL_CLASSES_BY_TYPE[__WORK_MODEL_TYPE] = Work
+        __MODEL_CLASSES_BY_TYPE[_COLLECTION_MODEL_TYPE] = Collection
+        __MODEL_CLASSES_BY_TYPE[_IMAGE_MODEL_TYPE] = Image
+        __MODEL_CLASSES_BY_TYPE[_INSTITUTION_MODEL_TYPE] = Institution
+        __MODEL_CLASSES_BY_TYPE[_PERSON_MODEL_TYPE] = Person
+        __MODEL_CLASSES_BY_TYPE[_WORK_MODEL_TYPE] = Work
 
         def __init__(
             self,
             *,
             default_collection: Optional[Collection],
             default_institution: Optional[Institution],
+            default_namespace: rdflib.Namespace,
             logger: Logger,
             markdown_directory: MarkdownDirectory,
+            namespaces_by_prefix: Dict[str, rdflib.Namespace],
             pipeline_id: str,
         ):
-            if default_collection is not None:
-                default_collection = default_collection
             self.__default_collection = default_collection
-            if default_institution is not None:
-                self.__default_institution = default_institution
             self.__default_institution = default_institution
+            self.__default_namespace = default_namespace
             self.__logger = logger
             self.__markdown_directory = markdown_directory
+            self.__namespaces_by_prefix = namespaces_by_prefix
             self.__pipeline_id = pipeline_id
             self.__transformed_models_by_type = {}  # Then by id
             self.__transformed_models_by_uri = {}
@@ -330,14 +405,13 @@ class MarkdownDirectoryTransformer(_Transformer):
         def __get_or_synthesize_default_collection(self) -> Collection:
             if self.__default_collection is None:
                 model_id = self.__markdown_directory.name
-                model_type = self.__COLLECTION_MODEL_TYPE
+                model_type = _COLLECTION_MODEL_TYPE
                 self.__default_collection = Collection.from_fields(
                     institution_uri=self.__get_or_synthesize_default_institution().uri,
                     title=self.__markdown_directory.name,
-                    uri=MarkdownDirectoryTransformer.model_uri(
+                    uri=MarkdownDirectoryTransformer.default_collection_uri(
+                        markdown_directory_name=self.__markdown_directory.name,
                         pipeline_id=self.__pipeline_id,
-                        model_type=model_type,
-                        model_id=model_id,
                     ),
                 )
                 self.__buffer_transformed_model(
@@ -350,14 +424,12 @@ class MarkdownDirectoryTransformer(_Transformer):
 
         def __get_or_synthesize_default_institution(self) -> Institution:
             if self.__default_institution is None:
-                model_id = "default"
-                model_type = self.__INSTITUTION_MODEL_TYPE
+                model_id = MarkdownDirectoryTransformer._DEFAULT_INSTITUTION_MODEL_ID
+                model_type = _INSTITUTION_MODEL_TYPE
                 self.__default_institution = Institution.from_fields(
                     name="Default institution",
-                    uri=MarkdownDirectoryTransformer.model_uri(
-                        pipeline_id=self.__pipeline_id,
-                        model_type=model_type,
-                        model_id=model_id,
+                    uri=MarkdownDirectoryTransformer.default_institution_uri(
+                        pipeline_id=self.__pipeline_id
                     ),
                 )
                 self.__buffer_transformed_model(
@@ -378,7 +450,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             for (
                 markdown_file_entry
             ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
-                self.__COLLECTION_MODEL_TYPE, tuple()
+                _COLLECTION_MODEL_TYPE, tuple()
             ):
                 collection_resource = self.__set_resource_institution_uri(
                     self.__transform_markdown_file_entry_to_resource(
@@ -423,7 +495,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             for (
                 markdown_file_entry
             ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
-                self.__IMAGE_MODEL_TYPE, tuple()
+                _IMAGE_MODEL_TYPE, tuple()
             ):
                 image_resource = self.__set_resource_institution_uri(
                     self.__transform_markdown_file_entry_to_resource(
@@ -438,7 +510,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                         model_type,
                         transformed_models_by_id,
                     ) in self.__transformed_models_by_type.items():
-                        if model_type == self.__IMAGE_MODEL_TYPE:
+                        if model_type == _IMAGE_MODEL_TYPE:
                             continue
                         transformed_model = transformed_models_by_id.get(
                             markdown_file_entry.model_id
@@ -517,14 +589,14 @@ class MarkdownDirectoryTransformer(_Transformer):
                     )
                     self.__buffer_transformed_model(
                         model_id=image_file_entry.model_id,
-                        model_type=self.__IMAGE_MODEL_TYPE,
+                        model_type=_IMAGE_MODEL_TYPE,
                         transformed_model=Image.from_fields(
                             depicts_uri=transformed_model.uri,
                             src=image_file_entry.path.as_uri(),
                             uri=MarkdownDirectoryTransformer.model_uri(
                                 pipeline_id=self.__pipeline_id,
                                 model_id=image_file_entry.model_id,
-                                model_type=self.__IMAGE_MODEL_TYPE,
+                                model_type=_IMAGE_MODEL_TYPE,
                             ),
                         ),
                     )
@@ -533,7 +605,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             for (
                 markdown_file_entry
             ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
-                self.__INSTITUTION_MODEL_TYPE, tuple()
+                _INSTITUTION_MODEL_TYPE, tuple()
             ):
                 institution_resource = self.__transform_markdown_file_entry_to_resource(
                     markdown_file_entry
@@ -565,11 +637,10 @@ class MarkdownDirectoryTransformer(_Transformer):
         ) -> Resource:
             return MarkdownDirectoryTransformer._MarkdownToResourceTransformer.visit_document(
                 markdown_file_entry.markdown_source,
-                model_uri=MarkdownDirectoryTransformer.model_uri(
-                    pipeline_id=self.__pipeline_id,
-                    model_type=markdown_file_entry.model_type,
-                    model_id=markdown_file_entry.model_id,
-                ),
+                default_namespace=self.__default_namespace,
+                model_id=markdown_file_entry.model_id,
+                model_type=markdown_file_entry.model_type,
+                namespaces_by_prefix=self.__namespaces_by_prefix,
                 pipeline_id=self.__pipeline_id,
             )
 
@@ -579,7 +650,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             for (
                 markdown_file_entry
             ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
-                self.__WORK_MODEL_TYPE, tuple()
+                _WORK_MODEL_TYPE, tuple()
             ):
                 work_resource = self.__set_resource_institution_uri(
                     self.__transform_markdown_file_entry_to_resource(
@@ -611,18 +682,27 @@ class MarkdownDirectoryTransformer(_Transformer):
                 model_type,
                 markdown_file_entries,
             ) in self.__untransformed_markdown_file_entries_by_model_type.items():
-                if model_type == self.__IMAGE_MODEL_TYPE:
+                if model_type == _IMAGE_MODEL_TYPE:
                     continue
                 for markdown_file_entry in markdown_file_entries:
+                    model_resource = self.__transform_markdown_file_entry_to_resource(
+                        markdown_file_entry
+                    )
+                    try:
+                        transformed_model = self.__transform_resource_to_model(
+                            model_resource=model_resource,
+                            model_type=markdown_file_entry.model_type,
+                        )
+                    except KeyError:
+                        self.__logger.warning(
+                            "unknown model type: %s", markdown_file_entry.model_type
+                        )
+                        continue
+
                     self.__buffer_transformed_model(
                         model_id=markdown_file_entry.model_id,
                         model_type=markdown_file_entry.model_type,
-                        transformed_model=self.__transform_resource_to_model(
-                            model_resource=self.__transform_markdown_file_entry_to_resource(
-                                markdown_file_entry
-                            ),
-                            model_type=markdown_file_entry.model_type,
-                        ),
+                        transformed_model=transformed_model,
                     )
 
         def __transform_resource_to_model(
@@ -641,7 +721,9 @@ class MarkdownDirectoryTransformer(_Transformer):
         yield from self.__TransformInvocation(
             default_collection=self.__default_collection,
             default_institution=self.__default_institution,
+            default_namespace=self.__default_namespace,
             logger=self._logger,
             markdown_directory=markdown_directory,
+            namespaces_by_prefix=self.__namespaces_by_prefix,
             pipeline_id=self._pipeline_id,
         )()

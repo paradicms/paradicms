@@ -39,6 +39,10 @@ class _Model:
     def from_rdf(cls, resource: Resource):
         return cls(cls._copy_resource(resource))
 
+    @property
+    def label(self) -> Optional[str]:
+        pass
+
     def __literal_values(
         self, p: Union[URIRef, Tuple[URIRef, ...]], expected_type=None
     ) -> Generator[object, None, None]:

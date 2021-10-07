@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Optional
 
 from rdflib import Literal, URIRef
-from rdflib.namespace import DCTERMS, FOAF
+from rdflib.namespace import DCTERMS, FOAF, RDFS
 
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.image_dimensions import ImageDimensions
@@ -44,6 +44,7 @@ class Image(_NamedModel):
         created: Optional[datetime] = None,
         exact_dimensions: Optional[ImageDimensions] = None,
         format: Optional[str] = None,
+        label: Optional[str] = None,
         max_dimensions: Optional[ImageDimensions] = None,
         modified: Optional[datetime] = None,
         original_image_uri: Optional[URIRef] = None,
@@ -65,6 +66,8 @@ class Image(_NamedModel):
         elif max_dimensions is not None:
             resource.add(CMS.imageMaxHeight, Literal(max_dimensions.height))
             resource.add(CMS.imageMaxWidth, Literal(max_dimensions.width))
+        if label is not None:
+            resource.add(RDFS.label, Literal(label))
         if modified is not None:
             resource.add(DCTERMS.modified, Literal(modified))
         if original_image_uri is not None:
@@ -83,6 +86,10 @@ class Image(_NamedModel):
     @property
     def depicts_uri(self) -> URIRef:
         return self._required_uri_value(FOAF.depicts)
+
+    @property
+    def label(self):
+        return self._optional_str_value(RDFS.label)
 
     @property
     def original_image_uri(self) -> Optional[URIRef]:

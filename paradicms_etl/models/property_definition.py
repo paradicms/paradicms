@@ -9,3 +9,7 @@ class PropertyDefinition(_NamedModel):
         resource = cls._create_resource(identifier=uri)
         resource.add(RDFS.label, Literal(label))
         return cls(resource)
+
+    @property
+    def label(self) -> str:
+        return self._required_str_value(RDFS.label)

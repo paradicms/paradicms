@@ -1,6 +1,6 @@
 from typing import Optional
 
-from rdflib import Literal, RDF, XSD
+from rdflib import BNode, Literal, RDF, XSD
 
 from paradicms_etl._model import _Model
 from paradicms_etl.namespace import TIME
@@ -18,7 +18,7 @@ class DateTimeDescription(_Model):
         month: Optional[int] = None,
         year: Optional[int] = None,
     ):
-        resource = cls._create_resource()
+        resource = cls._create_resource(identifier=BNode())
         resource.add(RDF.type, TIME.DateTimeDescription)
         if day is not None:
             resource.add(TIME.day, Literal("---" + str(day), datatype=XSD.gDay))

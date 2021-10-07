@@ -28,5 +28,9 @@ class PropertyValueDefinition(_NamedModel):
         return cls(resource)
 
     @property
+    def label(self) -> Optional[str]:
+        return self._optional_str_value(RDFS.label)
+
+    @property
     def property_uris(self) -> Tuple[URIRef, ...]:
         return self._required_uri_values(RDF.predicate)
