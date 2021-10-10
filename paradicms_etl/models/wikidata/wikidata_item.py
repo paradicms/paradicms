@@ -155,15 +155,18 @@ class WikidataItem(_NamedModel):
             added_property = False
             for property_definition in property_definitions:
                 if predicate == property_definition.claim_uri:
-                    full_statements.append(
-                        WikidataFullStatement.from_rdf(
-                            logger=logger,
-                            property_definitions=property_definitions,
-                            resource=resource.graph.resource(object_),
+                    try:
+                        full_statements.append(
+                            WikidataFullStatement.from_rdf(
+                                logger=logger,
+                                property_definitions=property_definitions,
+                                resource=resource.graph.resource(object_),
+                            )
                         )
-                    )
-                    added_property = True
-                    break
+                        added_property = True
+                        break
+                    except ValueError:
+                        pass
                 elif predicate == property_definition.direct_claim_uri:
                     direct_claims.append(
                         WikidataDirectClaim.from_rdf(
@@ -182,7 +185,10 @@ class WikidataItem(_NamedModel):
                     break
             if not added_property:
                 logger.warning(
-                    "item parser: unknown triple (%s, %s, %s)", uri, predicate, object_
+                    "item parser: unknown triple (%s, %s, %s)",
+                    resource.identifier,
+                    predicate,
+                    object_,
                 )
 
         # Direct claims often duplicate full statements

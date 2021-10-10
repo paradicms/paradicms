@@ -16,6 +16,9 @@ from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
 
 @dataclass
 class WikidataFullStatement(WikidataStatement):
+    __IGNORE_PREDICATES = {PROV.wasDerivedFrom, WIKIBASE.rank}
+    __IGNORE_VALUE_TYPES = {WIKIBASE.GlobecoordinateValue, WIKIBASE.QuantityValue}
+
     @classmethod
     def from_rdf(
         cls,
@@ -24,10 +27,8 @@ class WikidataFullStatement(WikidataStatement):
         property_definitions: Tuple[WikidataPropertyDefinition, ...],
         resource: Resource
     ):
-        IGNORE_PREDICATES = {PROV.wasDerivedFrom, WIKIBASE.rank}
-
-        qualifiers = []
         normalized_value = None
+        qualifiers = []
         value = None
         value_property_definition = None
 
@@ -43,7 +44,13 @@ class WikidataFullStatement(WikidataStatement):
             )
             if not value_objects:
                 return None
-            assert len(value_objects) == 1, predicate
+            if len(value_objects) != 1:
+                logger.warning(
+                    "predicate %s has %d value objects: %s",
+                    predicate,
+                    len(value_objects),
+                )
+                return None
             value_object = value_objects[0]
             if isinstance(value_object, Literal):
                 return value_object
@@ -59,7 +66,7 @@ class WikidataFullStatement(WikidataStatement):
             predicate,
             object_,
         ) in resource.graph.predicate_objects(subject=resource.identifier):
-            if predicate in IGNORE_PREDICATES:
+            if predicate in cls.__IGNORE_PREDICATES:
                 handled_predicates.add(predicate)
                 logger.debug(
                     "full statement %s: ignoring predicate %s",
@@ -68,7 +75,9 @@ class WikidataFullStatement(WikidataStatement):
                 )
                 continue
             if predicate == RDF.type:
-                assert object_ == WIKIBASE.Statement or object_ == WIKIBASE.BestRank
+                # assert (
+                #     object_ == WIKIBASE.Statement or object_ == WIKIBASE.BestRank
+                # ), object_
                 handled_predicates.add(predicate)
                 continue
 
@@ -130,7 +139,9 @@ class WikidataFullStatement(WikidataStatement):
                 object_,
             )
 
-        assert value is not None
+        if value is None:
+            raise ValueError("unable to parse value of full statement")
+
         assert value_property_definition is not None
         return cls(
             normalized_value=normalized_value,
@@ -147,8 +158,8 @@ class WikidataFullStatement(WikidataStatement):
             return value_uri  # Refers to an authority URI outside the graph
         assert len(value_types) == 1
         value_type = value_types[0]
-        if value_type == WIKIBASE.QuantityValue:
-            logger.info("ignoring QuantityValue %s", value_uri)
+        if value_type in cls.__IGNORE_VALUE_TYPES:
+            logger.info("ignoring %s %s", value_types, value_uri)
             return None
         elif value_type == WIKIBASE.TimeValue:
             time_value_literal = tuple(
