@@ -364,6 +364,19 @@
     dcterms:hasVersion "1.0" ;
     foaf:logo <http://i.creativecommons.org/l/nd/1.0/88x31.png> .
 
+<http://creativecommons.org/licenses/publicdomain/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:deprecatedOn "2010-10-05"^^<http://www.w3.org/2001/XMLSchema-datatypes#date> ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/publicdomain/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/publicdomain/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    dc:identifier "publicdomain" ;
+    dc:title "Public Domain"@en ;
+    foaf:logo <http://i.creativecommons.org/l/publicdomain/80x15.png>,
+        <http://i.creativecommons.org/l/publicdomain/88x31.png> .
+
 <http://creativecommons.org/licenses/sa/1.0/> a creativecommons:License,
         paradicms:License ;
     creativecommons:deprecatedOn "2004-05-25"^^<http://www.w3.org/2001/XMLSchema-datatypes#date> ;
@@ -596,20 +609,6 @@ dcterms:type a paradicms:PropertyDefinition ;
     skos:prefLabel "In Copyright - Rights-holder(s) Unlocatable or Unidentifiable"@en ;
     skos:scopeNote "This Rights Statement is intended for use with an Item that has been identified as in copyright but for which no rights-holder(s) has been identified or located after some reasonable investigation. This Rights Statement should only be used if the organization that intends to make the Item available is reasonably sure that the underlying Work is in copyright. This Rights Statement is not intended for use by EU-based organizations who have identified works as Orphan Works in accordance with the EU Orphan Works Directive (they must use InC-OW-EU instead)."@en .
 
-<http://rightsstatements.org/vocab/InC/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright."@en ;
-    dcterms:identifier "InC" ;
-    skos:definition """This Item is protected by copyright and/or related rights.
-
-  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use.
-
-  For other uses you need to obtain permission from the rights-holder(s)."""@en ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
-    skos:prefLabel "In Copyright"@en ;
-    skos:scopeNote "This Rights Statement can be used for an Item that is in copyright. Using this statement implies that the organization making this Item available has determined that the Item is in copyright and either is the rights-holder, has obtained permission from the rights-holder(s) to make their Work(s) available, or makes the Item available under an exception or limitation to copyright (including Fair Use) that entitles it to make the Item available."@en .
-
 <http://rightsstatements.org/vocab/NKC/1.0/> a paradicms:RightsStatement ;
     dcterms:description "This Rights Statement indicates that the organization that has published the Item believes that no copyright or related rights are known to exist for the Item, but that a conclusive determination could not be made."@en ;
     dcterms:identifier "NKC" ;
@@ -702,22 +701,13 @@ dcterms:type a paradicms:PropertyDefinition ;
     dcterms:identifier "collection-other" ;
     skos:prefLabel "Statements for works where the copyright status is unclear"@en .
 
-<https://creativecommons.org/publicdomain/zero/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "None" ;
-    dcterms:identifier "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication" ;
-    skos:definition """The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.
-
-You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.        
-""" ;
-    skos:prefLabel "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication" .
-
 <urn:markdown:markdown_directory:image:test_work1> a paradicms:Image ;
     paradicms:imageCopyable true ;
-    paradicms:imageSrc "file:///C:/Users/minor/projects/personal/paradicms/etl/data/markdown_directory/extracted/work/test_work1.gif" ;
+    paradicms:imageSrc "file:///home/minor/projects/paradicms/etl/data/markdown_directory/extracted/work/test_work1.gif" ;
     foaf:depicts <urn:markdown:markdown_directory:work:test_work1> .
 
 <urn:markdown:markdown_directory:image:test_work2> a paradicms:Image ;
-    paradicms:imageSrc "file:///C:/Users/minor/projects/personal/paradicms/etl/data/markdown_directory/extracted/image/test_work2.gif" ;
+    paradicms:imageSrc "file:///home/minor/projects/paradicms/etl/data/markdown_directory/extracted/image/test_work2.gif" ;
     paradicms:institution <urn:markdown:markdown_directory:institution:default> ;
     foaf:depicts <urn:markdown:markdown_directory:work:test_work2> .
 
@@ -927,24 +917,6 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
     foaf:logo <http://i.creativecommons.org/l/by-nd/3.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nd/3.0/88x31.png> .
 
-<http://creativecommons.org/licenses/by-sa/2.0/> a creativecommons:License,
-        paradicms:License ;
-    creativecommons:legalcode <http://creativecommons.org/licenses/by-sa/2.0/legalcode> ;
-    creativecommons:licenseClass <http://creativecommons.org/license/> ;
-    creativecommons:permits creativecommons:DerivativeWorks,
-        creativecommons:Distribution,
-        creativecommons:Reproduction ;
-    creativecommons:requires creativecommons:Attribution,
-        creativecommons:Notice,
-        creativecommons:ShareAlike ;
-    dc:creator <http://creativecommons.org> ;
-    dc:identifier "by-sa" ;
-    dc:title "Attribution-ShareAlike 2.0 Generic"@en ;
-    dcterms:hasVersion "2.0" ;
-    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-sa/2.5/> ;
-    foaf:logo <http://i.creativecommons.org/l/by-sa/2.0/80x15.png>,
-        <http://i.creativecommons.org/l/by-sa/2.0/88x31.png> .
-
 <http://creativecommons.org/licenses/by-sa/2.5/> a creativecommons:License,
         paradicms:License ;
     creativecommons:legalcode <http://creativecommons.org/licenses/by-sa/2.5/legalcode> ;
@@ -1033,8 +1005,8 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
 <urn:markdown:markdown_directory:work:test_work1> a paradicms:Work ;
     dcterms:abstract "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>" ;
     dcterms:creator <urn:markdown:markdown_directory:person:test_person> ;
-    dcterms:license <http://creativecommons.org/licenses/publicdomain/> ;
-    dcterms:rights <https://creativecommons.org/publicdomain/mark/1.0/> ;
+    dcterms:license <http://creativecommons.org/licenses/by-sa/2.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
     dcterms:title "Test work 1" ;
     paradicms:collection <urn:markdown:markdown_directory:collection:default> ;
     paradicms:institution <urn:markdown:markdown_directory:institution:default> .
@@ -1042,33 +1014,25 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
 <urn:markdown:markdown_directory:work:test_work2> a paradicms:Work ;
     dcterms:abstract "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>" ;
     dcterms:creator <urn:markdown:markdown_directory:person:test_person> ;
-    dcterms:license <http://creativecommons.org/licenses/publicdomain/> ;
-    dcterms:rights <https://creativecommons.org/publicdomain/mark/1.0/> ;
+    dcterms:license <http://creativecommons.org/licenses/by-sa/2.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
     dcterms:title "Test work 2" ;
     paradicms:collection <urn:markdown:markdown_directory:collection:default> ;
     paradicms:institution <urn:markdown:markdown_directory:institution:default> .
 
-<http://creativecommons.org/licenses/publicdomain/> a creativecommons:License,
-        paradicms:License ;
-    creativecommons:deprecatedOn "2010-10-05"^^<http://www.w3.org/2001/XMLSchema-datatypes#date> ;
-    creativecommons:legalcode <http://creativecommons.org/licenses/publicdomain/legalcode> ;
-    creativecommons:licenseClass <http://creativecommons.org/license/publicdomain/> ;
-    creativecommons:permits creativecommons:DerivativeWorks,
-        creativecommons:Distribution,
-        creativecommons:Reproduction ;
-    dc:identifier "publicdomain" ;
-    dc:title "Public Domain"@en ;
-    foaf:logo <http://i.creativecommons.org/l/publicdomain/80x15.png>,
-        <http://i.creativecommons.org/l/publicdomain/88x31.png> .
+<http://rightsstatements.org/vocab/InC/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright."@en ;
+    dcterms:identifier "InC" ;
+    skos:definition """This Item is protected by copyright and/or related rights.
 
-<https://creativecommons.org/publicdomain/mark/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "None" ;
-    dcterms:identifier "Public Domain Mark 1.0" ;
-    skos:definition """This work has been identified as being free of known restrictions under copyright law, including all related and neighboring rights.
+  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use.
 
-You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.
-""" ;
-    skos:prefLabel "Public Domain Mark 1.0" .
+  For other uses you need to obtain permission from the rights-holder(s)."""@en ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
+    skos:prefLabel "In Copyright"@en ;
+    skos:scopeNote "This Rights Statement can be used for an Item that is in copyright. Using this statement implies that the organization making this Item available has determined that the Item is in copyright and either is the rights-holder, has obtained permission from the rights-holder(s) to make their Work(s) available, or makes the Item available under an exception or limitation to copyright (including Fair Use) that entitles it to make the Item available."@en .
 
 <urn:markdown:markdown_directory:collection:default> a paradicms:Collection ;
     dcterms:title "Override default collection title" ;
@@ -1078,6 +1042,24 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
     dcterms:abstract "<p>Test person label</p>" ;
     dcterms:description "Test person description" ;
     foaf:name "Test person" .
+
+<http://creativecommons.org/licenses/by-sa/2.0/> a creativecommons:License,
+        paradicms:License ;
+    creativecommons:legalcode <http://creativecommons.org/licenses/by-sa/2.0/legalcode> ;
+    creativecommons:licenseClass <http://creativecommons.org/license/> ;
+    creativecommons:permits creativecommons:DerivativeWorks,
+        creativecommons:Distribution,
+        creativecommons:Reproduction ;
+    creativecommons:requires creativecommons:Attribution,
+        creativecommons:Notice,
+        creativecommons:ShareAlike ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-sa" ;
+    dc:title "Attribution-ShareAlike 2.0 Generic"@en ;
+    dcterms:hasVersion "2.0" ;
+    dcterms:isReplacedBy <http://creativecommons.org/licenses/by-sa/2.5/> ;
+    foaf:logo <http://i.creativecommons.org/l/by-sa/2.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-sa/2.0/88x31.png> .
 
 <urn:markdown:markdown_directory:institution:default> a paradicms:Institution ;
     foaf:name "Default institution" .
