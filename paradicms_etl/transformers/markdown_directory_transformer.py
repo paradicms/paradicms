@@ -17,9 +17,6 @@ from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
-from paradicms_etl.models.creative_commons_rights_statements import (
-    CreativeCommonsRightsStatements,
-)
 from paradicms_etl.models.dublin_core_property_definitions import (
     DublinCorePropertyDefinitions,
 )
@@ -714,7 +711,6 @@ class MarkdownDirectoryTransformer(_Transformer):
 
     def transform(self, markdown_directory: MarkdownDirectory):
         yield from CreativeCommonsLicenses.as_tuple()
-        yield from CreativeCommonsRightsStatements.as_tuple()
         yield from DublinCorePropertyDefinitions.as_tuple()
         yield from RightsStatementsDotOrgRightsStatements.as_tuple()
 

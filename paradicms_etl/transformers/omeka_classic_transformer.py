@@ -8,9 +8,6 @@ from tqdm import tqdm
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
-from paradicms_etl.models.creative_commons_rights_statements import (
-    CreativeCommonsRightsStatements,
-)
 from paradicms_etl.models.dublin_core_property_definitions import (
     DublinCorePropertyDefinitions,
 )
@@ -56,7 +53,6 @@ class OmekaClassicTransformer(_Transformer):
 
     def transform(self, *, collections, endpoint_url, files, items):
         yield from CreativeCommonsLicenses.as_tuple()
-        yield from CreativeCommonsRightsStatements.as_tuple()
         yield from RightsStatementsDotOrgRightsStatements.as_tuple()
         yield from DublinCorePropertyDefinitions.as_tuple()
 
