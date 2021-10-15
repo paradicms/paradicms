@@ -1,15 +1,16 @@
-import {Dataset} from "./Dataset";
-import {Rights} from "./Rights";
-import {Property} from "./Property";
-import {CollectionJoinSelector} from "./CollectionJoinSelector";
-import {InstitutionJoinSelector} from "./InstitutionJoinSelector";
-import {Collection} from "./Collection";
-import {DatasetBuilder} from "./DatasetBuilder";
-import {Institution} from "./Institution";
-import {PropertyDefinitionJoinSelector} from "./PropertyDefinitionJoinSelector";
-import {selectThumbnail} from "./selectThumbnail";
-import {WorkJoinSelector} from "./WorkJoinSelector";
-import {Work} from "./Work";
+import { Dataset } from "./Dataset";
+import { Rights } from "./Rights";
+import { Property } from "./Property";
+import { CollectionJoinSelector } from "./CollectionJoinSelector";
+import { InstitutionJoinSelector } from "./InstitutionJoinSelector";
+import { Collection } from "./Collection";
+import { DatasetBuilder } from "./DatasetBuilder";
+import { Institution } from "./Institution";
+import { PropertyDefinitionJoinSelector } from "./PropertyDefinitionJoinSelector";
+import { selectThumbnail } from "./selectThumbnail";
+import { WorkJoinSelector } from "./WorkJoinSelector";
+import { Work } from "./Work";
+import { Image } from "Image";
 
 /**
  * Subset a Dataset to reduce the amount of data passed between getStaticProps and the component.
@@ -22,7 +23,7 @@ import {Work} from "./Work";
  * but no models connected to the Collections (i.e., their Works).
  */
 export class DataSubsetter {
-  constructor(private readonly completeDataset: Dataset) {}
+  constructor(private readonly completeDataset: Dataset) { }
 
   // Use the builder pattern internally rather than a more functional algorithm, such as merging datasets,
   // which was the initial implementation
@@ -38,7 +39,7 @@ export class DataSubsetter {
         .collectionByUri(collection.uri)
         .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        builder.addImage(thumbnailImage);
+        this.addImageDataset(builder, thumbnailImage);
         if (thumbnailImage.depictsUri !== collection.uri) {
           // The thumbnail either depicts the collection or one of the collection's works.
           // If the latter case we need to include the work in the dataset.
@@ -66,6 +67,15 @@ export class DataSubsetter {
     return builder;
   }
 
+  private addImageDataset(
+    builder: DatasetBuilder,
+    image: Image,
+  ): DatasetBuilder {
+    builder.addImage(image);
+    this.addRightsDataset(builder, image.rights);
+    return builder;
+  }
+
   private addInstitutionDataset(
     builder: DatasetBuilder,
     institution: Institution,
@@ -78,7 +88,7 @@ export class DataSubsetter {
         .institutionByUri(institution.uri)
         .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        builder.addImage(thumbnailImage);
+        this.addImageDataset(builder, thumbnailImage);
         if (thumbnailImage.depictsUri !== institution.uri) {
           // The thumbnail either depicts the institution, one of the institution's collections, or one of the institution's works.
           // In the latter cases we need to include the depicted collection or work
@@ -131,13 +141,15 @@ export class DataSubsetter {
     builder.addWork(work);
 
     if (joinSelector?.allImages) {
-      builder.addImages(this.completeDataset.imagesByDepictsUri(work.uri));
+      for (const image of this.completeDataset.imagesByDepictsUri(work.uri)) {
+        this.addImageDataset(builder, image);
+      }
     } else if (joinSelector?.thumbnail) {
       const thumbnailImage = this.completeDataset
         .workByUri(work.uri)
         .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        builder.addImage(thumbnailImage);
+        this.addImageDataset(builder, thumbnailImage);
       }
     }
 
@@ -166,6 +178,8 @@ export class DataSubsetter {
         joinSelector.propertyDefinitions
       );
     }
+
+    // Works Datasets always include rights
     this.addRightsDataset(builder, work.rights);
 
     return builder;
@@ -197,11 +211,9 @@ export class DataSubsetter {
 
         if (joinSelector.values.allImages) {
           for (const propertyValueDefinition of propertyValueDefinitions) {
-            builder.addImages(
-              this.completeDataset.imagesByDepictsUri(
-                propertyValueDefinition.uri
-              )
-            );
+            for (const image of this.completeDataset.imagesByDepictsUri(propertyValueDefinition.uri)) {
+              this.addImageDataset(builder, image);
+            }
           }
         } else if (joinSelector.values.thumbnail) {
           for (const propertyValueDefinition of propertyValueDefinitions) {
@@ -212,7 +224,7 @@ export class DataSubsetter {
               joinSelector.values.thumbnail
             );
             if (thumbnail) {
-              builder.addImage(thumbnail);
+              this.addImageDataset(builder, thumbnail);
             }
           }
         }
