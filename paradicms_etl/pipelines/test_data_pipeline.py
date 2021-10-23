@@ -297,7 +297,7 @@ class TestDataPipeline(_Pipeline):
             properties.extend(
                 Property(
                     DublinCorePropertyDefinitions.CREATOR,
-                    people[(work_i + 1) % len(people)].uri,
+                    people[(work_i + i) % len(people)].uri,
                 )
                 for i in range(2)
             )
