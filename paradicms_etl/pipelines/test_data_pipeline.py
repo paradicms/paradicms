@@ -19,6 +19,7 @@ from paradicms_etl.models.dublin_core_property_definitions import (
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
+from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_value_definition import PropertyValueDefinition
@@ -109,23 +110,39 @@ class TestDataPipeline(_Pipeline):
 
             yield from self.__generate_property_definitions()
 
-            people = tuple(self.__generate_people())
-            yield from people
+            agents = tuple(self.__generate_agents())
+            yield from agents
 
-            yield from self.__generate_institutions(people=people)
+            yield from self.__generate_institutions(agents=agents)
+
+        def __generate_agents(self):
+            for organization_i in range(5):
+                yield Organization.from_fields(
+                    name=f"Organization {organization_i}",
+                    uri=URIRef(f"http://example.com/organization{organization_i}"),
+                )
+
+            for person_i in range(5):
+                yield Person.from_fields(
+                    family_name=str(person_i),
+                    given_name="Person",
+                    name=f"Person {person_i}",
+                    sort_name=f"{person_i}, Person",
+                    uri=URIRef(f"http://example.com/person{person_i}"),
+                )
 
         def __generate_collection_works(
             self,
             *,
             collection: Collection,
             institution: Institution,
-            people: Tuple[Person, ...],
+            agents: Tuple[Person, ...],
         ):
             for work_i in range(self.__works_per_institution):
                 yield from self.__generate_work(
                     collection_uris=(collection.uri,),
                     institution=institution,
-                    people=people,
+                    agents=agents,
                     work_i=work_i,
                     title=f"{collection.title}Work{work_i}",
                     uri=URIRef(f"{collection.uri}/work{work_i}"),
@@ -160,7 +177,7 @@ class TestDataPipeline(_Pipeline):
                     )
 
         def __generate_institution_collections(
-            self, *, institution: Institution, people: Tuple[Person, ...]
+            self, *, institution: Institution, agents: Tuple[Person, ...]
         ):
             for collection_i in range(self.__collections_per_institution):
                 collection_title = f"{institution.name}Collection{collection_i}"
@@ -180,10 +197,10 @@ class TestDataPipeline(_Pipeline):
                 # For collection 0, force the GUI to use an work image
 
                 yield from self.__generate_collection_works(
-                    collection=collection, institution=institution, people=people
+                    collection=collection, institution=institution, agents=agents
                 )
 
-        def __generate_institutions(self, people: Tuple[Person, ...]):
+        def __generate_institutions(self, agents: Tuple[Person, ...]):
             for institution_i in range(self.__institutions):
                 institution_name = f"Institution{institution_i}"
                 institution = Institution.from_fields(
@@ -205,7 +222,7 @@ class TestDataPipeline(_Pipeline):
 
                 collections = []
                 for model in self.__generate_institution_collections(
-                    institution=institution, people=people
+                    institution=institution, agents=agents
                 ):
                     if isinstance(model, Collection):
                         collections.append(model)
@@ -214,17 +231,7 @@ class TestDataPipeline(_Pipeline):
                 yield from self.__generate_shared_works(
                     collections=tuple(collections),
                     institution=institution,
-                    people=people,
-                )
-
-        def __generate_people(self):
-            for person_i in range(10):
-                yield Person.from_fields(
-                    family_name=str(person_i),
-                    given_name="Person",
-                    name=f"Person {person_i}",
-                    sort_name=f"{person_i}, Person",
-                    uri=URIRef(f"http://example.com/person{person_i}"),
+                    agents=agents,
                 )
 
         def __generate_work(
@@ -232,7 +239,7 @@ class TestDataPipeline(_Pipeline):
             *,
             collection_uris: Tuple[URIRef, ...],
             institution: Institution,
-            people: Tuple[Person, ...],
+            agents: Tuple[Person, ...],
             work_i: int,
             title: str,
             uri: URIRef,
@@ -300,7 +307,7 @@ class TestDataPipeline(_Pipeline):
             properties.extend(
                 Property(
                     DublinCorePropertyDefinitions.CREATOR,
-                    people[(work_i + i) % len(people)].uri,
+                    agents[(work_i + i) % len(agents)].uri,
                 )
                 for i in range(1)
             )
@@ -369,7 +376,7 @@ class TestDataPipeline(_Pipeline):
             *,
             collections: Tuple[Collection, ...],
             institution: Institution,
-            people: Tuple[Person, ...],
+            agents: Tuple[Person, ...],
         ):
             for work_i in range(self.__works_per_institution):  # Per institution
                 yield from self.__generate_work(
@@ -377,7 +384,7 @@ class TestDataPipeline(_Pipeline):
                         map(lambda collection: collection.uri, collections)
                     ),
                     institution=institution,
-                    people=people,
+                    agents=agents,
                     work_i=work_i,
                     title=f"{institution.name}SharedWork{work_i}",
                     uri=URIRef(f"{institution.uri}/shared/work{work_i}"),

@@ -3,11 +3,11 @@ from typing import Optional
 from rdflib import Literal, URIRef
 from rdflib.namespace import FOAF
 
-from paradicms_etl.models._named_model import _NamedModel
+from paradicms_etl.models._agent import _Agent
 from paradicms_etl.namespace import CONTACT
 
 
-class Person(_NamedModel):
+class Person(_Agent):
     @classmethod
     def from_fields(
         cls,
@@ -27,11 +27,3 @@ class Person(_NamedModel):
         if sort_name is not None:
             resource.add(CONTACT.sortName, Literal(sort_name))
         return cls(resource)
-
-    @property
-    def label(self) -> str:
-        return self.name
-
-    @property
-    def name(self) -> str:
-        return self._required_str_value(FOAF.name)
