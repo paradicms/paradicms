@@ -1,16 +1,16 @@
-import { Dataset } from "./Dataset";
-import { Rights } from "./Rights";
-import { Property } from "./Property";
-import { CollectionJoinSelector } from "./CollectionJoinSelector";
-import { InstitutionJoinSelector } from "./InstitutionJoinSelector";
-import { Collection } from "./Collection";
-import { DatasetBuilder } from "./DatasetBuilder";
-import { Institution } from "./Institution";
-import { PropertyDefinitionJoinSelector } from "./PropertyDefinitionJoinSelector";
-import { selectThumbnail } from "./selectThumbnail";
-import { WorkJoinSelector } from "./WorkJoinSelector";
-import { Work } from "./Work";
-import { Image } from "Image";
+import {Dataset} from "./Dataset";
+import {Rights} from "./Rights";
+import {Property} from "./Property";
+import {CollectionJoinSelector} from "./CollectionJoinSelector";
+import {InstitutionJoinSelector} from "./InstitutionJoinSelector";
+import {Collection} from "./Collection";
+import {DatasetBuilder} from "./DatasetBuilder";
+import {Institution} from "./Institution";
+import {PropertyDefinitionJoinSelector} from "./PropertyDefinitionJoinSelector";
+import {selectThumbnail} from "./selectThumbnail";
+import {WorkJoinSelector} from "./WorkJoinSelector";
+import {Work} from "./Work";
+import {Image} from "Image";
 
 /**
  * Subset a Dataset to reduce the amount of data passed between getStaticProps and the component.
@@ -23,7 +23,7 @@ import { Image } from "Image";
  * but no models connected to the Collections (i.e., their Works).
  */
 export class DataSubsetter {
-  constructor(private readonly completeDataset: Dataset) { }
+  constructor(private readonly completeDataset: Dataset) {}
 
   // Use the builder pattern internally rather than a more functional algorithm, such as merging datasets,
   // which was the initial implementation
@@ -69,7 +69,7 @@ export class DataSubsetter {
 
   private addImageDataset(
     builder: DatasetBuilder,
-    image: Image,
+    image: Image
   ): DatasetBuilder {
     builder.addImage(image);
     this.addRightsDataset(builder, image.rights);
@@ -211,7 +211,9 @@ export class DataSubsetter {
 
         if (joinSelector.values.allImages) {
           for (const propertyValueDefinition of propertyValueDefinitions) {
-            for (const image of this.completeDataset.imagesByDepictsUri(propertyValueDefinition.uri)) {
+            for (const image of this.completeDataset.imagesByDepictsUri(
+              propertyValueDefinition.uri
+            )) {
               this.addImageDataset(builder, image);
             }
           }
@@ -240,6 +242,11 @@ export class DataSubsetter {
   ): DatasetBuilder {
     if (!rights) {
       return builder;
+    }
+
+    const creator = rights.creator;
+    if (creator && typeof creator !== "string") {
+      builder.addPerson(creator);
     }
 
     const license = rights.license;
