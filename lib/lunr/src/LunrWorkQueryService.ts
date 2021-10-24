@@ -402,7 +402,7 @@ export class LunrWorkQueryService implements WorkQueryService {
       maxDimensions: image.maxDimensions,
       rights: rights
         ? {
-            creator: rights.creator,
+            creator: rights.creator?.toString() ?? null,
             holder: rights.holder,
             license: rights.license?.toString() ?? null,
             statement: rights.statement?.toString() ?? null,
