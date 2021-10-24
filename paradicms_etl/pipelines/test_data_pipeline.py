@@ -121,31 +121,39 @@ class TestDataPipeline(_Pipeline):
             yield from self.__generate_institutions(agents=agents)
 
         def __generate_agents(self):
+            agents = []
             for organization_i in range(5):
-                yield Organization.from_fields(
-                    name=f"Organization {organization_i}",
-                    uri=URIRef(f"http://example.com/organization{organization_i}"),
+                agents.append(
+                    Organization.from_fields(
+                        name=f"Organization {organization_i}",
+                        uri=URIRef(f"http://example.com/organization{organization_i}"),
+                    )
                 )
 
             for person_i in range(5):
-                person = Person.from_fields(
-                    family_name=str(person_i),
-                    given_name="Person",
-                    name=f"Person {person_i}",
-                    sort_name=f"{person_i}, Person",
-                    uri=URIRef(f"http://example.com/person{person_i}"),
+                agents.append(
+                    Person.from_fields(
+                        family_name=str(person_i),
+                        given_name="Person",
+                        name=f"Person {person_i}",
+                        sort_name=f"{person_i}, Person",
+                        uri=URIRef(f"http://example.com/person{person_i}"),
+                    )
                 )
-                yield person
+
+            for agent in agents:
+                yield agent
 
                 yield Image.from_fields(
-                    depicts_uri=person.uri,
+                    depicts_uri=agent.uri,
+                    exact_dimensions=ImageDimensions(height=600, width=600),
                     rights=Rights(
-                        creator=f"{person.name} image creator",
-                        holder=f"{person.name} image rights holder",
+                        creator=f"{agent.name} image creator",
+                        holder=f"{agent.name} image rights holder",
                         license=CreativeCommonsLicenses.NC_1_0.uri,
                         statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
                     ),
-                    uri=URIRef(f"{person.uri}Image"),
+                    uri=URIRef(f"{agent.uri}Image"),
                 )
 
         def __generate_collection_works(
