@@ -17,6 +17,7 @@ import {PARADICMS, prefixes, RDF} from "./vocabularies";
 import {Work} from "./Work";
 import {Person} from "./Person";
 import {NamedModel} from "./NamedModel";
+import {Organization} from "./Organization";
 
 /**
  * Lazily indexes the contents of an immutable Dataset to provide quick lookups and subsetting.
@@ -40,6 +41,8 @@ export class Dataset {
   private _institutionsByUriIndex?: {[index: string]: Institution};
   private _licenses?: readonly License[];
   private _licensesByUriIndex?: {[index: string]: License};
+  private _organizations?: readonly Organization[];
+  private _organizationsByUriIndex?: {[index: string]: Organization};
   private _people?: readonly Person[];
   private _peopleByUriIndex?: {[index: string]: Person};
   private _propertyDefinitions?: readonly PropertyDefinition[];
@@ -231,6 +234,29 @@ export class Dataset {
     }
   }
 
+  organizationByUri(organizationUri: string): Organization {
+    const organization = this.organizationsByUriIndex[organizationUri];
+    if (!organization) {
+      this.logContents();
+      throw new RangeError("no such organization " + organizationUri);
+    }
+    return organization;
+  }
+
+  get organizations(): readonly Organization[] {
+    if (!this._organizations) {
+      this.readOrganizations();
+    }
+    return this._organizations!;
+  }
+
+  private get organizationsByUriIndex(): {[index: string]: Organization} {
+    if (!this._organizationsByUriIndex) {
+      this.readOrganizations();
+    }
+    return this._organizationsByUriIndex!;
+  }
+
   static parse(input: string, options?: ParserOptions): Dataset {
     const parser = new Parser(options);
     const store = new Store();
@@ -418,6 +444,21 @@ export class Dataset {
       type,
       null
     );
+  }
+
+  protected readOrganization(node: NamedNode): Organization {
+    return new Organization({dataset: this, node});
+  }
+
+  private readOrganizations() {
+    const organizations: Organization[] = [];
+    this._organizationsByUriIndex = {};
+    this.readModelNodes(node => {
+      const organization = this.readOrganization(node);
+      organizations.push(organization);
+      this._organizationsByUriIndex![organization.uri] = organization;
+    }, PARADICMS.Organization);
+    this._organizations = organizations;
   }
 
   private readPeople() {
