@@ -1,4 +1,5 @@
 export * from "./Agent";
+export * from "./AgentJoinSelector";
 export * from "./Collection";
 export * from "./CollectionJoinSelector";
 export * from "./CollectionValueFacet";

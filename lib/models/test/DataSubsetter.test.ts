@@ -4,7 +4,7 @@ import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {testDataTtl} from "./testDataTtl";
 import {Dataset, License, RightsStatement} from "../src";
 import {NamedModel} from "../src/NamedModel";
-import {Person} from "../src/Person";
+import {Agent} from "../src/Agent";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
@@ -140,9 +140,9 @@ describe("DataSubsetter", () => {
         license => license.uri === (work.rights!.license! as License).uri
       )!,
     ]);
-    expectModelsDeepEq(dataset.people, [
-      testDataset.people.find(
-        person => person.uri === (work.rights!.creator! as Person).uri
+    expectModelsDeepEq(dataset.agents, [
+      testDataset.agents.find(
+        person => person.uri === (work.rights!.creator! as Agent).uri
       )!,
     ]);
     expectModelsDeepEq(dataset.works, [work]);

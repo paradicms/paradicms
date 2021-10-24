@@ -7,7 +7,7 @@ import {Rights} from "./Rights";
 import {Image} from "./Image";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
-import {Person} from "./Person";
+import {Agent} from "./Agent";
 
 export class Work extends NamedModel {
   get abstract(): string | null {
@@ -24,9 +24,9 @@ export class Work extends NamedModel {
     return this.parentNamedNodes(PARADICMS.collection).map(node => node.value);
   }
 
-  get creator(): Person | string | null {
+  get creator(): Agent | string | null {
     return this.optionalModelOrString(
-      uri => this.dataset.personByUri(uri),
+      uri => this.dataset.agentByUri(uri),
       DCTERMS.creator
     );
   }

@@ -18,6 +18,7 @@ import {Work} from "./Work";
 import {Person} from "./Person";
 import {NamedModel} from "./NamedModel";
 import {Organization} from "./Organization";
+import {Agent} from "./Agent";
 
 /**
  * Lazily indexes the contents of an immutable Dataset to provide quick lookups and subsetting.
@@ -61,6 +62,21 @@ export class Dataset {
   private _worksByUriIndex?: {[index: string]: Work};
 
   constructor(readonly store: Store) {}
+
+  agentByUri(agentUri: string): Agent {
+    for (const index of [this.organizationsByUriIndex, this.peopleByUriIndex]) {
+      const agent = index[agentUri];
+      if (agent) {
+        return agent;
+      }
+    }
+    this.logContents();
+    throw new RangeError("no such agent " + agentUri);
+  }
+
+  agents(): readonly Agent[] {
+    return [...this.organizations, ...this.people];
+  }
 
   collectionWorks(collectionUri: string): readonly Work[] {
     return this.worksByCollectionUriIndex[collectionUri] ?? [];
@@ -213,6 +229,7 @@ export class Dataset {
       institutions: this.institutions,
       images: this.images,
       licenses: this.licenses,
+      organizations: this.organizations,
       people: this.people,
       propertyDefinitions: this.propertyDefinitions,
       propertyValueDefinitions: this.propertyValueDefinitions,
