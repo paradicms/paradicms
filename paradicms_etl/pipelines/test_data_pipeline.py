@@ -223,7 +223,7 @@ class TestDataPipeline(_Pipeline):
                     family_name=str(person_i),
                     given_name="Person",
                     name=f"Person {person_i}",
-                    sort_name="{person_i}, Person",
+                    sort_name=f"{person_i}, Person",
                     uri=URIRef(f"http://example.com/person{person_i}"),
                 )
 
