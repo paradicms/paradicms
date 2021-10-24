@@ -8,12 +8,14 @@ import {PropertyDefinition} from "./PropertyDefinition";
 import {PropertyValueDefinition} from "./PropertyValueDefinition";
 import {Store} from "n3";
 import {Work} from "./Work";
+import {Person} from "./Person";
 
 export class DatasetBuilder {
   private collectionsByUri: {[index: string]: Collection} | undefined;
   private institutionsByUri: {[index: string]: Institution} | undefined;
   private imagesByUri: {[index: string]: Image} | undefined;
   private licensesByUri: {[index: string]: License} | undefined;
+  private peopleByUri: {[index: string]: Person} | undefined;
   private propertyDefinitionsByUri:
     | {[index: string]: PropertyDefinition}
     | undefined;
@@ -111,6 +113,11 @@ export class DatasetBuilder {
     return addedModels;
   }
 
+  addPerson(person: Person) {
+    this.peopleByUri = DatasetBuilder.addNamedModel(this.peopleByUri, person);
+    return this;
+  }
+
   addWork(work: Work) {
     this.worksByUri = DatasetBuilder.addNamedModel(this.worksByUri, work);
     return this;
@@ -178,6 +185,7 @@ export class DatasetBuilder {
       this.imagesByUri,
       this.institutionsByUri,
       this.licensesByUri,
+      this.peopleByUri,
       this.worksByUri,
       this.propertyDefinitionsByUri,
       this.propertyValueDefinitionsByUri,

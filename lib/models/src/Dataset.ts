@@ -15,6 +15,7 @@ import {
 } from "n3";
 import {PARADICMS, prefixes, RDF} from "./vocabularies";
 import {Work} from "./Work";
+import {Person} from "./Person";
 
 /**
  * Lazily indexes the contents of an immutable Dataset to provide quick lookups and subsetting.
@@ -38,6 +39,8 @@ export class Dataset {
   private _institutionsByUriIndex?: {[index: string]: Institution};
   private _licenses?: readonly License[];
   private _licensesByUriIndex?: {[index: string]: License};
+  private _people?: readonly Person[];
+  private _peopleByUriIndex?: {[index: string]: Person};
   private _propertyDefinitions?: readonly PropertyDefinition[];
   private _propertyDefinitionsByUriIndex?: {
     [index: string]: PropertyDefinition;
@@ -198,6 +201,28 @@ export class Dataset {
     return new Dataset(store);
   }
 
+  get people(): readonly Person[] {
+    if (!this._people) {
+      this.readPeople();
+    }
+    return this._people!;
+  }
+
+  private get peopleByUriIndex(): {[index: string]: Person} {
+    if (!this._peopleByUriIndex) {
+      this.readPeople();
+    }
+    return this._peopleByUriIndex!;
+  }
+
+  personByUri(personUri: string): Person {
+    const person = this.peopleByUriIndex[personUri];
+    if (!person) {
+      throw new RangeError("no such person " + personUri);
+    }
+    return person;
+  }
+
   propertyDefinitionByUri(
     propertyDefinitionUri: string
   ): PropertyDefinition | null {
@@ -355,6 +380,21 @@ export class Dataset {
       type,
       null
     );
+  }
+
+  private readPeople() {
+    const people: Person[] = [];
+    this._peopleByUriIndex = {};
+    this.readModelNodes(node => {
+      const person = this.readPerson(node);
+      people.push(person);
+      this._peopleByUriIndex![person.uri] = person;
+    }, PARADICMS.Person);
+    this._people = people;
+  }
+
+  private readPerson(node: NamedNode): Person {
+    return new Person({dataset: this, node});
   }
 
   protected readPropertyDefinition(node: NamedNode): PropertyDefinition {

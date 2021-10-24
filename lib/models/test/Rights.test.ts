@@ -3,9 +3,16 @@ import {License} from "../src/License";
 import {RightsStatement} from "../src/RightsStatement";
 import {Dataset} from "../src";
 import {testDataTtl} from "./testDataTtl";
+import {Person} from "../src/Person";
 
 describe("Rights", () => {
-  const sut = Dataset.parse(testDataTtl).institutions[0].rights!;
+  const sut = Dataset.parse(testDataTtl).works[0].rights!;
+
+  it("should have a joined creator", () => {
+    expect(sut.creator).to.not.be.empty;
+    expect(sut.creator).to.not.be.instanceof(String);
+    expect((sut.creator! as Person).name).to.not.be.empty;
+  });
 
   it("should have a joined license", () => {
     expect(sut.license).to.not.be.empty;
