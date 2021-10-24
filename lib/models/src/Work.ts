@@ -7,6 +7,7 @@ import {Rights} from "./Rights";
 import {Image} from "./Image";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
+import {Person} from "./Person";
 
 export class Work extends NamedModel {
   get abstract(): string | null {
@@ -21,6 +22,13 @@ export class Work extends NamedModel {
 
   get collectionUris(): readonly string[] {
     return this.parentNamedNodes(PARADICMS.collection).map(node => node.value);
+  }
+
+  get creator(): Person | string | null {
+    return this.optionalModelOrString(
+      uri => this.dataset.personByUri(uri),
+      DCTERMS.creator
+    );
   }
 
   get images(): readonly Image[] {

@@ -304,7 +304,7 @@ export const getStaticProps: GetStaticProps = async ({
         .worksDataset(workUris, {
           allImages: true,
           collections: {},
-          institution: {rights: true},
+          institution: {},
         })
         .stringify(),
       nextWorkUri,

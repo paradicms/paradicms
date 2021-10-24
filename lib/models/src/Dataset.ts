@@ -16,6 +16,7 @@ import {
 import {PARADICMS, prefixes, RDF} from "./vocabularies";
 import {Work} from "./Work";
 import {Person} from "./Person";
+import {NamedModel} from "./NamedModel";
 
 /**
  * Lazily indexes the contents of an immutable Dataset to provide quick lookups and subsetting.
@@ -81,6 +82,7 @@ export class Dataset {
   collectionByUri(collectionUri: string): Collection {
     const collection = this.collectionsByUriIndex[collectionUri];
     if (!collection) {
+      this.logContents();
       throw new RangeError("no such collection " + collectionUri);
     }
     return collection;
@@ -96,6 +98,7 @@ export class Dataset {
   imageByUri(imageUri: string): Image {
     const image = this.imagesByUriIndex[imageUri];
     if (!image) {
+      this.logContents();
       throw new RangeError("no such image " + imageUri);
     }
     return image;
@@ -145,6 +148,7 @@ export class Dataset {
   institutionByUri(institutionUri: string): Institution {
     const institution = this.institutionsByUriIndex[institutionUri];
     if (!institution) {
+      this.logContents();
       throw new RangeError("no such institution " + institutionUri);
     }
     return institution;
@@ -175,6 +179,7 @@ export class Dataset {
   licenseByUri(licenseUri: string): License {
     const license = this.licensesByUriIndex[licenseUri];
     if (!license) {
+      this.logContents();
       throw new RangeError("no such license " + licenseUri);
     }
     return license;
@@ -192,6 +197,38 @@ export class Dataset {
       this.readLicenses();
     }
     return this._licensesByUriIndex!;
+  }
+
+  private logContents(): void {
+    console.log(
+      "Dataset:",
+      this.store.getSubjects(null, null, null).length,
+      "subjects"
+    );
+    const models: {[index: string]: readonly NamedModel[]} = {
+      collections: this.collections,
+      institutions: this.institutions,
+      images: this.images,
+      licenses: this.licenses,
+      people: this.people,
+      propertyDefinitions: this.propertyDefinitions,
+      propertyValueDefinitions: this.propertyValueDefinitions,
+      rightsStatements: this.rightsStatements,
+      works: this.works,
+    };
+    for (const key of Object.keys(models)) {
+      const keyModels = models[key];
+      console.log(
+        "  ",
+        keyModels.length,
+        key,
+        ":",
+        keyModels
+          .map(model => model.uri)
+          .sort()
+          .join(" ")
+      );
+    }
   }
 
   static parse(input: string, options?: ParserOptions): Dataset {
@@ -218,6 +255,7 @@ export class Dataset {
   personByUri(personUri: string): Person {
     const person = this.peopleByUriIndex[personUri];
     if (!person) {
+      this.logContents();
       throw new RangeError("no such person " + personUri);
     }
     return person;
@@ -515,6 +553,7 @@ export class Dataset {
   rightsStatementByUri(rightsStatementUri: string): RightsStatement {
     const rightsStatement = this.rightsStatementsByUriIndex[rightsStatementUri];
     if (!rightsStatement) {
+      this.logContents();
       throw new RangeError("no such rights statement " + rightsStatementUri);
     }
     return rightsStatement;
@@ -545,6 +584,7 @@ export class Dataset {
   workByUri(workUri: string): Work {
     const work = this.worksByUriIndex[workUri];
     if (!work) {
+      this.logContents();
       throw new RangeError("no such work " + workUri);
     }
     return work;

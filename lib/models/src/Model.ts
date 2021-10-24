@@ -2,6 +2,7 @@ import {BlankNode, Literal, NamedNode, Store, Term} from "n3";
 import {Dataset} from "./Dataset";
 import {FOAF, PARADICMS, RDF} from "./vocabularies";
 import {Property} from "./Property";
+import {NamedModel} from "./NamedModel";
 
 export class Model {
   readonly dataset: Dataset;
@@ -54,10 +55,18 @@ export class Model {
     return null;
   }
 
-  protected optionalTerm(property: NamedNode): Term | null {
-    const works = this.store.getObjects(this.node, property, null);
-    for (const work of works) {
-      return work;
+  protected optionalModelOrString<ModelT extends NamedModel>(
+    modelByUri: (uri: string) => ModelT,
+    property: NamedNode
+  ): ModelT | string | null {
+    const objects = this.store.getObjects(this.node, property, null);
+    for (const object of objects) {
+      switch (object.termType) {
+        case "Literal":
+          return object.value;
+        case "NamedNode":
+          return modelByUri(object.value);
+      }
     }
     return null;
   }
@@ -114,13 +123,12 @@ export class Model {
   }
 
   protected requiredTerm(property: NamedNode): Term {
-    const term = this.optionalTerm(property);
-    if (!term) {
-      throw new EvalError(
-        `missing (<${this.node.value}>, <${property.value}>, *) statement`
-      );
+    for (const object of this.store.getObjects(this.node, property, null)) {
+      return object;
     }
-    return term;
+    throw new EvalError(
+      `missing (<${this.node.value}>, <${property.value}>, *) statement`
+    );
   }
 
   protected get store(): Store {

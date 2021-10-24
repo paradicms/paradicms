@@ -29,7 +29,7 @@ interface StaticProps {
 
 const WORK_JOIN_SELECTOR: WorkJoinSelector = {
   collections: {},
-  institution: {rights: true},
+  institution: {},
   propertyDefinitions: {
     values: {
       thumbnail: {targetDimensions: thumbnailTargetDimensions},
