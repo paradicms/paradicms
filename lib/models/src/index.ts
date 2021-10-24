@@ -1,3 +1,4 @@
+export * from "./Agent";
 export * from "./Collection";
 export * from "./CollectionJoinSelector";
 export * from "./CollectionValueFacet";
@@ -21,6 +22,7 @@ export * from "./License";
 export * from "./Model";
 export * from "./NamedModel";
 export * from "./Namespace";
+export * from "./Organization";
 export * from "./PrimitiveType";
 export * from "./Property";
 export * from "./PropertyDefinition";
