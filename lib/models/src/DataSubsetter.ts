@@ -37,7 +37,9 @@ export class DataSubsetter {
     builder.addAgent(agent);
 
     if (joinSelector?.thumbnail) {
-      const thumbnailImage = agent.thumbnail(joinSelector.thumbnail);
+      const thumbnailImage = this.completeDataset
+        .agentByUri(agent.uri)
+        .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
         this.addImageDataset(builder, thumbnailImage);
       }

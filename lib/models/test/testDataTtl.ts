@@ -1,5 +1,5 @@
 // Trying to Dataset.parse in the const declaration causes circular dependency issues
-export const testDataTtl = ` 
+export const testDataTtl = `
 @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
 @prefix creativecommons: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
@@ -442,38 +442,105 @@ export const testDataTtl = `
     foaf:logo <http://i.creativecommons.org/p/zero/1.0/80x15.png>,
         <http://i.creativecommons.org/p/zero/1.0/88x31.png> .
 
-<http://example.com/organization4> a paradicms:Organization ;
-    foaf:name "Organization 4" .
+<http://example.com/organization0Image> a paradicms:Image ;
+    dcterms:creator "Organization 0 image creator" ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Organization 0 image rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <http://example.com/organization0> .
 
-<http://example.com/person0> a paradicms:Person ;
-    contact:sortName "0, Person" ;
-    foaf:familyName "0" ;
-    foaf:givenName "Person" ;
-    foaf:name "Person 0" .
+<http://example.com/organization1Image> a paradicms:Image ;
+    dcterms:creator "Organization 1 image creator" ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Organization 1 image rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <http://example.com/organization1> .
 
-<http://example.com/person1> a paradicms:Person ;
-    contact:sortName "1, Person" ;
-    foaf:familyName "1" ;
-    foaf:givenName "Person" ;
-    foaf:name "Person 1" .
+<http://example.com/organization2Image> a paradicms:Image ;
+    dcterms:creator "Organization 2 image creator" ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Organization 2 image rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <http://example.com/organization2> .
 
-<http://example.com/person2> a paradicms:Person ;
-    contact:sortName "2, Person" ;
-    foaf:familyName "2" ;
-    foaf:givenName "Person" ;
-    foaf:name "Person 2" .
+<http://example.com/organization3Image> a paradicms:Image ;
+    dcterms:creator "Organization 3 image creator" ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Organization 3 image rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <http://example.com/organization3> .
 
-<http://example.com/person3> a paradicms:Person ;
-    contact:sortName "3, Person" ;
-    foaf:familyName "3" ;
-    foaf:givenName "Person" ;
-    foaf:name "Person 3" .
+<http://example.com/organization4Image> a paradicms:Image ;
+    dcterms:creator "Organization 4 image creator" ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Organization 4 image rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <http://example.com/organization4> .
 
-<http://example.com/person4> a paradicms:Person ;
-    contact:sortName "4, Person" ;
-    foaf:familyName "4" ;
-    foaf:givenName "Person" ;
-    foaf:name "Person 4" .
+<http://example.com/person0Image> a paradicms:Image ;
+    dcterms:creator "Person 0 image creator" ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Person 0 image rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <http://example.com/person0> .
+
+<http://example.com/person1Image> a paradicms:Image ;
+    dcterms:creator "Person 1 image creator" ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Person 1 image rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <http://example.com/person1> .
+
+<http://example.com/person2Image> a paradicms:Image ;
+    dcterms:creator "Person 2 image creator" ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Person 2 image rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <http://example.com/person2> .
+
+<http://example.com/person3Image> a paradicms:Image ;
+    dcterms:creator "Person 3 image creator" ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Person 3 image rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <http://example.com/person3> .
+
+<http://example.com/person4Image> a paradicms:Image ;
+    dcterms:creator "Person 4 image creator" ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Person 4 image rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <http://example.com/person4> .
 
 dcterms:abstract a paradicms:PropertyDefinition ;
     rdfs:label "Abstract" .
@@ -3929,6 +3996,39 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:hasVersion "3.0" ;
     foaf:logo <http://i.creativecommons.org/l/by/3.0/80x15.png>,
         <http://i.creativecommons.org/l/by/3.0/88x31.png> .
+
+<http://example.com/organization4> a paradicms:Organization ;
+    foaf:name "Organization 4" .
+
+<http://example.com/person0> a paradicms:Person ;
+    contact:sortName "0, Person" ;
+    foaf:familyName "0" ;
+    foaf:givenName "Person" ;
+    foaf:name "Person 0" .
+
+<http://example.com/person1> a paradicms:Person ;
+    contact:sortName "1, Person" ;
+    foaf:familyName "1" ;
+    foaf:givenName "Person" ;
+    foaf:name "Person 1" .
+
+<http://example.com/person2> a paradicms:Person ;
+    contact:sortName "2, Person" ;
+    foaf:familyName "2" ;
+    foaf:givenName "Person" ;
+    foaf:name "Person 2" .
+
+<http://example.com/person3> a paradicms:Person ;
+    contact:sortName "3, Person" ;
+    foaf:familyName "3" ;
+    foaf:givenName "Person" ;
+    foaf:name "Person 3" .
+
+<http://example.com/person4> a paradicms:Person ;
+    contact:sortName "4, Person" ;
+    foaf:familyName "4" ;
+    foaf:givenName "Person" ;
+    foaf:name "Person 4" .
 
 <https://place-hold.it/600x600?text=Cultural%20context%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
