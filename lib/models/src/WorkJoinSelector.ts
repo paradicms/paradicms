@@ -2,11 +2,13 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
 import {CollectionJoinSelector} from "./CollectionJoinSelector";
 import {InstitutionJoinSelector} from "./InstitutionJoinSelector";
 import {PropertyDefinitionJoinSelector} from "./PropertyDefinitionJoinSelector";
+import {AgentJoinSelector} from "./AgentJoinSelector";
 
 /**
  * See note in DataSubsetter re: the use of this interface.
  */
 export interface WorkJoinSelector {
+  agent?: AgentJoinSelector;
   // Return all Images that depict this Work.
   allImages?: boolean;
   // Return all collections referred to by this Work's collectionUris.

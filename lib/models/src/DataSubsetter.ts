@@ -11,7 +11,8 @@ import {selectThumbnail} from "./selectThumbnail";
 import {WorkJoinSelector} from "./WorkJoinSelector";
 import {Work} from "./Work";
 import {Image} from "Image";
-import {Person} from "./Person";
+import {Agent} from "./Agent";
+import {AgentJoinSelector} from "./AgentJoinSelector";
 
 /**
  * Subset a Dataset to reduce the amount of data passed between getStaticProps and the component.
@@ -28,6 +29,25 @@ export class DataSubsetter {
 
   // Use the builder pattern internally rather than a more functional algorithm, such as merging datasets,
   // which was the initial implementation
+  private addAgentDataset(
+    agent: Agent,
+    builder: DatasetBuilder,
+    joinSelector?: AgentJoinSelector
+  ): DatasetBuilder {
+    builder.addAgent(agent);
+
+    if (joinSelector?.thumbnail) {
+      const thumbnailImage = this.completeDataset
+        .agentByUri(agent.uri)
+        .thumbnail(joinSelector.thumbnail);
+      if (thumbnailImage) {
+        this.addImageDataset(builder, thumbnailImage);
+      }
+    }
+
+    return builder;
+  }
+
   private addCollectionDataset(
     builder: DatasetBuilder,
     collection: Collection,
@@ -70,10 +90,11 @@ export class DataSubsetter {
 
   private addImageDataset(
     builder: DatasetBuilder,
-    image: Image
+    image: Image,
+    agentJoinSelector?: AgentJoinSelector
   ): DatasetBuilder {
     builder.addImage(image);
-    this.addRightsDataset(builder, image.rights);
+    this.addRightsDataset(builder, image.rights, agentJoinSelector);
     return builder;
   }
 
@@ -138,18 +159,18 @@ export class DataSubsetter {
   ): DatasetBuilder {
     builder.addWork(work);
     // Works Datasets always include rights
-    this.addRightsDataset(builder, work.rights);
+    this.addRightsDataset(builder, work.rights, joinSelector?.agent);
 
     if (joinSelector?.allImages) {
       for (const image of this.completeDataset.imagesByDepictsUri(work.uri)) {
-        this.addImageDataset(builder, image);
+        this.addImageDataset(builder, image, joinSelector?.agent);
       }
     } else if (joinSelector?.thumbnail) {
       const thumbnailImage = this.completeDataset
         .workByUri(work.uri)
         .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        this.addImageDataset(builder, thumbnailImage);
+        this.addImageDataset(builder, thumbnailImage, joinSelector?.agent);
       }
     }
 
@@ -179,11 +200,6 @@ export class DataSubsetter {
       );
     }
 
-    const creator = work.creator;
-    if (creator && typeof creator !== "string") {
-      builder.addPerson(creator as Person);
-    }
-
     return builder;
   }
 
@@ -211,15 +227,16 @@ export class DataSubsetter {
         );
         builder.addPropertyValueDefinitions(propertyValueDefinitions);
 
-        if (joinSelector.values.allImages) {
-          for (const propertyValueDefinition of propertyValueDefinitions) {
-            for (const image of this.completeDataset.imagesByDepictsUri(
-              propertyValueDefinition.uri
-            )) {
-              this.addImageDataset(builder, image);
-            }
-          }
-        } else if (joinSelector.values.thumbnail) {
+        // if (joinSelector.values.allImages) {
+        //   for (const propertyValueDefinition of propertyValueDefinitions) {
+        //     for (const image of this.completeDataset.imagesByDepictsUri(
+        //       propertyValueDefinition.uri
+        //     )) {
+        //       this.addImageDataset(builder, image);
+        //     }
+        //   }
+        // } else
+        if (joinSelector.values.thumbnail) {
           for (const propertyValueDefinition of propertyValueDefinitions) {
             const thumbnail = selectThumbnail(
               this.completeDataset.imagesByDepictsUri(
@@ -240,7 +257,8 @@ export class DataSubsetter {
 
   private addRightsDataset(
     builder: DatasetBuilder,
-    rights: Rights | null
+    rights: Rights | null,
+    agentJoinSelector?: AgentJoinSelector
   ): DatasetBuilder {
     if (!rights) {
       return builder;
@@ -248,7 +266,7 @@ export class DataSubsetter {
 
     const creator = rights.creator;
     if (creator && typeof creator !== "string") {
-      builder.addPerson(creator);
+      this.addAgentDataset(creator, builder, agentJoinSelector);
     }
 
     const license = rights.license;

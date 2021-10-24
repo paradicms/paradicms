@@ -17,6 +17,7 @@ export class PARADICMS {
   static Image = PARADICMS.NS("Image");
   static Institution = PARADICMS.NS("Institution");
   static License = PARADICMS.NS("License");
+  static Organization = PARADICMS.NS("Organization");
   static Person = PARADICMS.NS("Person");
   static PropertyDefinition = PARADICMS.NS("PropertyDefinition");
   static PropertyValueDefinition = PARADICMS.NS("PropertyValueDefinition");

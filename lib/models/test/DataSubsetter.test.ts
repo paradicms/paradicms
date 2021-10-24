@@ -4,7 +4,7 @@ import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {testDataTtl} from "./testDataTtl";
 import {Dataset, License, RightsStatement} from "../src";
 import {NamedModel} from "../src/NamedModel";
-import {Person} from "../src/Person";
+import {Agent} from "../src/Agent";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
@@ -110,12 +110,15 @@ describe("DataSubsetter", () => {
     ]);
   });
 
-  it("should get an work with its institution, collections, and all images (work page)", () => {
+  it("should get an work with its institution, collections, all images, agents, and agents' thumbnails (work page)", () => {
     const work = testDataset.works[0];
     const dataset = sut.workDataset(work.uri, {
+      agent: {
+        thumbnail: THUMBNAIL_SELECTOR,
+      },
+      allImages: true,
       collections: {},
       institution: {},
-      allImages: true,
       propertyDefinitions: {},
     });
     expectModelsDeepEq(
@@ -128,7 +131,11 @@ describe("DataSubsetter", () => {
     );
     expectModelsDeepEq(
       dataset.images,
-      testDataset.images.filter(image => image.depictsUri === work.uri)
+      testDataset.images.filter(
+        image =>
+          image.depictsUri === work.uri ||
+          image.depictsUri === (work.rights!.creator! as Agent).uri
+      )
     );
     expectModelsDeepEq(dataset.institutions, [
       testDataset.institutions.find(
@@ -140,9 +147,9 @@ describe("DataSubsetter", () => {
         license => license.uri === (work.rights!.license! as License).uri
       )!,
     ]);
-    expectModelsDeepEq(dataset.people, [
-      testDataset.people.find(
-        person => person.uri === (work.rights!.creator! as Person).uri
+    expectModelsDeepEq(dataset.agents, [
+      testDataset.agents.find(
+        agent => agent.uri === (work.rights!.creator! as Agent).uri
       )!,
     ]);
     expectModelsDeepEq(dataset.works, [work]);

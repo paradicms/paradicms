@@ -1,7 +1,7 @@
-import {NamedModel} from "./NamedModel";
 import {CONTACT, FOAF} from "./vocabularies";
+import {Agent} from "./Agent";
 
-export class Person extends NamedModel {
+export class Person extends Agent {
   get familyName(): string | null {
     return this.optionalString(FOAF.familyName);
   }
@@ -10,15 +10,7 @@ export class Person extends NamedModel {
     return this.optionalString(FOAF.givenName);
   }
 
-  get name(): string {
-    return this.requiredString(FOAF.name_);
-  }
-
   get sortName(): string | null {
     return this.optionalString(CONTACT.sortName);
-  }
-
-  toString() {
-    return this.name;
   }
 }

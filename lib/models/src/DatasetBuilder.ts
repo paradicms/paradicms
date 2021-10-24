@@ -9,12 +9,15 @@ import {PropertyValueDefinition} from "./PropertyValueDefinition";
 import {Store} from "n3";
 import {Work} from "./Work";
 import {Person} from "./Person";
+import {Organization} from "./Organization";
+import {Agent} from "./Agent";
 
 export class DatasetBuilder {
   private collectionsByUri: {[index: string]: Collection} | undefined;
   private institutionsByUri: {[index: string]: Institution} | undefined;
   private imagesByUri: {[index: string]: Image} | undefined;
   private licensesByUri: {[index: string]: License} | undefined;
+  private organizationsByUri: {[index: string]: Organization} | undefined;
   private peopleByUri: {[index: string]: Person} | undefined;
   private propertyDefinitionsByUri:
     | {[index: string]: PropertyDefinition}
@@ -24,6 +27,16 @@ export class DatasetBuilder {
     | undefined;
   private rightsStatementsByUri: {[index: string]: RightsStatement} | undefined;
   private worksByUri: {[index: string]: Work} | undefined;
+
+  addAgent(agent: Agent) {
+    if (agent instanceof Organization) {
+      return this.addOrganization(agent);
+    } else if (agent instanceof Person) {
+      return this.addPerson(agent);
+    } else {
+      throw new EvalError();
+    }
+  }
 
   addCollection(collection: Collection) {
     this.collectionsByUri = DatasetBuilder.addNamedModel(
@@ -113,6 +126,14 @@ export class DatasetBuilder {
     return addedModels;
   }
 
+  addOrganization(organization: Organization) {
+    this.organizationsByUri = DatasetBuilder.addNamedModel(
+      this.organizationsByUri,
+      organization
+    );
+    return this;
+  }
+
   addPerson(person: Person) {
     this.peopleByUri = DatasetBuilder.addNamedModel(this.peopleByUri, person);
     return this;
@@ -185,6 +206,7 @@ export class DatasetBuilder {
       this.imagesByUri,
       this.institutionsByUri,
       this.licensesByUri,
+      this.organizationsByUri,
       this.peopleByUri,
       this.worksByUri,
       this.propertyDefinitionsByUri,

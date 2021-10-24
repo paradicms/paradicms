@@ -2,12 +2,12 @@ import {Model} from "./Model";
 import {DCTERMS} from "./vocabularies";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
-import {Person} from "./Person";
+import {Agent} from "./Agent";
 
 export class Rights extends Model {
-  get creator(): Person | string | null {
+  get creator(): Agent | string | null {
     return this.optionalModelOrString(
-      uri => this.dataset.personByUri(uri),
+      uri => this.dataset.agentByUri(uri),
       DCTERMS.creator
     );
   }
