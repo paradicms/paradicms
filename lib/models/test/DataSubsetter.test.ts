@@ -110,12 +110,15 @@ describe("DataSubsetter", () => {
     ]);
   });
 
-  it("should get an work with its institution, collections, and all images (work page)", () => {
+  it("should get an work with its institution, collections, all images, agents, and agents' thumbnails (work page)", () => {
     const work = testDataset.works[0];
     const dataset = sut.workDataset(work.uri, {
+      agent: {
+        thumbnail: THUMBNAIL_SELECTOR,
+      },
+      allImages: true,
       collections: {},
       institution: {},
-      allImages: true,
       propertyDefinitions: {},
     });
     expectModelsDeepEq(
@@ -142,7 +145,7 @@ describe("DataSubsetter", () => {
     ]);
     expectModelsDeepEq(dataset.agents, [
       testDataset.agents.find(
-        person => person.uri === (work.rights!.creator! as Agent).uri
+        agent => agent.uri === (work.rights!.creator! as Agent).uri
       )!,
     ]);
     expectModelsDeepEq(dataset.works, [work]);

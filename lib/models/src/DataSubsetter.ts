@@ -198,11 +198,6 @@ export class DataSubsetter {
       );
     }
 
-    const creator = work.creator;
-    if (creator && typeof creator !== "string") {
-      this.addAgentDataset(creator as Agent, builder, joinSelector?.agent);
-    }
-
     return builder;
   }
 

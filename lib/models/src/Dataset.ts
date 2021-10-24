@@ -74,7 +74,7 @@ export class Dataset {
     throw new RangeError("no such agent " + agentUri);
   }
 
-  agents(): readonly Agent[] {
+  get agents(): readonly Agent[] {
     return [...this.organizations, ...this.people];
   }
 
