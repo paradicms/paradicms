@@ -17,4 +17,8 @@ export class Person extends NamedModel {
   get sortName(): string | null {
     return this.optionalString(CONTACT.sortName);
   }
+
+  toString() {
+    return this.name;
+  }
 }
