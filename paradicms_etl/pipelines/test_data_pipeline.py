@@ -302,7 +302,7 @@ class TestDataPipeline(_Pipeline):
                     DublinCorePropertyDefinitions.CREATOR,
                     people[(work_i + i) % len(people)].uri,
                 )
-                for i in range(2)
+                for i in range(1)
             )
 
             page = "http://example.com/work/" + str(work_i)
