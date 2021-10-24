@@ -3,6 +3,7 @@ import {License} from "../src/License";
 import {RightsStatement} from "../src/RightsStatement";
 import {testDataTtl} from "./testDataTtl";
 import {expect} from "chai";
+import {Person} from "../src/Person";
 
 describe("Dataset", () => {
   const sut = Dataset.parse(testDataTtl);
@@ -40,6 +41,8 @@ describe("Dataset", () => {
       for (const work of institutionWorks) {
         const rights = work.rights;
         expect(rights).to.not.be.null;
+        expect(rights!.creator).to.not.be.null;
+        expect((rights!.creator! as Person).uri).to.not.be.empty;
         expect(rights!.license).to.not.be.null;
         expect((rights!.license! as License).uri).to.not.be.empty;
         expect(rights!.statement).to.not.be.null;

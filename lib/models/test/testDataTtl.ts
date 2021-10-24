@@ -441,6 +441,21 @@ export const testDataTtl = `
     foaf:logo <http://i.creativecommons.org/p/zero/1.0/80x15.png>,
         <http://i.creativecommons.org/p/zero/1.0/88x31.png> .
 
+<http://example.com/person5> a paradicms:Person ;
+    foaf:name "Person 5" .
+
+<http://example.com/person6> a paradicms:Person ;
+    foaf:name "Person 6" .
+
+<http://example.com/person7> a paradicms:Person ;
+    foaf:name "Person 7" .
+
+<http://example.com/person8> a paradicms:Person ;
+    foaf:name "Person 8" .
+
+<http://example.com/person9> a paradicms:Person ;
+    foaf:name "Person 9" .
+
 dcterms:abstract a paradicms:PropertyDefinition ;
     rdfs:label "Abstract" .
 
@@ -455,6 +470,9 @@ dcterms:contributor a paradicms:PropertyDefinition ;
 
 dcterms:coverage a paradicms:PropertyDefinition ;
     rdfs:label "Coverage" .
+
+dcterms:creator a paradicms:PropertyDefinition ;
+    rdfs:label "Creator" .
 
 dcterms:date a paradicms:PropertyDefinition ;
     rdfs:label "Date" .
@@ -516,169 +534,7 @@ vra:stylePeriod a paradicms:PropertyDefinition ;
 vra:worktype a paradicms:PropertyDefinition ;
     rdfs:label "Work type" .
 
-<http://rightsstatements.org/vocab/CNE/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the organization that has published the Item has not evaluated the copyright and related rights status of the Item."@en ;
-    dcterms:identifier "CNE" ;
-    skos:definition """The copyright and related rights status of this Item has not been evaluated.
-
-  Please refer to the organization that has made the Item available for more information.
-
-  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use."""@en ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
-    skos:prefLabel "Copyright Not Evaluated"@en ;
-    skos:scopeNote "This Rights Statement should be used for Items for which the copyright status is unknown and for which the organization that intends to make the Item available has not undertaken an effort to determine the copyright status of the underlying Work."@en .
-
-<http://rightsstatements.org/vocab/InC-NC/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright but that non-commercial use is allowed without the need to obtain additional permission."@en ;
-    dcterms:identifier "InC-NC" ;
-    skos:definition """This Item is protected by copyright and/or related rights.
-
-  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use. In addition, no permission is required from the rights-holder(s) for non-commercial uses.
-
-  For other uses you need to obtain permission from the rights-holder(s)."""@en ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
-    skos:prefLabel "In Copyright - Non-Commercial Use Permitted"@en ;
-    skos:scopeNote "This Rights Statement can be used only for copyrighted Items for which the organization making the Item available is the rights-holder or has been explicitly authorized by the rights-holder(s) to allow third parties to use their Work(s) for non-commercial purposes without obtaining permission first."@en .
-
-<http://rightsstatements.org/vocab/InC-OW-EU/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement has been identified as an ‘Orphan Work’ under the terms of the EU Orphan Works Directive."@en ;
-    dcterms:identifier "InC-OW-EU" ;
-    skos:definition """This Item has been identified as an orphan work in the country of first publication and in line with Directive 2012/28/EU of the European Parliament and of the Council of 25 October 2012 on certain permitted uses of orphan works.
-
-  For this Item, either (a) no rights-holder(s) have been identified or (b) one or more rights-holder(s) have been identified but none have been located even though a diligent search for the rights-holder(s) has been conducted. The results of the diligent search are available in the EU Orphan Works Database.
-
-  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use."""@en ;
-    skos:note "If you have any information that can contribute to identifying or locating the rights-holder(s), please notify the organization that has made the Item available."@en,
-        "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
-    skos:prefLabel "In Copyright - EU Orphan Work"@en ;
-    skos:scopeNote "This Rights Statement is intended for use with Items for which the underlying Work has been identified as an Orphan Work in accordance with Directive 2012/28/EU of the European Parliament and of the Council of 25 October 2012 on certain permitted uses of Orphan Works. It can only be applied to Items derived from Works that are covered by the Directive: Works published in the form of books, journals, newspapers, magazines or other writings as well as cinematographic or audiovisual works and phonograms (note: this excludes photography and visual arts). It can only be applied by organizations that are beneficiaries of the Directive: publicly accessible libraries, educational establishments and museums, archives, film or audio heritage institutions and public-service broadcasting organizations, established in one of the EU member states. The beneficiary is also expected to have registered the work in the EU Orphan Works Database maintained by EUIPO."@en .
-
-<http://rightsstatements.org/vocab/InC-RUU/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement has been identified as in copyright, but its rights-holder(s) either cannot be identified or cannot be located."@en ;
-    dcterms:identifier "InC-RUU" ;
-    skos:definition """This Item is protected by copyright and/or related rights. However, for this Item, either (a) no rights-holder(s) have been identified or (b) one or more rights-holder(s) have been identified but none have been located.
-
-  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use."""@en ;
-    skos:note "If you have any information that can contribute to identifying or locating the rights-holder(s) please notify the organization that has made the Item available."@en,
-        "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
-    skos:prefLabel "In Copyright - Rights-holder(s) Unlocatable or Unidentifiable"@en ;
-    skos:scopeNote "This Rights Statement is intended for use with an Item that has been identified as in copyright but for which no rights-holder(s) has been identified or located after some reasonable investigation. This Rights Statement should only be used if the organization that intends to make the Item available is reasonably sure that the underlying Work is in copyright. This Rights Statement is not intended for use by EU-based organizations who have identified works as Orphan Works in accordance with the EU Orphan Works Directive (they must use InC-OW-EU instead)."@en .
-
-<http://rightsstatements.org/vocab/InC/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright."@en ;
-    dcterms:identifier "InC" ;
-    skos:definition """This Item is protected by copyright and/or related rights.
-
-  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use.
-
-  For other uses you need to obtain permission from the rights-holder(s)."""@en ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
-    skos:prefLabel "In Copyright"@en ;
-    skos:scopeNote "This Rights Statement can be used for an Item that is in copyright. Using this statement implies that the organization making this Item available has determined that the Item is in copyright and either is the rights-holder, has obtained permission from the rights-holder(s) to make their Work(s) available, or makes the Item available under an exception or limitation to copyright (including Fair Use) that entitles it to make the Item available."@en .
-
-<http://rightsstatements.org/vocab/NKC/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the organization that has published the Item believes that no copyright or related rights are known to exist for the Item, but that a conclusive determination could not be made."@en ;
-    dcterms:identifier "NKC" ;
-    skos:definition """The organization that has made the Item available reasonably believes that the Item is not restricted by copyright or related rights, but a conclusive determination could not be made.
-
-  Please refer to the organization that has made the Item available for more information.
-
-  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use."""@en ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
-    skos:prefLabel "No Known Copyright"@en ;
-    skos:scopeNote "This Rights Statement should be used for Items for which the copyright status has not been determined conclusively, but for which the organization that intends to make the Item available has reasonable cause to believe that the underlying Work is not covered by copyright or related rights anymore. This Rights Statement should not be used for Orphan Works (which are assumed to be in-copyright) or for Items where the organization that intends to make the Item available has not undertaken an effort to ascertain the copyright status of the underlying Work."@en .
-
-<http://rightsstatements.org/vocab/NoC-CR/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the underlying Work is in the Public Domain, but the organization that has published the Item is contractually required to restrict certain forms of use by third parties."@en ;
-    dcterms:identifier "NoC-CR" ;
-    skos:definition """Use of this Item is not restricted by copyright and/or related rights.
-
-  As part of the acquisition or digitization of this Work, the organization that has made the Item available is contractually required to limit the use of this Item. Limitations may include, but are not limited to, privacy issues, cultural protections, digitization agreements or donor agreements.
-
-  Please refer to the organization that has made the Item available for more information."""@en ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
-    skos:prefLabel "No Copyright - Contractual Restrictions"@en ;
-    skos:scopeNote "This Rights Statement can only be used for Items that are in the Public Domain but for which the organization that intends to make the Item available has entered into contractual agreement that requires it to take steps to restrict third party uses of the Item. In order for this Rights Statement to be conclusive, the organization that intends to make the Item available should provide a link to a page detailing the contractual restrictions that apply to the use of the Item."@en .
-
-<http://rightsstatements.org/vocab/NoC-NC/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the underlying Work is in the Public Domain, but the organization that has published the Item is contractually required to allow only non-commercial use by third parties."@en ;
-    dcterms:identifier "NoC-NC" ;
-    skos:definition """This Work has been digitized in a public-private partnership. As part of this partnership, the partners have agreed to limit commercial uses of this digital representation of the Work by third parties.
-
-  You can, without permission, copy, modify, distribute, display, or perform the Item, for non-commercial uses. For any other permissible uses, please review the terms and conditions of the organization that has made the Item available."""@en ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy, or moral rights may limit how you may use the material."@en ;
-    skos:prefLabel "No Copyright - Non-Commercial Use Only"@en ;
-    skos:scopeNote "This Rights Statement can only be used for Works that are in the Public Domain and have been digitized in a public-private partnership as part of which, the partners have agreed to limit commercial uses of this digital representation of the Work by third parties. It has been developed specifically to allow the inclusion of Works that have been digitized as part of the partnerships between European Libraries and Google, but can in theory be applied to Items that have been digitized in similar public-private partnerships."@en .
-
-<http://rightsstatements.org/vocab/NoC-OKLR/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the underlying Work is in the Public Domain, but that there are known restrictions imposed by laws other than copyright and/or related rights on the use of the Item by third parties."@en ;
-    dcterms:identifier "NoC-OKLR" ;
-    skos:definition """Use of this Item is not restricted by copyright and/or related rights.
-
-  In one or more jurisdictions, laws other than copyright are known to impose restrictions on the use of this Item.
-
-  Please refer to the organization that has made the Item available for more information."""@en ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
-    skos:prefLabel "No Copyright - Other Known Legal Restrictions"@en ;
-    skos:scopeNote "This Rights Statement should be used for Items that are in the Public Domain but that cannot be freely re-used as the consequence of known legal restrictions that prevent the organization that intends to make the Item available from allowing free re-use of the Item, such as cultural heritage or traditional cultural expression protections. In order for this Rights Statement to be conclusive, the organization that intends to make the Item available should provide a link to a page detailing the legal restrictions that limit re-use of the Item."@en .
-
-<http://rightsstatements.org/vocab/NoC-US/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the Item is in the Public Domain under the laws of the United States, but that a determination was not made as to its copyright status under the copyright laws of other countries."@en ;
-    dcterms:identifier "NoC-US" ;
-    skos:definition """The organization that has made the Item available believes that the Item is in the Public Domain under the laws of the United States, but a determination was not made as to its copyright status under the copyright laws of other countries. The Item may not be in the Public Domain under the laws of other countries.
-
-  Please refer to the organization that has made the Item available for more information."""@en ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
-    skos:prefLabel "No Copyright - United States"@en ;
-    skos:scopeNote "This Rights Statement should be used for Items for which the organization that intends to make the Item available has determined are free of copyright under the laws of the United States. This Rights Statement should not be used for Orphan Works (which are assumed to be in-copyright) or for Items where the organization that intends to make the Item available has not undertaken an effort to ascertain the copyright status of the underlying Work."@en .
-
-<http://rightsstatements.org/vocab/UND/1.0/> a paradicms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the organization that has made the Item available has reviewed the copyright and related rights status of the Item, but was unable to determine the copyright status of the Item."@en ;
-    dcterms:identifier "UND" ;
-    skos:definition """The copyright and related rights status of this Item has been reviewed by the organization that has made the Item available, but the organization was unable to make a conclusive determination as to the copyright status of the Item.
-
-  Please refer to the organization that has made the Item available for more information.
-
-  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use."""@en ;
-    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
-        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
-        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
-    skos:prefLabel "Copyright Undetermined"@en ;
-    skos:scopeNote "This Rights Statement should be used for Items for which the copyright status is unknown and for which the organization that has made the Item available has undertaken an (unsuccessful) effort to determine the copyright status of the underlying Work. Typically, this Rights Statement is used when the organization is missing key facts essential to making an accurate copyright status determination."@en .
-
-<http://rightsstatements.org/vocab/collection-ic/1.0/> a paradicms:RightsStatement ;
-    dcterms:identifier "collection-ic" ;
-    skos:prefLabel "Statements for works that are in copyright"@en .
-
-<http://rightsstatements.org/vocab/collection-nc/1.0/> a paradicms:RightsStatement ;
-    dcterms:identifier "collection-nc" ;
-    skos:prefLabel "Statements for works that are not in copyright"@en .
-
-<http://rightsstatements.org/vocab/collection-other/1.0/> a paradicms:RightsStatement ;
-    dcterms:identifier "collection-other" ;
-    skos:prefLabel "Statements for works where the copyright status is unclear"@en .
-
-<http://place-hold.it/1000x1000?text=Creator%200Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -686,10 +542,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:0> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%200Image0>,
-        <http://place-hold.it/75x75?text=Creator%200Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%200Image0>,
+        <https://place-hold.it/75x75?text=Cultural%20context%200Image0> .
 
-<http://place-hold.it/1000x1000?text=Creator%200Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -697,10 +553,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:0> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%200Image1>,
-        <http://place-hold.it/75x75?text=Creator%200Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%200Image1>,
+        <https://place-hold.it/75x75?text=Cultural%20context%200Image1> .
 
-<http://place-hold.it/1000x1000?text=Creator%201Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -708,10 +564,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:1> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%201Image0>,
-        <http://place-hold.it/75x75?text=Creator%201Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%201Image0>,
+        <https://place-hold.it/75x75?text=Cultural%20context%201Image0> .
 
-<http://place-hold.it/1000x1000?text=Creator%201Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -719,10 +575,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:1> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%201Image1>,
-        <http://place-hold.it/75x75?text=Creator%201Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%201Image1>,
+        <https://place-hold.it/75x75?text=Cultural%20context%201Image1> .
 
-<http://place-hold.it/1000x1000?text=Creator%202Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -730,10 +586,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:2> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%202Image0>,
-        <http://place-hold.it/75x75?text=Creator%202Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%202Image0>,
+        <https://place-hold.it/75x75?text=Cultural%20context%202Image0> .
 
-<http://place-hold.it/1000x1000?text=Creator%202Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -741,10 +597,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:2> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%202Image1>,
-        <http://place-hold.it/75x75?text=Creator%202Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%202Image1>,
+        <https://place-hold.it/75x75?text=Cultural%20context%202Image1> .
 
-<http://place-hold.it/1000x1000?text=Creator%203Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -752,10 +608,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:3> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%203Image0>,
-        <http://place-hold.it/75x75?text=Creator%203Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%203Image0>,
+        <https://place-hold.it/75x75?text=Cultural%20context%203Image0> .
 
-<http://place-hold.it/1000x1000?text=Creator%203Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -763,10 +619,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:3> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%203Image1>,
-        <http://place-hold.it/75x75?text=Creator%203Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%203Image1>,
+        <https://place-hold.it/75x75?text=Cultural%20context%203Image1> .
 
-<http://place-hold.it/1000x1000?text=Creator%204Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -774,10 +630,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:4> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%204Image0>,
-        <http://place-hold.it/75x75?text=Creator%204Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%204Image0>,
+        <https://place-hold.it/75x75?text=Cultural%20context%204Image0> .
 
-<http://place-hold.it/1000x1000?text=Creator%204Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -785,10 +641,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:4> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%204Image1>,
-        <http://place-hold.it/75x75?text=Creator%204Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%204Image1>,
+        <https://place-hold.it/75x75?text=Cultural%20context%204Image1> .
 
-<http://place-hold.it/1000x1000?text=Creator%205Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -796,10 +652,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:5> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%205Image0>,
-        <http://place-hold.it/75x75?text=Creator%205Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%205Image0>,
+        <https://place-hold.it/75x75?text=Cultural%20context%205Image0> .
 
-<http://place-hold.it/1000x1000?text=Creator%205Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -807,10 +663,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:5> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%205Image1>,
-        <http://place-hold.it/75x75?text=Creator%205Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%205Image1>,
+        <https://place-hold.it/75x75?text=Cultural%20context%205Image1> .
 
-<http://place-hold.it/1000x1000?text=Creator%206Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -818,10 +674,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:6> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%206Image0>,
-        <http://place-hold.it/75x75?text=Creator%206Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%206Image0>,
+        <https://place-hold.it/75x75?text=Cultural%20context%206Image0> .
 
-<http://place-hold.it/1000x1000?text=Creator%206Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -829,10 +685,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:6> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%206Image1>,
-        <http://place-hold.it/75x75?text=Creator%206Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%206Image1>,
+        <https://place-hold.it/75x75?text=Cultural%20context%206Image1> .
 
-<http://place-hold.it/1000x1000?text=Creator%207Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -840,10 +696,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:7> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%207Image0>,
-        <http://place-hold.it/75x75?text=Creator%207Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%207Image0>,
+        <https://place-hold.it/75x75?text=Cultural%20context%207Image0> .
 
-<http://place-hold.it/1000x1000?text=Creator%207Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -851,10 +707,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:7> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%207Image1>,
-        <http://place-hold.it/75x75?text=Creator%207Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%207Image1>,
+        <https://place-hold.it/75x75?text=Cultural%20context%207Image1> .
 
-<http://place-hold.it/1000x1000?text=Creator%208Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -862,10 +718,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:8> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%208Image0>,
-        <http://place-hold.it/75x75?text=Creator%208Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%208Image0>,
+        <https://place-hold.it/75x75?text=Cultural%20context%208Image0> .
 
-<http://place-hold.it/1000x1000?text=Creator%208Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -873,10 +729,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:8> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%208Image1>,
-        <http://place-hold.it/75x75?text=Creator%208Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%208Image1>,
+        <https://place-hold.it/75x75?text=Cultural%20context%208Image1> .
 
-<http://place-hold.it/1000x1000?text=Creator%209Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -884,10 +740,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:9> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%209Image0>,
-        <http://place-hold.it/75x75?text=Creator%209Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%209Image0>,
+        <https://place-hold.it/75x75?text=Cultural%20context%209Image0> .
 
-<http://place-hold.it/1000x1000?text=Creator%209Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Cultural%20context%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -895,10 +751,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:9> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Creator%209Image1>,
-        <http://place-hold.it/75x75?text=Creator%209Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Cultural%20context%209Image1>,
+        <https://place-hold.it/75x75?text=Cultural%20context%209Image1> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%200Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -906,10 +762,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:10> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%200Image0>,
-        <http://place-hold.it/75x75?text=Cultural%20context%200Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%200Image0>,
+        <https://place-hold.it/75x75?text=Extent%200Image0> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%200Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -917,10 +773,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:10> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%200Image1>,
-        <http://place-hold.it/75x75?text=Cultural%20context%200Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%200Image1>,
+        <https://place-hold.it/75x75?text=Extent%200Image1> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%201Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -928,10 +784,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:11> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%201Image0>,
-        <http://place-hold.it/75x75?text=Cultural%20context%201Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%201Image0>,
+        <https://place-hold.it/75x75?text=Extent%201Image0> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%201Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -939,10 +795,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:11> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%201Image1>,
-        <http://place-hold.it/75x75?text=Cultural%20context%201Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%201Image1>,
+        <https://place-hold.it/75x75?text=Extent%201Image1> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%202Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -950,10 +806,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:12> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%202Image0>,
-        <http://place-hold.it/75x75?text=Cultural%20context%202Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%202Image0>,
+        <https://place-hold.it/75x75?text=Extent%202Image0> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%202Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -961,10 +817,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:12> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%202Image1>,
-        <http://place-hold.it/75x75?text=Cultural%20context%202Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%202Image1>,
+        <https://place-hold.it/75x75?text=Extent%202Image1> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%203Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -972,10 +828,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:13> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%203Image0>,
-        <http://place-hold.it/75x75?text=Cultural%20context%203Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%203Image0>,
+        <https://place-hold.it/75x75?text=Extent%203Image0> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%203Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -983,10 +839,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:13> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%203Image1>,
-        <http://place-hold.it/75x75?text=Cultural%20context%203Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%203Image1>,
+        <https://place-hold.it/75x75?text=Extent%203Image1> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%204Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -994,10 +850,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:14> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%204Image0>,
-        <http://place-hold.it/75x75?text=Cultural%20context%204Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%204Image0>,
+        <https://place-hold.it/75x75?text=Extent%204Image0> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%204Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1005,10 +861,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:14> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%204Image1>,
-        <http://place-hold.it/75x75?text=Cultural%20context%204Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%204Image1>,
+        <https://place-hold.it/75x75?text=Extent%204Image1> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%205Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1016,10 +872,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:15> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%205Image0>,
-        <http://place-hold.it/75x75?text=Cultural%20context%205Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%205Image0>,
+        <https://place-hold.it/75x75?text=Extent%205Image0> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%205Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1027,10 +883,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:15> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%205Image1>,
-        <http://place-hold.it/75x75?text=Cultural%20context%205Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%205Image1>,
+        <https://place-hold.it/75x75?text=Extent%205Image1> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%206Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1038,10 +894,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:16> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%206Image0>,
-        <http://place-hold.it/75x75?text=Cultural%20context%206Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%206Image0>,
+        <https://place-hold.it/75x75?text=Extent%206Image0> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%206Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1049,10 +905,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:16> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%206Image1>,
-        <http://place-hold.it/75x75?text=Cultural%20context%206Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%206Image1>,
+        <https://place-hold.it/75x75?text=Extent%206Image1> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%207Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1060,10 +916,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:17> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%207Image0>,
-        <http://place-hold.it/75x75?text=Cultural%20context%207Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%207Image0>,
+        <https://place-hold.it/75x75?text=Extent%207Image0> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%207Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1071,10 +927,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:17> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%207Image1>,
-        <http://place-hold.it/75x75?text=Cultural%20context%207Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%207Image1>,
+        <https://place-hold.it/75x75?text=Extent%207Image1> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%208Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1082,10 +938,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:18> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%208Image0>,
-        <http://place-hold.it/75x75?text=Cultural%20context%208Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%208Image0>,
+        <https://place-hold.it/75x75?text=Extent%208Image0> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%208Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1093,10 +949,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:18> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%208Image1>,
-        <http://place-hold.it/75x75?text=Cultural%20context%208Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%208Image1>,
+        <https://place-hold.it/75x75?text=Extent%208Image1> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%209Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1104,10 +960,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:19> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%209Image0>,
-        <http://place-hold.it/75x75?text=Cultural%20context%209Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%209Image0>,
+        <https://place-hold.it/75x75?text=Extent%209Image0> .
 
-<http://place-hold.it/1000x1000?text=Cultural%20context%209Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Extent%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1115,231 +971,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:19> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Cultural%20context%209Image1>,
-        <http://place-hold.it/75x75?text=Cultural%20context%209Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Extent%209Image1>,
+        <https://place-hold.it/75x75?text=Extent%209Image1> .
 
-<http://place-hold.it/1000x1000?text=Extent%200Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%200Image0>,
-        <http://place-hold.it/75x75?text=Extent%200Image0> .
-
-<http://place-hold.it/1000x1000?text=Extent%200Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%200Image1>,
-        <http://place-hold.it/75x75?text=Extent%200Image1> .
-
-<http://place-hold.it/1000x1000?text=Extent%201Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%201Image0>,
-        <http://place-hold.it/75x75?text=Extent%201Image0> .
-
-<http://place-hold.it/1000x1000?text=Extent%201Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%201Image1>,
-        <http://place-hold.it/75x75?text=Extent%201Image1> .
-
-<http://place-hold.it/1000x1000?text=Extent%202Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%202Image0>,
-        <http://place-hold.it/75x75?text=Extent%202Image0> .
-
-<http://place-hold.it/1000x1000?text=Extent%202Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%202Image1>,
-        <http://place-hold.it/75x75?text=Extent%202Image1> .
-
-<http://place-hold.it/1000x1000?text=Extent%203Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%203Image0>,
-        <http://place-hold.it/75x75?text=Extent%203Image0> .
-
-<http://place-hold.it/1000x1000?text=Extent%203Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%203Image1>,
-        <http://place-hold.it/75x75?text=Extent%203Image1> .
-
-<http://place-hold.it/1000x1000?text=Extent%204Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%204Image0>,
-        <http://place-hold.it/75x75?text=Extent%204Image0> .
-
-<http://place-hold.it/1000x1000?text=Extent%204Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%204Image1>,
-        <http://place-hold.it/75x75?text=Extent%204Image1> .
-
-<http://place-hold.it/1000x1000?text=Extent%205Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%205Image0>,
-        <http://place-hold.it/75x75?text=Extent%205Image0> .
-
-<http://place-hold.it/1000x1000?text=Extent%205Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%205Image1>,
-        <http://place-hold.it/75x75?text=Extent%205Image1> .
-
-<http://place-hold.it/1000x1000?text=Extent%206Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%206Image0>,
-        <http://place-hold.it/75x75?text=Extent%206Image0> .
-
-<http://place-hold.it/1000x1000?text=Extent%206Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%206Image1>,
-        <http://place-hold.it/75x75?text=Extent%206Image1> .
-
-<http://place-hold.it/1000x1000?text=Extent%207Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%207Image0>,
-        <http://place-hold.it/75x75?text=Extent%207Image0> .
-
-<http://place-hold.it/1000x1000?text=Extent%207Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%207Image1>,
-        <http://place-hold.it/75x75?text=Extent%207Image1> .
-
-<http://place-hold.it/1000x1000?text=Extent%208Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%208Image0>,
-        <http://place-hold.it/75x75?text=Extent%208Image0> .
-
-<http://place-hold.it/1000x1000?text=Extent%208Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%208Image1>,
-        <http://place-hold.it/75x75?text=Extent%208Image1> .
-
-<http://place-hold.it/1000x1000?text=Extent%209Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%209Image0>,
-        <http://place-hold.it/75x75?text=Extent%209Image0> .
-
-<http://place-hold.it/1000x1000?text=Extent%209Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Extent%209Image1>,
-        <http://place-hold.it/75x75?text=Extent%209Image1> .
-
-<http://place-hold.it/1000x1000?text=Institution0Collection0Work0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/1000x1000?text=Institution0Collection0Work0Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
@@ -1347,11 +983,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/collection0/work0> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0Collection0Work0Image0>,
-        <http://place-hold.it/75x75?text=Institution0Collection0Work0Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Work0Image0>,
+        <https://place-hold.it/75x75?text=Institution0Collection0Work0Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution0Collection0Work0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/1000x1000?text=Institution0Collection0Work0Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
@@ -1359,11 +995,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/collection0/work0> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0Collection0Work0Image1>,
-        <http://place-hold.it/75x75?text=Institution0Collection0Work0Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Work0Image1>,
+        <https://place-hold.it/75x75?text=Institution0Collection0Work0Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution0Collection0Work1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/1000x1000?text=Institution0Collection0Work1Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
@@ -1371,11 +1007,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/collection0/work1> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0Collection0Work1Image0>,
-        <http://place-hold.it/75x75?text=Institution0Collection0Work1Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Work1Image0>,
+        <https://place-hold.it/75x75?text=Institution0Collection0Work1Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution0Collection0Work1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/1000x1000?text=Institution0Collection0Work1Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
@@ -1383,11 +1019,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/collection0/work1> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0Collection0Work1Image1>,
-        <http://place-hold.it/75x75?text=Institution0Collection0Work1Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Work1Image1>,
+        <https://place-hold.it/75x75?text=Institution0Collection0Work1Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution0Collection0Work2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/1000x1000?text=Institution0Collection0Work2Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person2> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
@@ -1395,11 +1031,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/collection0/work2> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0Collection0Work2Image0>,
-        <http://place-hold.it/75x75?text=Institution0Collection0Work2Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Work2Image0>,
+        <https://place-hold.it/75x75?text=Institution0Collection0Work2Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution0Collection0Work2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/1000x1000?text=Institution0Collection0Work2Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person2> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
@@ -1407,11 +1043,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/collection0/work2> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0Collection0Work2Image1>,
-        <http://place-hold.it/75x75?text=Institution0Collection0Work2Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Work2Image1>,
+        <https://place-hold.it/75x75?text=Institution0Collection0Work2Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution0Collection0Work3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+<https://place-hold.it/1000x1000?text=Institution0Collection0Work3Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
@@ -1419,11 +1055,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/collection0/work3> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0Collection0Work3Image0>,
-        <http://place-hold.it/75x75?text=Institution0Collection0Work3Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Work3Image0>,
+        <https://place-hold.it/75x75?text=Institution0Collection0Work3Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution0Collection0Work3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+<https://place-hold.it/1000x1000?text=Institution0Collection0Work3Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
@@ -1431,10 +1067,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/collection0/work3> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0Collection0Work3Image1>,
-        <http://place-hold.it/75x75?text=Institution0Collection0Work3Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Work3Image1>,
+        <https://place-hold.it/75x75?text=Institution0Collection0Work3Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution0Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution0Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0 rights holder" ;
@@ -1442,10 +1078,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0Image0>,
-        <http://place-hold.it/75x75?text=Institution0Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Image0>,
+        <https://place-hold.it/75x75?text=Institution0Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution0Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution0Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0 rights holder" ;
@@ -1453,11 +1089,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0Image1>,
-        <http://place-hold.it/75x75?text=Institution0Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Image1>,
+        <https://place-hold.it/75x75?text=Institution0Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution0SharedWork0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/1000x1000?text=Institution0SharedWork0Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
@@ -1465,11 +1101,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/shared/work0> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0SharedWork0Image0>,
-        <http://place-hold.it/75x75?text=Institution0SharedWork0Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedWork0Image0>,
+        <https://place-hold.it/75x75?text=Institution0SharedWork0Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution0SharedWork0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/1000x1000?text=Institution0SharedWork0Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
@@ -1477,11 +1113,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/shared/work0> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0SharedWork0Image1>,
-        <http://place-hold.it/75x75?text=Institution0SharedWork0Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedWork0Image1>,
+        <https://place-hold.it/75x75?text=Institution0SharedWork0Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution0SharedWork1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/1000x1000?text=Institution0SharedWork1Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
@@ -1489,11 +1125,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/shared/work1> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0SharedWork1Image0>,
-        <http://place-hold.it/75x75?text=Institution0SharedWork1Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedWork1Image0>,
+        <https://place-hold.it/75x75?text=Institution0SharedWork1Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution0SharedWork1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/1000x1000?text=Institution0SharedWork1Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
@@ -1501,11 +1137,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/shared/work1> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0SharedWork1Image1>,
-        <http://place-hold.it/75x75?text=Institution0SharedWork1Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedWork1Image1>,
+        <https://place-hold.it/75x75?text=Institution0SharedWork1Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution0SharedWork2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/1000x1000?text=Institution0SharedWork2Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
@@ -1513,11 +1149,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/shared/work2> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0SharedWork2Image0>,
-        <http://place-hold.it/75x75?text=Institution0SharedWork2Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedWork2Image0>,
+        <https://place-hold.it/75x75?text=Institution0SharedWork2Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution0SharedWork2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/1000x1000?text=Institution0SharedWork2Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
@@ -1525,11 +1161,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/shared/work2> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0SharedWork2Image1>,
-        <http://place-hold.it/75x75?text=Institution0SharedWork2Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedWork2Image1>,
+        <https://place-hold.it/75x75?text=Institution0SharedWork2Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution0SharedWork3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/1000x1000?text=Institution0SharedWork3Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
@@ -1537,11 +1173,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/shared/work3> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0SharedWork3Image0>,
-        <http://place-hold.it/75x75?text=Institution0SharedWork3Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedWork3Image0>,
+        <https://place-hold.it/75x75?text=Institution0SharedWork3Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution0SharedWork3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/1000x1000?text=Institution0SharedWork3Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
@@ -1549,11 +1185,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution0/shared/work3> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution0SharedWork3Image1>,
-        <http://place-hold.it/75x75?text=Institution0SharedWork3Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedWork3Image1>,
+        <https://place-hold.it/75x75?text=Institution0SharedWork3Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution1Collection0Work0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+<https://place-hold.it/1000x1000?text=Institution1Collection0Work0Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
@@ -1561,11 +1197,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/collection0/work0> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1Collection0Work0Image0>,
-        <http://place-hold.it/75x75?text=Institution1Collection0Work0Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Work0Image0>,
+        <https://place-hold.it/75x75?text=Institution1Collection0Work0Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution1Collection0Work0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+<https://place-hold.it/1000x1000?text=Institution1Collection0Work0Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
@@ -1573,11 +1209,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/collection0/work0> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1Collection0Work0Image1>,
-        <http://place-hold.it/75x75?text=Institution1Collection0Work0Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Work0Image1>,
+        <https://place-hold.it/75x75?text=Institution1Collection0Work0Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution1Collection0Work1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/1000x1000?text=Institution1Collection0Work1Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
@@ -1585,11 +1221,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/collection0/work1> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1Collection0Work1Image0>,
-        <http://place-hold.it/75x75?text=Institution1Collection0Work1Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Work1Image0>,
+        <https://place-hold.it/75x75?text=Institution1Collection0Work1Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution1Collection0Work1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/1000x1000?text=Institution1Collection0Work1Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
@@ -1597,11 +1233,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/collection0/work1> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1Collection0Work1Image1>,
-        <http://place-hold.it/75x75?text=Institution1Collection0Work1Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Work1Image1>,
+        <https://place-hold.it/75x75?text=Institution1Collection0Work1Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution1Collection0Work2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/1000x1000?text=Institution1Collection0Work2Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person2> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
@@ -1609,11 +1245,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/collection0/work2> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1Collection0Work2Image0>,
-        <http://place-hold.it/75x75?text=Institution1Collection0Work2Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Work2Image0>,
+        <https://place-hold.it/75x75?text=Institution1Collection0Work2Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution1Collection0Work2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/1000x1000?text=Institution1Collection0Work2Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person2> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
@@ -1621,11 +1257,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/collection0/work2> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1Collection0Work2Image1>,
-        <http://place-hold.it/75x75?text=Institution1Collection0Work2Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Work2Image1>,
+        <https://place-hold.it/75x75?text=Institution1Collection0Work2Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution1Collection0Work3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+<https://place-hold.it/1000x1000?text=Institution1Collection0Work3Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
@@ -1633,11 +1269,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/collection0/work3> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1Collection0Work3Image0>,
-        <http://place-hold.it/75x75?text=Institution1Collection0Work3Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Work3Image0>,
+        <https://place-hold.it/75x75?text=Institution1Collection0Work3Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution1Collection0Work3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+<https://place-hold.it/1000x1000?text=Institution1Collection0Work3Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
@@ -1645,10 +1281,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/collection0/work3> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1Collection0Work3Image1>,
-        <http://place-hold.it/75x75?text=Institution1Collection0Work3Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Work3Image1>,
+        <https://place-hold.it/75x75?text=Institution1Collection0Work3Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution1Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution1Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1 rights holder" ;
@@ -1656,10 +1292,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1Image0>,
-        <http://place-hold.it/75x75?text=Institution1Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Image0>,
+        <https://place-hold.it/75x75?text=Institution1Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution1Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution1Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1 rights holder" ;
@@ -1667,11 +1303,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1Image1>,
-        <http://place-hold.it/75x75?text=Institution1Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Image1>,
+        <https://place-hold.it/75x75?text=Institution1Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution1SharedWork0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/1000x1000?text=Institution1SharedWork0Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
@@ -1679,11 +1315,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/shared/work0> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1SharedWork0Image0>,
-        <http://place-hold.it/75x75?text=Institution1SharedWork0Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedWork0Image0>,
+        <https://place-hold.it/75x75?text=Institution1SharedWork0Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution1SharedWork0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/1000x1000?text=Institution1SharedWork0Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
@@ -1691,11 +1327,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/shared/work0> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1SharedWork0Image1>,
-        <http://place-hold.it/75x75?text=Institution1SharedWork0Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedWork0Image1>,
+        <https://place-hold.it/75x75?text=Institution1SharedWork0Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution1SharedWork1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/1000x1000?text=Institution1SharedWork1Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
@@ -1703,11 +1339,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/shared/work1> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1SharedWork1Image0>,
-        <http://place-hold.it/75x75?text=Institution1SharedWork1Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedWork1Image0>,
+        <https://place-hold.it/75x75?text=Institution1SharedWork1Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution1SharedWork1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/1000x1000?text=Institution1SharedWork1Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
@@ -1715,11 +1351,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/shared/work1> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1SharedWork1Image1>,
-        <http://place-hold.it/75x75?text=Institution1SharedWork1Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedWork1Image1>,
+        <https://place-hold.it/75x75?text=Institution1SharedWork1Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution1SharedWork2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/1000x1000?text=Institution1SharedWork2Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
@@ -1727,11 +1363,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/shared/work2> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1SharedWork2Image0>,
-        <http://place-hold.it/75x75?text=Institution1SharedWork2Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedWork2Image0>,
+        <https://place-hold.it/75x75?text=Institution1SharedWork2Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution1SharedWork2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/1000x1000?text=Institution1SharedWork2Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
@@ -1739,11 +1375,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/shared/work2> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1SharedWork2Image1>,
-        <http://place-hold.it/75x75?text=Institution1SharedWork2Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedWork2Image1>,
+        <https://place-hold.it/75x75?text=Institution1SharedWork2Image1> .
 
-<http://place-hold.it/1000x1000?text=Institution1SharedWork3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/1000x1000?text=Institution1SharedWork3Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
@@ -1751,11 +1387,11 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/shared/work3> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1SharedWork3Image0>,
-        <http://place-hold.it/75x75?text=Institution1SharedWork3Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedWork3Image0>,
+        <https://place-hold.it/75x75?text=Institution1SharedWork3Image0> .
 
-<http://place-hold.it/1000x1000?text=Institution1SharedWork3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/1000x1000?text=Institution1SharedWork3Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
@@ -1763,10 +1399,230 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <http://example.com/institution1/shared/work3> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Institution1SharedWork3Image1>,
-        <http://place-hold.it/75x75?text=Institution1SharedWork3Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedWork3Image1>,
+        <https://place-hold.it/75x75?text=Institution1SharedWork3Image1> .
 
-<http://place-hold.it/1000x1000?text=Language%200Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Language%200Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%200Image0>,
+        <https://place-hold.it/75x75?text=Language%200Image0> .
+
+<https://place-hold.it/1000x1000?text=Language%200Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%200Image1>,
+        <https://place-hold.it/75x75?text=Language%200Image1> .
+
+<https://place-hold.it/1000x1000?text=Language%201Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%201Image0>,
+        <https://place-hold.it/75x75?text=Language%201Image0> .
+
+<https://place-hold.it/1000x1000?text=Language%201Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%201Image1>,
+        <https://place-hold.it/75x75?text=Language%201Image1> .
+
+<https://place-hold.it/1000x1000?text=Language%202Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%202Image0>,
+        <https://place-hold.it/75x75?text=Language%202Image0> .
+
+<https://place-hold.it/1000x1000?text=Language%202Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%202Image1>,
+        <https://place-hold.it/75x75?text=Language%202Image1> .
+
+<https://place-hold.it/1000x1000?text=Language%203Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%203Image0>,
+        <https://place-hold.it/75x75?text=Language%203Image0> .
+
+<https://place-hold.it/1000x1000?text=Language%203Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%203Image1>,
+        <https://place-hold.it/75x75?text=Language%203Image1> .
+
+<https://place-hold.it/1000x1000?text=Language%204Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%204Image0>,
+        <https://place-hold.it/75x75?text=Language%204Image0> .
+
+<https://place-hold.it/1000x1000?text=Language%204Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%204Image1>,
+        <https://place-hold.it/75x75?text=Language%204Image1> .
+
+<https://place-hold.it/1000x1000?text=Language%205Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%205Image0>,
+        <https://place-hold.it/75x75?text=Language%205Image0> .
+
+<https://place-hold.it/1000x1000?text=Language%205Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%205Image1>,
+        <https://place-hold.it/75x75?text=Language%205Image1> .
+
+<https://place-hold.it/1000x1000?text=Language%206Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%206Image0>,
+        <https://place-hold.it/75x75?text=Language%206Image0> .
+
+<https://place-hold.it/1000x1000?text=Language%206Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%206Image1>,
+        <https://place-hold.it/75x75?text=Language%206Image1> .
+
+<https://place-hold.it/1000x1000?text=Language%207Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%207Image0>,
+        <https://place-hold.it/75x75?text=Language%207Image0> .
+
+<https://place-hold.it/1000x1000?text=Language%207Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%207Image1>,
+        <https://place-hold.it/75x75?text=Language%207Image1> .
+
+<https://place-hold.it/1000x1000?text=Language%208Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%208Image0>,
+        <https://place-hold.it/75x75?text=Language%208Image0> .
+
+<https://place-hold.it/1000x1000?text=Language%208Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%208Image1>,
+        <https://place-hold.it/75x75?text=Language%208Image1> .
+
+<https://place-hold.it/1000x1000?text=Language%209Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%209Image0>,
+        <https://place-hold.it/75x75?text=Language%209Image0> .
+
+<https://place-hold.it/1000x1000?text=Language%209Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Language%209Image1>,
+        <https://place-hold.it/75x75?text=Language%209Image1> .
+
+<https://place-hold.it/1000x1000?text=Material%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1774,10 +1630,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:30> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%200Image0>,
-        <http://place-hold.it/75x75?text=Language%200Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%200Image0>,
+        <https://place-hold.it/75x75?text=Material%200Image0> .
 
-<http://place-hold.it/1000x1000?text=Language%200Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1785,10 +1641,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:30> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%200Image1>,
-        <http://place-hold.it/75x75?text=Language%200Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%200Image1>,
+        <https://place-hold.it/75x75?text=Material%200Image1> .
 
-<http://place-hold.it/1000x1000?text=Language%201Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1796,10 +1652,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:31> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%201Image0>,
-        <http://place-hold.it/75x75?text=Language%201Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%201Image0>,
+        <https://place-hold.it/75x75?text=Material%201Image0> .
 
-<http://place-hold.it/1000x1000?text=Language%201Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1807,10 +1663,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:31> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%201Image1>,
-        <http://place-hold.it/75x75?text=Language%201Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%201Image1>,
+        <https://place-hold.it/75x75?text=Material%201Image1> .
 
-<http://place-hold.it/1000x1000?text=Language%202Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1818,10 +1674,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:32> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%202Image0>,
-        <http://place-hold.it/75x75?text=Language%202Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%202Image0>,
+        <https://place-hold.it/75x75?text=Material%202Image0> .
 
-<http://place-hold.it/1000x1000?text=Language%202Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1829,10 +1685,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:32> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%202Image1>,
-        <http://place-hold.it/75x75?text=Language%202Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%202Image1>,
+        <https://place-hold.it/75x75?text=Material%202Image1> .
 
-<http://place-hold.it/1000x1000?text=Language%203Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1840,10 +1696,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:33> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%203Image0>,
-        <http://place-hold.it/75x75?text=Language%203Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%203Image0>,
+        <https://place-hold.it/75x75?text=Material%203Image0> .
 
-<http://place-hold.it/1000x1000?text=Language%203Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1851,10 +1707,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:33> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%203Image1>,
-        <http://place-hold.it/75x75?text=Language%203Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%203Image1>,
+        <https://place-hold.it/75x75?text=Material%203Image1> .
 
-<http://place-hold.it/1000x1000?text=Language%204Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1862,10 +1718,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:34> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%204Image0>,
-        <http://place-hold.it/75x75?text=Language%204Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%204Image0>,
+        <https://place-hold.it/75x75?text=Material%204Image0> .
 
-<http://place-hold.it/1000x1000?text=Language%204Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1873,10 +1729,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:34> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%204Image1>,
-        <http://place-hold.it/75x75?text=Language%204Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%204Image1>,
+        <https://place-hold.it/75x75?text=Material%204Image1> .
 
-<http://place-hold.it/1000x1000?text=Language%205Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1884,10 +1740,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:35> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%205Image0>,
-        <http://place-hold.it/75x75?text=Language%205Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%205Image0>,
+        <https://place-hold.it/75x75?text=Material%205Image0> .
 
-<http://place-hold.it/1000x1000?text=Language%205Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1895,10 +1751,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:35> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%205Image1>,
-        <http://place-hold.it/75x75?text=Language%205Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%205Image1>,
+        <https://place-hold.it/75x75?text=Material%205Image1> .
 
-<http://place-hold.it/1000x1000?text=Language%206Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1906,10 +1762,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:36> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%206Image0>,
-        <http://place-hold.it/75x75?text=Language%206Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%206Image0>,
+        <https://place-hold.it/75x75?text=Material%206Image0> .
 
-<http://place-hold.it/1000x1000?text=Language%206Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1917,10 +1773,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:36> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%206Image1>,
-        <http://place-hold.it/75x75?text=Language%206Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%206Image1>,
+        <https://place-hold.it/75x75?text=Material%206Image1> .
 
-<http://place-hold.it/1000x1000?text=Language%207Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1928,10 +1784,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:37> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%207Image0>,
-        <http://place-hold.it/75x75?text=Language%207Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%207Image0>,
+        <https://place-hold.it/75x75?text=Material%207Image0> .
 
-<http://place-hold.it/1000x1000?text=Language%207Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1939,10 +1795,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:37> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%207Image1>,
-        <http://place-hold.it/75x75?text=Language%207Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%207Image1>,
+        <https://place-hold.it/75x75?text=Material%207Image1> .
 
-<http://place-hold.it/1000x1000?text=Language%208Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1950,10 +1806,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:38> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%208Image0>,
-        <http://place-hold.it/75x75?text=Language%208Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%208Image0>,
+        <https://place-hold.it/75x75?text=Material%208Image0> .
 
-<http://place-hold.it/1000x1000?text=Language%208Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1961,10 +1817,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:38> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%208Image1>,
-        <http://place-hold.it/75x75?text=Language%208Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%208Image1>,
+        <https://place-hold.it/75x75?text=Material%208Image1> .
 
-<http://place-hold.it/1000x1000?text=Language%209Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1972,10 +1828,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:39> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%209Image0>,
-        <http://place-hold.it/75x75?text=Language%209Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%209Image0>,
+        <https://place-hold.it/75x75?text=Material%209Image0> .
 
-<http://place-hold.it/1000x1000?text=Language%209Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Material%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1983,10 +1839,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:39> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Language%209Image1>,
-        <http://place-hold.it/75x75?text=Language%209Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Material%209Image1>,
+        <https://place-hold.it/75x75?text=Material%209Image1> .
 
-<http://place-hold.it/1000x1000?text=Material%200Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -1994,10 +1850,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:40> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%200Image0>,
-        <http://place-hold.it/75x75?text=Material%200Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%200Image0>,
+        <https://place-hold.it/75x75?text=Medium%200Image0> .
 
-<http://place-hold.it/1000x1000?text=Material%200Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2005,10 +1861,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:40> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%200Image1>,
-        <http://place-hold.it/75x75?text=Material%200Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%200Image1>,
+        <https://place-hold.it/75x75?text=Medium%200Image1> .
 
-<http://place-hold.it/1000x1000?text=Material%201Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2016,10 +1872,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:41> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%201Image0>,
-        <http://place-hold.it/75x75?text=Material%201Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%201Image0>,
+        <https://place-hold.it/75x75?text=Medium%201Image0> .
 
-<http://place-hold.it/1000x1000?text=Material%201Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2027,10 +1883,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:41> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%201Image1>,
-        <http://place-hold.it/75x75?text=Material%201Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%201Image1>,
+        <https://place-hold.it/75x75?text=Medium%201Image1> .
 
-<http://place-hold.it/1000x1000?text=Material%202Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2038,10 +1894,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:42> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%202Image0>,
-        <http://place-hold.it/75x75?text=Material%202Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%202Image0>,
+        <https://place-hold.it/75x75?text=Medium%202Image0> .
 
-<http://place-hold.it/1000x1000?text=Material%202Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2049,10 +1905,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:42> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%202Image1>,
-        <http://place-hold.it/75x75?text=Material%202Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%202Image1>,
+        <https://place-hold.it/75x75?text=Medium%202Image1> .
 
-<http://place-hold.it/1000x1000?text=Material%203Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2060,10 +1916,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:43> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%203Image0>,
-        <http://place-hold.it/75x75?text=Material%203Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%203Image0>,
+        <https://place-hold.it/75x75?text=Medium%203Image0> .
 
-<http://place-hold.it/1000x1000?text=Material%203Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2071,10 +1927,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:43> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%203Image1>,
-        <http://place-hold.it/75x75?text=Material%203Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%203Image1>,
+        <https://place-hold.it/75x75?text=Medium%203Image1> .
 
-<http://place-hold.it/1000x1000?text=Material%204Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2082,10 +1938,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:44> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%204Image0>,
-        <http://place-hold.it/75x75?text=Material%204Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%204Image0>,
+        <https://place-hold.it/75x75?text=Medium%204Image0> .
 
-<http://place-hold.it/1000x1000?text=Material%204Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2093,10 +1949,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:44> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%204Image1>,
-        <http://place-hold.it/75x75?text=Material%204Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%204Image1>,
+        <https://place-hold.it/75x75?text=Medium%204Image1> .
 
-<http://place-hold.it/1000x1000?text=Material%205Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2104,10 +1960,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:45> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%205Image0>,
-        <http://place-hold.it/75x75?text=Material%205Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%205Image0>,
+        <https://place-hold.it/75x75?text=Medium%205Image0> .
 
-<http://place-hold.it/1000x1000?text=Material%205Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2115,10 +1971,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:45> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%205Image1>,
-        <http://place-hold.it/75x75?text=Material%205Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%205Image1>,
+        <https://place-hold.it/75x75?text=Medium%205Image1> .
 
-<http://place-hold.it/1000x1000?text=Material%206Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2126,10 +1982,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:46> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%206Image0>,
-        <http://place-hold.it/75x75?text=Material%206Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%206Image0>,
+        <https://place-hold.it/75x75?text=Medium%206Image0> .
 
-<http://place-hold.it/1000x1000?text=Material%206Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2137,10 +1993,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:46> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%206Image1>,
-        <http://place-hold.it/75x75?text=Material%206Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%206Image1>,
+        <https://place-hold.it/75x75?text=Medium%206Image1> .
 
-<http://place-hold.it/1000x1000?text=Material%207Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2148,10 +2004,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:47> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%207Image0>,
-        <http://place-hold.it/75x75?text=Material%207Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%207Image0>,
+        <https://place-hold.it/75x75?text=Medium%207Image0> .
 
-<http://place-hold.it/1000x1000?text=Material%207Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2159,10 +2015,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:47> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%207Image1>,
-        <http://place-hold.it/75x75?text=Material%207Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%207Image1>,
+        <https://place-hold.it/75x75?text=Medium%207Image1> .
 
-<http://place-hold.it/1000x1000?text=Material%208Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2170,10 +2026,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:48> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%208Image0>,
-        <http://place-hold.it/75x75?text=Material%208Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%208Image0>,
+        <https://place-hold.it/75x75?text=Medium%208Image0> .
 
-<http://place-hold.it/1000x1000?text=Material%208Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2181,10 +2037,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:48> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%208Image1>,
-        <http://place-hold.it/75x75?text=Material%208Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%208Image1>,
+        <https://place-hold.it/75x75?text=Medium%208Image1> .
 
-<http://place-hold.it/1000x1000?text=Material%209Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2192,10 +2048,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:49> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%209Image0>,
-        <http://place-hold.it/75x75?text=Material%209Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%209Image0>,
+        <https://place-hold.it/75x75?text=Medium%209Image0> .
 
-<http://place-hold.it/1000x1000?text=Material%209Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Medium%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2203,10 +2059,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:49> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Material%209Image1>,
-        <http://place-hold.it/75x75?text=Material%209Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Medium%209Image1>,
+        <https://place-hold.it/75x75?text=Medium%209Image1> .
 
-<http://place-hold.it/1000x1000?text=Medium%200Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2214,10 +2070,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:50> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%200Image0>,
-        <http://place-hold.it/75x75?text=Medium%200Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%200Image0>,
+        <https://place-hold.it/75x75?text=Publisher%200Image0> .
 
-<http://place-hold.it/1000x1000?text=Medium%200Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2225,10 +2081,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:50> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%200Image1>,
-        <http://place-hold.it/75x75?text=Medium%200Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%200Image1>,
+        <https://place-hold.it/75x75?text=Publisher%200Image1> .
 
-<http://place-hold.it/1000x1000?text=Medium%201Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2236,10 +2092,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:51> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%201Image0>,
-        <http://place-hold.it/75x75?text=Medium%201Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%201Image0>,
+        <https://place-hold.it/75x75?text=Publisher%201Image0> .
 
-<http://place-hold.it/1000x1000?text=Medium%201Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2247,10 +2103,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:51> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%201Image1>,
-        <http://place-hold.it/75x75?text=Medium%201Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%201Image1>,
+        <https://place-hold.it/75x75?text=Publisher%201Image1> .
 
-<http://place-hold.it/1000x1000?text=Medium%202Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2258,10 +2114,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:52> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%202Image0>,
-        <http://place-hold.it/75x75?text=Medium%202Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%202Image0>,
+        <https://place-hold.it/75x75?text=Publisher%202Image0> .
 
-<http://place-hold.it/1000x1000?text=Medium%202Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2269,10 +2125,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:52> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%202Image1>,
-        <http://place-hold.it/75x75?text=Medium%202Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%202Image1>,
+        <https://place-hold.it/75x75?text=Publisher%202Image1> .
 
-<http://place-hold.it/1000x1000?text=Medium%203Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2280,10 +2136,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:53> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%203Image0>,
-        <http://place-hold.it/75x75?text=Medium%203Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%203Image0>,
+        <https://place-hold.it/75x75?text=Publisher%203Image0> .
 
-<http://place-hold.it/1000x1000?text=Medium%203Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2291,10 +2147,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:53> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%203Image1>,
-        <http://place-hold.it/75x75?text=Medium%203Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%203Image1>,
+        <https://place-hold.it/75x75?text=Publisher%203Image1> .
 
-<http://place-hold.it/1000x1000?text=Medium%204Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2302,10 +2158,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:54> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%204Image0>,
-        <http://place-hold.it/75x75?text=Medium%204Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%204Image0>,
+        <https://place-hold.it/75x75?text=Publisher%204Image0> .
 
-<http://place-hold.it/1000x1000?text=Medium%204Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2313,10 +2169,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:54> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%204Image1>,
-        <http://place-hold.it/75x75?text=Medium%204Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%204Image1>,
+        <https://place-hold.it/75x75?text=Publisher%204Image1> .
 
-<http://place-hold.it/1000x1000?text=Medium%205Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2324,10 +2180,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:55> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%205Image0>,
-        <http://place-hold.it/75x75?text=Medium%205Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%205Image0>,
+        <https://place-hold.it/75x75?text=Publisher%205Image0> .
 
-<http://place-hold.it/1000x1000?text=Medium%205Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2335,10 +2191,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:55> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%205Image1>,
-        <http://place-hold.it/75x75?text=Medium%205Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%205Image1>,
+        <https://place-hold.it/75x75?text=Publisher%205Image1> .
 
-<http://place-hold.it/1000x1000?text=Medium%206Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2346,10 +2202,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:56> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%206Image0>,
-        <http://place-hold.it/75x75?text=Medium%206Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%206Image0>,
+        <https://place-hold.it/75x75?text=Publisher%206Image0> .
 
-<http://place-hold.it/1000x1000?text=Medium%206Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2357,10 +2213,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:56> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%206Image1>,
-        <http://place-hold.it/75x75?text=Medium%206Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%206Image1>,
+        <https://place-hold.it/75x75?text=Publisher%206Image1> .
 
-<http://place-hold.it/1000x1000?text=Medium%207Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2368,10 +2224,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:57> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%207Image0>,
-        <http://place-hold.it/75x75?text=Medium%207Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%207Image0>,
+        <https://place-hold.it/75x75?text=Publisher%207Image0> .
 
-<http://place-hold.it/1000x1000?text=Medium%207Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2379,10 +2235,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:57> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%207Image1>,
-        <http://place-hold.it/75x75?text=Medium%207Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%207Image1>,
+        <https://place-hold.it/75x75?text=Publisher%207Image1> .
 
-<http://place-hold.it/1000x1000?text=Medium%208Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2390,10 +2246,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:58> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%208Image0>,
-        <http://place-hold.it/75x75?text=Medium%208Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%208Image0>,
+        <https://place-hold.it/75x75?text=Publisher%208Image0> .
 
-<http://place-hold.it/1000x1000?text=Medium%208Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2401,10 +2257,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:58> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%208Image1>,
-        <http://place-hold.it/75x75?text=Medium%208Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%208Image1>,
+        <https://place-hold.it/75x75?text=Publisher%208Image1> .
 
-<http://place-hold.it/1000x1000?text=Medium%209Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2412,10 +2268,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:59> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%209Image0>,
-        <http://place-hold.it/75x75?text=Medium%209Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%209Image0>,
+        <https://place-hold.it/75x75?text=Publisher%209Image0> .
 
-<http://place-hold.it/1000x1000?text=Medium%209Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Publisher%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2423,10 +2279,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:59> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Medium%209Image1>,
-        <http://place-hold.it/75x75?text=Medium%209Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Publisher%209Image1>,
+        <https://place-hold.it/75x75?text=Publisher%209Image1> .
 
-<http://place-hold.it/1000x1000?text=Publisher%200Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2434,10 +2290,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:60> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%200Image0>,
-        <http://place-hold.it/75x75?text=Publisher%200Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%200Image0>,
+        <https://place-hold.it/75x75?text=Source%200Image0> .
 
-<http://place-hold.it/1000x1000?text=Publisher%200Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2445,10 +2301,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:60> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%200Image1>,
-        <http://place-hold.it/75x75?text=Publisher%200Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%200Image1>,
+        <https://place-hold.it/75x75?text=Source%200Image1> .
 
-<http://place-hold.it/1000x1000?text=Publisher%201Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2456,10 +2312,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:61> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%201Image0>,
-        <http://place-hold.it/75x75?text=Publisher%201Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%201Image0>,
+        <https://place-hold.it/75x75?text=Source%201Image0> .
 
-<http://place-hold.it/1000x1000?text=Publisher%201Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2467,10 +2323,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:61> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%201Image1>,
-        <http://place-hold.it/75x75?text=Publisher%201Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%201Image1>,
+        <https://place-hold.it/75x75?text=Source%201Image1> .
 
-<http://place-hold.it/1000x1000?text=Publisher%202Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2478,10 +2334,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:62> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%202Image0>,
-        <http://place-hold.it/75x75?text=Publisher%202Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%202Image0>,
+        <https://place-hold.it/75x75?text=Source%202Image0> .
 
-<http://place-hold.it/1000x1000?text=Publisher%202Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2489,10 +2345,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:62> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%202Image1>,
-        <http://place-hold.it/75x75?text=Publisher%202Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%202Image1>,
+        <https://place-hold.it/75x75?text=Source%202Image1> .
 
-<http://place-hold.it/1000x1000?text=Publisher%203Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2500,10 +2356,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:63> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%203Image0>,
-        <http://place-hold.it/75x75?text=Publisher%203Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%203Image0>,
+        <https://place-hold.it/75x75?text=Source%203Image0> .
 
-<http://place-hold.it/1000x1000?text=Publisher%203Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2511,10 +2367,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:63> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%203Image1>,
-        <http://place-hold.it/75x75?text=Publisher%203Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%203Image1>,
+        <https://place-hold.it/75x75?text=Source%203Image1> .
 
-<http://place-hold.it/1000x1000?text=Publisher%204Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2522,10 +2378,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:64> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%204Image0>,
-        <http://place-hold.it/75x75?text=Publisher%204Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%204Image0>,
+        <https://place-hold.it/75x75?text=Source%204Image0> .
 
-<http://place-hold.it/1000x1000?text=Publisher%204Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2533,10 +2389,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:64> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%204Image1>,
-        <http://place-hold.it/75x75?text=Publisher%204Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%204Image1>,
+        <https://place-hold.it/75x75?text=Source%204Image1> .
 
-<http://place-hold.it/1000x1000?text=Publisher%205Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2544,10 +2400,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:65> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%205Image0>,
-        <http://place-hold.it/75x75?text=Publisher%205Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%205Image0>,
+        <https://place-hold.it/75x75?text=Source%205Image0> .
 
-<http://place-hold.it/1000x1000?text=Publisher%205Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2555,10 +2411,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:65> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%205Image1>,
-        <http://place-hold.it/75x75?text=Publisher%205Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%205Image1>,
+        <https://place-hold.it/75x75?text=Source%205Image1> .
 
-<http://place-hold.it/1000x1000?text=Publisher%206Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2566,10 +2422,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:66> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%206Image0>,
-        <http://place-hold.it/75x75?text=Publisher%206Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%206Image0>,
+        <https://place-hold.it/75x75?text=Source%206Image0> .
 
-<http://place-hold.it/1000x1000?text=Publisher%206Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2577,10 +2433,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:66> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%206Image1>,
-        <http://place-hold.it/75x75?text=Publisher%206Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%206Image1>,
+        <https://place-hold.it/75x75?text=Source%206Image1> .
 
-<http://place-hold.it/1000x1000?text=Publisher%207Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2588,10 +2444,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:67> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%207Image0>,
-        <http://place-hold.it/75x75?text=Publisher%207Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%207Image0>,
+        <https://place-hold.it/75x75?text=Source%207Image0> .
 
-<http://place-hold.it/1000x1000?text=Publisher%207Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2599,10 +2455,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:67> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%207Image1>,
-        <http://place-hold.it/75x75?text=Publisher%207Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%207Image1>,
+        <https://place-hold.it/75x75?text=Source%207Image1> .
 
-<http://place-hold.it/1000x1000?text=Publisher%208Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2610,10 +2466,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:68> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%208Image0>,
-        <http://place-hold.it/75x75?text=Publisher%208Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%208Image0>,
+        <https://place-hold.it/75x75?text=Source%208Image0> .
 
-<http://place-hold.it/1000x1000?text=Publisher%208Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2621,10 +2477,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:68> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%208Image1>,
-        <http://place-hold.it/75x75?text=Publisher%208Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%208Image1>,
+        <https://place-hold.it/75x75?text=Source%208Image1> .
 
-<http://place-hold.it/1000x1000?text=Publisher%209Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2632,10 +2488,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:69> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%209Image0>,
-        <http://place-hold.it/75x75?text=Publisher%209Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%209Image0>,
+        <https://place-hold.it/75x75?text=Source%209Image0> .
 
-<http://place-hold.it/1000x1000?text=Publisher%209Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Source%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2643,10 +2499,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:69> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Publisher%209Image1>,
-        <http://place-hold.it/75x75?text=Publisher%209Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Source%209Image1>,
+        <https://place-hold.it/75x75?text=Source%209Image1> .
 
-<http://place-hold.it/1000x1000?text=Source%200Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2654,10 +2510,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:70> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%200Image0>,
-        <http://place-hold.it/75x75?text=Source%200Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%200Image0>,
+        <https://place-hold.it/75x75?text=Spatial%200Image0> .
 
-<http://place-hold.it/1000x1000?text=Source%200Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2665,10 +2521,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:70> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%200Image1>,
-        <http://place-hold.it/75x75?text=Source%200Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%200Image1>,
+        <https://place-hold.it/75x75?text=Spatial%200Image1> .
 
-<http://place-hold.it/1000x1000?text=Source%201Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2676,10 +2532,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:71> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%201Image0>,
-        <http://place-hold.it/75x75?text=Source%201Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%201Image0>,
+        <https://place-hold.it/75x75?text=Spatial%201Image0> .
 
-<http://place-hold.it/1000x1000?text=Source%201Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2687,10 +2543,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:71> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%201Image1>,
-        <http://place-hold.it/75x75?text=Source%201Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%201Image1>,
+        <https://place-hold.it/75x75?text=Spatial%201Image1> .
 
-<http://place-hold.it/1000x1000?text=Source%202Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2698,10 +2554,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:72> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%202Image0>,
-        <http://place-hold.it/75x75?text=Source%202Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%202Image0>,
+        <https://place-hold.it/75x75?text=Spatial%202Image0> .
 
-<http://place-hold.it/1000x1000?text=Source%202Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2709,10 +2565,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:72> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%202Image1>,
-        <http://place-hold.it/75x75?text=Source%202Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%202Image1>,
+        <https://place-hold.it/75x75?text=Spatial%202Image1> .
 
-<http://place-hold.it/1000x1000?text=Source%203Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2720,10 +2576,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:73> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%203Image0>,
-        <http://place-hold.it/75x75?text=Source%203Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%203Image0>,
+        <https://place-hold.it/75x75?text=Spatial%203Image0> .
 
-<http://place-hold.it/1000x1000?text=Source%203Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2731,10 +2587,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:73> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%203Image1>,
-        <http://place-hold.it/75x75?text=Source%203Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%203Image1>,
+        <https://place-hold.it/75x75?text=Spatial%203Image1> .
 
-<http://place-hold.it/1000x1000?text=Source%204Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2742,10 +2598,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:74> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%204Image0>,
-        <http://place-hold.it/75x75?text=Source%204Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%204Image0>,
+        <https://place-hold.it/75x75?text=Spatial%204Image0> .
 
-<http://place-hold.it/1000x1000?text=Source%204Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2753,10 +2609,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:74> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%204Image1>,
-        <http://place-hold.it/75x75?text=Source%204Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%204Image1>,
+        <https://place-hold.it/75x75?text=Spatial%204Image1> .
 
-<http://place-hold.it/1000x1000?text=Source%205Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2764,10 +2620,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:75> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%205Image0>,
-        <http://place-hold.it/75x75?text=Source%205Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%205Image0>,
+        <https://place-hold.it/75x75?text=Spatial%205Image0> .
 
-<http://place-hold.it/1000x1000?text=Source%205Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2775,10 +2631,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:75> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%205Image1>,
-        <http://place-hold.it/75x75?text=Source%205Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%205Image1>,
+        <https://place-hold.it/75x75?text=Spatial%205Image1> .
 
-<http://place-hold.it/1000x1000?text=Source%206Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2786,10 +2642,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:76> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%206Image0>,
-        <http://place-hold.it/75x75?text=Source%206Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%206Image0>,
+        <https://place-hold.it/75x75?text=Spatial%206Image0> .
 
-<http://place-hold.it/1000x1000?text=Source%206Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2797,10 +2653,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:76> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%206Image1>,
-        <http://place-hold.it/75x75?text=Source%206Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%206Image1>,
+        <https://place-hold.it/75x75?text=Spatial%206Image1> .
 
-<http://place-hold.it/1000x1000?text=Source%207Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2808,10 +2664,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:77> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%207Image0>,
-        <http://place-hold.it/75x75?text=Source%207Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%207Image0>,
+        <https://place-hold.it/75x75?text=Spatial%207Image0> .
 
-<http://place-hold.it/1000x1000?text=Source%207Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2819,10 +2675,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:77> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%207Image1>,
-        <http://place-hold.it/75x75?text=Source%207Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%207Image1>,
+        <https://place-hold.it/75x75?text=Spatial%207Image1> .
 
-<http://place-hold.it/1000x1000?text=Source%208Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2830,10 +2686,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:78> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%208Image0>,
-        <http://place-hold.it/75x75?text=Source%208Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%208Image0>,
+        <https://place-hold.it/75x75?text=Spatial%208Image0> .
 
-<http://place-hold.it/1000x1000?text=Source%208Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2841,10 +2697,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:78> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%208Image1>,
-        <http://place-hold.it/75x75?text=Source%208Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%208Image1>,
+        <https://place-hold.it/75x75?text=Spatial%208Image1> .
 
-<http://place-hold.it/1000x1000?text=Source%209Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2852,10 +2708,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:79> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%209Image0>,
-        <http://place-hold.it/75x75?text=Source%209Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%209Image0>,
+        <https://place-hold.it/75x75?text=Spatial%209Image0> .
 
-<http://place-hold.it/1000x1000?text=Source%209Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Spatial%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2863,10 +2719,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:79> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Source%209Image1>,
-        <http://place-hold.it/75x75?text=Source%209Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Spatial%209Image1>,
+        <https://place-hold.it/75x75?text=Spatial%209Image1> .
 
-<http://place-hold.it/1000x1000?text=Spatial%200Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2874,10 +2730,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:80> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%200Image0>,
-        <http://place-hold.it/75x75?text=Spatial%200Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%200Image0>,
+        <https://place-hold.it/75x75?text=Subject%200Image0> .
 
-<http://place-hold.it/1000x1000?text=Spatial%200Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2885,10 +2741,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:80> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%200Image1>,
-        <http://place-hold.it/75x75?text=Spatial%200Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%200Image1>,
+        <https://place-hold.it/75x75?text=Subject%200Image1> .
 
-<http://place-hold.it/1000x1000?text=Spatial%201Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2896,10 +2752,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:81> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%201Image0>,
-        <http://place-hold.it/75x75?text=Spatial%201Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%201Image0>,
+        <https://place-hold.it/75x75?text=Subject%201Image0> .
 
-<http://place-hold.it/1000x1000?text=Spatial%201Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2907,10 +2763,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:81> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%201Image1>,
-        <http://place-hold.it/75x75?text=Spatial%201Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%201Image1>,
+        <https://place-hold.it/75x75?text=Subject%201Image1> .
 
-<http://place-hold.it/1000x1000?text=Spatial%202Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2918,10 +2774,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:82> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%202Image0>,
-        <http://place-hold.it/75x75?text=Spatial%202Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%202Image0>,
+        <https://place-hold.it/75x75?text=Subject%202Image0> .
 
-<http://place-hold.it/1000x1000?text=Spatial%202Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2929,10 +2785,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:82> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%202Image1>,
-        <http://place-hold.it/75x75?text=Spatial%202Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%202Image1>,
+        <https://place-hold.it/75x75?text=Subject%202Image1> .
 
-<http://place-hold.it/1000x1000?text=Spatial%203Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2940,10 +2796,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:83> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%203Image0>,
-        <http://place-hold.it/75x75?text=Spatial%203Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%203Image0>,
+        <https://place-hold.it/75x75?text=Subject%203Image0> .
 
-<http://place-hold.it/1000x1000?text=Spatial%203Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2951,10 +2807,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:83> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%203Image1>,
-        <http://place-hold.it/75x75?text=Spatial%203Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%203Image1>,
+        <https://place-hold.it/75x75?text=Subject%203Image1> .
 
-<http://place-hold.it/1000x1000?text=Spatial%204Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2962,10 +2818,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:84> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%204Image0>,
-        <http://place-hold.it/75x75?text=Spatial%204Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%204Image0>,
+        <https://place-hold.it/75x75?text=Subject%204Image0> .
 
-<http://place-hold.it/1000x1000?text=Spatial%204Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2973,10 +2829,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:84> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%204Image1>,
-        <http://place-hold.it/75x75?text=Spatial%204Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%204Image1>,
+        <https://place-hold.it/75x75?text=Subject%204Image1> .
 
-<http://place-hold.it/1000x1000?text=Spatial%205Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2984,10 +2840,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:85> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%205Image0>,
-        <http://place-hold.it/75x75?text=Spatial%205Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%205Image0>,
+        <https://place-hold.it/75x75?text=Subject%205Image0> .
 
-<http://place-hold.it/1000x1000?text=Spatial%205Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -2995,10 +2851,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:85> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%205Image1>,
-        <http://place-hold.it/75x75?text=Spatial%205Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%205Image1>,
+        <https://place-hold.it/75x75?text=Subject%205Image1> .
 
-<http://place-hold.it/1000x1000?text=Spatial%206Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3006,10 +2862,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:86> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%206Image0>,
-        <http://place-hold.it/75x75?text=Spatial%206Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%206Image0>,
+        <https://place-hold.it/75x75?text=Subject%206Image0> .
 
-<http://place-hold.it/1000x1000?text=Spatial%206Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3017,10 +2873,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:86> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%206Image1>,
-        <http://place-hold.it/75x75?text=Spatial%206Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%206Image1>,
+        <https://place-hold.it/75x75?text=Subject%206Image1> .
 
-<http://place-hold.it/1000x1000?text=Spatial%207Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3028,10 +2884,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:87> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%207Image0>,
-        <http://place-hold.it/75x75?text=Spatial%207Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%207Image0>,
+        <https://place-hold.it/75x75?text=Subject%207Image0> .
 
-<http://place-hold.it/1000x1000?text=Spatial%207Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3039,10 +2895,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:87> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%207Image1>,
-        <http://place-hold.it/75x75?text=Spatial%207Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%207Image1>,
+        <https://place-hold.it/75x75?text=Subject%207Image1> .
 
-<http://place-hold.it/1000x1000?text=Spatial%208Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3050,10 +2906,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:88> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%208Image0>,
-        <http://place-hold.it/75x75?text=Spatial%208Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%208Image0>,
+        <https://place-hold.it/75x75?text=Subject%208Image0> .
 
-<http://place-hold.it/1000x1000?text=Spatial%208Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3061,10 +2917,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:88> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%208Image1>,
-        <http://place-hold.it/75x75?text=Spatial%208Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%208Image1>,
+        <https://place-hold.it/75x75?text=Subject%208Image1> .
 
-<http://place-hold.it/1000x1000?text=Spatial%209Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3072,10 +2928,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:89> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%209Image0>,
-        <http://place-hold.it/75x75?text=Spatial%209Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%209Image0>,
+        <https://place-hold.it/75x75?text=Subject%209Image0> .
 
-<http://place-hold.it/1000x1000?text=Spatial%209Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Subject%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3083,10 +2939,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:89> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Spatial%209Image1>,
-        <http://place-hold.it/75x75?text=Spatial%209Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Subject%209Image1>,
+        <https://place-hold.it/75x75?text=Subject%209Image1> .
 
-<http://place-hold.it/1000x1000?text=Subject%200Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3094,10 +2950,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:90> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%200Image0>,
-        <http://place-hold.it/75x75?text=Subject%200Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%200Image0>,
+        <https://place-hold.it/75x75?text=Technique%200Image0> .
 
-<http://place-hold.it/1000x1000?text=Subject%200Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3105,10 +2961,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:90> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%200Image1>,
-        <http://place-hold.it/75x75?text=Subject%200Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%200Image1>,
+        <https://place-hold.it/75x75?text=Technique%200Image1> .
 
-<http://place-hold.it/1000x1000?text=Subject%201Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3116,10 +2972,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:91> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%201Image0>,
-        <http://place-hold.it/75x75?text=Subject%201Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%201Image0>,
+        <https://place-hold.it/75x75?text=Technique%201Image0> .
 
-<http://place-hold.it/1000x1000?text=Subject%201Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3127,10 +2983,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:91> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%201Image1>,
-        <http://place-hold.it/75x75?text=Subject%201Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%201Image1>,
+        <https://place-hold.it/75x75?text=Technique%201Image1> .
 
-<http://place-hold.it/1000x1000?text=Subject%202Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3138,10 +2994,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:92> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%202Image0>,
-        <http://place-hold.it/75x75?text=Subject%202Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%202Image0>,
+        <https://place-hold.it/75x75?text=Technique%202Image0> .
 
-<http://place-hold.it/1000x1000?text=Subject%202Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3149,10 +3005,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:92> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%202Image1>,
-        <http://place-hold.it/75x75?text=Subject%202Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%202Image1>,
+        <https://place-hold.it/75x75?text=Technique%202Image1> .
 
-<http://place-hold.it/1000x1000?text=Subject%203Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3160,10 +3016,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:93> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%203Image0>,
-        <http://place-hold.it/75x75?text=Subject%203Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%203Image0>,
+        <https://place-hold.it/75x75?text=Technique%203Image0> .
 
-<http://place-hold.it/1000x1000?text=Subject%203Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3171,10 +3027,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:93> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%203Image1>,
-        <http://place-hold.it/75x75?text=Subject%203Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%203Image1>,
+        <https://place-hold.it/75x75?text=Technique%203Image1> .
 
-<http://place-hold.it/1000x1000?text=Subject%204Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3182,10 +3038,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:94> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%204Image0>,
-        <http://place-hold.it/75x75?text=Subject%204Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%204Image0>,
+        <https://place-hold.it/75x75?text=Technique%204Image0> .
 
-<http://place-hold.it/1000x1000?text=Subject%204Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3193,10 +3049,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:94> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%204Image1>,
-        <http://place-hold.it/75x75?text=Subject%204Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%204Image1>,
+        <https://place-hold.it/75x75?text=Technique%204Image1> .
 
-<http://place-hold.it/1000x1000?text=Subject%205Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3204,10 +3060,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:95> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%205Image0>,
-        <http://place-hold.it/75x75?text=Subject%205Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%205Image0>,
+        <https://place-hold.it/75x75?text=Technique%205Image0> .
 
-<http://place-hold.it/1000x1000?text=Subject%205Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3215,10 +3071,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:95> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%205Image1>,
-        <http://place-hold.it/75x75?text=Subject%205Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%205Image1>,
+        <https://place-hold.it/75x75?text=Technique%205Image1> .
 
-<http://place-hold.it/1000x1000?text=Subject%206Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3226,10 +3082,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:96> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%206Image0>,
-        <http://place-hold.it/75x75?text=Subject%206Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%206Image0>,
+        <https://place-hold.it/75x75?text=Technique%206Image0> .
 
-<http://place-hold.it/1000x1000?text=Subject%206Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3237,10 +3093,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:96> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%206Image1>,
-        <http://place-hold.it/75x75?text=Subject%206Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%206Image1>,
+        <https://place-hold.it/75x75?text=Technique%206Image1> .
 
-<http://place-hold.it/1000x1000?text=Subject%207Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3248,10 +3104,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:97> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%207Image0>,
-        <http://place-hold.it/75x75?text=Subject%207Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%207Image0>,
+        <https://place-hold.it/75x75?text=Technique%207Image0> .
 
-<http://place-hold.it/1000x1000?text=Subject%207Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3259,10 +3115,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:97> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%207Image1>,
-        <http://place-hold.it/75x75?text=Subject%207Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%207Image1>,
+        <https://place-hold.it/75x75?text=Technique%207Image1> .
 
-<http://place-hold.it/1000x1000?text=Subject%208Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3270,10 +3126,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:98> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%208Image0>,
-        <http://place-hold.it/75x75?text=Subject%208Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%208Image0>,
+        <https://place-hold.it/75x75?text=Technique%208Image0> .
 
-<http://place-hold.it/1000x1000?text=Subject%208Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3281,10 +3137,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:98> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%208Image1>,
-        <http://place-hold.it/75x75?text=Subject%208Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%208Image1>,
+        <https://place-hold.it/75x75?text=Technique%208Image1> .
 
-<http://place-hold.it/1000x1000?text=Subject%209Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3292,10 +3148,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:99> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%209Image0>,
-        <http://place-hold.it/75x75?text=Subject%209Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%209Image0>,
+        <https://place-hold.it/75x75?text=Technique%209Image0> .
 
-<http://place-hold.it/1000x1000?text=Subject%209Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Technique%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3303,10 +3159,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:99> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Subject%209Image1>,
-        <http://place-hold.it/75x75?text=Subject%209Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Technique%209Image1>,
+        <https://place-hold.it/75x75?text=Technique%209Image1> .
 
-<http://place-hold.it/1000x1000?text=Technique%200Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3314,10 +3170,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:100> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%200Image0>,
-        <http://place-hold.it/75x75?text=Technique%200Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%200Image0>,
+        <https://place-hold.it/75x75?text=Temporal%200Image0> .
 
-<http://place-hold.it/1000x1000?text=Technique%200Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3325,10 +3181,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:100> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%200Image1>,
-        <http://place-hold.it/75x75?text=Technique%200Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%200Image1>,
+        <https://place-hold.it/75x75?text=Temporal%200Image1> .
 
-<http://place-hold.it/1000x1000?text=Technique%201Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3336,10 +3192,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:101> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%201Image0>,
-        <http://place-hold.it/75x75?text=Technique%201Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%201Image0>,
+        <https://place-hold.it/75x75?text=Temporal%201Image0> .
 
-<http://place-hold.it/1000x1000?text=Technique%201Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3347,10 +3203,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:101> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%201Image1>,
-        <http://place-hold.it/75x75?text=Technique%201Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%201Image1>,
+        <https://place-hold.it/75x75?text=Temporal%201Image1> .
 
-<http://place-hold.it/1000x1000?text=Technique%202Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3358,10 +3214,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:102> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%202Image0>,
-        <http://place-hold.it/75x75?text=Technique%202Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%202Image0>,
+        <https://place-hold.it/75x75?text=Temporal%202Image0> .
 
-<http://place-hold.it/1000x1000?text=Technique%202Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3369,10 +3225,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:102> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%202Image1>,
-        <http://place-hold.it/75x75?text=Technique%202Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%202Image1>,
+        <https://place-hold.it/75x75?text=Temporal%202Image1> .
 
-<http://place-hold.it/1000x1000?text=Technique%203Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3380,10 +3236,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:103> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%203Image0>,
-        <http://place-hold.it/75x75?text=Technique%203Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%203Image0>,
+        <https://place-hold.it/75x75?text=Temporal%203Image0> .
 
-<http://place-hold.it/1000x1000?text=Technique%203Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3391,10 +3247,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:103> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%203Image1>,
-        <http://place-hold.it/75x75?text=Technique%203Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%203Image1>,
+        <https://place-hold.it/75x75?text=Temporal%203Image1> .
 
-<http://place-hold.it/1000x1000?text=Technique%204Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3402,10 +3258,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:104> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%204Image0>,
-        <http://place-hold.it/75x75?text=Technique%204Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%204Image0>,
+        <https://place-hold.it/75x75?text=Temporal%204Image0> .
 
-<http://place-hold.it/1000x1000?text=Technique%204Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3413,10 +3269,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:104> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%204Image1>,
-        <http://place-hold.it/75x75?text=Technique%204Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%204Image1>,
+        <https://place-hold.it/75x75?text=Temporal%204Image1> .
 
-<http://place-hold.it/1000x1000?text=Technique%205Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3424,10 +3280,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:105> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%205Image0>,
-        <http://place-hold.it/75x75?text=Technique%205Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%205Image0>,
+        <https://place-hold.it/75x75?text=Temporal%205Image0> .
 
-<http://place-hold.it/1000x1000?text=Technique%205Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3435,10 +3291,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:105> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%205Image1>,
-        <http://place-hold.it/75x75?text=Technique%205Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%205Image1>,
+        <https://place-hold.it/75x75?text=Temporal%205Image1> .
 
-<http://place-hold.it/1000x1000?text=Technique%206Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3446,10 +3302,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:106> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%206Image0>,
-        <http://place-hold.it/75x75?text=Technique%206Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%206Image0>,
+        <https://place-hold.it/75x75?text=Temporal%206Image0> .
 
-<http://place-hold.it/1000x1000?text=Technique%206Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3457,10 +3313,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:106> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%206Image1>,
-        <http://place-hold.it/75x75?text=Technique%206Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%206Image1>,
+        <https://place-hold.it/75x75?text=Temporal%206Image1> .
 
-<http://place-hold.it/1000x1000?text=Technique%207Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3468,10 +3324,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:107> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%207Image0>,
-        <http://place-hold.it/75x75?text=Technique%207Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%207Image0>,
+        <https://place-hold.it/75x75?text=Temporal%207Image0> .
 
-<http://place-hold.it/1000x1000?text=Technique%207Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3479,10 +3335,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:107> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%207Image1>,
-        <http://place-hold.it/75x75?text=Technique%207Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%207Image1>,
+        <https://place-hold.it/75x75?text=Temporal%207Image1> .
 
-<http://place-hold.it/1000x1000?text=Technique%208Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3490,10 +3346,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:108> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%208Image0>,
-        <http://place-hold.it/75x75?text=Technique%208Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%208Image0>,
+        <https://place-hold.it/75x75?text=Temporal%208Image0> .
 
-<http://place-hold.it/1000x1000?text=Technique%208Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3501,10 +3357,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:108> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%208Image1>,
-        <http://place-hold.it/75x75?text=Technique%208Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%208Image1>,
+        <https://place-hold.it/75x75?text=Temporal%208Image1> .
 
-<http://place-hold.it/1000x1000?text=Technique%209Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3512,10 +3368,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:109> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%209Image0>,
-        <http://place-hold.it/75x75?text=Technique%209Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%209Image0>,
+        <https://place-hold.it/75x75?text=Temporal%209Image0> .
 
-<http://place-hold.it/1000x1000?text=Technique%209Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Temporal%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3523,10 +3379,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:109> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Technique%209Image1>,
-        <http://place-hold.it/75x75?text=Technique%209Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Temporal%209Image1>,
+        <https://place-hold.it/75x75?text=Temporal%209Image1> .
 
-<http://place-hold.it/1000x1000?text=Temporal%200Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3534,10 +3390,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:110> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%200Image0>,
-        <http://place-hold.it/75x75?text=Temporal%200Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%200Image0>,
+        <https://place-hold.it/75x75?text=Type%200Image0> .
 
-<http://place-hold.it/1000x1000?text=Temporal%200Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3545,10 +3401,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:110> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%200Image1>,
-        <http://place-hold.it/75x75?text=Temporal%200Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%200Image1>,
+        <https://place-hold.it/75x75?text=Type%200Image1> .
 
-<http://place-hold.it/1000x1000?text=Temporal%201Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3556,10 +3412,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:111> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%201Image0>,
-        <http://place-hold.it/75x75?text=Temporal%201Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%201Image0>,
+        <https://place-hold.it/75x75?text=Type%201Image0> .
 
-<http://place-hold.it/1000x1000?text=Temporal%201Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3567,10 +3423,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:111> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%201Image1>,
-        <http://place-hold.it/75x75?text=Temporal%201Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%201Image1>,
+        <https://place-hold.it/75x75?text=Type%201Image1> .
 
-<http://place-hold.it/1000x1000?text=Temporal%202Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3578,10 +3434,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:112> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%202Image0>,
-        <http://place-hold.it/75x75?text=Temporal%202Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%202Image0>,
+        <https://place-hold.it/75x75?text=Type%202Image0> .
 
-<http://place-hold.it/1000x1000?text=Temporal%202Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3589,10 +3445,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:112> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%202Image1>,
-        <http://place-hold.it/75x75?text=Temporal%202Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%202Image1>,
+        <https://place-hold.it/75x75?text=Type%202Image1> .
 
-<http://place-hold.it/1000x1000?text=Temporal%203Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3600,10 +3456,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:113> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%203Image0>,
-        <http://place-hold.it/75x75?text=Temporal%203Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%203Image0>,
+        <https://place-hold.it/75x75?text=Type%203Image0> .
 
-<http://place-hold.it/1000x1000?text=Temporal%203Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3611,10 +3467,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:113> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%203Image1>,
-        <http://place-hold.it/75x75?text=Temporal%203Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%203Image1>,
+        <https://place-hold.it/75x75?text=Type%203Image1> .
 
-<http://place-hold.it/1000x1000?text=Temporal%204Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3622,10 +3478,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:114> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%204Image0>,
-        <http://place-hold.it/75x75?text=Temporal%204Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%204Image0>,
+        <https://place-hold.it/75x75?text=Type%204Image0> .
 
-<http://place-hold.it/1000x1000?text=Temporal%204Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3633,10 +3489,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:114> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%204Image1>,
-        <http://place-hold.it/75x75?text=Temporal%204Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%204Image1>,
+        <https://place-hold.it/75x75?text=Type%204Image1> .
 
-<http://place-hold.it/1000x1000?text=Temporal%205Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3644,10 +3500,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:115> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%205Image0>,
-        <http://place-hold.it/75x75?text=Temporal%205Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%205Image0>,
+        <https://place-hold.it/75x75?text=Type%205Image0> .
 
-<http://place-hold.it/1000x1000?text=Temporal%205Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3655,10 +3511,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:115> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%205Image1>,
-        <http://place-hold.it/75x75?text=Temporal%205Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%205Image1>,
+        <https://place-hold.it/75x75?text=Type%205Image1> .
 
-<http://place-hold.it/1000x1000?text=Temporal%206Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3666,10 +3522,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:116> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%206Image0>,
-        <http://place-hold.it/75x75?text=Temporal%206Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%206Image0>,
+        <https://place-hold.it/75x75?text=Type%206Image0> .
 
-<http://place-hold.it/1000x1000?text=Temporal%206Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3677,10 +3533,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:116> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%206Image1>,
-        <http://place-hold.it/75x75?text=Temporal%206Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%206Image1>,
+        <https://place-hold.it/75x75?text=Type%206Image1> .
 
-<http://place-hold.it/1000x1000?text=Temporal%207Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3688,10 +3544,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:117> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%207Image0>,
-        <http://place-hold.it/75x75?text=Temporal%207Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%207Image0>,
+        <https://place-hold.it/75x75?text=Type%207Image0> .
 
-<http://place-hold.it/1000x1000?text=Temporal%207Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3699,10 +3555,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:117> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%207Image1>,
-        <http://place-hold.it/75x75?text=Temporal%207Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%207Image1>,
+        <https://place-hold.it/75x75?text=Type%207Image1> .
 
-<http://place-hold.it/1000x1000?text=Temporal%208Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3710,10 +3566,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:118> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%208Image0>,
-        <http://place-hold.it/75x75?text=Temporal%208Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%208Image0>,
+        <https://place-hold.it/75x75?text=Type%208Image0> .
 
-<http://place-hold.it/1000x1000?text=Temporal%208Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3721,10 +3577,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:118> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%208Image1>,
-        <http://place-hold.it/75x75?text=Temporal%208Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%208Image1>,
+        <https://place-hold.it/75x75?text=Type%208Image1> .
 
-<http://place-hold.it/1000x1000?text=Temporal%209Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3732,10 +3588,10 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:119> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%209Image0>,
-        <http://place-hold.it/75x75?text=Temporal%209Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%209Image0>,
+        <https://place-hold.it/75x75?text=Type%209Image0> .
 
-<http://place-hold.it/1000x1000?text=Temporal%209Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Type%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -3743,228 +3599,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:height 1000 ;
     exif:width 1000 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:119> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Temporal%209Image1>,
-        <http://place-hold.it/75x75?text=Temporal%209Image1> .
-
-<http://place-hold.it/1000x1000?text=Type%200Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:120> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%200Image0>,
-        <http://place-hold.it/75x75?text=Type%200Image0> .
-
-<http://place-hold.it/1000x1000?text=Type%200Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:120> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%200Image1>,
-        <http://place-hold.it/75x75?text=Type%200Image1> .
-
-<http://place-hold.it/1000x1000?text=Type%201Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:121> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%201Image0>,
-        <http://place-hold.it/75x75?text=Type%201Image0> .
-
-<http://place-hold.it/1000x1000?text=Type%201Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:121> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%201Image1>,
-        <http://place-hold.it/75x75?text=Type%201Image1> .
-
-<http://place-hold.it/1000x1000?text=Type%202Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:122> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%202Image0>,
-        <http://place-hold.it/75x75?text=Type%202Image0> .
-
-<http://place-hold.it/1000x1000?text=Type%202Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:122> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%202Image1>,
-        <http://place-hold.it/75x75?text=Type%202Image1> .
-
-<http://place-hold.it/1000x1000?text=Type%203Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:123> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%203Image0>,
-        <http://place-hold.it/75x75?text=Type%203Image0> .
-
-<http://place-hold.it/1000x1000?text=Type%203Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:123> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%203Image1>,
-        <http://place-hold.it/75x75?text=Type%203Image1> .
-
-<http://place-hold.it/1000x1000?text=Type%204Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:124> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%204Image0>,
-        <http://place-hold.it/75x75?text=Type%204Image0> .
-
-<http://place-hold.it/1000x1000?text=Type%204Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:124> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%204Image1>,
-        <http://place-hold.it/75x75?text=Type%204Image1> .
-
-<http://place-hold.it/1000x1000?text=Type%205Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:125> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%205Image0>,
-        <http://place-hold.it/75x75?text=Type%205Image0> .
-
-<http://place-hold.it/1000x1000?text=Type%205Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:125> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%205Image1>,
-        <http://place-hold.it/75x75?text=Type%205Image1> .
-
-<http://place-hold.it/1000x1000?text=Type%206Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:126> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%206Image0>,
-        <http://place-hold.it/75x75?text=Type%206Image0> .
-
-<http://place-hold.it/1000x1000?text=Type%206Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:126> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%206Image1>,
-        <http://place-hold.it/75x75?text=Type%206Image1> .
-
-<http://place-hold.it/1000x1000?text=Type%207Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:127> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%207Image0>,
-        <http://place-hold.it/75x75?text=Type%207Image0> .
-
-<http://place-hold.it/1000x1000?text=Type%207Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:127> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%207Image1>,
-        <http://place-hold.it/75x75?text=Type%207Image1> .
-
-<http://place-hold.it/1000x1000?text=Type%208Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:128> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%208Image0>,
-        <http://place-hold.it/75x75?text=Type%208Image0> .
-
-<http://place-hold.it/1000x1000?text=Type%208Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:128> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%208Image1>,
-        <http://place-hold.it/75x75?text=Type%208Image1> .
-
-<http://place-hold.it/1000x1000?text=Type%209Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:129> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%209Image0>,
-        <http://place-hold.it/75x75?text=Type%209Image0> .
-
-<http://place-hold.it/1000x1000?text=Type%209Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:129> ;
-    foaf:thumbnail <http://place-hold.it/600x600?text=Type%209Image1>,
-        <http://place-hold.it/75x75?text=Type%209Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Type%209Image1>,
+        <https://place-hold.it/75x75?text=Type%209Image1> .
 
 <http://creativecommons.org/licenses/by-nc-nd/2.0/> a creativecommons:License,
         paradicms:License ;
@@ -4275,7 +3911,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:logo <http://i.creativecommons.org/l/by/3.0/80x15.png>,
         <http://i.creativecommons.org/l/by/3.0/88x31.png> .
 
-<http://place-hold.it/600x600?text=Creator%200Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4284,7 +3920,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:0> .
 
-<http://place-hold.it/600x600?text=Creator%200Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4293,7 +3929,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:0> .
 
-<http://place-hold.it/600x600?text=Creator%201Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4302,7 +3938,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:1> .
 
-<http://place-hold.it/600x600?text=Creator%201Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4311,7 +3947,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:1> .
 
-<http://place-hold.it/600x600?text=Creator%202Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4320,7 +3956,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:2> .
 
-<http://place-hold.it/600x600?text=Creator%202Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4329,7 +3965,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:2> .
 
-<http://place-hold.it/600x600?text=Creator%203Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4338,7 +3974,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:3> .
 
-<http://place-hold.it/600x600?text=Creator%203Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4347,7 +3983,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:3> .
 
-<http://place-hold.it/600x600?text=Creator%204Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4356,7 +3992,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:4> .
 
-<http://place-hold.it/600x600?text=Creator%204Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4365,7 +4001,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:4> .
 
-<http://place-hold.it/600x600?text=Creator%205Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4374,7 +4010,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:5> .
 
-<http://place-hold.it/600x600?text=Creator%205Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4383,7 +4019,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:5> .
 
-<http://place-hold.it/600x600?text=Creator%206Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4392,7 +4028,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:6> .
 
-<http://place-hold.it/600x600?text=Creator%206Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4401,7 +4037,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:6> .
 
-<http://place-hold.it/600x600?text=Creator%207Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4410,7 +4046,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:7> .
 
-<http://place-hold.it/600x600?text=Creator%207Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4419,7 +4055,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:7> .
 
-<http://place-hold.it/600x600?text=Creator%208Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4428,7 +4064,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:8> .
 
-<http://place-hold.it/600x600?text=Creator%208Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4437,7 +4073,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:8> .
 
-<http://place-hold.it/600x600?text=Creator%209Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4446,7 +4082,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:9> .
 
-<http://place-hold.it/600x600?text=Creator%209Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Cultural%20context%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4455,7 +4091,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:9> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%200Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4464,7 +4100,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:10> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%200Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4473,7 +4109,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:10> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%201Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4482,7 +4118,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:11> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%201Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4491,7 +4127,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:11> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%202Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4500,7 +4136,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:12> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%202Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4509,7 +4145,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:12> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%203Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4518,7 +4154,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:13> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%203Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4527,7 +4163,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:13> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%204Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4536,7 +4172,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:14> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%204Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4545,7 +4181,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:14> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%205Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4554,7 +4190,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:15> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%205Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4563,7 +4199,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:15> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%206Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4572,7 +4208,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:16> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%206Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4581,7 +4217,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:16> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%207Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4590,7 +4226,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:17> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%207Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4599,7 +4235,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:17> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%208Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4608,7 +4244,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:18> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%208Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4617,7 +4253,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:18> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%209Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4626,7 +4262,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:19> .
 
-<http://place-hold.it/600x600?text=Cultural%20context%209Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Extent%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -4635,188 +4271,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:19> .
 
-<http://place-hold.it/600x600?text=Extent%200Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> .
-
-<http://place-hold.it/600x600?text=Extent%200Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> .
-
-<http://place-hold.it/600x600?text=Extent%201Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> .
-
-<http://place-hold.it/600x600?text=Extent%201Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> .
-
-<http://place-hold.it/600x600?text=Extent%202Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> .
-
-<http://place-hold.it/600x600?text=Extent%202Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> .
-
-<http://place-hold.it/600x600?text=Extent%203Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> .
-
-<http://place-hold.it/600x600?text=Extent%203Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> .
-
-<http://place-hold.it/600x600?text=Extent%204Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> .
-
-<http://place-hold.it/600x600?text=Extent%204Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> .
-
-<http://place-hold.it/600x600?text=Extent%205Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> .
-
-<http://place-hold.it/600x600?text=Extent%205Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> .
-
-<http://place-hold.it/600x600?text=Extent%206Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> .
-
-<http://place-hold.it/600x600?text=Extent%206Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> .
-
-<http://place-hold.it/600x600?text=Extent%207Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> .
-
-<http://place-hold.it/600x600?text=Extent%207Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> .
-
-<http://place-hold.it/600x600?text=Extent%208Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> .
-
-<http://place-hold.it/600x600?text=Extent%208Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> .
-
-<http://place-hold.it/600x600?text=Extent%209Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> .
-
-<http://place-hold.it/600x600?text=Extent%209Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> .
-
-<http://place-hold.it/600x600?text=Institution0Collection0Work0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/600x600?text=Institution0Collection0Work0Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
@@ -4825,8 +4281,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/work0> .
 
-<http://place-hold.it/600x600?text=Institution0Collection0Work0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/600x600?text=Institution0Collection0Work0Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
@@ -4835,8 +4291,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/work0> .
 
-<http://place-hold.it/600x600?text=Institution0Collection0Work1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/600x600?text=Institution0Collection0Work1Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
@@ -4845,8 +4301,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/work1> .
 
-<http://place-hold.it/600x600?text=Institution0Collection0Work1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/600x600?text=Institution0Collection0Work1Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
@@ -4855,8 +4311,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/work1> .
 
-<http://place-hold.it/600x600?text=Institution0Collection0Work2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/600x600?text=Institution0Collection0Work2Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person2> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
@@ -4865,8 +4321,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/work2> .
 
-<http://place-hold.it/600x600?text=Institution0Collection0Work2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/600x600?text=Institution0Collection0Work2Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person2> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
@@ -4875,8 +4331,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/work2> .
 
-<http://place-hold.it/600x600?text=Institution0Collection0Work3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+<https://place-hold.it/600x600?text=Institution0Collection0Work3Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
@@ -4885,8 +4341,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/work3> .
 
-<http://place-hold.it/600x600?text=Institution0Collection0Work3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+<https://place-hold.it/600x600?text=Institution0Collection0Work3Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
@@ -4895,7 +4351,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/collection0/work3> .
 
-<http://place-hold.it/600x600?text=Institution0Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution0Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0 rights holder" ;
@@ -4904,7 +4360,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0> .
 
-<http://place-hold.it/600x600?text=Institution0Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution0Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0 rights holder" ;
@@ -4913,8 +4369,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0> .
 
-<http://place-hold.it/600x600?text=Institution0SharedWork0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/600x600?text=Institution0SharedWork0Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
@@ -4923,8 +4379,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/work0> .
 
-<http://place-hold.it/600x600?text=Institution0SharedWork0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/600x600?text=Institution0SharedWork0Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
@@ -4933,8 +4389,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/work0> .
 
-<http://place-hold.it/600x600?text=Institution0SharedWork1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/600x600?text=Institution0SharedWork1Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
@@ -4943,8 +4399,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/work1> .
 
-<http://place-hold.it/600x600?text=Institution0SharedWork1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/600x600?text=Institution0SharedWork1Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
@@ -4953,8 +4409,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/work1> .
 
-<http://place-hold.it/600x600?text=Institution0SharedWork2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/600x600?text=Institution0SharedWork2Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
@@ -4963,8 +4419,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/work2> .
 
-<http://place-hold.it/600x600?text=Institution0SharedWork2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/600x600?text=Institution0SharedWork2Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
@@ -4973,8 +4429,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/work2> .
 
-<http://place-hold.it/600x600?text=Institution0SharedWork3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/600x600?text=Institution0SharedWork3Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
@@ -4983,8 +4439,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/work3> .
 
-<http://place-hold.it/600x600?text=Institution0SharedWork3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/600x600?text=Institution0SharedWork3Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
@@ -4993,8 +4449,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution0/shared/work3> .
 
-<http://place-hold.it/600x600?text=Institution1Collection0Work0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+<https://place-hold.it/600x600?text=Institution1Collection0Work0Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
@@ -5003,8 +4459,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/work0> .
 
-<http://place-hold.it/600x600?text=Institution1Collection0Work0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+<https://place-hold.it/600x600?text=Institution1Collection0Work0Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
@@ -5013,8 +4469,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/work0> .
 
-<http://place-hold.it/600x600?text=Institution1Collection0Work1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/600x600?text=Institution1Collection0Work1Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
@@ -5023,8 +4479,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/work1> .
 
-<http://place-hold.it/600x600?text=Institution1Collection0Work1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/600x600?text=Institution1Collection0Work1Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
@@ -5033,8 +4489,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/work1> .
 
-<http://place-hold.it/600x600?text=Institution1Collection0Work2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/600x600?text=Institution1Collection0Work2Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person2> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
@@ -5043,8 +4499,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/work2> .
 
-<http://place-hold.it/600x600?text=Institution1Collection0Work2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/600x600?text=Institution1Collection0Work2Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person2> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
@@ -5053,8 +4509,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/work2> .
 
-<http://place-hold.it/600x600?text=Institution1Collection0Work3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+<https://place-hold.it/600x600?text=Institution1Collection0Work3Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
@@ -5063,8 +4519,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/work3> .
 
-<http://place-hold.it/600x600?text=Institution1Collection0Work3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+<https://place-hold.it/600x600?text=Institution1Collection0Work3Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
@@ -5073,7 +4529,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/collection0/work3> .
 
-<http://place-hold.it/600x600?text=Institution1Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution1Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1 rights holder" ;
@@ -5082,7 +4538,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1> .
 
-<http://place-hold.it/600x600?text=Institution1Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution1Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1 rights holder" ;
@@ -5091,8 +4547,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1> .
 
-<http://place-hold.it/600x600?text=Institution1SharedWork0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/600x600?text=Institution1SharedWork0Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
@@ -5101,8 +4557,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/work0> .
 
-<http://place-hold.it/600x600?text=Institution1SharedWork0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/600x600?text=Institution1SharedWork0Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
@@ -5111,8 +4567,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/work0> .
 
-<http://place-hold.it/600x600?text=Institution1SharedWork1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/600x600?text=Institution1SharedWork1Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
@@ -5121,8 +4577,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/work1> .
 
-<http://place-hold.it/600x600?text=Institution1SharedWork1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/600x600?text=Institution1SharedWork1Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
@@ -5131,8 +4587,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/work1> .
 
-<http://place-hold.it/600x600?text=Institution1SharedWork2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/600x600?text=Institution1SharedWork2Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
@@ -5141,8 +4597,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/work2> .
 
-<http://place-hold.it/600x600?text=Institution1SharedWork2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/600x600?text=Institution1SharedWork2Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
@@ -5151,8 +4607,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/work2> .
 
-<http://place-hold.it/600x600?text=Institution1SharedWork3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/600x600?text=Institution1SharedWork3Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
@@ -5161,8 +4617,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/work3> .
 
-<http://place-hold.it/600x600?text=Institution1SharedWork3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/600x600?text=Institution1SharedWork3Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
@@ -5171,7 +4627,187 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <http://example.com/institution1/shared/work3> .
 
-<http://place-hold.it/600x600?text=Language%200Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Language%200Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> .
+
+<https://place-hold.it/600x600?text=Language%200Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> .
+
+<https://place-hold.it/600x600?text=Language%201Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> .
+
+<https://place-hold.it/600x600?text=Language%201Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> .
+
+<https://place-hold.it/600x600?text=Language%202Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> .
+
+<https://place-hold.it/600x600?text=Language%202Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> .
+
+<https://place-hold.it/600x600?text=Language%203Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> .
+
+<https://place-hold.it/600x600?text=Language%203Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> .
+
+<https://place-hold.it/600x600?text=Language%204Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> .
+
+<https://place-hold.it/600x600?text=Language%204Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> .
+
+<https://place-hold.it/600x600?text=Language%205Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> .
+
+<https://place-hold.it/600x600?text=Language%205Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> .
+
+<https://place-hold.it/600x600?text=Language%206Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> .
+
+<https://place-hold.it/600x600?text=Language%206Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> .
+
+<https://place-hold.it/600x600?text=Language%207Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> .
+
+<https://place-hold.it/600x600?text=Language%207Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> .
+
+<https://place-hold.it/600x600?text=Language%208Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> .
+
+<https://place-hold.it/600x600?text=Language%208Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> .
+
+<https://place-hold.it/600x600?text=Language%209Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> .
+
+<https://place-hold.it/600x600?text=Language%209Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 600 ;
+    exif:width 600 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> .
+
+<https://place-hold.it/600x600?text=Material%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5180,7 +4816,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:30> .
 
-<http://place-hold.it/600x600?text=Language%200Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5189,7 +4825,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:30> .
 
-<http://place-hold.it/600x600?text=Language%201Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5198,7 +4834,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:31> .
 
-<http://place-hold.it/600x600?text=Language%201Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5207,7 +4843,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:31> .
 
-<http://place-hold.it/600x600?text=Language%202Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5216,7 +4852,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:32> .
 
-<http://place-hold.it/600x600?text=Language%202Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5225,7 +4861,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:32> .
 
-<http://place-hold.it/600x600?text=Language%203Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5234,7 +4870,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:33> .
 
-<http://place-hold.it/600x600?text=Language%203Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5243,7 +4879,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:33> .
 
-<http://place-hold.it/600x600?text=Language%204Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5252,7 +4888,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:34> .
 
-<http://place-hold.it/600x600?text=Language%204Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5261,7 +4897,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:34> .
 
-<http://place-hold.it/600x600?text=Language%205Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5270,7 +4906,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:35> .
 
-<http://place-hold.it/600x600?text=Language%205Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5279,7 +4915,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:35> .
 
-<http://place-hold.it/600x600?text=Language%206Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5288,7 +4924,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:36> .
 
-<http://place-hold.it/600x600?text=Language%206Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5297,7 +4933,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:36> .
 
-<http://place-hold.it/600x600?text=Language%207Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5306,7 +4942,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:37> .
 
-<http://place-hold.it/600x600?text=Language%207Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5315,7 +4951,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:37> .
 
-<http://place-hold.it/600x600?text=Language%208Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5324,7 +4960,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:38> .
 
-<http://place-hold.it/600x600?text=Language%208Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5333,7 +4969,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:38> .
 
-<http://place-hold.it/600x600?text=Language%209Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5342,7 +4978,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:39> .
 
-<http://place-hold.it/600x600?text=Language%209Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Material%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5351,7 +4987,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:39> .
 
-<http://place-hold.it/600x600?text=Material%200Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5360,7 +4996,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:40> .
 
-<http://place-hold.it/600x600?text=Material%200Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5369,7 +5005,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:40> .
 
-<http://place-hold.it/600x600?text=Material%201Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5378,7 +5014,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:41> .
 
-<http://place-hold.it/600x600?text=Material%201Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5387,7 +5023,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:41> .
 
-<http://place-hold.it/600x600?text=Material%202Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5396,7 +5032,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:42> .
 
-<http://place-hold.it/600x600?text=Material%202Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5405,7 +5041,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:42> .
 
-<http://place-hold.it/600x600?text=Material%203Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5414,7 +5050,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:43> .
 
-<http://place-hold.it/600x600?text=Material%203Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5423,7 +5059,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:43> .
 
-<http://place-hold.it/600x600?text=Material%204Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5432,7 +5068,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:44> .
 
-<http://place-hold.it/600x600?text=Material%204Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5441,7 +5077,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:44> .
 
-<http://place-hold.it/600x600?text=Material%205Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5450,7 +5086,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:45> .
 
-<http://place-hold.it/600x600?text=Material%205Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5459,7 +5095,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:45> .
 
-<http://place-hold.it/600x600?text=Material%206Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5468,7 +5104,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:46> .
 
-<http://place-hold.it/600x600?text=Material%206Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5477,7 +5113,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:46> .
 
-<http://place-hold.it/600x600?text=Material%207Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5486,7 +5122,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:47> .
 
-<http://place-hold.it/600x600?text=Material%207Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5495,7 +5131,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:47> .
 
-<http://place-hold.it/600x600?text=Material%208Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5504,7 +5140,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:48> .
 
-<http://place-hold.it/600x600?text=Material%208Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5513,7 +5149,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:48> .
 
-<http://place-hold.it/600x600?text=Material%209Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5522,7 +5158,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:49> .
 
-<http://place-hold.it/600x600?text=Material%209Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Medium%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5531,7 +5167,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:49> .
 
-<http://place-hold.it/600x600?text=Medium%200Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5540,7 +5176,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:50> .
 
-<http://place-hold.it/600x600?text=Medium%200Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5549,7 +5185,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:50> .
 
-<http://place-hold.it/600x600?text=Medium%201Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5558,7 +5194,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:51> .
 
-<http://place-hold.it/600x600?text=Medium%201Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5567,7 +5203,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:51> .
 
-<http://place-hold.it/600x600?text=Medium%202Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5576,7 +5212,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:52> .
 
-<http://place-hold.it/600x600?text=Medium%202Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5585,7 +5221,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:52> .
 
-<http://place-hold.it/600x600?text=Medium%203Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5594,7 +5230,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:53> .
 
-<http://place-hold.it/600x600?text=Medium%203Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5603,7 +5239,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:53> .
 
-<http://place-hold.it/600x600?text=Medium%204Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5612,7 +5248,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:54> .
 
-<http://place-hold.it/600x600?text=Medium%204Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5621,7 +5257,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:54> .
 
-<http://place-hold.it/600x600?text=Medium%205Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5630,7 +5266,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:55> .
 
-<http://place-hold.it/600x600?text=Medium%205Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5639,7 +5275,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:55> .
 
-<http://place-hold.it/600x600?text=Medium%206Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5648,7 +5284,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:56> .
 
-<http://place-hold.it/600x600?text=Medium%206Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5657,7 +5293,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:56> .
 
-<http://place-hold.it/600x600?text=Medium%207Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5666,7 +5302,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:57> .
 
-<http://place-hold.it/600x600?text=Medium%207Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5675,7 +5311,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:57> .
 
-<http://place-hold.it/600x600?text=Medium%208Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5684,7 +5320,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:58> .
 
-<http://place-hold.it/600x600?text=Medium%208Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5693,7 +5329,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:58> .
 
-<http://place-hold.it/600x600?text=Medium%209Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5702,7 +5338,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:59> .
 
-<http://place-hold.it/600x600?text=Medium%209Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Publisher%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5711,7 +5347,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:59> .
 
-<http://place-hold.it/600x600?text=Publisher%200Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5720,7 +5356,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:60> .
 
-<http://place-hold.it/600x600?text=Publisher%200Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5729,7 +5365,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:60> .
 
-<http://place-hold.it/600x600?text=Publisher%201Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5738,7 +5374,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:61> .
 
-<http://place-hold.it/600x600?text=Publisher%201Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5747,7 +5383,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:61> .
 
-<http://place-hold.it/600x600?text=Publisher%202Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5756,7 +5392,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:62> .
 
-<http://place-hold.it/600x600?text=Publisher%202Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5765,7 +5401,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:62> .
 
-<http://place-hold.it/600x600?text=Publisher%203Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5774,7 +5410,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:63> .
 
-<http://place-hold.it/600x600?text=Publisher%203Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5783,7 +5419,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:63> .
 
-<http://place-hold.it/600x600?text=Publisher%204Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5792,7 +5428,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:64> .
 
-<http://place-hold.it/600x600?text=Publisher%204Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5801,7 +5437,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:64> .
 
-<http://place-hold.it/600x600?text=Publisher%205Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5810,7 +5446,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:65> .
 
-<http://place-hold.it/600x600?text=Publisher%205Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5819,7 +5455,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:65> .
 
-<http://place-hold.it/600x600?text=Publisher%206Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5828,7 +5464,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:66> .
 
-<http://place-hold.it/600x600?text=Publisher%206Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5837,7 +5473,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:66> .
 
-<http://place-hold.it/600x600?text=Publisher%207Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5846,7 +5482,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:67> .
 
-<http://place-hold.it/600x600?text=Publisher%207Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5855,7 +5491,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:67> .
 
-<http://place-hold.it/600x600?text=Publisher%208Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5864,7 +5500,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:68> .
 
-<http://place-hold.it/600x600?text=Publisher%208Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5873,7 +5509,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:68> .
 
-<http://place-hold.it/600x600?text=Publisher%209Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5882,7 +5518,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:69> .
 
-<http://place-hold.it/600x600?text=Publisher%209Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Source%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5891,7 +5527,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:69> .
 
-<http://place-hold.it/600x600?text=Source%200Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5900,7 +5536,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:70> .
 
-<http://place-hold.it/600x600?text=Source%200Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5909,7 +5545,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:70> .
 
-<http://place-hold.it/600x600?text=Source%201Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5918,7 +5554,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:71> .
 
-<http://place-hold.it/600x600?text=Source%201Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5927,7 +5563,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:71> .
 
-<http://place-hold.it/600x600?text=Source%202Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5936,7 +5572,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:72> .
 
-<http://place-hold.it/600x600?text=Source%202Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5945,7 +5581,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:72> .
 
-<http://place-hold.it/600x600?text=Source%203Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5954,7 +5590,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:73> .
 
-<http://place-hold.it/600x600?text=Source%203Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5963,7 +5599,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:73> .
 
-<http://place-hold.it/600x600?text=Source%204Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5972,7 +5608,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:74> .
 
-<http://place-hold.it/600x600?text=Source%204Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5981,7 +5617,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:74> .
 
-<http://place-hold.it/600x600?text=Source%205Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5990,7 +5626,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:75> .
 
-<http://place-hold.it/600x600?text=Source%205Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -5999,7 +5635,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:75> .
 
-<http://place-hold.it/600x600?text=Source%206Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6008,7 +5644,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:76> .
 
-<http://place-hold.it/600x600?text=Source%206Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6017,7 +5653,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:76> .
 
-<http://place-hold.it/600x600?text=Source%207Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6026,7 +5662,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:77> .
 
-<http://place-hold.it/600x600?text=Source%207Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6035,7 +5671,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:77> .
 
-<http://place-hold.it/600x600?text=Source%208Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6044,7 +5680,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:78> .
 
-<http://place-hold.it/600x600?text=Source%208Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6053,7 +5689,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:78> .
 
-<http://place-hold.it/600x600?text=Source%209Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6062,7 +5698,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:79> .
 
-<http://place-hold.it/600x600?text=Source%209Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Spatial%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6071,7 +5707,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:79> .
 
-<http://place-hold.it/600x600?text=Spatial%200Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6080,7 +5716,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:80> .
 
-<http://place-hold.it/600x600?text=Spatial%200Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6089,7 +5725,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:80> .
 
-<http://place-hold.it/600x600?text=Spatial%201Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6098,7 +5734,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:81> .
 
-<http://place-hold.it/600x600?text=Spatial%201Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6107,7 +5743,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:81> .
 
-<http://place-hold.it/600x600?text=Spatial%202Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6116,7 +5752,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:82> .
 
-<http://place-hold.it/600x600?text=Spatial%202Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6125,7 +5761,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:82> .
 
-<http://place-hold.it/600x600?text=Spatial%203Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6134,7 +5770,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:83> .
 
-<http://place-hold.it/600x600?text=Spatial%203Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6143,7 +5779,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:83> .
 
-<http://place-hold.it/600x600?text=Spatial%204Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6152,7 +5788,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:84> .
 
-<http://place-hold.it/600x600?text=Spatial%204Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6161,7 +5797,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:84> .
 
-<http://place-hold.it/600x600?text=Spatial%205Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6170,7 +5806,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:85> .
 
-<http://place-hold.it/600x600?text=Spatial%205Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6179,7 +5815,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:85> .
 
-<http://place-hold.it/600x600?text=Spatial%206Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6188,7 +5824,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:86> .
 
-<http://place-hold.it/600x600?text=Spatial%206Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6197,7 +5833,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:86> .
 
-<http://place-hold.it/600x600?text=Spatial%207Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6206,7 +5842,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:87> .
 
-<http://place-hold.it/600x600?text=Spatial%207Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6215,7 +5851,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:87> .
 
-<http://place-hold.it/600x600?text=Spatial%208Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6224,7 +5860,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:88> .
 
-<http://place-hold.it/600x600?text=Spatial%208Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6233,7 +5869,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:88> .
 
-<http://place-hold.it/600x600?text=Spatial%209Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6242,7 +5878,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:89> .
 
-<http://place-hold.it/600x600?text=Spatial%209Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Subject%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6251,7 +5887,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:89> .
 
-<http://place-hold.it/600x600?text=Subject%200Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6260,7 +5896,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:90> .
 
-<http://place-hold.it/600x600?text=Subject%200Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6269,7 +5905,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:90> .
 
-<http://place-hold.it/600x600?text=Subject%201Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6278,7 +5914,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:91> .
 
-<http://place-hold.it/600x600?text=Subject%201Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6287,7 +5923,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:91> .
 
-<http://place-hold.it/600x600?text=Subject%202Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6296,7 +5932,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:92> .
 
-<http://place-hold.it/600x600?text=Subject%202Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6305,7 +5941,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:92> .
 
-<http://place-hold.it/600x600?text=Subject%203Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6314,7 +5950,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:93> .
 
-<http://place-hold.it/600x600?text=Subject%203Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6323,7 +5959,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:93> .
 
-<http://place-hold.it/600x600?text=Subject%204Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6332,7 +5968,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:94> .
 
-<http://place-hold.it/600x600?text=Subject%204Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6341,7 +5977,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:94> .
 
-<http://place-hold.it/600x600?text=Subject%205Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6350,7 +5986,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:95> .
 
-<http://place-hold.it/600x600?text=Subject%205Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6359,7 +5995,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:95> .
 
-<http://place-hold.it/600x600?text=Subject%206Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6368,7 +6004,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:96> .
 
-<http://place-hold.it/600x600?text=Subject%206Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6377,7 +6013,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:96> .
 
-<http://place-hold.it/600x600?text=Subject%207Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6386,7 +6022,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:97> .
 
-<http://place-hold.it/600x600?text=Subject%207Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6395,7 +6031,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:97> .
 
-<http://place-hold.it/600x600?text=Subject%208Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6404,7 +6040,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:98> .
 
-<http://place-hold.it/600x600?text=Subject%208Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6413,7 +6049,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:98> .
 
-<http://place-hold.it/600x600?text=Subject%209Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6422,7 +6058,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:99> .
 
-<http://place-hold.it/600x600?text=Subject%209Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Technique%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6431,7 +6067,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:99> .
 
-<http://place-hold.it/600x600?text=Technique%200Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6440,7 +6076,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:100> .
 
-<http://place-hold.it/600x600?text=Technique%200Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6449,7 +6085,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:100> .
 
-<http://place-hold.it/600x600?text=Technique%201Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6458,7 +6094,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:101> .
 
-<http://place-hold.it/600x600?text=Technique%201Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6467,7 +6103,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:101> .
 
-<http://place-hold.it/600x600?text=Technique%202Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6476,7 +6112,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:102> .
 
-<http://place-hold.it/600x600?text=Technique%202Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6485,7 +6121,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:102> .
 
-<http://place-hold.it/600x600?text=Technique%203Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6494,7 +6130,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:103> .
 
-<http://place-hold.it/600x600?text=Technique%203Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6503,7 +6139,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:103> .
 
-<http://place-hold.it/600x600?text=Technique%204Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6512,7 +6148,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:104> .
 
-<http://place-hold.it/600x600?text=Technique%204Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6521,7 +6157,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:104> .
 
-<http://place-hold.it/600x600?text=Technique%205Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6530,7 +6166,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:105> .
 
-<http://place-hold.it/600x600?text=Technique%205Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6539,7 +6175,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:105> .
 
-<http://place-hold.it/600x600?text=Technique%206Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6548,7 +6184,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:106> .
 
-<http://place-hold.it/600x600?text=Technique%206Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6557,7 +6193,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:106> .
 
-<http://place-hold.it/600x600?text=Technique%207Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6566,7 +6202,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:107> .
 
-<http://place-hold.it/600x600?text=Technique%207Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6575,7 +6211,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:107> .
 
-<http://place-hold.it/600x600?text=Technique%208Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6584,7 +6220,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:108> .
 
-<http://place-hold.it/600x600?text=Technique%208Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6593,7 +6229,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:108> .
 
-<http://place-hold.it/600x600?text=Technique%209Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6602,7 +6238,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:109> .
 
-<http://place-hold.it/600x600?text=Technique%209Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Temporal%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6611,7 +6247,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:109> .
 
-<http://place-hold.it/600x600?text=Temporal%200Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6620,7 +6256,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:110> .
 
-<http://place-hold.it/600x600?text=Temporal%200Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6629,7 +6265,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:110> .
 
-<http://place-hold.it/600x600?text=Temporal%201Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6638,7 +6274,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:111> .
 
-<http://place-hold.it/600x600?text=Temporal%201Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6647,7 +6283,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:111> .
 
-<http://place-hold.it/600x600?text=Temporal%202Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6656,7 +6292,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:112> .
 
-<http://place-hold.it/600x600?text=Temporal%202Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6665,7 +6301,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:112> .
 
-<http://place-hold.it/600x600?text=Temporal%203Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6674,7 +6310,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:113> .
 
-<http://place-hold.it/600x600?text=Temporal%203Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6683,7 +6319,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:113> .
 
-<http://place-hold.it/600x600?text=Temporal%204Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6692,7 +6328,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:114> .
 
-<http://place-hold.it/600x600?text=Temporal%204Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6701,7 +6337,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:114> .
 
-<http://place-hold.it/600x600?text=Temporal%205Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6710,7 +6346,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:115> .
 
-<http://place-hold.it/600x600?text=Temporal%205Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6719,7 +6355,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:115> .
 
-<http://place-hold.it/600x600?text=Temporal%206Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6728,7 +6364,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:116> .
 
-<http://place-hold.it/600x600?text=Temporal%206Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6737,7 +6373,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:116> .
 
-<http://place-hold.it/600x600?text=Temporal%207Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6746,7 +6382,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:117> .
 
-<http://place-hold.it/600x600?text=Temporal%207Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6755,7 +6391,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:117> .
 
-<http://place-hold.it/600x600?text=Temporal%208Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6764,7 +6400,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:118> .
 
-<http://place-hold.it/600x600?text=Temporal%208Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6773,7 +6409,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:118> .
 
-<http://place-hold.it/600x600?text=Temporal%209Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6782,7 +6418,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:119> .
 
-<http://place-hold.it/600x600?text=Temporal%209Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Type%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6791,187 +6427,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 600 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:119> .
 
-<http://place-hold.it/600x600?text=Type%200Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:120> .
-
-<http://place-hold.it/600x600?text=Type%200Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:120> .
-
-<http://place-hold.it/600x600?text=Type%201Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:121> .
-
-<http://place-hold.it/600x600?text=Type%201Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:121> .
-
-<http://place-hold.it/600x600?text=Type%202Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:122> .
-
-<http://place-hold.it/600x600?text=Type%202Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:122> .
-
-<http://place-hold.it/600x600?text=Type%203Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:123> .
-
-<http://place-hold.it/600x600?text=Type%203Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:123> .
-
-<http://place-hold.it/600x600?text=Type%204Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:124> .
-
-<http://place-hold.it/600x600?text=Type%204Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:124> .
-
-<http://place-hold.it/600x600?text=Type%205Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:125> .
-
-<http://place-hold.it/600x600?text=Type%205Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:125> .
-
-<http://place-hold.it/600x600?text=Type%206Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:126> .
-
-<http://place-hold.it/600x600?text=Type%206Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:126> .
-
-<http://place-hold.it/600x600?text=Type%207Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:127> .
-
-<http://place-hold.it/600x600?text=Type%207Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:127> .
-
-<http://place-hold.it/600x600?text=Type%208Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:128> .
-
-<http://place-hold.it/600x600?text=Type%208Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:128> .
-
-<http://place-hold.it/600x600?text=Type%209Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:129> .
-
-<http://place-hold.it/600x600?text=Type%209Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 600 ;
-    exif:width 600 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:129> .
-
-<http://place-hold.it/75x75?text=Creator%200Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6980,7 +6436,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:0> .
 
-<http://place-hold.it/75x75?text=Creator%200Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6989,7 +6445,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:0> .
 
-<http://place-hold.it/75x75?text=Creator%201Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -6998,7 +6454,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:1> .
 
-<http://place-hold.it/75x75?text=Creator%201Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7007,7 +6463,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:1> .
 
-<http://place-hold.it/75x75?text=Creator%202Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7016,7 +6472,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:2> .
 
-<http://place-hold.it/75x75?text=Creator%202Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7025,7 +6481,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:2> .
 
-<http://place-hold.it/75x75?text=Creator%203Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7034,7 +6490,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:3> .
 
-<http://place-hold.it/75x75?text=Creator%203Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7043,7 +6499,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:3> .
 
-<http://place-hold.it/75x75?text=Creator%204Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7052,7 +6508,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:4> .
 
-<http://place-hold.it/75x75?text=Creator%204Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7061,7 +6517,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:4> .
 
-<http://place-hold.it/75x75?text=Creator%205Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7070,7 +6526,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:5> .
 
-<http://place-hold.it/75x75?text=Creator%205Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7079,7 +6535,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:5> .
 
-<http://place-hold.it/75x75?text=Creator%206Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7088,7 +6544,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:6> .
 
-<http://place-hold.it/75x75?text=Creator%206Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7097,7 +6553,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:6> .
 
-<http://place-hold.it/75x75?text=Creator%207Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7106,7 +6562,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:7> .
 
-<http://place-hold.it/75x75?text=Creator%207Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7115,7 +6571,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:7> .
 
-<http://place-hold.it/75x75?text=Creator%208Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7124,7 +6580,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:8> .
 
-<http://place-hold.it/75x75?text=Creator%208Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7133,7 +6589,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:8> .
 
-<http://place-hold.it/75x75?text=Creator%209Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7142,7 +6598,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:9> .
 
-<http://place-hold.it/75x75?text=Creator%209Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Cultural%20context%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7151,7 +6607,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:9> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%200Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7160,7 +6616,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:10> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%200Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7169,7 +6625,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:10> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%201Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7178,7 +6634,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:11> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%201Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7187,7 +6643,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:11> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%202Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7196,7 +6652,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:12> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%202Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7205,7 +6661,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:12> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%203Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7214,7 +6670,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:13> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%203Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7223,7 +6679,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:13> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%204Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7232,7 +6688,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:14> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%204Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7241,7 +6697,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:14> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%205Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7250,7 +6706,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:15> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%205Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7259,7 +6715,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:15> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%206Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7268,7 +6724,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:16> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%206Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7277,7 +6733,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:16> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%207Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7286,7 +6742,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:17> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%207Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7295,7 +6751,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:17> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%208Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7304,7 +6760,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:18> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%208Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7313,7 +6769,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:18> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%209Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7322,7 +6778,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:19> .
 
-<http://place-hold.it/75x75?text=Cultural%20context%209Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Extent%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7331,188 +6787,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:19> .
 
-<http://place-hold.it/75x75?text=Extent%200Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> .
-
-<http://place-hold.it/75x75?text=Extent%200Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> .
-
-<http://place-hold.it/75x75?text=Extent%201Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> .
-
-<http://place-hold.it/75x75?text=Extent%201Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> .
-
-<http://place-hold.it/75x75?text=Extent%202Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> .
-
-<http://place-hold.it/75x75?text=Extent%202Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> .
-
-<http://place-hold.it/75x75?text=Extent%203Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> .
-
-<http://place-hold.it/75x75?text=Extent%203Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> .
-
-<http://place-hold.it/75x75?text=Extent%204Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> .
-
-<http://place-hold.it/75x75?text=Extent%204Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> .
-
-<http://place-hold.it/75x75?text=Extent%205Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> .
-
-<http://place-hold.it/75x75?text=Extent%205Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> .
-
-<http://place-hold.it/75x75?text=Extent%206Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> .
-
-<http://place-hold.it/75x75?text=Extent%206Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> .
-
-<http://place-hold.it/75x75?text=Extent%207Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> .
-
-<http://place-hold.it/75x75?text=Extent%207Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> .
-
-<http://place-hold.it/75x75?text=Extent%208Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> .
-
-<http://place-hold.it/75x75?text=Extent%208Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> .
-
-<http://place-hold.it/75x75?text=Extent%209Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> .
-
-<http://place-hold.it/75x75?text=Extent%209Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> .
-
-<http://place-hold.it/75x75?text=Institution0Collection0Work0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/75x75?text=Institution0Collection0Work0Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
@@ -7521,8 +6797,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/work0> .
 
-<http://place-hold.it/75x75?text=Institution0Collection0Work0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/75x75?text=Institution0Collection0Work0Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work0 rights holder" ;
@@ -7531,8 +6807,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/work0> .
 
-<http://place-hold.it/75x75?text=Institution0Collection0Work1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/75x75?text=Institution0Collection0Work1Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
@@ -7541,8 +6817,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/work1> .
 
-<http://place-hold.it/75x75?text=Institution0Collection0Work1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/75x75?text=Institution0Collection0Work1Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work1 rights holder" ;
@@ -7551,8 +6827,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/work1> .
 
-<http://place-hold.it/75x75?text=Institution0Collection0Work2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/75x75?text=Institution0Collection0Work2Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person2> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
@@ -7561,8 +6837,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/work2> .
 
-<http://place-hold.it/75x75?text=Institution0Collection0Work2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/75x75?text=Institution0Collection0Work2Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person2> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work2 rights holder" ;
@@ -7571,8 +6847,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/work2> .
 
-<http://place-hold.it/75x75?text=Institution0Collection0Work3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+<https://place-hold.it/75x75?text=Institution0Collection0Work3Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
@@ -7581,8 +6857,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/work3> .
 
-<http://place-hold.it/75x75?text=Institution0Collection0Work3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+<https://place-hold.it/75x75?text=Institution0Collection0Work3Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Work3 rights holder" ;
@@ -7591,7 +6867,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/collection0/work3> .
 
-<http://place-hold.it/75x75?text=Institution0Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution0Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0 rights holder" ;
@@ -7600,7 +6876,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0> .
 
-<http://place-hold.it/75x75?text=Institution0Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution0Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0 rights holder" ;
@@ -7609,8 +6885,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0> .
 
-<http://place-hold.it/75x75?text=Institution0SharedWork0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/75x75?text=Institution0SharedWork0Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
@@ -7619,8 +6895,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/work0> .
 
-<http://place-hold.it/75x75?text=Institution0SharedWork0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/75x75?text=Institution0SharedWork0Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork0 rights holder" ;
@@ -7629,8 +6905,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/work0> .
 
-<http://place-hold.it/75x75?text=Institution0SharedWork1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/75x75?text=Institution0SharedWork1Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
@@ -7639,8 +6915,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/work1> .
 
-<http://place-hold.it/75x75?text=Institution0SharedWork1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/75x75?text=Institution0SharedWork1Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork1 rights holder" ;
@@ -7649,8 +6925,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/work1> .
 
-<http://place-hold.it/75x75?text=Institution0SharedWork2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/75x75?text=Institution0SharedWork2Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
@@ -7659,8 +6935,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/work2> .
 
-<http://place-hold.it/75x75?text=Institution0SharedWork2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/75x75?text=Institution0SharedWork2Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork2 rights holder" ;
@@ -7669,8 +6945,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/work2> .
 
-<http://place-hold.it/75x75?text=Institution0SharedWork3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/75x75?text=Institution0SharedWork3Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
@@ -7679,8 +6955,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/work3> .
 
-<http://place-hold.it/75x75?text=Institution0SharedWork3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/75x75?text=Institution0SharedWork3Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedWork3 rights holder" ;
@@ -7689,8 +6965,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution0/shared/work3> .
 
-<http://place-hold.it/75x75?text=Institution1Collection0Work0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+<https://place-hold.it/75x75?text=Institution1Collection0Work0Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
@@ -7699,8 +6975,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/work0> .
 
-<http://place-hold.it/75x75?text=Institution1Collection0Work0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 1" ;
+<https://place-hold.it/75x75?text=Institution1Collection0Work0Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work0 rights holder" ;
@@ -7709,8 +6985,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/work0> .
 
-<http://place-hold.it/75x75?text=Institution1Collection0Work1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/75x75?text=Institution1Collection0Work1Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
@@ -7719,8 +6995,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/work1> .
 
-<http://place-hold.it/75x75?text=Institution1Collection0Work1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/75x75?text=Institution1Collection0Work1Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work1 rights holder" ;
@@ -7729,8 +7005,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/work1> .
 
-<http://place-hold.it/75x75?text=Institution1Collection0Work2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/75x75?text=Institution1Collection0Work2Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person2> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
@@ -7739,8 +7015,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/work2> .
 
-<http://place-hold.it/75x75?text=Institution1Collection0Work2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/75x75?text=Institution1Collection0Work2Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person2> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work2 rights holder" ;
@@ -7749,8 +7025,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/work2> .
 
-<http://place-hold.it/75x75?text=Institution1Collection0Work3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+<https://place-hold.it/75x75?text=Institution1Collection0Work3Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
@@ -7759,8 +7035,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/work3> .
 
-<http://place-hold.it/75x75?text=Institution1Collection0Work3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 4" ;
+<https://place-hold.it/75x75?text=Institution1Collection0Work3Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Work3 rights holder" ;
@@ -7769,7 +7045,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/collection0/work3> .
 
-<http://place-hold.it/75x75?text=Institution1Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution1Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1 rights holder" ;
@@ -7778,7 +7054,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1> .
 
-<http://place-hold.it/75x75?text=Institution1Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution1Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1 rights holder" ;
@@ -7787,8 +7063,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1> .
 
-<http://place-hold.it/75x75?text=Institution1SharedWork0Image0> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/75x75?text=Institution1SharedWork0Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
@@ -7797,8 +7073,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/work0> .
 
-<http://place-hold.it/75x75?text=Institution1SharedWork0Image1> a paradicms:Image ;
-    dcterms:creator "Creator 0" ;
+<https://place-hold.it/75x75?text=Institution1SharedWork0Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person0> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork0 rights holder" ;
@@ -7807,8 +7083,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/work0> .
 
-<http://place-hold.it/75x75?text=Institution1SharedWork1Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/75x75?text=Institution1SharedWork1Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
@@ -7817,8 +7093,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/work1> .
 
-<http://place-hold.it/75x75?text=Institution1SharedWork1Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/75x75?text=Institution1SharedWork1Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person1> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork1 rights holder" ;
@@ -7827,8 +7103,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/work1> .
 
-<http://place-hold.it/75x75?text=Institution1SharedWork2Image0> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/75x75?text=Institution1SharedWork2Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
@@ -7837,8 +7113,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/work2> .
 
-<http://place-hold.it/75x75?text=Institution1SharedWork2Image1> a paradicms:Image ;
-    dcterms:creator "Creator 2" ;
+<https://place-hold.it/75x75?text=Institution1SharedWork2Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork2 rights holder" ;
@@ -7847,8 +7123,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/work2> .
 
-<http://place-hold.it/75x75?text=Institution1SharedWork3Image0> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/75x75?text=Institution1SharedWork3Image0> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
@@ -7857,8 +7133,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/work3> .
 
-<http://place-hold.it/75x75?text=Institution1SharedWork3Image1> a paradicms:Image ;
-    dcterms:creator "Creator 3" ;
+<https://place-hold.it/75x75?text=Institution1SharedWork3Image1> a paradicms:Image ;
+    dcterms:creator <http://example.com/person3> ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedWork3 rights holder" ;
@@ -7867,7 +7143,187 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <http://example.com/institution1/shared/work3> .
 
-<http://place-hold.it/75x75?text=Language%200Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Language%200Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> .
+
+<https://place-hold.it/75x75?text=Language%200Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:20> .
+
+<https://place-hold.it/75x75?text=Language%201Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> .
+
+<https://place-hold.it/75x75?text=Language%201Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:21> .
+
+<https://place-hold.it/75x75?text=Language%202Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> .
+
+<https://place-hold.it/75x75?text=Language%202Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:22> .
+
+<https://place-hold.it/75x75?text=Language%203Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> .
+
+<https://place-hold.it/75x75?text=Language%203Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:23> .
+
+<https://place-hold.it/75x75?text=Language%204Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> .
+
+<https://place-hold.it/75x75?text=Language%204Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:24> .
+
+<https://place-hold.it/75x75?text=Language%205Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> .
+
+<https://place-hold.it/75x75?text=Language%205Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:25> .
+
+<https://place-hold.it/75x75?text=Language%206Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> .
+
+<https://place-hold.it/75x75?text=Language%206Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:26> .
+
+<https://place-hold.it/75x75?text=Language%207Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> .
+
+<https://place-hold.it/75x75?text=Language%207Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:27> .
+
+<https://place-hold.it/75x75?text=Language%208Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> .
+
+<https://place-hold.it/75x75?text=Language%208Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:28> .
+
+<https://place-hold.it/75x75?text=Language%209Image0> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> .
+
+<https://place-hold.it/75x75?text=Language%209Image1> a paradicms:Image ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Property definition rights holder" ;
+    paradicms:imageCopyable true ;
+    exif:height 75 ;
+    exif:width 75 ;
+    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:29> .
+
+<https://place-hold.it/75x75?text=Material%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7876,7 +7332,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:30> .
 
-<http://place-hold.it/75x75?text=Language%200Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7885,7 +7341,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:30> .
 
-<http://place-hold.it/75x75?text=Language%201Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7894,7 +7350,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:31> .
 
-<http://place-hold.it/75x75?text=Language%201Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7903,7 +7359,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:31> .
 
-<http://place-hold.it/75x75?text=Language%202Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7912,7 +7368,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:32> .
 
-<http://place-hold.it/75x75?text=Language%202Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7921,7 +7377,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:32> .
 
-<http://place-hold.it/75x75?text=Language%203Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7930,7 +7386,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:33> .
 
-<http://place-hold.it/75x75?text=Language%203Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7939,7 +7395,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:33> .
 
-<http://place-hold.it/75x75?text=Language%204Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7948,7 +7404,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:34> .
 
-<http://place-hold.it/75x75?text=Language%204Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7957,7 +7413,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:34> .
 
-<http://place-hold.it/75x75?text=Language%205Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7966,7 +7422,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:35> .
 
-<http://place-hold.it/75x75?text=Language%205Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7975,7 +7431,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:35> .
 
-<http://place-hold.it/75x75?text=Language%206Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7984,7 +7440,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:36> .
 
-<http://place-hold.it/75x75?text=Language%206Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -7993,7 +7449,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:36> .
 
-<http://place-hold.it/75x75?text=Language%207Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8002,7 +7458,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:37> .
 
-<http://place-hold.it/75x75?text=Language%207Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8011,7 +7467,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:37> .
 
-<http://place-hold.it/75x75?text=Language%208Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8020,7 +7476,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:38> .
 
-<http://place-hold.it/75x75?text=Language%208Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8029,7 +7485,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:38> .
 
-<http://place-hold.it/75x75?text=Language%209Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8038,7 +7494,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:39> .
 
-<http://place-hold.it/75x75?text=Language%209Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Material%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8047,7 +7503,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:39> .
 
-<http://place-hold.it/75x75?text=Material%200Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8056,7 +7512,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:40> .
 
-<http://place-hold.it/75x75?text=Material%200Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8065,7 +7521,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:40> .
 
-<http://place-hold.it/75x75?text=Material%201Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8074,7 +7530,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:41> .
 
-<http://place-hold.it/75x75?text=Material%201Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8083,7 +7539,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:41> .
 
-<http://place-hold.it/75x75?text=Material%202Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8092,7 +7548,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:42> .
 
-<http://place-hold.it/75x75?text=Material%202Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8101,7 +7557,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:42> .
 
-<http://place-hold.it/75x75?text=Material%203Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8110,7 +7566,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:43> .
 
-<http://place-hold.it/75x75?text=Material%203Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8119,7 +7575,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:43> .
 
-<http://place-hold.it/75x75?text=Material%204Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8128,7 +7584,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:44> .
 
-<http://place-hold.it/75x75?text=Material%204Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8137,7 +7593,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:44> .
 
-<http://place-hold.it/75x75?text=Material%205Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8146,7 +7602,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:45> .
 
-<http://place-hold.it/75x75?text=Material%205Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8155,7 +7611,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:45> .
 
-<http://place-hold.it/75x75?text=Material%206Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8164,7 +7620,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:46> .
 
-<http://place-hold.it/75x75?text=Material%206Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8173,7 +7629,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:46> .
 
-<http://place-hold.it/75x75?text=Material%207Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8182,7 +7638,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:47> .
 
-<http://place-hold.it/75x75?text=Material%207Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8191,7 +7647,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:47> .
 
-<http://place-hold.it/75x75?text=Material%208Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8200,7 +7656,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:48> .
 
-<http://place-hold.it/75x75?text=Material%208Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8209,7 +7665,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:48> .
 
-<http://place-hold.it/75x75?text=Material%209Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8218,7 +7674,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:49> .
 
-<http://place-hold.it/75x75?text=Material%209Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Medium%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8227,7 +7683,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:49> .
 
-<http://place-hold.it/75x75?text=Medium%200Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8236,7 +7692,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:50> .
 
-<http://place-hold.it/75x75?text=Medium%200Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8245,7 +7701,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:50> .
 
-<http://place-hold.it/75x75?text=Medium%201Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8254,7 +7710,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:51> .
 
-<http://place-hold.it/75x75?text=Medium%201Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8263,7 +7719,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:51> .
 
-<http://place-hold.it/75x75?text=Medium%202Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8272,7 +7728,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:52> .
 
-<http://place-hold.it/75x75?text=Medium%202Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8281,7 +7737,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:52> .
 
-<http://place-hold.it/75x75?text=Medium%203Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8290,7 +7746,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:53> .
 
-<http://place-hold.it/75x75?text=Medium%203Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8299,7 +7755,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:53> .
 
-<http://place-hold.it/75x75?text=Medium%204Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8308,7 +7764,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:54> .
 
-<http://place-hold.it/75x75?text=Medium%204Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8317,7 +7773,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:54> .
 
-<http://place-hold.it/75x75?text=Medium%205Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8326,7 +7782,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:55> .
 
-<http://place-hold.it/75x75?text=Medium%205Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8335,7 +7791,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:55> .
 
-<http://place-hold.it/75x75?text=Medium%206Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8344,7 +7800,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:56> .
 
-<http://place-hold.it/75x75?text=Medium%206Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8353,7 +7809,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:56> .
 
-<http://place-hold.it/75x75?text=Medium%207Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8362,7 +7818,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:57> .
 
-<http://place-hold.it/75x75?text=Medium%207Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8371,7 +7827,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:57> .
 
-<http://place-hold.it/75x75?text=Medium%208Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8380,7 +7836,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:58> .
 
-<http://place-hold.it/75x75?text=Medium%208Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8389,7 +7845,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:58> .
 
-<http://place-hold.it/75x75?text=Medium%209Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8398,7 +7854,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:59> .
 
-<http://place-hold.it/75x75?text=Medium%209Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Publisher%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8407,7 +7863,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:59> .
 
-<http://place-hold.it/75x75?text=Publisher%200Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8416,7 +7872,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:60> .
 
-<http://place-hold.it/75x75?text=Publisher%200Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8425,7 +7881,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:60> .
 
-<http://place-hold.it/75x75?text=Publisher%201Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8434,7 +7890,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:61> .
 
-<http://place-hold.it/75x75?text=Publisher%201Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8443,7 +7899,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:61> .
 
-<http://place-hold.it/75x75?text=Publisher%202Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8452,7 +7908,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:62> .
 
-<http://place-hold.it/75x75?text=Publisher%202Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8461,7 +7917,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:62> .
 
-<http://place-hold.it/75x75?text=Publisher%203Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8470,7 +7926,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:63> .
 
-<http://place-hold.it/75x75?text=Publisher%203Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8479,7 +7935,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:63> .
 
-<http://place-hold.it/75x75?text=Publisher%204Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8488,7 +7944,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:64> .
 
-<http://place-hold.it/75x75?text=Publisher%204Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8497,7 +7953,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:64> .
 
-<http://place-hold.it/75x75?text=Publisher%205Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8506,7 +7962,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:65> .
 
-<http://place-hold.it/75x75?text=Publisher%205Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8515,7 +7971,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:65> .
 
-<http://place-hold.it/75x75?text=Publisher%206Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8524,7 +7980,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:66> .
 
-<http://place-hold.it/75x75?text=Publisher%206Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8533,7 +7989,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:66> .
 
-<http://place-hold.it/75x75?text=Publisher%207Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8542,7 +7998,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:67> .
 
-<http://place-hold.it/75x75?text=Publisher%207Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8551,7 +8007,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:67> .
 
-<http://place-hold.it/75x75?text=Publisher%208Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8560,7 +8016,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:68> .
 
-<http://place-hold.it/75x75?text=Publisher%208Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8569,7 +8025,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:68> .
 
-<http://place-hold.it/75x75?text=Publisher%209Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8578,7 +8034,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:69> .
 
-<http://place-hold.it/75x75?text=Publisher%209Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Source%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8587,7 +8043,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:69> .
 
-<http://place-hold.it/75x75?text=Source%200Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8596,7 +8052,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:70> .
 
-<http://place-hold.it/75x75?text=Source%200Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8605,7 +8061,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:70> .
 
-<http://place-hold.it/75x75?text=Source%201Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8614,7 +8070,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:71> .
 
-<http://place-hold.it/75x75?text=Source%201Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8623,7 +8079,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:71> .
 
-<http://place-hold.it/75x75?text=Source%202Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8632,7 +8088,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:72> .
 
-<http://place-hold.it/75x75?text=Source%202Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8641,7 +8097,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:72> .
 
-<http://place-hold.it/75x75?text=Source%203Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8650,7 +8106,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:73> .
 
-<http://place-hold.it/75x75?text=Source%203Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8659,7 +8115,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:73> .
 
-<http://place-hold.it/75x75?text=Source%204Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8668,7 +8124,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:74> .
 
-<http://place-hold.it/75x75?text=Source%204Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8677,7 +8133,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:74> .
 
-<http://place-hold.it/75x75?text=Source%205Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8686,7 +8142,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:75> .
 
-<http://place-hold.it/75x75?text=Source%205Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8695,7 +8151,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:75> .
 
-<http://place-hold.it/75x75?text=Source%206Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8704,7 +8160,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:76> .
 
-<http://place-hold.it/75x75?text=Source%206Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8713,7 +8169,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:76> .
 
-<http://place-hold.it/75x75?text=Source%207Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8722,7 +8178,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:77> .
 
-<http://place-hold.it/75x75?text=Source%207Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8731,7 +8187,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:77> .
 
-<http://place-hold.it/75x75?text=Source%208Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8740,7 +8196,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:78> .
 
-<http://place-hold.it/75x75?text=Source%208Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8749,7 +8205,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:78> .
 
-<http://place-hold.it/75x75?text=Source%209Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8758,7 +8214,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:79> .
 
-<http://place-hold.it/75x75?text=Source%209Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Spatial%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8767,7 +8223,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:79> .
 
-<http://place-hold.it/75x75?text=Spatial%200Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8776,7 +8232,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:80> .
 
-<http://place-hold.it/75x75?text=Spatial%200Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8785,7 +8241,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:80> .
 
-<http://place-hold.it/75x75?text=Spatial%201Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8794,7 +8250,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:81> .
 
-<http://place-hold.it/75x75?text=Spatial%201Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8803,7 +8259,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:81> .
 
-<http://place-hold.it/75x75?text=Spatial%202Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8812,7 +8268,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:82> .
 
-<http://place-hold.it/75x75?text=Spatial%202Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8821,7 +8277,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:82> .
 
-<http://place-hold.it/75x75?text=Spatial%203Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8830,7 +8286,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:83> .
 
-<http://place-hold.it/75x75?text=Spatial%203Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8839,7 +8295,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:83> .
 
-<http://place-hold.it/75x75?text=Spatial%204Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8848,7 +8304,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:84> .
 
-<http://place-hold.it/75x75?text=Spatial%204Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8857,7 +8313,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:84> .
 
-<http://place-hold.it/75x75?text=Spatial%205Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8866,7 +8322,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:85> .
 
-<http://place-hold.it/75x75?text=Spatial%205Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8875,7 +8331,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:85> .
 
-<http://place-hold.it/75x75?text=Spatial%206Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8884,7 +8340,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:86> .
 
-<http://place-hold.it/75x75?text=Spatial%206Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8893,7 +8349,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:86> .
 
-<http://place-hold.it/75x75?text=Spatial%207Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8902,7 +8358,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:87> .
 
-<http://place-hold.it/75x75?text=Spatial%207Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8911,7 +8367,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:87> .
 
-<http://place-hold.it/75x75?text=Spatial%208Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8920,7 +8376,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:88> .
 
-<http://place-hold.it/75x75?text=Spatial%208Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8929,7 +8385,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:88> .
 
-<http://place-hold.it/75x75?text=Spatial%209Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8938,7 +8394,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:89> .
 
-<http://place-hold.it/75x75?text=Spatial%209Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Subject%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8947,7 +8403,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:89> .
 
-<http://place-hold.it/75x75?text=Subject%200Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8956,7 +8412,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:90> .
 
-<http://place-hold.it/75x75?text=Subject%200Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8965,7 +8421,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:90> .
 
-<http://place-hold.it/75x75?text=Subject%201Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8974,7 +8430,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:91> .
 
-<http://place-hold.it/75x75?text=Subject%201Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8983,7 +8439,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:91> .
 
-<http://place-hold.it/75x75?text=Subject%202Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -8992,7 +8448,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:92> .
 
-<http://place-hold.it/75x75?text=Subject%202Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9001,7 +8457,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:92> .
 
-<http://place-hold.it/75x75?text=Subject%203Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9010,7 +8466,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:93> .
 
-<http://place-hold.it/75x75?text=Subject%203Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9019,7 +8475,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:93> .
 
-<http://place-hold.it/75x75?text=Subject%204Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9028,7 +8484,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:94> .
 
-<http://place-hold.it/75x75?text=Subject%204Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9037,7 +8493,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:94> .
 
-<http://place-hold.it/75x75?text=Subject%205Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9046,7 +8502,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:95> .
 
-<http://place-hold.it/75x75?text=Subject%205Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9055,7 +8511,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:95> .
 
-<http://place-hold.it/75x75?text=Subject%206Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9064,7 +8520,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:96> .
 
-<http://place-hold.it/75x75?text=Subject%206Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9073,7 +8529,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:96> .
 
-<http://place-hold.it/75x75?text=Subject%207Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9082,7 +8538,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:97> .
 
-<http://place-hold.it/75x75?text=Subject%207Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9091,7 +8547,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:97> .
 
-<http://place-hold.it/75x75?text=Subject%208Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9100,7 +8556,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:98> .
 
-<http://place-hold.it/75x75?text=Subject%208Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9109,7 +8565,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:98> .
 
-<http://place-hold.it/75x75?text=Subject%209Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9118,7 +8574,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:99> .
 
-<http://place-hold.it/75x75?text=Subject%209Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Technique%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9127,7 +8583,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:99> .
 
-<http://place-hold.it/75x75?text=Technique%200Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9136,7 +8592,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:100> .
 
-<http://place-hold.it/75x75?text=Technique%200Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9145,7 +8601,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:100> .
 
-<http://place-hold.it/75x75?text=Technique%201Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9154,7 +8610,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:101> .
 
-<http://place-hold.it/75x75?text=Technique%201Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9163,7 +8619,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:101> .
 
-<http://place-hold.it/75x75?text=Technique%202Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9172,7 +8628,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:102> .
 
-<http://place-hold.it/75x75?text=Technique%202Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9181,7 +8637,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:102> .
 
-<http://place-hold.it/75x75?text=Technique%203Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9190,7 +8646,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:103> .
 
-<http://place-hold.it/75x75?text=Technique%203Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9199,7 +8655,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:103> .
 
-<http://place-hold.it/75x75?text=Technique%204Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9208,7 +8664,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:104> .
 
-<http://place-hold.it/75x75?text=Technique%204Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9217,7 +8673,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:104> .
 
-<http://place-hold.it/75x75?text=Technique%205Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9226,7 +8682,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:105> .
 
-<http://place-hold.it/75x75?text=Technique%205Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9235,7 +8691,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:105> .
 
-<http://place-hold.it/75x75?text=Technique%206Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9244,7 +8700,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:106> .
 
-<http://place-hold.it/75x75?text=Technique%206Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9253,7 +8709,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:106> .
 
-<http://place-hold.it/75x75?text=Technique%207Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9262,7 +8718,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:107> .
 
-<http://place-hold.it/75x75?text=Technique%207Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9271,7 +8727,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:107> .
 
-<http://place-hold.it/75x75?text=Technique%208Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9280,7 +8736,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:108> .
 
-<http://place-hold.it/75x75?text=Technique%208Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9289,7 +8745,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:108> .
 
-<http://place-hold.it/75x75?text=Technique%209Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9298,7 +8754,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:109> .
 
-<http://place-hold.it/75x75?text=Technique%209Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Temporal%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9307,7 +8763,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:109> .
 
-<http://place-hold.it/75x75?text=Temporal%200Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9316,7 +8772,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:110> .
 
-<http://place-hold.it/75x75?text=Temporal%200Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%200Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9325,7 +8781,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:110> .
 
-<http://place-hold.it/75x75?text=Temporal%201Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%201Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9334,7 +8790,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:111> .
 
-<http://place-hold.it/75x75?text=Temporal%201Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%201Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9343,7 +8799,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:111> .
 
-<http://place-hold.it/75x75?text=Temporal%202Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%202Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9352,7 +8808,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:112> .
 
-<http://place-hold.it/75x75?text=Temporal%202Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%202Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9361,7 +8817,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:112> .
 
-<http://place-hold.it/75x75?text=Temporal%203Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%203Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9370,7 +8826,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:113> .
 
-<http://place-hold.it/75x75?text=Temporal%203Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%203Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9379,7 +8835,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:113> .
 
-<http://place-hold.it/75x75?text=Temporal%204Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%204Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9388,7 +8844,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:114> .
 
-<http://place-hold.it/75x75?text=Temporal%204Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%204Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9397,7 +8853,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:114> .
 
-<http://place-hold.it/75x75?text=Temporal%205Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%205Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9406,7 +8862,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:115> .
 
-<http://place-hold.it/75x75?text=Temporal%205Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%205Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9415,7 +8871,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:115> .
 
-<http://place-hold.it/75x75?text=Temporal%206Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%206Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9424,7 +8880,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:116> .
 
-<http://place-hold.it/75x75?text=Temporal%206Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%206Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9433,7 +8889,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:116> .
 
-<http://place-hold.it/75x75?text=Temporal%207Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%207Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9442,7 +8898,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:117> .
 
-<http://place-hold.it/75x75?text=Temporal%207Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%207Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9451,7 +8907,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:117> .
 
-<http://place-hold.it/75x75?text=Temporal%208Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%208Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9460,7 +8916,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:118> .
 
-<http://place-hold.it/75x75?text=Temporal%208Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%208Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9469,7 +8925,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:118> .
 
-<http://place-hold.it/75x75?text=Temporal%209Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%209Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9478,7 +8934,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:119> .
 
-<http://place-hold.it/75x75?text=Temporal%209Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Type%209Image1> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Property definition rights holder" ;
@@ -9487,192 +8943,15 @@ vra:worktype a paradicms:PropertyDefinition ;
     exif:width 75 ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:119> .
 
-<http://place-hold.it/75x75?text=Type%200Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:120> .
-
-<http://place-hold.it/75x75?text=Type%200Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:120> .
-
-<http://place-hold.it/75x75?text=Type%201Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:121> .
-
-<http://place-hold.it/75x75?text=Type%201Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:121> .
-
-<http://place-hold.it/75x75?text=Type%202Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:122> .
-
-<http://place-hold.it/75x75?text=Type%202Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:122> .
-
-<http://place-hold.it/75x75?text=Type%203Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:123> .
-
-<http://place-hold.it/75x75?text=Type%203Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:123> .
-
-<http://place-hold.it/75x75?text=Type%204Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:124> .
-
-<http://place-hold.it/75x75?text=Type%204Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:124> .
-
-<http://place-hold.it/75x75?text=Type%205Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:125> .
-
-<http://place-hold.it/75x75?text=Type%205Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:125> .
-
-<http://place-hold.it/75x75?text=Type%206Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:126> .
-
-<http://place-hold.it/75x75?text=Type%206Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:126> .
-
-<http://place-hold.it/75x75?text=Type%207Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:127> .
-
-<http://place-hold.it/75x75?text=Type%207Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:127> .
-
-<http://place-hold.it/75x75?text=Type%208Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:128> .
-
-<http://place-hold.it/75x75?text=Type%208Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:128> .
-
-<http://place-hold.it/75x75?text=Type%209Image0> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:129> .
-
-<http://place-hold.it/75x75?text=Type%209Image1> a paradicms:Image ;
-    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
-    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
-    dcterms:rightsHolder "Property definition rights holder" ;
-    paradicms:imageCopyable true ;
-    exif:height 75 ;
-    exif:width 75 ;
-    foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:129> .
+<http://example.com/person4> a paradicms:Person ;
+    foaf:name "Person 4" .
 
 <http://example.com/institution0/collection0/work0> a paradicms:Work ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0Collection0Work0 alternative title 0",
         "Institution0Collection0Work0 alternative title 1" ;
-    dcterms:creator "Creator 0",
-        "Creator 1" ;
+    dcterms:creator <http://example.com/person0>,
+        <http://example.com/person1> ;
     dcterms:date "2020-08-08",
         "2020-08-09" ;
     dcterms:description "Institution0Collection0Work0 description 0",
@@ -9718,8 +8997,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0Collection0Work1 alternative title 0",
         "Institution0Collection0Work1 alternative title 1" ;
-    dcterms:creator "Creator 1",
-        "Creator 2" ;
+    dcterms:creator <http://example.com/person1>,
+        <http://example.com/person2> ;
     dcterms:date "2020-08-07",
         "2020-08-08" ;
     dcterms:description "Institution0Collection0Work1 description 0",
@@ -9765,8 +9044,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0Collection0Work2 alternative title 0",
         "Institution0Collection0Work2 alternative title 1" ;
-    dcterms:creator "Creator 2",
-        "Creator 3" ;
+    dcterms:creator <http://example.com/person2>,
+        <http://example.com/person3> ;
     dcterms:date "2020-08-06",
         "2020-08-07" ;
     dcterms:description "Institution0Collection0Work2 description 0",
@@ -9812,8 +9091,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0Collection0Work3 alternative title 0",
         "Institution0Collection0Work3 alternative title 1" ;
-    dcterms:creator "Creator 3",
-        "Creator 4" ;
+    dcterms:creator <http://example.com/person3>,
+        <http://example.com/person4> ;
     dcterms:date "2020-08-05",
         "2020-08-06" ;
     dcterms:description "Institution0Collection0Work3 description 0",
@@ -9859,8 +9138,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0SharedWork0 alternative title 0",
         "Institution0SharedWork0 alternative title 1" ;
-    dcterms:creator "Creator 0",
-        "Creator 1" ;
+    dcterms:creator <http://example.com/person0>,
+        <http://example.com/person1> ;
     dcterms:date "2020-08-08",
         "2020-08-09" ;
     dcterms:description "Institution0SharedWork0 description 0",
@@ -9906,8 +9185,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0SharedWork1 alternative title 0",
         "Institution0SharedWork1 alternative title 1" ;
-    dcterms:creator "Creator 1",
-        "Creator 2" ;
+    dcterms:creator <http://example.com/person1>,
+        <http://example.com/person2> ;
     dcterms:date "2020-08-07",
         "2020-08-08" ;
     dcterms:description "Institution0SharedWork1 description 0",
@@ -9953,8 +9232,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0SharedWork2 alternative title 0",
         "Institution0SharedWork2 alternative title 1" ;
-    dcterms:creator "Creator 2",
-        "Creator 3" ;
+    dcterms:creator <http://example.com/person2>,
+        <http://example.com/person3> ;
     dcterms:date "2020-08-06",
         "2020-08-07" ;
     dcterms:description "Institution0SharedWork2 description 0",
@@ -10000,8 +9279,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution0SharedWork3 alternative title 0",
         "Institution0SharedWork3 alternative title 1" ;
-    dcterms:creator "Creator 3",
-        "Creator 4" ;
+    dcterms:creator <http://example.com/person3>,
+        <http://example.com/person4> ;
     dcterms:date "2020-08-05",
         "2020-08-06" ;
     dcterms:description "Institution0SharedWork3 description 0",
@@ -10047,8 +9326,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1Collection0Work0 alternative title 0",
         "Institution1Collection0Work0 alternative title 1" ;
-    dcterms:creator "Creator 0",
-        "Creator 1" ;
+    dcterms:creator <http://example.com/person0>,
+        <http://example.com/person1> ;
     dcterms:date "2020-08-08",
         "2020-08-09" ;
     dcterms:description "Institution1Collection0Work0 description 0",
@@ -10094,8 +9373,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1Collection0Work1 alternative title 0",
         "Institution1Collection0Work1 alternative title 1" ;
-    dcterms:creator "Creator 1",
-        "Creator 2" ;
+    dcterms:creator <http://example.com/person1>,
+        <http://example.com/person2> ;
     dcterms:date "2020-08-07",
         "2020-08-08" ;
     dcterms:description "Institution1Collection0Work1 description 0",
@@ -10141,8 +9420,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1Collection0Work2 alternative title 0",
         "Institution1Collection0Work2 alternative title 1" ;
-    dcterms:creator "Creator 2",
-        "Creator 3" ;
+    dcterms:creator <http://example.com/person2>,
+        <http://example.com/person3> ;
     dcterms:date "2020-08-06",
         "2020-08-07" ;
     dcterms:description "Institution1Collection0Work2 description 0",
@@ -10188,8 +9467,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1Collection0Work3 alternative title 0",
         "Institution1Collection0Work3 alternative title 1" ;
-    dcterms:creator "Creator 3",
-        "Creator 4" ;
+    dcterms:creator <http://example.com/person3>,
+        <http://example.com/person4> ;
     dcterms:date "2020-08-05",
         "2020-08-06" ;
     dcterms:description "Institution1Collection0Work3 description 0",
@@ -10235,8 +9514,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1SharedWork0 alternative title 0",
         "Institution1SharedWork0 alternative title 1" ;
-    dcterms:creator "Creator 0",
-        "Creator 1" ;
+    dcterms:creator <http://example.com/person0>,
+        <http://example.com/person1> ;
     dcterms:date "2020-08-08",
         "2020-08-09" ;
     dcterms:description "Institution1SharedWork0 description 0",
@@ -10282,8 +9561,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1SharedWork1 alternative title 0",
         "Institution1SharedWork1 alternative title 1" ;
-    dcterms:creator "Creator 1",
-        "Creator 2" ;
+    dcterms:creator <http://example.com/person1>,
+        <http://example.com/person2> ;
     dcterms:date "2020-08-07",
         "2020-08-08" ;
     dcterms:description "Institution1SharedWork1 description 0",
@@ -10329,8 +9608,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1SharedWork2 alternative title 0",
         "Institution1SharedWork2 alternative title 1" ;
-    dcterms:creator "Creator 2",
-        "Creator 3" ;
+    dcterms:creator <http://example.com/person2>,
+        <http://example.com/person3> ;
     dcterms:date "2020-08-06",
         "2020-08-07" ;
     dcterms:description "Institution1SharedWork2 description 0",
@@ -10376,8 +9655,8 @@ vra:worktype a paradicms:PropertyDefinition ;
     dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
     dcterms:alternative "Institution1SharedWork3 alternative title 0",
         "Institution1SharedWork3 alternative title 1" ;
-    dcterms:creator "Creator 3",
-        "Creator 4" ;
+    dcterms:creator <http://example.com/person3>,
+        <http://example.com/person4> ;
     dcterms:date "2020-08-05",
         "2020-08-06" ;
     dcterms:description "Institution1SharedWork3 description 0",
@@ -10420,524 +9699,484 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:page "http://example.com/work/3" .
 
 <urn:paradicms_etl:pipeline:test_data:property_value:0> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:creator ;
-    rdf:value "Creator 0" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:1> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:creator ;
-    rdf:value "Creator 1" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:10> a paradicms:PropertyValueDefinition ;
     rdf:predicate vra:culturalContext ;
     rdf:value "Cultural context 0" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:100> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:hasTechnique ;
-    rdf:value "Technique 0" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:101> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:hasTechnique ;
-    rdf:value "Technique 1" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:102> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:hasTechnique ;
-    rdf:value "Technique 2" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:103> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:hasTechnique ;
-    rdf:value "Technique 3" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:104> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:hasTechnique ;
-    rdf:value "Technique 4" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:105> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:hasTechnique ;
-    rdf:value "Technique 5" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:106> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:hasTechnique ;
-    rdf:value "Technique 6" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:107> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:hasTechnique ;
-    rdf:value "Technique 7" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:108> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:hasTechnique ;
-    rdf:value "Technique 8" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:109> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:hasTechnique ;
-    rdf:value "Technique 9" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:11> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:1> a paradicms:PropertyValueDefinition ;
     rdf:predicate vra:culturalContext ;
     rdf:value "Cultural context 1" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:110> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:temporal ;
-    rdf:value "Temporal 0" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:111> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:temporal ;
-    rdf:value "Temporal 1" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:112> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:temporal ;
-    rdf:value "Temporal 2" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:113> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:temporal ;
-    rdf:value "Temporal 3" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:114> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:temporal ;
-    rdf:value "Temporal 4" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:115> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:temporal ;
-    rdf:value "Temporal 5" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:116> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:temporal ;
-    rdf:value "Temporal 6" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:117> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:temporal ;
-    rdf:value "Temporal 7" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:118> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:temporal ;
-    rdf:value "Temporal 8" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:119> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:temporal ;
-    rdf:value "Temporal 9" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:12> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:culturalContext ;
-    rdf:value "Cultural context 2" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:120> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:type ;
-    rdf:value "Type 0" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:121> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:type ;
-    rdf:value "Type 1" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:122> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:type ;
-    rdf:value "Type 2" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:123> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:type ;
-    rdf:value "Type 3" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:124> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:type ;
-    rdf:value "Type 4" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:125> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:type ;
-    rdf:value "Type 5" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:126> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:type ;
-    rdf:value "Type 6" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:127> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:type ;
-    rdf:value "Type 7" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:128> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:type ;
-    rdf:value "Type 8" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:129> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:type ;
-    rdf:value "Type 9" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:13> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:culturalContext ;
-    rdf:value "Cultural context 3" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:14> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:culturalContext ;
-    rdf:value "Cultural context 4" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:15> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:culturalContext ;
-    rdf:value "Cultural context 5" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:16> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:culturalContext ;
-    rdf:value "Cultural context 6" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:17> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:culturalContext ;
-    rdf:value "Cultural context 7" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:18> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:culturalContext ;
-    rdf:value "Cultural context 8" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:19> a paradicms:PropertyValueDefinition ;
-    rdf:predicate vra:culturalContext ;
-    rdf:value "Cultural context 9" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:2> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:creator ;
-    rdf:value "Creator 2" .
-
-<urn:paradicms_etl:pipeline:test_data:property_value:20> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:10> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:extent ;
     rdf:value "Extent 0" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:21> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:100> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:temporal ;
+    rdf:value "Temporal 0" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:101> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:temporal ;
+    rdf:value "Temporal 1" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:102> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:temporal ;
+    rdf:value "Temporal 2" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:103> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:temporal ;
+    rdf:value "Temporal 3" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:104> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:temporal ;
+    rdf:value "Temporal 4" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:105> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:temporal ;
+    rdf:value "Temporal 5" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:106> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:temporal ;
+    rdf:value "Temporal 6" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:107> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:temporal ;
+    rdf:value "Temporal 7" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:108> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:temporal ;
+    rdf:value "Temporal 8" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:109> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:temporal ;
+    rdf:value "Temporal 9" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:11> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:extent ;
     rdf:value "Extent 1" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:22> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:110> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:type ;
+    rdf:value "Type 0" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:111> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:type ;
+    rdf:value "Type 1" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:112> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:type ;
+    rdf:value "Type 2" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:113> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:type ;
+    rdf:value "Type 3" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:114> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:type ;
+    rdf:value "Type 4" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:115> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:type ;
+    rdf:value "Type 5" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:116> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:type ;
+    rdf:value "Type 6" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:117> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:type ;
+    rdf:value "Type 7" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:118> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:type ;
+    rdf:value "Type 8" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:119> a paradicms:PropertyValueDefinition ;
+    rdf:predicate dcterms:type ;
+    rdf:value "Type 9" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:12> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:extent ;
     rdf:value "Extent 2" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:23> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:13> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:extent ;
     rdf:value "Extent 3" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:24> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:14> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:extent ;
     rdf:value "Extent 4" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:25> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:15> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:extent ;
     rdf:value "Extent 5" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:26> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:16> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:extent ;
     rdf:value "Extent 6" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:27> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:17> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:extent ;
     rdf:value "Extent 7" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:28> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:18> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:extent ;
     rdf:value "Extent 8" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:29> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:19> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:extent ;
     rdf:value "Extent 9" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:3> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:creator ;
-    rdf:value "Creator 3" .
+<urn:paradicms_etl:pipeline:test_data:property_value:2> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:culturalContext ;
+    rdf:value "Cultural context 2" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:30> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:20> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:language ;
     rdf:value "Language 0" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:31> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:21> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:language ;
     rdf:value "Language 1" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:32> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:22> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:language ;
     rdf:value "Language 2" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:33> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:23> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:language ;
     rdf:value "Language 3" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:34> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:24> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:language ;
     rdf:value "Language 4" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:35> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:25> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:language ;
     rdf:value "Language 5" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:36> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:26> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:language ;
     rdf:value "Language 6" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:37> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:27> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:language ;
     rdf:value "Language 7" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:38> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:28> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:language ;
     rdf:value "Language 8" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:39> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:29> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:language ;
     rdf:value "Language 9" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:4> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:creator ;
-    rdf:value "Creator 4" .
+<urn:paradicms_etl:pipeline:test_data:property_value:3> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:culturalContext ;
+    rdf:value "Cultural context 3" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:40> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:30> a paradicms:PropertyValueDefinition ;
     rdf:predicate vra:material ;
     rdf:value "Material 0" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:41> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:31> a paradicms:PropertyValueDefinition ;
     rdf:predicate vra:material ;
     rdf:value "Material 1" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:42> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:32> a paradicms:PropertyValueDefinition ;
     rdf:predicate vra:material ;
     rdf:value "Material 2" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:43> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:33> a paradicms:PropertyValueDefinition ;
     rdf:predicate vra:material ;
     rdf:value "Material 3" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:44> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:34> a paradicms:PropertyValueDefinition ;
     rdf:predicate vra:material ;
     rdf:value "Material 4" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:45> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:35> a paradicms:PropertyValueDefinition ;
     rdf:predicate vra:material ;
     rdf:value "Material 5" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:46> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:36> a paradicms:PropertyValueDefinition ;
     rdf:predicate vra:material ;
     rdf:value "Material 6" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:47> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:37> a paradicms:PropertyValueDefinition ;
     rdf:predicate vra:material ;
     rdf:value "Material 7" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:48> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:38> a paradicms:PropertyValueDefinition ;
     rdf:predicate vra:material ;
     rdf:value "Material 8" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:49> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:39> a paradicms:PropertyValueDefinition ;
     rdf:predicate vra:material ;
     rdf:value "Material 9" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:5> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:creator ;
-    rdf:value "Creator 5" .
+<urn:paradicms_etl:pipeline:test_data:property_value:4> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:culturalContext ;
+    rdf:value "Cultural context 4" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:50> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:40> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:medium ;
     rdf:value "Medium 0" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:51> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:41> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:medium ;
     rdf:value "Medium 1" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:52> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:42> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:medium ;
     rdf:value "Medium 2" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:53> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:43> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:medium ;
     rdf:value "Medium 3" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:54> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:44> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:medium ;
     rdf:value "Medium 4" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:55> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:45> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:medium ;
     rdf:value "Medium 5" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:56> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:46> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:medium ;
     rdf:value "Medium 6" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:57> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:47> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:medium ;
     rdf:value "Medium 7" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:58> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:48> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:medium ;
     rdf:value "Medium 8" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:59> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:49> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:medium ;
     rdf:value "Medium 9" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:6> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:creator ;
-    rdf:value "Creator 6" .
+<urn:paradicms_etl:pipeline:test_data:property_value:5> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:culturalContext ;
+    rdf:value "Cultural context 5" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:60> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:50> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:publisher ;
     rdf:value "Publisher 0" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:61> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:51> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:publisher ;
     rdf:value "Publisher 1" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:62> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:52> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:publisher ;
     rdf:value "Publisher 2" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:63> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:53> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:publisher ;
     rdf:value "Publisher 3" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:64> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:54> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:publisher ;
     rdf:value "Publisher 4" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:65> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:55> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:publisher ;
     rdf:value "Publisher 5" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:66> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:56> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:publisher ;
     rdf:value "Publisher 6" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:67> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:57> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:publisher ;
     rdf:value "Publisher 7" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:68> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:58> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:publisher ;
     rdf:value "Publisher 8" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:69> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:59> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:publisher ;
     rdf:value "Publisher 9" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:7> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:creator ;
-    rdf:value "Creator 7" .
+<urn:paradicms_etl:pipeline:test_data:property_value:6> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:culturalContext ;
+    rdf:value "Cultural context 6" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:70> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:60> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:source ;
     rdf:value "Source 0" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:71> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:61> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:source ;
     rdf:value "Source 1" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:72> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:62> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:source ;
     rdf:value "Source 2" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:73> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:63> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:source ;
     rdf:value "Source 3" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:74> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:64> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:source ;
     rdf:value "Source 4" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:75> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:65> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:source ;
     rdf:value "Source 5" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:76> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:66> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:source ;
     rdf:value "Source 6" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:77> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:67> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:source ;
     rdf:value "Source 7" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:78> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:68> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:source ;
     rdf:value "Source 8" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:79> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:69> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:source ;
     rdf:value "Source 9" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:8> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:creator ;
-    rdf:value "Creator 8" .
+<urn:paradicms_etl:pipeline:test_data:property_value:7> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:culturalContext ;
+    rdf:value "Cultural context 7" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:80> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:70> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:spatial ;
     rdf:value "Spatial 0" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:81> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:71> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:spatial ;
     rdf:value "Spatial 1" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:82> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:72> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:spatial ;
     rdf:value "Spatial 2" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:83> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:73> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:spatial ;
     rdf:value "Spatial 3" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:84> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:74> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:spatial ;
     rdf:value "Spatial 4" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:85> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:75> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:spatial ;
     rdf:value "Spatial 5" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:86> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:76> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:spatial ;
     rdf:value "Spatial 6" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:87> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:77> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:spatial ;
     rdf:value "Spatial 7" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:88> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:78> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:spatial ;
     rdf:value "Spatial 8" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:89> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:79> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:spatial ;
     rdf:value "Spatial 9" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:9> a paradicms:PropertyValueDefinition ;
-    rdf:predicate dcterms:creator ;
-    rdf:value "Creator 9" .
+<urn:paradicms_etl:pipeline:test_data:property_value:8> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:culturalContext ;
+    rdf:value "Cultural context 8" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:90> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:80> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:subject ;
     rdf:value "Subject 0" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:91> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:81> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:subject ;
     rdf:value "Subject 1" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:92> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:82> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:subject ;
     rdf:value "Subject 2" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:93> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:83> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:subject ;
     rdf:value "Subject 3" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:94> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:84> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:subject ;
     rdf:value "Subject 4" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:95> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:85> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:subject ;
     rdf:value "Subject 5" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:96> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:86> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:subject ;
     rdf:value "Subject 6" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:97> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:87> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:subject ;
     rdf:value "Subject 7" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:98> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:88> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:subject ;
     rdf:value "Subject 8" .
 
-<urn:paradicms_etl:pipeline:test_data:property_value:99> a paradicms:PropertyValueDefinition ;
+<urn:paradicms_etl:pipeline:test_data:property_value:89> a paradicms:PropertyValueDefinition ;
     rdf:predicate dcterms:subject ;
     rdf:value "Subject 9" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:9> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:culturalContext ;
+    rdf:value "Cultural context 9" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:90> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:hasTechnique ;
+    rdf:value "Technique 0" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:91> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:hasTechnique ;
+    rdf:value "Technique 1" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:92> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:hasTechnique ;
+    rdf:value "Technique 2" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:93> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:hasTechnique ;
+    rdf:value "Technique 3" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:94> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:hasTechnique ;
+    rdf:value "Technique 4" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:95> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:hasTechnique ;
+    rdf:value "Technique 5" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:96> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:hasTechnique ;
+    rdf:value "Technique 6" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:97> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:hasTechnique ;
+    rdf:value "Technique 7" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:98> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:hasTechnique ;
+    rdf:value "Technique 8" .
+
+<urn:paradicms_etl:pipeline:test_data:property_value:99> a paradicms:PropertyValueDefinition ;
+    rdf:predicate vra:hasTechnique ;
+    rdf:value "Technique 9" .
 
 <http://example.com/institution0/collection0> a paradicms:Collection ;
     dcterms:title "Institution0Collection0" ;
@@ -10946,9 +10185,6 @@ vra:worktype a paradicms:PropertyDefinition ;
 <http://example.com/institution1/collection0> a paradicms:Collection ;
     dcterms:title "Institution1Collection0" ;
     paradicms:institution <http://example.com/institution1> .
-
-dcterms:creator a paradicms:PropertyDefinition ;
-    rdfs:label "Creator" .
 
 dcterms:extent a paradicms:PropertyDefinition ;
     rdfs:label "Extent" .
@@ -10997,6 +10233,18 @@ vra:material a paradicms:PropertyDefinition ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1 rights holder" ;
     foaf:name "Institution1" .
+
+<http://example.com/person2> a paradicms:Person ;
+    foaf:name "Person 2" .
+
+<http://example.com/person0> a paradicms:Person ;
+    foaf:name "Person 0" .
+
+<http://example.com/person1> a paradicms:Person ;
+    foaf:name "Person 1" .
+
+<http://example.com/person3> a paradicms:Person ;
+    foaf:name "Person 3" .
 
 <http://creativecommons.org/licenses/nc/1.0/> a creativecommons:License,
         paradicms:License ;
