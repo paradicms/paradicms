@@ -11,6 +11,7 @@ from paradicms_etl._transformer import _Transformer
 from paradicms_etl.extractors.nop_extractor import NopExtractor
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
+from paradicms_etl.models._agent import _Agent
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.dublin_core_property_definitions import (
@@ -110,8 +111,12 @@ class TestDataPipeline(_Pipeline):
 
             yield from self.__generate_property_definitions()
 
-            agents = tuple(self.__generate_agents())
-            yield from agents
+            agents = []
+            for model in self.__generate_agents():
+                yield model
+                if isinstance(model, _Agent):
+                    agents.append(model)
+            agents = tuple(agents)
 
             yield from self.__generate_institutions(agents=agents)
 
@@ -123,20 +128,32 @@ class TestDataPipeline(_Pipeline):
                 )
 
             for person_i in range(5):
-                yield Person.from_fields(
+                person = Person.from_fields(
                     family_name=str(person_i),
                     given_name="Person",
                     name=f"Person {person_i}",
                     sort_name=f"{person_i}, Person",
                     uri=URIRef(f"http://example.com/person{person_i}"),
                 )
+                yield person
+
+                yield Image.from_fields(
+                    depicts_uri=person.uri,
+                    rights=Rights(
+                        creator=f"{person.name} image creator",
+                        holder=f"{person.name} image rights holder",
+                        license=CreativeCommonsLicenses.NC_1_0.uri,
+                        statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
+                    ),
+                    uri=URIRef(f"{person.uri}Image"),
+                )
 
         def __generate_collection_works(
             self,
             *,
+            agents: Tuple[_Agent, ...],
             collection: Collection,
             institution: Institution,
-            agents: Tuple[Person, ...],
         ):
             for work_i in range(self.__works_per_institution):
                 yield from self.__generate_work(
@@ -177,7 +194,7 @@ class TestDataPipeline(_Pipeline):
                     )
 
         def __generate_institution_collections(
-            self, *, institution: Institution, agents: Tuple[Person, ...]
+            self, *, agents: Tuple[_Agent, ...], institution: Institution
         ):
             for collection_i in range(self.__collections_per_institution):
                 collection_title = f"{institution.name}Collection{collection_i}"
@@ -200,7 +217,7 @@ class TestDataPipeline(_Pipeline):
                     collection=collection, institution=institution, agents=agents
                 )
 
-        def __generate_institutions(self, agents: Tuple[Person, ...]):
+        def __generate_institutions(self, agents: Tuple[_Agent, ...]):
             for institution_i in range(self.__institutions):
                 institution_name = f"Institution{institution_i}"
                 institution = Institution.from_fields(
@@ -237,9 +254,9 @@ class TestDataPipeline(_Pipeline):
         def __generate_work(
             self,
             *,
+            agents: Tuple[_Agent, ...],
             collection_uris: Tuple[URIRef, ...],
             institution: Institution,
-            agents: Tuple[Person, ...],
             work_i: int,
             title: str,
             uri: URIRef,
@@ -374,17 +391,17 @@ class TestDataPipeline(_Pipeline):
         def __generate_shared_works(
             self,
             *,
+            agents: Tuple[_Agent, ...],
             collections: Tuple[Collection, ...],
             institution: Institution,
-            agents: Tuple[Person, ...],
         ):
             for work_i in range(self.__works_per_institution):  # Per institution
                 yield from self.__generate_work(
+                    agents=agents,
                     collection_uris=tuple(
                         map(lambda collection: collection.uri, collections)
                     ),
                     institution=institution,
-                    agents=agents,
                     work_i=work_i,
                     title=f"{institution.name}SharedWork{work_i}",
                     uri=URIRef(f"{institution.uri}/shared/work{work_i}"),
