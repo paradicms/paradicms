@@ -100,7 +100,7 @@ export const getStaticProps: GetStaticProps = async ({
         .workDataset(workUri, {
           allImages: true,
           collections: {},
-          institution: {rights: true},
+          institution: {},
           propertyDefinitions: {},
         })
         .stringify(),

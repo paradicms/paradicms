@@ -11,6 +11,7 @@ import {selectThumbnail} from "./selectThumbnail";
 import {WorkJoinSelector} from "./WorkJoinSelector";
 import {Work} from "./Work";
 import {Image} from "Image";
+import {Person} from "./Person";
 
 /**
  * Subset a Dataset to reduce the amount of data passed between getStaticProps and the component.
@@ -82,6 +83,7 @@ export class DataSubsetter {
     joinSelector?: InstitutionJoinSelector
   ): DatasetBuilder {
     builder.addInstitution(institution);
+    this.addRightsDataset(builder, institution.rights);
 
     if (joinSelector?.thumbnail) {
       const thumbnailImage = this.completeDataset
@@ -126,10 +128,6 @@ export class DataSubsetter {
       }
     }
 
-    if (joinSelector?.rights) {
-      this.addRightsDataset(builder, institution.rights);
-    }
-
     return builder;
   }
 
@@ -139,6 +137,8 @@ export class DataSubsetter {
     joinSelector?: WorkJoinSelector
   ): DatasetBuilder {
     builder.addWork(work);
+    // Works Datasets always include rights
+    this.addRightsDataset(builder, work.rights);
 
     if (joinSelector?.allImages) {
       for (const image of this.completeDataset.imagesByDepictsUri(work.uri)) {
@@ -179,8 +179,10 @@ export class DataSubsetter {
       );
     }
 
-    // Works Datasets always include rights
-    this.addRightsDataset(builder, work.rights);
+    const creator = work.creator;
+    if (creator && typeof creator !== "string") {
+      builder.addPerson(creator as Person);
+    }
 
     return builder;
   }
