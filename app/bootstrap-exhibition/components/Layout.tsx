@@ -45,8 +45,8 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
           </Navbar>
         </Col>
       </Row>
-      <Row className="m-4">
-        <Col>{children}</Col>
+      <Row className="mt-4">
+        <Col className="p-0">{children}</Col>
       </Row>
     </Container>
   </>

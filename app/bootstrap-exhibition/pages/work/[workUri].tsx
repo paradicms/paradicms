@@ -2,10 +2,12 @@ import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {
+  Agent,
   Configuration,
   Dataset,
   DataSubsetter,
   DCTERMS,
+  Image,
   License,
   RightsStatement,
 } from "@paradicms/models";
@@ -28,7 +30,10 @@ import {
 } from "reactstrap";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
-import {WorkImagesCarousel} from "@paradicms/bootstrap";
+import {
+  thumbnailTargetDimensions,
+  WorkImagesCarousel,
+} from "@paradicms/bootstrap";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
@@ -102,12 +107,24 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     }
   }, [currentWork]);
 
-  const rights = useMemo(
+  const rights: Rights | null = useMemo(
     () => currentWork.rights ?? institution.rights ?? null,
     [currentWork, institution]
   );
 
-  const licenseValue = useMemo(() => {
+  const creatorAgent: Agent | null = useMemo(() => {
+    const creator = rights?.creator;
+    return creator && creator instanceof Agent ? (creator as Agent) : null;
+  }, [rights]);
+
+  const creatorAgentThumbnail: Image | null = useMemo(
+    () =>
+      creatorAgent?.thumbnail({targetDimensions: thumbnailTargetDimensions}) ??
+      null,
+    [creatorAgent]
+  );
+
+  const licenseValue: string | null = useMemo(() => {
     if (!rights || !rights.license) {
       return null;
     }
@@ -118,7 +135,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     return <a href={license.uri}>{license.title}</a>;
   }, [rights]);
 
-  const rightsStatementValue = useMemo(() => {
+  const rightsStatementValue: string | null = useMemo(() => {
     if (!rights || !rights.statement) {
       return null;
     }
@@ -139,7 +156,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
         <Row>
           {currentWork.images.length > 0 ? (
             <Col
-              className="d-flex justify-content-center pl-0 pr-0"
+              className="d-flex justify-content-center px-0"
               xs={12}
               sm={12}
               lg={8}
@@ -150,7 +167,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
             </Col>
           ) : null}
           <Col
-            className="d-flex justify-content-center pl-0 pr-0 pt-2"
+            className="d-flex justify-content-center px-0 pt-2"
             xs={12}
             sm={12}
             lg={currentWork.images.length > 0 ? 4 : 12}
@@ -302,6 +319,9 @@ export const getStaticProps: GetStaticProps = async ({
       currentWorkUri: workUri,
       datasetString: new DataSubsetter(dataset)
         .worksDataset(workUris, {
+          agent: {
+            thumbnail: {targetDimensions: thumbnailTargetDimensions},
+          },
           allImages: true,
           collections: {},
           institution: {},
