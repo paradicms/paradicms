@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {Image, ImageDimensions, Work} from "@paradicms/models";
 import {Carousel, CarouselControl, CarouselItem} from "reactstrap";
 import ImageZoom from "react-medium-image-zoom";
@@ -8,8 +8,10 @@ import {RightsTable} from "./RightsTable";
 const thumbnailTargetDimensions: ImageDimensions = {height: 600, width: 600};
 
 export const WorkImagesCarousel: React.FunctionComponent<{
+  hideImageRights?: boolean;
+  onShowImage?: (newImage: Image) => void;
   work: Work;
-}> = ({work}) => {
+}> = ({hideImageRights, onShowImage, work}) => {
   const workOriginalImages = work.originalImages;
 
   const renderWorkOriginalImage = (originalImage: Image) => {
@@ -53,7 +55,7 @@ export const WorkImagesCarousel: React.FunctionComponent<{
             }}
           />
         </div>
-        {originalImage && originalImage.rights ? (
+        {!hideImageRights && originalImage && originalImage.rights ? (
           <div className="mt-2">
             <h6 className="text-center">Image rights</h6>
             <RightsTable rights={originalImage.rights} />
@@ -63,25 +65,38 @@ export const WorkImagesCarousel: React.FunctionComponent<{
     );
   };
 
+  useEffect(() => {
+    if (onShowImage && workOriginalImages.length > 0) {
+      // Invoke onChange with the first image
+      onShowImage(workOriginalImages[0]);
+    }
+  }, []);
+
   if (workOriginalImages.length === 1) {
     return renderWorkOriginalImage(workOriginalImages[0]);
   }
 
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const next = () => {
+  const onClickNext = useCallback(() => {
     // if (animating) return;
     const nextIndex =
       activeIndex === workOriginalImages.length - 1 ? 0 : activeIndex + 1;
     setActiveIndex(nextIndex);
-  };
+    if (onShowImage) {
+      onShowImage(workOriginalImages[nextIndex]);
+    }
+  }, [activeIndex]);
 
-  const previous = () => {
+  const onClickPrevious = useCallback(() => {
     // if (animating) return;
     const nextIndex =
       activeIndex === 0 ? workOriginalImages.length - 1 : activeIndex - 1;
     setActiveIndex(nextIndex);
-  };
+    if (onShowImage) {
+      onShowImage(workOriginalImages[nextIndex]);
+    }
+  }, [activeIndex]);
 
   // const goToIndex = (newIndex: number) => {
   //   // if (animating) return;
@@ -92,8 +107,8 @@ export const WorkImagesCarousel: React.FunctionComponent<{
     <Carousel
       activeIndex={activeIndex}
       autoPlay={false}
-      next={next}
-      previous={previous}
+      next={onClickNext}
+      previous={onClickPrevious}
       slide={false}
     >
       {/*<CarouselIndicators*/}
@@ -115,12 +130,12 @@ export const WorkImagesCarousel: React.FunctionComponent<{
       <CarouselControl
         direction="prev"
         directionText="Previous"
-        onClickHandler={previous}
+        onClickHandler={onClickPrevious}
       />
       <CarouselControl
         direction="next"
         directionText="Next"
-        onClickHandler={next}
+        onClickHandler={onClickNext}
       />
     </Carousel>
   );

@@ -1,6 +1,6 @@
 import {BlankNode, Literal, NamedNode, Store, Term} from "n3";
 import {Dataset} from "./Dataset";
-import {FOAF, PARADICMS, RDF} from "./vocabularies";
+import {DCTERMS, FOAF, PARADICMS, RDF} from "./vocabularies";
 import {Property} from "./Property";
 import {NamedModel} from "./NamedModel";
 
@@ -10,6 +10,11 @@ export class Model {
 
   private static createIgnoredPropertyUris(): Set<string> {
     const result = new Set<string>();
+    // Ignore the rights properties
+    result.add(DCTERMS.creator.value);
+    result.add(DCTERMS.license.value);
+    result.add(DCTERMS.rights.value);
+    result.add(DCTERMS.rightsHolder.value);
     result.add(FOAF.page.value);
     result.add(PARADICMS.collection.value);
     result.add(PARADICMS.institution.value);

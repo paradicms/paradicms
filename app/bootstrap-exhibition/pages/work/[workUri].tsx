@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useMemo} from "react";
+import {useMemo, useState} from "react";
 import {Layout} from "components/Layout";
 import {
   Agent,
@@ -8,8 +8,7 @@ import {
   DataSubsetter,
   DCTERMS,
   Image,
-  License,
-  RightsStatement,
+  Rights,
 } from "@paradicms/models";
 import {
   decodeFileName,
@@ -26,7 +25,6 @@ import {
   PaginationItem,
   PaginationLink,
   Row,
-  Table,
 } from "reactstrap";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
@@ -34,8 +32,13 @@ import {
   thumbnailTargetDimensions,
   WorkImagesCarousel,
 } from "@paradicms/bootstrap";
+import {RightsParagraph} from "../../components/RightsParagraph";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
+const RIGHTS_STYLE: React.CSSProperties = {
+  fontSize: "x-small",
+  marginBottom: 0,
+};
 
 interface StaticProps {
   readonly collectionUri: string;
@@ -92,7 +95,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     [nextWorkUri, dataset]
   );
 
-  const abstract: string | null = useMemo(() => {
+  const currentWorkAbstract: string | null = useMemo(() => {
     if (currentWork.abstract) {
       return currentWork.abstract;
     } else if (currentWork.properties) {
@@ -107,44 +110,30 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     }
   }, [currentWork]);
 
-  const rights: Rights | null = useMemo(
+  const currentWorkRights: Rights | null = useMemo(
     () => currentWork.rights ?? institution.rights ?? null,
     [currentWork, institution]
   );
 
-  const creatorAgent: Agent | null = useMemo(() => {
-    const creator = rights?.creator;
+  const currentWorkCreatorAgent: Agent | null = useMemo(() => {
+    const creator = currentWorkRights?.creator;
     return creator && creator instanceof Agent ? (creator as Agent) : null;
-  }, [rights]);
+  }, [currentWorkRights]);
 
-  const creatorAgentThumbnail: Image | null = useMemo(
+  // @ts-ignore
+  const currentWorkCreatorAgentThumbnail: Image | null = useMemo(
     () =>
-      creatorAgent?.thumbnail({targetDimensions: thumbnailTargetDimensions}) ??
-      null,
-    [creatorAgent]
+      currentWorkCreatorAgent?.thumbnail({
+        targetDimensions: thumbnailTargetDimensions,
+      }) ?? null,
+    [currentWorkCreatorAgent]
   );
 
-  const licenseValue: string | null = useMemo(() => {
-    if (!rights || !rights.license) {
-      return null;
-    }
-    if (typeof rights.license === "string") {
-      return rights.license as string;
-    }
-    const license = rights.license as License;
-    return <a href={license.uri}>{license.title}</a>;
-  }, [rights]);
+  const [currentImage, setCurrentImage] = useState<Image | null>(null);
 
-  const rightsStatementValue: string | null = useMemo(() => {
-    if (!rights || !rights.statement) {
-      return null;
-    }
-    if (typeof rights.statement === "string") {
-      return rights.statement as string;
-    }
-    const rightsStatement = rights.statement as RightsStatement;
-    return <a href={rightsStatement.uri}>{rightsStatement.prefLabel}</a>;
-  }, [rights]);
+  const currentImageRights = useMemo(() => currentImage?.rights ?? null, [
+    currentImage,
+  ]);
 
   return (
     <Layout
@@ -163,7 +152,11 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
               xl={6}
               style={{minHeight: 600, minWidth: 600}}
             >
-              <WorkImagesCarousel work={currentWork} />
+              <WorkImagesCarousel
+                hideImageRights={true}
+                onShowImage={setCurrentImage}
+                work={currentWork}
+              />
             </Col>
           ) : null}
           <Col
@@ -179,39 +172,13 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                   <h1>{currentWork.title}</h1>
                 </Col>
               </Row>
-              {abstract ? (
+              {currentWorkAbstract ? (
                 <Row className="mt-2">
                   <Col
                     className="p-0 text-wrap"
                     xs={12}
-                    dangerouslySetInnerHTML={{__html: abstract}}
+                    dangerouslySetInnerHTML={{__html: currentWorkAbstract}}
                   ></Col>
-                </Row>
-              ) : null}
-              {rights ? (
-                <Row className="mt-4">
-                  <Col className="p-0" xs={12}>
-                    <Table striped>
-                      <tbody>
-                        {rights ? (
-                          <>
-                            <RightsTableRow
-                              label="Rights statement"
-                              value={rightsStatementValue}
-                            />
-                            <RightsTableRow
-                              label="Rights holder"
-                              value={rights?.holder}
-                            />
-                            <RightsTableRow
-                              label="License"
-                              value={licenseValue}
-                            />
-                          </>
-                        ) : null}
-                      </tbody>
-                    </Table>
-                  </Col>
                 </Row>
               ) : null}
             </Container>
@@ -247,6 +214,26 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                   </PaginationItem>
                 ) : null}
               </Pagination>
+            </Col>
+          </Row>
+        ) : null}
+        {currentImageRights || currentWorkRights ? (
+          <Row>
+            <Col style={{textAlign: "center"}} xs={12}>
+              {currentImageRights ? (
+                <RightsParagraph
+                  material="Image"
+                  rights={currentImageRights}
+                  style={RIGHTS_STYLE}
+                />
+              ) : null}
+              {currentWorkRights ? (
+                <RightsParagraph
+                  material="Text"
+                  rights={currentWorkRights}
+                  style={RIGHTS_STYLE}
+                />
+              ) : null}
             </Col>
           </Row>
         ) : null}
