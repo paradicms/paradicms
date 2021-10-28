@@ -1,7 +1,9 @@
 import * as React from "react";
 import {CSSProperties} from "react";
-import {License, Rights, RightsStatement} from "@paradicms/models";
+import {Rights} from "@paradicms/models";
 import {Table} from "reactstrap";
+import {RightsStatementLink} from "./RightsStatementLink";
+import {LicenseLink} from "./LicenseLink";
 
 const RightsTableRow: React.FunctionComponent<{
   cellClassName?: string;
@@ -45,28 +47,6 @@ export const RightsTable: React.FunctionComponent<{
     rights,
   ]);
 
-  const licenseValue = React.useMemo(() => {
-    if (!rights.license) {
-      return null;
-    }
-    if (typeof rights.license === "string") {
-      return rights.license as string;
-    }
-    const license = rights.license as License;
-    return <a href={license.uri}>{license.title}</a>;
-  }, [rights]);
-
-  const rightsStatementValue = React.useMemo(() => {
-    if (!rights.statement) {
-      return null;
-    }
-    if (typeof rights.statement === "string") {
-      return rights.statement as string;
-    }
-    const rightsStatement = rights.statement as RightsStatement;
-    return <a href={rightsStatement.uri}>{rightsStatement.prefLabel}</a>;
-  }, [rights]);
-
   const rowProps = {cellClassName, cellStyle, rowClassName, rowStyle};
 
   return (
@@ -75,11 +55,15 @@ export const RightsTable: React.FunctionComponent<{
         <RightsTableRow
           {...rowProps}
           label="Statement"
-          value={rightsStatementValue}
+          value={<RightsStatementLink rightsStatement={rights.statement} />}
         />
         <RightsTableRow {...rowProps} label="Creator" value={creatorValue} />
         <RightsTableRow {...rowProps} label="Holder" value={rights.holder} />
-        <RightsTableRow {...rowProps} label="License" value={licenseValue} />
+        <RightsTableRow
+          {...rowProps}
+          label="License"
+          value={<LicenseLink license={rights.license} />}
+        />
       </tbody>
     </Table>
   );

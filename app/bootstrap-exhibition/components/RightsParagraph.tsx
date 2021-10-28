@@ -1,6 +1,7 @@
-import {License, Rights, RightsStatement} from "@paradicms/models";
+import {Rights} from "@paradicms/models";
 import * as React from "react";
 import {useMemo} from "react";
+import {LicenseLink, RightsStatementLink} from "../../../lib/bootstrap/src";
 
 export const RightsParagraph: React.FunctionComponent<{
   material: string;
@@ -10,28 +11,6 @@ export const RightsParagraph: React.FunctionComponent<{
   const creatorValue = React.useMemo(() => rights.creator?.toString() ?? null, [
     rights,
   ]);
-
-  const licenseValue: string | null = useMemo(() => {
-    if (!rights || !rights.license) {
-      return null;
-    }
-    if (typeof rights.license === "string") {
-      return rights.license as string;
-    }
-    const license = rights.license as License;
-    return <a href={license.uri}>{license.title}</a>;
-  }, [rights]);
-
-  const rightsStatementValue: string | null = useMemo(() => {
-    if (!rights || !rights.statement) {
-      return null;
-    }
-    if (typeof rights.statement === "string") {
-      return rights.statement as string;
-    }
-    const rightsStatement = rights.statement as RightsStatement;
-    return <a href={rightsStatement.uri}>{rightsStatement.prefLabel}</a>;
-  }, [rights]);
 
   const rightsElements: React.ReactNodeArray = useMemo(() => {
     const result: React.ReactNodeArray = [];
@@ -51,10 +30,11 @@ export const RightsParagraph: React.FunctionComponent<{
       );
     }
 
-    if (rightsStatementValue) {
+    if (rights.statement) {
       pushRightsElement(
         <span>
-          <i>Statement</i>: {rightsStatementValue}
+          <i>Statement</i>:{" "}
+          <RightsStatementLink rightsStatement={rights.statement} />
         </span>
       );
     }
@@ -67,16 +47,16 @@ export const RightsParagraph: React.FunctionComponent<{
       );
     }
 
-    if (licenseValue) {
+    if (rights.license) {
       pushRightsElement(
         <span>
-          <i>License</i>: {licenseValue}
+          <i>License</i>: {<LicenseLink license={rights.license} />}
         </span>
       );
     }
 
     return result;
-  }, [creatorValue, licenseValue, rights, rightsStatementValue]);
+  }, [creatorValue, rights]);
 
   return (
     <p style={style}>
