@@ -102,6 +102,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     const creator = currentWorkRights?.creator;
     return creator && creator instanceof Agent ? (creator as Agent) : null;
   }, [currentWorkRights]);
+  console.log("Creator agent:", currentWorkCreatorAgent?.name);
 
   // @ts-ignore
   const currentWorkCreatorAgentThumbnail: Image | null = useMemo(
@@ -111,6 +112,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
       }) ?? null,
     [currentWorkCreatorAgent]
   );
+  console.log("Creator agent thumbnail", currentWorkCreatorAgentThumbnail?.uri);
 
   const [currentImage, setCurrentImage] = useState<Image | null>(null);
 
@@ -158,10 +160,27 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
               {currentWorkAbstract ? (
                 <Row className="mt-2">
                   <Col
-                    className="p-0 text-wrap"
+                    className="pl-0 text-wrap"
                     xs={12}
                     dangerouslySetInnerHTML={{__html: currentWorkAbstract}}
                   ></Col>
+                </Row>
+              ) : null}
+              {currentWorkCreatorAgent && currentWorkCreatorAgentThumbnail ? (
+                <Row className="mt-2">
+                  <Col className="pl-0" xs={12}>
+                    <img
+                      src={
+                        currentWorkCreatorAgentThumbnail.src ??
+                        currentWorkCreatorAgentThumbnail.uri
+                      }
+                      style={{
+                        maxHeight: thumbnailTargetDimensions.height,
+                        maxWidth: thumbnailTargetDimensions.width,
+                      }}
+                      title={currentWorkCreatorAgent.name}
+                    />
+                  </Col>
                 </Row>
               ) : null}
             </Container>
