@@ -49,23 +49,6 @@ interface StaticProps {
   readonly previousWorkUri: string | null;
 }
 
-const RightsTableRow: React.FunctionComponent<{
-  label: string;
-  value: React.ReactNode;
-}> = ({label, value}) => {
-  if (!value) {
-    return null;
-  }
-  return (
-    <tr>
-      <td>
-        <strong>{label}</strong>
-      </td>
-      <td>{value}</td>
-    </tr>
-  );
-};
-
 const WorkPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
   configuration,

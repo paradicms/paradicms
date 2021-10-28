@@ -1,7 +1,7 @@
 import {Rights} from "@paradicms/models";
 import * as React from "react";
 import {useMemo} from "react";
-import {LicenseLink, RightsStatementLink} from "../../../lib/bootstrap/src";
+import {LicenseLink, RightsStatementLink} from "@paradicms/bootstrap";
 
 export const RightsParagraph: React.FunctionComponent<{
   material: string;
