@@ -153,7 +153,9 @@ class TestDataPipeline(_Pipeline):
                         license=CreativeCommonsLicenses.NC_1_0.uri,
                         statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
                     ),
-                    uri=URIRef(f"{agent.uri}Image"),
+                    uri=URIRef(
+                        f"https://place-hold.it/1000x1000?text={quote(agent.name)}"
+                    ),
                 )
 
         def __generate_collection_works(
