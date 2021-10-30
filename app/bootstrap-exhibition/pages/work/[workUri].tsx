@@ -2,7 +2,6 @@ import * as React from "react";
 import {useMemo, useState} from "react";
 import {Layout} from "components/Layout";
 import {
-  Agent,
   Configuration,
   Dataset,
   DataSubsetter,
@@ -21,10 +20,15 @@ import Link from "next/link";
 import {
   Col,
   Container,
+  Nav,
+  NavItem,
+  NavLink,
   Pagination,
   PaginationItem,
   PaginationLink,
   Row,
+  TabContent,
+  TabPane,
 } from "reactstrap";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
@@ -33,6 +37,8 @@ import {
   WorkImagesCarousel,
 } from "@paradicms/bootstrap";
 import {RightsParagraph} from "../../components/RightsParagraph";
+import {getWorkAgentProfiles} from "../../lib/getWorkAgentProfiles";
+import {WorkAgentProfilesContainer} from "../../components/WorkAgentProfilesContainer";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 const RIGHTS_STYLE: React.CSSProperties = {
@@ -98,27 +104,48 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     [currentWork, institution]
   );
 
-  const currentWorkCreatorAgent: Agent | null = useMemo(() => {
-    const creator = currentWorkRights?.creator;
-    return creator && creator instanceof Agent ? (creator as Agent) : null;
-  }, [currentWorkRights]);
-  console.log("Creator agent:", currentWorkCreatorAgent?.name);
-
-  // @ts-ignore
-  const currentWorkCreatorAgentThumbnail: Image | null = useMemo(
+  const currentWorkAgentProfiles = useMemo(
     () =>
-      currentWorkCreatorAgent?.thumbnail({
-        targetDimensions: thumbnailTargetDimensions,
-      }) ?? null,
-    [currentWorkCreatorAgent]
+      getWorkAgentProfiles({
+        institution,
+        work: currentWork,
+      }),
+    [currentWork, institution]
   );
-  console.log("Creator agent thumbnail", currentWorkCreatorAgentThumbnail?.uri);
 
   const [currentImage, setCurrentImage] = useState<Image | null>(null);
 
   const currentImageRights = useMemo(() => currentImage?.rights ?? null, [
     currentImage,
   ]);
+
+  const leftColNavTabs: {content: React.ReactNode; title: string}[] = [];
+  if (currentWork.images.length > 0) {
+    leftColNavTabs.push({
+      title: currentWork.title,
+      content: (
+        <WorkImagesCarousel
+          hideImageRights={true}
+          key={leftColNavTabs.length}
+          onShowImage={setCurrentImage}
+          work={currentWork}
+        />
+      ),
+    });
+  }
+  if (currentWorkAgentProfiles.length > 0) {
+    leftColNavTabs.push({
+      title: "People and Organizations",
+      content: (
+        <WorkAgentProfilesContainer
+          key={leftColNavTabs.length}
+          workAgentProfiles={currentWorkAgentProfiles}
+        />
+      ),
+    });
+  }
+
+  const [activeLeftColNavTabIndex, setActiveLeftColNavTabIndex] = useState(0);
 
   return (
     <Layout
@@ -128,28 +155,53 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     >
       <Container fluid>
         <Row>
-          {currentWork.images.length > 0 ? (
+          {leftColNavTabs.length > 0 ? (
             <Col
-              className="d-flex justify-content-center px-0"
               xs={12}
               sm={12}
               lg={8}
               xl={6}
               style={{minHeight: 600, minWidth: 600}}
             >
-              <WorkImagesCarousel
-                hideImageRights={true}
-                onShowImage={setCurrentImage}
-                work={currentWork}
-              />
+              {leftColNavTabs.length === 1 ? (
+                leftColNavTabs[0].content
+              ) : (
+                <>
+                  <Nav tabs>
+                    {leftColNavTabs.map((navTab, navTabIndex) => (
+                      <NavItem key={navTabIndex}>
+                        <NavLink
+                          className={
+                            activeLeftColNavTabIndex === navTabIndex
+                              ? "active"
+                              : undefined
+                          }
+                          onClick={() =>
+                            setActiveLeftColNavTabIndex(navTabIndex)
+                          }
+                        >
+                          {navTab.title}
+                        </NavLink>
+                      </NavItem>
+                    ))}
+                  </Nav>
+                  <TabContent activeTab={activeLeftColNavTabIndex.toString()}>
+                    {leftColNavTabs.map((navTab, navTabIndex) => (
+                      <TabPane key={navTabIndex} tabId={navTabIndex.toString()}>
+                        <div className="mt-2">{navTab.content}</div>
+                      </TabPane>
+                    ))}
+                  </TabContent>
+                </>
+              )}
             </Col>
           ) : null}
           <Col
             className="d-flex justify-content-center px-0 pt-2"
             xs={12}
             sm={12}
-            lg={currentWork.images.length > 0 ? 4 : 12}
-            xl={currentWork.images.length > 0 ? 6 : 12}
+            lg={leftColNavTabs.length > 0 ? 4 : 12}
+            xl={leftColNavTabs.length > 0 ? 6 : 12}
           >
             <Container fluid>
               <Row>
@@ -164,23 +216,6 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                     xs={12}
                     dangerouslySetInnerHTML={{__html: currentWorkAbstract}}
                   ></Col>
-                </Row>
-              ) : null}
-              {currentWorkCreatorAgent && currentWorkCreatorAgentThumbnail ? (
-                <Row className="mt-2">
-                  <Col className="pl-0" xs={12}>
-                    <img
-                      src={
-                        currentWorkCreatorAgentThumbnail.src ??
-                        currentWorkCreatorAgentThumbnail.uri
-                      }
-                      style={{
-                        maxHeight: thumbnailTargetDimensions.height,
-                        maxWidth: thumbnailTargetDimensions.width,
-                      }}
-                      title={currentWorkCreatorAgent.name}
-                    />
-                  </Col>
                 </Row>
               ) : null}
             </Container>
