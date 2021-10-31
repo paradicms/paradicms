@@ -14,7 +14,7 @@ export const WorkImagesCarousel: React.FunctionComponent<{
 }> = ({hideImageRights, onShowImage, work}) => {
   const workOriginalImages = work.originalImages;
 
-  const renderWorkOriginalImage = (originalImage: Image) => {
+  const renderOriginalImage = (originalImage: Image) => {
     const originalImageSrc = originalImage.src;
     if (!originalImageSrc) {
       return null;
@@ -72,10 +72,6 @@ export const WorkImagesCarousel: React.FunctionComponent<{
     }
   }, []);
 
-  if (workOriginalImages.length === 1) {
-    return renderWorkOriginalImage(workOriginalImages[0]);
-  }
-
   const [activeIndex, setActiveIndex] = useState(0);
 
   const onClickNext = useCallback(() => {
@@ -103,6 +99,15 @@ export const WorkImagesCarousel: React.FunctionComponent<{
   //   setActiveIndex(newIndex);
   // };
 
+  if (workOriginalImages.length === 1) {
+    console.debug(
+      "work",
+      work.uri,
+      "only has one image, rendering without carousel"
+    );
+    return renderOriginalImage(workOriginalImages[0]);
+  }
+
   return (
     <Carousel
       activeIndex={activeIndex}
@@ -117,7 +122,7 @@ export const WorkImagesCarousel: React.FunctionComponent<{
       {/*  onClickHandler={goToIndex}*/}
       {/*/>*/}
       {workOriginalImages.map(originalImage => {
-        const renderedOriginalImage = renderWorkOriginalImage(originalImage);
+        const renderedOriginalImage = renderOriginalImage(originalImage);
         if (!renderedOriginalImage) {
           return null;
         }
