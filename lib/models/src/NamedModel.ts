@@ -1,6 +1,7 @@
 import {NamedNode} from "n3";
 import {Model} from "./Model";
 import {Rights} from "./Rights";
+import {DCTERMS} from "./vocabularies";
 
 export class NamedModel extends Model {
   get node(): NamedNode {
@@ -22,5 +23,21 @@ export class NamedModel extends Model {
 
   get uri(): string {
     return this.node.value;
+  }
+
+  protected get _wikidataConceptUri(): string | null {
+    for (const relationObject of this.store.getObjects(
+      this.node,
+      DCTERMS.relation,
+      null
+    )) {
+      if (relationObject.termType !== "NamedNode") {
+        continue;
+      }
+      if (relationObject.value.startsWith("http://www.wikidata.org/entity/")) {
+        return relationObject.value;
+      }
+    }
+    return null;
   }
 }

@@ -80,6 +80,17 @@ export class Model {
     return this.optionalLiteral(property)?.value ?? null;
   }
 
+  protected optionalStringOrUri(property: NamedNode): string | null {
+    for (const object of this.store.getObjects(this.node, property, null)) {
+      switch (object.termType) {
+        case "Literal":
+        case "NamedNode":
+          return object.value;
+      }
+    }
+    return null;
+  }
+
   protected get _properties(): readonly Property[] {
     const properties: Property[] = [];
     for (const quad of this.store.getQuads(this.node, null, null, null)) {

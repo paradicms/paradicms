@@ -17,11 +17,19 @@ export class Agent extends NamedModel {
     return this.images.filter(image => image.isOriginal);
   }
 
+  get page(): string | null {
+    return this.optionalStringOrUri(FOAF.page);
+  }
+
   thumbnail(selector: ThumbnailSelector): Image | null {
     return selectThumbnail(this.images, selector);
   }
 
   toString() {
     return this.name;
+  }
+
+  get wikidataConceptUri(): string | null {
+    return this._wikidataConceptUri;
   }
 }

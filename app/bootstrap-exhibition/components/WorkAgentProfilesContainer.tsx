@@ -12,7 +12,14 @@ export const WorkAgentProfilesContainer: React.FunctionComponent<{
           <Col xs={12}>
             <Card className="text-center">
               <CardHeader tag="h6">
-                {workAgentProfile.role}:&nbsp;{workAgentProfile.agent.name}
+                {workAgentProfile.role}:&nbsp;
+                {workAgentProfile.href ? (
+                  <a href={workAgentProfile.href}>
+                    {workAgentProfile.agent.name}
+                  </a>
+                ) : (
+                  <span>{workAgentProfile.agent.name}</span>
+                )}
               </CardHeader>
               <CardBody>
                 <img

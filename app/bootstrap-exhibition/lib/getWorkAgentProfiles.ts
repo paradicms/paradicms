@@ -15,12 +15,14 @@ export const getWorkAgentProfiles = (kwds: {
 
   const creator = rights?.creator;
   if (creator && creator instanceof Agent) {
-    const thumbnail = (creator as Agent).thumbnail({
+    const creatorAgent = creator as Agent;
+    const thumbnail = creatorAgent.thumbnail({
       targetDimensions: thumbnailTargetDimensions,
     });
     if (thumbnail) {
       result.push({
-        agent: creator as Agent,
+        agent: creatorAgent,
+        href: creatorAgent.page ?? creatorAgent.wikidataConceptUri ?? null,
         role: "Creator",
         thumbnail,
         thumbnailTargetDimensions,
