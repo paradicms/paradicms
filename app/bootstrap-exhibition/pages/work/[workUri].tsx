@@ -175,7 +175,9 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     <Layout
       collection={collection}
       configuration={configuration}
-      work={currentWork}
+      currentWork={currentWork}
+      nextWork={nextWorkUri ? {uri: nextWorkUri} : undefined}
+      previousWork={previousWorkUri ? {uri: previousWorkUri} : undefined}
     >
       <Hammer onSwipeLeft={onGoToPreviousWork} onSwipeRight={onGoToNextWork}>
         <div>
@@ -229,7 +231,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                   </Col>
                 ) : null}
                 <Col
-                  className="d-flex justify-content-center px-0 pt-2"
+                  className="d-flex justify-content-center px-0"
                   xs={12}
                   sm={12}
                   lg={leftColNavTabs.length > 0 ? 4 : 12}
@@ -237,7 +239,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                 >
                   <Container fluid>
                     <Row>
-                      <Col className="p-0" xs={12}>
+                      <Col className="px-0 text-center" xs={12}>
                         <h1>{currentWork.title}</h1>
                       </Col>
                     </Row>
@@ -256,7 +258,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                 </Col>
               </Row>
               {currentImageRights || currentWorkRights ? (
-                <Row>
+                <Row className="mt-2">
                   <Col style={{textAlign: "center"}} xs={12}>
                     {currentImageRights ? (
                       <RightsParagraph
