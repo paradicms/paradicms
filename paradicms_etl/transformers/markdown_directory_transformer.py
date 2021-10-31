@@ -23,6 +23,7 @@ from paradicms_etl.models.dublin_core_property_definitions import (
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.markdown_directory import MarkdownDirectory
+from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -50,6 +51,7 @@ def _create_namespaces_by_prefix_default() -> Dict[str, rdflib.Namespace]:
 _COLLECTION_MODEL_TYPE = "collection"
 _IMAGE_MODEL_TYPE = "image"
 _INSTITUTION_MODEL_TYPE = "institution"
+_ORGANIZATION_MODEL_TYPE = "organization"
 _PERSON_MODEL_TYPE = "person"
 _WORK_MODEL_TYPE = "work"
 
@@ -342,6 +344,7 @@ class MarkdownDirectoryTransformer(_Transformer):
         __MODEL_CLASSES_BY_TYPE[_IMAGE_MODEL_TYPE] = Image
         __MODEL_CLASSES_BY_TYPE[_INSTITUTION_MODEL_TYPE] = Institution
         __MODEL_CLASSES_BY_TYPE[_PERSON_MODEL_TYPE] = Person
+        __MODEL_CLASSES_BY_TYPE[_ORGANIZATION_MODEL_TYPE] = Organization
         __MODEL_CLASSES_BY_TYPE[_WORK_MODEL_TYPE] = Work
 
         def __init__(
