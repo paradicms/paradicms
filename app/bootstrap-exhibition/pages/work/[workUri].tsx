@@ -114,7 +114,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   const leftColNavTabs: {content: React.ReactNode; title: string}[] = [];
   if (currentWork.images.length > 0) {
     leftColNavTabs.push({
-      title: currentWork.title,
+      title: "Images",
       content: (
         <div className="text-center">
           <WorkImagesCarousel
