@@ -126,6 +126,9 @@ class TestDataPipeline(_Pipeline):
                 agents.append(
                     Organization.from_fields(
                         name=f"Organization {organization_i}",
+                        page=URIRef(
+                            f"http://example.com/organization{organization_i}page"
+                        ),
                         uri=URIRef(f"http://example.com/organization{organization_i}"),
                     )
                 )
@@ -136,6 +139,7 @@ class TestDataPipeline(_Pipeline):
                         family_name=str(person_i),
                         given_name="Person",
                         name=f"Person {person_i}",
+                        page=URIRef(f"http://example.com/person{person_i}page"),
                         sort_name=f"{person_i}, Person",
                         uri=URIRef(f"http://example.com/person{person_i}"),
                     )

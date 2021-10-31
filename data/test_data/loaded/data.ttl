@@ -3996,37 +3996,43 @@ vra:worktype a paradicms:PropertyDefinition ;
         <http://i.creativecommons.org/l/by/3.0/88x31.png> .
 
 <http://example.com/organization4> a paradicms:Organization ;
-    foaf:name "Organization 4" .
+    foaf:name "Organization 4" ;
+    foaf:page <http://example.com/organization4page> .
 
 <http://example.com/person0> a paradicms:Person ;
     contact:sortName "0, Person" ;
     foaf:familyName "0" ;
     foaf:givenName "Person" ;
-    foaf:name "Person 0" .
+    foaf:name "Person 0" ;
+    foaf:page <http://example.com/person0page> .
 
 <http://example.com/person1> a paradicms:Person ;
     contact:sortName "1, Person" ;
     foaf:familyName "1" ;
     foaf:givenName "Person" ;
-    foaf:name "Person 1" .
+    foaf:name "Person 1" ;
+    foaf:page <http://example.com/person1page> .
 
 <http://example.com/person2> a paradicms:Person ;
     contact:sortName "2, Person" ;
     foaf:familyName "2" ;
     foaf:givenName "Person" ;
-    foaf:name "Person 2" .
+    foaf:name "Person 2" ;
+    foaf:page <http://example.com/person2page> .
 
 <http://example.com/person3> a paradicms:Person ;
     contact:sortName "3, Person" ;
     foaf:familyName "3" ;
     foaf:givenName "Person" ;
-    foaf:name "Person 3" .
+    foaf:name "Person 3" ;
+    foaf:page <http://example.com/person3page> .
 
 <http://example.com/person4> a paradicms:Person ;
     contact:sortName "4, Person" ;
     foaf:familyName "4" ;
     foaf:givenName "Person" ;
-    foaf:name "Person 4" .
+    foaf:name "Person 4" ;
+    foaf:page <http://example.com/person4page> .
 
 <https://place-hold.it/600x600?text=Cultural%20context%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
@@ -10333,16 +10339,20 @@ vra:material a paradicms:PropertyDefinition ;
     foaf:name "Institution1" .
 
 <http://example.com/organization0> a paradicms:Organization ;
-    foaf:name "Organization 0" .
+    foaf:name "Organization 0" ;
+    foaf:page <http://example.com/organization0page> .
 
 <http://example.com/organization1> a paradicms:Organization ;
-    foaf:name "Organization 1" .
+    foaf:name "Organization 1" ;
+    foaf:page <http://example.com/organization1page> .
 
 <http://example.com/organization2> a paradicms:Organization ;
-    foaf:name "Organization 2" .
+    foaf:name "Organization 2" ;
+    foaf:page <http://example.com/organization2page> .
 
 <http://example.com/organization3> a paradicms:Organization ;
-    foaf:name "Organization 3" .
+    foaf:name "Organization 3" ;
+    foaf:page <http://example.com/organization3page> .
 
 <http://creativecommons.org/licenses/nc/1.0/> a creativecommons:License,
         paradicms:License ;

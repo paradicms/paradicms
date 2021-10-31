@@ -16,6 +16,7 @@ class Person(_Agent):
         uri: URIRef,
         family_name: Optional[str] = None,
         given_name: Optional[str] = None,
+        page: Optional[URIRef] = None,
         sort_name: Optional[str] = None,
     ):
         resource = cls._create_resource(identifier=uri)
@@ -23,6 +24,8 @@ class Person(_Agent):
             resource.add(FOAF.familyName, Literal(family_name))
         if given_name is not None:
             resource.add(FOAF.givenName, Literal(given_name))
+        if page is not None:
+            resource.add(FOAF.page, page)
         resource.add(FOAF.name, Literal(name))
         if sort_name is not None:
             resource.add(CONTACT.sortName, Literal(sort_name))
