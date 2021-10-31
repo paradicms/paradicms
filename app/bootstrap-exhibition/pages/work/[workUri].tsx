@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useMemo, useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import {Layout} from "components/Layout";
 import {
   Configuration,
@@ -16,16 +16,12 @@ import {
   readDatasetFile,
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
-import Link from "next/link";
 import {
   Col,
   Container,
   Nav,
   NavItem,
   NavLink,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
   Row,
   TabContent,
   TabPane,
@@ -39,6 +35,8 @@ import {
 import {RightsParagraph} from "../../components/RightsParagraph";
 import {getWorkAgentProfiles} from "../../lib/getWorkAgentProfiles";
 import {WorkAgentProfilesContainer} from "../../components/WorkAgentProfilesContainer";
+import Hammer from "react-hammerjs";
+import {useRouter} from "next/router";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 const RIGHTS_STYLE: React.CSSProperties = {
@@ -63,6 +61,8 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   nextWorkUri,
   previousWorkUri,
 }) => {
+  const router = useRouter();
+
   const dataset = useMemo<Dataset>(() => Dataset.parse(datasetString), [
     datasetString,
   ]);
@@ -75,14 +75,6 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     dataset,
   ]);
   const institution = useMemo(() => collection.institution, [collection]);
-  const nextWork = useMemo(
-    () => (nextWorkUri ? dataset.workByUri(nextWorkUri) : null),
-    [nextWorkUri, dataset]
-  );
-  const previousWork = useMemo(
-    () => (previousWorkUri ? dataset.workByUri(previousWorkUri) : null),
-    [nextWorkUri, dataset]
-  );
 
   const currentWorkAbstract: string | null = useMemo(() => {
     if (currentWork.abstract) {
@@ -149,134 +141,144 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 
   const [activeLeftColNavTabIndex, setActiveLeftColNavTabIndex] = useState(0);
 
+  const onGoToNextWork = useCallback(() => {
+    if (nextWorkUri) {
+      router.push(Hrefs.work(nextWorkUri));
+    }
+  }, [nextWorkUri, router]);
+
+  const onGoToPreviousWork = useCallback(() => {
+    if (previousWorkUri) {
+      router.push(Hrefs.work(previousWorkUri));
+    }
+  }, [previousWorkUri, router]);
+
+  const onKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      switch (e.keyCode) {
+        case 37:
+          // Left arrow
+          onGoToPreviousWork();
+          break;
+        case 39:
+          // Right arrow
+          onGoToNextWork();
+          break;
+        default:
+          break;
+      }
+    },
+    [onGoToNextWork, onGoToPreviousWork]
+  );
+
   return (
     <Layout
       collection={collection}
       configuration={configuration}
       work={currentWork}
     >
-      <Container fluid>
-        <Row>
-          {leftColNavTabs.length > 0 ? (
-            <Col
-              xs={12}
-              sm={12}
-              lg={8}
-              xl={6}
-              style={{minHeight: 600, minWidth: 600}}
-            >
-              {leftColNavTabs.length === 1 ? (
-                leftColNavTabs[0].content
-              ) : (
-                <>
-                  <Nav tabs>
-                    {leftColNavTabs.map((navTab, navTabIndex) => (
-                      <NavItem key={navTabIndex}>
-                        <NavLink
-                          className={
-                            activeLeftColNavTabIndex === navTabIndex
-                              ? "active"
-                              : undefined
-                          }
-                          onClick={() =>
-                            setActiveLeftColNavTabIndex(navTabIndex)
-                          }
-                        >
-                          {navTab.title}
-                        </NavLink>
-                      </NavItem>
-                    ))}
-                  </Nav>
-                  <TabContent activeTab={activeLeftColNavTabIndex.toString()}>
-                    {leftColNavTabs.map((navTab, navTabIndex) => (
-                      <TabPane key={navTabIndex} tabId={navTabIndex.toString()}>
-                        <div className="mt-2">{navTab.content}</div>
-                      </TabPane>
-                    ))}
-                  </TabContent>
-                </>
-              )}
-            </Col>
-          ) : null}
-          <Col
-            className="d-flex justify-content-center px-0 pt-2"
-            xs={12}
-            sm={12}
-            lg={leftColNavTabs.length > 0 ? 4 : 12}
-            xl={leftColNavTabs.length > 0 ? 6 : 12}
-          >
+      <Hammer onSwipeLeft={onGoToPreviousWork} onSwipeRight={onGoToNextWork}>
+        <div>
+          <div onKeyDown={onKeyDown} style={{outline: "none"}} tabIndex={0}>
             <Container fluid>
               <Row>
-                <Col className="p-0" xs={12}>
-                  <h1>{currentWork.title}</h1>
+                {leftColNavTabs.length > 0 ? (
+                  <Col
+                    xs={12}
+                    sm={12}
+                    lg={8}
+                    xl={6}
+                    style={{minHeight: 600, minWidth: 600}}
+                  >
+                    {leftColNavTabs.length === 1 ? (
+                      leftColNavTabs[0].content
+                    ) : (
+                      <>
+                        <Nav tabs>
+                          {leftColNavTabs.map((navTab, navTabIndex) => (
+                            <NavItem key={navTabIndex}>
+                              <NavLink
+                                className={
+                                  activeLeftColNavTabIndex === navTabIndex
+                                    ? "active"
+                                    : undefined
+                                }
+                                onClick={() =>
+                                  setActiveLeftColNavTabIndex(navTabIndex)
+                                }
+                              >
+                                {navTab.title}
+                              </NavLink>
+                            </NavItem>
+                          ))}
+                        </Nav>
+                        <TabContent
+                          activeTab={activeLeftColNavTabIndex.toString()}
+                        >
+                          {leftColNavTabs.map((navTab, navTabIndex) => (
+                            <TabPane
+                              key={navTabIndex}
+                              tabId={navTabIndex.toString()}
+                            >
+                              <div className="mt-2">{navTab.content}</div>
+                            </TabPane>
+                          ))}
+                        </TabContent>
+                      </>
+                    )}
+                  </Col>
+                ) : null}
+                <Col
+                  className="d-flex justify-content-center px-0 pt-2"
+                  xs={12}
+                  sm={12}
+                  lg={leftColNavTabs.length > 0 ? 4 : 12}
+                  xl={leftColNavTabs.length > 0 ? 6 : 12}
+                >
+                  <Container fluid>
+                    <Row>
+                      <Col className="p-0" xs={12}>
+                        <h1>{currentWork.title}</h1>
+                      </Col>
+                    </Row>
+                    {currentWorkAbstract ? (
+                      <Row className="mt-2">
+                        <Col
+                          className="pl-0 text-wrap"
+                          xs={12}
+                          dangerouslySetInnerHTML={{
+                            __html: currentWorkAbstract,
+                          }}
+                        ></Col>
+                      </Row>
+                    ) : null}
+                  </Container>
                 </Col>
               </Row>
-              {currentWorkAbstract ? (
-                <Row className="mt-2">
-                  <Col
-                    className="pl-0 text-wrap"
-                    xs={12}
-                    dangerouslySetInnerHTML={{__html: currentWorkAbstract}}
-                  ></Col>
+              {currentImageRights || currentWorkRights ? (
+                <Row>
+                  <Col style={{textAlign: "center"}} xs={12}>
+                    {currentImageRights ? (
+                      <RightsParagraph
+                        material="Image"
+                        rights={currentImageRights}
+                        style={RIGHTS_STYLE}
+                      />
+                    ) : null}
+                    {currentWorkRights ? (
+                      <RightsParagraph
+                        material="Text"
+                        rights={currentWorkRights}
+                        style={RIGHTS_STYLE}
+                      />
+                    ) : null}
+                  </Col>
                 </Row>
               ) : null}
             </Container>
-          </Col>
-        </Row>
-        {nextWork || previousWork ? (
-          <Row className="mt-4">
-            <Col xs={12}>
-              <Pagination
-                size="lg"
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  width: "100%",
-                }}
-              >
-                {previousWork ? (
-                  <PaginationItem>
-                    <Link href={Hrefs.work(previousWork.uri)} passHref>
-                      <PaginationLink previous>
-                        {"‹ " + previousWork.title}
-                      </PaginationLink>
-                    </Link>
-                  </PaginationItem>
-                ) : null}
-                {nextWork ? (
-                  <PaginationItem>
-                    <Link href={Hrefs.work(nextWork.uri)} passHref>
-                      <PaginationLink next>
-                        {nextWork.title + " ›"}
-                      </PaginationLink>
-                    </Link>
-                  </PaginationItem>
-                ) : null}
-              </Pagination>
-            </Col>
-          </Row>
-        ) : null}
-        {currentImageRights || currentWorkRights ? (
-          <Row>
-            <Col style={{textAlign: "center"}} xs={12}>
-              {currentImageRights ? (
-                <RightsParagraph
-                  material="Image"
-                  rights={currentImageRights}
-                  style={RIGHTS_STYLE}
-                />
-              ) : null}
-              {currentWorkRights ? (
-                <RightsParagraph
-                  material="Text"
-                  rights={currentWorkRights}
-                  style={RIGHTS_STYLE}
-                />
-              ) : null}
-            </Col>
-          </Row>
-        ) : null}
-      </Container>
+          </div>
+        </div>
+      </Hammer>
     </Layout>
   );
 };
