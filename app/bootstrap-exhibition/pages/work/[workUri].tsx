@@ -124,12 +124,14 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     leftColNavTabs.push({
       title: currentWork.title,
       content: (
-        <WorkImagesCarousel
-          hideImageRights={true}
-          key={leftColNavTabs.length}
-          onShowImage={setCurrentImage}
-          work={currentWork}
-        />
+        <div className="text-center">
+          <WorkImagesCarousel
+            hideImageRights={true}
+            key={leftColNavTabs.length}
+            onShowImage={setCurrentImage}
+            work={currentWork}
+          />
+        </div>
       ),
     });
   }
