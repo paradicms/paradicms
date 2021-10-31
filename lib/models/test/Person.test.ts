@@ -24,6 +24,10 @@ describe("Person", () => {
     expect(sut.name).to.not.be.empty;
   });
 
+  it("should get the person's page", () => {
+    expect(sut.page).to.not.be.empty;
+  });
+
   it("should get the person's sort name", () => {
     expect(sut.sortName).to.not.be.empty;
   });

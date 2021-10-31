@@ -40,7 +40,7 @@ export class Work extends NamedModel {
   }
 
   get page(): string | null {
-    return this.optionalString(FOAF.page);
+    return this.optionalStringOrUri(FOAF.page);
   }
 
   get properties(): readonly Property[] {
@@ -57,5 +57,9 @@ export class Work extends NamedModel {
 
   get title(): string {
     return this.requiredString(DCTERMS.title);
+  }
+
+  get wikidataConceptUri(): string | null {
+    return this._wikidataConceptUri;
   }
 }

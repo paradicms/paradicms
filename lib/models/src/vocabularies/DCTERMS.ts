@@ -8,6 +8,7 @@ export class DCTERMS {
   static description = DCTERMS.NS("description");
   static identifier = DCTERMS.NS("identifier");
   static license = DCTERMS.NS("license");
+  static relation = DCTERMS.NS("relation");
   static rights = DCTERMS.NS("rights");
   static rightsHolder = DCTERMS.NS("rightsHolder");
   static title = DCTERMS.NS("title");

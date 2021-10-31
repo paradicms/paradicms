@@ -1,13 +1,13 @@
 import * as React from "react";
-import {useMemo} from "react";
+import {useMemo, useState} from "react";
 import {Layout} from "components/Layout";
 import {
   Configuration,
   Dataset,
   DataSubsetter,
   DCTERMS,
-  License,
-  RightsStatement,
+  Image,
+  Rights,
 } from "@paradicms/models";
 import {
   decodeFileName,
@@ -20,17 +20,31 @@ import Link from "next/link";
 import {
   Col,
   Container,
+  Nav,
+  NavItem,
+  NavLink,
   Pagination,
   PaginationItem,
   PaginationLink,
   Row,
-  Table,
+  TabContent,
+  TabPane,
 } from "reactstrap";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
-import {WorkImagesCarousel} from "@paradicms/bootstrap";
+import {
+  thumbnailTargetDimensions,
+  WorkImagesCarousel,
+} from "@paradicms/bootstrap";
+import {RightsParagraph} from "../../components/RightsParagraph";
+import {getWorkAgentProfiles} from "../../lib/getWorkAgentProfiles";
+import {WorkAgentProfilesContainer} from "../../components/WorkAgentProfilesContainer";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
+const RIGHTS_STYLE: React.CSSProperties = {
+  fontSize: "x-small",
+  marginBottom: 0,
+};
 
 interface StaticProps {
   readonly collectionUri: string;
@@ -40,23 +54,6 @@ interface StaticProps {
   readonly nextWorkUri: string | null;
   readonly previousWorkUri: string | null;
 }
-
-const RightsTableRow: React.FunctionComponent<{
-  label: string;
-  value: React.ReactNode;
-}> = ({label, value}) => {
-  if (!value) {
-    return null;
-  }
-  return (
-    <tr>
-      <td>
-        <strong>{label}</strong>
-      </td>
-      <td>{value}</td>
-    </tr>
-  );
-};
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
@@ -87,7 +84,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     [nextWorkUri, dataset]
   );
 
-  const abstract: string | null = useMemo(() => {
+  const currentWorkAbstract: string | null = useMemo(() => {
     if (currentWork.abstract) {
       return currentWork.abstract;
     } else if (currentWork.properties) {
@@ -102,32 +99,55 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     }
   }, [currentWork]);
 
-  const rights = useMemo(
+  const currentWorkRights: Rights | null = useMemo(
     () => currentWork.rights ?? institution.rights ?? null,
     [currentWork, institution]
   );
 
-  const licenseValue = useMemo(() => {
-    if (!rights || !rights.license) {
-      return null;
-    }
-    if (typeof rights.license === "string") {
-      return rights.license as string;
-    }
-    const license = rights.license as License;
-    return <a href={license.uri}>{license.title}</a>;
-  }, [rights]);
+  const currentWorkAgentProfiles = useMemo(
+    () =>
+      getWorkAgentProfiles({
+        institution,
+        work: currentWork,
+      }),
+    [currentWork, institution]
+  );
 
-  const rightsStatementValue = useMemo(() => {
-    if (!rights || !rights.statement) {
-      return null;
-    }
-    if (typeof rights.statement === "string") {
-      return rights.statement as string;
-    }
-    const rightsStatement = rights.statement as RightsStatement;
-    return <a href={rightsStatement.uri}>{rightsStatement.prefLabel}</a>;
-  }, [rights]);
+  const [currentImage, setCurrentImage] = useState<Image | null>(null);
+
+  const currentImageRights = useMemo(() => currentImage?.rights ?? null, [
+    currentImage,
+  ]);
+
+  const leftColNavTabs: {content: React.ReactNode; title: string}[] = [];
+  if (currentWork.images.length > 0) {
+    leftColNavTabs.push({
+      title: currentWork.title,
+      content: (
+        <div className="text-center">
+          <WorkImagesCarousel
+            hideImageRights={true}
+            key={leftColNavTabs.length}
+            onShowImage={setCurrentImage}
+            work={currentWork}
+          />
+        </div>
+      ),
+    });
+  }
+  if (currentWorkAgentProfiles.length > 0) {
+    leftColNavTabs.push({
+      title: "People and Organizations",
+      content: (
+        <WorkAgentProfilesContainer
+          key={leftColNavTabs.length}
+          workAgentProfiles={currentWorkAgentProfiles}
+        />
+      ),
+    });
+  }
+
+  const [activeLeftColNavTabIndex, setActiveLeftColNavTabIndex] = useState(0);
 
   return (
     <Layout
@@ -137,24 +157,53 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     >
       <Container fluid>
         <Row>
-          {currentWork.images.length > 0 ? (
+          {leftColNavTabs.length > 0 ? (
             <Col
-              className="d-flex justify-content-center pl-0 pr-0"
               xs={12}
               sm={12}
               lg={8}
               xl={6}
               style={{minHeight: 600, minWidth: 600}}
             >
-              <WorkImagesCarousel work={currentWork} />
+              {leftColNavTabs.length === 1 ? (
+                leftColNavTabs[0].content
+              ) : (
+                <>
+                  <Nav tabs>
+                    {leftColNavTabs.map((navTab, navTabIndex) => (
+                      <NavItem key={navTabIndex}>
+                        <NavLink
+                          className={
+                            activeLeftColNavTabIndex === navTabIndex
+                              ? "active"
+                              : undefined
+                          }
+                          onClick={() =>
+                            setActiveLeftColNavTabIndex(navTabIndex)
+                          }
+                        >
+                          {navTab.title}
+                        </NavLink>
+                      </NavItem>
+                    ))}
+                  </Nav>
+                  <TabContent activeTab={activeLeftColNavTabIndex.toString()}>
+                    {leftColNavTabs.map((navTab, navTabIndex) => (
+                      <TabPane key={navTabIndex} tabId={navTabIndex.toString()}>
+                        <div className="mt-2">{navTab.content}</div>
+                      </TabPane>
+                    ))}
+                  </TabContent>
+                </>
+              )}
             </Col>
           ) : null}
           <Col
-            className="d-flex justify-content-center pl-0 pr-0 pt-2"
+            className="d-flex justify-content-center px-0 pt-2"
             xs={12}
             sm={12}
-            lg={currentWork.images.length > 0 ? 4 : 12}
-            xl={currentWork.images.length > 0 ? 6 : 12}
+            lg={leftColNavTabs.length > 0 ? 4 : 12}
+            xl={leftColNavTabs.length > 0 ? 6 : 12}
           >
             <Container fluid>
               <Row>
@@ -162,39 +211,13 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                   <h1>{currentWork.title}</h1>
                 </Col>
               </Row>
-              {abstract ? (
+              {currentWorkAbstract ? (
                 <Row className="mt-2">
                   <Col
-                    className="p-0 text-wrap"
+                    className="pl-0 text-wrap"
                     xs={12}
-                    dangerouslySetInnerHTML={{__html: abstract}}
+                    dangerouslySetInnerHTML={{__html: currentWorkAbstract}}
                   ></Col>
-                </Row>
-              ) : null}
-              {rights ? (
-                <Row className="mt-4">
-                  <Col className="p-0" xs={12}>
-                    <Table striped>
-                      <tbody>
-                        {rights ? (
-                          <>
-                            <RightsTableRow
-                              label="Rights statement"
-                              value={rightsStatementValue}
-                            />
-                            <RightsTableRow
-                              label="Rights holder"
-                              value={rights?.holder}
-                            />
-                            <RightsTableRow
-                              label="License"
-                              value={licenseValue}
-                            />
-                          </>
-                        ) : null}
-                      </tbody>
-                    </Table>
-                  </Col>
                 </Row>
               ) : null}
             </Container>
@@ -230,6 +253,26 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                   </PaginationItem>
                 ) : null}
               </Pagination>
+            </Col>
+          </Row>
+        ) : null}
+        {currentImageRights || currentWorkRights ? (
+          <Row>
+            <Col style={{textAlign: "center"}} xs={12}>
+              {currentImageRights ? (
+                <RightsParagraph
+                  material="Image"
+                  rights={currentImageRights}
+                  style={RIGHTS_STYLE}
+                />
+              ) : null}
+              {currentWorkRights ? (
+                <RightsParagraph
+                  material="Text"
+                  rights={currentWorkRights}
+                  style={RIGHTS_STYLE}
+                />
+              ) : null}
             </Col>
           </Row>
         ) : null}
@@ -302,6 +345,9 @@ export const getStaticProps: GetStaticProps = async ({
       currentWorkUri: workUri,
       datasetString: new DataSubsetter(dataset)
         .worksDataset(workUris, {
+          agent: {
+            thumbnail: {targetDimensions: thumbnailTargetDimensions},
+          },
           allImages: true,
           collections: {},
           institution: {},

@@ -16,6 +16,10 @@ describe("Organization", () => {
     expect(sut.name).to.not.be.empty;
   });
 
+  it("should get the organization's page", () => {
+    expect(sut.page).to.not.be.empty;
+  });
+
   it("should get the organization's uri", () => {
     expect(sut.uri).to.not.be.empty;
   });
