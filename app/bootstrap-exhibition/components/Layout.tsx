@@ -26,7 +26,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         href={configuration.bootstrapStylesheetHref ?? STYLESHEET_HREF_DEFAULT}
       />
     </Head>
-    <Container fluid>
+    <Container fluid style={{minHeight: "100vh"}}>
       <Row>
         <Col className="p-0">
           <Navbar className="p-0">
