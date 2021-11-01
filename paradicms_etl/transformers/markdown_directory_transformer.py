@@ -1,5 +1,7 @@
+from dataclasses import dataclass
+from enum import Enum
 from logging import Logger
-from typing import Dict, Optional, Tuple, Union
+from typing import Dict, Optional, Tuple, Type, Union
 from urllib.parse import quote
 
 import rdflib.namespace
@@ -47,13 +49,15 @@ def _create_namespaces_by_prefix_default() -> Dict[str, rdflib.Namespace]:
     return namespaces_by_prefix
 
 
-# Constants
-_COLLECTION_MODEL_TYPE = "collection"
-_IMAGE_MODEL_TYPE = "image"
-_INSTITUTION_MODEL_TYPE = "institution"
-_ORGANIZATION_MODEL_TYPE = "organization"
-_PERSON_MODEL_TYPE = "person"
-_WORK_MODEL_TYPE = "work"
+__MODEL_TYPES = (Collection, Image, Institution, Organization, Person, Work)
+
+__MODEL_TYPES_BY_NAME = {
+    model_type.__name__.lower(): model_type for model_type in __MODEL_TYPES
+}
+
+
+def _model_type_by_name(name: str):
+    return __MODEL_TYPES_BY_NAME[name.lower()]
 
 
 class MarkdownDirectoryTransformer(_Transformer):
@@ -89,7 +93,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             default_namespace: rdflib.Namespace,
             markdown_it: MarkdownIt,
             model_id: str,
-            model_type: str,
+            model_type: Type[_NamedModel],
             namespaces_by_prefix: Dict[str, rdflib.Namespace],
             pipeline_id: str,
         ):
@@ -131,7 +135,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                         if len(uri_value_split) == 3:
                             return MarkdownDirectoryTransformer.model_uri(
                                 pipeline_id=self.__pipeline_id,
-                                model_type=uri_value_split[1],
+                                model_type=_model_type_by_name(uri_value_split[1]),
                                 model_id=uri_value_split[2],
                             )
                     return URIRef(uri_value)
@@ -316,7 +320,7 @@ class MarkdownDirectoryTransformer(_Transformer):
     def default_collection_uri(*, markdown_directory_name: str, pipeline_id: str):
         return MarkdownDirectoryTransformer.model_uri(
             pipeline_id=pipeline_id,
-            model_type=_COLLECTION_MODEL_TYPE,
+            model_type=Collection,
             model_id=markdown_directory_name,
         )
 
@@ -324,29 +328,22 @@ class MarkdownDirectoryTransformer(_Transformer):
     def default_institution_uri(*, pipeline_id: str):
         return MarkdownDirectoryTransformer.model_uri(
             pipeline_id=pipeline_id,
-            model_type=_INSTITUTION_MODEL_TYPE,
+            model_type=Institution,
             model_id=MarkdownDirectoryTransformer._DEFAULT_INSTITUTION_MODEL_ID,
         )
 
     @staticmethod
-    def model_uri(*, pipeline_id: str, model_type: str, model_id: str) -> URIRef:
+    def model_uri(
+        *, pipeline_id: str, model_type: Type[_NamedModel], model_id: str
+    ) -> URIRef:
         return URIRef(
-            f"urn:markdown:{pipeline_id}:{quote(model_type)}:{quote(model_id)}"
+            f"urn:markdown:{pipeline_id}:{quote(model_type.__name__.lower())}:{quote(model_id)}"
         )
 
     # Rather than managing the state of the transform as variable assignments in a particular order,
     # create a class instance per transform invocation.
     # The state includes things like the default institution, which is synthesized if needed.
     class __TransformInvocation:
-        # Constants
-        __MODEL_CLASSES_BY_TYPE = {}
-        __MODEL_CLASSES_BY_TYPE[_COLLECTION_MODEL_TYPE] = Collection
-        __MODEL_CLASSES_BY_TYPE[_IMAGE_MODEL_TYPE] = Image
-        __MODEL_CLASSES_BY_TYPE[_INSTITUTION_MODEL_TYPE] = Institution
-        __MODEL_CLASSES_BY_TYPE[_PERSON_MODEL_TYPE] = Person
-        __MODEL_CLASSES_BY_TYPE[_ORGANIZATION_MODEL_TYPE] = Organization
-        __MODEL_CLASSES_BY_TYPE[_WORK_MODEL_TYPE] = Work
-
         def __init__(
             self,
             *,
@@ -370,16 +367,19 @@ class MarkdownDirectoryTransformer(_Transformer):
             self.__untransformed_image_file_entries_by_model_type = {}
             for image_file_entry in markdown_directory.image_file_entries:
                 self.__untransformed_image_file_entries_by_model_type.setdefault(
-                    image_file_entry.model_type, {}
+                    _model_type_by_name(image_file_entry.model_type), {}
                 )[image_file_entry.model_id] = image_file_entry
             self.__untransformed_markdown_file_entries_by_model_type = {}
             for markdown_file_entry in markdown_directory.markdown_file_entries:
                 self.__untransformed_markdown_file_entries_by_model_type.setdefault(
-                    markdown_file_entry.model_type, []
+                    _model_type_by_name(markdown_file_entry.model_type), []
                 ).append(markdown_file_entry)
 
         def __buffer_transformed_model(
-            self, *, model_id: str, model_type: str, transformed_model: _NamedModel
+            self,
+            *,
+            model_id: str,
+            transformed_model: _NamedModel,
         ):
             assert (
                 transformed_model.uri not in self.__transformed_models_by_uri
@@ -387,7 +387,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             self.__transformed_models_by_uri[transformed_model.uri] = transformed_model
 
             transformed_models_by_type = self.__transformed_models_by_type.setdefault(
-                model_type, {}
+                transformed_model.__class__, {}
             )
             assert model_id not in transformed_models_by_type
             transformed_models_by_type[model_id] = transformed_model
@@ -405,7 +405,7 @@ class MarkdownDirectoryTransformer(_Transformer):
         def __get_or_synthesize_default_collection(self) -> Collection:
             if self.__default_collection is None:
                 model_id = self.__markdown_directory.name
-                model_type = _COLLECTION_MODEL_TYPE
+                model_type = Collection
                 self.__default_collection = Collection.from_fields(
                     institution_uri=self.__get_or_synthesize_default_institution().uri,
                     title=self.__markdown_directory.name,
@@ -416,7 +416,6 @@ class MarkdownDirectoryTransformer(_Transformer):
                 )
                 self.__buffer_transformed_model(
                     model_id=model_id,
-                    model_type=model_type,
                     transformed_model=self.__default_collection,
                 )
                 self.__logger.info("synthesized default collection %s", model_id)
@@ -425,7 +424,6 @@ class MarkdownDirectoryTransformer(_Transformer):
         def __get_or_synthesize_default_institution(self) -> Institution:
             if self.__default_institution is None:
                 model_id = MarkdownDirectoryTransformer._DEFAULT_INSTITUTION_MODEL_ID
-                model_type = _INSTITUTION_MODEL_TYPE
                 self.__default_institution = Institution.from_fields(
                     name="Default institution",
                     uri=MarkdownDirectoryTransformer.default_institution_uri(
@@ -434,7 +432,6 @@ class MarkdownDirectoryTransformer(_Transformer):
                 )
                 self.__buffer_transformed_model(
                     model_id=model_id,
-                    model_type=model_type,
                     transformed_model=self.__default_institution,
                 )
             return self.__default_institution
@@ -450,7 +447,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             for (
                 markdown_file_entry
             ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
-                _COLLECTION_MODEL_TYPE, tuple()
+                Collection, tuple()
             ):
                 collection_resource = self.__set_resource_institution_uri(
                     self.__transform_markdown_file_entry_to_resource(
@@ -465,7 +462,7 @@ class MarkdownDirectoryTransformer(_Transformer):
 
                 collection = self.__transform_resource_to_model(
                     model_resource=collection_resource,
-                    model_type=markdown_file_entry.model_type,
+                    model_type=_model_type_by_name(markdown_file_entry.model_type),
                 )
                 if self.__default_collection is None:
                     if self.__default_institution is not None:
@@ -487,7 +484,6 @@ class MarkdownDirectoryTransformer(_Transformer):
 
                 self.__buffer_transformed_model(
                     model_id=markdown_file_entry.model_id,
-                    model_type=markdown_file_entry.model_type,
                     transformed_model=collection,
                 )
 
@@ -495,7 +491,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             for (
                 markdown_file_entry
             ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
-                _IMAGE_MODEL_TYPE, tuple()
+                Image, tuple()
             ):
                 image_resource = self.__set_resource_institution_uri(
                     self.__transform_markdown_file_entry_to_resource(
@@ -510,7 +506,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                         model_type,
                         transformed_models_by_id,
                     ) in self.__transformed_models_by_type.items():
-                        if model_type == _IMAGE_MODEL_TYPE:
+                        if model_type == Image:
                             continue
                         transformed_model = transformed_models_by_id.get(
                             markdown_file_entry.model_id
@@ -538,7 +534,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                 if image.src is None:
                     image_file_entry = (
                         self.__untransformed_image_file_entries_by_model_type.get(
-                            markdown_file_entry.model_type, {}
+                            _model_type_by_name(markdown_file_entry.model_type), {}
                         ).pop(markdown_file_entry.model_id, None)
                     )
                     if image_file_entry is not None:
@@ -549,7 +545,6 @@ class MarkdownDirectoryTransformer(_Transformer):
 
                 self.__buffer_transformed_model(
                     model_id=markdown_file_entry.model_id,
-                    model_type=markdown_file_entry.model_type,
                     transformed_model=image,
                 )
 
@@ -589,14 +584,13 @@ class MarkdownDirectoryTransformer(_Transformer):
                     )
                     self.__buffer_transformed_model(
                         model_id=image_file_entry.model_id,
-                        model_type=_IMAGE_MODEL_TYPE,
                         transformed_model=Image.from_fields(
                             depicts_uri=transformed_model.uri,
                             src=image_file_entry.path.as_uri(),
                             uri=MarkdownDirectoryTransformer.model_uri(
                                 pipeline_id=self.__pipeline_id,
                                 model_id=image_file_entry.model_id,
-                                model_type=_IMAGE_MODEL_TYPE,
+                                model_type=Image,
                             ),
                         ),
                     )
@@ -605,7 +599,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             for (
                 markdown_file_entry
             ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
-                _INSTITUTION_MODEL_TYPE, tuple()
+                Institution, tuple()
             ):
                 institution_resource = self.__transform_markdown_file_entry_to_resource(
                     markdown_file_entry
@@ -618,7 +612,7 @@ class MarkdownDirectoryTransformer(_Transformer):
 
                 institution = self.__transform_resource_to_model(
                     model_resource=institution_resource,
-                    model_type=markdown_file_entry.model_type,
+                    model_type=Institution,
                 )
                 if self.__default_institution is None:
                     self.__default_institution = institution
@@ -628,7 +622,6 @@ class MarkdownDirectoryTransformer(_Transformer):
                     )
                 self.__buffer_transformed_model(
                     model_id=markdown_file_entry.model_id,
-                    model_type=markdown_file_entry.model_type,
                     transformed_model=institution,
                 )
 
@@ -639,7 +632,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                 markdown_file_entry.markdown_source,
                 default_namespace=self.__default_namespace,
                 model_id=markdown_file_entry.model_id,
-                model_type=markdown_file_entry.model_type,
+                model_type=_model_type_by_name(markdown_file_entry.model_type),
                 namespaces_by_prefix=self.__namespaces_by_prefix,
                 pipeline_id=self.__pipeline_id,
             )
@@ -650,7 +643,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             for (
                 markdown_file_entry
             ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
-                _WORK_MODEL_TYPE, tuple()
+                Work, tuple()
             ):
                 work_resource = self.__set_resource_institution_uri(
                     self.__transform_markdown_file_entry_to_resource(
@@ -669,11 +662,10 @@ class MarkdownDirectoryTransformer(_Transformer):
 
                 work_ = self.__transform_resource_to_model(
                     model_resource=work_resource,
-                    model_type=markdown_file_entry.model_type,
+                    model_type=Work,
                 )
                 self.__buffer_transformed_model(
                     model_id=markdown_file_entry.model_id,
-                    model_type=markdown_file_entry.model_type,
                     transformed_model=work_,
                 )
 
@@ -682,7 +674,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                 model_type,
                 markdown_file_entries,
             ) in self.__untransformed_markdown_file_entries_by_model_type.items():
-                if model_type == _IMAGE_MODEL_TYPE:
+                if model_type == Image:
                     continue
                 for markdown_file_entry in markdown_file_entries:
                     model_resource = self.__transform_markdown_file_entry_to_resource(
@@ -691,7 +683,9 @@ class MarkdownDirectoryTransformer(_Transformer):
                     try:
                         transformed_model = self.__transform_resource_to_model(
                             model_resource=model_resource,
-                            model_type=markdown_file_entry.model_type,
+                            model_type=_model_type_by_name(
+                                markdown_file_entry.model_type
+                            ),
                         )
                     except KeyError:
                         self.__logger.warning(
@@ -701,16 +695,13 @@ class MarkdownDirectoryTransformer(_Transformer):
 
                     self.__buffer_transformed_model(
                         model_id=markdown_file_entry.model_id,
-                        model_type=markdown_file_entry.model_type,
                         transformed_model=transformed_model,
                     )
 
         def __transform_resource_to_model(
-            self, *, model_resource: Resource, model_type: str
+            self, *, model_resource: Resource, model_type: Type[_NamedModel]
         ) -> _NamedModel:
-            model_class = self.__MODEL_CLASSES_BY_TYPE[model_type]
-            model = model_class.from_rdf(model_resource)
-            return model
+            return model_type.from_rdf(model_resource)
 
     def transform(self, markdown_directory: MarkdownDirectory):
         yield from CreativeCommonsLicenses.as_tuple()
