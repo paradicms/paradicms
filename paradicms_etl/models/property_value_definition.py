@@ -7,6 +7,11 @@ from paradicms_etl.models._named_model import _NamedModel
 
 
 class PropertyValueDefinition(_NamedModel):
+    def __init__(self, *args, **kwds):
+        _NamedModel.__init__(self, *args, **kwds)
+        self.label
+        self.property_uris
+
     @classmethod
     def from_fields(
         cls,

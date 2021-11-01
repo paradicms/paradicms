@@ -9,7 +9,7 @@ from markdown_it import MarkdownIt
 from markdown_it.renderer import RendererHTML
 from markdown_it.tree import SyntaxTreeNode
 from mdit_py_plugins.front_matter import front_matter_plugin
-from rdflib import DCTERMS, FOAF, Graph, Literal, URIRef
+from rdflib import DC, DCTERMS, FOAF, Graph, Literal, URIRef
 from rdflib.resource import Resource
 from rdflib.term import Node
 
@@ -23,15 +23,18 @@ from paradicms_etl.models.dublin_core_property_definitions import (
 )
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
+from paradicms_etl.models.license import License
 from paradicms_etl.models.markdown_directory import MarkdownDirectory
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
+from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespace import CMS
 import rdflib.namespace
+import stringcase
 
 
 def _create_namespaces_by_prefix_default() -> Dict[str, rdflib.Namespace]:
@@ -49,13 +52,28 @@ def _create_namespaces_by_prefix_default() -> Dict[str, rdflib.Namespace]:
     return namespaces_by_prefix
 
 
-__MODEL_TYPES = (Collection, Image, Institution, Organization, Person, Work)
+__MODEL_TYPES = (
+    Collection,
+    Image,
+    Institution,
+    License,
+    Organization,
+    Person,
+    RightsStatement,
+    Work,
+)
 
 __MODEL_TYPES_BY_NAME = {
-    model_type.__name__.lower(): model_type for model_type in __MODEL_TYPES
+    stringcase.snakecase(model_type.__name__): model_type for model_type in __MODEL_TYPES
 }
 
-_MODEL_TYPE_LABEL_PROPERTIES = {Collection: DCTERMS.title, Institution: FOAF.name, Organization: FOAF.name, Person: FOAF.name, Work: DCTERMS.title}
+_MODEL_TYPE_LABEL_PROPERTIES = {
+    Collection: DCTERMS.title,
+    Institution: FOAF.name,
+    Organization: FOAF.name,
+    Person: FOAF.name,
+    Work: DCTERMS.title,
+}
 
 
 def _model_type_by_name(name: str):
@@ -339,7 +357,7 @@ class MarkdownDirectoryTransformer(_Transformer):
         *, pipeline_id: str, model_type: Type[_NamedModel], model_id: str
     ) -> URIRef:
         return URIRef(
-            f"urn:markdown:{pipeline_id}:{quote(model_type.__name__.lower())}:{quote(model_id)}"
+            f"urn:markdown:{pipeline_id}:{quote(stringcase.snakecase(model_type.__name__))}:{quote(model_id)}"
         )
 
     # Rather than managing the state of the transform as variable assignments in a particular order,
@@ -447,7 +465,9 @@ class MarkdownDirectoryTransformer(_Transformer):
         def __set_resource_label(
             self, *, model_id: str, model_type: Type[_NamedModel], resource: Resource
         ) -> None:
-            label_property = _MODEL_TYPE_LABEL_PROPERTIES[model_type]
+            label_property = _MODEL_TYPE_LABEL_PROPERTIES.get(model_type)
+            if label_property is None:
+                return
             if resource.value(label_property) is None:
                 resource.add(
                     label_property,
@@ -656,7 +676,11 @@ class MarkdownDirectoryTransformer(_Transformer):
                     markdown_file_entry
                 )
                 self.__set_resource_institution_uri(work_resource)
-                self.__set_resource_label(model_id=markdown_file_entry.model_id, model_type=Work, resource=work_resource)
+                self.__set_resource_label(
+                    model_id=markdown_file_entry.model_id,
+                    model_type=Work,
+                    resource=work_resource,
+                )
 
                 if work_resource.value(CMS.collection) is None:
                     work_resource.add(
@@ -684,7 +708,11 @@ class MarkdownDirectoryTransformer(_Transformer):
                     model_resource = self.__transform_markdown_file_entry_to_resource(
                         markdown_file_entry
                     )
-                    self.__set_resource_label(model_id=markdown_file_entry.model_id, model_type=model_type, resource=model_resource)
+                    self.__set_resource_label(
+                        model_id=markdown_file_entry.model_id,
+                        model_type=model_type,
+                        resource=model_resource,
+                    )
 
                     try:
                         transformed_model = self.__transform_resource_to_model(
