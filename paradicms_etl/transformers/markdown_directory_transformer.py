@@ -4,13 +4,12 @@ from logging import Logger
 from typing import Dict, Optional, Tuple, Type, Union
 from urllib.parse import quote
 
-import rdflib.namespace
 import yaml
 from markdown_it import MarkdownIt
 from markdown_it.renderer import RendererHTML
 from markdown_it.tree import SyntaxTreeNode
 from mdit_py_plugins.front_matter import front_matter_plugin
-from rdflib import DCTERMS, Graph, Literal, URIRef
+from rdflib import DCTERMS, FOAF, Graph, Literal, URIRef
 from rdflib.resource import Resource
 from rdflib.term import Node
 
@@ -32,6 +31,7 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 )
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespace import CMS
+import rdflib.namespace
 
 
 def _create_namespaces_by_prefix_default() -> Dict[str, rdflib.Namespace]:
@@ -54,6 +54,8 @@ __MODEL_TYPES = (Collection, Image, Institution, Organization, Person, Work)
 __MODEL_TYPES_BY_NAME = {
     model_type.__name__.lower(): model_type for model_type in __MODEL_TYPES
 }
+
+_MODEL_TYPE_LABEL_PROPERTIES = {Collection: DCTERMS.title, Institution: FOAF.name, Organization: FOAF.name, Person: FOAF.name, Work: DCTERMS.title}
 
 
 def _model_type_by_name(name: str):
@@ -436,12 +438,21 @@ class MarkdownDirectoryTransformer(_Transformer):
                 )
             return self.__default_institution
 
-        def __set_resource_institution_uri(self, resource: Resource) -> Resource:
+        def __set_resource_institution_uri(self, resource: Resource) -> None:
             if resource.value(CMS.institution) is None:
                 resource.add(
                     CMS.institution, self.__get_or_synthesize_default_institution().uri
                 )
-            return resource
+
+        def __set_resource_label(
+            self, *, model_id: str, model_type: Type[_NamedModel], resource: Resource
+        ) -> None:
+            label_property = _MODEL_TYPE_LABEL_PROPERTIES[model_type]
+            if resource.value(label_property) is None:
+                resource.add(
+                    label_property,
+                    Literal(model_id),
+                )
 
         def __transform_collection_markdown_file_entries(self) -> None:
             for (
@@ -449,16 +460,16 @@ class MarkdownDirectoryTransformer(_Transformer):
             ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
                 Collection, tuple()
             ):
-                collection_resource = self.__set_resource_institution_uri(
-                    self.__transform_markdown_file_entry_to_resource(
-                        markdown_file_entry
-                    )
+                collection_resource = self.__transform_markdown_file_entry_to_resource(
+                    markdown_file_entry
                 )
-                if collection_resource.value(DCTERMS.title) is None:
-                    collection_resource.add(
-                        rdflib.namespace.FOAF.depicts,
-                        Literal(markdown_file_entry.model_id),
-                    )
+
+                self.__set_resource_institution_uri(collection_resource)
+                self.__set_resource_label(
+                    model_id=markdown_file_entry.model_id,
+                    model_type=Collection,
+                    resource=collection_resource,
+                )
 
                 collection = self.__transform_resource_to_model(
                     model_resource=collection_resource,
@@ -493,13 +504,11 @@ class MarkdownDirectoryTransformer(_Transformer):
             ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
                 Image, tuple()
             ):
-                image_resource = self.__set_resource_institution_uri(
-                    self.__transform_markdown_file_entry_to_resource(
-                        markdown_file_entry
-                    )
+                image_resource = self.__transform_markdown_file_entry_to_resource(
+                    markdown_file_entry
                 )
 
-                if image_resource.value(rdflib.namespace.FOAF.depicts) is None:
+                if image_resource.value(FOAF.depicts) is None:
                     # If the .md image metadata has no depicts but its model_id corresponds with a model_id of another type,
                     # synthesize a depicts.
                     for (
@@ -517,9 +526,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                                 markdown_file_entry.model_id,
                             )
                             continue
-                        image_resource.add(
-                            rdflib.namespace.FOAF.depicts, transformed_model.uri
-                        )
+                        image_resource.add(FOAF.depicts, transformed_model.uri)
                         self.__logger.debug(
                             "image markdown %s has no depicts statement but corresponds to the model %s, adding depicts statement",
                             markdown_file_entry.model_id,
@@ -604,11 +611,11 @@ class MarkdownDirectoryTransformer(_Transformer):
                 institution_resource = self.__transform_markdown_file_entry_to_resource(
                     markdown_file_entry
                 )
-                if institution_resource.value(rdflib.namespace.FOAF.name) is None:
-                    institution_resource.add(
-                        rdflib.namespace.FOAF.name,
-                        Literal(markdown_file_entry.model_id),
-                    )
+                self.__set_resource_label(
+                    model_id=markdown_file_entry.model_id,
+                    model_type=Institution,
+                    resource=institution_resource,
+                )
 
                 institution = self.__transform_resource_to_model(
                     model_resource=institution_resource,
@@ -645,19 +652,16 @@ class MarkdownDirectoryTransformer(_Transformer):
             ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
                 Work, tuple()
             ):
-                work_resource = self.__set_resource_institution_uri(
-                    self.__transform_markdown_file_entry_to_resource(
-                        markdown_file_entry
-                    )
+                work_resource = self.__transform_markdown_file_entry_to_resource(
+                    markdown_file_entry
                 )
+                self.__set_resource_institution_uri(work_resource)
+                self.__set_resource_label(model_id=markdown_file_entry.model_id, model_type=Work, resource=work_resource)
+
                 if work_resource.value(CMS.collection) is None:
                     work_resource.add(
                         CMS.collection,
                         self.__get_or_synthesize_default_collection().uri,
-                    )
-                if work_resource.value(DCTERMS.title) is None:
-                    work_resource.add(
-                        DCTERMS.title, Literal(markdown_file_entry.model_id)
                     )
 
                 work_ = self.__transform_resource_to_model(
@@ -680,6 +684,8 @@ class MarkdownDirectoryTransformer(_Transformer):
                     model_resource = self.__transform_markdown_file_entry_to_resource(
                         markdown_file_entry
                     )
+                    self.__set_resource_label(model_id=markdown_file_entry.model_id, model_type=model_type, resource=model_resource)
+
                     try:
                         transformed_model = self.__transform_resource_to_model(
                             model_resource=model_resource,
