@@ -4,6 +4,10 @@ from paradicms_etl.models._named_model import _NamedModel
 
 
 class _Agent(_NamedModel):
+    def __init__(self, *args, **kwds):
+        _NamedModel.__init__(self, *args, **kwds)
+        self.name
+
     @property
     def label(self) -> str:
         return self.name

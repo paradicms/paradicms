@@ -5,6 +5,7 @@
 @prefix paradicms: <http://www.paradicms.org/ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vra: <http://purl.org/vra/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://creativecommons.org/licenses/BSD/> a creativecommons:License,
@@ -539,6 +540,33 @@ dcterms:title a paradicms:PropertyDefinition ;
 dcterms:type a paradicms:PropertyDefinition ;
     rdfs:label "Type" .
 
+vra:culturalContext a paradicms:PropertyDefinition ;
+    rdfs:label "Cultural context" .
+
+vra:earliestDate a paradicms:PropertyDefinition ;
+    rdfs:label "Earliest date" .
+
+vra:hasTechnique a paradicms:PropertyDefinition ;
+    rdfs:label "Technique" .
+
+vra:inscription a paradicms:PropertyDefinition ;
+    rdfs:label "Inscription" .
+
+vra:latestDate a paradicms:PropertyDefinition ;
+    rdfs:label "Latest date" .
+
+vra:material a paradicms:PropertyDefinition ;
+    rdfs:label "Material" .
+
+vra:measurements a paradicms:PropertyDefinition ;
+    rdfs:label "Measurements" .
+
+vra:stylePeriod a paradicms:PropertyDefinition ;
+    rdfs:label "Style Period" .
+
+vra:worktype a paradicms:PropertyDefinition ;
+    rdfs:label "Work type" .
+
 <http://rightsstatements.org/vocab/CNE/1.0/> a paradicms:RightsStatement ;
     dcterms:description "This Rights Statement indicates that the organization that has published the Item has not evaluated the copyright and related rights status of the Item."@en ;
     dcterms:identifier "CNE" ;
@@ -708,7 +736,6 @@ dcterms:type a paradicms:PropertyDefinition ;
 
 <urn:markdown:markdown_directory:image:test_work2> a paradicms:Image ;
     paradicms:imageSrc "file:///home/minor/projects/paradicms/etl/data/markdown_directory/extracted/image/test_work2.gif" ;
-    paradicms:institution <urn:markdown:markdown_directory:institution:default> ;
     foaf:depicts <urn:markdown:markdown_directory:work:test_work2> .
 
 <http://creativecommons.org/licenses/by-nc-nd/2.0/> a creativecommons:License,
