@@ -9,7 +9,7 @@ from markdown_it import MarkdownIt
 from markdown_it.renderer import RendererHTML
 from markdown_it.tree import SyntaxTreeNode
 from mdit_py_plugins.front_matter import front_matter_plugin
-from rdflib import DC, DCTERMS, FOAF, Graph, Literal, URIRef
+from rdflib import DC, DCTERMS, FOAF, Graph, Literal, RDFS, URIRef
 from rdflib.resource import Resource
 from rdflib.term import Node
 
@@ -27,10 +27,13 @@ from paradicms_etl.models.license import License
 from paradicms_etl.models.markdown_directory import MarkdownDirectory
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
+from paradicms_etl.models.property_definition import PropertyDefinition
+from paradicms_etl.models.property_value_definition import PropertyValueDefinition
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
+from paradicms_etl.models.vra_core_property_definitions import VraCorePropertyDefinitions
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespace import CMS
 import rdflib.namespace
@@ -59,16 +62,20 @@ __MODEL_TYPES = (
     License,
     Organization,
     Person,
+    PropertyDefinition,
+    PropertyValueDefinition,
     RightsStatement,
     Work,
 )
 
 __MODEL_TYPES_BY_NAME = {
-    stringcase.snakecase(model_type.__name__): model_type for model_type in __MODEL_TYPES
+    stringcase.snakecase(model_type.__name__): model_type
+    for model_type in __MODEL_TYPES
 }
 
 _MODEL_TYPE_LABEL_PROPERTIES = {
     Collection: DCTERMS.title,
+    Image: RDFS.label,
     Institution: FOAF.name,
     Organization: FOAF.name,
     Person: FOAF.name,
@@ -738,11 +745,11 @@ class MarkdownDirectoryTransformer(_Transformer):
             return model_type.from_rdf(model_resource)
 
     def transform(self, markdown_directory: MarkdownDirectory):
-        yield from CreativeCommonsLicenses.as_tuple()
-        yield from DublinCorePropertyDefinitions.as_tuple()
-        yield from RightsStatementsDotOrgRightsStatements.as_tuple()
+        yield_known_licenses = True
+        yield_known_property_definitions = True
+        yield_known_rights_statements = True
 
-        yield from self.__TransformInvocation(
+        for model in self.__TransformInvocation(
             default_collection=self.__default_collection,
             default_institution=self.__default_institution,
             default_namespace=self.__default_namespace,
@@ -750,4 +757,25 @@ class MarkdownDirectoryTransformer(_Transformer):
             markdown_directory=markdown_directory,
             namespaces_by_prefix=self.__namespaces_by_prefix,
             pipeline_id=self._pipeline_id,
-        )()
+        )():
+            yield model
+
+            if isinstance(model, License):
+                yield_known_licenses = False
+            elif isinstance(model, PropertyDefinition):
+                yield_known_property_definitions = False
+            elif isinstance(model, RightsStatement):
+                yield_known_rights_statements = False
+
+        if yield_known_licenses:
+            # If no licenses came from the Markdown directory, yield known licenses
+            yield from CreativeCommonsLicenses.as_tuple()
+
+        if yield_known_property_definitions:
+            # If no property definitions came from the Markdown directory, yield known property definitions
+            yield from DublinCorePropertyDefinitions.as_tuple()
+            yield from VraCorePropertyDefinitions.as_tuple()
+
+        if yield_known_rights_statements:
+            # If no rights statements came from the Markdown directory, yield known rights statements
+            yield from RightsStatementsDotOrgRightsStatements.as_tuple()
