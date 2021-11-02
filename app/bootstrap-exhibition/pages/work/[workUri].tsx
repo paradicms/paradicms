@@ -129,7 +129,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   }
   if (currentWorkAgentProfiles.length > 0) {
     leftColNavTabs.push({
-      title: "People and Organizations",
+      title: "People",
       content: (
         <WorkAgentProfilesContainer
           key={leftColNavTabs.length}
