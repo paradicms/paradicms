@@ -8,6 +8,21 @@ from paradicms_etl.namespace import CMS
 
 
 class Text(_Model):
+    """
+    Model of a string with associated metadata, such as rights.
+
+    The model has its own RDF resource, a blank node. It is used in lieu of a string literal
+    in situations where:
+
+    <other model URI> dcterms:description "Description with associated metadata" .
+
+    does not capture the metadata. Instead:
+
+    <other model URI> dcterms:description <text bnode> .
+    <text bnode> rdf:value "Description with associated metadata" .
+    <text bnode> dcterms:license <license URI> .
+    """
+
     def __init__(self, *args, **kwds):
         _Model.__init__(self, *args, **kwds)
         self.value

@@ -12,6 +12,14 @@ from paradicms_etl.models.dublin_core_property_definitions import (
 
 @dataclass(frozen=True)
 class Rights:
+    """
+    Value class that captures a group of properties that specify the rights of another model,
+    such as the license and the rights statement.
+
+    Rights is not a model itself. The rights properties are attached directly to another model
+    like Work. Rights is simply a convenient way of grouping those properties.
+    """
+
     creator: Union[None, str, URIRef] = None
     holder: Union[None, str, URIRef] = None
     license: Union[None, str, URIRef] = None
