@@ -218,8 +218,9 @@ export class DatasetBuilder {
       }
       for (const modelUri of Object.keys(modelsByUri)) {
         const model = modelsByUri[modelUri];
+        // Add all quads that belong to the model's graph
         store.addQuads(
-          model.dataset.store.getQuads(model.node, null, null, null)
+          model.dataset.store.getQuads(null, null, null, model.node)
         );
       }
     }

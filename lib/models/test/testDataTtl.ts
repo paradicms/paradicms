@@ -4036,6 +4036,102 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:name "Person 4" ;
     foaf:page <http://example.com/person4page> .
 
+<http://www.paradicms.org/.well-known/genid/rdflib/N0e5108954293460586a4cfa4d0ac8256> a paradicms:Text ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0Collection0Work0 abstract rights holder" ;
+    rdf:value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." .
+
+<http://www.paradicms.org/.well-known/genid/rdflib/N0f4b7fb842e54c0d942530a571e334b6> a paradicms:Text ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1SharedWork3 abstract rights holder" ;
+    rdf:value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." .
+
+<http://www.paradicms.org/.well-known/genid/rdflib/N1ffd4a188834411eb601d33ec08c58ef> a paradicms:Text ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0SharedWork3 abstract rights holder" ;
+    rdf:value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." .
+
+<http://www.paradicms.org/.well-known/genid/rdflib/N257426624f8847b38f837b47c56fe8ea> a paradicms:Text ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1Collection0Work1 abstract rights holder" ;
+    rdf:value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." .
+
+<http://www.paradicms.org/.well-known/genid/rdflib/N50e3429f06f946dfa7c7d0814b570010> a paradicms:Text ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0Collection0Work1 abstract rights holder" ;
+    rdf:value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." .
+
+<http://www.paradicms.org/.well-known/genid/rdflib/N89bfb0951dce4b1b90a49cb1983f95ac> a paradicms:Text ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1SharedWork0 abstract rights holder" ;
+    rdf:value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." .
+
+<http://www.paradicms.org/.well-known/genid/rdflib/N9729393040564da9b0b1532413e8f11e> a paradicms:Text ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1Collection0Work3 abstract rights holder" ;
+    rdf:value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." .
+
+<http://www.paradicms.org/.well-known/genid/rdflib/Na2694b2e5ca54aab925aaf8812084890> a paradicms:Text ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1SharedWork1 abstract rights holder" ;
+    rdf:value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." .
+
+<http://www.paradicms.org/.well-known/genid/rdflib/Na845d0c30dc14dba96e16c7736166aa3> a paradicms:Text ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0Collection0Work2 abstract rights holder" ;
+    rdf:value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." .
+
+<http://www.paradicms.org/.well-known/genid/rdflib/Nb4670812e8434bf79d6271697db74eda> a paradicms:Text ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0Collection0Work3 abstract rights holder" ;
+    rdf:value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." .
+
+<http://www.paradicms.org/.well-known/genid/rdflib/Nbc0efbd7d936499fb1eb6d07a3af28c9> a paradicms:Text ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1Collection0Work0 abstract rights holder" ;
+    rdf:value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." .
+
+<http://www.paradicms.org/.well-known/genid/rdflib/Nce3d8ce428004025aa1adc5e7060dd75> a paradicms:Text ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1SharedWork2 abstract rights holder" ;
+    rdf:value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." .
+
+<http://www.paradicms.org/.well-known/genid/rdflib/Nddaec698d937450fbf6d6569de8821d7> a paradicms:Text ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0SharedWork0 abstract rights holder" ;
+    rdf:value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." .
+
+<http://www.paradicms.org/.well-known/genid/rdflib/Nee21ac0aca4344a1b952872eebb5855e> a paradicms:Text ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0SharedWork1 abstract rights holder" ;
+    rdf:value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." .
+
+<http://www.paradicms.org/.well-known/genid/rdflib/Nf069ddc79bcd4e71abf022661c25df5b> a paradicms:Text ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution1Collection0Work2 abstract rights holder" ;
+    rdf:value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." .
+
+<http://www.paradicms.org/.well-known/genid/rdflib/Nfbbe7d9c011c448cb8504bd03602c63a> a paradicms:Text ;
+    dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
+    dcterms:rightsHolder "Institution0SharedWork2 abstract rights holder" ;
+    rdf:value "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." .
+
 <https://place-hold.it/600x600?text=Cultural%20context%200Image0> a paradicms:Image ;
     dcterms:license <http://creativecommons.org/licenses/nc/1.0/> ;
     dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
@@ -9069,7 +9165,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:depicts <urn:paradicms_etl:pipeline:test_data:property_value:119> .
 
 <http://example.com/institution0/collection0/work0> a paradicms:Work ;
-    dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
+    dcterms:abstract <http://www.paradicms.org/.well-known/genid/rdflib/N0e5108954293460586a4cfa4d0ac8256> ;
     dcterms:alternative "Institution0Collection0Work0 alternative title 0",
         "Institution0Collection0Work0 alternative title 1" ;
     dcterms:creator <http://example.com/organization0> ;
@@ -9115,7 +9211,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:page <http://example.com/work/0> .
 
 <http://example.com/institution0/collection0/work1> a paradicms:Work ;
-    dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
+    dcterms:abstract <http://www.paradicms.org/.well-known/genid/rdflib/N50e3429f06f946dfa7c7d0814b570010> ;
     dcterms:alternative "Institution0Collection0Work1 alternative title 0",
         "Institution0Collection0Work1 alternative title 1" ;
     dcterms:creator <http://example.com/organization1> ;
@@ -9161,7 +9257,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:page "http://example.com/work/1" .
 
 <http://example.com/institution0/collection0/work2> a paradicms:Work ;
-    dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
+    dcterms:abstract <http://www.paradicms.org/.well-known/genid/rdflib/Na845d0c30dc14dba96e16c7736166aa3> ;
     dcterms:alternative "Institution0Collection0Work2 alternative title 0",
         "Institution0Collection0Work2 alternative title 1" ;
     dcterms:creator <http://example.com/organization2> ;
@@ -9207,7 +9303,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:page <http://example.com/work/2> .
 
 <http://example.com/institution0/collection0/work3> a paradicms:Work ;
-    dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
+    dcterms:abstract <http://www.paradicms.org/.well-known/genid/rdflib/Nb4670812e8434bf79d6271697db74eda> ;
     dcterms:alternative "Institution0Collection0Work3 alternative title 0",
         "Institution0Collection0Work3 alternative title 1" ;
     dcterms:creator <http://example.com/organization3> ;
@@ -9253,7 +9349,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:page "http://example.com/work/3" .
 
 <http://example.com/institution0/shared/work0> a paradicms:Work ;
-    dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
+    dcterms:abstract <http://www.paradicms.org/.well-known/genid/rdflib/Nddaec698d937450fbf6d6569de8821d7> ;
     dcterms:alternative "Institution0SharedWork0 alternative title 0",
         "Institution0SharedWork0 alternative title 1" ;
     dcterms:creator <http://example.com/organization0> ;
@@ -9299,7 +9395,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:page <http://example.com/work/0> .
 
 <http://example.com/institution0/shared/work1> a paradicms:Work ;
-    dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
+    dcterms:abstract <http://www.paradicms.org/.well-known/genid/rdflib/Nee21ac0aca4344a1b952872eebb5855e> ;
     dcterms:alternative "Institution0SharedWork1 alternative title 0",
         "Institution0SharedWork1 alternative title 1" ;
     dcterms:creator <http://example.com/organization1> ;
@@ -9345,7 +9441,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:page "http://example.com/work/1" .
 
 <http://example.com/institution0/shared/work2> a paradicms:Work ;
-    dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
+    dcterms:abstract <http://www.paradicms.org/.well-known/genid/rdflib/Nfbbe7d9c011c448cb8504bd03602c63a> ;
     dcterms:alternative "Institution0SharedWork2 alternative title 0",
         "Institution0SharedWork2 alternative title 1" ;
     dcterms:creator <http://example.com/organization2> ;
@@ -9391,7 +9487,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:page <http://example.com/work/2> .
 
 <http://example.com/institution0/shared/work3> a paradicms:Work ;
-    dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
+    dcterms:abstract <http://www.paradicms.org/.well-known/genid/rdflib/N1ffd4a188834411eb601d33ec08c58ef> ;
     dcterms:alternative "Institution0SharedWork3 alternative title 0",
         "Institution0SharedWork3 alternative title 1" ;
     dcterms:creator <http://example.com/organization3> ;
@@ -9437,7 +9533,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:page "http://example.com/work/3" .
 
 <http://example.com/institution1/collection0/work0> a paradicms:Work ;
-    dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
+    dcterms:abstract <http://www.paradicms.org/.well-known/genid/rdflib/Nbc0efbd7d936499fb1eb6d07a3af28c9> ;
     dcterms:alternative "Institution1Collection0Work0 alternative title 0",
         "Institution1Collection0Work0 alternative title 1" ;
     dcterms:creator <http://example.com/organization0> ;
@@ -9483,7 +9579,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:page <http://example.com/work/0> .
 
 <http://example.com/institution1/collection0/work1> a paradicms:Work ;
-    dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
+    dcterms:abstract <http://www.paradicms.org/.well-known/genid/rdflib/N257426624f8847b38f837b47c56fe8ea> ;
     dcterms:alternative "Institution1Collection0Work1 alternative title 0",
         "Institution1Collection0Work1 alternative title 1" ;
     dcterms:creator <http://example.com/organization1> ;
@@ -9529,7 +9625,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:page "http://example.com/work/1" .
 
 <http://example.com/institution1/collection0/work2> a paradicms:Work ;
-    dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
+    dcterms:abstract <http://www.paradicms.org/.well-known/genid/rdflib/Nf069ddc79bcd4e71abf022661c25df5b> ;
     dcterms:alternative "Institution1Collection0Work2 alternative title 0",
         "Institution1Collection0Work2 alternative title 1" ;
     dcterms:creator <http://example.com/organization2> ;
@@ -9575,7 +9671,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:page <http://example.com/work/2> .
 
 <http://example.com/institution1/collection0/work3> a paradicms:Work ;
-    dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
+    dcterms:abstract <http://www.paradicms.org/.well-known/genid/rdflib/N9729393040564da9b0b1532413e8f11e> ;
     dcterms:alternative "Institution1Collection0Work3 alternative title 0",
         "Institution1Collection0Work3 alternative title 1" ;
     dcterms:creator <http://example.com/organization3> ;
@@ -9621,7 +9717,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:page "http://example.com/work/3" .
 
 <http://example.com/institution1/shared/work0> a paradicms:Work ;
-    dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
+    dcterms:abstract <http://www.paradicms.org/.well-known/genid/rdflib/N89bfb0951dce4b1b90a49cb1983f95ac> ;
     dcterms:alternative "Institution1SharedWork0 alternative title 0",
         "Institution1SharedWork0 alternative title 1" ;
     dcterms:creator <http://example.com/organization0> ;
@@ -9667,7 +9763,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:page <http://example.com/work/0> .
 
 <http://example.com/institution1/shared/work1> a paradicms:Work ;
-    dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
+    dcterms:abstract <http://www.paradicms.org/.well-known/genid/rdflib/Na2694b2e5ca54aab925aaf8812084890> ;
     dcterms:alternative "Institution1SharedWork1 alternative title 0",
         "Institution1SharedWork1 alternative title 1" ;
     dcterms:creator <http://example.com/organization1> ;
@@ -9713,7 +9809,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:page "http://example.com/work/1" .
 
 <http://example.com/institution1/shared/work2> a paradicms:Work ;
-    dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
+    dcterms:abstract <http://www.paradicms.org/.well-known/genid/rdflib/Nce3d8ce428004025aa1adc5e7060dd75> ;
     dcterms:alternative "Institution1SharedWork2 alternative title 0",
         "Institution1SharedWork2 alternative title 1" ;
     dcterms:creator <http://example.com/organization2> ;
@@ -9759,7 +9855,7 @@ vra:worktype a paradicms:PropertyDefinition ;
     foaf:page <http://example.com/work/2> .
 
 <http://example.com/institution1/shared/work3> a paradicms:Work ;
-    dcterms:abstract "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae." ;
+    dcterms:abstract <http://www.paradicms.org/.well-known/genid/rdflib/N0f4b7fb842e54c0d942530a571e334b6> ;
     dcterms:alternative "Institution1SharedWork3 alternative title 0",
         "Institution1SharedWork3 alternative title 1" ;
     dcterms:creator <http://example.com/organization3> ;

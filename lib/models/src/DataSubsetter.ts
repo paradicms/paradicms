@@ -13,6 +13,7 @@ import {Work} from "./Work";
 import {Image} from "Image";
 import {Agent} from "./Agent";
 import {AgentJoinSelector} from "./AgentJoinSelector";
+import {Text} from "./Text";
 
 /**
  * Subset a Dataset to reduce the amount of data passed between getStaticProps and the component.
@@ -158,8 +159,12 @@ export class DataSubsetter {
     joinSelector?: WorkJoinSelector
   ): DatasetBuilder {
     builder.addWork(work);
-    // Works Datasets always include rights
+    // Work Datasets always include rights
     this.addRightsDataset(builder, work.rights, joinSelector?.agent);
+
+    const abstract = work.abstract;
+    if (abstract && abstract instanceof Text) {
+    }
 
     if (joinSelector?.allImages) {
       for (const image of this.completeDataset.imagesByDepictsUri(work.uri)) {
