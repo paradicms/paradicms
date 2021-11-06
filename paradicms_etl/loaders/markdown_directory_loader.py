@@ -2,13 +2,12 @@ from typing import Dict, Generator, Literal, Optional
 
 import yaml
 from pathvalidate import sanitize_filename
-from rdflib import Graph, Literal, Namespace, RDF, URIRef
+from rdflib import Graph, Literal, Namespace, RDF, URIRef, BNode
 from rdflib.resource import Resource
 from stringcase import snakecase
 
 from paradicms_etl._loader import _Loader
 from paradicms_etl._model import _Model
-from paradicms_etl.namespace import CMS_BNODE
 from paradicms_etl.transformers.markdown_directory_transformer import (
     MarkdownDirectoryTransformer,
 )
@@ -80,15 +79,12 @@ class MarkdownDirectoryLoader(_Loader):
             if isinstance(o, Literal):
                 md_o = o.toPython()
             elif isinstance(o, Resource):
-                if not isinstance(o.identifier, URIRef):
-                    raise ValueError(
-                        f"({model_resource.identifier}, {p}) has a blank node object)"
-                    )
-                if str(o.identifier).startswith(str(CMS_BNODE)):
-                    bnode_resource = model_resource.graph.resource(o.identifier)
-                    md_o = self.__transform_model_resource_to_dict(bnode_resource)
-                else:
+                if isinstance(o.identifier, URIRef):
                     md_o = f"<{str(o.identifier)}>"
+                elif isinstance(o.identifier, BNode):
+                    md_o = self.__transform_model_resource_to_dict(o)
+                else:
+                    raise NotImplementedError
             else:
                 raise TypeError(type(o))
 
