@@ -1,4 +1,4 @@
-from typing import Optional, Tuple, Union, Text
+from typing import Optional, Tuple, Union
 
 from rdflib import Literal, URIRef
 from rdflib.namespace import DCTERMS, FOAF
@@ -7,6 +7,7 @@ from rdflib.resource import Resource
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
+from paradicms_etl.models.text import Text
 from paradicms_etl.namespace import CMS
 
 
@@ -45,7 +46,7 @@ class Work(_NamedModel):
             if isinstance(abstract, str):
                 resource.add(DCTERMS.abstract, Literal(abstract))
             elif isinstance(abstract, Text):
-                abstract.to_rdf(graph=resource.graph)
+                resource.add(DCTERMS.abstract, abstract.to_rdf(graph=resource.graph))
             else:
                 raise TypeError(type(abstract))
         for collection_uri in collection_uris:

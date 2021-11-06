@@ -28,7 +28,7 @@ class Text(_Model):
         self.value
 
     @classmethod
-    def from_fields(cls, *, value: str, rights: Optional[Rights] = None):
+    def from_fields(cls, value: str, *, rights: Optional[Rights] = None):
         resource = cls._create_resource(identifier=BNode())
         resource.add(RDF.type, CMS.Text)
         resource.add(RDF.value, Literal(value))
