@@ -28,7 +28,7 @@ class _Model:
         if identifier is None:
             identifier = BNode()
         if isinstance(identifier, BNode):
-            identifier = identifier.skolemize()
+            identifier = identifier.skolemize("http://www.paradicms.org/")
         if not isinstance(identifier, URIRef):
             raise ValueError("identifier must be a URI")
         graph = Graph()
