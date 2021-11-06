@@ -15,7 +15,6 @@ class _Model:
 
     @classmethod
     def _copy_resource(cls, resource) -> Resource:
-        assert isinstance(resource.identifier, URIRef)
         graph = Graph()
         graph += resource.graph
         return graph.resource(resource.identifier)
