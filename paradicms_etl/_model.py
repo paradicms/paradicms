@@ -8,8 +8,6 @@ from paradicms_etl.namespace import CMS
 
 class _Model:
     def __init__(self, resource: Resource):
-        if not isinstance(resource.identifier, URIRef):
-            raise ValueError("resource must have a URI")
         self.__resource = resource
         self.__resource.add(RDF.type, CMS[self.__class__.__name__])
         # print(self.__class__.__name__, "resource:")
@@ -17,20 +15,13 @@ class _Model:
 
     @classmethod
     def _copy_resource(cls, resource) -> Resource:
-        if not isinstance(resource.identifier, URIRef):
-            raise ValueError("resource must have a URI")
+        assert isinstance(resource.identifier, URIRef)
         graph = Graph()
         graph += resource.graph
         return graph.resource(resource.identifier)
 
     @classmethod
-    def _create_resource(cls, identifier: Union[None, BNode, URIRef]) -> Resource:
-        if identifier is None:
-            identifier = BNode()
-        if isinstance(identifier, BNode):
-            identifier = identifier.skolemize("http://www.paradicms.org/")
-        if not isinstance(identifier, URIRef):
-            raise ValueError("identifier must be a URI")
+    def _create_resource(cls, identifier: Union[BNode, URIRef]) -> Resource:
         graph = Graph()
         resource = graph.resource(identifier)
         return resource
