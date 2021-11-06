@@ -8,6 +8,7 @@ from stringcase import snakecase
 
 from paradicms_etl._loader import _Loader
 from paradicms_etl._model import _Model
+from paradicms_etl.namespace import CMS_BNODE
 from paradicms_etl.transformers.markdown_directory_transformer import (
     MarkdownDirectoryTransformer,
 )
@@ -40,37 +41,8 @@ class MarkdownDirectoryLoader(_Loader):
                 model_graph.add(
                     (model_resource.identifier, RDF.subject, model_resource.identifier)
                 )
-            md_front_matter = {}
-            for p, o in model_resource.predicate_objects():
-                if p.identifier == RDF.type:
-                    continue
-                p_prefix, p_namespace = None, None
-                for prefix, namespace in self.__namespaces_by_prefix.items():
-                    if not str(p.identifier).startswith(str(namespace)):
-                        continue
-                    if p_namespace is None or str(namespace) > len(str(p_namespace)):
-                        p_prefix, p_namespace = prefix, namespace
-                if p_prefix is None:
-                    self._logger.warning(
-                        "(%s, %s, object) does not have an associated namespace prefix",
-                        model_resource.identifier,
-                        p,
-                    )
-                    continue
-                p_local_name = str(p.identifier)[len(str(p_namespace)) :]
 
-                if isinstance(o, Literal):
-                    md_o = o.toPython()
-                elif isinstance(o, Resource):
-                    if not isinstance(o.identifier, URIRef):
-                        raise ValueError(
-                            f"({model_resource.identifier}, {p}) has a blank node object)"
-                        )
-                    md_o = f"<{str(o.identifier)}>"
-                else:
-                    raise TypeError(type(o))
-
-                md_front_matter[f"{p_prefix}_{p_local_name}"] = md_o
+            md_front_matter = self.__transform_model_resource_to_dict(model_resource)
 
             md_dir_path = self._loaded_data_dir_path / model_type
             md_dir_path.mkdir(parents=True, exist_ok=True)
@@ -84,3 +56,41 @@ class MarkdownDirectoryLoader(_Loader):
 ---
 """
                 )
+
+    def __transform_model_resource_to_dict(self, model_resource: Resource):
+        result = {}
+        for p, o in model_resource.predicate_objects():
+            if p.identifier == RDF.type:
+                continue
+            p_prefix, p_namespace = None, None
+            for prefix, namespace in self.__namespaces_by_prefix.items():
+                if not str(p.identifier).startswith(str(namespace)):
+                    continue
+                if p_namespace is None or str(namespace) > len(str(p_namespace)):
+                    p_prefix, p_namespace = prefix, namespace
+            if p_prefix is None:
+                self._logger.warning(
+                    "(%s, %s, object) does not have an associated namespace prefix",
+                    model_resource.identifier,
+                    p,
+                )
+                continue
+            p_local_name = str(p.identifier)[len(str(p_namespace)) :]
+
+            if isinstance(o, Literal):
+                md_o = o.toPython()
+            elif isinstance(o, Resource):
+                if not isinstance(o.identifier, URIRef):
+                    raise ValueError(
+                        f"({model_resource.identifier}, {p}) has a blank node object)"
+                    )
+                if str(o.identifier).startswith(str(CMS_BNODE)):
+                    bnode_resource = model_resource.graph.resource(o.identifier)
+                    md_o = self.__transform_model_resource_to_dict(bnode_resource)
+                else:
+                    md_o = f"<{str(o.identifier)}>"
+            else:
+                raise TypeError(type(o))
+
+            result[f"{p_prefix}_{p_local_name}"] = md_o
+        return result
