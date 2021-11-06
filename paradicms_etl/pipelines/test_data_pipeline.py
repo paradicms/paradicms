@@ -449,7 +449,7 @@ class TestDataPipeline(_Pipeline):
                         / "data"
                         / "test_data"
                         / "loaded"
-                        / "data.ttl",
+                        / "data.trig",
                         pipeline_id=self.ID,
                     ),
                 ),
