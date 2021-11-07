@@ -16,22 +16,22 @@ module.exports = (env, argv) => {
 
   const copyFilePathPatterns = [];
 
-  const configurationJsonFilePath = process.env.CONFIGURATION_JSON_FILE_PATH;
-  if (configurationJsonFilePath) {
-    console.info("configuration.json file path:", configurationJsonFilePath);
+  const configurationFilePath = process.env.CONFIGURATION_FILE_PATH;
+  if (configurationFilePath) {
+    console.info("configuration.json file path:", configurationFilePath);
     copyFilePathPatterns.push({
-      from: configurationJsonFilePath,
+      from: configurationFilePath,
       to: path.join(distPath, "configuration.json"),
     });
   } else {
     console.warn("no configuration.json file path specified");
   }
 
-  const dataTtlFilePath = process.env.DATA_TTL_FILE_PATH;
-  if (dataTtlFilePath) {
-    console.info("data.ttl file path:", dataTtlFilePath);
+  const dataFilePath = process.env.DATA_FILE_PATH;
+  if (dataFilePath) {
+    console.info("data.ttl file path:", dataFilePath);
     copyFilePathPatterns.push({
-      from: dataTtlFilePath,
+      from: dataFilePath,
       to: path.join(distPath, "data.ttl"),
     });
   } else {

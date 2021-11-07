@@ -8,11 +8,11 @@ export const readDatasetFile = (
   readFileSync: (filePath: string) => string
 ): Dataset => {
   if (!_dataset) {
-    const dataTtlFilePath: string | undefined = process.env.DATA_TTL_FILE_PATH;
-    if (!dataTtlFilePath) {
+    const dataFilePath: string | undefined = process.env.DATA_FILE_PATH;
+    if (!dataFilePath) {
       throw new EvalError("must specify a data .ttl (text/turtle) file path");
     }
-    _dataset = Dataset.parse(readFileSync(dataTtlFilePath).toString());
+    _dataset = Dataset.parse(readFileSync(dataFilePath).toString());
   }
   return _dataset;
 };

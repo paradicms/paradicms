@@ -3,7 +3,7 @@ import {testDataTtl} from "./testDataTtl";
 import {Dataset} from "../src";
 
 describe("Work", () => {
-  const dataset = Dataset.parse(testDataTtl);
+  const dataset = Dataset.parse(testDataTrig);
   const sut = dataset.works[0];
 
   it("should get the work's abstract", () => {

@@ -8,7 +8,7 @@ const THUMBNAIL_SELECTOR: ThumbnailSelector = {
 };
 
 describe("Collection", () => {
-  const sut = Dataset.parse(testDataTtl).collections[0];
+  const sut = Dataset.parse(testDataTrig).collections[0];
 
   it("should get the collection's institution", () => {
     expect(sut.institution.uri).to.eq(sut.institutionUri);

@@ -5,7 +5,7 @@ import {testDataTtl} from "../../models/test/testDataTtl";
 
 describe("LunrWorkQueryService", () => {
   const configuration = defaultConfiguration.workSearch;
-  const dataset = Dataset.parse(testDataTtl);
+  const dataset = Dataset.parse(testDataTrig);
   const sut = new LunrWorkQueryService({
     configuration,
     dataset,

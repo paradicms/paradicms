@@ -6,7 +6,7 @@ import {expect} from "chai";
 import {Agent} from "../src/Agent";
 
 describe("Dataset", () => {
-  const sut = Dataset.parse(testDataTtl);
+  const sut = Dataset.parse(testDataTrig);
 
   it("should exercise all indices", () => {
     const institutions = sut.institutions;

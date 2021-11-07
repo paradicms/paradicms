@@ -27,7 +27,7 @@ const expectModelsDeepEq = <ModelT extends NamedModel>(
   );
 
 describe("DataSubsetter", () => {
-  const testDataset = Dataset.parse(testDataTtl);
+  const testDataset = Dataset.parse(testDataTrig);
   const sut = new DataSubsetter(testDataset);
 
   it("should get institutions with thumbnails (institutions page)", () => {

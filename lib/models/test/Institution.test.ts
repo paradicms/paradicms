@@ -3,7 +3,7 @@ import {testDataTtl} from "./testDataTtl";
 import {Dataset} from "../src";
 
 describe("Institution", () => {
-  const sut = Dataset.parse(testDataTtl).institutions[0];
+  const sut = Dataset.parse(testDataTrig).institutions[0];
 
   it("should get the institution's collections", () => {
     expect(sut.collections).to.not.be.empty;

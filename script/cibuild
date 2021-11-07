@@ -5,8 +5,8 @@ set -eu
 cd "$(dirname "$0")"
 cd ..
 echo "Current working directory: $PWD"
-export DATA_TTL_FILE_PATH=`realpath $PWD/../etl/data/test_data/loaded/data.ttl`
-echo "DATA_TTL_FILE_PATH: $DATA_TTL_FILE_PATH"
+export DATA_FILE_PATH=`realpath $PWD/../etl/data/test_data/loaded/data.ttl`
+echo "DATA_FILE_PATH: $DATA_FILE_PATH"
 
 
 time yarn install

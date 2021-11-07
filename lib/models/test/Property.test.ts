@@ -3,7 +3,7 @@ import {Dataset} from "../src";
 import {testDataTtl} from "./testDataTtl";
 
 describe("Property", () => {
-  const dataset = Dataset.parse(testDataTtl);
+  const dataset = Dataset.parse(testDataTrig);
   const work = dataset.works[0];
   const sut = work.properties[0];
   const definition = dataset.propertyDefinitionByUri(sut.uri)!;

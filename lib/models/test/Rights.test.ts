@@ -6,7 +6,7 @@ import {testDataTtl} from "./testDataTtl";
 import {Agent} from "../src/Agent";
 
 describe("Rights", () => {
-  const sut = Dataset.parse(testDataTtl).works[0].rights!;
+  const sut = Dataset.parse(testDataTrig).works[0].rights!;
 
   it("should have a joined creator", () => {
     expect(sut.creator).to.not.be.empty;

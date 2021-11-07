@@ -3,7 +3,7 @@ import {testDataTtl} from "./testDataTtl";
 import {Dataset} from "../src";
 
 describe("Person", () => {
-  const sut = Dataset.parse(testDataTtl).people[0];
+  const sut = Dataset.parse(testDataTrig).people[0];
 
   it("should get the person's family name", () => {
     expect(sut.familyName).to.not.be.empty;

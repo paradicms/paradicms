@@ -3,7 +3,7 @@ import {Dataset, Text} from "../src";
 import {testDataTtl} from "./testDataTtl";
 
 describe("Text", () => {
-  const dataset = Dataset.parse(testDataTtl);
+  const dataset = Dataset.parse(testDataTrig);
   const work = dataset.works[0];
   const sut: Text = work.abstract! as Text;
 
