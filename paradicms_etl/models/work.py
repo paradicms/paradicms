@@ -74,13 +74,6 @@ class Work(_NamedModel):
         )
 
     @property
-    def creator(self) -> Union[str, URIRef, None]:
-        str_value = self._optional_str_value(DCTERMS.creator)
-        if str_value is not None:
-            return str_value
-        return self._optional_uri_value(DCTERMS.creator)
-
-    @property
     def institution_uri(self):
         return self._required_uri_value(CMS.institution)
 
