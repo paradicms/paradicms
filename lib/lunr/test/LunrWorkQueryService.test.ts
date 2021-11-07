@@ -20,7 +20,7 @@ describe("LunrWorkQueryService", () => {
       limit: Number.MAX_SAFE_INTEGER,
     });
     expect(result.dataset.works).to.not.be.empty;
-  });
+  }).timeout(30000);
 
   it("should return fewer works from a freetext query", async () => {
     const allResult = await sut.getWorks({
@@ -45,5 +45,5 @@ describe("LunrWorkQueryService", () => {
     expect(fewerResult.dataset.works.length).to.be.lessThan(
       allResult.dataset.works.length
     );
-  });
+  }).timeout(30000);
 });
