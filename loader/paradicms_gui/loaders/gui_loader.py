@@ -46,7 +46,7 @@ class GuiLoader(_BufferingLoader):
         """
         :param app: name of an app (in pp/ of this repository) or path to an app
         :param base_url_path: Next.js basePath (https://nextjs.org/docs/api-reference/next.config.js/basepath)
-        :param configuration_file_path: path to an app configuration.json
+        :param configuration_file_path: path to an app configuration file path
         :param deployer: optional deployer implementation; if not specified, defaults to a file system deployer that writes to the loaded data directory
         :param dev: transform the input data to RDF and archive and thumbnail but run the Next.js dev server instead of generating and deploying static files
         :param image_archiver: optional image archiver implementation; if not specified, defaults to a file system archiver that writes to Next's public/ directory

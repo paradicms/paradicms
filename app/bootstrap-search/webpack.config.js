@@ -18,13 +18,13 @@ module.exports = (env, argv) => {
 
   const configurationFilePath = process.env.CONFIGURATION_FILE_PATH;
   if (configurationFilePath) {
-    console.info("configuration.json file path:", configurationFilePath);
+    console.info("configuration file path:", configurationFilePath);
     copyFilePathPatterns.push({
       from: configurationFilePath,
-      to: path.join(distPath, "configuration.json"),
+      to: distPath,
     });
   } else {
-    console.warn("no configuration.json file path specified");
+    console.warn("no configuration file path specified");
   }
 
   const dataFilePath = process.env.DATA_FILE_PATH;
