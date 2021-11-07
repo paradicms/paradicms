@@ -21,8 +21,8 @@ const fetchConfiguration = (): Promise<Configuration> => {
 };
 
 const fetchDataset = (): Promise<Dataset> =>
-  fetch("./data.ttl").then(response =>
-    response.text().then(ttl => Dataset.parse(ttl))
+  fetch("./data.trig").then(response =>
+    response.text().then(trig => Dataset.parse(trig, {format: "TriG"}))
   );
 
 Promise.all([fetchConfiguration(), fetchDataset()]).then(

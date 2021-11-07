@@ -124,7 +124,7 @@ class GuiLoader(_BufferingLoader):
         )
         data_loader.load(models=models)
         data_loader.flush()
-        data_file_path = data_dir_path / (self._pipeline_id + ".ttl")
+        data_file_path = data_dir_path / (self._pipeline_id + ".trig")
         self._logger.info("loaded data to %s", data_file_path)
 
         app_package_build_kwds = {

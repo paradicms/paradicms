@@ -1,7 +1,7 @@
 import mimetypes
 from pathlib import Path
 
-__CUSTOM_MIME_TYPES = {".ttl": "text/turtle"}
+__CUSTOM_MIME_TYPES = {".trig": "application/trig", ".ttl": "text/turtle"}
 
 
 def get_generic_file_mime_type(file_path: Path) -> str:

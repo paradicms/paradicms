@@ -31,7 +31,7 @@ def test_build(test_data_models: Tuple[_Model, ...], tmp_path):
     gui_data_loader.flush()
 
     app_out_dir_path = app_package.build(
-        data_file_path=Path(tmp_path) / (pipeline_id + ".ttl")
+        data_file_path=Path(tmp_path) / (pipeline_id + ".trig")
     )
     assert app_out_dir_path == (app_package.app_dir_path / "out")
     assert app_out_dir_path.is_dir()

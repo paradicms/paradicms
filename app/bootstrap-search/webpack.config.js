@@ -29,13 +29,13 @@ module.exports = (env, argv) => {
 
   const dataFilePath = process.env.DATA_FILE_PATH;
   if (dataFilePath) {
-    console.info("data.ttl file path:", dataFilePath);
+    console.info("data file path:", dataFilePath);
     copyFilePathPatterns.push({
       from: dataFilePath,
-      to: path.join(distPath, "data.ttl"),
+      to: distPath,
     });
   } else {
-    console.warn("no data.ttl file path specified");
+    console.warn("no data file path specified");
   }
 
   return {
@@ -75,10 +75,6 @@ module.exports = (env, argv) => {
           test: /\.js$/,
           enforce: "pre",
           use: ["source-map-loader"],
-        },
-        {
-          test: /\.ttl$/i,
-          use: "raw-loader",
         },
         {
           test: /\.tsx?$/,

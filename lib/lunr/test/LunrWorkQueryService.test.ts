@@ -1,6 +1,7 @@
 import {expect} from "chai";
 import {LunrWorkQueryService} from "../src/LunrWorkQueryService";
 import {Dataset, defaultConfiguration} from "@paradicms/models";
+import {testDataTrig} from "../../models/test/testDataTrig";
 
 describe("LunrWorkQueryService", () => {
   const configuration = defaultConfiguration.workSearch;
