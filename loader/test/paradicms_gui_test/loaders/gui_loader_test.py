@@ -43,7 +43,7 @@ def test_load(app: str, test_data_models: Tuple[_Model, ...], tmp_path):
     gui_loader.load(models=[original_images[0]] + other_models)
     gui_loader.flush()
 
-    assert (loaded_data_dir_path / "data" / "test.ttl").is_file()
+    assert (loaded_data_dir_path / "data" / "test.trig").is_file()
     assert (loaded_data_dir_path / "deployed" / "index.html").is_file()
 
 

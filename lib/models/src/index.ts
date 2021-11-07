@@ -37,6 +37,7 @@ export * from "./RightsStatement";
 export * from "./StringPropertyValueFacet";
 export * from "./StringPropertyValueFilter";
 export * from "./ThumbnailSelector";
+export * from "./Text";
 export * from "./ValueFacet";
 export * from "./ValueFacetValue";
 export * from "./ValueFacetValueThumbnail";

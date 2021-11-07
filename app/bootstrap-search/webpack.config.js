@@ -16,26 +16,26 @@ module.exports = (env, argv) => {
 
   const copyFilePathPatterns = [];
 
-  const configurationJsonFilePath = process.env.CONFIGURATION_JSON_FILE_PATH;
-  if (configurationJsonFilePath) {
-    console.info("configuration.json file path:", configurationJsonFilePath);
+  const configurationFilePath = process.env.CONFIGURATION_FILE_PATH;
+  if (configurationFilePath) {
+    console.info("configuration file path:", configurationFilePath);
     copyFilePathPatterns.push({
-      from: configurationJsonFilePath,
-      to: path.join(distPath, "configuration.json"),
+      from: configurationFilePath,
+      to: distPath,
     });
   } else {
-    console.warn("no configuration.json file path specified");
+    console.warn("no configuration file path specified");
   }
 
-  const dataTtlFilePath = process.env.DATA_TTL_FILE_PATH;
-  if (dataTtlFilePath) {
-    console.info("data.ttl file path:", dataTtlFilePath);
+  const dataFilePath = process.env.DATA_FILE_PATH;
+  if (dataFilePath) {
+    console.info("data file path:", dataFilePath);
     copyFilePathPatterns.push({
-      from: dataTtlFilePath,
-      to: path.join(distPath, "data.ttl"),
+      from: dataFilePath,
+      to: distPath,
     });
   } else {
-    console.warn("no data.ttl file path specified");
+    console.warn("no data file path specified");
   }
 
   return {
@@ -75,10 +75,6 @@ module.exports = (env, argv) => {
           test: /\.js$/,
           enforce: "pre",
           use: ["source-map-loader"],
-        },
-        {
-          test: /\.ttl$/i,
-          use: "raw-loader",
         },
         {
           test: /\.tsx?$/,

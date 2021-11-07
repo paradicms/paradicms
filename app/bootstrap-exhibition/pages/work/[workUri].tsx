@@ -8,6 +8,7 @@ import {
   DCTERMS,
   Image,
   Rights,
+  Text,
 } from "@paradicms/models";
 import {
   decodeFileName,
@@ -76,7 +77,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   ]);
   const institution = useMemo(() => collection.institution, [collection]);
 
-  const currentWorkAbstract: string | null = useMemo(() => {
+  const currentWorkAbstract: string | Text | null = useMemo(() => {
     if (currentWork.abstract) {
       return currentWork.abstract;
     } else if (currentWork.properties) {
@@ -91,10 +92,19 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     }
   }, [currentWork]);
 
-  const currentWorkRights: Rights | null = useMemo(
-    () => currentWork.rights ?? institution.rights ?? null,
-    [currentWork, institution]
-  );
+  const currentWorkAbstractRights: Rights | null = useMemo(() => {
+    if (
+      currentWorkAbstract &&
+      currentWorkAbstract instanceof Text &&
+      currentWorkAbstract.rights
+    ) {
+      return currentWorkAbstract.rights;
+    } else if (currentWork.rights) {
+      return currentWork.rights;
+    } else {
+      return institution.rights;
+    }
+  }, [currentWork, currentWorkAbstract, institution]);
 
   const currentWorkAgentProfiles = useMemo(
     () =>
@@ -249,7 +259,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                           className="pl-0 text-wrap"
                           xs={12}
                           dangerouslySetInnerHTML={{
-                            __html: currentWorkAbstract,
+                            __html: currentWorkAbstract.toString(),
                           }}
                         ></Col>
                       </Row>
@@ -257,7 +267,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                   </Container>
                 </Col>
               </Row>
-              {currentImageRights || currentWorkRights ? (
+              {currentImageRights || currentWorkAbstractRights ? (
                 <Row className="mt-2">
                   <Col style={{textAlign: "center"}} xs={12}>
                     {currentImageRights ? (
@@ -267,10 +277,10 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                         style={RIGHTS_STYLE}
                       />
                     ) : null}
-                    {currentWorkRights ? (
+                    {currentWorkAbstractRights ? (
                       <RightsParagraph
                         material="Text"
-                        rights={currentWorkRights}
+                        rights={currentWorkAbstractRights}
                         style={RIGHTS_STYLE}
                       />
                     ) : null}

@@ -1,9 +1,9 @@
 import {expect} from "chai";
-import {testDataTtl} from "./testDataTtl";
 import {Dataset} from "../src";
+import {testDataTrig} from "./testDataTrig";
 
 describe("Organization", () => {
-  const sut = Dataset.parse(testDataTtl).organizations[0];
+  const sut = Dataset.parse(testDataTrig).organizations[0];
 
   it("should get the organization's images", () => {
     expect(sut.images).to.not.be.empty;

@@ -3,6 +3,8 @@ import {DCTERMS} from "./vocabularies";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
 import {Agent} from "./Agent";
+import {Dataset} from "./Dataset";
+import {BlankNode, NamedNode} from "n3";
 
 export class Rights extends Model {
   get creator(): Agent | string | null {
@@ -21,6 +23,19 @@ export class Rights extends Model {
       uri => this.dataset.licenseByUri(uri),
       DCTERMS.license
     );
+  }
+
+  static optional(kwds: {
+    dataset: Dataset;
+    node: BlankNode | NamedNode;
+  }): Rights | null {
+    const rights = new Rights(kwds);
+
+    if (rights.creator || rights.holder || rights.license || rights.statement) {
+      return rights;
+    } else {
+      return null;
+    }
   }
 
   get statement(): RightsStatement | string | null {

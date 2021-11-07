@@ -1,10 +1,10 @@
 import {expect} from "chai";
 import {DataSubsetter} from "../src/DataSubsetter";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
-import {testDataTtl} from "./testDataTtl";
 import {Dataset, License, RightsStatement} from "../src";
 import {NamedModel} from "../src/NamedModel";
 import {Agent} from "../src/Agent";
+import {testDataTrig} from "./testDataTrig";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
@@ -27,7 +27,7 @@ const expectModelsDeepEq = <ModelT extends NamedModel>(
   );
 
 describe("DataSubsetter", () => {
-  const testDataset = Dataset.parse(testDataTtl);
+  const testDataset = Dataset.parse(testDataTrig);
   const sut = new DataSubsetter(testDataset);
 
   it("should get institutions with thumbnails (institutions page)", () => {
@@ -66,7 +66,9 @@ describe("DataSubsetter", () => {
     );
   });
 
-  it("should get a collection with its works and their thumbnails (collection page)", () => {
+  it("should get a collection with its works and their thumbnails (collection page)", function() {
+    this.timeout(30000);
+
     const collection = testDataset.collections[0];
     const dataset = sut.collectionDataset(collection.uri, {
       works: {

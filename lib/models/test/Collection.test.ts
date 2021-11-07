@@ -1,14 +1,14 @@
 import {expect} from "chai";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
-import {testDataTtl} from "./testDataTtl";
 import {Dataset} from "../src";
+import {testDataTrig} from "./testDataTrig";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
 };
 
 describe("Collection", () => {
-  const sut = Dataset.parse(testDataTtl).collections[0];
+  const sut = Dataset.parse(testDataTrig).collections[0];
 
   it("should get the collection's institution", () => {
     expect(sut.institution.uri).to.eq(sut.institutionUri);

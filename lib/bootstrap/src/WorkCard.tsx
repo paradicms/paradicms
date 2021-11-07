@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Image, Institution, Work} from "@paradicms/models";
+import {Image, Institution, Rights, Text, Work} from "@paradicms/models";
 import {
   Card,
   CardBody,
@@ -27,6 +27,23 @@ export const WorkCard: React.FunctionComponent<{
   });
   const thumbnailSrc =
     thumbnail?.src ?? Image.placeholderSrc(thumbnailTargetDimensions);
+
+  const rightsEntries: {rights: Rights; title: string}[] = [];
+  if (thumbnail && thumbnail.rights) {
+    rightsEntries.push({rights: thumbnail.rights, title: "Image rights"});
+  }
+  if (work.rights || work.institution.rights) {
+    rightsEntries.push({
+      rights: work.rights ?? work.institution.rights!,
+      title: "Metadata rights",
+    });
+  }
+  if (work.abstract && work.abstract instanceof Text && work.abstract.rights) {
+    rightsEntries.push({
+      rights: work.abstract.rights!,
+      title: "Summary rights",
+    });
+  }
 
   return (
     <Card className="text-center">
@@ -72,42 +89,28 @@ export const WorkCard: React.FunctionComponent<{
           {work.abstract ? (
             <Row>
               <Col xs={12}>
-                <Accordion title="Summary">{work.abstract}</Accordion>
+                <Accordion title="Summary">
+                  {work.abstract.toString()}
+                </Accordion>
               </Col>
             </Row>
           ) : null}
-          {thumbnail && thumbnail.rights ? (
-            <Row>
+          {rightsEntries.map((rightsEntry, key) => (
+            <Row key={key}>
               <Col xs={12}>
-                <Accordion title="Image rights">
+                <Accordion title={rightsEntry.title}>
                   <RightsTable
                     cellStyle={{
                       padding: 0,
                       textAlign: "left",
                     }}
-                    rights={thumbnail.rights}
+                    rights={rightsEntry.rights}
                     tableStyle={{fontSize: "xx-small"}}
                   ></RightsTable>
                 </Accordion>
               </Col>
             </Row>
-          ) : null}
-          {work.rights ? (
-            <Row>
-              <Col xs={12}>
-                <Accordion title="Metadata rights">
-                  <RightsTable
-                    cellStyle={{
-                      padding: 0,
-                      textAlign: "left",
-                    }}
-                    rights={work.rights}
-                    tableStyle={{fontSize: "xx-small"}}
-                  ></RightsTable>
-                </Accordion>
-              </Col>
-            </Row>
-          ) : null}
+          ))}
         </Container>
       </CardBody>
     </Card>

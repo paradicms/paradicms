@@ -2,11 +2,11 @@ import {expect} from "chai";
 import {License} from "../src/License";
 import {RightsStatement} from "../src/RightsStatement";
 import {Dataset} from "../src";
-import {testDataTtl} from "./testDataTtl";
 import {Agent} from "../src/Agent";
+import {testDataTrig} from "./testDataTrig";
 
 describe("Rights", () => {
-  const sut = Dataset.parse(testDataTtl).works[0].rights!;
+  const sut = Dataset.parse(testDataTrig).works[0].rights!;
 
   it("should have a joined creator", () => {
     expect(sut.creator).to.not.be.empty;

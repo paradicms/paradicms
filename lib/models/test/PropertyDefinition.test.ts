@@ -1,9 +1,9 @@
 import {expect} from "chai";
 import {Dataset} from "../src";
-import {testDataTtl} from "./testDataTtl";
+import {testDataTrig} from "./testDataTrig";
 
 describe("PropertyDefinition", () => {
-  const dataset = Dataset.parse(testDataTtl);
+  const dataset = Dataset.parse(testDataTrig);
   const sut = dataset.propertyDefinitionByUri(
     dataset.propertyValueDefinitions[0].propertyUris[0]
   )!;

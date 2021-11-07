@@ -5,12 +5,13 @@ import {Institution} from "./Institution";
 import {Property} from "./Property";
 import {Rights} from "./Rights";
 import {Image} from "./Image";
+import {Text} from "./Text";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 
 export class Work extends NamedModel {
-  get abstract(): string | null {
-    return this.optionalString(DCTERMS.abstract);
+  get abstract(): string | Text | null {
+    return this.optionalStringOrText(DCTERMS.abstract);
   }
 
   get collections(): readonly Collection[] {

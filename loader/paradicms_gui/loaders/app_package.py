@@ -37,8 +37,8 @@ class AppPackage:
     def build(
         self,
         *,
-        data_ttl_file_path: Path,
-        configuration_json_file_path: Optional[Path] = None,
+        data_file_path: Path,
+        configuration_file_path: Optional[Path] = None,
     ) -> Path:
         """
         Build the app
@@ -65,8 +65,8 @@ class AppPackage:
 
         self.__run_script(
             "build",
-            configuration_json_file_path=configuration_json_file_path,
-            data_ttl_file_path=data_ttl_file_path,
+            configuration_file_path=configuration_file_path,
+            data_file_path=data_file_path,
         )
         self.__logger.info("built GUI")
 
@@ -112,13 +112,13 @@ class AppPackage:
     def dev(
         self,
         *,
-        data_ttl_file_path: Path,
-        configuration_json_file_path: Optional[Path] = None,
+        data_file_path: Path,
+        configuration_file_path: Optional[Path] = None,
     ):
         self.__run_script(
             "dev",
-            configuration_json_file_path=configuration_json_file_path,
-            data_ttl_file_path=data_ttl_file_path,
+            configuration_file_path=configuration_file_path,
+            data_file_path=data_file_path,
         )
 
     @property
@@ -129,20 +129,18 @@ class AppPackage:
         self,
         script,
         check=True,
-        configuration_json_file_path: Optional[Path] = None,
-        data_ttl_file_path: Optional[Path] = None,
+        configuration_file_path: Optional[Path] = None,
+        data_file_path: Optional[Path] = None,
         shell=None,
         **kwds,
     ):
         subprocess_env = os.environ.copy()
         if self.__base_url_path:
             subprocess_env["GUI_BASE_URL_PATH"] = self.__base_url_path
-        if configuration_json_file_path is not None:
-            subprocess_env["CONFIGURATION_JSON_FILE_PATH"] = str(
-                configuration_json_file_path
-            )
-        if data_ttl_file_path is not None:
-            subprocess_env["DATA_TTL_FILE_PATH"] = str(data_ttl_file_path)
+        if configuration_file_path is not None:
+            subprocess_env["CONFIGURATION_FILE_PATH"] = str(configuration_file_path)
+        if data_file_path is not None:
+            subprocess_env["DATA_FILE_PATH"] = str(data_file_path)
         subprocess_env["EDITOR"] = ""
         self.__logger.info("subprocess environment variables: %s", subprocess_env)
 

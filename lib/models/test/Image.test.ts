@@ -1,10 +1,10 @@
 import {expect} from "chai";
-import {testDataTtl} from "./testDataTtl";
 import {Dataset} from "../src";
+import {testDataTrig} from "./testDataTrig";
 
 describe("Image", () => {
   // sut should be an original image
-  const sut = Dataset.parse(testDataTtl).works[0].images.find(
+  const sut = Dataset.parse(testDataTrig).works[0].images.find(
     image => image.isOriginal
   )!;
 

@@ -1,28 +1,29 @@
 import {NamedNode} from "n3";
 import {Model} from "./Model";
-import {Rights} from "./Rights";
 import {DCTERMS} from "./vocabularies";
+import {Rights} from "./Rights";
+import {Text} from "./Text";
 
 export class NamedModel extends Model {
   get node(): NamedNode {
     return this._node as NamedNode;
   }
 
-  protected get _rights(): Rights | null {
-    const rights = new Rights({
-      dataset: this.dataset,
-      node: this.node,
-    });
-
-    if (rights.creator || rights.holder || rights.license || rights.statement) {
-      return rights;
-    } else {
-      return null;
+  protected optionalStringOrText(property: NamedNode): string | Text | null {
+    for (const object of this.store.getObjects(this.node, property, null)) {
+      switch (object.termType) {
+        case "Literal":
+          return object.value;
+        case "BlankNode":
+        case "NamedNode":
+          return new Text({dataset: this.dataset, node: object});
+      }
     }
+    return null;
   }
 
-  get uri(): string {
-    return this.node.value;
+  protected get _rights(): Rights | null {
+    return Rights.optional({dataset: this.dataset, node: this.node});
   }
 
   protected get _wikidataConceptUri(): string | null {
@@ -39,5 +40,9 @@ export class NamedModel extends Model {
       }
     }
     return null;
+  }
+
+  get uri(): string {
+    return this.node.value;
   }
 }

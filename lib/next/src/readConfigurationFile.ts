@@ -8,11 +8,11 @@ export const readConfigurationFile = (
   readFileSync: (filePath: string) => string
 ): Configuration => {
   if (!_configuration) {
-    const configurationJsonFilePath: string | undefined =
-      process.env.CONFIGURATION_JSON_FILE_PATH;
-    if (configurationJsonFilePath) {
+    const configurationFilePath: string | undefined =
+      process.env.CONFIGURATION_FILE_PATH;
+    if (configurationFilePath) {
       _configuration = JSON.parse(
-        readFileSync(configurationJsonFilePath).toString()
+        readFileSync(configurationFilePath).toString()
       );
     } else {
       _configuration = defaultConfiguration;

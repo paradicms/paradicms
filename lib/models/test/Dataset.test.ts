@@ -1,12 +1,12 @@
 import {Dataset} from "../src/Dataset";
 import {License} from "../src/License";
 import {RightsStatement} from "../src/RightsStatement";
-import {testDataTtl} from "./testDataTtl";
 import {expect} from "chai";
 import {Agent} from "../src/Agent";
+import {testDataTrig} from "./testDataTrig";
 
 describe("Dataset", () => {
-  const sut = Dataset.parse(testDataTtl);
+  const sut = Dataset.parse(testDataTrig);
 
   it("should exercise all indices", () => {
     const institutions = sut.institutions;

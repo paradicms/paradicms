@@ -33,7 +33,7 @@ class GuiLoader(_BufferingLoader):
         *,
         app: Union[Path, str],
         base_url_path: str = "",
-        configuration_json_file_path: Optional[Path] = None,
+        configuration_file_path: Optional[Path] = None,
         deployer: Optional[_Deployer] = None,
         dev: bool = False,
         image_archiver: Optional[_ImageArchiver] = None,
@@ -46,7 +46,7 @@ class GuiLoader(_BufferingLoader):
         """
         :param app: name of an app (in pp/ of this repository) or path to an app
         :param base_url_path: Next.js basePath (https://nextjs.org/docs/api-reference/next.config.js/basepath)
-        :param configuration_json_file_path: path to an app configuration.json
+        :param configuration_file_path: path to an app configuration file path
         :param deployer: optional deployer implementation; if not specified, defaults to a file system deployer that writes to the loaded data directory
         :param dev: transform the input data to RDF and archive and thumbnail but run the Next.js dev server instead of generating and deploying static files
         :param image_archiver: optional image archiver implementation; if not specified, defaults to a file system archiver that writes to Next's public/ directory
@@ -57,7 +57,7 @@ class GuiLoader(_BufferingLoader):
         _BufferingLoader.__init__(self, **kwds)
         self.__app = app
         self.__base_url_path = base_url_path
-        self.__configuration_json_file_path = configuration_json_file_path
+        self.__configuration_file_path = configuration_file_path
         self.__deployer = deployer
         self.__dev = dev
         self.__image_archiver = image_archiver
@@ -124,12 +124,12 @@ class GuiLoader(_BufferingLoader):
         )
         data_loader.load(models=models)
         data_loader.flush()
-        data_ttl_file_path = data_dir_path / (self._pipeline_id + ".ttl")
-        self._logger.info("loaded data to %s", data_ttl_file_path)
+        data_file_path = data_dir_path / (self._pipeline_id + ".trig")
+        self._logger.info("loaded data to %s", data_file_path)
 
         app_package_build_kwds = {
-            "configuration_json_file_path": self.__configuration_json_file_path,
-            "data_ttl_file_path": data_ttl_file_path,
+            "configuration_file_path": self.__configuration_file_path,
+            "data_file_path": data_file_path,
         }
 
         if self.__dev:
