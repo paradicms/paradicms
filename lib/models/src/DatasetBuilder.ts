@@ -219,18 +219,17 @@ export class DatasetBuilder {
       }
       for (const modelUri of Object.keys(modelsByUri)) {
         const model = modelsByUri[modelUri];
-        const modelRdfTypeQuads = model.dataset.store.getQuads(
+        const modelGraphUris = model.dataset.store.getGraphs(
           model.node,
           RDF.type,
-          null,
           null
         );
-        if (modelRdfTypeQuads.length !== 1) {
+        if (modelGraphUris.length !== 1) {
           throw new EvalError(
-            `model ${model.uri} has ${modelRdfTypeQuads.length} rdf:type quads`
+            `model ${model.uri} has rdf:type quads in ${modelGraphUris.length} graphs`
           );
         }
-        const modelGraphUri = modelRdfTypeQuads[0].graph;
+        const modelGraphUri = modelGraphUris[0];
         // Add all quads that belong to the model's graph
         store.addQuads(
           model.dataset.store.getQuads(null, null, null, modelGraphUri)
