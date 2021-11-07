@@ -11,6 +11,7 @@ import {Work} from "./Work";
 import {Person} from "./Person";
 import {Organization} from "./Organization";
 import {Agent} from "./Agent";
+import {RDF} from "./vocabularies";
 
 export class DatasetBuilder {
   private collectionsByUri: {[index: string]: Collection} | undefined;
@@ -218,9 +219,21 @@ export class DatasetBuilder {
       }
       for (const modelUri of Object.keys(modelsByUri)) {
         const model = modelsByUri[modelUri];
+        const modelRdfTypeQuads = model.dataset.store.getQuads(
+          model.node,
+          RDF.type,
+          null,
+          null
+        );
+        if (modelRdfTypeQuads.length !== 1) {
+          throw new EvalError(
+            `model ${model.uri} has ${modelRdfTypeQuads.length} rdf:type quads`
+          );
+        }
+        const modelGraphUri = modelRdfTypeQuads[0].graph;
         // Add all quads that belong to the model's graph
         store.addQuads(
-          model.dataset.store.getQuads(null, null, null, model.node)
+          model.dataset.store.getQuads(null, null, null, modelGraphUri)
         );
       }
     }
