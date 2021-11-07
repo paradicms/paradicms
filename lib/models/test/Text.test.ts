@@ -12,7 +12,11 @@ describe("Text", () => {
   });
 
   it("should have rights", () => {
-    expect(sut.rights!.creator).to.not.be.empty;
-    expect(sut.rights!.holder).to.not.be.empty;
+    const rights = sut.rights;
+    expect(rights).to.not.be.null;
+    const license = rights!.license;
+    expect(license).to.not.be.null;
+    const holder = rights!.holder;
+    expect(holder).to.not.be.empty;
   });
 });
