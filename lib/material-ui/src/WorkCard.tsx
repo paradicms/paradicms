@@ -16,7 +16,7 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {RightsTable} from "./RightsTable";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
-import {Image, Institution, Work} from "@paradicms/models";
+import {Image, Institution, Rights, Text, Work} from "@paradicms/models";
 
 const useStyles = makeStyles(theme => ({
   accordionTitle: {
@@ -56,6 +56,23 @@ export const WorkCard: React.FunctionComponent<{
   });
   const thumbnailSrc =
     thumbnail?.src ?? Image.placeholderSrc(thumbnailTargetDimensions);
+
+  const rightsEntries: {rights: Rights; title: string}[] = [];
+  if (thumbnail && thumbnail.rights) {
+    rightsEntries.push({rights: thumbnail.rights, title: "Image rights"});
+  }
+  if (work.rights || work.institution.rights) {
+    rightsEntries.push({
+      rights: work.rights ?? work.institution.rights!,
+      title: "Metadata rights",
+    });
+  }
+  if (work.abstract && work.abstract instanceof Text && work.abstract.rights) {
+    rightsEntries.push({
+      rights: work.abstract.rights!,
+      title: "Summary rights",
+    });
+  }
 
   return (
     <Card className={classes.root}>
@@ -111,42 +128,24 @@ export const WorkCard: React.FunctionComponent<{
               </Accordion>
             </Grid>
           ) : null}
-          {thumbnail && thumbnail.rights ? (
-            <Grid item>
+          {rightsEntries.map((rightsEntry, key) => (
+            <Grid item key={key}>
               <Accordion>
                 <AccordionSummary
                   className={classes.accordionTitle}
                   expandIcon={<ExpandMoreIcon />}
                 >
-                  Image rights
+                  {rightsEntry.title}
                 </AccordionSummary>
                 <AccordionDetails>
                   <RightsTable
                     cellClassName={classes.rightsTableCell}
-                    rights={thumbnail.rights}
+                    rights={rightsEntry.rights}
                   ></RightsTable>
                 </AccordionDetails>
               </Accordion>
             </Grid>
-          ) : null}
-          {work.rights ? (
-            <Grid item>
-              <Accordion>
-                <AccordionSummary
-                  className={classes.accordionTitle}
-                  expandIcon={<ExpandMoreIcon />}
-                >
-                  Metadata rights
-                </AccordionSummary>
-                <AccordionDetails>
-                  <RightsTable
-                    cellClassName={classes.rightsTableCell}
-                    rights={work.rights}
-                  ></RightsTable>
-                </AccordionDetails>
-              </Accordion>
-            </Grid>
-          ) : null}
+          ))}
         </Grid>
       </CardContent>
     </Card>

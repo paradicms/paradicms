@@ -75,7 +75,7 @@ export class LunrWorkQueryService implements WorkQueryService {
       for (const work of kwds.dataset.works) {
         const doc: any = {title: work.title, uri: work.uri};
         if (work.abstract) {
-          doc.abstract = work.abstract;
+          doc.abstract = work.abstract.toString();
         }
         if (work.properties && work.properties.length > 0) {
           for (const property of work.properties) {

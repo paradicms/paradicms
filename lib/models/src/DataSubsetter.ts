@@ -162,8 +162,11 @@ export class DataSubsetter {
     // Work Datasets always include rights
     this.addRightsDataset(builder, work.rights, joinSelector?.agent);
 
-    const abstract = work.abstract;
-    if (abstract && abstract instanceof Text) {
+    {
+      const abstract = work.abstract;
+      if (abstract && abstract instanceof Text) {
+        this.addRightsDataset(builder, abstract.rights, joinSelector?.agent);
+      }
     }
 
     if (joinSelector?.allImages) {
