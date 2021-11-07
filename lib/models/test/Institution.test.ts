@@ -1,6 +1,6 @@
 import {expect} from "chai";
-import {testDataTtl} from "./testDataTtl";
 import {Dataset} from "../src";
+import {testDataTrig} from "./testDataTrig";
 
 describe("Institution", () => {
   const sut = Dataset.parse(testDataTrig).institutions[0];

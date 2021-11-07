@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
-import {testDataTtl} from "./testDataTtl";
 import {Dataset} from "../src";
+import {testDataTrig} from "./testDataTrig";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},

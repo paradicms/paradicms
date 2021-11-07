@@ -1,10 +1,10 @@
 import {expect} from "chai";
 import {DataSubsetter} from "../src/DataSubsetter";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
-import {testDataTtl} from "./testDataTtl";
 import {Dataset, License, RightsStatement} from "../src";
 import {NamedModel} from "../src/NamedModel";
 import {Agent} from "../src/Agent";
+import {testDataTrig} from "./testDataTrig";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
