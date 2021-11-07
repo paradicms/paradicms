@@ -1,6 +1,7 @@
 /build/
 /data/creative_commons/
 /data/gordon-book-export/
+/data/markdown_directory/loaded/
 /data/rights_statements_dot_org/
 !/data/README.md
 /dist/

@@ -7,10 +7,17 @@ from rdflib.resource import Resource
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
+from paradicms_etl.models.text import Text
 from paradicms_etl.namespace import CMS
 
 
 class Work(_NamedModel):
+    """
+    Model of a work such as a painting or a garment.
+
+    This is the same concept as Work in VRA Core.
+    """
+
     def __init__(self, *args, **kwds):
         _NamedModel.__init__(self, *args, **kwds)
         self.collection_uris
@@ -27,7 +34,7 @@ class Work(_NamedModel):
         institution_uri: URIRef,
         title: str,
         uri: URIRef,
-        abstract: Optional[str] = None,
+        abstract: Union[str, Text, None] = None,
         page: Union[
             str, URIRef, None
         ] = None,  # foaf:page, linking to a human-readable page; if not specified, defaults to URI
@@ -36,7 +43,12 @@ class Work(_NamedModel):
     ):
         resource = cls._create_resource(identifier=uri)
         if abstract is not None:
-            resource.add(DCTERMS.abstract, Literal(abstract))
+            if isinstance(abstract, str):
+                resource.add(DCTERMS.abstract, Literal(abstract))
+            elif isinstance(abstract, Text):
+                resource.add(DCTERMS.abstract, abstract.to_rdf(graph=resource.graph))
+            else:
+                raise TypeError(type(abstract))
         for collection_uri in collection_uris:
             resource.add(CMS.collection, collection_uri)
         resource.add(CMS.institution, institution_uri)

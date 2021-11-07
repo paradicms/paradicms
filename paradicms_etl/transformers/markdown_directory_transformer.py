@@ -1,17 +1,17 @@
-from dataclasses import dataclass
-from enum import Enum
 from logging import Logger
 from typing import Dict, Optional, Tuple, Type, Union
 from urllib.parse import quote
 
+import rdflib.namespace
+import stringcase
 import yaml
 from markdown_it import MarkdownIt
 from markdown_it.renderer import RendererHTML
 from markdown_it.tree import SyntaxTreeNode
 from mdit_py_plugins.front_matter import front_matter_plugin
-from rdflib import DC, DCTERMS, FOAF, Graph, Literal, RDFS, URIRef
+from rdflib import DCTERMS, FOAF, Graph, Literal, RDFS, URIRef
 from rdflib.resource import Resource
-from rdflib.term import Node
+from rdflib.term import Node, BNode
 
 import paradicms_etl
 from paradicms_etl._transformer import _Transformer
@@ -33,11 +33,11 @@ from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
-from paradicms_etl.models.vra_core_property_definitions import VraCorePropertyDefinitions
+from paradicms_etl.models.vra_core_property_definitions import (
+    VraCorePropertyDefinitions,
+)
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespace import CMS
-import rdflib.namespace
-import stringcase
 
 
 def _create_namespaces_by_prefix_default() -> Dict[str, rdflib.Namespace]:
@@ -127,6 +127,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             self.__current_heading_id = None
             self.__markdown_it = markdown_it
             self.__default_namespace = default_namespace
+            self.__graph = Graph()
             self.__model_id = model_id
             self.__model_type = model_type
             self.__namespaces_by_prefix = namespaces_by_prefix
@@ -145,7 +146,17 @@ class MarkdownDirectoryTransformer(_Transformer):
             if isinstance(value, (bool, int)):
                 return Literal(value)
             elif isinstance(value, dict):
-                raise NotImplementedError("return a blank node")
+                bnode_resource = self.__graph.resource(BNode())
+                for sub_key, sub_value in value.items():
+                    property_uri = self._convert_key_to_property_uri(sub_key)
+                    sub_value_nodes = self._convert_front_matter_value_to_rdf_node(
+                        sub_value
+                    )
+                    if isinstance(sub_value_nodes, Node):
+                        sub_value_nodes = (sub_value_nodes,)
+                    for sub_value_node in sub_value_nodes:
+                        bnode_resource.add(property_uri, sub_value_node)
+                return bnode_resource.identifier
             elif isinstance(value, (list, tuple)):
                 nodes = tuple(self._visit_value(value) for value in value)
                 if all(nodes, lambda node: isinstance(node, Literal)):
@@ -210,7 +221,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                     model_type=self.__model_type,
                     model_id=self.__model_id,
                 )
-                self.__result = Graph().resource(model_uri)
+                self.__result = self.__graph.resource(model_uri)
             return self.__result
 
         def _visit_front_matter_node(self, front_matter_node: SyntaxTreeNode):
@@ -238,7 +249,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                             "subject URI must be a URIRef, not a "
                             + type(value_nodes[0])
                         )
-                    self.__result = Graph().resource(value_nodes[0])
+                    self.__result = self.__graph.resource(value_nodes[0])
                     continue
 
                 for value_node in value_nodes:

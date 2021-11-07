@@ -8,4 +8,4 @@ def test_load(test_data_models, tmpdir):
     loader = RdfFileLoader(data_dir_path=tmpdir_path, pipeline_id="test")
     loader.load(models=test_data_models)
     loader.flush()
-    assert (tmpdir_path / "test" / "loaded" / "test.ttl").exists()
+    assert (tmpdir_path / "test" / "loaded" / "test.trig").exists()

@@ -1,22 +1,24 @@
+import hashlib
 from pathlib import Path
 from typing import Optional
 
 from pathvalidate import sanitize_filename
-from rdflib import Graph
+from rdflib import ConjunctiveGraph, URIRef
 
 from paradicms_etl.loaders._buffering_loader import _BufferingLoader
+from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.namespace import bind_namespaces
 
 
 class RdfFileLoader(_BufferingLoader):
-    FORMAT_DEFAULT = "ttl"
+    FORMAT_DEFAULT = "trig"
 
     def __init__(
         self,
         *,
         file_path: Optional[Path] = None,
         format: Optional[str] = FORMAT_DEFAULT,
-        **kwds
+        **kwds,
     ):
         _BufferingLoader.__init__(self, **kwds)
         self.__file_path = file_path
@@ -31,16 +33,16 @@ class RdfFileLoader(_BufferingLoader):
                 sanitize_filename(self._pipeline_id) + "." + self.__format
             )
         self._logger.debug("serializing %d models to a graph", len(models))
-        graph = self._new_graph()
+        conjunctive_graph = ConjunctiveGraph()
+        bind_namespaces(conjunctive_graph.namespace_manager)
         for model in models:
-            model.to_rdf(graph)
-        self._logger.debug("serialized %d models to a graph", len(models))
+            assert isinstance(model, _NamedModel)
+            model_graph_uri = URIRef(
+                f"{self._pipeline_uri}:model:{hashlib.sha256(str(model.uri).encode('utf-8')).hexdigest()}"
+            )
+            model_graph = conjunctive_graph.get_context(model_graph_uri)
+            model.to_rdf(graph=model_graph)
         self._logger.debug("writing %d models to %s", len(models), file_path)
         with open(file_path, "w+b") as file_:
-            graph.serialize(destination=file_, format=self.__format)
+            conjunctive_graph.serialize(destination=file_, format=self.__format)
         self._logger.info("wrote %d models to %s", len(models), file_path)
-
-    def _new_graph(self) -> Graph:
-        graph = Graph()
-        bind_namespaces(graph.namespace_manager)
-        return graph

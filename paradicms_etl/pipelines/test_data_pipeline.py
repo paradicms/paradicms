@@ -28,6 +28,7 @@ from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
+from paradicms_etl.models.text import Text
 from paradicms_etl.models.vra_core_property_definitions import (
     VraCorePropertyDefinitions,
 )
@@ -348,7 +349,14 @@ class TestDataPipeline(_Pipeline):
                 page = URIRef(page)
 
             work_ = Work.from_fields(
-                abstract=self.__LOREM_IPSUM,
+                abstract=Text.from_fields(
+                    self.__LOREM_IPSUM,
+                    rights=Rights(
+                        holder=f"{title} abstract rights holder",
+                        license=CreativeCommonsLicenses.NC_1_0.uri,
+                        statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
+                    ),
+                ),
                 collection_uris=collection_uris,
                 institution_uri=institution.uri,
                 page=page,
@@ -441,7 +449,7 @@ class TestDataPipeline(_Pipeline):
                         / "data"
                         / "test_data"
                         / "loaded"
-                        / "data.ttl",
+                        / "data.trig",
                         pipeline_id=self.ID,
                     ),
                 ),
