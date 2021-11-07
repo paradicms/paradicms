@@ -1,4 +1,4 @@
-import { Agent, ImageDimensions, Institution, Rights, Work } from "@paradicms/models";
+import { Agent, ImageDimensions, Institution, Rights, Text, Work } from "@paradicms/models";
 import { WorkAgentProfile } from "./WorkAgentProfile";
 
 const thumbnailTargetDimensions: ImageDimensions = { height: 600, width: 600 };
@@ -39,6 +39,12 @@ export const getWorkAgentProfiles = (kwds: {
   const result: WorkAgentProfile[] = [];
 
   result.push(...getRightsAgentProfiles(work.rights ?? institution.rights ?? null, "Work"));
+
+  const abstract = work.abstract;
+  if (abstract && abstract instanceof Text) {
+    result.push(...getRightsAgentProfiles(abstract.rights, "Text"));
+  }
+
   for (const image of work.originalImages) {
     result.push(...getRightsAgentProfiles(image.rights, "Image"));
   }
