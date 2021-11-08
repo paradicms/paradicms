@@ -70,7 +70,7 @@ export const RightsTable: React.FunctionComponent<{
             cellClassName={cellClassName}
             label="Creator"
             rowClassName={rowClassName}
-            value={rights?.creator.toString()}
+            value={rights?.creator?.toString()}
           />
           <RightsTableRow
             cellClassName={cellClassName}
