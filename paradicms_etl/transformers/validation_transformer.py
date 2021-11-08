@@ -222,9 +222,6 @@ class ValidationTransformer(_Transformer):
                         )
 
         def _validate_work(self, work: Work):
-            creator_uri = work.creator
-            if isinstance(creator_uri, URIRef):
-                self.__referenced_agent_uris.add(creator_uri)
             for collection_uri in work.collection_uris:
                 self.__referenced_collection_uris.add(collection_uri)
             self.__referenced_institution_uris.add(work.institution_uri)

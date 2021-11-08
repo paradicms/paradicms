@@ -65,6 +65,10 @@ class Work(_NamedModel):
         return cls(resource)
 
     @property
+    def abstract(self) -> Union[str, Text, None]:
+        return self._optional_str_or_text_value(DCTERMS.abstract)
+
+    @property
     def collection_uris(self) -> Tuple[URIRef, ...]:
         return tuple(
             resource.identifier
@@ -72,13 +76,6 @@ class Work(_NamedModel):
             if isinstance(resource, Resource)
             and isinstance(resource.identifier, URIRef)
         )
-
-    @property
-    def creator(self) -> Union[str, URIRef, None]:
-        str_value = self._optional_str_value(DCTERMS.creator)
-        if str_value is not None:
-            return str_value
-        return self._optional_uri_value(DCTERMS.creator)
 
     @property
     def institution_uri(self):

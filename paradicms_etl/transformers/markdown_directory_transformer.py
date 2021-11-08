@@ -1,5 +1,5 @@
 from logging import Logger
-from typing import Dict, Optional, Tuple, Type, Union
+from typing import Dict, Optional, Tuple, Type
 from urllib.parse import quote
 
 import rdflib.namespace
@@ -9,7 +9,7 @@ from markdown_it import MarkdownIt
 from markdown_it.renderer import RendererHTML
 from markdown_it.tree import SyntaxTreeNode
 from mdit_py_plugins.front_matter import front_matter_plugin
-from rdflib import DCTERMS, FOAF, Graph, Literal, RDFS, URIRef
+from rdflib import DCTERMS, FOAF, Graph, Literal, RDF, RDFS, URIRef
 from rdflib.resource import Resource
 from rdflib.term import Node, BNode
 
@@ -134,29 +134,25 @@ class MarkdownDirectoryTransformer(_Transformer):
             self.__pipeline_id = pipeline_id
             self.__result = None  # Create lazily
 
-        def _convert_front_matter_value_to_rdf_node(
+        def _convert_front_matter_value_to_rdf_nodes(
             self, value: object
-        ) -> Union[Node, Tuple[Node, ...]]:
+        ) -> Tuple[Node, ...]:
             """
-            Transform a value to an RDF node or a sequence of nodes.
-
-            If a sequence of nodes is returned, there are multiple values (objects) for the associated key (propert).
+            Transform a value to one or more RDF nodes.
             """
 
             if isinstance(value, (bool, int)):
-                return Literal(value)
+                return (Literal(value),)
             elif isinstance(value, dict):
                 bnode_resource = self.__graph.resource(BNode())
                 for sub_key, sub_value in value.items():
                     property_uri = self._convert_key_to_property_uri(sub_key)
-                    sub_value_nodes = self._convert_front_matter_value_to_rdf_node(
+                    sub_value_nodes = self._convert_front_matter_value_to_rdf_nodes(
                         sub_value
                     )
-                    if isinstance(sub_value_nodes, Node):
-                        sub_value_nodes = (sub_value_nodes,)
                     for sub_value_node in sub_value_nodes:
                         bnode_resource.add(property_uri, sub_value_node)
-                return bnode_resource.identifier
+                return (bnode_resource.identifier,)
             elif isinstance(value, (list, tuple)):
                 nodes = tuple(self._visit_value(value) for value in value)
                 if all(nodes, lambda node: isinstance(node, Literal)):
@@ -171,14 +167,16 @@ class MarkdownDirectoryTransformer(_Transformer):
                     if uri_value.startswith("/"):
                         uri_value_split = uri_value.split("/", 2)
                         if len(uri_value_split) == 3:
-                            return MarkdownDirectoryTransformer.model_uri(
-                                pipeline_id=self.__pipeline_id,
-                                model_type=_model_type_by_name(uri_value_split[1]),
-                                model_id=uri_value_split[2],
+                            return (
+                                MarkdownDirectoryTransformer.model_uri(
+                                    pipeline_id=self.__pipeline_id,
+                                    model_type=_model_type_by_name(uri_value_split[1]),
+                                    model_id=uri_value_split[2],
+                                ),
                             )
-                    return URIRef(uri_value)
+                    return (URIRef(uri_value),)
                 else:
-                    return Literal(value)
+                    return (Literal(value),)
             else:
                 raise NotImplementedError("unsupported value type: " + type(value))
 
@@ -233,9 +231,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             front_matter_statements = []
             for key, value in front_matter_dict.items():
                 property_uri = self._convert_key_to_property_uri(key)
-                value_nodes = self._convert_front_matter_value_to_rdf_node(value)
-                if isinstance(value_nodes, Node):
-                    value_nodes = (value_nodes,)
+                value_nodes = self._convert_front_matter_value_to_rdf_nodes(value)
 
                 if property_uri == rdflib.RDF.subject:
                     # Front matter specifies the model's URI
@@ -311,6 +307,21 @@ class MarkdownDirectoryTransformer(_Transformer):
                 self._result.set(
                     property_uri, Literal(existing_value.toPython() + html)
                 )
+            elif isinstance(existing_value, Resource):
+                # #27: the frontmatter had a dict for this property, which was transformed into a bnode
+                # Assume that bnode was intended to be a Text model
+                # Set the rdf:type and use the HTML here as the value of the Text model
+                assert isinstance(existing_value.identifier, BNode)
+                text_resource = existing_value
+                text_resource.add(RDF.type, CMS.Text)
+                existing_text_value = text_resource.value(RDF.value)
+                # Concatenate multiple paragraphs as needed
+                if existing_text_value is None:
+                    text_resource.add(RDF.value, Literal(html))
+                else:
+                    text_resource.set(
+                        RDF.value, Literal(existing_text_value.toPython() + html)
+                    )
             else:
                 self._result.set(property_uri, Literal(html))
 
