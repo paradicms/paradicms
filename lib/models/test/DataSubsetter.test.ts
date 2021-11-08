@@ -108,7 +108,7 @@ describe("DataSubsetter", () => {
           "http://rightsstatements.org/vocab/InC-EDU/1.0/"
       )!,
     ]);
-  });
+  }).timeout(5000);
 
   it("should get an work with its institution, collections, all images, agents, and agents' thumbnails (work page)", () => {
     const work = testDataset.works[0];
