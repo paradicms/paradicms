@@ -4,6 +4,7 @@
     "declaration": true,
     "declarationMap": true,
     "downlevelIteration": true,
+    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "module": "commonjs",

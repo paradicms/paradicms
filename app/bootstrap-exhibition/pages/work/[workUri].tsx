@@ -67,15 +67,9 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   const dataset = useMemo<Dataset>(() => Dataset.parse(datasetString), [
     datasetString,
   ]);
-  const collection = useMemo(() => dataset.collectionByUri(collectionUri), [
-    collectionUri,
-    dataset,
-  ]);
-  const currentWork = useMemo(() => dataset.workByUri(currentWorkUri), [
-    currentWorkUri,
-    dataset,
-  ]);
-  const institution = useMemo(() => collection.institution, [collection]);
+  const collection = dataset.collectionByUri(collectionUri);
+  const currentWork = dataset.workByUri(currentWorkUri);
+  const institution = collection.institution;
 
   const currentWorkAbstract: string | Text | null = useMemo(() => {
     if (currentWork.abstract) {
@@ -116,10 +110,6 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   );
 
   const [currentImage, setCurrentImage] = useState<Image | null>(null);
-
-  const currentImageRights = useMemo(() => currentImage?.rights ?? null, [
-    currentImage,
-  ]);
 
   const leftColNavTabs: {content: React.ReactNode; title: string}[] = [];
   if (currentWork.images.length > 0) {
@@ -267,13 +257,13 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                   </Container>
                 </Col>
               </Row>
-              {currentImageRights || currentWorkAbstractRights ? (
+              {currentImage?.rights || currentWorkAbstractRights ? (
                 <Row className="mt-2">
                   <Col style={{textAlign: "center"}} xs={12}>
-                    {currentImageRights ? (
+                    {currentImage?.rights ? (
                       <RightsParagraph
                         material="Image"
-                        rights={currentImageRights}
+                        rights={currentImage.rights}
                         style={RIGHTS_STYLE}
                       />
                     ) : null}

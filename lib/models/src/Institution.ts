@@ -5,6 +5,7 @@ import {Collection} from "./Collection";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Image} from "./Image";
+import {Memoize} from "typescript-memoize";
 
 export class Institution extends NamedModel {
   get collections(): readonly Collection[] {
@@ -15,6 +16,7 @@ export class Institution extends NamedModel {
     return this.requiredString(FOAF.name_);
   }
 
+  @Memoize()
   get rights(): Rights | null {
     return this._rights;
   }

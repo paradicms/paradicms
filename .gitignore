@@ -2,6 +2,8 @@
 /app/bootstrap-exhibition/public/img/archive/
 /app/material-ui-union/public/img/archive/
 dist/
+/lib/lunr/@paradicms/
+/lib/models/@paradicms/
 .next/
 node_modules/
 null/

@@ -77,14 +77,12 @@ export class LunrWorkQueryService implements WorkQueryService {
         if (work.abstract) {
           doc.abstract = work.abstract.toString();
         }
-        if (work.properties && work.properties.length > 0) {
-          for (const property of work.properties) {
-            const fieldName = propertyFieldNamesByUri[property.uri];
-            if (!fieldName) {
-              continue;
-            }
-            doc[fieldName] = property.value.value.toString();
+        for (const property of work.properties) {
+          const fieldName = propertyFieldNamesByUri[property.uri];
+          if (!fieldName) {
+            continue;
           }
+          doc[fieldName] = property.value.value.toString();
         }
         this.add(doc);
       }
@@ -180,44 +178,44 @@ export class LunrWorkQueryService implements WorkQueryService {
           } = {};
           for (const work of works) {
             let workHasProperty = false;
-            for (const property of work.properties ?? []) {
-              if (property.uri === concreteFilter.propertyUri) {
-                const propertyValueString: string = property.value.value;
-                const facetValue = facetValues[propertyValueString];
-                if (facetValue) {
-                  facetValue.count++;
-                } else {
-                  const propertyDefinition = this.dataset.propertyDefinitionByUri(
-                    property.uri
-                  );
-                  let propertyValueDefinition:
-                    | PropertyValueDefinition
-                    | undefined;
-                  if (propertyDefinition) {
-                    propertyValueDefinition = propertyDefinition.values.find(
-                      propertyValueDefinition =>
-                        propertyValueDefinition.value.equals(property.value)
-                    );
-                  }
-                  facetValues[propertyValueString] = {
-                    count: 1,
-                    label: propertyValueDefinition
-                      ? propertyValueDefinition.label
-                      : null,
-                    value: propertyValueString,
-                    thumbnail:
-                      propertyValueDefinition &&
-                      valueFacetValueThumbnailSelector
-                        ? LunrWorkQueryService.toValueFacetValueThumbnail(
-                            propertyValueDefinition.thumbnail(
-                              valueFacetValueThumbnailSelector
-                            )
-                          )
-                        : null,
-                  };
-                }
-                workHasProperty = true;
+            for (const property of work.properties) {
+              if (property.uri !== concreteFilter.propertyUri) {
+                continue;
               }
+              const propertyValueString: string = property.value.value;
+              const facetValue = facetValues[propertyValueString];
+              if (facetValue) {
+                facetValue.count++;
+              } else {
+                const propertyDefinition = this.dataset.propertyDefinitionByUri(
+                  property.uri
+                );
+                let propertyValueDefinition:
+                  | PropertyValueDefinition
+                  | undefined;
+                if (propertyDefinition) {
+                  propertyValueDefinition = propertyDefinition.values.find(
+                    propertyValueDefinition =>
+                      propertyValueDefinition.value.equals(property.value)
+                  );
+                }
+                facetValues[propertyValueString] = {
+                  count: 1,
+                  label: propertyValueDefinition
+                    ? propertyValueDefinition.label
+                    : null,
+                  value: propertyValueString,
+                  thumbnail:
+                    propertyValueDefinition && valueFacetValueThumbnailSelector
+                      ? LunrWorkQueryService.toValueFacetValueThumbnail(
+                          propertyValueDefinition.thumbnail(
+                            valueFacetValueThumbnailSelector
+                          )
+                        )
+                      : null,
+                };
+              }
+              workHasProperty = true;
             }
             if (!workHasProperty) {
               unknownCount++;
@@ -265,7 +263,7 @@ export class LunrWorkQueryService implements WorkQueryService {
           filteredWorks = filteredWorks.filter(work =>
             LunrWorkQueryService.testValueFilter(
               filter as StringPropertyValueFilter,
-              (work.properties ?? [])
+              work.properties
                 .filter(
                   property =>
                     property.uri ===

@@ -43,10 +43,6 @@ export const RightsTable: React.FunctionComponent<{
   tableClassName,
   tableStyle,
 }) => {
-  const creatorValue = React.useMemo(() => rights.creator?.toString() ?? null, [
-    rights,
-  ]);
-
   const rowProps = {cellClassName, cellStyle, rowClassName, rowStyle};
 
   return (
@@ -57,7 +53,11 @@ export const RightsTable: React.FunctionComponent<{
           label="Statement"
           value={<RightsStatementLink rightsStatement={rights.statement} />}
         />
-        <RightsTableRow {...rowProps} label="Creator" value={creatorValue} />
+        <RightsTableRow
+          {...rowProps}
+          label="Creator"
+          value={rights.creator?.toString()}
+        />
         <RightsTableRow {...rowProps} label="Holder" value={rights.holder} />
         <RightsTableRow
           {...rowProps}
