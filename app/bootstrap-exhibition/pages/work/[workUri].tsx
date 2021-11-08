@@ -67,15 +67,9 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   const dataset = useMemo<Dataset>(() => Dataset.parse(datasetString), [
     datasetString,
   ]);
-  const collection = useMemo(() => dataset.collectionByUri(collectionUri), [
-    collectionUri,
-    dataset,
-  ]);
-  const currentWork = useMemo(() => dataset.workByUri(currentWorkUri), [
-    currentWorkUri,
-    dataset,
-  ]);
-  const institution = useMemo(() => collection.institution, [collection]);
+  const collection = dataset.collectionByUri(collectionUri);
+  const currentWork = dataset.workByUri(currentWorkUri);
+  const institution = collection.institution;
 
   const currentWorkAbstract: string | Text | null = useMemo(() => {
     if (currentWork.abstract) {

@@ -8,10 +8,6 @@ export const RightsParagraph: React.FunctionComponent<{
   rights: Rights;
   style?: React.CSSProperties;
 }> = ({material, rights, style}) => {
-  const creatorValue = React.useMemo(() => rights.creator?.toString() ?? null, [
-    rights,
-  ]);
-
   const rightsElements: React.ReactNodeArray = useMemo(() => {
     const result: React.ReactNodeArray = [];
 
@@ -22,10 +18,10 @@ export const RightsParagraph: React.FunctionComponent<{
       result.push(<span key={result.length}>{rightsElement}</span>);
     };
 
-    if (creatorValue) {
+    if (rights.creator) {
       pushRightsElement(
         <span>
-          <i>Creator</i>: {creatorValue}
+          <i>Creator</i>: {rights.creator.toString()}
         </span>
       );
     }
@@ -56,7 +52,7 @@ export const RightsParagraph: React.FunctionComponent<{
     }
 
     return result;
-  }, [creatorValue, rights]);
+  }, [rights]);
 
   return (
     <p style={style}>

@@ -1,7 +1,7 @@
 import {NumberParam, useQueryParam} from "use-query-params";
 import {JsonQueryParamConfig} from "@paradicms/react";
 import * as React from "react";
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useState} from "react";
 import {
   WorkQuery,
   WorkQueryResults,
@@ -25,19 +25,15 @@ export const WorkSearchPage: React.FunctionComponent<{
   const [workQueryQueryParam, setWorkQuery] = useQueryParam<
     WorkQuery | undefined
   >("query", new JsonQueryParamConfig<WorkQuery>());
-  const workQuery = useMemo(
-    () =>
-      workQueryQueryParam ?? {
-        filters: configuration.filters,
-      },
-    [workQueryQueryParam]
-  );
+  const workQuery = workQueryQueryParam ?? {
+    filters: configuration.filters,
+  };
 
   const [pageQueryParam, setPage] = useQueryParam<number | null | undefined>(
     "page",
     NumberParam
   );
-  const page = useMemo(() => pageQueryParam ?? 0, [pageQueryParam]);
+  const page = pageQueryParam ?? 0;
 
   const [
     workQueryResults,

@@ -53,11 +53,8 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
 }) => {
   const dataset = useMemo(() => Dataset.parse(datasetString), [datasetString]);
 
-  const collection = useMemo(() => dataset.collectionByUri(collectionUri), [
-    collectionUri,
-    dataset,
-  ]);
-  const institution = useMemo(() => collection.institution, [collection]);
+  const collection = dataset.collectionByUri(collectionUri);
+  const institution = collection.institution;
   const workQueryService = useMemo<WorkQueryService>(
     () =>
       new LunrWorkQueryService({
