@@ -3,6 +3,7 @@ from rdflib import URIRef
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.person import Person
+from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
 from paradicms_etl.transformers.markdown_directory_transformer import (
     MarkdownDirectoryTransformer,
@@ -30,6 +31,13 @@ def test_transform():
     assert len(works) == 2
     work1 = works[URIRef("urn:markdown:test:work:test_work1")]
     work2 = works[URIRef("urn:markdown:test:work:test_work2")]
+
+    work1_abstract = work1.abstract
+    assert work1_abstract is not None
+    assert isinstance(work1_abstract, Text)
+    work1_abstract_rights = work1_abstract.rights
+    assert work1_abstract_rights is not None
+    assert work1_abstract_rights.holder == "Abstract rights holder"
 
     images = {model.uri: model for model in models if isinstance(model, Image)}
     assert len(images) == 2

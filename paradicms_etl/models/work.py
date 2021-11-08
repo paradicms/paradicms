@@ -65,6 +65,10 @@ class Work(_NamedModel):
         return cls(resource)
 
     @property
+    def abstract(self) -> Union[str, Text, None]:
+        return self._optional_str_or_text_value(DCTERMS.abstract)
+
+    @property
     def collection_uris(self) -> Tuple[URIRef, ...]:
         return tuple(
             resource.identifier

@@ -56,6 +56,30 @@ class _Model:
     ) -> Optional[str]:
         return self.__optional_value(self.__literal_values(p, str))
 
+    def _optional_str_or_text_value(
+        self, p: Union[URIRef, Tuple[URIRef, ...]]
+    ) -> Union[str, "Text", None]:
+        for value in self.__values(p):
+            if isinstance(value, Literal):
+                python_value = value.toPython()
+                if not isinstance(python_value, str):
+                    raise TypeError(
+                        f"expected {p} literal to be a string, not a {type(python_value)}"
+                    )
+            elif isinstance(value, Resource):
+                value_type = value.value(RDF.type)
+                if (
+                    not isinstance(value_type, Resource)
+                    or value_type.identifier != CMS.Text
+                ):
+                    raise TypeError(
+                        f"expected {p} node to be a Text, not a {value_type}"
+                    )
+                from paradicms_etl.models.text import Text
+
+                return Text(value)
+        return None
+
     def _optional_uri_value(
         self, p: Union[URIRef, Tuple[URIRef, ...]]
     ) -> Optional[URIRef]:
