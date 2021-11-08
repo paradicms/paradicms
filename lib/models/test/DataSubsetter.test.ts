@@ -66,9 +66,7 @@ describe("DataSubsetter", () => {
     );
   });
 
-  it("should get a collection with its works and their thumbnails (collection page)", function() {
-    this.timeout(5000);
-
+  it("should get a collection with its works and their thumbnails (collection page)", () => {
     const collection = testDataset.collections[0];
     const dataset = sut.collectionDataset(collection.uri, {
       works: {

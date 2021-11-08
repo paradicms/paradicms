@@ -93,23 +93,43 @@ export class Model {
 
   protected get _properties(): readonly Property[] {
     const properties: Property[] = [];
-    for (const quad of this.store.getQuads(this.node, null, null, null)) {
-      if (quad.predicate.termType !== "NamedNode") {
-        continue;
-      }
-      const propertyUri = quad.predicate.value;
-      if (Model.IGNORED_PROPERTY_URIS.has(propertyUri)) {
-        continue;
-      }
-      properties.push(
-        new Property({
-          dataset: this.dataset,
-          value: quad.object,
-          uri: propertyUri,
-        })
-      );
-    }
+    this.store.forEach(
+      quad => {
+        const propertyUri = quad.predicate.value;
+        if (Model.IGNORED_PROPERTY_URIS.has(propertyUri)) {
+          return;
+        }
+        properties.push(
+          new Property({
+            dataset: this.dataset,
+            value: quad.object,
+            uri: propertyUri,
+          })
+        );
+      },
+      this.node,
+      null,
+      null,
+      null
+    );
     return properties;
+  }
+
+  protected get _propertyUris(): readonly string[] {
+    const propertyUris: string[] = [];
+    this.store.forPredicates(
+      predicate => {
+        const propertyUri = predicate.value;
+        if (Model.IGNORED_PROPERTY_URIS.has(propertyUri)) {
+          return;
+        }
+        propertyUris.push(propertyUri);
+      },
+      this.node,
+      null,
+      null
+    );
+    return propertyUris;
   }
 
   protected requiredLiteral(property: NamedNode): Literal {

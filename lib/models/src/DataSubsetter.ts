@@ -10,8 +10,8 @@ import {WorkJoinSelector} from "./WorkJoinSelector";
 import {Work} from "./Work";
 import {Image} from "Image";
 import {Agent} from "./Agent";
-import {AgentJoinSelector} from "./AgentJoinSelector";
 import {Text} from "./Text";
+import {AgentJoinSelector} from "./AgentJoinSelector";
 
 /**
  * Subset a Dataset to reduce the amount of data passed between getStaticProps and the component.
@@ -212,7 +212,7 @@ export class DataSubsetter {
 
       if (collectionUris) {
         for (const collectionUri of work.collectionUris) {
-          collectionUris!.add(collectionUri);
+          collectionUris.add(collectionUri);
         }
       }
 
@@ -221,14 +221,14 @@ export class DataSubsetter {
       }
 
       if (propertyUris) {
-        for (const property of work.properties ?? []) {
-          propertyUris!.add(property.uri);
+        for (const propertyUri of work.propertyUris) {
+          propertyUris.add(propertyUri);
         }
       }
     }
 
     if (collectionUris) {
-      for (const collectionUri of collectionUris!) {
+      for (const collectionUri of collectionUris) {
         this.addCollectionDataset(
           builder,
           this.completeDataset.collectionByUri(collectionUri),

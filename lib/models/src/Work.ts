@@ -48,6 +48,10 @@ export class Work extends NamedModel {
     return this._properties;
   }
 
+  get propertyUris(): readonly string[] {
+    return this._propertyUris;
+  }
+
   get rights(): Rights | null {
     return this._rights;
   }
