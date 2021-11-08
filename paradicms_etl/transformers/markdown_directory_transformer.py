@@ -320,7 +320,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                     text_resource.add(RDF.value, Literal(html))
                 else:
                     text_resource.set(
-                        property_uri, Literal(existing_text_value.toPython() + html)
+                        RDF.value, Literal(existing_text_value.toPython() + html)
                     )
             else:
                 self._result.set(property_uri, Literal(html))
