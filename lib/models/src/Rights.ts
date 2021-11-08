@@ -5,8 +5,10 @@ import {RightsStatement} from "./RightsStatement";
 import {Agent} from "./Agent";
 import {Dataset} from "./Dataset";
 import {BlankNode, NamedNode} from "n3";
+import {Memoize} from "typescript-memoize";
 
 export class Rights extends Model {
+  @Memoize()
   get creator(): Agent | string | null {
     return this.optionalModelOrString(
       uri => this.dataset.agentByUri(uri),
@@ -14,10 +16,12 @@ export class Rights extends Model {
     );
   }
 
+  @Memoize()
   get holder(): string | null {
     return this.optionalString(DCTERMS.rightsHolder);
   }
 
+  @Memoize()
   get license(): License | string | null {
     return this.optionalModelOrString(
       uri => this.dataset.licenseByUri(uri),
@@ -38,6 +42,7 @@ export class Rights extends Model {
     }
   }
 
+  @Memoize()
   get statement(): RightsStatement | string | null {
     return this.optionalModelOrString(
       uri => this.dataset.rightsStatementByUri(uri),

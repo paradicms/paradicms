@@ -117,10 +117,6 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 
   const [currentImage, setCurrentImage] = useState<Image | null>(null);
 
-  const currentImageRights = useMemo(() => currentImage?.rights ?? null, [
-    currentImage,
-  ]);
-
   const leftColNavTabs: {content: React.ReactNode; title: string}[] = [];
   if (currentWork.images.length > 0) {
     leftColNavTabs.push({
@@ -267,13 +263,13 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                   </Container>
                 </Col>
               </Row>
-              {currentImageRights || currentWorkAbstractRights ? (
+              {currentImage?.rights || currentWorkAbstractRights ? (
                 <Row className="mt-2">
                   <Col style={{textAlign: "center"}} xs={12}>
-                    {currentImageRights ? (
+                    {currentImage?.rights ? (
                       <RightsParagraph
                         material="Image"
-                        rights={currentImageRights}
+                        rights={currentImage.rights}
                         style={RIGHTS_STYLE}
                       />
                     ) : null}

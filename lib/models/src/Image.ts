@@ -5,6 +5,7 @@ import {EXIF, FOAF, PARADICMS, XSD} from "./vocabularies";
 import {Rights} from "./Rights";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
+import {Memoize} from "typescript-memoize";
 
 export class Image extends NamedModel {
   get depictsUri() {
@@ -19,6 +20,7 @@ export class Image extends NamedModel {
     return this.dataset.imagesByOriginalImageUri(this.uri);
   }
 
+  @Memoize()
   get exactDimensions(): ImageDimensions | null {
     return this.imageDimensions(EXIF.height, EXIF.width);
   }
@@ -54,6 +56,7 @@ export class Image extends NamedModel {
     return this.originalImageUri === null;
   }
 
+  @Memoize()
   get maxDimensions(): ImageDimensions | null {
     return this.imageDimensions(
       PARADICMS.imageMaxHeight,
@@ -83,6 +86,7 @@ export class Image extends NamedModel {
     }?text=${encodeURIComponent("Missing image")}`;
   }
 
+  @Memoize()
   get rights(): Rights | null {
     return this._rights;
   }

@@ -8,6 +8,7 @@ import {Image} from "./Image";
 import {Text} from "./Text";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
+import {Memoize} from "typescript-memoize";
 
 export class Work extends NamedModel {
   get abstract(): string | Text | null {
@@ -44,14 +45,17 @@ export class Work extends NamedModel {
     return this.optionalStringOrUri(FOAF.page);
   }
 
+  @Memoize()
   get properties(): readonly Property[] {
     return this._properties;
   }
 
+  @Memoize()
   get propertyUris(): readonly string[] {
     return this._propertyUris;
   }
 
+  @Memoize()
   get rights(): Rights | null {
     return this._rights;
   }
