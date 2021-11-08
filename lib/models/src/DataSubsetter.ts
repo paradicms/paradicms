@@ -1,19 +1,17 @@
 import {Dataset} from "./Dataset";
 import {Rights} from "./Rights";
-import {Property} from "./Property";
 import {CollectionJoinSelector} from "./CollectionJoinSelector";
 import {InstitutionJoinSelector} from "./InstitutionJoinSelector";
 import {Collection} from "./Collection";
 import {DatasetBuilder} from "./DatasetBuilder";
 import {Institution} from "./Institution";
-import {PropertyDefinitionJoinSelector} from "./PropertyDefinitionJoinSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {WorkJoinSelector} from "./WorkJoinSelector";
 import {Work} from "./Work";
 import {Image} from "Image";
 import {Agent} from "./Agent";
-import {AgentJoinSelector} from "./AgentJoinSelector";
 import {Text} from "./Text";
+import {AgentJoinSelector} from "./AgentJoinSelector";
 
 /**
  * Subset a Dataset to reduce the amount of data passed between getStaticProps and the component.
@@ -33,16 +31,16 @@ export class DataSubsetter {
   private addAgentDataset(
     agent: Agent,
     builder: DatasetBuilder,
-    joinSelector?: AgentJoinSelector
+    joinSelector: AgentJoinSelector
   ): DatasetBuilder {
     builder.addAgent(agent);
 
-    if (joinSelector?.thumbnail) {
+    if (joinSelector.thumbnail) {
       const thumbnailImage = this.completeDataset
         .agentByUri(agent.uri)
         .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        this.addImageDataset(builder, thumbnailImage);
+        this.addImageDataset(builder, thumbnailImage, {});
       }
     }
 
@@ -52,16 +50,16 @@ export class DataSubsetter {
   private addCollectionDataset(
     builder: DatasetBuilder,
     collection: Collection,
-    joinSelector?: CollectionJoinSelector
+    joinSelector: CollectionJoinSelector
   ): DatasetBuilder {
     builder.addCollection(collection);
 
-    if (joinSelector?.thumbnail) {
+    if (joinSelector.thumbnail) {
       const thumbnailImage = this.completeDataset
         .collectionByUri(collection.uri)
         .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        this.addImageDataset(builder, thumbnailImage);
+        this.addImageDataset(builder, thumbnailImage, {});
         if (thumbnailImage.depictsUri !== collection.uri) {
           // The thumbnail either depicts the collection or one of the collection's works.
           // If the latter case we need to include the work in the dataset.
@@ -72,7 +70,7 @@ export class DataSubsetter {
       }
     }
 
-    if (joinSelector?.institution) {
+    if (joinSelector.institution) {
       this.addInstitutionDataset(
         builder,
         this.completeDataset.institutionByUri(collection.institutionUri),
@@ -80,10 +78,12 @@ export class DataSubsetter {
       );
     }
 
-    if (joinSelector?.works) {
-      for (const work of this.completeDataset.collectionWorks(collection.uri)) {
-        this.addWorkDataset(builder, work, joinSelector.works);
-      }
+    if (joinSelector.works) {
+      this.addWorkDatasets(
+        builder,
+        this.completeDataset.collectionWorks(collection.uri),
+        joinSelector.works
+      );
     }
 
     return builder;
@@ -92,7 +92,7 @@ export class DataSubsetter {
   private addImageDataset(
     builder: DatasetBuilder,
     image: Image,
-    agentJoinSelector?: AgentJoinSelector
+    agentJoinSelector: AgentJoinSelector
   ): DatasetBuilder {
     builder.addImage(image);
     this.addRightsDataset(builder, image.rights, agentJoinSelector);
@@ -102,17 +102,17 @@ export class DataSubsetter {
   private addInstitutionDataset(
     builder: DatasetBuilder,
     institution: Institution,
-    joinSelector?: InstitutionJoinSelector
+    joinSelector: InstitutionJoinSelector
   ): DatasetBuilder {
     builder.addInstitution(institution);
-    this.addRightsDataset(builder, institution.rights);
+    this.addRightsDataset(builder, institution.rights, {});
 
-    if (joinSelector?.thumbnail) {
+    if (joinSelector.thumbnail) {
       const thumbnailImage = this.completeDataset
         .institutionByUri(institution.uri)
         .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        this.addImageDataset(builder, thumbnailImage);
+        this.addImageDataset(builder, thumbnailImage, {});
         if (thumbnailImage.depictsUri !== institution.uri) {
           // The thumbnail either depicts the institution, one of the institution's collections, or one of the institution's works.
           // In the latter cases we need to include the depicted collection or work
@@ -130,7 +130,7 @@ export class DataSubsetter {
       }
     }
 
-    if (joinSelector?.collections) {
+    if (joinSelector.collections) {
       for (const collection of this.completeDataset.institutionCollections(
         institution.uri
       )) {
@@ -142,12 +142,12 @@ export class DataSubsetter {
       }
     }
 
-    if (joinSelector?.works) {
-      for (const work of this.completeDataset.institutionWorks(
-        institution.uri
-      )) {
-        this.addWorkDataset(builder, work, joinSelector.works);
-      }
+    if (joinSelector.works) {
+      this.addWorkDatasets(
+        builder,
+        this.completeDataset.institutionWorks(institution.uri),
+        joinSelector.works
+      );
     }
 
     return builder;
@@ -156,104 +156,133 @@ export class DataSubsetter {
   private addWorkDataset(
     builder: DatasetBuilder,
     work: Work,
-    joinSelector?: WorkJoinSelector
+    joinSelector: WorkJoinSelector
   ): DatasetBuilder {
-    builder.addWork(work);
-    // Work Datasets always include rights
-    this.addRightsDataset(builder, work.rights, joinSelector?.agent);
+    return this.addWorkDatasets(builder, [work], joinSelector);
+  }
 
-    {
-      const abstract = work.abstract;
-      if (abstract && abstract instanceof Text) {
-        this.addRightsDataset(builder, abstract.rights, joinSelector?.agent);
+  private addWorkDatasets(
+    builder: DatasetBuilder,
+    works: readonly Work[],
+    joinSelector: WorkJoinSelector
+  ): DatasetBuilder {
+    const collectionUris = joinSelector.collections
+      ? new Set<string>()
+      : undefined;
+    const institutionUris = joinSelector.institution
+      ? new Set<string>()
+      : undefined;
+    const propertyUris = joinSelector.propertyDefinitions
+      ? new Set<string>()
+      : undefined;
+
+    for (const work of works) {
+      builder.addWork(work);
+
+      // Work Datasets always include rights
+      this.addRightsDataset(builder, work.rights, joinSelector.agent ?? {});
+
+      {
+        const abstract = work.abstract;
+        if (abstract && abstract instanceof Text) {
+          this.addRightsDataset(
+            builder,
+            abstract.rights,
+            joinSelector.agent ?? {}
+          );
+        }
+      }
+
+      if (joinSelector.allImages) {
+        for (const image of this.completeDataset.imagesByDepictsUri(work.uri)) {
+          this.addImageDataset(builder, image, joinSelector.agent ?? {});
+        }
+      } else if (joinSelector.thumbnail) {
+        const thumbnailImage = this.completeDataset
+          .workByUri(work.uri)
+          .thumbnail(joinSelector.thumbnail);
+        if (thumbnailImage) {
+          this.addImageDataset(
+            builder,
+            thumbnailImage,
+            joinSelector.agent ?? {}
+          );
+        }
+      }
+
+      if (collectionUris) {
+        for (const collectionUri of work.collectionUris) {
+          collectionUris.add(collectionUri);
+        }
+      }
+
+      if (institutionUris) {
+        institutionUris.add(work.institutionUri);
+      }
+
+      if (propertyUris) {
+        for (const propertyUri of work.propertyUris) {
+          propertyUris.add(propertyUri);
+        }
       }
     }
 
-    if (joinSelector?.allImages) {
-      for (const image of this.completeDataset.imagesByDepictsUri(work.uri)) {
-        this.addImageDataset(builder, image, joinSelector?.agent);
-      }
-    } else if (joinSelector?.thumbnail) {
-      const thumbnailImage = this.completeDataset
-        .workByUri(work.uri)
-        .thumbnail(joinSelector.thumbnail);
-      if (thumbnailImage) {
-        this.addImageDataset(builder, thumbnailImage, joinSelector?.agent);
-      }
-    }
-
-    if (joinSelector?.collections) {
-      for (const collectionUri of work.collectionUris) {
+    if (collectionUris) {
+      for (const collectionUri of collectionUris) {
         this.addCollectionDataset(
           builder,
           this.completeDataset.collectionByUri(collectionUri),
-          joinSelector.collections
+          joinSelector.collections ?? {}
         );
       }
     }
 
-    if (joinSelector?.institution) {
-      this.addInstitutionDataset(
-        builder,
-        this.completeDataset.institutionByUri(work.institutionUri),
-        joinSelector.institution
-      );
-    }
-
-    if (joinSelector?.propertyDefinitions) {
-      this.addPropertyDefinitionsDataset(
-        builder,
-        work.properties,
-        joinSelector.propertyDefinitions
-      );
-    }
-
-    return builder;
-  }
-
-  private addPropertyDefinitionsDataset(
-    builder: DatasetBuilder,
-    properties: readonly Property[] | null,
-    joinSelector?: PropertyDefinitionJoinSelector
-  ): DatasetBuilder {
-    if (!properties) {
-      return builder;
-    }
-
-    for (const property of properties) {
-      const propertyDefinition = this.completeDataset.propertyDefinitionByUri(
-        property.uri
-      );
-      if (!propertyDefinition) {
-        continue;
-      }
-      builder.addPropertyDefinition(propertyDefinition);
-
-      if (joinSelector?.values) {
-        const propertyValueDefinitions = this.completeDataset.propertyValueDefinitionsByPropertyUri(
-          propertyDefinition.uri
+    if (institutionUris) {
+      for (const institutionUri of institutionUris) {
+        this.addInstitutionDataset(
+          builder,
+          this.completeDataset.institutionByUri(institutionUri),
+          joinSelector.institution ?? {}
         );
-        builder.addPropertyValueDefinitions(propertyValueDefinitions);
+      }
+    }
 
-        // if (joinSelector.values.allImages) {
-        //   for (const propertyValueDefinition of propertyValueDefinitions) {
-        //     for (const image of this.completeDataset.imagesByDepictsUri(
-        //       propertyValueDefinition.uri
-        //     )) {
-        //       this.addImageDataset(builder, image);
-        //     }
-        //   }
-        // } else
-        if (joinSelector.values.thumbnail) {
-          for (const propertyValueDefinition of propertyValueDefinitions) {
-            const thumbnail = selectThumbnail(
-              this.completeDataset.imagesByDepictsUri(
-                propertyValueDefinition.uri
-              ),
-              joinSelector.values.thumbnail
-            );
-            if (thumbnail) {
-              this.addImageDataset(builder, thumbnail);
+    if (propertyUris) {
+      for (const propertyUri of propertyUris) {
+        const propertyDefinition = this.completeDataset.propertyDefinitionByUri(
+          propertyUri
+        );
+        if (!propertyDefinition) {
+          continue;
+        }
+        builder.addPropertyDefinition(propertyDefinition);
+
+        if (joinSelector.propertyDefinitions!.values) {
+          const propertyValueDefinitions = this.completeDataset.propertyValueDefinitionsByPropertyUri(
+            propertyDefinition.uri
+          );
+          builder.addPropertyValueDefinitions(propertyValueDefinitions);
+
+          // if (joinSelector.values.allImages) {
+          //   for (const propertyValueDefinition of propertyValueDefinitions) {
+          //     for (const image of this.completeDataset.imagesByDepictsUri(
+          //       propertyValueDefinition.uri
+          //     )) {
+          //       this.addImageDataset(builder, image);
+          //     }
+          //   }
+          // } else
+          if (joinSelector.propertyDefinitions!.values.thumbnail) {
+            for (const propertyValueDefinition of propertyValueDefinitions) {
+              const thumbnail = selectThumbnail(
+                this.completeDataset.imagesByDepictsUri(
+                  propertyValueDefinition.uri
+                ),
+                joinSelector.propertyDefinitions!.values.thumbnail
+              );
+              if (thumbnail) {
+                this.addImageDataset(builder, thumbnail, {});
+              }
             }
           }
         }
@@ -266,7 +295,7 @@ export class DataSubsetter {
   private addRightsDataset(
     builder: DatasetBuilder,
     rights: Rights | null,
-    agentJoinSelector?: AgentJoinSelector
+    agentJoinSelector: AgentJoinSelector
   ): DatasetBuilder {
     if (!rights) {
       return builder;
@@ -297,7 +326,7 @@ export class DataSubsetter {
     return this.addCollectionDataset(
       new DatasetBuilder(),
       this.completeDataset.collectionByUri(collectionUri),
-      joinSelector
+      joinSelector ?? {}
     ).build();
   }
 
@@ -310,7 +339,7 @@ export class DataSubsetter {
       this.addCollectionDataset(
         builder,
         this.completeDataset.collectionByUri(collectionUri),
-        joinSelector
+        joinSelector ?? {}
       );
     }
     return builder.build();
@@ -323,7 +352,7 @@ export class DataSubsetter {
     return this.addInstitutionDataset(
       new DatasetBuilder(),
       this.completeDataset.institutionByUri(institutionUri),
-      joinSelector
+      joinSelector ?? {}
     ).build();
   }
 
@@ -336,7 +365,7 @@ export class DataSubsetter {
       this.addInstitutionDataset(
         builder,
         this.completeDataset.institutionByUri(institutionUri),
-        joinSelector
+        joinSelector ?? {}
       );
     }
     return builder.build();
@@ -346,7 +375,7 @@ export class DataSubsetter {
     return this.addWorkDataset(
       new DatasetBuilder(),
       this.completeDataset.workByUri(workUri),
-      joinSelector
+      joinSelector ?? {}
     ).build();
   }
 
@@ -355,13 +384,11 @@ export class DataSubsetter {
     joinSelector?: WorkJoinSelector
   ): Dataset {
     const builder = new DatasetBuilder();
-    for (const workUri of workUris) {
-      this.addWorkDataset(
-        builder,
-        this.completeDataset.workByUri(workUri),
-        joinSelector
-      );
-    }
+    this.addWorkDatasets(
+      builder,
+      workUris.map(workUri => this.completeDataset.workByUri(workUri)),
+      joinSelector ?? {}
+    );
     return builder.build();
   }
 }

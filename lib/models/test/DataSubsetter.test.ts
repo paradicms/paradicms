@@ -66,9 +66,7 @@ describe("DataSubsetter", () => {
     );
   });
 
-  it("should get a collection with its works and their thumbnails (collection page)", function() {
-    this.timeout(30000);
-
+  it("should get a collection with its works and their thumbnails (collection page)", () => {
     const collection = testDataset.collections[0];
     const dataset = sut.collectionDataset(collection.uri, {
       works: {
@@ -110,7 +108,7 @@ describe("DataSubsetter", () => {
           "http://rightsstatements.org/vocab/InC-EDU/1.0/"
       )!,
     ]);
-  });
+  }).timeout(5000);
 
   it("should get an work with its institution, collections, all images, agents, and agents' thumbnails (work page)", () => {
     const work = testDataset.works[0];
