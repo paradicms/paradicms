@@ -466,12 +466,12 @@ export class Dataset {
         callback({
           dataset: this,
           graphNode: quad.graph as NamedNode,
-          node: quad.object as NamedNode,
+          node: quad.subject as NamedNode,
         });
       },
+      null,
       RDF.type,
       type,
-      null,
       null
     );
   }

@@ -21,6 +21,7 @@ export * from "./InstitutionValueFacet";
 export * from "./InstitutionValueFilter";
 export * from "./License";
 export * from "./Model";
+export * from "./ModelParameters";
 export * from "./NamedModel";
 export * from "./Namespace";
 export * from "./Organization";
