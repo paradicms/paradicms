@@ -16,14 +16,22 @@ export class NamedModel extends Model {
           return object.value;
         case "BlankNode":
         case "NamedNode":
-          return new Text({dataset: this.dataset, node: object});
+          return new Text({
+            dataset: this.dataset,
+            graphNode: this.graphNode,
+            node: object,
+          });
       }
     }
     return null;
   }
 
   protected get _rights(): Rights | null {
-    return Rights.optional({dataset: this.dataset, node: this.node});
+    return Rights.optional({
+      dataset: this.dataset,
+      graphNode: this.graphNode,
+      node: this.node,
+    });
   }
 
   protected get _wikidataConceptUri(): string | null {

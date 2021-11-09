@@ -19,6 +19,7 @@ import {Person} from "./Person";
 import {NamedModel} from "./NamedModel";
 import {Organization} from "./Organization";
 import {Agent} from "./Agent";
+import {ModelParameters} from "./ModelParameters";
 
 /**
  * Lazily indexes the contents of an immutable Dataset to provide quick lookups and subsetting.
@@ -348,8 +349,8 @@ export class Dataset {
     return this._propertyValueDefinitionsByPropertyUriIndex!;
   }
 
-  protected readCollection(node: NamedNode): Collection {
-    return new Collection({dataset: this, node});
+  protected readCollection(kwds: ModelParameters): Collection {
+    return new Collection(kwds);
   }
 
   private readCollections(): void {
@@ -358,8 +359,8 @@ export class Dataset {
     const collectionsByInstitutionUriIndex: {
       [index: string]: Collection[];
     } = {};
-    this.readModelNodes(node => {
-      const collection = this.readCollection(node);
+    this.readModels(kwds => {
+      const collection = this.readCollection(kwds);
 
       collections.push(collection);
 
@@ -379,8 +380,8 @@ export class Dataset {
     this._collectionsByInstitutionUriIndex = collectionsByInstitutionUriIndex;
   }
 
-  protected readImage(node: NamedNode): Image {
-    return new Image({dataset: this, node});
+  protected readImage(kwds: ModelParameters): Image {
+    return new Image(kwds);
   }
 
   private readImages(): void {
@@ -388,8 +389,8 @@ export class Dataset {
     const imagesByDepictsUriIndex: {[index: string]: Image[]} = {};
     const imagesByOriginalImageUriIndex: {[index: string]: Image[]} = {};
     this._imagesByUriIndex = {};
-    this.readModelNodes(node => {
-      const image = this.readImage(node);
+    this.readModels(kwds => {
+      const image = this.readImage(kwds);
 
       images.push(image);
 
@@ -416,62 +417,74 @@ export class Dataset {
     this._imagesByOriginalImageUriIndex = imagesByOriginalImageUriIndex;
   }
 
-  protected readInstitution(node: NamedNode): Institution {
-    return new Institution({dataset: this, node});
+  protected readInstitution(kwds: ModelParameters): Institution {
+    return new Institution(kwds);
   }
 
   private readInstitutions() {
     const institutions: Institution[] = [];
     this._institutionsByUriIndex = {};
-    this.readModelNodes(node => {
-      const institution = this.readInstitution(node);
+    this.readModels(kwds => {
+      const institution = this.readInstitution(kwds);
       institutions.push(institution);
       this._institutionsByUriIndex![institution.uri] = institution;
     }, PARADICMS.Institution);
     this._institutions = institutions;
   }
 
-  protected readLicense(node: NamedNode): License {
-    return new License({dataset: this, node});
+  protected readLicense(kwds: ModelParameters): License {
+    return new License(kwds);
   }
 
   private readLicenses() {
     const licenses: License[] = [];
     this._licensesByUriIndex = {};
-    this.readModelNodes(node => {
-      const license = this.readLicense(node);
+    this.readModels(kwds => {
+      const license = this.readLicense(kwds);
       licenses.push(license);
       this._licensesByUriIndex![license.uri] = license;
     }, PARADICMS.License);
     this._licenses = licenses;
   }
 
-  private readModelNodes(
-    callback: (node: NamedNode) => void,
+  private readModels(
+    callback: (kwds: ModelParameters) => void,
     type: NamedNode
   ): void {
-    this.store.forSubjects(
-      node => {
-        if (node.termType !== "NamedNode") {
-          throw new RangeError(`expected NamedNode, actual ${node.termType}`);
+    this.store.forEach(
+      quad => {
+        if (quad.graph.termType !== "NamedNode") {
+          throw new RangeError(
+            `expected NamedNode graph, actual ${quad.graph.termType}`
+          );
         }
-        callback(node);
+        if (quad.subject.termType !== "NamedNode") {
+          throw new RangeError(
+            `expected NamedNode subject, actual ${quad.subject.termType}`
+          );
+        }
+        callback({
+          dataset: this,
+          graphNode: quad.graph as NamedNode,
+          node: quad.object as NamedNode,
+        });
       },
       RDF.type,
       type,
+      null,
       null
     );
   }
 
-  protected readOrganization(node: NamedNode): Organization {
-    return new Organization({dataset: this, node});
+  protected readOrganization(kwds: ModelParameters): Organization {
+    return new Organization(kwds);
   }
 
   private readOrganizations() {
     const organizations: Organization[] = [];
     this._organizationsByUriIndex = {};
-    this.readModelNodes(node => {
-      const organization = this.readOrganization(node);
+    this.readModels(kwds => {
+      const organization = this.readOrganization(kwds);
       organizations.push(organization);
       this._organizationsByUriIndex![organization.uri] = organization;
     }, PARADICMS.Organization);
@@ -481,27 +494,27 @@ export class Dataset {
   private readPeople() {
     const people: Person[] = [];
     this._peopleByUriIndex = {};
-    this.readModelNodes(node => {
-      const person = this.readPerson(node);
+    this.readModels(kwds => {
+      const person = this.readPerson(kwds);
       people.push(person);
       this._peopleByUriIndex![person.uri] = person;
     }, PARADICMS.Person);
     this._people = people;
   }
 
-  private readPerson(node: NamedNode): Person {
-    return new Person({dataset: this, node});
+  private readPerson(kwds: ModelParameters): Person {
+    return new Person(kwds);
   }
 
-  protected readPropertyDefinition(node: NamedNode): PropertyDefinition {
-    return new PropertyDefinition({dataset: this, node});
+  protected readPropertyDefinition(kwds: ModelParameters): PropertyDefinition {
+    return new PropertyDefinition(kwds);
   }
 
   private readPropertyDefinitions() {
     const propertyDefinitions: PropertyDefinition[] = [];
     this._propertyDefinitionsByUriIndex = {};
-    this.readModelNodes(node => {
-      const propertyDefinition = this.readPropertyDefinition(node);
+    this.readModels(kwds => {
+      const propertyDefinition = this.readPropertyDefinition(kwds);
       propertyDefinitions.push(propertyDefinition);
       this._propertyDefinitionsByUriIndex![
         propertyDefinition.uri
@@ -511,9 +524,9 @@ export class Dataset {
   }
 
   protected readPropertyValueDefinition(
-    node: NamedNode
+    kwds: ModelParameters
   ): PropertyValueDefinition {
-    return new PropertyValueDefinition({dataset: this, node});
+    return new PropertyValueDefinition(kwds);
   }
 
   private readPropertyValueDefinitions() {
@@ -521,8 +534,8 @@ export class Dataset {
     const propertyValueDefinitionsByPropertyUriIndex: {
       [index: string]: PropertyValueDefinition[];
     } = {};
-    this.readModelNodes(node => {
-      const propertyValueDefinition = this.readPropertyValueDefinition(node);
+    this.readModels(kwds => {
+      const propertyValueDefinition = this.readPropertyValueDefinition(kwds);
 
       propertyValueDefinitions.push(propertyValueDefinition);
 
@@ -542,23 +555,23 @@ export class Dataset {
     this._propertyValueDefinitionsByPropertyUriIndex = propertyValueDefinitionsByPropertyUriIndex;
   }
 
-  protected readRightsStatement(node: NamedNode): RightsStatement {
-    return new RightsStatement({dataset: this, node});
+  protected readRightsStatement(kwds: ModelParameters): RightsStatement {
+    return new RightsStatement(kwds);
   }
 
   private readRightsStatements() {
     const rightsStatements: RightsStatement[] = [];
     this._rightsStatementsByUriIndex = {};
-    this.readModelNodes(node => {
-      const rightsStatement = this.readRightsStatement(node);
+    this.readModels(kwds => {
+      const rightsStatement = this.readRightsStatement(kwds);
       rightsStatements.push(rightsStatement);
       this._rightsStatementsByUriIndex![rightsStatement.uri] = rightsStatement;
     }, PARADICMS.RightsStatement);
     this._rightsStatements = rightsStatements;
   }
 
-  protected readWork(node: NamedNode): Work {
-    return new Work({dataset: this, node});
+  protected readWork(kwds: ModelParameters): Work {
+    return new Work(kwds);
   }
 
   private readWorks(): void {
@@ -566,8 +579,8 @@ export class Dataset {
     const worksByCollectionUriIndex: {[index: string]: Work[]} = {};
     const worksByInstitutionUriIndex: {[index: string]: Work[]} = {};
     this._worksByUriIndex = {};
-    this.readModelNodes(node => {
-      const work = this.readWork(node);
+    this.readModels(kwds => {
+      const work = this.readWork(kwds);
 
       works.push(work);
 
