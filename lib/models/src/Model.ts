@@ -3,9 +3,11 @@ import {Dataset} from "./Dataset";
 import {DCTERMS, FOAF, PARADICMS, RDF} from "./vocabularies";
 import {Property} from "./Property";
 import {NamedModel} from "./NamedModel";
+import {ModelParameters} from "./ModelParameters";
 
 export class Model {
   readonly dataset: Dataset;
+  readonly graphNode: NamedNode;
   protected readonly _node: BlankNode | NamedNode;
 
   private static createIgnoredPropertyUris(): Set<string> {
@@ -24,8 +26,9 @@ export class Model {
 
   private static readonly IGNORED_PROPERTY_URIS = Model.createIgnoredPropertyUris();
 
-  constructor(kwds: {dataset: Dataset; node: BlankNode | NamedNode}) {
+  constructor(kwds: ModelParameters) {
     this.dataset = kwds.dataset;
+    this.graphNode = kwds.graphNode;
     this._node = kwds.node;
   }
 

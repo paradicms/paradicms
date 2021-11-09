@@ -6,7 +6,11 @@ import {Memoize} from "typescript-memoize";
 export class Text extends Model {
   @Memoize()
   get rights(): Rights | null {
-    return Rights.optional({dataset: this.dataset, node: this.node});
+    return Rights.optional({
+      dataset: this.dataset,
+      graphNode: this.graphNode,
+      node: this.node,
+    });
   }
 
   toString() {

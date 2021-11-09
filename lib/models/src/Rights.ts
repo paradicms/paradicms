@@ -31,6 +31,7 @@ export class Rights extends Model {
 
   static optional(kwds: {
     dataset: Dataset;
+    graphNode: NamedNode;
     node: BlankNode | NamedNode;
   }): Rights | null {
     const rights = new Rights(kwds);
