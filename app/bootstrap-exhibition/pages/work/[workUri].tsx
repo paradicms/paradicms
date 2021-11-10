@@ -18,6 +18,9 @@ import {
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {
+  Card,
+  CardBody,
+  CardFooter,
   Col,
   Container,
   Nav,
@@ -109,21 +112,36 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     [currentWork, institution]
   );
 
-  const [currentImage, setCurrentImage] = useState<Image | null>(null);
+  const [
+    currentWorkImagesCarouselImage,
+    setCurrentWorkImagesCarouselImage,
+  ] = useState<Image | null>(null);
 
   const leftColNavTabs: {content: React.ReactNode; title: string}[] = [];
   if (currentWork.images.length > 0) {
     leftColNavTabs.push({
       title: "Images",
       content: (
-        <div className="text-center">
-          <WorkImagesCarousel
-            hideImageRights={true}
-            key={leftColNavTabs.length}
-            onShowImage={setCurrentImage}
-            work={currentWork}
-          />
-        </div>
+        <Card className="border-0">
+          <CardBody className="text-center">
+            <WorkImagesCarousel
+              hideImageRights={true}
+              key={leftColNavTabs.length}
+              onShowImage={setCurrentWorkImagesCarouselImage}
+              work={currentWork}
+            />
+          </CardBody>
+          {currentWorkImagesCarouselImage &&
+          currentWorkImagesCarouselImage.rights ? (
+            <CardFooter className="text-center">
+              <RightsParagraph
+                material="Image"
+                rights={currentWorkImagesCarouselImage.rights}
+                style={RIGHTS_STYLE}
+              />
+            </CardFooter>
+          ) : null}
+        </Card>
       ),
     });
   }
@@ -257,23 +275,14 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                   </Container>
                 </Col>
               </Row>
-              {currentImage?.rights || currentWorkAbstractRights ? (
+              {currentWorkAbstractRights ? (
                 <Row className="mt-2">
                   <Col style={{textAlign: "center"}} xs={12}>
-                    {currentImage?.rights ? (
-                      <RightsParagraph
-                        material="Image"
-                        rights={currentImage.rights}
-                        style={RIGHTS_STYLE}
-                      />
-                    ) : null}
-                    {currentWorkAbstractRights ? (
-                      <RightsParagraph
-                        material="Text"
-                        rights={currentWorkAbstractRights}
-                        style={RIGHTS_STYLE}
-                      />
-                    ) : null}
+                    <RightsParagraph
+                      material="Text"
+                      rights={currentWorkAbstractRights}
+                      style={RIGHTS_STYLE}
+                    />
                   </Col>
                 </Row>
               ) : null}
