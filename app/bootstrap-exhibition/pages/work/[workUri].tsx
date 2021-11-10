@@ -1,6 +1,6 @@
 import * as React from "react";
-import {useCallback, useMemo, useState} from "react";
-import {Layout} from "components/Layout";
+import { useCallback, useMemo, useState } from "react";
+import { Layout } from "components/Layout";
 import {
   Configuration,
   Dataset,
@@ -16,7 +16,7 @@ import {
   readConfigurationFile,
   readDatasetFile,
 } from "@paradicms/next";
-import {GetStaticPaths, GetStaticProps} from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import {
   Card,
   CardBody,
@@ -30,17 +30,17 @@ import {
   TabContent,
   TabPane,
 } from "reactstrap";
-import {Hrefs} from "lib/Hrefs";
+import { Hrefs } from "lib/Hrefs";
 import fs from "fs";
 import {
   thumbnailTargetDimensions,
   WorkImagesCarousel,
 } from "@paradicms/bootstrap";
-import {RightsParagraph} from "../../components/RightsParagraph";
-import {getWorkAgentProfiles} from "../../lib/getWorkAgentProfiles";
-import {WorkAgentProfilesContainer} from "../../components/WorkAgentProfilesContainer";
+import { RightsParagraph } from "../../components/RightsParagraph";
+import { getWorkAgentProfiles } from "../../lib/getWorkAgentProfiles";
+import { WorkAgentProfilesContainer } from "../../components/WorkAgentProfilesContainer";
 import Hammer from "react-hammerjs";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 const RIGHTS_STYLE: React.CSSProperties = {
@@ -117,7 +117,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     setCurrentWorkImagesCarouselImage,
   ] = useState<Image | null>(null);
 
-  const leftColNavTabs: {content: React.ReactNode; title: string}[] = [];
+  const leftColNavTabs: { content: React.ReactNode; title: string }[] = [];
   if (currentWork.images.length > 0) {
     leftColNavTabs.push({
       title: "Images",
@@ -132,7 +132,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
             />
           </CardBody>
           {currentWorkImagesCarouselImage &&
-          currentWorkImagesCarouselImage.rights ? (
+            currentWorkImagesCarouselImage.rights ? (
             <CardFooter className="text-center">
               <RightsParagraph
                 material="Image"
@@ -194,12 +194,12 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
       collection={collection}
       configuration={configuration}
       currentWork={currentWork}
-      nextWork={nextWorkUri ? {uri: nextWorkUri} : undefined}
-      previousWork={previousWorkUri ? {uri: previousWorkUri} : undefined}
+      nextWork={nextWorkUri ? { uri: nextWorkUri } : undefined}
+      previousWork={previousWorkUri ? { uri: previousWorkUri } : undefined}
     >
       <Hammer onSwipeLeft={onGoToPreviousWork} onSwipeRight={onGoToNextWork}>
         <div>
-          <div onKeyDown={onKeyDown} style={{outline: "none"}} tabIndex={0}>
+          <div onKeyDown={onKeyDown} style={{ outline: "none" }} tabIndex={0}>
             <Container fluid>
               <Row>
                 {leftColNavTabs.length > 0 ? (
@@ -208,7 +208,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                     sm={12}
                     lg={8}
                     xl={6}
-                    style={{minHeight: 600, minWidth: 600}}
+                    style={{ minHeight: 600, minWidth: 600 }}
                   >
                     {leftColNavTabs.length === 1 ? (
                       leftColNavTabs[0].content
@@ -275,9 +275,9 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                   </Container>
                 </Col>
               </Row>
-              {currentWorkAbstractRights ? (
+              {currentWorkAbstract && currentWorkAbstractRights ? (
                 <Row className="mt-2">
-                  <Col style={{textAlign: "center"}} xs={12}>
+                  <Col style={{ textAlign: "center" }} xs={12}>
                     <RightsParagraph
                       material="Text"
                       rights={currentWorkAbstractRights}
@@ -297,7 +297,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 export default WorkPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths: {params: {workUri: string}}[] = [];
+  const paths: { params: { workUri: string } }[] = [];
 
   for (const work of readDatasetFile(readFileSync).works) {
     paths.push({
@@ -315,7 +315,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({
   params,
-}): Promise<{props: StaticProps}> => {
+}): Promise<{ props: StaticProps }> => {
   const workUri = decodeFileName(params!.workUri as string);
 
   const dataset = readDatasetFile(readFileSync);
@@ -359,7 +359,7 @@ export const getStaticProps: GetStaticProps = async ({
       datasetString: new DataSubsetter(dataset)
         .worksDataset(workUris, {
           agent: {
-            thumbnail: {targetDimensions: thumbnailTargetDimensions},
+            thumbnail: { targetDimensions: thumbnailTargetDimensions },
           },
           allImages: true,
           collections: {},
