@@ -257,14 +257,14 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
                 >
                   <Container fluid>
                     <Row>
-                      <Col className="px-0 text-center" xs={12}>
+                      <Col className="pr-0 text-center" xs={12}>
                         <h1>{currentWork.title}</h1>
                       </Col>
                     </Row>
                     {currentWorkAbstract ? (
                       <Row className="mt-2">
                         <Col
-                          className="pl-0 text-wrap"
+                          className="text-wrap"
                           xs={12}
                           dangerouslySetInnerHTML={{
                             __html: currentWorkAbstract.toString(),
