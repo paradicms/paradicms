@@ -1,3 +1,4 @@
+from inspect import isclass
 from logging import Logger
 from typing import Dict, Optional, Tuple, Type
 from urllib.parse import quote
@@ -47,8 +48,9 @@ def _create_namespaces_by_prefix_default() -> Dict[str, rdflib.Namespace]:
             if attr.upper() != attr:
                 continue
             value = getattr(namespace_module, attr)
-            if not isinstance(value, rdflib.Namespace) and not isinstance(
-                value, rdflib.namespace.ClosedNamespace
+            if not isinstance(value, rdflib.Namespace) and (
+                not isclass(value)
+                or not issubclass(value, rdflib.namespace.DefinedNamespace)
             ):
                 continue
             namespaces_by_prefix[attr.lower()] = value
