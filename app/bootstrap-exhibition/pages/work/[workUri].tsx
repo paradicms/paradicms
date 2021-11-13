@@ -189,6 +189,54 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     [onGoToNextWork, onGoToPreviousWork]
   );
 
+  let leftCol: React.ReactNode;
+  if (leftColNavTabs.length === 1) {
+    leftCol = leftColNavTabs[0].content;
+  } else if (leftColNavTabs.length > 1) {
+    leftCol = (
+      <>
+        <Nav tabs>
+          {leftColNavTabs.map((navTab, navTabIndex) => (
+            <NavItem key={navTabIndex}>
+              <NavLink
+                className={
+                  activeLeftColNavTabIndex === navTabIndex
+                    ? "active"
+                    : undefined
+                }
+                onClick={() => setActiveLeftColNavTabIndex(navTabIndex)}
+              >
+                {navTab.title}
+              </NavLink>
+            </NavItem>
+          ))}
+        </Nav>
+        <TabContent activeTab={activeLeftColNavTabIndex.toString()}>
+          {leftColNavTabs.map((navTab, navTabIndex) => (
+            <TabPane key={navTabIndex} tabId={navTabIndex.toString()}>
+              <div className="mt-2">{navTab.content}</div>
+            </TabPane>
+          ))}
+        </TabContent>
+      </>
+    );
+  }
+
+  const rightCol = currentWorkAbstract ? (
+    <Container fluid>
+      <Row>&nbsp;</Row>
+      <Row className="mt-4">
+        <Col
+          className="text-wrap"
+          xs={12}
+          dangerouslySetInnerHTML={{
+            __html: currentWorkAbstract.toString(),
+          }}
+        ></Col>
+      </Row>
+    </Container>
+  ) : null;
+
   return (
     <Layout
       collection={collection}
@@ -202,77 +250,25 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
           <div onKeyDown={onKeyDown} style={{outline: "none"}} tabIndex={0}>
             <Container fluid>
               <Row>
-                {leftColNavTabs.length > 0 ? (
+                {leftCol ? (
                   <Col
                     xs={12}
                     sm={12}
-                    lg={8}
-                    xl={6}
+                    lg={rightCol ? 8 : 12}
+                    xl={rightCol ? 6 : 12}
                     style={{minHeight: 600, minWidth: 600}}
                   >
-                    {leftColNavTabs.length === 1 ? (
-                      leftColNavTabs[0].content
-                    ) : (
-                      <>
-                        <Nav tabs>
-                          {leftColNavTabs.map((navTab, navTabIndex) => (
-                            <NavItem key={navTabIndex}>
-                              <NavLink
-                                className={
-                                  activeLeftColNavTabIndex === navTabIndex
-                                    ? "active"
-                                    : undefined
-                                }
-                                onClick={() =>
-                                  setActiveLeftColNavTabIndex(navTabIndex)
-                                }
-                              >
-                                {navTab.title}
-                              </NavLink>
-                            </NavItem>
-                          ))}
-                        </Nav>
-                        <TabContent
-                          activeTab={activeLeftColNavTabIndex.toString()}
-                        >
-                          {leftColNavTabs.map((navTab, navTabIndex) => (
-                            <TabPane
-                              key={navTabIndex}
-                              tabId={navTabIndex.toString()}
-                            >
-                              <div className="mt-2">{navTab.content}</div>
-                            </TabPane>
-                          ))}
-                        </TabContent>
-                      </>
-                    )}
+                    {leftCol}
                   </Col>
                 ) : null}
                 <Col
                   className="d-flex justify-content-center px-0"
                   xs={12}
                   sm={12}
-                  lg={leftColNavTabs.length > 0 ? 4 : 12}
-                  xl={leftColNavTabs.length > 0 ? 6 : 12}
+                  lg={leftCol ? 4 : 12}
+                  xl={leftCol ? 6 : 12}
                 >
-                  <Container fluid>
-                    <Row>
-                      <Col className="pr-0 text-center" xs={12}>
-                        <h1>{currentWork.title}</h1>
-                      </Col>
-                    </Row>
-                    {currentWorkAbstract ? (
-                      <Row className="mt-2">
-                        <Col
-                          className="text-wrap"
-                          xs={12}
-                          dangerouslySetInnerHTML={{
-                            __html: currentWorkAbstract.toString(),
-                          }}
-                        ></Col>
-                      </Row>
-                    ) : null}
-                  </Container>
+                  {rightCol}
                 </Col>
               </Row>
               {currentWorkAbstract && currentWorkAbstractRights ? (

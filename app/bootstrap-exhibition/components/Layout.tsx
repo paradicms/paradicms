@@ -6,6 +6,8 @@ import Head from "next/head";
 import {STYLESHEET_HREF_DEFAULT} from "@paradicms/bootstrap";
 import {Configuration} from "@paradicms/models";
 
+const textStyle: React.CSSProperties = {fontSize: "xx-large"};
+
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string};
   configuration: Configuration;
@@ -35,14 +37,14 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         <NavItem className="align-top">
           {previousWork ? (
             <Link href={Hrefs.work(previousWork.uri)} passHref>
-              <NavLink style={{fontSize: "xx-large"}}>‹</NavLink>
+              <NavLink style={textStyle}>‹</NavLink>
             </Link>
           ) : (
-            <span style={{fontSize: "xx-large"}}>&nbsp;</span>
+            <span style={textStyle}>&nbsp;</span>
           )}
         </NavItem>
       </Nav>
-      <div className="navbar-brand mx-auto">
+      <div className="navbar-brand mx-auto" style={textStyle}>
         <Link href={Hrefs.home}>{collection.title}</Link>
         {currentWork ? (
           <>
@@ -55,10 +57,10 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         <NavItem>
           {nextWork ? (
             <Link href={Hrefs.work(nextWork.uri)} passHref>
-              <NavLink style={{fontSize: "xx-large"}}>›</NavLink>
+              <NavLink style={textStyle}>›</NavLink>
             </Link>
           ) : (
-            <span style={{fontSize: "xx-large"}} />
+            <span style={textStyle} />
           )}
         </NavItem>
       </Nav>
