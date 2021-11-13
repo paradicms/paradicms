@@ -1,10 +1,12 @@
 import * as React from "react";
 import {Hrefs} from "lib/Hrefs";
-import {Nav, Navbar, NavbarBrand, NavItem, NavLink} from "reactstrap";
+import {Nav, Navbar, NavItem, NavLink} from "reactstrap";
 import Link from "next/link";
 import Head from "next/head";
 import {STYLESHEET_HREF_DEFAULT} from "@paradicms/bootstrap";
 import {Configuration} from "@paradicms/models";
+
+const textStyle: React.CSSProperties = {fontSize: "xx-large"};
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string};
@@ -31,16 +33,18 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
       />
     </Head>
     <Navbar className="navbar-light py-0">
-      {previousWork ? (
-        <Nav className="navbar mr-auto">
-          <NavItem className="align-top">
+      <Nav className="navbar mr-auto">
+        <NavItem className="align-top">
+          {previousWork ? (
             <Link href={Hrefs.work(previousWork.uri)} passHref>
-              <NavLink style={{fontSize: "xx-large"}}>‹</NavLink>
+              <NavLink style={textStyle}>‹</NavLink>
             </Link>
-          </NavItem>
-        </Nav>
-      ) : null}
-      <NavbarBrand className="navbar-brand mx-auto">
+          ) : (
+            <span style={textStyle}>&nbsp;</span>
+          )}
+        </NavItem>
+      </Nav>
+      <div className="navbar-brand mx-auto" style={textStyle}>
         <Link href={Hrefs.home}>{collection.title}</Link>
         {currentWork ? (
           <>
@@ -48,16 +52,18 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
             <Link href={Hrefs.work(currentWork.uri)}>{currentWork.title}</Link>
           </>
         ) : null}
-      </NavbarBrand>
-      {nextWork ? (
-        <Nav className="navbar ml-auto h-100">
-          <NavItem>
+      </div>
+      <Nav className="navbar ml-auto h-100">
+        <NavItem>
+          {nextWork ? (
             <Link href={Hrefs.work(nextWork.uri)} passHref>
-              <NavLink style={{fontSize: "xx-large"}}>›</NavLink>
+              <NavLink style={textStyle}>›</NavLink>
             </Link>
-          </NavItem>
-        </Nav>
-      ) : null}
+          ) : (
+            <span style={textStyle} />
+          )}
+        </NavItem>
+      </Nav>
     </Navbar>
     {children}
   </>

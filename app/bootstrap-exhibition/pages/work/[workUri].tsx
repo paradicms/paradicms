@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useCallback, useMemo, useState } from "react";
-import { Layout } from "components/Layout";
+import {useCallback, useMemo, useState} from "react";
+import {Layout} from "components/Layout";
 import {
   Configuration,
   Dataset,
@@ -16,7 +16,7 @@ import {
   readConfigurationFile,
   readDatasetFile,
 } from "@paradicms/next";
-import { GetStaticPaths, GetStaticProps } from "next";
+import {GetStaticPaths, GetStaticProps} from "next";
 import {
   Card,
   CardBody,
@@ -30,17 +30,17 @@ import {
   TabContent,
   TabPane,
 } from "reactstrap";
-import { Hrefs } from "lib/Hrefs";
+import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
 import {
   thumbnailTargetDimensions,
   WorkImagesCarousel,
 } from "@paradicms/bootstrap";
-import { RightsParagraph } from "../../components/RightsParagraph";
-import { getWorkAgentProfiles } from "../../lib/getWorkAgentProfiles";
-import { WorkAgentProfilesContainer } from "../../components/WorkAgentProfilesContainer";
+import {RightsParagraph} from "../../components/RightsParagraph";
+import {getWorkAgentProfiles} from "../../lib/getWorkAgentProfiles";
+import {WorkAgentProfilesContainer} from "../../components/WorkAgentProfilesContainer";
 import Hammer from "react-hammerjs";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 const RIGHTS_STYLE: React.CSSProperties = {
@@ -117,7 +117,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     setCurrentWorkImagesCarouselImage,
   ] = useState<Image | null>(null);
 
-  const leftColNavTabs: { content: React.ReactNode; title: string }[] = [];
+  const leftColNavTabs: {content: React.ReactNode; title: string}[] = [];
   if (currentWork.images.length > 0) {
     leftColNavTabs.push({
       title: "Images",
@@ -132,7 +132,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
             />
           </CardBody>
           {currentWorkImagesCarouselImage &&
-            currentWorkImagesCarouselImage.rights ? (
+          currentWorkImagesCarouselImage.rights ? (
             <CardFooter className="text-center">
               <RightsParagraph
                 material="Image"
@@ -189,95 +189,91 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     [onGoToNextWork, onGoToPreviousWork]
   );
 
+  let leftCol: React.ReactNode;
+  if (leftColNavTabs.length === 1) {
+    leftCol = leftColNavTabs[0].content;
+  } else if (leftColNavTabs.length > 1) {
+    leftCol = (
+      <>
+        <Nav tabs>
+          {leftColNavTabs.map((navTab, navTabIndex) => (
+            <NavItem key={navTabIndex}>
+              <NavLink
+                className={
+                  activeLeftColNavTabIndex === navTabIndex
+                    ? "active"
+                    : undefined
+                }
+                onClick={() => setActiveLeftColNavTabIndex(navTabIndex)}
+              >
+                {navTab.title}
+              </NavLink>
+            </NavItem>
+          ))}
+        </Nav>
+        <TabContent activeTab={activeLeftColNavTabIndex.toString()}>
+          {leftColNavTabs.map((navTab, navTabIndex) => (
+            <TabPane key={navTabIndex} tabId={navTabIndex.toString()}>
+              <div className="mt-2">{navTab.content}</div>
+            </TabPane>
+          ))}
+        </TabContent>
+      </>
+    );
+  }
+
+  const rightCol = currentWorkAbstract ? (
+    <Container fluid>
+      <Row>&nbsp;</Row>
+      <Row className="mt-4">
+        <Col
+          className="text-wrap"
+          xs={12}
+          dangerouslySetInnerHTML={{
+            __html: currentWorkAbstract.toString(),
+          }}
+        ></Col>
+      </Row>
+    </Container>
+  ) : null;
+
   return (
     <Layout
       collection={collection}
       configuration={configuration}
       currentWork={currentWork}
-      nextWork={nextWorkUri ? { uri: nextWorkUri } : undefined}
-      previousWork={previousWorkUri ? { uri: previousWorkUri } : undefined}
+      nextWork={nextWorkUri ? {uri: nextWorkUri} : undefined}
+      previousWork={previousWorkUri ? {uri: previousWorkUri} : undefined}
     >
       <Hammer onSwipeLeft={onGoToPreviousWork} onSwipeRight={onGoToNextWork}>
         <div>
-          <div onKeyDown={onKeyDown} style={{ outline: "none" }} tabIndex={0}>
+          <div onKeyDown={onKeyDown} style={{outline: "none"}} tabIndex={0}>
             <Container fluid>
               <Row>
-                {leftColNavTabs.length > 0 ? (
+                {leftCol ? (
                   <Col
                     xs={12}
                     sm={12}
-                    lg={8}
-                    xl={6}
-                    style={{ minHeight: 600, minWidth: 600 }}
+                    lg={rightCol ? 8 : 12}
+                    xl={rightCol ? 6 : 12}
+                    style={{minHeight: 600, minWidth: 600}}
                   >
-                    {leftColNavTabs.length === 1 ? (
-                      leftColNavTabs[0].content
-                    ) : (
-                      <>
-                        <Nav tabs>
-                          {leftColNavTabs.map((navTab, navTabIndex) => (
-                            <NavItem key={navTabIndex}>
-                              <NavLink
-                                className={
-                                  activeLeftColNavTabIndex === navTabIndex
-                                    ? "active"
-                                    : undefined
-                                }
-                                onClick={() =>
-                                  setActiveLeftColNavTabIndex(navTabIndex)
-                                }
-                              >
-                                {navTab.title}
-                              </NavLink>
-                            </NavItem>
-                          ))}
-                        </Nav>
-                        <TabContent
-                          activeTab={activeLeftColNavTabIndex.toString()}
-                        >
-                          {leftColNavTabs.map((navTab, navTabIndex) => (
-                            <TabPane
-                              key={navTabIndex}
-                              tabId={navTabIndex.toString()}
-                            >
-                              <div className="mt-2">{navTab.content}</div>
-                            </TabPane>
-                          ))}
-                        </TabContent>
-                      </>
-                    )}
+                    {leftCol}
                   </Col>
                 ) : null}
                 <Col
                   className="d-flex justify-content-center px-0"
                   xs={12}
                   sm={12}
-                  lg={leftColNavTabs.length > 0 ? 4 : 12}
-                  xl={leftColNavTabs.length > 0 ? 6 : 12}
+                  lg={leftCol ? 4 : 12}
+                  xl={leftCol ? 6 : 12}
                 >
-                  <Container fluid>
-                    <Row>
-                      <Col className="pr-0 text-center" xs={12}>
-                        <h1>{currentWork.title}</h1>
-                      </Col>
-                    </Row>
-                    {currentWorkAbstract ? (
-                      <Row className="mt-2">
-                        <Col
-                          className="text-wrap"
-                          xs={12}
-                          dangerouslySetInnerHTML={{
-                            __html: currentWorkAbstract.toString(),
-                          }}
-                        ></Col>
-                      </Row>
-                    ) : null}
-                  </Container>
+                  {rightCol}
                 </Col>
               </Row>
               {currentWorkAbstract && currentWorkAbstractRights ? (
                 <Row className="mt-2">
-                  <Col style={{ textAlign: "center" }} xs={12}>
+                  <Col style={{textAlign: "center"}} xs={12}>
                     <RightsParagraph
                       material="Text"
                       rights={currentWorkAbstractRights}
@@ -297,7 +293,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 export default WorkPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths: { params: { workUri: string } }[] = [];
+  const paths: {params: {workUri: string}}[] = [];
 
   for (const work of readDatasetFile(readFileSync).works) {
     paths.push({
@@ -315,7 +311,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({
   params,
-}): Promise<{ props: StaticProps }> => {
+}): Promise<{props: StaticProps}> => {
   const workUri = decodeFileName(params!.workUri as string);
 
   const dataset = readDatasetFile(readFileSync);
@@ -323,24 +319,18 @@ export const getStaticProps: GetStaticProps = async ({
   const collectionUri = currentWork.collectionUris[0];
   const collectionWorks = dataset.collectionWorks(collectionUri);
 
-  let nextWorkUri: string | null = null;
-  let previousWorkUri: string | null = null;
-  for (let workI = 0; workI < collectionWorks.length; workI++) {
-    const work = collectionWorks[workI];
-    if (work.uri !== workUri) {
-      continue;
-    }
-
-    if (workI > 0) {
-      previousWorkUri = dataset.works[workI - 1].uri;
-    }
-
-    if (workI + 1 < dataset.works.length) {
-      nextWorkUri = dataset.works[workI + 1].uri;
-    }
-
-    break;
+  const currentWorkI = collectionWorks.findIndex(
+    work => work.uri === currentWork.uri
+  );
+  if (currentWorkI === -1) {
+    throw new EvalError();
   }
+  const nextWorkUri =
+    currentWorkI + 1 < collectionWorks.length
+      ? collectionWorks[currentWorkI + 1].uri
+      : null;
+  const previousWorkUri =
+    currentWorkI > 0 ? collectionWorks[currentWorkI - 1].uri : null;
 
   const workUris: string[] = [];
   if (previousWorkUri) {
@@ -359,7 +349,7 @@ export const getStaticProps: GetStaticProps = async ({
       datasetString: new DataSubsetter(dataset)
         .worksDataset(workUris, {
           agent: {
-            thumbnail: { targetDimensions: thumbnailTargetDimensions },
+            thumbnail: {targetDimensions: thumbnailTargetDimensions},
           },
           allImages: true,
           collections: {},
