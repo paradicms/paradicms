@@ -173,7 +173,7 @@ class OmekaClassicTransformer(_Transformer):
             ("Coverage", DublinCorePropertyDefinitions.COVERAGE),
             ("Creator", DublinCorePropertyDefinitions.CREATOR),
             ("Date", DublinCorePropertyDefinitions.DATE),
-            ("Date Created", DublinCorePropertyDefinitions.DATE_CREATED),
+            ("Date Created", DublinCorePropertyDefinitions.CREATED),
             ("Date Submitted", DublinCorePropertyDefinitions.DATE_SUBMITTED),
             ("Description", DublinCorePropertyDefinitions.DESCRIPTION),
             ("Extent", DublinCorePropertyDefinitions.EXTENT),

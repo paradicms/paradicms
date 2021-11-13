@@ -218,7 +218,7 @@ class LunaTransformer(_Transformer):
             if date_type == "completion date":
                 property_definition = DublinCorePropertyDefinitions.DATE_SUBMITTED
             elif date_type == "creation":
-                property_definition = DublinCorePropertyDefinitions.DATE_CREATED
+                property_definition = DublinCorePropertyDefinitions.CREATED
             else:
                 raise ValueError(date_type)
             properties.append(Property(property_definition, date))

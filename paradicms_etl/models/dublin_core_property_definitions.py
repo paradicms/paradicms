@@ -27,15 +27,15 @@ class DublinCorePropertyDefinitions(_ModelSingletons):
         label="Coverage",
         uri=DCTERMS.coverage,
     )
+    CREATED = PropertyDefinition.from_fields(
+        label="Date created",
+        uri=DCTERMS.created,
+    )
     CREATOR = PropertyDefinition.from_fields(
         label="Creator",
         uri=DCTERMS.creator,
     )
     DATE = PropertyDefinition.from_fields(label="Date", uri=DCTERMS.date)
-    DATE_CREATED = PropertyDefinition.from_fields(
-        label="Date created",
-        uri=DCTERMS.dateCreated,
-    )
     DATE_SUBMITTED = PropertyDefinition.from_fields(
         label="Date submitted",
         uri=DCTERMS.dateSubmitted,
