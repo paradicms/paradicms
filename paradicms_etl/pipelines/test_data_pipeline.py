@@ -286,12 +286,13 @@ class TestDataPipeline(_Pipeline):
                 )
                 for i in range(2)
             )
-            properties.append(
-                Property(
-                    DublinCorePropertyDefinitions.DESCRIPTION,
-                    self.__LOREM_IPSUM,
+            if work_i % 2 == 0:
+                properties.append(
+                    Property(
+                        DublinCorePropertyDefinitions.DESCRIPTION,
+                        self.__LOREM_IPSUM,
+                    )
                 )
-            )
             properties.extend(
                 Property(
                     DublinCorePropertyDefinitions.DESCRIPTION,
