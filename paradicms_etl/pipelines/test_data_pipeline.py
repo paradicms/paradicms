@@ -356,7 +356,9 @@ class TestDataPipeline(_Pipeline):
                         license=CreativeCommonsLicenses.NC_1_0.uri,
                         statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
                     ),
-                ),
+                )
+                if work_i % 2 == 0
+                else None,
                 collection_uris=collection_uris,
                 institution_uri=institution.uri,
                 page=page,
