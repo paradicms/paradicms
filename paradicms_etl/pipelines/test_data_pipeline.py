@@ -278,6 +278,8 @@ class TestDataPipeline(_Pipeline):
         ):
             properties = []
 
+            include_abstract_and_description = work_i % 2 == 0
+
             # Properties that depend on the work title
             properties.extend(
                 Property(
@@ -286,20 +288,20 @@ class TestDataPipeline(_Pipeline):
                 )
                 for i in range(2)
             )
-            if work_i % 2 == 0:
+            if include_abstract_and_description:
                 properties.append(
                     Property(
                         DublinCorePropertyDefinitions.DESCRIPTION,
                         self.__LOREM_IPSUM,
                     )
                 )
-            properties.extend(
-                Property(
-                    DublinCorePropertyDefinitions.DESCRIPTION,
-                    f"{title} description {i}",
+                properties.extend(
+                    Property(
+                        DublinCorePropertyDefinitions.DESCRIPTION,
+                        f"{title} description {i}",
+                    )
+                    for i in range(2)
                 )
-                for i in range(2)
-            )
             properties.extend(
                 Property(DublinCorePropertyDefinitions.IDENTIFIER, f"{title}Id{i}")
                 for i in range(2)
@@ -358,7 +360,7 @@ class TestDataPipeline(_Pipeline):
                         statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
                     ),
                 )
-                if work_i % 2 == 0
+                if include_abstract_and_description
                 else None,
                 collection_uris=collection_uris,
                 institution_uri=institution.uri,
