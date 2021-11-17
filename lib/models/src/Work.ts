@@ -11,6 +11,7 @@ import {selectThumbnail} from "./selectThumbnail";
 import {Memoize} from "typescript-memoize";
 
 export class Work extends NamedModel {
+  @Memoize()
   get abstract(): string | Text | null {
     return this.optionalStringOrText(DCTERMS.abstract);
   }

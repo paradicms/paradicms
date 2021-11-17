@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {Dataset} from "../src";
+import {Dataset, Text} from "../src";
 import {testDataTrig} from "./testDataTrig";
 
 describe("Work", () => {
@@ -7,7 +7,9 @@ describe("Work", () => {
   const sut = dataset.works[0];
 
   it("should get the work's abstract", () => {
-    expect(sut.abstract).to.not.be.empty;
+    expect(sut.abstract).to.be.instanceof(Text);
+    const abstract: Text = sut.abstract as Text;
+    expect(abstract.value).to.not.be.empty;
   });
 
   it("should get the work's collections", () => {
