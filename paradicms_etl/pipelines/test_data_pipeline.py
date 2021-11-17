@@ -214,6 +214,16 @@ class TestDataPipeline(_Pipeline):
             for collection_i in range(self.__collections_per_institution):
                 collection_title = f"{institution.name}Collection{collection_i}"
                 collection = Collection.from_fields(
+                    abstract=Text.from_fields(
+                        self.__LOREM_IPSUM,
+                        rights=Rights(
+                            holder=f"{collection_title} abstract rights holder",
+                            license=CreativeCommonsLicenses.NC_1_0.uri,
+                            statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
+                        ),
+                    )
+                    if collection_i % 2 == 0
+                    else None,
                     institution_uri=institution.uri,
                     title=collection_title,
                     uri=URIRef(f"{institution.uri}/collection{collection_i}"),
