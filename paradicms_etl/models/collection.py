@@ -1,10 +1,11 @@
-from typing import Optional, Tuple
+from typing import Tuple, Union
 
 from rdflib import Literal, URIRef
 from rdflib.namespace import DCTERMS
 
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.property import Property
+from paradicms_etl.models.text import Text
 from paradicms_etl.namespace import CMS
 
 
@@ -23,12 +24,17 @@ class Collection(_NamedModel):
         institution_uri: URIRef,
         title: str,
         uri: URIRef,
-        abstract: Optional[str] = None,
+        abstract: Union[str, Text, None] = None,
         properties: Tuple[Property, ...] = ()
     ):
         resource = cls._create_resource(identifier=uri)
         if abstract is not None:
-            resource.add(DCTERMS.abstract, Literal(abstract))
+            if isinstance(abstract, str):
+                resource.add(DCTERMS.abstract, Literal(abstract))
+            elif isinstance(abstract, Text):
+                resource.add(DCTERMS.abstract, abstract.to_rdf(graph=resource.graph))
+            else:
+                raise TypeError(type(abstract))
         resource.add(CMS.institution, institution_uri)
         for property_ in properties:
             resource.add(property_.uri, property_.value)
