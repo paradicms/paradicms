@@ -58,9 +58,12 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
             self.__institution_uri = institution_uri
 
         def _transform_item(self, item: WikidataItem):
+            properties = []
+
             return Work.from_fields(
                 collection_uris=(self.__collection_uri,),
                 institution_uri=self.__institution_uri,
+                properties=tuple(properties),
                 rights=WikidataItemsTransformer._RIGHTS,
                 title=item.label,
                 uri=item.uri,

@@ -46,7 +46,7 @@ class WikidataItem(_NamedModel):
         graph: Graph,
         logger: Logger,
         property_definitions: Optional[Tuple[WikidataPropertyDefinition, ...]] = None,
-    ) -> Tuple:
+    ) -> Tuple["WikidataItem", ...]:
         """
         Read all items from the graph and return a tuple of them.
         """

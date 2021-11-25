@@ -17,7 +17,7 @@ class WikidataDirectClaim(WikidataStatement):
         predicate: URIRef,
         property_definition: PropertyDefinition,
         subject: URIRef
-    ):
+    ) -> "WikidataDirectClaim":
         if property_definition.direct_claim_normalized_uri is not None:
             normalized_objects = tuple(
                 graph.objects(
