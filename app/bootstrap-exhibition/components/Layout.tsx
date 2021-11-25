@@ -12,7 +12,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: Collection;
   configuration: Configuration;
   currentWork?: Work;
-  nextWork: {readonly uri: string};
+  nextWork?: {readonly uri: string};
   previousWork?: {readonly uri: string};
 }>> = ({
   collection,
