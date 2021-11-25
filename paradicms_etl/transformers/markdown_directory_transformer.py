@@ -156,11 +156,12 @@ class MarkdownDirectoryTransformer(_Transformer):
                         bnode_resource.add(property_uri, sub_value_node)
                 return (bnode_resource.identifier,)
             elif isinstance(value, (list, tuple)):
-                nodes = tuple(self._visit_value(value) for value in value)
-                if all(nodes, lambda node: isinstance(node, Literal)):
-                    return nodes
-                else:
-                    raise NotImplementedError("return an RDF list")
+                nodes = []
+                for sub_value in value:
+                    nodes.extend(
+                        self._convert_front_matter_value_to_rdf_nodes(sub_value)
+                    )
+                return tuple(nodes)
             elif isinstance(value, str):
                 if len(value) > 2 and value[0] == "<" and value[-1] == ">":
                     # Consider a URI like </person/X> to be a link to another model in the same Markdown directory,
