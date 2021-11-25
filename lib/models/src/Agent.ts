@@ -32,4 +32,8 @@ export class Agent extends NamedModel {
   get wikidataConceptUri(): string | null {
     return this._wikidataConceptUri;
   }
+
+  get wikipediaUrl(): string | null {
+    return this._wikipediaUrl;
+  }
 }

@@ -26,15 +26,8 @@ export class NamedModel extends Model {
     return null;
   }
 
-  protected get _rights(): Rights | null {
-    return Rights.optional({
-      dataset: this.dataset,
-      graphNode: this.graphNode,
-      node: this.node,
-    });
-  }
-
-  protected get _wikidataConceptUri(): string | null {
+  private get relationUrls(): readonly URL[] {
+    const result: URL[] = [];
     for (const relationObject of this.store.getObjects(
       this.node,
       DCTERMS.relation,
@@ -43,8 +36,40 @@ export class NamedModel extends Model {
       if (relationObject.termType !== "NamedNode") {
         continue;
       }
-      if (relationObject.value.startsWith("http://www.wikidata.org/entity/")) {
-        return relationObject.value;
+      try {
+        result.push(new URL(relationObject.value));
+      } catch {}
+    }
+    return result;
+  }
+
+  protected get _rights(): Rights | null {
+    return Rights.optional({
+      dataset: this.dataset,
+      graphNode: this.graphNode,
+      node: this.node,
+    });
+  }
+
+  protected get _wikipediaUrl(): string | null {
+    for (const relationUrl of this.relationUrls) {
+      if (
+        relationUrl.host.endsWith("wikipedia.org") &&
+        relationUrl.pathname.startsWith("/wiki/")
+      ) {
+        return relationUrl.toString();
+      }
+    }
+    return null;
+  }
+
+  protected get _wikidataConceptUri(): string | null {
+    for (const relationUrl of this.relationUrls) {
+      if (
+        relationUrl.host === "www.wikidata.org" &&
+        relationUrl.pathname.startsWith("/entity/")
+      ) {
+        return relationUrl.toString();
       }
     }
     return null;

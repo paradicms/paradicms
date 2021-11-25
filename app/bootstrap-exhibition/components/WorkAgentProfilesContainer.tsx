@@ -10,6 +10,7 @@ import {
 } from "reactstrap";
 import {WorkAgentProfile} from "../lib/WorkAgentProfile";
 import {RightsParagraph} from "./RightsParagraph";
+import {Agent} from "@paradicms/models";
 
 export const WorkAgentProfilesContainer: React.FunctionComponent<{
   workAgentProfiles: readonly WorkAgentProfile[];
@@ -26,6 +27,42 @@ export const WorkAgentProfilesContainer: React.FunctionComponent<{
     }
   }
 
+  const workAgentLinks = (agent: Agent) => {
+    const links: React.ReactNodeArray = [];
+
+    for (const link of [
+      {
+        href: agent.page,
+        text: "Home page",
+      },
+      {
+        href: agent.wikidataConceptUri,
+        text: "Wikidata",
+      },
+      {
+        href: agent.wikipediaUrl,
+        text: "Wikipedia",
+      },
+    ]) {
+      if (!link.href) {
+        continue;
+      }
+      if (links.length > 0) {
+        links.push(<span key={links.length}>&nbsp;&bull;&nbsp;</span>);
+      }
+      links.push(
+        <a href={link.href} key={links.length}>
+          {link.text}
+        </a>
+      );
+    }
+    return links.length > 0 ? (
+      <div className="mt-1" style={{fontSize: "x-small"}}>
+        {links}
+      </div>
+    ) : null;
+  };
+
   return (
     <Container fluid>
       {uniqueWorkAgentProfiles.map(
@@ -37,13 +74,8 @@ export const WorkAgentProfilesContainer: React.FunctionComponent<{
             <Col xs={12} className="p-0">
               <Card className="text-center">
                 <CardHeader tag="h6">
-                  {workAgentProfile.href ? (
-                    <a href={workAgentProfile.href}>
-                      {workAgentProfile.agent.name}
-                    </a>
-                  ) : (
-                    <span>{workAgentProfile.agent.name}</span>
-                  )}
+                  <div>{workAgentProfile.agent.name}</div>
+                  {workAgentLinks(workAgentProfile.agent)}
                 </CardHeader>
                 <CardBody>
                   <img
