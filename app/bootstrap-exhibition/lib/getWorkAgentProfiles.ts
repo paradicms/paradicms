@@ -1,9 +1,19 @@
-import { Agent, ImageDimensions, Institution, Rights, Text, Work } from "@paradicms/models";
-import { WorkAgentProfile } from "./WorkAgentProfile";
+import {
+  Agent,
+  ImageDimensions,
+  Institution,
+  Rights,
+  Text,
+  Work,
+} from "@paradicms/models";
+import {WorkAgentProfile} from "./WorkAgentProfile";
 
-const thumbnailTargetDimensions: ImageDimensions = { height: 600, width: 600 };
+const thumbnailTargetDimensions: ImageDimensions = {height: 600, width: 600};
 
-const getRightsAgentProfiles = (rights: Rights | null, rolePrefix: string): readonly WorkAgentProfile[] => {
+const getRightsAgentProfiles = (
+  rights: Rights | null,
+  rolePrefix: string
+): readonly WorkAgentProfile[] => {
   const result: WorkAgentProfile[] = [];
 
   if (!rights) {
@@ -19,7 +29,11 @@ const getRightsAgentProfiles = (rights: Rights | null, rolePrefix: string): read
     if (thumbnail) {
       result.push({
         agent: creatorAgent,
-        href: creatorAgent.page ?? creatorAgent.wikidataConceptUri ?? null,
+        href:
+          creatorAgent.page ??
+          creatorAgent.wikipediaUrl ??
+          creatorAgent.wikidataConceptUri ??
+          null,
         role: rolePrefix + " creator",
         thumbnail,
         thumbnailTargetDimensions,
@@ -28,17 +42,19 @@ const getRightsAgentProfiles = (rights: Rights | null, rolePrefix: string): read
   }
 
   return result;
-}
+};
 
 export const getWorkAgentProfiles = (kwds: {
   institution: Institution;
   work: Work;
 }): readonly WorkAgentProfile[] => {
-  const { institution, work } = kwds;
+  const {institution, work} = kwds;
 
   const result: WorkAgentProfile[] = [];
 
-  result.push(...getRightsAgentProfiles(work.rights ?? institution.rights ?? null, "Work"));
+  result.push(
+    ...getRightsAgentProfiles(work.rights ?? institution.rights ?? null, "Work")
+  );
 
   const abstract = work.abstract;
   if (abstract && abstract instanceof Text) {
