@@ -20,7 +20,7 @@ class PropertyValueDefinition(_NamedModel):
         uri: URIRef,
         value: Node,  # A property value
         label: Optional[str] = None,
-    ):
+    ) -> "PropertyValueDefinition":
         resource = cls._create_resource(identifier=uri)
         if label is not None:
             resource.add(RDFS.label, Literal(label))

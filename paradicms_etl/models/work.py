@@ -40,7 +40,7 @@ class Work(_NamedModel):
         ] = None,  # foaf:page, linking to a human-readable page; if not specified, defaults to URI
         properties: Tuple[Property, ...] = (),
         rights: Optional[Rights] = None,
-    ):
+    ) -> "Work":
         resource = cls._create_resource(identifier=uri)
         if abstract is not None:
             if isinstance(abstract, str):

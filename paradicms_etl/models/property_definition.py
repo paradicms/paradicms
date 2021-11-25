@@ -9,7 +9,7 @@ class PropertyDefinition(_NamedModel):
         self.label
 
     @classmethod
-    def from_fields(cls, *, label: str, uri: URIRef):
+    def from_fields(cls, *, label: str, uri: URIRef) -> "PropertyDefinition":
         resource = cls._create_resource(identifier=uri)
         resource.add(RDFS.label, Literal(label))
         return cls(resource)

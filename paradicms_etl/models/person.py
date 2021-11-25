@@ -20,7 +20,7 @@ class Person(_Agent):
         page: Optional[URIRef] = None,
         properties: Tuple[Property, ...] = (),
         sort_name: Optional[str] = None,
-    ):
+    ) -> "Person":
         resource = cls._create_resource(identifier=uri)
         if family_name is not None:
             resource.add(FOAF.familyName, Literal(family_name))
