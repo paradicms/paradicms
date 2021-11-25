@@ -1,13 +1,17 @@
-from typing import Optional
+from typing import Optional, Tuple
 
 from rdflib import URIRef
 
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
+from paradicms_etl.models.dublin_core_property_definitions import (
+    DublinCorePropertyDefinitions,
+)
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.person import Person
+from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -36,6 +40,18 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
     )
 
     class __WikidataItemTransformer(_WikidataItemTransformer):
+        def _get_properties(self, item: WikidataItem) -> Tuple[Property, ...]:
+            properties = []
+            properties.append(
+                Property(DublinCorePropertyDefinitions.RELATION, item.uri)
+            )
+            for article in item.articles:
+                if str(article.uri).startswith("https://en.wikipedia.org/wiki/"):
+                    properties.append(
+                        Property(DublinCorePropertyDefinitions.RELATION, article.uri)
+                    )
+            return tuple(properties)
+
         def _transform_image_statement(
             self,
             *,
@@ -49,7 +65,11 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
 
     class __PersonWikidataItemTransformer(__WikidataItemTransformer):
         def _transform_item(self, *, item: WikidataItem):
-            return Person.from_fields(name=item.label, uri=item.uri)
+            return Person.from_fields(
+                name=item.label,
+                properties=tuple(self._get_properties(item)),
+                uri=item.uri,
+            )
 
     class __WorkWikidataItemTransformer(__WikidataItemTransformer):
         def __init__(self, *, collection_uri: URIRef, institution_uri: URIRef, **kwds):
@@ -58,12 +78,10 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
             self.__institution_uri = institution_uri
 
         def _transform_item(self, item: WikidataItem):
-            properties = []
-
             return Work.from_fields(
                 collection_uris=(self.__collection_uri,),
                 institution_uri=self.__institution_uri,
-                properties=tuple(properties),
+                properties=tuple(self._get_properties(item)),
                 rights=WikidataItemsTransformer._RIGHTS,
                 title=item.label,
                 uri=item.uri,
