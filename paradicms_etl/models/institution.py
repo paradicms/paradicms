@@ -23,7 +23,7 @@ class Institution(_NamedModel):
         abstract: Optional[str] = None,
         properties: Tuple[Property, ...] = (),
         rights: Optional[Rights] = None,
-    ):
+    ) -> "Institution":
         resource = cls._create_resource(identifier=uri)
         if abstract is not None:
             resource.add(DCTERMS.abstract, Literal(abstract))

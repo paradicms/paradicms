@@ -26,7 +26,7 @@ class WikidataFullStatement(WikidataStatement):
         logger: Logger,
         property_definitions: Tuple[WikidataPropertyDefinition, ...],
         resource: Resource
-    ):
+    ) -> "WikidataFullStatement":
         normalized_value = None
         qualifiers = []
         value = None

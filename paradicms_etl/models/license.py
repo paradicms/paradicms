@@ -18,7 +18,7 @@ class License(_NamedModel):
     @classmethod
     def from_fields(
         cls, *, identifier: str, title: str, uri: URIRef, version: Optional[str] = None
-    ):
+    ) -> "License":
         resource = cls._create_resource(identifier=uri)
         resource.add(DC.identifier, Literal(identifier))
         resource.add(DC.title, Literal(title))

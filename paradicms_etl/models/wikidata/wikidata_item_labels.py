@@ -14,7 +14,7 @@ class WikidataItemLabels:
     acronym: Optional[str] = None
     alt_labels: Optional[Tuple[str, ...]] = None
 
-    def to_rdf(self, *, add_to_resource: Resource):
+    def to_rdf(self, *, add_to_resource: Resource) -> None:
         labels = self
         if labels.acronym is not None:
             add_to_resource.add(CMS.acronym, Literal(labels.acronym))

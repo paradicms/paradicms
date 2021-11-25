@@ -26,7 +26,7 @@ class Collection(_NamedModel):
         uri: URIRef,
         abstract: Union[str, Text, None] = None,
         properties: Tuple[Property, ...] = ()
-    ):
+    ) -> "Collection":
         resource = cls._create_resource(identifier=uri)
         if abstract is not None:
             if isinstance(abstract, str):

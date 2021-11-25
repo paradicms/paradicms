@@ -26,7 +26,7 @@ class RightsStatement(_NamedModel):
         description: Optional[str] = None,
         notes: Tuple[str, ...] = (),
         scope_note: Optional[str] = None,
-    ):
+    ) -> "RightsStatement":
         resource = cls._create_resource(identifier=uri)
         if definition is not None:
             resource.add(SKOS.definition, Literal(definition))

@@ -21,7 +21,7 @@ class WikidataPropertyDefinition:
     statement_value_uri: Optional[URIRef] = None
 
     @classmethod
-    def from_rdf(cls, *, graph: Graph) -> Tuple:
+    def from_rdf(cls, *, graph: Graph) -> Tuple["WikidataPropertyDefinition", ...]:
         """
         Return property definitions from the graph and return a tuple of them.
         """

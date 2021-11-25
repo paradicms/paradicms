@@ -5,6 +5,7 @@ from rdflib import Graph, Literal, RDF, RDFS, SKOS
 from rdflib.resource import Resource
 
 from paradicms_etl.models._named_model import _NamedModel
+from paradicms_etl.models.wikidata.wikidata_article import WikidataArticle
 from paradicms_etl.models.wikidata.wikidata_direct_claim import WikidataDirectClaim
 from paradicms_etl.models.wikidata.wikidata_full_statement import WikidataFullStatement
 from paradicms_etl.models.wikidata.wikidata_item_labels import WikidataItemLabels
@@ -20,12 +21,14 @@ class WikidataItem(_NamedModel):
     def __init__(
         self,
         *,
+        articles: Tuple[WikidataArticle, ...],
         description: Optional[str],
         labels: WikidataItemLabels,
         statements: Tuple[WikidataStatement, ...],
         resource: Resource,
     ):
         _NamedModel.__init__(self, resource=resource)
+        self.__articles = articles
         self.__description = description
         self.__labels = labels
         self.__statements = statements
@@ -34,6 +37,10 @@ class WikidataItem(_NamedModel):
         if not isinstance(other, WikidataItem):
             return False
         return self.uri == other.uri
+
+    @property
+    def articles(self) -> Tuple[WikidataArticle, ...]:
+        return self.__articles
 
     @property
     def description(self) -> Optional[str]:
@@ -46,7 +53,7 @@ class WikidataItem(_NamedModel):
         graph: Graph,
         logger: Logger,
         property_definitions: Optional[Tuple[WikidataPropertyDefinition, ...]] = None,
-    ) -> Tuple:
+    ) -> Tuple["WikidataItem", ...]:
         """
         Read all items from the graph and return a tuple of them.
         """
@@ -227,7 +234,20 @@ class WikidataItem(_NamedModel):
             logger.warning("item %s: no pref_label detected", resource.identifier)
             return None
 
+        articles = []
+
         return cls(
+            articles=tuple(
+                WikidataArticle.from_rdf(
+                    logger=logger, resource=resource.graph.resource(article_uri)
+                )
+                for article_uri in resource.graph.subjects(
+                    predicate=SCHEMA.about, object=resource.identifier
+                )
+                if tuple(
+                    resource.graph.triples((article_uri, RDF.type, SCHEMA.Article))
+                )
+            ),
             description=description,
             labels=WikidataItemLabels(
                 alt_labels=tuple(sorted(alt_labels)) if alt_labels else None,

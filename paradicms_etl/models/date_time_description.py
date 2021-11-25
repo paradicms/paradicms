@@ -17,7 +17,7 @@ class DateTimeDescription(_Model):
         second: Optional[int] = None,
         month: Optional[int] = None,
         year: Optional[int] = None,
-    ):
+    ) -> "DateTimeDescription":
         resource = cls._create_resource(identifier=BNode())
         resource.add(RDF.type, TIME.DateTimeDescription)
         if day is not None:

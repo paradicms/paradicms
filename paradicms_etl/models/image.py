@@ -52,7 +52,7 @@ class Image(_NamedModel):
         src: Optional[
             str
         ] = None,  # src that can be used in an <img> tag; if not specified, defaults to URI
-    ):
+    ) -> "Image":
         resource = cls._create_resource(identifier=uri)
         resource.add(CMS.imageCopyable, Literal(copyable))
         if created is not None:
