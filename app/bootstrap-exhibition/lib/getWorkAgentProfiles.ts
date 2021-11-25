@@ -29,11 +29,6 @@ const getRightsAgentProfiles = (
     if (thumbnail) {
       result.push({
         agent: creatorAgent,
-        href:
-          creatorAgent.page ??
-          creatorAgent.wikipediaUrl ??
-          creatorAgent.wikidataConceptUri ??
-          null,
         role: rolePrefix + " creator",
         thumbnail,
         thumbnailTargetDimensions,
