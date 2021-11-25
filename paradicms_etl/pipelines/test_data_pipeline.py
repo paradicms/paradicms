@@ -102,6 +102,7 @@ class TestDataPipeline(_Pipeline):
             self.__institutions = institutions
             self.__collections_per_institution = collections_per_institution
             self.__images_per_work = images_per_work
+            self.__next_work_i = 0
             self.__works_per_institution = works_per_institution
 
         def transform(self):
@@ -140,7 +141,22 @@ class TestDataPipeline(_Pipeline):
                         family_name=str(person_i),
                         given_name="Person",
                         name=f"Person {person_i}",
-                        page=URIRef(f"http://example.com/person{person_i}page"),
+                        page=URIRef(f"http://example.com/person{person_i}page")
+                        if person_i % 2 == 0
+                        else None,
+                        properties=(
+                            # dcterms:relation
+                            # Wikidata concept for Pilot ACE
+                            Property(
+                                DublinCorePropertyDefinitions.RELATION,
+                                URIRef("http://www.wikidata.org/entity/Q937690"),
+                            ),
+                            # Wikipedia
+                            Property(
+                                DublinCorePropertyDefinitions.RELATION,
+                                URIRef("http://en.wikipedia.org/wiki/Pilot_ACE"),
+                            ),
+                        ),
                         sort_name=f"{person_i}, Person",
                         uri=URIRef(f"http://example.com/person{person_i}"),
                     )
@@ -175,9 +191,8 @@ class TestDataPipeline(_Pipeline):
                     collection_uris=(collection.uri,),
                     institution=institution,
                     agents=agents,
-                    work_i=work_i,
-                    title=f"{collection.title}Work{work_i}",
-                    uri=URIRef(f"{collection.uri}/work{work_i}"),
+                    title_prefix=collection.title + "Work",
+                    uri_prefix=str(collection.uri) + "/work",
                 )
 
         def __generate_images(
@@ -282,11 +297,16 @@ class TestDataPipeline(_Pipeline):
             agents: Tuple[_Agent, ...],
             collection_uris: Tuple[URIRef, ...],
             institution: Institution,
-            work_i: int,
-            title: str,
-            uri: URIRef,
+            title_prefix: str,
+            uri_prefix: str,
         ):
             properties = []
+
+            work_i = self.__next_work_i
+            self.__next_work_i += 1
+
+            title = title_prefix + str(work_i)
+            uri = URIRef(uri_prefix + str(work_i))
 
             include_abstract_and_description = work_i % 2 == 0
 
@@ -354,12 +374,24 @@ class TestDataPipeline(_Pipeline):
                     DublinCorePropertyDefinitions.CREATOR,
                     agents[(work_i + i) % len(agents)].uri,
                 )
-                for i in range(1)
+                for i in range(3)
             )
 
-            page = "http://example.com/work/" + str(work_i)
-            if work_i % 2 == 0:
-                page = URIRef(page)
+            # dcterms:relation
+            # Wikidata concept for Alan Turing
+            properties.append(
+                Property(
+                    DublinCorePropertyDefinitions.RELATION,
+                    URIRef("http://www.wikidata.org/entity/Q7251"),
+                )
+            )
+            # Wikipedia
+            properties.append(
+                Property(
+                    DublinCorePropertyDefinitions.RELATION,
+                    URIRef("http://en.wikipedia.org/wiki/Alan_Turing"),
+                )
+            )
 
             work_ = Work.from_fields(
                 abstract=Text.from_fields(
@@ -374,7 +406,9 @@ class TestDataPipeline(_Pipeline):
                 else None,
                 collection_uris=collection_uris,
                 institution_uri=institution.uri,
-                page=page,
+                page=URIRef("http://example.com/work/" + str(work_i))
+                if work_i % 2 == 0
+                else None,
                 properties=tuple(properties),
                 rights=Rights(
                     holder=f"{title} rights holder",
@@ -439,9 +473,8 @@ class TestDataPipeline(_Pipeline):
                         map(lambda collection: collection.uri, collections)
                     ),
                     institution=institution,
-                    work_i=work_i,
-                    title=f"{institution.name}SharedWork{work_i}",
-                    uri=URIRef(f"{institution.uri}/shared/work{work_i}"),
+                    title_prefix=f"{institution.name}SharedWork",
+                    uri_prefix=f"{institution.uri}/shared/work",
                 )
 
     def __init__(self, loader: Optional[_Loader] = None, **kwds):
