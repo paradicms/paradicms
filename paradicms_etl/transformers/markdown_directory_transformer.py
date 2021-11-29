@@ -48,12 +48,15 @@ def _create_namespaces_by_prefix_default() -> Dict[str, rdflib.Namespace]:
             if attr.upper() != attr:
                 continue
             value = getattr(namespace_module, attr)
-            if not isinstance(value, rdflib.Namespace) and (
-                not isclass(value)
-                or not issubclass(value, rdflib.namespace.DefinedNamespace)
+            if (
+                isinstance(value, rdflib.namespace.Namespace)
+                or isinstance(value, rdflib.namespace.ClosedNamespace)
+                or (
+                    isclass(value)
+                    and issubclass(value, rdflib.namespace.DefinedNamespace)
+                )
             ):
-                continue
-            namespaces_by_prefix[attr.lower()] = value
+                namespaces_by_prefix[attr.lower()] = value
     return namespaces_by_prefix
 
 
