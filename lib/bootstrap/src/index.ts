@@ -1,4 +1,3 @@
-export * from "./Accordion";
 export * from "./createFilterControl";
 export * from "./FiltersControls";
 export * from "./FiltersBadges";

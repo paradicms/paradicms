@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useCallback, useMemo} from "react";
+import {useCallback, useMemo, useState} from "react";
 import {
   Image,
   PrimitiveType,
@@ -11,6 +11,10 @@ import {
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 import classNames from "classnames";
 import {
+  Accordion,
+  AccordionBody,
+  AccordionHeader,
+  AccordionItem,
   Card,
   CardBody,
   CardHeader,
@@ -19,7 +23,6 @@ import {
   Input,
   Label,
 } from "reactstrap";
-import {Accordion} from "./Accordion";
 
 interface ValueFacetValueCardProps<T extends PrimitiveType> {
   filterState: ValueFilterState<T, ValueFilter<T>>;
@@ -44,6 +47,19 @@ const ValueFacetValueCard = <T extends PrimitiveType>(
     }
     onChange(filterState.snapshot);
   }, [filterState, value]);
+
+  const [openAccordionId, setOpenAccordionId] = useState<string>("");
+
+  const toggleAccordion = useCallback(
+    (newOpenAccordionId: string) => {
+      if (newOpenAccordionId === openAccordionId) {
+        setOpenAccordionId("");
+      } else {
+        setOpenAccordionId(newOpenAccordionId);
+      }
+    },
+    [openAccordionId]
+  );
 
   return (
     <Card
@@ -83,27 +99,36 @@ const ValueFacetValueCard = <T extends PrimitiveType>(
       </a>
       {value.thumbnail && value.thumbnail.rights ? (
         <CardBody>
-          <Accordion title="Image rights">
-            <table style={{fontSize: "xx-small"}}>
-              {Object.keys(value.thumbnail.rights).map(rightsKey => {
-                const rightsValue = (value.thumbnail!.rights as any)[rightsKey];
-                if (!rightsValue) {
-                  return;
-                }
-                return (
-                  <tr>
-                    <td style={{padding: 0, textAlign: "left"}}>
-                      <strong>
-                        {rightsKey[0].toUpperCase() + rightsKey.substring(1)}
-                      </strong>
-                    </td>
-                    <td style={{padding: 0, textAlign: "left"}}>
-                      {rightsValue}
-                    </td>
-                  </tr>
-                );
-              })}
-            </table>
+          {/*@ts-ignore*/}
+          <Accordion open={openAccordionId} toggle={toggleAccordion}>
+            <AccordionItem>
+              <AccordionHeader targetId="0">Image rights</AccordionHeader>
+              <AccordionBody accordionId="0">
+                <table style={{fontSize: "xx-small"}}>
+                  {Object.keys(value.thumbnail.rights).map(rightsKey => {
+                    const rightsValue = (value.thumbnail!.rights as any)[
+                      rightsKey
+                    ];
+                    if (!rightsValue) {
+                      return;
+                    }
+                    return (
+                      <tr>
+                        <td style={{padding: 0, textAlign: "left"}}>
+                          <strong>
+                            {rightsKey[0].toUpperCase() +
+                              rightsKey.substring(1)}
+                          </strong>
+                        </td>
+                        <td style={{padding: 0, textAlign: "left"}}>
+                          {rightsValue}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </table>
+              </AccordionBody>
+            </AccordionItem>
           </Accordion>
         </CardBody>
       ) : null}

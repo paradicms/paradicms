@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useMemo} from "react";
+import {useCallback, useMemo, useState} from "react";
 import {Layout} from "components/Layout";
 import {Configuration, Dataset, DataSubsetter} from "@paradicms/models";
 import {
@@ -9,13 +9,16 @@ import {
   readDatasetFile,
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {Col, Container, Row} from "reactstrap";
 import {
   Accordion,
-  PropertiesTable,
-  RightsTable,
-  WorkImagesCarousel,
-} from "@paradicms/bootstrap";
+  AccordionBody,
+  AccordionHeader,
+  AccordionItem,
+  Col,
+  Container,
+  Row,
+} from "reactstrap";
+import {RightsTable, WorkImagesCarousel} from "@paradicms/bootstrap";
 import * as fs from "fs";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
@@ -35,6 +38,19 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   const work = dataset.workByUri(workUri);
   const collection = work.collections[0];
 
+  const [openAccordionId, setOpenAccordionId] = useState<string>("");
+
+  const toggleAccordion = useCallback(
+    (newOpenAccordionId: string) => {
+      if (newOpenAccordionId === openAccordionId) {
+        setOpenAccordionId("");
+      } else {
+        setOpenAccordionId(newOpenAccordionId);
+      }
+    },
+    [openAccordionId]
+  );
+
   return (
     <Layout
       collection={collection}
@@ -50,17 +66,25 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
         {work.properties.length > 0 ? (
           <Row className="mt-4">
             <Col xs={12}>
-              <Accordion defaultOpen={true} title={<h4>Properties</h4>}>
-                <PropertiesTable properties={work.properties} />
-              </Accordion>
+              {/*<Accordion defaultOpen={true} title={<h4>Properties</h4>}>*/}
+              {/*  <PropertiesTable properties={work.properties} />*/}
+              {/*</Accordion>*/}
             </Col>
           </Row>
         ) : null}
         {work.rights ? (
           <Row className="mt-4">
             <Col xs={12}>
-              <Accordion title={<h4>Metadata rights</h4>}>
-                <RightsTable rights={work.rights} />
+              {/*@ts-ignore*/}
+              <Accordion open={openAccordionId} toggle={toggleAccordion}>
+                <AccordionItem>
+                  <AccordionHeader targetId="0">
+                    Metadata rights
+                  </AccordionHeader>
+                  <AccordionBody accordionId="0">
+                    <RightsTable rights={work.rights} />
+                  </AccordionBody>
+                </AccordionItem>
               </Accordion>
             </Col>
           </Row>
