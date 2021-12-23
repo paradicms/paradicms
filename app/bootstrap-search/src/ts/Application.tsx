@@ -35,7 +35,14 @@ export const Application: React.FunctionComponent<{
         workQueryService={workQueryService}
         worksPerPage={WORKS_PER_PAGE}
       >
-        {({workQuery, setWorkQuery, setPage, ...workSearchProps}) => (
+        {({
+          page,
+          pageMax,
+          workQuery,
+          setWorkQuery,
+          setPage,
+          ...workSearchProps
+        }) => (
           <Container fluid>
             <Row>
               <Col>
@@ -62,8 +69,9 @@ export const Application: React.FunctionComponent<{
                   <CardBody>
                     <WorkSearchContainer
                       {...workSearchProps}
+                      page={page}
+                      pageMax={pageMax}
                       workQuery={workQuery}
-                      worksPerPage={WORKS_PER_PAGE}
                       renderWorkLink={(work, children) => (
                         <a href={work.page ?? work.uri}>{children}</a>
                       )}
