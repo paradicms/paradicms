@@ -13,11 +13,11 @@ import {
   NavItem,
   Row,
 } from "reactstrap";
-import {NavbarSearchForm, STYLESHEET_HREF_DEFAULT} from "@paradicms/bootstrap";
+import {NavbarSearchForm} from "@paradicms/bootstrap";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";
-import {Configuration} from "@paradicms/models";
+import {Configuration, defaultConfiguration} from "@paradicms/models";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string; readonly uri: string};
@@ -61,7 +61,8 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         <link
           rel="stylesheet"
           href={
-            configuration.bootstrapStylesheetHref ?? STYLESHEET_HREF_DEFAULT
+            configuration.bootstrapStylesheetHref ??
+            defaultConfiguration.bootstrapStylesheetHref!
           }
         />
       </Head>

@@ -3,8 +3,12 @@ import {Hrefs} from "lib/Hrefs";
 import {Nav, Navbar, NavItem, NavLink} from "reactstrap";
 import Link from "next/link";
 import Head from "next/head";
-import {STYLESHEET_HREF_DEFAULT} from "@paradicms/bootstrap";
-import {Collection, Configuration, Work} from "@paradicms/models";
+import {
+  Collection,
+  Configuration,
+  defaultConfiguration,
+  Work,
+} from "@paradicms/models";
 
 const textStyle: React.CSSProperties = {fontSize: "xx-large"};
 
@@ -59,7 +63,8 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         <link
           rel="stylesheet"
           href={
-            configuration.bootstrapStylesheetHref ?? STYLESHEET_HREF_DEFAULT
+            configuration.bootstrapStylesheetHref ??
+            defaultConfiguration.bootstrapStylesheetHref!
           }
         />
       </Head>
