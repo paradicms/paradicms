@@ -1,6 +1,11 @@
 import * as React from "react";
+import {useCallback, useState} from "react";
 import {Image, Institution, Rights, Text, Work} from "@paradicms/models";
 import {
+  Accordion,
+  AccordionBody,
+  AccordionHeader,
+  AccordionItem,
   Card,
   CardBody,
   CardHeader,
@@ -10,7 +15,6 @@ import {
   Row,
   Table,
 } from "reactstrap";
-import {Accordion} from "./Accordion";
 import {RightsTable} from "./RightsTable";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 
@@ -44,6 +48,19 @@ export const WorkCard: React.FunctionComponent<{
       title: "Summary rights",
     });
   }
+
+  const [openAccordionId, setOpenAccordionId] = useState<string>("");
+
+  const toggleAccordion = useCallback(
+    (newOpenAccordionId: string) => {
+      if (newOpenAccordionId === openAccordionId) {
+        setOpenAccordionId("");
+      } else {
+        setOpenAccordionId(newOpenAccordionId);
+      }
+    },
+    [openAccordionId]
+  );
 
   return (
     <Card className="text-center">
@@ -86,31 +103,43 @@ export const WorkCard: React.FunctionComponent<{
               </Col>
             </Row>
           ) : null}
-          {work.abstract ? (
-            <Row>
-              <Col xs={12}>
-                <Accordion title="Summary">
-                  {work.abstract.toString()}
-                </Accordion>
-              </Col>
-            </Row>
-          ) : null}
-          {rightsEntries.map((rightsEntry, key) => (
-            <Row key={key}>
-              <Col xs={12}>
-                <Accordion title={rightsEntry.title}>
-                  <RightsTable
-                    cellStyle={{
-                      padding: 0,
-                      textAlign: "left",
-                    }}
-                    rights={rightsEntry.rights}
-                    tableStyle={{fontSize: "xx-small"}}
-                  ></RightsTable>
-                </Accordion>
-              </Col>
-            </Row>
-          ))}
+          {/*@ts-ignore*/}
+          <Accordion open={openAccordionId} toggle={toggleAccordion}>
+            {work.abstract ? (
+              <Row>
+                <Col xs={12}>
+                  {/*@ts-ignore*/}
+                  <AccordionItem>
+                    <AccordionHeader targetId="0">Summary</AccordionHeader>
+                    <AccordionBody accordionId="0">
+                      {work.abstract.toString()}
+                    </AccordionBody>
+                  </AccordionItem>
+                </Col>
+              </Row>
+            ) : null}
+            {rightsEntries.map((rightsEntry, key) => (
+              <Row key={key}>
+                <Col xs={12}>
+                  <AccordionItem>
+                    <AccordionHeader targetId={(key + 1).toString()}>
+                      {rightsEntry.title}
+                    </AccordionHeader>
+                    <AccordionBody accordionId={(key + 1).toString()}>
+                      <RightsTable
+                        cellStyle={{
+                          padding: 0,
+                          textAlign: "left",
+                        }}
+                        rights={rightsEntry.rights}
+                        tableStyle={{fontSize: "xx-small"}}
+                      ></RightsTable>
+                    </AccordionBody>
+                  </AccordionItem>
+                </Col>
+              </Row>
+            ))}
+          </Accordion>
         </Container>
       </CardBody>
     </Card>

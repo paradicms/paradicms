@@ -7,7 +7,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faImages, faList} from "@fortawesome/free-solid-svg-icons";
 import {WorksGallery} from "./WorksGallery";
 import {WorksTable} from "./WorksTable";
-import PaginationComponent from "react-reactstrap-pagination";
 import {useQueryParam} from "use-query-params";
 import {
   Institution,
@@ -15,12 +14,13 @@ import {
   WorkQuery,
   WorkQueryResults,
 } from "@paradicms/models";
+import {Pagination} from "./Pagination";
 
 export const WorkSearchContainer: React.FunctionComponent<{
   workQuery: WorkQuery;
   workQueryResults: WorkQueryResults;
-  worksPerPage: number;
   page: number;
+  pageMax: number;
   renderInstitutionLink?: (
     institution: Institution,
     children: React.ReactNode
@@ -31,8 +31,8 @@ export const WorkSearchContainer: React.FunctionComponent<{
 }> = ({
   workQuery,
   workQueryResults,
-  worksPerPage,
   page,
+  pageMax,
   renderInstitutionLink,
   renderWorkLink,
   setWorkQuery,
@@ -135,15 +135,10 @@ export const WorkSearchContainer: React.FunctionComponent<{
             </Row>
             <Row className="mt-4">
               <Col className="d-flex justify-content-center" xs={12}>
-                <PaginationComponent
-                  defaultActivePage={page + 1}
-                  firstPageText="«"
-                  lastPageText="»"
-                  nextPageText="›"
-                  onSelect={page => setPage(page - 1)}
-                  pageSize={worksPerPage}
-                  previousPageText="‹"
-                  totalItems={workQueryResults.totalWorksCount}
+                <Pagination
+                  count={pageMax + 1}
+                  page={page + 1}
+                  onChange={(_, newPage) => setPage(newPage - 1)}
                 />
               </Col>
             </Row>

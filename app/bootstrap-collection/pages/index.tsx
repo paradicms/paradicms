@@ -70,7 +70,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
       workQueryService={workQueryService}
       worksPerPage={WORKS_PER_PAGE}
     >
-      {({setWorkQuery, setPage, ...lunrWorkSearchProps}) => (
+      {({page, pageMax, setWorkQuery, setPage, ...lunrWorkSearchProps}) => (
         <Layout
           collection={collection}
           configuration={configuration}
@@ -80,7 +80,8 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
           }}
         >
           <WorkSearchContainer
-            worksPerPage={WORKS_PER_PAGE}
+            page={page}
+            pageMax={pageMax}
             renderWorkLink={(work, children) => (
               <Link href={Hrefs.work(work.uri)}>
                 <a>{children}</a>

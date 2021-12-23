@@ -6,6 +6,7 @@
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
+    "incremental": true,
     "jsx": "react",
     "module": "commonjs",
     "moduleResolution": "node",

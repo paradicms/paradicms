@@ -3,8 +3,12 @@ import {Hrefs} from "lib/Hrefs";
 import {Nav, Navbar, NavItem, NavLink} from "reactstrap";
 import Link from "next/link";
 import Head from "next/head";
-import {STYLESHEET_HREF_DEFAULT} from "@paradicms/bootstrap";
-import {Collection, Configuration, Work} from "@paradicms/models";
+import {
+  Collection,
+  Configuration,
+  defaultConfiguration,
+  Work,
+} from "@paradicms/models";
 
 const textStyle: React.CSSProperties = {fontSize: "xx-large"};
 
@@ -59,12 +63,13 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         <link
           rel="stylesheet"
           href={
-            configuration.bootstrapStylesheetHref ?? STYLESHEET_HREF_DEFAULT
+            configuration.bootstrapStylesheetHref ??
+            defaultConfiguration.bootstrapStylesheetHref!
           }
         />
       </Head>
       <Navbar className="navbar-light py-0">
-        <Nav className="navbar mr-auto">
+        <Nav className="navbar me-auto">
           <NavItem className="align-top">
             {previousWork ? (
               <Link href={Hrefs.work(previousWork.uri)} passHref>
@@ -86,7 +91,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
             </>
           ) : null}
         </div>
-        <Nav className="navbar ml-auto h-100">
+        <Nav className="navbar ms-auto h-100">
           <NavItem>
             {nextWork ? (
               <Link href={Hrefs.work(nextWork.uri)} passHref>
