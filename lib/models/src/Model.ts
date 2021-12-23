@@ -115,7 +115,15 @@ export class Model {
       null,
       null
     );
-    return properties;
+    if (properties.every(property => !!property.definition?.label)) {
+      return properties.sort((left, right) =>
+        left.definition!.label!.localeCompare(right.definition!.label)
+      );
+    } else {
+      return properties.sort((left, right) =>
+        left.uri.localeCompare(right.uri)
+      );
+    }
   }
 
   protected get _propertyUris(): readonly string[] {
