@@ -47,7 +47,7 @@ export const Application: React.FunctionComponent<{
             <Row>
               <Col>
                 <Navbar>
-                  <NavbarBrand className="mr-auto" tag="div">
+                  <NavbarBrand className="me-auto" tag="div">
                     {navbarTitle}
                   </NavbarBrand>
                   <Nav navbar>

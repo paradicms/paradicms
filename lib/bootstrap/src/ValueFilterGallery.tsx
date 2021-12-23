@@ -50,7 +50,7 @@ const ValueFacetValueCard = <T extends PrimitiveType>(
       className={classNames({
         "border-info": filterState.includesValue(value.value),
         "mb-4": true,
-        "mr-4": true,
+        "me-4": true,
         "text-center": true,
       })}
       style={{

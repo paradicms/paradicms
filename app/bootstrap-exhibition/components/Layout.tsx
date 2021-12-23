@@ -69,7 +69,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         />
       </Head>
       <Navbar className="navbar-light py-0">
-        <Nav className="navbar mr-auto">
+        <Nav className="navbar me-auto">
           <NavItem className="align-top">
             {previousWork ? (
               <Link href={Hrefs.work(previousWork.uri)} passHref>
@@ -91,7 +91,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
             </>
           ) : null}
         </div>
-        <Nav className="navbar ml-auto h-100">
+        <Nav className="navbar ms-auto h-100">
           <NavItem>
             {nextWork ? (
               <Link href={Hrefs.work(nextWork.uri)} passHref>

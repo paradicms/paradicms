@@ -15,7 +15,7 @@ export class ValueFilterBadges<
     if (filter.excludeKnown) {
       filterBadges.push(
         <h5
-          className="d-inline-block ml-2"
+          className="d-inline-block ms-2"
           key={`${filter.label}-excludeKnown`}
         >
           <Badge className="p-2" color="warning" pill>
@@ -29,7 +29,7 @@ export class ValueFilterBadges<
     if (filter.excludeUnknown) {
       filterBadges.push(
         <h5
-          className="d-inline-block ml-2"
+          className="d-inline-block ms-2"
           key={`${filter.label}-excludeUnknown`}
         >
           <Badge className="p-2" color="warning" pill>
@@ -43,7 +43,7 @@ export class ValueFilterBadges<
     (filter.excludeValues ?? []).forEach((excludeValue, excludeValueI) => {
       filterBadges.push(
         <h5
-          className="d-inline-block ml-2"
+          className="d-inline-block ms-2"
           key={`${filter.label}-excludeValue-${excludeValueI}`}
         >
           <Badge className="p-2" color="warning" pill>
@@ -57,7 +57,7 @@ export class ValueFilterBadges<
     (filter.includeValues ?? []).forEach((includeValue, includeValueI) => {
       filterBadges.push(
         <h5
-          className="d-inline-block ml-2"
+          className="d-inline-block ms-2"
           key={`${filter.label}-includeValue-${includeValueI}`}
         >
           <Badge className="p-2" color="warning" pill>

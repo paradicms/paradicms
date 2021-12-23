@@ -70,7 +70,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         <Row>
           <Col>
             <Navbar>
-              <NavbarBrand className="mr-auto" tag="div">
+              <NavbarBrand className="me-auto" tag="div">
                 <Link href={Hrefs.home}>{collection.title}</Link>
               </NavbarBrand>
               <Nav navbar>
