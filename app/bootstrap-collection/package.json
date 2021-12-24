@@ -8,6 +8,7 @@
   "main": "n/a",
   "dependencies": {
     "@paradicms/bootstrap": "1.0.5",
+    "@paradicms/configuration": "1.0.5",
     "@paradicms/lunr": "1.0.5",
     "@paradicms/models": "1.0.5",
     "@paradicms/next": "1.0.5",

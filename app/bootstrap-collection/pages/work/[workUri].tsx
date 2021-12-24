@@ -1,11 +1,12 @@
 import * as React from "react";
 import {useCallback, useMemo, useState} from "react";
 import {Layout} from "components/Layout";
-import {Configuration, Dataset, DataSubsetter} from "@paradicms/models";
+import {Dataset, DataSubsetter} from "@paradicms/models";
+import {AppConfiguration} from "@paradicms/configuration";
 import {
   decodeFileName,
   encodeFileName,
-  readConfigurationFile,
+  readAppConfigurationFile,
   readDatasetFile,
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
@@ -24,7 +25,7 @@ import * as fs from "fs";
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
-  readonly configuration: Configuration;
+  readonly configuration: AppConfiguration;
   readonly datasetString: string;
   readonly workUri: string;
 }
@@ -119,7 +120,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
-      configuration: readConfigurationFile(readFileSync),
+      configuration: readAppConfigurationFile(readFileSync),
       datasetString: new DataSubsetter(readDatasetFile(readFileSync))
         .workDataset(workUri, {
           allImages: true,

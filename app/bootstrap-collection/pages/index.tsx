@@ -2,7 +2,6 @@ import * as React from "react";
 import {useMemo} from "react";
 import {
   Collection,
-  Configuration,
   Dataset,
   DataSubsetter,
   WorkJoinSelector,
@@ -15,17 +14,18 @@ import {
 } from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
-import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
+import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
 import fs from "fs";
 import {WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
 import {WorkSearchPage} from "@paradicms/react-search";
+import {AppConfiguration} from "@paradicms/configuration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: Configuration;
+  readonly configuration: AppConfiguration;
   readonly datasetString: string;
 }
 
@@ -108,7 +108,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   return {
     props: {
       collectionUri,
-      configuration: readConfigurationFile(readFileSync),
+      configuration: readAppConfigurationFile(readFileSync),
       datasetString: new DataSubsetter(completeDataset)
         .collectionDataset(collectionUri, {
           institution: {},
