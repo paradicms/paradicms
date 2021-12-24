@@ -1,12 +1,15 @@
-import {Configuration, defaultConfiguration} from "@paradicms/models";
+import {
+  AppConfiguration,
+  defaultAppConfiguration,
+} from "@paradicms/configuration";
 
-let _configuration: Configuration | undefined;
+let _configuration: AppConfiguration | undefined;
 
 export const readConfigurationFile = (
   // There are issues importing "fs" from a library, so pass in the function we need here
   // https://github.com/vercel/next.js/issues/7755
   readFileSync: (filePath: string) => string
-): Configuration => {
+): AppConfiguration => {
   if (!_configuration) {
     const configurationFilePath: string | undefined =
       process.env.CONFIGURATION_FILE_PATH;
@@ -15,7 +18,7 @@ export const readConfigurationFile = (
         readFileSync(configurationFilePath).toString()
       );
     } else {
-      _configuration = defaultConfiguration;
+      _configuration = defaultAppConfiguration;
     }
   }
   return _configuration!;

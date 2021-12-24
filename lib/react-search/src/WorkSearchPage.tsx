@@ -5,9 +5,9 @@ import {useEffect, useState} from "react";
 import {
   WorkQuery,
   WorkQueryResults,
-  WorkSearchConfiguration,
-} from "@paradicms/models";
-import {WorkQueryService} from "@paradicms/services";
+  WorkQueryService,
+} from "@paradicms/services";
+import {WorkSearchConfiguration} from "@paradicms/configuration";
 
 export const WorkSearchPage: React.FunctionComponent<{
   configuration: WorkSearchConfiguration;
