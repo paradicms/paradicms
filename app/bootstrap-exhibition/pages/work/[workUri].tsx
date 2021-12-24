@@ -2,7 +2,6 @@ import * as React from "react";
 import {useCallback, useMemo, useState} from "react";
 import {Layout} from "components/Layout";
 import {
-  Configuration,
   Dataset,
   DataSubsetter,
   DCTERMS,
@@ -13,7 +12,7 @@ import {
 import {
   decodeFileName,
   encodeFileName,
-  readConfigurationFile,
+  readAppConfigurationFile,
   readDatasetFile,
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
@@ -41,6 +40,7 @@ import {getWorkAgentProfiles} from "../../lib/getWorkAgentProfiles";
 import {WorkAgentProfilesContainer} from "../../components/WorkAgentProfilesContainer";
 import Hammer from "react-hammerjs";
 import {useRouter} from "next/router";
+import {AppConfiguration} from "@paradicms/configuration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 const RIGHTS_STYLE: React.CSSProperties = {
@@ -50,7 +50,7 @@ const RIGHTS_STYLE: React.CSSProperties = {
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: Configuration;
+  readonly configuration: AppConfiguration;
   readonly currentWorkUri: string;
   readonly datasetString: string;
   readonly nextWorkUri: string | null;
@@ -344,7 +344,7 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       collectionUri,
-      configuration: readConfigurationFile(readFileSync),
+      configuration: readAppConfigurationFile(readFileSync),
       currentWorkUri: workUri,
       datasetString: new DataSubsetter(dataset)
         .worksDataset(workUris, {

@@ -3,18 +3,17 @@ import {Hrefs} from "lib/Hrefs";
 import {Nav, Navbar, NavItem, NavLink} from "reactstrap";
 import Link from "next/link";
 import Head from "next/head";
+import {Collection, Work} from "@paradicms/models";
 import {
-  Collection,
-  Configuration,
-  defaultConfiguration,
-  Work,
-} from "@paradicms/models";
+  AppConfiguration,
+  defaultAppConfiguration,
+} from "@paradicms/configuration";
 
 const textStyle: React.CSSProperties = {fontSize: "xx-large"};
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: Collection;
-  configuration: Configuration;
+  configuration: AppConfiguration;
   currentWork?: Work;
   nextWork?: {readonly uri: string};
   previousWork?: {readonly uri: string};
@@ -64,7 +63,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
           rel="stylesheet"
           href={
             configuration.bootstrapStylesheetHref ??
-            defaultConfiguration.bootstrapStylesheetHref!
+            defaultAppConfiguration.bootstrapStylesheetHref!
           }
         />
       </Head>
