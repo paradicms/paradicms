@@ -5,7 +5,7 @@ import {
 
 let _configuration: AppConfiguration | undefined;
 
-export const readConfigurationFile = (
+export const readAppConfigurationFile = (
   // There are issues importing "fs" from a library, so pass in the function we need here
   // https://github.com/vercel/next.js/issues/7755
   readFileSync: (filePath: string) => string
