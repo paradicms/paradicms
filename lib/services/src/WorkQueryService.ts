@@ -1,4 +1,5 @@
-import {WorkQuery, WorkQueryResults} from "@paradicms/models";
+import {WorkQuery} from "./WorkQuery";
+import {WorkQueryResults} from "./WorkQueryResults";
 
 export interface WorkQueryService {
   getWorks(kwds: {

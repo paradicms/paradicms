@@ -1,7 +1,9 @@
 import {Configuration} from "./Configuration";
-import {InstitutionValueFilter} from "./InstitutionValueFilter";
-import {CollectionValueFilter} from "./CollectionValueFilter";
-import {StringPropertyValueFilter} from "./StringPropertyValueFilter";
+import {
+  CollectionValueFilter,
+  InstitutionValueFilter,
+  StringPropertyValueFilter,
+} from "@paradicms/filters";
 
 const DCTERMS_NS = "http://purl.org/dc/terms/";
 
