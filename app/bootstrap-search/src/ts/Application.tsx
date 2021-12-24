@@ -12,14 +12,14 @@ import {
   Row,
 } from "reactstrap";
 import {Helmet} from "react-helmet";
-import {Configuration} from "@paradicms/models";
+import {AppConfiguration} from "@paradicms/configuration";
 import {WorkQueryService} from "@paradicms/services";
 import {WorkSearchPage} from "@paradicms/react-search";
 
 const WORKS_PER_PAGE = 10;
 
 export const Application: React.FunctionComponent<{
-  configuration: Configuration;
+  configuration: AppConfiguration;
   workQueryService: WorkQueryService;
 }> = ({configuration, workQueryService}) => {
   const documentTitle = configuration.documentTitle ?? "Search";
