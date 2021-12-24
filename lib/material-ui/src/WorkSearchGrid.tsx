@@ -1,9 +1,12 @@
-import {Facet, Filter, Institution, Work, WorkQuery} from "@paradicms/models";
+import {Institution, Work} from "@paradicms/models";
 import * as React from "react";
 import {Grid} from "@material-ui/core";
 import {FiltersControls} from "./FiltersControls";
 import {WorksGallery} from "./WorksGallery";
 import {FiltersChips} from "./FiltersChips";
+import {WorkQuery} from "@paradicms/services";
+import {Facet} from "@paradicms/facets";
+import {Filter} from "@paradicms/filters";
 
 export const WorkSearchGrid: React.FunctionComponent<{
   facets: readonly Facet[];

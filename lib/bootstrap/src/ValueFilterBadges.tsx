@@ -1,6 +1,6 @@
 import * as React from "react";
-import {PrimitiveType, ValueFilter} from "@paradicms/models";
 import {Badge} from "reactstrap";
+import {PrimitiveType, ValueFilter} from "@paradicms/filters";
 
 export class ValueFilterBadges<
   T extends PrimitiveType

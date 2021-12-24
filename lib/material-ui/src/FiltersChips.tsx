@@ -1,8 +1,9 @@
-import {Facet, Filter} from "@paradicms/models";
 import * as React from "react";
 import {makeStyles} from "@material-ui/core";
 import {ValueFilterChips} from "./ValueFilterChips";
 import {createFilterControl} from "@paradicms/react-search";
+import {Facet} from "@paradicms/facets";
+import {Filter} from "@paradicms/filters";
 
 const useStyles = makeStyles(theme => ({
   chip: {

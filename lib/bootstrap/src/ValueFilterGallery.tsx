@@ -1,13 +1,6 @@
 import * as React from "react";
 import {useCallback, useMemo, useState} from "react";
-import {
-  Image,
-  PrimitiveType,
-  ValueFacet,
-  ValueFacetValue,
-  ValueFilter,
-  ValueFilterState,
-} from "@paradicms/models";
+import {Image} from "@paradicms/models";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 import classNames from "classnames";
 import {
@@ -23,6 +16,8 @@ import {
   Input,
   Label,
 } from "reactstrap";
+import {PrimitiveType, ValueFilter, ValueFilterState} from "@paradicms/filters";
+import {ValueFacet, ValueFacetValue} from "@paradicms/facets";
 
 interface ValueFacetValueCardProps<T extends PrimitiveType> {
   filterState: ValueFilterState<T, ValueFilter<T>>;

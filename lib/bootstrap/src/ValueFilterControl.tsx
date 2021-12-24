@@ -1,6 +1,5 @@
 import * as React from "react";
 import {useCallback, useState} from "react";
-import {PrimitiveType, ValueFacet, ValueFilter} from "@paradicms/models";
 import {ValueFilterTable} from "@paradicms/react-search";
 import {
   Button,
@@ -14,6 +13,8 @@ import {
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faImages} from "@fortawesome/free-solid-svg-icons";
 import {ValueFilterGallery} from "./ValueFilterGallery";
+import {PrimitiveType, ValueFilter} from "@paradicms/filters";
+import {ValueFacet} from "@paradicms/facets";
 
 interface ValueFilterControlProps<T extends PrimitiveType> {
   facet: ValueFacet<T>;

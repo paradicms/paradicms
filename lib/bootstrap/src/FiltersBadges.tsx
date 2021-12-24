@@ -1,6 +1,6 @@
-import {Filter, StringPropertyValueFilter} from "@paradicms/models";
 import * as React from "react";
 import {ValueFilterBadges} from "./ValueFilterBadges";
+import {Filter, StringPropertyValueFilter} from "@paradicms/filters";
 
 export const FiltersBadges: React.FunctionComponent<{
   filters: readonly Filter[];

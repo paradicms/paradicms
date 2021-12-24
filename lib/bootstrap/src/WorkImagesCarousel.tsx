@@ -1,17 +1,17 @@
 import * as React from "react";
-import { useCallback, useEffect, useState } from "react";
-import { Image, ImageDimensions, Work } from "@paradicms/models";
-import { Carousel, CarouselControl, CarouselItem } from "reactstrap";
+import {useCallback, useEffect, useState} from "react";
+import {Image, ImageDimensions, Work} from "@paradicms/models";
+import {Carousel, CarouselControl, CarouselItem} from "reactstrap";
 import ImageZoom from "react-medium-image-zoom";
-import { RightsTable } from "./RightsTable";
+import {RightsTable} from "./RightsTable";
 
-const thumbnailTargetDimensions: ImageDimensions = { height: 600, width: 600 };
+const thumbnailTargetDimensions: ImageDimensions = {height: 600, width: 600};
 
 export const WorkImagesCarousel: React.FunctionComponent<{
   hideImageRights?: boolean;
   onShowImage?: (newImage: Image) => void;
   work: Work;
-}> = ({ hideImageRights, onShowImage, work }) => {
+}> = ({hideImageRights, onShowImage, work}) => {
   const workOriginalImages = work.originalImages;
 
   const renderOriginalImage = (originalImage: Image) => {
