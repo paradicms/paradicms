@@ -57,7 +57,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   const workQueryService = useMemo<WorkQueryService>(
     () =>
       new LunrWorkQueryService({
-        configuration: configuration.workSearch,
+        configuration,
         dataset,
         workJoinSelector: WORK_JOIN_SELECTOR,
       }),

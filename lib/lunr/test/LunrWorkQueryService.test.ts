@@ -5,7 +5,7 @@ import {testDataTrig} from "../../models/test/testDataTrig";
 import {defaultAppConfiguration} from "@paradicms/configuration";
 
 describe("LunrWorkQueryService", () => {
-  const configuration = defaultAppConfiguration.workSearch;
+  const configuration = defaultAppConfiguration;
   const dataset = Dataset.parse(testDataTrig);
   const sut = new LunrWorkQueryService({
     configuration,

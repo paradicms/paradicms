@@ -1,9 +1,9 @@
-import {AppConfiguration} from "./AppConfiguration";
 import {
   CollectionValueFilter,
   InstitutionValueFilter,
-  StringPropertyValueFilter,
 } from "@paradicms/filters";
+import {PropertyConfiguration} from "./PropertyConfiguration";
+import {imputeAppConfiguration} from "./imputeAppConfiguration";
 
 const DCTERMS_NS = "http://purl.org/dc/terms/";
 
@@ -17,36 +17,36 @@ const institutionValueFilter: InstitutionValueFilter = {
   type: "InstitutionValue",
 };
 
-const filterablePropertyDefinitions = [
+const workProperties: PropertyConfiguration[] = [
   {
+    label: "Description",
+    hidden: true,
+    searchable: true,
+    uri: DCTERMS_NS + "description",
+  },
+  {
+    filterable: true,
     label: "Medium",
     uri: DCTERMS_NS + "medium",
   },
   {
+    filterable: true,
     label: "Subject",
     uri: DCTERMS_NS + "subject",
   },
+  {
+    label: "Title",
+    hidden: true,
+    searchable: true,
+    uri: DCTERMS_NS + "title",
+  },
 ];
 
-const stringPropertyValueFilters: readonly StringPropertyValueFilter[] = filterablePropertyDefinitions.map(
-  propertyDefinition => ({
-    label: propertyDefinition.label,
-    propertyUri: propertyDefinition.uri,
-    type: "StringPropertyValue",
-  })
-);
-
-export const defaultAppConfiguration: AppConfiguration = {
+export const defaultAppConfiguration = imputeAppConfiguration({
   bootstrapStylesheetHref:
     "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css",
-  documentTitle: null,
-  navbarTitle: null,
+  workProperties,
   workSearch: {
-    filters: [
-      collectionValueFilter,
-      institutionValueFilter,
-      ...stringPropertyValueFilters,
-    ],
-    searchablePropertyUris: [DCTERMS_NS + "description", DCTERMS_NS + "title"],
+    filters: [collectionValueFilter, institutionValueFilter],
   },
-};
+});

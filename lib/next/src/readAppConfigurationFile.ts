@@ -1,6 +1,7 @@
 import {
   AppConfiguration,
   defaultAppConfiguration,
+  imputeAppConfiguration,
 } from "@paradicms/configuration";
 
 let _configuration: AppConfiguration | undefined;
@@ -21,5 +22,6 @@ export const readAppConfigurationFile = (
       _configuration = defaultAppConfiguration;
     }
   }
+  _configuration = imputeAppConfiguration(_configuration!);
   return _configuration!;
 };

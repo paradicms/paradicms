@@ -30,7 +30,7 @@ import {
   ValueFacetValue,
   ValueFacetValueThumbnail,
 } from "@paradicms/facets";
-import {WorkSearchConfiguration} from "@paradicms/configuration";
+import {AppConfiguration} from "@paradicms/configuration";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -60,8 +60,9 @@ export class LunrWorkQueryService implements WorkQueryService {
   private readonly workJoinSelector?: WorkJoinSelector;
 
   constructor(kwds: {
-    configuration: WorkSearchConfiguration;
+    configuration: AppConfiguration;
     dataset: Dataset;
+    searchablePropertyUris: readonly string[];
     workJoinSelector?: WorkJoinSelector;
   }) {
     this.dataset = kwds.dataset;
@@ -71,7 +72,12 @@ export class LunrWorkQueryService implements WorkQueryService {
       this.field("abstract");
       this.field("title");
       const propertyFieldNamesByUri: {[index: string]: string} = {};
-      for (const propertyUri of kwds.configuration.searchablePropertyUris) {
+      for (const propertyConfiguration of kwds.configuration.workProperties ??
+        []) {
+        if (!propertyConfiguration.searchable) {
+          continue;
+        }
+        const propertyUri = propertyConfiguration.uri;
         const fieldName = LunrWorkQueryService.encodeFieldName(propertyUri);
         propertyFieldNamesByUri[propertyUri] = fieldName;
         this.field(fieldName);
