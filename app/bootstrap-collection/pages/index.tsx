@@ -18,7 +18,7 @@ import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
 import fs from "fs";
 import {WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
-import {WorkSearchPage} from "@paradicms/react-search";
+import {useWorkQuery} from "@paradicms/react-search";
 import {AppConfiguration} from "@paradicms/configuration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
@@ -64,36 +64,44 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     [configuration, dataset]
   );
 
+  const useWorkQueryOut = useWorkQuery({
+    configuration: configuration.workSearch,
+    workQueryService,
+    worksPerPage: WORKS_PER_PAGE,
+  });
+  if (!useWorkQueryOut) {
+    return null;
+  }
+  const {
+    page,
+    pageMax,
+    setPage,
+    setWorkQuery,
+    ...lunrWorkSearchProps
+  } = useWorkQueryOut;
+
   return (
-    <WorkSearchPage
-      configuration={configuration.workSearch}
-      workQueryService={workQueryService}
-      worksPerPage={WORKS_PER_PAGE}
+    <Layout
+      collection={collection}
+      configuration={configuration}
+      onSearch={text => {
+        setWorkQuery({filters: configuration.workSearch.filters, text});
+        setPage(undefined);
+      }}
     >
-      {({page, pageMax, setWorkQuery, setPage, ...lunrWorkSearchProps}) => (
-        <Layout
-          collection={collection}
-          configuration={configuration}
-          onSearch={text => {
-            setWorkQuery({filters: configuration.workSearch.filters, text});
-            setPage(undefined);
-          }}
-        >
-          <WorkSearchContainer
-            page={page}
-            pageMax={pageMax}
-            renderWorkLink={(work, children) => (
-              <Link href={Hrefs.work(work.uri)}>
-                <a>{children}</a>
-              </Link>
-            )}
-            setWorkQuery={setWorkQuery}
-            setPage={setPage}
-            {...lunrWorkSearchProps}
-          />
-        </Layout>
-      )}
-    </WorkSearchPage>
+      <WorkSearchContainer
+        page={page}
+        pageMax={pageMax}
+        renderWorkLink={(work, children) => (
+          <Link href={Hrefs.work(work.uri)}>
+            <a>{children}</a>
+          </Link>
+        )}
+        setWorkQuery={setWorkQuery}
+        setPage={setPage}
+        {...lunrWorkSearchProps}
+      />
+    </Layout>
   );
 };
 

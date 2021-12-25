@@ -1,3 +1,3 @@
 export * from "./createFilterControl";
-export * from "./WorkSearchPage";
+export * from "./useWorkQuery";
 export * from "./ValueFilterTable";
