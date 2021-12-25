@@ -8,17 +8,11 @@ import {faImages, faList} from "@fortawesome/free-solid-svg-icons";
 import {WorksGallery} from "./WorksGallery";
 import {WorksTable} from "./WorksTable";
 import {useQueryParam} from "use-query-params";
-import {
-  Institution,
-  Work,
-  WorkQuery,
-  WorkQueryResults,
-} from "@paradicms/models";
+import {Institution, Work} from "@paradicms/models";
 import {Pagination} from "./Pagination";
+import {WorkQuery, WorkQueryResults} from "@paradicms/services";
 
 export const WorkSearchContainer: React.FunctionComponent<{
-  workQuery: WorkQuery;
-  workQueryResults: WorkQueryResults;
   page: number;
   pageMax: number;
   renderInstitutionLink?: (
@@ -28,15 +22,17 @@ export const WorkSearchContainer: React.FunctionComponent<{
   renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactNode;
   setWorkQuery: (workQuery: WorkQuery) => void;
   setPage: (page: number | undefined) => void;
+  workQuery: WorkQuery;
+  workQueryResults: WorkQueryResults;
 }> = ({
-  workQuery,
-  workQueryResults,
   page,
   pageMax,
   renderInstitutionLink,
   renderWorkLink,
   setWorkQuery,
   setPage,
+  workQuery,
+  workQueryResults,
 }) => {
   const [viewQueryParam, setView] = useQueryParam<"gallery" | "table">("view");
   const view = viewQueryParam ?? "gallery";

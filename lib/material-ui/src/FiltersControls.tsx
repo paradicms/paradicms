@@ -5,9 +5,10 @@ import {
   AccordionSummary,
   Grid,
 } from "@material-ui/core";
-import {Facet, Filter} from "@paradicms/models";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {createFilterControl, ValueFilterTable} from "@paradicms/react-search";
+import {Facet} from "@paradicms/facets";
+import {Filter} from "@paradicms/filters";
 
 export const FiltersControls: React.FunctionComponent<{
   facets: readonly Facet[];

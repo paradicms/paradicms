@@ -4,17 +4,18 @@ import {GetStaticProps} from "next";
 import {useRouter} from "next/router";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
-import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
-import {Configuration, Dataset, Text} from "@paradicms/models";
+import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
+import {Dataset, Text} from "@paradicms/models";
 import {Layout} from "../components/Layout";
 import {Col, Container, Row} from "reactstrap";
 import {RightsParagraph} from "../components/RightsParagraph";
+import {AppConfiguration} from "@paradicms/configuration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: Configuration;
+  readonly configuration: AppConfiguration;
   readonly datasetString: string;
   readonly firstWorkUri: string;
 }
@@ -84,7 +85,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      configuration: readConfigurationFile(readFileSync),
+      configuration: readAppConfigurationFile(readFileSync),
       datasetString: dataset.stringify(),
       collectionUri: collection.uri,
       firstWorkUri: collection.works[0].uri,

@@ -17,11 +17,14 @@ import {NavbarSearchForm} from "@paradicms/bootstrap";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";
-import {Configuration, defaultConfiguration} from "@paradicms/models";
+import {
+  AppConfiguration,
+  defaultAppConfiguration,
+} from "@paradicms/configuration";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string; readonly uri: string};
-  configuration: Configuration;
+  configuration: AppConfiguration;
   cardTitle?: React.ReactNode;
   className?: string;
   documentTitle?: string;
@@ -62,7 +65,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
           rel="stylesheet"
           href={
             configuration.bootstrapStylesheetHref ??
-            defaultConfiguration.bootstrapStylesheetHref!
+            defaultAppConfiguration.bootstrapStylesheetHref!
           }
         />
       </Head>

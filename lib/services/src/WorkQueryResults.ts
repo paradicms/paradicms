@@ -1,5 +1,5 @@
-import {Facet} from "./Facet";
-import {Dataset} from "./Dataset";
+import {Dataset} from "@paradicms/models";
+import {Facet} from "@paradicms/facets";
 
 export interface WorkQueryResults {
   readonly dataset: Dataset;

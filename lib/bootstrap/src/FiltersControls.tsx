@@ -9,8 +9,9 @@ import {
   Container,
   Row,
 } from "reactstrap";
-import {Facet, Filter} from "@paradicms/models";
 import {createFilterControl} from "./createFilterControl";
+import {Facet} from "@paradicms/facets";
+import {Filter} from "@paradicms/filters";
 
 export const FiltersControls: React.FunctionComponent<{
   facets: readonly Facet[];

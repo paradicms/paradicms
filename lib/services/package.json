@@ -3,6 +3,8 @@
   "name": "@paradicms/services",
   "description": "Paradicms services library",
   "dependencies": {
+    "@paradicms/facets": "1.0.5",
+    "@paradicms/filters": "1.0.5",
     "@paradicms/models": "1.0.5"
   },
   "devDependencies": {

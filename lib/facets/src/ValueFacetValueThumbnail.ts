@@ -1,4 +1,7 @@
-import {ImageDimensions} from "./ImageDimensions";
+interface ImageDimensions {
+  readonly height: number;
+  readonly width: number;
+}
 
 export interface ValueFacetValueThumbnail {
   // Can't use class Models since facets are not assumed to be part of the Dataset.

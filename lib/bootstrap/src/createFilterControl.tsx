@@ -1,7 +1,8 @@
-import {Facet, Filter} from "@paradicms/models";
 import * as React from "react";
 import {createFilterControl as createFilterControlDelegate} from "@paradicms/react-search";
 import {ValueFilterControl} from "./ValueFilterControl";
+import {Facet} from "@paradicms/facets";
+import {Filter} from "@paradicms/filters";
 
 export const createFilterControl: (kwds: {
   facets: readonly Facet[];

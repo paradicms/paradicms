@@ -8,14 +8,15 @@ import {
   InstitutionsGallery,
   thumbnailTargetDimensions,
 } from "@paradicms/material-ui";
-import {Configuration, Dataset, DataSubsetter} from "@paradicms/models";
+import {Dataset, DataSubsetter} from "@paradicms/models";
 import fs from "fs";
-import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
+import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
+import {AppConfiguration} from "@paradicms/configuration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
-  readonly configuration: Configuration;
+  readonly configuration: AppConfiguration;
   readonly datasetString: string;
 }
 
@@ -51,7 +52,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      configuration: readConfigurationFile(readFileSync),
+      configuration: readAppConfigurationFile(readFileSync),
       datasetString: new DataSubsetter(dataset)
         .institutionsDataset(
           dataset.institutions.map(institution => institution.uri),

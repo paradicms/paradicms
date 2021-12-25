@@ -1,4 +1,4 @@
-import {Filter} from "./Filter";
+import {Filter} from "@paradicms/filters";
 
 export interface WorkSearchConfiguration {
   readonly filters: readonly Filter[];

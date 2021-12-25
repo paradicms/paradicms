@@ -1,12 +1,8 @@
 import * as React from "react";
 import {useMemo} from "react";
-import {
-  PrimitiveType,
-  ValueFacet,
-  ValueFilter,
-  ValueFilterState,
-} from "@paradicms/models";
 import {Chip} from "@material-ui/core";
+import {ValueFacet} from "@paradicms/facets";
+import {PrimitiveType, ValueFilter, ValueFilterState} from "@paradicms/filters";
 
 export const ValueFilterChips = <T extends PrimitiveType>(props: {
   className: string;

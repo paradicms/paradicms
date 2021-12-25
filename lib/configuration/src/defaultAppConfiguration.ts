@@ -1,7 +1,9 @@
-import {Configuration} from "./Configuration";
-import {InstitutionValueFilter} from "./InstitutionValueFilter";
-import {CollectionValueFilter} from "./CollectionValueFilter";
-import {StringPropertyValueFilter} from "./StringPropertyValueFilter";
+import {AppConfiguration} from "./AppConfiguration";
+import {
+  CollectionValueFilter,
+  InstitutionValueFilter,
+  StringPropertyValueFilter,
+} from "@paradicms/filters";
 
 const DCTERMS_NS = "http://purl.org/dc/terms/";
 
@@ -34,7 +36,7 @@ const stringPropertyValueFilters: readonly StringPropertyValueFilter[] = filtera
   })
 );
 
-export const defaultConfiguration: Configuration = {
+export const defaultAppConfiguration: AppConfiguration = {
   bootstrapStylesheetHref:
     "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css",
   documentTitle: null,

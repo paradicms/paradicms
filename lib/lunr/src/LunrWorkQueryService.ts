@@ -1,30 +1,36 @@
 import {
-  CollectionValueFacet,
-  CollectionValueFilter,
   Dataset,
   DataSubsetter,
-  Facet,
-  Filter,
   Image,
-  InstitutionValueFacet,
-  InstitutionValueFilter,
-  PrimitiveType,
   PropertyValueDefinition,
-  StringPropertyValueFacet,
-  StringPropertyValueFilter,
   ThumbnailSelector,
-  ValueFacetValue,
-  ValueFacetValueThumbnail,
-  ValueFilter,
   Work,
   WorkJoinSelector,
-  WorkQuery,
-  WorkQueryResults,
-  WorkSearchConfiguration,
 } from "@paradicms/models";
 import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
-import {WorkQueryService} from "@paradicms/services";
+import {
+  WorkQuery,
+  WorkQueryResults,
+  WorkQueryService,
+} from "@paradicms/services";
+import {
+  CollectionValueFilter,
+  Filter,
+  InstitutionValueFilter,
+  PrimitiveType,
+  StringPropertyValueFilter,
+  ValueFilter,
+} from "@paradicms/filters";
+import {
+  CollectionValueFacet,
+  Facet,
+  InstitutionValueFacet,
+  StringPropertyValueFacet,
+  ValueFacetValue,
+  ValueFacetValueThumbnail,
+} from "@paradicms/facets";
+import {WorkSearchConfiguration} from "@paradicms/configuration";
 
 const basex = require("base-x");
 const base58 = basex(

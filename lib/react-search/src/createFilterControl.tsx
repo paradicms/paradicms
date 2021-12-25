@@ -1,13 +1,15 @@
 import {
-  CollectionValueFacet,
   CollectionValueFilter,
-  Facet,
   Filter,
-  InstitutionValueFacet,
   InstitutionValueFilter,
-  StringPropertyValueFacet,
   StringPropertyValueFilter,
-} from "@paradicms/models";
+} from "@paradicms/filters";
+import {
+  CollectionValueFacet,
+  Facet,
+  InstitutionValueFacet,
+  StringPropertyValueFacet,
+} from "@paradicms/facets";
 
 export const createFilterControl = (kwds: {
   facets: readonly Facet[];

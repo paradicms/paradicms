@@ -1,18 +1,13 @@
 import {
   decodeFileName,
   encodeFileName,
-  readConfigurationFile,
+  readAppConfigurationFile,
   readDatasetFile,
 } from "@paradicms/next";
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
-import {
-  Configuration,
-  Dataset,
-  DataSubsetter,
-  WorkJoinSelector,
-} from "@paradicms/models";
+import {Dataset, DataSubsetter, WorkJoinSelector} from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {
   thumbnailTargetDimensions,
@@ -24,6 +19,7 @@ import fs from "fs";
 import {WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
 import {WorkSearchPage} from "@paradicms/react-search";
+import {AppConfiguration} from "@paradicms/configuration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
@@ -42,7 +38,7 @@ const WORKS_PER_PAGE = 10;
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: Configuration;
+  readonly configuration: AppConfiguration;
   readonly datasetString: string;
 }
 
@@ -152,7 +148,7 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       collectionUri,
-      configuration: readConfigurationFile(readFileSync),
+      configuration: readAppConfigurationFile(readFileSync),
       datasetString: new DataSubsetter(readDatasetFile(readFileSync))
         .collectionDataset(collectionUri, {
           works: WORK_JOIN_SELECTOR,
