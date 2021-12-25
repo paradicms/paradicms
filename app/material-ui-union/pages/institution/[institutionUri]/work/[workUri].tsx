@@ -7,7 +7,7 @@ import {
   AccordionSummary,
   Grid,
 } from "@material-ui/core";
-import {Configuration, Dataset, DataSubsetter} from "@paradicms/models";
+import {Dataset, DataSubsetter} from "@paradicms/models";
 import {
   PropertiesTable,
   RightsTable,
@@ -17,16 +17,17 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {
   decodeFileName,
   encodeFileName,
-  readConfigurationFile,
+  readAppConfigurationFile,
   readDatasetFile,
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import fs from "fs";
+import {AppConfiguration} from "@paradicms/configuration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
-  readonly configuration: Configuration;
+  readonly configuration: AppConfiguration;
   readonly datasetString: string;
   readonly workUri: string;
 }
@@ -110,7 +111,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
-      configuration: readConfigurationFile(readFileSync),
+      configuration: readAppConfigurationFile(readFileSync),
       datasetString: new DataSubsetter(readDatasetFile(readFileSync))
         .workDataset(workUri, {
           allImages: true,

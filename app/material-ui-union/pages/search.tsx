@@ -1,9 +1,4 @@
-import {
-  Configuration,
-  Dataset,
-  DataSubsetter,
-  WorkJoinSelector,
-} from "@paradicms/models";
+import {Dataset, DataSubsetter, WorkJoinSelector} from "@paradicms/models";
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
@@ -15,15 +10,16 @@ import {
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
-import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
+import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
 import {WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
 import {WorkSearchPage} from "@paradicms/react-search";
+import {AppConfiguration} from "@paradicms/configuration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
-  readonly configuration: Configuration;
+  readonly configuration: AppConfiguration;
   readonly datasetString: string;
 }
 
@@ -128,7 +124,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      configuration: readConfigurationFile(readFileSync),
+      configuration: readAppConfigurationFile(readFileSync),
       datasetString: new DataSubsetter(dataset)
         .worksDataset(
           dataset.works.map(work => work.uri),

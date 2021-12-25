@@ -2,12 +2,12 @@ import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {Hrefs} from "lib/Hrefs";
-import {Configuration, Dataset, DataSubsetter} from "@paradicms/models";
+import {Dataset, DataSubsetter} from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {
   decodeFileName,
   encodeFileName,
-  readConfigurationFile,
+  readAppConfigurationFile,
   readDatasetFile,
 } from "@paradicms/next";
 import {
@@ -16,11 +16,12 @@ import {
 } from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import fs from "fs";
+import {AppConfiguration} from "@paradicms/configuration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
-  readonly configuration: Configuration;
+  readonly configuration: AppConfiguration;
   readonly datasetString: string;
   readonly institutionUri: string;
 }
@@ -75,7 +76,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
-      configuration: readConfigurationFile(readFileSync),
+      configuration: readAppConfigurationFile(readFileSync),
       datasetString: new DataSubsetter(readDatasetFile(readFileSync))
         .institutionDataset(institutionUri, {
           collections: {

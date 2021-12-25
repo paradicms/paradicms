@@ -15,7 +15,7 @@ import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import {useRouter} from "next/router";
 import Head from "next/head";
-import {Configuration} from "@paradicms/models";
+import {AppConfiguration} from "@paradicms/configuration";
 
 const useStyles = makeStyles(theme => ({
   brand: {
@@ -44,7 +44,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   };
   cardTitle?: React.ReactNode;
   className?: string;
-  configuration: Configuration;
+  configuration: AppConfiguration;
   documentTitle?: string;
   onSearch?: (text: string) => void;
 }>> = ({
