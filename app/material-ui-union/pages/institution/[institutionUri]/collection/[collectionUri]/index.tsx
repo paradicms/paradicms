@@ -18,7 +18,7 @@ import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
 import {WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
-import {WorkSearchPage} from "@paradicms/react-search";
+import {useWorkQuery} from "@paradicms/react-search";
 import {AppConfiguration} from "@paradicms/configuration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
@@ -61,57 +61,55 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
     [configuration, dataset]
   );
 
+  const useWorkQueryOut = useWorkQuery({
+    configuration: configuration.workSearch,
+    workQueryService,
+    worksPerPage: WORKS_PER_PAGE,
+  });
+  if (!useWorkQueryOut) {
+    return null;
+  }
+  const {
+    page,
+    pageMax,
+    setPage,
+    setWorkQuery,
+    workQuery,
+    workQueryResults,
+  } = useWorkQueryOut;
+
   return (
-    <WorkSearchPage
-      configuration={configuration.workSearch}
-      workQueryService={workQueryService}
-      worksPerPage={WORKS_PER_PAGE}
+    <Layout
+      breadcrumbs={{collection, institution}}
+      cardTitle={
+        <span>
+          <span>
+            Collection&nbsp;&mdash;&nbsp;
+            <span data-cy="collection-title">{collection.title}</span>
+          </span>
+        </span>
+      }
+      documentTitle={"Collection - " + collection.title}
+      configuration={configuration}
     >
-      {({
-        workQuery,
-        workQueryResults,
-        page,
-        pageMax,
-        setWorkQuery,
-        setPage,
-      }) => (
-        <Layout
-          breadcrumbs={{collection, institution}}
-          cardTitle={
-            <span>
-              <span>
-                Collection&nbsp;&mdash;&nbsp;
-                <span data-cy="collection-title">{collection.title}</span>
-              </span>
-            </span>
-          }
-          documentTitle={"Collection - " + collection.title}
-          configuration={configuration}
-        >
-          <WorkSearchGrid
-            facets={workQueryResults.facets}
-            works={workQueryResults.dataset.works}
-            onChangeFilters={filters => setWorkQuery({...workQuery, filters})}
-            onChangePage={setPage}
-            page={page}
-            pageMax={pageMax}
-            renderInstitutionLink={(institution, children) => (
-              <Link href={Hrefs.institution(institution.uri).home}>
-                {children}
-              </Link>
-            )}
-            renderWorkLink={(work, children) => (
-              <Link
-                href={Hrefs.institution(work.institution.uri).work(work.uri)}
-              >
-                {children}
-              </Link>
-            )}
-            query={workQuery}
-          />
-        </Layout>
-      )}
-    </WorkSearchPage>
+      <WorkSearchGrid
+        facets={workQueryResults.facets}
+        works={workQueryResults.dataset.works}
+        onChangeFilters={filters => setWorkQuery({...workQuery, filters})}
+        onChangePage={setPage}
+        page={page}
+        pageMax={pageMax}
+        renderInstitutionLink={(institution, children) => (
+          <Link href={Hrefs.institution(institution.uri).home}>{children}</Link>
+        )}
+        renderWorkLink={(work, children) => (
+          <Link href={Hrefs.institution(work.institution.uri).work(work.uri)}>
+            {children}
+          </Link>
+        )}
+        query={workQuery}
+      />
+    </Layout>
   );
 };
 
