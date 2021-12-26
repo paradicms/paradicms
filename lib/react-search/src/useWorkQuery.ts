@@ -6,10 +6,10 @@ import {
   WorkQueryResults,
   WorkQueryService,
 } from "@paradicms/services";
-import {SearchConfiguration} from "@paradicms/configuration";
+import {Filter} from "@paradicms/filters";
 
 export const useWorkQuery = (kwds: {
-  configuration: SearchConfiguration;
+  defaultFilters: readonly Filter[];
   workQueryService: WorkQueryService;
   worksPerPage: number;
 }): {
@@ -20,13 +20,13 @@ export const useWorkQuery = (kwds: {
   workQuery: WorkQuery;
   workQueryResults: WorkQueryResults;
 } | null => {
-  const {configuration, workQueryService, worksPerPage} = kwds;
+  const {defaultFilters, workQueryService, worksPerPage} = kwds;
 
   const [workQueryQueryParam, setWorkQuery] = useQueryParam<
     WorkQuery | undefined
   >("query", new JsonQueryParamConfig<WorkQuery>());
   const workQuery = workQueryQueryParam ?? {
-    filters: configuration.filters,
+    filters: defaultFilters,
   };
 
   const [pageQueryParam, setPage] = useQueryParam<number | null | undefined>(

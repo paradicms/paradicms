@@ -6,5 +6,5 @@ export interface AppConfiguration {
   readonly documentTitle?: string;
   readonly navbarTitle?: string;
   readonly workProperties?: readonly PropertyConfiguration[];
-  readonly workSearch?: SearchConfiguration;
+  readonly search?: SearchConfiguration;
 }

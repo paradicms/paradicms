@@ -40,19 +40,21 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   const router = useRouter();
 
   // @ts-ignore
-  let onSearch: (text: string) => void;
-  if (onSearchUserDefined) {
-    onSearch = onSearchUserDefined;
-  } else {
-    onSearch = (text: string) => {
-      const href = Hrefs.collection({
-        filters: configuration.workSearch.filters,
-        text: text,
-      }).toString();
-      console.info("redirecting to search href", href);
-      router.push(href);
-      return null;
-    };
+  let onSearch: ((text: string) => void) | undefined;
+  if (configuration.search) {
+    if (onSearchUserDefined) {
+      onSearch = onSearchUserDefined;
+    } else {
+      onSearch = (text: string) => {
+        const href = Hrefs.collection({
+          filters: configuration.search!.filters ?? [],
+          text: text,
+        }).toString();
+        console.info("redirecting to search href", href);
+        router.push(href);
+        return null;
+      };
+    }
   }
 
   return (
@@ -76,11 +78,13 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
               <NavbarBrand className="me-auto" tag="div">
                 <Link href={Hrefs.home}>{collection.title}</Link>
               </NavbarBrand>
-              <Nav navbar>
-                <NavItem>
-                  <NavbarSearchForm onSearch={onSearch} />
-                </NavItem>
-              </Nav>
+              {onSearch ? (
+                <Nav navbar>
+                  <NavItem>
+                    <NavbarSearchForm onSearch={onSearch} />
+                  </NavItem>
+                </Nav>
+              ) : null}
             </Navbar>
           </Col>
         </Row>

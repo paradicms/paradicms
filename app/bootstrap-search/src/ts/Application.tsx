@@ -26,7 +26,7 @@ export const Application: React.FunctionComponent<{
   const navbarTitle = configuration.navbarTitle ?? documentTitle;
 
   const useWorkQueryOut = useWorkQuery({
-    configuration: configuration.workSearch,
+    defaultFilters: configuration.search?.filters ?? [],
     workQueryService,
     worksPerPage: WORKS_PER_PAGE,
   });

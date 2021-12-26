@@ -62,7 +62,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
   );
 
   const useWorkQueryOut = useWorkQuery({
-    configuration: configuration.workSearch,
+    defaultFilters: configuration.search?.filters ?? [],
     workQueryService,
     worksPerPage: WORKS_PER_PAGE,
   });

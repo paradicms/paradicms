@@ -130,19 +130,21 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   }
 
   // @ts-ignore
-  let onSearch: (text: string) => void;
-  if (onSearchUserDefined) {
-    onSearch = onSearchUserDefined;
-  } else {
-    onSearch = (text: string) => {
-      const href = Hrefs.search({
-        filters: configuration.workSearch.filters,
-        text,
-      });
-      console.info("redirecting to search href", href);
-      router.push(href);
-      return null;
-    };
+  let onSearch: ((text: string) => void) | undefined;
+  if (configuration.search) {
+    if (onSearchUserDefined) {
+      onSearch = onSearchUserDefined;
+    } else {
+      onSearch = (text: string) => {
+        const href = Hrefs.search({
+          filters: configuration.search!.filters,
+          text,
+        });
+        console.info("redirecting to search href", href);
+        router.push(href);
+        return null;
+      };
+    }
   }
 
   let qualifiedDocumentTitle: string[] = [];
@@ -170,7 +172,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
               <Link className={classes.navLink} href={Hrefs.home}>
                 Home
               </Link>
-              <NavbarSearchForm onSearch={onSearch} />
+              {onSearch ? <NavbarSearchForm onSearch={onSearch} /> : null}
             </Toolbar>
           </AppBar>
         </Grid>

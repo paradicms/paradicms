@@ -5,9 +5,10 @@ import {StringPropertyValueFilter} from "@paradicms/filters";
 
 const imputeSearchConfiguration = (
   propertyConfigurations: readonly PropertyConfiguration[],
-  searchConfiguration: SearchConfiguration
-): SearchConfiguration => {
-  const searchConfigurationFilters = searchConfiguration.filters.concat();
+  searchConfiguration: SearchConfiguration | undefined
+): SearchConfiguration | undefined => {
+  const searchConfigurationFilters =
+    searchConfiguration?.filters?.concat() ?? [];
   for (const propertyConfiguration of propertyConfigurations) {
     if (!propertyConfiguration.filterable) {
       continue;
@@ -38,7 +39,9 @@ const imputeSearchConfiguration = (
       type: "StringPropertyValue",
     } as StringPropertyValueFilter);
   }
-
+  if (!searchConfiguration && searchConfigurationFilters.length === 0) {
+    return undefined;
+  }
   return {
     ...searchConfiguration,
     filters: searchConfigurationFilters,
@@ -48,14 +51,17 @@ const imputeSearchConfiguration = (
 export const imputeAppConfiguration = (
   inputAppConfiguration: AppConfiguration
 ): AppConfiguration => {
-  return {
-    ...inputAppConfiguration,
-    workSearch:
-      inputAppConfiguration.workProperties && inputAppConfiguration.workSearch
-        ? imputeSearchConfiguration(
-            inputAppConfiguration.workProperties,
-            inputAppConfiguration.workSearch
-          )
-        : inputAppConfiguration.workSearch,
-  };
+  if (!inputAppConfiguration.workProperties) {
+    return inputAppConfiguration;
+  }
+
+  const searchConfiguration = imputeSearchConfiguration(
+    inputAppConfiguration.workProperties,
+    inputAppConfiguration.search
+  );
+  if (!searchConfiguration) {
+    return inputAppConfiguration;
+  }
+
+  return {...inputAppConfiguration, search: searchConfiguration};
 };

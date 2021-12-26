@@ -15,6 +15,7 @@ import {WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
 import {useWorkQuery} from "@paradicms/react-search";
 import {AppConfiguration} from "@paradicms/configuration";
+import {useRouter} from "next/router";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
@@ -40,6 +41,15 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
   configuration,
   datasetString,
 }) => {
+  const router = useRouter();
+
+  if (!configuration.search) {
+    router.push(Hrefs.home);
+    return null;
+  }
+
+  const defaultWorkQueryFilters = configuration.search!.filters ?? [];
+
   const dataset = useMemo(() => Dataset.parse(datasetString), [datasetString]);
 
   const workQueryService = useMemo<WorkQueryService>(
@@ -53,7 +63,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
   );
 
   const useWorkQueryOut = useWorkQuery({
-    configuration: configuration.workSearch,
+    defaultFilters: defaultWorkQueryFilters,
     workQueryService,
     worksPerPage: WORKS_PER_PAGE,
   });
@@ -88,9 +98,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
           : "Search results"
       }
       configuration={configuration}
-      onSearch={text =>
-        setWorkQuery({filters: configuration.workSearch.filters, text})
-      }
+      onSearch={text => setWorkQuery({filters: defaultWorkQueryFilters, text})}
     >
       <WorkSearchGrid
         facets={workQueryResults.facets}

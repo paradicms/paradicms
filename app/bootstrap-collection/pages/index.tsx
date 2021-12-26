@@ -45,6 +45,8 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   configuration,
   datasetString,
 }) => {
+  const defaultWorkQueryFilters = configuration.search?.filters ?? [];
+
   const dataset = useMemo<Dataset>(() => Dataset.parse(datasetString), [
     datasetString,
   ]);
@@ -65,7 +67,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   );
 
   const useWorkQueryOut = useWorkQuery({
-    configuration: configuration.workSearch,
+    defaultFilters: defaultWorkQueryFilters,
     workQueryService,
     worksPerPage: WORKS_PER_PAGE,
   });
@@ -85,7 +87,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
       collection={collection}
       configuration={configuration}
       onSearch={text => {
-        setWorkQuery({filters: configuration.workSearch.filters, text});
+        setWorkQuery({filters: defaultWorkQueryFilters, text});
         setPage(undefined);
       }}
     >

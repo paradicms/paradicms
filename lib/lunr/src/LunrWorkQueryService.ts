@@ -62,7 +62,6 @@ export class LunrWorkQueryService implements WorkQueryService {
   constructor(kwds: {
     configuration: AppConfiguration;
     dataset: Dataset;
-    searchablePropertyUris: readonly string[];
     workJoinSelector?: WorkJoinSelector;
   }) {
     this.dataset = kwds.dataset;
