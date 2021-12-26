@@ -21,18 +21,18 @@ const imputeSearchConfiguration = (
             .propertyUri === propertyConfiguration.uri
       )
     ) {
-      console.debug(
-        "filterable property",
-        propertyConfiguration.uri,
-        "already has a search filter, skipping"
-      );
+      // console.debug(
+      //   "filterable property",
+      //   propertyConfiguration.uri,
+      //   "already has a search filter, skipping"
+      // );
       continue;
     }
-    console.debug(
-      "filterable property",
-      propertyConfiguration.uri,
-      "does not have search filter, adding"
-    );
+    // console.debug(
+    //   "filterable property",
+    //   propertyConfiguration.uri,
+    //   "does not have search filter, adding"
+    // );
     searchConfigurationFilters.push({
       label: propertyConfiguration.label,
       propertyUri: propertyConfiguration.uri,

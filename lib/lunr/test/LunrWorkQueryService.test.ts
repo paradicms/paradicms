@@ -15,7 +15,7 @@ describe("LunrWorkQueryService", () => {
   it("should return at least one work from an empty query", async () => {
     const result = await sut.getWorks({
       query: {
-        filters: configuration.filters,
+        filters: configuration.search!.filters,
       },
       offset: 0,
       limit: Number.MAX_SAFE_INTEGER,
@@ -26,7 +26,7 @@ describe("LunrWorkQueryService", () => {
   it("should return fewer works from a freetext query", async () => {
     const allResult = await sut.getWorks({
       query: {
-        filters: configuration.filters,
+        filters: configuration.search!.filters,
       },
       offset: 0,
       limit: Number.MAX_SAFE_INTEGER,
@@ -34,7 +34,7 @@ describe("LunrWorkQueryService", () => {
 
     const fewerResult = await sut.getWorks({
       query: {
-        filters: configuration.filters,
+        filters: configuration.search!.filters!,
         text: "Institution0Collection0Work2",
       },
       offset: 0,
