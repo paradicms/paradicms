@@ -5,6 +5,7 @@ import {ModelParameters} from "./ModelParameters";
 import {NamedValue} from "./NamedValue";
 import {Text} from "./Text";
 import {PARADICMS, RDF} from "./vocabularies";
+import {PropertyValue} from "./PropertyValue";
 
 export class Model {
   readonly dataset: Dataset;
@@ -107,48 +108,40 @@ export class Model {
       .map(node => node as NamedNode);
   }
 
-  propertyValues(uri: string): readonly (NamedValue | Term | Text)[] {
-    const result: (NamedValue | Term | Text)[] = [];
+  propertyValues(uri: string): readonly PropertyValue[] {
+    const result: PropertyValue[] = [];
     this.store.forEach(
       quad => {
         switch (quad.object.termType) {
           case "BlankNode":
             if (this.hasRdfType(quad.object as BlankNode, PARADICMS.Text)) {
               result.push(
-                new Text({
-                  dataset: this.dataset,
-                  graphNode: this.graphNode,
-                  node: quad.object as BlankNode,
-                })
+                PropertyValue.fromText(
+                  new Text({
+                    dataset: this.dataset,
+                    graphNode: this.graphNode,
+                    node: quad.object as BlankNode,
+                  })
+                )
               );
-            } else {
-              console.warn(
-                "non-Text BlankNode property value:",
-                JSON.stringify(quad)
-              );
-              result.push(quad.object);
             }
             break;
           case "Literal":
-            result.push(quad.object);
+            result.push(PropertyValue.fromLiteral(quad.object as Literal));
             break;
           case "NamedNode":
             if (
               this.hasRdfType(quad.object as NamedNode, PARADICMS.NamedValue)
             ) {
               result.push(
-                new NamedValue({
-                  dataset: this.dataset,
-                  graphNode: quad.graph as NamedNode,
-                  node: quad.object as NamedNode,
-                })
+                PropertyValue.fromNamedValue(
+                  new NamedValue({
+                    dataset: this.dataset,
+                    graphNode: quad.graph as NamedNode,
+                    node: quad.object as NamedNode,
+                  })
+                )
               );
-            } else {
-              console.warn(
-                "non-NamedValue NamedNode property value:",
-                JSON.stringify(quad)
-              );
-              result.push(quad.object);
             }
             break;
         }

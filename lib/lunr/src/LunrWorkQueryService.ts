@@ -2,7 +2,6 @@ import {
   Dataset,
   DataSubsetter,
   Image,
-  PropertyValueDefinition,
   ThumbnailSelector,
   Work,
   WorkJoinSelector,
@@ -71,8 +70,9 @@ export class LunrWorkQueryService implements WorkQueryService {
       this.field("abstract");
       this.field("title");
       const propertyFieldNamesByUri: {[index: string]: string} = {};
-      for (const propertyConfiguration of kwds.configuration.workProperties ??
-        []) {
+      const workPropertyConfigurations =
+        kwds.configuration.workProperties ?? [];
+      for (const propertyConfiguration of workPropertyConfigurations) {
         if (!propertyConfiguration.searchable) {
           continue;
         }
@@ -88,12 +88,16 @@ export class LunrWorkQueryService implements WorkQueryService {
         if (work.abstract) {
           doc.abstract = work.abstract.toString();
         }
-        for (const property of work.properties) {
-          const fieldName = propertyFieldNamesByUri[property.uri];
+        for (const propertyConfiguration of workPropertyConfigurations) {
+          const fieldName = propertyFieldNamesByUri[propertyConfiguration.uri];
           if (!fieldName) {
             continue;
           }
-          doc[fieldName] = property.value.value.toString();
+          for (const propertyValue of work.propertyValues(
+            propertyConfiguration.uri
+          )) {
+            doc[fieldName] = propertyValue.toString();
+          }
         }
         this.add(doc);
       }
@@ -189,41 +193,25 @@ export class LunrWorkQueryService implements WorkQueryService {
           } = {};
           for (const work of works) {
             let workHasProperty = false;
-            for (const property of work.properties) {
-              if (property.uri !== concreteFilter.propertyUri) {
-                continue;
-              }
-              const propertyValueString: string = property.value.value;
+            for (const propertyValue of work.propertyValues(
+              concreteFilter.propertyUri
+            )) {
+              const propertyValueString: string = propertyValue.toString();
               const facetValue = facetValues[propertyValueString];
               if (facetValue) {
                 facetValue.count++;
               } else {
-                const propertyDefinition = this.dataset.propertyDefinitionByUri(
-                  property.uri
-                );
-                let propertyValueDefinition:
-                  | PropertyValueDefinition
-                  | undefined;
-                if (propertyDefinition) {
-                  propertyValueDefinition = propertyDefinition.values.find(
-                    propertyValueDefinition =>
-                      propertyValueDefinition.value.equals(property.value)
-                  );
-                }
                 facetValues[propertyValueString] = {
                   count: 1,
-                  label: propertyValueDefinition
-                    ? propertyValueDefinition.label
-                    : null,
+                  label: propertyValue.label,
                   value: propertyValueString,
-                  thumbnail:
-                    propertyValueDefinition && valueFacetValueThumbnailSelector
-                      ? LunrWorkQueryService.toValueFacetValueThumbnail(
-                          propertyValueDefinition.thumbnail(
-                            valueFacetValueThumbnailSelector
-                          )
+                  thumbnail: valueFacetValueThumbnailSelector
+                    ? LunrWorkQueryService.toValueFacetValueThumbnail(
+                        propertyValue.thumbnail(
+                          valueFacetValueThumbnailSelector
                         )
-                      : null,
+                      )
+                    : null,
                 };
               }
               workHasProperty = true;
@@ -274,13 +262,11 @@ export class LunrWorkQueryService implements WorkQueryService {
           filteredWorks = filteredWorks.filter(work =>
             LunrWorkQueryService.testValueFilter(
               filter as StringPropertyValueFilter,
-              work.properties
-                .filter(
-                  property =>
-                    property.uri ===
-                    (filter as StringPropertyValueFilter).propertyUri
+              work
+                .propertyValues(
+                  (filter as StringPropertyValueFilter).propertyUri
                 )
-                .map(property => property.value.value.toString())
+                .map(propertyValue => propertyValue.toString())
             )
           );
         }

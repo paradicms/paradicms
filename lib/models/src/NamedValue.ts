@@ -1,15 +1,17 @@
 import {NamedModel} from "./NamedModel";
 import {RDF, RDFS} from "./vocabularies";
-import {Term} from "n3";
+import {Literal} from "n3";
 import {Image} from "./Image";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
+import {Memoize} from "typescript-memoize";
 
 export class NamedValue extends NamedModel {
   get images(): readonly Image[] {
     return this.dataset.imagesByDepictsUri(this.uri);
   }
 
+  @Memoize()
   get label(): string | null {
     return this.optionalString(RDFS.label);
   }
@@ -28,7 +30,7 @@ export class NamedValue extends NamedModel {
     return selectThumbnail(this.images, selector);
   }
 
-  get value(): Term {
-    return this.requiredTerm(RDF.value);
+  get value(): Literal {
+    return this.requiredLiteral(RDF.value);
   }
 }
