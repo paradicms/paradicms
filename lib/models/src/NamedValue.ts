@@ -5,7 +5,7 @@ import {Image} from "./Image";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 
-export class PropertyValueDefinition extends NamedModel {
+export class NamedValue extends NamedModel {
   get images(): readonly Image[] {
     return this.dataset.imagesByDepictsUri(this.uri);
   }

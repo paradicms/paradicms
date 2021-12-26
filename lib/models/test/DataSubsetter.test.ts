@@ -100,7 +100,7 @@ describe("DataSubsetter", () => {
       )
     );
     expect(dataset.propertyDefinitions).to.not.be.empty;
-    expect(dataset.propertyValueDefinitions).to.not.be.empty;
+    expect(dataset.namedValues).to.not.be.empty;
     expectModelsDeepEq(dataset.rightsStatements, [
       testDataset.rightsStatements.find(
         rightsStatement =>
@@ -154,7 +154,7 @@ describe("DataSubsetter", () => {
     ]);
     expectModelsDeepEq(dataset.works, [work]);
     expect(dataset.propertyDefinitions).to.not.be.empty;
-    expect(dataset.propertyValueDefinitions).to.be.empty;
+    expect(dataset.namedValues).to.be.empty;
     expectModelsDeepEq(dataset.rightsStatements, [
       testDataset.rightsStatements.find(
         rightsStatement =>

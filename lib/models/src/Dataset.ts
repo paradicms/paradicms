@@ -3,8 +3,6 @@ import {Image} from "./Image";
 import {Institution} from "./Institution";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
-import {PropertyDefinition} from "./PropertyDefinition";
-import {PropertyValueDefinition} from "./PropertyValueDefinition";
 import {
   NamedNode,
   Parser,
@@ -17,6 +15,7 @@ import {PARADICMS, prefixes, RDF} from "./vocabularies";
 import {Work} from "./Work";
 import {Person} from "./Person";
 import {NamedModel} from "./NamedModel";
+import {NamedValue} from "./NamedValue";
 import {Organization} from "./Organization";
 import {Agent} from "./Agent";
 import {ModelParameters} from "./ModelParameters";
@@ -43,18 +42,14 @@ export class Dataset {
   private _institutionsByUriIndex?: {[index: string]: Institution};
   private _licenses?: readonly License[];
   private _licensesByUriIndex?: {[index: string]: License};
+  private _namedValues?: readonly NamedValue[];
+  private _namedValuesByPropertyUriIndex?: {
+    [index: string]: readonly NamedValue[];
+  };
   private _organizations?: readonly Organization[];
   private _organizationsByUriIndex?: {[index: string]: Organization};
   private _people?: readonly Person[];
   private _peopleByUriIndex?: {[index: string]: Person};
-  private _propertyDefinitions?: readonly PropertyDefinition[];
-  private _propertyDefinitionsByUriIndex?: {
-    [index: string]: PropertyDefinition;
-  };
-  private _propertyValueDefinitions?: readonly PropertyValueDefinition[];
-  private _propertyValueDefinitionsByPropertyUriIndex?: {
-    [index: string]: readonly PropertyValueDefinition[];
-  };
   private _rightsStatements?: readonly RightsStatement[];
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
   private _works?: readonly Work[];
@@ -230,10 +225,9 @@ export class Dataset {
       institutions: this.institutions,
       images: this.images,
       licenses: this.licenses,
+      namedValues: this.namedValues,
       organizations: this.organizations,
       people: this.people,
-      propertyDefinitions: this.propertyDefinitions,
-      propertyValueDefinitions: this.propertyValueDefinitions,
       rightsStatements: this.rightsStatements,
       works: this.works,
     };
@@ -250,6 +244,26 @@ export class Dataset {
           .join(" ")
       );
     }
+  }
+
+  get namedValues(): readonly NamedValue[] {
+    if (!this._namedValues) {
+      this.readNamedValues();
+    }
+    return this._namedValues!;
+  }
+
+  namedValuesByPropertyUri(propertyUri: string): readonly NamedValue[] {
+    return this.namedValuesByPropertyUriIndex[propertyUri] ?? [];
+  }
+
+  private get namedValuesByPropertyUriIndex(): {
+    [index: string]: readonly NamedValue[];
+  } {
+    if (!this._namedValuesByPropertyUriIndex) {
+      this.readNamedValues();
+    }
+    return this._namedValuesByPropertyUriIndex!;
   }
 
   organizationByUri(organizationUri: string): Organization {
@@ -303,50 +317,6 @@ export class Dataset {
       throw new RangeError("no such person " + personUri);
     }
     return person;
-  }
-
-  propertyDefinitionByUri(
-    propertyDefinitionUri: string
-  ): PropertyDefinition | null {
-    return this.propertyDefinitionsByUriIndex[propertyDefinitionUri] ?? null;
-  }
-
-  get propertyDefinitions(): readonly PropertyDefinition[] {
-    if (!this._propertyDefinitions) {
-      this.readPropertyDefinitions();
-    }
-    return this._propertyDefinitions!;
-  }
-
-  private get propertyDefinitionsByUriIndex(): {
-    [index: string]: PropertyDefinition;
-  } {
-    if (!this._propertyDefinitionsByUriIndex) {
-      this.readPropertyDefinitions();
-    }
-    return this._propertyDefinitionsByUriIndex!;
-  }
-
-  get propertyValueDefinitions(): readonly PropertyValueDefinition[] {
-    if (!this._propertyValueDefinitions) {
-      this.readPropertyValueDefinitions();
-    }
-    return this._propertyValueDefinitions!;
-  }
-
-  propertyValueDefinitionsByPropertyUri(
-    propertyUri: string
-  ): readonly PropertyValueDefinition[] {
-    return this.propertyValueDefinitionsByPropertyUriIndex[propertyUri] ?? [];
-  }
-
-  private get propertyValueDefinitionsByPropertyUriIndex(): {
-    [index: string]: readonly PropertyValueDefinition[];
-  } {
-    if (!this._propertyValueDefinitionsByPropertyUriIndex) {
-      this.readPropertyValueDefinitions();
-    }
-    return this._propertyValueDefinitionsByPropertyUriIndex!;
   }
 
   protected readCollection(kwds: ModelParameters): Collection {
@@ -476,6 +446,33 @@ export class Dataset {
     );
   }
 
+  protected readNamedValue(kwds: ModelParameters): NamedValue {
+    return new NamedValue(kwds);
+  }
+
+  private readNamedValues() {
+    const namedValues: NamedValue[] = [];
+    const namedValuesByPropertyUriIndex: {
+      [index: string]: NamedValue[];
+    } = {};
+    this.readModels(kwds => {
+      const namedValue = this.readNamedValue(kwds);
+
+      namedValues.push(namedValue);
+
+      for (const propertyUri of namedValue.propertyUris) {
+        const existingNamedValues = namedValuesByPropertyUriIndex[propertyUri];
+        if (existingNamedValues) {
+          existingNamedValues.push(namedValue);
+        } else {
+          namedValuesByPropertyUriIndex[propertyUri] = [namedValue];
+        }
+      }
+    }, PARADICMS.NamedValue);
+    this._namedValues = namedValues;
+    this._namedValuesByPropertyUriIndex = namedValuesByPropertyUriIndex;
+  }
+
   protected readOrganization(kwds: ModelParameters): Organization {
     return new Organization(kwds);
   }
@@ -504,55 +501,6 @@ export class Dataset {
 
   private readPerson(kwds: ModelParameters): Person {
     return new Person(kwds);
-  }
-
-  protected readPropertyDefinition(kwds: ModelParameters): PropertyDefinition {
-    return new PropertyDefinition(kwds);
-  }
-
-  private readPropertyDefinitions() {
-    const propertyDefinitions: PropertyDefinition[] = [];
-    this._propertyDefinitionsByUriIndex = {};
-    this.readModels(kwds => {
-      const propertyDefinition = this.readPropertyDefinition(kwds);
-      propertyDefinitions.push(propertyDefinition);
-      this._propertyDefinitionsByUriIndex![
-        propertyDefinition.uri
-      ] = propertyDefinition;
-    }, PARADICMS.PropertyDefinition);
-    this._propertyDefinitions = propertyDefinitions;
-  }
-
-  protected readPropertyValueDefinition(
-    kwds: ModelParameters
-  ): PropertyValueDefinition {
-    return new PropertyValueDefinition(kwds);
-  }
-
-  private readPropertyValueDefinitions() {
-    const propertyValueDefinitions: PropertyValueDefinition[] = [];
-    const propertyValueDefinitionsByPropertyUriIndex: {
-      [index: string]: PropertyValueDefinition[];
-    } = {};
-    this.readModels(kwds => {
-      const propertyValueDefinition = this.readPropertyValueDefinition(kwds);
-
-      propertyValueDefinitions.push(propertyValueDefinition);
-
-      for (const propertyUri of propertyValueDefinition.propertyUris) {
-        const existingPropertyValueDefinitions =
-          propertyValueDefinitionsByPropertyUriIndex[propertyUri];
-        if (existingPropertyValueDefinitions) {
-          existingPropertyValueDefinitions.push(propertyValueDefinition);
-        } else {
-          propertyValueDefinitionsByPropertyUriIndex[propertyUri] = [
-            propertyValueDefinition,
-          ];
-        }
-      }
-    }, PARADICMS.PropertyValueDefinition);
-    this._propertyValueDefinitions = propertyValueDefinitions;
-    this._propertyValueDefinitionsByPropertyUriIndex = propertyValueDefinitionsByPropertyUriIndex;
   }
 
   protected readRightsStatement(kwds: ModelParameters): RightsStatement {

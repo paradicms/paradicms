@@ -2,7 +2,6 @@ import {NamedModel} from "./NamedModel";
 import {DCTERMS, FOAF, PARADICMS} from "./vocabularies";
 import {Collection} from "./Collection";
 import {Institution} from "./Institution";
-import {Property} from "./Property";
 import {Rights} from "./Rights";
 import {Image} from "./Image";
 import {Text} from "./Text";
@@ -44,16 +43,6 @@ export class Work extends NamedModel {
 
   get page(): string | null {
     return this.optionalStringOrUri(FOAF.page);
-  }
-
-  @Memoize()
-  get properties(): readonly Property[] {
-    return this._properties;
-  }
-
-  @Memoize()
-  get propertyUris(): readonly string[] {
-    return this._propertyUris;
   }
 
   @Memoize()

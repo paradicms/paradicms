@@ -5,7 +5,7 @@ import {testDataTrig} from "./testDataTrig";
 describe("PropertyDefinition", () => {
   const dataset = Dataset.parse(testDataTrig);
   const sut = dataset.propertyDefinitionByUri(
-    dataset.propertyValueDefinitions[0].propertyUris[0]
+    dataset.namedValues[0].propertyUris[0]
   )!;
 
   it("should get the label", () => {

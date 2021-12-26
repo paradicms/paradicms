@@ -5,7 +5,6 @@ import {InstitutionJoinSelector} from "./InstitutionJoinSelector";
 import {Collection} from "./Collection";
 import {DatasetBuilder} from "./DatasetBuilder";
 import {Institution} from "./Institution";
-import {selectThumbnail} from "./selectThumbnail";
 import {WorkJoinSelector} from "./WorkJoinSelector";
 import {Work} from "./Work";
 import {Image} from "Image";
@@ -172,9 +171,9 @@ export class DataSubsetter {
     const institutionUris = joinSelector.institution
       ? new Set<string>()
       : undefined;
-    const propertyUris = joinSelector.propertyDefinitions
-      ? new Set<string>()
-      : undefined;
+    // const propertyUris = joinSelector.propertyDefinitions
+    //   ? new Set<string>()
+    //   : undefined;
 
     for (const work of works) {
       builder.addWork(work);
@@ -220,11 +219,11 @@ export class DataSubsetter {
         institutionUris.add(work.institutionUri);
       }
 
-      if (propertyUris) {
-        for (const propertyUri of work.propertyUris) {
-          propertyUris.add(propertyUri);
-        }
-      }
+      // if (propertyUris) {
+      //   for (const propertyUri of work.propertyUris) {
+      //     propertyUris.add(propertyUri);
+      //   }
+      // }
     }
 
     if (collectionUris) {
@@ -247,47 +246,45 @@ export class DataSubsetter {
       }
     }
 
-    if (propertyUris) {
-      for (const propertyUri of propertyUris) {
-        const propertyDefinition = this.completeDataset.propertyDefinitionByUri(
-          propertyUri
-        );
-        if (!propertyDefinition) {
-          continue;
-        }
-        builder.addPropertyDefinition(propertyDefinition);
-
-        if (joinSelector.propertyDefinitions!.values) {
-          const propertyValueDefinitions = this.completeDataset.propertyValueDefinitionsByPropertyUri(
-            propertyDefinition.uri
-          );
-          builder.addPropertyValueDefinitions(propertyValueDefinitions);
-
-          // if (joinSelector.values.allImages) {
-          //   for (const propertyValueDefinition of propertyValueDefinitions) {
-          //     for (const image of this.completeDataset.imagesByDepictsUri(
-          //       propertyValueDefinition.uri
-          //     )) {
-          //       this.addImageDataset(builder, image);
-          //     }
-          //   }
-          // } else
-          if (joinSelector.propertyDefinitions!.values.thumbnail) {
-            for (const propertyValueDefinition of propertyValueDefinitions) {
-              const thumbnail = selectThumbnail(
-                this.completeDataset.imagesByDepictsUri(
-                  propertyValueDefinition.uri
-                ),
-                joinSelector.propertyDefinitions!.values.thumbnail
-              );
-              if (thumbnail) {
-                this.addImageDataset(builder, thumbnail, {});
-              }
-            }
-          }
-        }
-      }
-    }
+    // if (propertyUris) {
+    //   for (const propertyUri of propertyUris) {
+    //     const propertyDefinition = this.completeDataset.propertyDefinitionByUri(
+    //       propertyUri
+    //     );
+    //     if (!propertyDefinition) {
+    //       continue;
+    //     }
+    //     builder.addPropertyDefinition(propertyDefinition);
+    //
+    //     if (joinSelector.propertyDefinitions!.values) {
+    //       const namedValues = this.completeDataset.namedValuesByPropertyUri(
+    //         propertyDefinition.uri
+    //       );
+    //       builder.addPropertyValueDefinitions(namedValues);
+    //
+    //       // if (joinSelector.values.allImages) {
+    //       //   for (const namedValue of namedValues) {
+    //       //     for (const image of this.completeDataset.imagesByDepictsUri(
+    //       //       namedValue.uri
+    //       //     )) {
+    //       //       this.addImageDataset(builder, image);
+    //       //     }
+    //       //   }
+    //       // } else
+    //       if (joinSelector.propertyDefinitions!.values.thumbnail) {
+    //         for (const namedValue of namedValues) {
+    //           const thumbnail = selectThumbnail(
+    //             this.completeDataset.imagesByDepictsUri(namedValue.uri),
+    //             joinSelector.propertyDefinitions!.values.thumbnail
+    //           );
+    //           if (thumbnail) {
+    //             this.addImageDataset(builder, thumbnail, {});
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
 
     return builder;
   }

@@ -1,30 +1,15 @@
 import {BlankNode, Literal, NamedNode, Store, Term} from "n3";
 import {Dataset} from "./Dataset";
-import {DCTERMS, FOAF, PARADICMS, RDF} from "./vocabularies";
-import {Property} from "./Property";
 import {NamedModel} from "./NamedModel";
 import {ModelParameters} from "./ModelParameters";
+import {NamedValue} from "./NamedValue";
+import {Text} from "./Text";
+import {PARADICMS, RDF} from "./vocabularies";
 
 export class Model {
   readonly dataset: Dataset;
   readonly graphNode: NamedNode;
   protected readonly _node: BlankNode | NamedNode;
-
-  private static createIgnoredPropertyUris(): Set<string> {
-    const result = new Set<string>();
-    // Ignore the rights properties
-    result.add(DCTERMS.creator.value);
-    result.add(DCTERMS.license.value);
-    result.add(DCTERMS.rights.value);
-    result.add(DCTERMS.rightsHolder.value);
-    result.add(FOAF.page.value);
-    result.add(PARADICMS.collection.value);
-    result.add(PARADICMS.institution.value);
-    result.add(RDF.type.value);
-    return result;
-  }
-
-  private static readonly IGNORED_PROPERTY_URIS = Model.createIgnoredPropertyUris();
 
   constructor(kwds: ModelParameters) {
     this.dataset = kwds.dataset;
@@ -32,22 +17,17 @@ export class Model {
     this._node = kwds.node;
   }
 
-  get node(): BlankNode | NamedNode {
-    return this._node;
+  private hasRdfType(node: BlankNode | NamedNode, rdfType: NamedNode): boolean {
+    for (const object of this.store.getObjects(node, RDF.type, null)) {
+      if (object.termType === "NamedNode" && object.value === rdfType.value) {
+        return true;
+      }
+    }
+    return false;
   }
 
-  protected parentNamedNodes(childToParentProperty: NamedNode): NamedNode[] {
-    const parentNodes = this.store.getObjects(
-      this.node,
-      childToParentProperty,
-      null
-    );
-    if (parentNodes.length === 0) {
-      return [];
-    }
-    return parentNodes
-      .filter(node => node.termType === "NamedNode")
-      .map(node => node as NamedNode);
+  get node(): BlankNode | NamedNode {
+    return this._node;
   }
 
   protected optionalLiteral(property: NamedNode): Literal | null {
@@ -94,53 +74,91 @@ export class Model {
     return null;
   }
 
-  protected get _properties(): readonly Property[] {
-    const properties: Property[] = [];
-    this.store.forEach(
-      quad => {
-        const propertyUri = quad.predicate.value;
-        if (Model.IGNORED_PROPERTY_URIS.has(propertyUri)) {
-          return;
-        }
-        properties.push(
-          new Property({
-            dataset: this.dataset,
-            value: quad.object,
-            uri: propertyUri,
-          })
-        );
-      },
-      this.node,
-      null,
-      null,
-      null
-    );
-    if (properties.every(property => !!property.definition?.label)) {
-      return properties.sort((left, right) =>
-        left.definition!.label!.localeCompare(right.definition!.label)
-      );
-    } else {
-      return properties.sort((left, right) =>
-        left.uri.localeCompare(right.uri)
-      );
+  protected optionalStringOrText(property: NamedNode): string | Text | null {
+    for (const object of this.store.getObjects(this.node, property, null)) {
+      switch (object.termType) {
+        case "BlankNode":
+          if (this.hasRdfType(object as BlankNode, PARADICMS.Text)) {
+            return new Text({
+              dataset: this.dataset,
+              graphNode: this.graphNode,
+              node: object,
+            });
+          }
+          break;
+        case "Literal":
+          return object.value;
+      }
     }
+    return null;
   }
 
-  protected get _propertyUris(): readonly string[] {
-    const propertyUris: string[] = [];
-    this.store.forPredicates(
-      predicate => {
-        const propertyUri = predicate.value;
-        if (Model.IGNORED_PROPERTY_URIS.has(propertyUri)) {
-          return;
-        }
-        propertyUris.push(propertyUri);
-      },
+  protected parentNamedNodes(childToParentProperty: NamedNode): NamedNode[] {
+    const parentNodes = this.store.getObjects(
       this.node,
-      null,
+      childToParentProperty,
       null
     );
-    return propertyUris;
+    if (parentNodes.length === 0) {
+      return [];
+    }
+    return parentNodes
+      .filter(node => node.termType === "NamedNode")
+      .map(node => node as NamedNode);
+  }
+
+  propertyValues(uri: string): readonly (NamedValue | Term | Text)[] {
+    const result: (NamedValue | Term | Text)[] = [];
+    this.store.forEach(
+      quad => {
+        switch (quad.object.termType) {
+          case "BlankNode":
+            if (this.hasRdfType(quad.object as BlankNode, PARADICMS.Text)) {
+              result.push(
+                new Text({
+                  dataset: this.dataset,
+                  graphNode: this.graphNode,
+                  node: quad.object as BlankNode,
+                })
+              );
+            } else {
+              console.warn(
+                "non-Text BlankNode property value:",
+                JSON.stringify(quad)
+              );
+              result.push(quad.object);
+            }
+            break;
+          case "Literal":
+            result.push(quad.object);
+            break;
+          case "NamedNode":
+            if (
+              this.hasRdfType(quad.object as NamedNode, PARADICMS.NamedValue)
+            ) {
+              result.push(
+                new NamedValue({
+                  dataset: this.dataset,
+                  graphNode: quad.graph as NamedNode,
+                  node: quad.object as NamedNode,
+                })
+              );
+            } else {
+              console.warn(
+                "non-NamedValue NamedNode property value:",
+                JSON.stringify(quad)
+              );
+              result.push(quad.object);
+            }
+            break;
+        }
+      },
+      this.node,
+      new NamedNode(uri),
+      null,
+      this.graphNode
+    );
+    return result;
   }
 
   protected requiredLiteral(property: NamedNode): Literal {
