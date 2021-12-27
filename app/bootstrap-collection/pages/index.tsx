@@ -45,11 +45,9 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
 }) => {
   const defaultWorkQueryFilters = configuration.search?.filters ?? [];
 
-  const dataset = useMemo<Dataset>(() => {
-    const dataset = Dataset.parse(datasetString);
-    dataset.logContents();
-    return dataset;
-  }, [datasetString]);
+  const dataset = useMemo<Dataset>(() => Dataset.parse(datasetString), [
+    datasetString,
+  ]);
 
   const collection = useMemo<Collection>(
     () => dataset.collectionByUri(collectionUri),

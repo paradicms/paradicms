@@ -4,7 +4,9 @@ import {testDataTrig} from "./testDataTrig";
 
 describe("Work", () => {
   const dataset = Dataset.parse(testDataTrig);
-  const sut = dataset.works[0];
+  const sut = dataset.workByUri(
+    "http://example.com/institution0/collection0/work2"
+  );
 
   it("should get the work's abstract", () => {
     expect(sut.abstract).to.be.instanceof(Text);

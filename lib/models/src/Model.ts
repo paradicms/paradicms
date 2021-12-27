@@ -27,7 +27,7 @@ export class Model {
   }
 
   protected optionalLiteral(property: NamedNode): Literal | null {
-    const nodes = this.store.getObjects(this.node, property, null);
+    const nodes = this.store.getObjects(this.node, property, this.graphNode);
     if (nodes.length === 0) {
       return null;
     }
@@ -43,7 +43,7 @@ export class Model {
     modelByUri: (uri: string) => ModelT,
     property: NamedNode
   ): ModelT | string | null {
-    const objects = this.store.getObjects(this.node, property, null);
+    const objects = this.store.getObjects(this.node, property, this.graphNode);
     for (const object of objects) {
       switch (object.termType) {
         case "Literal":
@@ -60,7 +60,11 @@ export class Model {
   }
 
   protected optionalStringOrUri(property: NamedNode): string | null {
-    for (const object of this.store.getObjects(this.node, property, null)) {
+    for (const object of this.store.getObjects(
+      this.node,
+      property,
+      this.graphNode
+    )) {
       switch (object.termType) {
         case "Literal":
         case "NamedNode":
@@ -74,7 +78,7 @@ export class Model {
     const parentNodes = this.store.getObjects(
       this.node,
       childToParentProperty,
-      null
+      this.graphNode
     );
     if (parentNodes.length === 0) {
       return [];
@@ -111,7 +115,11 @@ export class Model {
   }
 
   protected requiredTerm(property: NamedNode): Term {
-    for (const object of this.store.getObjects(this.node, property, null)) {
+    for (const object of this.store.getObjects(
+      this.node,
+      property,
+      this.graphNode
+    )) {
       return object;
     }
     throw new EvalError(

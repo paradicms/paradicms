@@ -11,7 +11,11 @@ export class NamedModel extends Model {
 
   // Text is a Model, so this must be in NamedModel to avoid a circular dependency.
   protected optionalStringOrText(property: NamedNode): string | Text | null {
-    for (const object of this.store.getObjects(this.node, property, null)) {
+    for (const object of this.store.getObjects(
+      this.node,
+      property,
+      this.graphNode
+    )) {
       switch (object.termType) {
         case "BlankNode":
           if (this.hasRdfType(object as BlankNode, PARADICMS.Text)) {
@@ -34,7 +38,7 @@ export class NamedModel extends Model {
     for (const relationObject of this.store.getObjects(
       this.node,
       DCTERMS.relation,
-      null
+      this.graphNode
     )) {
       if (relationObject.termType !== "NamedNode") {
         continue;
