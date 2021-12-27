@@ -36,7 +36,7 @@ from paradicms_etl.namespaces import CMS
 
 def _create_namespaces_by_prefix_default() -> Dict[str, rdflib.Namespace]:
     namespaces_by_prefix = {}
-    for namespace_module in (rdflib.namespace, paradicms_etl.namespace):
+    for namespace_module in (rdflib.namespace, paradicms_etl.namespaces):
         for attr in dir(namespace_module):
             if attr.upper() != attr:
                 continue

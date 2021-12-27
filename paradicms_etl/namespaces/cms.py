@@ -17,6 +17,7 @@ class CMS(DefinedNamespace):
     # Resources
     Collection: URIRef
     Configuration: URIRef
+    DateTimeDescription: URIRef
     Image: URIRef
     Institution: URIRef
     License: URIRef
@@ -25,4 +26,5 @@ class CMS(DefinedNamespace):
     Person: URIRef
     RightsStatement: URIRef
     Text: URIRef
+    WikidataItem: URIRef
     Work: URIRef
