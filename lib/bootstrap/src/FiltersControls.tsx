@@ -35,7 +35,7 @@ export const FiltersControls: React.FunctionComponent<{
           onChangeFilter,
         });
         if (!filterControl) {
-          return;
+          return null;
         }
 
         return (

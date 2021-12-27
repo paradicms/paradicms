@@ -6,7 +6,6 @@ export * from "./Footer";
 export * from "./InstitutionCard";
 export * from "./InstitutionsGallery";
 export * from "./NavbarSearchForm";
-export * from "./PropertiesTable";
 export * from "./RightsTable";
 export * from "./ValueFilterChips";
 export * from "./thumbnailTargetDimensions";

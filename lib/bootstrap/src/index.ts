@@ -4,7 +4,6 @@ export * from "./FiltersBadges";
 export * from "./LicenseLink";
 export * from "./NavbarSearchForm";
 export * from "./Pagination";
-export * from "./PropertiesTable";
 export * from "./RightsStatementLink";
 export * from "./RightsTable";
 export * from "./thumbnailTargetDimensions";
