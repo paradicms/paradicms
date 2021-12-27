@@ -8,6 +8,8 @@ import {Text} from "./Text";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Memoize} from "typescript-memoize";
+import {PropertyValue} from "./PropertyValue";
+import {NamedValue} from "./NamedValue";
 
 export class Work extends NamedModel {
   @Memoize()
@@ -43,6 +45,14 @@ export class Work extends NamedModel {
 
   get page(): string | null {
     return this.optionalStringOrUri(FOAF.page);
+  }
+
+  propertyNamedValues(propertyUri: string): readonly NamedValue[] {
+    return super._propertyNamedValues(propertyUri);
+  }
+
+  propertyValues(propertyUri: string): readonly PropertyValue[] {
+    return super._propertyValues(propertyUri);
   }
 
   @Memoize()

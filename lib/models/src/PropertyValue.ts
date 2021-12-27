@@ -5,6 +5,11 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
 import {Image} from "./Image";
 
 export abstract class PropertyValue {
+  /**
+   * Abstract base class with factories for adapting other classes to a common interface.
+   *
+   * This is used to treat "properties" of a model similarly.
+   */
   static fromLiteral(literal: Literal) {
     return new LiteralPropertyValue(literal);
   }

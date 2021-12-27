@@ -1,4 +1,4 @@
-import {BlankNode, Literal, NamedNode, Store, Term} from "n3";
+import {BlankNode, Literal, NamedNode, Quad, Store, Term} from "n3";
 import {Dataset} from "./Dataset";
 import {NamedModel} from "./NamedModel";
 import {ModelParameters} from "./ModelParameters";
@@ -16,6 +16,19 @@ export class Model {
     this.dataset = kwds.dataset;
     this.graphNode = kwds.graphNode;
     this._node = kwds.node;
+  }
+
+  private forEachPropertyQuad(
+    callback: (quad: Quad) => void,
+    propertyUri: string
+  ): void {
+    this.store.forEach(
+      callback,
+      this.node,
+      new NamedNode(propertyUri),
+      null,
+      this.graphNode
+    );
   }
 
   private hasRdfType(node: BlankNode | NamedNode, rdfType: NamedNode): boolean {
@@ -108,49 +121,61 @@ export class Model {
       .map(node => node as NamedNode);
   }
 
-  propertyValues(uri: string): readonly PropertyValue[] {
+  protected _propertyNamedValues(propertyUri: string): readonly NamedValue[] {
+    const result: NamedValue[] = [];
+    this.forEachPropertyQuad(quad => {
+      if (quad.object.termType !== "NamedNode") {
+        return;
+      }
+      if (!this.hasRdfType(quad.object as NamedNode, PARADICMS.NamedValue)) {
+        return;
+      }
+      result.push(
+        new NamedValue({
+          dataset: this.dataset,
+          graphNode: quad.graph as NamedNode,
+          node: quad.object,
+        })
+      );
+    }, propertyUri);
+    return result;
+  }
+
+  protected _propertyValues(propertyUri: string): readonly PropertyValue[] {
     const result: PropertyValue[] = [];
-    this.store.forEach(
-      quad => {
-        switch (quad.object.termType) {
-          case "BlankNode":
-            if (this.hasRdfType(quad.object as BlankNode, PARADICMS.Text)) {
-              result.push(
-                PropertyValue.fromText(
-                  new Text({
-                    dataset: this.dataset,
-                    graphNode: this.graphNode,
-                    node: quad.object as BlankNode,
-                  })
-                )
-              );
-            }
-            break;
-          case "Literal":
-            result.push(PropertyValue.fromLiteral(quad.object as Literal));
-            break;
-          case "NamedNode":
-            if (
-              this.hasRdfType(quad.object as NamedNode, PARADICMS.NamedValue)
-            ) {
-              result.push(
-                PropertyValue.fromNamedValue(
-                  new NamedValue({
-                    dataset: this.dataset,
-                    graphNode: quad.graph as NamedNode,
-                    node: quad.object as NamedNode,
-                  })
-                )
-              );
-            }
-            break;
-        }
-      },
-      this.node,
-      new NamedNode(uri),
-      null,
-      this.graphNode
-    );
+    this.forEachPropertyQuad(quad => {
+      switch (quad.object.termType) {
+        case "BlankNode":
+          if (this.hasRdfType(quad.object as BlankNode, PARADICMS.Text)) {
+            result.push(
+              PropertyValue.fromText(
+                new Text({
+                  dataset: this.dataset,
+                  graphNode: this.graphNode,
+                  node: quad.object as BlankNode,
+                })
+              )
+            );
+          }
+          break;
+        case "Literal":
+          result.push(PropertyValue.fromLiteral(quad.object as Literal));
+          break;
+        case "NamedNode":
+          if (this.hasRdfType(quad.object as NamedNode, PARADICMS.NamedValue)) {
+            result.push(
+              PropertyValue.fromNamedValue(
+                new NamedValue({
+                  dataset: this.dataset,
+                  graphNode: quad.graph as NamedNode,
+                  node: quad.object as NamedNode,
+                })
+              )
+            );
+          }
+          break;
+      }
+    }, propertyUri);
     return result;
   }
 

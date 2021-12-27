@@ -2,6 +2,7 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
 import {CollectionJoinSelector} from "./CollectionJoinSelector";
 import {InstitutionJoinSelector} from "./InstitutionJoinSelector";
 import {AgentJoinSelector} from "./AgentJoinSelector";
+import {NamedValueJoinSelector} from "./NamedValueJoinSelector";
 
 /**
  * See note in DataSubsetter re: the use of this interface.
@@ -14,6 +15,8 @@ export interface WorkJoinSelector {
   collections?: CollectionJoinSelector;
   // Return the Institution referred to by this Work's institutionUri.
   institution?: InstitutionJoinSelector;
+  // Return any NamedValues referred to by this Work.
+  propertyNamedValues?: NamedValueJoinSelector;
   // Return a single thumbnail Image for this Work.
   thumbnail?: ThumbnailSelector;
 }

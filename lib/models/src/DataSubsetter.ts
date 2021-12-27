@@ -11,6 +11,9 @@ import {Image} from "Image";
 import {Agent} from "./Agent";
 import {Text} from "./Text";
 import {AgentJoinSelector} from "./AgentJoinSelector";
+import {selectThumbnail} from "./selectThumbnail";
+import {NamedValueJoinSelector} from "./NamedValueJoinSelector";
+import {NamedValue} from "./NamedValue";
 
 /**
  * Subset a Dataset to reduce the amount of data passed between getStaticProps and the component.
@@ -23,7 +26,16 @@ import {AgentJoinSelector} from "./AgentJoinSelector";
  * but no models connected to the Collections (i.e., their Works).
  */
 export class DataSubsetter {
-  constructor(private readonly completeDataset: Dataset) {}
+  private readonly completeDataset: Dataset;
+  private readonly workPropertyUris: readonly string[];
+
+  constructor(kwds: {
+    completeDataset: Dataset;
+    workPropertyUris: readonly string[];
+  }) {
+    this.completeDataset = kwds.completeDataset;
+    this.workPropertyUris = kwds.workPropertyUris;
+  }
 
   // Use the builder pattern internally rather than a more functional algorithm, such as merging datasets,
   // which was the initial implementation
@@ -152,6 +164,25 @@ export class DataSubsetter {
     return builder;
   }
 
+  private addNamedValuesDataset(
+    builder: DatasetBuilder,
+    namedValues: readonly NamedValue[],
+    joinSelector: NamedValueJoinSelector
+  ) {
+    builder.addNamedValues(namedValues);
+    if (joinSelector.thumbnail) {
+      for (const namedValue of namedValues) {
+        const thumbnail = selectThumbnail(
+          this.completeDataset.imagesByDepictsUri(namedValue.uri),
+          joinSelector.thumbnail
+        );
+        if (thumbnail) {
+          this.addImageDataset(builder, thumbnail, {});
+        }
+      }
+    }
+  }
+
   private addWorkDataset(
     builder: DatasetBuilder,
     work: Work,
@@ -171,9 +202,7 @@ export class DataSubsetter {
     const institutionUris = joinSelector.institution
       ? new Set<string>()
       : undefined;
-    // const propertyUris = joinSelector.propertyDefinitions
-    //   ? new Set<string>()
-    //   : undefined;
+    const namedValuesByUri: {[index: string]: NamedValue} = {};
 
     for (const work of works) {
       builder.addWork(work);
@@ -219,11 +248,15 @@ export class DataSubsetter {
         institutionUris.add(work.institutionUri);
       }
 
-      // if (propertyUris) {
-      //   for (const propertyUri of work.propertyUris) {
-      //     propertyUris.add(propertyUri);
-      //   }
-      // }
+      if (joinSelector.propertyNamedValues) {
+        for (const propertyUri of this.workPropertyUris) {
+          for (const namedValue of work.propertyNamedValues(propertyUri)) {
+            if (!namedValuesByUri[namedValue.uri]) {
+              namedValuesByUri[namedValue.uri] = namedValue;
+            }
+          }
+        }
+      }
     }
 
     if (collectionUris) {
@@ -246,45 +279,13 @@ export class DataSubsetter {
       }
     }
 
-    // if (propertyUris) {
-    //   for (const propertyUri of propertyUris) {
-    //     const propertyDefinition = this.completeDataset.propertyDefinitionByUri(
-    //       propertyUri
-    //     );
-    //     if (!propertyDefinition) {
-    //       continue;
-    //     }
-    //     builder.addPropertyDefinition(propertyDefinition);
-    //
-    //     if (joinSelector.propertyDefinitions!.values) {
-    //       const namedValues = this.completeDataset.namedValuesByPropertyUri(
-    //         propertyDefinition.uri
-    //       );
-    //       builder.addPropertyValueDefinitions(namedValues);
-    //
-    //       // if (joinSelector.values.allImages) {
-    //       //   for (const namedValue of namedValues) {
-    //       //     for (const image of this.completeDataset.imagesByDepictsUri(
-    //       //       namedValue.uri
-    //       //     )) {
-    //       //       this.addImageDataset(builder, image);
-    //       //     }
-    //       //   }
-    //       // } else
-    //       if (joinSelector.propertyDefinitions!.values.thumbnail) {
-    //         for (const namedValue of namedValues) {
-    //           const thumbnail = selectThumbnail(
-    //             this.completeDataset.imagesByDepictsUri(namedValue.uri),
-    //             joinSelector.propertyDefinitions!.values.thumbnail
-    //           );
-    //           if (thumbnail) {
-    //             this.addImageDataset(builder, thumbnail, {});
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
+    if (joinSelector.propertyNamedValues) {
+      this.addNamedValuesDataset(
+        builder,
+        Object.keys(namedValuesByUri).map(uri => namedValuesByUri[uri]),
+        joinSelector.propertyNamedValues
+      );
+    }
 
     return builder;
   }
@@ -386,6 +387,7 @@ export class DataSubsetter {
       workUris.map(workUri => this.completeDataset.workByUri(workUri)),
       joinSelector ?? {}
     );
+
     return builder.build();
   }
 }
