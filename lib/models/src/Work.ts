@@ -49,6 +49,8 @@ export class Work extends NamedModel {
   }
 
   propertyNamedValues(propertyUri: string): readonly NamedValue[] {
+    // This code is (temporarily) here instead of in Model or NamedModel
+    // because NamedValue is a NamedModel, which creates a circular dependency.
     const result: NamedValue[] = [];
     this.store.forEach(
       quad => {

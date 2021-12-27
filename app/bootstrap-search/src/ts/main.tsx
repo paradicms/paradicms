@@ -43,10 +43,8 @@ Promise.all([fetchAppConfiguration(), fetchDataset()]).then(
         institution: {
           thumbnail: {targetDimensions: thumbnailTargetDimensions},
         },
-        propertyDefinitions: {
-          values: {
-            thumbnail: {targetDimensions: thumbnailTargetDimensions},
-          },
+        propertyNamedValues: {
+          thumbnail: {targetDimensions: thumbnailTargetDimensions},
         },
         thumbnail: {targetDimensions: thumbnailTargetDimensions},
       },

@@ -2,11 +2,11 @@ import {expect} from "chai";
 import {Dataset} from "../src";
 import {testDataTrig} from "./testDataTrig";
 
-describe("PropertyValueDefinition", () => {
+describe("NamedValue", () => {
   const dataset = Dataset.parse(testDataTrig);
-  const sut = dataset.propertyDefinitionByUri(
+  const sut = dataset.namedValuesByPropertyUri(
     dataset.namedValues[0].propertyUris[0]
-  )!.values[0];
+  )[0];
 
   it("should get the value", () => {
     expect(sut.value.value.toString()).to.not.be.empty;

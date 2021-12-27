@@ -26,10 +26,8 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 const WORK_JOIN_SELECTOR: WorkJoinSelector = {
   collections: {},
   institution: {},
-  propertyDefinitions: {
-    values: {
-      thumbnail: {targetDimensions: thumbnailTargetDimensions},
-    },
+  propertyNamedValues: {
+    thumbnail: {targetDimensions: thumbnailTargetDimensions},
   },
   thumbnail: {targetDimensions: thumbnailTargetDimensions},
 };
