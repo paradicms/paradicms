@@ -10,6 +10,7 @@ import {useQueryParam} from "use-query-params";
 import {Institution, Work} from "@paradicms/models";
 import {Pagination} from "./Pagination";
 import {WorkQuery, WorkQueryResults} from "@paradicms/services";
+import {FiltersControls} from "./FiltersControls";
 
 export const WorkSearchContainer: React.FunctionComponent<{
   page: number;
@@ -96,17 +97,17 @@ export const WorkSearchContainer: React.FunctionComponent<{
       ) : null}
       <Row>
         <Col xs="2">
-          {/*<FiltersControls*/}
-          {/*  facets={workQueryResults.facets}*/}
-          {/*  filters={workQuery.filters}*/}
-          {/*  onChange={newFilters => {*/}
-          {/*    setWorkQuery({*/}
-          {/*      ...workQuery,*/}
-          {/*      filters: newFilters,*/}
-          {/*    });*/}
-          {/*    setPage(undefined);*/}
-          {/*  }}*/}
-          {/*/>*/}
+          <FiltersControls
+            facets={workQueryResults.facets}
+            filters={workQuery.filters}
+            onChange={newFilters => {
+              setWorkQuery({
+                ...workQuery,
+                filters: newFilters,
+              });
+              setPage(undefined);
+            }}
+          />
         </Col>
         <Col xs="10">
           <Container fluid>
