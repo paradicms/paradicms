@@ -6,7 +6,7 @@ from rdflib.namespace import DCTERMS
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.text import Text
-from paradicms_etl.namespace import CMS
+from paradicms_etl.namespaces import CMS
 
 
 class Collection(_NamedModel):

@@ -5,7 +5,7 @@ from rdflib.namespace import FOAF
 
 from paradicms_etl.models._agent import _Agent
 from paradicms_etl.models.property import Property
-from paradicms_etl.namespace import CONTACT
+from paradicms_etl.namespaces import CONTACT
 
 
 class Person(_Agent):

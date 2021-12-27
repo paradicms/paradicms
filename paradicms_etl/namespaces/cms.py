@@ -9,6 +9,7 @@ class CMS(DefinedNamespace):
     # Properties
     collection: URIRef
     institution: URIRef
+    imageCopyable: URIRef
     imageMaxHeight: URIRef
     imageMaxWidth: URIRef
     imageSrc: URIRef

@@ -3,7 +3,7 @@ from typing import Generator, Optional, Tuple, Union
 from rdflib import BNode, ConjunctiveGraph, Graph, Literal, RDF, URIRef
 from rdflib.resource import Resource
 
-from paradicms_etl.namespace import CMS
+from paradicms_etl.namespaces import CMS
 
 
 class _Model:

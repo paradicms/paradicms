@@ -4,7 +4,7 @@ from logging import Logger
 from rdflib import URIRef, Literal
 from rdflib.resource import Resource
 
-from paradicms_etl.namespace import SCHEMA
+from paradicms_etl.namespaces import SCHEMA
 
 
 @dataclass(frozen=True)

@@ -10,10 +10,9 @@ from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.license import License
+from paradicms_etl.models.named_value import NamedValue
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
-from paradicms_etl.models.property_definition import PropertyDefinition
-from paradicms_etl.models.property_value_definition import NamedValue
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.work import Work
@@ -34,12 +33,10 @@ class ValidationTransformer(_Transformer):
             self.__model_uris = set()
             self.__organization_uris = set()
             self.__person_uris = set()
-            self.__property_definition_uris = set()
             self.__referenced_agent_uris = set()
             self.__referenced_collection_uris = set()
             self.__referenced_institution_uris = set()
             self.__referenced_license_uris = set()
-            self.__referenced_property_definition_uris = set()
             self.__referenced_rights_statement_uris = set()
             self.__rights_statement_uris = set()
             self.__work_uris = set()
@@ -146,38 +143,26 @@ class ValidationTransformer(_Transformer):
             if model.uri not in self.__model_uris:
                 self.__model_uris.add(model.uri)
             else:
-                # elif not isinstance(model, PropertyDefinition):
                 raise ValueError(f"duplicate model URI: {model.uri}")
+
+        def _validate_named_value(self, named_value: NamedValue):
+            pass
+
+        def _validate_named_value_references(self):
+            pass
 
         def _validate_organization(self, organization: Organization):
             assert organization.uri not in self.__organization_uris
             self.__organization_uris.add(organization.uri)
 
+        def _validate_organization_references(self):
+            pass
+
         def _validate_person(self, person: Person):
             assert person.uri not in self.__person_uris
             self.__person_uris.add(person.uri)
 
-        def _validate_property_definition(
-            self, property_definition: PropertyDefinition
-        ):
-            assert property_definition.uri not in self.__property_definition_uris
-            self.__property_definition_uris.add(property_definition.uri)
-
-        def _validate_property_definition_references(self):
-            self.__validate_uri_references(
-                referenced_uris=self.__referenced_property_definition_uris,
-                universe_uris=self.__property_definition_uris,
-                uri_type="property definition",
-                warn=False,
-            )
-
-        def _validate_property_value_definition(
-            self, property_value_definition: NamedValue
-        ):
-            for property_uri in property_value_definition.property_uris:
-                self.__referenced_property_definition_uris.add(property_uri)
-
-        def _validate_property_value_definition_references(self):
+        def _validate_person_references(self):
             pass
 
         def __validate_rights(self, rights: Optional[Rights]):

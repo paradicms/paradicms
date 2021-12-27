@@ -5,7 +5,7 @@ from rdflib import Literal, RDFS
 from rdflib.namespace import SKOS
 from rdflib.resource import Resource
 
-from paradicms_etl.namespace import CMS
+from paradicms_etl.namespaces import CMS
 
 
 @dataclass(frozen=True)

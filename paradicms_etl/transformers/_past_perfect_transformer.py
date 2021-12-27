@@ -1,15 +1,11 @@
 from typing import Tuple, Union
 from urllib.parse import quote
 
-from rdflib import URIRef
+from rdflib import URIRef, DCTERMS
 
 from paradicms_etl._transformer import _Transformer
-from paradicms_etl.models.dublin_core_property_definitions import (
-    DublinCorePropertyDefinitions,
-)
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.property import Property
-from paradicms_etl.models.property_definition import PropertyDefinition
 from paradicms_etl.models.work import Work
 
 
@@ -22,15 +18,15 @@ class _PastPerfectTransformer(_Transformer):
     def _convert_database_object_attribute_values_to_properties(
         self,
         attribute_values: Union[None, str, Tuple[str, ...]],
-        property_definition: PropertyDefinition,
+        property_uri: URIRef,
     ) -> Tuple[Property, ...]:
         if attribute_values is None:
             return ()
         if isinstance(attribute_values, str):
-            return (Property(property_definition, attribute_values),)
+            return (Property(property_uri, attribute_values),)
         elif isinstance(attribute_values, tuple):
             return tuple(
-                Property(property_definition, property_value)
+                Property(property_uri, property_value)
                 for property_value in attribute_values
             )
         else:
@@ -42,26 +38,24 @@ class _PastPerfectTransformer(_Transformer):
         assert isinstance(database_object, DatabaseObject)
 
         properties = []
-        for property_definition, attribute_values in (
+        for property_uri, attribute_values in (
             (
-                DublinCorePropertyDefinitions.ALTERNATIVE_TITLE,
+                DCTERMS.alternative,
                 database_object.othername,
             ),
-            (DublinCorePropertyDefinitions.DATE, database_object.date),
-            (DublinCorePropertyDefinitions.DESCRIPTION, database_object.description),
-            (DublinCorePropertyDefinitions.IDENTIFIER, database_object.id),
-            (DublinCorePropertyDefinitions.TITLE, database_object.title),
+            (DCTERMS.date, database_object.date),
+            (DCTERMS.description, database_object.description),
+            (DCTERMS.identifier, database_object.id),
+            (DCTERMS.title, database_object.title),
         ):
             properties.extend(
                 self._convert_database_object_attribute_values_to_properties(
-                    attribute_values, property_definition
+                    attribute_values, property_uri
                 )
             )
         return tuple(properties)
 
     def transform(self, database):
-        yield from DublinCorePropertyDefinitions.as_tuple()
-
         institution = self._transform_institution_from_arguments(**self.__kwds)
         yield institution
 

@@ -2,7 +2,9 @@ from dataclasses import dataclass
 
 from rdflib import Graph, URIRef
 
-from paradicms_etl.models.property_definition import PropertyDefinition
+from paradicms_etl.models.wikidata.wikidata_property_definition import (
+    WikidataPropertyDefinition,
+)
 from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
 
 
@@ -15,7 +17,7 @@ class WikidataDirectClaim(WikidataStatement):
         graph: Graph,
         object_: URIRef,
         predicate: URIRef,
-        property_definition: PropertyDefinition,
+        property_definition: WikidataPropertyDefinition,
         subject: URIRef
     ) -> "WikidataDirectClaim":
         if property_definition.direct_claim_normalized_uri is not None:

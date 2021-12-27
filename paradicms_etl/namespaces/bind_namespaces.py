@@ -1,10 +1,10 @@
 from rdflib import DC, DCTERMS, FOAF, OWL, SKOS
 from rdflib.namespace import NamespaceManager
 
-from paradicms_etl.namespaces.vra import VRA
-
 
 def bind_namespaces(namespace_manager: NamespaceManager) -> NamespaceManager:
+    from paradicms_etl.namespaces import CMS, CONTACT, EXIF, PROV, SCHEMA, TIME, VRA
+
     namespace_manager.bind("paradicms", CMS)
     namespace_manager.bind("contact", CONTACT)
     namespace_manager.bind("creativecommons", "http://creativecommons.org/ns#")

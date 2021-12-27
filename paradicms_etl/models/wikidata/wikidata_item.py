@@ -14,7 +14,7 @@ from paradicms_etl.models.wikidata.wikidata_property_definition import (
     WikidataPropertyDefinition,
 )
 from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
-from paradicms_etl.namespace import SCHEMA
+from paradicms_etl.namespaces import SCHEMA
 
 
 class WikidataItem(_NamedModel):

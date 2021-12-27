@@ -1,6 +1,7 @@
 from typing import Optional, Tuple
 
 from rdflib.namespace import RDF, RDFS
+from rdflib.resource import Resource
 from rdflib.term import Literal, Node, URIRef
 
 from paradicms_etl.models._named_model import _NamedModel
@@ -39,3 +40,14 @@ class NamedValue(_NamedModel):
     @property
     def property_uris(self) -> Tuple[URIRef, ...]:
         return self._required_uri_values(RDF.predicate)
+
+    @property
+    def value(self) -> Node:
+        value = self._resource.value(RDF.value)
+        if value is None:
+            raise KeyError
+        if isinstance(value, Resource):
+            return value.identifier
+        else:
+            assert isinstance(value, Node)
+            return value

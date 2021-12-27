@@ -1,6 +1,5 @@
-from paradicms_etl.models.dublin_core_property_definitions import (
-    DublinCorePropertyDefinitions,
-)
+from rdflib import DCTERMS
+
 from paradicms_etl.transformers._past_perfect_transformer import _PastPerfectTransformer
 
 
@@ -13,23 +12,23 @@ class PastPerfectOnlineTransformer(_PastPerfectTransformer):
         )
 
         impl_attributes = database_object.impl_attributes.copy()
-        for (impl_attributes_key, property_definition) in (
+        for (impl_attributes_key, property_uri) in (
             ("Date", None),
             ("Description", None),
             ("Object Name", None),
             ("Other Name", None),
-            ("People & Trade Names", DublinCorePropertyDefinitions.ALTERNATIVE_TITLE),
-            ("Provenance", DublinCorePropertyDefinitions.PROVENANCE),
-            ("Subjects", DublinCorePropertyDefinitions.SUBJECT),
+            ("People & Trade Names", DCTERMS.alternative),
+            ("Provenance", DCTERMS.provenance),
+            ("Subjects", DCTERMS.subject),
             ("Title", None),
         ):
             impl_attribute_values = impl_attributes.pop(impl_attributes_key, None)
-            if property_definition is None:
+            if property_uri is None:
                 # Already covered elsewhere
                 continue
             properties.extend(
                 self._convert_database_object_attribute_values_to_properties(
-                    impl_attribute_values, property_definition
+                    impl_attribute_values, property_uri
                 )
             )
         for key, value in impl_attributes.items():

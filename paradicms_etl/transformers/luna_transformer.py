@@ -1,24 +1,19 @@
 from datetime import datetime
 from typing import Dict, Generator, List, Tuple
 
-from rdflib import URIRef
+from rdflib import URIRef, DCTERMS
 
 from paradicms_etl._model import _Model
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.extractors.luna_extractor import LunaExtractor
 from paradicms_etl.models.collection import Collection
-from paradicms_etl.models.dublin_core_property_definitions import (
-    DublinCorePropertyDefinitions,
-)
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
-from paradicms_etl.models.vra_core_property_definitions import (
-    VraCorePropertyDefinitions,
-)
 from paradicms_etl.models.work import Work
+from paradicms_etl.namespaces import VRA
 
 
 class LunaTransformer(_Transformer):
@@ -70,9 +65,6 @@ class LunaTransformer(_Transformer):
         yield from zip(*all_field_values)
 
     def transform(self, base_url: str, search_results):
-        yield from DublinCorePropertyDefinitions.as_tuple()
-        yield from VraCorePropertyDefinitions.as_tuple()
-
         institution = self._transform_institution(
             base_url=base_url, institution_name=search_results["institutionName"]
         )
@@ -192,14 +184,14 @@ class LunaTransformer(_Transformer):
 
         properties = []
 
-        for field_name, property_definition in (
-            ("Culture", VraCorePropertyDefinitions.CULTURAL_CONTEXT),
-            ("Description", DublinCorePropertyDefinitions.DESCRIPTION),
-            ("Subject", DublinCorePropertyDefinitions.SUBJECT),
-            ("Work Type", DublinCorePropertyDefinitions.TYPE),
+        for field_name, property_uri in (
+            ("Culture", VRA.culturalContext),
+            ("Description", DCTERMS.description),
+            ("Subject", DCTERMS.subject),
+            ("Work Type", DCTERMS.type),
         ):
             for field_value in field_values.pop(field_name, []):
-                properties.append(Property(property_definition, field_value))
+                properties.append(Property(property_uri, field_value))
 
         def pop_qualified_field_values(*args):
             return self._pop_qualified_field_values(field_values, *args)
@@ -212,16 +204,16 @@ class LunaTransformer(_Transformer):
         ) in pop_qualified_field_values(
             "Creator", "Creator Dates", "Creator Type", "Creator Role"
         ):
-            properties.append(Property(DublinCorePropertyDefinitions.CREATOR, creator))
+            properties.append(Property(DCTERMS.creator, creator))
 
         for date, date_type in pop_qualified_field_values("Date", "Date Type"):
             if date_type == "completion date":
-                property_definition = DublinCorePropertyDefinitions.DATE_SUBMITTED
+                property_uri = DCTERMS.dateSubmitted
             elif date_type == "creation":
-                property_definition = DublinCorePropertyDefinitions.CREATED
+                property_uri = DCTERMS.created
             else:
                 raise ValueError(date_type)
-            properties.append(Property(property_definition, date))
+            properties.append(Property(property_uri, date))
 
         for location, location_type in pop_qualified_field_values(
             "Location", "Location Type"
@@ -231,10 +223,10 @@ class LunaTransformer(_Transformer):
         for material, material_type in pop_qualified_field_values(
             "Material", "Material Type"
         ):
-            properties.append(Property(VraCorePropertyDefinitions.MATERIAL, material))
+            properties.append(Property(VRA.material, material))
 
         for title, title_type in pop_qualified_field_values("Title", "Title Type"):
-            properties.append(Property(DublinCorePropertyDefinitions.TITLE, title))
+            properties.append(Property(DCTERMS.title, title))
 
         for ignore_key in (
             "Repository",

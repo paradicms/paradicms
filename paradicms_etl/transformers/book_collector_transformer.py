@@ -12,7 +12,7 @@ from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.work import Work
-from paradicms_etl.namespace import CMS, SCHEMA
+from paradicms_etl.namespaces import CMS, SCHEMA
 
 
 class BookCollectorTransformer(_Transformer):

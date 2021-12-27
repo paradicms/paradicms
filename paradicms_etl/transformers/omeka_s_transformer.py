@@ -9,7 +9,7 @@ from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.work import Work
-from paradicms_etl.namespace import CMS, PROV
+from paradicms_etl.namespaces import CMS, PROV
 
 # Omeka namespace
 O = Namespace("http://omeka.org/s/vocabs/o#")

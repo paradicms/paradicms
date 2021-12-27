@@ -7,7 +7,7 @@ from rdflib.namespace import DCTERMS, FOAF, RDFS
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.rights import Rights
-from paradicms_etl.namespace import CMS, EXIF
+from paradicms_etl.namespaces import CMS, EXIF
 
 
 # def image_dimensions(height_p, width_p):
