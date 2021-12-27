@@ -1,7 +1,6 @@
 import {Button, ButtonGroup, Col, Container, Row} from "reactstrap";
 import * as React from "react";
 import {useMemo} from "react";
-import {FiltersControls} from "./FiltersControls";
 import {FiltersBadges} from "./FiltersBadges";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faImages, faList} from "@fortawesome/free-solid-svg-icons";
@@ -97,17 +96,17 @@ export const WorkSearchContainer: React.FunctionComponent<{
       ) : null}
       <Row>
         <Col xs="2">
-          <FiltersControls
-            facets={workQueryResults.facets}
-            filters={workQuery.filters}
-            onChange={newFilters => {
-              setWorkQuery({
-                ...workQuery,
-                filters: newFilters,
-              });
-              setPage(undefined);
-            }}
-          />
+          {/*<FiltersControls*/}
+          {/*  facets={workQueryResults.facets}*/}
+          {/*  filters={workQuery.filters}*/}
+          {/*  onChange={newFilters => {*/}
+          {/*    setWorkQuery({*/}
+          {/*      ...workQuery,*/}
+          {/*      filters: newFilters,*/}
+          {/*    });*/}
+          {/*    setPage(undefined);*/}
+          {/*  }}*/}
+          {/*/>*/}
         </Col>
         <Col xs="10">
           <Container fluid>

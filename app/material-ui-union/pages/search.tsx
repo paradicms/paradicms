@@ -60,22 +60,20 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
     [configuration, dataset]
   );
 
-  const useWorkQueryOut = useWorkQuery({
-    defaultFilters: defaultWorkQueryFilters,
-    workQueryService,
-    worksPerPage: WORKS_PER_PAGE,
-  });
-  if (!useWorkQueryOut) {
-    return null;
-  }
   const {
-    page,
-    pageMax,
     setPage,
     setWorkQuery,
     workQuery,
     workQueryResults,
-  } = useWorkQueryOut;
+    ...workSearchProps
+  } = useWorkQuery({
+    defaultFilters: defaultWorkQueryFilters,
+    workQueryService,
+    worksPerPage: WORKS_PER_PAGE,
+  });
+  if (!workQueryResults) {
+    return null;
+  }
 
   return (
     <Layout
@@ -103,8 +101,6 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
         works={workQueryResults.dataset.works}
         onChangeFilters={filters => setWorkQuery({...workQuery, filters})}
         onChangePage={setPage}
-        page={page}
-        pageMax={pageMax}
         renderInstitutionLink={(institution, children) => (
           <Link href={Hrefs.institution(institution.uri).home}>{children}</Link>
         )}
@@ -114,6 +110,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
           </Link>
         )}
         query={workQuery}
+        {...workSearchProps}
       />
     </Layout>
   );

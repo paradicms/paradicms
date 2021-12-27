@@ -64,21 +64,19 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     [configuration, dataset]
   );
 
-  const useWorkQueryOut = useWorkQuery({
+  const {
+    setPage,
+    setWorkQuery,
+    workQueryResults,
+    ...workSearchProps
+  } = useWorkQuery({
     defaultFilters: defaultWorkQueryFilters,
     workQueryService,
     worksPerPage: WORKS_PER_PAGE,
   });
-  if (!useWorkQueryOut) {
+  if (!workQueryResults) {
     return null;
   }
-  const {
-    page,
-    pageMax,
-    setPage,
-    setWorkQuery,
-    ...lunrWorkSearchProps
-  } = useWorkQueryOut;
 
   return (
     <Layout
@@ -90,16 +88,15 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
       }}
     >
       <WorkSearchContainer
-        page={page}
-        pageMax={pageMax}
         renderWorkLink={(work, children) => (
           <Link href={Hrefs.work(work.uri)}>
             <a>{children}</a>
           </Link>
         )}
-        setWorkQuery={setWorkQuery}
         setPage={setPage}
-        {...lunrWorkSearchProps}
+        setWorkQuery={setWorkQuery}
+        workQueryResults={workQueryResults}
+        {...workSearchProps}
       />
     </Layout>
   );

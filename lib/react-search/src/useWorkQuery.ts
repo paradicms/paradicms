@@ -1,6 +1,6 @@
 import {NumberParam, useQueryParam} from "use-query-params";
 import {JsonQueryParamConfig} from "@paradicms/react";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {
   WorkQuery,
   WorkQueryResults,
@@ -18,22 +18,26 @@ export const useWorkQuery = (kwds: {
   setWorkQuery: (workQuery: WorkQuery) => void;
   setPage: (page: number | undefined) => void;
   workQuery: WorkQuery;
-  workQueryResults: WorkQueryResults;
-} | null => {
+  workQueryResults: WorkQueryResults | null;
+} => {
   const {defaultFilters, workQueryService, worksPerPage} = kwds;
 
   const [workQueryQueryParam, setWorkQuery] = useQueryParam<
     WorkQuery | undefined
   >("query", new JsonQueryParamConfig<WorkQuery>());
-  const workQuery = workQueryQueryParam ?? {
-    filters: defaultFilters,
-  };
+  const workQuery = useMemo(
+    () =>
+      workQueryQueryParam ?? {
+        filters: defaultFilters,
+      },
+    [defaultFilters, workQueryQueryParam]
+  );
 
   const [pageQueryParam, setPage] = useQueryParam<number | null | undefined>(
     "page",
     NumberParam
   );
-  const page = pageQueryParam ?? 0;
+  const page = useMemo(() => pageQueryParam ?? 0, [pageQueryParam]);
 
   const [
     workQueryResults,
@@ -50,18 +54,16 @@ export const useWorkQuery = (kwds: {
         query: workQuery,
       })
       .then(setWorkQueryResults);
-  }, [workQuery, workQueryService, worksPerPage, page]);
+  }, [page, workQuery, workQueryService, worksPerPage]);
 
-  if (workQueryResults !== null) {
-    return {
-      page,
-      pageMax: Math.ceil(workQueryResults.totalWorksCount / worksPerPage) - 1,
-      setPage,
-      setWorkQuery,
-      workQuery,
-      workQueryResults,
-    };
-  } else {
-    return null;
-  }
+  return {
+    page,
+    pageMax: workQueryResults
+      ? Math.ceil(workQueryResults.totalWorksCount / worksPerPage) - 1
+      : page,
+    setPage,
+    setWorkQuery,
+    workQuery,
+    workQueryResults,
+  };
 };

@@ -25,22 +25,21 @@ export const Application: React.FunctionComponent<{
   const documentTitle = configuration.documentTitle ?? "Search";
   const navbarTitle = configuration.navbarTitle ?? documentTitle;
 
-  const useWorkQueryOut = useWorkQuery({
+  const {
+    setPage,
+    setWorkQuery,
+    workQuery,
+    workQueryResults,
+    ...workSearchProps
+  } = useWorkQuery({
     defaultFilters: configuration.search?.filters ?? [],
     workQueryService,
     worksPerPage: WORKS_PER_PAGE,
   });
-  if (!useWorkQueryOut) {
+
+  if (!workQueryResults) {
     return null;
   }
-  const {
-    page,
-    pageMax,
-    setPage,
-    setWorkQuery,
-    workQuery,
-    ...workSearchProps
-  } = useWorkQueryOut;
 
   return (
     <>
@@ -75,12 +74,13 @@ export const Application: React.FunctionComponent<{
                   {...workSearchProps}
                   page={page}
                   pageMax={pageMax}
-                  workQuery={workQuery}
                   renderWorkLink={(work, children) => (
                     <a href={work.page ?? work.uri}>{children}</a>
                   )}
-                  setWorkQuery={setWorkQuery}
                   setPage={setPage}
+                  setWorkQuery={setWorkQuery}
+                  workQuery={workQuery}
+                  workQueryResults={workQueryResults}
                 />
               </CardBody>
             </Card>
