@@ -40,6 +40,11 @@ const workProperties: PropertyConfiguration[] = [
     searchable: true,
     uri: DCTERMS_NS + "title",
   },
+  {
+    filterable: true,
+    label: "Type",
+    uri: DCTERMS_NS + "type",
+  },
 ];
 
 export const defaultAppConfiguration = imputeAppConfiguration({

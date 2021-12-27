@@ -64,7 +64,8 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
             <WorkImagesCarousel work={work} />
           </Col>
         </Row>
-        {work.properties.length > 0 ? (
+        {configuration.workProperties &&
+        configuration.workProperties.length > 0 ? (
           <Row className="mt-4">
             <Col xs={12}>
               {/*<Accordion defaultOpen={true} title={<h4>Properties</h4>}>*/}

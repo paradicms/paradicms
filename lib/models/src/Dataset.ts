@@ -214,7 +214,7 @@ export class Dataset {
     return this._licensesByUriIndex!;
   }
 
-  private logContents(): void {
+  logContents(): void {
     console.log(
       "Dataset:",
       this.store.getSubjects(null, null, null).length,
