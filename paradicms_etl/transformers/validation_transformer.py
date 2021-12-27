@@ -13,7 +13,7 @@ from paradicms_etl.models.license import License
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property_definition import PropertyDefinition
-from paradicms_etl.models.property_value_definition import PropertyValueDefinition
+from paradicms_etl.models.property_value_definition import NamedValue
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.work import Work
@@ -172,7 +172,7 @@ class ValidationTransformer(_Transformer):
             )
 
         def _validate_property_value_definition(
-            self, property_value_definition: PropertyValueDefinition
+            self, property_value_definition: NamedValue
         ):
             for property_uri in property_value_definition.property_uris:
                 self.__referenced_property_definition_uris.add(property_uri)

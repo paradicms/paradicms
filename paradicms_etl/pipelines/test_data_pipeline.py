@@ -23,7 +23,7 @@ from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
-from paradicms_etl.models.property_value_definition import PropertyValueDefinition
+from paradicms_etl.models.property_value_definition import NamedValue
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -441,7 +441,7 @@ class TestDataPipeline(_Pipeline):
                 if property_definition.uri == DCTERMS.creator:
                     continue
                 for property_value in property_values:
-                    property_value_definition = PropertyValueDefinition.from_fields(
+                    property_value_definition = NamedValue.from_fields(
                         # label=property_value,
                         property_uris=(property_definition.uri,),
                         uri=URIRef(

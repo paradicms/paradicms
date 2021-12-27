@@ -29,7 +29,7 @@ from paradicms_etl.models.markdown_directory import MarkdownDirectory
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property_definition import PropertyDefinition
-from paradicms_etl.models.property_value_definition import PropertyValueDefinition
+from paradicms_etl.models.property_value_definition import NamedValue
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -65,7 +65,7 @@ __MODEL_TYPES = (
     Organization,
     Person,
     PropertyDefinition,
-    PropertyValueDefinition,
+    NamedValue,
     RightsStatement,
     Work,
 )

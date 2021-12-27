@@ -6,7 +6,7 @@ from rdflib.term import Literal, Node, URIRef
 from paradicms_etl.models._named_model import _NamedModel
 
 
-class PropertyValueDefinition(_NamedModel):
+class NamedValue(_NamedModel):
     def __init__(self, *args, **kwds):
         _NamedModel.__init__(self, *args, **kwds)
         self.label
@@ -20,7 +20,7 @@ class PropertyValueDefinition(_NamedModel):
         uri: URIRef,
         value: Node,  # A property value
         label: Optional[str] = None,
-    ) -> "PropertyValueDefinition":
+    ) -> "NamedValue":
         resource = cls._create_resource(identifier=uri)
         if label is not None:
             resource.add(RDFS.label, Literal(label))
