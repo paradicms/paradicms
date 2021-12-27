@@ -27,10 +27,8 @@ interface StaticProps {
 const WORK_JOIN_SELECTOR: WorkJoinSelector = {
   collections: {},
   institution: {},
-  propertyDefinitions: {
-    values: {
-      thumbnail: {targetDimensions: thumbnailTargetDimensions},
-    },
+  propertyNamedValues: {
+    thumbnail: {targetDimensions: thumbnailTargetDimensions},
   },
   thumbnail: {targetDimensions: thumbnailTargetDimensions},
 };
@@ -126,14 +124,15 @@ export default SearchPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const dataset = readDatasetFile(readFileSync);
+  const completeDataset = readDatasetFile(readFileSync);
+  const configuration = readAppConfigurationFile(readFileSync);
 
   return {
     props: {
-      configuration: readAppConfigurationFile(readFileSync),
-      datasetString: new DataSubsetter(dataset)
+      configuration,
+      datasetString: new DataSubsetter({completeDataset, configuration})
         .worksDataset(
-          dataset.works.map(work => work.uri),
+          completeDataset.works.map(work => work.uri),
           WORK_JOIN_SELECTOR
         )
         .stringify(),

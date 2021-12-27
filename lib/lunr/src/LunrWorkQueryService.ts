@@ -29,7 +29,7 @@ import {
   ValueFacetValue,
   ValueFacetValueThumbnail,
 } from "@paradicms/facets";
-import {AppConfiguration} from "@paradicms/configuration";
+import {PropertyConfiguration} from "@paradicms/configuration";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -48,21 +48,27 @@ const base58 = basex(
 //   }
 // }
 
+interface LunrWorkQueryServiceConfiguration {
+  readonly workProperties?: readonly PropertyConfiguration[];
+}
+
 interface MutableValueFacetValue<ValueT extends PrimitiveType>
   extends Omit<ValueFacetValue<ValueT>, "count"> {
   count: number;
 }
 
 export class LunrWorkQueryService implements WorkQueryService {
+  private readonly configuration: LunrWorkQueryServiceConfiguration;
   private readonly dataset: Dataset;
   private readonly index: Index;
   private readonly workJoinSelector?: WorkJoinSelector;
 
   constructor(kwds: {
-    configuration: AppConfiguration;
+    configuration: LunrWorkQueryServiceConfiguration;
     dataset: Dataset;
     workJoinSelector?: WorkJoinSelector;
   }) {
+    this.configuration = kwds.configuration;
     this.dataset = kwds.dataset;
     this.workJoinSelector = kwds.workJoinSelector;
 
@@ -318,7 +324,10 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       console.debug("Search sliced works count:", slicedWorks.length);
 
-      const slicedWorksDataset = new DataSubsetter(this.dataset).worksDataset(
+      const slicedWorksDataset = new DataSubsetter({
+        completeDataset: this.dataset,
+        configuration: this.configuration,
+      }).worksDataset(
         slicedWorks.map(work => work.uri),
         this.workJoinSelector
       );

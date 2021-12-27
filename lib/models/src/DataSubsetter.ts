@@ -14,6 +14,11 @@ import {AgentJoinSelector} from "./AgentJoinSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {NamedValueJoinSelector} from "./NamedValueJoinSelector";
 import {NamedValue} from "./NamedValue";
+import {PropertyConfiguration} from "@paradicms/configuration";
+
+interface DataSubsetterConfiguration {
+  readonly workProperties?: readonly PropertyConfiguration[];
+}
 
 /**
  * Subset a Dataset to reduce the amount of data passed between getStaticProps and the component.
@@ -27,14 +32,14 @@ import {NamedValue} from "./NamedValue";
  */
 export class DataSubsetter {
   private readonly completeDataset: Dataset;
-  private readonly workPropertyUris: readonly string[];
+  private readonly configuration: DataSubsetterConfiguration;
 
   constructor(kwds: {
     completeDataset: Dataset;
-    workPropertyUris: readonly string[];
+    configuration: DataSubsetterConfiguration;
   }) {
     this.completeDataset = kwds.completeDataset;
-    this.workPropertyUris = kwds.workPropertyUris;
+    this.configuration = kwds.configuration;
   }
 
   // Use the builder pattern internally rather than a more functional algorithm, such as merging datasets,
@@ -248,9 +253,14 @@ export class DataSubsetter {
         institutionUris.add(work.institutionUri);
       }
 
-      if (joinSelector.propertyNamedValues) {
-        for (const propertyUri of this.workPropertyUris) {
-          for (const namedValue of work.propertyNamedValues(propertyUri)) {
+      if (
+        joinSelector.propertyNamedValues &&
+        this.configuration.workProperties
+      ) {
+        for (const propertyConfiguration of this.configuration.workProperties) {
+          for (const namedValue of work.propertyNamedValues(
+            propertyConfiguration.uri
+          )) {
             if (!namedValuesByUri[namedValue.uri]) {
               namedValuesByUri[namedValue.uri] = namedValue;
             }

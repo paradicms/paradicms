@@ -10,6 +10,7 @@ import {selectThumbnail} from "./selectThumbnail";
 import {Memoize} from "typescript-memoize";
 import {PropertyValue} from "./PropertyValue";
 import {NamedValue} from "./NamedValue";
+import {NamedNode} from "n3";
 
 export class Work extends NamedModel {
   @Memoize()
@@ -48,11 +49,41 @@ export class Work extends NamedModel {
   }
 
   propertyNamedValues(propertyUri: string): readonly NamedValue[] {
-    return super._propertyNamedValues(propertyUri);
+    const result: NamedValue[] = [];
+    this.store.forEach(
+      quad => {
+        if (quad.object.termType !== "NamedNode") {
+          return;
+        }
+        if (!this.hasRdfType(quad.object as NamedNode, PARADICMS.NamedValue)) {
+          return;
+        }
+        result.push(
+          new NamedValue({
+            dataset: this.dataset,
+            graphNode: quad.graph as NamedNode,
+            node: quad.object,
+          })
+        );
+      },
+      this.node,
+      new NamedNode(propertyUri),
+      null,
+      this.graphNode
+    );
+    return result;
   }
 
   propertyValues(propertyUri: string): readonly PropertyValue[] {
-    return super._propertyValues(propertyUri);
+    return PropertyValue.fromQuads(
+      this.dataset,
+      this.store.getQuads(
+        this.node,
+        new NamedNode(propertyUri),
+        null,
+        this.graphNode
+      )
+    );
   }
 
   @Memoize()

@@ -143,11 +143,16 @@ export const getStaticProps: GetStaticProps = async ({
   const collectionUri = decodeFileName(params!.collectionUri as string);
   // const institutionUri = decodeFileName(params!.institutionUri as string);
 
+  const configuration = readAppConfigurationFile(readFileSync);
+
   return {
     props: {
       collectionUri,
-      configuration: readAppConfigurationFile(readFileSync),
-      datasetString: new DataSubsetter(readDatasetFile(readFileSync))
+      configuration,
+      datasetString: new DataSubsetter({
+        completeDataset: readDatasetFile(readFileSync),
+        configuration,
+      })
         .collectionDataset(collectionUri, {
           works: WORK_JOIN_SELECTOR,
         })

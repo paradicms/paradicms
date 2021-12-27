@@ -1,8 +1,10 @@
 import {NamedValue} from "./NamedValue";
-import {Literal} from "n3";
+import {BlankNode, Literal, NamedNode, Quad} from "n3";
 import {Text} from "./Text";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {Image} from "./Image";
+import {PARADICMS, RDF} from "./vocabularies";
+import {Dataset} from "./Dataset";
 
 export abstract class PropertyValue {
   /**
@@ -16,6 +18,57 @@ export abstract class PropertyValue {
 
   static fromNamedValue(namedValue: NamedValue) {
     return new NamedPropertyValue(namedValue);
+  }
+
+  static fromQuads(
+    dataset: Dataset,
+    quads: readonly Quad[]
+  ): readonly PropertyValue[] {
+    const result: PropertyValue[] = [];
+    for (const quad of quads) {
+      switch (quad.object.termType) {
+        case "BlankNode":
+          if (
+            dataset.store.getQuads(quad.object, RDF.type, PARADICMS.Text, null)
+              .length > 0
+          ) {
+            result.push(
+              PropertyValue.fromText(
+                new Text({
+                  dataset,
+                  graphNode: quad.graph as NamedNode,
+                  node: quad.object as BlankNode,
+                })
+              )
+            );
+          }
+          break;
+        case "Literal":
+          result.push(PropertyValue.fromLiteral(quad.object as Literal));
+          break;
+        case "NamedNode":
+          if (
+            dataset.store.getQuads(
+              quad.object,
+              RDF.type,
+              PARADICMS.NamedValue,
+              null
+            ).length > 0
+          ) {
+            result.push(
+              PropertyValue.fromNamedValue(
+                new NamedValue({
+                  dataset,
+                  graphNode: quad.graph as NamedNode,
+                  node: quad.object as NamedNode,
+                })
+              )
+            );
+          }
+          break;
+      }
+    }
+    return result;
   }
 
   static fromText(text: Text) {

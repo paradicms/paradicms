@@ -1,11 +1,8 @@
-import {BlankNode, Literal, NamedNode, Quad, Store, Term} from "n3";
+import {BlankNode, Literal, NamedNode, Store, Term} from "n3";
 import {Dataset} from "./Dataset";
 import {NamedModel} from "./NamedModel";
 import {ModelParameters} from "./ModelParameters";
-import {NamedValue} from "./NamedValue";
-import {Text} from "./Text";
-import {PARADICMS, RDF} from "./vocabularies";
-import {PropertyValue} from "./PropertyValue";
+import {RDF} from "./vocabularies";
 
 export class Model {
   readonly dataset: Dataset;
@@ -18,26 +15,11 @@ export class Model {
     this._node = kwds.node;
   }
 
-  private forEachPropertyQuad(
-    callback: (quad: Quad) => void,
-    propertyUri: string
-  ): void {
-    this.store.forEach(
-      callback,
-      this.node,
-      new NamedNode(propertyUri),
-      null,
-      this.graphNode
-    );
-  }
-
-  private hasRdfType(node: BlankNode | NamedNode, rdfType: NamedNode): boolean {
-    for (const object of this.store.getObjects(node, RDF.type, null)) {
-      if (object.termType === "NamedNode" && object.value === rdfType.value) {
-        return true;
-      }
-    }
-    return false;
+  protected hasRdfType(
+    subject: BlankNode | NamedNode,
+    rdfType: NamedNode
+  ): boolean {
+    return this.store.getQuads(subject, RDF.type, rdfType, null).length > 0;
   }
 
   get node(): BlankNode | NamedNode {
@@ -88,25 +70,6 @@ export class Model {
     return null;
   }
 
-  protected optionalStringOrText(property: NamedNode): string | Text | null {
-    for (const object of this.store.getObjects(this.node, property, null)) {
-      switch (object.termType) {
-        case "BlankNode":
-          if (this.hasRdfType(object as BlankNode, PARADICMS.Text)) {
-            return new Text({
-              dataset: this.dataset,
-              graphNode: this.graphNode,
-              node: object,
-            });
-          }
-          break;
-        case "Literal":
-          return object.value;
-      }
-    }
-    return null;
-  }
-
   protected parentNamedNodes(childToParentProperty: NamedNode): NamedNode[] {
     const parentNodes = this.store.getObjects(
       this.node,
@@ -119,64 +82,6 @@ export class Model {
     return parentNodes
       .filter(node => node.termType === "NamedNode")
       .map(node => node as NamedNode);
-  }
-
-  protected _propertyNamedValues(propertyUri: string): readonly NamedValue[] {
-    const result: NamedValue[] = [];
-    this.forEachPropertyQuad(quad => {
-      if (quad.object.termType !== "NamedNode") {
-        return;
-      }
-      if (!this.hasRdfType(quad.object as NamedNode, PARADICMS.NamedValue)) {
-        return;
-      }
-      result.push(
-        new NamedValue({
-          dataset: this.dataset,
-          graphNode: quad.graph as NamedNode,
-          node: quad.object,
-        })
-      );
-    }, propertyUri);
-    return result;
-  }
-
-  protected _propertyValues(propertyUri: string): readonly PropertyValue[] {
-    const result: PropertyValue[] = [];
-    this.forEachPropertyQuad(quad => {
-      switch (quad.object.termType) {
-        case "BlankNode":
-          if (this.hasRdfType(quad.object as BlankNode, PARADICMS.Text)) {
-            result.push(
-              PropertyValue.fromText(
-                new Text({
-                  dataset: this.dataset,
-                  graphNode: this.graphNode,
-                  node: quad.object as BlankNode,
-                })
-              )
-            );
-          }
-          break;
-        case "Literal":
-          result.push(PropertyValue.fromLiteral(quad.object as Literal));
-          break;
-        case "NamedNode":
-          if (this.hasRdfType(quad.object as NamedNode, PARADICMS.NamedValue)) {
-            result.push(
-              PropertyValue.fromNamedValue(
-                new NamedValue({
-                  dataset: this.dataset,
-                  graphNode: quad.graph as NamedNode,
-                  node: quad.object as NamedNode,
-                })
-              )
-            );
-          }
-          break;
-      }
-    }, propertyUri);
-    return result;
   }
 
   protected requiredLiteral(property: NamedNode): Literal {

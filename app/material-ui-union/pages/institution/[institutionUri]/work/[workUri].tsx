@@ -109,15 +109,19 @@ export const getStaticProps: GetStaticProps = async ({
   // const institutionUri = decodeFileName(params!.institutionUri as string);
   const workUri = decodeFileName(params!.workUri as string);
 
+  const configuration = readAppConfigurationFile(readFileSync);
+
   return {
     props: {
-      configuration: readAppConfigurationFile(readFileSync),
-      datasetString: new DataSubsetter(readDatasetFile(readFileSync))
+      configuration,
+      datasetString: new DataSubsetter({
+        completeDataset: readDatasetFile(readFileSync),
+        configuration,
+      })
         .workDataset(workUri, {
           allImages: true,
           collections: {},
           institution: {},
-          propertyDefinitions: {},
         })
         .stringify(),
       workUri,
