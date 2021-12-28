@@ -1,5 +1,9 @@
 import * as React from "react";
-import {NavbarSearchForm, WorkSearchContainer} from "@paradicms/bootstrap";
+import {
+  NavbarSearchForm,
+  thumbnailTargetDimensions,
+  WorkSearchContainer,
+} from "@paradicms/bootstrap";
 import {
   Card,
   CardBody,
@@ -32,7 +36,12 @@ export const Application: React.FunctionComponent<{
     workQueryResults,
     ...workSearchProps
   } = useWorkQuery({
-    defaultFilters: configuration.search?.filters ?? [],
+    defaultWorkQuery: {
+      filters: configuration.search?.filters ?? [],
+      valueFacetValueThumbnailSelector: {
+        targetDimensions: thumbnailTargetDimensions,
+      },
+    },
     workQueryService,
     worksPerPage: WORKS_PER_PAGE,
   });

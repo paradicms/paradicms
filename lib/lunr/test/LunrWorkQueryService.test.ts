@@ -21,6 +21,12 @@ describe("LunrWorkQueryService", () => {
     const result = await sut.getWorks({
       query: {
         filters: configuration.search!.filters,
+        valueFacetValueThumbnailSelector: {
+          targetDimensions: {
+            height: 200,
+            width: 200,
+          },
+        },
       },
       offset: 0,
       limit: Number.MAX_SAFE_INTEGER,
@@ -42,6 +48,8 @@ describe("LunrWorkQueryService", () => {
       facet => facet.type === "StringPropertyValue"
     ) as StringPropertyValueFacet | undefined;
     expect(stringPropertyValueFacet).to.not.be.undefined;
+    expect(stringPropertyValueFacet!.values.some(value => !!value.thumbnail)).to
+      .be.true;
   });
 
   it("should return fewer works from a freetext query", async () => {

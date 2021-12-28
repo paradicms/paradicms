@@ -6,10 +6,9 @@ import {
   WorkQueryResults,
   WorkQueryService,
 } from "@paradicms/services";
-import {Filter} from "@paradicms/filters";
 
 export const useWorkQuery = (kwds: {
-  defaultFilters: readonly Filter[];
+  defaultWorkQuery: WorkQuery;
   workQueryService: WorkQueryService;
   worksPerPage: number;
 }): {
@@ -20,18 +19,15 @@ export const useWorkQuery = (kwds: {
   workQuery: WorkQuery;
   workQueryResults: WorkQueryResults | null;
 } => {
-  const {defaultFilters, workQueryService, worksPerPage} = kwds;
+  const {defaultWorkQuery, workQueryService, worksPerPage} = kwds;
 
   const [workQueryQueryParam, setWorkQuery] = useQueryParam<
     WorkQuery | undefined
   >("query", new JsonQueryParamConfig<WorkQuery>());
-  const workQuery = useMemo(
-    () =>
-      workQueryQueryParam ?? {
-        filters: defaultFilters,
-      },
-    [defaultFilters, workQueryQueryParam]
-  );
+  const workQuery = useMemo(() => workQueryQueryParam ?? defaultWorkQuery, [
+    defaultWorkQuery,
+    workQueryQueryParam,
+  ]);
 
   const [pageQueryParam, setPage] = useQueryParam<number | null | undefined>(
     "page",

@@ -46,8 +46,6 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
     return null;
   }
 
-  const defaultWorkQueryFilters = configuration.search!.filters ?? [];
-
   const dataset = useMemo(() => Dataset.parse(datasetString), [datasetString]);
 
   const workQueryService = useMemo<WorkQueryService>(
@@ -67,7 +65,12 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
     workQueryResults,
     ...workSearchProps
   } = useWorkQuery({
-    defaultFilters: defaultWorkQueryFilters,
+    defaultWorkQuery: {
+      filters: configuration.search!.filters ?? [],
+      valueFacetValueThumbnailSelector: {
+        targetDimensions: thumbnailTargetDimensions,
+      },
+    },
     workQueryService,
     worksPerPage: WORKS_PER_PAGE,
   });
@@ -94,7 +97,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
           : "Search results"
       }
       configuration={configuration}
-      onSearch={text => setWorkQuery({filters: defaultWorkQueryFilters, text})}
+      onSearch={text => setWorkQuery({...workQuery, text})}
     >
       <WorkSearchGrid
         facets={workQueryResults.facets}

@@ -308,6 +308,8 @@ export class LunrWorkQueryService implements WorkQueryService {
       // Calculate facets on the universe before filtering it
       const facets = this.facetizeWorks({
         filters: query.filters,
+        valueFacetValueThumbnailSelector:
+          query.valueFacetValueThumbnailSelector,
         works: allWorks,
       });
 

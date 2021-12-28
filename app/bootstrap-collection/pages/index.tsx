@@ -43,8 +43,6 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   configuration,
   datasetString,
 }) => {
-  const defaultWorkQueryFilters = configuration.search?.filters ?? [];
-
   const dataset = useMemo<Dataset>(() => Dataset.parse(datasetString), [
     datasetString,
   ]);
@@ -67,10 +65,16 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   const {
     setPage,
     setWorkQuery,
+    workQuery,
     workQueryResults,
     ...workSearchProps
   } = useWorkQuery({
-    defaultFilters: defaultWorkQueryFilters,
+    defaultWorkQuery: {
+      filters: configuration.search?.filters ?? [],
+      valueFacetValueThumbnailSelector: {
+        targetDimensions: thumbnailTargetDimensions,
+      },
+    },
     workQueryService,
     worksPerPage: WORKS_PER_PAGE,
   });
@@ -83,7 +87,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
       collection={collection}
       configuration={configuration}
       onSearch={text => {
-        setWorkQuery({filters: defaultWorkQueryFilters, text});
+        setWorkQuery({...workQuery, text});
         setPage(undefined);
       }}
     >
@@ -95,6 +99,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
         )}
         setPage={setPage}
         setWorkQuery={setWorkQuery}
+        workQuery={workQuery}
         workQueryResults={workQueryResults}
         {...workSearchProps}
       />

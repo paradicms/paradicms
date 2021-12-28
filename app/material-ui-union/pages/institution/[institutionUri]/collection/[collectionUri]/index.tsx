@@ -66,7 +66,12 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
     workQueryResults,
     ...workSearchProps
   } = useWorkQuery({
-    defaultFilters: configuration.search?.filters ?? [],
+    defaultWorkQuery: {
+      filters: configuration.search?.filters ?? [],
+      valueFacetValueThumbnailSelector: {
+        targetDimensions: thumbnailTargetDimensions,
+      },
+    },
     workQueryService,
     worksPerPage: WORKS_PER_PAGE,
   });
