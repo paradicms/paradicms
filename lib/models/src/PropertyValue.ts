@@ -27,7 +27,7 @@ export abstract class PropertyValue {
     const result: PropertyValue[] = [];
     for (const quad of quads) {
       switch (quad.object.termType) {
-        case "BlankNode":
+        case "BlankNode": {
           if (
             dataset.store.getQuads(quad.object, RDF.type, PARADICMS.Text, null)
               .length > 0
@@ -36,36 +36,38 @@ export abstract class PropertyValue {
               PropertyValue.fromText(
                 new Text({
                   dataset,
-                  graphNode: quad.graph as NamedNode,
+                  graphNode: quad.graph as NamedNode, // Blank node must be in the same graph as the current node
                   node: quad.object as BlankNode,
                 })
               )
             );
           }
           break;
+        }
         case "Literal":
           result.push(PropertyValue.fromLiteral(quad.object as Literal));
           break;
-        case "NamedNode":
-          if (
-            dataset.store.getQuads(
-              quad.object,
-              RDF.type,
-              PARADICMS.NamedValue,
-              null
-            ).length > 0
-          ) {
+        case "NamedNode": {
+          const rdfTypeQuads = dataset.store.getQuads(
+            quad.object,
+            RDF.type,
+            PARADICMS.NamedValue,
+            null
+          );
+          if (rdfTypeQuads.length > 0) {
+            const rdfTypeQuad = rdfTypeQuads[0];
             result.push(
               PropertyValue.fromNamedValue(
                 new NamedValue({
                   dataset,
-                  graphNode: quad.graph as NamedNode,
+                  graphNode: rdfTypeQuad.graph as NamedNode,
                   node: quad.object as NamedNode,
                 })
               )
             );
           }
           break;
+        }
       }
     }
     return result;

@@ -1,5 +1,5 @@
 import {NamedModel} from "./NamedModel";
-import {DCTERMS, FOAF, PARADICMS} from "./vocabularies";
+import {DCTERMS, FOAF, PARADICMS, RDF} from "./vocabularies";
 import {Collection} from "./Collection";
 import {Institution} from "./Institution";
 import {Rights} from "./Rights";
@@ -57,13 +57,19 @@ export class Work extends NamedModel {
         if (quad.object.termType !== "NamedNode") {
           return;
         }
-        if (!this.hasRdfType(quad.object as NamedNode, PARADICMS.NamedValue)) {
+        const rdfTypeQuads = this.store.getQuads(
+          quad.object,
+          RDF.type,
+          PARADICMS.NamedValue,
+          null
+        );
+        if (rdfTypeQuads.length == 0) {
           return;
         }
         result.push(
           new NamedValue({
             dataset: this.dataset,
-            graphNode: quad.graph as NamedNode,
+            graphNode: rdfTypeQuads[0].graph as NamedNode,
             node: quad.object,
           })
         );

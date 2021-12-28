@@ -3,6 +3,11 @@ import {LunrWorkQueryService} from "../src/LunrWorkQueryService";
 import {Dataset} from "@paradicms/models";
 import {testDataTrig} from "../../models/test/testDataTrig";
 import {defaultAppConfiguration} from "@paradicms/configuration";
+import {
+  CollectionValueFacet,
+  InstitutionValueFacet,
+  StringPropertyValueFacet,
+} from "@paradicms/facets";
 
 describe("LunrWorkQueryService", () => {
   const configuration = defaultAppConfiguration;
@@ -20,7 +25,23 @@ describe("LunrWorkQueryService", () => {
       offset: 0,
       limit: Number.MAX_SAFE_INTEGER,
     });
+
     expect(result.dataset.works).to.not.be.empty;
+
+    const collectionValueFacet = result.facets.find(
+      facet => facet.type === "CollectionValue"
+    ) as CollectionValueFacet | undefined;
+    expect(collectionValueFacet).to.not.be.undefined;
+
+    const institutionValueFacet = result.facets.find(
+      facet => facet.type === "InstitutionValue"
+    ) as InstitutionValueFacet | undefined;
+    expect(institutionValueFacet).to.not.be.undefined;
+
+    const stringPropertyValueFacet = result.facets.find(
+      facet => facet.type === "StringPropertyValue"
+    ) as StringPropertyValueFacet | undefined;
+    expect(stringPropertyValueFacet).to.not.be.undefined;
   });
 
   it("should return fewer works from a freetext query", async () => {
