@@ -81,8 +81,6 @@ export const Application: React.FunctionComponent<{
               <CardBody>
                 <WorkSearchContainer
                   {...workSearchProps}
-                  page={page}
-                  pageMax={pageMax}
                   renderWorkLink={(work, children) => (
                     <a href={work.page ?? work.uri}>{children}</a>
                   )}
