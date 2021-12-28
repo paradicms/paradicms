@@ -77,16 +77,15 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   const currentWorkAbstract: string | Text | null = useMemo(() => {
     if (currentWork.abstract) {
       return currentWork.abstract;
-    } else if (currentWork.properties) {
-      for (const property of currentWork.properties) {
-        if (property.uri === DCTERMS.description.value) {
-          return property.value.value.toString();
-        }
-      }
-      return null;
-    } else {
-      return null;
     }
+
+    for (const propertyValue of currentWork.propertyValues(
+      DCTERMS.description.value
+    )) {
+      return propertyValue.toString();
+    }
+
+    return null;
   }, [currentWork]);
 
   const currentWorkAbstractRights: Rights | null = useMemo(() => {
