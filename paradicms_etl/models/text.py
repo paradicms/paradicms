@@ -4,7 +4,7 @@ from rdflib import BNode, RDF, Literal
 
 from paradicms_etl._model import _Model
 from paradicms_etl.models.rights import Rights
-from paradicms_etl.namespace import CMS
+from paradicms_etl.namespaces import CMS
 
 
 class Text(_Model):

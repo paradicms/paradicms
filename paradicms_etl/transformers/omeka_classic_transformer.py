@@ -2,15 +2,12 @@ from datetime import datetime
 from typing import Dict, Optional, Tuple
 
 from pyformance import MetricsRegistry
-from rdflib import URIRef
+from rdflib import URIRef, DCTERMS
 from tqdm import tqdm
 
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
-from paradicms_etl.models.dublin_core_property_definitions import (
-    DublinCorePropertyDefinitions,
-)
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.property import Property
@@ -54,7 +51,6 @@ class OmekaClassicTransformer(_Transformer):
     def transform(self, *, collections, endpoint_url, files, items):
         yield from CreativeCommonsLicenses.as_tuple()
         yield from RightsStatementsDotOrgRightsStatements.as_tuple()
-        yield from DublinCorePropertyDefinitions.as_tuple()
 
         institution = self._transform_institution_from_arguments(
             **self.__institution_kwds
@@ -118,12 +114,12 @@ class OmekaClassicTransformer(_Transformer):
     def _get_title(
         self, properties: Tuple[Property, ...]
     ) -> Tuple[str, Tuple[Property, ...]]:
-        for title_property_definition in (
-            DublinCorePropertyDefinitions.TITLE,
-            DublinCorePropertyDefinitions.ALTERNATIVE_TITLE,
+        for title_property_uri in (
+            DCTERMS.title,
+            DCTERMS.alternative,
         ):
             for property_i, property_ in enumerate(properties):
-                if property_.uri == title_property_definition.uri:
+                if property_.uri == title_property_uri:
                     remaining_properties = list(properties[:property_i]) + list(
                         properties[property_i + 1 :]
                     )
@@ -167,45 +163,45 @@ class OmekaClassicTransformer(_Transformer):
         # The items JSON from the API has display name element identifiers instead of the Dublin Core URIs,
         # so we have to map back here.
         properties = set()
-        for key, property_definition in (
-            ("Alternative Title", DublinCorePropertyDefinitions.ALTERNATIVE_TITLE),
-            ("Contributor", DublinCorePropertyDefinitions.CONTRIBUTOR),
-            ("Coverage", DublinCorePropertyDefinitions.COVERAGE),
-            ("Creator", DublinCorePropertyDefinitions.CREATOR),
-            ("Date", DublinCorePropertyDefinitions.DATE),
-            ("Date Created", DublinCorePropertyDefinitions.CREATED),
-            ("Date Submitted", DublinCorePropertyDefinitions.DATE_SUBMITTED),
-            ("Description", DublinCorePropertyDefinitions.DESCRIPTION),
-            ("Extent", DublinCorePropertyDefinitions.EXTENT),
-            ("Format", DublinCorePropertyDefinitions.FORMAT),
-            ("Identifier", DublinCorePropertyDefinitions.IDENTIFIER),
-            ("Is Referenced By", DublinCorePropertyDefinitions.IS_REFERENCED_BY),
-            ("Language", DublinCorePropertyDefinitions.LANGUAGE),
-            ("Medium", DublinCorePropertyDefinitions.MEDIUM),
-            ("Provenance", DublinCorePropertyDefinitions.PROVENANCE),
-            ("Publisher", DublinCorePropertyDefinitions.PUBLISHER),
-            ("References", DublinCorePropertyDefinitions.IS_REFERENCED_BY),
-            ("Relation", DublinCorePropertyDefinitions.RELATION),
-            ("Rights Holder", DublinCorePropertyDefinitions.RIGHTS_HOLDER),
-            ("Source", DublinCorePropertyDefinitions.SOURCE),
-            ("Spatial Coverage", DublinCorePropertyDefinitions.SPATIAL),
-            ("Subject", DublinCorePropertyDefinitions.SUBJECT),
-            ("Temporal Coverage", DublinCorePropertyDefinitions.TEMPORAL),
-            ("Title", DublinCorePropertyDefinitions.TITLE),
-            ("Type", DublinCorePropertyDefinitions.TYPE),
+        for key, property_uri in (
+            ("Alternative Title", DCTERMS.alternative),
+            ("Contributor", DCTERMS.contributor),
+            ("Coverage", DCTERMS.coverage),
+            ("Creator", DCTERMS.creator),
+            ("Date", DCTERMS.date),
+            ("Date Created", DCTERMS.created),
+            ("Date Submitted", DCTERMS.dateSubmitted),
+            ("Description", DCTERMS.description),
+            ("Extent", DCTERMS.extent),
+            ("Format", DCTERMS.format),
+            ("Identifier", DCTERMS.identifier),
+            ("Is Referenced By", DCTERMS.isReferencedBy),
+            ("Language", DCTERMS.language),
+            ("Medium", DCTERMS.medium),
+            ("Provenance", DCTERMS.provenance),
+            ("Publisher", DCTERMS.publisher),
+            ("References", DCTERMS.references),
+            ("Relation", DCTERMS.relation),
+            ("Rights Holder", DCTERMS.rightsHolder),
+            ("Source", DCTERMS.source),
+            ("Spatial Coverage", DCTERMS.spatial),
+            ("Subject", DCTERMS.subject),
+            ("Temporal Coverage", DCTERMS.temporal),
+            ("Title", DCTERMS.title),
+            ("Type", DCTERMS.type),
         ):
             for value in dc_element_text_tree.pop(key, []):
-                properties.add(Property(property_definition, value))
+                properties.add(Property(property_uri, value))
 
-        for (key, property_definition) in (
-            ("License", DublinCorePropertyDefinitions.LICENSE),
-            ("Rights", DublinCorePropertyDefinitions.RIGHTS),
+        for (key, property_uri) in (
+            ("License", DCTERMS.license),
+            ("Rights", DCTERMS.rights),
         ):
             for value in dc_element_text_tree.pop(key, []):
                 if is_uri(value):
-                    properties.add(Property(property_definition, URIRef(value)))
+                    properties.add(Property(property_uri, URIRef(value)))
                 else:
-                    properties.add(Property(property_definition, value))
+                    properties.add(Property(property_uri, value))
 
         if dc_element_text_tree:
             self._logger.warn(

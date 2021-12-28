@@ -1,13 +1,9 @@
 from dataclasses import dataclass
 from typing import Optional, Union
 
-from rdflib import Literal, URIRef
+from rdflib import Literal, URIRef, DCTERMS
 from rdflib.resource import Resource
 from rdflib.term import Node
-
-from paradicms_etl.models.dublin_core_property_definitions import (
-    DublinCorePropertyDefinitions,
-)
 
 
 @dataclass(frozen=True)
@@ -26,10 +22,10 @@ class Rights:
     statement: Union[None, str, URIRef] = None
 
     __PROPERTY_URIS = {
-        "creator": DublinCorePropertyDefinitions.CREATOR.uri,
-        "holder": DublinCorePropertyDefinitions.RIGHTS_HOLDER.uri,
-        "license": DublinCorePropertyDefinitions.LICENSE.uri,
-        "statement": DublinCorePropertyDefinitions.RIGHTS.uri,
+        "creator": DCTERMS.creator,
+        "holder": DCTERMS.rightsHolder,
+        "license": DCTERMS.license,
+        "statement": DCTERMS.rights,
     }
 
     @classmethod

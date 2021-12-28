@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Dict
 from urllib.parse import quote
 
 from rdflib import DCTERMS, Literal, URIRef
@@ -14,77 +14,72 @@ from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models._agent import _Agent
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
-from paradicms_etl.models.dublin_core_property_definitions import (
-    DublinCorePropertyDefinitions,
-)
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
+from paradicms_etl.models.named_value import NamedValue
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
-from paradicms_etl.models.property_value_definition import PropertyValueDefinition
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.text import Text
-from paradicms_etl.models.vra_core_property_definitions import (
-    VraCorePropertyDefinitions,
-)
 from paradicms_etl.models.work import Work
+from paradicms_etl.namespaces import VRA
 
 
 class TestDataPipeline(_Pipeline):
     ID = "test_data"
 
     class __TestDataTransformer(_Transformer):
-        __FACETED_PROPERTY_DEFINITIONS = (
+        __FACETED_PROPERTY_VALUES = (
             (
-                VraCorePropertyDefinitions.CULTURAL_CONTEXT,
+                VRA.culturalContext,
                 tuple(f"Cultural context {i}" for i in range(10)),
             ),
             (
-                DublinCorePropertyDefinitions.EXTENT,
+                DCTERMS.extent,
                 tuple(f"Extent {i}" for i in range(10)),
             ),
             (
-                DublinCorePropertyDefinitions.LANGUAGE,
+                DCTERMS.language,
                 tuple(f"Language {i}" for i in range(10)),
             ),
             (
-                VraCorePropertyDefinitions.MATERIAL,
+                VRA.material,
                 tuple(f"Material {i}" for i in range(10)),
             ),
             (
-                DublinCorePropertyDefinitions.MEDIUM,
+                DCTERMS.medium,
                 tuple(f"Medium {i}" for i in range(10)),
             ),
             (
-                DublinCorePropertyDefinitions.PUBLISHER,
+                DCTERMS.publisher,
                 tuple(f"Publisher {i}" for i in range(10)),
             ),
             (
-                DublinCorePropertyDefinitions.SOURCE,
+                DCTERMS.source,
                 tuple(f"Source {i}" for i in range(10)),
             ),
             (
-                DublinCorePropertyDefinitions.SPATIAL,
+                DCTERMS.spatial,
                 tuple(f"Spatial {i}" for i in range(10)),
             ),
             (
-                DublinCorePropertyDefinitions.SUBJECT,
+                DCTERMS.subject,
                 tuple(f"Subject {i}" for i in range(10)),
             ),
             (
-                VraCorePropertyDefinitions.TECHNIQUE,
+                VRA.technique,
                 tuple(f"Technique {i}" for i in range(10)),
             ),
             (
-                DublinCorePropertyDefinitions.TEMPORAL,
+                DCTERMS.temporal,
                 tuple(f"Temporal {i}" for i in range(10)),
             ),
-            (DublinCorePropertyDefinitions.TYPE, tuple(f"Type {i}" for i in range(10))),
+            (DCTERMS.type, tuple(f"Type {i}" for i in range(10))),
         )
 
         __LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae."
@@ -107,11 +102,17 @@ class TestDataPipeline(_Pipeline):
 
         def transform(self):
             yield from CreativeCommonsLicenses.as_tuple()
-            yield from DublinCorePropertyDefinitions.as_tuple()
             yield RightsStatementsDotOrgRightsStatements.InC_EDU
-            yield from VraCorePropertyDefinitions.as_tuple()
 
-            yield from self.__generate_property_definitions()
+            named_values_by_value = {}
+            for model in self.__generate_named_values():
+                yield model
+                if isinstance(model, NamedValue):
+                    named_value = model
+                    named_value_str = named_value.value.toPython()
+                    assert isinstance(named_value_str, str)
+                    assert named_value_str not in named_values_by_value
+                    named_values_by_value[named_value_str] = named_value
 
             agents = []
             for model in self.__generate_agents():
@@ -120,7 +121,9 @@ class TestDataPipeline(_Pipeline):
                     agents.append(model)
             agents = tuple(agents)
 
-            yield from self.__generate_institutions(agents=agents)
+            yield from self.__generate_institutions(
+                agents=agents, named_values_by_value=named_values_by_value
+            )
 
         def __generate_agents(self):
             agents = []
@@ -148,12 +151,12 @@ class TestDataPipeline(_Pipeline):
                             # dcterms:relation
                             # Wikidata concept for Pilot ACE
                             Property(
-                                DublinCorePropertyDefinitions.RELATION,
+                                DCTERMS.relation,
                                 URIRef("http://www.wikidata.org/entity/Q937690"),
                             ),
                             # Wikipedia
                             Property(
-                                DublinCorePropertyDefinitions.RELATION,
+                                DCTERMS.relation,
                                 URIRef("http://en.wikipedia.org/wiki/Pilot_ACE"),
                             ),
                         ),
@@ -185,12 +188,14 @@ class TestDataPipeline(_Pipeline):
             agents: Tuple[_Agent, ...],
             collection: Collection,
             institution: Institution,
+            named_values_by_value: Dict[str, NamedValue],
         ):
             for work_i in range(self.__works_per_institution):
                 yield from self.__generate_work(
+                    agents=agents,
                     collection_uris=(collection.uri,),
                     institution=institution,
-                    agents=agents,
+                    named_values_by_value=named_values_by_value,
                     title_prefix=collection.title + "Work",
                     uri_prefix=str(collection.uri) + "/work",
                 )
@@ -224,7 +229,11 @@ class TestDataPipeline(_Pipeline):
                     )
 
         def __generate_institution_collections(
-            self, *, agents: Tuple[_Agent, ...], institution: Institution
+            self,
+            *,
+            agents: Tuple[_Agent, ...],
+            institution: Institution,
+            named_values_by_value: Dict[str, NamedValue],
         ):
             for collection_i in range(self.__collections_per_institution):
                 collection_title = f"{institution.name}Collection{collection_i}"
@@ -254,10 +263,17 @@ class TestDataPipeline(_Pipeline):
                 # For collection 0, force the GUI to use an work image
 
                 yield from self.__generate_collection_works(
-                    collection=collection, institution=institution, agents=agents
+                    agents=agents,
+                    collection=collection,
+                    institution=institution,
+                    named_values_by_value=named_values_by_value,
                 )
 
-        def __generate_institutions(self, agents: Tuple[_Agent, ...]):
+        def __generate_institutions(
+            self,
+            agents: Tuple[_Agent, ...],
+            named_values_by_value: Dict[str, NamedValue],
+        ):
             for institution_i in range(self.__institutions):
                 institution_name = f"Institution{institution_i}"
                 institution = Institution.from_fields(
@@ -279,17 +295,53 @@ class TestDataPipeline(_Pipeline):
 
                 collections = []
                 for model in self.__generate_institution_collections(
-                    institution=institution, agents=agents
+                    agents=agents,
+                    institution=institution,
+                    named_values_by_value=named_values_by_value,
                 ):
                     if isinstance(model, Collection):
                         collections.append(model)
                     yield model
 
                 yield from self.__generate_shared_works(
+                    agents=agents,
                     collections=tuple(collections),
                     institution=institution,
-                    agents=agents,
+                    named_values_by_value=named_values_by_value,
                 )
+
+        def __generate_named_values(self):
+            rights = Rights(
+                holder=f"Property definition rights holder",
+                license=CreativeCommonsLicenses.NC_1_0.uri,
+                statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
+            )
+
+            named_value_urn_i = 0
+            for (
+                property_uri,
+                property_values,
+            ) in self.__FACETED_PROPERTY_VALUES:
+                if property_uri == DCTERMS.creator:
+                    continue
+                for property_value in property_values:
+                    named_value = NamedValue.from_fields(
+                        # label=property_value,
+                        property_uris=(property_uri,),
+                        uri=URIRef(
+                            f"urn:paradicms_etl:pipeline:test_data:named_value:{named_value_urn_i}"
+                        ),
+                        value=Literal(property_value),
+                    )
+                    yield named_value
+
+                    yield from self.__generate_images(
+                        depicts_uri=named_value.uri,
+                        rights=rights,
+                        text_prefix=property_value,
+                    )
+
+                    named_value_urn_i += 1
 
         def __generate_work(
             self,
@@ -297,6 +349,7 @@ class TestDataPipeline(_Pipeline):
             agents: Tuple[_Agent, ...],
             collection_uris: Tuple[URIRef, ...],
             institution: Institution,
+            named_values_by_value: Dict[str, NamedValue],
             title_prefix: str,
             uri_prefix: str,
         ):
@@ -313,7 +366,7 @@ class TestDataPipeline(_Pipeline):
             # Properties that depend on the work title
             properties.extend(
                 Property(
-                    DublinCorePropertyDefinitions.ALTERNATIVE_TITLE,
+                    DCTERMS.alternative,
                     f"{title} alternative title {i}",
                 )
                 for i in range(2)
@@ -321,32 +374,29 @@ class TestDataPipeline(_Pipeline):
             if include_abstract_and_description:
                 properties.append(
                     Property(
-                        DublinCorePropertyDefinitions.DESCRIPTION,
+                        DCTERMS.description,
                         self.__LOREM_IPSUM,
                     )
                 )
                 properties.extend(
                     Property(
-                        DublinCorePropertyDefinitions.DESCRIPTION,
+                        DCTERMS.description,
                         f"{title} description {i}",
                     )
                     for i in range(2)
                 )
             properties.extend(
-                Property(DublinCorePropertyDefinitions.IDENTIFIER, f"{title}Id{i}")
-                for i in range(2)
+                Property(DCTERMS.identifier, f"{title}Id{i}") for i in range(2)
             )
             properties.extend(
-                Property(
-                    DublinCorePropertyDefinitions.PROVENANCE, f"{title} provenance {i}"
-                )
+                Property(DCTERMS.provenance, f"{title} provenance {i}")
                 for i in range(2)
             )
 
             # Properties that depend on the date
             properties.extend(
                 Property(
-                    DublinCorePropertyDefinitions.DATE,
+                    DCTERMS.date,
                     (
                         date(year=2020, month=8, day=9)
                         - timedelta(minutes=(60 * 24 * (work_i + date_i)))
@@ -357,13 +407,15 @@ class TestDataPipeline(_Pipeline):
 
             # Faceted literal properties, which are the same across works
             for (
-                property_definition,
+                property_uri,
                 property_values,
-            ) in self.__FACETED_PROPERTY_DEFINITIONS:
+            ) in self.__FACETED_PROPERTY_VALUES:
                 properties.extend(
                     Property(
-                        property_definition,
-                        property_values[(work_i + i) % len(property_values)],
+                        property_uri,
+                        named_values_by_value[
+                            property_values[(work_i + i) % len(property_values)]
+                        ].uri,
                     )
                     for i in range(2)
                 )
@@ -371,7 +423,7 @@ class TestDataPipeline(_Pipeline):
             # dcterms:creator
             properties.extend(
                 Property(
-                    DublinCorePropertyDefinitions.CREATOR,
+                    DCTERMS.creator,
                     agents[(work_i + i) % len(agents)].uri,
                 )
                 for i in range(3)
@@ -381,14 +433,14 @@ class TestDataPipeline(_Pipeline):
             # Wikidata concept for Alan Turing
             properties.append(
                 Property(
-                    DublinCorePropertyDefinitions.RELATION,
+                    DCTERMS.relation,
                     URIRef("http://www.wikidata.org/entity/Q7251"),
                 )
             )
             # Wikipedia
             properties.append(
                 Property(
-                    DublinCorePropertyDefinitions.RELATION,
+                    DCTERMS.relation,
                     URIRef("http://en.wikipedia.org/wiki/Alan_Turing"),
                 )
             )
@@ -426,45 +478,13 @@ class TestDataPipeline(_Pipeline):
                 text_prefix=work_.title,
             )
 
-        def __generate_property_definitions(self):
-            rights = Rights(
-                holder=f"Property definition rights holder",
-                license=CreativeCommonsLicenses.NC_1_0.uri,
-                statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-            )
-
-            property_value_urn_i = 0
-            for (
-                property_definition,
-                property_values,
-            ) in self.__FACETED_PROPERTY_DEFINITIONS:
-                if property_definition.uri == DCTERMS.creator:
-                    continue
-                for property_value in property_values:
-                    property_value_definition = PropertyValueDefinition.from_fields(
-                        # label=property_value,
-                        property_uris=(property_definition.uri,),
-                        uri=URIRef(
-                            f"urn:paradicms_etl:pipeline:test_data:property_value:{property_value_urn_i}"
-                        ),
-                        value=Literal(property_value),
-                    )
-                    yield property_value_definition
-
-                    yield from self.__generate_images(
-                        depicts_uri=property_value_definition.uri,
-                        rights=rights,
-                        text_prefix=property_value,
-                    )
-
-                    property_value_urn_i += 1
-
         def __generate_shared_works(
             self,
             *,
             agents: Tuple[_Agent, ...],
             collections: Tuple[Collection, ...],
             institution: Institution,
+            named_values_by_value: Dict[str, NamedValue],
         ):
             for work_i in range(self.__works_per_institution):  # Per institution
                 yield from self.__generate_work(
@@ -473,6 +493,7 @@ class TestDataPipeline(_Pipeline):
                         map(lambda collection: collection.uri, collections)
                     ),
                     institution=institution,
+                    named_values_by_value=named_values_by_value,
                     title_prefix=f"{institution.name}SharedWork",
                     uri_prefix=f"{institution.uri}/shared/work",
                 )

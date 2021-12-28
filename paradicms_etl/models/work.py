@@ -8,7 +8,7 @@ from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.text import Text
-from paradicms_etl.namespace import CMS
+from paradicms_etl.namespaces import CMS
 
 
 class Work(_NamedModel):

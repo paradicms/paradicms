@@ -3,7 +3,7 @@ from typing import Optional
 from rdflib import BNode, Literal, RDF, XSD
 
 from paradicms_etl._model import _Model
-from paradicms_etl.namespace import TIME
+from paradicms_etl.namespaces import TIME
 
 
 class DateTimeDescription(_Model):

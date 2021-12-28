@@ -7,7 +7,7 @@ from rdflib import ConjunctiveGraph, URIRef
 
 from paradicms_etl.loaders._buffering_loader import _BufferingLoader
 from paradicms_etl.models._named_model import _NamedModel
-from paradicms_etl.namespace import bind_namespaces
+from paradicms_etl.namespaces import bind_namespaces
 
 
 class RdfFileLoader(_BufferingLoader):

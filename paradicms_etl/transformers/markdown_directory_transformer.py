@@ -19,31 +19,24 @@ from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
-from paradicms_etl.models.dublin_core_property_definitions import (
-    DublinCorePropertyDefinitions,
-)
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.license import License
 from paradicms_etl.models.markdown_directory import MarkdownDirectory
+from paradicms_etl.models.named_value import NamedValue
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
-from paradicms_etl.models.property_definition import PropertyDefinition
-from paradicms_etl.models.property_value_definition import PropertyValueDefinition
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
-from paradicms_etl.models.vra_core_property_definitions import (
-    VraCorePropertyDefinitions,
-)
 from paradicms_etl.models.work import Work
-from paradicms_etl.namespace import CMS
+from paradicms_etl.namespaces import CMS
 
 
 def _create_namespaces_by_prefix_default() -> Dict[str, rdflib.Namespace]:
     namespaces_by_prefix = {}
-    for namespace_module in (rdflib.namespace, paradicms_etl.namespace):
+    for namespace_module in (rdflib.namespace, paradicms_etl.namespaces):
         for attr in dir(namespace_module):
             if attr.upper() != attr:
                 continue
@@ -64,8 +57,7 @@ __MODEL_TYPES = (
     License,
     Organization,
     Person,
-    PropertyDefinition,
-    PropertyValueDefinition,
+    NamedValue,
     RightsStatement,
     Work,
 )
@@ -771,7 +763,6 @@ class MarkdownDirectoryTransformer(_Transformer):
 
     def transform(self, markdown_directory: MarkdownDirectory):
         yield_known_licenses = True
-        yield_known_property_definitions = True
         yield_known_rights_statements = True
 
         for model in self.__TransformInvocation(
@@ -787,19 +778,12 @@ class MarkdownDirectoryTransformer(_Transformer):
 
             if isinstance(model, License):
                 yield_known_licenses = False
-            elif isinstance(model, PropertyDefinition):
-                yield_known_property_definitions = False
             elif isinstance(model, RightsStatement):
                 yield_known_rights_statements = False
 
         if yield_known_licenses:
             # If no licenses came from the Markdown directory, yield known licenses
             yield from CreativeCommonsLicenses.as_tuple()
-
-        if yield_known_property_definitions:
-            # If no property definitions came from the Markdown directory, yield known property definitions
-            yield from DublinCorePropertyDefinitions.as_tuple()
-            yield from VraCorePropertyDefinitions.as_tuple()
 
         if yield_known_rights_statements:
             # If no rights statements came from the Markdown directory, yield known rights statements

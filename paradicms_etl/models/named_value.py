@@ -1,12 +1,13 @@
 from typing import Optional, Tuple
 
 from rdflib.namespace import RDF, RDFS
+from rdflib.resource import Resource
 from rdflib.term import Literal, Node, URIRef
 
 from paradicms_etl.models._named_model import _NamedModel
 
 
-class PropertyValueDefinition(_NamedModel):
+class NamedValue(_NamedModel):
     def __init__(self, *args, **kwds):
         _NamedModel.__init__(self, *args, **kwds)
         self.label
@@ -20,7 +21,7 @@ class PropertyValueDefinition(_NamedModel):
         uri: URIRef,
         value: Node,  # A property value
         label: Optional[str] = None,
-    ) -> "PropertyValueDefinition":
+    ) -> "NamedValue":
         resource = cls._create_resource(identifier=uri)
         if label is not None:
             resource.add(RDFS.label, Literal(label))
@@ -39,3 +40,14 @@ class PropertyValueDefinition(_NamedModel):
     @property
     def property_uris(self) -> Tuple[URIRef, ...]:
         return self._required_uri_values(RDF.predicate)
+
+    @property
+    def value(self) -> Node:
+        value = self._resource.value(RDF.value)
+        if value is None:
+            raise KeyError
+        if isinstance(value, Resource):
+            return value.identifier
+        else:
+            assert isinstance(value, Node)
+            return value

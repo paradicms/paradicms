@@ -1,13 +1,10 @@
 from typing import Optional, Tuple
 
-from rdflib import URIRef
+from rdflib import URIRef, DCTERMS
 
 from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
-from paradicms_etl.models.dublin_core_property_definitions import (
-    DublinCorePropertyDefinitions,
-)
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.person import Person
@@ -42,14 +39,10 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
     class __WikidataItemTransformer(_WikidataItemTransformer):
         def _get_properties(self, item: WikidataItem) -> Tuple[Property, ...]:
             properties = []
-            properties.append(
-                Property(DublinCorePropertyDefinitions.RELATION, item.uri)
-            )
+            properties.append(Property(DCTERMS.relation, item.uri))
             for article in item.articles:
                 if str(article.uri).startswith("https://en.wikipedia.org/wiki/"):
-                    properties.append(
-                        Property(DublinCorePropertyDefinitions.RELATION, article.uri)
-                    )
+                    properties.append(Property(DCTERMS.relation, article.uri))
             return tuple(properties)
 
         def _transform_image_statement(

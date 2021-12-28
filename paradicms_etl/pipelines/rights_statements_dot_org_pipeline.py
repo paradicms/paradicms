@@ -10,7 +10,7 @@ from paradicms_etl._loader import _Loader
 from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.rights_statement import RightsStatement
-from paradicms_etl.namespace import bind_namespaces
+from paradicms_etl.namespaces import bind_namespaces
 
 
 class RightsStatementsDotOrgPipeline(_Pipeline):
