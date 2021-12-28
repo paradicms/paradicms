@@ -329,7 +329,7 @@ class TestDataPipeline(_Pipeline):
                         # label=property_value,
                         property_uris=(property_uri,),
                         uri=URIRef(
-                            f"urn:paradicms_etl:pipeline:test_data:property_value:{named_value_urn_i}"
+                            f"urn:paradicms_etl:pipeline:test_data:named_value:{named_value_urn_i}"
                         ),
                         value=Literal(property_value),
                     )
