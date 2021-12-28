@@ -1,15 +1,14 @@
 import {NumberParam, useQueryParam} from "use-query-params";
 import {JsonQueryParamConfig} from "@paradicms/react";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {
   WorkQuery,
   WorkQueryResults,
   WorkQueryService,
 } from "@paradicms/services";
-import {WorkSearchConfiguration} from "@paradicms/configuration";
 
-export function useWorkQuery(kwds: {
-  configuration: WorkSearchConfiguration;
+export const useWorkQuery = (kwds: {
+  defaultWorkQuery: WorkQuery;
   workQueryService: WorkQueryService;
   worksPerPage: number;
 }): {
@@ -18,22 +17,23 @@ export function useWorkQuery(kwds: {
   setWorkQuery: (workQuery: WorkQuery) => void;
   setPage: (page: number | undefined) => void;
   workQuery: WorkQuery;
-  workQueryResults: WorkQueryResults;
-} | null {
-  const {configuration, workQueryService, worksPerPage} = kwds;
+  workQueryResults: WorkQueryResults | null;
+} => {
+  const {defaultWorkQuery, workQueryService, worksPerPage} = kwds;
 
   const [workQueryQueryParam, setWorkQuery] = useQueryParam<
     WorkQuery | undefined
   >("query", new JsonQueryParamConfig<WorkQuery>());
-  const workQuery = workQueryQueryParam ?? {
-    filters: configuration.filters,
-  };
+  const workQuery = useMemo(() => workQueryQueryParam ?? defaultWorkQuery, [
+    defaultWorkQuery,
+    workQueryQueryParam,
+  ]);
 
   const [pageQueryParam, setPage] = useQueryParam<number | null | undefined>(
     "page",
     NumberParam
   );
-  const page = pageQueryParam ?? 0;
+  const page = useMemo(() => pageQueryParam ?? 0, [pageQueryParam]);
 
   const [
     workQueryResults,
@@ -50,18 +50,16 @@ export function useWorkQuery(kwds: {
         query: workQuery,
       })
       .then(setWorkQueryResults);
-  }, [workQuery, workQueryService, worksPerPage, page]);
+  }, [page, workQuery, workQueryService, worksPerPage]);
 
-  if (workQueryResults !== null) {
-    return {
-      page,
-      pageMax: Math.ceil(workQueryResults.totalWorksCount / worksPerPage) - 1,
-      setPage,
-      setWorkQuery,
-      workQuery,
-      workQueryResults,
-    };
-  } else {
-    return null;
-  }
-}
+  return {
+    page,
+    pageMax: workQueryResults
+      ? Math.ceil(workQueryResults.totalWorksCount / worksPerPage) - 1
+      : page,
+    setPage,
+    setWorkQuery,
+    workQuery,
+    workQueryResults,
+  };
+};

@@ -74,10 +74,15 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const institutionUri = decodeFileName(params!.institutionUri as string);
 
+  const configuration = readAppConfigurationFile(readFileSync);
+
   return {
     props: {
-      configuration: readAppConfigurationFile(readFileSync),
-      datasetString: new DataSubsetter(readDatasetFile(readFileSync))
+      configuration,
+      datasetString: new DataSubsetter({
+        completeDataset: readDatasetFile(readFileSync),
+        configuration,
+      })
         .institutionDataset(institutionUri, {
           collections: {
             institution: {},

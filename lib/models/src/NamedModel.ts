@@ -1,6 +1,6 @@
-import {NamedNode} from "n3";
+import {BlankNode, NamedNode} from "n3";
 import {Model} from "./Model";
-import {DCTERMS} from "./vocabularies";
+import {DCTERMS, PARADICMS} from "./vocabularies";
 import {Rights} from "./Rights";
 import {Text} from "./Text";
 
@@ -9,18 +9,25 @@ export class NamedModel extends Model {
     return this._node as NamedNode;
   }
 
+  // Text is a Model, so this must be in NamedModel to avoid a circular dependency.
   protected optionalStringOrText(property: NamedNode): string | Text | null {
-    for (const object of this.store.getObjects(this.node, property, null)) {
+    for (const object of this.store.getObjects(
+      this.node,
+      property,
+      this.graphNode
+    )) {
       switch (object.termType) {
+        case "BlankNode":
+          if (this.hasRdfType(object as BlankNode, PARADICMS.Text)) {
+            return new Text({
+              dataset: this.dataset,
+              graphNode: this.graphNode,
+              node: object,
+            });
+          }
+          break;
         case "Literal":
           return object.value;
-        case "BlankNode":
-        case "NamedNode":
-          return new Text({
-            dataset: this.dataset,
-            graphNode: this.graphNode,
-            node: object,
-          });
       }
     }
     return null;
@@ -31,7 +38,7 @@ export class NamedModel extends Model {
     for (const relationObject of this.store.getObjects(
       this.node,
       DCTERMS.relation,
-      null
+      this.graphNode
     )) {
       if (relationObject.termType !== "NamedNode") {
         continue;

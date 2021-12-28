@@ -3,9 +3,14 @@ import {LunrWorkQueryService} from "../src/LunrWorkQueryService";
 import {Dataset} from "@paradicms/models";
 import {testDataTrig} from "../../models/test/testDataTrig";
 import {defaultAppConfiguration} from "@paradicms/configuration";
+import {
+  CollectionValueFacet,
+  InstitutionValueFacet,
+  StringPropertyValueFacet,
+} from "@paradicms/facets";
 
 describe("LunrWorkQueryService", () => {
-  const configuration = defaultAppConfiguration.workSearch;
+  const configuration = defaultAppConfiguration;
   const dataset = Dataset.parse(testDataTrig);
   const sut = new LunrWorkQueryService({
     configuration,
@@ -15,18 +20,42 @@ describe("LunrWorkQueryService", () => {
   it("should return at least one work from an empty query", async () => {
     const result = await sut.getWorks({
       query: {
-        filters: configuration.filters,
+        filters: configuration.search!.filters,
+        valueFacetValueThumbnailSelector: {
+          targetDimensions: {
+            height: 200,
+            width: 200,
+          },
+        },
       },
       offset: 0,
       limit: Number.MAX_SAFE_INTEGER,
     });
+
     expect(result.dataset.works).to.not.be.empty;
+
+    const collectionValueFacet = result.facets.find(
+      facet => facet.type === "CollectionValue"
+    ) as CollectionValueFacet | undefined;
+    expect(collectionValueFacet).to.not.be.undefined;
+
+    const institutionValueFacet = result.facets.find(
+      facet => facet.type === "InstitutionValue"
+    ) as InstitutionValueFacet | undefined;
+    expect(institutionValueFacet).to.not.be.undefined;
+
+    const stringPropertyValueFacet = result.facets.find(
+      facet => facet.type === "StringPropertyValue"
+    ) as StringPropertyValueFacet | undefined;
+    expect(stringPropertyValueFacet).to.not.be.undefined;
+    expect(stringPropertyValueFacet!.values.some(value => !!value.thumbnail)).to
+      .be.true;
   });
 
   it("should return fewer works from a freetext query", async () => {
     const allResult = await sut.getWorks({
       query: {
-        filters: configuration.filters,
+        filters: configuration.search!.filters,
       },
       offset: 0,
       limit: Number.MAX_SAFE_INTEGER,
@@ -34,7 +63,7 @@ describe("LunrWorkQueryService", () => {
 
     const fewerResult = await sut.getWorks({
       query: {
-        filters: configuration.filters,
+        filters: configuration.search!.filters!,
         text: "Institution0Collection0Work2",
       },
       offset: 0,

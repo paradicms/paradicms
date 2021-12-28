@@ -1,14 +1,16 @@
 import {NamedModel} from "./NamedModel";
-import {DCTERMS, FOAF, PARADICMS} from "./vocabularies";
+import {DCTERMS, FOAF, PARADICMS, RDF} from "./vocabularies";
 import {Collection} from "./Collection";
 import {Institution} from "./Institution";
-import {Property} from "./Property";
 import {Rights} from "./Rights";
 import {Image} from "./Image";
 import {Text} from "./Text";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Memoize} from "typescript-memoize";
+import {PropertyValue} from "./PropertyValue";
+import {NamedValue} from "./NamedValue";
+import {NamedNode} from "n3";
 
 export class Work extends NamedModel {
   @Memoize()
@@ -46,14 +48,50 @@ export class Work extends NamedModel {
     return this.optionalStringOrUri(FOAF.page);
   }
 
-  @Memoize()
-  get properties(): readonly Property[] {
-    return this._properties;
+  propertyNamedValues(propertyUri: string): readonly NamedValue[] {
+    // This code is (temporarily) here instead of in Model or NamedModel
+    // because NamedValue is a NamedModel, which creates a circular dependency.
+    const result: NamedValue[] = [];
+    this.store.forEach(
+      quad => {
+        if (quad.object.termType !== "NamedNode") {
+          return;
+        }
+        const rdfTypeQuads = this.store.getQuads(
+          quad.object,
+          RDF.type,
+          PARADICMS.NamedValue,
+          null
+        );
+        if (rdfTypeQuads.length == 0) {
+          return;
+        }
+        result.push(
+          new NamedValue({
+            dataset: this.dataset,
+            graphNode: rdfTypeQuads[0].graph as NamedNode,
+            node: quad.object,
+          })
+        );
+      },
+      this.node,
+      new NamedNode(propertyUri),
+      null,
+      this.graphNode
+    );
+    return result;
   }
 
-  @Memoize()
-  get propertyUris(): readonly string[] {
-    return this._propertyUris;
+  propertyValues(propertyUri: string): readonly PropertyValue[] {
+    return PropertyValue.fromQuads(
+      this.dataset,
+      this.store.getQuads(
+        this.node,
+        new NamedNode(propertyUri),
+        null,
+        this.graphNode
+      )
+    );
   }
 
   @Memoize()

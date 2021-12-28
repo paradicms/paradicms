@@ -17,10 +17,10 @@ export class PARADICMS {
   static Image = PARADICMS.NS("Image");
   static Institution = PARADICMS.NS("Institution");
   static License = PARADICMS.NS("License");
+  static NamedValue = PARADICMS.NS("NamedValue");
   static Organization = PARADICMS.NS("Organization");
   static Person = PARADICMS.NS("Person");
-  static PropertyDefinition = PARADICMS.NS("PropertyDefinition");
-  static PropertyValueDefinition = PARADICMS.NS("PropertyValueDefinition");
   static RightsStatement = PARADICMS.NS("RightsStatement");
+  static Text = PARADICMS.NS("Text");
   static Work = PARADICMS.NS("Work");
 }

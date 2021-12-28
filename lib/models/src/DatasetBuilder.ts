@@ -4,8 +4,7 @@ import {Dataset} from "./Dataset";
 import {Collection} from "./Collection";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
-import {PropertyDefinition} from "./PropertyDefinition";
-import {PropertyValueDefinition} from "./PropertyValueDefinition";
+import {NamedValue} from "./NamedValue";
 import {Store} from "n3";
 import {Work} from "./Work";
 import {Person} from "./Person";
@@ -17,14 +16,9 @@ export class DatasetBuilder {
   private institutionsByUri: {[index: string]: Institution} | undefined;
   private imagesByUri: {[index: string]: Image} | undefined;
   private licensesByUri: {[index: string]: License} | undefined;
+  private namedValuesByUri: {[index: string]: NamedValue} | undefined;
   private organizationsByUri: {[index: string]: Organization} | undefined;
   private peopleByUri: {[index: string]: Person} | undefined;
-  private propertyDefinitionsByUri:
-    | {[index: string]: PropertyDefinition}
-    | undefined;
-  private propertyValueDefinitionsByUri:
-    | {[index: string]: PropertyValueDefinition}
-    | undefined;
   private rightsStatementsByUri: {[index: string]: RightsStatement} | undefined;
   private worksByUri: {[index: string]: Work} | undefined;
 
@@ -149,36 +143,18 @@ export class DatasetBuilder {
     return this;
   }
 
-  addPropertyDefinition(propertyDefinition: PropertyDefinition) {
-    this.propertyDefinitionsByUri = DatasetBuilder.addNamedModel(
-      this.propertyDefinitionsByUri,
-      propertyDefinition
+  addNamedValue(namedValue: NamedValue) {
+    this.namedValuesByUri = DatasetBuilder.addNamedModel(
+      this.namedValuesByUri,
+      namedValue
     );
     return this;
   }
 
-  addPropertyDefinitions(propertyDefinitions: readonly PropertyDefinition[]) {
-    this.propertyDefinitionsByUri = DatasetBuilder.addNamedModels(
-      this.propertyDefinitionsByUri,
-      propertyDefinitions
-    );
-    return this;
-  }
-
-  addPropertyValueDefinition(propertyValueDefinition: PropertyValueDefinition) {
-    this.propertyValueDefinitionsByUri = DatasetBuilder.addNamedModel(
-      this.propertyValueDefinitionsByUri,
-      propertyValueDefinition
-    );
-    return this;
-  }
-
-  addPropertyValueDefinitions(
-    propertyValueDefinitions: readonly PropertyValueDefinition[]
-  ) {
-    this.propertyValueDefinitionsByUri = DatasetBuilder.addNamedModels(
-      this.propertyValueDefinitionsByUri,
-      propertyValueDefinitions
+  addNamedValues(namedValues: readonly NamedValue[]) {
+    this.namedValuesByUri = DatasetBuilder.addNamedModels(
+      this.namedValuesByUri,
+      namedValues
     );
     return this;
   }
@@ -206,11 +182,10 @@ export class DatasetBuilder {
       this.imagesByUri,
       this.institutionsByUri,
       this.licensesByUri,
+      this.namedValuesByUri,
       this.organizationsByUri,
       this.peopleByUri,
       this.worksByUri,
-      this.propertyDefinitionsByUri,
-      this.propertyValueDefinitionsByUri,
       this.rightsStatementsByUri,
     ]) {
       if (!modelsByUri) {

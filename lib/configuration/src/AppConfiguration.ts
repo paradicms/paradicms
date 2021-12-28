@@ -1,9 +1,10 @@
-import {WorkSearchConfiguration} from "./WorkSearchConfiguration";
+import {PropertyConfiguration} from "./PropertyConfiguration";
+import {SearchConfiguration} from "./SearchConfiguration";
 
 export interface AppConfiguration {
-  // Configuration is passed over getStaticProps, so must use nulls instead of undefined
-  readonly bootstrapStylesheetHref: string | null;
-  readonly documentTitle: string | null;
-  readonly navbarTitle: string | null;
-  readonly workSearch: WorkSearchConfiguration;
+  readonly bootstrapStylesheetHref?: string;
+  readonly documentTitle?: string;
+  readonly navbarTitle?: string;
+  readonly workProperties?: readonly PropertyConfiguration[];
+  readonly search?: SearchConfiguration;
 }

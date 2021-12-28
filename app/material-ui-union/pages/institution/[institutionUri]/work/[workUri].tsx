@@ -8,11 +8,7 @@ import {
   Grid,
 } from "@material-ui/core";
 import {Dataset, DataSubsetter} from "@paradicms/models";
-import {
-  PropertiesTable,
-  RightsTable,
-  WorkImagesCarousel,
-} from "@paradicms/material-ui";
+import {RightsTable, WorkImagesCarousel} from "@paradicms/material-ui";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {
   decodeFileName,
@@ -51,18 +47,18 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
         <Grid item>
           <WorkImagesCarousel work={work} />
         </Grid>
-        {work.properties && work.properties.length > 0 ? (
-          <Grid item>
-            <Accordion defaultExpanded={true}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <h3>Properties</h3>
-              </AccordionSummary>
-              <AccordionDetails>
-                <PropertiesTable properties={work.properties} />
-              </AccordionDetails>
-            </Accordion>
-          </Grid>
-        ) : null}
+        {/*{work.properties && work.properties.length > 0 ? (*/}
+        {/*  <Grid item>*/}
+        {/*    <Accordion defaultExpanded={true}>*/}
+        {/*      <AccordionSummary expandIcon={<ExpandMoreIcon />}>*/}
+        {/*        <h3>Properties</h3>*/}
+        {/*      </AccordionSummary>*/}
+        {/*      <AccordionDetails>*/}
+        {/*        <PropertiesTable properties={work.properties} />*/}
+        {/*      </AccordionDetails>*/}
+        {/*    </Accordion>*/}
+        {/*  </Grid>*/}
+        {/*) : null}*/}
         {work.rights ? (
           <Grid item>
             <Accordion>
@@ -109,15 +105,19 @@ export const getStaticProps: GetStaticProps = async ({
   // const institutionUri = decodeFileName(params!.institutionUri as string);
   const workUri = decodeFileName(params!.workUri as string);
 
+  const configuration = readAppConfigurationFile(readFileSync);
+
   return {
     props: {
-      configuration: readAppConfigurationFile(readFileSync),
-      datasetString: new DataSubsetter(readDatasetFile(readFileSync))
+      configuration,
+      datasetString: new DataSubsetter({
+        completeDataset: readDatasetFile(readFileSync),
+        configuration,
+      })
         .workDataset(workUri, {
           allImages: true,
           collections: {},
           institution: {},
-          propertyDefinitions: {},
         })
         .stringify(),
       workUri,

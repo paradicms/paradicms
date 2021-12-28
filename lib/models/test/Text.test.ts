@@ -4,7 +4,9 @@ import {testDataTrig} from "./testDataTrig";
 
 describe("Text", () => {
   const dataset = Dataset.parse(testDataTrig);
-  const work = dataset.works[0];
+  const work = dataset.workByUri(
+    "http://example.com/institution0/collection0/work2"
+  );
   const sut: Text = work.abstract! as Text;
 
   it("should provide the value", () => {

@@ -1,5 +1,9 @@
 import * as React from "react";
-import {NavbarSearchForm, WorkSearchContainer} from "@paradicms/bootstrap";
+import {
+  NavbarSearchForm,
+  thumbnailTargetDimensions,
+  WorkSearchContainer,
+} from "@paradicms/bootstrap";
 import {
   Card,
   CardBody,
@@ -25,22 +29,26 @@ export const Application: React.FunctionComponent<{
   const documentTitle = configuration.documentTitle ?? "Search";
   const navbarTitle = configuration.navbarTitle ?? documentTitle;
 
-  const useWorkQueryOut = useWorkQuery({
-    configuration: configuration.workSearch,
-    workQueryService,
-    worksPerPage: WORKS_PER_PAGE,
-  });
-  if (!useWorkQueryOut) {
-    return null;
-  }
   const {
-    page,
-    pageMax,
     setPage,
     setWorkQuery,
     workQuery,
+    workQueryResults,
     ...workSearchProps
-  } = useWorkQueryOut;
+  } = useWorkQuery({
+    defaultWorkQuery: {
+      filters: configuration.search?.filters ?? [],
+      valueFacetValueThumbnailSelector: {
+        targetDimensions: thumbnailTargetDimensions,
+      },
+    },
+    workQueryService,
+    worksPerPage: WORKS_PER_PAGE,
+  });
+
+  if (!workQueryResults) {
+    return null;
+  }
 
   return (
     <>
@@ -73,14 +81,13 @@ export const Application: React.FunctionComponent<{
               <CardBody>
                 <WorkSearchContainer
                   {...workSearchProps}
-                  page={page}
-                  pageMax={pageMax}
-                  workQuery={workQuery}
                   renderWorkLink={(work, children) => (
                     <a href={work.page ?? work.uri}>{children}</a>
                   )}
-                  setWorkQuery={setWorkQuery}
                   setPage={setPage}
+                  setWorkQuery={setWorkQuery}
+                  workQuery={workQuery}
+                  workQueryResults={workQueryResults}
                 />
               </CardBody>
             </Card>

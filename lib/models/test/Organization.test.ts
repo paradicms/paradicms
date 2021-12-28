@@ -3,7 +3,9 @@ import {Dataset} from "../src";
 import {testDataTrig} from "./testDataTrig";
 
 describe("Organization", () => {
-  const sut = Dataset.parse(testDataTrig).organizations[0];
+  const sut = Dataset.parse(testDataTrig).organizationByUri(
+    "http://example.com/organization4"
+  );
 
   it("should get the organization's images", () => {
     expect(sut.images).to.not.be.empty;

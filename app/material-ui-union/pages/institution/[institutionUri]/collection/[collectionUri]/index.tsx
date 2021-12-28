@@ -26,10 +26,8 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 const WORK_JOIN_SELECTOR: WorkJoinSelector = {
   collections: {},
   institution: {},
-  propertyDefinitions: {
-    values: {
-      thumbnail: {targetDimensions: thumbnailTargetDimensions},
-    },
+  propertyNamedValues: {
+    thumbnail: {targetDimensions: thumbnailTargetDimensions},
   },
   thumbnail: {targetDimensions: thumbnailTargetDimensions},
 };
@@ -54,29 +52,32 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
   const workQueryService = useMemo<WorkQueryService>(
     () =>
       new LunrWorkQueryService({
-        configuration: configuration.workSearch,
+        configuration,
         dataset,
         workJoinSelector: WORK_JOIN_SELECTOR,
       }),
     [configuration, dataset]
   );
 
-  const useWorkQueryOut = useWorkQuery({
-    configuration: configuration.workSearch,
-    workQueryService,
-    worksPerPage: WORKS_PER_PAGE,
-  });
-  if (!useWorkQueryOut) {
-    return null;
-  }
   const {
-    page,
-    pageMax,
     setPage,
     setWorkQuery,
     workQuery,
     workQueryResults,
-  } = useWorkQueryOut;
+    ...workSearchProps
+  } = useWorkQuery({
+    defaultWorkQuery: {
+      filters: configuration.search?.filters ?? [],
+      valueFacetValueThumbnailSelector: {
+        targetDimensions: thumbnailTargetDimensions,
+      },
+    },
+    workQueryService,
+    worksPerPage: WORKS_PER_PAGE,
+  });
+  if (!workQueryResults) {
+    return null;
+  }
 
   return (
     <Layout
@@ -97,8 +98,6 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
         works={workQueryResults.dataset.works}
         onChangeFilters={filters => setWorkQuery({...workQuery, filters})}
         onChangePage={setPage}
-        page={page}
-        pageMax={pageMax}
         renderInstitutionLink={(institution, children) => (
           <Link href={Hrefs.institution(institution.uri).home}>{children}</Link>
         )}
@@ -108,6 +107,7 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
           </Link>
         )}
         query={workQuery}
+        {...workSearchProps}
       />
     </Layout>
   );
@@ -143,11 +143,16 @@ export const getStaticProps: GetStaticProps = async ({
   const collectionUri = decodeFileName(params!.collectionUri as string);
   // const institutionUri = decodeFileName(params!.institutionUri as string);
 
+  const configuration = readAppConfigurationFile(readFileSync);
+
   return {
     props: {
       collectionUri,
-      configuration: readAppConfigurationFile(readFileSync),
-      datasetString: new DataSubsetter(readDatasetFile(readFileSync))
+      configuration,
+      datasetString: new DataSubsetter({
+        completeDataset: readDatasetFile(readFileSync),
+        configuration,
+      })
         .collectionDataset(collectionUri, {
           works: WORK_JOIN_SELECTOR,
         })

@@ -1,30 +1,13 @@
 import {BlankNode, Literal, NamedNode, Store, Term} from "n3";
 import {Dataset} from "./Dataset";
-import {DCTERMS, FOAF, PARADICMS, RDF} from "./vocabularies";
-import {Property} from "./Property";
 import {NamedModel} from "./NamedModel";
 import {ModelParameters} from "./ModelParameters";
+import {RDF} from "./vocabularies";
 
 export class Model {
   readonly dataset: Dataset;
   readonly graphNode: NamedNode;
   protected readonly _node: BlankNode | NamedNode;
-
-  private static createIgnoredPropertyUris(): Set<string> {
-    const result = new Set<string>();
-    // Ignore the rights properties
-    result.add(DCTERMS.creator.value);
-    result.add(DCTERMS.license.value);
-    result.add(DCTERMS.rights.value);
-    result.add(DCTERMS.rightsHolder.value);
-    result.add(FOAF.page.value);
-    result.add(PARADICMS.collection.value);
-    result.add(PARADICMS.institution.value);
-    result.add(RDF.type.value);
-    return result;
-  }
-
-  private static readonly IGNORED_PROPERTY_URIS = Model.createIgnoredPropertyUris();
 
   constructor(kwds: ModelParameters) {
     this.dataset = kwds.dataset;
@@ -32,26 +15,19 @@ export class Model {
     this._node = kwds.node;
   }
 
+  protected hasRdfType(
+    subject: BlankNode | NamedNode,
+    rdfType: NamedNode
+  ): boolean {
+    return this.store.getQuads(subject, RDF.type, rdfType, null).length > 0;
+  }
+
   get node(): BlankNode | NamedNode {
     return this._node;
   }
 
-  protected parentNamedNodes(childToParentProperty: NamedNode): NamedNode[] {
-    const parentNodes = this.store.getObjects(
-      this.node,
-      childToParentProperty,
-      null
-    );
-    if (parentNodes.length === 0) {
-      return [];
-    }
-    return parentNodes
-      .filter(node => node.termType === "NamedNode")
-      .map(node => node as NamedNode);
-  }
-
   protected optionalLiteral(property: NamedNode): Literal | null {
-    const nodes = this.store.getObjects(this.node, property, null);
+    const nodes = this.store.getObjects(this.node, property, this.graphNode);
     if (nodes.length === 0) {
       return null;
     }
@@ -67,7 +43,7 @@ export class Model {
     modelByUri: (uri: string) => ModelT,
     property: NamedNode
   ): ModelT | string | null {
-    const objects = this.store.getObjects(this.node, property, null);
+    const objects = this.store.getObjects(this.node, property, this.graphNode);
     for (const object of objects) {
       switch (object.termType) {
         case "Literal":
@@ -84,7 +60,11 @@ export class Model {
   }
 
   protected optionalStringOrUri(property: NamedNode): string | null {
-    for (const object of this.store.getObjects(this.node, property, null)) {
+    for (const object of this.store.getObjects(
+      this.node,
+      property,
+      this.graphNode
+    )) {
       switch (object.termType) {
         case "Literal":
         case "NamedNode":
@@ -94,53 +74,18 @@ export class Model {
     return null;
   }
 
-  protected get _properties(): readonly Property[] {
-    const properties: Property[] = [];
-    this.store.forEach(
-      quad => {
-        const propertyUri = quad.predicate.value;
-        if (Model.IGNORED_PROPERTY_URIS.has(propertyUri)) {
-          return;
-        }
-        properties.push(
-          new Property({
-            dataset: this.dataset,
-            value: quad.object,
-            uri: propertyUri,
-          })
-        );
-      },
+  protected parentNamedNodes(childToParentProperty: NamedNode): NamedNode[] {
+    const parentNodes = this.store.getObjects(
       this.node,
-      null,
-      null,
-      null
+      childToParentProperty,
+      this.graphNode
     );
-    if (properties.every(property => !!property.definition?.label)) {
-      return properties.sort((left, right) =>
-        left.definition!.label!.localeCompare(right.definition!.label)
-      );
-    } else {
-      return properties.sort((left, right) =>
-        left.uri.localeCompare(right.uri)
-      );
+    if (parentNodes.length === 0) {
+      return [];
     }
-  }
-
-  protected get _propertyUris(): readonly string[] {
-    const propertyUris: string[] = [];
-    this.store.forPredicates(
-      predicate => {
-        const propertyUri = predicate.value;
-        if (Model.IGNORED_PROPERTY_URIS.has(propertyUri)) {
-          return;
-        }
-        propertyUris.push(propertyUri);
-      },
-      this.node,
-      null,
-      null
-    );
-    return propertyUris;
+    return parentNodes
+      .filter(node => node.termType === "NamedNode")
+      .map(node => node as NamedNode);
   }
 
   protected requiredLiteral(property: NamedNode): Literal {
@@ -170,7 +115,11 @@ export class Model {
   }
 
   protected requiredTerm(property: NamedNode): Term {
-    for (const object of this.store.getObjects(this.node, property, null)) {
+    for (const object of this.store.getObjects(
+      this.node,
+      property,
+      this.graphNode
+    )) {
       return object;
     }
     throw new EvalError(

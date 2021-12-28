@@ -48,14 +48,15 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const dataset = readDatasetFile(readFileSync);
+  const completeDataset = readDatasetFile(readFileSync);
+  const configuration = readAppConfigurationFile(readFileSync);
 
   return {
     props: {
-      configuration: readAppConfigurationFile(readFileSync),
-      datasetString: new DataSubsetter(dataset)
+      configuration,
+      datasetString: new DataSubsetter({completeDataset, configuration})
         .institutionsDataset(
-          dataset.institutions.map(institution => institution.uri),
+          completeDataset.institutions.map(institution => institution.uri),
           {
             thumbnail: {targetDimensions: thumbnailTargetDimensions},
           }

@@ -3,7 +3,9 @@ import {Dataset} from "../src";
 import {testDataTrig} from "./testDataTrig";
 
 describe("Person", () => {
-  const sut = Dataset.parse(testDataTrig).people[0];
+  const sut = Dataset.parse(testDataTrig).personByUri(
+    "http://example.com/person4"
+  );
 
   it("should get the person's family name", () => {
     expect(sut.familyName).to.not.be.empty;

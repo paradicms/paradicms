@@ -28,7 +28,10 @@ const expectModelsDeepEq = <ModelT extends NamedModel>(
 
 describe("DataSubsetter", () => {
   const testDataset = Dataset.parse(testDataTrig);
-  const sut = new DataSubsetter(testDataset);
+  const sut = new DataSubsetter({
+    completeDataset: testDataset,
+    configuration: {},
+  });
 
   it("should get institutions with thumbnails (institutions page)", () => {
     const dataset = sut.institutionsDataset(
@@ -70,7 +73,7 @@ describe("DataSubsetter", () => {
     const collection = testDataset.collections[0];
     const dataset = sut.collectionDataset(collection.uri, {
       works: {
-        propertyDefinitions: {values: {thumbnail: THUMBNAIL_SELECTOR}},
+        propertyNamedValues: {thumbnail: THUMBNAIL_SELECTOR},
         thumbnail: THUMBNAIL_SELECTOR,
       },
     });
@@ -78,13 +81,9 @@ describe("DataSubsetter", () => {
     const images = testDataset
       .collectionWorks(collection.uri)
       .map(work => work.thumbnail(THUMBNAIL_SELECTOR)!);
-    for (const propertyDefinition of dataset.propertyDefinitions) {
-      for (const propertyDefinitionValue of testDataset.propertyDefinitionByUri(
-        propertyDefinition.uri
-      )!.values) {
-        images.push(propertyDefinitionValue.thumbnail(THUMBNAIL_SELECTOR)!);
-      }
-    }
+    // for (const namedValue of testDataset.namedValues) {
+    //   images.push(namedValue.thumbnail(THUMBNAIL_SELECTOR)!);
+    // }
     expectModelsDeepEq(dataset.images, images);
     expectModelsDeepEq(dataset.licenses, [
       testDataset.licenses.find(
@@ -99,8 +98,7 @@ describe("DataSubsetter", () => {
         )
       )
     );
-    expect(dataset.propertyDefinitions).to.not.be.empty;
-    expect(dataset.propertyValueDefinitions).to.not.be.empty;
+    // expect(dataset.namedValues).to.not.be.empty;
     expectModelsDeepEq(dataset.rightsStatements, [
       testDataset.rightsStatements.find(
         rightsStatement =>
@@ -119,7 +117,6 @@ describe("DataSubsetter", () => {
       allImages: true,
       collections: {},
       institution: {},
-      propertyDefinitions: {},
     });
     expectModelsDeepEq(
       dataset.collections,
@@ -153,8 +150,7 @@ describe("DataSubsetter", () => {
       )!,
     ]);
     expectModelsDeepEq(dataset.works, [work]);
-    expect(dataset.propertyDefinitions).to.not.be.empty;
-    expect(dataset.propertyValueDefinitions).to.be.empty;
+    expect(dataset.namedValues).to.be.empty;
     expectModelsDeepEq(dataset.rightsStatements, [
       testDataset.rightsStatements.find(
         rightsStatement =>

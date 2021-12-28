@@ -64,7 +64,8 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
             <WorkImagesCarousel work={work} />
           </Col>
         </Row>
-        {work.properties.length > 0 ? (
+        {configuration.workProperties &&
+        configuration.workProperties.length > 0 ? (
           <Row className="mt-4">
             <Col xs={12}>
               {/*<Accordion defaultOpen={true} title={<h4>Properties</h4>}>*/}
@@ -117,16 +118,19 @@ export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
   const workUri = decodeFileName(params!.workUri as string);
+  const configuration = readAppConfigurationFile(readFileSync);
 
   return {
     props: {
-      configuration: readAppConfigurationFile(readFileSync),
-      datasetString: new DataSubsetter(readDatasetFile(readFileSync))
+      configuration,
+      datasetString: new DataSubsetter({
+        configuration,
+        completeDataset: readDatasetFile(readFileSync),
+      })
         .workDataset(workUri, {
           allImages: true,
           collections: {},
           institution: {},
-          propertyDefinitions: {},
         })
         .stringify(),
       workUri,

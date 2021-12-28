@@ -34,7 +34,7 @@ Promise.all([fetchAppConfiguration(), fetchDataset()]).then(
     console.info("configuration:\n", JSON.stringify(configuration));
 
     const workQueryService = new LunrWorkQueryService({
-      configuration: configuration.workSearch,
+      configuration,
       dataset,
       workJoinSelector: {
         collections: {
@@ -43,10 +43,8 @@ Promise.all([fetchAppConfiguration(), fetchDataset()]).then(
         institution: {
           thumbnail: {targetDimensions: thumbnailTargetDimensions},
         },
-        propertyDefinitions: {
-          values: {
-            thumbnail: {targetDimensions: thumbnailTargetDimensions},
-          },
+        propertyNamedValues: {
+          thumbnail: {targetDimensions: thumbnailTargetDimensions},
         },
         thumbnail: {targetDimensions: thumbnailTargetDimensions},
       },

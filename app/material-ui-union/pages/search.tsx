@@ -15,6 +15,7 @@ import {WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
 import {useWorkQuery} from "@paradicms/react-search";
 import {AppConfiguration} from "@paradicms/configuration";
+import {useRouter} from "next/router";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
@@ -26,10 +27,8 @@ interface StaticProps {
 const WORK_JOIN_SELECTOR: WorkJoinSelector = {
   collections: {},
   institution: {},
-  propertyDefinitions: {
-    values: {
-      thumbnail: {targetDimensions: thumbnailTargetDimensions},
-    },
+  propertyNamedValues: {
+    thumbnail: {targetDimensions: thumbnailTargetDimensions},
   },
   thumbnail: {targetDimensions: thumbnailTargetDimensions},
 };
@@ -40,34 +39,44 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
   configuration,
   datasetString,
 }) => {
+  const router = useRouter();
+
+  if (!configuration.search) {
+    router.push(Hrefs.home);
+    return null;
+  }
+
   const dataset = useMemo(() => Dataset.parse(datasetString), [datasetString]);
 
   const workQueryService = useMemo<WorkQueryService>(
     () =>
       new LunrWorkQueryService({
-        configuration: configuration.workSearch,
+        configuration,
         dataset,
         workJoinSelector: WORK_JOIN_SELECTOR,
       }),
     [configuration, dataset]
   );
 
-  const useWorkQueryOut = useWorkQuery({
-    configuration: configuration.workSearch,
-    workQueryService,
-    worksPerPage: WORKS_PER_PAGE,
-  });
-  if (!useWorkQueryOut) {
-    return null;
-  }
   const {
-    page,
-    pageMax,
     setPage,
     setWorkQuery,
     workQuery,
     workQueryResults,
-  } = useWorkQueryOut;
+    ...workSearchProps
+  } = useWorkQuery({
+    defaultWorkQuery: {
+      filters: configuration.search!.filters ?? [],
+      valueFacetValueThumbnailSelector: {
+        targetDimensions: thumbnailTargetDimensions,
+      },
+    },
+    workQueryService,
+    worksPerPage: WORKS_PER_PAGE,
+  });
+  if (!workQueryResults) {
+    return null;
+  }
 
   return (
     <Layout
@@ -88,17 +97,13 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
           : "Search results"
       }
       configuration={configuration}
-      onSearch={text =>
-        setWorkQuery({filters: configuration.workSearch.filters, text})
-      }
+      onSearch={text => setWorkQuery({...workQuery, text})}
     >
       <WorkSearchGrid
         facets={workQueryResults.facets}
         works={workQueryResults.dataset.works}
         onChangeFilters={filters => setWorkQuery({...workQuery, filters})}
         onChangePage={setPage}
-        page={page}
-        pageMax={pageMax}
         renderInstitutionLink={(institution, children) => (
           <Link href={Hrefs.institution(institution.uri).home}>{children}</Link>
         )}
@@ -108,6 +113,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
           </Link>
         )}
         query={workQuery}
+        {...workSearchProps}
       />
     </Layout>
   );
@@ -118,14 +124,15 @@ export default SearchPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const dataset = readDatasetFile(readFileSync);
+  const completeDataset = readDatasetFile(readFileSync);
+  const configuration = readAppConfigurationFile(readFileSync);
 
   return {
     props: {
-      configuration: readAppConfigurationFile(readFileSync),
-      datasetString: new DataSubsetter(dataset)
+      configuration,
+      datasetString: new DataSubsetter({completeDataset, configuration})
         .worksDataset(
-          dataset.works.map(work => work.uri),
+          completeDataset.works.map(work => work.uri),
           WORK_JOIN_SELECTOR
         )
         .stringify(),

@@ -1,7 +1,6 @@
 import {Button, ButtonGroup, Col, Container, Row} from "reactstrap";
 import * as React from "react";
 import {useMemo} from "react";
-import {FiltersControls} from "./FiltersControls";
 import {FiltersBadges} from "./FiltersBadges";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faImages, faList} from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +10,7 @@ import {useQueryParam} from "use-query-params";
 import {Institution, Work} from "@paradicms/models";
 import {Pagination} from "./Pagination";
 import {WorkQuery, WorkQueryResults} from "@paradicms/services";
+import {FiltersControls} from "./FiltersControls";
 
 export const WorkSearchContainer: React.FunctionComponent<{
   page: number;

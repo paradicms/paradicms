@@ -1,10 +1,12 @@
 import {expect} from "chai";
-import {Dataset, Text} from "../src";
+import {Dataset, DCTERMS, Text} from "../src";
 import {testDataTrig} from "./testDataTrig";
 
 describe("Work", () => {
   const dataset = Dataset.parse(testDataTrig);
-  const sut = dataset.works[0];
+  const sut = dataset.workByUri(
+    "http://example.com/institution0/collection0/work2"
+  );
 
   it("should get the work's abstract", () => {
     expect(sut.abstract).to.be.instanceof(Text);
@@ -43,8 +45,18 @@ describe("Work", () => {
     );
   });
 
-  it("should get the work's properties", () => {
-    expect(sut.properties).to.not.be.empty;
+  it("should get the work's property values (literal)", () => {
+    const propertyValues = sut.propertyValues(DCTERMS.title.value);
+    expect(propertyValues).to.have.length(1);
+    const propertyValue = propertyValues[0];
+    expect(propertyValue.toString()).to.eq(sut.title);
+  });
+
+  it("should get the work's property values (Text)", () => {
+    const propertyValues = sut.propertyValues(DCTERMS.abstract.value);
+    expect(propertyValues).to.have.length(1);
+    const propertyValue = propertyValues[0];
+    expect(propertyValue.toString()).to.eq((sut.abstract as Text).value);
   });
 
   it("should get the work's rights", () => {

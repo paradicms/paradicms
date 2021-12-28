@@ -77,16 +77,15 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   const currentWorkAbstract: string | Text | null = useMemo(() => {
     if (currentWork.abstract) {
       return currentWork.abstract;
-    } else if (currentWork.properties) {
-      for (const property of currentWork.properties) {
-        if (property.uri === DCTERMS.description.value) {
-          return property.value.value.toString();
-        }
-      }
-      return null;
-    } else {
-      return null;
     }
+
+    for (const propertyValue of currentWork.propertyValues(
+      DCTERMS.description.value
+    )) {
+      return propertyValue.toString();
+    }
+
+    return null;
   }, [currentWork]);
 
   const currentWorkAbstractRights: Rights | null = useMemo(() => {
@@ -314,10 +313,12 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const workUri = decodeFileName(params!.workUri as string);
 
-  const dataset = readDatasetFile(readFileSync);
-  const currentWork = dataset.workByUri(workUri);
+  const completeDataset = readDatasetFile(readFileSync);
+  const configuration = readAppConfigurationFile(readFileSync);
+
+  const currentWork = completeDataset.workByUri(workUri);
   const collectionUri = currentWork.collectionUris[0];
-  const collectionWorks = dataset.collectionWorks(collectionUri);
+  const collectionWorks = completeDataset.collectionWorks(collectionUri);
 
   const currentWorkI = collectionWorks.findIndex(
     work => work.uri === currentWork.uri
@@ -344,9 +345,9 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       collectionUri,
-      configuration: readAppConfigurationFile(readFileSync),
+      configuration,
       currentWorkUri: workUri,
-      datasetString: new DataSubsetter(dataset)
+      datasetString: new DataSubsetter({completeDataset, configuration})
         .worksDataset(workUris, {
           agent: {
             thumbnail: {targetDimensions: thumbnailTargetDimensions},
