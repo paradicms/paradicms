@@ -11,11 +11,54 @@ import {Memoize} from "typescript-memoize";
 import {PropertyValue} from "./PropertyValue";
 import {NamedValue} from "./NamedValue";
 import {NamedNode} from "n3";
+import {WorkAgent} from "./WorkAgent";
+import {Agent} from "./Agent";
+
+const getRightsAgents = (
+  rights: Rights | null,
+  rolePrefix: string
+): readonly WorkAgent[] => {
+  const result: WorkAgent[] = [];
+
+  if (!rights) {
+    return result;
+  }
+
+  const creator = rights?.creator;
+  if (creator && creator instanceof Agent) {
+    result.push({
+      agent: creator as Agent,
+      role: rolePrefix + " creator",
+    });
+  }
+
+  return result;
+};
 
 export class Work extends NamedModel {
   @Memoize()
   get abstract(): string | Text | null {
     return this.optionalStringOrText(DCTERMS.abstract);
+  }
+
+  @Memoize()
+  get agents(): readonly WorkAgent[] {
+    const result: WorkAgent[] = [];
+
+    result.push(
+      ...getRightsAgents(this.rights ?? this.institution.rights ?? null, "Work")
+    );
+
+    const abstract = this.abstract;
+    if (abstract && abstract instanceof Text) {
+      result.push(...getRightsAgents(abstract.rights, "Text"));
+    }
+
+    for (const image of this.originalImages) {
+      result.push(...getRightsAgents(image.rights, "Image"));
+    }
+
+    return result;
   }
 
   get collections(): readonly Collection[] {

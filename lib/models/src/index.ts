@@ -21,4 +21,5 @@ export * from "./ThumbnailSelector";
 export * from "./Text";
 export * from "./vocabularies";
 export * from "./Work";
+export * from "./WorkAgent";
 export * from "./WorkJoinSelector";
