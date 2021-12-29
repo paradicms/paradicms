@@ -1,22 +1,25 @@
 import * as React from "react";
-import {useCallback, useState} from "react";
-import {Image, Institution, Rights, Text, Work} from "@paradicms/models";
+import {useState} from "react";
+import {Image, Institution, Text, Work} from "@paradicms/models";
 import {
-  Accordion,
-  AccordionBody,
-  AccordionHeader,
-  AccordionItem,
   Card,
   CardBody,
+  CardFooter,
   CardHeader,
   CardImg,
-  Col,
-  Container,
-  Row,
-  Table,
+  Nav,
+  NavItem,
+  NavLink,
+  TabContent,
+  TabPane,
 } from "reactstrap";
-import {RightsTable} from "./RightsTable";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
+import {RightsParagraph} from "./RightsParagraph";
+
+const RIGHTS_STYLE: React.CSSProperties = {
+  fontSize: "xx-small",
+  marginBottom: 0,
+};
 
 export const WorkCard: React.FunctionComponent<{
   work: Work;
@@ -26,121 +29,100 @@ export const WorkCard: React.FunctionComponent<{
   ) => React.ReactNode;
   renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactNode;
 }> = ({work, renderInstitutionLink, renderWorkLink}) => {
+  const [activeNavTabIndex, setActiveNavTabIndex] = useState(0);
+
   const thumbnail = work.thumbnail({
     targetDimensions: thumbnailTargetDimensions,
   });
   const thumbnailSrc =
     thumbnail?.src ?? Image.placeholderSrc(thumbnailTargetDimensions);
 
-  const rightsEntries: {rights: Rights; title: string}[] = [];
-  if (thumbnail && thumbnail.rights) {
-    rightsEntries.push({rights: thumbnail.rights, title: "Image rights"});
-  }
-  if (work.rights || work.institution.rights) {
-    rightsEntries.push({
-      rights: work.rights ?? work.institution.rights!,
-      title: "Metadata rights",
+  const navTabs: {content: React.ReactNode; title: string}[] = [];
+  navTabs.push({
+    title: "Image",
+    content: (
+      <Card className="border-0">
+        {renderWorkLink(
+          work,
+          <CardImg
+            src={thumbnailSrc}
+            style={{
+              height: thumbnailTargetDimensions.height,
+              marginBottom: "20px",
+              marginTop: "20px",
+              width: thumbnailTargetDimensions.width,
+            }}
+            title={work.title}
+          />
+        )}
+        {thumbnail && thumbnail.rights ? (
+          <CardFooter className="text-center">
+            <RightsParagraph
+              material="Image"
+              rights={thumbnail.rights}
+              style={RIGHTS_STYLE}
+            />
+          </CardFooter>
+        ) : null}
+      </Card>
+    ),
+  });
+  if (work.abstract) {
+    navTabs.push({
+      title: "Summary",
+      content: (
+        <Card className="border-0">
+          <CardBody style={{fontSize: "small"}}>
+            {work.abstract.toString()}
+          </CardBody>
+          {work.abstract instanceof Text && work.abstract.rights ? (
+            <CardFooter className="text-center">
+              <RightsParagraph
+                material="Text"
+                rights={(work.abstract as Text).rights!}
+                style={RIGHTS_STYLE}
+              />
+            </CardFooter>
+          ) : null}
+        </Card>
+      ),
     });
   }
-  if (work.abstract && work.abstract instanceof Text && work.abstract.rights) {
-    rightsEntries.push({
-      rights: work.abstract.rights!,
-      title: "Summary rights",
-    });
-  }
-
-  const [openAccordionId, setOpenAccordionId] = useState<string>("");
-
-  const toggleAccordion = useCallback(
-    (newOpenAccordionId: string) => {
-      if (newOpenAccordionId === openAccordionId) {
-        setOpenAccordionId("");
-      } else {
-        setOpenAccordionId(newOpenAccordionId);
-      }
-    },
-    [openAccordionId]
-  );
 
   return (
     <Card className="text-center">
       <CardHeader tag="h4">
         {renderWorkLink(work, <>{work.title}</>)}
       </CardHeader>
-      {renderWorkLink(
-        work,
-        <CardImg
-          src={thumbnailSrc}
-          style={{
-            height: thumbnailTargetDimensions.height,
-            marginBottom: "20px",
-            marginTop: "20px",
-            width: thumbnailTargetDimensions.width,
-          }}
-          title={work.title}
-        />
-      )}
       <CardBody>
-        <Container fluid>
-          {renderInstitutionLink ? (
-            <Row>
-              <Col xs={12}>
-                <Table>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <strong>Institution</strong>
-                      </td>
-                      <td>
-                        {renderInstitutionLink(
-                          work.institution,
-                          <span>{work.institution.name}</span>
-                        )}
-                      </td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Col>
-            </Row>
-          ) : null}
-          {/*@ts-ignore*/}
-          <Accordion open={openAccordionId} toggle={toggleAccordion}>
-            {work.abstract ? (
-              <Row>
-                <Col xs={12}>
-                  {/*@ts-ignore*/}
-                  <AccordionItem>
-                    <AccordionHeader targetId="0">Summary</AccordionHeader>
-                    <AccordionBody accordionId="0">
-                      {work.abstract.toString()}
-                    </AccordionBody>
-                  </AccordionItem>
-                </Col>
-              </Row>
-            ) : null}
-            {rightsEntries.map((rightsEntry, key) => (
-              <Row key={key}>
-                <Col xs={12}>
-                  <AccordionItem>
-                    <AccordionHeader targetId={(key + 1).toString()}>
-                      {rightsEntry.title}
-                    </AccordionHeader>
-                    <AccordionBody accordionId={(key + 1).toString()}>
-                      <RightsTable
-                        cellStyle={{
-                          padding: 0,
-                          textAlign: "left",
-                        }}
-                        rights={rightsEntry.rights}
-                        tableStyle={{fontSize: "xx-small"}}
-                      ></RightsTable>
-                    </AccordionBody>
-                  </AccordionItem>
-                </Col>
-              </Row>
-            ))}
-          </Accordion>
-        </Container>
+        {navTabs.length === 1 ? (
+          navTabs[0].content
+        ) : (
+          <>
+            <Nav tabs>
+              {navTabs.map((navTab, navTabIndex) => (
+                <NavItem key={navTabIndex}>
+                  <NavLink
+                    className={
+                      activeNavTabIndex === navTabIndex ? "active" : undefined
+                    }
+                    onClick={() => setActiveNavTabIndex(navTabIndex)}
+                    style={{cursor: "pointer", fontSize: "small"}}
+                  >
+                    {navTab.title}
+                  </NavLink>
+                </NavItem>
+              ))}
+            </Nav>
+            <TabContent activeTab={activeNavTabIndex.toString()}>
+              {navTabs.map((navTab, navTabIndex) => (
+                <TabPane key={navTabIndex} tabId={navTabIndex.toString()}>
+                  <div className="mt-2">{navTab.content}</div>
+                </TabPane>
+              ))}
+            </TabContent>
+          </>
+        )}
       </CardBody>
     </Card>
   );
