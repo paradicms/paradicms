@@ -17,6 +17,7 @@ import {useMemo, useState} from "react";
 import {WorkImagesCarousel} from "./WorkImagesCarousel";
 import {RightsParagraph} from "./RightsParagraph";
 import {WorkAgentsContainer} from "./WorkAgentsContainer";
+import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "x-small",
@@ -84,7 +85,12 @@ export const WorkContainer: React.FunctionComponent<{
       ),
     });
   }
-  if (work.agents.length > 0) {
+  if (
+    work.agents.length > 0 &&
+    work.agents.some(agent =>
+      agent.agent.thumbnail({targetDimensions: thumbnailTargetDimensions})
+    )
+  ) {
     leftColNavTabs.push({
       title: "People",
       content: (
