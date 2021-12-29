@@ -9,8 +9,8 @@ import {
   Row,
 } from "reactstrap";
 import {Agent, Image, WorkAgent} from "@paradicms/models";
-import {thumbnailTargetDimensions} from "@paradicms/material-ui";
 import {RightsParagraph} from "./RightsParagraph";
+import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 
 interface WorkAgentWithThumbnail extends WorkAgent {
   thumbnail: Image;
