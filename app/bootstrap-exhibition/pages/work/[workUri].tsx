@@ -34,10 +34,9 @@ import fs from "fs";
 import {
   RightsParagraph,
   thumbnailTargetDimensions,
+  WorkAgentsContainer,
   WorkImagesCarousel,
 } from "@paradicms/bootstrap";
-import {getWorkAgentProfiles} from "../../lib/getWorkAgentProfiles";
-import {WorkAgentProfilesContainer} from "../../components/WorkAgentProfilesContainer";
 import Hammer from "react-hammerjs";
 import {useRouter} from "next/router";
 import {AppConfiguration} from "@paradicms/configuration";
@@ -102,15 +101,6 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     }
   }, [currentWork, currentWorkAbstract, institution]);
 
-  const currentWorkAgentProfiles = useMemo(
-    () =>
-      getWorkAgentProfiles({
-        institution,
-        work: currentWork,
-      }),
-    [currentWork, institution]
-  );
-
   const [
     currentWorkImagesCarouselImage,
     setCurrentWorkImagesCarouselImage,
@@ -144,13 +134,13 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
       ),
     });
   }
-  if (currentWorkAgentProfiles.length > 0) {
+  if (currentWork.agents.length > 0) {
     leftColNavTabs.push({
       title: "People",
       content: (
-        <WorkAgentProfilesContainer
+        <WorkAgentsContainer
           key={leftColNavTabs.length}
-          workAgentProfiles={currentWorkAgentProfiles}
+          workAgents={currentWork.agents}
         />
       ),
     });

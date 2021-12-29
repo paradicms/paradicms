@@ -9,6 +9,7 @@ export * from "./RightsParagraph";
 export * from "./RightsTable";
 export * from "./thumbnailTargetDimensions";
 export * from "./ValueFilterBadges";
+export * from "./WorkAgentsContainer";
 export * from "./WorkCard";
 export * from "./WorkImagesCarousel";
 export * from "./WorksGallery";
