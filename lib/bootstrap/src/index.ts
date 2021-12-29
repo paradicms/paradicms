@@ -11,6 +11,7 @@ export * from "./thumbnailTargetDimensions";
 export * from "./ValueFilterBadges";
 export * from "./WorkAgentsContainer";
 export * from "./WorkCard";
+export * from "./WorkContainer";
 export * from "./WorkImagesCarousel";
 export * from "./WorksGallery";
 export * from "./WorkSearchContainer";

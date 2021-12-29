@@ -12,13 +12,11 @@ import {
   TabContent,
   TabPane,
 } from "reactstrap";
-import {
-  RightsParagraph,
-  WorkAgentsContainer,
-  WorkImagesCarousel,
-} from "@paradicms/bootstrap";
 import * as React from "react";
 import {useMemo, useState} from "react";
+import {WorkImagesCarousel} from "./WorkImagesCarousel";
+import {RightsParagraph} from "./RightsParagraph";
+import {WorkAgentsContainer} from "./WorkAgentsContainer";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "x-small",

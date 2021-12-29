@@ -11,11 +11,10 @@ import {
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
-import {thumbnailTargetDimensions} from "@paradicms/bootstrap";
+import {thumbnailTargetDimensions, WorkContainer} from "@paradicms/bootstrap";
 import Hammer from "react-hammerjs";
 import {useRouter} from "next/router";
 import {AppConfiguration} from "@paradicms/configuration";
-import {WorkContainer} from "../../components/WorkContainer";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
