@@ -8,8 +8,8 @@ import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
 import {Dataset, Text} from "@paradicms/models";
 import {Layout} from "../components/Layout";
 import {Col, Container, Row} from "reactstrap";
-import {RightsParagraph} from "../components/RightsParagraph";
 import {AppConfiguration} from "@paradicms/configuration";
+import {RightsParagraph} from "@paradicms/bootstrap";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 

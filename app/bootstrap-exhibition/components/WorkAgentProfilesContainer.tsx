@@ -9,8 +9,8 @@ import {
   Row,
 } from "reactstrap";
 import {WorkAgentProfile} from "../lib/WorkAgentProfile";
-import {RightsParagraph} from "./RightsParagraph";
 import {Agent} from "@paradicms/models";
+import {RightsParagraph} from "@paradicms/bootstrap";
 
 export const WorkAgentProfilesContainer: React.FunctionComponent<{
   workAgentProfiles: readonly WorkAgentProfile[];

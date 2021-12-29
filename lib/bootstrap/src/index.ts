@@ -5,6 +5,7 @@ export * from "./LicenseLink";
 export * from "./NavbarSearchForm";
 export * from "./Pagination";
 export * from "./RightsStatementLink";
+export * from "./RightsParagraph";
 export * from "./RightsTable";
 export * from "./thumbnailTargetDimensions";
 export * from "./ValueFilterBadges";
