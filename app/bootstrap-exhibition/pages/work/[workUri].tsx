@@ -32,10 +32,10 @@ import {
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
 import {
+  RightsParagraph,
   thumbnailTargetDimensions,
   WorkImagesCarousel,
 } from "@paradicms/bootstrap";
-import {RightsParagraph} from "../../components/RightsParagraph";
 import {getWorkAgentProfiles} from "../../lib/getWorkAgentProfiles";
 import {WorkAgentProfilesContainer} from "../../components/WorkAgentProfilesContainer";
 import Hammer from "react-hammerjs";
