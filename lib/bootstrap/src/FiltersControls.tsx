@@ -52,6 +52,7 @@ export const FiltersControls: React.FunctionComponent<{
                       openFilterIndex === filterI ? -1 : filterI
                     )
                   }
+                  style={{cursor: "pointer"}}
                 >
                   {filter.label}
                 </CardHeader>
