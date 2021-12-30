@@ -5,8 +5,13 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
 import {Image} from "./Image";
 import {PARADICMS, RDF} from "./vocabularies";
 import {Dataset} from "./Dataset";
+import {Agent} from "./Agent";
 
 export abstract class PropertyValue {
+  static fromAgent(agent: Agent) {
+    return new AgentPropertyValue(agent);
+  }
+
   /**
    * Abstract base class with factories for adapting other classes to a common interface.
    *
@@ -77,15 +82,31 @@ export abstract class PropertyValue {
     return new TextPropertyValue(text);
   }
 
-  get label(): string | null {
-    return null;
-  }
+  abstract get label(): string;
 
   thumbnail(selector: ThumbnailSelector): Image | null {
     return null;
   }
 
-  abstract toString(): string;
+  toString() {
+    throw new EvalError("use .value, not .toString()");
+  }
+
+  abstract get value(): string;
+}
+
+class AgentPropertyValue extends PropertyValue {
+  constructor(readonly agent: Agent) {
+    super();
+  }
+
+  get label() {
+    return this.agent.name;
+  }
+
+  get value() {
+    return this.agent.uri;
+  }
 }
 
 class LiteralPropertyValue extends PropertyValue {
@@ -93,7 +114,11 @@ class LiteralPropertyValue extends PropertyValue {
     super();
   }
 
-  toString() {
+  get label() {
+    return this.literal.value;
+  }
+
+  get value() {
     return this.literal.value;
   }
 }
@@ -104,14 +129,14 @@ class NamedPropertyValue extends PropertyValue {
   }
 
   get label() {
-    return this.namedValue.label;
+    return this.namedValue.label ?? this.value;
   }
 
   thumbnail(selector: ThumbnailSelector) {
     return this.namedValue.thumbnail(selector);
   }
 
-  toString() {
+  get value() {
     return this.namedValue.value.value;
   }
 }
@@ -121,7 +146,11 @@ class TextPropertyValue extends PropertyValue {
     super();
   }
 
-  toString() {
-    return this.text.toString();
+  get label() {
+    return this.value;
+  }
+
+  get value() {
+    return this.text.value;
   }
 }

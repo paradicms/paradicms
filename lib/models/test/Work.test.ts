@@ -49,14 +49,14 @@ describe("Work", () => {
     const propertyValues = sut.propertyValues(DCTERMS.title.value);
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];
-    expect(propertyValue.toString()).to.eq(sut.title);
+    expect(propertyValue.value).to.eq(sut.title);
   });
 
   it("should get the work's property values (Text)", () => {
     const propertyValues = sut.propertyValues(DCTERMS.abstract.value);
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];
-    expect(propertyValue.toString()).to.eq((sut.abstract as Text).value);
+    expect(propertyValue.value).to.eq((sut.abstract as Text).value);
   });
 
   it("should get the work's rights", () => {

@@ -35,7 +35,7 @@ export const WorkContainer: React.FunctionComponent<{
     for (const propertyValue of work.propertyValues(
       DCTERMS.description.value
     )) {
-      return propertyValue.toString();
+      return propertyValue.value;
     }
 
     return null;
