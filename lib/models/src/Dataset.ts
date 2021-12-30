@@ -46,6 +46,7 @@ export class Dataset {
   private _namedValuesByPropertyUriIndex?: {
     [index: string]: readonly NamedValue[];
   };
+  private _namedValuesByUriIndex?: {[index: string]: NamedValue};
   private _organizations?: readonly Organization[];
   private _organizationsByUriIndex?: {[index: string]: Organization};
   private _people?: readonly Person[];
@@ -257,6 +258,15 @@ export class Dataset {
     return this.namedValuesByPropertyUriIndex[propertyUri] ?? [];
   }
 
+  namedValueByUri(namedValueUri: string): NamedValue {
+    const namedValue = this.namedValuesByUriIndex[namedValueUri];
+    if (!namedValue) {
+      this.logContents();
+      throw new RangeError("no such named value " + namedValueUri);
+    }
+    return namedValue;
+  }
+
   private get namedValuesByPropertyUriIndex(): {
     [index: string]: readonly NamedValue[];
   } {
@@ -264,6 +274,13 @@ export class Dataset {
       this.readNamedValues();
     }
     return this._namedValuesByPropertyUriIndex!;
+  }
+
+  private get namedValuesByUriIndex(): {[index: string]: NamedValue} {
+    if (!this._namedValuesByUriIndex) {
+      this.readNamedValues();
+    }
+    return this._namedValuesByUriIndex!;
   }
 
   organizationByUri(organizationUri: string): Organization {
@@ -455,6 +472,7 @@ export class Dataset {
     const namedValuesByPropertyUriIndex: {
       [index: string]: NamedValue[];
     } = {};
+    this._namedValuesByUriIndex = {};
     this.readModels(kwds => {
       const namedValue = this.readNamedValue(kwds);
 
@@ -468,6 +486,8 @@ export class Dataset {
           namedValuesByPropertyUriIndex[propertyUri] = [namedValue];
         }
       }
+
+      this._namedValuesByUriIndex![namedValue.uri] = namedValue;
     }, PARADICMS.NamedValue);
     this._namedValues = namedValues;
     this._namedValuesByPropertyUriIndex = namedValuesByPropertyUriIndex;
