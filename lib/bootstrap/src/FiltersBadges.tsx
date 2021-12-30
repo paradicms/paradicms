@@ -1,10 +1,12 @@
 import * as React from "react";
 import {ValueFilterBadges} from "./ValueFilterBadges";
 import {Filter, StringPropertyValueFilter} from "@paradicms/filters";
+import {Facet, StringPropertyValueFacet} from "@paradicms/facets";
 
 export const FiltersBadges: React.FunctionComponent<{
+  facets: readonly Facet[];
   filters: readonly Filter[];
-}> = ({filters}) => {
+}> = ({facets, filters}) => {
   return (
     <>
       {filters.map((filter, filterI) => {
@@ -12,6 +14,14 @@ export const FiltersBadges: React.FunctionComponent<{
           case "StringPropertyValue": {
             return (
               <ValueFilterBadges
+                facet={
+                  facets.find(
+                    facet =>
+                      facet.type === "StringPropertyValue" &&
+                      (facet as StringPropertyValueFacet).propertyUri ===
+                        (filter as StringPropertyValueFilter).propertyUri
+                  ) as StringPropertyValueFacet | undefined
+                }
                 filter={filter as StringPropertyValueFilter}
                 key={filterI}
               />

@@ -1,14 +1,16 @@
 import * as React from "react";
 import {Badge} from "reactstrap";
 import {PrimitiveType, ValueFilter} from "@paradicms/filters";
+import {ValueFacet} from "@paradicms/facets";
 
 export class ValueFilterBadges<
   T extends PrimitiveType
 > extends React.Component<{
+  facet?: ValueFacet<T>;
   filter: ValueFilter<T>;
 }> {
   render() {
-    const {filter} = this.props;
+    const {facet, filter} = this.props;
 
     const filterBadges: React.ReactNodeArray = [];
 
@@ -48,7 +50,9 @@ export class ValueFilterBadges<
         >
           <Badge className="p-2" color="warning" pill>
             Exclude&nbsp;
-            {filter.label}: {excludeValue}
+            {filter.label}:&nbsp;
+            {facet?.values.find(facetValue => facetValue.value === excludeValue)
+              ?.label ?? excludeValue}
           </Badge>
         </h5>
       );
@@ -62,7 +66,9 @@ export class ValueFilterBadges<
         >
           <Badge className="p-2" color="warning" pill>
             Include&nbsp;
-            {filter.label}: {includeValue}
+            {filter.label}:&nbsp;
+            {facet?.values.find(facetValue => facetValue.value === includeValue)
+              ?.label ?? includeValue}
           </Badge>
         </h5>
       );
