@@ -9,7 +9,7 @@ describe("NamedValue", () => {
   )[0];
 
   it("should get the value", () => {
-    expect(sut.value.value.toString()).to.not.be.empty;
+    expect(sut.value.value).to.not.be.empty;
   });
 
   it("should get associated images", () => {

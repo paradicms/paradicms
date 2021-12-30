@@ -125,6 +125,7 @@ export class Work extends NamedModel {
     return result;
   }
 
+  @Memoize()
   propertyValues(propertyUri: string): readonly PropertyValue[] {
     return PropertyValue.fromQuads(
       this.dataset,

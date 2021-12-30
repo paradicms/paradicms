@@ -32,6 +32,9 @@ interface StaticProps {
 const WORKS_PER_PAGE = 10;
 
 const WORK_JOIN_SELECTOR: WorkJoinSelector = {
+  agent: {
+    thumbnail: {targetDimensions: thumbnailTargetDimensions},
+  },
   propertyNamedValues: {
     thumbnail: {targetDimensions: thumbnailTargetDimensions},
   },

@@ -44,12 +44,16 @@ describe("LunrWorkQueryService", () => {
     ) as InstitutionValueFacet | undefined;
     expect(institutionValueFacet).to.not.be.undefined;
 
-    const stringPropertyValueFacet = result.facets.find(
-      facet => facet.type === "StringPropertyValue"
-    ) as StringPropertyValueFacet | undefined;
-    expect(stringPropertyValueFacet).to.not.be.undefined;
-    expect(stringPropertyValueFacet!.values.some(value => !!value.thumbnail)).to
-      .be.true;
+    expect(
+      result.facets.some(facet => {
+        if (facet.type !== "StringPropertyValue") {
+          return false;
+        }
+        return (facet as StringPropertyValueFacet).values.some(
+          value => !!value.thumbnail
+        );
+      })
+    ).to.be.true;
   });
 
   it("should return fewer works from a freetext query", async () => {

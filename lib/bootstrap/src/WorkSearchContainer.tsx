@@ -67,7 +67,10 @@ export const WorkSearchContainer: React.FunctionComponent<{
               </h4>
               {workQuery.filters.length > 0 ? (
                 <div>
-                  <FiltersBadges filters={workQuery.filters} />
+                  <FiltersBadges
+                    facets={workQueryResults.facets}
+                    filters={workQuery.filters}
+                  />
                 </div>
               ) : null}
               <ButtonGroup>

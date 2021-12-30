@@ -44,7 +44,7 @@ export const createFilterControl = (kwds: {
         return null;
       }
       if (facet.values.length + (facet.unknownCount ? 1 : 0) <= 1) {
-        console.info("collection values facet has <= 1 values, eliding");
+        // console.info("collection values facet has <= 1 values, eliding");
         return null;
       }
       return factory.createCollectionValueFilterControl(facet, concreteFilter);

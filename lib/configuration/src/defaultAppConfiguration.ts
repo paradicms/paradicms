@@ -19,6 +19,11 @@ const institutionValueFilter: InstitutionValueFilter = {
 
 const workProperties: PropertyConfiguration[] = [
   {
+    filterable: true,
+    label: "Creator",
+    uri: DCTERMS_NS + "creator",
+  },
+  {
     label: "Description",
     hidden: true,
     searchable: true,

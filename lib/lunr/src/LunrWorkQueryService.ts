@@ -102,7 +102,7 @@ export class LunrWorkQueryService implements WorkQueryService {
           for (const propertyValue of work.propertyValues(
             propertyConfiguration.uri
           )) {
-            doc[fieldName] = propertyValue.toString();
+            doc[fieldName] = propertyValue.value;
           }
         }
         this.add(doc);
@@ -202,7 +202,7 @@ export class LunrWorkQueryService implements WorkQueryService {
             for (const propertyValue of work.propertyValues(
               concreteFilter.propertyUri
             )) {
-              const propertyValueString: string = propertyValue.toString();
+              const propertyValueString: string = propertyValue.value;
               const facetValue = facetValues[propertyValueString];
               if (facetValue) {
                 facetValue.count++;
@@ -272,7 +272,7 @@ export class LunrWorkQueryService implements WorkQueryService {
                 .propertyValues(
                   (filter as StringPropertyValueFilter).propertyUri
                 )
-                .map(propertyValue => propertyValue.toString())
+                .map(propertyValue => propertyValue.value)
             )
           );
         }

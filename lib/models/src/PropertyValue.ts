@@ -1,12 +1,17 @@
 import {NamedValue} from "./NamedValue";
-import {BlankNode, Literal, NamedNode, Quad} from "n3";
+import {Literal, NamedNode, Quad} from "n3";
 import {Text} from "./Text";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {Image} from "./Image";
 import {PARADICMS, RDF} from "./vocabularies";
 import {Dataset} from "./Dataset";
+import {Agent} from "./Agent";
 
 export abstract class PropertyValue {
+  static fromAgent(agent: Agent) {
+    return new AgentPropertyValue(agent);
+  }
+
   /**
    * Abstract base class with factories for adapting other classes to a common interface.
    *
@@ -20,72 +25,103 @@ export abstract class PropertyValue {
     return new NamedPropertyValue(namedValue);
   }
 
+  private static fromQuad(dataset: Dataset, quad: Quad): PropertyValue | null {
+    switch (quad.object.termType) {
+      case "BlankNode": {
+        const objectRdfTypeQuads = dataset.store.getQuads(
+          quad.object,
+          RDF.type,
+          PARADICMS.Text,
+          quad.graph
+        );
+        if (objectRdfTypeQuads.length === 0) {
+          return null;
+        }
+        return PropertyValue.fromText(
+          new Text({
+            dataset,
+            graphNode: quad.graph as NamedNode, // Blank node must be in the same graph as the current node
+            node: quad.object,
+          })
+        );
+      }
+      case "NamedNode": {
+        for (const objectRdfTypeQuad of dataset.store.getQuads(
+          quad.object,
+          RDF.type,
+          null,
+          null
+        )) {
+          if (objectRdfTypeQuad.object.termType !== "NamedNode") {
+            continue;
+          }
+          const rdfTypeUri = objectRdfTypeQuad.object.value;
+          if (rdfTypeUri === PARADICMS.NamedValue.value) {
+            return PropertyValue.fromNamedValue(
+              dataset.namedValueByUri(quad.object.value)
+            );
+          } else if (rdfTypeUri === PARADICMS.Organization.value) {
+            return PropertyValue.fromAgent(
+              dataset.organizationByUri(quad.object.value)
+            );
+          } else if (rdfTypeUri === PARADICMS.Person.value) {
+            return PropertyValue.fromAgent(
+              dataset.personByUri(quad.object.value)
+            );
+          }
+        }
+        return null;
+      }
+      case "Literal":
+        return PropertyValue.fromLiteral(quad.object as Literal);
+      default:
+        return null;
+    }
+  }
+
   static fromQuads(
     dataset: Dataset,
     quads: readonly Quad[]
   ): readonly PropertyValue[] {
-    const result: PropertyValue[] = [];
+    const propertyValues: PropertyValue[] = [];
     for (const quad of quads) {
-      switch (quad.object.termType) {
-        case "BlankNode": {
-          if (
-            dataset.store.getQuads(quad.object, RDF.type, PARADICMS.Text, null)
-              .length > 0
-          ) {
-            result.push(
-              PropertyValue.fromText(
-                new Text({
-                  dataset,
-                  graphNode: quad.graph as NamedNode, // Blank node must be in the same graph as the current node
-                  node: quad.object as BlankNode,
-                })
-              )
-            );
-          }
-          break;
-        }
-        case "Literal":
-          result.push(PropertyValue.fromLiteral(quad.object as Literal));
-          break;
-        case "NamedNode": {
-          const rdfTypeQuads = dataset.store.getQuads(
-            quad.object,
-            RDF.type,
-            PARADICMS.NamedValue,
-            null
-          );
-          if (rdfTypeQuads.length > 0) {
-            const rdfTypeQuad = rdfTypeQuads[0];
-            result.push(
-              PropertyValue.fromNamedValue(
-                new NamedValue({
-                  dataset,
-                  graphNode: rdfTypeQuad.graph as NamedNode,
-                  node: quad.object as NamedNode,
-                })
-              )
-            );
-          }
-          break;
-        }
+      const propertyValue = PropertyValue.fromQuad(dataset, quad);
+      if (propertyValue) {
+        propertyValues.push(propertyValue);
       }
     }
-    return result;
+    return propertyValues;
   }
 
   static fromText(text: Text) {
     return new TextPropertyValue(text);
   }
 
-  get label(): string | null {
-    return null;
-  }
+  abstract get label(): string;
 
   thumbnail(selector: ThumbnailSelector): Image | null {
     return null;
   }
 
-  abstract toString(): string;
+  toString() {
+    throw new EvalError("use .value, not .toString()");
+  }
+
+  abstract get value(): string;
+}
+
+class AgentPropertyValue extends PropertyValue {
+  constructor(readonly agent: Agent) {
+    super();
+  }
+
+  get label() {
+    return this.agent.name;
+  }
+
+  get value() {
+    return this.agent.uri;
+  }
 }
 
 class LiteralPropertyValue extends PropertyValue {
@@ -93,7 +129,11 @@ class LiteralPropertyValue extends PropertyValue {
     super();
   }
 
-  toString() {
+  get label() {
+    return this.literal.value;
+  }
+
+  get value() {
     return this.literal.value;
   }
 }
@@ -104,14 +144,14 @@ class NamedPropertyValue extends PropertyValue {
   }
 
   get label() {
-    return this.namedValue.label;
+    return this.namedValue.label ?? this.value;
   }
 
   thumbnail(selector: ThumbnailSelector) {
     return this.namedValue.thumbnail(selector);
   }
 
-  toString() {
+  get value() {
     return this.namedValue.value.value;
   }
 }
@@ -121,7 +161,11 @@ class TextPropertyValue extends PropertyValue {
     super();
   }
 
-  toString() {
-    return this.text.toString();
+  get label() {
+    return this.value;
+  }
+
+  get value() {
+    return this.text.value;
   }
 }
