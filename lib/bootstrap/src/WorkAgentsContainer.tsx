@@ -12,27 +12,17 @@ import {Agent, Image, WorkAgent} from "@paradicms/models";
 import {RightsParagraph} from "./RightsParagraph";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 
-interface WorkAgentWithThumbnail extends WorkAgent {
-  thumbnail: Image;
-}
-
 export const WorkAgentsContainer: React.FunctionComponent<{
   workAgents: readonly WorkAgent[];
 }> = ({workAgents}) => {
-  const workAgentsWithThumbnails: WorkAgentWithThumbnail[] = [];
+  const uniqueWorkAgents: WorkAgent[] = [];
   for (const workAgent of workAgents) {
-    const thumbnail = workAgent.agent.thumbnail({
-      targetDimensions: thumbnailTargetDimensions,
-    });
-    if (!thumbnail) {
-      continue;
-    }
     if (
-      !workAgentsWithThumbnails.find(
+      !uniqueWorkAgents.find(
         uniqueWorkAgent => uniqueWorkAgent.agent.uri === workAgent.agent.uri
       )
     ) {
-      workAgentsWithThumbnails.push({...workAgent, thumbnail});
+      uniqueWorkAgents.push(workAgent);
     }
   }
 
@@ -74,40 +64,49 @@ export const WorkAgentsContainer: React.FunctionComponent<{
 
   return (
     <Container fluid>
-      {workAgentsWithThumbnails.map((workAgent, workAgentIndex) => (
-        <Row
-          className={workAgentIndex > 0 ? "mt-4" : "mt-2"}
-          key={workAgentIndex}
-        >
-          <Col xs={12} className="p-0">
-            <Card className="text-center">
-              <CardHeader tag="h6">
-                <div>{workAgent.agent.name}</div>
-                {workAgentLinks(workAgent.agent)}
-              </CardHeader>
-              <CardBody>
-                <img
-                  src={workAgent.thumbnail.src ?? workAgent.thumbnail.uri}
-                  style={{
-                    maxHeight: thumbnailTargetDimensions.height,
-                    maxWidth: thumbnailTargetDimensions.width,
-                  }}
-                  title={workAgent.agent.name}
-                />
-              </CardBody>
-              {workAgent.thumbnail.rights ? (
-                <CardFooter>
-                  <RightsParagraph
-                    material="Image"
-                    rights={workAgent.thumbnail.rights}
-                    style={{fontSize: "x-small", marginBottom: 0}}
+      {uniqueWorkAgents.map((workAgent, workAgentIndex) => {
+        const thumbnail = workAgent.agent.thumbnail({
+          targetDimensions: thumbnailTargetDimensions,
+        });
+
+        return (
+          <Row
+            className={workAgentIndex > 0 ? "mt-4" : "mt-2"}
+            key={workAgentIndex}
+          >
+            <Col xs={12} className="p-0">
+              <Card className="text-center">
+                <CardHeader tag="h6">
+                  <div>{workAgent.agent.name}</div>
+                  {workAgentLinks(workAgent.agent)}
+                </CardHeader>
+                <CardBody>
+                  <img
+                    src={
+                      thumbnail?.src ??
+                      Image.placeholderSrc(thumbnailTargetDimensions)
+                    }
+                    style={{
+                      maxHeight: thumbnailTargetDimensions.height,
+                      maxWidth: thumbnailTargetDimensions.width,
+                    }}
+                    title={workAgent.agent.name}
                   />
-                </CardFooter>
-              ) : null}
-            </Card>
-          </Col>
-        </Row>
-      ))}
+                </CardBody>
+                {thumbnail?.rights ? (
+                  <CardFooter>
+                    <RightsParagraph
+                      material="Image"
+                      rights={thumbnail.rights}
+                      style={{fontSize: "x-small", marginBottom: 0}}
+                    />
+                  </CardFooter>
+                ) : null}
+              </Card>
+            </Col>
+          </Row>
+        );
+      })}
     </Container>
   );
 };
