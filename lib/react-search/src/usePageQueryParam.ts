@@ -1,8 +1,6 @@
 import {NumberParam, useQueryParam} from "use-query-params";
 
-export const usePageQueryParam = (
-  name: string
-): {
+export const usePageQueryParam = (): {
   page: number;
   setPage: (page: number | undefined) => void;
 } => {

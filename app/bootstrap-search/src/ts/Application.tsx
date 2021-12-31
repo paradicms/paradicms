@@ -1,9 +1,5 @@
 import * as React from "react";
-import {
-  NavbarSearchForm,
-  thumbnailTargetDimensions,
-  WorkSearchContainer,
-} from "@paradicms/bootstrap";
+import {NavbarSearchForm, WorkSearchContainer} from "@paradicms/bootstrap";
 import {
   Card,
   CardBody,
@@ -18,9 +14,7 @@ import {
 import {Helmet} from "react-helmet";
 import {AppConfiguration} from "@paradicms/configuration";
 import {WorkQueryService} from "@paradicms/services";
-import {useWorkQuery} from "@paradicms/react-search";
-
-const WORKS_PER_PAGE = 10;
+import {usePageQueryParam, useWorkQueryParam} from "@paradicms/react-search";
 
 export const Application: React.FunctionComponent<{
   configuration: AppConfiguration;
@@ -29,26 +23,11 @@ export const Application: React.FunctionComponent<{
   const documentTitle = configuration.documentTitle ?? "Search";
   const navbarTitle = configuration.navbarTitle ?? documentTitle;
 
-  const {
-    setPage,
-    setWorkQuery,
-    workQuery,
-    workQueryResults,
-    ...workSearchProps
-  } = useWorkQuery({
-    defaultWorkQuery: {
-      filters: configuration.search?.filters ?? [],
-      valueFacetValueThumbnailSelector: {
-        targetDimensions: thumbnailTargetDimensions,
-      },
-    },
-    workQueryService,
-    worksPerPage: WORKS_PER_PAGE,
+  const {setWorkQuery, workQuery} = useWorkQueryParam({
+    filters: configuration.search?.filters ?? [],
   });
 
-  if (!workQueryResults) {
-    return null;
-  }
+  const {page, setPage} = usePageQueryParam();
 
   return (
     <>
@@ -80,14 +59,14 @@ export const Application: React.FunctionComponent<{
             <Card>
               <CardBody>
                 <WorkSearchContainer
-                  {...workSearchProps}
+                  page={page}
                   renderWorkLink={(work, children) => (
                     <a href={work.page ?? work.uri}>{children}</a>
                   )}
                   setPage={setPage}
                   setWorkQuery={setWorkQuery}
                   workQuery={workQuery}
-                  workQueryResults={workQueryResults}
+                  workQueryService={workQueryService}
                 />
               </CardBody>
             </Card>

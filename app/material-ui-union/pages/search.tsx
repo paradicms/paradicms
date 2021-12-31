@@ -13,7 +13,7 @@ import fs from "fs";
 import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
 import {WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
-import {useWorkQuery} from "@paradicms/react-search";
+import {usePageQueryParam, useWorkQueryParam} from "@paradicms/react-search";
 import {AppConfiguration} from "@paradicms/configuration";
 import {useRouter} from "next/router";
 
@@ -32,8 +32,6 @@ const WORK_JOIN_SELECTOR: WorkJoinSelector = {
   },
   thumbnail: {targetDimensions: thumbnailTargetDimensions},
 };
-
-const WORKS_PER_PAGE = 10;
 
 const SearchPage: React.FunctionComponent<StaticProps> = ({
   configuration,
@@ -58,25 +56,11 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
     [configuration, dataset]
   );
 
-  const {
-    setPage,
-    setWorkQuery,
-    workQuery,
-    workQueryResults,
-    ...workSearchProps
-  } = useWorkQuery({
-    defaultWorkQuery: {
-      filters: configuration.search!.filters ?? [],
-      valueFacetValueThumbnailSelector: {
-        targetDimensions: thumbnailTargetDimensions,
-      },
-    },
-    workQueryService,
-    worksPerPage: WORKS_PER_PAGE,
+  const {setWorkQuery, workQuery} = useWorkQueryParam({
+    filters: configuration.search?.filters ?? [],
   });
-  if (!workQueryResults) {
-    return null;
-  }
+
+  const {page, setPage} = usePageQueryParam();
 
   return (
     <Layout
@@ -100,10 +84,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
       onSearch={text => setWorkQuery({...workQuery, text})}
     >
       <WorkSearchGrid
-        facets={workQueryResults.facets}
-        works={workQueryResults.dataset.works}
-        onChangeFilters={filters => setWorkQuery({...workQuery, filters})}
-        onChangePage={setPage}
+        page={page}
         renderInstitutionLink={(institution, children) => (
           <Link href={Hrefs.institution(institution.uri).home}>{children}</Link>
         )}
@@ -112,8 +93,10 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
             {children}
           </Link>
         )}
-        query={workQuery}
-        {...workSearchProps}
+        setPage={setPage}
+        setWorkQuery={setWorkQuery}
+        workQuery={workQuery}
+        workQueryService={workQueryService}
       />
     </Layout>
   );

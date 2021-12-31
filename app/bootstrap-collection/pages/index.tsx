@@ -67,7 +67,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     filters: configuration.search?.filters ?? [],
   });
 
-  const {page, setPage} = usePageQueryParam("page");
+  const {page, setPage} = usePageQueryParam();
 
   return (
     <Layout

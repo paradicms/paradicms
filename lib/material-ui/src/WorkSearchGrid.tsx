@@ -1,50 +1,75 @@
 import {Institution, Work} from "@paradicms/models";
 import * as React from "react";
+import {useEffect, useState} from "react";
 import {Grid} from "@material-ui/core";
 import {FiltersControls} from "./FiltersControls";
 import {WorksGallery} from "./WorksGallery";
 import {FiltersChips} from "./FiltersChips";
-import {WorkQuery} from "@paradicms/services";
-import {Facet} from "@paradicms/facets";
-import {Filter} from "@paradicms/filters";
+import {GetWorksResult, WorkQuery, WorkQueryService} from "@paradicms/services";
+import {thumbnailTargetDimensions} from "@paradicms/bootstrap";
+import {calculatePageMax} from "@paradicms/react-search";
+
+const OBJECTS_PER_PAGE = 10;
 
 export const WorkSearchGrid: React.FunctionComponent<{
-  facets: readonly Facet[];
-  onChangeFilters: (filters: readonly Filter[]) => void;
-  onChangePage: (page: number) => void;
   page: number; // From 0
-  pageMax: number;
-  query: WorkQuery;
   renderInstitutionLink?: (
     institution: Institution,
     children: React.ReactNode
   ) => React.ReactNode;
   renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactNode;
-  works: readonly Work[];
+  setPage: (page: number | undefined) => void;
+  setWorkQuery: (workQuery: WorkQuery) => void;
+  workQuery: WorkQuery;
+  workQueryService: WorkQueryService;
 }> = ({
-  facets,
-  works,
-  onChangeFilters,
-  onChangePage,
   page,
-  pageMax,
-  query,
   renderInstitutionLink,
   renderWorkLink,
+  setPage,
+  setWorkQuery,
+  workQuery,
+  workQueryService,
 }) => {
+  const [getWorksResult, setGetWorksResult] = useState<GetWorksResult | null>(
+    null
+  );
+
+  useEffect(() => {
+    workQueryService
+      .getWorks(
+        {
+          limit: OBJECTS_PER_PAGE,
+          offset: page * OBJECTS_PER_PAGE,
+          valueFacetValueThumbnailSelector: {
+            targetDimensions: thumbnailTargetDimensions,
+          },
+        },
+        workQuery
+      )
+      .then(setGetWorksResult);
+  }, [page, workQuery]);
+
+  if (!getWorksResult) {
+    return null;
+  }
+
   return (
     <Grid container direction="column" spacing={2}>
       <Grid item>
         <Grid container>
           <Grid item xs={10}>
-            {works.length > 0 ? (
+            {getWorksResult.dataset.works.length > 0 ? (
               <WorksGallery
-                works={works}
-                onChangePage={onChangePage}
+                onChangePage={setPage}
                 page={page}
-                pageMax={pageMax}
+                pageMax={calculatePageMax({
+                  objectsPerPage: OBJECTS_PER_PAGE,
+                  totalObjects: getWorksResult.totalWorksCount,
+                })}
                 renderInstitutionLink={renderInstitutionLink}
                 renderWorkLink={renderWorkLink}
+                works={getWorksResult.dataset.works}
               />
             ) : (
               <h2 style={{textAlign: "center"}}>No matching works found.</h2>
@@ -54,16 +79,16 @@ export const WorkSearchGrid: React.FunctionComponent<{
             <Grid container direction="column" spacing={2}>
               <Grid item>
                 <FiltersChips
-                  facets={facets}
-                  filters={query.filters}
-                  onChange={onChangeFilters}
+                  facets={getWorksResult.facets}
+                  filters={workQuery.filters}
+                  onChange={filters => setWorkQuery({...workQuery, filters})}
                 />
               </Grid>
               <Grid item>
                 <FiltersControls
-                  facets={facets}
-                  filters={query.filters}
-                  onChange={onChangeFilters}
+                  facets={getWorksResult.facets}
+                  filters={workQuery.filters}
+                  onChange={filters => setWorkQuery({...workQuery, filters})}
                 />
               </Grid>
             </Grid>
