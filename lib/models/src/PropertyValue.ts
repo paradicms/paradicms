@@ -46,28 +46,26 @@ export abstract class PropertyValue {
         );
       }
       case "NamedNode": {
-        for (const objectRdfTypeQuad of dataset.store.getQuads(
-          quad.object,
-          RDF.type,
-          null,
-          null
-        )) {
-          if (objectRdfTypeQuad.object.termType !== "NamedNode") {
-            continue;
+        // #78 index lookups take half as much time (amortized over multiple works)
+        // as getting the rdf:type of the NamedNode and branching on its value.
+        {
+          const namedValue = dataset.namedValueByUriOptional(quad.object.value);
+          if (namedValue) {
+            return PropertyValue.fromNamedValue(namedValue);
           }
-          const rdfTypeUri = objectRdfTypeQuad.object.value;
-          if (rdfTypeUri === PARADICMS.NamedValue.value) {
-            return PropertyValue.fromNamedValue(
-              dataset.namedValueByUri(quad.object.value)
-            );
-          } else if (rdfTypeUri === PARADICMS.Organization.value) {
-            return PropertyValue.fromAgent(
-              dataset.organizationByUri(quad.object.value)
-            );
-          } else if (rdfTypeUri === PARADICMS.Person.value) {
-            return PropertyValue.fromAgent(
-              dataset.personByUri(quad.object.value)
-            );
+        }
+        {
+          const organization = dataset.organizationByUriOptional(
+            quad.object.value
+          );
+          if (organization) {
+            return PropertyValue.fromAgent(organization);
+          }
+        }
+        {
+          const person = dataset.personByUriOptional(quad.object.value);
+          if (person) {
+            return PropertyValue.fromAgent(person);
           }
         }
         return null;
