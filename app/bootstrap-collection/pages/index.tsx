@@ -18,7 +18,7 @@ import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
 import fs from "fs";
 import {WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
-import {useWorkQuery} from "@paradicms/react-search";
+import {usePageQueryParam, useWorkQueryParam} from "@paradicms/react-search";
 import {AppConfiguration} from "@paradicms/configuration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
@@ -28,8 +28,6 @@ interface StaticProps {
   readonly configuration: AppConfiguration;
   readonly datasetString: string;
 }
-
-const WORKS_PER_PAGE = 10;
 
 const WORK_JOIN_SELECTOR: WorkJoinSelector = {
   agent: {
@@ -65,25 +63,11 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     [configuration, dataset]
   );
 
-  const {
-    setPage,
-    setWorkQuery,
-    workQuery,
-    workQueryResults,
-    ...workSearchProps
-  } = useWorkQuery({
-    defaultWorkQuery: {
-      filters: configuration.search?.filters ?? [],
-      valueFacetValueThumbnailSelector: {
-        targetDimensions: thumbnailTargetDimensions,
-      },
-    },
-    workQueryService,
-    worksPerPage: WORKS_PER_PAGE,
+  const {setWorkQuery, workQuery} = useWorkQueryParam({
+    filters: configuration.search?.filters ?? [],
   });
-  if (!workQueryResults) {
-    return null;
-  }
+
+  const {page, setPage} = usePageQueryParam("page");
 
   return (
     <Layout
@@ -95,6 +79,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
       }}
     >
       <WorkSearchContainer
+        page={page}
         renderWorkLink={(work, children) => (
           <Link href={Hrefs.work(work.uri)}>
             <a>{children}</a>
@@ -103,8 +88,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
         setPage={setPage}
         setWorkQuery={setWorkQuery}
         workQuery={workQuery}
-        workQueryResults={workQueryResults}
-        {...workSearchProps}
+        workQueryService={workQueryService}
       />
     </Layout>
   );

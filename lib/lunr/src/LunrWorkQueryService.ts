@@ -9,8 +9,9 @@ import {
 import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
 import {
+  GetWorksOptions,
+  GetWorksResult,
   WorkQuery,
-  WorkQueryResults,
   WorkQueryService,
 } from "@paradicms/services";
 import {
@@ -281,13 +282,11 @@ export class LunrWorkQueryService implements WorkQueryService {
     return filteredWorks;
   }
 
-  getWorks(kwds: {
-    limit: number;
-    offset: number;
-    query: WorkQuery;
-  }): Promise<WorkQueryResults> {
-    const {limit, offset, query} = kwds;
-
+  getWorks(
+    options: GetWorksOptions,
+    query: WorkQuery
+  ): Promise<GetWorksResult> {
+    const {limit, offset, valueFacetValueThumbnailSelector} = options;
     invariant(!!query, "query must be defined");
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
@@ -308,8 +307,7 @@ export class LunrWorkQueryService implements WorkQueryService {
       // Calculate facets on the universe before filtering it
       const facets = this.facetizeWorks({
         filters: query.filters,
-        valueFacetValueThumbnailSelector:
-          query.valueFacetValueThumbnailSelector,
+        valueFacetValueThumbnailSelector,
         works: allWorks,
       });
 

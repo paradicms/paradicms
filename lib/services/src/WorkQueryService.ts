@@ -1,10 +1,7 @@
 import {WorkQuery} from "./WorkQuery";
-import {WorkQueryResults} from "./WorkQueryResults";
+import {GetWorksResult} from "./GetWorksResult";
+import {GetWorksOptions} from "./GetWorksOptions";
 
 export interface WorkQueryService {
-  getWorks(kwds: {
-    limit: number;
-    offset: number;
-    query: WorkQuery;
-  }): Promise<WorkQueryResults>;
+  getWorks(options: GetWorksOptions, query: WorkQuery): Promise<GetWorksResult>;
 }

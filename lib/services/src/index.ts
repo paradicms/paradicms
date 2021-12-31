@@ -1,3 +1,4 @@
+export * from "./GetWorksOptions";
+export * from "./GetWorksResult";
 export * from "./WorkQuery";
-export * from "./WorkQueryResults";
 export * from "./WorkQueryService";

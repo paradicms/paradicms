@@ -1,6 +1,6 @@
 import {Button, ButtonGroup, Col, Container, Row} from "reactstrap";
 import * as React from "react";
-import {useMemo} from "react";
+import {useEffect, useState} from "react";
 import {FiltersBadges} from "./FiltersBadges";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faImages, faList} from "@fortawesome/free-solid-svg-icons";
@@ -9,37 +9,58 @@ import {WorksTable} from "./WorksTable";
 import {useQueryParam} from "use-query-params";
 import {Institution, Work} from "@paradicms/models";
 import {Pagination} from "./Pagination";
-import {WorkQuery, WorkQueryResults} from "@paradicms/services";
+import {GetWorksResult, WorkQuery, WorkQueryService} from "@paradicms/services";
 import {FiltersControls} from "./FiltersControls";
+import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
+import {calculatePageMax} from "@paradicms/react-search";
+
+const OBJECTS_PER_PAGE = 10;
 
 export const WorkSearchContainer: React.FunctionComponent<{
   page: number;
-  pageMax: number;
   renderInstitutionLink?: (
     institution: Institution,
     children: React.ReactNode
   ) => React.ReactNode;
   renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactNode;
-  setWorkQuery: (workQuery: WorkQuery) => void;
   setPage: (page: number | undefined) => void;
+  setWorkQuery: (workQuery: WorkQuery) => void;
   workQuery: WorkQuery;
-  workQueryResults: WorkQueryResults;
+  workQueryService: WorkQueryService;
 }> = ({
   page,
-  pageMax,
   renderInstitutionLink,
   renderWorkLink,
-  setWorkQuery,
   setPage,
+  setWorkQuery,
   workQuery,
-  workQueryResults,
+  workQueryService,
 }) => {
   const [viewQueryParam, setView] = useQueryParam<"gallery" | "table">("view");
   const view = viewQueryParam ?? "gallery";
 
-  const works = useMemo(() => workQueryResults.dataset.works, [
-    workQueryResults,
-  ]);
+  const [getWorksResult, setGetWorksResult] = useState<GetWorksResult | null>(
+    null
+  );
+
+  useEffect(() => {
+    workQueryService
+      .getWorks(
+        {
+          limit: OBJECTS_PER_PAGE,
+          offset: page * OBJECTS_PER_PAGE,
+          valueFacetValueThumbnailSelector: {
+            targetDimensions: thumbnailTargetDimensions,
+          },
+        },
+        workQuery
+      )
+      .then(setGetWorksResult);
+  }, [page, workQuery]);
+
+  if (!getWorksResult) {
+    return null;
+  }
 
   // if (works.length === 0) {
   //   return <h3>No matching works found.</h3>;
@@ -47,14 +68,14 @@ export const WorkSearchContainer: React.FunctionComponent<{
 
   return (
     <Container fluid>
-      {workQueryResults.totalWorksCount > 0 ? (
+      {getWorksResult.totalWorksCount > 0 ? (
         <>
           <Row>
             <Col className="d-flex justify-content-between" xs={12}>
               <h4>
-                <span>{workQueryResults.totalWorksCount}</span>&nbsp;
+                <span>{getWorksResult.totalWorksCount}</span>&nbsp;
                 <span>
-                  {workQueryResults.totalWorksCount === 1 ? "work" : "works"}
+                  {getWorksResult.totalWorksCount === 1 ? "work" : "works"}
                 </span>
                 &nbsp;
                 {workQuery.text ? (
@@ -68,7 +89,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
               {workQuery.filters.length > 0 ? (
                 <div>
                   <FiltersBadges
-                    facets={workQueryResults.facets}
+                    facets={getWorksResult.facets}
                     filters={workQuery.filters}
                   />
                 </div>
@@ -101,7 +122,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
       <Row>
         <Col xs="2">
           <FiltersControls
-            facets={workQueryResults.facets}
+            facets={getWorksResult.facets}
             filters={workQuery.filters}
             onChange={newFilters => {
               setWorkQuery({
@@ -117,7 +138,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
             <Row>
               {view === "gallery" ? (
                 <WorksGallery
-                  works={works}
+                  works={getWorksResult.dataset.works}
                   renderInstitutionLink={renderInstitutionLink}
                   renderWorkLink={renderWorkLink}
                 />
@@ -125,7 +146,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
               {view === "table" ? (
                 <Col xs={12}>
                   <WorksTable
-                    works={works}
+                    works={getWorksResult.dataset.works}
                     renderInstitutionLink={renderInstitutionLink}
                     renderWorkLink={renderWorkLink}
                   />
@@ -135,7 +156,12 @@ export const WorkSearchContainer: React.FunctionComponent<{
             <Row className="mt-4">
               <Col className="d-flex justify-content-center" xs={12}>
                 <Pagination
-                  count={pageMax + 1}
+                  count={
+                    calculatePageMax({
+                      objectsPerPage: OBJECTS_PER_PAGE,
+                      totalObjects: getWorksResult.totalWorksCount,
+                    }) + 1
+                  }
                   page={page + 1}
                   onChange={(_, newPage) => setPage(newPage - 1)}
                 />
