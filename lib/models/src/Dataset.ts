@@ -267,6 +267,10 @@ export class Dataset {
     return namedValue;
   }
 
+  namedValueByUriOptional(namedValueUri: string): NamedValue | null {
+    return this.namedValuesByUriIndex[namedValueUri] ?? null;
+  }
+
   private get namedValuesByPropertyUriIndex(): {
     [index: string]: readonly NamedValue[];
   } {
@@ -290,6 +294,10 @@ export class Dataset {
       throw new RangeError("no such organization " + organizationUri);
     }
     return organization;
+  }
+
+  organizationByUriOptional(organizationUri: string): Organization | null {
+    return this.organizationsByUriIndex[organizationUri] ?? null;
   }
 
   get organizations(): readonly Organization[] {
@@ -334,6 +342,10 @@ export class Dataset {
       throw new RangeError("no such person " + personUri);
     }
     return person;
+  }
+
+  personByUriOptional(personUri: string): Person | null {
+    return this.peopleByUriIndex[personUri] ?? null;
   }
 
   protected readCollection(kwds: ModelParameters): Collection {
