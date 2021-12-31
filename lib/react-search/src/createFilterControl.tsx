@@ -10,7 +10,12 @@ import {
   InstitutionValueFacet,
   StringPropertyValueFacet,
 } from "@paradicms/facets";
+import {visitFilter} from "./FilterVisitor";
+import React from "react";
 
+/**
+ * Create a control React element for a filter. Delegates to the factory for UI-framework specific elements.
+ */
 export const createFilterControl = (kwds: {
   facets: readonly Facet[];
   factory: {
@@ -33,71 +38,54 @@ export const createFilterControl = (kwds: {
 }): React.ReactNode => {
   const {facets, factory, filter} = kwds;
 
-  switch (filter.type) {
-    case "CollectionValue": {
-      const concreteFilter: CollectionValueFilter = filter as CollectionValueFilter;
-      const facet: CollectionValueFacet | undefined = facets.find(
-        facet => facet.type === "CollectionValue"
-      ) as CollectionValueFacet | undefined;
-      if (!facet) {
-        console.warn("no matching facet for filter on collections");
-        return null;
-      }
-      if (facet.values.length + (facet.unknownCount ? 1 : 0) <= 1) {
-        // console.info("collection values facet has <= 1 values, eliding");
-        return null;
-      }
-      return factory.createCollectionValueFilterControl(facet, concreteFilter);
-    }
+  return visitFilter(
+    filter,
+    {
+      visitCollectionValueFilter(
+        filter: CollectionValueFilter,
+        facet?: CollectionValueFacet
+      ): React.ReactNode {
+        if (!facet) {
+          return null;
+        }
+        if (facet.values.length + (facet.unknownCount ? 1 : 0) <= 1) {
+          // console.info("collection values facet has <= 1 values, eliding");
+          return null;
+        }
+        return factory.createCollectionValueFilterControl(facet, filter);
+      },
 
-    case "InstitutionValue": {
-      const concreteFilter: InstitutionValueFilter = filter as InstitutionValueFilter;
-      const facet: InstitutionValueFacet | undefined = facets.find(
-        facet => facet.type === "InstitutionValue"
-      ) as InstitutionValueFacet | undefined;
-      if (!facet) {
-        console.warn("no matching facet for filter on institutions");
-        return null;
-      }
-      if (facet.values.length + (facet.unknownCount ? 1 : 0) <= 1) {
-        console.debug("institution values facet has <= 1 values, eliding");
-        return null;
-      }
-      return factory.createInstitutionValueFilterControl(facet, concreteFilter);
-    }
+      visitInstitutionValueFilter(
+        filter: InstitutionValueFilter,
+        facet?: InstitutionValueFacet
+      ): React.ReactNode {
+        if (!facet) {
+          return null;
+        }
+        if (facet.values.length + (facet.unknownCount ? 1 : 0) <= 1) {
+          return null;
+        }
+        return factory.createInstitutionValueFilterControl(facet, filter);
+      },
 
-    case "StringPropertyValue": {
-      const concreteFilter: StringPropertyValueFilter = filter as StringPropertyValueFilter;
-
-      const facet: StringPropertyValueFacet | undefined = facets.find(
-        facet =>
-          facet.type === "StringPropertyValue" &&
-          (facet as StringPropertyValueFacet).propertyUri ===
-            concreteFilter.propertyUri
-      ) as StringPropertyValueFacet | undefined;
-      if (!facet) {
-        console.warn(
-          "no matching facet for filter on property",
-          concreteFilter.propertyUri
-        );
-        return null;
-      }
-      if (facet.values.length + (facet.unknownCount ? 1 : 0) <= 1) {
-        console.debug(
-          "facet for property",
-          concreteFilter.propertyUri,
-          "has <= 1 values, eliding"
-        );
-        return null;
-      }
-
-      return factory.createStringPropertyValueFilterControl(
-        facet,
-        concreteFilter
-      );
-    }
-    default:
-      console.warn("unsupported filter type:", filter.type);
-      return null;
-  }
+      visitStringPropertyValueFilter(
+        filter: StringPropertyValueFilter,
+        facet?: StringPropertyValueFacet
+      ): React.ReactNode {
+        if (!facet) {
+          return null;
+        }
+        if (facet.values.length + (facet.unknownCount ? 1 : 0) <= 1) {
+          // console.debug(
+          //   "facet for property",
+          //   concreteFilter.propertyUri,
+          //   "has <= 1 values, eliding"
+          // );
+          return null;
+        }
+        return factory.createStringPropertyValueFilterControl(facet, filter);
+      },
+    },
+    facets
+  );
 };
