@@ -28,14 +28,26 @@ export const FiltersBadges: React.FunctionComponent<{
               filter: CollectionValueFilter,
               facet?: CollectionValueFacet
             ): React.ReactNode {
-              throw new EvalError("not implemented");
+              return (
+                <ValueFilterBadges
+                  facet={facet}
+                  filter={filter}
+                  key={filterI}
+                />
+              );
             },
 
             visitInstitutionValueFilter(
               filter: InstitutionValueFilter,
               facet?: InstitutionValueFacet
             ): React.ReactNode {
-              throw new EvalError("not implemented");
+              return (
+                <ValueFilterBadges
+                  facet={facet}
+                  filter={filter}
+                  key={filterI}
+                />
+              );
             },
 
             visitStringPropertyValueFilter(
