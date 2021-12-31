@@ -6,8 +6,8 @@ import {FiltersControls} from "./FiltersControls";
 import {WorksGallery} from "./WorksGallery";
 import {FiltersChips} from "./FiltersChips";
 import {GetWorksResult, WorkQuery, WorkQueryService} from "@paradicms/services";
-import {thumbnailTargetDimensions} from "@paradicms/bootstrap";
 import {calculatePageMax} from "@paradicms/react-search";
+import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 
 const OBJECTS_PER_PAGE = 10;
 
