@@ -1,3 +1,4 @@
+export * from "./AgentCard";
 export * from "./createFilterControl";
 export * from "./FiltersControls";
 export * from "./FiltersBadges";
@@ -9,7 +10,6 @@ export * from "./RightsParagraph";
 export * from "./RightsTable";
 export * from "./thumbnailTargetDimensions";
 export * from "./ValueFilterBadges";
-export * from "./WorkAgentsContainer";
 export * from "./WorkCard";
 export * from "./WorkContainer";
 export * from "./WorkImagesCarousel";
