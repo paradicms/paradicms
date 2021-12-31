@@ -102,7 +102,7 @@ class MarkdownDirectoryTransformer(_Transformer):
        d. Paragraphs are always considered string RDF literals.
        e. Some front matter values are handled differently:
            i. String values that are surrounded by < and >, which are treated as URI references.
-           ii. Sequence values create RDF lists.
+           ii. Sequence values create multiple RDF statements with the same subject and predicate.
            iii. Map values create blank nodes, and the conversion is applied recursively.
     3. Transform the RDF graph to a model.
     """
