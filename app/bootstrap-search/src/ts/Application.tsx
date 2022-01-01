@@ -14,7 +14,7 @@ import {
 import {Helmet} from "react-helmet";
 import {AppConfiguration} from "@paradicms/configuration";
 import {WorkQueryService} from "@paradicms/services";
-import {usePageQueryParam, useWorkQueryParam} from "@paradicms/react-search";
+import {useWorkSearchQueryParams} from "@paradicms/react-search";
 
 export const Application: React.FunctionComponent<{
   configuration: AppConfiguration;
@@ -23,14 +23,9 @@ export const Application: React.FunctionComponent<{
   const documentTitle = configuration.documentTitle ?? "Search";
   const navbarTitle = configuration.navbarTitle ?? documentTitle;
 
-  const {setWorkQuery, workQuery} = useWorkQueryParam(
-    {
-      filters: configuration.search?.filters ?? [],
-    },
-    "query"
+  const {onSearch, ...workSearchQueryParams} = useWorkSearchQueryParams(
+    configuration
   );
-
-  const {page, setPage} = usePageQueryParam("page");
 
   return (
     <>
@@ -46,12 +41,7 @@ export const Application: React.FunctionComponent<{
               </NavbarBrand>
               <Nav navbar>
                 <NavItem>
-                  <NavbarSearchForm
-                    onSearch={text => {
-                      setWorkQuery({...workQuery, text});
-                      setPage(undefined);
-                    }}
-                  />
+                  <NavbarSearchForm onSearch={onSearch} />
                 </NavItem>
               </Nav>
             </Navbar>
@@ -62,14 +52,11 @@ export const Application: React.FunctionComponent<{
             <Card>
               <CardBody>
                 <WorkSearchContainer
-                  page={page}
                   renderWorkLink={(work, children) => (
                     <a href={work.page ?? work.uri}>{children}</a>
                   )}
-                  setPage={setPage}
-                  setWorkQuery={setWorkQuery}
-                  workQuery={workQuery}
                   workQueryService={workQueryService}
+                  {...workSearchQueryParams}
                 />
               </CardBody>
             </Card>

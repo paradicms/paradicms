@@ -5,16 +5,10 @@ import {WorkQuery} from "@paradicms/services";
 export const useWorkQueryParam = (
   defaultWorkQuery: WorkQuery,
   name: string
-): {
-  setWorkQuery: (workQuery: WorkQuery) => void;
-  workQuery: WorkQuery;
-} => {
+): [WorkQuery, (workQuery: WorkQuery) => void] => {
   const [workQueryQueryParam, setWorkQuery] = useQueryParam<
     WorkQuery | undefined
   >(name, new JsonQueryParamConfig<WorkQuery>());
 
-  return {
-    setWorkQuery,
-    workQuery: workQueryQueryParam ?? defaultWorkQuery,
-  };
+  return [workQueryQueryParam ?? defaultWorkQuery, setWorkQuery];
 };

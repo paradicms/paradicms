@@ -13,28 +13,33 @@ import {GetWorksResult, WorkQuery, WorkQueryService} from "@paradicms/services";
 import {FiltersControls} from "./FiltersControls";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 import {calculatePageMax} from "@paradicms/react-search";
+import {Filter} from "@paradicms/filters";
 
 const OBJECTS_PER_PAGE = 10;
 
 export const WorkSearchContainer: React.FunctionComponent<{
-  page: number;
+  onChangeFilters: (filters: readonly Filter[]) => void;
   renderInstitutionLink?: (
     institution: Institution,
     children: React.ReactNode
   ) => React.ReactNode;
   renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactNode;
-  setPage: (page: number | undefined) => void;
+  setWorkAgentsPage: (page: number | undefined) => void;
+  setWorksPage: (page: number | undefined) => void;
   setWorkQuery: (workQuery: WorkQuery) => void;
+  workAgentsPage: number;
   workQuery: WorkQuery;
   workQueryService: WorkQueryService;
+  worksPage: number;
 }> = ({
-  page,
+  onChangeFilters,
   renderInstitutionLink,
   renderWorkLink,
-  setPage,
   setWorkQuery,
+  setWorksPage,
   workQuery,
   workQueryService,
+  worksPage,
 }) => {
   const [viewQueryParam, setView] = useQueryParam<"gallery" | "table">("view");
   const view = viewQueryParam ?? "gallery";
@@ -48,7 +53,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
       .getWorks(
         {
           limit: OBJECTS_PER_PAGE,
-          offset: page * OBJECTS_PER_PAGE,
+          offset: worksPage * OBJECTS_PER_PAGE,
           valueFacetValueThumbnailSelector: {
             targetDimensions: thumbnailTargetDimensions,
           },
@@ -56,7 +61,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
         workQuery
       )
       .then(setGetWorksResult);
-  }, [page, workQuery]);
+  }, [worksPage, workQuery]);
 
   if (!getWorksResult) {
     return null;
@@ -124,13 +129,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
           <FiltersControls
             facets={getWorksResult.facets}
             filters={workQuery.filters}
-            onChange={newFilters => {
-              setWorkQuery({
-                ...workQuery,
-                filters: newFilters,
-              });
-              setPage(undefined);
-            }}
+            onChange={onChangeFilters}
           />
         </Col>
         <Col xs="10">
@@ -162,8 +161,8 @@ export const WorkSearchContainer: React.FunctionComponent<{
                       totalObjects: getWorksResult.totalWorksCount,
                     }) + 1
                   }
-                  page={page + 1}
-                  onChange={(_, newPage) => setPage(newPage - 1)}
+                  page={worksPage + 1}
+                  onChange={(_, newPage) => setWorksPage(newPage - 1)}
                 />
               </Col>
             </Row>

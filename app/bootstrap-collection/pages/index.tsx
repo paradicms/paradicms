@@ -18,7 +18,7 @@ import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
 import fs from "fs";
 import {WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
-import {usePageQueryParam, useWorkQueryParam} from "@paradicms/react-search";
+import {useWorkSearchQueryParams} from "@paradicms/react-search";
 import {AppConfiguration} from "@paradicms/configuration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
@@ -63,35 +63,24 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     [configuration, dataset]
   );
 
-  const {setWorkQuery, workQuery} = useWorkQueryParam(
-    {
-      filters: configuration.search?.filters ?? [],
-    },
-    "query"
+  const {onSearch, ...workSearchQueryParams} = useWorkSearchQueryParams(
+    configuration
   );
-
-  const {page, setPage} = usePageQueryParam("page");
 
   return (
     <Layout
       collection={collection}
       configuration={configuration}
-      onSearch={text => {
-        setWorkQuery({...workQuery, text});
-        setPage(undefined);
-      }}
+      onSearch={onSearch}
     >
       <WorkSearchContainer
-        page={page}
         renderWorkLink={(work, children) => (
           <Link href={Hrefs.work(work.uri)}>
             <a>{children}</a>
           </Link>
         )}
-        setPage={setPage}
-        setWorkQuery={setWorkQuery}
-        workQuery={workQuery}
         workQueryService={workQueryService}
+        {...workSearchQueryParams}
       />
     </Layout>
   );
