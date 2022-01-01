@@ -57,14 +57,14 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
     [configuration, dataset]
   );
 
-  const {setWorkQuery, workQuery} = useWorkQueryParam(
+  const [workQuery, setWorkQuery] = useWorkQueryParam(
     {
       filters: configuration.search?.filters ?? [],
     },
     "query"
   );
 
-  const {page, setPage} = usePageQueryParam("page");
+  const [page, setPage] = usePageQueryParam("page");
 
   return (
     <Layout
