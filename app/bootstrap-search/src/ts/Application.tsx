@@ -23,11 +23,14 @@ export const Application: React.FunctionComponent<{
   const documentTitle = configuration.documentTitle ?? "Search";
   const navbarTitle = configuration.navbarTitle ?? documentTitle;
 
-  const {setWorkQuery, workQuery} = useWorkQueryParam({
-    filters: configuration.search?.filters ?? [],
-  });
+  const {setWorkQuery, workQuery} = useWorkQueryParam(
+    {
+      filters: configuration.search?.filters ?? [],
+    },
+    "query"
+  );
 
-  const {page, setPage} = usePageQueryParam();
+  const {page, setPage} = usePageQueryParam("page");
 
   return (
     <>
