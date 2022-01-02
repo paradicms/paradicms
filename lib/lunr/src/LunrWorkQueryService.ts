@@ -301,7 +301,6 @@ export class LunrWorkQueryService implements WorkQueryService {
       for (const work of works) {
         for (const agent of work.agents) {
           if (agentsByUri[agent.agent.uri]) {
-            console.debug("duplicate agent:", agent.agent.uri);
             continue;
           }
           agentsByUri[agent.agent.uri] = agent.agent;
@@ -312,10 +311,15 @@ export class LunrWorkQueryService implements WorkQueryService {
       );
       const slicedAgents = agents.slice(offset, offset + limit);
 
-      new DataSubsetter({
+      const slicedAgentsDataset = new DataSubsetter({
         completeDataset: this.dataset,
         configuration: this.configuration,
       }).agentsDataset(slicedAgents, agentJoinSelector);
+
+      resolve({
+        dataset: slicedAgentsDataset,
+        totalWorkAgentsCount: agents.length,
+      });
     });
   }
 
@@ -372,7 +376,7 @@ export class LunrWorkQueryService implements WorkQueryService {
           .join(", ")
       );
 
-      return resolve({
+      resolve({
         dataset: slicedWorksDataset,
         facets,
         totalWorksCount: filteredWorks.length,

@@ -3,11 +3,7 @@ import {LunrWorkQueryService} from "../src/LunrWorkQueryService";
 import {Dataset} from "@paradicms/models";
 import {testDataTrig} from "../../models/test/testDataTrig";
 import {defaultAppConfiguration} from "@paradicms/configuration";
-import {
-  CollectionValueFacet,
-  InstitutionValueFacet,
-  StringPropertyValueFacet,
-} from "@paradicms/facets";
+import {CollectionValueFacet, InstitutionValueFacet, StringPropertyValueFacet} from "@paradicms/facets";
 
 describe("LunrWorkQueryService", () => {
   const configuration = defaultAppConfiguration;
@@ -17,7 +13,50 @@ describe("LunrWorkQueryService", () => {
     dataset,
   });
 
-  it("should return at least one work from an empty query", async () => {
+  it("getWorkAgents return at least one agent from an empty query", async () => {
+    const result = await sut.getWorkAgents(
+      {
+        limit: Number.MAX_SAFE_INTEGER,
+        offset: 0,
+      },
+      {
+        filters: configuration.search!.filters,
+      }
+    );
+
+    expect(result.dataset.agents).to.not.be.empty;
+    expect(result.dataset.works).to.be.empty;
+  });
+
+  it("getWorkAgents return the works associated with an agent", async () => {
+    const result = await sut.getWorkAgents(
+      {
+        agentJoinSelector: {
+          works: {},
+        },
+        limit: Number.MAX_SAFE_INTEGER,
+        offset: 0,
+      },
+      {
+        filters: configuration.search!.filters,
+      }
+    );
+
+    expect(result.dataset.agents).to.not.be.empty;
+    let haveAgentWorks = false;
+    for (const agent of result.dataset.agents) {
+      const agentWorks = result.dataset.agentWorks(agent.uri);
+      haveAgentWorks ||= agentWorks.length > 0;
+      for (const work of agentWorks) {
+        for (const workAgent of work.agents) {
+          expect(workAgent.agent.uri).to.eq(agent.uri);
+        }
+      }
+    }
+    expect(haveAgentWorks).to.be.true;
+  });
+
+  it("getWorks return at least one work from an empty query", async () => {
     const result = await sut.getWorks(
       {
         limit: Number.MAX_SAFE_INTEGER,
@@ -58,7 +97,7 @@ describe("LunrWorkQueryService", () => {
     ).to.be.true;
   });
 
-  it("should return fewer works from a freetext query", async () => {
+  it("getWorks return fewer works from a freetext query", async () => {
     const allResult = await sut.getWorks(
       {
         offset: 0,

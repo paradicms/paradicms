@@ -61,9 +61,11 @@ export class DataSubsetter {
     }
 
     if (joinSelector.works) {
-      for (const work of this.completeDataset.agentWorks(agent.uri)) {
-        this.addWorkDataset(builder, work, joinSelector.works);
-      }
+      this.addWorkDatasets(
+        builder,
+        this.completeDataset.agentWorks(agent.uri),
+        joinSelector.works
+      );
     }
 
     return builder;
