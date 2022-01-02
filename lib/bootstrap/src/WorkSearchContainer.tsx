@@ -1,12 +1,8 @@
-import {Button, ButtonGroup, Col, Container, Row} from "reactstrap";
+import {Col, Container, Row} from "reactstrap";
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {FiltersBadges} from "./FiltersBadges";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faImages, faList} from "@fortawesome/free-solid-svg-icons";
 import {WorksGallery} from "./WorksGallery";
-import {WorksTable} from "./WorksTable";
-import {useQueryParam} from "use-query-params";
 import {Institution, Work} from "@paradicms/models";
 import {Pagination} from "./Pagination";
 import {GetWorksResult, WorkQuery, WorkQueryService} from "@paradicms/services";
@@ -41,8 +37,8 @@ export const WorkSearchContainer: React.FunctionComponent<{
   workQueryService,
   worksPage,
 }) => {
-  const [viewQueryParam, setView] = useQueryParam<"gallery" | "table">("view");
-  const view = viewQueryParam ?? "gallery";
+  // const [viewQueryParam, setView] = useQueryParam<"gallery" | "table">("view");
+  // const view = viewQueryParam ?? "gallery";
 
   const [getWorksResult, setGetWorksResult] = useState<GetWorksResult | null>(
     null
@@ -99,22 +95,6 @@ export const WorkSearchContainer: React.FunctionComponent<{
                   />
                 </div>
               ) : null}
-              <ButtonGroup>
-                <Button
-                  color={view === "gallery" ? "primary" : undefined}
-                  onClick={() => setView("gallery")}
-                  title="gallery view"
-                >
-                  <FontAwesomeIcon icon={faImages} />
-                </Button>
-                <Button
-                  color={view === "table" ? "primary" : undefined}
-                  onClick={() => setView("table")}
-                  title="table view"
-                >
-                  <FontAwesomeIcon icon={faList} />
-                </Button>
-              </ButtonGroup>
             </Col>
           </Row>
           <Row>
@@ -135,22 +115,11 @@ export const WorkSearchContainer: React.FunctionComponent<{
         <Col xs="10">
           <Container fluid>
             <Row>
-              {view === "gallery" ? (
-                <WorksGallery
-                  works={getWorksResult.dataset.works}
-                  renderInstitutionLink={renderInstitutionLink}
-                  renderWorkLink={renderWorkLink}
-                />
-              ) : null}
-              {view === "table" ? (
-                <Col xs={12}>
-                  <WorksTable
-                    works={getWorksResult.dataset.works}
-                    renderInstitutionLink={renderInstitutionLink}
-                    renderWorkLink={renderWorkLink}
-                  />
-                </Col>
-              ) : null}
+              <WorksGallery
+                works={getWorksResult.dataset.works}
+                renderInstitutionLink={renderInstitutionLink}
+                renderWorkLink={renderWorkLink}
+              />
             </Row>
             <Row className="mt-4">
               <Col className="d-flex justify-content-center" xs={12}>
