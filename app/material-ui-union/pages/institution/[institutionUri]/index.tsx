@@ -73,17 +73,17 @@ export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
   const institutionUri = decodeFileName(params!.institutionUri as string);
-
+  const completeDataset = readDatasetFile(readFileSync);
   const configuration = readAppConfigurationFile(readFileSync);
 
   return {
     props: {
       configuration,
       datasetString: new DataSubsetter({
-        completeDataset: readDatasetFile(readFileSync),
+        completeDataset,
         configuration,
       })
-        .institutionDataset(institutionUri, {
+        .institutionDataset(completeDataset.institutionByUri(institutionUri), {
           collections: {
             institution: {},
             thumbnail: {targetDimensions: thumbnailTargetDimensions},

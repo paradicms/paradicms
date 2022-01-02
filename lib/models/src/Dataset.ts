@@ -54,6 +54,7 @@ export class Dataset {
   private _rightsStatements?: readonly RightsStatement[];
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
   private _works?: readonly Work[];
+  private _worksByAgentUriIndex?: {[index: string]: readonly Work[]};
   private _worksByCollectionUriIndex?: {[index: string]: readonly Work[]};
   private _worksByInstitutionUriIndex?: {[index: string]: readonly Work[]};
   private _worksByUriIndex?: {[index: string]: Work};
@@ -73,6 +74,10 @@ export class Dataset {
 
   get agents(): readonly Agent[] {
     return [...this.organizations, ...this.people];
+  }
+
+  agentWorks(agentUri: string): readonly Work[] {
+    return this.worksByAgentUriIndex[agentUri] ?? [];
   }
 
   collectionWorks(collectionUri: string): readonly Work[] {
@@ -556,6 +561,7 @@ export class Dataset {
 
   private readWorks(): void {
     const works: Work[] = [];
+    const worksByAgentUriIndex: {[index: string]: Work[]} = {};
     const worksByCollectionUriIndex: {[index: string]: Work[]} = {};
     const worksByInstitutionUriIndex: {[index: string]: Work[]} = {};
     this._worksByUriIndex = {};
@@ -563,6 +569,15 @@ export class Dataset {
       const work = this.readWork(kwds);
 
       works.push(work);
+
+      for (const agent of work.agents) {
+        const worksByAgentUri = worksByAgentUriIndex[agent.agent.uri];
+        if (worksByAgentUri) {
+          worksByAgentUri.push(work);
+        } else {
+          worksByAgentUriIndex[agent.agent.uri] = [work];
+        }
+      }
 
       for (const collectionUri of work.collectionUris) {
         const collectionWorks = worksByCollectionUriIndex[collectionUri];
@@ -583,6 +598,7 @@ export class Dataset {
       this._worksByUriIndex![work.uri] = work;
     }, PARADICMS.Work);
     this._works = works;
+    this._worksByAgentUriIndex = worksByAgentUriIndex;
     this._worksByCollectionUriIndex = worksByCollectionUriIndex;
     this._worksByInstitutionUriIndex = worksByInstitutionUriIndex;
   }
@@ -646,6 +662,15 @@ export class Dataset {
       this.readWorks();
     }
     return this._works!;
+  }
+
+  private get worksByAgentUriIndex(): {
+    [index: string]: readonly Work[];
+  } {
+    if (!this._worksByAgentUriIndex) {
+      this.readWorks();
+    }
+    return Dataset.requireNotNullish(this._worksByAgentUriIndex);
   }
 
   private get worksByCollectionUriIndex(): {

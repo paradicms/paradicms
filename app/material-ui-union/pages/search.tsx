@@ -117,10 +117,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     props: {
       configuration,
       datasetString: new DataSubsetter({completeDataset, configuration})
-        .worksDataset(
-          completeDataset.works.map(work => work.uri),
-          WORK_JOIN_SELECTOR
-        )
+        .worksDataset(completeDataset.works, WORK_JOIN_SELECTOR)
         .stringify(),
     },
   };

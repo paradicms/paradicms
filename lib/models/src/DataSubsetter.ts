@@ -60,6 +60,12 @@ export class DataSubsetter {
       }
     }
 
+    if (joinSelector.works) {
+      for (const work of this.completeDataset.agentWorks(agent.uri)) {
+        this.addWorkDataset(builder, work, joinSelector.works);
+      }
+    }
+
     return builder;
   }
 
@@ -327,77 +333,64 @@ export class DataSubsetter {
     return builder;
   }
 
-  collectionDataset(
-    collectionUri: string,
-    joinSelector?: CollectionJoinSelector
-  ): Dataset {
-    return this.addCollectionDataset(
-      new DatasetBuilder(),
-      this.completeDataset.collectionByUri(collectionUri),
-      joinSelector ?? {}
-    ).build();
-  }
-
-  collectionsDataset(
-    collectionUris: readonly string[],
-    joinSelector?: CollectionJoinSelector
+  agentsDataset(
+    agents: readonly Agent[],
+    joinSelector?: AgentJoinSelector
   ): Dataset {
     const builder = new DatasetBuilder();
-    for (const collectionUri of collectionUris) {
-      this.addCollectionDataset(
-        builder,
-        this.completeDataset.collectionByUri(collectionUri),
-        joinSelector ?? {}
-      );
+    for (const agent of agents) {
+      this.addAgentDataset(agent, builder, joinSelector ?? {});
     }
     return builder.build();
   }
 
+  collectionDataset(
+    collection: Collection,
+    joinSelector?: CollectionJoinSelector
+  ): Dataset {
+    return this.addCollectionDataset(
+      new DatasetBuilder(),
+      collection,
+      joinSelector ?? {}
+    ).build();
+  }
+
   institutionDataset(
-    institutionUri: string,
+    institution: Institution,
     joinSelector?: InstitutionJoinSelector
   ): Dataset {
     return this.addInstitutionDataset(
       new DatasetBuilder(),
-      this.completeDataset.institutionByUri(institutionUri),
+      institution,
       joinSelector ?? {}
     ).build();
   }
 
   institutionsDataset(
-    institutionUris: readonly string[],
+    institutions: readonly Institution[],
     joinSelector?: InstitutionJoinSelector
   ): Dataset {
     const builder = new DatasetBuilder();
-    for (const institutionUri of institutionUris) {
-      this.addInstitutionDataset(
-        builder,
-        this.completeDataset.institutionByUri(institutionUri),
-        joinSelector ?? {}
-      );
+    for (const institution of institutions) {
+      this.addInstitutionDataset(builder, institution, joinSelector ?? {});
     }
     return builder.build();
   }
 
-  workDataset(workUri: string, joinSelector?: WorkJoinSelector): Dataset {
+  workDataset(work: Work, joinSelector?: WorkJoinSelector): Dataset {
     return this.addWorkDataset(
       new DatasetBuilder(),
-      this.completeDataset.workByUri(workUri),
+      work,
       joinSelector ?? {}
     ).build();
   }
 
   worksDataset(
-    workUris: readonly string[],
+    works: readonly Work[],
     joinSelector?: WorkJoinSelector
   ): Dataset {
     const builder = new DatasetBuilder();
-    this.addWorkDatasets(
-      builder,
-      workUris.map(workUri => this.completeDataset.workByUri(workUri)),
-      joinSelector ?? {}
-    );
-
+    this.addWorkDatasets(builder, works, joinSelector ?? {});
     return builder.build();
   }
 }

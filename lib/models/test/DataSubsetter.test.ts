@@ -34,10 +34,9 @@ describe("DataSubsetter", () => {
   });
 
   it("should get institutions with thumbnails (institutions page)", () => {
-    const dataset = sut.institutionsDataset(
-      testDataset.institutions.map(institution => institution.uri),
-      {thumbnail: THUMBNAIL_SELECTOR}
-    );
+    const dataset = sut.institutionsDataset(testDataset.institutions, {
+      thumbnail: THUMBNAIL_SELECTOR,
+    });
     expectModelsDeepEq(
       dataset.images,
       testDataset.institutions.map(
@@ -49,7 +48,7 @@ describe("DataSubsetter", () => {
 
   it("should get an institution with its collections and their thumbnails (institution page)", () => {
     const institution = testDataset.institutions[0];
-    const dataset = sut.institutionDataset(institution.uri, {
+    const dataset = sut.institutionDataset(institution, {
       collections: {thumbnail: THUMBNAIL_SELECTOR},
     });
     expectModelsDeepEq(
@@ -71,7 +70,7 @@ describe("DataSubsetter", () => {
 
   it("should get a collection with its works and their thumbnails (collection page)", () => {
     const collection = testDataset.collections[0];
-    const dataset = sut.collectionDataset(collection.uri, {
+    const dataset = sut.collectionDataset(collection, {
       works: {
         propertyNamedValues: {thumbnail: THUMBNAIL_SELECTOR},
         thumbnail: THUMBNAIL_SELECTOR,
@@ -110,7 +109,7 @@ describe("DataSubsetter", () => {
 
   it("should get an work with its institution, collections, all images, agents, and agents' thumbnails (work page)", () => {
     const work = testDataset.works[0];
-    const dataset = sut.workDataset(work.uri, {
+    const dataset = sut.workDataset(work, {
       agent: {
         thumbnail: THUMBNAIL_SELECTOR,
       },

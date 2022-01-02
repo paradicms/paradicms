@@ -128,7 +128,7 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const collectionUri = decodeFileName(params!.collectionUri as string);
   // const institutionUri = decodeFileName(params!.institutionUri as string);
-
+  const completeDataset = readDatasetFile(readFileSync);
   const configuration = readAppConfigurationFile(readFileSync);
 
   return {
@@ -136,10 +136,10 @@ export const getStaticProps: GetStaticProps = async ({
       collectionUri,
       configuration,
       datasetString: new DataSubsetter({
-        completeDataset: readDatasetFile(readFileSync),
+        completeDataset,
         configuration,
       })
-        .collectionDataset(collectionUri, {
+        .collectionDataset(completeDataset.collectionByUri(collectionUri), {
           works: WORK_JOIN_SELECTOR,
         })
         .stringify(),

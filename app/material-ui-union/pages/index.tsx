@@ -55,12 +55,9 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     props: {
       configuration,
       datasetString: new DataSubsetter({completeDataset, configuration})
-        .institutionsDataset(
-          completeDataset.institutions.map(institution => institution.uri),
-          {
-            thumbnail: {targetDimensions: thumbnailTargetDimensions},
-          }
-        )
+        .institutionsDataset(completeDataset.institutions, {
+          thumbnail: {targetDimensions: thumbnailTargetDimensions},
+        })
         .stringify(),
     },
   };

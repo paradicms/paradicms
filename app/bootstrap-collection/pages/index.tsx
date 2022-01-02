@@ -1,17 +1,9 @@
 import * as React from "react";
 import {useMemo} from "react";
-import {
-  Collection,
-  Dataset,
-  DataSubsetter,
-  WorkJoinSelector,
-} from "@paradicms/models";
+import {Collection, Dataset, DataSubsetter} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
-import {
-  thumbnailTargetDimensions,
-  WorkSearchContainer,
-} from "@paradicms/bootstrap";
+import {WorkSearchContainer} from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
@@ -28,16 +20,6 @@ interface StaticProps {
   readonly configuration: AppConfiguration;
   readonly datasetString: string;
 }
-
-const WORK_JOIN_SELECTOR: WorkJoinSelector = {
-  agent: {
-    thumbnail: {targetDimensions: thumbnailTargetDimensions},
-  },
-  propertyNamedValues: {
-    thumbnail: {targetDimensions: thumbnailTargetDimensions},
-  },
-  thumbnail: {targetDimensions: thumbnailTargetDimensions},
-};
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
@@ -58,7 +40,6 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
       new LunrWorkQueryService({
         configuration,
         dataset,
-        workJoinSelector: WORK_JOIN_SELECTOR,
       }),
     [configuration, dataset]
   );
@@ -94,16 +75,15 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   const completeDataset = readDatasetFile(readFileSync);
   const configuration = readAppConfigurationFile(readFileSync);
 
-  const collectionUri = completeDataset.collections[0].uri;
+  const collection = completeDataset.collections[0];
 
   return {
     props: {
-      collectionUri,
+      collectionUri: collection.uri,
       configuration,
       datasetString: new DataSubsetter({completeDataset, configuration})
-        .collectionDataset(collectionUri, {
+        .collectionDataset(collection, {
           institution: {},
-          works: WORK_JOIN_SELECTOR,
         })
         .stringify(),
     },

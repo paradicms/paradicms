@@ -1,17 +1,34 @@
-import {Col, Container, Row} from "reactstrap";
+import {
+  Col,
+  Container,
+  Nav,
+  NavItem,
+  NavLink,
+  Row,
+  TabContent,
+  TabPane,
+} from "reactstrap";
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {FiltersBadges} from "./FiltersBadges";
 import {WorksGallery} from "./WorksGallery";
 import {Institution, Work} from "@paradicms/models";
 import {Pagination} from "./Pagination";
-import {GetWorksResult, WorkQuery, WorkQueryService} from "@paradicms/services";
+import {
+  GetWorkAgentsResult,
+  GetWorksResult,
+  WorkQuery,
+  WorkQueryService,
+} from "@paradicms/services";
 import {FiltersControls} from "./FiltersControls";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 import {calculatePageMax} from "@paradicms/react-search";
 import {Filter} from "@paradicms/filters";
+import {useQueryParam} from "use-query-params";
 
 const OBJECTS_PER_PAGE = 10;
+
+type TabKey = "works" | "workAgents";
 
 export const WorkSearchContainer: React.FunctionComponent<{
   onChangeFilters: (filters: readonly Filter[]) => void;
@@ -33,39 +50,116 @@ export const WorkSearchContainer: React.FunctionComponent<{
   renderWorkLink,
   setWorkQuery,
   setWorksPage,
+  workAgentsPage,
   workQuery,
   workQueryService,
   worksPage,
 }) => {
-  // const [viewQueryParam, setView] = useQueryParam<"gallery" | "table">("view");
-  // const view = viewQueryParam ?? "gallery";
+  const [activeTabKeyQueryParam, setActiveTabKey] = useQueryParam<TabKey>(
+    "tab"
+  );
+  const activeTabKey: TabKey = activeTabKeyQueryParam ?? "works";
 
   const [getWorksResult, setGetWorksResult] = useState<GetWorksResult | null>(
     null
   );
 
+  const [
+    getWorkAgentsResult,
+    setGetWorkAgentsResult,
+  ] = useState<GetWorkAgentsResult | null>(null);
+
   useEffect(() => {
-    workQueryService
-      .getWorks(
-        {
-          limit: OBJECTS_PER_PAGE,
-          offset: worksPage * OBJECTS_PER_PAGE,
-          valueFacetValueThumbnailSelector: {
-            targetDimensions: thumbnailTargetDimensions,
+    if (activeTabKey === "works" || getWorksResult === null) {
+      console.debug("getWorks query");
+      workQueryService
+        .getWorks(
+          {
+            limit: OBJECTS_PER_PAGE,
+            offset: worksPage * OBJECTS_PER_PAGE,
+            valueFacetValueThumbnailSelector: {
+              targetDimensions: thumbnailTargetDimensions,
+            },
+            workJoinSelector: {
+              agent: {
+                thumbnail: {targetDimensions: thumbnailTargetDimensions},
+              },
+              propertyNamedValues: {
+                thumbnail: {targetDimensions: thumbnailTargetDimensions},
+              },
+              thumbnail: {targetDimensions: thumbnailTargetDimensions},
+            },
           },
-        },
-        workQuery
-      )
-      .then(setGetWorksResult);
+          workQuery
+        )
+        .then(setGetWorksResult);
+    } else if (activeTabKey === "workAgents") {
+      console.debug("getWorkAgents query");
+      workQueryService
+        .getWorkAgents(
+          {
+            limit: OBJECTS_PER_PAGE,
+            offset: workAgentsPage * OBJECTS_PER_PAGE,
+          },
+          workQuery
+        )
+        .then(setGetWorkAgentsResult);
+    }
   }, [worksPage, workQuery]);
 
-  if (!getWorksResult) {
+  if (getWorksResult === null) {
+    console.debug("waiting on getWorks result");
     return null;
   }
+
+  switch (activeTabKey) {
+    case "works":
+      // Wait above
+      break;
+    case "workAgents":
+      if (!getWorkAgentsResult) {
+        console.debug("waiting on getWorkAgents result");
+        return null;
+      }
+      break;
+  }
+
+  console.debug("not waiting on results");
 
   // if (works.length === 0) {
   //   return <h3>No matching works found.</h3>;
   // }
+
+  const tabs: {content: React.ReactNode; key: TabKey; title: string}[] = [];
+  tabs.push({
+    key: "works",
+    title: "Works",
+    content: (
+      <Container fluid>
+        <Row>
+          <WorksGallery
+            works={getWorksResult.dataset.works}
+            renderInstitutionLink={renderInstitutionLink}
+            renderWorkLink={renderWorkLink}
+          />
+        </Row>
+        <Row className="mt-4">
+          <Col className="d-flex justify-content-center" xs={12}>
+            <Pagination
+              count={
+                calculatePageMax({
+                  objectsPerPage: OBJECTS_PER_PAGE,
+                  totalObjects: getWorksResult.totalWorksCount,
+                }) + 1
+              }
+              page={worksPage + 1}
+              onChange={(_, newPage) => setWorksPage(newPage - 1)}
+            />
+          </Col>
+        </Row>
+      </Container>
+    ),
+  });
 
   return (
     <Container fluid>
@@ -99,6 +193,34 @@ export const WorkSearchContainer: React.FunctionComponent<{
           </Row>
           <Row>
             <Col xs={12}>
+              {tabs.length === 1 ? (
+                tabs[0].content
+              ) : (
+                <>
+                  <Nav tabs>
+                    {tabs.map(tab => (
+                      <NavItem key={tab.key}>
+                        <NavLink
+                          className={
+                            activeTabKey === tab.key ? "active" : undefined
+                          }
+                          onClick={() => setActiveTabKey(tab.key)}
+                          style={{cursor: "pointer", fontSize: "small"}}
+                        >
+                          {tab.title}
+                        </NavLink>
+                      </NavItem>
+                    ))}
+                  </Nav>
+                  <TabContent activeTab={activeTabKey}>
+                    {tabs.map(tab => (
+                      <TabPane key={tab.key} tabId={tab.key}>
+                        <div className="mt-2">{tab.content}</div>
+                      </TabPane>
+                    ))}
+                  </TabContent>
+                </>
+              )}
               <hr />
             </Col>
           </Row>
@@ -112,31 +234,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
             onChange={onChangeFilters}
           />
         </Col>
-        <Col xs="10">
-          <Container fluid>
-            <Row>
-              <WorksGallery
-                works={getWorksResult.dataset.works}
-                renderInstitutionLink={renderInstitutionLink}
-                renderWorkLink={renderWorkLink}
-              />
-            </Row>
-            <Row className="mt-4">
-              <Col className="d-flex justify-content-center" xs={12}>
-                <Pagination
-                  count={
-                    calculatePageMax({
-                      objectsPerPage: OBJECTS_PER_PAGE,
-                      totalObjects: getWorksResult.totalWorksCount,
-                    }) + 1
-                  }
-                  page={worksPage + 1}
-                  onChange={(_, newPage) => setWorksPage(newPage - 1)}
-                />
-              </Col>
-            </Row>
-          </Container>
-        </Col>
+        <Col xs="10"></Col>
       </Row>
     </Container>
   );
