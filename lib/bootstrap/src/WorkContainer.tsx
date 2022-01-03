@@ -106,18 +106,16 @@ export const WorkContainer: React.FunctionComponent<{
       title: "People",
       content: (
         <Container fluid key={leftColNavTabs.length}>
-          {workAgents.map((workAgent, workAgentIndex) => {
-            return (
-              <Row
-                className={workAgentIndex > 0 ? "mt-4" : "mt-2"}
-                key={workAgentIndex}
-              >
-                <Col xs={12} className="p-0">
-                  <AgentCard agent={workAgent.agent} role={workAgent.role} />
-                </Col>
-              </Row>
-            );
-          })}
+          {workAgents.map((workAgent, workAgentIndex) => (
+            <Row
+              className={workAgentIndex > 0 ? "mt-4" : "mt-2"}
+              key={workAgentIndex}
+            >
+              <Col xs={12} className="p-0">
+                <AgentCard agent={workAgent.agent} role={workAgent.role} />
+              </Col>
+            </Row>
+          ))}
         </Container>
       ),
     });

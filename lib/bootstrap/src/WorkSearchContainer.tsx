@@ -20,12 +20,13 @@ import {
   WorkQuery,
   WorkQueryService,
 } from "@paradicms/services";
-import {FiltersControls} from "./FiltersControls";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 import {calculatePageMax} from "@paradicms/react-search";
 import {Filter} from "@paradicms/filters";
 import {useQueryParam} from "use-query-params";
 import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
+import {AgentCard} from "./AgentCard";
+import {FiltersControls} from "./FiltersControls";
 
 const OBJECTS_PER_PAGE = 10;
 
@@ -49,7 +50,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
   onChangeFilters,
   renderInstitutionLink,
   renderWorkLink,
-  setWorkQuery,
+  setWorkAgentsPage,
   setWorksPage,
   workAgentsPage,
   workQuery,
@@ -98,7 +99,13 @@ export const WorkSearchContainer: React.FunctionComponent<{
         )
         .then(setGetWorkAgentsResult);
     }
-  }, [worksPage, workQuery]);
+  }, [
+    activeTabKeyQueryParam,
+    workAgentsPage,
+    worksPage,
+    workQuery,
+    workQueryService,
+  ]);
 
   if (getWorksResult === null) {
     console.debug("waiting on getWorks result");
@@ -117,7 +124,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
       break;
   }
 
-  console.debug("not waiting on results");
+  console.debug("not waiting on result");
 
   // if (works.length === 0) {
   //   return <h3>No matching works found.</h3>;
@@ -153,6 +160,42 @@ export const WorkSearchContainer: React.FunctionComponent<{
       </Container>
     ),
   });
+  tabs.push({
+    key: "workAgents",
+    title: "People",
+    content: getWorkAgentsResult ? (
+      <Container fluid>
+        <Row>
+          <Container fluid>
+            {getWorkAgentsResult.dataset.agents.map((agent, agentIndex) => (
+              <Row
+                className={agentIndex > 0 ? "mt-4" : "mt-2"}
+                key={agentIndex}
+              >
+                <Col xs={12} className="p-0">
+                  <AgentCard agent={agent} />
+                </Col>
+              </Row>
+            ))}
+          </Container>
+        </Row>
+        <Row className="mt-4">
+          <Col className="d-flex justify-content-center" xs={12}>
+            <Pagination
+              count={
+                calculatePageMax({
+                  objectsPerPage: OBJECTS_PER_PAGE,
+                  totalObjects: getWorkAgentsResult.totalWorkAgentsCount,
+                }) + 1
+              }
+              page={worksPage + 1}
+              onChange={(_, newPage) => setWorkAgentsPage(newPage - 1)}
+            />
+          </Col>
+        </Row>
+      </Container>
+    ) : null,
+  });
 
   return (
     <Container fluid>
@@ -186,34 +229,6 @@ export const WorkSearchContainer: React.FunctionComponent<{
           </Row>
           <Row>
             <Col xs={12}>
-              {tabs.length === 1 ? (
-                tabs[0].content
-              ) : (
-                <>
-                  <Nav tabs>
-                    {tabs.map(tab => (
-                      <NavItem key={tab.key}>
-                        <NavLink
-                          className={
-                            activeTabKey === tab.key ? "active" : undefined
-                          }
-                          onClick={() => setActiveTabKey(tab.key)}
-                          style={{cursor: "pointer", fontSize: "small"}}
-                        >
-                          {tab.title}
-                        </NavLink>
-                      </NavItem>
-                    ))}
-                  </Nav>
-                  <TabContent activeTab={activeTabKey}>
-                    {tabs.map(tab => (
-                      <TabPane key={tab.key} tabId={tab.key}>
-                        <div className="mt-2">{tab.content}</div>
-                      </TabPane>
-                    ))}
-                  </TabContent>
-                </>
-              )}
               <hr />
             </Col>
           </Row>
@@ -227,7 +242,36 @@ export const WorkSearchContainer: React.FunctionComponent<{
             onChange={onChangeFilters}
           />
         </Col>
-        <Col xs="10"></Col>
+        <Col xs="10">
+          {tabs.length === 1 ? (
+            tabs[0].content
+          ) : (
+            <>
+              <Nav tabs>
+                {tabs.map(tab => (
+                  <NavItem key={tab.key}>
+                    <NavLink
+                      className={
+                        activeTabKey === tab.key ? "active" : undefined
+                      }
+                      onClick={() => setActiveTabKey(tab.key)}
+                      style={{cursor: "pointer", fontSize: "small"}}
+                    >
+                      {tab.title}
+                    </NavLink>
+                  </NavItem>
+                ))}
+              </Nav>
+              <TabContent activeTab={activeTabKey}>
+                {tabs.map(tab => (
+                  <TabPane key={tab.key} tabId={tab.key}>
+                    <div className="mt-2">{tab.content}</div>
+                  </TabPane>
+                ))}
+              </TabContent>
+            </>
+          )}
+        </Col>
       </Row>
     </Container>
   );
