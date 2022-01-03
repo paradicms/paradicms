@@ -348,7 +348,7 @@ export class LunrWorkQueryService implements WorkQueryService {
         works: searchedWorks,
       });
 
-      console.debug("Search facets:", JSON.stringify(facets));
+      // console.debug("Search facets:", JSON.stringify(facets));
 
       const filteredWorks = this.filterWorks({
         filters: query.filters,

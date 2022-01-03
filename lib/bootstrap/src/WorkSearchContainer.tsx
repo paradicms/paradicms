@@ -71,9 +71,18 @@ export const WorkSearchContainer: React.FunctionComponent<{
     setGetWorkAgentsResult,
   ] = useState<GetWorkAgentsResult | null>(null);
 
+  const [loadingWorks, setLoadingWorks] = useState<boolean>(false);
+  const [loadingWorkAgents, setLoadingWorkAgents] = useState<boolean>(false);
+
+  // console.debug("Work query:", JSON.stringify(workQuery));
+  // console.debug("Works page:", worksPage);
+  // console.debug("Work agents page:", workAgentsPage);
+
+  // Effect that responds to switching to the works tab
   useEffect(() => {
-    if (activeTabKey === "works" || getWorksResult === null) {
-      console.debug("getWorks query");
+    if (activeTabKey === "works" && !loadingWorks) {
+      console.debug("getWorks");
+      setLoadingWorks(true);
       workQueryService
         .getWorks(
           {
@@ -86,45 +95,39 @@ export const WorkSearchContainer: React.FunctionComponent<{
           },
           workQuery
         )
-        .then(setGetWorksResult);
-    } else if (activeTabKey === "workAgents") {
-      console.debug("getWorkAgents query");
+        .then(getWorksResult => {
+          setGetWorksResult(getWorksResult);
+          setLoadingWorks(false);
+        });
+    }
+  }, [activeTabKeyQueryParam, workQuery, workQueryService, worksPage]);
+
+  // Effect that responds to switching to the work agents tab
+  useEffect(() => {
+    if (activeTabKey === "workAgents" && !loadingWorkAgents) {
+      console.debug("getWorkAgents");
+      setLoadingWorkAgents(true);
       workQueryService
         .getWorkAgents(
           {
+            agentJoinSelector: {
+              works: {},
+            },
             limit: OBJECTS_PER_PAGE,
             offset: workAgentsPage * OBJECTS_PER_PAGE,
           },
           workQuery
         )
-        .then(setGetWorkAgentsResult);
+        .then(getWorkAgentsResult => {
+          setGetWorkAgentsResult(getWorkAgentsResult);
+          setLoadingWorkAgents(false);
+        });
     }
-  }, [
-    activeTabKeyQueryParam,
-    workAgentsPage,
-    worksPage,
-    workQuery,
-    workQueryService,
-  ]);
+  }, [activeTabKeyQueryParam, workQuery, workQueryService, workAgentsPage]);
 
   if (getWorksResult === null) {
-    console.debug("waiting on getWorks result");
     return null;
   }
-
-  switch (activeTabKey) {
-    case "works":
-      // Wait above
-      break;
-    case "workAgents":
-      if (!getWorkAgentsResult) {
-        console.debug("waiting on getWorkAgents result");
-        return null;
-      }
-      break;
-  }
-
-  console.debug("not waiting on result");
 
   // if (works.length === 0) {
   //   return <h3>No matching works found.</h3>;
