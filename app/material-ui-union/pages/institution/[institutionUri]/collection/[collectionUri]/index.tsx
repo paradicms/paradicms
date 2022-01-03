@@ -9,7 +9,10 @@ import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {Dataset, DataSubsetter} from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {WorkSearchGrid} from "@paradicms/material-ui";
+import {
+  WorkSearchGrid,
+  workSearchWorkJoinSelector,
+} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
@@ -128,6 +131,7 @@ export const getStaticProps: GetStaticProps = async ({
       })
         .collectionDataset(completeDataset.collectionByUri(collectionUri), {
           institution: {},
+          works: workSearchWorkJoinSelector,
         })
         .stringify(),
     },

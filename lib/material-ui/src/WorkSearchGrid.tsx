@@ -8,6 +8,7 @@ import {FiltersChips} from "./FiltersChips";
 import {GetWorksResult, WorkQuery, WorkQueryService} from "@paradicms/services";
 import {calculatePageMax} from "@paradicms/react-search";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
+import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 
 const OBJECTS_PER_PAGE = 10;
 
@@ -41,14 +42,7 @@ export const WorkSearchGrid: React.FunctionComponent<{
         {
           limit: OBJECTS_PER_PAGE,
           offset: page * OBJECTS_PER_PAGE,
-          workJoinSelector: {
-            collections: {},
-            institution: {},
-            propertyNamedValues: {
-              thumbnail: {targetDimensions: thumbnailTargetDimensions},
-            },
-            thumbnail: {targetDimensions: thumbnailTargetDimensions},
-          },
+          workJoinSelector: workSearchWorkJoinSelector,
           valueFacetValueThumbnailSelector: {
             targetDimensions: thumbnailTargetDimensions,
           },

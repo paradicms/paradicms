@@ -1,11 +1,11 @@
-import {Dataset, DataSubsetter, WorkJoinSelector} from "@paradicms/models";
+import {Dataset, DataSubsetter} from "@paradicms/models";
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {
-  thumbnailTargetDimensions,
   WorkSearchGrid,
+  workSearchWorkJoinSelector,
 } from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
@@ -23,15 +23,6 @@ interface StaticProps {
   readonly configuration: AppConfiguration;
   readonly datasetString: string;
 }
-
-const WORK_JOIN_SELECTOR: WorkJoinSelector = {
-  collections: {},
-  institution: {},
-  propertyNamedValues: {
-    thumbnail: {targetDimensions: thumbnailTargetDimensions},
-  },
-  thumbnail: {targetDimensions: thumbnailTargetDimensions},
-};
 
 const SearchPage: React.FunctionComponent<StaticProps> = ({
   configuration,
@@ -116,7 +107,11 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     props: {
       configuration,
       datasetString: new DataSubsetter({completeDataset, configuration})
-        .worksDataset(completeDataset.works, WORK_JOIN_SELECTOR)
+        .worksDataset(completeDataset.works, {
+          ...workSearchWorkJoinSelector,
+          collections: {},
+          institution: {},
+        })
         .stringify(),
     },
   };

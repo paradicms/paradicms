@@ -25,6 +25,7 @@ import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 import {calculatePageMax} from "@paradicms/react-search";
 import {Filter} from "@paradicms/filters";
 import {useQueryParam} from "use-query-params";
+import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 
 const OBJECTS_PER_PAGE = 10;
 
@@ -80,15 +81,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
             valueFacetValueThumbnailSelector: {
               targetDimensions: thumbnailTargetDimensions,
             },
-            workJoinSelector: {
-              agent: {
-                thumbnail: {targetDimensions: thumbnailTargetDimensions},
-              },
-              propertyNamedValues: {
-                thumbnail: {targetDimensions: thumbnailTargetDimensions},
-              },
-              thumbnail: {targetDimensions: thumbnailTargetDimensions},
-            },
+            workJoinSelector: workSearchWorkJoinSelector,
           },
           workQuery
         )

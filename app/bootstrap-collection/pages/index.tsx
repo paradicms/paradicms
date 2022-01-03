@@ -3,7 +3,10 @@ import {useMemo} from "react";
 import {Collection, Dataset, DataSubsetter} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
-import {WorkSearchContainer} from "@paradicms/bootstrap";
+import {
+  WorkSearchContainer,
+  workSearchWorkJoinSelector,
+} from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
@@ -84,6 +87,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
       datasetString: new DataSubsetter({completeDataset, configuration})
         .collectionDataset(collection, {
           institution: {},
+          works: workSearchWorkJoinSelector,
         })
         .stringify(),
     },
