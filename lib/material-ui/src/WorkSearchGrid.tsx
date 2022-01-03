@@ -41,6 +41,14 @@ export const WorkSearchGrid: React.FunctionComponent<{
         {
           limit: OBJECTS_PER_PAGE,
           offset: page * OBJECTS_PER_PAGE,
+          workJoinSelector: {
+            collections: {},
+            institution: {},
+            propertyNamedValues: {
+              thumbnail: {targetDimensions: thumbnailTargetDimensions},
+            },
+            thumbnail: {targetDimensions: thumbnailTargetDimensions},
+          },
           valueFacetValueThumbnailSelector: {
             targetDimensions: thumbnailTargetDimensions,
           },

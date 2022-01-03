@@ -7,12 +7,9 @@ import {
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
-import {Dataset, DataSubsetter, WorkJoinSelector} from "@paradicms/models";
+import {Dataset, DataSubsetter} from "@paradicms/models";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {
-  thumbnailTargetDimensions,
-  WorkSearchGrid,
-} from "@paradicms/material-ui";
+import {WorkSearchGrid} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
@@ -22,15 +19,6 @@ import {usePageQueryParam, useWorkQueryParam} from "@paradicms/react-search";
 import {AppConfiguration} from "@paradicms/configuration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
-
-const WORK_JOIN_SELECTOR: WorkJoinSelector = {
-  collections: {},
-  institution: {},
-  propertyNamedValues: {
-    thumbnail: {targetDimensions: thumbnailTargetDimensions},
-  },
-  thumbnail: {targetDimensions: thumbnailTargetDimensions},
-};
 
 interface StaticProps {
   readonly collectionUri: string;
@@ -52,7 +40,6 @@ const CollectionPage: React.FunctionComponent<StaticProps> = ({
       new LunrWorkQueryService({
         configuration,
         dataset,
-        workJoinSelector: WORK_JOIN_SELECTOR,
       }),
     [configuration, dataset]
   );
@@ -140,7 +127,7 @@ export const getStaticProps: GetStaticProps = async ({
         configuration,
       })
         .collectionDataset(completeDataset.collectionByUri(collectionUri), {
-          works: WORK_JOIN_SELECTOR,
+          institution: {},
         })
         .stringify(),
     },

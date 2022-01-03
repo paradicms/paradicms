@@ -51,7 +51,6 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
       new LunrWorkQueryService({
         configuration,
         dataset,
-        workJoinSelector: WORK_JOIN_SELECTOR,
       }),
     [configuration, dataset]
   );
