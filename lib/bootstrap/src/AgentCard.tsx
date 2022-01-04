@@ -3,39 +3,13 @@ import {Card, CardBody, CardFooter, CardHeader} from "reactstrap";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 import {RightsParagraph} from "./RightsParagraph";
 import * as React from "react";
+import {getNamedModelLinks} from "./getNamedModelLinks";
 
 export const AgentCard: React.FunctionComponent<{
   agent: Agent;
   role?: string;
 }> = ({agent, role}) => {
-  const links: React.ReactNodeArray = [];
-
-  for (const link of [
-    {
-      href: agent.page,
-      text: "Home page",
-    },
-    {
-      href: agent.wikidataConceptUri,
-      text: "Wikidata",
-    },
-    {
-      href: agent.wikipediaUrl,
-      text: "Wikipedia",
-    },
-  ]) {
-    if (!link.href) {
-      continue;
-    }
-    if (links.length > 0) {
-      links.push(<span key={links.length}>&nbsp;&bull;&nbsp;</span>);
-    }
-    links.push(
-      <a href={link.href} key={links.length}>
-        {link.text}
-      </a>
-    );
-  }
+  const agentLinks = getNamedModelLinks(agent);
 
   const thumbnail = agent.thumbnail({
     targetDimensions: thumbnailTargetDimensions,
@@ -45,9 +19,9 @@ export const AgentCard: React.FunctionComponent<{
     <Card className="text-center">
       <CardHeader tag="h6">
         <div>{agent.name}</div>
-        {links.length > 0 ? (
+        {agentLinks.length > 0 ? (
           <div className="mt-1" style={{fontSize: "x-small"}}>
-            {links}
+            {agentLinks}
           </div>
         ) : null}
       </CardHeader>

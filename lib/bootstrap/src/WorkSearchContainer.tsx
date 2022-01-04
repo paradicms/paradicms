@@ -25,8 +25,8 @@ import {calculatePageMax} from "@paradicms/react-search";
 import {Filter} from "@paradicms/filters";
 import {useQueryParam} from "use-query-params";
 import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
-import {AgentCard} from "./AgentCard";
 import {FiltersControls} from "./FiltersControls";
+import {AgentsGallery} from "./AgentsGallery";
 
 const OBJECTS_PER_PAGE = 10;
 
@@ -80,7 +80,10 @@ export const WorkSearchContainer: React.FunctionComponent<{
 
   // Effect that responds to switching to the works tab
   useEffect(() => {
-    if (activeTabKey === "works" && !loadingWorks) {
+    if (
+      (activeTabKey === "works" || getWorksResult === null) &&
+      !loadingWorks
+    ) {
       console.debug("getWorks");
       setLoadingWorks(true);
       workQueryService
@@ -169,18 +172,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
     content: getWorkAgentsResult ? (
       <Container fluid>
         <Row>
-          <Container fluid>
-            {getWorkAgentsResult.dataset.agents.map((agent, agentIndex) => (
-              <Row
-                className={agentIndex > 0 ? "mt-4" : "mt-2"}
-                key={agentIndex}
-              >
-                <Col xs={12} className="p-0">
-                  <AgentCard agent={agent} />
-                </Col>
-              </Row>
-            ))}
-          </Container>
+          <AgentsGallery agents={getWorkAgentsResult.dataset.agents} />
         </Row>
         <Row className="mt-4">
           <Col className="d-flex justify-content-center" xs={12}>

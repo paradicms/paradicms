@@ -10,7 +10,7 @@ import {
   readDatasetFile,
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {WorkContainer} from "@paradicms/bootstrap";
+import {getNamedModelLinks, WorkContainer} from "@paradicms/bootstrap";
 import * as fs from "fs";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
@@ -32,8 +32,9 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 
   return (
     <Layout
+      cardHeaderLinks={getNamedModelLinks(work)}
       collection={collection}
-      documentTitle={"Work - " + work.title}
+      documentTitle={work.title}
       configuration={configuration}
     >
       <WorkContainer work={work} />

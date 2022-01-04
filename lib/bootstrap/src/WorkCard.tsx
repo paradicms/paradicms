@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 import {RightsParagraph} from "./RightsParagraph";
+import {getNamedModelLinks} from "./getNamedModelLinks";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "xx-small",
@@ -30,7 +31,7 @@ export const WorkCard: React.FunctionComponent<{
   renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactNode;
 }> = ({work, renderInstitutionLink, renderWorkLink}) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
-
+  const workLinks = getNamedModelLinks(work);
   const thumbnail = work.thumbnail({
     targetDimensions: thumbnailTargetDimensions,
   });
@@ -93,6 +94,11 @@ export const WorkCard: React.FunctionComponent<{
     <Card className="text-center">
       <CardHeader tag="h4">
         {renderWorkLink(work, <>{work.title}</>)}
+        {workLinks.length > 0 ? (
+          <div className="mt-1" style={{fontSize: "x-small"}}>
+            {workLinks}
+          </div>
+        ) : null}
       </CardHeader>
       <CardBody>
         {tabs.length === 1 ? (

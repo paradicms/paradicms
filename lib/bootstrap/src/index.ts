@@ -2,6 +2,7 @@ export * from "./AgentCard";
 export * from "./createFilterControl";
 export * from "./FiltersControls";
 export * from "./FiltersBadges";
+export * from "./getNamedModelLinks";
 export * from "./LicenseLink";
 export * from "./NavbarSearchForm";
 export * from "./Pagination";
