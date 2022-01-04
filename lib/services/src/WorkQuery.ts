@@ -5,10 +5,8 @@
  * so it's preferable to allow the optional fields to be undefined rather than null.
  */
 import {Filter} from "@paradicms/filters";
-import {ThumbnailSelector} from "@paradicms/models";
 
 export interface WorkQuery {
   readonly filters: readonly Filter[];
   readonly text?: string;
-  readonly valueFacetValueThumbnailSelector?: ThumbnailSelector;
 }

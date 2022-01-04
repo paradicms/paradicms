@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 import {RightsParagraph} from "./RightsParagraph";
+import {getNamedModelLinks} from "./getNamedModelLinks";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "xx-small",
@@ -29,16 +30,16 @@ export const WorkCard: React.FunctionComponent<{
   ) => React.ReactNode;
   renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactNode;
 }> = ({work, renderInstitutionLink, renderWorkLink}) => {
-  const [activeNavTabIndex, setActiveNavTabIndex] = useState(0);
-
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const workLinks = getNamedModelLinks(work);
   const thumbnail = work.thumbnail({
     targetDimensions: thumbnailTargetDimensions,
   });
   const thumbnailSrc =
     thumbnail?.src ?? Image.placeholderSrc(thumbnailTargetDimensions);
 
-  const navTabs: {content: React.ReactNode; title: string}[] = [];
-  navTabs.push({
+  const tabs: {content: React.ReactNode; title: string}[] = [];
+  tabs.push({
     title: "Image",
     content: (
       <Card className="border-0">
@@ -68,7 +69,7 @@ export const WorkCard: React.FunctionComponent<{
     ),
   });
   if (work.abstract) {
-    navTabs.push({
+    tabs.push({
       title: "Summary",
       content: (
         <Card className="border-0">
@@ -93,31 +94,36 @@ export const WorkCard: React.FunctionComponent<{
     <Card className="text-center">
       <CardHeader tag="h4">
         {renderWorkLink(work, <>{work.title}</>)}
+        {workLinks.length > 0 ? (
+          <div className="mt-1" style={{fontSize: "x-small"}}>
+            {workLinks}
+          </div>
+        ) : null}
       </CardHeader>
       <CardBody>
-        {navTabs.length === 1 ? (
-          navTabs[0].content
+        {tabs.length === 1 ? (
+          tabs[0].content
         ) : (
           <>
             <Nav tabs>
-              {navTabs.map((navTab, navTabIndex) => (
-                <NavItem key={navTabIndex}>
+              {tabs.map((tab, tabIndex) => (
+                <NavItem key={tabIndex}>
                   <NavLink
                     className={
-                      activeNavTabIndex === navTabIndex ? "active" : undefined
+                      activeTabIndex === tabIndex ? "active" : undefined
                     }
-                    onClick={() => setActiveNavTabIndex(navTabIndex)}
+                    onClick={() => setActiveTabIndex(tabIndex)}
                     style={{cursor: "pointer", fontSize: "small"}}
                   >
-                    {navTab.title}
+                    {tab.title}
                   </NavLink>
                 </NavItem>
               ))}
             </Nav>
-            <TabContent activeTab={activeNavTabIndex.toString()}>
-              {navTabs.map((navTab, navTabIndex) => (
-                <TabPane key={navTabIndex} tabId={navTabIndex.toString()}>
-                  <div className="mt-2">{navTab.content}</div>
+            <TabContent activeTab={activeTabIndex.toString()}>
+              {tabs.map((tab, tabIndex) => (
+                <TabPane key={tabIndex} tabId={tabIndex.toString()}>
+                  <div className="mt-2">{tab.content}</div>
                 </TabPane>
               ))}
             </TabContent>

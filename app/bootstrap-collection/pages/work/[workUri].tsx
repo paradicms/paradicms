@@ -10,7 +10,7 @@ import {
   readDatasetFile,
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {WorkContainer} from "@paradicms/bootstrap";
+import {getNamedModelLinks, WorkContainer} from "@paradicms/bootstrap";
 import * as fs from "fs";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
@@ -32,8 +32,9 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 
   return (
     <Layout
+      cardHeaderLinks={getNamedModelLinks(work)}
       collection={collection}
-      documentTitle={"Work - " + work.title}
+      documentTitle={work.title}
       configuration={configuration}
     >
       <WorkContainer work={work} />
@@ -63,6 +64,7 @@ export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
   const workUri = decodeFileName(params!.workUri as string);
+  const completeDataset = readDatasetFile(readFileSync);
   const configuration = readAppConfigurationFile(readFileSync);
 
   return {
@@ -70,9 +72,9 @@ export const getStaticProps: GetStaticProps = async ({
       configuration,
       datasetString: new DataSubsetter({
         configuration,
-        completeDataset: readDatasetFile(readFileSync),
+        completeDataset,
       })
-        .workDataset(workUri, {
+        .workDataset(completeDataset.workByUri(workUri), {
           allImages: true,
           collections: {},
           institution: {},

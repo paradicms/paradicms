@@ -12,4 +12,6 @@ export * from "./thumbnailTargetDimensions";
 export * from "./WorkCard";
 export * from "./WorkSearchGrid";
 export * from "./WorkImagesCarousel";
+export * from "./WorkSearchGrid";
+export * from "./workSearchWorkJoinSelector";
 export * from "./WorksGallery";

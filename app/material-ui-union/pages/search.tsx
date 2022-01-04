@@ -1,11 +1,11 @@
-import {Dataset, DataSubsetter, WorkJoinSelector} from "@paradicms/models";
+import {Dataset, DataSubsetter} from "@paradicms/models";
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {
-  thumbnailTargetDimensions,
   WorkSearchGrid,
+  workSearchWorkJoinSelector,
 } from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
@@ -13,7 +13,7 @@ import fs from "fs";
 import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
 import {WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
-import {useWorkQuery} from "@paradicms/react-search";
+import {usePageQueryParam, useWorkQueryParam} from "@paradicms/react-search";
 import {AppConfiguration} from "@paradicms/configuration";
 import {useRouter} from "next/router";
 
@@ -23,17 +23,6 @@ interface StaticProps {
   readonly configuration: AppConfiguration;
   readonly datasetString: string;
 }
-
-const WORK_JOIN_SELECTOR: WorkJoinSelector = {
-  collections: {},
-  institution: {},
-  propertyNamedValues: {
-    thumbnail: {targetDimensions: thumbnailTargetDimensions},
-  },
-  thumbnail: {targetDimensions: thumbnailTargetDimensions},
-};
-
-const WORKS_PER_PAGE = 10;
 
 const SearchPage: React.FunctionComponent<StaticProps> = ({
   configuration,
@@ -53,30 +42,18 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
       new LunrWorkQueryService({
         configuration,
         dataset,
-        workJoinSelector: WORK_JOIN_SELECTOR,
       }),
     [configuration, dataset]
   );
 
-  const {
-    setPage,
-    setWorkQuery,
-    workQuery,
-    workQueryResults,
-    ...workSearchProps
-  } = useWorkQuery({
-    defaultWorkQuery: {
-      filters: configuration.search!.filters ?? [],
-      valueFacetValueThumbnailSelector: {
-        targetDimensions: thumbnailTargetDimensions,
-      },
+  const [workQuery, setWorkQuery] = useWorkQueryParam(
+    {
+      filters: configuration.search?.filters ?? [],
     },
-    workQueryService,
-    worksPerPage: WORKS_PER_PAGE,
-  });
-  if (!workQueryResults) {
-    return null;
-  }
+    "query"
+  );
+
+  const [page, setPage] = usePageQueryParam("page");
 
   return (
     <Layout
@@ -100,10 +77,7 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
       onSearch={text => setWorkQuery({...workQuery, text})}
     >
       <WorkSearchGrid
-        facets={workQueryResults.facets}
-        works={workQueryResults.dataset.works}
-        onChangeFilters={filters => setWorkQuery({...workQuery, filters})}
-        onChangePage={setPage}
+        page={page}
         renderInstitutionLink={(institution, children) => (
           <Link href={Hrefs.institution(institution.uri).home}>{children}</Link>
         )}
@@ -112,8 +86,10 @@ const SearchPage: React.FunctionComponent<StaticProps> = ({
             {children}
           </Link>
         )}
-        query={workQuery}
-        {...workSearchProps}
+        setPage={setPage}
+        setWorkQuery={setWorkQuery}
+        workQuery={workQuery}
+        workQueryService={workQueryService}
       />
     </Layout>
   );
@@ -131,10 +107,11 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     props: {
       configuration,
       datasetString: new DataSubsetter({completeDataset, configuration})
-        .worksDataset(
-          completeDataset.works.map(work => work.uri),
-          WORK_JOIN_SELECTOR
-        )
+        .worksDataset(completeDataset.works, {
+          ...workSearchWorkJoinSelector,
+          collections: {},
+          institution: {},
+        })
         .stringify(),
     },
   };

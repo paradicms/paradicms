@@ -8,6 +8,7 @@ import {
   AppConfiguration,
   defaultAppConfiguration,
 } from "@paradicms/configuration";
+import {getNamedModelLinks} from "@paradicms/bootstrap";
 
 const textStyle: React.CSSProperties = {fontSize: "xx-large"};
 
@@ -25,33 +26,9 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   nextWork,
   previousWork,
 }) => {
-  const currentWorkLinks: React.ReactNodeArray = [];
-  if (currentWork) {
-    for (const link of [
-      {
-        href: currentWork.wikidataConceptUri,
-        text: "Wikidata",
-      },
-      {
-        href: currentWork.wikipediaUrl,
-        text: "Wikipedia",
-      },
-    ]) {
-      if (!link.href) {
-        continue;
-      }
-      if (currentWorkLinks.length > 0) {
-        currentWorkLinks.push(
-          <span key={currentWorkLinks.length}>&nbsp;&bull;&nbsp;</span>
-        );
-      }
-      currentWorkLinks.push(
-        <a href={link.href} key={currentWorkLinks.length}>
-          {link.text}
-        </a>
-      );
-    }
-  }
+  const currentWorkLinks: React.ReactNodeArray = currentWork
+    ? getNamedModelLinks(currentWork)
+    : [];
 
   return (
     <>
@@ -89,6 +66,11 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
               </Link>
             </>
           ) : null}
+          {currentWorkLinks.length > 0 ? (
+            <div className="text-center" style={{fontSize: "small"}}>
+              {currentWorkLinks}
+            </div>
+          ) : null}
         </div>
         <Nav className="navbar ms-auto h-100">
           <NavItem>
@@ -102,11 +84,6 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
           </NavItem>
         </Nav>
       </Navbar>
-      {currentWorkLinks.length > 0 ? (
-        <div className="text-center" style={{fontSize: "small"}}>
-          {currentWorkLinks}
-        </div>
-      ) : null}
       {children}
     </>
   );

@@ -1,16 +1,19 @@
 import {
+  Agent,
   Dataset,
   DataSubsetter,
   Image,
   ThumbnailSelector,
   Work,
-  WorkJoinSelector,
 } from "@paradicms/models";
 import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
 import {
+  GetWorkAgentsOptions,
+  GetWorkAgentsResult,
+  GetWorksOptions,
+  GetWorksResult,
   WorkQuery,
-  WorkQueryResults,
   WorkQueryService,
 } from "@paradicms/services";
 import {
@@ -61,16 +64,13 @@ export class LunrWorkQueryService implements WorkQueryService {
   private readonly configuration: LunrWorkQueryServiceConfiguration;
   private readonly dataset: Dataset;
   private readonly index: Index;
-  private readonly workJoinSelector?: WorkJoinSelector;
 
   constructor(kwds: {
     configuration: LunrWorkQueryServiceConfiguration;
     dataset: Dataset;
-    workJoinSelector?: WorkJoinSelector;
   }) {
     this.configuration = kwds.configuration;
     this.dataset = kwds.dataset;
-    this.workJoinSelector = kwds.workJoinSelector;
 
     this.index = lunr(function() {
       this.field("abstract");
@@ -281,43 +281,78 @@ export class LunrWorkQueryService implements WorkQueryService {
     return filteredWorks;
   }
 
-  getWorks(kwds: {
-    limit: number;
-    offset: number;
-    query: WorkQuery;
-  }): Promise<WorkQueryResults> {
-    const {limit, offset, query} = kwds;
+  getWorkAgents(
+    options: GetWorkAgentsOptions,
+    query: WorkQuery
+  ): Promise<GetWorkAgentsResult> {
+    const {agentJoinSelector, limit, offset} = options;
 
     invariant(!!query, "query must be defined");
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
 
-    return new Promise((resolve, reject) => {
-      // Calculate the universe of works
-      let allWorks: readonly Work[];
-      if (query.text) {
-        // Anything matching the fulltext search
-        allWorks = this.index
-          .search(query.text)
-          .map(({ref}) => this.dataset.workByUri(ref));
-      } else {
-        // All works
-        allWorks = this.dataset.works;
+    return new Promise(resolve => {
+      const works = this.filterWorks({
+        filters: query.filters,
+        works: this.searchWorks(query),
+      });
+
+      const agentsByUri: {[index: string]: Agent} = {};
+      for (const work of works) {
+        for (const agent of work.agents) {
+          if (agentsByUri[agent.agent.uri]) {
+            continue;
+          }
+          agentsByUri[agent.agent.uri] = agent.agent;
+        }
       }
+      const agents = Object.keys(agentsByUri).map(
+        agentUri => agentsByUri[agentUri]
+      );
+      const slicedAgents = agents.slice(offset, offset + limit);
+
+      const slicedAgentsDataset = new DataSubsetter({
+        completeDataset: this.dataset,
+        configuration: this.configuration,
+      }).agentsDataset(slicedAgents, agentJoinSelector);
+
+      resolve({
+        dataset: slicedAgentsDataset,
+        totalWorkAgentsCount: agents.length,
+      });
+    });
+  }
+
+  getWorks(
+    options: GetWorksOptions,
+    query: WorkQuery
+  ): Promise<GetWorksResult> {
+    const {
+      limit,
+      offset,
+      valueFacetValueThumbnailSelector,
+      workJoinSelector,
+    } = options;
+    invariant(!!query, "query must be defined");
+    invariant(limit > 0, "limit must be > 0");
+    invariant(offset >= 0, "offset must be >= 0");
+
+    return new Promise(resolve => {
+      // Calculate the universe of works
+      const searchedWorks: readonly Work[] = this.searchWorks(query);
 
       // Calculate facets on the universe before filtering it
       const facets = this.facetizeWorks({
         filters: query.filters,
-        valueFacetValueThumbnailSelector:
-          query.valueFacetValueThumbnailSelector,
-        works: allWorks,
+        valueFacetValueThumbnailSelector,
+        works: searchedWorks,
       });
 
-      console.debug("Search facets:", JSON.stringify(facets));
+      // console.debug("Search facets:", JSON.stringify(facets));
 
       const filteredWorks = this.filterWorks({
         filters: query.filters,
-        works: allWorks,
+        works: searchedWorks,
       });
 
       console.debug("Search filtered works count:", filteredWorks.length);
@@ -329,10 +364,7 @@ export class LunrWorkQueryService implements WorkQueryService {
       const slicedWorksDataset = new DataSubsetter({
         completeDataset: this.dataset,
         configuration: this.configuration,
-      }).worksDataset(
-        slicedWorks.map(work => work.uri),
-        this.workJoinSelector
-      );
+      }).worksDataset(slicedWorks, workJoinSelector);
 
       console.debug(
         "Search results dataset:",
@@ -344,12 +376,24 @@ export class LunrWorkQueryService implements WorkQueryService {
           .join(", ")
       );
 
-      return resolve({
+      resolve({
         dataset: slicedWorksDataset,
         facets,
         totalWorksCount: filteredWorks.length,
       });
     });
+  }
+
+  private searchWorks(query: WorkQuery): readonly Work[] {
+    if (query.text) {
+      // Anything matching the fulltext search
+      return this.index
+        .search(query.text)
+        .map(({ref}) => this.dataset.workByUri(ref));
+    } else {
+      // All works
+      return this.dataset.works;
+    }
   }
 
   private static testValueFilter<T extends PrimitiveType>(

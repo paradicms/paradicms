@@ -7,7 +7,6 @@ import {LunrWorkQueryService} from "@paradicms/lunr";
 import {Dataset} from "@paradicms/models";
 import {QueryParamProvider} from "use-query-params";
 import {BrowserRouter as Router, Route} from "react-router-dom";
-import {thumbnailTargetDimensions} from "@paradicms/bootstrap";
 import {
   AppConfiguration,
   defaultAppConfiguration,
@@ -36,18 +35,18 @@ Promise.all([fetchAppConfiguration(), fetchDataset()]).then(
     const workQueryService = new LunrWorkQueryService({
       configuration,
       dataset,
-      workJoinSelector: {
-        collections: {
-          thumbnail: {targetDimensions: thumbnailTargetDimensions},
-        },
-        institution: {
-          thumbnail: {targetDimensions: thumbnailTargetDimensions},
-        },
-        propertyNamedValues: {
-          thumbnail: {targetDimensions: thumbnailTargetDimensions},
-        },
-        thumbnail: {targetDimensions: thumbnailTargetDimensions},
-      },
+      // workJoinSelector: {
+      //   collections: {
+      //     thumbnail: {targetDimensions: thumbnailTargetDimensions},
+      //   },
+      //   institution: {
+      //     thumbnail: {targetDimensions: thumbnailTargetDimensions},
+      //   },
+      //   propertyNamedValues: {
+      //     thumbnail: {targetDimensions: thumbnailTargetDimensions},
+      //   },
+      //   thumbnail: {targetDimensions: thumbnailTargetDimensions},
+      // },
     });
 
     ReactDOM.render(

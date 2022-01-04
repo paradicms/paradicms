@@ -151,14 +151,17 @@ export const getStaticProps: GetStaticProps = async ({
       configuration,
       currentWorkUri: workUri,
       datasetString: new DataSubsetter({completeDataset, configuration})
-        .worksDataset(workUris, {
-          agent: {
-            thumbnail: {targetDimensions: thumbnailTargetDimensions},
-          },
-          allImages: true,
-          collections: {},
-          institution: {},
-        })
+        .worksDataset(
+          workUris.map(workUri => completeDataset.workByUri(workUri)),
+          {
+            agent: {
+              thumbnail: {targetDimensions: thumbnailTargetDimensions},
+            },
+            allImages: true,
+            collections: {},
+            institution: {},
+          }
+        )
         .stringify(),
       nextWorkUri,
       previousWorkUri,

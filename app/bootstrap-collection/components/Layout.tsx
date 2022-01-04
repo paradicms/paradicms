@@ -4,7 +4,6 @@ import {
   Card,
   CardBody,
   CardHeader,
-  CardTitle,
   Col,
   Container,
   Nav,
@@ -25,13 +24,15 @@ import {
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string; readonly uri: string};
   configuration: AppConfiguration;
+  cardHeaderLinks?: React.ReactNodeArray;
   cardTitle?: React.ReactNode;
   className?: string;
   documentTitle?: string;
   onSearch?: (text: string) => void;
 }>> = ({
-  collection,
+  cardHeaderLinks,
   cardTitle,
+  collection,
   children,
   documentTitle,
   configuration,
@@ -92,8 +93,13 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
           <Col>
             <Card>
               {cardTitle || documentTitle ? (
-                <CardHeader tag="h3">
-                  <CardTitle>{cardTitle ?? documentTitle}</CardTitle>
+                <CardHeader className="text-center" tag="h3">
+                  <div>{cardTitle ?? documentTitle}</div>
+                  {cardHeaderLinks && cardHeaderLinks.length > 0 ? (
+                    <div className="mt-1" style={{fontSize: "x-small"}}>
+                      {cardHeaderLinks}
+                    </div>
+                  ) : null}
                 </CardHeader>
               ) : null}
               <CardBody>{children}</CardBody>

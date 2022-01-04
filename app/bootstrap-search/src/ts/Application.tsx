@@ -1,9 +1,5 @@
 import * as React from "react";
-import {
-  NavbarSearchForm,
-  thumbnailTargetDimensions,
-  WorkSearchContainer,
-} from "@paradicms/bootstrap";
+import {NavbarSearchForm, WorkSearchContainer} from "@paradicms/bootstrap";
 import {
   Card,
   CardBody,
@@ -18,9 +14,7 @@ import {
 import {Helmet} from "react-helmet";
 import {AppConfiguration} from "@paradicms/configuration";
 import {WorkQueryService} from "@paradicms/services";
-import {useWorkQuery} from "@paradicms/react-search";
-
-const WORKS_PER_PAGE = 10;
+import {useWorkSearchQueryParams} from "@paradicms/react-search";
 
 export const Application: React.FunctionComponent<{
   configuration: AppConfiguration;
@@ -29,26 +23,9 @@ export const Application: React.FunctionComponent<{
   const documentTitle = configuration.documentTitle ?? "Search";
   const navbarTitle = configuration.navbarTitle ?? documentTitle;
 
-  const {
-    setPage,
-    setWorkQuery,
-    workQuery,
-    workQueryResults,
-    ...workSearchProps
-  } = useWorkQuery({
-    defaultWorkQuery: {
-      filters: configuration.search?.filters ?? [],
-      valueFacetValueThumbnailSelector: {
-        targetDimensions: thumbnailTargetDimensions,
-      },
-    },
-    workQueryService,
-    worksPerPage: WORKS_PER_PAGE,
-  });
-
-  if (!workQueryResults) {
-    return null;
-  }
+  const {onSearch, ...workSearchQueryParams} = useWorkSearchQueryParams(
+    configuration
+  );
 
   return (
     <>
@@ -64,12 +41,7 @@ export const Application: React.FunctionComponent<{
               </NavbarBrand>
               <Nav navbar>
                 <NavItem>
-                  <NavbarSearchForm
-                    onSearch={text => {
-                      setWorkQuery({...workQuery, text});
-                      setPage(undefined);
-                    }}
-                  />
+                  <NavbarSearchForm onSearch={onSearch} />
                 </NavItem>
               </Nav>
             </Navbar>
@@ -80,14 +52,11 @@ export const Application: React.FunctionComponent<{
             <Card>
               <CardBody>
                 <WorkSearchContainer
-                  {...workSearchProps}
                   renderWorkLink={(work, children) => (
                     <a href={work.page ?? work.uri}>{children}</a>
                   )}
-                  setPage={setPage}
-                  setWorkQuery={setWorkQuery}
-                  workQuery={workQuery}
-                  workQueryResults={workQueryResults}
+                  workQueryService={workQueryService}
+                  {...workSearchQueryParams}
                 />
               </CardBody>
             </Card>

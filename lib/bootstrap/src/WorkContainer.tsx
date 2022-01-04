@@ -1,4 +1,4 @@
-import {DCTERMS, Image, Rights, Text, Work} from "@paradicms/models";
+import {DCTERMS, Image, Rights, Text, Work, WorkAgent} from "@paradicms/models";
 import {
   Card,
   CardBody,
@@ -16,8 +16,7 @@ import * as React from "react";
 import {useMemo, useState} from "react";
 import {WorkImagesCarousel} from "./WorkImagesCarousel";
 import {RightsParagraph} from "./RightsParagraph";
-import {WorkAgentsContainer} from "./WorkAgentsContainer";
-import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
+import {AgentCard} from "./AgentCard";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "x-small",
@@ -50,6 +49,17 @@ export const WorkContainer: React.FunctionComponent<{
       return work.institution.rights;
     }
   }, [work, workAbstract]);
+
+  const workAgents: WorkAgent[] = [];
+  for (const workAgent of work.agents) {
+    if (
+      !workAgents.find(
+        uniqueWorkAgent => uniqueWorkAgent.agent.uri === workAgent.agent.uri
+      )
+    ) {
+      workAgents.push(workAgent);
+    }
+  }
 
   const [
     workImagesCarouselImage,
@@ -85,19 +95,22 @@ export const WorkContainer: React.FunctionComponent<{
       ),
     });
   }
-  if (
-    work.agents.length > 0 &&
-    work.agents.some(agent =>
-      agent.agent.thumbnail({targetDimensions: thumbnailTargetDimensions})
-    )
-  ) {
+  if (workAgents.length > 0) {
     leftColNavTabs.push({
       title: "People",
       content: (
-        <WorkAgentsContainer
-          key={leftColNavTabs.length}
-          workAgents={work.agents}
-        />
+        <Container fluid key={leftColNavTabs.length}>
+          {workAgents.map((workAgent, workAgentIndex) => (
+            <Row
+              className={workAgentIndex > 0 ? "mt-4" : "mt-2"}
+              key={workAgentIndex}
+            >
+              <Col xs={12} className="p-0">
+                <AgentCard agent={workAgent.agent} role={workAgent.role} />
+              </Col>
+            </Row>
+          ))}
+        </Container>
       ),
     });
   }
