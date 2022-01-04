@@ -1,3 +1,4 @@
+import datetime
 from typing import Optional
 
 from rdflib import BNode, Literal, RDF, XSD
@@ -7,6 +8,10 @@ from paradicms_etl.namespaces import TIME
 
 
 class DateTimeDescription(_Model):
+    @classmethod
+    def from_date(cls, date: datetime.date) -> "DateTimeDescription":
+        return cls.from_fields(day=date.day, month=date.month, year=date.year)
+
     @classmethod
     def from_fields(
         cls,

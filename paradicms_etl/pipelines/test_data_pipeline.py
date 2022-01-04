@@ -14,6 +14,7 @@ from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models._agent import _Agent
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
+from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
@@ -74,10 +75,6 @@ class TestDataPipeline(_Pipeline):
             (
                 VRA.technique,
                 tuple(f"Technique {i}" for i in range(10)),
-            ),
-            (
-                DCTERMS.temporal,
-                tuple(f"Temporal {i}" for i in range(10)),
             ),
             (DCTERMS.type, tuple(f"Type {i}" for i in range(10))),
         )
@@ -442,6 +439,15 @@ class TestDataPipeline(_Pipeline):
                 Property(
                     DCTERMS.relation,
                     URIRef("http://en.wikipedia.org/wiki/Alan_Turing"),
+                )
+            )
+
+            properties.append(
+                Property(
+                    DCTERMS.temporal,
+                    DateTimeDescription.from_date(
+                        date(day=1, month=1, year=2022) + timedelta(days=work_i)
+                    ),
                 )
             )
 
