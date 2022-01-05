@@ -11,5 +11,6 @@ export class DCTERMS {
   static relation = DCTERMS.NS("relation");
   static rights = DCTERMS.NS("rights");
   static rightsHolder = DCTERMS.NS("rightsHolder");
+  static temporal = DCTERMS.NS("temporal");
   static title = DCTERMS.NS("title");
 }

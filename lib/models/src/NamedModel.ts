@@ -3,14 +3,19 @@ import {Model} from "./Model";
 import {DCTERMS, PARADICMS} from "./vocabularies";
 import {Rights} from "./Rights";
 import {Text} from "./Text";
+import {DateTimeDescription} from "./DateTimeDescription";
+import {ModelParameters} from "./ModelParameters";
 
 export class NamedModel extends Model {
   get node(): NamedNode {
     return this._node as NamedNode;
   }
 
-  // Text is a Model, so this must be in NamedModel to avoid a circular dependency.
-  protected optionalStringOrText(property: NamedNode): string | Text | null {
+  private optionalStringOrUnnamedModel<ModelT extends Model>(
+    modelFactory: (kwds: ModelParameters) => ModelT,
+    modelRdfType: NamedNode,
+    property: NamedNode
+  ): ModelT | string | null {
     for (const object of this.store.getObjects(
       this.node,
       property,
@@ -18,8 +23,8 @@ export class NamedModel extends Model {
     )) {
       switch (object.termType) {
         case "BlankNode":
-          if (this.hasRdfType(object as BlankNode, PARADICMS.Text)) {
-            return new Text({
+          if (this.hasRdfType(object as BlankNode, modelRdfType)) {
+            return modelFactory({
               dataset: this.dataset,
               graphNode: this.graphNode,
               node: object,
@@ -31,6 +36,26 @@ export class NamedModel extends Model {
       }
     }
     return null;
+  }
+
+  // DateTimeDescription is a Model, so this must be in NamedModel to avoid a circular dependency.
+  protected optionalDateTimeDescriptionOrString(
+    property: NamedNode
+  ): DateTimeDescription | string | null {
+    return this.optionalStringOrUnnamedModel(
+      kwds => new DateTimeDescription(kwds),
+      PARADICMS.DateTimeDescription,
+      property
+    );
+  }
+
+  // Text is a Model, so this must be in NamedModel to avoid a circular dependency.
+  protected optionalStringOrText(property: NamedNode): string | Text | null {
+    return this.optionalStringOrUnnamedModel(
+      kwds => new Text(kwds),
+      PARADICMS.Text,
+      property
+    );
   }
 
   private get relationUrls(): readonly URL[] {

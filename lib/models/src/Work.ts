@@ -13,6 +13,7 @@ import {NamedValue} from "./NamedValue";
 import {NamedNode} from "n3";
 import {WorkAgent} from "./WorkAgent";
 import {Agent} from "./Agent";
+import {DateTimeDescription} from "./DateTimeDescription";
 
 const getRightsAgents = (
   rights: Rights | null,
@@ -141,6 +142,10 @@ export class Work extends NamedModel {
   @Memoize()
   get rights(): Rights | null {
     return this._rights;
+  }
+
+  get temporal(): DateTimeDescription | string | null {
+    return this.optionalDateTimeDescriptionOrString(DCTERMS.temporal);
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {
