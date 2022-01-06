@@ -144,8 +144,8 @@ export class Work extends NamedModel {
     return this._rights;
   }
 
-  get temporal(): DateTimeDescription | string | null {
-    return this.optionalDateTimeDescriptionOrString(DCTERMS.temporal);
+  get temporal(): DateTimeDescription | number | string | null {
+    return this.optionalDateTimeDescriptionOrNumberOrString(DCTERMS.temporal);
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {
