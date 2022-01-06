@@ -1,6 +1,6 @@
-import {BlankNode, NamedNode} from "n3";
+import {BlankNode, Literal, NamedNode} from "n3";
 import {Model} from "./Model";
-import {DCTERMS, PARADICMS} from "./vocabularies";
+import {DCTERMS, PARADICMS, XSD} from "./vocabularies";
 import {Rights} from "./Rights";
 import {Text} from "./Text";
 import {DateTimeDescription} from "./DateTimeDescription";
@@ -11,11 +11,12 @@ export class NamedModel extends Model {
     return this._node as NamedNode;
   }
 
-  private optionalStringOrUnnamedModel<ModelT extends Model>(
+  private optionalLiteralOrUnnamedModel<LiteralT, ModelT extends Model>(
+    literalFactory: (literal: Literal) => LiteralT,
     modelFactory: (kwds: ModelParameters) => ModelT,
     modelRdfType: NamedNode,
     property: NamedNode
-  ): ModelT | string | null {
+  ): LiteralT | ModelT | null {
     for (const object of this.store.getObjects(
       this.node,
       property,
@@ -32,17 +33,21 @@ export class NamedModel extends Model {
           }
           break;
         case "Literal":
-          return object.value;
+          return literalFactory(object);
       }
     }
     return null;
   }
 
   // DateTimeDescription is a Model, so this must be in NamedModel to avoid a circular dependency.
-  protected optionalDateTimeDescriptionOrString(
+  protected optionalDateTimeDescriptionOrNumberOrString(
     property: NamedNode
-  ): DateTimeDescription | string | null {
-    return this.optionalStringOrUnnamedModel(
+  ): DateTimeDescription | number | string | null {
+    return this.optionalLiteralOrUnnamedModel(
+      literal =>
+        literal.datatype.value === XSD.integer.value
+          ? parseInt(literal.value)
+          : literal.value,
       kwds => new DateTimeDescription(kwds),
       PARADICMS.DateTimeDescription,
       property
@@ -51,7 +56,8 @@ export class NamedModel extends Model {
 
   // Text is a Model, so this must be in NamedModel to avoid a circular dependency.
   protected optionalStringOrText(property: NamedNode): string | Text | null {
-    return this.optionalStringOrUnnamedModel(
+    return this.optionalLiteralOrUnnamedModel(
+      literal => literal.value,
       kwds => new Text(kwds),
       PARADICMS.Text,
       property
