@@ -3,6 +3,7 @@ import {FOAF} from "./vocabularies";
 import {Image} from "./Image";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
+import {requireDefined} from "./requireDefined";
 
 export class Agent extends NamedModel {
   get images(): readonly Image[] {
@@ -10,7 +11,9 @@ export class Agent extends NamedModel {
   }
 
   get name(): string {
-    return this.requiredString(FOAF.name_);
+    return requireDefined(
+      this.propertyObjects(FOAF.name_).find(term => term.termType === "Literal")
+    ).value;
   }
 
   get originalImages(): readonly Image[] {
@@ -18,7 +21,17 @@ export class Agent extends NamedModel {
   }
 
   get page(): string | null {
-    return this.optionalStringOrUri(FOAF.page);
+    return (
+      this.propertyObjects(FOAF.page).find(term => {
+        switch (term.termType) {
+          case "Literal":
+          case "NamedNode":
+            return true;
+          default:
+            return false;
+        }
+      })?.value ?? null
+    );
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {

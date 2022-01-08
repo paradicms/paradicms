@@ -1,18 +1,16 @@
 import {Model} from "./Model";
 import {TIME} from "./vocabularies/TIME";
 import {XSD} from "./vocabularies";
-import {NamedNode} from "n3";
+import {Literal, NamedNode} from "n3";
 
 export class DateTimeDescription extends Model {
   get day(): number | null {
-    const literal = this.optionalLiteral(TIME.day);
+    const literal = this.propertyObjects(TIME.day).find(
+      term =>
+        term.termType === "Literal" && term.datatype.value === XSD.gDay.value
+    ) as Literal | undefined;
     if (!literal) {
       return null;
-    }
-    if (literal.datatype.value !== XSD.gDay.value) {
-      throw new RangeError(
-        "expected time:day literal to have datatype xsd:gDay"
-      );
     }
     // https://www.w3.org/TR/xmlschema11-2/#gDay
     const match = literal.value.match(
@@ -34,14 +32,12 @@ export class DateTimeDescription extends Model {
   }
 
   get month(): number | null {
-    const literal = this.optionalLiteral(TIME.month);
+    const literal = this.propertyObjects(TIME.month).find(
+      term =>
+        term.termType === "Literal" && term.datatype.value === XSD.gMonth.value
+    ) as Literal | undefined;
     if (!literal) {
       return null;
-    }
-    if (literal.datatype.value !== XSD.gMonth.value) {
-      throw new RangeError(
-        "expected time:month literal to have datatype xsd:gMonth"
-      );
     }
     // https://www.w3.org/TR/xmlschema11-2/#gMonth
     const match = literal.value.match(
@@ -55,20 +51,23 @@ export class DateTimeDescription extends Model {
   }
 
   private optionalInt(property: NamedNode): number | null {
-    const literal = this.optionalLiteral(property);
+    const literal = this.propertyObjects(property).find(
+      term =>
+        term.termType === "Literal" && term.datatype.value === XSD.integer.value
+    ) as Literal | undefined;
     if (!literal) {
       return null;
-    }
-    if (literal.datatype !== XSD.integer) {
-      throw new RangeError(
-        `expected ${property.value} to have datatype xsd:integer`
-      );
     }
     return parseInt(literal.value);
   }
 
   get second(): number | null {
-    const literal = this.optionalLiteral(TIME.second);
+    const literal = this.propertyObjects(TIME.second).find(
+      term =>
+        term.termType === "Literal" &&
+        (term.datatype.value === XSD.decimal.value ||
+          term.datatype.value === XSD.integer.value)
+    ) as Literal | undefined;
     if (!literal) {
       return null;
     }
@@ -77,22 +76,17 @@ export class DateTimeDescription extends Model {
     } else if (literal.datatype.value === XSD.integer.value) {
       return parseInt(literal.value);
     } else {
-      throw new RangeError(
-        "expected time:second to have an xsd:integer or xsd:decimal value, not " +
-          literal.datatype.value
-      );
+      throw new EvalError();
     }
   }
 
   get year(): number | null {
-    const literal = this.optionalLiteral(TIME.year);
+    const literal = this.propertyObjects(TIME.year).find(
+      term =>
+        term.termType === "Literal" && term.datatype.value === XSD.gYear.value
+    ) as Literal | undefined;
     if (!literal) {
       return null;
-    }
-    if (literal.datatype.value !== XSD.gYear.value) {
-      throw new RangeError(
-        "expected time:year literal to have datatype xsd:gYear"
-      );
     }
     // https://www.w3.org/TR/xmlschema11-2/#gYear
     const match = literal.value.match(

@@ -2,6 +2,7 @@ import {Model} from "./Model";
 import {RDF} from "./vocabularies";
 import {Rights} from "./Rights";
 import {Memoize} from "typescript-memoize";
+import {requireDefined} from "./requireDefined";
 
 export class Text extends Model {
   @Memoize()
@@ -18,6 +19,8 @@ export class Text extends Model {
   }
 
   get value(): string {
-    return this.requiredString(RDF.value);
+    return requireDefined(
+      this.propertyObjects(RDF.value).find(term => term.termType === "Literal")
+    ).value;
   }
 }

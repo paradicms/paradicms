@@ -1,15 +1,20 @@
 import {ImageDimensions} from "./ImageDimensions";
 import {NamedModel} from "./NamedModel";
-import {NamedNode} from "n3";
+import {Literal, NamedNode} from "n3";
 import {EXIF, FOAF, PARADICMS, XSD} from "./vocabularies";
 import {Rights} from "./Rights";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Memoize} from "typescript-memoize";
+import {requireDefined} from "./requireDefined";
 
 export class Image extends NamedModel {
-  get depictsUri() {
-    return this.requiredParentNamedNode(FOAF.depicts).value;
+  get depictsUri(): string {
+    return requireDefined(
+      this.propertyObjects(FOAF.depicts).find(
+        term => term.termType === "NamedNode"
+      )
+    ).value;
   }
 
   get derivedImages(): readonly Image[] {
@@ -29,16 +34,16 @@ export class Image extends NamedModel {
     heightProperty: NamedNode,
     widthProperty: NamedNode
   ): ImageDimensions | null {
-    const heightLiteral = this.optionalLiteral(heightProperty);
-    const widthLiteral = this.optionalLiteral(widthProperty);
+    const heightLiteral = this.propertyObjects(heightProperty).find(
+      term =>
+        term.termType === "Literal" && term.datatype.value === XSD.integer.value
+    ) as Literal | undefined;
+    const widthLiteral = this.propertyObjects(widthProperty).find(
+      term =>
+        term.termType === "Literal" && term.datatype.value === XSD.integer.value
+    ) as Literal | undefined;
 
     if (heightLiteral && widthLiteral) {
-      if (heightLiteral.datatype.value !== XSD.integer.value) {
-        throw new RangeError("height must be an xsd:integer");
-      }
-      if (widthLiteral.datatype.value !== XSD.integer.value) {
-        throw new RangeError("width must be an xsd:integer");
-      }
       return {
         height: parseInt(heightLiteral.value),
         width: parseInt(widthLiteral.value),
@@ -92,9 +97,11 @@ export class Image extends NamedModel {
   }
 
   get src(): string | null {
-    const src = this.optionalString(PARADICMS.imageSrc);
-    if (src) {
-      return src;
+    const srcLiteral = this.propertyObjects(PARADICMS.imageSrc).find(
+      term => term.termType === "Literal"
+    );
+    if (srcLiteral) {
+      return srcLiteral.value;
     } else if (
       this.uri.startsWith("http://") ||
       this.uri.startsWith("https://")

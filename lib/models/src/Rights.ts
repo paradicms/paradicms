@@ -8,25 +8,45 @@ import {BlankNode, NamedNode} from "n3";
 import {Memoize} from "typescript-memoize";
 
 export class Rights extends Model {
-  @Memoize()
-  get creator(): Agent | string | null {
-    return this.optionalModelOrString(
-      uri => this.dataset.agentByUri(uri),
-      DCTERMS.creator
-    );
+  private agentsOrStrings(property: NamedNode) {
+    return this.propertyObjects(DCTERMS.creator).flatMap(term => {
+      switch (term.termType) {
+        case "Literal":
+          return term.value;
+        case "NamedNode":
+          return this.dataset.agentByUri(term.value);
+        default:
+          return [];
+      }
+    });
   }
 
   @Memoize()
-  get holder(): string | null {
-    return this.optionalString(DCTERMS.rightsHolder);
+  get creators(): readonly (Agent | string)[] {
+    return this.agentsOrStrings(DCTERMS.creator);
+  }
+
+  @Memoize()
+  get holders(): readonly (Agent | string)[] {
+    return this.agentsOrStrings(DCTERMS.rightsHolder);
   }
 
   @Memoize()
   get license(): License | string | null {
-    return this.optionalModelOrString(
-      uri => this.dataset.licenseByUri(uri),
-      DCTERMS.license
+    const term = this.propertyObjects(DCTERMS.license).find(
+      term => term.termType === "Literal" || term.termType === "NamedNode"
     );
+    if (!term) {
+      return null;
+    }
+    switch (term.termType) {
+      case "Literal":
+        return term.value;
+      case "NamedNode":
+        return this.dataset.licenseByUri(term.value);
+      default:
+        throw new EvalError();
+    }
   }
 
   static optional(kwds: {
@@ -36,7 +56,12 @@ export class Rights extends Model {
   }): Rights | null {
     const rights = new Rights(kwds);
 
-    if (rights.creator || rights.holder || rights.license || rights.statement) {
+    if (
+      rights.creators.length > 0 ||
+      rights.holders.length > 0 ||
+      rights.license ||
+      rights.statement
+    ) {
       return rights;
     } else {
       return null;
@@ -45,9 +70,19 @@ export class Rights extends Model {
 
   @Memoize()
   get statement(): RightsStatement | string | null {
-    return this.optionalModelOrString(
-      uri => this.dataset.rightsStatementByUri(uri),
-      DCTERMS.rights
+    const term = this.propertyObjects(DCTERMS.rights).find(
+      term => term.termType === "Literal" || term.termType === "NamedNode"
     );
+    if (!term) {
+      return null;
+    }
+    switch (term.termType) {
+      case "Literal":
+        return term.value;
+      case "NamedNode":
+        return this.dataset.rightsStatementByUri(term.value);
+      default:
+        throw new EvalError();
+    }
   }
 }

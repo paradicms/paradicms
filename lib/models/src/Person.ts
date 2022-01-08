@@ -3,14 +3,26 @@ import {Agent} from "./Agent";
 
 export class Person extends Agent {
   get familyName(): string | null {
-    return this.optionalString(FOAF.familyName);
+    return (
+      this.propertyObjects(FOAF.familyName).find(
+        term => term.termType === "Literal"
+      )?.value ?? null
+    );
   }
 
   get givenName(): string | null {
-    return this.optionalString(FOAF.givenName);
+    return (
+      this.propertyObjects(FOAF.givenName).find(
+        term => term.termType === "Literal"
+      )?.value ?? null
+    );
   }
 
   get sortName(): string | null {
-    return this.optionalString(CONTACT.sortName);
+    return (
+      this.propertyObjects(CONTACT.sortName).find(
+        term => term.termType === "Literal"
+      )?.value ?? null
+    );
   }
 }

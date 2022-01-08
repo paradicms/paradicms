@@ -1,13 +1,20 @@
-import { NamedModel } from "./NamedModel";
-import { DC } from "./vocabularies";
+import {NamedModel} from "./NamedModel";
+import {DC} from "./vocabularies";
+import {requireDefined} from "./requireDefined";
 
 export class License extends NamedModel {
   get identifier(): string {
-    return this.requiredString(DC.identifier);
+    return requireDefined(
+      this.propertyObjects(DC.identifier).find(
+        term => term.termType === "Literal"
+      )
+    ).value;
   }
 
   get title(): string {
-    return this.requiredString(DC.title);
+    return requireDefined(
+      this.propertyObjects(DC.title).find(term => term.termType === "Literal")
+    ).value;
   }
 
   toString() {

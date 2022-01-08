@@ -19,6 +19,7 @@ import {NamedValue} from "./NamedValue";
 import {Organization} from "./Organization";
 import {Agent} from "./Agent";
 import {ModelParameters} from "./ModelParameters";
+import {requireDefined} from "./requireDefined";
 
 /**
  * Lazily indexes the contents of an immutable Dataset to provide quick lookups and subsetting.
@@ -97,7 +98,7 @@ export class Dataset {
     if (!this._collectionsByInstitutionUriIndex) {
       this.readCollections();
     }
-    return Dataset.requireNotNullish(this._collectionsByInstitutionUriIndex);
+    return requireDefined(this._collectionsByInstitutionUriIndex);
   }
 
   collectionByUri(collectionUri: string): Collection {
@@ -113,7 +114,7 @@ export class Dataset {
     if (!this._collectionsByUriIndex) {
       this.readCollections();
     }
-    return Dataset.requireNotNullish(this._collectionsByUriIndex);
+    return requireDefined(this._collectionsByUriIndex);
   }
 
   imageByUri(imageUri: string): Image {
@@ -140,7 +141,7 @@ export class Dataset {
     if (!this._imagesByDepictsUriIndex) {
       this.readImages();
     }
-    return Dataset.requireNotNullish(this._imagesByDepictsUriIndex);
+    return requireDefined(this._imagesByDepictsUriIndex);
   }
 
   imagesByOriginalImageUri(originalImageUri: string): readonly Image[] {
@@ -156,14 +157,14 @@ export class Dataset {
     if (!this._imagesByOriginalImageUriIndex) {
       this.readImages();
     }
-    return Dataset.requireNotNullish(this._imagesByOriginalImageUriIndex);
+    return requireDefined(this._imagesByOriginalImageUriIndex);
   }
 
   private get imagesByUriIndex(): {[index: string]: Image} {
     if (!this._imagesByUriIndex) {
       this.readImages();
     }
-    return Dataset.requireNotNullish(this._imagesByUriIndex);
+    return requireDefined(this._imagesByUriIndex);
   }
 
   institutionByUri(institutionUri: string): Institution {
@@ -603,13 +604,6 @@ export class Dataset {
     this._worksByInstitutionUriIndex = worksByInstitutionUriIndex;
   }
 
-  private static requireNotNullish<T>(value: T | undefined): T {
-    if (typeof value === "undefined") {
-      throw new EvalError("expected value to be defined");
-    }
-    return value;
-  }
-
   get rightsStatements(): readonly RightsStatement[] {
     if (!this._rightsStatements) {
       this.readRightsStatements();
@@ -670,7 +664,7 @@ export class Dataset {
     if (!this._worksByAgentUriIndex) {
       this.readWorks();
     }
-    return Dataset.requireNotNullish(this._worksByAgentUriIndex);
+    return requireDefined(this._worksByAgentUriIndex);
   }
 
   private get worksByCollectionUriIndex(): {
@@ -679,7 +673,7 @@ export class Dataset {
     if (!this._worksByCollectionUriIndex) {
       this.readWorks();
     }
-    return Dataset.requireNotNullish(this._worksByCollectionUriIndex);
+    return requireDefined(this._worksByCollectionUriIndex);
   }
 
   private get worksByInstitutionUriIndex(): {
@@ -688,13 +682,13 @@ export class Dataset {
     if (!this._worksByInstitutionUriIndex) {
       this.readWorks();
     }
-    return Dataset.requireNotNullish(this._worksByInstitutionUriIndex);
+    return requireDefined(this._worksByInstitutionUriIndex);
   }
 
   private get worksByUriIndex(): {[index: string]: Work} {
     if (!this._worksByUriIndex) {
       this.readWorks();
     }
-    return Dataset.requireNotNullish(this._worksByUriIndex);
+    return requireDefined(this._worksByUriIndex);
   }
 }

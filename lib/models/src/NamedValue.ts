@@ -5,6 +5,7 @@ import {Image} from "./Image";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Memoize} from "typescript-memoize";
+import {requireDefined} from "./requireDefined";
 
 export class NamedValue extends NamedModel {
   get images(): readonly Image[] {
@@ -13,17 +14,22 @@ export class NamedValue extends NamedModel {
 
   @Memoize()
   get label(): string | null {
-    return this.optionalString(RDFS.label);
+    return (
+      this.propertyObjects(RDFS.label).find(term => term.termType === "Literal")
+        ?.value ?? null
+    );
   }
 
   get propertyUris(): readonly string[] {
-    const propertyNamedNodes = this.parentNamedNodes(RDF.predicate);
-    if (propertyNamedNodes.length === 0) {
+    const propertyUris: readonly string[] = this.propertyObjects(RDF.predicate)
+      .filter(term => term.termType === "NamedNode")
+      .map(term => term.value);
+    if (propertyUris.length === 0) {
       throw new RangeError(
         "property value definition must link to one or more property definitions"
       );
     }
-    return propertyNamedNodes.map(node => node.value);
+    return propertyUris;
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {
@@ -31,6 +37,8 @@ export class NamedValue extends NamedModel {
   }
 
   get value(): Literal {
-    return this.requiredLiteral(RDF.value);
+    return requireDefined(
+      this.propertyObjects(RDF.value).find(term => term.termType === "Literal")
+    ) as Literal;
   }
 }

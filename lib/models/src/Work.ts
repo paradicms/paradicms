@@ -1,5 +1,5 @@
 import {NamedModel} from "./NamedModel";
-import {DCTERMS, FOAF, PARADICMS, RDF} from "./vocabularies";
+import {DCTERMS, FOAF, PARADICMS, RDF, XSD} from "./vocabularies";
 import {Collection} from "./Collection";
 import {Institution} from "./Institution";
 import {Rights} from "./Rights";
@@ -16,6 +16,7 @@ import {Agent} from "./Agent";
 import {DateTimeDescription} from "./DateTimeDescription";
 import {WorkEvent} from "./WorkEvent";
 import {WorkEventDateTime} from "./WorkEventDateTime";
+import {requireDefined} from "./requireDefined";
 
 const getRightsAgents = (
   rights: Rights | null,
@@ -27,11 +28,19 @@ const getRightsAgents = (
     return result;
   }
 
-  const creator = rights?.creator;
-  if (creator && creator instanceof Agent) {
+  for (const creator of rights.creators) {
+    if (creator instanceof Agent) {
+      result.push({
+        agent: creator as Agent,
+        role: rolePrefix + " creator",
+      });
+    }
+  }
+
+  for (const holder of rights.holders) {
     result.push({
-      agent: creator as Agent,
-      role: rolePrefix + " creator",
+      agent: holder as Agent,
+      role: rolePrefix + " holder",
     });
   }
 
@@ -41,7 +50,19 @@ const getRightsAgents = (
 export class Work extends NamedModel {
   @Memoize()
   get abstract(): string | Text | null {
-    return this.optionalStringOrText(DCTERMS.abstract);
+    for (const term of this.propertyObjects(DCTERMS.abstract)) {
+      switch (term.termType) {
+        case "BlankNode":
+          return new Text({
+            dataset: this.dataset,
+            graphNode: this.graphNode,
+            node: term,
+          });
+        case "Literal":
+          return term.value;
+      }
+    }
+    return null;
   }
 
   @Memoize()
@@ -71,12 +92,30 @@ export class Work extends NamedModel {
   }
 
   get collectionUris(): readonly string[] {
-    return this.parentNamedNodes(PARADICMS.collection).map(node => node.value);
+    return this.propertyObjects(PARADICMS.collection)
+      .filter(term => term.termType === "NamedNode")
+      .map(term => term.value);
   }
 
   @Memoize()
   get created(): DateTimeDescription | number | string | null {
-    return this.optionalDateTimeDescriptionOrNumberOrString(DCTERMS.created);
+    for (const term of this.propertyObjects(DCTERMS.abstract)) {
+      switch (term.termType) {
+        case "BlankNode":
+          return new DateTimeDescription({
+            dataset: this.dataset,
+            graphNode: this.graphNode,
+            node: term,
+          });
+        case "Literal":
+          if (term.datatype.value === XSD.integer.value) {
+            return parseInt(term.value);
+          } else {
+            return term.value;
+          }
+      }
+    }
+    return null;
   }
 
   get events(): readonly WorkEvent[] {
@@ -129,7 +168,11 @@ export class Work extends NamedModel {
   }
 
   get institutionUri(): string {
-    return this.requiredParentNamedNode(PARADICMS.institution).value;
+    return requireDefined(
+      this.propertyObjects(PARADICMS.institution).find(
+        term => term.termType === "NamedNode"
+      )
+    ).value;
   }
 
   get originalImages(): readonly Image[] {
@@ -137,7 +180,17 @@ export class Work extends NamedModel {
   }
 
   get page(): string | null {
-    return this.optionalStringOrUri(FOAF.page);
+    return (
+      this.propertyObjects(FOAF.page).find(term => {
+        switch (term.termType) {
+          case "Literal":
+          case "NamedNode":
+            return true;
+          default:
+            return false;
+        }
+      })?.value ?? null
+    );
   }
 
   propertyNamedValues(propertyUri: string): readonly NamedValue[] {
@@ -197,7 +250,11 @@ export class Work extends NamedModel {
   }
 
   get title(): string {
-    return this.requiredString(DCTERMS.title);
+    return requireDefined(
+      this.propertyObjects(DCTERMS.title).find(
+        term => term.termType === "Literal"
+      )
+    ).value;
   }
 
   get wikidataConceptUri(): string | null {

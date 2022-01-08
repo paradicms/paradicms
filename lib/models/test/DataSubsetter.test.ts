@@ -107,7 +107,7 @@ describe("DataSubsetter", () => {
     ]);
   });
 
-  it("should get an work with its institution, collections, all images, agents, and agents' thumbnails (work page)", () => {
+  it("should get a work with its institution, collections, all images, agents, and agents' thumbnails (work page)", () => {
     const work = testDataset.works[0];
     const dataset = sut.workDataset(work, {
       agent: {
