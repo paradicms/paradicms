@@ -130,7 +130,12 @@ describe("DataSubsetter", () => {
       testDataset.images.filter(
         image =>
           image.depictsUri === work.uri ||
-          image.depictsUri === (work.rights!.creator! as Agent).uri
+          work.rights!.creators.some(
+            agent => agent instanceof Agent && agent.uri === image.depictsUri
+          ) ||
+          work.rights!.holders.some(
+            agent => agent instanceof Agent && agent.uri === image.depictsUri
+          )
       )
     );
     expectModelsDeepEq(dataset.institutions, [
@@ -144,8 +149,10 @@ describe("DataSubsetter", () => {
       )!,
     ]);
     expectModelsDeepEq(dataset.agents, [
-      testDataset.agents.find(
-        agent => agent.uri === (work.rights!.creator! as Agent).uri
+      testDataset.agents.find(agent =>
+        work.rights!.creators.some(
+          creator => creator instanceof Agent && creator.uri === agent.uri
+        )
       )!,
     ]);
     expectModelsDeepEq(dataset.works, [work]);

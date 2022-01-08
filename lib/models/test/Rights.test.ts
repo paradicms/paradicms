@@ -9,9 +9,14 @@ describe("Rights", () => {
   const sut = Dataset.parse(testDataTrig).works[0].rights!;
 
   it("should have a joined creator", () => {
-    expect(sut.creator).to.not.be.empty;
-    expect(sut.creator).to.not.be.instanceof(String);
-    expect((sut.creator! as Agent).name).to.not.be.empty;
+    expect(sut.creators).to.not.be.empty;
+    expect(sut.creators.filter(creator => creator instanceof Agent)).to.not.be
+      .empty;
+    expect(
+      sut.creators
+        .filter(creator => creator instanceof Agent)
+        .map(creator => creator as Agent)[0].name
+    ).to.not.be.empty;
   });
 
   it("should have a joined license", () => {
@@ -27,7 +32,6 @@ describe("Rights", () => {
   });
 
   it("should have a text holder", () => {
-    expect(sut.holder).to.not.be.null;
-    expect(sut.holder!).to.not.be.empty;
+    expect(sut.holders).to.not.be.empty;
   });
 });

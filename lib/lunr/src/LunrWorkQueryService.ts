@@ -455,8 +455,8 @@ export class LunrWorkQueryService implements WorkQueryService {
       maxDimensions: image.maxDimensions,
       rights: rights
         ? {
-            creator: rights.creator?.toString() ?? null,
-            holder: rights.holder,
+            creators: rights.creators.map(creator => creator.toString()),
+            holders: rights.holders.map(holder => holder.toString()),
             license: rights.license?.toString() ?? null,
             statement: rights.statement?.toString() ?? null,
           }
