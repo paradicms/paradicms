@@ -14,6 +14,8 @@ import {NamedNode} from "n3";
 import {WorkAgent} from "./WorkAgent";
 import {Agent} from "./Agent";
 import {DateTimeDescription} from "./DateTimeDescription";
+import {WorkEvent} from "./WorkEvent";
+import {WorkEventDateTime} from "./WorkEventDateTime";
 
 const getRightsAgents = (
   rights: Rights | null,
@@ -70,6 +72,52 @@ export class Work extends NamedModel {
 
   get collectionUris(): readonly string[] {
     return this.parentNamedNodes(PARADICMS.collection).map(node => node.value);
+  }
+
+  @Memoize()
+  get created(): DateTimeDescription | number | string | null {
+    return this.optionalDateTimeDescriptionOrNumberOrString(DCTERMS.created);
+  }
+
+  get events(): readonly WorkEvent[] {
+    const toWorkEventDateTime = (
+      dateTime: DateTimeDescription | number | string | null
+    ): WorkEventDateTime | null => {
+      if (dateTime === null) {
+        return null;
+      }
+      if (typeof dateTime === "number") {
+        return {
+          day: 1,
+          month: 1,
+          year: dateTime,
+        };
+      } else if (typeof dateTime === "string") {
+        return null;
+      } else {
+        // DateTimeDescription
+        if (dateTime.year == null) {
+          return null;
+        }
+        return {
+          day: dateTime.day,
+          month: dateTime.month,
+          year: dateTime.year,
+        };
+      }
+    };
+
+    const events: WorkEvent[] = [];
+
+    const created = toWorkEventDateTime(this.created);
+    if (created !== null) {
+      events.push({
+        dateTime: created,
+        type: "Creation",
+      });
+    }
+
+    return events;
   }
 
   get images(): readonly Image[] {
@@ -142,10 +190,6 @@ export class Work extends NamedModel {
   @Memoize()
   get rights(): Rights | null {
     return this._rights;
-  }
-
-  get temporal(): DateTimeDescription | number | string | null {
-    return this.optionalDateTimeDescriptionOrNumberOrString(DCTERMS.temporal);
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {

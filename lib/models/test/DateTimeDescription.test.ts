@@ -5,7 +5,7 @@ import {DateTimeDescription} from "../src/DateTimeDescription";
 
 describe("DateTimeDescription", () => {
   const sut = Dataset.parse(testDataTrig).works[0]
-    .temporal! as DateTimeDescription;
+    .created! as DateTimeDescription;
 
   before(() => {
     expect(sut).to.not.be.null;
