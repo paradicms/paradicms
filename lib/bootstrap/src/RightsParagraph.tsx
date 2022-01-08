@@ -19,10 +19,10 @@ export const RightsParagraph: React.FunctionComponent<{
       result.push(<span key={result.length}>{rightsElement}</span>);
     };
 
-    if (rights.creator) {
+    for (const creator of rights.creators) {
       pushRightsElement(
         <span>
-          <i>Creator</i>: {rights.creator.toString()}
+          <i>Creator</i>: {creator.toString()}
         </span>
       );
     }
@@ -36,10 +36,10 @@ export const RightsParagraph: React.FunctionComponent<{
       );
     }
 
-    if (rights.holder) {
+    for (const holder of rights.holders) {
       pushRightsElement(
         <span>
-          <i>Holder</i>: {rights.holder}
+          <i>Holder</i>: {holder.toString}
         </span>
       );
     }

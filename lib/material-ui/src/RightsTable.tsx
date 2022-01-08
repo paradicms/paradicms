@@ -66,18 +66,24 @@ export const RightsTable: React.FunctionComponent<{
             rowClassName={rowClassName}
             value={rightsStatementValue}
           />
-          <RightsTableRow
-            cellClassName={cellClassName}
-            label="Creator"
-            rowClassName={rowClassName}
-            value={rights?.creator?.toString()}
-          />
-          <RightsTableRow
-            cellClassName={cellClassName}
-            label="Holder"
-            rowClassName={rowClassName}
-            value={rights.holder}
-          />
+          {rights.creators.map((creator, creatorIndex) => (
+            <RightsTableRow
+              cellClassName={cellClassName}
+              key={"creator" + creatorIndex.toString()}
+              label="Creator"
+              rowClassName={rowClassName}
+              value={creator.toString()}
+            />
+          ))}
+          {rights.holders.map((holder, holderIndex) => (
+            <RightsTableRow
+              cellClassName={cellClassName}
+              key={"holder" + holderIndex.toString()}
+              label="Holder"
+              rowClassName={rowClassName}
+              value={holder}
+            />
+          ))}
           <RightsTableRow
             cellClassName={cellClassName}
             label="License"

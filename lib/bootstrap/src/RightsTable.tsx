@@ -53,12 +53,22 @@ export const RightsTable: React.FunctionComponent<{
           label="Statement"
           value={<RightsStatementLink rightsStatement={rights.statement} />}
         />
-        <RightsTableRow
-          {...rowProps}
-          label="Creator"
-          value={rights.creator?.toString()}
-        />
-        <RightsTableRow {...rowProps} label="Holder" value={rights.holder} />
+        {rights.creators.map((creator, creatorIndex) => (
+          <RightsTableRow
+            {...rowProps}
+            key={"creator" + creatorIndex.toString()}
+            label="Creator"
+            value={creator.toString()}
+          />
+        ))}
+        {rights.holders.map((holder, holderIndex) => (
+          <RightsTableRow
+            {...rowProps}
+            key={"holder" + holderIndex.toString()}
+            label="Holder"
+            value={holder}
+          />
+        ))}
         <RightsTableRow
           {...rowProps}
           label="License"
