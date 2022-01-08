@@ -391,6 +391,16 @@ class TestDataPipeline(_Pipeline):
             )
 
             # Properties that depend on the date
+            # dcterms:created
+            properties.append(
+                Property(
+                    DCTERMS.created,
+                    DateTimeDescription.from_date(
+                        date(day=1, month=1, year=2022) + timedelta(days=work_i)
+                    ),
+                )
+            )
+            # dcterms:date
             properties.extend(
                 Property(
                     DCTERMS.date,
@@ -439,15 +449,6 @@ class TestDataPipeline(_Pipeline):
                 Property(
                     DCTERMS.relation,
                     URIRef("http://en.wikipedia.org/wiki/Alan_Turing"),
-                )
-            )
-
-            properties.append(
-                Property(
-                    DCTERMS.temporal,
-                    DateTimeDescription.from_date(
-                        date(day=1, month=1, year=2022) + timedelta(days=work_i)
-                    ),
                 )
             )
 
