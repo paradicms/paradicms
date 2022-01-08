@@ -8,6 +8,11 @@
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "jsx": "react",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es2019.array"
+    ],
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitThis": true,
