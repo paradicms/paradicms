@@ -5,6 +5,7 @@ import {
   Image,
   ThumbnailSelector,
   Work,
+  WorkEvent,
 } from "@paradicms/models";
 import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
@@ -33,6 +34,8 @@ import {
   ValueFacetValueThumbnail,
 } from "@paradicms/facets";
 import {PropertyConfiguration} from "@paradicms/configuration";
+import {GetWorkEventsOptions} from "@paradicms/services/dist/GetWorkEventsOptions";
+import {GetWorkEventsResult} from "@paradicms/services/dist/GetWorkEventsResult";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -460,5 +463,48 @@ export class LunrWorkQueryService implements WorkQueryService {
         : null,
       src: imageSrc,
     };
+  }
+
+  getWorkEvents(
+    options: GetWorkEventsOptions,
+    query: WorkQuery
+  ): Promise<GetWorkEventsResult> {
+    const {limit, offset} = options;
+
+    invariant(!!query, "query must be defined");
+    invariant(limit > 0, "limit must be > 0");
+    invariant(offset >= 0, "offset must be >= 0");
+
+    return new Promise(resolve => {
+      const works = this.filterWorks({
+        filters: query.filters,
+        works: this.searchWorks(query),
+      });
+
+      const workEvents: (WorkEvent & {
+        workUri: string;
+      })[] = works.flatMap(work =>
+        work.events.map(workEvent => ({...workEvent, workUri: work.uri}))
+      );
+
+      const slicedWorkEvents = workEvents.slice(offset, offset + limit);
+
+      const slicedWorkEventsDataset = new DataSubsetter({
+        completeDataset: this.dataset,
+        configuration: this.configuration,
+      }).worksDataset(
+        [
+          ...new Set<string>(
+            slicedWorkEvents.map(workEvent => workEvent.workUri)
+          ),
+        ].map(workUri => this.dataset.workByUri(workUri))
+      );
+
+      resolve({
+        dataset: slicedWorkEventsDataset,
+        workEvents: slicedWorkEvents,
+        totalWorkEventsCount: workEvents.length,
+      });
+    });
   }
 }

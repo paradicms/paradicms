@@ -56,6 +56,38 @@ describe("LunrWorkQueryService", () => {
     expect(haveAgentWorks).to.be.true;
   });
 
+  it("getWorkEvents return at least one event from an empty query", async () => {
+    const result = await sut.getWorkEvents(
+      {
+        limit: Number.MAX_SAFE_INTEGER,
+        offset: 0,
+      },
+      {
+        filters: configuration.search!.filters,
+      }
+    );
+
+    expect(result.workEvents).to.not.be.empty;
+    expect(result.totalWorkEventsCount).to.be.gt(0);
+  });
+
+  it("getWorkEvents return the works associated with an event", async () => {
+    const result = await sut.getWorkEvents(
+      {
+        limit: Number.MAX_SAFE_INTEGER,
+        offset: 0,
+      },
+      {
+        filters: configuration.search!.filters,
+      }
+    );
+
+    expect(result.dataset.works).to.not.be.empty;
+    for (const workEvent of result.workEvents) {
+      expect(result.dataset.workByUri(workEvent.workUri)).to.not.be.null;
+    }
+  });
+
   it("getWorks return at least one work from an empty query", async () => {
     const result = await sut.getWorks(
       {
