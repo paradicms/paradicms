@@ -4,6 +4,7 @@ export class DCTERMS {
   static NS = Namespace("http://purl.org/dc/terms/");
 
   static abstract = DCTERMS.NS("abstract");
+  static created = DCTERMS.NS("created");
   static creator = DCTERMS.NS("creator");
   static description = DCTERMS.NS("description");
   static identifier = DCTERMS.NS("identifier");

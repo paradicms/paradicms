@@ -41,8 +41,9 @@ describe("Dataset", () => {
       for (const work of institutionWorks) {
         const rights = work.rights;
         expect(rights).to.not.be.null;
-        expect(rights!.creator).to.not.be.null;
-        expect((rights!.creator! as Agent).uri).to.not.be.empty;
+        expect(rights!.creators).to.not.be.empty;
+        expect(rights!.creators.filter(creator => creator instanceof Agent)).to
+          .not.be.empty;
         expect(rights!.license).to.not.be.null;
         expect((rights!.license! as License).uri).to.not.be.empty;
         expect(rights!.statement).to.not.be.null;

@@ -22,4 +22,7 @@ export * from "./Text";
 export * from "./vocabularies";
 export * from "./Work";
 export * from "./WorkAgent";
+export * from "./WorkEvent";
+export * from "./WorkEventDateTime";
+export * from "./WorkEventType";
 export * from "./WorkJoinSelector";

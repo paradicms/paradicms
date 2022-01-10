@@ -15,6 +15,7 @@ import {WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
 import {useWorkSearchQueryParams} from "@paradicms/react-search";
 import {AppConfiguration} from "@paradicms/configuration";
+import "react-vertical-timeline-component/style.min.css";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 

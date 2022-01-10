@@ -6,6 +6,7 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Image} from "./Image";
 import {Memoize} from "typescript-memoize";
+import {requireDefined} from "./requireDefined";
 
 export class Institution extends NamedModel {
   get collections(): readonly Collection[] {
@@ -13,7 +14,9 @@ export class Institution extends NamedModel {
   }
 
   get name(): string {
-    return this.requiredString(FOAF.name_);
+    return requireDefined(
+      this.propertyObjects(FOAF.name_).find(term => term.termType === "Literal")
+    ).value;
   }
 
   @Memoize()

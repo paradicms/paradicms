@@ -5,6 +5,8 @@ import {
   Image,
   ThumbnailSelector,
   Work,
+  WorkEvent,
+  WorkEventDateTime,
 } from "@paradicms/models";
 import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
@@ -33,6 +35,8 @@ import {
   ValueFacetValueThumbnail,
 } from "@paradicms/facets";
 import {PropertyConfiguration} from "@paradicms/configuration";
+import {GetWorkEventsOptions} from "@paradicms/services/dist/GetWorkEventsOptions";
+import {GetWorkEventsResult} from "@paradicms/services/dist/GetWorkEventsResult";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -108,6 +112,25 @@ export class LunrWorkQueryService implements WorkQueryService {
         this.add(doc);
       }
     });
+  }
+
+  private static compareWorkEventDateTimes(
+    left: WorkEventDateTime,
+    right: WorkEventDateTime
+  ): number {
+    const yearDiff = left.year - right.year;
+    if (yearDiff !== 0) {
+      return yearDiff;
+    }
+    const monthDiff =
+      (left.month !== null ? left.month : 1) -
+      (right.month !== null ? right.month : 1);
+    if (monthDiff !== 0) {
+      return monthDiff;
+    }
+    return (
+      (left.day !== null ? left.day : 1) - (right.day !== null ? right.day : 1)
+    );
   }
 
   private static encodeFieldName(value: string) {
@@ -306,9 +329,9 @@ export class LunrWorkQueryService implements WorkQueryService {
           agentsByUri[agent.agent.uri] = agent.agent;
         }
       }
-      const agents = Object.keys(agentsByUri).map(
-        agentUri => agentsByUri[agentUri]
-      );
+      const agents = Object.keys(agentsByUri)
+        .map(agentUri => agentsByUri[agentUri])
+        .sort((left, right) => left.name.localeCompare(right.name));
       const slicedAgents = agents.slice(offset, offset + limit);
 
       const slicedAgentsDataset = new DataSubsetter({
@@ -319,6 +342,7 @@ export class LunrWorkQueryService implements WorkQueryService {
       resolve({
         dataset: slicedAgentsDataset,
         totalWorkAgentsCount: agents.length,
+        workAgentUris: slicedAgents.map(agent => agent.uri),
       });
     });
   }
@@ -452,13 +476,63 @@ export class LunrWorkQueryService implements WorkQueryService {
       maxDimensions: image.maxDimensions,
       rights: rights
         ? {
-            creator: rights.creator?.toString() ?? null,
-            holder: rights.holder,
+            creators: rights.creators.map(creator => creator.toString()),
+            holders: rights.holders.map(holder => holder.toString()),
             license: rights.license?.toString() ?? null,
             statement: rights.statement?.toString() ?? null,
           }
         : null,
       src: imageSrc,
     };
+  }
+
+  getWorkEvents(
+    options: GetWorkEventsOptions,
+    query: WorkQuery
+  ): Promise<GetWorkEventsResult> {
+    const {limit, offset} = options;
+
+    invariant(!!query, "query must be defined");
+    invariant(limit > 0, "limit must be > 0");
+    invariant(offset >= 0, "offset must be >= 0");
+
+    return new Promise(resolve => {
+      const works = this.filterWorks({
+        filters: query.filters,
+        works: this.searchWorks(query),
+      });
+
+      const workEvents: (WorkEvent & {
+        workUri: string;
+      })[] = works
+        .flatMap(work =>
+          work.events.map(workEvent => ({...workEvent, workUri: work.uri}))
+        )
+        .sort((left, right) =>
+          LunrWorkQueryService.compareWorkEventDateTimes(
+            left.dateTime,
+            right.dateTime
+          )
+        );
+
+      const slicedWorkEvents = workEvents.slice(offset, offset + limit);
+
+      const slicedWorkEventsDataset = new DataSubsetter({
+        completeDataset: this.dataset,
+        configuration: this.configuration,
+      }).worksDataset(
+        [
+          ...new Set<string>(
+            slicedWorkEvents.map(workEvent => workEvent.workUri)
+          ),
+        ].map(workUri => this.dataset.workByUri(workUri))
+      );
+
+      resolve({
+        dataset: slicedWorkEventsDataset,
+        workEvents: slicedWorkEvents,
+        totalWorkEventsCount: workEvents.length,
+      });
+    });
   }
 }

@@ -27,10 +27,12 @@ import {useQueryParam} from "use-query-params";
 import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 import {FiltersControls} from "./FiltersControls";
 import {AgentsGallery} from "./AgentsGallery";
+import {GetWorkEventsResult} from "@paradicms/services/dist/GetWorkEventsResult";
+import {WorkEventsTimeline} from "./WorkEventsTimeline";
 
-const OBJECTS_PER_PAGE = 10;
+const OBJECTS_PER_PAGE = 4;
 
-type TabKey = "works" | "workAgents";
+type TabKey = "workAgents" | "workEvents" | "works";
 
 export const WorkSearchContainer: React.FunctionComponent<{
   onChangeFilters: (filters: readonly Filter[]) => void;
@@ -40,9 +42,11 @@ export const WorkSearchContainer: React.FunctionComponent<{
   ) => React.ReactNode;
   renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactNode;
   setWorkAgentsPage: (page: number | undefined) => void;
+  setWorkEventsPage: (page: number | undefined) => void;
   setWorksPage: (page: number | undefined) => void;
   setWorkQuery: (workQuery: WorkQuery) => void;
   workAgentsPage: number;
+  workEventsPage: number;
   workQuery: WorkQuery;
   workQueryService: WorkQueryService;
   worksPage: number;
@@ -51,8 +55,10 @@ export const WorkSearchContainer: React.FunctionComponent<{
   renderInstitutionLink,
   renderWorkLink,
   setWorkAgentsPage,
+  setWorkEventsPage,
   setWorksPage,
   workAgentsPage,
+  workEventsPage,
   workQuery,
   workQueryService,
   worksPage,
@@ -62,17 +68,23 @@ export const WorkSearchContainer: React.FunctionComponent<{
   );
   const activeTabKey: TabKey = activeTabKeyQueryParam ?? "works";
 
-  const [getWorksResult, setGetWorksResult] = useState<GetWorksResult | null>(
-    null
-  );
-
   const [
     getWorkAgentsResult,
     setGetWorkAgentsResult,
   ] = useState<GetWorkAgentsResult | null>(null);
 
-  const [loadingWorks, setLoadingWorks] = useState<boolean>(false);
+  const [
+    getWorkEventsResult,
+    setGetWorkEventsResult,
+  ] = useState<GetWorkEventsResult | null>(null);
+
+  const [getWorksResult, setGetWorksResult] = useState<GetWorksResult | null>(
+    null
+  );
+
   const [loadingWorkAgents, setLoadingWorkAgents] = useState<boolean>(false);
+  const [loadingWorkEvents, setLoadingWorkEvents] = useState<boolean>(false);
+  const [loadingWorks, setLoadingWorks] = useState<boolean>(false);
 
   // console.debug("Work query:", JSON.stringify(workQuery));
   // console.debug("Works page:", worksPage);
@@ -128,6 +140,27 @@ export const WorkSearchContainer: React.FunctionComponent<{
     }
   }, [activeTabKeyQueryParam, workQuery, workQueryService, workAgentsPage]);
 
+  // Effect that responds to switching to the work events tab
+  useEffect(() => {
+    if (activeTabKey === "workEvents" && !loadingWorkEvents) {
+      console.debug("getWorkEvents");
+      setLoadingWorkEvents(true);
+      // "Paging" the timeline loads more events rather than typical pagination.
+      workQueryService
+        .getWorkEvents(
+          {
+            limit: (workEventsPage + 1) * OBJECTS_PER_PAGE,
+            offset: 0,
+          },
+          workQuery
+        )
+        .then(getWorkEventsResult => {
+          setGetWorkEventsResult(getWorkEventsResult);
+          setLoadingWorkEvents(false);
+        });
+    }
+  }, [activeTabKeyQueryParam, workQuery, workQueryService, workEventsPage]);
+
   if (getWorksResult === null) {
     return null;
   }
@@ -172,7 +205,11 @@ export const WorkSearchContainer: React.FunctionComponent<{
     content: getWorkAgentsResult ? (
       <Container fluid>
         <Row>
-          <AgentsGallery agents={getWorkAgentsResult.dataset.agents} />
+          <AgentsGallery
+            agents={getWorkAgentsResult.workAgentUris.map(workAgentUri =>
+              getWorkAgentsResult.dataset.agentByUri(workAgentUri)
+            )}
+          />
         </Row>
         <Row className="mt-4">
           <Col className="d-flex justify-content-center" xs={12}>
@@ -183,12 +220,33 @@ export const WorkSearchContainer: React.FunctionComponent<{
                   totalObjects: getWorkAgentsResult.totalWorkAgentsCount,
                 }) + 1
               }
-              page={worksPage + 1}
+              page={workAgentsPage + 1}
               onChange={(_, newPage) => setWorkAgentsPage(newPage - 1)}
             />
           </Col>
         </Row>
       </Container>
+    ) : null,
+  });
+  tabs.push({
+    key: "workEvents",
+    title: "Timeline",
+    content: getWorkEventsResult ? (
+      <WorkEventsTimeline
+        page={workEventsPage}
+        pageMax={calculatePageMax({
+          objectsPerPage: OBJECTS_PER_PAGE,
+          totalObjects: getWorkEventsResult.totalWorkEventsCount,
+        })}
+        setPage={setWorkEventsPage}
+        workEvents={getWorkEventsResult.workEvents.map(workEvent => {
+          const {workUri, ...otherWorkEventProps} = workEvent;
+          return {
+            work: getWorkEventsResult!.dataset.workByUri(workUri),
+            ...otherWorkEventProps,
+          };
+        })}
+      />
     ) : null,
   });
 

@@ -19,6 +19,7 @@ import {NamedValue} from "./NamedValue";
 import {Organization} from "./Organization";
 import {Agent} from "./Agent";
 import {ModelParameters} from "./ModelParameters";
+import {requireDefined} from "./requireDefined";
 
 /**
  * Lazily indexes the contents of an immutable Dataset to provide quick lookups and subsetting.
@@ -68,7 +69,7 @@ export class Dataset {
         return agent;
       }
     }
-    this.logContents();
+    // this.logContents();
     throw new RangeError("no such agent " + agentUri);
   }
 
@@ -97,13 +98,13 @@ export class Dataset {
     if (!this._collectionsByInstitutionUriIndex) {
       this.readCollections();
     }
-    return Dataset.requireNotNullish(this._collectionsByInstitutionUriIndex);
+    return requireDefined(this._collectionsByInstitutionUriIndex);
   }
 
   collectionByUri(collectionUri: string): Collection {
     const collection = this.collectionsByUriIndex[collectionUri];
     if (!collection) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such collection " + collectionUri);
     }
     return collection;
@@ -113,13 +114,13 @@ export class Dataset {
     if (!this._collectionsByUriIndex) {
       this.readCollections();
     }
-    return Dataset.requireNotNullish(this._collectionsByUriIndex);
+    return requireDefined(this._collectionsByUriIndex);
   }
 
   imageByUri(imageUri: string): Image {
     const image = this.imagesByUriIndex[imageUri];
     if (!image) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such image " + imageUri);
     }
     return image;
@@ -140,7 +141,7 @@ export class Dataset {
     if (!this._imagesByDepictsUriIndex) {
       this.readImages();
     }
-    return Dataset.requireNotNullish(this._imagesByDepictsUriIndex);
+    return requireDefined(this._imagesByDepictsUriIndex);
   }
 
   imagesByOriginalImageUri(originalImageUri: string): readonly Image[] {
@@ -156,20 +157,20 @@ export class Dataset {
     if (!this._imagesByOriginalImageUriIndex) {
       this.readImages();
     }
-    return Dataset.requireNotNullish(this._imagesByOriginalImageUriIndex);
+    return requireDefined(this._imagesByOriginalImageUriIndex);
   }
 
   private get imagesByUriIndex(): {[index: string]: Image} {
     if (!this._imagesByUriIndex) {
       this.readImages();
     }
-    return Dataset.requireNotNullish(this._imagesByUriIndex);
+    return requireDefined(this._imagesByUriIndex);
   }
 
   institutionByUri(institutionUri: string): Institution {
     const institution = this.institutionsByUriIndex[institutionUri];
     if (!institution) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such institution " + institutionUri);
     }
     return institution;
@@ -200,7 +201,7 @@ export class Dataset {
   licenseByUri(licenseUri: string): License {
     const license = this.licensesByUriIndex[licenseUri];
     if (!license) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such license " + licenseUri);
     }
     return license;
@@ -266,7 +267,7 @@ export class Dataset {
   namedValueByUri(namedValueUri: string): NamedValue {
     const namedValue = this.namedValuesByUriIndex[namedValueUri];
     if (!namedValue) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such named value " + namedValueUri);
     }
     return namedValue;
@@ -295,7 +296,7 @@ export class Dataset {
   organizationByUri(organizationUri: string): Organization {
     const organization = this.organizationsByUriIndex[organizationUri];
     if (!organization) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such organization " + organizationUri);
     }
     return organization;
@@ -343,7 +344,7 @@ export class Dataset {
   personByUri(personUri: string): Person {
     const person = this.peopleByUriIndex[personUri];
     if (!person) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such person " + personUri);
     }
     return person;
@@ -570,12 +571,12 @@ export class Dataset {
 
       works.push(work);
 
-      for (const agent of work.agents) {
-        const worksByAgentUri = worksByAgentUriIndex[agent.agent.uri];
+      for (const agentUri of work.agentUris) {
+        const worksByAgentUri = worksByAgentUriIndex[agentUri];
         if (worksByAgentUri) {
           worksByAgentUri.push(work);
         } else {
-          worksByAgentUriIndex[agent.agent.uri] = [work];
+          worksByAgentUriIndex[agentUri] = [work];
         }
       }
 
@@ -603,13 +604,6 @@ export class Dataset {
     this._worksByInstitutionUriIndex = worksByInstitutionUriIndex;
   }
 
-  private static requireNotNullish<T>(value: T | undefined): T {
-    if (typeof value === "undefined") {
-      throw new EvalError("expected value to be defined");
-    }
-    return value;
-  }
-
   get rightsStatements(): readonly RightsStatement[] {
     if (!this._rightsStatements) {
       this.readRightsStatements();
@@ -620,7 +614,7 @@ export class Dataset {
   rightsStatementByUri(rightsStatementUri: string): RightsStatement {
     const rightsStatement = this.rightsStatementsByUriIndex[rightsStatementUri];
     if (!rightsStatement) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such rights statement " + rightsStatementUri);
     }
     return rightsStatement;
@@ -651,7 +645,7 @@ export class Dataset {
   workByUri(workUri: string): Work {
     const work = this.worksByUriIndex[workUri];
     if (!work) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such work " + workUri);
     }
     return work;
@@ -670,7 +664,7 @@ export class Dataset {
     if (!this._worksByAgentUriIndex) {
       this.readWorks();
     }
-    return Dataset.requireNotNullish(this._worksByAgentUriIndex);
+    return requireDefined(this._worksByAgentUriIndex);
   }
 
   private get worksByCollectionUriIndex(): {
@@ -679,7 +673,7 @@ export class Dataset {
     if (!this._worksByCollectionUriIndex) {
       this.readWorks();
     }
-    return Dataset.requireNotNullish(this._worksByCollectionUriIndex);
+    return requireDefined(this._worksByCollectionUriIndex);
   }
 
   private get worksByInstitutionUriIndex(): {
@@ -688,13 +682,13 @@ export class Dataset {
     if (!this._worksByInstitutionUriIndex) {
       this.readWorks();
     }
-    return Dataset.requireNotNullish(this._worksByInstitutionUriIndex);
+    return requireDefined(this._worksByInstitutionUriIndex);
   }
 
   private get worksByUriIndex(): {[index: string]: Work} {
     if (!this._worksByUriIndex) {
       this.readWorks();
     }
-    return Dataset.requireNotNullish(this._worksByUriIndex);
+    return requireDefined(this._worksByUriIndex);
   }
 }

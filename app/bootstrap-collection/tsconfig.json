@@ -2,11 +2,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "esModuleInterop": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
     "noEmit": true,
     "isolatedModules": true,
     "jsx": "preserve",

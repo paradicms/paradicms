@@ -7,11 +7,24 @@ import {Image} from "./Image";
 import {Work} from "./Work";
 import {Text} from "./Text";
 import {Memoize} from "typescript-memoize";
+import {requireDefined} from "./requireDefined";
 
 export class Collection extends NamedModel {
   @Memoize()
   get abstract(): string | Text | null {
-    return this.optionalStringOrText(DCTERMS.abstract);
+    for (const term of this.propertyObjects(DCTERMS.abstract)) {
+      switch (term.termType) {
+        case "BlankNode":
+          return new Text({
+            dataset: this.dataset,
+            graphNode: this.graphNode,
+            node: term,
+          });
+        case "Literal":
+          return term.value;
+      }
+    }
+    return null;
   }
 
   get institution(): Institution {
@@ -19,7 +32,11 @@ export class Collection extends NamedModel {
   }
 
   get institutionUri(): string {
-    return this.requiredParentNamedNode(PARADICMS.institution).value;
+    return requireDefined(
+      this.propertyObjects(PARADICMS.institution).find(
+        term => term.termType === "NamedNode"
+      )
+    ).value;
   }
 
   get works(): readonly Work[] {
@@ -47,6 +64,10 @@ export class Collection extends NamedModel {
   }
 
   get title(): string {
-    return this.requiredString(DCTERMS.title);
+    return requireDefined(
+      this.propertyObjects(DCTERMS.title).find(
+        term => term.termType === "Literal"
+      )
+    ).value;
   }
 }

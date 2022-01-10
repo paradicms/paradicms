@@ -18,7 +18,5 @@ describe("Text", () => {
     expect(rights).to.not.be.null;
     const license = rights!.license;
     expect(license).to.not.be.null;
-    const holder = rights!.holder;
-    expect(holder).to.not.be.empty;
   });
 });

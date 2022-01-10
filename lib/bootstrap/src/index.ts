@@ -13,6 +13,7 @@ export * from "./thumbnailTargetDimensions";
 export * from "./ValueFilterBadges";
 export * from "./WorkCard";
 export * from "./WorkContainer";
+export * from "./WorkEventsTimeline";
 export * from "./WorkImagesCarousel";
 export * from "./WorksGallery";
 export * from "./WorkSearchContainer";
