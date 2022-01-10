@@ -21,9 +21,39 @@ export class Rights extends Model {
     });
   }
 
+  get agentUris(): readonly string[] {
+    return this.creatorAgentUris.concat(this.holderAgentUris);
+  }
+
   @Memoize()
   get creators(): readonly (Agent | string)[] {
     return this.agentsOrStrings(DCTERMS.creator);
+  }
+
+  get creatorAgents(): readonly Agent[] {
+    return this.creatorAgentUris.map(agentUri =>
+      this.dataset.agentByUri(agentUri)
+    );
+  }
+
+  @Memoize()
+  get creatorAgentUris(): readonly string[] {
+    return this.propertyObjects(DCTERMS.creator)
+      .filter(term => term.termType === "NamedNode")
+      .map(term => term.value);
+  }
+
+  get holderAgents(): readonly Agent[] {
+    return this.holderAgentUris.map(agentUri =>
+      this.dataset.agentByUri(agentUri)
+    );
+  }
+
+  @Memoize()
+  get holderAgentUris(): readonly string[] {
+    return this.propertyObjects(DCTERMS.rightsHolder)
+      .filter(term => term.termType === "NamedNode")
+      .map(term => term.value);
   }
 
   @Memoize()
@@ -57,10 +87,10 @@ export class Rights extends Model {
     const rights = new Rights(kwds);
 
     if (
-      rights.creators.length > 0 ||
-      rights.holders.length > 0 ||
-      rights.license ||
-      rights.statement
+      rights.propertyObjects(DCTERMS.creator).length > 0 ||
+      rights.propertyObjects(DCTERMS.license).length > 0 ||
+      rights.propertyObjects(DCTERMS.rights).length > 0 ||
+      rights.propertyObjects(DCTERMS.rightsHolder).length > 0
     ) {
       return rights;
     } else {

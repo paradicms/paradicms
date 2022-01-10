@@ -48,9 +48,7 @@ describe("LunrWorkQueryService", () => {
       const agentWorks = result.dataset.agentWorks(agent.uri);
       haveAgentWorks ||= agentWorks.length > 0;
       for (const work of agentWorks) {
-        for (const workAgent of work.agents) {
-          expect(workAgent.agent.uri).to.eq(agent.uri);
-        }
+        expect(work.agents.some(workAgent => workAgent.agent.uri === agent.uri)).to.be.true;
       }
     }
     expect(haveAgentWorks).to.be.true;

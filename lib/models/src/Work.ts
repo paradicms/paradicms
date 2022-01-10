@@ -12,13 +12,12 @@ import {PropertyValue} from "./PropertyValue";
 import {NamedValue} from "./NamedValue";
 import {NamedNode} from "n3";
 import {WorkAgent} from "./WorkAgent";
-import {Agent} from "./Agent";
 import {DateTimeDescription} from "./DateTimeDescription";
 import {WorkEvent} from "./WorkEvent";
 import {WorkEventDateTime} from "./WorkEventDateTime";
 import {requireDefined} from "./requireDefined";
 
-const getRightsAgents = (
+const getRightsWorkAgents = (
   rights: Rights | null,
   rolePrefix: string
 ): readonly WorkAgent[] => {
@@ -28,18 +27,16 @@ const getRightsAgents = (
     return result;
   }
 
-  for (const creator of rights.creators) {
-    if (creator instanceof Agent) {
-      result.push({
-        agent: creator as Agent,
-        role: rolePrefix + " creator",
-      });
-    }
+  for (const creatorAgent of rights.creatorAgents) {
+    result.push({
+      agent: creatorAgent,
+      role: rolePrefix + " creator",
+    });
   }
 
-  for (const holder of rights.holders) {
+  for (const holderAgent of rights.holderAgents) {
     result.push({
-      agent: holder as Agent,
+      agent: holderAgent,
       role: rolePrefix + " holder",
     });
   }
@@ -70,16 +67,45 @@ export class Work extends NamedModel {
     const result: WorkAgent[] = [];
 
     result.push(
-      ...getRightsAgents(this.rights ?? this.institution.rights ?? null, "Work")
+      ...getRightsWorkAgents(
+        this.rights ?? this.institution.rights ?? null,
+        "Work"
+      )
     );
 
-    const abstract = this.abstract;
-    if (abstract && abstract instanceof Text) {
-      result.push(...getRightsAgents(abstract.rights, "Text"));
+    if (this.abstract && this.abstract instanceof Text) {
+      result.push(...getRightsWorkAgents(this.abstract.rights, "Text"));
     }
 
     for (const image of this.originalImages) {
-      result.push(...getRightsAgents(image.rights, "Image"));
+      result.push(...getRightsWorkAgents(image.rights, "Image"));
+    }
+
+    return result;
+  }
+
+  @Memoize()
+  get agentUris(): readonly string[] {
+    const result: string[] = [];
+
+    if (this.rights) {
+      result.push(...this.rights.agentUris);
+    } else if (this.institution.rights) {
+      result.push(...this.institution.rights.agentUris);
+    }
+
+    if (
+      this.abstract &&
+      this.abstract instanceof Text &&
+      this.abstract.rights
+    ) {
+      result.push(...this.abstract.rights.agentUris);
+    }
+
+    for (const image of this.originalImages) {
+      if (image.rights) {
+        result.push(...image.rights.agentUris);
+      }
     }
 
     return result;
@@ -99,7 +125,7 @@ export class Work extends NamedModel {
 
   @Memoize()
   get created(): DateTimeDescription | number | string | null {
-    for (const term of this.propertyObjects(DCTERMS.abstract)) {
+    for (const term of this.propertyObjects(DCTERMS.created)) {
       switch (term.termType) {
         case "BlankNode":
           return new DateTimeDescription({

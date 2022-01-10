@@ -69,7 +69,7 @@ export class Dataset {
         return agent;
       }
     }
-    this.logContents();
+    // this.logContents();
     throw new RangeError("no such agent " + agentUri);
   }
 
@@ -104,7 +104,7 @@ export class Dataset {
   collectionByUri(collectionUri: string): Collection {
     const collection = this.collectionsByUriIndex[collectionUri];
     if (!collection) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such collection " + collectionUri);
     }
     return collection;
@@ -120,7 +120,7 @@ export class Dataset {
   imageByUri(imageUri: string): Image {
     const image = this.imagesByUriIndex[imageUri];
     if (!image) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such image " + imageUri);
     }
     return image;
@@ -170,7 +170,7 @@ export class Dataset {
   institutionByUri(institutionUri: string): Institution {
     const institution = this.institutionsByUriIndex[institutionUri];
     if (!institution) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such institution " + institutionUri);
     }
     return institution;
@@ -201,7 +201,7 @@ export class Dataset {
   licenseByUri(licenseUri: string): License {
     const license = this.licensesByUriIndex[licenseUri];
     if (!license) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such license " + licenseUri);
     }
     return license;
@@ -267,7 +267,7 @@ export class Dataset {
   namedValueByUri(namedValueUri: string): NamedValue {
     const namedValue = this.namedValuesByUriIndex[namedValueUri];
     if (!namedValue) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such named value " + namedValueUri);
     }
     return namedValue;
@@ -296,7 +296,7 @@ export class Dataset {
   organizationByUri(organizationUri: string): Organization {
     const organization = this.organizationsByUriIndex[organizationUri];
     if (!organization) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such organization " + organizationUri);
     }
     return organization;
@@ -344,7 +344,7 @@ export class Dataset {
   personByUri(personUri: string): Person {
     const person = this.peopleByUriIndex[personUri];
     if (!person) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such person " + personUri);
     }
     return person;
@@ -571,12 +571,12 @@ export class Dataset {
 
       works.push(work);
 
-      for (const agent of work.agents) {
-        const worksByAgentUri = worksByAgentUriIndex[agent.agent.uri];
+      for (const agentUri of work.agentUris) {
+        const worksByAgentUri = worksByAgentUriIndex[agentUri];
         if (worksByAgentUri) {
           worksByAgentUri.push(work);
         } else {
-          worksByAgentUriIndex[agent.agent.uri] = [work];
+          worksByAgentUriIndex[agentUri] = [work];
         }
       }
 
@@ -614,7 +614,7 @@ export class Dataset {
   rightsStatementByUri(rightsStatementUri: string): RightsStatement {
     const rightsStatement = this.rightsStatementsByUriIndex[rightsStatementUri];
     if (!rightsStatement) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such rights statement " + rightsStatementUri);
     }
     return rightsStatement;
@@ -645,7 +645,7 @@ export class Dataset {
   workByUri(workUri: string): Work {
     const work = this.worksByUriIndex[workUri];
     if (!work) {
-      this.logContents();
+      // this.logContents();
       throw new RangeError("no such work " + workUri);
     }
     return work;

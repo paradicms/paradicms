@@ -148,13 +148,14 @@ describe("DataSubsetter", () => {
         license => license.uri === (work.rights!.license! as License).uri
       )!,
     ]);
-    expectModelsDeepEq(dataset.agents, [
-      testDataset.agents.find(agent =>
+    expectModelsDeepEq(
+      dataset.agents,
+      testDataset.agents.filter(agent =>
         work.rights!.creators.some(
           creator => creator instanceof Agent && creator.uri === agent.uri
         )
-      )!,
-    ]);
+      )
+    );
     expectModelsDeepEq(dataset.works, [work]);
     expect(dataset.namedValues).to.be.empty;
     expectModelsDeepEq(dataset.rightsStatements, [
