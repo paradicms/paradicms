@@ -58,7 +58,7 @@ class Work(_NamedModel):
             else:
                 resource.add(FOAF.page, Literal(str(page)))
         for property_ in properties:
-            resource.add(property_.uri, property_.value)
+            property_.to_rdf(add_to_resource=resource)
         if rights is not None:
             rights.to_rdf(add_to_resource=resource)
         resource.add(DCTERMS.title, Literal(title))

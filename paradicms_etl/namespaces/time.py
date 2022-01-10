@@ -11,6 +11,7 @@ class TIME(DefinedNamespace):
     hour: URIRef
     minute: URIRef
     month: URIRef
+    second: URIRef
     year: URIRef
 
     # Resources
