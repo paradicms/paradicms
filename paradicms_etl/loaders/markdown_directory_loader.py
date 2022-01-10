@@ -1,4 +1,4 @@
-from typing import Dict, Generator, Literal, Optional
+from typing import Dict, Generator, Optional
 
 import yaml
 from pathvalidate import sanitize_filename
@@ -78,6 +78,13 @@ class MarkdownDirectoryLoader(_Loader):
 
             if isinstance(o, Literal):
                 md_o = o.toPython()
+                if isinstance(md_o, Literal) or not isinstance(
+                    md_o, (float, int, bool, str)
+                ):
+                    self._logger.warning(
+                        "unable to serialize non-scalar literal: %s", md_o
+                    )
+                    continue
             elif isinstance(o, Resource):
                 if isinstance(o.identifier, URIRef):
                     md_o = f"<{str(o.identifier)}>"
