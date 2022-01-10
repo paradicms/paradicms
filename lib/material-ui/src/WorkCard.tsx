@@ -123,7 +123,7 @@ export const WorkCard: React.FunctionComponent<{
                   Summary
                 </AccordionSummary>
                 <AccordionDetails className={classes.workSummary}>
-                  {work.abstract}
+                  {work.abstract.toString()}
                 </AccordionDetails>
               </Accordion>
             </Grid>

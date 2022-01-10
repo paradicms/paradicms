@@ -66,7 +66,7 @@ export const RightsTable: React.FunctionComponent<{
             {...rowProps}
             key={"holder" + holderIndex.toString()}
             label="Holder"
-            value={holder}
+            value={holder.toString()}
           />
         ))}
         <RightsTableRow
