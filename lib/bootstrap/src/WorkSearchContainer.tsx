@@ -30,7 +30,7 @@ import {AgentsGallery} from "./AgentsGallery";
 import {GetWorkEventsResult} from "@paradicms/services/dist/GetWorkEventsResult";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
 
-const OBJECTS_PER_PAGE = 10;
+const OBJECTS_PER_PAGE = 4;
 
 type TabKey = "workAgents" | "workEvents" | "works";
 
@@ -145,11 +145,12 @@ export const WorkSearchContainer: React.FunctionComponent<{
     if (activeTabKey === "workEvents" && !loadingWorkEvents) {
       console.debug("getWorkEvents");
       setLoadingWorkEvents(true);
+      // "Paging" the timeline loads more events rather than typical pagination.
       workQueryService
         .getWorkEvents(
           {
-            limit: OBJECTS_PER_PAGE,
-            offset: workEventsPage * OBJECTS_PER_PAGE,
+            limit: (workEventsPage + 1) * OBJECTS_PER_PAGE,
+            offset: 0,
           },
           workQuery
         )

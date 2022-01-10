@@ -10,8 +10,9 @@
  * Must be JSON-compatible for serialization.
  */
 import {WorkEventDateTime} from "./WorkEventDateTime";
+import {WorkEventType} from "./WorkEventType";
 
 export interface WorkEvent {
   readonly dateTime: WorkEventDateTime;
-  readonly type: "Creation";
+  readonly type: WorkEventType;
 }

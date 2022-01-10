@@ -24,4 +24,5 @@ export * from "./Work";
 export * from "./WorkAgent";
 export * from "./WorkEvent";
 export * from "./WorkEventDateTime";
+export * from "./WorkEventType";
 export * from "./WorkJoinSelector";

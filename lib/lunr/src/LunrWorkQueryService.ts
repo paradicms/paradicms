@@ -6,6 +6,7 @@ import {
   ThumbnailSelector,
   Work,
   WorkEvent,
+  WorkEventDateTime,
 } from "@paradicms/models";
 import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
@@ -111,6 +112,25 @@ export class LunrWorkQueryService implements WorkQueryService {
         this.add(doc);
       }
     });
+  }
+
+  private static compareWorkEventDateTimes(
+    left: WorkEventDateTime,
+    right: WorkEventDateTime
+  ): number {
+    const yearDiff = left.year - right.year;
+    if (yearDiff !== 0) {
+      return yearDiff;
+    }
+    const monthDiff =
+      (left.month !== null ? left.month : 1) -
+      (right.month !== null ? right.month : 1);
+    if (monthDiff !== 0) {
+      return monthDiff;
+    }
+    return (
+      (left.day !== null ? left.day : 1) - (right.day !== null ? right.day : 1)
+    );
   }
 
   private static encodeFieldName(value: string) {
@@ -483,9 +503,16 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       const workEvents: (WorkEvent & {
         workUri: string;
-      })[] = works.flatMap(work =>
-        work.events.map(workEvent => ({...workEvent, workUri: work.uri}))
-      );
+      })[] = works
+        .flatMap(work =>
+          work.events.map(workEvent => ({...workEvent, workUri: work.uri}))
+        )
+        .sort((left, right) =>
+          LunrWorkQueryService.compareWorkEventDateTimes(
+            left.dateTime,
+            right.dateTime
+          )
+        );
 
       const slicedWorkEvents = workEvents.slice(offset, offset + limit);
 

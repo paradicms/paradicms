@@ -1,9 +1,24 @@
-import {Work, WorkEvent, WorkEventDateTime} from "@paradicms/models";
+import {
+  Work,
+  WorkEvent,
+  WorkEventDateTime,
+  WorkEventType,
+} from "@paradicms/models";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
+import {faEllipsisV, faLightbulb} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import React = require("react");
+
+const getWorkEventTypeIcon = (workEventType: WorkEventType): IconDefinition => {
+  switch (workEventType) {
+    case "Creation":
+      return faLightbulb;
+  }
+};
 
 const toDateTimeString = (dateTime: WorkEventDateTime): string => {
   const {day, month, year} = dateTime;
@@ -13,7 +28,7 @@ const toDateTimeString = (dateTime: WorkEventDateTime): string => {
   if (day === null) {
     return `${month}/${year}`;
   }
-  return `${day}/${month}/${year}`;
+  return `${month}/${day}/${year}`;
 };
 
 export const WorkEventsTimeline: React.FunctionComponent<{
@@ -21,29 +36,26 @@ export const WorkEventsTimeline: React.FunctionComponent<{
   readonly pageMax: number; // 0-based
   readonly setPage: (newPage: number) => void;
   readonly workEvents: (WorkEvent & {readonly work: Work})[];
-}> = ({workEvents}) => {
-  // elements.sort((leftElement, rightElement) => {
-  //   const yearDiff = leftElement.year - rightElement.year;
-  //   if (yearDiff !== 0) {
-  //     return yearDiff;
-  //   }
-  //   const monthDiff = leftElement.month - rightElement.month;
-  //   if (monthDiff !== 0) {
-  //     return monthDiff;
-  //   }
-  //   return leftElement.day - rightElement.day;
-  // });
-
+}> = ({page, pageMax, setPage, workEvents}) => {
   return (
     <VerticalTimeline>
       {workEvents.map(workEvent => (
-        <VerticalTimelineElement date={toDateTimeString(workEvent.dateTime)}>
-          <h3>
-            {workEvent.type}:&nbsp;{workEvent.work.title}
-          </h3>
-          {workEvent.work.abstract ? <p>{workEvent.work.abstract}</p> : null}
+        <VerticalTimelineElement
+          date={toDateTimeString(workEvent.dateTime)}
+          icon={<FontAwesomeIcon icon={getWorkEventTypeIcon(workEvent.type)} />}
+        >
+          <h3>{workEvent.work.title}</h3>
+          {workEvent.work.abstract ? (
+            <p>{workEvent.work.abstract.toString()}</p>
+          ) : null}
         </VerticalTimelineElement>
       ))}
+      {page < pageMax ? (
+        <VerticalTimelineElement
+          iconOnClick={() => setPage(page + 1)}
+          icon={<FontAwesomeIcon icon={faEllipsisV} />}
+        />
+      ) : null}
     </VerticalTimeline>
   );
 };
