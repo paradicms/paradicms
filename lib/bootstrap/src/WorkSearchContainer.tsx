@@ -205,7 +205,11 @@ export const WorkSearchContainer: React.FunctionComponent<{
     content: getWorkAgentsResult ? (
       <Container fluid>
         <Row>
-          <AgentsGallery agents={getWorkAgentsResult.dataset.agents} />
+          <AgentsGallery
+            agents={getWorkAgentsResult.workAgentUris.map(workAgentUri =>
+              getWorkAgentsResult.dataset.agentByUri(workAgentUri)
+            )}
+          />
         </Row>
         <Row className="mt-4">
           <Col className="d-flex justify-content-center" xs={12}>
@@ -216,7 +220,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
                   totalObjects: getWorkAgentsResult.totalWorkAgentsCount,
                 }) + 1
               }
-              page={worksPage + 1}
+              page={workAgentsPage + 1}
               onChange={(_, newPage) => setWorkAgentsPage(newPage - 1)}
             />
           </Col>

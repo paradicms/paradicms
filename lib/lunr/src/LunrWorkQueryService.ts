@@ -329,9 +329,9 @@ export class LunrWorkQueryService implements WorkQueryService {
           agentsByUri[agent.agent.uri] = agent.agent;
         }
       }
-      const agents = Object.keys(agentsByUri).map(
-        agentUri => agentsByUri[agentUri]
-      );
+      const agents = Object.keys(agentsByUri)
+        .map(agentUri => agentsByUri[agentUri])
+        .sort((left, right) => left.name.localeCompare(right.name));
       const slicedAgents = agents.slice(offset, offset + limit);
 
       const slicedAgentsDataset = new DataSubsetter({
@@ -342,6 +342,7 @@ export class LunrWorkQueryService implements WorkQueryService {
       resolve({
         dataset: slicedAgentsDataset,
         totalWorkAgentsCount: agents.length,
+        workAgentUris: slicedAgents.map(agent => agent.uri),
       });
     });
   }
