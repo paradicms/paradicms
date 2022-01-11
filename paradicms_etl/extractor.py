@@ -5,10 +5,10 @@ from urllib.request import urlopen
 
 from pathvalidate import sanitize_filename
 
-from paradicms_etl._pipeline_phase import _PipelinePhase
+from paradicms_etl.pipeline_phase import PipelinePhase
 
 
-class Extractor(_PipelinePhase):
+class Extractor(PipelinePhase):
     def __init__(
         self,
         *,
@@ -24,7 +24,7 @@ class Extractor(_PipelinePhase):
         If neither is specified, use the default data_dir_path in the repository / pipeline_id / "extracted".
         """
 
-        _PipelinePhase.__init__(self, **kwds)
+        PipelinePhase.__init__(self, **kwds)
         self.__data_dir_path = data_dir_path
         self.__extracted_data_dir_path = extracted_data_dir_path
 

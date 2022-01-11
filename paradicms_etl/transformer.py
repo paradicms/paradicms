@@ -3,7 +3,7 @@ from typing import Generator, Optional, Union
 
 from rdflib import URIRef
 
-from paradicms_etl._pipeline_phase import _PipelinePhase
+from paradicms_etl.pipeline_phase import PipelinePhase
 from paradicms_etl.model import Model
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
@@ -11,7 +11,7 @@ from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.rights import Rights
 
 
-class Transformer(_PipelinePhase):
+class Transformer(PipelinePhase):
     @abstractmethod
     def transform(self, **kwds) -> Generator[Model, None, None]:
         """

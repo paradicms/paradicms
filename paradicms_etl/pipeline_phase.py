@@ -2,7 +2,7 @@ import logging
 from abc import ABC
 
 
-class _PipelinePhase(ABC):
+class PipelinePhase(ABC):
     def __init__(self, *, pipeline_id: str, **kwds):
         self.__logger = logging.getLogger(self.__class__.__name__)
         self.__pipeline_id = pipeline_id

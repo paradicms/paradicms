@@ -2,11 +2,11 @@ from abc import abstractmethod
 from pathlib import Path
 from typing import Generator, Optional
 
-from paradicms_etl._pipeline_phase import _PipelinePhase
+from paradicms_etl.pipeline_phase import PipelinePhase
 from paradicms_etl.model import Model
 
 
-class Loader(_PipelinePhase):
+class Loader(PipelinePhase):
     def __init__(
         self,
         *,
@@ -22,7 +22,7 @@ class Loader(_PipelinePhase):
         If neither is specified, use the default data_dir_path in the repository / pipeline_id / "loaded".
         """
 
-        _PipelinePhase.__init__(self, **kwds)
+        PipelinePhase.__init__(self, **kwds)
         self.__data_dir_path = data_dir_path
         self.__loaded_data_dir_path = loaded_data_dir_path
 
