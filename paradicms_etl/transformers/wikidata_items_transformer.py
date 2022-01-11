@@ -87,7 +87,7 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
         institution_uri: Optional[URIRef] = None,
         **kwds,
     ):
-        WikidataItemsTransformer.__init__(self, **kwds)
+        _WikidataItemsTransformer.__init__(self, **kwds)
         self.__collection_uri = collection_uri
         self.__institution_uri = institution_uri
 
@@ -102,7 +102,7 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
         yield CreativeCommonsLicenses.BY_SA_3_0
         yield RightsStatementsDotOrgRightsStatements.InC
 
-        yield from WikidataItemsTransformer.transform(self, **kwds)
+        yield from _WikidataItemsTransformer.transform(self, **kwds)
 
     def _transform_human_item(self, item: WikidataItem):
         yield from self.__PersonWikidataItemTransformer(
