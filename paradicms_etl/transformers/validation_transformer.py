@@ -1,10 +1,10 @@
 from typing import Generator, Optional, Set
 
-from paradicms_etl.model import Model
+from paradicms_etl.transformer import Transformer
 from rdflib import URIRef
 from stringcase import snakecase
 
-from paradicms_etl._transformer import _Transformer
+from paradicms_etl.model import Model
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
@@ -18,7 +18,7 @@ from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.work import Work
 
 
-class ValidationTransformer(_Transformer):
+class ValidationTransformer(Transformer):
     """
     A transformer that validates models from other transformers.
     """

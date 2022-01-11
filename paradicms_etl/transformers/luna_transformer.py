@@ -1,11 +1,11 @@
 from datetime import datetime
 from typing import Dict, Generator, List, Tuple
 
+from paradicms_etl.transformer import Transformer
 from rdflib import URIRef, DCTERMS
 
-from paradicms_etl.model import Model
-from paradicms_etl._transformer import _Transformer
 from paradicms_etl.extractors.luna_extractor import LunaExtractor
+from paradicms_etl.model import Model
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
@@ -16,7 +16,7 @@ from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import VRA
 
 
-class LunaTransformer(_Transformer):
+class LunaTransformer(Transformer):
     # __OBJECT_FIELD_PROPERTY_DEFINITIONS = {
     #     "Reproduction Record ID": None,
     #     "Work Class": None,

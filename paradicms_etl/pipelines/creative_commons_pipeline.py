@@ -3,12 +3,12 @@ from pathlib import Path
 from typing import Dict, Generator
 from zipfile import ZipFile
 
+from paradicms_etl.transformer import Transformer
 from rdflib import Graph, Literal, Namespace
 
-from paradicms_etl.extractor import Extractor
 from paradicms_etl._loader import _Loader
 from paradicms_etl._pipeline import _Pipeline
-from paradicms_etl._transformer import _Transformer
+from paradicms_etl.extractor import Extractor
 from paradicms_etl.models.license import License
 from paradicms_etl.namespaces import bind_namespaces
 
@@ -38,7 +38,7 @@ class CreativeCommonsPipeline(_Pipeline):
                         rdf_file_contents[file_name] = zip_file_entry.read()
             return {"rdf_file_contents": rdf_file_contents}
 
-    class _CreativeCommonsTransformer(_Transformer):
+    class _CreativeCommonsTransformer(Transformer):
         def transform(self, rdf_file_contents: Dict[str, bytes]):
             CC = Namespace("http://creativecommons.org/ns#")
             for rdf_file_name, rdf_file_bytes in rdf_file_contents.items():

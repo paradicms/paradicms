@@ -10,19 +10,19 @@ from markdown_it import MarkdownIt
 from markdown_it.renderer import RendererHTML
 from markdown_it.tree import SyntaxTreeNode
 from mdit_py_plugins.front_matter import front_matter_plugin
+from paradicms_etl.transformer import Transformer
 from rdflib import DCTERMS, FOAF, Graph, Literal, RDF, RDFS, URIRef
 from rdflib.resource import Resource
 from rdflib.term import Node, BNode
 
 import paradicms_etl
-from paradicms_etl._transformer import _Transformer
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.license import License
 from paradicms_etl.models.markdown_directory import MarkdownDirectory
+from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.named_value import NamedValue
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
@@ -84,7 +84,7 @@ def _model_type_by_name(name: str):
     return __MODEL_TYPES_BY_NAME[name.lower()]
 
 
-class MarkdownDirectoryTransformer(_Transformer):
+class MarkdownDirectoryTransformer(Transformer):
     """
     Transform a directory of Markdown files to a set of models.
 
@@ -351,7 +351,7 @@ class MarkdownDirectoryTransformer(_Transformer):
         namespaces_by_prefix: Optional[Dict[str, rdflib.Namespace]] = None,
         **kwds,
     ):
-        _Transformer.__init__(self, **kwds)
+        Transformer.__init__(self, **kwds)
         if default_institution is None and default_collection is not None:
             raise ValueError(
                 "default institution must be supplied if default collection is"

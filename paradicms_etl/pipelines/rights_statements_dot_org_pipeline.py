@@ -3,12 +3,12 @@ from pathlib import Path
 from typing import Dict, Generator
 from zipfile import ZipFile
 
+from paradicms_etl.transformer import Transformer
 from rdflib import DCTERMS, Graph, Literal
 
-from paradicms_etl.extractor import Extractor
 from paradicms_etl._loader import _Loader
 from paradicms_etl._pipeline import _Pipeline
-from paradicms_etl._transformer import _Transformer
+from paradicms_etl.extractor import Extractor
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.namespaces import bind_namespaces
 
@@ -39,7 +39,7 @@ class RightsStatementsDotOrgPipeline(_Pipeline):
                         json_ld_file_contents[id_] = zip_file_entry.read()
             return {"json_ld_file_contents": json_ld_file_contents}
 
-    class _RightsStatementsDotOrgTransformer(_Transformer):
+    class _RightsStatementsDotOrgTransformer(Transformer):
         def transform(self, json_ld_file_contents: Dict[str, bytes]):
             for entry_id, json_ld_bytes in json_ld_file_contents.items():
                 graph = Graph()

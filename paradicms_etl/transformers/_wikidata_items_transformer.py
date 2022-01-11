@@ -1,14 +1,14 @@
 from typing import Generator, Tuple
 
-from paradicms_etl.model import Model
+from paradicms_etl.transformer import Transformer
 from rdflib import Graph
 
-from paradicms_etl._transformer import _Transformer
+from paradicms_etl.model import Model
 from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
 from paradicms_etl.utils.sanitize_method_name import sanitize_method_name
 
 
-class _WikidataItemsTransformer(_Transformer):
+class _WikidataItemsTransformer(Transformer):
     """
     Abstract base class for transformers that accept an rdflib Graph containing Wikidata items and generate zero or more
     paradicms Models.

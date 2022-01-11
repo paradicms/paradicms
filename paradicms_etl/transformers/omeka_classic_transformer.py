@@ -1,11 +1,11 @@
 from datetime import datetime
 from typing import Dict, Optional, Tuple
 
+from paradicms_etl.transformer import Transformer
 from pyformance import MetricsRegistry
 from rdflib import URIRef, DCTERMS
 from tqdm import tqdm
 
-from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
@@ -23,7 +23,7 @@ def is_uri(value: str):
     return value.startswith("http://") or value.startswith("https://")
 
 
-class OmekaClassicTransformer(_Transformer):
+class OmekaClassicTransformer(Transformer):
     def __init__(
         self,
         *,
@@ -35,7 +35,7 @@ class OmekaClassicTransformer(_Transformer):
         thumbnail_max_width_px: int,
         **kwds
     ):
-        _Transformer.__init__(self, **kwds)
+        Transformer.__init__(self, **kwds)
         # Single _ so we can use getattr
         self._fullsize_max_height_px = fullsize_max_height_px
         self._fullsize_max_width_px = fullsize_max_width_px

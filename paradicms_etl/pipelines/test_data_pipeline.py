@@ -3,11 +3,11 @@ from pathlib import Path
 from typing import Optional, Tuple, Dict
 from urllib.parse import quote
 
+from paradicms_etl.transformer import Transformer
 from rdflib import DCTERMS, Literal, URIRef
 
 from paradicms_etl._loader import _Loader
 from paradicms_etl._pipeline import _Pipeline
-from paradicms_etl._transformer import _Transformer
 from paradicms_etl.extractors.nop_extractor import NopExtractor
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
@@ -34,7 +34,7 @@ from paradicms_etl.namespaces import VRA
 class TestDataPipeline(_Pipeline):
     ID = "test_data"
 
-    class __TestDataTransformer(_Transformer):
+    class __TestDataTransformer(Transformer):
         __FACETED_PROPERTY_VALUES = (
             (
                 VRA.culturalContext,
@@ -90,7 +90,7 @@ class TestDataPipeline(_Pipeline):
             works_per_institution=4,  # Works per page is 20
             **kwds,
         ):
-            _Transformer.__init__(self, **kwds)
+            Transformer.__init__(self, **kwds)
             self.__institutions = institutions
             self.__collections_per_institution = collections_per_institution
             self.__images_per_work = images_per_work
