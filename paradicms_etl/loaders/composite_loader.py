@@ -1,7 +1,8 @@
 from typing import Generator, Tuple
 
+from paradicms_etl.model import Model
+
 from paradicms_etl._loader import _Loader
-from paradicms_etl._model import _Model
 
 
 class CompositeLoader(_Loader):
@@ -13,7 +14,7 @@ class CompositeLoader(_Loader):
         for loader in self.__loaders:
             loader.flush()
 
-    def load(self, *, models: Generator[_Model, None, None], **kwds):
+    def load(self, *, models: Generator[Model, None, None], **kwds):
         models_frozen = tuple(models)
         for loader in self.__loaders:
             loader.load(models=models_frozen, **kwds)

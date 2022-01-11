@@ -1,9 +1,9 @@
 from abc import abstractmethod
 from typing import Generator, Optional, Union
 
+from paradicms_etl.model import Model
 from rdflib import URIRef
 
-from paradicms_etl._model import _Model
 from paradicms_etl._pipeline_phase import _PipelinePhase
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
@@ -13,7 +13,7 @@ from paradicms_etl.models.rights import Rights
 
 class _Transformer(_PipelinePhase):
     @abstractmethod
-    def transform(self, **kwds) -> Generator[_Model, None, None]:
+    def transform(self, **kwds) -> Generator[Model, None, None]:
         """
         Transform previously-extracted data.
         :param kwds: merged dictionary of initial extract kwds and the result of extract

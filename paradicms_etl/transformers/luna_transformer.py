@@ -3,7 +3,7 @@ from typing import Dict, Generator, List, Tuple
 
 from rdflib import URIRef, DCTERMS
 
-from paradicms_etl._model import _Model
+from paradicms_etl.model import Model
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.extractors.luna_extractor import LunaExtractor
 from paradicms_etl.models.collection import Collection
@@ -121,7 +121,7 @@ class LunaTransformer(_Transformer):
         collections_by_id: Dict[str, Collection],
         institution: Institution,
         luna_object,
-    ) -> Generator[_Model, None, None]:
+    ) -> Generator[Model, None, None]:
         id_ = luna_object["id"].strip()
         assert id_
 

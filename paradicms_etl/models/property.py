@@ -1,11 +1,10 @@
 from dataclasses import dataclass
 from typing import Any
 
+from paradicms_etl.model import Model
 from rdflib import Literal, URIRef
 from rdflib.resource import Resource
 from rdflib.term import Node
-
-from paradicms_etl._model import _Model
 
 
 @dataclass(init=True, unsafe_hash=True)
@@ -15,7 +14,7 @@ class Property:
     """
 
     uri: URIRef
-    value: [_Model, Node]
+    value: [Model, Node]
 
     def __init__(
         self,
@@ -25,13 +24,13 @@ class Property:
         assert isinstance(uri, URIRef)
         self.uri = uri
 
-        if isinstance(value, (_Model, Node)):
+        if isinstance(value, (Model, Node)):
             self.value = value
         else:
             self.value = Literal(value)
 
     def to_rdf(self, *, add_to_resource: Resource) -> None:
-        if isinstance(self.value, _Model):
+        if isinstance(self.value, Model):
             add_to_resource.add(
                 self.uri, self.value.to_rdf(graph=add_to_resource.graph)
             )

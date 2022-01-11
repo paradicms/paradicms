@@ -1,13 +1,13 @@
 from typing import Dict, Generator, Optional
 
 import yaml
+from paradicms_etl.model import Model
 from pathvalidate import sanitize_filename
 from rdflib import Graph, Literal, Namespace, RDF, URIRef, BNode
 from rdflib.resource import Resource
 from stringcase import snakecase
 
 from paradicms_etl._loader import _Loader
-from paradicms_etl._model import _Model
 from paradicms_etl.transformers.markdown_directory_transformer import (
     MarkdownDirectoryTransformer,
 )
@@ -24,7 +24,7 @@ class MarkdownDirectoryLoader(_Loader):
             )
         self.__namespaces_by_prefix = namespaces_by_prefix.copy()
 
-    def load(self, *, models: Generator[_Model, None, None]):
+    def load(self, *, models: Generator[Model, None, None]):
         for model in models:
             model_id = model.label
             if model_id is None:

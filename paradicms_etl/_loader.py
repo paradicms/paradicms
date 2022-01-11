@@ -1,8 +1,9 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from pathlib import Path
 from typing import Generator, Optional
 
-from paradicms_etl._model import _Model
+from paradicms_etl.model import Model
+
 from paradicms_etl._pipeline_phase import _PipelinePhase
 
 
@@ -32,7 +33,7 @@ class _Loader(_PipelinePhase):
         """
 
     @abstractmethod
-    def load(self, *, models: Generator[_Model, None, None]):
+    def load(self, *, models: Generator[Model, None, None]):
         """
         Load models from the given generator.
         :param models: generator of models to load, normally the result of the transformer
