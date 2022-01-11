@@ -2,12 +2,11 @@ from abc import abstractmethod
 from pathlib import Path
 from typing import Generator, Optional
 
+from paradicms_etl._pipeline_phase import _PipelinePhase
 from paradicms_etl.model import Model
 
-from paradicms_etl._pipeline_phase import _PipelinePhase
 
-
-class _Loader(_PipelinePhase):
+class Loader(_PipelinePhase):
     def __init__(
         self,
         *,

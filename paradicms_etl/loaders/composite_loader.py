@@ -2,12 +2,12 @@ from typing import Generator, Tuple
 
 from paradicms_etl.model import Model
 
-from paradicms_etl._loader import _Loader
+from paradicms_etl.loader import Loader
 
 
-class CompositeLoader(_Loader):
-    def __init__(self, *, loaders: Tuple[_Loader, ...], **kwds):
-        _Loader.__init__(self, **kwds)
+class CompositeLoader(Loader):
+    def __init__(self, *, loaders: Tuple[Loader, ...], **kwds):
+        Loader.__init__(self, **kwds)
         self.__loaders = loaders
 
     def flush(self):

@@ -7,17 +7,17 @@ from rdflib import Graph, Literal, Namespace, RDF, URIRef, BNode
 from rdflib.resource import Resource
 from stringcase import snakecase
 
-from paradicms_etl._loader import _Loader
+from paradicms_etl.loader import Loader
 from paradicms_etl.transformers.markdown_directory_transformer import (
     MarkdownDirectoryTransformer,
 )
 
 
-class MarkdownDirectoryLoader(_Loader):
+class MarkdownDirectoryLoader(Loader):
     def __init__(
         self, *, namespaces_by_prefix: Optional[Dict[str, Namespace]] = None, **kwds
     ):
-        _Loader.__init__(self, **kwds)
+        Loader.__init__(self, **kwds)
         if namespaces_by_prefix is None:
             namespaces_by_prefix = (
                 MarkdownDirectoryTransformer.NAMESPACES_BY_PREFIX_DEFAULT

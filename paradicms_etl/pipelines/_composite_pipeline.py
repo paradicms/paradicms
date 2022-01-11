@@ -2,7 +2,7 @@ from typing import List, Optional, Tuple
 
 from configargparse import ArgParser
 
-from paradicms_etl._loader import _Loader
+from paradicms_etl.loader import Loader
 from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl.extractors.nop_extractor import NopExtractor
 from paradicms_etl.transformers.nop_transformer import NopTransformer
@@ -18,7 +18,7 @@ class _CompositePipeline(_Pipeline):
         self,
         *,
         id: str,
-        loader: _Loader,
+        loader: Loader,
         pipelines: Tuple[_Pipeline, ...],
         exclude_pipeline_id: Optional[List[str]] = None,
         include_pipeline_id: Optional[List[str]] = None,

@@ -6,7 +6,7 @@ from zipfile import ZipFile
 from paradicms_etl.transformer import Transformer
 from rdflib import DCTERMS, Graph, Literal
 
-from paradicms_etl._loader import _Loader
+from paradicms_etl.loader import Loader
 from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl.extractor import Extractor
 from paradicms_etl.models.rights_statement import RightsStatement
@@ -50,7 +50,7 @@ class RightsStatementsDotOrgPipeline(_Pipeline):
                 graph.add((uri, DCTERMS.identifier, Literal(entry_id)))
                 yield RightsStatement.from_rdf(graph.resource(uri))
 
-    class _RightsStatementsDotOrgLoader(_Loader):
+    class _RightsStatementsDotOrgLoader(Loader):
         def load(self, *, models: Generator[RightsStatement, None, None]):
             rights_statements_py_file_path = (
                 Path(__file__).parent.parent

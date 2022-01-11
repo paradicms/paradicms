@@ -3,12 +3,12 @@ from typing import Generator, Tuple
 
 from paradicms_etl.model import Model
 
-from paradicms_etl._loader import _Loader
+from paradicms_etl.loader import Loader
 
 
-class _BufferingLoader(_Loader):
+class _BufferingLoader(Loader):
     def __init__(self, **kwds):
-        _Loader.__init__(self, **kwds)
+        Loader.__init__(self, **kwds)
         self.__models = []
 
     def flush(self):

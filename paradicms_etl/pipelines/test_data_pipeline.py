@@ -6,7 +6,7 @@ from urllib.parse import quote
 from paradicms_etl.transformer import Transformer
 from rdflib import DCTERMS, Literal, URIRef
 
-from paradicms_etl._loader import _Loader
+from paradicms_etl.loader import Loader
 from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl.extractors.nop_extractor import NopExtractor
 from paradicms_etl.loaders.composite_loader import CompositeLoader
@@ -505,7 +505,7 @@ class TestDataPipeline(_Pipeline):
                     uri_prefix=f"{institution.uri}/shared/work",
                 )
 
-    def __init__(self, loader: Optional[_Loader] = None, **kwds):
+    def __init__(self, loader: Optional[Loader] = None, **kwds):
         root_dir_path = Path(__file__).absolute().parent.parent.parent
         if loader is None:
             loader = CompositeLoader(

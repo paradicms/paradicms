@@ -7,7 +7,7 @@ from configargparse import ArgParser
 from paradicms_etl.transformer import Transformer
 from rdflib import URIRef
 
-from paradicms_etl._loader import _Loader
+from paradicms_etl.loader import Loader
 from paradicms_etl.extractor import Extractor
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.transformers.validation_transformer import ValidationTransformer
@@ -20,7 +20,7 @@ class _Pipeline(ABC):
         extractor: Extractor,
         id: str,
         transformer: Transformer,
-        loader: Optional[_Loader] = None,
+        loader: Optional[Loader] = None,
         validate_transform: bool = True,
         **kwds,
     ):

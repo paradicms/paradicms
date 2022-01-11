@@ -1,12 +1,12 @@
 from pathlib import Path
 from typing import Optional
 
-from paradicms_etl._loader import _Loader
+from paradicms_etl.loader import Loader
 
 
-class _FileLoader(_Loader):
+class _FileLoader(Loader):
     def __init__(self, *, file_path: Optional[Path] = None, **kwds):
-        _Loader.__init__(self, **kwds)
+        Loader.__init__(self, **kwds)
         self.__file_path = file_path
 
     @property

@@ -6,7 +6,7 @@ from zipfile import ZipFile
 from paradicms_etl.transformer import Transformer
 from rdflib import Graph, Literal, Namespace
 
-from paradicms_etl._loader import _Loader
+from paradicms_etl.loader import Loader
 from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl.extractor import Extractor
 from paradicms_etl.models.license import License
@@ -58,7 +58,7 @@ class CreativeCommonsPipeline(_Pipeline):
                     continue
                 yield License.from_rdf(graph.resource(uri))
 
-    class _CreativeCommonsLoader(_Loader):
+    class _CreativeCommonsLoader(Loader):
         def load(self, *, models: Generator[License, None, None]):
             creative_commons_licenses_py_file_path = (
                 Path(__file__).parent.parent / "models" / "creative_commons_licenses.py"
