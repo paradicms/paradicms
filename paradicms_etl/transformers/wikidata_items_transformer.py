@@ -2,7 +2,7 @@ from typing import Optional, Tuple
 
 from rdflib import URIRef, DCTERMS
 
-from paradicms_etl.models._named_model import _NamedModel
+from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
@@ -49,7 +49,7 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
             self,
             *,
             item: WikidataItem,
-            item_model: _NamedModel,
+            item_model: NamedModel,
             statement: WikidataStatement,
         ):
             yield Image.from_fields(

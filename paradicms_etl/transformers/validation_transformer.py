@@ -5,7 +5,7 @@ from stringcase import snakecase
 
 from paradicms_etl._model import _Model
 from paradicms_etl._transformer import _Transformer
-from paradicms_etl.models._named_model import _NamedModel
+from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
@@ -53,7 +53,7 @@ class ValidationTransformer(_Transformer):
 
                 # self._validate_model(model)
 
-                if isinstance(model, _NamedModel):
+                if isinstance(model, NamedModel):
                     self._validate_named_model(model)
 
                 validate_method_name = "_validate_" + model_class_name_snake_case
@@ -139,7 +139,7 @@ class ValidationTransformer(_Transformer):
                 warn=False,
             )
 
-        def _validate_named_model(self, model: _NamedModel):
+        def _validate_named_model(self, model: NamedModel):
             if model.uri not in self.__model_uris:
                 self.__model_uris.add(model.uri)
             else:

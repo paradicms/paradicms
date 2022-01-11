@@ -6,7 +6,7 @@ from pathvalidate import sanitize_filename
 from rdflib import ConjunctiveGraph, URIRef
 
 from paradicms_etl.loaders._buffering_loader import _BufferingLoader
-from paradicms_etl.models._named_model import _NamedModel
+from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.namespaces import bind_namespaces
 
 
@@ -36,7 +36,7 @@ class RdfFileLoader(_BufferingLoader):
         conjunctive_graph = ConjunctiveGraph()
         bind_namespaces(conjunctive_graph.namespace_manager)
         for model in models:
-            assert isinstance(model, _NamedModel)
+            assert isinstance(model, NamedModel)
             model_graph_uri = URIRef(
                 f"{self._pipeline_uri}:model:{hashlib.sha256(str(model.uri).encode('utf-8')).hexdigest()}"
             )

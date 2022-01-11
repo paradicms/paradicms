@@ -16,7 +16,7 @@ from rdflib.term import Node, BNode
 
 import paradicms_etl
 from paradicms_etl._transformer import _Transformer
-from paradicms_etl.models._named_model import _NamedModel
+from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
@@ -117,7 +117,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             default_namespace: rdflib.Namespace,
             markdown_it: MarkdownIt,
             model_id: str,
-            model_type: Type[_NamedModel],
+            model_type: Type[NamedModel],
             namespaces_by_prefix: Dict[str, rdflib.Namespace],
             pipeline_id: str,
         ):
@@ -381,7 +381,7 @@ class MarkdownDirectoryTransformer(_Transformer):
 
     @staticmethod
     def model_uri(
-        *, pipeline_id: str, model_type: Type[_NamedModel], model_id: str
+        *, pipeline_id: str, model_type: Type[NamedModel], model_id: str
     ) -> URIRef:
         return URIRef(
             f"urn:markdown:{pipeline_id}:{quote(stringcase.snakecase(model_type.__name__))}:{quote(model_id)}"
@@ -426,7 +426,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             self,
             *,
             model_id: str,
-            transformed_model: _NamedModel,
+            transformed_model: NamedModel,
         ):
             assert (
                 transformed_model.uri not in self.__transformed_models_by_uri
@@ -439,7 +439,7 @@ class MarkdownDirectoryTransformer(_Transformer):
             assert model_id not in transformed_models_by_type
             transformed_models_by_type[model_id] = transformed_model
 
-        def __call__(self) -> Tuple[_NamedModel, ...]:
+        def __call__(self) -> Tuple[NamedModel, ...]:
             # Order is important
             self.__transform_institution_markdown_file_entries()
             self.__transform_collection_markdown_file_entries()
@@ -490,7 +490,7 @@ class MarkdownDirectoryTransformer(_Transformer):
                 )
 
         def __set_resource_label(
-            self, *, model_id: str, model_type: Type[_NamedModel], resource: Resource
+            self, *, model_id: str, model_type: Type[NamedModel], resource: Resource
         ) -> None:
             label_property = _MODEL_TYPE_LABEL_PROPERTIES.get(model_type)
             if label_property is None:
@@ -760,8 +760,8 @@ class MarkdownDirectoryTransformer(_Transformer):
                     )
 
         def __transform_resource_to_model(
-            self, *, model_resource: Resource, model_type: Type[_NamedModel]
-        ) -> _NamedModel:
+            self, *, model_resource: Resource, model_type: Type[NamedModel]
+        ) -> NamedModel:
             return model_type.from_rdf(model_resource)
 
     def transform(self, markdown_directory: MarkdownDirectory):
