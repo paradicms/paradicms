@@ -72,10 +72,10 @@ from typing import Tuple
 
 from rdflib import Graph, URIRef
 from paradicms_etl.models.rights_statement import RightsStatement
-from paradicms_etl.models._model_singletons import _ModelSingletons
+from paradicms_etl.models.model_singletons import ModelSingletons
 
 
-class RightsStatementsDotOrgRightsStatements(_ModelSingletons):
+class RightsStatementsDotOrgRightsStatements(ModelSingletons):
     _MODEL_CLASS = RightsStatement
 
 {rights_statement_reprs}

@@ -100,10 +100,10 @@ from typing import Tuple
 
 from rdflib import Graph, URIRef
 from paradicms_etl.models.license import License
-from paradicms_etl.models._model_singletons import _ModelSingletons
+from paradicms_etl.models.model_singletons import ModelSingletons
 
 
-class CreativeCommonsLicenses(_ModelSingletons):
+class CreativeCommonsLicenses(ModelSingletons):
     _MODEL_CLASS = License
 
 {py_license_reprs}
