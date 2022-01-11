@@ -1,21 +1,21 @@
 from abc import abstractmethod
 from typing import Generator, Tuple
 
-from paradicms_etl._loader import _Loader
-from paradicms_etl._model import _Model
+from paradicms_etl.loader import Loader
+from paradicms_etl.model import Model
 
 
-class _BufferingLoader(_Loader):
+class BufferingLoader(Loader):
     def __init__(self, **kwds):
-        _Loader.__init__(self, **kwds)
+        Loader.__init__(self, **kwds)
         self.__models = []
 
     def flush(self):
         return self._flush(tuple(self.__models))
 
     @abstractmethod
-    def _flush(self, models: Tuple[_Model, ...]):
+    def _flush(self, models: Tuple[Model, ...]):
         raise NotImplementedError
 
-    def load(self, *, models: Generator[_Model, None, None]):
+    def load(self, *, models: Generator[Model, None, None]):
         self.__models.extend(models)

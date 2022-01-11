@@ -1,13 +1,13 @@
 import datetime
 from typing import Optional, Union
 
+from paradicms_etl.model import Model
 from rdflib import BNode, Literal, RDF, XSD
 
-from paradicms_etl._model import _Model
 from paradicms_etl.namespaces import TIME
 
 
-class DateTimeDescription(_Model):
+class DateTimeDescription(Model):
     """
     Description of date and time structured with separate values for the various elements of a calendar-clock system.
 

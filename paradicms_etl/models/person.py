@@ -3,12 +3,12 @@ from typing import Optional, Tuple
 from rdflib import Literal, URIRef
 from rdflib.namespace import FOAF
 
-from paradicms_etl.models._agent import _Agent
+from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.property import Property
 from paradicms_etl.namespaces import CONTACT
 
 
-class Person(_Agent):
+class Person(Agent):
     @classmethod
     def from_fields(
         cls,

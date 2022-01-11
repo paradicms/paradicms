@@ -3,10 +3,10 @@ from typing import Optional
 from rdflib import Literal, URIRef
 from rdflib.namespace import FOAF
 
-from paradicms_etl.models._agent import _Agent
+from paradicms_etl.models.agent import Agent
 
 
-class Organization(_Agent):
+class Organization(Agent):
     @classmethod
     def from_fields(
         cls, *, name: str, uri: URIRef, page: Optional[URIRef] = None

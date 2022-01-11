@@ -1,14 +1,14 @@
 from abc import abstractmethod
 from typing import Dict, Generator, Tuple
 
-from paradicms_etl._model import _Model
-from paradicms_etl._transformer import _Transformer
+from paradicms_etl.model import Model
 from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
 from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
+from paradicms_etl.transformer import Transformer
 from paradicms_etl.utils.sanitize_method_name import sanitize_method_name
 
 
-class _WikidataItemTransformer(_Transformer):
+class WikidataItemTransformer(Transformer):
     """
     Abstract base class for transformers that accept a single WikidataItem and transform it into zero or more paradicms Models.
 
@@ -25,7 +25,7 @@ class _WikidataItemTransformer(_Transformer):
     There is a similar process for _transform_statement_qualifiers.
     """
 
-    def transform(self, item: WikidataItem) -> Generator[_Model, None, None]:
+    def transform(self, item: WikidataItem) -> Generator[Model, None, None]:
         item_model = self._transform_item(item=item)
 
         for model in self._transform_statements(
@@ -45,7 +45,7 @@ class _WikidataItemTransformer(_Transformer):
         yield item_model
 
     @abstractmethod
-    def _transform_item(self, item: WikidataItem) -> _Model:
+    def _transform_item(self, item: WikidataItem) -> Model:
         """
         Transform the item to a _Model.
         """
@@ -54,9 +54,9 @@ class _WikidataItemTransformer(_Transformer):
         self,
         *,
         item: WikidataItem,
-        item_model: _Model,
+        item_model: Model,
         statement: WikidataStatement,
-    ) -> Generator[_Model, None, None]:
+    ) -> Generator[Model, None, None]:
         """
         Transform an item statement into zero or more _Models.
         """
@@ -96,7 +96,7 @@ class _WikidataItemTransformer(_Transformer):
         yield from models
 
     def _transform_statement_qualifiers(
-        self, *, item: WikidataItem, item_model: _Model, statement: WikidataStatement
+        self, *, item: WikidataItem, item_model: Model, statement: WikidataStatement
     ) -> Dict[str, object]:
         """
         Transform a statement's qualifiers into a **kwds dictionary, which will be passed to _transform_statement.
@@ -136,9 +136,9 @@ class _WikidataItemTransformer(_Transformer):
         self,
         *,
         item: WikidataItem,
-        item_model: _Model,
+        item_model: Model,
         statements: Tuple[WikidataStatement, ...],
-    ) -> Generator[_Model, None, None]:
+    ) -> Generator[Model, None, None]:
         reassigned_item_model = False
 
         for statement in sorted(

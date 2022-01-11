@@ -1,14 +1,14 @@
 from typing import Generator, Tuple
 
+from paradicms_etl.transformer import Transformer
 from rdflib import Graph
 
-from paradicms_etl._model import _Model
-from paradicms_etl._transformer import _Transformer
+from paradicms_etl.model import Model
 from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
 from paradicms_etl.utils.sanitize_method_name import sanitize_method_name
 
 
-class _WikidataItemsTransformer(_Transformer):
+class _WikidataItemsTransformer(Transformer):
     """
     Abstract base class for transformers that accept an rdflib Graph containing Wikidata items and generate zero or more
     paradicms Models.
@@ -33,12 +33,12 @@ class _WikidataItemsTransformer(_Transformer):
             item.uri,
         )
 
-    def transform(self, *, graph: Graph) -> Generator[_Model, None, None]:
+    def transform(self, *, graph: Graph) -> Generator[Model, None, None]:
         yield from self._transform_items(
             WikidataItem.from_rdf(graph=graph, logger=self._logger)
         )
 
-    def _transform_item(self, item: WikidataItem) -> Generator[_Model, None, None]:
+    def _transform_item(self, item: WikidataItem) -> Generator[Model, None, None]:
         instance_of_statements = item.statements_by_property_label().get(
             "instance of", None
         )

@@ -4,16 +4,16 @@ from urllib.request import urlopen
 
 from pathvalidate import sanitize_filename
 
-from paradicms_etl._extractor import _Extractor
+from paradicms_etl.extractor import Extractor
 
 
-class OmekaSExtractor(_Extractor):
+class OmekaSExtractor(Extractor):
     """
     Extractor for Omeka S (https://omeka.org/s/) API endpoints.
     """
 
     def __init__(self, endpoint_url: str):
-        _Extractor.__init__(self)
+        Extractor.__init__(self)
         self.__endpoint_url = endpoint_url.rstrip("/")
 
     def __extract_all_pages(self, url: str):

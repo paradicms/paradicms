@@ -3,15 +3,15 @@ from urllib.parse import quote
 
 from rdflib import URIRef, DCTERMS
 
-from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.work import Work
+from paradicms_etl.transformer import Transformer
 
 
-class _PastPerfectTransformer(_Transformer):
+class PastPerfectTransformer(Transformer):
     def __init__(self, work_uri_prefix: str, **kwds):
-        _Transformer.__init__(self, **kwds)
+        Transformer.__init__(self, **kwds)
         self.__kwds = kwds
         self.__work_uri_prefix = work_uri_prefix
 

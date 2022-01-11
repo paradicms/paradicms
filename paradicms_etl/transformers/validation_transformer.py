@@ -1,15 +1,15 @@
 from typing import Generator, Optional, Set
 
+from paradicms_etl.transformer import Transformer
 from rdflib import URIRef
 from stringcase import snakecase
 
-from paradicms_etl._model import _Model
-from paradicms_etl._transformer import _Transformer
-from paradicms_etl.models._named_model import _NamedModel
+from paradicms_etl.model import Model
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.license import License
+from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.named_value import NamedValue
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
@@ -18,7 +18,7 @@ from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.work import Work
 
 
-class ValidationTransformer(_Transformer):
+class ValidationTransformer(Transformer):
     """
     A transformer that validates models from other transformers.
     """
@@ -42,8 +42,8 @@ class ValidationTransformer(_Transformer):
             self.__work_uris = set()
 
         def validate(
-            self, models: Generator[_Model, None, None]
-        ) -> Generator[_Model, None, None]:
+            self, models: Generator[Model, None, None]
+        ) -> Generator[Model, None, None]:
             model_class_names_snake_case = set()
             missing_method_names = set()
 
@@ -53,7 +53,7 @@ class ValidationTransformer(_Transformer):
 
                 # self._validate_model(model)
 
-                if isinstance(model, _NamedModel):
+                if isinstance(model, NamedModel):
                     self._validate_named_model(model)
 
                 validate_method_name = "_validate_" + model_class_name_snake_case
@@ -139,7 +139,7 @@ class ValidationTransformer(_Transformer):
                 warn=False,
             )
 
-        def _validate_named_model(self, model: _NamedModel):
+        def _validate_named_model(self, model: NamedModel):
             if model.uri not in self.__model_uris:
                 self.__model_uris.add(model.uri)
             else:
@@ -218,6 +218,6 @@ class ValidationTransformer(_Transformer):
             pass
 
     def transform(
-        self, models: Generator[_Model, None, None]
-    ) -> Generator[_Model, None, None]:
+        self, models: Generator[Model, None, None]
+    ) -> Generator[Model, None, None]:
         yield from self.__Validator(logger=self._logger).validate(models)

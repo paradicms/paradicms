@@ -2,14 +2,14 @@ from typing import List, Optional, Tuple
 
 from configargparse import ArgParser
 
-from paradicms_etl._loader import _Loader
-from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl.extractors.nop_extractor import NopExtractor
+from paradicms_etl.loader import Loader
+from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.transformers.nop_transformer import NopTransformer
 from paradicms_etl.transformers.validation_transformer import ValidationTransformer
 
 
-class _CompositePipeline(_Pipeline):
+class CompositePipeline(Pipeline):
     """
     A base class for pipelines that compose 2+ other pipelines and share a loader.
     """
@@ -18,14 +18,14 @@ class _CompositePipeline(_Pipeline):
         self,
         *,
         id: str,
-        loader: _Loader,
-        pipelines: Tuple[_Pipeline, ...],
+        loader: Loader,
+        pipelines: Tuple[Pipeline, ...],
         exclude_pipeline_id: Optional[List[str]] = None,
         include_pipeline_id: Optional[List[str]] = None,
         validate_transform: bool = True,
         **kwds,
     ):
-        _Pipeline.__init__(
+        Pipeline.__init__(
             self,
             extractor=NopExtractor(pipeline_id=id, **kwds),
             id=id,
@@ -62,7 +62,7 @@ class _CompositePipeline(_Pipeline):
 
     @classmethod
     def add_arguments(cls, arg_parser: ArgParser) -> None:
-        _Pipeline.add_arguments(arg_parser)
+        Pipeline.add_arguments(arg_parser)
         arg_parser.add_argument("--exclude-pipeline-id", action="append")
         arg_parser.add_argument("--include-pipeline-id", action="append")
 
@@ -81,5 +81,5 @@ class _CompositePipeline(_Pipeline):
         self.loader.flush()
 
     @property
-    def _pipelines(self) -> Tuple[_Pipeline, ...]:
+    def _pipelines(self) -> Tuple[Pipeline, ...]:
         return self.__pipelines

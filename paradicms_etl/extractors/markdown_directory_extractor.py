@@ -3,11 +3,11 @@ from pathlib import Path
 
 from PIL import Image, UnidentifiedImageError
 
-from paradicms_etl._extractor import _Extractor
+from paradicms_etl.extractor import Extractor
 from paradicms_etl.models.markdown_directory import MarkdownDirectory
 
 
-class MarkdownDirectoryExtractor(_Extractor):
+class MarkdownDirectoryExtractor(Extractor):
     """
     Extract entries from a directory with the structure:
     work/id1.md

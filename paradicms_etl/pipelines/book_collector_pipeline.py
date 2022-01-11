@@ -2,14 +2,14 @@ from typing import Optional
 
 from rdflib import URIRef
 
-from paradicms_etl._pipeline import _Pipeline
+from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.extractors.book_collector_extractor import BookCollectorExtractor
 from paradicms_etl.transformers.book_collector_transformer import (
     BookCollectorTransformer,
 )
 
 
-class BookCollectorPipeline(_Pipeline):
+class BookCollectorPipeline(Pipeline):
     def __init__(
         self,
         *,
@@ -18,20 +18,20 @@ class BookCollectorPipeline(_Pipeline):
         pipeline_id: str,
         **kwds
     ):
-        _Pipeline.__init__(
+        Pipeline.__init__(
             self,
             extractor=BookCollectorExtractor(export_xml_file_path=export_xml_file_path),
             id=pipeline_id,
             transformer=BookCollectorTransformer(
                 owner=URIRef(owner) if owner is not None else None,
-                pipeline_uri=_Pipeline.id_to_uri(pipeline_id),
+                pipeline_uri=Pipeline.id_to_uri(pipeline_id),
             ),
             **kwds
         )
 
     @classmethod
     def add_arguments(cls, arg_parser):
-        _Pipeline.add_arguments(cls, arg_parser)
+        Pipeline.add_arguments(cls, arg_parser)
         arg_parser.add_argument(
             "--export-xml-file-path", help="path to book-export.xml", required=True
         )

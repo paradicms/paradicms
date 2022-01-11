@@ -1,12 +1,12 @@
 from rdflib import DCTERMS
 
-from paradicms_etl.transformers._past_perfect_transformer import _PastPerfectTransformer
+from paradicms_etl.transformers.past_perfect_transformer import PastPerfectTransformer
 
 
-class PastPerfectOnlineTransformer(_PastPerfectTransformer):
+class PastPerfectOnlineTransformer(PastPerfectTransformer):
     def _get_database_object_properties(self, database_object):
         properties = list(
-            _PastPerfectTransformer._get_database_object_properties(
+            PastPerfectTransformer._get_database_object_properties(
                 self, database_object
             )
         )

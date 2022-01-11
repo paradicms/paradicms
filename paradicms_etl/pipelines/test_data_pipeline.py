@@ -3,15 +3,15 @@ from pathlib import Path
 from typing import Optional, Tuple, Dict
 from urllib.parse import quote
 
+from paradicms_etl.transformer import Transformer
 from rdflib import DCTERMS, Literal, URIRef
 
-from paradicms_etl._loader import _Loader
-from paradicms_etl._pipeline import _Pipeline
-from paradicms_etl._transformer import _Transformer
+from paradicms_etl.loader import Loader
+from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.extractors.nop_extractor import NopExtractor
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
-from paradicms_etl.models._agent import _Agent
+from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.date_time_description import DateTimeDescription
@@ -31,10 +31,10 @@ from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import VRA
 
 
-class TestDataPipeline(_Pipeline):
+class TestDataPipeline(Pipeline):
     ID = "test_data"
 
-    class __TestDataTransformer(_Transformer):
+    class __TestDataTransformer(Transformer):
         __FACETED_PROPERTY_VALUES = (
             (
                 VRA.culturalContext,
@@ -90,7 +90,7 @@ class TestDataPipeline(_Pipeline):
             works_per_institution=4,  # Works per page is 20
             **kwds,
         ):
-            _Transformer.__init__(self, **kwds)
+            Transformer.__init__(self, **kwds)
             self.__institutions = institutions
             self.__collections_per_institution = collections_per_institution
             self.__images_per_work = images_per_work
@@ -114,7 +114,7 @@ class TestDataPipeline(_Pipeline):
             agents = []
             for model in self.__generate_agents():
                 yield model
-                if isinstance(model, _Agent):
+                if isinstance(model, Agent):
                     agents.append(model)
             agents = tuple(agents)
 
@@ -182,7 +182,7 @@ class TestDataPipeline(_Pipeline):
         def __generate_collection_works(
             self,
             *,
-            agents: Tuple[_Agent, ...],
+            agents: Tuple[Agent, ...],
             collection: Collection,
             institution: Institution,
             named_values_by_value: Dict[str, NamedValue],
@@ -228,7 +228,7 @@ class TestDataPipeline(_Pipeline):
         def __generate_institution_collections(
             self,
             *,
-            agents: Tuple[_Agent, ...],
+            agents: Tuple[Agent, ...],
             institution: Institution,
             named_values_by_value: Dict[str, NamedValue],
         ):
@@ -268,7 +268,7 @@ class TestDataPipeline(_Pipeline):
 
         def __generate_institutions(
             self,
-            agents: Tuple[_Agent, ...],
+            agents: Tuple[Agent, ...],
             named_values_by_value: Dict[str, NamedValue],
         ):
             for institution_i in range(self.__institutions):
@@ -343,7 +343,7 @@ class TestDataPipeline(_Pipeline):
         def __generate_work(
             self,
             *,
-            agents: Tuple[_Agent, ...],
+            agents: Tuple[Agent, ...],
             collection_uris: Tuple[URIRef, ...],
             institution: Institution,
             named_values_by_value: Dict[str, NamedValue],
@@ -488,7 +488,7 @@ class TestDataPipeline(_Pipeline):
         def __generate_shared_works(
             self,
             *,
-            agents: Tuple[_Agent, ...],
+            agents: Tuple[Agent, ...],
             collections: Tuple[Collection, ...],
             institution: Institution,
             named_values_by_value: Dict[str, NamedValue],
@@ -505,7 +505,7 @@ class TestDataPipeline(_Pipeline):
                     uri_prefix=f"{institution.uri}/shared/work",
                 )
 
-    def __init__(self, loader: Optional[_Loader] = None, **kwds):
+    def __init__(self, loader: Optional[Loader] = None, **kwds):
         root_dir_path = Path(__file__).absolute().parent.parent.parent
         if loader is None:
             loader = CompositeLoader(
@@ -532,7 +532,7 @@ class TestDataPipeline(_Pipeline):
                 pipeline_id=self.ID,
             )
 
-        _Pipeline.__init__(
+        Pipeline.__init__(
             self,
             extractor=NopExtractor(pipeline_id=self.ID),
             id=self.ID,

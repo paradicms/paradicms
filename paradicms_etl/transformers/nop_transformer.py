@@ -1,6 +1,6 @@
-from paradicms_etl._transformer import _Transformer
+from paradicms_etl.transformer import Transformer
 
 
-class NopTransformer(_Transformer):
+class NopTransformer(Transformer):
     def transform(self, **kwds):
         return ()

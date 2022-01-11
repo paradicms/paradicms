@@ -5,10 +5,10 @@ from urllib.request import urlopen
 
 from pathvalidate import sanitize_filename
 
-from paradicms_etl._extractor import _Extractor
+from paradicms_etl.extractor import Extractor
 
 
-class AirtableExtractor(_Extractor):
+class AirtableExtractor(Extractor):
     """
     Extractor for an Airtable (https://airtable.com/) base.
     """
@@ -26,7 +26,7 @@ class AirtableExtractor(_Extractor):
         :param base_id: Airtable base identifier
         :param tables: a list or a union of table [names] or a dict where the keys are table names and the values are API query parameters
         """
-        _Extractor.__init__(self, **kwds)
+        Extractor.__init__(self, **kwds)
         self.__api_key = api_key
         self.__base_id = base_id
         if isinstance(tables, (list, tuple)):

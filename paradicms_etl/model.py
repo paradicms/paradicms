@@ -6,7 +6,7 @@ from rdflib.resource import Resource
 from paradicms_etl.namespaces import CMS
 
 
-class _Model:
+class Model:
     def __init__(self, resource: Resource):
         self.__resource = resource
         self.__resource.add(RDF.type, CMS[self.__class__.__name__])

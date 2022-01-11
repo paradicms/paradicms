@@ -1,4 +1,4 @@
-class _ModelSingletons:
+class ModelSingletons:
     """
     Base class for classes that contain model singletons as class constants.
     """

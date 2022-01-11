@@ -1,10 +1,10 @@
-from paradicms_etl._transformer import _Transformer
 from paradicms_etl.extractors.airtable_extractor import AirtableExtractor
+from paradicms_etl.transformer import Transformer
 
 
-class _AirtableTransformer(_Transformer):
+class AirtableTransformer(Transformer):
     def __init__(self, base_id: str, **kwds):
-        _Transformer.__init__(self, **kwds)
+        Transformer.__init__(self, **kwds)
         self.__base_id = base_id
 
     def _record_url(self, *, record_id: str, table: str):

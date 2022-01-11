@@ -3,10 +3,10 @@ from typing import Dict, Optional
 from urllib.parse import quote_plus
 from xml.etree import ElementTree
 
+from paradicms_etl.transformer import Transformer
 from rdflib import Graph, Literal, URIRef
 from rdflib.namespace import DCTERMS, RDF
 
-from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.institution import Institution
@@ -15,7 +15,7 @@ from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import CMS, SCHEMA
 
 
-class BookCollectorTransformer(_Transformer):
+class BookCollectorTransformer(Transformer):
     def __init__(self, pipeline_uri: URIRef, owner: Optional[URIRef]):
         self.__owner = owner
         self.__pipeline_uri = pipeline_uri

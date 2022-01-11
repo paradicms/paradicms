@@ -3,15 +3,15 @@ from typing import Tuple, Union
 from rdflib import Literal, URIRef
 from rdflib.namespace import DCTERMS
 
-from paradicms_etl.models._named_model import _NamedModel
+from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import CMS
 
 
-class Collection(_NamedModel):
+class Collection(NamedModel):
     def __init__(self, *args, **kwds):
-        _NamedModel.__init__(self, *args, **kwds)
+        NamedModel.__init__(self, *args, **kwds)
         self.institution_uri
         self.title
 

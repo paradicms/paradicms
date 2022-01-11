@@ -1,6 +1,6 @@
 from rdflib import URIRef
 
-from paradicms_etl.models._named_model import _NamedModel
+from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.text import Text
@@ -25,7 +25,7 @@ def test_transform():
     )
     assert models
     for model in models:
-        assert isinstance(model, _NamedModel), type(model)
+        assert isinstance(model, NamedModel), type(model)
 
     works = {model.uri: model for model in models if isinstance(model, Work)}
     assert len(works) == 2

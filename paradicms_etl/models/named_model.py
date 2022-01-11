@@ -1,9 +1,8 @@
+from paradicms_etl.model import Model
 from rdflib import URIRef
 
-from paradicms_etl._model import _Model
 
-
-class _NamedModel(_Model):
+class NamedModel(Model):
     @property
     def uri(self) -> URIRef:
         return self._resource.identifier

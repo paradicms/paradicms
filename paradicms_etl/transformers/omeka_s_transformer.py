@@ -1,11 +1,11 @@
 import json
 from typing import Dict, Tuple
 
+from paradicms_etl.transformer import Transformer
 from rdflib import Namespace, RDF, URIRef
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
-from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.work import Work
@@ -15,11 +15,11 @@ from paradicms_etl.namespaces import CMS, PROV
 O = Namespace("http://omeka.org/s/vocabs/o#")
 
 
-class OmekaSTransformer(_Transformer):
+class OmekaSTransformer(Transformer):
     def __init__(
         self, *, square_thumbnail_height_px: int, square_thumbnail_width_px: int, **kwds
     ):
-        _Transformer.__init__(self, **kwds)
+        Transformer.__init__(self, **kwds)
         self.__institution_kwds = kwds
         self.__square_thumbnail_height_px = square_thumbnail_height_px
         self.__square_thumbnail_width_px = square_thumbnail_width_px

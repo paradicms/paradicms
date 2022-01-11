@@ -2,11 +2,11 @@ from typing import Optional, Tuple
 
 from rdflib import URIRef, DCTERMS
 
-from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
+from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
@@ -16,11 +16,11 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
 from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
 from paradicms_etl.models.work import Work
-from paradicms_etl.transformers._wikidata_item_transformer import (
-    _WikidataItemTransformer,
-)
 from paradicms_etl.transformers._wikidata_items_transformer import (
     _WikidataItemsTransformer,
+)
+from paradicms_etl.transformers.wikidata_item_transformer import (
+    WikidataItemTransformer,
 )
 
 
@@ -36,7 +36,7 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
         statement=RightsStatementsDotOrgRightsStatements.InC.uri,
     )
 
-    class __WikidataItemTransformer(_WikidataItemTransformer):
+    class __WikidataItemTransformer(WikidataItemTransformer):
         def _get_properties(self, item: WikidataItem) -> Tuple[Property, ...]:
             properties = []
             properties.append(Property(DCTERMS.relation, item.uri))
@@ -49,7 +49,7 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
             self,
             *,
             item: WikidataItem,
-            item_model: _NamedModel,
+            item_model: NamedModel,
             statement: WikidataStatement,
         ):
             yield Image.from_fields(
