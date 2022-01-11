@@ -5,7 +5,7 @@ from zipfile import ZipFile
 
 from rdflib import Graph, Literal, Namespace
 
-from paradicms_etl._extractor import _Extractor
+from paradicms_etl.extractor import Extractor
 from paradicms_etl._loader import _Loader
 from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl._transformer import _Transformer
@@ -16,7 +16,7 @@ from paradicms_etl.namespaces import bind_namespaces
 class CreativeCommonsPipeline(_Pipeline):
     ID = "creative_commons"
 
-    class _CreativeCommonsExtractor(_Extractor):
+    class _CreativeCommonsExtractor(Extractor):
         def extract(self, *, force: bool):
             zip_file_path = self._download(
                 "https://github.com/creativecommons/cc.licenserdf/archive/refs/heads/master.zip",

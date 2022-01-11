@@ -1,10 +1,10 @@
 from pathlib import Path
 from typing import Optional
 
-from paradicms_etl._extractor import _Extractor
+from paradicms_etl.extractor import Extractor
 
 
-class ExistingFileExtractor(_Extractor):
+class ExistingFileExtractor(Extractor):
     """
     Extractor that's parameterized with an existing file path (or file name in the _extracted_data_dir_path) and returns it.
     """
@@ -16,7 +16,7 @@ class ExistingFileExtractor(_Extractor):
         file_path: Optional[Path] = None,
         **kwds
     ):
-        _Extractor.__init__(self, **kwds)
+        Extractor.__init__(self, **kwds)
         if file_path is not None:
             self.__file_path = file_path
         elif file_name is not None:

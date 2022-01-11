@@ -6,7 +6,7 @@ from typing import Dict, Optional
 from configargparse import ArgParser
 from rdflib import URIRef
 
-from paradicms_etl._extractor import _Extractor
+from paradicms_etl.extractor import Extractor
 from paradicms_etl._loader import _Loader
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
@@ -17,7 +17,7 @@ class _Pipeline(ABC):
     def __init__(
         self,
         *,
-        extractor: _Extractor,
+        extractor: Extractor,
         id: str,
         transformer: _Transformer,
         loader: Optional[_Loader] = None,

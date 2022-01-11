@@ -5,7 +5,7 @@ from zipfile import ZipFile
 
 from rdflib import DCTERMS, Graph, Literal
 
-from paradicms_etl._extractor import _Extractor
+from paradicms_etl.extractor import Extractor
 from paradicms_etl._loader import _Loader
 from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl._transformer import _Transformer
@@ -16,7 +16,7 @@ from paradicms_etl.namespaces import bind_namespaces
 class RightsStatementsDotOrgPipeline(_Pipeline):
     ID = "rights_statements_dot_org"
 
-    class _RightsStatementsDotOrgExtractor(_Extractor):
+    class _RightsStatementsDotOrgExtractor(Extractor):
         def extract(self, *, force: bool):
             zip_file_path = self._download(
                 "https://github.com/rightsstatements/data-model/archive/refs/heads/master.zip",

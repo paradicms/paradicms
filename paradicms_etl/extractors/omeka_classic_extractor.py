@@ -3,16 +3,16 @@ import json
 from pathvalidate import sanitize_filename
 from tqdm import tqdm
 
-from paradicms_etl._extractor import _Extractor
+from paradicms_etl.extractor import Extractor
 
 
-class OmekaClassicExtractor(_Extractor):
+class OmekaClassicExtractor(Extractor):
     """
     Extractor for Omeka Classic (https://omeka.org/classic/) API endpoints.
     """
 
     def __init__(self, api_key: str, endpoint_url: str, **kwds):
-        _Extractor.__init__(self, **kwds)
+        Extractor.__init__(self, **kwds)
         from yomeka.classic.omeka_classic_rest_api_client import (
             OmekaClassicRestApiClient,
         )

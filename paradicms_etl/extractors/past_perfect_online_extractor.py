@@ -1,14 +1,14 @@
-from paradicms_etl._extractor import _Extractor
+from paradicms_etl.extractor import Extractor
 import os
 
 
-class PastPerfectOnlineExtractor(_Extractor):
+class PastPerfectOnlineExtractor(Extractor):
     """
     Extractor that scrapes PastPerfect Online (http://www.pastperfect-online.com/)
     """
 
     def __init__(self, **kwds):
-        _Extractor.__init__(self, **kwds)
+        Extractor.__init__(self, **kwds)
 
     def extract(self, *, force: bool):
         from pastpy.database import Database

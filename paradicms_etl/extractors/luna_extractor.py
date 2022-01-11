@@ -5,10 +5,10 @@ from urllib.request import urlretrieve
 
 from pathvalidate import sanitize_filename
 
-from paradicms_etl._extractor import _Extractor
+from paradicms_etl.extractor import Extractor
 
 
-class LunaExtractor(_Extractor):
+class LunaExtractor(Extractor):
     """
     Extractor for LUNA Digital Asset Management (http://www.lunaimaging.com/) software installations on the web.
     """
@@ -19,7 +19,7 @@ class LunaExtractor(_Extractor):
         :param query: query for the LUNA search API, either a mapping object or a sequence of two-element tuples, which may contain str or bytes objects
         """
 
-        _Extractor.__init__(self, **kwds)
+        Extractor.__init__(self, **kwds)
         self.__base_url = base_url
         self.__query = query
 

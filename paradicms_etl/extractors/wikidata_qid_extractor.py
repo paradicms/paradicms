@@ -5,16 +5,16 @@ from urllib.request import urlopen
 
 from rdflib import Graph
 
-from paradicms_etl._extractor import _Extractor
+from paradicms_etl.extractor import Extractor
 
 
-class WikidataQidExtractor(_Extractor):
+class WikidataQidExtractor(Extractor):
     """
     Extractor that downloads a set of Wikidata concepts (identified by QIDs) in RDF.
     """
 
     def __init__(self, qids: Tuple[str, ...], **kwds):
-        _Extractor.__init__(self, **kwds)
+        Extractor.__init__(self, **kwds)
         self.__qids = qids
 
     def extract(self, *, force: bool):

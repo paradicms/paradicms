@@ -7,10 +7,10 @@ from xml.etree.ElementTree import ElementTree
 from pathvalidate import sanitize_filename
 from xml.dom.minidom import parseString
 
-from paradicms_etl._extractor import _Extractor
+from paradicms_etl.extractor import Extractor
 
 
-class OaiPmhExtractor(_Extractor):
+class OaiPmhExtractor(Extractor):
     """
     Extractor for OAI compliant endpoints that expose OAI-PMH metadata (https://www.openarchives.org/pmh/).
     """
@@ -18,7 +18,7 @@ class OaiPmhExtractor(_Extractor):
     def __init__(
         self, *, endpoint_url: str, metadata_prefix: str, set_: Optional[str] = None
     ):
-        _Extractor.__init__(self)
+        Extractor.__init__(self)
         self.__endpoint_url = endpoint_url
         self.__metadata_prefix = metadata_prefix
         self.__set = set_

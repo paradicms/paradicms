@@ -1,5 +1,4 @@
-import logging
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from pathlib import Path
 from typing import Dict, Optional
 from urllib.request import urlopen
@@ -9,7 +8,7 @@ from pathvalidate import sanitize_filename
 from paradicms_etl._pipeline_phase import _PipelinePhase
 
 
-class _Extractor(_PipelinePhase):
+class Extractor(_PipelinePhase):
     def __init__(
         self,
         *,
