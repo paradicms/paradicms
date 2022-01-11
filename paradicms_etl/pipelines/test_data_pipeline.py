@@ -11,7 +11,7 @@ from paradicms_etl._transformer import _Transformer
 from paradicms_etl.extractors.nop_extractor import NopExtractor
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
-from paradicms_etl.models._agent import _Agent
+from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.date_time_description import DateTimeDescription
@@ -114,7 +114,7 @@ class TestDataPipeline(_Pipeline):
             agents = []
             for model in self.__generate_agents():
                 yield model
-                if isinstance(model, _Agent):
+                if isinstance(model, Agent):
                     agents.append(model)
             agents = tuple(agents)
 
@@ -182,7 +182,7 @@ class TestDataPipeline(_Pipeline):
         def __generate_collection_works(
             self,
             *,
-            agents: Tuple[_Agent, ...],
+            agents: Tuple[Agent, ...],
             collection: Collection,
             institution: Institution,
             named_values_by_value: Dict[str, NamedValue],
@@ -228,7 +228,7 @@ class TestDataPipeline(_Pipeline):
         def __generate_institution_collections(
             self,
             *,
-            agents: Tuple[_Agent, ...],
+            agents: Tuple[Agent, ...],
             institution: Institution,
             named_values_by_value: Dict[str, NamedValue],
         ):
@@ -268,7 +268,7 @@ class TestDataPipeline(_Pipeline):
 
         def __generate_institutions(
             self,
-            agents: Tuple[_Agent, ...],
+            agents: Tuple[Agent, ...],
             named_values_by_value: Dict[str, NamedValue],
         ):
             for institution_i in range(self.__institutions):
@@ -343,7 +343,7 @@ class TestDataPipeline(_Pipeline):
         def __generate_work(
             self,
             *,
-            agents: Tuple[_Agent, ...],
+            agents: Tuple[Agent, ...],
             collection_uris: Tuple[URIRef, ...],
             institution: Institution,
             named_values_by_value: Dict[str, NamedValue],
@@ -488,7 +488,7 @@ class TestDataPipeline(_Pipeline):
         def __generate_shared_works(
             self,
             *,
-            agents: Tuple[_Agent, ...],
+            agents: Tuple[Agent, ...],
             collections: Tuple[Collection, ...],
             institution: Institution,
             named_values_by_value: Dict[str, NamedValue],
