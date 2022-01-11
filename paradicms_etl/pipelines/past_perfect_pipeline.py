@@ -1,7 +1,7 @@
 from paradicms_etl.pipeline import Pipeline
 
 
-class _PastPerfectPipeline(Pipeline):
+class PastPerfectPipeline(Pipeline):
     @classmethod
     def add_arguments(cls, arg_parser, **kwds):
         Pipeline.add_arguments(arg_parser, **kwds)

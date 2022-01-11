@@ -2,11 +2,11 @@ from typing import Optional, Tuple
 
 from rdflib import URIRef, DCTERMS
 
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
+from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
@@ -16,11 +16,11 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
 from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
 from paradicms_etl.models.work import Work
-from paradicms_etl.transformers._wikidata_item_transformer import (
-    _WikidataItemTransformer,
-)
 from paradicms_etl.transformers._wikidata_items_transformer import (
     _WikidataItemsTransformer,
+)
+from paradicms_etl.transformers.wikidata_item_transformer import (
+    WikidataItemTransformer,
 )
 
 
@@ -36,7 +36,7 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
         statement=RightsStatementsDotOrgRightsStatements.InC.uri,
     )
 
-    class __WikidataItemTransformer(_WikidataItemTransformer):
+    class __WikidataItemTransformer(WikidataItemTransformer):
         def _get_properties(self, item: WikidataItem) -> Tuple[Property, ...]:
             properties = []
             properties.append(Property(DCTERMS.relation, item.uri))
@@ -87,7 +87,7 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
         institution_uri: Optional[URIRef] = None,
         **kwds,
     ):
-        _WikidataItemsTransformer.__init__(self, **kwds)
+        WikidataItemsTransformer.__init__(self, **kwds)
         self.__collection_uri = collection_uri
         self.__institution_uri = institution_uri
 
@@ -102,7 +102,7 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
         yield CreativeCommonsLicenses.BY_SA_3_0
         yield RightsStatementsDotOrgRightsStatements.InC
 
-        yield from _WikidataItemsTransformer.transform(self, **kwds)
+        yield from WikidataItemsTransformer.transform(self, **kwds)
 
     def _transform_human_item(self, item: WikidataItem):
         yield from self.__PersonWikidataItemTransformer(

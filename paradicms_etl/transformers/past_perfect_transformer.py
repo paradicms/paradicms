@@ -1,15 +1,15 @@
 from typing import Tuple, Union
 from urllib.parse import quote
 
-from paradicms_etl.transformer import Transformer
 from rdflib import URIRef, DCTERMS
 
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.work import Work
+from paradicms_etl.transformer import Transformer
 
 
-class _PastPerfectTransformer(Transformer):
+class PastPerfectTransformer(Transformer):
     def __init__(self, work_uri_prefix: str, **kwds):
         Transformer.__init__(self, **kwds)
         self.__kwds = kwds

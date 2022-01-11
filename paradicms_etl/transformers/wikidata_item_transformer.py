@@ -1,15 +1,14 @@
 from abc import abstractmethod
 from typing import Dict, Generator, Tuple
 
-from paradicms_etl.transformer import Transformer
-
 from paradicms_etl.model import Model
 from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
 from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
+from paradicms_etl.transformer import Transformer
 from paradicms_etl.utils.sanitize_method_name import sanitize_method_name
 
 
-class _WikidataItemTransformer(Transformer):
+class WikidataItemTransformer(Transformer):
     """
     Abstract base class for transformers that accept a single WikidataItem and transform it into zero or more paradicms Models.
 

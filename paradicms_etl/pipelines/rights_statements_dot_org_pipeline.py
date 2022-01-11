@@ -3,20 +3,20 @@ from pathlib import Path
 from typing import Dict, Generator
 from zipfile import ZipFile
 
-from paradicms_etl.transformer import Transformer
 from rdflib import DCTERMS, Graph, Literal
 
-from paradicms_etl.loader import Loader
-from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.extractor import Extractor
+from paradicms_etl.loader import Loader
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.namespaces import bind_namespaces
+from paradicms_etl.pipeline import Pipeline
+from paradicms_etl.transformer import Transformer
 
 
 class RightsStatementsDotOrgPipeline(Pipeline):
     ID = "rights_statements_dot_org"
 
-    class _RightsStatementsDotOrgExtractor(Extractor):
+    class __RightsStatementsDotOrgExtractor(Extractor):
         def extract(self, *, force: bool):
             zip_file_path = self._download(
                 "https://github.com/rightsstatements/data-model/archive/refs/heads/master.zip",
@@ -39,7 +39,7 @@ class RightsStatementsDotOrgPipeline(Pipeline):
                         json_ld_file_contents[id_] = zip_file_entry.read()
             return {"json_ld_file_contents": json_ld_file_contents}
 
-    class _RightsStatementsDotOrgTransformer(Transformer):
+    class __RightsStatementsDotOrgTransformer(Transformer):
         def transform(self, json_ld_file_contents: Dict[str, bytes]):
             for entry_id, json_ld_bytes in json_ld_file_contents.items():
                 graph = Graph()
@@ -50,7 +50,7 @@ class RightsStatementsDotOrgPipeline(Pipeline):
                 graph.add((uri, DCTERMS.identifier, Literal(entry_id)))
                 yield RightsStatement.from_rdf(graph.resource(uri))
 
-    class _RightsStatementsDotOrgLoader(Loader):
+    class __RightsStatementsDotOrgLoader(Loader):
         def load(self, *, models: Generator[RightsStatement, None, None]):
             rights_statements_py_file_path = (
                 Path(__file__).parent.parent
@@ -85,12 +85,12 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
     def __init__(self, **kwds):
         Pipeline.__init__(
             self,
-            extractor=self._RightsStatementsDotOrgExtractor(
+            extractor=self.__RightsStatementsDotOrgExtractor(
                 pipeline_id=self.ID, **kwds
             ),
             id=self.ID,
-            loader=self._RightsStatementsDotOrgLoader(pipeline_id=self.ID, **kwds),
-            transformer=self._RightsStatementsDotOrgTransformer(
+            loader=self.__RightsStatementsDotOrgLoader(pipeline_id=self.ID, **kwds),
+            transformer=self.__RightsStatementsDotOrgTransformer(
                 pipeline_id=self.ID, **kwds
             ),
             **kwds,

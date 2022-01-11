@@ -1,6 +1,6 @@
-from paradicms_etl.loaders._buffering_loader import _BufferingLoader
+from paradicms_etl.loaders.buffering_loader import BufferingLoader
 
 
-class CollectingLoader(_BufferingLoader):
+class CollectingLoader(BufferingLoader):
     def _flush(self, models):
         return models

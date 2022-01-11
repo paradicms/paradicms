@@ -2,14 +2,14 @@ from typing import List, Optional, Tuple
 
 from configargparse import ArgParser
 
+from paradicms_etl.extractors.nop_extractor import NopExtractor
 from paradicms_etl.loader import Loader
 from paradicms_etl.pipeline import Pipeline
-from paradicms_etl.extractors.nop_extractor import NopExtractor
 from paradicms_etl.transformers.nop_transformer import NopTransformer
 from paradicms_etl.transformers.validation_transformer import ValidationTransformer
 
 
-class _CompositePipeline(Pipeline):
+class CompositePipeline(Pipeline):
     """
     A base class for pipelines that compose 2+ other pipelines and share a loader.
     """

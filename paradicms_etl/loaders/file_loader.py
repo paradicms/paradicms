@@ -4,7 +4,7 @@ from typing import Optional
 from paradicms_etl.loader import Loader
 
 
-class _FileLoader(Loader):
+class FileLoader(Loader):
     def __init__(self, *, file_path: Optional[Path] = None, **kwds):
         Loader.__init__(self, **kwds)
         self.__file_path = file_path

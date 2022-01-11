@@ -5,12 +5,12 @@ from typing import Optional
 from pathvalidate import sanitize_filename
 from rdflib import ConjunctiveGraph, URIRef
 
-from paradicms_etl.loaders._buffering_loader import _BufferingLoader
+from paradicms_etl.loaders.buffering_loader import BufferingLoader
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.namespaces import bind_namespaces
 
 
-class RdfFileLoader(_BufferingLoader):
+class RdfFileLoader(BufferingLoader):
     FORMAT_DEFAULT = "trig"
 
     def __init__(
@@ -20,7 +20,7 @@ class RdfFileLoader(_BufferingLoader):
         format: Optional[str] = FORMAT_DEFAULT,
         **kwds,
     ):
-        _BufferingLoader.__init__(self, **kwds)
+        BufferingLoader.__init__(self, **kwds)
         self.__file_path = file_path
         if format is None:
             format = self.FORMAT_DEFAULT
