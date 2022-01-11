@@ -1,8 +1,9 @@
 from typing import Optional
 
-from rdflib import DC, DCTERMS, Literal, URIRef
+from rdflib import DC, DCTERMS, URIRef
 
 from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class License(NamedModel):
@@ -19,12 +20,13 @@ class License(NamedModel):
     def from_fields(
         cls, *, identifier: str, title: str, uri: URIRef, version: Optional[str] = None
     ) -> "License":
-        resource = cls._create_resource(identifier=uri)
-        resource.add(DC.identifier, Literal(identifier))
-        resource.add(DC.title, Literal(title))
-        if version is not None:
-            resource.add(DCTERMS.hasVersion, Literal(version))
-        return cls(resource)
+        return cls(
+            ResourceBuilder(uri)
+            .add(DC.identifier, identifier)
+            .add(DC.title, title)
+            .add(DCTERMS.hasVersion, version)
+            .build()
+        )
 
     @property
     def identifier(self) -> str:

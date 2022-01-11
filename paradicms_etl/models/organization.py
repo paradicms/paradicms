@@ -1,9 +1,10 @@
 from typing import Optional
 
-from rdflib import Literal, URIRef
+from rdflib import URIRef
 from rdflib.namespace import FOAF
 
 from paradicms_etl.models.agent import Agent
+from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class Organization(Agent):
@@ -11,8 +12,6 @@ class Organization(Agent):
     def from_fields(
         cls, *, name: str, uri: URIRef, page: Optional[URIRef] = None
     ) -> "Organization":
-        resource = cls._create_resource(identifier=uri)
-        resource.add(FOAF.name, Literal(name))
-        if page is not None:
-            resource.add(FOAF.page, page)
-        return cls(resource)
+        return cls(
+            ResourceBuilder(uri).add(FOAF.name, name).add(FOAF.page, page).build()
+        )

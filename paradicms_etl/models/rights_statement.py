@@ -1,8 +1,9 @@
 from typing import Optional, Tuple
 
-from rdflib import DCTERMS, Literal, SKOS, URIRef
+from rdflib import DCTERMS, SKOS, URIRef
 
 from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class RightsStatement(NamedModel):
@@ -27,17 +28,16 @@ class RightsStatement(NamedModel):
         notes: Tuple[str, ...] = (),
         scope_note: Optional[str] = None,
     ) -> "RightsStatement":
-        resource = cls._create_resource(identifier=uri)
-        if definition is not None:
-            resource.add(SKOS.definition, Literal(definition))
-        resource.add(DCTERMS.description, Literal(description))
-        resource.add(DCTERMS.identifier, Literal(identifier))
-        for note in notes:
-            resource.add(SKOS.note, Literal(note))
-        resource.add(SKOS.prefLabel, Literal(pref_label))
-        if scope_note is not None:
-            resource.add(SKOS.scopeNote, Literal(scope_note))
-        return cls(resource)
+        return cls(
+            ResourceBuilder(uri)
+            .add(SKOS.definition, definition)
+            .add(DCTERMS.description, description)
+            .add(DCTERMS.identifier, identifier)
+            .add(SKOS.note, notes)
+            .add(SKOS.prefLabel, pref_label)
+            .add(SKOS.scopeNote, scope_note)
+            .build()
+        )
 
     @property
     def identifier(self) -> str:

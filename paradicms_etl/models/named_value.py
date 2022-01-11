@@ -2,9 +2,10 @@ from typing import Optional, Tuple
 
 from rdflib.namespace import RDF, RDFS
 from rdflib.resource import Resource
-from rdflib.term import Literal, Node, URIRef
+from rdflib.term import Node, URIRef
 
 from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class NamedValue(NamedModel):
@@ -22,16 +23,15 @@ class NamedValue(NamedModel):
         value: Node,  # A property value
         label: Optional[str] = None,
     ) -> "NamedValue":
-        resource = cls._create_resource(identifier=uri)
-        if label is not None:
-            resource.add(RDFS.label, Literal(label))
         if not property_uris:
             raise ValueError("must specify at least one property URI")
-        for property_uri in property_uris:
-            # Not kosher use of rdf:predicate, but I couldn't find a better fit
-            resource.add(RDF.predicate, property_uri)
-        resource.add(RDF.value, value)
-        return cls(resource)
+        return cls(
+            ResourceBuilder(uri)
+            .add(RDFS.label, label)
+            .add(RDF.predicate, property_uris)
+            .add(RDF.value, value)
+            .build()
+        )
 
     @property
     def label(self) -> Optional[str]:

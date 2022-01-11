@@ -1,6 +1,6 @@
 from typing import Optional, Tuple, Union
 
-from rdflib import Literal, URIRef
+from rdflib import URIRef
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
@@ -9,6 +9,7 @@ from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import CMS
+from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class Work(NamedModel):
@@ -41,28 +42,17 @@ class Work(NamedModel):
         properties: Tuple[Property, ...] = (),
         rights: Optional[Rights] = None,
     ) -> "Work":
-        resource = cls._create_resource(identifier=uri)
-        if abstract is not None:
-            if isinstance(abstract, str):
-                resource.add(DCTERMS.abstract, Literal(abstract))
-            elif isinstance(abstract, Text):
-                resource.add(DCTERMS.abstract, abstract.to_rdf(graph=resource.graph))
-            else:
-                raise TypeError(type(abstract))
-        for collection_uri in collection_uris:
-            resource.add(CMS.collection, collection_uri)
-        resource.add(CMS.institution, institution_uri)
-        if page is not None:
-            if isinstance(page, URIRef):
-                resource.add(FOAF.page, page)
-            else:
-                resource.add(FOAF.page, Literal(str(page)))
-        for property_ in properties:
-            property_.to_rdf(add_to_resource=resource)
-        if rights is not None:
-            rights.to_rdf(add_to_resource=resource)
-        resource.add(DCTERMS.title, Literal(title))
-        return cls(resource)
+        return cls(
+            ResourceBuilder(uri)
+            .add(DCTERMS.abstract, abstract)
+            .add(CMS.collection, collection_uris)
+            .add(CMS.institution, institution_uri)
+            .add(FOAF.page, page)
+            .add_properties(properties)
+            .add_rights(rights)
+            .add(DCTERMS.title, title)
+            .build()
+        )
 
     @property
     def abstract(self) -> Union[str, Text, None]:

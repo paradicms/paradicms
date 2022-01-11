@@ -1,11 +1,12 @@
 from typing import Optional, Tuple
 
-from rdflib import Literal, URIRef
+from rdflib import URIRef
 from rdflib.namespace import DCTERMS, FOAF
 
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
+from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class Institution(NamedModel):
@@ -24,15 +25,14 @@ class Institution(NamedModel):
         properties: Tuple[Property, ...] = (),
         rights: Optional[Rights] = None,
     ) -> "Institution":
-        resource = cls._create_resource(identifier=uri)
-        if abstract is not None:
-            resource.add(DCTERMS.abstract, Literal(abstract))
-        resource.add(FOAF.name, Literal(name))
-        for property_ in properties:
-            resource.add(property_.uri, property_.value)
-        if rights is not None:
-            rights.to_rdf(add_to_resource=resource)
-        return cls(resource)
+        return cls(
+            ResourceBuilder(uri)
+            .add(DCTERMS.abstract, abstract)
+            .add(FOAF.name, name)
+            .add_properties(properties)
+            .add_rights(rights)
+            .build()
+        )
 
     @property
     def label(self) -> str:

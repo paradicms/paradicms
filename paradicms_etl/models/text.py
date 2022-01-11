@@ -1,10 +1,11 @@
 from typing import Optional
 
-from paradicms_etl.model import Model
-from rdflib import BNode, RDF, Literal
+from rdflib import BNode, RDF
 
+from paradicms_etl.model import Model
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespaces import CMS
+from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class Text(Model):
@@ -29,12 +30,13 @@ class Text(Model):
 
     @classmethod
     def from_fields(cls, value: str, *, rights: Optional[Rights] = None) -> "Text":
-        resource = cls._create_resource(identifier=BNode())
-        resource.add(RDF.type, CMS.Text)
-        resource.add(RDF.value, Literal(value))
-        if rights is not None:
-            rights.to_rdf(add_to_resource=resource)
-        return cls(resource=resource)
+        return cls(
+            ResourceBuilder(BNode())
+            .add(RDF.type, CMS.Text)
+            .add(RDF.value, value)
+            .add_rights(rights)
+            .build()
+        )
 
     @property
     def rights(self) -> Optional[Rights]:
