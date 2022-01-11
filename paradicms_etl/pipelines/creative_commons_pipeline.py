@@ -7,13 +7,13 @@ from paradicms_etl.transformer import Transformer
 from rdflib import Graph, Literal, Namespace
 
 from paradicms_etl.loader import Loader
-from paradicms_etl._pipeline import _Pipeline
+from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.extractor import Extractor
 from paradicms_etl.models.license import License
 from paradicms_etl.namespaces import bind_namespaces
 
 
-class CreativeCommonsPipeline(_Pipeline):
+class CreativeCommonsPipeline(Pipeline):
     ID = "creative_commons"
 
     class _CreativeCommonsExtractor(Extractor):
@@ -111,7 +111,7 @@ class CreativeCommonsLicenses(ModelSingletons):
                 )
 
     def __init__(self, **kwds):
-        _Pipeline.__init__(
+        Pipeline.__init__(
             self,
             extractor=self._CreativeCommonsExtractor(pipeline_id=self.ID, **kwds),
             id=self.ID,

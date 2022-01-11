@@ -7,7 +7,7 @@ from paradicms_etl.transformer import Transformer
 from rdflib import DCTERMS, Literal, URIRef
 
 from paradicms_etl.loader import Loader
-from paradicms_etl._pipeline import _Pipeline
+from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.extractors.nop_extractor import NopExtractor
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
@@ -31,7 +31,7 @@ from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import VRA
 
 
-class TestDataPipeline(_Pipeline):
+class TestDataPipeline(Pipeline):
     ID = "test_data"
 
     class __TestDataTransformer(Transformer):
@@ -532,7 +532,7 @@ class TestDataPipeline(_Pipeline):
                 pipeline_id=self.ID,
             )
 
-        _Pipeline.__init__(
+        Pipeline.__init__(
             self,
             extractor=NopExtractor(pipeline_id=self.ID),
             id=self.ID,

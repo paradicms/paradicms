@@ -1,9 +1,9 @@
-from paradicms_etl._pipeline import _Pipeline
+from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.extractors.omeka_classic_extractor import OmekaClassicExtractor
 from paradicms_etl.transformers.omeka_classic_transformer import OmekaClassicTransformer
 
 
-class OmekaClassicPipeline(_Pipeline):
+class OmekaClassicPipeline(Pipeline):
     def __init__(
         self,
         *,
@@ -18,7 +18,7 @@ class OmekaClassicPipeline(_Pipeline):
         thumbnail_width_px: int,
         **kwds
     ):
-        _Pipeline.__init__(
+        Pipeline.__init__(
             self,
             extractor=OmekaClassicExtractor(
                 api_key=api_key,
@@ -42,7 +42,7 @@ class OmekaClassicPipeline(_Pipeline):
 
     @classmethod
     def add_arguments(cls, arg_parser):
-        _Pipeline.add_arguments(cls, arg_parser)
+        Pipeline.add_arguments(cls, arg_parser)
         arg_parser.add_argument("--api-key", help="Omeka API key", required=True)
         arg_parser.add_argument(
             "--endpoint-url", help="Omeka API endpoint URL", required=True

@@ -4,7 +4,7 @@ from typing import List, Optional
 from configargparse import ArgParser
 from rdflib import URIRef
 
-from paradicms_etl._pipeline import _Pipeline
+from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.extractors.wikidata_qid_extractor import WikidataQidExtractor
 from paradicms_etl.loaders.markdown_directory_loader import MarkdownDirectoryLoader
 from paradicms_etl.transformers.markdown_directory_transformer import (
@@ -15,7 +15,7 @@ from paradicms_etl.transformers.wikidata_items_transformer import (
 )
 
 
-class WikidataQidToMarkdownDirectoryPipeline(_Pipeline):
+class WikidataQidToMarkdownDirectoryPipeline(Pipeline):
     def __init__(
         self,
         *,
@@ -43,7 +43,7 @@ class WikidataQidToMarkdownDirectoryPipeline(_Pipeline):
                 )
             )
 
-        _Pipeline.__init__(
+        Pipeline.__init__(
             self,
             extractor=WikidataQidExtractor(
                 qids=tuple(qid), pipeline_id=pipeline_id, **kwds
@@ -65,7 +65,7 @@ class WikidataQidToMarkdownDirectoryPipeline(_Pipeline):
 
     @classmethod
     def add_arguments(cls, arg_parser: ArgParser) -> None:
-        _Pipeline.add_arguments(arg_parser)
+        Pipeline.add_arguments(arg_parser)
         arg_parser.add_argument("--collection-uri")
         arg_parser.add_argument("--institution-uri")
         arg_parser.add_argument("--markdown-directory-path", required=True)

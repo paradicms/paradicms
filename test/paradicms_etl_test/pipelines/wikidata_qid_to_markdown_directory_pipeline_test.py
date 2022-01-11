@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 from pathvalidate import sanitize_filename
 
-from paradicms_etl._pipeline import _Pipeline
+from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.extractors.markdown_directory_extractor import (
     MarkdownDirectoryExtractor,
 )
@@ -19,9 +19,9 @@ from paradicms_etl.transformers.markdown_directory_transformer import (
 )
 
 
-class __MarkdownDirectoryPipeline(_Pipeline):
+class __MarkdownDirectoryPipeline(Pipeline):
     def __init__(self, id: str, markdown_directory_path: Path):
-        _Pipeline.__init__(
+        Pipeline.__init__(
             self,
             extractor=MarkdownDirectoryExtractor(
                 extracted_data_dir_path=markdown_directory_path, pipeline_id=id

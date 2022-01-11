@@ -4,16 +4,16 @@ from pathlib import Path
 from typing import Dict, Optional
 
 from configargparse import ArgParser
-from paradicms_etl.transformer import Transformer
 from rdflib import URIRef
 
-from paradicms_etl.loader import Loader
 from paradicms_etl.extractor import Extractor
+from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
+from paradicms_etl.transformer import Transformer
 from paradicms_etl.transformers.validation_transformer import ValidationTransformer
 
 
-class _Pipeline(ABC):
+class Pipeline(ABC):
     def __init__(
         self,
         *,

@@ -7,13 +7,13 @@ from paradicms_etl.transformer import Transformer
 from rdflib import DCTERMS, Graph, Literal
 
 from paradicms_etl.loader import Loader
-from paradicms_etl._pipeline import _Pipeline
+from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.extractor import Extractor
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.namespaces import bind_namespaces
 
 
-class RightsStatementsDotOrgPipeline(_Pipeline):
+class RightsStatementsDotOrgPipeline(Pipeline):
     ID = "rights_statements_dot_org"
 
     class _RightsStatementsDotOrgExtractor(Extractor):
@@ -83,7 +83,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
                 )
 
     def __init__(self, **kwds):
-        _Pipeline.__init__(
+        Pipeline.__init__(
             self,
             extractor=self._RightsStatementsDotOrgExtractor(
                 pipeline_id=self.ID, **kwds
