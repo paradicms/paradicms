@@ -1,5 +1,5 @@
 import {NamedModel} from "./NamedModel";
-import {DCTERMS, FOAF, PARADICMS, RDF, XSD} from "./vocabularies";
+import {DCTERMS, FOAF, PARADICMS, RDF} from "./vocabularies";
 import {Collection} from "./Collection";
 import {Institution} from "./Institution";
 import {Rights} from "./Rights";
@@ -12,9 +12,6 @@ import {PropertyValue} from "./PropertyValue";
 import {NamedValue} from "./NamedValue";
 import {NamedNode} from "n3";
 import {WorkAgent} from "./WorkAgent";
-import {DateTimeDescription} from "./DateTimeDescription";
-import {WorkEvent} from "./WorkEvent";
-import {WorkEventDateTime} from "./WorkEventDateTime";
 import {requireDefined} from "./requireDefined";
 
 const getRightsWorkAgents = (
@@ -123,67 +120,46 @@ export class Work extends NamedModel {
       .map(term => term.value);
   }
 
-  @Memoize()
-  get created(): DateTimeDescription | number | string | null {
-    for (const term of this.propertyObjects(DCTERMS.created)) {
-      switch (term.termType) {
-        case "BlankNode":
-          return new DateTimeDescription({
-            dataset: this.dataset,
-            graphNode: this.graphNode,
-            node: term,
-          });
-        case "Literal":
-          if (term.datatype.value === XSD.integer.value) {
-            return parseInt(term.value);
-          } else {
-            return term.value;
-          }
-      }
-    }
-    return null;
-  }
-
-  get events(): readonly WorkEvent[] {
-    const toWorkEventDateTime = (
-      dateTime: DateTimeDescription | number | string | null
-    ): WorkEventDateTime | null => {
-      if (dateTime === null) {
-        return null;
-      }
-      if (typeof dateTime === "number") {
-        return {
-          day: 1,
-          month: 1,
-          year: dateTime,
-        };
-      } else if (typeof dateTime === "string") {
-        return null;
-      } else {
-        // DateTimeDescription
-        if (dateTime.year == null) {
-          return null;
-        }
-        return {
-          day: dateTime.day,
-          month: dateTime.month,
-          year: dateTime.year,
-        };
-      }
-    };
-
-    const events: WorkEvent[] = [];
-
-    const created = toWorkEventDateTime(this.created);
-    if (created !== null) {
-      events.push({
-        dateTime: created,
-        type: "Creation",
-      });
-    }
-
-    return events;
-  }
+  // get events(): readonly WorkEvent[] {
+  //   const toWorkEventDateTime = (
+  //     dateTime: DateTimeDescription | number | string | null
+  //   ): WorkEventDateTime | null => {
+  //     if (dateTime === null) {
+  //       return null;
+  //     }
+  //     if (typeof dateTime === "number") {
+  //       return {
+  //         day: 1,
+  //         month: 1,
+  //         year: dateTime,
+  //       };
+  //     } else if (typeof dateTime === "string") {
+  //       return null;
+  //     } else {
+  //       // DateTimeDescription
+  //       if (dateTime.year == null) {
+  //         return null;
+  //       }
+  //       return {
+  //         day: dateTime.day,
+  //         month: dateTime.month,
+  //         year: dateTime.year,
+  //       };
+  //     }
+  //   };
+  //
+  //   const events: WorkEvent[] = [];
+  //
+  //   const created = toWorkEventDateTime(this.created);
+  //   if (created !== null) {
+  //     events.push({
+  //       dateTime: created,
+  //       type: "Creation",
+  //     });
+  //   }
+  //
+  //   return events;
+  // }
 
   get images(): readonly Image[] {
     return this.dataset.imagesByDepictsUri(this.uri);

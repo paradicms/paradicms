@@ -1,7 +1,6 @@
 import {expect} from "chai";
 import {Dataset, DCTERMS, Text} from "../src";
 import {testDataTrig} from "./testDataTrig";
-import {DateTimeDescription} from "../src/DateTimeDescription";
 
 describe("Work", () => {
   const dataset = Dataset.parse(testDataTrig);
@@ -27,11 +26,11 @@ describe("Work", () => {
     );
   });
 
-  it("should get the work's created datetime as a DateTimeDescription", () => {
-    const created = sut.created;
-    expect(created).to.be.instanceof(DateTimeDescription);
-    expect((created as DateTimeDescription).year).to.eq(2022);
-  });
+  // it("should get the work's created datetime as a DateTimeDescription", () => {
+  //   const created = sut.created;
+  //   expect(created).to.be.instanceof(DateTimeDescription);
+  //   expect((created as DateTimeDescription).year).to.eq(2022);
+  // });
 
   it("should get the work's images", () => {
     expect(sut.images.map(image => image.uri).sort()).to.deep.eq(

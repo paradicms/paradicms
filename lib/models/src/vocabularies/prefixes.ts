@@ -9,6 +9,9 @@ import {EXIF} from "./EXIF";
 import {XSD} from "./XSD";
 import {VRA} from "./VRA";
 import {SKOS} from "./SKOS";
+import {TIME} from "./TIME";
+import {WGS} from "./WGS";
+import {PROV} from "./PROV";
 
 export const prefixes: Prefixes = {
   dc: DC.NS(""),
@@ -16,9 +19,12 @@ export const prefixes: Prefixes = {
   exif: EXIF.NS(""),
   foaf: FOAF.NS(""),
   paradicms: PARADICMS.NS(""),
+  prov: PROV.NS(""),
   rdf: RDF.NS(""),
   rdfs: RDFS.NS(""),
   skos: SKOS.NS(""),
+  time: TIME.NS(""),
   vra: VRA.NS(""),
   xsd: XSD.NS(""),
+  wgs: WGS.NS(""),
 };

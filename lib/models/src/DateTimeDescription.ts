@@ -1,6 +1,5 @@
 import {Model} from "./Model";
-import {TIME} from "./vocabularies/TIME";
-import {XSD} from "./vocabularies";
+import {TIME, XSD} from "./vocabularies";
 import {Literal, NamedNode} from "n3";
 
 export class DateTimeDescription extends Model {
