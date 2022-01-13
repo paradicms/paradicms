@@ -1,5 +1,5 @@
 import {NamedModel} from "./NamedModel";
-import {DCTERMS, FOAF, PARADICMS, RDF} from "./vocabularies";
+import {CMS, DCTERMS, FOAF, RDF} from "./vocabularies";
 import {Collection} from "./Collection";
 import {Institution} from "./Institution";
 import {Rights} from "./Rights";
@@ -115,7 +115,7 @@ export class Work extends NamedModel {
   }
 
   get collectionUris(): readonly string[] {
-    return this.propertyObjects(PARADICMS.collection)
+    return this.propertyObjects(CMS.collection)
       .filter(term => term.termType === "NamedNode")
       .map(term => term.value);
   }
@@ -171,7 +171,7 @@ export class Work extends NamedModel {
 
   get institutionUri(): string {
     return requireDefined(
-      this.propertyObjects(PARADICMS.institution).find(
+      this.propertyObjects(CMS.institution).find(
         term => term.termType === "NamedNode"
       )
     ).value;
@@ -207,7 +207,7 @@ export class Work extends NamedModel {
         const rdfTypeQuads = this.store.getQuads(
           quad.object,
           RDF.type,
-          PARADICMS.NamedValue,
+          CMS.NamedValue,
           null
         );
         if (rdfTypeQuads.length == 0) {

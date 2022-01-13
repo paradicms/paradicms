@@ -1,7 +1,7 @@
 import {ImageDimensions} from "./ImageDimensions";
 import {NamedModel} from "./NamedModel";
 import {Literal, NamedNode} from "n3";
-import {EXIF, FOAF, PARADICMS, XSD} from "./vocabularies";
+import {CMS, EXIF, FOAF, XSD} from "./vocabularies";
 import {Rights} from "./Rights";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
@@ -63,10 +63,7 @@ export class Image extends NamedModel {
 
   @Memoize()
   get maxDimensions(): ImageDimensions | null {
-    return this.imageDimensions(
-      PARADICMS.imageMaxHeight,
-      PARADICMS.imageMaxWidth
-    );
+    return this.imageDimensions(CMS.imageMaxHeight, CMS.imageMaxWidth);
   }
 
   get originalImageUri(): string | null {
@@ -97,7 +94,7 @@ export class Image extends NamedModel {
   }
 
   get src(): string | null {
-    const srcLiteral = this.propertyObjects(PARADICMS.imageSrc).find(
+    const srcLiteral = this.propertyObjects(CMS.imageSrc).find(
       term => term.termType === "Literal"
     );
     if (srcLiteral) {

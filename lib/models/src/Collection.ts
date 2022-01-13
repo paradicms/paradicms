@@ -1,6 +1,6 @@
 import {NamedModel} from "./NamedModel";
 import {Institution} from "./Institution";
-import {DCTERMS, PARADICMS} from "./vocabularies";
+import {CMS, DCTERMS} from "./vocabularies";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Image} from "./Image";
@@ -33,7 +33,7 @@ export class Collection extends NamedModel {
 
   get institutionUri(): string {
     return requireDefined(
-      this.propertyObjects(PARADICMS.institution).find(
+      this.propertyObjects(CMS.institution).find(
         term => term.termType === "NamedNode"
       )
     ).value;

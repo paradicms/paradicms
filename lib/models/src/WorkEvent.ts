@@ -1,13 +1,11 @@
 import {Event} from "./Event";
 import {requireDefined} from "./requireDefined";
-import {PROV} from "./vocabularies";
+import {CMS} from "./vocabularies";
 
-export class WorkEvent extends Event {
+export abstract class WorkEvent extends Event {
   get workUri(): string {
     return requireDefined(
-      this.propertyObjects(PROV.generated).find(
-        term => term.termType === "NamedNode"
-      )
+      this.propertyObjects(CMS.work).find(term => term.termType === "NamedNode")
     ).value;
   }
 }

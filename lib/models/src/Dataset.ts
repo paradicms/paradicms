@@ -11,7 +11,7 @@ import {
   Writer,
   WriterOptions,
 } from "n3";
-import {PARADICMS, prefixes, RDF} from "./vocabularies";
+import {CMS, prefixes, RDF} from "./vocabularies";
 import {Work} from "./Work";
 import {Person} from "./Person";
 import {NamedModel} from "./NamedModel";
@@ -380,7 +380,7 @@ export class Dataset {
           collection,
         ];
       }
-    }, PARADICMS.Collection);
+    }, CMS.Collection);
     this._collections = collections;
     this._collectionsByInstitutionUriIndex = collectionsByInstitutionUriIndex;
   }
@@ -416,7 +416,7 @@ export class Dataset {
       }
 
       this._imagesByUriIndex![image.uri] = image;
-    }, PARADICMS.Image);
+    }, CMS.Image);
     this._images = images;
     this._imagesByDepictsUriIndex = imagesByDepictsUriIndex;
     this._imagesByOriginalImageUriIndex = imagesByOriginalImageUriIndex;
@@ -433,7 +433,7 @@ export class Dataset {
       const institution = this.readInstitution(kwds);
       institutions.push(institution);
       this._institutionsByUriIndex![institution.uri] = institution;
-    }, PARADICMS.Institution);
+    }, CMS.Institution);
     this._institutions = institutions;
   }
 
@@ -448,7 +448,7 @@ export class Dataset {
       const license = this.readLicense(kwds);
       licenses.push(license);
       this._licensesByUriIndex![license.uri] = license;
-    }, PARADICMS.License);
+    }, CMS.License);
     this._licenses = licenses;
   }
 
@@ -506,7 +506,7 @@ export class Dataset {
       }
 
       this._namedValuesByUriIndex![namedValue.uri] = namedValue;
-    }, PARADICMS.NamedValue);
+    }, CMS.NamedValue);
     this._namedValues = namedValues;
     this._namedValuesByPropertyUriIndex = namedValuesByPropertyUriIndex;
   }
@@ -522,7 +522,7 @@ export class Dataset {
       const organization = this.readOrganization(kwds);
       organizations.push(organization);
       this._organizationsByUriIndex![organization.uri] = organization;
-    }, PARADICMS.Organization);
+    }, CMS.Organization);
     this._organizations = organizations;
   }
 
@@ -533,7 +533,7 @@ export class Dataset {
       const person = this.readPerson(kwds);
       people.push(person);
       this._peopleByUriIndex![person.uri] = person;
-    }, PARADICMS.Person);
+    }, CMS.Person);
     this._people = people;
   }
 
@@ -552,7 +552,7 @@ export class Dataset {
       const rightsStatement = this.readRightsStatement(kwds);
       rightsStatements.push(rightsStatement);
       this._rightsStatementsByUriIndex![rightsStatement.uri] = rightsStatement;
-    }, PARADICMS.RightsStatement);
+    }, CMS.RightsStatement);
     this._rightsStatements = rightsStatements;
   }
 
@@ -597,7 +597,7 @@ export class Dataset {
       }
 
       this._worksByUriIndex![work.uri] = work;
-    }, PARADICMS.Work);
+    }, CMS.Work);
     this._works = works;
     this._worksByAgentUriIndex = worksByAgentUriIndex;
     this._worksByCollectionUriIndex = worksByCollectionUriIndex;

@@ -4,7 +4,7 @@ import {DCTERMS, VRA, XSD} from "./vocabularies";
 import {NamedNode} from "n3";
 import {Location} from "./Location";
 
-export class Event extends NamedModel {
+export abstract class Event extends NamedModel {
   get date(): DateTimeDescription | number | string | null {
     return this.datePropertyValue(DCTERMS.date);
   }

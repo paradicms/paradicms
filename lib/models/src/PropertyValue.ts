@@ -3,7 +3,7 @@ import {Literal, NamedNode, Quad} from "n3";
 import {Text} from "./Text";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {Image} from "./Image";
-import {PARADICMS, RDF} from "./vocabularies";
+import {CMS, RDF} from "./vocabularies";
 import {Dataset} from "./Dataset";
 import {Agent} from "./Agent";
 
@@ -31,7 +31,7 @@ export abstract class PropertyValue {
         const objectRdfTypeQuads = dataset.store.getQuads(
           quad.object,
           RDF.type,
-          PARADICMS.Text,
+          CMS.Text,
           quad.graph
         );
         if (objectRdfTypeQuads.length === 0) {
