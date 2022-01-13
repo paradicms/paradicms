@@ -715,13 +715,13 @@ class MarkdownDirectoryTransformer(Transformer):
                         self.__get_or_synthesize_default_collection().uri,
                     )
 
-                work_ = self.__transform_resource_to_model(
+                work = self.__transform_resource_to_model(
                     model_resource=work_resource,
                     model_type=Work,
                 )
                 self.__buffer_transformed_model(
                     model_id=markdown_file_entry.model_id,
-                    transformed_model=work_,
+                    transformed_model=work,
                 )
 
         def __transform_other_markdown_file_entries(self) -> None:

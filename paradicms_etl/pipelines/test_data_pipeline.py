@@ -3,12 +3,10 @@ from pathlib import Path
 from typing import Optional, Tuple, Dict
 from urllib.parse import quote
 
-from paradicms_etl.transformer import Transformer
 from rdflib import DCTERMS, Literal, URIRef
 
-from paradicms_etl.loader import Loader
-from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.extractors.nop_extractor import NopExtractor
+from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.agent import Agent
@@ -28,7 +26,10 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 )
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
+from paradicms_etl.models.work_creation import WorkCreation
 from paradicms_etl.namespaces import VRA
+from paradicms_etl.pipeline import Pipeline
+from paradicms_etl.transformer import Transformer
 
 
 class TestDataPipeline(Pipeline):
@@ -392,14 +393,10 @@ class TestDataPipeline(Pipeline):
 
             # Properties that depend on the date
             # dcterms:created
-            properties.append(
-                Property(
-                    DCTERMS.created,
-                    DateTimeDescription.from_date(
-                        date(day=1, month=1, year=2022) + timedelta(days=work_i)
-                    ),
-                )
+            creation_date_time_description = DateTimeDescription.from_date(
+                date(day=1, month=1, year=2022) + timedelta(days=work_i)
             )
+            properties.append(Property(DCTERMS.created, creation_date_time_description))
             # dcterms:date
             properties.extend(
                 Property(
@@ -428,12 +425,9 @@ class TestDataPipeline(Pipeline):
                 )
 
             # dcterms:creator
+            creator_uris = [agents[(work_i + i) % len(agents)].uri for i in range(3)]
             properties.extend(
-                Property(
-                    DCTERMS.creator,
-                    agents[(work_i + i) % len(agents)].uri,
-                )
-                for i in range(3)
+                Property(DCTERMS.creator, creator_uri) for creator_uri in creator_uris
             )
 
             # dcterms:relation
@@ -452,7 +446,7 @@ class TestDataPipeline(Pipeline):
                 )
             )
 
-            work_ = Work.from_fields(
+            work = Work.from_fields(
                 abstract=Text.from_fields(
                     self.__LOREM_IPSUM,
                     rights=Rights(
@@ -477,12 +471,20 @@ class TestDataPipeline(Pipeline):
                 title=title,
                 uri=uri,
             )
-            yield work_
+            yield work
 
             yield from self.__generate_images(
-                depicts_uri=work_.uri,
-                rights=work_.rights,
-                text_prefix=work_.title,
+                depicts_uri=work.uri,
+                rights=work.rights,
+                text_prefix=work.title,
+            )
+
+            # ADD LOCATION
+            yield WorkCreation.from_fields(
+                creator_uri=creator_uris,
+                date=creation_date_time_description,
+                work_uri=work.uri,
+                uri=URIRef(str(uri) + "Creation"),
             )
 
         def __generate_shared_works(

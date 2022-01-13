@@ -5,7 +5,7 @@ from rdflib import URIRef, DCTERMS
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.work_event import WorkEvent
-from paradicms_etl.namespaces import PROV
+from paradicms_etl.namespaces import PROV, VRA
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
@@ -14,17 +14,21 @@ class WorkCreation(WorkEvent):
     def from_fields(
         cls,
         *,
-        creator_uri: Union[URIRef, Tuple[URIRef, ...]],
         uri: URIRef,
         work_uri: URIRef,
-        spatial: Union[Location, None] = None,
-        temporal: Union[DateTimeDescription, str] = None
+        creator_uri: Union[URIRef, Tuple[URIRef, ...]],
+        date: Union[DateTimeDescription, str, None] = None,
+        earliest_date: Union[DateTimeDescription, str, None] = None,
+        latest_date: Union[DateTimeDescription, str, None] = None,
+        location: Union[Location, str, None] = None,
     ):
         return cls(
-            ResourceBuilder.create(uri)
+            ResourceBuilder(uri)
             .add(DCTERMS.creator, creator_uri)
-            .add(DCTERMS.spatial, spatial)
-            .add(DCTERMS.temporal, temporal)
+            .add(DCTERMS.date, date)
+            .add(VRA.earliestDate, earliest_date)
+            .add(VRA.latestDate, latest_date)
+            .add(DCTERMS.spatial, location)
             .add(PROV.generated, work_uri)
             .build()
         )

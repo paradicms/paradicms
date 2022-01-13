@@ -18,6 +18,7 @@ class CMS(DefinedNamespace):
     Collection: URIRef
     Configuration: URIRef
     DateTimeDescription: URIRef
+    Event: URIRef
     Image: URIRef
     Institution: URIRef
     License: URIRef
@@ -28,3 +29,5 @@ class CMS(DefinedNamespace):
     Text: URIRef
     WikidataItem: URIRef
     Work: URIRef
+    WorkCreation: URIRef
+    WorkEvent: URIRef

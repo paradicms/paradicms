@@ -1,7 +1,7 @@
 import datetime
 from typing import Optional, Union
 
-from rdflib import BNode, Literal, RDF, XSD
+from rdflib import BNode, Literal, XSD
 
 from paradicms_etl.model import Model
 from paradicms_etl.namespaces import TIME
@@ -36,7 +36,7 @@ class DateTimeDescription(Model):
         return cls(
             ResourceBuilder(BNode())
             # https://www.w3.org/TR/owl-time/#time:DateTimeDescription
-            .add(RDF.type, TIME.DateTimeDescription)
+            # .add(RDF.type, TIME.DateTimeDescription)
             # https://www.w3.org/TR/owl-time/#time:day
             # https://www.w3.org/TR/xmlschema11-2/#gDay
             .add(

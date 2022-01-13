@@ -153,7 +153,7 @@ class LunaTransformer(Transformer):
 
         properties = self._transform_object_field_values(field_values=field_values_dict)
 
-        work_ = Work.from_fields(
+        work = Work.from_fields(
             abstract=description,
             collection_uris=collection_uris,
             institution_uri=institution.uri,
@@ -161,12 +161,12 @@ class LunaTransformer(Transformer):
             title=display_name,
             uri=URIRef(luna_object["iiifManifest"]),
         )
-        yield work_
+        yield work
 
         yield from self._transform_object_images(
             field_values=field_values_dict,
             luna_object=luna_object,
-            work_=work_,
+            work=work,
         )
 
         for field_name, field_values in field_values_dict.items():
@@ -243,7 +243,7 @@ class LunaTransformer(Transformer):
         *,
         field_values: Dict[str, List[str]],
         luna_object,
-        work_: Work,
+        work: Work,
     ) -> Generator[Image, None, None]:
         def pop_qualified_field_values(*args):
             return self._pop_qualified_field_values(field_values, *args)
@@ -291,7 +291,7 @@ class LunaTransformer(Transformer):
             image_uri = URIRef(image_url)
             yield Image.from_fields(
                 created=image_created,
-                depicts_uri=work_.uri,
+                depicts_uri=work.uri,
                 max_dimensions=ImageDimensions(
                     height=image_dimension_max,
                     width=image_dimension_max,
