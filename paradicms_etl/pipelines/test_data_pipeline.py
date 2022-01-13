@@ -324,7 +324,7 @@ class TestDataPipeline(Pipeline):
                     continue
                 for property_value in property_values:
                     named_value = NamedValue.from_fields(
-                        # label=property_value,
+                        label=f"Named value {named_value_urn_i}",
                         property_uris=(property_uri,),
                         uri=URIRef(
                             f"urn:paradicms_etl:pipeline:test_data:named_value:{named_value_urn_i}"
