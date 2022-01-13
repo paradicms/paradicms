@@ -147,15 +147,15 @@ class TestDataPipeline(Pipeline):
                         else None,
                         properties=(
                             # dcterms:relation
-                            # Wikidata concept for Pilot ACE
+                            # Wikidata concept for Alan Turing
                             Property(
                                 DCTERMS.relation,
-                                URIRef("http://www.wikidata.org/entity/Q937690"),
+                                URIRef("http://www.wikidata.org/entity/Q7251"),
                             ),
                             # Wikipedia
                             Property(
                                 DCTERMS.relation,
-                                URIRef("http://en.wikipedia.org/wiki/Pilot_ACE"),
+                                URIRef("http://en.wikipedia.org/wiki/Alan_Turing"),
                             ),
                         ),
                         sort_name=f"{person_i}, Person",
@@ -431,18 +431,18 @@ class TestDataPipeline(Pipeline):
             )
 
             # dcterms:relation
-            # Wikidata concept for Alan Turing
+            # Wikidata concept for the Pilot ACE
             properties.append(
                 Property(
                     DCTERMS.relation,
-                    URIRef("http://www.wikidata.org/entity/Q7251"),
+                    URIRef("http://www.wikidata.org/entity/Q937690"),
                 )
             )
             # Wikipedia
             properties.append(
                 Property(
                     DCTERMS.relation,
-                    URIRef("http://en.wikipedia.org/wiki/Alan_Turing"),
+                    URIRef("http://en.wikipedia.org/wiki/Pilot-ACE"),
                 )
             )
 
