@@ -3,10 +3,12 @@
 /app/material-ui-union/public/img/archive/
 dist/
 /lib/lunr/@paradicms/
+/lib/models/coverage/
 /lib/models/@paradicms/
 .next/
 node_modules/
 null/
+.nyc_output/
 out/
 !/integration/material-ui-union/package-lock.json
 yarn-error.log

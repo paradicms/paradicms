@@ -15,7 +15,9 @@
     "chai": "^4.2.0",
     "mocha": "^8.2.1",
     "mocha-profiler": "1.0.0",
+    "nyc": "15.1.0",
     "rimraf": "3.0.2",
+    "source-map-support": "0.5.21",
     "ts-node": "^9.1.1",
     "typescript": "^4.5.4"
   },
@@ -24,11 +26,24 @@
     "dist"
   ],
   "main": "dist/index.js",
+  "nyc": {
+    "all": true,
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "**/*.d.ts"
+    ],
+    "reporter": [
+      "html"
+    ]
+  },
   "scripts": {
     "build": "tsc -b",
     "clean": "rimraf dist",
     "rebuild": "rimraf dist && tsc -b",
     "test": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' mocha -r ts-node/register 'test/**/*.ts'",
+    "test-coverage": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' nyc mocha -r source-map-support/register -r ts-node/register 'test/**/*.ts'",
     "test-profile": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' mocha -r ts-node/register -r mocha-profiler 'test/**/DataSubsetter.test.ts'",
     "test-watch": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' mocha -r ts-node/register -w 'test/**/*.ts'",
     "watch": "tsc -w --preserveWatchOutput"
