@@ -5,7 +5,7 @@ from rdflib import URIRef, DCTERMS
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.work_event import WorkEvent
-from paradicms_etl.namespaces import PROV, VRA
+from paradicms_etl.namespaces import VRA, CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
@@ -29,6 +29,6 @@ class WorkCreation(WorkEvent):
             .add(VRA.earliestDate, earliest_date)
             .add(VRA.latestDate, latest_date)
             .add(DCTERMS.spatial, location)
-            .add(PROV.generated, work_uri)
+            .add(CMS.work, work_uri)
             .build()
         )

@@ -13,6 +13,7 @@ class CMS(DefinedNamespace):
     imageMaxHeight: URIRef
     imageMaxWidth: URIRef
     imageSrc: URIRef
+    work: URIRef
 
     # Resources
     Collection: URIRef
