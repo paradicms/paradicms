@@ -15,6 +15,7 @@ export class CMS {
   // Resources
   static readonly Collection = CMS.NS("Collection");
   static readonly DateTimeDescription = CMS.NS("DateTimeDescription");
+  static readonly Event = CMS.NS("Event");
   static readonly Image = CMS.NS("Image");
   static readonly Institution = CMS.NS("Institution");
   static readonly License = CMS.NS("License");
@@ -24,4 +25,6 @@ export class CMS {
   static readonly RightsStatement = CMS.NS("RightsStatement");
   static readonly Text = CMS.NS("Text");
   static readonly Work = CMS.NS("Work");
+  static readonly WorkCreation = CMS.NS("WorkCreation");
+  static readonly WorkEvent = CMS.NS("WorkEvent");
 }
