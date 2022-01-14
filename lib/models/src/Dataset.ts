@@ -20,6 +20,15 @@ import {Organization} from "./Organization";
 import {Agent} from "./Agent";
 import {ModelParameters} from "./ModelParameters";
 import {requireDefined} from "./requireDefined";
+import {WorkEvent} from "./WorkEvent";
+import {WorkCreation} from "./WorkCreation";
+import {Event} from "./Event";
+
+const eventClassesByRdfType = (() => {
+  const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
+  result[CMS.WorkCreation.value] = WorkCreation;
+  return result;
+})();
 
 /**
  * Lazily indexes the contents of an immutable Dataset to provide quick lookups and subsetting.
@@ -54,6 +63,7 @@ export class Dataset {
   private _peopleByUriIndex?: {[index: string]: Person};
   private _rightsStatements?: readonly RightsStatement[];
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
+  private _workEventsByWorkUriIndex?: {[index: string]: readonly WorkEvent[]};
   private _works?: readonly Work[];
   private _worksByAgentUriIndex?: {[index: string]: readonly Work[]};
   private _worksByCollectionUriIndex?: {[index: string]: readonly Work[]};
@@ -354,6 +364,39 @@ export class Dataset {
     return this.peopleByUriIndex[personUri] ?? null;
   }
 
+  protected readEvent(kwds: ModelParameters): Event {
+    for (const eventRdfType of this.store.getObjects(
+      kwds.node,
+      RDF.type,
+      kwds.graphNode
+    )) {
+      const eventClass = eventClassesByRdfType[eventRdfType.value];
+      if (eventClass) {
+        return new eventClass(kwds);
+      }
+    }
+    throw new EvalError(kwds.node.value);
+  }
+
+  protected readEvents(): void {
+    const workEventsByWorkUriIndex: {[index: string]: WorkEvent[]} = {};
+
+    this.readModels(kwds => {
+      const event = this.readEvent(kwds);
+
+      if (event instanceof WorkEvent) {
+        const workEvents = workEventsByWorkUriIndex[event.workUri];
+        if (workEvents) {
+          workEvents.push(event);
+        } else {
+          workEventsByWorkUriIndex[event.workUri] = [event];
+        }
+      }
+    }, CMS.Event);
+
+    this._workEventsByWorkUriIndex = workEventsByWorkUriIndex;
+  }
+
   protected readCollection(kwds: ModelParameters): Collection {
     return new Collection(kwds);
   }
@@ -649,6 +692,19 @@ export class Dataset {
       throw new RangeError("no such work " + workUri);
     }
     return work;
+  }
+
+  workEventsByWork(workUri: string): readonly WorkEvent[] {
+    return this.workEventsByWorkUriIndex[workUri] ?? [];
+  }
+
+  private get workEventsByWorkUriIndex(): {
+    [index: string]: readonly WorkEvent[];
+  } {
+    if (!this._workEventsByWorkUriIndex) {
+      this.readEvents();
+    }
+    return requireDefined(this._workEventsByWorkUriIndex);
   }
 
   get works(): readonly Work[] {
