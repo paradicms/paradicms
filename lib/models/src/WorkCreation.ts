@@ -4,8 +4,17 @@ import {WorkEvent} from "./WorkEvent";
 import {Agent} from "./Agent";
 
 export class WorkCreation extends WorkEvent {
-  get creator(): Agent {
-    return this.dataset.agentByUri(this.creatorUri);
+  get creators(): readonly (Agent | string)[] {
+    return this.propertyObjects(DCTERMS.creator).flatMap(term => {
+      switch (term.termType) {
+        case "Literal":
+          return term.value;
+        case "NamedNode":
+          return this.dataset.agentByUri(term.value);
+        default:
+          return [];
+      }
+    });
   }
 
   get creatorUri(): string {

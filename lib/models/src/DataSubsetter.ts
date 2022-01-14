@@ -56,7 +56,7 @@ export class DataSubsetter {
         .agentByUri(agent.uri)
         .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        this.addImageDataset(builder, thumbnailImage, {});
+        this.addImageDataset({}, builder, thumbnailImage);
       }
     }
 
@@ -83,7 +83,7 @@ export class DataSubsetter {
         .collectionByUri(collection.uri)
         .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        this.addImageDataset(builder, thumbnailImage, {});
+        this.addImageDataset({}, builder, thumbnailImage);
         if (thumbnailImage.depictsUri !== collection.uri) {
           // The thumbnail either depicts the collection or one of the collection's works.
           // If the latter case we need to include the work in the dataset.
@@ -114,12 +114,12 @@ export class DataSubsetter {
   }
 
   private addImageDataset(
+    agentJoinSelector: AgentJoinSelector,
     builder: DatasetBuilder,
-    image: Image,
-    agentJoinSelector: AgentJoinSelector
+    image: Image
   ): DatasetBuilder {
     builder.addImage(image);
-    this.addRightsDataset(builder, image.rights, agentJoinSelector);
+    this.addRightsDataset(agentJoinSelector, builder, image.rights);
     return builder;
   }
 
@@ -129,14 +129,14 @@ export class DataSubsetter {
     joinSelector: InstitutionJoinSelector
   ): DatasetBuilder {
     builder.addInstitution(institution);
-    this.addRightsDataset(builder, institution.rights, {});
+    this.addRightsDataset({}, builder, institution.rights);
 
     if (joinSelector.thumbnail) {
       const thumbnailImage = this.completeDataset
         .institutionByUri(institution.uri)
         .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        this.addImageDataset(builder, thumbnailImage, {});
+        this.addImageDataset({}, builder, thumbnailImage);
         if (thumbnailImage.depictsUri !== institution.uri) {
           // The thumbnail either depicts the institution, one of the institution's collections, or one of the institution's works.
           // In the latter cases we need to include the depicted collection or work
@@ -190,7 +190,7 @@ export class DataSubsetter {
           joinSelector.thumbnail
         );
         if (thumbnail) {
-          this.addImageDataset(builder, thumbnail, {});
+          this.addImageDataset({}, builder, thumbnail);
         }
       }
     }
@@ -221,22 +221,22 @@ export class DataSubsetter {
       builder.addWork(work);
 
       // Work Datasets always include rights
-      this.addRightsDataset(builder, work.rights, joinSelector.agent ?? {});
+      this.addRightsDataset(joinSelector.agent ?? {}, builder, work.rights);
 
       {
         const abstract = work.abstract;
         if (abstract && abstract instanceof Text) {
           this.addRightsDataset(
+            joinSelector.agent ?? {},
             builder,
-            abstract.rights,
-            joinSelector.agent ?? {}
+            abstract.rights
           );
         }
       }
 
       if (joinSelector.allImages) {
         for (const image of this.completeDataset.imagesByDepictsUri(work.uri)) {
-          this.addImageDataset(builder, image, joinSelector.agent ?? {});
+          this.addImageDataset(joinSelector.agent ?? {}, builder, image);
         }
       } else if (joinSelector.thumbnail) {
         const thumbnailImage = this.completeDataset
@@ -244,9 +244,9 @@ export class DataSubsetter {
           .thumbnail(joinSelector.thumbnail);
         if (thumbnailImage) {
           this.addImageDataset(
+            joinSelector.agent ?? {},
             builder,
-            thumbnailImage,
-            joinSelector.agent ?? {}
+            thumbnailImage
           );
         }
       }
@@ -309,9 +309,9 @@ export class DataSubsetter {
   }
 
   private addRightsDataset(
+    agentJoinSelector: AgentJoinSelector,
     builder: DatasetBuilder,
-    rights: Rights | null,
-    agentJoinSelector: AgentJoinSelector
+    rights: Rights | null
   ): DatasetBuilder {
     if (!rights) {
       return builder;
@@ -341,6 +341,16 @@ export class DataSubsetter {
 
     return builder;
   }
+
+  // private addWorkCreationDataset(
+  //   agentJoinSelector: AgentJoinSelector,
+  //   builder: DatasetBuilder,
+  //   workCreation: WorkCreation,
+  //   workJoinSelector: WorkJoinSelector
+  // ): DatasetBuilder {
+  //   this.addAgentDataset(workCreation.creator,
+  //   this.addWorkEventDataset(builder, workCreation, workJoinSelector);
+  // }
 
   agentsDataset(
     agents: readonly Agent[],
