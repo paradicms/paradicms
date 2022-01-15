@@ -2,13 +2,14 @@ import {ImageDimensions} from "./ImageDimensions";
 import {NamedModel} from "./NamedModel";
 import {Literal, NamedNode} from "n3";
 import {CMS, EXIF, FOAF, XSD} from "./vocabularies";
-import {Rights} from "./Rights";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Memoize} from "typescript-memoize";
 import {requireDefined} from "./requireDefined";
+import {Mixin} from "ts-mixer";
+import {HasRights} from "./mixins";
 
-export class Image extends NamedModel {
+export class Image extends Mixin(NamedModel, HasRights) {
   get depictsUri(): string {
     return requireDefined(
       this.propertyObjects(FOAF.depicts).find(
@@ -86,11 +87,6 @@ export class Image extends NamedModel {
     return `https://place-hold.it/${dimensions.width}x${
       dimensions.height
     }?text=${encodeURIComponent("Missing image")}`;
-  }
-
-  @Memoize()
-  get rights(): Rights | null {
-    return this._rights;
   }
 
   get src(): string | null {

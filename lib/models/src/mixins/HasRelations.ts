@@ -1,9 +1,7 @@
-import {DCTERMS} from "./vocabularies";
-import {NamedNode, Term} from "n3";
+import {ModelMixin} from "./ModelMixin";
+import {DCTERMS} from "../vocabularies";
 
-export abstract class HasRelations {
-  protected abstract propertyObjects(property: NamedNode): readonly Term[];
-
+export abstract class HasRelations extends ModelMixin {
   get wikipediaUrl(): string | null {
     return (
       this.propertyObjects(DCTERMS.relation).find(term => {

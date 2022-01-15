@@ -1,22 +1,21 @@
-import {Rights} from "./Rights";
 import {NamedModel} from "./NamedModel";
 import {Collection} from "./Collection";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Image} from "./Image";
-import {Memoize} from "typescript-memoize";
 import {HasImages} from "./mixins/HasImages";
 import {Mixin} from "ts-mixer";
 import {HasName} from "./mixins/HasName";
+import {HasRights} from "./mixins";
 
-export class Institution extends Mixin(NamedModel, HasImages, HasName) {
+export class Institution extends Mixin(
+  NamedModel,
+  HasImages,
+  HasName,
+  HasRights
+) {
   get collections(): readonly Collection[] {
     return this.dataset.institutionCollections(this.uri);
-  }
-
-  @Memoize()
-  get rights(): Rights | null {
-    return this._rights;
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {

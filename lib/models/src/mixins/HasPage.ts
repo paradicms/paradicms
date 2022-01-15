@@ -1,9 +1,7 @@
 import {FOAF} from "../vocabularies";
-import {NamedNode, Term} from "n3";
+import {ModelMixin} from "./ModelMixin";
 
-export abstract class HasPage {
-  protected abstract propertyObjects(property: NamedNode): readonly Term[];
-
+export abstract class HasPage extends ModelMixin {
   get page(): string | null {
     return (
       this.propertyObjects(FOAF.page).find(term => {

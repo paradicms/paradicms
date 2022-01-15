@@ -3,11 +3,8 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Image} from "./Image";
 import {Work} from "./Work";
-import {HasAbstract} from "./mixins/HasAbstract";
 import {Mixin} from "ts-mixer";
-import {HasImages} from "./mixins/HasImages";
-import {HasInstitution} from "./mixins/HasInstitution";
-import {HasTitle} from "./mixins/HasTitle";
+import {HasAbstract, HasImages, HasInstitution, HasTitle} from "./mixins";
 
 export class Collection extends Mixin(
   NamedModel,
@@ -16,10 +13,6 @@ export class Collection extends Mixin(
   HasImages,
   HasTitle
 ) {
-  get works(): readonly Work[] {
-    return this.dataset.collectionWorks(this.uri);
-  }
-
   thumbnail(selector: ThumbnailSelector): Image | null {
     const collectionImages: readonly Image[] = this.dataset.imagesByDepictsUri(
       this.uri
@@ -38,5 +31,9 @@ export class Collection extends Mixin(
     }
 
     return null;
+  }
+
+  get works(): readonly Work[] {
+    return this.dataset.collectionWorks(this.uri);
   }
 }

@@ -1,10 +1,9 @@
 import {Memoize} from "typescript-memoize";
 import {Text} from "../Text";
 import {DCTERMS} from "../vocabularies";
-import {Dataset} from "../Dataset";
-import {NamedNode, Term} from "n3";
+import {ModelMixin} from "./ModelMixin";
 
-export abstract class HasAbstract {
+export abstract class HasAbstract extends ModelMixin {
   @Memoize()
   get abstract(): string | Text | null {
     for (const term of this.propertyObjects(DCTERMS.abstract)) {
@@ -21,8 +20,4 @@ export abstract class HasAbstract {
     }
     return null;
   }
-
-  protected abstract readonly dataset: Dataset;
-  protected abstract readonly graphNode: NamedNode;
-  protected abstract propertyObjects(property: NamedNode): readonly Term[];
 }

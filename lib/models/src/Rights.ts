@@ -3,8 +3,7 @@ import {DCTERMS} from "./vocabularies";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
 import {Agent} from "./Agent";
-import {Dataset} from "./Dataset";
-import {BlankNode, NamedNode} from "n3";
+import {NamedNode} from "n3";
 import {Memoize} from "typescript-memoize";
 import {Mixin} from "ts-mixer";
 import {HasCreators} from "./mixins/HasCreators";
@@ -60,25 +59,6 @@ export class Rights extends Mixin(Model, HasCreators) {
         return this.dataset.licenseByUri(term.value);
       default:
         throw new EvalError();
-    }
-  }
-
-  static optional(kwds: {
-    dataset: Dataset;
-    graphNode: NamedNode;
-    node: BlankNode | NamedNode;
-  }): Rights | null {
-    const rights = new Rights(kwds);
-
-    if (
-      rights.propertyObjects(DCTERMS.creator).length > 0 ||
-      rights.propertyObjects(DCTERMS.license).length > 0 ||
-      rights.propertyObjects(DCTERMS.rights).length > 0 ||
-      rights.propertyObjects(DCTERMS.rightsHolder).length > 0
-    ) {
-      return rights;
-    } else {
-      return null;
     }
   }
 

@@ -1,17 +1,12 @@
 import {NamedModel} from "./NamedModel";
 import {RDF, RDFS} from "./vocabularies";
 import {Literal} from "n3";
-import {Image} from "./Image";
-import {ThumbnailSelector} from "./ThumbnailSelector";
-import {selectThumbnail} from "./selectThumbnail";
 import {Memoize} from "typescript-memoize";
 import {requireDefined} from "./requireDefined";
+import {HasImages} from "./mixins";
+import {Mixin} from "ts-mixer";
 
-export class NamedValue extends NamedModel {
-  get images(): readonly Image[] {
-    return this.dataset.imagesByDepictsUri(this.uri);
-  }
-
+export class NamedValue extends Mixin(NamedModel, HasImages) {
   @Memoize()
   get label(): string | null {
     return (
@@ -30,10 +25,6 @@ export class NamedValue extends NamedModel {
       );
     }
     return propertyUris;
-  }
-
-  thumbnail(selector: ThumbnailSelector): Image | null {
-    return selectThumbnail(this.images, selector);
   }
 
   get value(): Literal {

@@ -1,10 +1,9 @@
 import {Memoize} from "typescript-memoize";
 import {Agent} from "../Agent";
 import {DCTERMS} from "../vocabularies";
-import {NamedNode, Term} from "n3";
-import {Dataset} from "../Dataset";
+import {ModelMixin} from "./ModelMixin";
 
-export abstract class HasCreators {
+export abstract class HasCreators extends ModelMixin {
   @Memoize()
   get creators(): readonly (Agent | string)[] {
     return this.propertyObjects(DCTERMS.creator).flatMap(term => {
@@ -31,7 +30,4 @@ export abstract class HasCreators {
       .filter(term => term.termType === "NamedNode")
       .map(term => term.value);
   }
-
-  protected abstract readonly dataset: Dataset;
-  protected abstract propertyObjects(property: NamedNode): readonly Term[];
 }

@@ -8,13 +8,16 @@ import {PropertyValue} from "./PropertyValue";
 import {NamedValue} from "./NamedValue";
 import {NamedNode} from "n3";
 import {WorkAgent} from "./WorkAgent";
-import {HasPage} from "./mixins/HasPage";
 import {Mixin} from "ts-mixer";
-import {HasAbstract} from "./mixins/HasAbstract";
-import {HasImages} from "./mixins/HasImages";
-import {HasInstitution} from "./mixins/HasInstitution";
-import {HasTitle} from "./mixins/HasTitle";
-import {HasRelations} from "./HasRelations";
+import {
+  HasAbstract,
+  HasImages,
+  HasInstitution,
+  HasPage,
+  HasRelations,
+  HasRights,
+  HasTitle,
+} from "./mixins";
 
 const getRightsWorkAgents = (
   rights: Rights | null,
@@ -50,7 +53,8 @@ export class Work extends Mixin(
   HasInstitution,
   HasPage,
   HasTitle,
-  HasRelations
+  HasRelations,
+  HasRights
 ) {
   @Memoize()
   get agents(): readonly WorkAgent[] {
@@ -199,10 +203,5 @@ export class Work extends Mixin(
         this.graphNode
       )
     );
-  }
-
-  @Memoize()
-  get rights(): Rights | null {
-    return this._rights;
   }
 }

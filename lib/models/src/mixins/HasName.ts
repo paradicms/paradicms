@@ -1,13 +1,11 @@
 import {requireDefined} from "../requireDefined";
 import {FOAF} from "../vocabularies";
-import {NamedNode, Term} from "n3";
+import {ModelMixin} from "./ModelMixin";
 
-export abstract class HasName {
+export abstract class HasName extends ModelMixin {
   get name(): string {
     return requireDefined(
       this.propertyObjects(FOAF.name_).find(term => term.termType === "Literal")
     ).value;
   }
-
-  protected abstract propertyObjects(property: NamedNode): readonly Term[];
 }
