@@ -174,8 +174,8 @@ describe("DataSubsetter", () => {
       .workEventsByWork(work.uri)
       .find(event => event instanceof WorkCreation)! as WorkCreation;
 
-    const dataset = sut.workEventDataset({
-      workEvent: workCreation,
+    const dataset = sut.workEventsDataset({
+      workEvents: [workCreation],
     });
     expectModelsDeepEq(dataset.works, [work]);
     expectModelsDeepEq(dataset.agents, workCreation.creatorAgents);

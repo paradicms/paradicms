@@ -18,6 +18,7 @@ import {
   HasRights,
   HasTitle,
 } from "./mixins";
+import {WorkEvent} from "./WorkEvent";
 
 const getRightsWorkAgents = (
   rights: Rights | null,
@@ -117,46 +118,9 @@ export class Work extends Mixin(
       .map(term => term.value);
   }
 
-  // get events(): readonly WorkEvent[] {
-  //   const toWorkEventDateTime = (
-  //     dateTime: DateTimeDescription | number | string | null
-  //   ): WorkEventDateTime | null => {
-  //     if (dateTime === null) {
-  //       return null;
-  //     }
-  //     if (typeof dateTime === "number") {
-  //       return {
-  //         day: 1,
-  //         month: 1,
-  //         year: dateTime,
-  //       };
-  //     } else if (typeof dateTime === "string") {
-  //       return null;
-  //     } else {
-  //       // DateTimeDescription
-  //       if (dateTime.year == null) {
-  //         return null;
-  //       }
-  //       return {
-  //         day: dateTime.day,
-  //         month: dateTime.month,
-  //         year: dateTime.year,
-  //       };
-  //     }
-  //   };
-  //
-  //   const events: WorkEvent[] = [];
-  //
-  //   const created = toWorkEventDateTime(this.created);
-  //   if (created !== null) {
-  //     events.push({
-  //       dateTime: created,
-  //       type: "Creation",
-  //     });
-  //   }
-  //
-  //   return events;
-  // }
+  get events(): readonly WorkEvent[] {
+    return this.dataset.workEventsByWork(this.uri);
+  }
 
   propertyNamedValues(propertyUri: string): readonly NamedValue[] {
     // This code is (temporarily) here instead of in Model or NamedModel

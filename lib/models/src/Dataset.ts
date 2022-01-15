@@ -64,6 +64,7 @@ export class Dataset {
   private _peopleByUriIndex?: {[index: string]: Person};
   private _rightsStatements?: readonly RightsStatement[];
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
+  private _workEvents?: readonly WorkEvent[];
   private _workEventsByWorkUriIndex?: {[index: string]: readonly WorkEvent[]};
   private _works?: readonly Work[];
   private _worksByAgentUriIndex?: {[index: string]: readonly Work[]};
@@ -380,15 +381,18 @@ export class Dataset {
   }
 
   protected readEvents(): void {
+    const workEvents: WorkEvent[] = [];
     const workEventsByWorkUriIndex: {[index: string]: WorkEvent[]} = {};
 
     this.readModels(kwds => {
       const event = this.readEvent(kwds);
 
       if (hasMixin(event, WorkEvent)) {
-        const workEvents = workEventsByWorkUriIndex[event.workUri];
-        if (workEvents) {
-          workEvents.push(event);
+        workEvents.push(event);
+
+        const workEventsForWorkUri = workEventsByWorkUriIndex[event.workUri];
+        if (workEventsForWorkUri) {
+          workEventsForWorkUri.push(event);
         } else {
           workEventsByWorkUriIndex[event.workUri] = [event];
         }
@@ -397,6 +401,7 @@ export class Dataset {
       }
     }, CMS.Event);
 
+    this._workEvents = workEvents;
     this._workEventsByWorkUriIndex = workEventsByWorkUriIndex;
   }
 
@@ -695,6 +700,13 @@ export class Dataset {
       throw new RangeError("no such work " + workUri);
     }
     return work;
+  }
+
+  get workEvents(): readonly WorkEvent[] {
+    if (!this._workEvents) {
+      this.readEvents();
+    }
+    return this._workEvents!;
   }
 
   workEventsByWork(workUri: string): readonly WorkEvent[] {

@@ -4,6 +4,7 @@ import {Dataset} from "@paradicms/models";
 import {testDataTrig} from "../../models/test/testDataTrig";
 import {defaultAppConfiguration} from "@paradicms/configuration";
 import {CollectionValueFacet, InstitutionValueFacet, StringPropertyValueFacet} from "@paradicms/facets";
+import {WorkCreation} from "@paradicms/models/dist/WorkCreation";
 
 describe("LunrWorkQueryService", () => {
   const configuration = defaultAppConfiguration;
@@ -65,11 +66,11 @@ describe("LunrWorkQueryService", () => {
       }
     );
 
-    expect(result.workEvents).to.not.be.empty;
     expect(result.totalWorkEventsCount).to.be.gt(0);
+    expect(result.dataset.workEvents).to.have.length(result.totalWorkEventsCount);
   });
 
-  it("getWorkEvents return the works associated with an event", async () => {
+  it("getWorkEvents return the other models associated with an event", async () => {
     const result = await sut.getWorkEvents(
       {
         limit: Number.MAX_SAFE_INTEGER,
@@ -81,8 +82,11 @@ describe("LunrWorkQueryService", () => {
     );
 
     expect(result.dataset.works).to.not.be.empty;
-    for (const workEvent of result.workEvents) {
-      expect(result.dataset.workByUri(workEvent.workUri)).to.not.be.null;
+    for (const workEvent of result.dataset.workEvents) {
+      expect(workEvent.work).to.not.be.null;
+      if (workEvent instanceof WorkCreation) {
+        expect(workEvent.creatorAgents).to.not.be.empty;
+      }
     }
   });
 
