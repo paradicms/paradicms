@@ -385,7 +385,7 @@ export class Dataset {
     this.readModels(kwds => {
       const event = this.readEvent(kwds);
 
-      if (event instanceof WorkEvent || hasMixin(event, WorkEvent)) {
+      if (hasMixin(event, WorkEvent)) {
         const workEvents = workEventsByWorkUriIndex[event.workUri];
         if (workEvents) {
           workEvents.push(event);

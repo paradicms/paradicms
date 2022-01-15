@@ -5,6 +5,7 @@ import {InstitutionJoinSelector} from "./InstitutionJoinSelector";
 import {Collection} from "./Collection";
 import {DatasetBuilder} from "./DatasetBuilder";
 import {Institution} from "./Institution";
+import {Event} from "./Event";
 import {WorkJoinSelector} from "./WorkJoinSelector";
 import {Work} from "./Work";
 import {Image} from "Image";
@@ -15,6 +16,8 @@ import {selectThumbnail} from "./selectThumbnail";
 import {NamedValueJoinSelector} from "./NamedValueJoinSelector";
 import {NamedValue} from "./NamedValue";
 import {PropertyConfiguration} from "@paradicms/configuration";
+import {WorkCreation} from "./WorkCreation";
+import {WorkEvent} from "./WorkEvent";
 
 interface DataSubsetterConfiguration {
   readonly workProperties?: readonly PropertyConfiguration[];
@@ -110,6 +113,14 @@ export class DataSubsetter {
       );
     }
 
+    return builder;
+  }
+
+  private addEventDataset(
+    builder: DatasetBuilder,
+    event: Event
+  ): DatasetBuilder {
+    builder.addEvent(event);
     return builder;
   }
 
@@ -342,15 +353,27 @@ export class DataSubsetter {
     return builder;
   }
 
-  // private addWorkCreationDataset(
-  //   agentJoinSelector: AgentJoinSelector,
-  //   builder: DatasetBuilder,
-  //   workCreation: WorkCreation,
-  //   workJoinSelector: WorkJoinSelector
-  // ): DatasetBuilder {
-  //   this.addAgentDataset(workCreation.creator,
-  //   this.addWorkEventDataset(builder, workCreation, workJoinSelector);
-  // }
+  // @ts-ignore
+  private addWorkCreationDataset(
+    agentJoinSelector: AgentJoinSelector,
+    builder: DatasetBuilder,
+    workCreation: WorkCreation,
+    workJoinSelector: WorkJoinSelector
+  ): DatasetBuilder {
+    for (const creatorAgent of workCreation.creatorAgents) {
+      this.addAgentDataset(creatorAgent, builder, agentJoinSelector);
+    }
+    return this.addWorkEventDataset(builder, workCreation, workJoinSelector);
+  }
+
+  private addWorkEventDataset(
+    builder: DatasetBuilder,
+    workEvent: WorkEvent,
+    workJoinSelector: WorkJoinSelector
+  ): DatasetBuilder {
+    this.addWorkDataset(builder, workEvent.work, workJoinSelector);
+    return this.addEventDataset(builder, workEvent);
+  }
 
   agentsDataset(
     agents: readonly Agent[],
@@ -402,6 +425,26 @@ export class DataSubsetter {
       work,
       joinSelector ?? {}
     ).build();
+  }
+
+  workEventDataset(kwds: {
+    agentJoinSelector?: AgentJoinSelector;
+    workEvent: WorkEvent;
+    workJoinSelector?: WorkJoinSelector;
+  }): Dataset {
+    // @ts-ignore
+    const {agentJoinSelector, workEvent, workJoinSelector} = kwds;
+
+    if (workEvent instanceof WorkCreation) {
+      return this.addWorkCreationDataset(
+        agentJoinSelector ?? {},
+        new DatasetBuilder(),
+        workEvent,
+        workJoinSelector ?? {}
+      ).build();
+    } else {
+      throw new EvalError();
+    }
   }
 
   worksDataset(
