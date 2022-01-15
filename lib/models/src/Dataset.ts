@@ -23,6 +23,7 @@ import {requireDefined} from "./requireDefined";
 import {WorkEvent} from "./WorkEvent";
 import {WorkCreation} from "./WorkCreation";
 import {Event} from "./Event";
+import {hasMixin} from "ts-mixer";
 
 const eventClassesByRdfType = (() => {
   const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
@@ -384,13 +385,15 @@ export class Dataset {
     this.readModels(kwds => {
       const event = this.readEvent(kwds);
 
-      if (event instanceof WorkEvent) {
+      if (event instanceof WorkEvent || hasMixin(event, WorkEvent)) {
         const workEvents = workEventsByWorkUriIndex[event.workUri];
         if (workEvents) {
           workEvents.push(event);
         } else {
           workEventsByWorkUriIndex[event.workUri] = [event];
         }
+      } else {
+        throw new EvalError();
       }
     }, CMS.Event);
 

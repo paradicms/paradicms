@@ -1,22 +1,17 @@
 import {Rights} from "./Rights";
 import {NamedModel} from "./NamedModel";
-import {FOAF} from "./vocabularies";
 import {Collection} from "./Collection";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Image} from "./Image";
 import {Memoize} from "typescript-memoize";
-import {requireDefined} from "./requireDefined";
+import {HasImages} from "./mixins/HasImages";
+import {Mixin} from "ts-mixer";
+import {HasName} from "./mixins/HasName";
 
-export class Institution extends NamedModel {
+export class Institution extends Mixin(NamedModel, HasImages, HasName) {
   get collections(): readonly Collection[] {
     return this.dataset.institutionCollections(this.uri);
-  }
-
-  get name(): string {
-    return requireDefined(
-      this.propertyObjects(FOAF.name_).find(term => term.termType === "Literal")
-    ).value;
   }
 
   @Memoize()

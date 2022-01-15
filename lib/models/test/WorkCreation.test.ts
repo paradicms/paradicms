@@ -15,7 +15,7 @@ describe("WorkCreation", () => {
   });
 
   it("should expose the creator", () => {
-    const creator = sut.creator;
+    const creator = sut.creatorAgents[0];
     dataset.agentByUri(creator.uri);
     expect(work.agents.some(agent => agent.agent.uri === creator.uri)).to.be
       .true;

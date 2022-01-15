@@ -1,18 +1,20 @@
 import {NamedModel} from "./NamedModel";
-import {CMS, DCTERMS, FOAF, RDF} from "./vocabularies";
+import {CMS, RDF} from "./vocabularies";
 import {Collection} from "./Collection";
-import {Institution} from "./Institution";
 import {Rights} from "./Rights";
-import {Image} from "./Image";
 import {Text} from "./Text";
-import {ThumbnailSelector} from "./ThumbnailSelector";
-import {selectThumbnail} from "./selectThumbnail";
 import {Memoize} from "typescript-memoize";
 import {PropertyValue} from "./PropertyValue";
 import {NamedValue} from "./NamedValue";
 import {NamedNode} from "n3";
 import {WorkAgent} from "./WorkAgent";
-import {requireDefined} from "./requireDefined";
+import {HasPage} from "./mixins/HasPage";
+import {Mixin} from "ts-mixer";
+import {HasAbstract} from "./mixins/HasAbstract";
+import {HasImages} from "./mixins/HasImages";
+import {HasInstitution} from "./mixins/HasInstitution";
+import {HasTitle} from "./mixins/HasTitle";
+import {HasRelations} from "./HasRelations";
 
 const getRightsWorkAgents = (
   rights: Rights | null,
@@ -41,24 +43,15 @@ const getRightsWorkAgents = (
   return result;
 };
 
-export class Work extends NamedModel {
-  @Memoize()
-  get abstract(): string | Text | null {
-    for (const term of this.propertyObjects(DCTERMS.abstract)) {
-      switch (term.termType) {
-        case "BlankNode":
-          return new Text({
-            dataset: this.dataset,
-            graphNode: this.graphNode,
-            node: term,
-          });
-        case "Literal":
-          return term.value;
-      }
-    }
-    return null;
-  }
-
+export class Work extends Mixin(
+  NamedModel,
+  HasAbstract,
+  HasImages,
+  HasInstitution,
+  HasPage,
+  HasTitle,
+  HasRelations
+) {
   @Memoize()
   get agents(): readonly WorkAgent[] {
     const result: WorkAgent[] = [];
@@ -161,40 +154,6 @@ export class Work extends NamedModel {
   //   return events;
   // }
 
-  get images(): readonly Image[] {
-    return this.dataset.imagesByDepictsUri(this.uri);
-  }
-
-  get institution(): Institution {
-    return this.dataset.institutionByUri(this.institutionUri);
-  }
-
-  get institutionUri(): string {
-    return requireDefined(
-      this.propertyObjects(CMS.institution).find(
-        term => term.termType === "NamedNode"
-      )
-    ).value;
-  }
-
-  get originalImages(): readonly Image[] {
-    return this.images.filter(image => image.isOriginal);
-  }
-
-  get page(): string | null {
-    return (
-      this.propertyObjects(FOAF.page).find(term => {
-        switch (term.termType) {
-          case "Literal":
-          case "NamedNode":
-            return true;
-          default:
-            return false;
-        }
-      })?.value ?? null
-    );
-  }
-
   propertyNamedValues(propertyUri: string): readonly NamedValue[] {
     // This code is (temporarily) here instead of in Model or NamedModel
     // because NamedValue is a NamedModel, which creates a circular dependency.
@@ -245,25 +204,5 @@ export class Work extends NamedModel {
   @Memoize()
   get rights(): Rights | null {
     return this._rights;
-  }
-
-  thumbnail(selector: ThumbnailSelector): Image | null {
-    return selectThumbnail(this.images, selector);
-  }
-
-  get title(): string {
-    return requireDefined(
-      this.propertyObjects(DCTERMS.title).find(
-        term => term.termType === "Literal"
-      )
-    ).value;
-  }
-
-  get wikidataConceptUri(): string | null {
-    return this._wikidataConceptUri;
-  }
-
-  get wikipediaUrl(): string | null {
-    return this._wikipediaUrl;
   }
 }

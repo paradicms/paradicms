@@ -5,6 +5,7 @@ export class DCTERMS {
 
   static readonly abstract = DCTERMS.NS("abstract");
   static readonly date = DCTERMS.NS("date");
+  static readonly created = DCTERMS.NS("creator");
   static readonly creator = DCTERMS.NS("creator");
   static readonly description = DCTERMS.NS("description");
   static readonly identifier = DCTERMS.NS("identifier");

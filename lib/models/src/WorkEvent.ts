@@ -3,7 +3,7 @@ import {requireDefined} from "./requireDefined";
 import {CMS} from "./vocabularies";
 import {Work} from "./Work";
 
-export abstract class WorkEvent extends Event {
+export class WorkEvent extends Event {
   get work(): Work {
     return this.dataset.workByUri(this.workUri);
   }

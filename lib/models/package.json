@@ -6,6 +6,7 @@
     "@paradicms/configuration": "1.0.5",
     "@types/n3": "1.10.2",
     "n3": "1.11.0",
+    "ts-mixer": "6.0.0",
     "typescript-memoize": "1.0.1"
   },
   "devDependencies": {

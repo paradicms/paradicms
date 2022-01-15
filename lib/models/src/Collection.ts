@@ -1,44 +1,21 @@
 import {NamedModel} from "./NamedModel";
-import {Institution} from "./Institution";
-import {CMS, DCTERMS} from "./vocabularies";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Image} from "./Image";
 import {Work} from "./Work";
-import {Text} from "./Text";
-import {Memoize} from "typescript-memoize";
-import {requireDefined} from "./requireDefined";
+import {HasAbstract} from "./mixins/HasAbstract";
+import {Mixin} from "ts-mixer";
+import {HasImages} from "./mixins/HasImages";
+import {HasInstitution} from "./mixins/HasInstitution";
+import {HasTitle} from "./mixins/HasTitle";
 
-export class Collection extends NamedModel {
-  @Memoize()
-  get abstract(): string | Text | null {
-    for (const term of this.propertyObjects(DCTERMS.abstract)) {
-      switch (term.termType) {
-        case "BlankNode":
-          return new Text({
-            dataset: this.dataset,
-            graphNode: this.graphNode,
-            node: term,
-          });
-        case "Literal":
-          return term.value;
-      }
-    }
-    return null;
-  }
-
-  get institution(): Institution {
-    return this.dataset.institutionByUri(this.institutionUri);
-  }
-
-  get institutionUri(): string {
-    return requireDefined(
-      this.propertyObjects(CMS.institution).find(
-        term => term.termType === "NamedNode"
-      )
-    ).value;
-  }
-
+export class Collection extends Mixin(
+  NamedModel,
+  HasAbstract,
+  HasInstitution,
+  HasImages,
+  HasTitle
+) {
   get works(): readonly Work[] {
     return this.dataset.collectionWorks(this.uri);
   }
@@ -61,13 +38,5 @@ export class Collection extends NamedModel {
     }
 
     return null;
-  }
-
-  get title(): string {
-    return requireDefined(
-      this.propertyObjects(DCTERMS.title).find(
-        term => term.termType === "Literal"
-      )
-    ).value;
   }
 }
