@@ -65,6 +65,7 @@ export class Dataset {
   private _rightsStatements?: readonly RightsStatement[];
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
   private _workEvents?: readonly WorkEvent[];
+  private _workEventsByUriIndex?: {[index: string]: WorkEvent};
   private _workEventsByWorkUriIndex?: {[index: string]: readonly WorkEvent[]};
   private _works?: readonly Work[];
   private _worksByAgentUriIndex?: {[index: string]: readonly Work[]};
@@ -383,6 +384,7 @@ export class Dataset {
   protected readEvents(): void {
     const workEvents: WorkEvent[] = [];
     const workEventsByWorkUriIndex: {[index: string]: WorkEvent[]} = {};
+    this._workEventsByUriIndex = {};
 
     this.readModels(kwds => {
       const event = this.readEvent(kwds);
@@ -396,6 +398,8 @@ export class Dataset {
         } else {
           workEventsByWorkUriIndex[event.workUri] = [event];
         }
+
+        this._workEventsByUriIndex![event.uri] = event;
       } else {
         throw new EvalError();
       }
@@ -711,6 +715,24 @@ export class Dataset {
 
   workEventsByWork(workUri: string): readonly WorkEvent[] {
     return this.workEventsByWorkUriIndex[workUri] ?? [];
+  }
+
+  workEventByUri(workEventUri: string): WorkEvent {
+    const workEvent = this.workEventsByUriIndex[workEventUri];
+    if (!workEvent) {
+      // this.logContents();
+      throw new RangeError("no such work event " + workEventUri);
+    }
+    return workEvent;
+  }
+
+  private get workEventsByUriIndex(): {
+    [index: string]: WorkEvent;
+  } {
+    if (!this._workEventsByUriIndex) {
+      this.readEvents();
+    }
+    return requireDefined(this._workEventsByUriIndex);
   }
 
   private get workEventsByWorkUriIndex(): {

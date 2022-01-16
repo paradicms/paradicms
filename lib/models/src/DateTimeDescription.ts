@@ -1,6 +1,7 @@
 import {Model} from "./Model";
 import {TIME, XSD} from "./vocabularies";
 import {Literal, NamedNode} from "n3";
+import * as dayjs from "dayjs";
 
 export class DateTimeDescription extends Model {
   get day(): number | null {
@@ -77,6 +78,57 @@ export class DateTimeDescription extends Model {
     } else {
       throw new EvalError();
     }
+  }
+
+  toString() {
+    const year = this.year;
+
+    if (year === null) {
+      return "(unknown)";
+    }
+
+    const dayjs_ = dayjs();
+
+    // https://day.js.org/docs/en/display/format
+    let dateFormat = "";
+    const month = this.month;
+    if (month !== null) {
+      dateFormat += "MMM";
+      dayjs_.month(month);
+
+      const day = this.day;
+      if (day !== null) {
+        dateFormat += " D";
+        dayjs_.day(day);
+      }
+    }
+    dateFormat += " YYYY";
+    dayjs_.year(year);
+
+    let timeFormat: string = "";
+    const hour = this.hour;
+    if (hour !== null) {
+      dayjs_.hour(hour);
+      timeFormat += "h";
+
+      const minute = this.minute;
+      if (minute !== null) {
+        dayjs_.minute(minute);
+        timeFormat += ":m";
+
+        const second = this.second;
+        if (second !== null) {
+          dayjs_.second(second);
+          timeFormat += ":s";
+        }
+
+        timeFormat += " A";
+      }
+    }
+
+    return dayjs_.format(
+      timeFormat.length > 0 ? timeFormat + " " + dateFormat : dateFormat
+    );
   }
 
   get year(): number | null {

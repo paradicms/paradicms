@@ -68,6 +68,7 @@ describe("LunrWorkQueryService", () => {
 
     expect(result.totalWorkEventsCount).to.be.gt(0);
     expect(result.dataset.workEvents).to.have.length(result.totalWorkEventsCount);
+    expect(result.workEventUris).to.have.length(result.totalWorkEventsCount);
   });
 
   it("getWorkEvents return the other models associated with an event", async () => {

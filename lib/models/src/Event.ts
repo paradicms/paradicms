@@ -5,6 +5,29 @@ import {NamedNode} from "n3";
 import {Location} from "./Location";
 
 export class Event extends NamedModel {
+  get displayDate(): string {
+    const date = this.date;
+    if (date !== null) {
+      return date.toString();
+    }
+
+    const earliestDate = this.earliestDate;
+    const latestDate = this.latestDate;
+
+    if (earliestDate === null && latestDate === null) {
+      return "(unknown)";
+    }
+
+    const result: string[] = [];
+    if (earliestDate !== null) {
+      result.push(earliestDate.toString() + " (earliest)");
+    }
+    if (latestDate !== null) {
+      result.push(latestDate.toString() + " (latest)");
+    }
+    return result.join(" - ");
+  }
+
   compareByDate(other: Event): number {
     const thisSortDate = this.sortDate;
     const otherSortDate = other.sortDate;
@@ -69,7 +92,11 @@ export class Event extends NamedModel {
     return this.datePropertyValue(VRA.earliestDate);
   }
 
-  get location(): Location | number | string | null {
+  get latestDate(): DateTimeDescription | number | string | null {
+    return this.datePropertyValue(VRA.latestDate);
+  }
+
+  get location(): Location | string | null {
     for (const term of this.propertyObjects(DCTERMS.spatial)) {
       switch (term.termType) {
         case "BlankNode":
@@ -79,18 +106,10 @@ export class Event extends NamedModel {
             node: term,
           });
         case "Literal":
-          if (term.datatype.value === XSD.integer.value) {
-            return parseInt(term.value);
-          } else {
-            return term.value;
-          }
+          return term.value;
       }
     }
     return null;
-  }
-
-  get latestDate(): DateTimeDescription | number | string | null {
-    return this.datePropertyValue(VRA.latestDate);
   }
 
   /**

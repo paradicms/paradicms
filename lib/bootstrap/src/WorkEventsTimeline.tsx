@@ -1,9 +1,4 @@
-import {
-  Work,
-  WorkEvent,
-  WorkEventDateTime,
-  WorkEventType,
-} from "@paradicms/models";
+import {Work, WorkEvent} from "@paradicms/models";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -11,24 +6,15 @@ import {
 import {faEllipsisV, faLightbulb} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
+import {WorkCreation} from "@paradicms/models/dist/WorkCreation";
 import React = require("react");
 
-const getWorkEventTypeIcon = (workEventType: WorkEventType): IconDefinition => {
-  switch (workEventType) {
-    case "Creation":
-      return faLightbulb;
+const getWorkEventIcon = (workEvent: WorkEvent): IconDefinition => {
+  if (workEvent instanceof WorkCreation) {
+    return faLightbulb;
+  } else {
+    throw new EvalError();
   }
-};
-
-const toDateTimeString = (dateTime: WorkEventDateTime): string => {
-  const {day, month, year} = dateTime;
-  if (month == null) {
-    return year.toString();
-  }
-  if (day === null) {
-    return `${month}/${year}`;
-  }
-  return `${month}/${day}/${year}`;
 };
 
 export const WorkEventsTimeline: React.FunctionComponent<{
@@ -41,8 +27,8 @@ export const WorkEventsTimeline: React.FunctionComponent<{
     <VerticalTimeline>
       {workEvents.map(workEvent => (
         <VerticalTimelineElement
-          date={toDateTimeString(workEvent.dateTime)}
-          icon={<FontAwesomeIcon icon={getWorkEventTypeIcon(workEvent.type)} />}
+          date={workEvent.displayDate}
+          icon={<FontAwesomeIcon icon={getWorkEventIcon(workEvent)} />}
         >
           <h3>{workEvent.work.title}</h3>
           {workEvent.work.abstract ? (

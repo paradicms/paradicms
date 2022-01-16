@@ -239,13 +239,9 @@ export const WorkSearchContainer: React.FunctionComponent<{
           totalObjects: getWorkEventsResult.totalWorkEventsCount,
         })}
         setPage={setWorkEventsPage}
-        workEvents={getWorkEventsResult.workEvents.map(workEvent => {
-          const {workUri, ...otherWorkEventProps} = workEvent;
-          return {
-            work: getWorkEventsResult!.dataset.workByUri(workUri),
-            ...otherWorkEventProps,
-          };
-        })}
+        workEvents={getWorkEventsResult.workEventUris.map(workEventUri =>
+          getWorkEventsResult.dataset.workEventByUri(workEventUri)
+        )}
       />
     ) : null,
   });

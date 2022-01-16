@@ -39,4 +39,9 @@ describe("DateTimeDescription", () => {
   it("should get the year", () => {
     expect(sut.year).to.eq(2022);
   });
+
+  it("should convert to a string", () => {
+    const str = sut.toString();
+    expect(str).to.not.be.empty;
+  });
 });
