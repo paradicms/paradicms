@@ -154,7 +154,7 @@ export const getStaticProps: GetStaticProps = async ({
         .worksDataset(
           workUris.map(workUri => completeDataset.workByUri(workUri)),
           {
-            agent: {
+            agents: {
               thumbnail: {targetDimensions: thumbnailTargetDimensions},
             },
             allImages: true,

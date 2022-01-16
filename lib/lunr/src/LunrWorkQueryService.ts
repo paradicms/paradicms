@@ -5,14 +5,14 @@ import {
   Image,
   ThumbnailSelector,
   Work,
-  WorkEvent,
-  WorkEventDateTime,
 } from "@paradicms/models";
 import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
 import {
   GetWorkAgentsOptions,
   GetWorkAgentsResult,
+  GetWorkEventsOptions,
+  GetWorkEventsResult,
   GetWorksOptions,
   GetWorksResult,
   WorkQuery,
@@ -35,8 +35,6 @@ import {
   ValueFacetValueThumbnail,
 } from "@paradicms/facets";
 import {PropertyConfiguration} from "@paradicms/configuration";
-import {GetWorkEventsOptions} from "@paradicms/services/dist/GetWorkEventsOptions";
-import {GetWorkEventsResult} from "@paradicms/services/dist/GetWorkEventsResult";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -112,25 +110,6 @@ export class LunrWorkQueryService implements WorkQueryService {
         this.add(doc);
       }
     });
-  }
-
-  private static compareWorkEventDateTimes(
-    left: WorkEventDateTime,
-    right: WorkEventDateTime
-  ): number {
-    const yearDiff = left.year - right.year;
-    if (yearDiff !== 0) {
-      return yearDiff;
-    }
-    const monthDiff =
-      (left.month !== null ? left.month : 1) -
-      (right.month !== null ? right.month : 1);
-    if (monthDiff !== 0) {
-      return monthDiff;
-    }
-    return (
-      (left.day !== null ? left.day : 1) - (right.day !== null ? right.day : 1)
-    );
   }
 
   private static encodeFieldName(value: string) {
@@ -490,7 +469,7 @@ export class LunrWorkQueryService implements WorkQueryService {
     options: GetWorkEventsOptions,
     query: WorkQuery
   ): Promise<GetWorkEventsResult> {
-    const {limit, offset} = options;
+    const {limit, offset, requireDate, workEventJoinSelector} = options;
 
     invariant(!!query, "query must be defined");
     invariant(limit > 0, "limit must be > 0");
@@ -502,36 +481,31 @@ export class LunrWorkQueryService implements WorkQueryService {
         works: this.searchWorks(query),
       });
 
-      const workEvents: (WorkEvent & {
-        workUri: string;
-      })[] = works
+      const workEvents = works
         .flatMap(work =>
-          work.events.map(workEvent => ({...workEvent, workUri: work.uri}))
+          work.events.filter(workEvent => {
+            if (requireDate && workEvent.sortDate === null) {
+              return false;
+            }
+            // if (requireLocation && !(workEvent.location instanceof Location)) {
+            //   return false;
+            // }
+            return true;
+          })
         )
-        .sort((left, right) =>
-          LunrWorkQueryService.compareWorkEventDateTimes(
-            left.dateTime,
-            right.dateTime
-          )
-        );
+        .sort((left, right) => left.compareByDate(right));
 
       const slicedWorkEvents = workEvents.slice(offset, offset + limit);
 
       const slicedWorkEventsDataset = new DataSubsetter({
         completeDataset: this.dataset,
         configuration: this.configuration,
-      }).worksDataset(
-        [
-          ...new Set<string>(
-            slicedWorkEvents.map(workEvent => workEvent.workUri)
-          ),
-        ].map(workUri => this.dataset.workByUri(workUri))
-      );
+      }).workEventsDataset(workEvents, workEventJoinSelector);
 
       resolve({
         dataset: slicedWorkEventsDataset,
-        workEvents: slicedWorkEvents,
         totalWorkEventsCount: workEvents.length,
+        workEventUris: slicedWorkEvents.map(workEvent => workEvent.uri),
       });
     });
   }

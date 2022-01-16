@@ -3,11 +3,12 @@ import {DCTERMS} from "./vocabularies";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
 import {Agent} from "./Agent";
-import {Dataset} from "./Dataset";
-import {BlankNode, NamedNode} from "n3";
+import {NamedNode} from "n3";
 import {Memoize} from "typescript-memoize";
+import {Mixin} from "ts-mixer";
+import {HasCreators} from "./mixins/HasCreators";
 
-export class Rights extends Model {
+export class Rights extends Mixin(Model, HasCreators) {
   private agentsOrStrings(property: NamedNode) {
     return this.propertyObjects(DCTERMS.creator).flatMap(term => {
       switch (term.termType) {
@@ -23,24 +24,6 @@ export class Rights extends Model {
 
   get agentUris(): readonly string[] {
     return this.creatorAgentUris.concat(this.holderAgentUris);
-  }
-
-  @Memoize()
-  get creators(): readonly (Agent | string)[] {
-    return this.agentsOrStrings(DCTERMS.creator);
-  }
-
-  get creatorAgents(): readonly Agent[] {
-    return this.creatorAgentUris.map(agentUri =>
-      this.dataset.agentByUri(agentUri)
-    );
-  }
-
-  @Memoize()
-  get creatorAgentUris(): readonly string[] {
-    return this.propertyObjects(DCTERMS.creator)
-      .filter(term => term.termType === "NamedNode")
-      .map(term => term.value);
   }
 
   get holderAgents(): readonly Agent[] {
@@ -76,25 +59,6 @@ export class Rights extends Model {
         return this.dataset.licenseByUri(term.value);
       default:
         throw new EvalError();
-    }
-  }
-
-  static optional(kwds: {
-    dataset: Dataset;
-    graphNode: NamedNode;
-    node: BlankNode | NamedNode;
-  }): Rights | null {
-    const rights = new Rights(kwds);
-
-    if (
-      rights.propertyObjects(DCTERMS.creator).length > 0 ||
-      rights.propertyObjects(DCTERMS.license).length > 0 ||
-      rights.propertyObjects(DCTERMS.rights).length > 0 ||
-      rights.propertyObjects(DCTERMS.rightsHolder).length > 0
-    ) {
-      return rights;
-    } else {
-      return null;
     }
   }
 

@@ -16,18 +16,20 @@ import {Institution, Work} from "@paradicms/models";
 import {Pagination} from "./Pagination";
 import {
   GetWorkAgentsResult,
+  GetWorkEventsResult,
   GetWorksResult,
   WorkQuery,
   WorkQueryService,
 } from "@paradicms/services";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
-import {calculatePageMax} from "@paradicms/react-search";
+import {
+  calculatePageMax,
+  workSearchWorkJoinSelector,
+} from "@paradicms/react-search";
 import {Filter} from "@paradicms/filters";
 import {useQueryParam} from "use-query-params";
-import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 import {FiltersControls} from "./FiltersControls";
 import {AgentsGallery} from "./AgentsGallery";
-import {GetWorkEventsResult} from "@paradicms/services/dist/GetWorkEventsResult";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
 
 const OBJECTS_PER_PAGE = 4;
@@ -106,11 +108,14 @@ export const WorkSearchContainer: React.FunctionComponent<{
             valueFacetValueThumbnailSelector: {
               targetDimensions: thumbnailTargetDimensions,
             },
-            workJoinSelector: workSearchWorkJoinSelector,
+            workJoinSelector: workSearchWorkJoinSelector(
+              thumbnailTargetDimensions
+            ),
           },
           workQuery
         )
         .then(getWorksResult => {
+          console.debug("getWorks result:", getWorksResult.totalWorksCount);
           setGetWorksResult(getWorksResult);
           setLoadingWorks(false);
         });
@@ -134,6 +139,10 @@ export const WorkSearchContainer: React.FunctionComponent<{
           workQuery
         )
         .then(getWorkAgentsResult => {
+          console.debug(
+            "getWorkAgents result:",
+            getWorkAgentsResult.totalWorkAgentsCount
+          );
           setGetWorkAgentsResult(getWorkAgentsResult);
           setLoadingWorkAgents(false);
         });
@@ -151,10 +160,18 @@ export const WorkSearchContainer: React.FunctionComponent<{
           {
             limit: (workEventsPage + 1) * OBJECTS_PER_PAGE,
             offset: 0,
+            requireDate: true,
+            workEventJoinSelector: {
+              work: {},
+            },
           },
           workQuery
         )
         .then(getWorkEventsResult => {
+          console.info(
+            "getWorkEvents result:",
+            getWorkEventsResult.totalWorkEventsCount
+          );
           setGetWorkEventsResult(getWorkEventsResult);
           setLoadingWorkEvents(false);
         });
@@ -239,13 +256,9 @@ export const WorkSearchContainer: React.FunctionComponent<{
           totalObjects: getWorkEventsResult.totalWorkEventsCount,
         })}
         setPage={setWorkEventsPage}
-        workEvents={getWorkEventsResult.workEvents.map(workEvent => {
-          const {workUri, ...otherWorkEventProps} = workEvent;
-          return {
-            work: getWorkEventsResult!.dataset.workByUri(workUri),
-            ...otherWorkEventProps,
-          };
-        })}
+        workEvents={getWorkEventsResult.workEventUris.map(workEventUri =>
+          getWorkEventsResult.dataset.workEventByUri(workEventUri)
+        )}
       />
     ) : null,
   });

@@ -15,6 +15,9 @@ import {selectThumbnail} from "./selectThumbnail";
 import {NamedValueJoinSelector} from "./NamedValueJoinSelector";
 import {NamedValue} from "./NamedValue";
 import {PropertyConfiguration} from "@paradicms/configuration";
+import {WorkCreation} from "./WorkCreation";
+import {WorkEvent} from "./WorkEvent";
+import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
 
 interface DataSubsetterConfiguration {
   readonly workProperties?: readonly PropertyConfiguration[];
@@ -56,7 +59,7 @@ export class DataSubsetter {
         .agentByUri(agent.uri)
         .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        this.addImageDataset(builder, thumbnailImage, {});
+        this.addImageDataset({}, builder, thumbnailImage);
       }
     }
 
@@ -83,7 +86,7 @@ export class DataSubsetter {
         .collectionByUri(collection.uri)
         .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        this.addImageDataset(builder, thumbnailImage, {});
+        this.addImageDataset({}, builder, thumbnailImage);
         if (thumbnailImage.depictsUri !== collection.uri) {
           // The thumbnail either depicts the collection or one of the collection's works.
           // If the latter case we need to include the work in the dataset.
@@ -114,12 +117,12 @@ export class DataSubsetter {
   }
 
   private addImageDataset(
+    agentJoinSelector: AgentJoinSelector,
     builder: DatasetBuilder,
-    image: Image,
-    agentJoinSelector: AgentJoinSelector
+    image: Image
   ): DatasetBuilder {
     builder.addImage(image);
-    this.addRightsDataset(builder, image.rights, agentJoinSelector);
+    this.addRightsDataset(agentJoinSelector, builder, image.rights);
     return builder;
   }
 
@@ -129,14 +132,14 @@ export class DataSubsetter {
     joinSelector: InstitutionJoinSelector
   ): DatasetBuilder {
     builder.addInstitution(institution);
-    this.addRightsDataset(builder, institution.rights, {});
+    this.addRightsDataset({}, builder, institution.rights);
 
     if (joinSelector.thumbnail) {
       const thumbnailImage = this.completeDataset
         .institutionByUri(institution.uri)
         .thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        this.addImageDataset(builder, thumbnailImage, {});
+        this.addImageDataset({}, builder, thumbnailImage);
         if (thumbnailImage.depictsUri !== institution.uri) {
           // The thumbnail either depicts the institution, one of the institution's collections, or one of the institution's works.
           // In the latter cases we need to include the depicted collection or work
@@ -190,7 +193,7 @@ export class DataSubsetter {
           joinSelector.thumbnail
         );
         if (thumbnail) {
-          this.addImageDataset(builder, thumbnail, {});
+          this.addImageDataset({}, builder, thumbnail);
         }
       }
     }
@@ -221,22 +224,22 @@ export class DataSubsetter {
       builder.addWork(work);
 
       // Work Datasets always include rights
-      this.addRightsDataset(builder, work.rights, joinSelector.agent ?? {});
+      this.addRightsDataset(joinSelector.agents ?? {}, builder, work.rights);
 
       {
         const abstract = work.abstract;
         if (abstract && abstract instanceof Text) {
           this.addRightsDataset(
+            joinSelector.agents ?? {},
             builder,
-            abstract.rights,
-            joinSelector.agent ?? {}
+            abstract.rights
           );
         }
       }
 
       if (joinSelector.allImages) {
         for (const image of this.completeDataset.imagesByDepictsUri(work.uri)) {
-          this.addImageDataset(builder, image, joinSelector.agent ?? {});
+          this.addImageDataset(joinSelector.agents ?? {}, builder, image);
         }
       } else if (joinSelector.thumbnail) {
         const thumbnailImage = this.completeDataset
@@ -244,10 +247,16 @@ export class DataSubsetter {
           .thumbnail(joinSelector.thumbnail);
         if (thumbnailImage) {
           this.addImageDataset(
+            joinSelector.agents ?? {},
             builder,
-            thumbnailImage,
-            joinSelector.agent ?? {}
+            thumbnailImage
           );
+        }
+      }
+
+      if (joinSelector.events) {
+        for (const event of work.events) {
+          this.addWorkEventDataset(builder, joinSelector.events, event);
         }
       }
 
@@ -309,9 +318,9 @@ export class DataSubsetter {
   }
 
   private addRightsDataset(
+    agentJoinSelector: AgentJoinSelector,
     builder: DatasetBuilder,
-    rights: Rights | null,
-    agentJoinSelector: AgentJoinSelector
+    rights: Rights | null
   ): DatasetBuilder {
     if (!rights) {
       return builder;
@@ -340,6 +349,35 @@ export class DataSubsetter {
     }
 
     return builder;
+  }
+
+  private addWorkCreationDataset(
+    builder: DatasetBuilder,
+    joinSelector: WorkEventJoinSelector,
+    workCreation: WorkCreation
+  ): DatasetBuilder {
+    builder.addEvent(workCreation);
+    if (joinSelector.agents) {
+      for (const creatorAgent of workCreation.creatorAgents) {
+        this.addAgentDataset(creatorAgent, builder, joinSelector.agents);
+      }
+    }
+    if (joinSelector.work) {
+      this.addWorkDataset(builder, workCreation.work, joinSelector.work);
+    }
+    return builder;
+  }
+
+  private addWorkEventDataset(
+    builder: DatasetBuilder,
+    joinSelector: WorkEventJoinSelector,
+    workEvent: WorkEvent
+  ): DatasetBuilder {
+    if (workEvent instanceof WorkCreation) {
+      return this.addWorkCreationDataset(builder, joinSelector, workEvent);
+    } else {
+      throw new EvalError();
+    }
   }
 
   agentsDataset(
@@ -392,6 +430,17 @@ export class DataSubsetter {
       work,
       joinSelector ?? {}
     ).build();
+  }
+
+  workEventsDataset(
+    workEvents: readonly WorkEvent[],
+    joinSelector?: WorkEventJoinSelector
+  ): Dataset {
+    const builder = new DatasetBuilder();
+    for (const workEvent of workEvents) {
+      this.addWorkEventDataset(builder, joinSelector ?? {}, workEvent);
+    }
+    return builder.build();
   }
 
   worksDataset(

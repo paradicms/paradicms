@@ -12,11 +12,13 @@ describe("Rights", () => {
     expect(sut.creators).to.not.be.empty;
     expect(sut.creators.filter(creator => creator instanceof Agent)).to.not.be
       .empty;
-    expect(
-      sut.creators
-        .filter(creator => creator instanceof Agent)
-        .map(creator => creator as Agent)[0].name
-    ).to.not.be.empty;
+    expect(sut.creatorAgents).to.not.be.empty;
+    expect(sut.creatorAgents.map(creator => creator as Agent)[0].name).to.not.be
+      .empty;
+  });
+
+  it("should not have a joined holder", () => {
+    expect(sut.holderAgents).to.be.empty;
   });
 
   it("should have a joined license", () => {

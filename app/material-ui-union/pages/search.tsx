@@ -3,19 +3,21 @@ import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
-import {
-  WorkSearchGrid,
-  workSearchWorkJoinSelector,
-} from "@paradicms/material-ui";
+import {WorkSearchGrid} from "@paradicms/material-ui";
 import {Link} from "@paradicms/material-ui-next";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
 import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
 import {WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
-import {usePageQueryParam, useWorkQueryParam} from "@paradicms/react-search";
+import {
+  usePageQueryParam,
+  useWorkQueryParam,
+  workSearchWorkJoinSelector,
+} from "@paradicms/react-search";
 import {AppConfiguration} from "@paradicms/configuration";
 import {useRouter} from "next/router";
+import {thumbnailTargetDimensions} from "@paradicms/material-ui/src";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
@@ -108,7 +110,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
       configuration,
       datasetString: new DataSubsetter({completeDataset, configuration})
         .worksDataset(completeDataset.works, {
-          ...workSearchWorkJoinSelector,
+          ...workSearchWorkJoinSelector(thumbnailTargetDimensions),
           collections: {},
           institution: {},
         })

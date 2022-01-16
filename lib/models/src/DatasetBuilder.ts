@@ -10,10 +10,12 @@ import {Work} from "./Work";
 import {Person} from "./Person";
 import {Organization} from "./Organization";
 import {Agent} from "./Agent";
+import {Event} from "./Event";
 
 export class DatasetBuilder {
   private collectionsByUri: {[index: string]: Collection} | undefined;
   private institutionsByUri: {[index: string]: Institution} | undefined;
+  private eventsByUri: {[index: string]: Event} | undefined;
   private imagesByUri: {[index: string]: Image} | undefined;
   private licensesByUri: {[index: string]: License} | undefined;
   private namedValuesByUri: {[index: string]: NamedValue} | undefined;
@@ -45,6 +47,11 @@ export class DatasetBuilder {
       this.collectionsByUri,
       collections
     );
+    return this;
+  }
+
+  addEvent(event: Event) {
+    this.eventsByUri = DatasetBuilder.addNamedModel(this.eventsByUri, event);
     return this;
   }
 
@@ -179,6 +186,7 @@ export class DatasetBuilder {
     const store = new Store();
     for (const modelsByUri of [
       this.collectionsByUri,
+      this.eventsByUri,
       this.imagesByUri,
       this.institutionsByUri,
       this.licensesByUri,

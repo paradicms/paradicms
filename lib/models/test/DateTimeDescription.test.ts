@@ -4,8 +4,10 @@ import {testDataTrig} from "./testDataTrig";
 import {DateTimeDescription} from "../src/DateTimeDescription";
 
 describe("DateTimeDescription", () => {
-  const sut = Dataset.parse(testDataTrig).works[0]
-    .created! as DateTimeDescription;
+  const dataset = Dataset.parse(testDataTrig);
+  const sut: DateTimeDescription = dataset.workEventsByWork(
+    dataset.works[0].uri
+  )[0].date! as DateTimeDescription;
 
   before(() => {
     expect(sut).to.not.be.null;
@@ -36,5 +38,10 @@ describe("DateTimeDescription", () => {
 
   it("should get the year", () => {
     expect(sut.year).to.eq(2022);
+  });
+
+  it("should convert to a string", () => {
+    const str = sut.toString();
+    expect(str).to.not.be.empty;
   });
 });

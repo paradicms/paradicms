@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {Dataset} from "../src";
+import {Dataset, Image} from "../src";
 import {testDataTrig} from "./testDataTrig";
 
 describe("Image", () => {
@@ -16,6 +16,7 @@ describe("Image", () => {
     expect(sut.derivedImages).to.not.be.empty;
     for (const derivedImage of sut.derivedImages) {
       expect(derivedImage.originalImageUri).to.eq(sut.uri);
+      expect(derivedImage.derivedImages).to.be.empty;
     }
   });
 
@@ -30,6 +31,10 @@ describe("Image", () => {
 
   it("should get the image's src", () => {
     expect(sut.src).to.not.be.empty;
+  });
+
+  it("should generate a placeholder src", () => {
+    expect(Image.placeholderSrc({height: 200, width: 200})).to.not.be.empty;
   });
 
   it("should get a thumbnail", () => {

@@ -14,11 +14,23 @@ describe("Work", () => {
     expect(abstract.value).to.not.be.empty;
   });
 
+  it("should get the work's agents", () => {
+    const agents = sut.agents;
+    expect(agents).to.have.length(5);
+    expect(agents.map(agent => agent.agent.uri)).to.deep.eq(sut.agentUris);
+  });
+
   it("should get the work's collections", () => {
     expect(sut.collections.map(collection => collection.uri)).to.deep.eq(
       sut.collectionUris
     );
   });
+
+  // it("should get the work's created datetime as a DateTimeDescription", () => {
+  //   const created = sut.created;
+  //   expect(created).to.be.instanceof(DateTimeDescription);
+  //   expect((created as DateTimeDescription).year).to.eq(2022);
+  // });
 
   it("should get the work's images", () => {
     expect(sut.images.map(image => image.uri).sort()).to.deep.eq(
@@ -45,11 +57,24 @@ describe("Work", () => {
     );
   });
 
+  it("should get the work's page", () => {
+    expect(sut.page).to.not.be.empty;
+  });
+
   it("should get the work's property values (literal)", () => {
     const propertyValues = sut.propertyValues(DCTERMS.title.value);
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];
     expect(propertyValue.value).to.eq(sut.title);
+  });
+
+  it("should get the work's property values (named)", () => {
+    const propertyValues = sut.propertyNamedValues(DCTERMS.subject.value);
+    expect(propertyValues).to.have.length(2);
+    const propertyValue = propertyValues[0];
+    expect(propertyValue.value.value).to.satisfy((text: string) =>
+      text.startsWith("Subject")
+    );
   });
 
   it("should get the work's property values (Text)", () => {
@@ -70,5 +95,15 @@ describe("Work", () => {
 
   it("should get the work's URI", () => {
     expect(sut.uri).to.not.be.empty;
+  });
+
+  it("should get the work's Wikidata concept URI", () => {
+    expect(sut.wikidataConceptUri).to.eq(
+      "http://www.wikidata.org/entity/Q937690"
+    );
+  });
+
+  it("should get the work's Wikipedia URL", () => {
+    expect(sut.wikipediaUrl).to.eq("http://en.wikipedia.org/wiki/Pilot-ACE");
   });
 });

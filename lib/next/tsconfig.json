@@ -2,6 +2,10 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "esModuleInterop": true,
+    "lib": [
+      "dom",
+      "dom.iterable"
+    ],
     "outDir": "./dist"
   },
   "exclude": [

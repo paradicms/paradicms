@@ -5,9 +5,12 @@
     "noEmit": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "skipLibCheck": true,
-    "module": "esnext",
-    "moduleResolution": "node"
+    "lib": [
+      "dom",
+      "dom.iterable"
+    ],
+    "moduleResolution": "node",
+    "skipLibCheck": true
   },
   "include": [
     "next-env.d.ts",

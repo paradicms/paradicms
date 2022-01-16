@@ -5,6 +5,7 @@ import {Dataset, License, RightsStatement} from "../src";
 import {NamedModel} from "../src/NamedModel";
 import {Agent} from "../src/Agent";
 import {testDataTrig} from "./testDataTrig";
+import {WorkCreation} from "../src/WorkCreation";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
@@ -110,7 +111,7 @@ describe("DataSubsetter", () => {
   it("should get a work with its institution, collections, all images, agents, and agents' thumbnails (work page)", () => {
     const work = testDataset.works[0];
     const dataset = sut.workDataset(work, {
-      agent: {
+      agents: {
         thumbnail: THUMBNAIL_SELECTOR,
       },
       allImages: true,
@@ -165,5 +166,20 @@ describe("DataSubsetter", () => {
           (work.rights!.statement! as RightsStatement).uri
       )!,
     ]);
+  });
+
+  it("should get a work event subset", () => {
+    const work = testDataset.works[0];
+    const workCreation: WorkCreation = testDataset
+      .workEventsByWork(work.uri)
+      .find(event => event instanceof WorkCreation)! as WorkCreation;
+
+    const dataset = sut.workEventsDataset([workCreation], {
+      agents: {},
+      work: {},
+    });
+    expectModelsDeepEq(dataset.works, [work]);
+    expectModelsDeepEq(dataset.agents, workCreation.creatorAgents);
+    expectModelsDeepEq(dataset.workEventsByWork(work.uri), [workCreation]);
   });
 });

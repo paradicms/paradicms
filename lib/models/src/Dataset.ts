@@ -11,7 +11,7 @@ import {
   Writer,
   WriterOptions,
 } from "n3";
-import {PARADICMS, prefixes, RDF} from "./vocabularies";
+import {CMS, prefixes, RDF} from "./vocabularies";
 import {Work} from "./Work";
 import {Person} from "./Person";
 import {NamedModel} from "./NamedModel";
@@ -20,6 +20,16 @@ import {Organization} from "./Organization";
 import {Agent} from "./Agent";
 import {ModelParameters} from "./ModelParameters";
 import {requireDefined} from "./requireDefined";
+import {WorkEvent} from "./WorkEvent";
+import {WorkCreation} from "./WorkCreation";
+import {Event} from "./Event";
+import {hasMixin} from "ts-mixer";
+
+const eventClassesByRdfType = (() => {
+  const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
+  result[CMS.WorkCreation.value] = WorkCreation;
+  return result;
+})();
 
 /**
  * Lazily indexes the contents of an immutable Dataset to provide quick lookups and subsetting.
@@ -54,6 +64,9 @@ export class Dataset {
   private _peopleByUriIndex?: {[index: string]: Person};
   private _rightsStatements?: readonly RightsStatement[];
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
+  private _workEvents?: readonly WorkEvent[];
+  private _workEventsByUriIndex?: {[index: string]: WorkEvent};
+  private _workEventsByWorkUriIndex?: {[index: string]: readonly WorkEvent[]};
   private _works?: readonly Work[];
   private _worksByAgentUriIndex?: {[index: string]: readonly Work[]};
   private _worksByCollectionUriIndex?: {[index: string]: readonly Work[]};
@@ -354,6 +367,48 @@ export class Dataset {
     return this.peopleByUriIndex[personUri] ?? null;
   }
 
+  protected readEvent(kwds: ModelParameters): Event {
+    for (const eventRdfType of this.store.getObjects(
+      kwds.node,
+      RDF.type,
+      kwds.graphNode
+    )) {
+      const eventClass = eventClassesByRdfType[eventRdfType.value];
+      if (eventClass) {
+        return new eventClass(kwds);
+      }
+    }
+    throw new EvalError(kwds.node.value);
+  }
+
+  protected readEvents(): void {
+    const workEvents: WorkEvent[] = [];
+    const workEventsByWorkUriIndex: {[index: string]: WorkEvent[]} = {};
+    this._workEventsByUriIndex = {};
+
+    this.readModels(kwds => {
+      const event = this.readEvent(kwds);
+
+      if (hasMixin(event, WorkEvent)) {
+        workEvents.push(event);
+
+        const workEventsForWorkUri = workEventsByWorkUriIndex[event.workUri];
+        if (workEventsForWorkUri) {
+          workEventsForWorkUri.push(event);
+        } else {
+          workEventsByWorkUriIndex[event.workUri] = [event];
+        }
+
+        this._workEventsByUriIndex![event.uri] = event;
+      } else {
+        throw new EvalError();
+      }
+    }, CMS.Event);
+
+    this._workEvents = workEvents;
+    this._workEventsByWorkUriIndex = workEventsByWorkUriIndex;
+  }
+
   protected readCollection(kwds: ModelParameters): Collection {
     return new Collection(kwds);
   }
@@ -380,7 +435,7 @@ export class Dataset {
           collection,
         ];
       }
-    }, PARADICMS.Collection);
+    }, CMS.Collection);
     this._collections = collections;
     this._collectionsByInstitutionUriIndex = collectionsByInstitutionUriIndex;
   }
@@ -416,7 +471,7 @@ export class Dataset {
       }
 
       this._imagesByUriIndex![image.uri] = image;
-    }, PARADICMS.Image);
+    }, CMS.Image);
     this._images = images;
     this._imagesByDepictsUriIndex = imagesByDepictsUriIndex;
     this._imagesByOriginalImageUriIndex = imagesByOriginalImageUriIndex;
@@ -433,7 +488,7 @@ export class Dataset {
       const institution = this.readInstitution(kwds);
       institutions.push(institution);
       this._institutionsByUriIndex![institution.uri] = institution;
-    }, PARADICMS.Institution);
+    }, CMS.Institution);
     this._institutions = institutions;
   }
 
@@ -448,7 +503,7 @@ export class Dataset {
       const license = this.readLicense(kwds);
       licenses.push(license);
       this._licensesByUriIndex![license.uri] = license;
-    }, PARADICMS.License);
+    }, CMS.License);
     this._licenses = licenses;
   }
 
@@ -506,7 +561,7 @@ export class Dataset {
       }
 
       this._namedValuesByUriIndex![namedValue.uri] = namedValue;
-    }, PARADICMS.NamedValue);
+    }, CMS.NamedValue);
     this._namedValues = namedValues;
     this._namedValuesByPropertyUriIndex = namedValuesByPropertyUriIndex;
   }
@@ -522,7 +577,7 @@ export class Dataset {
       const organization = this.readOrganization(kwds);
       organizations.push(organization);
       this._organizationsByUriIndex![organization.uri] = organization;
-    }, PARADICMS.Organization);
+    }, CMS.Organization);
     this._organizations = organizations;
   }
 
@@ -533,7 +588,7 @@ export class Dataset {
       const person = this.readPerson(kwds);
       people.push(person);
       this._peopleByUriIndex![person.uri] = person;
-    }, PARADICMS.Person);
+    }, CMS.Person);
     this._people = people;
   }
 
@@ -552,7 +607,7 @@ export class Dataset {
       const rightsStatement = this.readRightsStatement(kwds);
       rightsStatements.push(rightsStatement);
       this._rightsStatementsByUriIndex![rightsStatement.uri] = rightsStatement;
-    }, PARADICMS.RightsStatement);
+    }, CMS.RightsStatement);
     this._rightsStatements = rightsStatements;
   }
 
@@ -597,7 +652,7 @@ export class Dataset {
       }
 
       this._worksByUriIndex![work.uri] = work;
-    }, PARADICMS.Work);
+    }, CMS.Work);
     this._works = works;
     this._worksByAgentUriIndex = worksByAgentUriIndex;
     this._worksByCollectionUriIndex = worksByCollectionUriIndex;
@@ -649,6 +704,44 @@ export class Dataset {
       throw new RangeError("no such work " + workUri);
     }
     return work;
+  }
+
+  get workEvents(): readonly WorkEvent[] {
+    if (!this._workEvents) {
+      this.readEvents();
+    }
+    return this._workEvents!;
+  }
+
+  workEventsByWork(workUri: string): readonly WorkEvent[] {
+    return this.workEventsByWorkUriIndex[workUri] ?? [];
+  }
+
+  workEventByUri(workEventUri: string): WorkEvent {
+    const workEvent = this.workEventsByUriIndex[workEventUri];
+    if (!workEvent) {
+      // this.logContents();
+      throw new RangeError("no such work event " + workEventUri);
+    }
+    return workEvent;
+  }
+
+  private get workEventsByUriIndex(): {
+    [index: string]: WorkEvent;
+  } {
+    if (!this._workEventsByUriIndex) {
+      this.readEvents();
+    }
+    return requireDefined(this._workEventsByUriIndex);
+  }
+
+  private get workEventsByWorkUriIndex(): {
+    [index: string]: readonly WorkEvent[];
+  } {
+    if (!this._workEventsByWorkUriIndex) {
+      this.readEvents();
+    }
+    return requireDefined(this._workEventsByWorkUriIndex);
   }
 
   get works(): readonly Work[] {

@@ -1,19 +1,10 @@
 import {Model} from "./Model";
 import {RDF} from "./vocabularies";
-import {Rights} from "./Rights";
-import {Memoize} from "typescript-memoize";
 import {requireDefined} from "./requireDefined";
+import {Mixin} from "ts-mixer";
+import {HasRights} from "./mixins/HasRights";
 
-export class Text extends Model {
-  @Memoize()
-  get rights(): Rights | null {
-    return Rights.optional({
-      dataset: this.dataset,
-      graphNode: this.graphNode,
-      node: this.node,
-    });
-  }
-
+export class Text extends Mixin(Model, HasRights) {
   toString() {
     return this.value;
   }

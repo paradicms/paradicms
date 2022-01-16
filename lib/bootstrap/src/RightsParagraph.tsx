@@ -39,7 +39,7 @@ export const RightsParagraph: React.FunctionComponent<{
     for (const holder of rights.holders) {
       pushRightsElement(
         <span>
-          <i>Holder</i>: {holder.toString}
+          <i>Holder</i>: {holder.toString()}
         </span>
       );
     }
