@@ -2,7 +2,7 @@ import {WorkJoinSelector} from "@paradicms/models";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 
 export const workSearchWorkJoinSelector: WorkJoinSelector = {
-  agent: {
+  agents: {
     thumbnail: {targetDimensions: thumbnailTargetDimensions},
   },
   collections: {},

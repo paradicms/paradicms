@@ -76,6 +76,10 @@ describe("LunrWorkQueryService", () => {
       {
         limit: Number.MAX_SAFE_INTEGER,
         offset: 0,
+        workEventJoinSelector: {
+          agents: {},
+          work: {}
+        }
       },
       {
         filters: configuration.search!.filters,

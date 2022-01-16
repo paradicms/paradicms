@@ -111,6 +111,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
           workQuery
         )
         .then(getWorksResult => {
+          console.debug("getWorks result:", getWorksResult.totalWorksCount);
           setGetWorksResult(getWorksResult);
           setLoadingWorks(false);
         });
@@ -134,6 +135,10 @@ export const WorkSearchContainer: React.FunctionComponent<{
           workQuery
         )
         .then(getWorkAgentsResult => {
+          console.debug(
+            "getWorkAgents result:",
+            getWorkAgentsResult.totalWorkAgentsCount
+          );
           setGetWorkAgentsResult(getWorkAgentsResult);
           setLoadingWorkAgents(false);
         });
@@ -151,10 +156,15 @@ export const WorkSearchContainer: React.FunctionComponent<{
           {
             limit: (workEventsPage + 1) * OBJECTS_PER_PAGE,
             offset: 0,
+            requireDate: true,
           },
           workQuery
         )
         .then(getWorkEventsResult => {
+          console.info(
+            "getWorkEvents result:",
+            getWorkEventsResult.totalWorkEventsCount
+          );
           setGetWorkEventsResult(getWorkEventsResult);
           setLoadingWorkEvents(false);
         });

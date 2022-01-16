@@ -469,7 +469,7 @@ export class LunrWorkQueryService implements WorkQueryService {
     options: GetWorkEventsOptions,
     query: WorkQuery
   ): Promise<GetWorkEventsResult> {
-    const {limit, offset, requireDate, requireLocation} = options;
+    const {limit, offset, requireDate, workEventJoinSelector} = options;
 
     invariant(!!query, "query must be defined");
     invariant(limit > 0, "limit must be > 0");
@@ -487,9 +487,9 @@ export class LunrWorkQueryService implements WorkQueryService {
             if (requireDate && workEvent.sortDate === null) {
               return false;
             }
-            if (requireLocation && !(workEvent.location instanceof Location)) {
-              return false;
-            }
+            // if (requireLocation && !(workEvent.location instanceof Location)) {
+            //   return false;
+            // }
             return true;
           })
         )
@@ -500,9 +500,7 @@ export class LunrWorkQueryService implements WorkQueryService {
       const slicedWorkEventsDataset = new DataSubsetter({
         completeDataset: this.dataset,
         configuration: this.configuration,
-      }).workEventsDataset({
-        workEvents: slicedWorkEvents,
-      });
+      }).workEventsDataset(workEvents, workEventJoinSelector);
 
       resolve({
         dataset: slicedWorkEventsDataset,

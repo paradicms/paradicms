@@ -17,6 +17,7 @@ import {NamedValue} from "./NamedValue";
 import {PropertyConfiguration} from "@paradicms/configuration";
 import {WorkCreation} from "./WorkCreation";
 import {WorkEvent} from "./WorkEvent";
+import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
 
 interface DataSubsetterConfiguration {
   readonly workProperties?: readonly PropertyConfiguration[];
@@ -223,13 +224,13 @@ export class DataSubsetter {
       builder.addWork(work);
 
       // Work Datasets always include rights
-      this.addRightsDataset(joinSelector.agent ?? {}, builder, work.rights);
+      this.addRightsDataset(joinSelector.agents ?? {}, builder, work.rights);
 
       {
         const abstract = work.abstract;
         if (abstract && abstract instanceof Text) {
           this.addRightsDataset(
-            joinSelector.agent ?? {},
+            joinSelector.agents ?? {},
             builder,
             abstract.rights
           );
@@ -238,7 +239,7 @@ export class DataSubsetter {
 
       if (joinSelector.allImages) {
         for (const image of this.completeDataset.imagesByDepictsUri(work.uri)) {
-          this.addImageDataset(joinSelector.agent ?? {}, builder, image);
+          this.addImageDataset(joinSelector.agents ?? {}, builder, image);
         }
       } else if (joinSelector.thumbnail) {
         const thumbnailImage = this.completeDataset
@@ -246,10 +247,16 @@ export class DataSubsetter {
           .thumbnail(joinSelector.thumbnail);
         if (thumbnailImage) {
           this.addImageDataset(
-            joinSelector.agent ?? {},
+            joinSelector.agents ?? {},
             builder,
             thumbnailImage
           );
+        }
+      }
+
+      if (joinSelector.events) {
+        for (const event of work.events) {
+          this.addWorkEventDataset(builder, joinSelector.events, event);
         }
       }
 
@@ -345,17 +352,32 @@ export class DataSubsetter {
   }
 
   private addWorkCreationDataset(
-    agentJoinSelector: AgentJoinSelector,
     builder: DatasetBuilder,
-    workCreation: WorkCreation,
-    workJoinSelector: WorkJoinSelector
+    joinSelector: WorkEventJoinSelector,
+    workCreation: WorkCreation
   ): DatasetBuilder {
     builder.addEvent(workCreation);
-    for (const creatorAgent of workCreation.creatorAgents) {
-      this.addAgentDataset(creatorAgent, builder, agentJoinSelector);
+    if (joinSelector.agents) {
+      for (const creatorAgent of workCreation.creatorAgents) {
+        this.addAgentDataset(creatorAgent, builder, joinSelector.agents);
+      }
     }
-    this.addWorkDataset(builder, workCreation.work, workJoinSelector);
+    if (joinSelector.work) {
+      this.addWorkDataset(builder, workCreation.work, joinSelector.work);
+    }
     return builder;
+  }
+
+  private addWorkEventDataset(
+    builder: DatasetBuilder,
+    joinSelector: WorkEventJoinSelector,
+    workEvent: WorkEvent
+  ): DatasetBuilder {
+    if (workEvent instanceof WorkCreation) {
+      return this.addWorkCreationDataset(builder, joinSelector, workEvent);
+    } else {
+      throw new EvalError();
+    }
   }
 
   agentsDataset(
@@ -410,27 +432,13 @@ export class DataSubsetter {
     ).build();
   }
 
-  workEventsDataset(kwds: {
-    agentJoinSelector?: AgentJoinSelector;
-    workEvents: readonly WorkEvent[];
-    workJoinSelector?: WorkJoinSelector;
-  }): Dataset {
-    // @ts-ignore
-    const {agentJoinSelector, workEvents, workJoinSelector} = kwds;
-
+  workEventsDataset(
+    workEvents: readonly WorkEvent[],
+    joinSelector?: WorkEventJoinSelector
+  ): Dataset {
     const builder = new DatasetBuilder();
-
     for (const workEvent of workEvents) {
-      if (workEvent instanceof WorkCreation) {
-        this.addWorkCreationDataset(
-          agentJoinSelector ?? {},
-          builder,
-          workEvent,
-          workJoinSelector ?? {}
-        );
-      } else {
-        throw new EvalError();
-      }
+      this.addWorkEventDataset(builder, joinSelector ?? {}, workEvent);
     }
     return builder.build();
   }

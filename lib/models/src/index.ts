@@ -25,4 +25,5 @@ export * from "./vocabularies";
 export * from "./Work";
 export * from "./WorkAgent";
 export * from "./WorkEvent";
+export * from "./WorkEventJoinSelector";
 export * from "./WorkJoinSelector";

@@ -111,7 +111,7 @@ describe("DataSubsetter", () => {
   it("should get a work with its institution, collections, all images, agents, and agents' thumbnails (work page)", () => {
     const work = testDataset.works[0];
     const dataset = sut.workDataset(work, {
-      agent: {
+      agents: {
         thumbnail: THUMBNAIL_SELECTOR,
       },
       allImages: true,
@@ -174,8 +174,9 @@ describe("DataSubsetter", () => {
       .workEventsByWork(work.uri)
       .find(event => event instanceof WorkCreation)! as WorkCreation;
 
-    const dataset = sut.workEventsDataset({
-      workEvents: [workCreation],
+    const dataset = sut.workEventsDataset([workCreation], {
+      agents: {},
+      work: {},
     });
     expectModelsDeepEq(dataset.works, [work]);
     expectModelsDeepEq(dataset.agents, workCreation.creatorAgents);
