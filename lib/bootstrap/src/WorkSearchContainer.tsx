@@ -16,18 +16,20 @@ import {Institution, Work} from "@paradicms/models";
 import {Pagination} from "./Pagination";
 import {
   GetWorkAgentsResult,
+  GetWorkEventsResult,
   GetWorksResult,
   WorkQuery,
   WorkQueryService,
 } from "@paradicms/services";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
-import {calculatePageMax} from "@paradicms/react-search";
+import {
+  calculatePageMax,
+  workSearchWorkJoinSelector,
+} from "@paradicms/react-search";
 import {Filter} from "@paradicms/filters";
 import {useQueryParam} from "use-query-params";
-import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 import {FiltersControls} from "./FiltersControls";
 import {AgentsGallery} from "./AgentsGallery";
-import {GetWorkEventsResult} from "@paradicms/services/dist/GetWorkEventsResult";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
 
 const OBJECTS_PER_PAGE = 4;
@@ -106,7 +108,9 @@ export const WorkSearchContainer: React.FunctionComponent<{
             valueFacetValueThumbnailSelector: {
               targetDimensions: thumbnailTargetDimensions,
             },
-            workJoinSelector: workSearchWorkJoinSelector,
+            workJoinSelector: workSearchWorkJoinSelector(
+              thumbnailTargetDimensions
+            ),
           },
           workQuery
         )
@@ -157,6 +161,9 @@ export const WorkSearchContainer: React.FunctionComponent<{
             limit: (workEventsPage + 1) * OBJECTS_PER_PAGE,
             offset: 0,
             requireDate: true,
+            workEventJoinSelector: {
+              work: {},
+            },
           },
           workQuery
         )

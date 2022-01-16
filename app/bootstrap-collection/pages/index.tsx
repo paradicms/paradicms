@@ -4,8 +4,8 @@ import {Collection, Dataset, DataSubsetter} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {
+  thumbnailTargetDimensions,
   WorkSearchContainer,
-  workSearchWorkJoinSelector,
 } from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
@@ -13,7 +13,10 @@ import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
 import fs from "fs";
 import {WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
-import {useWorkSearchQueryParams} from "@paradicms/react-search";
+import {
+  useWorkSearchQueryParams,
+  workSearchWorkJoinSelector,
+} from "@paradicms/react-search";
 import {AppConfiguration} from "@paradicms/configuration";
 import "react-vertical-timeline-component/style.min.css";
 
@@ -88,7 +91,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
       datasetString: new DataSubsetter({completeDataset, configuration})
         .collectionDataset(collection, {
           institution: {},
-          works: workSearchWorkJoinSelector,
+          works: workSearchWorkJoinSelector(thumbnailTargetDimensions),
         })
         .stringify(),
     },

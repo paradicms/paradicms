@@ -1,10 +1,9 @@
 import {expect} from "chai";
 import {LunrWorkQueryService} from "../src/LunrWorkQueryService";
-import {Dataset} from "@paradicms/models";
+import {Dataset, WorkCreation} from "@paradicms/models";
 import {testDataTrig} from "../../models/test/testDataTrig";
 import {defaultAppConfiguration} from "@paradicms/configuration";
 import {CollectionValueFacet, InstitutionValueFacet, StringPropertyValueFacet} from "@paradicms/facets";
-import {WorkCreation} from "@paradicms/models/dist/WorkCreation";
 
 describe("LunrWorkQueryService", () => {
   const configuration = defaultAppConfiguration;

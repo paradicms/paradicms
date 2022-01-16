@@ -17,4 +17,3 @@ export * from "./WorkEventsTimeline";
 export * from "./WorkImagesCarousel";
 export * from "./WorksGallery";
 export * from "./WorkSearchContainer";
-export * from "./workSearchWorkJoinSelector";

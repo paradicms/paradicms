@@ -1,4 +1,4 @@
-import {Work, WorkEvent} from "@paradicms/models";
+import {Work, WorkCreation, WorkEvent} from "@paradicms/models";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -6,7 +6,6 @@ import {
 import {faEllipsisV, faLightbulb} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
-import {WorkCreation} from "@paradicms/models/dist/WorkCreation";
 import React = require("react");
 
 const getWorkEventIcon = (workEvent: WorkEvent): IconDefinition => {
@@ -28,6 +27,7 @@ export const WorkEventsTimeline: React.FunctionComponent<{
       {workEvents.map(workEvent => (
         <VerticalTimelineElement
           date={workEvent.displayDate}
+          key={workEvent.uri}
           icon={<FontAwesomeIcon icon={getWorkEventIcon(workEvent)} />}
         >
           <h3>{workEvent.work.title}</h3>

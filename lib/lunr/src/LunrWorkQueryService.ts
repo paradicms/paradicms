@@ -11,6 +11,8 @@ import invariant from "ts-invariant";
 import {
   GetWorkAgentsOptions,
   GetWorkAgentsResult,
+  GetWorkEventsOptions,
+  GetWorkEventsResult,
   GetWorksOptions,
   GetWorksResult,
   WorkQuery,
@@ -33,8 +35,6 @@ import {
   ValueFacetValueThumbnail,
 } from "@paradicms/facets";
 import {PropertyConfiguration} from "@paradicms/configuration";
-import {GetWorkEventsOptions} from "@paradicms/services/dist/GetWorkEventsOptions";
-import {GetWorkEventsResult} from "@paradicms/services/dist/GetWorkEventsResult";
 
 const basex = require("base-x");
 const base58 = basex(
