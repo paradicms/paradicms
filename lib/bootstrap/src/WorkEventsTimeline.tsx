@@ -1,4 +1,4 @@
-import {Work, WorkCreation, WorkEvent} from "@paradicms/models";
+import {visitWorkEvent, Work, WorkCreation, WorkEvent} from "@paradicms/models";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -9,11 +9,11 @@ import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import React = require("react");
 
 const getWorkEventIcon = (workEvent: WorkEvent): IconDefinition => {
-  if (workEvent instanceof WorkCreation) {
-    return faLightbulb;
-  } else {
-    throw new EvalError();
-  }
+  return visitWorkEvent(workEvent, {
+    visitWorkCreation(workCreation: WorkCreation): IconDefinition {
+      return faLightbulb;
+    },
+  });
 };
 
 export const WorkEventsTimeline: React.FunctionComponent<{

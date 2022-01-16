@@ -18,6 +18,7 @@ import {PropertyConfiguration} from "@paradicms/configuration";
 import {WorkCreation} from "./WorkCreation";
 import {WorkEvent} from "./WorkEvent";
 import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
+import {visitWorkEvent} from "./WorkEventVisitor";
 
 interface DataSubsetterConfiguration {
   readonly workProperties?: readonly PropertyConfiguration[];
@@ -373,11 +374,12 @@ export class DataSubsetter {
     joinSelector: WorkEventJoinSelector,
     workEvent: WorkEvent
   ): DatasetBuilder {
-    if (workEvent instanceof WorkCreation) {
-      return this.addWorkCreationDataset(builder, joinSelector, workEvent);
-    } else {
-      throw new EvalError();
-    }
+    const self = this;
+    return visitWorkEvent(workEvent, {
+      visitWorkCreation(workCreation: WorkCreation): DatasetBuilder {
+        return self.addWorkCreationDataset(builder, joinSelector, workCreation);
+      },
+    });
   }
 
   agentsDataset(
