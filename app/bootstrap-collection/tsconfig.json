@@ -9,7 +9,6 @@
       "dom",
       "dom.iterable"
     ],
-    "module": "esnext",
     "moduleResolution": "node",
     "skipLibCheck": true
   },
