@@ -1,6 +1,5 @@
 /app/bootstrap-collection/public/img/archive/
 /app/bootstrap-exhibition/public/img/archive/
-/app/material-ui-union/public/img/archive/
 dist/
 /lib/lunr/@paradicms/
 /lib/models/coverage/
@@ -10,5 +9,4 @@ node_modules/
 null/
 .nyc_output/
 out/
-!/integration/material-ui-union/package-lock.json
 yarn-error.log

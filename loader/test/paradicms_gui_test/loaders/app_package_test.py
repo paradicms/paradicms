@@ -1,12 +1,10 @@
+from paradicms_etl._model import _Model
+from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
+from paradicms_gui.loaders.app_package import AppPackage
 from pathlib import Path
 from typing import Tuple
 
-from paradicms_etl._model import _Model
-from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
-
-from paradicms_gui.loaders.app_package import AppPackage
-
-APP = "material-ui-union"
+APP = "bootstrap-collection"
 
 
 # def test_clean():

@@ -13,8 +13,7 @@
     "test": "wsrun --exclude-missing test"
   },
   "workspaces": [
-    "app/bootstrap-collection",
-    "app/bootstrap-exhibition",
+    "app/*",
     "lib/*"
   ]
 }
