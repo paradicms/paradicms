@@ -27,4 +27,5 @@ export * from "./WorkAgent";
 export * from "./WorkCreation";
 export * from "./WorkEvent";
 export * from "./WorkEventJoinSelector";
+export * from "./WorkEventVisitor";
 export * from "./WorkJoinSelector";
