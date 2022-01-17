@@ -11,7 +11,7 @@ import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
 import fs from "fs";
-import {WorkQueryService} from "@paradicms/services";
+import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
 import {
   useWorkSearchQueryParams,
@@ -19,6 +19,7 @@ import {
 } from "@paradicms/react-search";
 import {AppConfiguration} from "@paradicms/configuration";
 import "react-vertical-timeline-component/style.min.css";
+import dynamic from "next/dynamic";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
@@ -27,6 +28,20 @@ interface StaticProps {
   readonly configuration: AppConfiguration;
   readonly datasetString: string;
 }
+
+const WorkLocationsMap = dynamic<{
+  readonly renderWorkLink: (
+    workUri: string,
+    children: React.ReactNode
+  ) => React.ReactNode;
+  readonly workLocations: readonly WorkLocationSummary[];
+}>(
+  () =>
+    import("../components/WorkLocationsMap").then(
+      module => module.WorkLocationsMap
+    ),
+  {ssr: false}
+);
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
@@ -62,11 +77,12 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
       onSearch={onSearch}
     >
       <WorkSearchContainer
-        renderWorkLink={(work, children) => (
-          <Link href={Hrefs.work(work.uri)}>
+        renderWorkLink={(workUri, children) => (
+          <Link href={Hrefs.work(workUri)}>
             <a>{children}</a>
           </Link>
         )}
+        workLocationsMapComponent={WorkLocationsMap}
         workQueryService={workQueryService}
         {...workSearchQueryParams}
       />

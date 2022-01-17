@@ -3,6 +3,7 @@ export * from "./createFilterControl";
 export * from "./FiltersControls";
 export * from "./FiltersBadges";
 export * from "./getNamedModelLinks";
+export * from "./getWorkEventIcon";
 export * from "./LicenseLink";
 export * from "./NavbarSearchForm";
 export * from "./Pagination";

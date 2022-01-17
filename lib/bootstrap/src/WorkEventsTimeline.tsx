@@ -1,20 +1,12 @@
-import {visitWorkEvent, Work, WorkCreation, WorkEvent} from "@paradicms/models";
+import {Work, WorkEvent} from "@paradicms/models";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
-import {faEllipsisV, faLightbulb} from "@fortawesome/free-solid-svg-icons";
+import {faEllipsisV} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
+import {getWorkEventIcon} from "./getWorkEventIcon";
 import React = require("react");
-
-const getWorkEventIcon = (workEvent: WorkEvent): IconDefinition => {
-  return visitWorkEvent(workEvent, {
-    visitWorkCreation(workCreation: WorkCreation): IconDefinition {
-      return faLightbulb;
-    },
-  });
-};
 
 export const WorkEventsTimeline: React.FunctionComponent<{
   readonly page: number; // 0-based

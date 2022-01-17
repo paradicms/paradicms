@@ -9,15 +9,16 @@ import {
   TabPane,
 } from "reactstrap";
 import * as React from "react";
-import {useEffect, useState} from "react";
+import {ComponentType, useEffect, useState} from "react";
 import {FiltersBadges} from "./FiltersBadges";
 import {WorksGallery} from "./WorksGallery";
-import {Institution, Work} from "@paradicms/models";
 import {Pagination} from "./Pagination";
 import {
   GetWorkAgentsResult,
   GetWorkEventsResult,
+  GetWorkLocationsResult,
   GetWorksResult,
+  WorkLocationSummary,
   WorkQuery,
   WorkQueryService,
 } from "@paradicms/services";
@@ -34,21 +35,31 @@ import {WorkEventsTimeline} from "./WorkEventsTimeline";
 
 const OBJECTS_PER_PAGE = 4;
 
-type TabKey = "workAgents" | "workEvents" | "works";
+type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
 
 export const WorkSearchContainer: React.FunctionComponent<{
   onChangeFilters: (filters: readonly Filter[]) => void;
   renderInstitutionLink?: (
-    institution: Institution,
+    institutionUri: string,
     children: React.ReactNode
   ) => React.ReactNode;
-  renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactNode;
+  renderWorkLink: (
+    workUri: string,
+    children: React.ReactNode
+  ) => React.ReactNode;
   setWorkAgentsPage: (page: number | undefined) => void;
   setWorkEventsPage: (page: number | undefined) => void;
   setWorksPage: (page: number | undefined) => void;
   setWorkQuery: (workQuery: WorkQuery) => void;
   workAgentsPage: number;
   workEventsPage: number;
+  workLocationsMapComponent?: ComponentType<{
+    readonly renderWorkLink: (
+      workUri: string,
+      children: React.ReactNode
+    ) => React.ReactNode;
+    readonly workLocations: readonly WorkLocationSummary[];
+  }>;
   workQuery: WorkQuery;
   workQueryService: WorkQueryService;
   worksPage: number;
@@ -61,6 +72,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
   setWorksPage,
   workAgentsPage,
   workEventsPage,
+  workLocationsMapComponent,
   workQuery,
   workQueryService,
   worksPage,
@@ -80,12 +92,21 @@ export const WorkSearchContainer: React.FunctionComponent<{
     setGetWorkEventsResult,
   ] = useState<GetWorkEventsResult | null>(null);
 
+  const [
+    // @ts-ignore
+    getWorkLocationsResult,
+    setGetWorkLocationsResult,
+  ] = useState<GetWorkLocationsResult | null>(null);
+
   const [getWorksResult, setGetWorksResult] = useState<GetWorksResult | null>(
     null
   );
 
   const [loadingWorkAgents, setLoadingWorkAgents] = useState<boolean>(false);
   const [loadingWorkEvents, setLoadingWorkEvents] = useState<boolean>(false);
+  const [loadingWorkLocations, setLoadingWorkLocations] = useState<boolean>(
+    false
+  );
   const [loadingWorks, setLoadingWorks] = useState<boolean>(false);
 
   // console.debug("Work query:", JSON.stringify(workQuery));
@@ -178,6 +199,24 @@ export const WorkSearchContainer: React.FunctionComponent<{
     }
   }, [activeTabKeyQueryParam, workQuery, workQueryService, workEventsPage]);
 
+  // Effect that responds to switching to the work locations tab
+  useEffect(() => {
+    if (activeTabKey === "workLocations" && !loadingWorkLocations) {
+      console.debug("getWorkLocations");
+      setLoadingWorkLocations(true);
+      workQueryService
+        .getWorkLocations({}, workQuery)
+        .then(getWorkLocationsResult => {
+          console.debug(
+            "getWorkLocations result:",
+            getWorkLocationsResult.workLocations.length
+          );
+          setGetWorkLocationsResult(getWorkLocationsResult);
+          setLoadingWorkLocations(false);
+        });
+    }
+  }, [activeTabKeyQueryParam, workQuery, workQueryService, workAgentsPage]);
+
   if (getWorksResult === null) {
     return null;
   }
@@ -262,6 +301,20 @@ export const WorkSearchContainer: React.FunctionComponent<{
       />
     ) : null,
   });
+  if (workLocationsMapComponent) {
+    tabs.push({
+      key: "workLocations",
+      title: "Map",
+      content:
+        getWorkLocationsResult &&
+        getWorkLocationsResult.workLocations.length > 0
+          ? React.createElement(workLocationsMapComponent, {
+              renderWorkLink,
+              workLocations: getWorkLocationsResult.workLocations,
+            })
+          : null,
+    });
+  }
 
   return (
     <Container fluid>
