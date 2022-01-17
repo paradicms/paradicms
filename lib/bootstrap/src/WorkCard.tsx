@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useState} from "react";
-import {Image, Institution, Text, Work} from "@paradicms/models";
+import {Image, Text, Work} from "@paradicms/models";
 import {
   Card,
   CardBody,
@@ -25,10 +25,13 @@ const RIGHTS_STYLE: React.CSSProperties = {
 export const WorkCard: React.FunctionComponent<{
   work: Work;
   renderInstitutionLink?: (
-    institution: Institution,
+    institutionUri: string,
     children: React.ReactNode
   ) => React.ReactNode;
-  renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactNode;
+  renderWorkLink: (
+    workUri: string,
+    children: React.ReactNode
+  ) => React.ReactNode;
 }> = ({work, renderInstitutionLink, renderWorkLink}) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const workLinks = getNamedModelLinks(work);
@@ -43,19 +46,21 @@ export const WorkCard: React.FunctionComponent<{
     title: "Image",
     content: (
       <Card className="border-0">
-        {renderWorkLink(
-          work,
-          <CardImg
-            src={thumbnailSrc}
-            style={{
-              height: thumbnailTargetDimensions.height,
-              marginBottom: "20px",
-              marginTop: "20px",
-              width: thumbnailTargetDimensions.width,
-            }}
-            title={work.title}
-          />
-        )}
+        {
+          (work.uri,
+          (
+            <CardImg
+              src={thumbnailSrc}
+              style={{
+                height: thumbnailTargetDimensions.height,
+                marginBottom: "20px",
+                marginTop: "20px",
+                width: thumbnailTargetDimensions.width,
+              }}
+              title={work.title}
+            />
+          ))
+        }
         {thumbnail && thumbnail.rights ? (
           <CardFooter className="text-center">
             <RightsParagraph
@@ -93,7 +98,7 @@ export const WorkCard: React.FunctionComponent<{
   return (
     <Card className="text-center">
       <CardHeader tag="h4">
-        {renderWorkLink(work, <>{work.title}</>)}
+        {renderWorkLink(work.uri, <>{work.title}</>)}
         {workLinks.length > 0 ? (
           <div className="mt-1" style={{fontSize: "x-small"}}>
             {workLinks}

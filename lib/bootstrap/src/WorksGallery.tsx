@@ -1,6 +1,6 @@
 import * as React from "react";
 import {WorkCard} from "./WorkCard";
-import {Institution, Work} from "@paradicms/models";
+import {Work} from "@paradicms/models";
 
 /**
  * Works gallery component.
@@ -10,10 +10,13 @@ import {Institution, Work} from "@paradicms/models";
 export const WorksGallery: React.FunctionComponent<{
   works: readonly Work[];
   renderInstitutionLink?: (
-    institution: Institution,
+    institutionUri: string,
     children: React.ReactNode
   ) => React.ReactNode;
-  renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactNode;
+  renderWorkLink: (
+    workUri: string,
+    children: React.ReactNode
+  ) => React.ReactNode;
 }> = ({works, renderInstitutionLink, renderWorkLink}) => (
   <>
     {works.map(work => (

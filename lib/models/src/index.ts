@@ -29,3 +29,5 @@ export * from "./WorkEvent";
 export * from "./WorkEventJoinSelector";
 export * from "./WorkEventVisitor";
 export * from "./WorkJoinSelector";
+export * from "./WorkLocation";
+export * from "./WorkLocationRole";
