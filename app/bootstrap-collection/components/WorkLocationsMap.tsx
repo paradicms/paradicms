@@ -32,7 +32,6 @@ export const WorkLocationsMap: React.FunctionComponent<{
   return (
     <MapContainer
       center={[workLocations[0].location.lat, workLocations[0].location.long]}
-      scrollWheelZoom={false}
       style={{height: "600px"}}
       zoom={13}
     >
