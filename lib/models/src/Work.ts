@@ -19,6 +19,10 @@ import {
   HasTitle,
 } from "./mixins";
 import {WorkEvent} from "./WorkEvent";
+import {WorkLocation} from "./WorkLocation";
+import {visitWorkEvent} from "./WorkEventVisitor";
+import {WorkCreation} from "./WorkCreation";
+import {Location} from "./Location";
 
 const getRightsWorkAgents = (
   rights: Rights | null,
@@ -112,6 +116,7 @@ export class Work extends Mixin(
     );
   }
 
+  @Memoize()
   get collectionUris(): readonly string[] {
     return this.propertyObjects(CMS.collection)
       .filter(term => term.termType === "NamedNode")
@@ -122,9 +127,28 @@ export class Work extends Mixin(
     return this.dataset.workEventsByWork(this.uri);
   }
 
+  @Memoize()
+  get locations(): readonly WorkLocation[] {
+    const result: WorkLocation[] = [];
+
+    for (const event of this.events) {
+      visitWorkEvent(event, {
+        visitWorkCreation(workCreation: WorkCreation): void {
+          if (workCreation.location instanceof Location) {
+            result.push({
+              location: workCreation.location,
+              role: "Creation",
+            });
+          }
+        },
+      });
+    }
+
+    return result;
+  }
+
+  @Memoize()
   propertyNamedValues(propertyUri: string): readonly NamedValue[] {
-    // This code is (temporarily) here instead of in Model or NamedModel
-    // because NamedValue is a NamedModel, which creates a circular dependency.
     const result: NamedValue[] = [];
     this.store.forEach(
       quad => {

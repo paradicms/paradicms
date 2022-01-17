@@ -13,6 +13,7 @@ import {
   GetWorkAgentsResult,
   GetWorkEventsOptions,
   GetWorkEventsResult,
+  GetWorkLocationsResult,
   GetWorksOptions,
   GetWorksResult,
   WorkQuery,
@@ -35,6 +36,7 @@ import {
   ValueFacetValueThumbnail,
 } from "@paradicms/facets";
 import {PropertyConfiguration} from "@paradicms/configuration";
+import {GetWorkLocationsOptions} from "@paradicms/services/dist/GetWorkLocationsOptions";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -506,6 +508,38 @@ export class LunrWorkQueryService implements WorkQueryService {
         dataset: slicedWorkEventsDataset,
         totalWorkEventsCount: workEvents.length,
         workEventUris: slicedWorkEvents.map(workEvent => workEvent.uri),
+      });
+    });
+  }
+
+  getWorkLocations(
+    options: GetWorkLocationsOptions,
+    query: WorkQuery
+  ): Promise<GetWorkLocationsResult> {
+    invariant(!!query, "query must be defined");
+
+    return new Promise(resolve => {
+      const works = this.filterWorks({
+        filters: query.filters,
+        works: this.searchWorks(query),
+      });
+
+      const workLocations = works.flatMap(work =>
+        work.locations.map(workLocation => ({
+          location: {
+            lat: workLocation.location.lat,
+            long: workLocation.location.long,
+          },
+          role: workLocation.role,
+          work: {
+            title: work.title,
+            uri: work.uri,
+          },
+        }))
+      );
+
+      resolve({
+        workLocations,
       });
     });
   }
