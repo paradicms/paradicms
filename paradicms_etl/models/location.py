@@ -16,6 +16,8 @@ class Location(Model):
         long: Optional[float] = None,
         uri: Optional[URIRef] = None
     ):
+        if uri is not None:
+            raise NotImplementedError("no support in the GUI for named Locations")
         return cls(
             ResourceBuilder(uri if uri is not None else BNode())
             .add(WGS.lat, lat)

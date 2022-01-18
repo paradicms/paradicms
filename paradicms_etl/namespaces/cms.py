@@ -23,6 +23,7 @@ class CMS(DefinedNamespace):
     Image: URIRef
     Institution: URIRef
     License: URIRef
+    Location: URIRef
     NamedValue: URIRef
     Organization: URIRef
     Person: URIRef

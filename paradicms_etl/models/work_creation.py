@@ -10,6 +10,14 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class WorkCreation(WorkEvent):
+    def __init__(self, *args, **kwds):
+        WorkEvent.__init__(self, *args, **kwds)
+        self.creator_uris
+
+    @property
+    def creator_uris(self) -> Tuple[URIRef, ...]:
+        return self._required_uri_values(DCTERMS.creator)
+
     @classmethod
     def from_fields(
         cls,
@@ -22,6 +30,9 @@ class WorkCreation(WorkEvent):
         latest_date: Union[DateTimeDescription, str, None] = None,
         location: Union[Location, str, None] = None,
     ):
+        if date is None and earliest_date is None and latest_date is None:
+            raise ValueError("must specify at least onedate")
+
         return cls(
             ResourceBuilder(uri)
             .add(DCTERMS.creator, creator_uri)

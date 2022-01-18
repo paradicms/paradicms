@@ -16,6 +16,7 @@ from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
+from paradicms_etl.models.location import Location
 from paradicms_etl.models.named_value import NamedValue
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
@@ -483,6 +484,7 @@ class TestDataPipeline(Pipeline):
             yield WorkCreation.from_fields(
                 creator_uri=creator_uris,
                 date=creation_date_time_description,
+                location=Location.from_fields(lat=42.728104, long=-73.687576),
                 work_uri=work.uri,
                 uri=URIRef(str(uri) + "Creation"),
             )
