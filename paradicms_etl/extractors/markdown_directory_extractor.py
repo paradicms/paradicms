@@ -21,7 +21,7 @@ class MarkdownDirectoryExtractor(Extractor):
 
     def extract(self, **kwds):
         image_file_entries = []
-        markdown_file_entries = []
+        metadata_file_entries = []
         root_dir_path = self._extracted_data_dir_path.absolute()
         for dir_path, _, file_names in os.walk(root_dir_path):
             dir_path = Path(dir_path)
@@ -35,11 +35,12 @@ class MarkdownDirectoryExtractor(Extractor):
                 if file_name.suffix == ".md":
                     with open(file_path) as md_file:
                         markdown_source = md_file.read()
-                    markdown_file_entries.append(
+                    metadata_file_entries.append(
                         MarkdownDirectory.MetadataFileEntry(
-                            markdown_source=markdown_source,
+                            format="md",
                             model_id=model_id,
                             model_type=model_type,
+                            source=markdown_source,
                         )
                     )
                     continue
@@ -65,7 +66,7 @@ class MarkdownDirectoryExtractor(Extractor):
         return {
             "markdown_directory": MarkdownDirectory(
                 image_file_entries=tuple(image_file_entries),
-                markdown_file_entries=tuple(markdown_file_entries),
+                metadata_file_entries=tuple(metadata_file_entries),
                 name=str(root_dir_path.name),
             )
         }

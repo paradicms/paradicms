@@ -453,17 +453,20 @@ class MarkdownDirectoryTransformer(Transformer):
                 model_type=_model_type_by_name(metadata_file_entry.model_type),
                 pipeline_id=self.__pipeline_id,
             )
-            return MarkdownToResourceTransformer.transform(
-                front_matter_to_resource_transformer=MarkdownDirectoryTransformer._CustomDictToResourceTransformer(
+            if metadata_file_entry.format == "md":
+                return MarkdownToResourceTransformer.transform(
+                    front_matter_to_resource_transformer=MarkdownDirectoryTransformer._CustomDictToResourceTransformer(
+                        graph=graph,
+                        namespaces_by_prefix=self.__namespaces_by_prefix,
+                        pipeline_id=self.__pipeline_id,
+                        resource_identifier_default=resource_identifier_default,
+                    ),
                     graph=graph,
-                    namespaces_by_prefix=self.__namespaces_by_prefix,
-                    pipeline_id=self.__pipeline_id,
+                    markdown=metadata_file_entry.source,
                     resource_identifier_default=resource_identifier_default,
-                ),
-                graph=graph,
-                markdown=metadata_file_entry.markdown_source,
-                resource_identifier_default=resource_identifier_default,
-            )
+                )
+            else:
+                raise NotImplementedError(metadata_file_entry.format)
 
         def __transform_other_metadata_file_entries(self) -> None:
             for (
