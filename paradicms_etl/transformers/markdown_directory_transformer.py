@@ -26,10 +26,10 @@ from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_creation import WorkCreation
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.transformer import Transformer
+from paradicms_etl.utils.dict_to_resource_transformer import DictToResourceTransformer
 from paradicms_etl.utils.markdown_to_resource_transformer import (
     MarkdownToResourceTransformer,
 )
-from paradicms_etl.utils.yaml_to_rdf_transformer import YamlToRdfTransformer
 
 __MODEL_TYPES = (
     Collection,
@@ -88,9 +88,9 @@ class MarkdownDirectoryTransformer(Transformer):
 
     _DEFAULT_INSTITUTION_MODEL_ID = "default"
 
-    class _FrontMatterToRdfTransformer(YamlToRdfTransformer):
+    class _CustomDictToResourceTransformer(DictToResourceTransformer):
         def __init__(self, *, pipeline_id: str, **kwds):
-            YamlToRdfTransformer.__init__(self, **kwds)
+            DictToResourceTransformer.__init__(self, **kwds)
             self.__pipeline_id = pipeline_id
 
         def _transform_uri_value_to_node(self, value: str) -> URIRef:
@@ -105,7 +105,9 @@ class MarkdownDirectoryTransformer(Transformer):
                         ),
                     )
             else:
-                return YamlToRdfTransformer._transform_uri_value_to_node(self, value)
+                return DictToResourceTransformer._transform_uri_value_to_node(
+                    self, value
+                )
 
     def __init__(
         self,
@@ -446,19 +448,21 @@ class MarkdownDirectoryTransformer(Transformer):
             self, markdown_file_entry: MarkdownDirectory.MarkdownFileEntry
         ) -> Resource:
             graph = Graph()
+            resource_identifier_default = MarkdownDirectoryTransformer.model_uri(
+                model_id=markdown_file_entry.model_id,
+                model_type=_model_type_by_name(markdown_file_entry.model_type),
+                pipeline_id=self.__pipeline_id,
+            )
             return MarkdownToResourceTransformer.transform(
-                front_matter_to_rdf_transformer=MarkdownDirectoryTransformer._FrontMatterToRdfTransformer(
+                front_matter_to_resource_transformer=MarkdownDirectoryTransformer._CustomDictToResourceTransformer(
                     graph=graph,
                     namespaces_by_prefix=self.__namespaces_by_prefix,
                     pipeline_id=self.__pipeline_id,
+                    resource_identifier_default=resource_identifier_default,
                 ),
                 graph=graph,
                 markdown=markdown_file_entry.markdown_source,
-                resource_identifier_default=MarkdownDirectoryTransformer.model_uri(
-                    model_id=markdown_file_entry.model_id,
-                    model_type=_model_type_by_name(markdown_file_entry.model_type),
-                    pipeline_id=self.__pipeline_id,
-                ),
+                resource_identifier_default=resource_identifier_default,
             )
 
         def __transform_other_markdown_file_entries(self) -> None:

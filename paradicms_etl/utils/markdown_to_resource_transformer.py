@@ -12,7 +12,7 @@ from rdflib.term import Identifier
 
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.namespaces import CMS
-from paradicms_etl.utils.yaml_to_rdf_transformer import YamlToRdfTransformer
+from paradicms_etl.utils.dict_to_resource_transformer import DictToResourceTransformer
 
 
 class MarkdownToResourceTransformer:
@@ -20,14 +20,18 @@ class MarkdownToResourceTransformer:
         self,
         *,
         markdown_it: MarkdownIt,
-        front_matter_to_rdf_transformer: Optional[YamlToRdfTransformer] = None,
+        front_matter_to_resource_transformer: Optional[
+            DictToResourceTransformer
+        ] = None,
         graph: Optional[Graph] = None,
         resource_identifier_default: Optional[Identifier] = None,
     ):
         self.__current_heading_id = None
-        if front_matter_to_rdf_transformer is None:
-            front_matter_to_rdf_transformer = YamlToRdfTransformer()
-        self.__front_matter_to_rdf_transformer = front_matter_to_rdf_transformer
+        if front_matter_to_resource_transformer is None:
+            front_matter_to_resource_transformer = DictToResourceTransformer()
+        self.__front_matter_to_resource_transformer = (
+            front_matter_to_resource_transformer
+        )
         self.__markdown_it = markdown_it
         if graph is None:
             graph = Graph()
@@ -59,32 +63,13 @@ class MarkdownToResourceTransformer:
         return self.__result
 
     def _visit_front_matter_node(self, front_matter_node: SyntaxTreeNode):
+        assert self.__result is None
         front_matter_dict = yaml.load(front_matter_node.content, Loader=yaml.FullLoader)
-
-        # Buffer the statements so that we can handle the model's URI first
-        front_matter_statements = []
-        for (
-            property_uri,
-            value_node,
-        ) in self.__front_matter_to_rdf_transformer.transform_dict_to_resource_statements(
-            front_matter_dict
-        ):
-            if property_uri == rdflib.RDF.subject:
-                # Front matter specifies the model's URI
-                # Preemptively create the result rdflib Resource so it doesn't use the default URI (synthesized from the model id and type)
-                if self.__result is not None:
-                    raise ValueError("only one subject URI can be specified")
-                if not isinstance(value_node, URIRef):
-                    raise TypeError(
-                        "subject URI must be a URIRef, not a " + type(value_node)
-                    )
-                self.__result = self.__graph.resource(value_node)
-                continue
-
-            front_matter_statements.append((property_uri, value_node))
-
-        for property_uri, value_node in front_matter_statements:
-            self._result.add(property_uri, value_node)
+        self.__result = (
+            self.__front_matter_to_resource_transformer.transform_dict_to_resource(
+                front_matter_dict
+            )
+        )
 
     def _visit_heading_node(self, heading_node: SyntaxTreeNode):
         if len(heading_node.children) != 1:
@@ -128,7 +113,9 @@ class MarkdownToResourceTransformer:
             key = "abstract"
 
         property_uri = (
-            self.__front_matter_to_rdf_transformer.transform_key_to_property_uri(key)
+            self.__front_matter_to_resource_transformer.transform_key_to_property_uri(
+                key
+            )
         )
 
         existing_value = self._result.value(property_uri)
