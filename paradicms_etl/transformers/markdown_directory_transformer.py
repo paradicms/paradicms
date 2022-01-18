@@ -1,20 +1,13 @@
-from inspect import isclass
+from logging import Logger
 from logging import Logger
 from typing import Dict, Optional, Tuple, Type
 from urllib.parse import quote
 
 import rdflib.namespace
 import stringcase
-import yaml
-from markdown_it import MarkdownIt
-from markdown_it.renderer import RendererHTML
-from markdown_it.tree import SyntaxTreeNode
-from mdit_py_plugins.front_matter import front_matter_plugin
-from rdflib import DCTERMS, FOAF, Graph, Literal, RDF, RDFS, URIRef
+from rdflib import DCTERMS, FOAF, Graph, Literal, RDFS, URIRef
 from rdflib.resource import Resource
-from rdflib.term import Node, BNode
 
-import paradicms_etl
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
@@ -33,6 +26,9 @@ from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_creation import WorkCreation
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.transformer import Transformer
+from paradicms_etl.utils.markdown_to_resource_transformer import (
+    MarkdownToResourceTransformer,
+)
 from paradicms_etl.utils.yaml_to_rdf_transformer import YamlToRdfTransformer
 
 __MODEL_TYPES = (
@@ -91,184 +87,6 @@ class MarkdownDirectoryTransformer(Transformer):
     """
 
     _DEFAULT_INSTITUTION_MODEL_ID = "default"
-
-    class _MarkdownToResourceTransformer:
-        def __init__(
-            self,
-            *,
-            default_namespace: Optional[rdflib.Namespace],
-            markdown_it: MarkdownIt,
-            model_id: str,
-            model_type: Type[NamedModel],
-            namespaces_by_prefix: Optional[Dict[str, rdflib.Namespace]],
-            pipeline_id: str,
-        ):
-            self.__current_heading_id = None
-            self.__markdown_it = markdown_it
-            self.__graph = Graph()
-            self.__front_matter_to_rdf_transformer = (
-                MarkdownDirectoryTransformer._FrontMatterToRdfTransformer(
-                    default_namespace=default_namespace,
-                    graph=self.__graph,
-                    namespaces_by_prefix=namespaces_by_prefix,
-                    pipeline_id=pipeline_id,
-                )
-            )
-            self.__model_id = model_id
-            self.__model_type = model_type
-            self.__pipeline_id = pipeline_id
-            self.__result = None  # Create lazily
-
-        def _render_node_as_html(self, node: SyntaxTreeNode) -> str:
-            return (
-                RendererHTML()
-                .render(node.to_tokens(), options=self.__markdown_it.options, env={})
-                .strip()
-            )
-
-        @property
-        def _result(self) -> Resource:
-            """
-            Lazily create the result rdflib Resource.
-
-            The front matter can specify an identifier (URIRef) for the Resource, in which case the
-            front matter visitor preemptively creates the result rdflib Resource.
-
-            If the
-            """
-            if self.__result is None:
-                model_uri = MarkdownDirectoryTransformer.model_uri(
-                    pipeline_id=self.__pipeline_id,
-                    model_type=self.__model_type,
-                    model_id=self.__model_id,
-                )
-                self.__result = self.__graph.resource(model_uri)
-            return self.__result
-
-        def _visit_front_matter_node(self, front_matter_node: SyntaxTreeNode):
-            front_matter_dict = yaml.load(
-                front_matter_node.content, Loader=yaml.FullLoader
-            )
-
-            # Buffer the statements so that we can handle the model's URI first
-            front_matter_statements = []
-            for (
-                property_uri,
-                value_node,
-            ) in self.__front_matter_to_rdf_transformer.transform_dict_to_resource_statements(
-                front_matter_dict
-            ):
-                if property_uri == rdflib.RDF.subject:
-                    # Front matter specifies the model's URI
-                    # Preemptively create the result rdflib Resource so it doesn't use the default URI (synthesized from the model id and type)
-                    if self.__result is not None:
-                        raise ValueError("only one subject URI can be specified")
-                    if not isinstance(value_node, URIRef):
-                        raise TypeError(
-                            "subject URI must be a URIRef, not a " + type(value_node)
-                        )
-                    self.__result = self.__graph.resource(value_node)
-                    continue
-
-                front_matter_statements.append((property_uri, value_node))
-
-            for property_uri, value_node in front_matter_statements:
-                self._result.add(property_uri, value_node)
-
-        def _visit_heading_node(self, heading_node: SyntaxTreeNode):
-            if len(heading_node.children) != 1:
-                raise ValueError(
-                    "expected heading node to have a single child: "
-                    + heading_node.pretty()
-                )
-            heading_inline_node = heading_node.children[0]
-            if len(heading_inline_node.children) != 1:
-                raise ValueError(
-                    "expected heading inline node to have a single child: "
-                    + heading_node.pretty()
-                )
-            heading_link_node = heading_inline_node.children[0]
-            if heading_link_node.type != "link":
-                raise ValueError(
-                    "expected heading inline node to have a single link child: "
-                    + heading_node.pretty()
-                )
-            if "href" not in heading_link_node.attrs:
-                raise ValueError(
-                    "expected heading link node to have an href: "
-                    + heading_node.pretty()
-                )
-            heading_link_href = heading_link_node.attrs["href"]
-            if not heading_link_href.startswith("#"):
-                raise ValueError(
-                    "expected heading link node href to start with #: "
-                    + heading_node.pretty()
-                )
-            self.__current_heading_id = heading_link_href[1:].strip()
-            if not self.__current_heading_id:
-                raise ValueError(
-                    "expected heading link node href to start with # and have content: "
-                    + heading_node.pretty()
-                )
-
-        def _visit_default_node(self, node: SyntaxTreeNode):
-            html = self._render_node_as_html(node)
-
-            key = self.__current_heading_id
-            if key is None:
-                key = "abstract"
-
-            property_uri = (
-                self.__front_matter_to_rdf_transformer.transform_key_to_property_uri(
-                    key
-                )
-            )
-
-            existing_value = self._result.value(property_uri)
-            if existing_value is None:
-                self._result.add(property_uri, Literal(html))
-            elif isinstance(existing_value, Literal):
-                # Concatenate multiple paragraphs under the same header
-                self._result.set(
-                    property_uri, Literal(existing_value.toPython() + html)
-                )
-            elif isinstance(existing_value, Resource):
-                # #27: the frontmatter had a dict for this property, which was transformed into a bnode
-                # Assume that bnode was intended to be a Text model
-                # Set the rdf:type and use the HTML here as the value of the Text model
-                assert isinstance(existing_value.identifier, BNode)
-                text_resource = existing_value
-                text_resource.add(RDF.type, CMS.Text)
-                existing_text_value = text_resource.value(RDF.value)
-                # Concatenate multiple paragraphs as needed
-                if existing_text_value is None:
-                    text_resource.add(RDF.value, Literal(html))
-                else:
-                    text_resource.set(
-                        RDF.value, Literal(existing_text_value.toPython() + html)
-                    )
-            else:
-                self._result.set(property_uri, Literal(html))
-
-        @classmethod
-        def visit_document(cls, markdown: str, **kwds) -> Resource:
-            markdown_it = MarkdownIt().use(front_matter_plugin)
-            tokens = markdown_it.parse(markdown)
-            ast = SyntaxTreeNode(tokens)
-            inst = cls(markdown_it=markdown_it, **kwds)
-            inst._visit_node(ast)
-            return inst._result
-
-        def _visit_node(self, node: SyntaxTreeNode):
-            try:
-                method = getattr(self, "_visit_" + node.type + "_node")
-            except AttributeError:
-                method = self._visit_default_node
-            method(node)
-
-        def _visit_root_node(self, root_node: SyntaxTreeNode):
-            for child_node in root_node.children:
-                self._visit_node(child_node)
 
     class _FrontMatterToRdfTransformer(YamlToRdfTransformer):
         def __init__(self, *, pipeline_id: str, **kwds):
@@ -627,13 +445,20 @@ class MarkdownDirectoryTransformer(Transformer):
         def __transform_markdown_file_entry_to_resource(
             self, markdown_file_entry: MarkdownDirectory.MarkdownFileEntry
         ) -> Resource:
-            return MarkdownDirectoryTransformer._MarkdownToResourceTransformer.visit_document(
-                markdown_file_entry.markdown_source,
-                default_namespace=self.__default_namespace,
-                model_id=markdown_file_entry.model_id,
-                model_type=_model_type_by_name(markdown_file_entry.model_type),
-                namespaces_by_prefix=self.__namespaces_by_prefix,
-                pipeline_id=self.__pipeline_id,
+            graph = Graph()
+            return MarkdownToResourceTransformer.transform(
+                front_matter_to_rdf_transformer=MarkdownDirectoryTransformer._FrontMatterToRdfTransformer(
+                    graph=graph,
+                    namespaces_by_prefix=self.__namespaces_by_prefix,
+                    pipeline_id=self.__pipeline_id,
+                ),
+                graph=graph,
+                markdown=markdown_file_entry.markdown_source,
+                resource_identifier_default=MarkdownDirectoryTransformer.model_uri(
+                    model_id=markdown_file_entry.model_id,
+                    model_type=_model_type_by_name(markdown_file_entry.model_type),
+                    pipeline_id=self.__pipeline_id,
+                ),
             )
 
         def __transform_other_markdown_file_entries(self) -> None:
