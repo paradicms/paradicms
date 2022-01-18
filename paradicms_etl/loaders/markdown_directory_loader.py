@@ -11,6 +11,7 @@ from paradicms_etl.loader import Loader
 from paradicms_etl.transformers.markdown_directory_transformer import (
     MarkdownDirectoryTransformer,
 )
+from paradicms_etl.utils.yaml_to_rdf_transformer import YamlToRdfTransformer
 
 
 class MarkdownDirectoryLoader(Loader):
@@ -19,9 +20,7 @@ class MarkdownDirectoryLoader(Loader):
     ):
         Loader.__init__(self, **kwds)
         if namespaces_by_prefix is None:
-            namespaces_by_prefix = (
-                MarkdownDirectoryTransformer.NAMESPACES_BY_PREFIX_DEFAULT
-            )
+            namespaces_by_prefix = YamlToRdfTransformer.NAMESPACES_BY_PREFIX_DEFAULT
         self.__namespaces_by_prefix = namespaces_by_prefix.copy()
 
     def load(self, *, models: Generator[Model, None, None]):
