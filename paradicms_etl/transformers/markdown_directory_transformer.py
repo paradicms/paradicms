@@ -10,7 +10,6 @@ from markdown_it import MarkdownIt
 from markdown_it.renderer import RendererHTML
 from markdown_it.tree import SyntaxTreeNode
 from mdit_py_plugins.front_matter import front_matter_plugin
-from paradicms_etl.transformer import Transformer
 from rdflib import DCTERMS, FOAF, Graph, Literal, RDF, RDFS, URIRef
 from rdflib.resource import Resource
 from rdflib.term import Node, BNode
@@ -31,7 +30,9 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.work import Work
+from paradicms_etl.models.work_creation import WorkCreation
 from paradicms_etl.namespaces import CMS
+from paradicms_etl.transformer import Transformer
 
 
 def _create_namespaces_by_prefix_default() -> Dict[str, rdflib.Namespace]:
@@ -63,6 +64,7 @@ __MODEL_TYPES = (
     NamedValue,
     RightsStatement,
     Work,
+    WorkCreation,
 )
 
 __MODEL_TYPES_BY_NAME = {
@@ -444,6 +446,7 @@ class MarkdownDirectoryTransformer(Transformer):
             self.__transform_institution_markdown_file_entries()
             self.__transform_collection_markdown_file_entries()
             self.__transform_work_markdown_file_entries()
+            self.__transform_work_event_markdown_file_entries()
             self.__transform_other_markdown_file_entries()
             self.__transform_image_markdown_file_entries()
             self.__transform_image_file_entries()
@@ -691,6 +694,35 @@ class MarkdownDirectoryTransformer(Transformer):
                 pipeline_id=self.__pipeline_id,
             )
 
+        def __transform_other_markdown_file_entries(self) -> None:
+            for (
+                model_type,
+                markdown_file_entries,
+            ) in self.__untransformed_markdown_file_entries_by_model_type.items():
+                if model_type == Image:
+                    continue
+                for markdown_file_entry in markdown_file_entries:
+                    model_resource = self.__transform_markdown_file_entry_to_resource(
+                        markdown_file_entry
+                    )
+                    self.__set_resource_label(
+                        model_id=markdown_file_entry.model_id,
+                        model_type=model_type,
+                        resource=model_resource,
+                    )
+                    self.__buffer_transformed_model(
+                        model_id=markdown_file_entry.model_id,
+                        transformed_model=self.__transform_resource_to_model(
+                            model_resource=model_resource,
+                            model_type=model_type,
+                        ),
+                    )
+
+        def __transform_resource_to_model(
+            self, *, model_resource: Resource, model_type: Type[NamedModel]
+        ) -> NamedModel:
+            return model_type.from_rdf(model_resource)
+
         def __transform_work_markdown_file_entries(
             self,
         ):
@@ -715,54 +747,56 @@ class MarkdownDirectoryTransformer(Transformer):
                         self.__get_or_synthesize_default_collection().uri,
                     )
 
-                work = self.__transform_resource_to_model(
-                    model_resource=work_resource,
-                    model_type=Work,
-                )
                 self.__buffer_transformed_model(
                     model_id=markdown_file_entry.model_id,
-                    transformed_model=work,
+                    transformed_model=self.__transform_resource_to_model(
+                        model_resource=work_resource,
+                        model_type=Work,
+                    ),
                 )
 
-        def __transform_other_markdown_file_entries(self) -> None:
-            for (
-                model_type,
-                markdown_file_entries,
-            ) in self.__untransformed_markdown_file_entries_by_model_type.items():
-                if model_type == Image:
-                    continue
-                for markdown_file_entry in markdown_file_entries:
-                    model_resource = self.__transform_markdown_file_entry_to_resource(
-                        markdown_file_entry
-                    )
-                    self.__set_resource_label(
-                        model_id=markdown_file_entry.model_id,
-                        model_type=model_type,
-                        resource=model_resource,
+        def __transform_work_event_markdown_file_entries(
+            self,
+        ):
+            transformed_works_by_id = self.__transformed_models_by_type.get(Work, {})
+
+            for model_type in (WorkCreation,):
+                for (
+                    markdown_file_entry
+                ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
+                    model_type, tuple()
+                ):
+                    work_event_resource = (
+                        self.__transform_markdown_file_entry_to_resource(
+                            markdown_file_entry
+                        )
                     )
 
-                    try:
-                        transformed_model = self.__transform_resource_to_model(
-                            model_resource=model_resource,
-                            model_type=_model_type_by_name(
-                                markdown_file_entry.model_type
-                            ),
+                    if work_event_resource.value(CMS.work) is None:
+                        # If the .md does not refer to a work but its model_id corresponds with a model_id of a work,
+                        # synthesize the reference
+                        work = transformed_works_by_id.get(markdown_file_entry.model_id)
+                        if work is None:
+                            self.__logger.warning(
+                                "work event markdown %s has no work statement and its id does not correspond to a Work",
+                                markdown_file_entry.model_id,
+                            )
+                            continue
+
+                        work_event_resource.add(CMS.work, work.uri)
+                        self.__logger.debug(
+                            "work event markdown %s has no work statement but corresponds to the model %s, adding work statement",
+                            markdown_file_entry.model_id,
+                            work.uri,
                         )
-                    except KeyError:
-                        self.__logger.warning(
-                            "unknown model type: %s", markdown_file_entry.model_type
-                        )
-                        continue
 
                     self.__buffer_transformed_model(
                         model_id=markdown_file_entry.model_id,
-                        transformed_model=transformed_model,
+                        transformed_model=self.__transform_resource_to_model(
+                            model_resource=work_event_resource,
+                            model_type=model_type,
+                        ),
                     )
-
-        def __transform_resource_to_model(
-            self, *, model_resource: Resource, model_type: Type[NamedModel]
-        ) -> NamedModel:
-            return model_type.from_rdf(model_resource)
 
     def transform(self, markdown_directory: MarkdownDirectory):
         yield_known_licenses = True
