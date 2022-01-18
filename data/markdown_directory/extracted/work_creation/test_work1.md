@@ -1,4 +1,7 @@
 ---
 creator:
-    - </person/test_person>
+- </person/test_person>
+date:
+  rdf_type: <http://www.paradicms.org/ns#DateTimeDescription>
+  time_year: 2022
 ---
