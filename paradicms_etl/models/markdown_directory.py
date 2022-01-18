@@ -13,11 +13,11 @@ class MarkdownDirectory:
         path: Path
 
     @dataclass(frozen=True)
-    class MarkdownFileEntry:
+    class MetadataFileEntry:
         markdown_source: str
         model_id: str
         model_type: str
 
     image_file_entries: Tuple[ImageFileEntry, ...]
-    markdown_file_entries: Tuple[MarkdownFileEntry, ...]
+    markdown_file_entries: Tuple[MetadataFileEntry, ...]
     name: str

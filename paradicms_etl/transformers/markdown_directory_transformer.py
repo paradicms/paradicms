@@ -180,11 +180,11 @@ class MarkdownDirectoryTransformer(Transformer):
                 self.__untransformed_image_file_entries_by_model_type.setdefault(
                     _model_type_by_name(image_file_entry.model_type), {}
                 )[image_file_entry.model_id] = image_file_entry
-            self.__untransformed_markdown_file_entries_by_model_type = {}
-            for markdown_file_entry in markdown_directory.markdown_file_entries:
-                self.__untransformed_markdown_file_entries_by_model_type.setdefault(
-                    _model_type_by_name(markdown_file_entry.model_type), []
-                ).append(markdown_file_entry)
+            self.__untransformed_metadata_file_entries_by_model_type = {}
+            for metadata_file_entry in markdown_directory.metadata_file_entries:
+                self.__untransformed_metadata_file_entries_by_model_type.setdefault(
+                    _model_type_by_name(metadata_file_entry.model_type), []
+                ).append(metadata_file_entry)
 
         def __buffer_transformed_model(
             self,
@@ -205,12 +205,12 @@ class MarkdownDirectoryTransformer(Transformer):
 
         def __call__(self) -> Tuple[NamedModel, ...]:
             # Order is important
-            self.__transform_institution_markdown_file_entries()
-            self.__transform_collection_markdown_file_entries()
-            self.__transform_work_markdown_file_entries()
-            self.__transform_work_event_markdown_file_entries()
-            self.__transform_other_markdown_file_entries()
-            self.__transform_image_markdown_file_entries()
+            self.__transform_institution_metadata_file_entries()
+            self.__transform_collection_metadata_file_entries()
+            self.__transform_work_metadata_file_entries()
+            self.__transform_work_event_metadata_file_entries()
+            self.__transform_other_metadata_file_entries()
+            self.__transform_image_metadata_file_entries()
             self.__transform_image_file_entries()
             return tuple(self.__transformed_models_by_uri.values())
 
@@ -266,26 +266,26 @@ class MarkdownDirectoryTransformer(Transformer):
                     Literal(model_id),
                 )
 
-        def __transform_collection_markdown_file_entries(self) -> None:
+        def __transform_collection_metadata_file_entries(self) -> None:
             for (
-                markdown_file_entry
-            ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
+                metadata_file_entry
+            ) in self.__untransformed_metadata_file_entries_by_model_type.pop(
                 Collection, tuple()
             ):
-                collection_resource = self.__transform_markdown_file_entry_to_resource(
-                    markdown_file_entry
+                collection_resource = self.__transform_metadata_file_entry_to_resource(
+                    metadata_file_entry
                 )
 
                 self.__set_resource_institution_uri(collection_resource)
                 self.__set_resource_label(
-                    model_id=markdown_file_entry.model_id,
+                    model_id=metadata_file_entry.model_id,
                     model_type=Collection,
                     resource=collection_resource,
                 )
 
                 collection = self.__transform_resource_to_model(
                     model_resource=collection_resource,
-                    model_type=_model_type_by_name(markdown_file_entry.model_type),
+                    model_type=_model_type_by_name(metadata_file_entry.model_type),
                 )
                 if self.__default_collection is None:
                     if self.__default_institution is not None:
@@ -306,18 +306,18 @@ class MarkdownDirectoryTransformer(Transformer):
                             )
 
                 self.__buffer_transformed_model(
-                    model_id=markdown_file_entry.model_id,
+                    model_id=metadata_file_entry.model_id,
                     transformed_model=collection,
                 )
 
-        def __transform_image_markdown_file_entries(self) -> None:
+        def __transform_image_metadata_file_entries(self) -> None:
             for (
-                markdown_file_entry
-            ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
+                metadata_file_entry
+            ) in self.__untransformed_metadata_file_entries_by_model_type.pop(
                 Image, tuple()
             ):
-                image_resource = self.__transform_markdown_file_entry_to_resource(
-                    markdown_file_entry
+                image_resource = self.__transform_metadata_file_entry_to_resource(
+                    metadata_file_entry
                 )
 
                 if image_resource.value(FOAF.depicts) is None:
@@ -330,18 +330,18 @@ class MarkdownDirectoryTransformer(Transformer):
                         if model_type == Image:
                             continue
                         transformed_model = transformed_models_by_id.get(
-                            markdown_file_entry.model_id
+                            metadata_file_entry.model_id
                         )
                         if transformed_model is None:
                             self.__logger.warning(
                                 "image markdown %s has no depicts statement and does not correspond to another model",
-                                markdown_file_entry.model_id,
+                                metadata_file_entry.model_id,
                             )
                             continue
                         image_resource.add(FOAF.depicts, transformed_model.uri)
                         self.__logger.debug(
                             "image markdown %s has no depicts statement but corresponds to the model %s, adding depicts statement",
-                            markdown_file_entry.model_id,
+                            metadata_file_entry.model_id,
                             transformed_model.uri,
                         )
                         break
@@ -353,8 +353,8 @@ class MarkdownDirectoryTransformer(Transformer):
                 if image.src is None:
                     image_file_entry = (
                         self.__untransformed_image_file_entries_by_model_type.get(
-                            _model_type_by_name(markdown_file_entry.model_type), {}
-                        ).pop(markdown_file_entry.model_id, None)
+                            _model_type_by_name(metadata_file_entry.model_type), {}
+                        ).pop(metadata_file_entry.model_id, None)
                     )
                     if image_file_entry is not None:
                         assert isinstance(
@@ -363,7 +363,7 @@ class MarkdownDirectoryTransformer(Transformer):
                         image = image.replace(src=image_file_entry.path.as_uri())
 
                 self.__buffer_transformed_model(
-                    model_id=markdown_file_entry.model_id,
+                    model_id=metadata_file_entry.model_id,
                     transformed_model=image,
                 )
 
@@ -414,17 +414,17 @@ class MarkdownDirectoryTransformer(Transformer):
                         ),
                     )
 
-        def __transform_institution_markdown_file_entries(self) -> None:
+        def __transform_institution_metadata_file_entries(self) -> None:
             for (
-                markdown_file_entry
-            ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
+                metadata_file_entry
+            ) in self.__untransformed_metadata_file_entries_by_model_type.pop(
                 Institution, tuple()
             ):
-                institution_resource = self.__transform_markdown_file_entry_to_resource(
-                    markdown_file_entry
+                institution_resource = self.__transform_metadata_file_entry_to_resource(
+                    metadata_file_entry
                 )
                 self.__set_resource_label(
-                    model_id=markdown_file_entry.model_id,
+                    model_id=metadata_file_entry.model_id,
                     model_type=Institution,
                     resource=institution_resource,
                 )
@@ -440,17 +440,17 @@ class MarkdownDirectoryTransformer(Transformer):
                         self.__default_institution.uri,
                     )
                 self.__buffer_transformed_model(
-                    model_id=markdown_file_entry.model_id,
+                    model_id=metadata_file_entry.model_id,
                     transformed_model=institution,
                 )
 
-        def __transform_markdown_file_entry_to_resource(
-            self, markdown_file_entry: MarkdownDirectory.MarkdownFileEntry
+        def __transform_metadata_file_entry_to_resource(
+            self, metadata_file_entry: MarkdownDirectory.MetadataFileEntry
         ) -> Resource:
             graph = Graph()
             resource_identifier_default = MarkdownDirectoryTransformer.model_uri(
-                model_id=markdown_file_entry.model_id,
-                model_type=_model_type_by_name(markdown_file_entry.model_type),
+                model_id=metadata_file_entry.model_id,
+                model_type=_model_type_by_name(metadata_file_entry.model_type),
                 pipeline_id=self.__pipeline_id,
             )
             return MarkdownToResourceTransformer.transform(
@@ -461,28 +461,28 @@ class MarkdownDirectoryTransformer(Transformer):
                     resource_identifier_default=resource_identifier_default,
                 ),
                 graph=graph,
-                markdown=markdown_file_entry.markdown_source,
+                markdown=metadata_file_entry.markdown_source,
                 resource_identifier_default=resource_identifier_default,
             )
 
-        def __transform_other_markdown_file_entries(self) -> None:
+        def __transform_other_metadata_file_entries(self) -> None:
             for (
                 model_type,
-                markdown_file_entries,
-            ) in self.__untransformed_markdown_file_entries_by_model_type.items():
+                metadata_file_entries,
+            ) in self.__untransformed_metadata_file_entries_by_model_type.items():
                 if model_type == Image:
                     continue
-                for markdown_file_entry in markdown_file_entries:
-                    model_resource = self.__transform_markdown_file_entry_to_resource(
-                        markdown_file_entry
+                for metadata_file_entry in metadata_file_entries:
+                    model_resource = self.__transform_metadata_file_entry_to_resource(
+                        metadata_file_entry
                     )
                     self.__set_resource_label(
-                        model_id=markdown_file_entry.model_id,
+                        model_id=metadata_file_entry.model_id,
                         model_type=model_type,
                         resource=model_resource,
                     )
                     self.__buffer_transformed_model(
-                        model_id=markdown_file_entry.model_id,
+                        model_id=metadata_file_entry.model_id,
                         transformed_model=self.__transform_resource_to_model(
                             model_resource=model_resource,
                             model_type=model_type,
@@ -494,20 +494,20 @@ class MarkdownDirectoryTransformer(Transformer):
         ) -> NamedModel:
             return model_type.from_rdf(model_resource)
 
-        def __transform_work_markdown_file_entries(
+        def __transform_work_metadata_file_entries(
             self,
         ):
             for (
-                markdown_file_entry
-            ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
+                metadata_file_entry
+            ) in self.__untransformed_metadata_file_entries_by_model_type.pop(
                 Work, tuple()
             ):
-                work_resource = self.__transform_markdown_file_entry_to_resource(
-                    markdown_file_entry
+                work_resource = self.__transform_metadata_file_entry_to_resource(
+                    metadata_file_entry
                 )
                 self.__set_resource_institution_uri(work_resource)
                 self.__set_resource_label(
-                    model_id=markdown_file_entry.model_id,
+                    model_id=metadata_file_entry.model_id,
                     model_type=Work,
                     resource=work_resource,
                 )
@@ -519,50 +519,50 @@ class MarkdownDirectoryTransformer(Transformer):
                     )
 
                 self.__buffer_transformed_model(
-                    model_id=markdown_file_entry.model_id,
+                    model_id=metadata_file_entry.model_id,
                     transformed_model=self.__transform_resource_to_model(
                         model_resource=work_resource,
                         model_type=Work,
                     ),
                 )
 
-        def __transform_work_event_markdown_file_entries(
+        def __transform_work_event_metadata_file_entries(
             self,
         ):
             transformed_works_by_id = self.__transformed_models_by_type.get(Work, {})
 
             for model_type in (WorkCreation,):
                 for (
-                    markdown_file_entry
-                ) in self.__untransformed_markdown_file_entries_by_model_type.pop(
+                    metadata_file_entry
+                ) in self.__untransformed_metadata_file_entries_by_model_type.pop(
                     model_type, tuple()
                 ):
                     work_event_resource = (
-                        self.__transform_markdown_file_entry_to_resource(
-                            markdown_file_entry
+                        self.__transform_metadata_file_entry_to_resource(
+                            metadata_file_entry
                         )
                     )
 
                     if work_event_resource.value(CMS.work) is None:
                         # If the .md does not refer to a work but its model_id corresponds with a model_id of a work,
                         # synthesize the reference
-                        work = transformed_works_by_id.get(markdown_file_entry.model_id)
+                        work = transformed_works_by_id.get(metadata_file_entry.model_id)
                         if work is None:
                             self.__logger.warning(
                                 "work event markdown %s has no work statement and its id does not correspond to a Work",
-                                markdown_file_entry.model_id,
+                                metadata_file_entry.model_id,
                             )
                             continue
 
                         work_event_resource.add(CMS.work, work.uri)
                         self.__logger.debug(
                             "work event markdown %s has no work statement but corresponds to the model %s, adding work statement",
-                            markdown_file_entry.model_id,
+                            metadata_file_entry.model_id,
                             work.uri,
                         )
 
                     self.__buffer_transformed_model(
-                        model_id=markdown_file_entry.model_id,
+                        model_id=metadata_file_entry.model_id,
                         transformed_model=self.__transform_resource_to_model(
                             model_resource=work_event_resource,
                             model_type=model_type,

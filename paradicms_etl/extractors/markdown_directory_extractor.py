@@ -36,7 +36,7 @@ class MarkdownDirectoryExtractor(Extractor):
                     with open(file_path) as md_file:
                         markdown_source = md_file.read()
                     markdown_file_entries.append(
-                        MarkdownDirectory.MarkdownFileEntry(
+                        MarkdownDirectory.MetadataFileEntry(
                             markdown_source=markdown_source,
                             model_id=model_id,
                             model_type=model_type,
