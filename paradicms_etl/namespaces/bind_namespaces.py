@@ -1,11 +1,13 @@
 from rdflib import DC, DCTERMS, FOAF, OWL, SKOS
 from rdflib.namespace import NamespaceManager
 
+from paradicms_etl.namespaces.wgs import WGS
+
 
 def bind_namespaces(namespace_manager: NamespaceManager) -> NamespaceManager:
     from paradicms_etl.namespaces import CMS, CONTACT, EXIF, PROV, SCHEMA, TIME, VRA
 
-    namespace_manager.bind("paradicms", CMS)
+    namespace_manager.bind("cms", CMS)
     namespace_manager.bind("contact", CONTACT)
     namespace_manager.bind("creativecommons", "http://creativecommons.org/ns#")
     namespace_manager.bind("dc", DC)
@@ -19,4 +21,5 @@ def bind_namespaces(namespace_manager: NamespaceManager) -> NamespaceManager:
     namespace_manager.bind("skos", SKOS)
     namespace_manager.bind("time", TIME)
     namespace_manager.bind("vra", VRA)
+    namespace_manager.bind("wgs", WGS)
     return namespace_manager

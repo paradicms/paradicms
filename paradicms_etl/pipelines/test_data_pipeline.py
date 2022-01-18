@@ -3,12 +3,10 @@ from pathlib import Path
 from typing import Optional, Tuple, Dict
 from urllib.parse import quote
 
-from paradicms_etl.transformer import Transformer
 from rdflib import DCTERMS, Literal, URIRef
 
-from paradicms_etl.loader import Loader
-from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.extractors.nop_extractor import NopExtractor
+from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.agent import Agent
@@ -18,6 +16,7 @@ from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
+from paradicms_etl.models.location import Location
 from paradicms_etl.models.named_value import NamedValue
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
@@ -28,7 +27,10 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 )
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
+from paradicms_etl.models.work_creation import WorkCreation
 from paradicms_etl.namespaces import VRA
+from paradicms_etl.pipeline import Pipeline
+from paradicms_etl.transformer import Transformer
 
 
 class TestDataPipeline(Pipeline):
@@ -146,15 +148,15 @@ class TestDataPipeline(Pipeline):
                         else None,
                         properties=(
                             # dcterms:relation
-                            # Wikidata concept for Pilot ACE
+                            # Wikidata concept for Alan Turing
                             Property(
                                 DCTERMS.relation,
-                                URIRef("http://www.wikidata.org/entity/Q937690"),
+                                URIRef("http://www.wikidata.org/entity/Q7251"),
                             ),
                             # Wikipedia
                             Property(
                                 DCTERMS.relation,
-                                URIRef("http://en.wikipedia.org/wiki/Pilot_ACE"),
+                                URIRef("http://en.wikipedia.org/wiki/Alan_Turing"),
                             ),
                         ),
                         sort_name=f"{person_i}, Person",
@@ -323,7 +325,7 @@ class TestDataPipeline(Pipeline):
                     continue
                 for property_value in property_values:
                     named_value = NamedValue.from_fields(
-                        # label=property_value,
+                        label=f"Named value {named_value_urn_i}",
                         property_uris=(property_uri,),
                         uri=URIRef(
                             f"urn:paradicms_etl:pipeline:test_data:named_value:{named_value_urn_i}"
@@ -392,14 +394,10 @@ class TestDataPipeline(Pipeline):
 
             # Properties that depend on the date
             # dcterms:created
-            properties.append(
-                Property(
-                    DCTERMS.created,
-                    DateTimeDescription.from_date(
-                        date(day=1, month=1, year=2022) + timedelta(days=work_i)
-                    ),
-                )
+            creation_date_time_description = DateTimeDescription.from_date(
+                date(day=1, month=1, year=2022) + timedelta(days=work_i)
             )
+            properties.append(Property(DCTERMS.created, creation_date_time_description))
             # dcterms:date
             properties.extend(
                 Property(
@@ -428,31 +426,28 @@ class TestDataPipeline(Pipeline):
                 )
 
             # dcterms:creator
+            creator_uris = [agents[(work_i + i) % len(agents)].uri for i in range(3)]
             properties.extend(
-                Property(
-                    DCTERMS.creator,
-                    agents[(work_i + i) % len(agents)].uri,
-                )
-                for i in range(3)
+                Property(DCTERMS.creator, creator_uri) for creator_uri in creator_uris
             )
 
             # dcterms:relation
-            # Wikidata concept for Alan Turing
+            # Wikidata concept for the Pilot ACE
             properties.append(
                 Property(
                     DCTERMS.relation,
-                    URIRef("http://www.wikidata.org/entity/Q7251"),
+                    URIRef("http://www.wikidata.org/entity/Q937690"),
                 )
             )
             # Wikipedia
             properties.append(
                 Property(
                     DCTERMS.relation,
-                    URIRef("http://en.wikipedia.org/wiki/Alan_Turing"),
+                    URIRef("http://en.wikipedia.org/wiki/Pilot-ACE"),
                 )
             )
 
-            work_ = Work.from_fields(
+            work = Work.from_fields(
                 abstract=Text.from_fields(
                     self.__LOREM_IPSUM,
                     rights=Rights(
@@ -477,12 +472,21 @@ class TestDataPipeline(Pipeline):
                 title=title,
                 uri=uri,
             )
-            yield work_
+            yield work
 
             yield from self.__generate_images(
-                depicts_uri=work_.uri,
-                rights=work_.rights,
-                text_prefix=work_.title,
+                depicts_uri=work.uri,
+                rights=work.rights,
+                text_prefix=work.title,
+            )
+
+            # ADD LOCATION
+            yield WorkCreation.from_fields(
+                creator_uri=creator_uris,
+                date=creation_date_time_description,
+                location=Location.from_fields(lat=42.728104, long=-73.687576),
+                work_uri=work.uri,
+                uri=URIRef(str(uri) + "Creation"),
             )
 
         def __generate_shared_works(

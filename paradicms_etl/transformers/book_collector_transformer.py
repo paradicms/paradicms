@@ -62,44 +62,44 @@ class BookCollectorTransformer(Transformer):
         hash_ = etree.findtext("hash")
         assert hash_
         hash_ = hash_.lstrip("{").rstrip("}")
-        work_ = Work.from_fields(graph=graph, uri=URIRef("urn:clzbook:" + hash_))
-        work_.owner = CMS.inherit
-        work_.resource.add(RDF.type, SCHEMA.Book)
+        work = Work.from_fields(graph=graph, uri=URIRef("urn:clzbook:" + hash_))
+        work.owner = CMS.inherit
+        work.resource.add(RDF.type, SCHEMA.Book)
 
         for mainsection_etree in etree.iter("mainsection"):
             title = mainsection_etree.findtext("title")
             if not title:
                 return None
-            work_.title = title
-            # work_.resource.add(SCHEMA.headline, Literal(title))
+            work.title = title
+            # work.resource.add(SCHEMA.headline, Literal(title))
 
             pagecount = mainsection_etree.findtext("pagecount")
             if pagecount:
-                work_.resource.add(SCHEMA.numberOfPages, Literal(int(pagecount)))
+                work.resource.add(SCHEMA.numberOfPages, Literal(int(pagecount)))
 
             plot = mainsection_etree.findtext("plot")
             if plot:
                 plot = Literal(plot)
-                work_.resource.add(DCTERMS.description, plot)
-                # work_.resource.add(SCHEMA.abstract, plot)
+                work.resource.add(DCTERMS.description, plot)
+                # work.resource.add(SCHEMA.abstract, plot)
 
         for credits_etree in mainsection_etree.iter("credits"):
             for credit_etree in credits_etree.iter("credit"):
                 self.__transform_book_credit(
-                    credit_etree=credit_etree, graph=graph, work_=work_
+                    credit_etree=credit_etree, graph=graph, work=work
                 )
 
         for publisher_etree in etree.iter("publisher"):
             displayname = publisher_etree.findtext("displayname")
             if not displayname:
                 continue
-            work_.resource.add(DCTERMS.publisher, Literal(displayname))
+            work.resource.add(DCTERMS.publisher, Literal(displayname))
 
         for format_etree in etree.iter("format"):
             displayname = format_etree.findtext("displayname")
             if not displayname:
                 continue
-            work_.resource.add(DCTERMS["format"], Literal(displayname))
+            work.resource.add(DCTERMS["format"], Literal(displayname))
 
         for key in ("genre", "subject"):
             for subjects_etree in etree.iter(key + "s"):
@@ -107,13 +107,13 @@ class BookCollectorTransformer(Transformer):
                     displayname = subject_etree.findtext("displayname")
                     if not displayname:
                         continue
-                    work_.resource.add(DCTERMS.subject, Literal(displayname))
+                    work.resource.add(DCTERMS.subject, Literal(displayname))
 
         isbn = etree.findtext("isbn")
         if isbn:
             isbn = Literal(isbn)
-            work_.resource.add(SCHEMA.isbn, isbn)
-            work_.resource.add(DCTERMS.identifier, isbn)
+            work.resource.add(SCHEMA.isbn, isbn)
+            work.resource.add(DCTERMS.identifier, isbn)
 
         publicationdate_etree = etree.find("publicationdate")
         if publicationdate_etree:
@@ -121,7 +121,7 @@ class BookCollectorTransformer(Transformer):
                 publicationdate_etree
             )
             if publicationdate:
-                work_.resource.add(DCTERMS.date, publicationdate)
+                work.resource.add(DCTERMS.date, publicationdate)
 
         # Ignore dewey
         # Ignore lccn
@@ -144,12 +144,12 @@ class BookCollectorTransformer(Transformer):
             if date_etree:
                 date_literal = self.__transform_timestamp(date_etree)
                 if date_literal:
-                    work_.resource.add(date_property, date_literal)
+                    work.resource.add(date_property, date_literal)
 
         for collection in collections:
-            collection.add_work(work_)
+            collection.add_work(work)
 
-        return work_
+        return work
 
     def __transform_book_collection(
         self,
@@ -176,7 +176,7 @@ class BookCollectorTransformer(Transformer):
         return collection
 
     def __transform_book_credit(
-        self, credit_etree: ElementTree, graph: Graph, work_: Work
+        self, credit_etree: ElementTree, graph: Graph, work: Work
     ) -> None:
         roleid = credit_etree.findtext("roleid")
         if not roleid:
@@ -217,7 +217,7 @@ class BookCollectorTransformer(Transformer):
 
         if roleid == "dfAuthor":
             if person is not None:
-                work_.resource.add(DCTERMS.creator, person.uri)
+                work.resource.add(DCTERMS.creator, person.uri)
             else:
                 raise NotImplementedError
         else:

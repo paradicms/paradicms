@@ -1,14 +1,13 @@
 from datetime import datetime
 from typing import Optional
 
-from rdflib import Literal, URIRef
+from rdflib import Literal, URIRef, Graph
 from rdflib.namespace import DCTERMS, FOAF, RDFS
 
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.image_dimensions import ImageDimensions
+from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespaces import CMS, EXIF
-
 
 # def image_dimensions(height_p, width_p):
 #     height = resource_wrapper.optional_python_value(height_p, int)
@@ -26,6 +25,7 @@ from paradicms_etl.namespaces import CMS, EXIF
 #     if exact_dimensions is None
 #     else None
 # )
+from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class Image(NamedModel):
@@ -53,29 +53,30 @@ class Image(NamedModel):
             str
         ] = None,  # src that can be used in an <img> tag; if not specified, defaults to URI
     ) -> "Image":
-        resource = cls._create_resource(identifier=uri)
-        resource.add(CMS.imageCopyable, Literal(copyable))
-        if created is not None:
-            resource.add(DCTERMS.created, Literal(created))
-        resource.add(FOAF.depicts, depicts_uri)
-        if format is not None:
-            resource.add(DCTERMS["format"], Literal(format))
+        resource_builder = (
+            ResourceBuilder(uri)
+            .add(CMS.imageCopyable, copyable)
+            .add(DCTERMS.created, created)
+            .add(FOAF.depicts, depicts_uri)
+            .add(DCTERMS["format"], format)
+            .add(RDFS.label, label)
+            .add(DCTERMS.modified, modified)
+            .add_rights(rights)
+            .add(CMS.imageSrc, src)
+        )
+
         if exact_dimensions is not None:
-            resource.add(EXIF.height, Literal(exact_dimensions.height))
-            resource.add(EXIF.width, Literal(exact_dimensions.width))
+            resource_builder.add(EXIF.height, exact_dimensions.height)
+            resource_builder.add(EXIF.width, exact_dimensions.width)
         elif max_dimensions is not None:
-            resource.add(CMS.imageMaxHeight, Literal(max_dimensions.height))
-            resource.add(CMS.imageMaxWidth, Literal(max_dimensions.width))
-        if label is not None:
-            resource.add(RDFS.label, Literal(label))
-        if modified is not None:
-            resource.add(DCTERMS.modified, Literal(modified))
+            resource_builder.add(CMS.imageMaxHeight, max_dimensions.height)
+            resource_builder.add(CMS.imageMaxWidth, max_dimensions.width)
+
+        resource = resource_builder.build()
+
         if original_image_uri is not None:
             resource.graph.add((original_image_uri, FOAF.thumbnail, uri))
-        if rights is not None:
-            rights.to_rdf(add_to_resource=resource)
-        if src is not None:
-            resource.add(CMS.imageSrc, Literal(src))
+
         return cls(resource)
 
     @property
@@ -104,7 +105,9 @@ class Image(NamedModel):
         return original_image_uri
 
     def replace(self, *, copyable: Optional[bool] = None, src: Optional[str] = None):
-        resource = self._copy_resource(self._resource)
+        graph = Graph()
+        graph += self._resource.graph
+        resource = graph.resource(self._resource.identifier)
         if copyable is not None:
             resource.remove(CMS.imageCopyable)
             resource.add(CMS.imageCopyable, Literal(copyable))

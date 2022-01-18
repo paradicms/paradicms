@@ -13,14 +13,17 @@ class CMS(DefinedNamespace):
     imageMaxHeight: URIRef
     imageMaxWidth: URIRef
     imageSrc: URIRef
+    work: URIRef
 
     # Resources
     Collection: URIRef
     Configuration: URIRef
     DateTimeDescription: URIRef
+    Event: URIRef
     Image: URIRef
     Institution: URIRef
     License: URIRef
+    Location: URIRef
     NamedValue: URIRef
     Organization: URIRef
     Person: URIRef
@@ -28,3 +31,5 @@ class CMS(DefinedNamespace):
     Text: URIRef
     WikidataItem: URIRef
     Work: URIRef
+    WorkCreation: URIRef
+    WorkEvent: URIRef

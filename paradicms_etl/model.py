@@ -1,6 +1,6 @@
 from typing import Generator, Optional, Tuple, Union
 
-from rdflib import BNode, ConjunctiveGraph, Graph, Literal, RDF, URIRef
+from rdflib import ConjunctiveGraph, Graph, Literal, RDF, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.namespaces import CMS
@@ -14,20 +14,10 @@ class Model:
         # print(self.__resource.graph.serialize().decode("utf-8"))
 
     @classmethod
-    def _copy_resource(cls, resource) -> Resource:
+    def from_rdf(cls, resource: Resource):
         graph = Graph()
         graph += resource.graph
-        return graph.resource(resource.identifier)
-
-    @classmethod
-    def _create_resource(cls, identifier: Union[BNode, URIRef]) -> Resource:
-        graph = Graph()
-        resource = graph.resource(identifier)
-        return resource
-
-    @classmethod
-    def from_rdf(cls, resource: Resource):
-        return cls(cls._copy_resource(resource))
+        return cls(graph.resource(resource.identifier))
 
     @property
     def label(self) -> Optional[str]:
