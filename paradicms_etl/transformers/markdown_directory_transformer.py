@@ -33,26 +33,7 @@ from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_creation import WorkCreation
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.transformer import Transformer
-
-
-def _create_namespaces_by_prefix_default() -> Dict[str, rdflib.Namespace]:
-    namespaces_by_prefix = {}
-    for namespace_module in (rdflib.namespace, paradicms_etl.namespaces):
-        for attr in dir(namespace_module):
-            if attr.upper() != attr:
-                continue
-            value = getattr(namespace_module, attr)
-            if (
-                isinstance(value, rdflib.namespace.Namespace)
-                or isinstance(value, rdflib.namespace.ClosedNamespace)
-                or (
-                    isclass(value)
-                    and issubclass(value, rdflib.namespace.DefinedNamespace)
-                )
-            ):
-                namespaces_by_prefix[attr.lower()] = value
-    return namespaces_by_prefix
-
+from paradicms_etl.utils.yaml_to_rdf_transformer import YamlToRdfTransformer
 
 __MODEL_TYPES = (
     Collection,
@@ -110,91 +91,33 @@ class MarkdownDirectoryTransformer(Transformer):
     """
 
     _DEFAULT_INSTITUTION_MODEL_ID = "default"
-    NAMESPACES_BY_PREFIX_DEFAULT = _create_namespaces_by_prefix_default()
 
     class _MarkdownToResourceTransformer:
         def __init__(
             self,
             *,
-            default_namespace: rdflib.Namespace,
+            default_namespace: Optional[rdflib.Namespace],
             markdown_it: MarkdownIt,
             model_id: str,
             model_type: Type[NamedModel],
-            namespaces_by_prefix: Dict[str, rdflib.Namespace],
+            namespaces_by_prefix: Optional[Dict[str, rdflib.Namespace]],
             pipeline_id: str,
         ):
             self.__current_heading_id = None
             self.__markdown_it = markdown_it
-            self.__default_namespace = default_namespace
             self.__graph = Graph()
+            self.__front_matter_to_rdf_transformer = (
+                MarkdownDirectoryTransformer._FrontMatterToRdfTransformer(
+                    default_namespace=default_namespace,
+                    graph=self.__graph,
+                    namespaces_by_prefix=namespaces_by_prefix,
+                    pipeline_id=pipeline_id,
+                )
+            )
             self.__model_id = model_id
             self.__model_type = model_type
-            self.__namespaces_by_prefix = namespaces_by_prefix
             self.__pipeline_id = pipeline_id
             self.__result = None  # Create lazily
-
-        def _convert_front_matter_value_to_rdf_nodes(
-            self, value: object
-        ) -> Tuple[Node, ...]:
-            """
-            Transform a value to one or more RDF nodes.
-            """
-
-            if isinstance(value, (bool, int)):
-                return (Literal(value),)
-            elif isinstance(value, dict):
-                bnode_resource = self.__graph.resource(BNode())
-                for sub_key, sub_value in value.items():
-                    property_uri = self._convert_key_to_property_uri(sub_key)
-                    sub_value_nodes = self._convert_front_matter_value_to_rdf_nodes(
-                        sub_value
-                    )
-                    for sub_value_node in sub_value_nodes:
-                        bnode_resource.add(property_uri, sub_value_node)
-                return (bnode_resource.identifier,)
-            elif isinstance(value, (list, tuple)):
-                nodes = []
-                for sub_value in value:
-                    nodes.extend(
-                        self._convert_front_matter_value_to_rdf_nodes(sub_value)
-                    )
-                return tuple(nodes)
-            elif isinstance(value, str):
-                if len(value) > 2 and value[0] == "<" and value[-1] == ">":
-                    # Consider a URI like </person/X> to be a link to another model in the same Markdown directory,
-                    # and translate it to
-                    uri_value = value[1:-1]
-                    if uri_value.startswith("/"):
-                        uri_value_split = uri_value.split("/", 2)
-                        if len(uri_value_split) == 3:
-                            return (
-                                MarkdownDirectoryTransformer.model_uri(
-                                    pipeline_id=self.__pipeline_id,
-                                    model_type=_model_type_by_name(uri_value_split[1]),
-                                    model_id=uri_value_split[2],
-                                ),
-                            )
-                    return (URIRef(uri_value),)
-                else:
-                    return (Literal(value),)
-            else:
-                raise NotImplementedError("unsupported value type: " + type(value))
-
-        def _convert_key_to_property_uri(self, key: str) -> URIRef:
-            """
-            Transform a key to an RDF property (identified by a URI).
-            """
-            key_split = key.split("_", 1)
-            if len(key_split) == 1:
-                # Unqualified key
-                return self.__default_namespace[key]
-
-            namespace_prefix = key_split[0].lower()
-            try:
-                namespace = self.__namespaces_by_prefix[namespace_prefix]
-            except KeyError:
-                raise ValueError(f"no such namespace {namespace_prefix}: {key}")
-            return namespace[key_split[1]]
 
         def _render_node_as_html(self, node: SyntaxTreeNode) -> str:
             return (
@@ -229,27 +152,25 @@ class MarkdownDirectoryTransformer(Transformer):
 
             # Buffer the statements so that we can handle the model's URI first
             front_matter_statements = []
-            for key, value in front_matter_dict.items():
-                property_uri = self._convert_key_to_property_uri(key)
-                value_nodes = self._convert_front_matter_value_to_rdf_nodes(value)
-
+            for (
+                property_uri,
+                value_node,
+            ) in self.__front_matter_to_rdf_transformer.transform_dict_to_resource_statements(
+                front_matter_dict
+            ):
                 if property_uri == rdflib.RDF.subject:
                     # Front matter specifies the model's URI
                     # Preemptively create the result rdflib Resource so it doesn't use the default URI (synthesized from the model id and type)
                     if self.__result is not None:
                         raise ValueError("only one subject URI can be specified")
-                    if len(value_nodes) > 1:
-                        raise ValueError("only one subject URI can be specified")
-                    if not isinstance(value_nodes[0], URIRef):
+                    if not isinstance(value_node, URIRef):
                         raise TypeError(
-                            "subject URI must be a URIRef, not a "
-                            + type(value_nodes[0])
+                            "subject URI must be a URIRef, not a " + type(value_node)
                         )
-                    self.__result = self.__graph.resource(value_nodes[0])
+                    self.__result = self.__graph.resource(value_node)
                     continue
 
-                for value_node in value_nodes:
-                    front_matter_statements.append((property_uri, value_node))
+                front_matter_statements.append((property_uri, value_node))
 
             for property_uri, value_node in front_matter_statements:
                 self._result.add(property_uri, value_node)
@@ -297,7 +218,11 @@ class MarkdownDirectoryTransformer(Transformer):
             if key is None:
                 key = "abstract"
 
-            property_uri = self._convert_key_to_property_uri(key)
+            property_uri = (
+                self.__front_matter_to_rdf_transformer.transform_key_to_property_uri(
+                    key
+                )
+            )
 
             existing_value = self._result.value(property_uri)
             if existing_value is None:
@@ -345,11 +270,30 @@ class MarkdownDirectoryTransformer(Transformer):
             for child_node in root_node.children:
                 self._visit_node(child_node)
 
+    class _FrontMatterToRdfTransformer(YamlToRdfTransformer):
+        def __init__(self, *, pipeline_id: str, **kwds):
+            YamlToRdfTransformer.__init__(self, **kwds)
+            self.__pipeline_id = pipeline_id
+
+        def _transform_uri_value_to_node(self, value: str) -> URIRef:
+            if value.startswith("/"):
+                uri_value_split = value.split("/", 2)
+                if len(uri_value_split) == 3:
+                    return (
+                        MarkdownDirectoryTransformer.model_uri(
+                            pipeline_id=self.__pipeline_id,
+                            model_type=_model_type_by_name(uri_value_split[1]),
+                            model_id=uri_value_split[2],
+                        ),
+                    )
+            else:
+                return YamlToRdfTransformer._transform_uri_value_to_node(self, value)
+
     def __init__(
         self,
         default_institution: Optional[Institution] = None,
         default_collection: Optional[Collection] = None,
-        default_namespace=DCTERMS,
+        default_namespace: Optional[rdflib.Namespace] = None,
         namespaces_by_prefix: Optional[Dict[str, rdflib.Namespace]] = None,
         **kwds,
     ):
@@ -361,9 +305,7 @@ class MarkdownDirectoryTransformer(Transformer):
         self.__default_collection = default_collection
         self.__default_institution = default_institution
         self.__default_namespace = default_namespace
-        if namespaces_by_prefix is None:
-            namespaces_by_prefix = self.NAMESPACES_BY_PREFIX_DEFAULT
-        self.__namespaces_by_prefix = namespaces_by_prefix.copy()
+        self.__namespaces_by_prefix = namespaces_by_prefix
 
     @staticmethod
     def default_collection_uri(*, markdown_directory_name: str, pipeline_id: str):
@@ -398,10 +340,10 @@ class MarkdownDirectoryTransformer(Transformer):
             *,
             default_collection: Optional[Collection],
             default_institution: Optional[Institution],
-            default_namespace: rdflib.Namespace,
+            default_namespace: Optional[rdflib.Namespace],
             logger: Logger,
             markdown_directory: MarkdownDirectory,
-            namespaces_by_prefix: Dict[str, rdflib.Namespace],
+            namespaces_by_prefix: Optional[Dict[str, rdflib.Namespace]],
             pipeline_id: str,
         ):
             self.__default_collection = default_collection
