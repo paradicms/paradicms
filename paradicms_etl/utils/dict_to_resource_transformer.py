@@ -3,7 +3,8 @@ from typing import Dict, Any, Tuple, Generator, Optional
 
 import rdflib
 from rdflib import URIRef, DCTERMS, Graph
-from rdflib.term import Node, Literal, BNode
+from rdflib.resource import Resource
+from rdflib.term import Node, Literal, BNode, Identifier
 
 import paradicms_etl
 
@@ -27,7 +28,7 @@ def _create_namespaces_by_prefix_default() -> Dict[str, rdflib.Namespace]:
     return namespaces_by_prefix
 
 
-class YamlToRdfTransformer:
+class DictToResourceTransformer:
     DEFAULT_NAMESPACE_DEFAULT = DCTERMS
     NAMESPACES_BY_PREFIX_DEFAULT = _create_namespaces_by_prefix_default()
 
@@ -37,6 +38,7 @@ class YamlToRdfTransformer:
         default_namespace: Optional[rdflib.Namespace] = None,
         graph: Optional[Graph] = None,
         namespaces_by_prefix: Optional[Dict[str, rdflib.Namespace]] = None,
+        resource_identifier_default: Optional[Identifier] = None,
     ):
         if default_namespace is None:
             default_namespace = self.DEFAULT_NAMESPACE_DEFAULT
@@ -47,16 +49,41 @@ class YamlToRdfTransformer:
         if namespaces_by_prefix is None:
             namespaces_by_prefix = self.NAMESPACES_BY_PREFIX_DEFAULT
         self.__namespaces_by_prefix = namespaces_by_prefix.copy()
+        self.__resource_identifier_default = resource_identifier_default
 
-    def transform_dict_to_resource_statements(
-        self, yaml_: Dict[str, Any]
-    ) -> Generator[Tuple[URIRef, Node], None, None]:
-        for key, value in yaml_.items():
+    def transform_dict_to_resource(self, dict_: Dict[str, Any]) -> Resource:
+        # Lazily create the Resource to allow its identifier to be specified as rdf:subject in the dict.
+        resource = None
+
+        # Buffer the statements so that we can handle the model's URI first
+        statements = []
+        for key, value in dict_.items():
             property_uri = self.transform_key_to_property_uri(key)
             value_nodes = self.transform_value_to_nodes(value)
 
             for value_node in value_nodes:
-                yield (property_uri, value_node)
+                if property_uri == rdflib.RDF.subject:
+                    # Front matter specifies the model's URI
+                    # Preemptively create the result rdflib Resource so it doesn't use the default URI (synthesized from the model id and type)
+                    if resource is not None:
+                        raise ValueError("only one subject URI can be specified")
+                    if not isinstance(value_node, URIRef):
+                        raise TypeError(
+                            "subject URI must be a URIRef, not a " + type(value_node)
+                        )
+                    resource = self.__graph.resource(value_node)
+
+            statements.append((property_uri, value_node))
+
+        if resource is None:
+            if self.__resource_identifier_default is None:
+                raise ValueError("no rdf:subject in metadata and no default specified")
+            resource = self.__graph.resource(self.__resource_identifier_default)
+
+        for property_uri, value_node in statements:
+            resource.add(property_uri, value_node)
+
+        return resource
 
     def transform_key_to_property_uri(self, key: str) -> URIRef:
         """

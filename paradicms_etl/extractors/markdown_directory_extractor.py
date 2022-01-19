@@ -1,4 +1,5 @@
 import os
+from os.path import splitext
 from pathlib import Path
 
 from PIL import Image, UnidentifiedImageError
@@ -21,7 +22,7 @@ class MarkdownDirectoryExtractor(Extractor):
 
     def extract(self, **kwds):
         image_file_entries = []
-        markdown_file_entries = []
+        metadata_file_entries = []
         root_dir_path = self._extracted_data_dir_path.absolute()
         for dir_path, _, file_names in os.walk(root_dir_path):
             dir_path = Path(dir_path)
@@ -32,40 +33,35 @@ class MarkdownDirectoryExtractor(Extractor):
                 file_path = dir_path / file_name
                 model_id = str(file_name.stem)
 
-                if file_name.suffix == ".md":
-                    with open(file_path) as md_file:
-                        markdown_source = md_file.read()
-                    markdown_file_entries.append(
-                        MarkdownDirectory.MarkdownFileEntry(
-                            markdown_source=markdown_source,
-                            model_id=model_id,
-                            model_type=model_type,
-                        )
-                    )
-                    continue
-
                 try:
                     with Image.open(str(file_path)) as image:
                         image_format = image.format
-                except UnidentifiedImageError:
-                    self._logger.warning(
-                        "non-Markdown, non-image file in Markdown directory: %s",
-                        file_path,
+                    image_file_entries.append(
+                        MarkdownDirectory.ImageFileEntry(
+                            mime_type="image/" + image_format.lower(),
+                            model_id=model_id,
+                            model_type=model_type,
+                            path=file_path,
+                        )
                     )
                     continue
+                except UnidentifiedImageError:
+                    pass
 
-                image_file_entries.append(
-                    MarkdownDirectory.ImageFileEntry(
-                        mime_type="image/" + image_format.lower(),
-                        model_id=model_id,
-                        model_type=model_type,
-                        path=file_path,
+                with open(file_path) as metadata_file:
+                    metadata_file_entries.append(
+                        MarkdownDirectory.MetadataFileEntry(
+                            format=splitext(file_name)[1][1:].lower(),
+                            model_id=model_id,
+                            model_type=model_type,
+                            source=metadata_file.read(),
+                        )
                     )
-                )
+
         return {
             "markdown_directory": MarkdownDirectory(
                 image_file_entries=tuple(image_file_entries),
-                markdown_file_entries=tuple(markdown_file_entries),
+                metadata_file_entries=tuple(metadata_file_entries),
                 name=str(root_dir_path.name),
             )
         }

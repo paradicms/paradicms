@@ -1,17 +1,14 @@
 from typing import Dict, Generator, Optional
 
 import yaml
-from paradicms_etl.model import Model
 from pathvalidate import sanitize_filename
 from rdflib import Graph, Literal, Namespace, RDF, URIRef, BNode
 from rdflib.resource import Resource
 from stringcase import snakecase
 
 from paradicms_etl.loader import Loader
-from paradicms_etl.transformers.markdown_directory_transformer import (
-    MarkdownDirectoryTransformer,
-)
-from paradicms_etl.utils.yaml_to_rdf_transformer import YamlToRdfTransformer
+from paradicms_etl.model import Model
+from paradicms_etl.utils.dict_to_resource_transformer import DictToResourceTransformer
 
 
 class MarkdownDirectoryLoader(Loader):
@@ -20,7 +17,9 @@ class MarkdownDirectoryLoader(Loader):
     ):
         Loader.__init__(self, **kwds)
         if namespaces_by_prefix is None:
-            namespaces_by_prefix = YamlToRdfTransformer.NAMESPACES_BY_PREFIX_DEFAULT
+            namespaces_by_prefix = (
+                DictToResourceTransformer.NAMESPACES_BY_PREFIX_DEFAULT
+            )
         self.__namespaces_by_prefix = namespaces_by_prefix.copy()
 
     def load(self, *, models: Generator[Model, None, None]):
