@@ -1,3 +1,4 @@
+import json
 from logging import Logger
 from logging import Logger
 from typing import Dict, Optional, Tuple, Type
@@ -5,8 +6,10 @@ from urllib.parse import quote
 
 import rdflib.namespace
 import stringcase
+import yaml
 from rdflib import DCTERMS, FOAF, Graph, Literal, RDFS, URIRef
 from rdflib.resource import Resource
+from yaml import FullLoader
 
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
@@ -453,20 +456,48 @@ class MarkdownDirectoryTransformer(Transformer):
                 model_type=_model_type_by_name(metadata_file_entry.model_type),
                 pipeline_id=self.__pipeline_id,
             )
-            if metadata_file_entry.format == "md":
+            dict_to_resource_transformer = (
+                MarkdownDirectoryTransformer._CustomDictToResourceTransformer(
+                    graph=graph,
+                    namespaces_by_prefix=self.__namespaces_by_prefix,
+                    pipeline_id=self.__pipeline_id,
+                    resource_identifier_default=resource_identifier_default,
+                )
+            )
+
+            if metadata_file_entry.format == "json":
+                return dict_to_resource_transformer.transform_dict_to_resource(
+                    json.loads(metadata_file_entry.source)
+                )
+            elif metadata_file_entry.format == "md":
                 return MarkdownToResourceTransformer.transform(
-                    front_matter_to_resource_transformer=MarkdownDirectoryTransformer._CustomDictToResourceTransformer(
-                        graph=graph,
-                        namespaces_by_prefix=self.__namespaces_by_prefix,
-                        pipeline_id=self.__pipeline_id,
-                        resource_identifier_default=resource_identifier_default,
-                    ),
+                    front_matter_to_resource_transformer=dict_to_resource_transformer,
                     graph=graph,
                     markdown=metadata_file_entry.source,
                     resource_identifier_default=resource_identifier_default,
                 )
+            elif metadata_file_entry.format == "yaml":
+                return dict_to_resource_transformer.transform_dict_to_resource(
+                    yaml.load(metadata_file_entry.source, Loader=FullLoader)
+                )
             else:
-                raise NotImplementedError(metadata_file_entry.format)
+                # Assume it's an RDF serialization
+                graph.parse(
+                    data=metadata_file_entry.source,
+                    format=metadata_file_entry.format,
+                    publicID=resource_identifier_default,
+                )
+                uri_subjects = [
+                    subject
+                    for subject in graph.subjects()
+                    if isinstance(subject, URIRef)
+                ]
+                if len(uri_subjects) == 1:
+                    return graph.resource(uri_subjects[0])
+                else:
+                    raise ValueError(
+                        f"metadata file {metadata_file_entry.model_type}/{metadata_file_entry.model_id}.{metadata_file_entry.format} has {len(uri_subjects)} named subjects"
+                    )
 
         def __transform_other_metadata_file_entries(self) -> None:
             for (

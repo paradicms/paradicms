@@ -1,5 +1,6 @@
 from rdflib import URIRef
 
+from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.person import Person
@@ -26,6 +27,13 @@ def test_transform():
     assert models
     for model in models:
         assert isinstance(model, NamedModel), type(model)
+
+    collections = {
+        model.uri: model for model in models if isinstance(model, Collection)
+    }
+    assert len(collections) == 1
+    collection = tuple(collections.values())[0]
+    assert collection.title == "Override default collection title"
 
     works = {model.uri: model for model in models if isinstance(model, Work)}
     assert len(works) == 2
