@@ -100,12 +100,10 @@ class MarkdownDirectoryTransformer(Transformer):
             if value.startswith("/"):
                 uri_value_split = value.split("/", 2)
                 if len(uri_value_split) == 3:
-                    return (
-                        MarkdownDirectoryTransformer.model_uri(
-                            pipeline_id=self.__pipeline_id,
-                            model_type=_model_type_by_name(uri_value_split[1]),
-                            model_id=uri_value_split[2],
-                        ),
+                    return MarkdownDirectoryTransformer.model_uri(
+                        pipeline_id=self.__pipeline_id,
+                        model_type=_model_type_by_name(uri_value_split[1]),
+                        model_id=uri_value_split[2],
                     )
             else:
                 return DictToResourceTransformer._transform_uri_value_to_node(
