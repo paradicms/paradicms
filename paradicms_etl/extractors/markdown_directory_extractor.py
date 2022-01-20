@@ -26,7 +26,12 @@ class MarkdownDirectoryExtractor(Extractor):
         root_dir_path = self._extracted_data_dir_path.absolute()
         for dir_path, _, file_names in os.walk(root_dir_path):
             dir_path = Path(dir_path)
+            if dir_path == root_dir_path:
+                continue
             dir_relpath = dir_path.relative_to(root_dir_path)
+            if str(dir_relpath).startswith("."):
+                self._logger.debug("skipping hidden directory %s", dir_path)
+                continue
             model_type = str(dir_relpath).replace(os.path.sep, "/")
             for file_name in file_names:
                 file_name = Path(file_name)
