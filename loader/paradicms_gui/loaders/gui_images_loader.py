@@ -3,21 +3,21 @@ import os.path
 from pathlib import Path
 from typing import Generator, Optional, Tuple
 
-from paradicms_etl._loader import _Loader
+from paradicms_etl.loader import Loader
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from pathvalidate import sanitize_filename
 from rdflib import URIRef
 from tqdm import tqdm
 
-from paradicms_gui._image_archiver import _ImageArchiver
+from paradicms_gui.image_archiver import ImageArchiver
 from paradicms_gui.loaders.gui_original_image_file_cache import (
     GuiOriginalImageFileCache,
 )
 from paradicms_gui.utils.thumbnail_image import thumbnail_image
 
 
-class GuiImagesLoader(_Loader):
+class GuiImagesLoader(Loader):
     """
     Loader that:
     - Thumbnails images
@@ -37,14 +37,14 @@ class GuiImagesLoader(_Loader):
     def __init__(
         self,
         *,
-        image_archiver: _ImageArchiver,
+        image_archiver: ImageArchiver,
         sleep_s_after_image_download: Optional[float] = None,
         thumbnail_max_dimensions: Tuple[
             ImageDimensions, ...
         ] = THUMBNAIL_MAX_DIMENSIONS_DEFAULT,
         **kwds,
     ):
-        _Loader.__init__(self, **kwds)
+        Loader.__init__(self, **kwds)
 
         self.__image_archiver = image_archiver
 

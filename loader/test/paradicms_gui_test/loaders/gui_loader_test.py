@@ -1,6 +1,6 @@
 import os
 import pytest
-from paradicms_etl._model import _Model
+from paradicms_etl.model import Model
 from paradicms_etl.models.image import Image
 from paradicms_etl.pipelines.test_data_pipeline import TestDataPipeline
 from paradicms_gui.loaders.gui_loader import GuiLoader
@@ -11,7 +11,7 @@ from .nop_image_archiver import NopImageArchiver
 
 
 @pytest.mark.parametrize("app", ["bootstrap-collection", "bootstrap-exhibition"])
-def test_load(app: str, test_data_models: Tuple[_Model, ...], tmp_path):
+def test_load(app: str, test_data_models: Tuple[Model, ...], tmp_path):
     app_dir_path = Path(__file__).parent.parent.parent.parent.parent / "app" / app
     assert app_dir_path.is_dir(), app_dir_path
 

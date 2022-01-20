@@ -4,12 +4,12 @@ from typing import Optional
 
 import boto3
 
-from paradicms_gui._image_archiver import _ImageArchiver
+from paradicms_gui.image_archiver import ImageArchiver
 from paradicms_gui.utils.get_image_file_mime_type import get_image_file_mime_type
 from paradicms_gui.utils.sha256_hash_file import sha256_hash_file
 
 
-class S3ImageArchiver(_ImageArchiver):
+class S3ImageArchiver(ImageArchiver):
     def __init__(
         self,
         *,
@@ -19,7 +19,7 @@ class S3ImageArchiver(_ImageArchiver):
         force_upload: bool = False,
         **kwds,
     ):
-        _ImageArchiver.__init__(self, **kwds)
+        ImageArchiver.__init__(self, **kwds)
 
         self.__force_upload = force_upload
         self.__s3_bucket_name = s3_bucket_name

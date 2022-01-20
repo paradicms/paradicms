@@ -1,29 +1,29 @@
 from pathlib import Path
 from typing import Optional, Tuple, Union
 
-from paradicms_etl.loaders._buffering_loader import _BufferingLoader
+from paradicms_etl.loaders.buffering_loader import BufferingLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 
-from paradicms_gui._deployer import _Deployer
-from paradicms_gui._image_archiver import _ImageArchiver
+from paradicms_gui.deployer import Deployer
+from paradicms_gui.image_archiver import ImageArchiver
 from paradicms_gui.deployers.fs_deployer import FsDeployer
 from paradicms_gui.image_archivers.fs_image_archiver import FsImageArchiver
 from paradicms_gui.loaders.app_package import AppPackage
 from paradicms_gui.loaders.gui_images_loader import GuiImagesLoader
 
 
-class GuiLoader(_BufferingLoader):
+class GuiLoader(BufferingLoader):
     """
     Loader that statically generates a web site using one of the GUI implementations in gui/.
 
     The loader:
     - Writes the input data to an rdf/turtle file
-    - Archives original images (via an _ImageArchiver)
+    - Archives original images (via an ImageArchiver)
     - Thumbnails images and archives them (via GuiImagesLoader)
     - Calls npm to generate the site (via AppPackage)
-    - Optionally deploys the generated site (via a _Deployer)
+    - Optionally deploys the generated site (via a Deployer)
 
     As noted, this class delegate most of its work to auxiliary classes such as AppPackage.
     """
@@ -34,9 +34,9 @@ class GuiLoader(_BufferingLoader):
         app: Union[Path, str],
         base_url_path: str = "",
         configuration_file_path: Optional[Path] = None,
-        deployer: Optional[_Deployer] = None,
+        deployer: Optional[Deployer] = None,
         dev: bool = False,
-        image_archiver: Optional[_ImageArchiver] = None,
+        image_archiver: Optional[ImageArchiver] = None,
         sleep_s_after_image_download: Optional[float] = None,
         thumbnail_max_dimensions: Tuple[
             ImageDimensions, ...
@@ -54,7 +54,7 @@ class GuiLoader(_BufferingLoader):
         :param thumbnail_max_dimensions: maximum dimensions of amage thumbnails to use
         """
 
-        _BufferingLoader.__init__(self, **kwds)
+        BufferingLoader.__init__(self, **kwds)
         self.__app = app
         self.__base_url_path = base_url_path
         self.__configuration_file_path = configuration_file_path

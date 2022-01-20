@@ -2,12 +2,12 @@ import mimetypes
 import shutil
 from pathlib import Path
 
-from paradicms_gui._image_archiver import _ImageArchiver
+from paradicms_gui.image_archiver import ImageArchiver
 from paradicms_gui.utils.get_image_file_mime_type import get_image_file_mime_type
 from paradicms_gui.utils.sha256_hash_file import sha256_hash_file
 
 
-class FsImageArchiver(_ImageArchiver):
+class FsImageArchiver(ImageArchiver):
     def __init__(
         self,
         *,
@@ -16,7 +16,7 @@ class FsImageArchiver(_ImageArchiver):
         force_overwrite: bool = False,
         **kwds,
     ):
-        _ImageArchiver.__init__(self, **kwds)
+        ImageArchiver.__init__(self, **kwds)
 
         self.__base_url = base_url.rstrip("/") + "/"
         self.__force_overwrite = force_overwrite

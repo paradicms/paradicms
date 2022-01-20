@@ -6,11 +6,11 @@ import boto3
 from rdflib import URIRef
 from tqdm import tqdm
 
-from paradicms_gui._deployer import _Deployer
+from paradicms_gui.deployer import Deployer
 from paradicms_gui.utils.get_generic_file_mime_type import get_generic_file_mime_type
 
 
-class S3Deployer(_Deployer):
+class S3Deployer(Deployer):
     def __init__(
         self,
         *,
@@ -19,7 +19,7 @@ class S3Deployer(_Deployer):
         aws_secret_access_key: Optional[str] = None,
         **kwds,
     ):
-        _Deployer.__init__(self, **kwds)
+        Deployer.__init__(self, **kwds)
 
         self.__s3_bucket_name = s3_bucket_name
 

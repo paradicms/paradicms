@@ -1,4 +1,4 @@
-from paradicms_etl._model import _Model
+from paradicms_etl.model import Model
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_gui.loaders.app_package import AppPackage
 from pathlib import Path
@@ -11,7 +11,7 @@ APP = "bootstrap-collection"
 #     AppPackage(gui=GUI).clean()
 
 
-def test_build(test_data_models: Tuple[_Model, ...], tmp_path):
+def test_build(test_data_models: Tuple[Model, ...], tmp_path):
     app_package = AppPackage(app=APP)
 
     if not (app_package.app_dir_path / "node_modules").is_dir():
