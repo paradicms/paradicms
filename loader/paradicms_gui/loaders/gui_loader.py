@@ -142,7 +142,7 @@ class GuiLoader(BufferingLoader):
             deployer = self.__deployer
             if deployer is None:
                 deployer = FsDeployer(
-                    gui_deploy_dir_path=self._loaded_data_dir_path / "deployed"
+                    deploy_dir_path=self._loaded_data_dir_path / "deployed"
                 )
 
             deployer.deploy(app_out_dir_path=app_out_dir_path)

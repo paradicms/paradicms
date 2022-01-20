@@ -58,9 +58,9 @@ if False and os.environ.get("CI") is None:
                 gui="bootstrap-collection",
                 pipeline_id=TestDataPipeline.ID,
             ),
-            images_per_institution=1,
+            images_per_work=1,
             institutions=1,
-            objects_per_institution=1,
+            works_per_institution=1,
         ).extract_transform_load()
         img_file_path = (
             data_dir_path
