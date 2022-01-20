@@ -47,7 +47,7 @@ class WikidataItemTransformer(Transformer):
     @abstractmethod
     def _transform_item(self, item: WikidataItem) -> Model:
         """
-        Transform the item to a _Model.
+        Transform the item to a Model.
         """
 
     def _transform_statement(
