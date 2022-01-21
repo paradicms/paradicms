@@ -44,7 +44,6 @@ class Image(NamedModel):
         created: Optional[datetime] = None,
         exact_dimensions: Optional[ImageDimensions] = None,
         format: Optional[str] = None,
-        label: Optional[str] = None,
         max_dimensions: Optional[ImageDimensions] = None,
         modified: Optional[datetime] = None,
         original_image_uri: Optional[URIRef] = None,
@@ -52,6 +51,7 @@ class Image(NamedModel):
         src: Optional[
             str
         ] = None,  # src that can be used in an <img> tag; if not specified, defaults to URI
+        title: Optional[str] = None,
     ) -> "Image":
         resource_builder = (
             ResourceBuilder(uri)
@@ -59,8 +59,8 @@ class Image(NamedModel):
             .add(DCTERMS.created, created)
             .add(FOAF.depicts, depicts_uri)
             .add(DCTERMS["format"], format)
-            .add(RDFS.label, label)
             .add(DCTERMS.modified, modified)
+            .add(DCTERMS.title, title)
             .add_rights(rights)
             .add(CMS.imageSrc, src)
         )
@@ -87,10 +87,6 @@ class Image(NamedModel):
     @property
     def depicts_uri(self) -> URIRef:
         return self._required_uri_value(FOAF.depicts)
-
-    @property
-    def label(self):
-        return self._optional_str_value(RDFS.label)
 
     @property
     def original_image_uri(self) -> Optional[URIRef]:
@@ -123,3 +119,7 @@ class Image(NamedModel):
     @property
     def src(self) -> Optional[str]:
         return self._optional_str_value(CMS.imageSrc)
+
+    @property
+    def title(self):
+        return self._optional_str_value(DCTERMS.title)
