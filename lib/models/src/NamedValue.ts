@@ -1,5 +1,5 @@
 import {NamedModel} from "./NamedModel";
-import {RDF, RDFS} from "./vocabularies";
+import {DCTERMS, RDF} from "./vocabularies";
 import {Literal} from "n3";
 import {Memoize} from "typescript-memoize";
 import {requireDefined} from "./requireDefined";
@@ -7,14 +7,6 @@ import {HasImages} from "./mixins";
 import {Mixin} from "ts-mixer";
 
 export class NamedValue extends Mixin(NamedModel, HasImages) {
-  @Memoize()
-  get label(): string | null {
-    return (
-      this.propertyObjects(RDFS.label).find(term => term.termType === "Literal")
-        ?.value ?? null
-    );
-  }
-
   get propertyUris(): readonly string[] {
     const propertyUris: readonly string[] = this.propertyObjects(RDF.predicate)
       .filter(term => term.termType === "NamedNode")
@@ -25,6 +17,15 @@ export class NamedValue extends Mixin(NamedModel, HasImages) {
       );
     }
     return propertyUris;
+  }
+
+  @Memoize()
+  get title(): string | null {
+    return (
+      this.propertyObjects(DCTERMS.title).find(
+        term => term.termType === "Literal"
+      )?.value ?? null
+    );
   }
 
   get value(): Literal {
