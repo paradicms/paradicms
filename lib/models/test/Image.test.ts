@@ -42,6 +42,10 @@ describe("Image", () => {
       .be.null;
   });
 
+  it("should get the title", () => {
+    expect(sut.title).to.not.be.empty;
+  });
+
   it("should get the image's URI", () => {
     expect(sut.uri).to.not.be.empty;
   });
