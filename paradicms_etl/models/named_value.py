@@ -1,5 +1,6 @@
 from typing import Optional, Tuple
 
+from rdflib import DCTERMS
 from rdflib.namespace import RDF, RDFS
 from rdflib.resource import Resource
 from rdflib.term import Node, URIRef
@@ -21,25 +22,25 @@ class NamedValue(NamedModel):
         property_uris: Tuple[URIRef, ...],  # Child -> parent references
         uri: URIRef,
         value: Node,  # A property value
-        label: Optional[str] = None,
+        title: Optional[str] = None,
     ) -> "NamedValue":
         if not property_uris:
             raise ValueError("must specify at least one property URI")
         return cls(
             ResourceBuilder(uri)
-            .add(RDFS.label, label)
+            .add(DCTERMS.title, title)
             .add(RDF.predicate, property_uris)
             .add(RDF.value, value)
             .build()
         )
 
     @property
-    def label(self) -> Optional[str]:
-        return self._optional_str_value(RDFS.label)
-
-    @property
     def property_uris(self) -> Tuple[URIRef, ...]:
         return self._required_uri_values(RDF.predicate)
+
+    @property
+    def title(self) -> Optional[str]:
+        return self._optional_str_value(DCTERMS.title)
 
     @property
     def value(self) -> Node:

@@ -54,7 +54,7 @@ __MODEL_TYPES_BY_NAME = {
 
 _MODEL_TYPE_LABEL_PROPERTIES = {
     Collection: DCTERMS.title,
-    Image: RDFS.label,
+    Image: DCTERMS.title,
     Institution: FOAF.name,
     Organization: FOAF.name,
     Person: FOAF.name,
