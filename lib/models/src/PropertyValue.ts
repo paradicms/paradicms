@@ -142,7 +142,7 @@ class NamedPropertyValue extends PropertyValue {
   }
 
   get label() {
-    return this.namedValue.label ?? this.value;
+    return this.namedValue.title ?? this.value;
   }
 
   thumbnail(selector: ThumbnailSelector) {

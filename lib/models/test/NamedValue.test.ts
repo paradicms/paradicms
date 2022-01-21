@@ -8,8 +8,8 @@ describe("NamedValue", () => {
     dataset.namedValues[0].propertyUris[0]
   )[0];
 
-  it("should get the label", () => {
-    expect(sut.label).to.not.be.empty;
+  it("should get the title", () => {
+    expect(sut.title).to.not.be.empty;
   });
 
   it("should get the value", () => {

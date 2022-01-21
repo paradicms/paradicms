@@ -1,7 +1,7 @@
 import {ImageDimensions} from "./ImageDimensions";
 import {NamedModel} from "./NamedModel";
 import {Literal, NamedNode} from "n3";
-import {CMS, EXIF, FOAF, XSD} from "./vocabularies";
+import {CMS, DCTERMS, EXIF, FOAF, XSD} from "./vocabularies";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Memoize} from "typescript-memoize";
@@ -110,6 +110,14 @@ export class Image extends Mixin(NamedModel, HasRights) {
     return selectThumbnail(
       [originalImage].concat(originalImage.derivedImages),
       selector
+    );
+  }
+
+  get title(): string | null {
+    return (
+      this.propertyObjects(DCTERMS.title).find(
+        term => term.termType === "Literal"
+      )?.value ?? null
     );
   }
 }
