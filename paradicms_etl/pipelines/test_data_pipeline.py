@@ -176,6 +176,7 @@ class TestDataPipeline(Pipeline):
                         license=CreativeCommonsLicenses.NC_1_0.uri,
                         statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
                     ),
+                    title=f"{agent.name} image",
                     uri=URIRef(
                         f"https://place-hold.it/1000x1000?text={quote(agent.name)}"
                     ),
@@ -207,6 +208,7 @@ class TestDataPipeline(Pipeline):
                     depicts_uri=depicts_uri,
                     exact_dimensions=ImageDimensions(height=1000, width=1000),
                     rights=rights,
+                    title=f"{text_prefix} image {image_i}",
                     uri=URIRef(
                         f"https://place-hold.it/1000x1000?text={quote(text_prefix)}Image{image_i}"
                     ),
@@ -222,6 +224,7 @@ class TestDataPipeline(Pipeline):
                         exact_dimensions=thumbnail_dimensions,
                         original_image_uri=original.uri,
                         rights=rights,
+                        title=f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}",
                         uri=URIRef(
                             f"https://place-hold.it/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}?text={quote(text_prefix)}Image{image_i}"
                         ),
