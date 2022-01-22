@@ -91,25 +91,6 @@ class MarkdownDirectoryTransformer(Transformer):
 
     _DEFAULT_INSTITUTION_MODEL_ID = "default"
 
-    class _CustomDictToResourceTransformer(DictToResourceTransformer):
-        def __init__(self, *, pipeline_id: str, **kwds):
-            DictToResourceTransformer.__init__(self, **kwds)
-            self.__pipeline_id = pipeline_id
-
-        def _transform_uri_value_to_node(self, value: str) -> URIRef:
-            if value.startswith("/"):
-                uri_value_split = value.split("/", 2)
-                if len(uri_value_split) == 3:
-                    return MarkdownDirectoryTransformer.model_uri(
-                        pipeline_id=self.__pipeline_id,
-                        model_type=_model_type_by_name(uri_value_split[1]),
-                        model_id=uri_value_split[2],
-                    )
-            else:
-                return DictToResourceTransformer._transform_uri_value_to_node(
-                    self, value
-                )
-
     def __init__(
         self,
         default_institution: Optional[Institution] = None,
@@ -130,7 +111,7 @@ class MarkdownDirectoryTransformer(Transformer):
 
     @staticmethod
     def default_collection_uri(*, markdown_directory_name: str, pipeline_id: str):
-        return MarkdownDirectoryTransformer.model_uri(
+        return MarkdownDirectoryTransformer._model_uri(
             pipeline_id=pipeline_id,
             model_type=Collection,
             model_id=markdown_directory_name,
@@ -138,19 +119,23 @@ class MarkdownDirectoryTransformer(Transformer):
 
     @staticmethod
     def default_institution_uri(*, pipeline_id: str):
-        return MarkdownDirectoryTransformer.model_uri(
+        return MarkdownDirectoryTransformer._model_uri(
             pipeline_id=pipeline_id,
             model_type=Institution,
             model_id=MarkdownDirectoryTransformer._DEFAULT_INSTITUTION_MODEL_ID,
         )
 
     @staticmethod
-    def model_uri(
+    def _model_uri(
         *, pipeline_id: str, model_type: Type[NamedModel], model_id: str
     ) -> URIRef:
-        return URIRef(
-            f"urn:markdown:{pipeline_id}:{quote(stringcase.snakecase(model_type.__name__))}:{quote(model_id)}"
-        )
+        return MarkdownDirectoryTransformer._pipeline_namespace(
+            pipeline_id=pipeline_id
+        )[f"{quote(stringcase.snakecase(model_type.__name__))}:{quote(model_id)}"]
+
+    @staticmethod
+    def _pipeline_namespace(*, pipeline_id: str) -> rdflib.Namespace:
+        return rdflib.Namespace(f"urn:markdown:{pipeline_id}:")
 
     # Rather than managing the state of the transform as variable assignments in a particular order,
     # create a class instance per transform invocation.
@@ -407,7 +392,7 @@ class MarkdownDirectoryTransformer(Transformer):
                         transformed_model=Image.from_fields(
                             depicts_uri=transformed_model.uri,
                             src=image_file_entry.path.as_uri(),
-                            uri=MarkdownDirectoryTransformer.model_uri(
+                            uri=MarkdownDirectoryTransformer._model_uri(
                                 pipeline_id=self.__pipeline_id,
                                 model_id=image_file_entry.model_id,
                                 model_type=Image,
@@ -449,18 +434,31 @@ class MarkdownDirectoryTransformer(Transformer):
             self, metadata_file_entry: MarkdownDirectory.MetadataFileEntry
         ) -> Resource:
             graph = Graph()
-            resource_identifier_default = MarkdownDirectoryTransformer.model_uri(
+
+            namespaces_by_prefix = self.__namespaces_by_prefix
+            if namespaces_by_prefix is None:
+                namespaces_by_prefix = (
+                    DictToResourceTransformer.NAMESPACES_BY_PREFIX_DEFAULT
+                )
+            namespaces_by_prefix = namespaces_by_prefix.copy()
+            assert "md" not in namespaces_by_prefix
+            namespaces_by_prefix[
+                "md"
+            ] = MarkdownDirectoryTransformer._pipeline_namespace(
+                pipeline_id=self.__pipeline_id
+            )
+
+            resource_identifier_default = MarkdownDirectoryTransformer._model_uri(
                 model_id=metadata_file_entry.model_id,
                 model_type=_model_type_by_name(metadata_file_entry.model_type),
                 pipeline_id=self.__pipeline_id,
             )
-            dict_to_resource_transformer = (
-                MarkdownDirectoryTransformer._CustomDictToResourceTransformer(
-                    graph=graph,
-                    namespaces_by_prefix=self.__namespaces_by_prefix,
-                    pipeline_id=self.__pipeline_id,
-                    resource_identifier_default=resource_identifier_default,
-                )
+
+            dict_to_resource_transformer = DictToResourceTransformer(
+                default_namespace=self.__default_namespace,
+                graph=graph,
+                namespaces_by_prefix=namespaces_by_prefix,
+                resource_identifier_default=resource_identifier_default,
             )
 
             if metadata_file_entry.format == "json":
@@ -469,8 +467,9 @@ class MarkdownDirectoryTransformer(Transformer):
                 )
             elif metadata_file_entry.format == "md":
                 return MarkdownToResourceTransformer.transform(
-                    front_matter_to_resource_transformer=dict_to_resource_transformer,
+                    default_namespace=self.__default_namespace,
                     graph=graph,
+                    namespaces_by_prefix=namespaces_by_prefix,
                     markdown=metadata_file_entry.source,
                     resource_identifier_default=resource_identifier_default,
                 )

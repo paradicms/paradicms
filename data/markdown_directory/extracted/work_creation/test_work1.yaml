@@ -1,5 +1,5 @@
 creator:
-- </person/test_person>
+- <md:person:test_person>
 date:
-  rdf_type: <http://www.paradicms.org/ns#DateTimeDescription>
-  time_year: 2022
+  "rdf:type": <http://www.paradicms.org/ns#DateTimeDescription>
+  "time:year": 2022

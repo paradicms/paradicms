@@ -20,23 +20,23 @@ class MarkdownToResourceTransformer:
         self,
         *,
         markdown_it: MarkdownIt,
-        front_matter_to_resource_transformer: Optional[
-            DictToResourceTransformer
-        ] = None,
+        default_namespace: Optional[rdflib.Namespace] = None,
         graph: Optional[Graph] = None,
+        namespaces_by_prefix: Optional[Dict[str, rdflib.Namespace]] = None,
         resource_identifier_default: Optional[Identifier] = None,
     ):
         self.__current_heading_id = None
-        if front_matter_to_resource_transformer is None:
-            front_matter_to_resource_transformer = DictToResourceTransformer()
-        self.__front_matter_to_resource_transformer = (
-            front_matter_to_resource_transformer
-        )
         self.__markdown_it = markdown_it
         if graph is None:
             graph = Graph()
         self.__graph = graph
         self.__resource_identifier_default = resource_identifier_default
+        self.__dict_to_resource_transformer = DictToResourceTransformer(
+            default_namespace=default_namespace,
+            graph=graph,
+            namespaces_by_prefix=namespaces_by_prefix,
+            resource_identifier_default=resource_identifier_default,
+        )
         self.__result = None  # Create lazily
 
     def _render_node_as_html(self, node: SyntaxTreeNode) -> str:
@@ -65,10 +65,8 @@ class MarkdownToResourceTransformer:
     def _visit_front_matter_node(self, front_matter_node: SyntaxTreeNode):
         assert self.__result is None
         front_matter_dict = yaml.load(front_matter_node.content, Loader=yaml.FullLoader)
-        self.__result = (
-            self.__front_matter_to_resource_transformer.transform_dict_to_resource(
-                front_matter_dict
-            )
+        self.__result = self.__dict_to_resource_transformer.transform_dict_to_resource(
+            front_matter_dict
         )
 
     def _visit_heading_node(self, heading_node: SyntaxTreeNode):
@@ -113,9 +111,7 @@ class MarkdownToResourceTransformer:
             key = "abstract"
 
         property_uri = (
-            self.__front_matter_to_resource_transformer.transform_key_to_property_uri(
-                key
-            )
+            self.__dict_to_resource_transformer.transform_key_to_property_uri(key)
         )
 
         existing_value = self._result.value(property_uri)

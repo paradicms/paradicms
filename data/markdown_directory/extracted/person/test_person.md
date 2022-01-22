@@ -1,6 +1,6 @@
 ---
 description: Test person description
-foaf_name: Test person
+"foaf:name": Test person
 ---
 
 Test person label

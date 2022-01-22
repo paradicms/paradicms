@@ -89,17 +89,7 @@ class DictToResourceTransformer:
         """
         Transform a key to an RDF property (identified by a URI).
         """
-        key_split = key.split("_", 1)
-        if len(key_split) == 1:
-            # Unqualified key
-            return self.__default_namespace[key]
-
-        namespace_prefix = key_split[0].lower()
-        try:
-            namespace = self.__namespaces_by_prefix[namespace_prefix]
-        except KeyError:
-            raise ValueError(f"no such namespace {namespace_prefix}: {key}")
-        return namespace[key_split[1]]
+        return self.__transform_str_to_uri(key)
 
     def transform_value_to_nodes(self, value: object) -> Tuple[Node, ...]:
         """
@@ -123,11 +113,22 @@ class DictToResourceTransformer:
             return tuple(nodes)
         elif isinstance(value, str):
             if len(value) > 2 and value[0] == "<" and value[-1] == ">":
-                return (URIRef(self._transform_uri_value_to_node(value[1:-1])),)
+                return (self.__transform_str_to_uri(value[1:-1]),)
             else:
                 return (Literal(value),)
         else:
             raise NotImplementedError("unsupported value type: " + type(value))
 
-    def _transform_uri_value_to_node(self, value: str) -> URIRef:
-        return URIRef(value)
+    def __transform_str_to_uri(self, str_: str) -> URIRef:
+        str_split = str_.split(":", 1)
+        if len(str_split) == 1:
+            # Unqualified
+            return self.__default_namespace[str_]
+
+        namespace_prefix = str_split[0].lower()
+        try:
+            namespace = self.__namespaces_by_prefix[namespace_prefix]
+        except KeyError:
+            # str_ is likely http://example.com, https://example.com, urn:example:other, and so on
+            return URIRef(str_)
+        return namespace[str_split[1]]
