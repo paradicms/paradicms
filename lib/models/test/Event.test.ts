@@ -21,6 +21,9 @@ describe("Event", () => {
         return abstract instanceof Text;
       })
     ).to.be.true;
+
+    expect(dataset.workEvents.some(workEvent => workEvent.abstract === null)).to
+      .be.true;
   });
 
   it("should get the date", () => {
