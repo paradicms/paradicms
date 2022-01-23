@@ -1,4 +1,4 @@
-import {Work, WorkEvent} from "@paradicms/models";
+import {Text, Work, WorkEvent} from "@paradicms/models";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -7,6 +7,7 @@ import {faEllipsisV} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {getWorkEventIcon} from "./getWorkEventIcon";
 import React = require("react");
+import {RightsParagraph} from "./RightsParagraph";
 
 export const WorkEventsTimeline: React.FunctionComponent<{
   readonly page: number; // 0-based
@@ -18,12 +19,24 @@ export const WorkEventsTimeline: React.FunctionComponent<{
     <VerticalTimeline>
       {workEvents.map(workEvent => (
         <VerticalTimelineElement
-          date={workEvent.displayDate}
+          date={workEvent.displayDate ?? undefined}
           key={workEvent.uri}
           icon={<FontAwesomeIcon icon={getWorkEventIcon(workEvent)} />}
         >
           <h3>{workEvent.title ?? workEvent.work.title}</h3>
-          {workEvent.abstract ? <p>{workEvent.abstract.toString()}</p> : null}
+          {workEvent.abstract ? (
+            <>
+              <p>{workEvent.abstract.toString()}</p>
+              {workEvent.abstract instanceof Text &&
+              workEvent.abstract.rights ? (
+                <RightsParagraph
+                  material="Text"
+                  rights={workEvent.abstract.rights}
+                  style={{fontSize: "x-small", marginBottom: 0}}
+                />
+              ) : null}
+            </>
+          ) : null}
         </VerticalTimelineElement>
       ))}
       {page < pageMax ? (

@@ -5,9 +5,11 @@ import {NamedNode} from "n3";
 import {Location} from "./Location";
 import {HasAbstract} from "./mixins";
 import {Mixin} from "ts-mixer";
+import {Memoize} from "typescript-memoize";
 
 export class Event extends Mixin(NamedModel, HasAbstract) {
-  get displayDate(): string {
+  @Memoize()
+  get displayDate(): string | null {
     const date = this.date;
     if (date !== null) {
       return date.toString();
@@ -17,7 +19,7 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
     const latestDate = this.latestDate;
 
     if (earliestDate === null && latestDate === null) {
-      return "(unknown)";
+      return null;
     }
 
     const result: string[] = [];
@@ -27,6 +29,7 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
     if (latestDate !== null) {
       result.push(latestDate.toString() + " (latest)");
     }
+
     return result.join(" - ");
   }
 
@@ -64,6 +67,7 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
     );
   }
 
+  @Memoize()
   get date(): DateTimeDescription | number | string | null {
     return this.datePropertyValue(DCTERMS.date);
   }
@@ -90,14 +94,17 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
     return null;
   }
 
+  @Memoize()
   get earliestDate(): DateTimeDescription | number | string | null {
     return this.datePropertyValue(VRA.earliestDate);
   }
 
+  @Memoize()
   get latestDate(): DateTimeDescription | number | string | null {
     return this.datePropertyValue(VRA.latestDate);
   }
 
+  @Memoize()
   get location(): Location | string | null {
     for (const term of this.propertyObjects(DCTERMS.spatial)) {
       switch (term.termType) {
@@ -117,6 +124,7 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
   /**
    * Synthesize a date that can be used for sorting this event.
    */
+  @Memoize()
   get sortDate(): {
     day: number | null;
     month: number | null;

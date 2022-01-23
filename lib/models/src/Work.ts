@@ -138,7 +138,11 @@ export class Work extends Mixin(
             result.push({
               location: workCreation.location,
               role: "Creation",
-              title: workCreation.title,
+              title: workCreation.title
+                ? workCreation.displayDate
+                  ? `${workCreation.displayDate}: ${workCreation.title}`
+                  : workCreation.title
+                : null,
             });
           }
         },
