@@ -1,4 +1,4 @@
-from typing import Union, Tuple
+from typing import Union, Tuple, Text, Optional
 
 from rdflib import URIRef, DCTERMS
 
@@ -25,21 +25,25 @@ class WorkCreation(WorkEvent):
         uri: URIRef,
         work_uri: URIRef,
         creator_uri: Union[URIRef, Tuple[URIRef, ...]],
+        abstract: Union[str, Text, None] = None,
         date: Union[DateTimeDescription, str, None] = None,
         earliest_date: Union[DateTimeDescription, str, None] = None,
         latest_date: Union[DateTimeDescription, str, None] = None,
         location: Union[Location, str, None] = None,
+        title: Optional[str] = None
     ):
         if date is None and earliest_date is None and latest_date is None:
             raise ValueError("must specify at least onedate")
 
         return cls(
             ResourceBuilder(uri)
+            .add(DCTERMS.abstract, abstract)
             .add(DCTERMS.creator, creator_uri)
             .add(DCTERMS.date, date)
             .add(VRA.earliestDate, earliest_date)
             .add(VRA.latestDate, latest_date)
             .add(DCTERMS.spatial, location)
+            .add(DCTERMS.title, title)
             .add(CMS.work, work_uri)
             .build()
         )
