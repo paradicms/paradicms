@@ -138,6 +138,7 @@ export class Work extends Mixin(
             result.push({
               location: workCreation.location,
               role: "Creation",
+              title: workCreation.title,
             });
           }
         },

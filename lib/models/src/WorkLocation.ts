@@ -7,4 +7,5 @@ import {WorkLocationRole} from "./WorkLocationRole";
 export interface WorkLocation {
   readonly location: Location;
   readonly role: WorkLocationRole;
+  readonly title: string | null;
 }

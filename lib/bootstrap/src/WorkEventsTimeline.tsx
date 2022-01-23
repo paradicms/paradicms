@@ -22,10 +22,8 @@ export const WorkEventsTimeline: React.FunctionComponent<{
           key={workEvent.uri}
           icon={<FontAwesomeIcon icon={getWorkEventIcon(workEvent)} />}
         >
-          <h3>{workEvent.work.title}</h3>
-          {workEvent.work.abstract ? (
-            <p>{workEvent.work.abstract.toString()}</p>
-          ) : null}
+          <h3>{workEvent.title ?? workEvent.work.title}</h3>
+          {workEvent.abstract ? <p>{workEvent.abstract.toString()}</p> : null}
         </VerticalTimelineElement>
       ))}
       {page < pageMax ? (

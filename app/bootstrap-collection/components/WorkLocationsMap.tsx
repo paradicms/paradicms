@@ -58,7 +58,7 @@ export const WorkLocationsMap: React.FunctionComponent<{
               icon={getWorkLocationIcon(workLocation)}
               style={{height: "16px", width: "16px"}}
             />
-            {workLocation.work.title}
+            {workLocation.title ?? workLocation.work.title}
           </Tooltip>
         </Marker>
       ))}
