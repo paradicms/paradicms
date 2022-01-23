@@ -93,7 +93,7 @@ class MarkdownDirectoryLoader(Loader):
             else:
                 raise TypeError(type(o))
 
-            result_key = f"{p_prefix}_{p_local_name}"
+            result_key = f"{p_prefix}:{p_local_name}"
 
             existing_result_value = result.get(result_key, None)
             if existing_result_value is None:
