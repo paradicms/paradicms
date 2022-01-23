@@ -531,6 +531,7 @@ export class LunrWorkQueryService implements WorkQueryService {
             long: workLocation.location.long,
           },
           role: workLocation.role,
+          title: workLocation.title,
           work: {
             title: work.title,
             uri: work.uri,

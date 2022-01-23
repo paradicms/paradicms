@@ -15,7 +15,7 @@ export abstract class HasRights extends ModelMixin {
       return new Rights({
         dataset: this.dataset,
         graphNode: this.graphNode,
-        node: this.node,
+        node: this._node,
       });
     } else {
       return null;

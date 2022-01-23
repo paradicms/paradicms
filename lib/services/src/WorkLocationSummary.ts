@@ -6,6 +6,7 @@ export interface WorkLocationSummary {
     readonly long: number;
   };
   readonly role: WorkLocationRole;
+  readonly title: string | null;
   readonly work: {
     readonly title: string;
     readonly uri: string;
