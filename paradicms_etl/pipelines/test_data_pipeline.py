@@ -450,8 +450,8 @@ class TestDataPipeline(Pipeline):
                 )
             )
 
-            work = Work.from_fields(
-                abstract=Text.from_fields(
+            abstract = (
+                Text.from_fields(
                     self.__LOREM_IPSUM,
                     rights=Rights(
                         holder=f"{title} abstract rights holder",
@@ -460,7 +460,11 @@ class TestDataPipeline(Pipeline):
                     ),
                 )
                 if include_abstract_and_description
-                else None,
+                else None
+            )
+
+            work = Work.from_fields(
+                abstract=abstract,
                 collection_uris=collection_uris,
                 institution_uri=institution.uri,
                 page=URIRef("http://example.com/work/" + str(work_i))
@@ -483,11 +487,12 @@ class TestDataPipeline(Pipeline):
                 text_prefix=work.title,
             )
 
-            # ADD LOCATION
             yield WorkCreation.from_fields(
+                abstract=abstract,
                 creator_uri=creator_uris,
                 date=creation_date_time_description,
                 location=Location.from_fields(lat=42.728104, long=-73.687576),
+                title=f"{work.title} creation",
                 work_uri=work.uri,
                 uri=URIRef(str(uri) + "Creation"),
             )
