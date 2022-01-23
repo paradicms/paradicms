@@ -3,8 +3,10 @@ import {DateTimeDescription} from "./DateTimeDescription";
 import {DCTERMS, VRA, XSD} from "./vocabularies";
 import {NamedNode} from "n3";
 import {Location} from "./Location";
+import {HasAbstract} from "./mixins";
+import {Mixin} from "ts-mixer";
 
-export class Event extends NamedModel {
+export class Event extends Mixin(NamedModel, HasAbstract) {
   get displayDate(): string {
     const date = this.date;
     if (date !== null) {
@@ -138,5 +140,13 @@ export class Event extends NamedModel {
       };
     }
     return null;
+  }
+
+  get title(): string | null {
+    return (
+      this.propertyObjects(DCTERMS.title).find(
+        term => term.termType === "Literal"
+      )?.value ?? null
+    );
   }
 }
