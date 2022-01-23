@@ -1,17 +1,14 @@
 import {expect} from "chai";
 import {Dataset} from "../src";
 import {testDataTrig} from "./testDataTrig";
-import {WorkCreation} from "../src/WorkCreation";
 import {DateTimeDescription} from "../src/DateTimeDescription";
 import {Location} from "../src/Location";
-import {hasMixin} from "ts-mixer";
+import {Text} from "../src/Text";
+import {Event} from "../src/Event";
 
 describe("Event", () => {
   const dataset = Dataset.parse(testDataTrig);
-  const work = dataset.works[0];
-  const sut: WorkCreation = dataset
-    .workEventsByWork(work.uri)
-    .find(event => hasMixin(event, WorkCreation))! as WorkCreation;
+  const sut: Event = dataset.workEvents[0];
 
   before(() => {
     expect(sut).is.not.undefined;
