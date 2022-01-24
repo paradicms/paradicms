@@ -96,7 +96,7 @@ class DictToResourceTransformer:
         Transform a value to one or more RDF nodes.
         """
 
-        if isinstance(value, (bool, int)):
+        if isinstance(value, (bool, float, int)):
             return (Literal(value),)
         elif isinstance(value, dict):
             bnode_resource = self.__graph.resource(BNode())
@@ -117,7 +117,7 @@ class DictToResourceTransformer:
             else:
                 return (Literal(value),)
         else:
-            raise NotImplementedError("unsupported value type: " + type(value))
+            raise NotImplementedError("unsupported value type: " + str(type(value)))
 
     def __transform_str_to_uri(self, str_: str) -> URIRef:
         str_split = str_.split(":", 1)
