@@ -6,3 +6,4 @@ from .prov import PROV
 from .schema import SCHEMA
 from .time import TIME
 from .vra import VRA
+from .wgs import WGS
