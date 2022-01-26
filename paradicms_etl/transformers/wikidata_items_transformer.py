@@ -53,7 +53,7 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
             statement: WikidataStatement,
         ):
             yield Image.from_fields(
-                depicts_uri=item_model.uri, label=item_model.label, uri=statement.value
+                depicts_uri=item_model.uri, title=item_model.label, uri=statement.value
             )
 
     class __PersonWikidataItemTransformer(__WikidataItemTransformer):
