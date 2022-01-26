@@ -360,11 +360,19 @@ export class LunrWorkQueryService implements WorkQueryService {
         works: searchedWorks,
       });
 
-      console.debug("Search filtered works count:", filteredWorks.length);
+      // console.debug("Search filtered works count:", filteredWorks.length);
 
-      const slicedWorks = filteredWorks.slice(offset, offset + limit);
+      // # 95: if search text specified, leave the works in the order they came out of Lunr (sorted by score/relevance).
+      // If not, sort the works by title
+      const sortedWorks = query.text
+        ? filteredWorks
+        : filteredWorks
+            .concat()
+            .sort((left, right) => left.title.localeCompare(right.title));
 
-      console.debug("Search sliced works count:", slicedWorks.length);
+      const slicedWorks = sortedWorks.slice(offset, offset + limit);
+
+      // console.debug("Search sliced works count:", slicedWorks.length);
 
       const slicedWorksDataset = new DataSubsetter({
         completeDataset: this.dataset,
