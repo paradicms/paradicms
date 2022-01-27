@@ -15,6 +15,18 @@ import {thumbnailTargetDimensions, WorkContainer} from "@paradicms/bootstrap";
 import Hammer from "react-hammerjs";
 import {useRouter} from "next/router";
 import {AppConfiguration} from "@paradicms/configuration";
+import dynamic from "next/dynamic";
+import {WorkLocationSummary} from "@paradicms/services";
+
+const WorkLocationsMap = dynamic<{
+  readonly workLocations: readonly WorkLocationSummary[];
+}>(
+  () =>
+    import("../../components/WorkLocationsMap").then(
+      module => module.WorkLocationsMap
+    ),
+  {ssr: false}
+);
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
@@ -84,7 +96,10 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
       <Hammer onSwipeLeft={onGoToPreviousWork} onSwipeRight={onGoToNextWork}>
         <div>
           <div onKeyDown={onKeyDown} style={{outline: "none"}} tabIndex={0}>
-            <WorkContainer work={currentWork} />
+            <WorkContainer
+              work={currentWork}
+              workLocationsMapComponent={WorkLocationsMap}
+            />
           </div>
         </div>
       </Hammer>

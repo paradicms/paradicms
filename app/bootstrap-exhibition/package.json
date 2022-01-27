@@ -9,8 +9,11 @@
   "dependencies": {
     "@paradicms/bootstrap": "1.0.5",
     "@paradicms/next": "1.0.5",
+    "@types/leaflet": "1.7.8",
+    "leaflet": "1.7.1",
     "next": "12.0.7",
-    "react-hammerjs": "1.0.1"
+    "react-hammerjs": "1.0.1",
+    "react-leaflet": "3.2.5"
   },
   "devDependencies": {
     "rimraf": "3.0.2"
