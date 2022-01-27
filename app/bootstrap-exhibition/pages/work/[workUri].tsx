@@ -175,6 +175,7 @@ export const getStaticProps: GetStaticProps = async ({
             allImages: true,
             collections: {},
             institution: {},
+            events: {},
           }
         )
         .stringify(),
