@@ -30,10 +30,6 @@ interface StaticProps {
 }
 
 const WorkLocationsMap = dynamic<{
-  readonly renderWorkLink: (
-    workUri: string,
-    children: React.ReactNode
-  ) => React.ReactNode;
   readonly workLocations: readonly WorkLocationSummary[];
 }>(
   () =>

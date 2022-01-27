@@ -17,12 +17,8 @@ const getWorkLocationIcon = (
 };
 
 export const WorkLocationsMap: React.FunctionComponent<{
-  readonly renderWorkLink: (
-    workUri: string,
-    children: React.ReactNode
-  ) => React.ReactNode;
   readonly workLocations: readonly WorkLocationSummary[];
-}> = ({renderWorkLink, workLocations}) => {
+}> = ({workLocations}) => {
   if (workLocations.length === 0) {
     return null;
   }

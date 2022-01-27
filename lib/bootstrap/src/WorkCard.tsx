@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useState } from "react";
-import { Image, Text, Work } from "@paradicms/models";
+import {useState} from "react";
+import {Image, Text, Work} from "@paradicms/models";
 import {
   Card,
   CardBody,
@@ -12,9 +12,9 @@ import {
   TabContent,
   TabPane,
 } from "reactstrap";
-import { thumbnailTargetDimensions } from "./thumbnailTargetDimensions";
-import { RightsParagraph } from "./RightsParagraph";
-import { getNamedModelLinks } from "./getNamedModelLinks";
+import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
+import {RightsParagraph} from "./RightsParagraph";
+import {getNamedModelLinks} from "./getNamedModelLinks";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "xx-small",
@@ -22,7 +22,6 @@ const RIGHTS_STYLE: React.CSSProperties = {
 };
 
 export const WorkCard: React.FunctionComponent<{
-  work: Work;
   renderInstitutionLink?: (
     institutionUri: string,
     children: React.ReactNode
@@ -31,7 +30,8 @@ export const WorkCard: React.FunctionComponent<{
     workUri: string,
     children: React.ReactNode
   ) => React.ReactNode;
-}> = ({ work, renderInstitutionLink, renderWorkLink }) => {
+  work: Work;
+}> = ({work, renderInstitutionLink, renderWorkLink}) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const workLinks = getNamedModelLinks(work);
   const thumbnail = work.thumbnail({
@@ -40,7 +40,7 @@ export const WorkCard: React.FunctionComponent<{
   const thumbnailSrc =
     thumbnail?.src ?? Image.placeholderSrc(thumbnailTargetDimensions);
 
-  const tabs: { content: React.ReactNode; title: string }[] = [];
+  const tabs: {content: React.ReactNode; title: string}[] = [];
   tabs.push({
     title: "Image",
     content: (
@@ -52,7 +52,8 @@ export const WorkCard: React.FunctionComponent<{
               maxHeight: thumbnailTargetDimensions.height,
               maxWidth: thumbnailTargetDimensions.width,
             }}
-            title={work.title} />
+            title={work.title}
+          />
         </CardBody>
         {thumbnail && thumbnail.rights ? (
           <CardFooter>
@@ -71,7 +72,7 @@ export const WorkCard: React.FunctionComponent<{
       title: "Summary",
       content: (
         <Card className="border-0">
-          <CardBody style={{ fontSize: "small" }}>
+          <CardBody style={{fontSize: "small"}}>
             {work.abstract.toString()}
           </CardBody>
           {work.abstract instanceof Text && work.abstract.rights ? (
@@ -93,7 +94,7 @@ export const WorkCard: React.FunctionComponent<{
       <CardHeader tag="h4">
         {renderWorkLink(work.uri, <>{work.title}</>)}
         {workLinks.length > 0 ? (
-          <div className="mt-1" style={{ fontSize: "x-small" }}>
+          <div className="mt-1" style={{fontSize: "x-small"}}>
             {workLinks}
           </div>
         ) : null}
@@ -111,7 +112,7 @@ export const WorkCard: React.FunctionComponent<{
                       activeTabIndex === tabIndex ? "active" : undefined
                     }
                     onClick={() => setActiveTabIndex(tabIndex)}
-                    style={{ cursor: "pointer", fontSize: "small" }}
+                    style={{cursor: "pointer", fontSize: "small"}}
                   >
                     {tab.title}
                   </NavLink>
