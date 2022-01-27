@@ -18,7 +18,6 @@ import {
   workSearchWorkJoinSelector,
 } from "@paradicms/react-search";
 import {AppConfiguration} from "@paradicms/configuration";
-import "react-vertical-timeline-component/style.min.css";
 import dynamic from "next/dynamic";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();

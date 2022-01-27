@@ -1,4 +1,4 @@
-import {DCTERMS, Image, Rights, Text, Work, WorkAgent} from "@paradicms/models";
+import {Image, Rights, Text, Work, WorkAgent} from "@paradicms/models";
 import {
   Card,
   CardBody,
@@ -13,10 +13,12 @@ import {
   TabPane,
 } from "reactstrap";
 import * as React from "react";
-import {useMemo, useState} from "react";
+import {ComponentType, useMemo, useState} from "react";
 import {WorkImagesCarousel} from "./WorkImagesCarousel";
 import {RightsParagraph} from "./RightsParagraph";
 import {AgentCard} from "./AgentCard";
+import {WorkLocationSummary} from "@paradicms/services";
+import {WorkEventsTimeline} from "./WorkEventsTimeline";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "x-small",
@@ -25,20 +27,14 @@ const RIGHTS_STYLE: React.CSSProperties = {
 
 export const WorkContainer: React.FunctionComponent<{
   work: Work;
-}> = ({work}) => {
-  const workAbstract: string | Text | null = useMemo(() => {
-    if (work.abstract) {
-      return work.abstract;
-    }
-
-    for (const propertyValue of work.propertyValues(
-      DCTERMS.description.value
-    )) {
-      return propertyValue.value;
-    }
-
-    return null;
-  }, [work]);
+  workLocationsMapComponent?: ComponentType<{
+    readonly workLocations: readonly WorkLocationSummary[];
+  }>;
+}> = ({work, workLocationsMapComponent}) => {
+  const workAbstract: string | Text | null = useMemo(
+    () => work.abstract ?? work.description ?? null,
+    [work]
+  );
 
   const workAbstractRights: Rights | null = useMemo(() => {
     if (workAbstract && workAbstract instanceof Text && workAbstract.rights) {
@@ -66,18 +62,18 @@ export const WorkContainer: React.FunctionComponent<{
     setCurrentWorkImagesCarouselImage,
   ] = useState<Image | null>(null);
 
-  const [activeLeftColNavTabIndex, setActiveLeftColNavTabIndex] = useState(0);
+  const [activeLeftColTabIndex, setActiveLeftColTabIndex] = useState(0);
 
-  const leftColNavTabs: {content: React.ReactNode; title: string}[] = [];
+  const leftColTabs: {content: React.ReactNode; title: string}[] = [];
   if (work.images.length > 0) {
-    leftColNavTabs.push({
+    leftColTabs.push({
       title: "Images",
       content: (
         <Card className="border-0">
           <CardBody className="text-center">
             <WorkImagesCarousel
               hideImageRights={true}
-              key={leftColNavTabs.length}
+              key={leftColTabs.length}
               onShowImage={setCurrentWorkImagesCarouselImage}
               work={work}
             />
@@ -96,10 +92,10 @@ export const WorkContainer: React.FunctionComponent<{
     });
   }
   if (workAgents.length > 0) {
-    leftColNavTabs.push({
+    leftColTabs.push({
       title: "People",
       content: (
-        <Container fluid key={leftColNavTabs.length}>
+        <Container fluid key={leftColTabs.length}>
           {workAgents.map((workAgent, workAgentIndex) => (
             <Row
               className={workAgentIndex > 0 ? "mt-4" : "mt-2"}
@@ -114,31 +110,58 @@ export const WorkContainer: React.FunctionComponent<{
       ),
     });
   }
+  if (work.events.length > 0) {
+    leftColTabs.push({
+      title: "Timeline",
+      content: (
+        <WorkEventsTimeline
+          page={0}
+          pageMax={0}
+          setPage={() => {}}
+          workEvents={work.events}
+        />
+      ),
+    });
+  }
+  if (workLocationsMapComponent && work.locations.length > 0) {
+    leftColTabs.push({
+      title: "Map",
+      content: React.createElement(workLocationsMapComponent, {
+        workLocations: work.locations.map(workLocation => ({
+          location: workLocation.location,
+          role: workLocation.role,
+          title: workLocation.title,
+          work: {
+            title: work.title,
+            uri: work.uri,
+          },
+        })),
+      }),
+    });
+  }
 
   let leftCol: React.ReactNode;
-  if (leftColNavTabs.length === 1) {
-    leftCol = leftColNavTabs[0].content;
-  } else if (leftColNavTabs.length > 1) {
+  if (leftColTabs.length === 1) {
+    leftCol = leftColTabs[0].content;
+  } else if (leftColTabs.length > 1) {
     leftCol = (
       <>
         <Nav tabs>
-          {leftColNavTabs.map((navTab, navTabIndex) => (
+          {leftColTabs.map((navTab, navTabIndex) => (
             <NavItem key={navTabIndex}>
               <NavLink
                 className={
-                  activeLeftColNavTabIndex === navTabIndex
-                    ? "active"
-                    : undefined
+                  activeLeftColTabIndex === navTabIndex ? "active" : undefined
                 }
-                onClick={() => setActiveLeftColNavTabIndex(navTabIndex)}
+                onClick={() => setActiveLeftColTabIndex(navTabIndex)}
               >
                 {navTab.title}
               </NavLink>
             </NavItem>
           ))}
         </Nav>
-        <TabContent activeTab={activeLeftColNavTabIndex.toString()}>
-          {leftColNavTabs.map((navTab, navTabIndex) => (
+        <TabContent activeTab={activeLeftColTabIndex.toString()}>
+          {leftColTabs.map((navTab, navTabIndex) => (
             <TabPane key={navTabIndex} tabId={navTabIndex.toString()}>
               <div className="mt-2">{navTab.content}</div>
             </TabPane>

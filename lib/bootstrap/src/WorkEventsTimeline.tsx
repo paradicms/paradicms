@@ -1,20 +1,20 @@
-import { Text, Work, WorkEvent } from "@paradicms/models";
+import {Text, Work, WorkEvent} from "@paradicms/models";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
-import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getWorkEventIcon } from "./getWorkEventIcon";
+import {faEllipsisV} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {getWorkEventIcon} from "./getWorkEventIcon";
 import React = require("react");
-import { RightsParagraph } from "./RightsParagraph";
+import {RightsParagraph} from "./RightsParagraph";
 
 export const WorkEventsTimeline: React.FunctionComponent<{
   readonly page: number; // 0-based
   readonly pageMax: number; // 0-based
   readonly setPage: (newPage: number) => void;
-  readonly workEvents: (WorkEvent & { readonly work: Work })[];
-}> = ({ page, pageMax, setPage, workEvents }) => {
+  readonly workEvents: readonly (WorkEvent & {readonly work: Work})[];
+}> = ({page, pageMax, setPage, workEvents}) => {
   return (
     <VerticalTimeline>
       {workEvents.map(workEvent => (
@@ -26,16 +26,17 @@ export const WorkEventsTimeline: React.FunctionComponent<{
           <h3>{workEvent.title ?? workEvent.work.title}</h3>
           {workEvent.abstract ? (
             <>
-              <div dangerouslySetInnerHTML={{
-                __html: workEvent.abstract.toString(),
-              }}
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: workEvent.abstract.toString(),
+                }}
               ></div>
               {workEvent.abstract instanceof Text &&
-                workEvent.abstract.rights ? (
+              workEvent.abstract.rights ? (
                 <RightsParagraph
                   material="Text"
                   rights={workEvent.abstract.rights}
-                  style={{ fontSize: "x-small", marginBottom: 0 }}
+                  style={{fontSize: "x-small", marginBottom: 0}}
                 />
               ) : null}
             </>
