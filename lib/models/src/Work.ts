@@ -1,5 +1,5 @@
 import {NamedModel} from "./NamedModel";
-import {CMS, RDF} from "./vocabularies";
+import {CMS, DCTERMS, RDF} from "./vocabularies";
 import {Collection} from "./Collection";
 import {Rights} from "./Rights";
 import {Text} from "./Text";
@@ -121,6 +121,23 @@ export class Work extends Mixin(
     return this.propertyObjects(CMS.collection)
       .filter(term => term.termType === "NamedNode")
       .map(term => term.value);
+  }
+
+  @Memoize()
+  get description(): string | Text | null {
+    for (const term of this.propertyObjects(DCTERMS.abstract)) {
+      switch (term.termType) {
+        case "BlankNode":
+          return new Text({
+            dataset: this.dataset,
+            graphNode: this.graphNode,
+            node: term,
+          });
+        case "Literal":
+          return term.value;
+      }
+    }
+    return null;
   }
 
   get events(): readonly WorkEvent[] {

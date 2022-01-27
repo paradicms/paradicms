@@ -18,22 +18,9 @@ import {
   workSearchWorkJoinSelector,
 } from "@paradicms/react-search";
 import {AppConfiguration} from "@paradicms/configuration";
-import "react-vertical-timeline-component/style.min.css";
 import dynamic from "next/dynamic";
 
-const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
-
-interface StaticProps {
-  readonly collectionUri: string;
-  readonly configuration: AppConfiguration;
-  readonly datasetString: string;
-}
-
 const WorkLocationsMap = dynamic<{
-  readonly renderWorkLink: (
-    workUri: string,
-    children: React.ReactNode
-  ) => React.ReactNode;
   readonly workLocations: readonly WorkLocationSummary[];
 }>(
   () =>
@@ -42,6 +29,14 @@ const WorkLocationsMap = dynamic<{
     ),
   {ssr: false}
 );
+
+const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
+
+interface StaticProps {
+  readonly collectionUri: string;
+  readonly configuration: AppConfiguration;
+  readonly datasetString: string;
+}
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,

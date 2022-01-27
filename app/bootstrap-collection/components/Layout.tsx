@@ -71,10 +71,6 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
             defaultAppConfiguration.bootstrapStylesheetHref!
           }
         />
-        <link
-          rel="stylesheet"
-          href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-        />
       </Head>
       <Container fluid>
         <Row>

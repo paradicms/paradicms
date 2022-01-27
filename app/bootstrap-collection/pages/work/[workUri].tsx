@@ -12,8 +12,20 @@ import {
 import {GetStaticPaths, GetStaticProps} from "next";
 import {getNamedModelLinks, WorkContainer} from "@paradicms/bootstrap";
 import * as fs from "fs";
+import dynamic from "next/dynamic";
+import {WorkLocationSummary} from "@paradicms/services";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
+
+const WorkLocationsMap = dynamic<{
+  readonly workLocations: readonly WorkLocationSummary[];
+}>(
+  () =>
+    import("../../components/WorkLocationsMap").then(
+      module => module.WorkLocationsMap
+    ),
+  {ssr: false}
+);
 
 interface StaticProps {
   readonly configuration: AppConfiguration;
@@ -37,7 +49,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
       documentTitle={work.title}
       configuration={configuration}
     >
-      <WorkContainer work={work} />
+      <WorkContainer work={work} workLocationsMapComponent={WorkLocationsMap} />
     </Layout>
   );
 };
@@ -77,6 +89,7 @@ export const getStaticProps: GetStaticProps = async ({
         .workDataset(completeDataset.workByUri(workUri), {
           allImages: true,
           collections: {},
+          events: {},
           institution: {},
         })
         .stringify(),

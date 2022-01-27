@@ -2,6 +2,8 @@ import {AppProps} from "next/app";
 import Head from "next/head";
 import {QueryParamProvider} from "@paradicms/next";
 import React from "react";
+import "react-vertical-timeline-component/style.min.css";
+import "leaflet/dist/leaflet.css";
 
 const App: React.FunctionComponent<AppProps> = ({Component, pageProps}) => {
   return (
