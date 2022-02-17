@@ -1,5 +1,6 @@
 export * from "./calculatePageMax";
 export * from "./createFilterControl";
+export * from "./createFilterControls";
 export * from "./FilterVisitor";
 export * from "./usePageQueryParam";
 export * from "./useWorkQueryParam";

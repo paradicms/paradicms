@@ -12,31 +12,18 @@ import {
 } from "@paradicms/facets";
 import {visitFilter} from "./FilterVisitor";
 import React from "react";
+import {CreateFilterControlFactory} from "./CreateFilterControlFactory";
 
 /**
  * Create a control React element for a filter. Delegates to the factory for UI-framework specific elements.
  */
 export const createFilterControl = (kwds: {
   facets: readonly Facet[];
-  factory: {
-    createCollectionValueFilterControl(
-      facet: CollectionValueFacet,
-      filter: CollectionValueFilter
-    ): React.ReactNode;
-
-    createInstitutionValueFilterControl(
-      facet: InstitutionValueFacet,
-      filter: InstitutionValueFilter
-    ): React.ReactNode;
-
-    createStringPropertyValueFilterControl(
-      facet: StringPropertyValueFacet,
-      filter: StringPropertyValueFilter
-    ): React.ReactNode;
-  };
+  factory: CreateFilterControlFactory;
   filter: Filter;
-}): React.ReactNode => {
-  const {facets, factory, filter} = kwds;
+  onChangeFilter: (newFilter: Filter) => void;
+}): React.ReactElement | null => {
+  const {facets, factory, filter, onChangeFilter} = kwds;
 
   return visitFilter(
     filter,
@@ -44,7 +31,7 @@ export const createFilterControl = (kwds: {
       visitCollectionValueFilter(
         filter: CollectionValueFilter,
         facet?: CollectionValueFacet
-      ): React.ReactNode {
+      ): React.ReactElement | null {
         if (!facet) {
           return null;
         }
@@ -52,26 +39,34 @@ export const createFilterControl = (kwds: {
           // console.info("collection values facet has <= 1 values, eliding");
           return null;
         }
-        return factory.createCollectionValueFilterControl(facet, filter);
+        return factory.createCollectionValueFilterControl(
+          facet,
+          filter,
+          onChangeFilter
+        );
       },
 
       visitInstitutionValueFilter(
         filter: InstitutionValueFilter,
         facet?: InstitutionValueFacet
-      ): React.ReactNode {
+      ): React.ReactElement | null {
         if (!facet) {
           return null;
         }
         if (facet.values.length + (facet.unknownCount ? 1 : 0) <= 1) {
           return null;
         }
-        return factory.createInstitutionValueFilterControl(facet, filter);
+        return factory.createInstitutionValueFilterControl(
+          facet,
+          filter,
+          onChangeFilter
+        );
       },
 
       visitStringPropertyValueFilter(
         filter: StringPropertyValueFilter,
         facet?: StringPropertyValueFacet
-      ): React.ReactNode {
+      ): React.ReactElement | null {
         if (!facet) {
           return null;
         }
@@ -83,7 +78,11 @@ export const createFilterControl = (kwds: {
           // );
           return null;
         }
-        return factory.createStringPropertyValueFilterControl(facet, filter);
+        return factory.createStringPropertyValueFilterControl(
+          facet,
+          filter,
+          onChangeFilter
+        );
       },
     },
     facets

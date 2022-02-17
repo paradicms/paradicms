@@ -25,6 +25,7 @@ import {
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 import {
   calculatePageMax,
+  createFilterControls,
   workSearchWorkJoinSelector,
 } from "@paradicms/react-search";
 import {Filter} from "@paradicms/filters";
@@ -32,6 +33,7 @@ import {useQueryParam} from "use-query-params";
 import {FiltersControls} from "./FiltersControls";
 import {AgentsGallery} from "./AgentsGallery";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
+import {bootstrapCreateFilterControlFactory} from "./bootstrapCreateFilterControlFactory";
 
 const OBJECTS_PER_PAGE = 4;
 
@@ -222,6 +224,13 @@ export const WorkSearchContainer: React.FunctionComponent<{
   //   return <h3>No matching works found.</h3>;
   // }
 
+  const filtersControls = createFilterControls({
+    facets: getWorksResult.facets,
+    factory: bootstrapCreateFilterControlFactory,
+    filters: workQuery.filters,
+    onChangeFilters,
+  });
+
   const tabs: {content: React.ReactNode; key: TabKey; title: string}[] = [];
   tabs.push({
     key: "works",
@@ -350,14 +359,12 @@ export const WorkSearchContainer: React.FunctionComponent<{
         </>
       ) : null}
       <Row>
-        <Col xs="2">
-          <FiltersControls
-            facets={getWorksResult.facets}
-            filters={workQuery.filters}
-            onChange={onChangeFilters}
-          />
-        </Col>
-        <Col xs="10">
+        {filtersControls.length > 0 ? (
+          <Col xs="2">
+            <FiltersControls filtersControls={filtersControls} />
+          </Col>
+        ) : null}
+        <Col xs={filtersControls.length > 0 ? 10 : 12}>
           {tabs.length === 1 ? (
             tabs[0].content
           ) : (

@@ -1,5 +1,5 @@
 export * from "./AgentCard";
-export * from "./createFilterControl";
+export * from "./bootstrapCreateFilterControlFactory";
 export * from "./FiltersControls";
 export * from "./FiltersBadges";
 export * from "./getNamedModelLinks";
