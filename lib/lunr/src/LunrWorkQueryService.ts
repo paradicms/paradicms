@@ -413,8 +413,14 @@ export class LunrWorkQueryService implements WorkQueryService {
     filter: ValueFilter<T>,
     values: readonly T[]
   ): boolean {
-    if (values.length === 0 && filter.excludeUnknown) {
-      return false;
+    if (values.length === 0) {
+      if (filter.excludeUnknown) {
+        return false;
+      }
+    } else {
+      if (filter.excludeKnown) {
+        return false;
+      }
     }
 
     const excludeValues: readonly T[] = filter.excludeValues ?? [];
