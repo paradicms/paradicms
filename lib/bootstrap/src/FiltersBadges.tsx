@@ -17,11 +17,18 @@ import {visitFilter} from "@paradicms/react-search";
 export const FiltersBadges: React.FunctionComponent<{
   facets: readonly Facet[];
   filters: readonly Filter[];
-}> = ({facets, filters}) => {
+  onChangeFilters: (filters: readonly Filter[]) => void;
+}> = ({facets, filters, onChangeFilters}) => {
   return (
     <>
-      {filters.map((filter, filterI) =>
-        visitFilter(
+      {filters.map((filter, filterI) => {
+        const onChangeFilter = (newFilter: Filter) => {
+          const filtersCopy = filters.concat();
+          filtersCopy[filterI] = newFilter;
+          onChangeFilters(filtersCopy);
+        };
+
+        return visitFilter(
           filter,
           {
             visitCollectionValueFilter(
@@ -33,6 +40,7 @@ export const FiltersBadges: React.FunctionComponent<{
                   facet={facet}
                   filter={filter}
                   key={filterI}
+                  onChange={onChangeFilter}
                 />
               );
             },
@@ -46,6 +54,7 @@ export const FiltersBadges: React.FunctionComponent<{
                   facet={facet}
                   filter={filter}
                   key={filterI}
+                  onChange={onChangeFilter}
                 />
               );
             },
@@ -59,13 +68,14 @@ export const FiltersBadges: React.FunctionComponent<{
                   facet={facet}
                   filter={filter}
                   key={filterI}
+                  onChange={onChangeFilter}
                 />
               );
             },
           },
           facets
-        )
-      )}
+        );
+      })}
     </>
   );
 };

@@ -346,6 +346,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
                   <FiltersBadges
                     facets={getWorksResult.facets}
                     filters={workQuery.filters}
+                    onChangeFilters={onChangeFilters}
                   />
                 </div>
               ) : null}
