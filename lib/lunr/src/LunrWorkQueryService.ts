@@ -23,7 +23,7 @@ import {
   CollectionValueFilter,
   Filter,
   InstitutionValueFilter,
-  PrimitiveType,
+  JsonPrimitiveType,
   StringPropertyValueFilter,
   ValueFilter,
 } from "@paradicms/filters";
@@ -59,7 +59,7 @@ interface LunrWorkQueryServiceConfiguration {
   readonly workProperties?: readonly PropertyConfiguration[];
 }
 
-interface MutableValueFacetValue<ValueT extends PrimitiveType>
+interface MutableValueFacetValue<ValueT extends JsonPrimitiveType>
   extends Omit<ValueFacetValue<ValueT>, "count"> {
   count: number;
 }
@@ -409,7 +409,7 @@ export class LunrWorkQueryService implements WorkQueryService {
     }
   }
 
-  private static testValueFilter<T extends PrimitiveType>(
+  private static testValueFilter<T extends JsonPrimitiveType>(
     filter: ValueFilter<T>,
     values: readonly T[]
   ): boolean {

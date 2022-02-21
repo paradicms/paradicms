@@ -13,16 +13,16 @@ import {
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faImages} from "@fortawesome/free-solid-svg-icons";
 import {ValueFilterGallery} from "./ValueFilterGallery";
-import {PrimitiveType, ValueFilter} from "@paradicms/filters";
+import {JsonPrimitiveType, ValueFilter} from "@paradicms/filters";
 import {ValueFacet} from "@paradicms/facets";
 
-interface ValueFilterControlProps<T extends PrimitiveType> {
+interface ValueFilterControlProps<T extends JsonPrimitiveType> {
   facet: ValueFacet<T>;
   filter: ValueFilter<T>;
   onChange: (newFilter: ValueFilter<T>) => void;
 }
 
-export const ValueFilterControl = <T extends PrimitiveType>(
+export const ValueFilterControl = <T extends JsonPrimitiveType>(
   props: ValueFilterControlProps<T>
 ) => {
   const {facet, filter, onChange} = props;

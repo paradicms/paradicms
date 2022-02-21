@@ -1,10 +1,10 @@
 import * as React from "react";
 import {Badge} from "reactstrap";
-import {PrimitiveType, ValueFilter} from "@paradicms/filters";
+import {JsonPrimitiveType, ValueFilter} from "@paradicms/filters";
 import {ValueFacet} from "@paradicms/facets";
 
 export class ValueFilterBadges<
-  T extends PrimitiveType
+  T extends JsonPrimitiveType
 > extends React.Component<{
   facet?: ValueFacet<T>;
   filter: ValueFilter<T>;

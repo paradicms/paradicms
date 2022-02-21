@@ -2,9 +2,13 @@ import * as React from "react";
 import {useCallback, useMemo} from "react";
 import DataTable, {IDataTableColumn} from "react-data-table-component";
 import {ValueFacet} from "@paradicms/facets";
-import {PrimitiveType, ValueFilter, ValueFilterState} from "@paradicms/filters";
+import {
+  JsonPrimitiveType,
+  ValueFilter,
+  ValueFilterState,
+} from "@paradicms/filters";
 
-type DataTableRow<T extends PrimitiveType> = {
+type DataTableRow<T extends JsonPrimitiveType> = {
   count: number;
   id: string;
   label: string;
@@ -12,13 +16,13 @@ type DataTableRow<T extends PrimitiveType> = {
   value?: T;
 };
 
-interface ValueFilterTableProps<T extends PrimitiveType> {
+interface ValueFilterTableProps<T extends JsonPrimitiveType> {
   facet: ValueFacet<T>;
   filter: ValueFilter<T>;
   onChange: (newFilter: ValueFilter<T>) => void;
 }
 
-export const ValueFilterTable = <T extends PrimitiveType>(
+export const ValueFilterTable = <T extends JsonPrimitiveType>(
   props: ValueFilterTableProps<T>
 ) => {
   // @ts-ignore

@@ -16,16 +16,20 @@ import {
   Input,
   Label,
 } from "reactstrap";
-import {PrimitiveType, ValueFilter, ValueFilterState} from "@paradicms/filters";
+import {
+  JsonPrimitiveType,
+  ValueFilter,
+  ValueFilterState,
+} from "@paradicms/filters";
 import {ValueFacet, ValueFacetValue} from "@paradicms/facets";
 
-interface ValueFacetValueCardProps<T extends PrimitiveType> {
+interface ValueFacetValueCardProps<T extends JsonPrimitiveType> {
   filterState: ValueFilterState<T, ValueFilter<T>>;
   onChange: (newFilter: ValueFilter<T>) => void;
   value: ValueFacetValue<T>;
 }
 
-const ValueFacetValueCard = <T extends PrimitiveType>(
+const ValueFacetValueCard = <T extends JsonPrimitiveType>(
   props: ValueFacetValueCardProps<T>
 ) => {
   const {filterState, onChange, value} = props;
@@ -131,13 +135,13 @@ const ValueFacetValueCard = <T extends PrimitiveType>(
   );
 };
 
-interface ValueFilterGalleryProps<T extends PrimitiveType> {
+interface ValueFilterGalleryProps<T extends JsonPrimitiveType> {
   facet: ValueFacet<T>;
   filter: ValueFilter<T>;
   onChange: (newFilter: ValueFilter<T>) => void;
 }
 
-export const ValueFilterGallery = <T extends PrimitiveType>(
+export const ValueFilterGallery = <T extends JsonPrimitiveType>(
   props: ValueFilterGalleryProps<T>
 ) => {
   const {facet, filter, onChange} = props;

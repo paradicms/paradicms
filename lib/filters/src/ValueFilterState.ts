@@ -1,8 +1,8 @@
 import {ValueFilter} from "./ValueFilter";
-import {PrimitiveType} from "./PrimitiveType";
+import {JsonPrimitiveType} from "./JsonPrimitiveType";
 
 export class ValueFilterState<
-  ValueT extends PrimitiveType,
+  ValueT extends JsonPrimitiveType,
   ValueFilterT extends ValueFilter<ValueT>
 > {
   private readonly excludeValueSet: Set<ValueT>;

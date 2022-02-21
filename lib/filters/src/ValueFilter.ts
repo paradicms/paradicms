@@ -1,5 +1,5 @@
 import {Filter} from "./Filter";
-import {PrimitiveType} from "./PrimitiveType";
+import {JsonPrimitiveType} from "./JsonPrimitiveType";
 
 /**
  * Filter that excludes/includes specific values where (model, filtered property, value).
@@ -12,7 +12,7 @@ import {PrimitiveType} from "./PrimitiveType";
  *
  * If the filter is empty (i.e., none of exclude* or include* is set), then all models are implicitly included.
  */
-export interface ValueFilter<T extends PrimitiveType> extends Filter {
+export interface ValueFilter<T extends JsonPrimitiveType> extends Filter {
   /**
    * If true, exclude all models that have the filtered property.
    *

@@ -1,7 +1,7 @@
 import {ValueFilter} from "./ValueFilter";
-import {PrimitiveType} from "./PrimitiveType";
+import {JsonPrimitiveType} from "./JsonPrimitiveType";
 
-export interface PropertyValueFilter<T extends PrimitiveType>
+export interface PropertyValueFilter<T extends JsonPrimitiveType>
   extends ValueFilter<T> {
   readonly propertyUri: string;
 }
