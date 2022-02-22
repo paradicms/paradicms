@@ -30,10 +30,10 @@ import {
 } from "@paradicms/react-search";
 import {Filter} from "@paradicms/filters";
 import {useQueryParam} from "use-query-params";
-import {FiltersControls} from "./FiltersControls";
 import {AgentsGallery} from "./AgentsGallery";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
 import {bootstrapCreateFilterControlFactory} from "./bootstrapCreateFilterControlFactory";
+import {FiltersControlsAccordion} from "./FiltersControlsAccordion";
 
 const OBJECTS_PER_PAGE = 4;
 
@@ -362,7 +362,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
       <Row>
         {filtersControls.length > 0 ? (
           <Col xs="2">
-            <FiltersControls filtersControls={filtersControls} />
+            <FiltersControlsAccordion filtersControls={filtersControls} />
           </Col>
         ) : null}
         <Col xs={filtersControls.length > 0 ? 10 : 12}>
