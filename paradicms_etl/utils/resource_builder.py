@@ -2,7 +2,7 @@ from typing import Optional, Tuple, Any
 
 from rdflib import URIRef, Literal, Graph
 from rdflib.resource import Resource
-from rdflib.term import Node
+from rdflib.term import Node, Identifier
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.property import Property
@@ -10,7 +10,7 @@ from paradicms_etl.models.rights import Rights
 
 
 class ResourceBuilder:
-    def __init__(self, identifier: URIRef):
+    def __init__(self, identifier: Identifier):
         graph = Graph()
         self.__resource = graph.resource(identifier)
 

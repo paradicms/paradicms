@@ -170,7 +170,7 @@ class TestDataPipeline(Pipeline):
                 yield Image.from_fields(
                     depicts_uri=agent.uri,
                     exact_dimensions=ImageDimensions(height=600, width=600),
-                    rights=Rights(
+                    rights=Rights.from_fields(
                         creator=f"{agent.name} image creator",
                         holder=f"{agent.name} image rights holder",
                         license=CreativeCommonsLicenses.NC_1_0.uri,
@@ -242,7 +242,7 @@ class TestDataPipeline(Pipeline):
                 collection = Collection.from_fields(
                     abstract=Text.from_fields(
                         self.__LOREM_IPSUM,
-                        rights=Rights(
+                        rights=Rights.from_fields(
                             holder=f"{collection_title} abstract rights holder",
                             license=CreativeCommonsLicenses.NC_1_0.uri,
                             statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
@@ -280,7 +280,7 @@ class TestDataPipeline(Pipeline):
                 institution_name = f"Institution{institution_i}"
                 institution = Institution.from_fields(
                     name=institution_name,
-                    rights=Rights(
+                    rights=Rights.from_fields(
                         holder=f"{institution_name} rights holder",
                         license=CreativeCommonsLicenses.NC_1_0.uri,
                         statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
@@ -313,7 +313,7 @@ class TestDataPipeline(Pipeline):
                 )
 
         def __generate_named_values(self):
-            rights = Rights(
+            rights = Rights.from_fields(
                 holder=f"Property definition rights holder",
                 license=CreativeCommonsLicenses.NC_1_0.uri,
                 statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
@@ -453,7 +453,7 @@ class TestDataPipeline(Pipeline):
             abstract = (
                 Text.from_fields(
                     self.__LOREM_IPSUM,
-                    rights=Rights(
+                    rights=Rights.from_fields(
                         holder=f"{title} abstract rights holder",
                         license=CreativeCommonsLicenses.NC_1_0.uri,
                         statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
@@ -471,7 +471,7 @@ class TestDataPipeline(Pipeline):
                 if work_i % 2 == 0
                 else None,
                 properties=tuple(properties),
-                rights=Rights(
+                rights=Rights.from_fields(
                     holder=f"{title} rights holder",
                     license=CreativeCommonsLicenses.NC_1_0.uri,
                     statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,

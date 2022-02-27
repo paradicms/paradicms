@@ -1,61 +1,59 @@
 from dataclasses import dataclass
-from typing import Optional, Union
+from typing import Optional, Union, Tuple
 
 from rdflib import Literal, URIRef, DCTERMS
 from rdflib.resource import Resource
 from rdflib.term import Node
 
+from paradicms_etl.model import Model
+from paradicms_etl.utils.resource_builder import ResourceBuilder
+
 
 @dataclass(frozen=True)
-class Rights:
+class Rights(Model):
     """
-    Value class that captures a group of properties that specify the rights of another model,
+    Captures a group of properties that specify the rights of another model,
     such as the license and the rights statement.
 
-    Rights is not a model itself. The rights properties are attached directly to another model
-    like Work. Rights is simply a convenient way of grouping those properties.
+    Rights typically has the Resource of another Model.
     """
 
-    creator: Union[None, str, URIRef] = None
-    holder: Union[None, str, URIRef] = None
-    license: Union[None, str, URIRef] = None
-    statement: Union[None, str, URIRef] = None
-
-    __PROPERTY_URIS = {
-        "creator": DCTERMS.creator,
-        "holder": DCTERMS.rightsHolder,
-        "license": DCTERMS.license,
-        "statement": DCTERMS.rights,
-    }
+    # def __init__(self, resource: Resource):
+    #     Model.__init__(self, resource)
+    #     self.contributors
+    #     self.creators
+    #     self.holders
+    #     self.license
+    #     self.statement
 
     @classmethod
-    def from_rdf(cls, *, resource: Resource) -> Optional["Rights"]:
-        kwds = {}
-        for property_name, property_uri in cls.__PROPERTY_URIS.items():
-            property_value = resource.value(property_uri)
-            if property_value is None:
-                continue
-            if isinstance(property_value, Literal):
-                property_value = property_value.toPython()
-            elif isinstance(property_value, Resource):
-                property_value = property_value.identifier
-                assert isinstance(property_value, URIRef)
-            else:
-                raise TypeError(f"expected {property_uri} to be a literal or a URI")
-            kwds[property_name] = property_value
-        if kwds:
-            return cls(**kwds)
-        else:
-            return None
+    def from_fields(
+        cls,
+        *,
+        contributor: Optional[str, URIRef] = None,
+        contributors: Optional[Tuple[Union[str, URIRef], ...]] = None,
+        creator: Optional[str, URIRef] = None,
+        creators: Optional[Tuple[Union[str, URIRef], ...]] = None,
+        holder: Optional[str, URIRef] = None,
+        holders: Optional[Tuple[Union[str, URIRef], ...]] = None,
+        license: Union[str, URIRef, None] = None,
+        statement: Union[str, URIRef, None] = None,
+    ):
+        resource_builder = ResourceBuilder()
+        for singular, plural, property_uri in (
+            (contributor, contributors, DCTERMS.contributor),
+            (creator, creators, DCTERMS.creator),
+            (holder, holders, DCTERMS.rightsHolder),
+            (license, None, DCTERMS.license),
+            (statement, None, DCTERMS.rights),
+        ):
+            if singular is not None:
+                resource_builder.add(property_uri, singular)
+            if plural is not None:
+                for value in plural:
+                    resource_builder.add(property_uri, value)
+        return resource_builder.build()
 
     def to_rdf(self, *, add_to_resource: Resource) -> None:
-        for property_name, property_uri in self.__PROPERTY_URIS.items():
-            property_value = getattr(self, property_name)
-            if property_value is None:
-                continue
-            if isinstance(property_value, Node):
-                add_to_resource.add(property_uri, property_value)
-            elif isinstance(property_value, str):
-                add_to_resource.add(property_uri, Literal(property_value))
-            else:
-                raise TypeError(type(property_value))
+        for p, o in self._resource.predicate_objects():
+            add_to_resource.add(p, o)

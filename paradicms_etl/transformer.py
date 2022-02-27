@@ -47,7 +47,9 @@ class Transformer(PipelinePhase):
     ) -> Institution:
         return Institution.from_fields(
             name=institution_name,
-            rights=Rights(holder=institution_name, statement=institution_rights)
+            rights=Rights.from_fields(
+                holder=institution_name, statement=institution_rights
+            )
             if institution_rights is not None
             else None,
             uri=URIRef(institution_uri),

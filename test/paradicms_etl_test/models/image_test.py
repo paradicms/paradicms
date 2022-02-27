@@ -22,7 +22,7 @@ def test_image() -> Image:
         modified=datetime.now(),
         original_image_uri=URIRef("http://example.com/originalImage"),
         # max_dimensions=ImageDimensions(height=600, width=600),
-        rights=Rights(
+        rights=Rights.from_fields(
             creator="Test creator",
             holder="Test holder",
             license=CreativeCommonsLicenses.BY_1_0.uri,
