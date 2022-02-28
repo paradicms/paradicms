@@ -6,7 +6,6 @@ from rdflib.resource import Resource
 from rdflib.term import Node
 
 from paradicms_etl.model import Model
-from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 @dataclass(frozen=True)
@@ -39,6 +38,8 @@ class Rights(Model):
         license: Union[str, URIRef, None] = None,
         statement: Union[str, URIRef, None] = None,
     ):
+        from paradicms_etl.utils.resource_builder import ResourceBuilder
+
         resource_builder = ResourceBuilder()
         for singular, plural, property_uri in (
             (contributor, contributors, DCTERMS.contributor),
