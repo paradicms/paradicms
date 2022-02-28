@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from typing import Tuple
-
 from rdflib import Graph, URIRef
-from paradicms_etl.models.rights_statement import RightsStatement
+
 from paradicms_etl.models.model_singletons import ModelSingletons
+from paradicms_etl.models.rights_statement import RightsStatement
 
 
 class RightsStatementsDotOrgRightsStatements(ModelSingletons):

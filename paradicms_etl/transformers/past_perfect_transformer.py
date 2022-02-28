@@ -81,7 +81,7 @@ class PastPerfectTransformer(Transformer):
                 institution_uri=institution.uri,
                 properties=self._get_database_object_properties(database_object),
                 title=database_object.name,
-                uri=URIRef(self.__work_uri_prefix + quote(database_work.id)),
+                uri=URIRef(self.__work_uri_prefix + quote(database_object.id)),
             )
             yield work
 

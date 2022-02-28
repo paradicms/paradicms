@@ -1,4 +1,4 @@
-from typing import Optional, Type, Dict
+from typing import Optional, Dict
 
 import rdflib
 import yaml
@@ -6,11 +6,10 @@ from markdown_it import MarkdownIt
 from markdown_it.renderer import RendererHTML
 from markdown_it.tree import SyntaxTreeNode
 from mdit_py_plugins.front_matter import front_matter_plugin
-from rdflib import Graph, URIRef, Literal, BNode, RDF
+from rdflib import Graph, Literal, BNode, RDF
 from rdflib.resource import Resource
 from rdflib.term import Identifier
 
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.dict_to_resource_transformer import DictToResourceTransformer
 

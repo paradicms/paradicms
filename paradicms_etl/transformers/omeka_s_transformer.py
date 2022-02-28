@@ -1,7 +1,6 @@
 import json
 from typing import Dict, Tuple
 
-from paradicms_etl.transformer import Transformer
 from rdflib import Namespace, RDF, URIRef
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
@@ -10,9 +9,10 @@ from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import CMS, PROV
+from paradicms_etl.transformer import Transformer
 
 # Omeka namespace
-O = Namespace("http://omeka.org/s/vocabs/o#")
+O = Namespace("http://omeka.org/s/vocabs/o#")  # noqa:E741
 
 
 class OmekaSTransformer(Transformer):

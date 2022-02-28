@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from typing import Optional, Union, Tuple
 
 from rdflib import URIRef, DCTERMS, BNode, Literal

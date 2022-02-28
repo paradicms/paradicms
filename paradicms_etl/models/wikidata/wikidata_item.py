@@ -234,8 +234,6 @@ class WikidataItem(NamedModel):
             logger.warning("item %s: no pref_label detected", resource.identifier)
             return None
 
-        articles = []
-
         return cls(
             articles=tuple(
                 WikidataArticle.from_rdf(

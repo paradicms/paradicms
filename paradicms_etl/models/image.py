@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Optional
 
 from rdflib import Literal, URIRef, Graph
-from rdflib.namespace import DCTERMS, FOAF, RDFS
+from rdflib.namespace import DCTERMS, FOAF
 
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.named_model import NamedModel

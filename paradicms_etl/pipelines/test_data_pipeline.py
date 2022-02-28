@@ -314,7 +314,7 @@ class TestDataPipeline(Pipeline):
 
         def __generate_named_values(self):
             rights = Rights.from_fields(
-                holder=f"Property definition rights holder",
+                holder="Property definition rights holder",
                 license=CreativeCommonsLicenses.NC_1_0.uri,
                 statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
             )

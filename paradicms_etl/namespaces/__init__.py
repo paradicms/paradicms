@@ -1,9 +1,9 @@
-from .bind_namespaces import bind_namespaces
-from .cms import CMS
-from .contact import CONTACT
-from .exif import EXIF
-from .prov import PROV
-from .schema import SCHEMA
-from .time import TIME
-from .vra import VRA
-from .wgs import WGS
+from .bind_namespaces import bind_namespaces  # noqa: F401
+from .cms import CMS  # noqa: F401
+from .contact import CONTACT  # noqa: F401
+from .exif import EXIF  # noqa: F401
+from .prov import PROV  # noqa: F401
+from .schema import SCHEMA  # noqa: F401
+from .time import TIME  # noqa: F401
+from .vra import VRA  # noqa: F401
+from .wgs import WGS  # noqa: F401

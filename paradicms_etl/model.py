@@ -49,7 +49,7 @@ class Model:
 
     def _optional_str_or_text_value(
         self, p: Union[URIRef, Tuple[URIRef, ...]]
-    ) -> Union[str, "Text", None]:
+    ) -> Union[str, "Text", None]:  # noqa: F821
         for value in self.__values(p):
             if isinstance(value, Literal):
                 python_value = value.toPython()

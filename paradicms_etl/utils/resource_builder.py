@@ -14,7 +14,7 @@ class ResourceBuilder:
         graph = Graph()
         self.__resource = graph.resource(identifier)
 
-    def add(self, p: URIRef, o: Any) -> "_ResourceBuilder":
+    def add(self, p: URIRef, o: Any) -> "ResourceBuilder":
         if o is None:
             pass
         elif isinstance(o, Model):
@@ -28,12 +28,12 @@ class ResourceBuilder:
             self.__resource.add(p, Literal(o))
         return self
 
-    def add_properties(self, properties: Tuple[Property, ...]) -> "_ResourceBuilder":
+    def add_properties(self, properties: Tuple[Property, ...]) -> "ResourceBuilder":
         for property_ in properties:
             self.add(property_.uri, property_.value)
         return self
 
-    def add_rights(self, rights: Optional[Rights]) -> "_ResourceBuilder":
+    def add_rights(self, rights: Optional[Rights]) -> "ResourceBuilder":
         if rights is not None:
             rights.to_rdf(add_to_resource=self.__resource)
         return self

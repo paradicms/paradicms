@@ -1,14 +1,13 @@
 import json
 from dataclasses import dataclass
 from logging import Logger
-from logging import Logger
 from typing import Dict, Optional, Tuple, Type
 from urllib.parse import quote
 
 import rdflib.namespace
 import stringcase
 import yaml
-from rdflib import DCTERMS, FOAF, Graph, Literal, RDFS, URIRef
+from rdflib import DCTERMS, FOAF, Graph, Literal, URIRef
 from rdflib.resource import Resource
 from yaml import FullLoader
 

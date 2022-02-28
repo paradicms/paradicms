@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from typing import Tuple
-
 from rdflib import Graph, URIRef
 from paradicms_etl.models.license import License
 from paradicms_etl.models.model_singletons import ModelSingletons

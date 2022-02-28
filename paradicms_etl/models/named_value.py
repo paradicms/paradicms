@@ -1,7 +1,7 @@
 from typing import Optional, Tuple
 
 from rdflib import DCTERMS
-from rdflib.namespace import RDF, RDFS
+from rdflib.namespace import RDF
 from rdflib.resource import Resource
 from rdflib.term import Node, URIRef
 

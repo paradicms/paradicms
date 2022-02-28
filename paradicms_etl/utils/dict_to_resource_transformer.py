@@ -1,5 +1,5 @@
 from inspect import isclass
-from typing import Dict, Any, Tuple, Generator, Optional
+from typing import Dict, Any, Tuple, Optional
 
 import rdflib
 from rdflib import URIRef, DCTERMS, Graph
