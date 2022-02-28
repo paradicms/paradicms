@@ -16,7 +16,7 @@ describe("Work", () => {
 
   it("should get the work's agents", () => {
     const agents = sut.agents;
-    expect(agents).to.have.length(5);
+    expect(agents).to.have.length(12);
     expect(agents.map(agent => agent.agent.uri)).to.deep.eq(sut.agentUris);
   });
 
@@ -25,12 +25,6 @@ describe("Work", () => {
       sut.collectionUris
     );
   });
-
-  // it("should get the work's created datetime as a DateTimeDescription", () => {
-  //   const created = sut.created;
-  //   expect(created).to.be.instanceof(DateTimeDescription);
-  //   expect((created as DateTimeDescription).year).to.eq(2022);
-  // });
 
   it("should get the work's images", () => {
     expect(sut.images.map(image => image.uri).sort()).to.deep.eq(

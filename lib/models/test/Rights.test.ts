@@ -8,6 +8,16 @@ import {testDataTrig} from "./testDataTrig";
 describe("Rights", () => {
   const sut = Dataset.parse(testDataTrig).works[0].rights!;
 
+  it("should have a joined contributor", () => {
+    expect(sut.contributors).to.not.be.empty;
+    expect(sut.contributors.filter(contributor => contributor instanceof Agent))
+      .to.not.be.empty;
+    expect(sut.contributorAgents).to.not.be.empty;
+    expect(
+      sut.contributorAgents.map(contributor => contributor as Agent)[0].name
+    ).to.not.be.empty;
+  });
+
   it("should have a joined creator", () => {
     expect(sut.creators).to.not.be.empty;
     expect(sut.creators.filter(creator => creator instanceof Agent)).to.not.be

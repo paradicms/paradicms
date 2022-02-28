@@ -51,11 +51,21 @@ describe("Dataset", () => {
       expect(work.originalImages).to.not.be.empty;
       const rights = work.rights;
       expect(rights).to.not.be.null;
+      expect(rights!.contributors).to.not.be.empty;
+      expect(rights!.contributorAgents).to.not.be.empty;
+      const contributorAgent = rights!.contributorAgents[0];
+      expect(
+        sut
+          .agentWorks(contributorAgent.uri)
+          .some(contributorAgentWork => contributorAgentWork.uri === work.uri)
+      ).to.be.true;
       expect(rights!.creators).to.not.be.empty;
       expect(rights!.creatorAgents).to.not.be.empty;
-      const agent = rights!.creatorAgents[0];
+      const creatorAgent = rights!.creatorAgents[0];
       expect(
-        sut.agentWorks(agent.uri).some(agentWork => agentWork.uri === work.uri)
+        sut
+          .agentWorks(creatorAgent.uri)
+          .some(agentWork => agentWork.uri === work.uri)
       ).to.be.true;
       expect(rights!.license).to.not.be.null;
       expect((rights!.license! as License).uri).to.not.be.empty;

@@ -3,7 +3,6 @@ import {DataSubsetter} from "../src/DataSubsetter";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {Dataset, License, RightsStatement} from "../src";
 import {NamedModel} from "../src/NamedModel";
-import {Agent} from "../src/Agent";
 import {testDataTrig} from "./testDataTrig";
 import {WorkCreation} from "../src/WorkCreation";
 
@@ -131,12 +130,7 @@ describe("DataSubsetter", () => {
       testDataset.images.filter(
         image =>
           image.depictsUri === work.uri ||
-          work.rights!.creators.some(
-            agent => agent instanceof Agent && agent.uri === image.depictsUri
-          ) ||
-          work.rights!.holders.some(
-            agent => agent instanceof Agent && agent.uri === image.depictsUri
-          )
+          work.rights!.agents.some(agent => agent.uri === image.depictsUri)
       )
     );
     expectModelsDeepEq(dataset.institutions, [
@@ -151,9 +145,9 @@ describe("DataSubsetter", () => {
     ]);
     expectModelsDeepEq(
       dataset.agents,
-      testDataset.agents.filter(agent =>
-        work.rights!.creators.some(
-          creator => creator instanceof Agent && creator.uri === agent.uri
+      testDataset.agents.filter(datasetAgent =>
+        work.rights!.agents.some(
+          workAgent => workAgent.uri === datasetAgent.uri
         )
       )
     );
@@ -179,7 +173,7 @@ describe("DataSubsetter", () => {
       work: {},
     });
     expectModelsDeepEq(dataset.works, [work]);
-    expectModelsDeepEq(dataset.agents, workCreation.creatorAgents);
+    expectModelsDeepEq(dataset.agents, workCreation.agents);
     expectModelsDeepEq(dataset.workEventsByWork(work.uri), [workCreation]);
   });
 });

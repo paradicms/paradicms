@@ -34,6 +34,13 @@ const getRightsWorkAgents = (
     return result;
   }
 
+  for (const contributorAgent of rights.contributorAgents) {
+    result.push({
+      agent: contributorAgent,
+      role: rolePrefix + " contributor",
+    });
+  }
+
   for (const creatorAgent of rights.creatorAgents) {
     result.push({
       agent: creatorAgent,

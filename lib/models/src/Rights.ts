@@ -7,8 +7,9 @@ import {NamedNode} from "n3";
 import {Memoize} from "typescript-memoize";
 import {Mixin} from "ts-mixer";
 import {HasCreators} from "./mixins/HasCreators";
+import {HasContributors} from "./mixins/HasContributors";
 
-export class Rights extends Mixin(Model, HasCreators) {
+export class Rights extends Mixin(Model, HasContributors, HasCreators) {
   private agentsOrStrings(property: NamedNode) {
     return this.propertyObjects(DCTERMS.creator).flatMap(term => {
       switch (term.termType) {
@@ -22,8 +23,16 @@ export class Rights extends Mixin(Model, HasCreators) {
     });
   }
 
+  @Memoize()
+  get agents(): readonly Agent[] {
+    return this.agentUris.map(agentUri => this.dataset.agentByUri(agentUri));
+  }
+
+  @Memoize()
   get agentUris(): readonly string[] {
-    return this.creatorAgentUris.concat(this.holderAgentUris);
+    return this.contributorAgentUris
+      .concat(this.creatorAgentUris)
+      .concat(this.holderAgentUris);
   }
 
   get holderAgents(): readonly Agent[] {

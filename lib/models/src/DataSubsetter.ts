@@ -327,16 +327,8 @@ export class DataSubsetter {
       return builder;
     }
 
-    for (const creator of rights.creators) {
-      if (creator instanceof Agent) {
-        this.addAgentDataset(creator, builder, agentJoinSelector);
-      }
-    }
-
-    for (const holder of rights.holders) {
-      if (holder instanceof Agent) {
-        this.addAgentDataset(holder, builder, agentJoinSelector);
-      }
+    for (const agent of rights.agents) {
+      this.addAgentDataset(agent, builder, agentJoinSelector);
     }
 
     const license = rights.license;
