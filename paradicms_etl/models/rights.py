@@ -12,6 +12,14 @@ class Rights(Model):
     such as the license and the rights statement.
     """
 
+    __PROPERTY_URIS = {
+        DCTERMS.contributor,
+        DCTERMS.creator,
+        DCTERMS.license,
+        DCTERMS.rights,
+        DCTERMS.rightsHolder,
+    }
+
     def __init__(self, resource: Resource):
         Model.__init__(self, resource, add_rdf_type=False)
 
@@ -39,19 +47,23 @@ class Rights(Model):
         from paradicms_etl.utils.resource_builder import ResourceBuilder
 
         resource_builder = ResourceBuilder(BNode())
-        for singular, plural, property_uri in (
+
+        fields = (
             (contributor, contributors, DCTERMS.contributor),
             (creator, creators, DCTERMS.creator),
             (holder, holders, DCTERMS.rightsHolder),
             (license, None, DCTERMS.license),
             (statement, None, DCTERMS.rights),
-        ):
+        )
+        assert len(fields) == len(cls.__PROPERTY_URIS)
+        for singular, plural, property_uri in fields:
+            assert property_uri in cls.__PROPERTY_URIS
             if singular is not None:
                 resource_builder.add(property_uri, singular)
             if plural is not None:
                 for value in plural:
                     resource_builder.add(property_uri, value)
-        return cls(resource=resource_builder.build())
+        return cls(resource_builder.build())
 
     @property
     def holders(self) -> Tuple[Union[str, URIRef], ...]:
@@ -82,6 +94,10 @@ class Rights(Model):
 
     def to_rdf(self, *, add_to_resource: Resource) -> None:
         for p, o in self._resource.predicate_objects():
+            if p.identifier not in self.__PROPERTY_URIS:
+                # Since the resource may belong to another model, carefully filter the properties
+                continue
+
             if isinstance(o, Resource):
                 o_value = o.identifier
             else:
