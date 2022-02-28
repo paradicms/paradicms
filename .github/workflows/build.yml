@@ -25,8 +25,8 @@ jobs:
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
-      - run: poetry run black --check towndex_etl
-      - run: poetry run flake8 towndex_etl
+      - run: poetry run black --check paradicms_etl
+      - run: poetry run flake8 paradicms_etl
       - name: Run Python unit tests
         run: |
           mkdir test-results
