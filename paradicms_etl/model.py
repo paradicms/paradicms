@@ -7,9 +7,10 @@ from paradicms_etl.namespaces import CMS
 
 
 class Model:
-    def __init__(self, resource: Resource):
+    def __init__(self, resource: Resource, add_rdf_type: bool = True):
         self.__resource = resource
-        self.__resource.add(RDF.type, CMS[self.__class__.__name__])
+        if add_rdf_type:
+            self.__resource.add(RDF.type, CMS[self.__class__.__name__])
         # print(self.__class__.__name__, "resource:")
         # print(self.__resource.graph.serialize().decode("utf-8"))
 
