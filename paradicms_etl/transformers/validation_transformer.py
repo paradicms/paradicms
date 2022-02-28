@@ -168,8 +168,10 @@ class ValidationTransformer(Transformer):
         def __validate_rights(self, rights: Optional[Rights]):
             if rights is None:
                 return
-            if isinstance(rights.creator, URIRef):
-                self.__referenced_agent_uris.add(rights.creator)
+            for agents in (rights.contributors, rights.creators, rights.holders):
+                for agent in agents:
+                    if isinstance(agent, URIRef):
+                        self.__referenced_agent_uris.add(agent)
             if isinstance(rights.license, URIRef):
                 self.__referenced_license_uris.add(rights.license)
             if isinstance(rights.statement, URIRef):

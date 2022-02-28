@@ -15,11 +15,14 @@ class Rights(Model):
 
     def __init__(self, resource: Resource):
         Model.__init__(self, resource, add_rdf_type=False)
-        self.creator
 
     @property
-    def creator(self) -> Union[str, URIRef, None]:
-        return self.__singular_value(DCTERMS.creator)
+    def contributors(self) -> Tuple[Union[str, URIRef], ...]:
+        return self.__plural_values(DCTERMS.contributor)
+
+    @property
+    def creators(self) -> Tuple[Union[str, URIRef], ...]:
+        return self.__plural_values(DCTERMS.creator)
 
     @classmethod
     def from_fields(
@@ -52,17 +55,27 @@ class Rights(Model):
         return cls(resource=resource_builder.build())
 
     @property
+    def holders(self) -> Tuple[Union[str, URIRef], ...]:
+        return self.__plural_values(DCTERMS.rightsHolder)
+
+    @property
     def license(self) -> Union[str, URIRef, None]:
         return self.__singular_value(DCTERMS.license)
 
+    def __plural_values(self, p: URIRef) -> Tuple[Union[str, URIRef], ...]:
+        values = []
+        for o in self._resource.objects(p):
+            if isinstance(o, Literal):
+                py_o = o.toPython()
+                if isinstance(py_o, str):
+                    values.append(py_o)
+            elif isinstance(o, Resource):
+                values.append(o.identifier)
+        return tuple(values)
+
     def __singular_value(self, p: URIRef) -> Union[str, URIRef, None]:
-        value = self._resource.value(p)
-        if isinstance(value, Literal):
-            return value.toPython()
-        elif isinstance(value, Resource):
-            return value.identifier
-        else:
-            return None
+        values = self.__plural_values(p)
+        return values[0] if values else None
 
     @property
     def statement(self) -> Union[str, URIRef, None]:
