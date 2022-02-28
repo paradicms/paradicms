@@ -9,4 +9,3 @@
 .mypy_cache/
 out/
 *.pyc
-/venv/

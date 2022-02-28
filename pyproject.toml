@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "paradicms-etl"
+version = "0.0.1"
+description = "Paradicms Extract-Transform-Load (ETL) library"
+authors = ["Minor Gordon <info@paradicms.org>"]
+license = "GPLv3"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+ConfigArgParse = "^1.5.3"
+markdown-it-py = {extras = ["plugins"], version = "^2.0.1"}
+pathvalidate = "^2.5.0"
+Pillow = "^9.0.1"
+PyYAML = "^6.0"
+pyformance = "^0.4"
+rdflib = "^6.1.1"
+stringcase = "^1.2.0"
+tqdm = "^4.62.3"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.0.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
