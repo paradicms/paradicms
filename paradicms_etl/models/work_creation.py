@@ -26,6 +26,7 @@ class WorkCreation(WorkEvent):
         work_uri: URIRef,
         creator_uri: Union[URIRef, Tuple[URIRef, ...]],
         abstract: Union[str, Text, None] = None,
+        contributor_uri: Union[URIRef, Tuple[URIRef, ...], None],
         date: Union[DateTimeDescription, str, None] = None,
         earliest_date: Union[DateTimeDescription, str, None] = None,
         latest_date: Union[DateTimeDescription, str, None] = None,
@@ -38,6 +39,7 @@ class WorkCreation(WorkEvent):
         return cls(
             ResourceBuilder(uri)
             .add(DCTERMS.abstract, abstract)
+            .add(DCTERMS.contributor, contributor_uri)
             .add(DCTERMS.creator, creator_uri)
             .add(DCTERMS.date, date)
             .add(VRA.earliestDate, earliest_date)

@@ -428,8 +428,17 @@ class TestDataPipeline(Pipeline):
                     for i in range(2)
                 )
 
+            # dcterms:contributor
+            contributor_uris = [
+                agents[(work_i + i) % len(agents)].uri for i in range(2)
+            ]
+            properties.extend(
+                Property(DCTERMS.contributor, contributor_uri)
+                for contributor_uri in contributor_uris
+            )
+
             # dcterms:creator
-            creator_uris = [agents[(work_i + i) % len(agents)].uri for i in range(3)]
+            creator_uris = [agents[(work_i + i) % len(agents)].uri for i in range(2, 4)]
             properties.extend(
                 Property(DCTERMS.creator, creator_uri) for creator_uri in creator_uris
             )
@@ -489,6 +498,7 @@ class TestDataPipeline(Pipeline):
 
             yield WorkCreation.from_fields(
                 abstract=abstract,
+                contributor_uri=contributor_uris,
                 creator_uri=creator_uris,
                 date=creation_date_time_description,
                 location=Location.from_fields(lat=42.728104, long=-73.687576),
