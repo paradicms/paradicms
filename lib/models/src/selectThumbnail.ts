@@ -20,6 +20,11 @@ export const selectThumbnail = <
   images: readonly ImageT[],
   selector: ThumbnailSelector
 ): ImageT | null => {
+  if (images.length === 0) {
+    console.warn("no images to select thumbnail from");
+    return null;
+  }
+
   const {minDimensions, maxDimensions, targetDimensions} = selector;
 
   const imagesByOriginalImageUri: {[index: string]: ImageT[]} = {};
@@ -116,6 +121,8 @@ export const selectThumbnail = <
     // );
     return candidateImages[candidateImages.length - 1].image;
   }
+
+  console.warn("no acceptable thumbnail found in", images.length, "images");
 
   return null;
 };

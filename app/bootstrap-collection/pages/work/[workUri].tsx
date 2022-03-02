@@ -10,7 +10,11 @@ import {
   readDatasetFile,
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {getNamedModelLinks, WorkContainer} from "@paradicms/bootstrap";
+import {
+  getNamedModelLinks,
+  thumbnailTargetDimensions,
+  WorkContainer,
+} from "@paradicms/bootstrap";
 import * as fs from "fs";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
@@ -87,6 +91,9 @@ export const getStaticProps: GetStaticProps = async ({
         completeDataset,
       })
         .workDataset(completeDataset.workByUri(workUri), {
+          agents: {
+            thumbnail: {targetDimensions: thumbnailTargetDimensions},
+          },
           allImages: true,
           collections: {},
           events: {},

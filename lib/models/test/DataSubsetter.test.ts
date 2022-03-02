@@ -115,6 +115,7 @@ describe("DataSubsetter", () => {
       },
       allImages: true,
       collections: {},
+      events: {},
       institution: {},
     });
     expectModelsDeepEq(
@@ -133,6 +134,10 @@ describe("DataSubsetter", () => {
           work.rights!.agents.some(agent => agent.uri === image.depictsUri)
       )
     );
+    expect(dataset.agents).to.not.be.empty;
+    for (const agent of dataset.agents) {
+      expect(agent.thumbnail(THUMBNAIL_SELECTOR)).to.not.be.null;
+    }
     expectModelsDeepEq(dataset.institutions, [
       testDataset.institutions.find(
         institution => institution.uri === work.institutionUri
