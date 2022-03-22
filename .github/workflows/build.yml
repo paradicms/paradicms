@@ -27,6 +27,7 @@ jobs:
         run: poetry install --no-interaction --no-root
       - run: poetry run black --check paradicms_etl
       - run: poetry run flake8 paradicms_etl
+      - run: poetry run mypy paradicms_etl
       - name: Run Python unit tests
         run: |
           mkdir test-results
