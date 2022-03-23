@@ -1,10 +1,11 @@
-from typing import Generator, Tuple
+from typing import Tuple, Iterable, Dict
 
-from paradicms_etl.transformer import Transformer
-from rdflib import Graph
+from rdflib import Graph, URIRef
 
 from paradicms_etl.model import Model
+from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
+from paradicms_etl.transformer import Transformer
 from paradicms_etl.utils.sanitize_method_name import sanitize_method_name
 
 
@@ -33,12 +34,12 @@ class _WikidataItemsTransformer(Transformer):
             item.uri,
         )
 
-    def transform(self, *, graph: Graph) -> Generator[Model, None, None]:
+    def transform(self, *, graph: Graph) -> Iterable[Model]:  # type: ignore
         yield from self._transform_items(
-            WikidataItem.from_rdf(graph=graph, logger=self._logger)
+            WikidataItem.from_wikidata_rdf(graph=graph, logger=self._logger)
         )
 
-    def _transform_item(self, item: WikidataItem) -> Generator[Model, None, None]:
+    def _transform_item(self, item: WikidataItem) -> Iterable[NamedModel]:
         instance_of_statements = item.statements_by_property_label().get(
             "instance of", None
         )
@@ -46,6 +47,7 @@ class _WikidataItemsTransformer(Transformer):
             self._logger.debug("item %s has no instance of statements", item.uri)
             return
 
+        assert isinstance(instance_of_statements[0].value, WikidataItem)
         instance_of_value = instance_of_statements[0].value.labels.pref_label
 
         transform_method_name = (
@@ -63,7 +65,7 @@ class _WikidataItemsTransformer(Transformer):
 
     def _transform_items(self, items: Tuple[WikidataItem, ...]):
         authoritative_models_by_uri = {}
-        non_authoritative_models_by_uri = {}
+        non_authoritative_models_by_uri: Dict[URIRef, NamedModel] = {}
 
         for item in items:
             for model in self._transform_item(item):

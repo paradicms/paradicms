@@ -1,8 +1,9 @@
-from typing import Dict, Generator, Optional
+from typing import Dict, Optional, Union, Type, Any, Iterable
 
 import yaml
 from pathvalidate import sanitize_filename
 from rdflib import Graph, Literal, Namespace, RDF, URIRef, BNode
+from rdflib.namespace import DefinedNamespace
 from rdflib.resource import Resource
 from stringcase import snakecase
 
@@ -13,7 +14,12 @@ from paradicms_etl.utils.dict_to_resource_transformer import DictToResourceTrans
 
 class MarkdownDirectoryLoader(Loader):
     def __init__(
-        self, *, namespaces_by_prefix: Optional[Dict[str, Namespace]] = None, **kwds
+        self,
+        *,
+        namespaces_by_prefix: Optional[
+            Dict[str, Union[Type[DefinedNamespace], Namespace]]
+        ] = None,
+        **kwds,
     ):
         Loader.__init__(self, **kwds)
         if namespaces_by_prefix is None:
@@ -22,7 +28,7 @@ class MarkdownDirectoryLoader(Loader):
             )
         self.__namespaces_by_prefix = namespaces_by_prefix.copy()
 
-    def load(self, *, models: Generator[Model, None, None]):
+    def load(self, *, models: Iterable[Model]):
         for model in models:
             model_id = model.label
             if model_id is None:
@@ -44,7 +50,7 @@ class MarkdownDirectoryLoader(Loader):
             md_dir_path = self._loaded_data_dir_path / model_type
             md_dir_path.mkdir(parents=True, exist_ok=True)
 
-            md_file_path = md_dir_path / (sanitize_filename(model_id) + ".md")
+            md_file_path = md_dir_path / (str(sanitize_filename(model_id)) + ".md")
             with open(md_file_path, "w+", encoding="utf-8") as md_file:
                 md_file.write(
                     f"""\
@@ -54,8 +60,10 @@ class MarkdownDirectoryLoader(Loader):
 """
                 )
 
-    def __transform_model_resource_to_dict(self, model_resource: Resource):
-        result = {}
+    def __transform_model_resource_to_dict(
+        self, model_resource: Resource
+    ) -> Dict[str, Any]:
+        result: Dict[str, Any] = {}
         for p, o in model_resource.predicate_objects():
             if p.identifier == RDF.type:
                 continue

@@ -1,12 +1,13 @@
 from io import BytesIO
 from pathlib import Path
-from typing import Dict, Generator
+from typing import Dict, Iterable
 from zipfile import ZipFile
 
 from rdflib import Graph, Literal, Namespace
 
 from paradicms_etl.extractor import Extractor
 from paradicms_etl.loader import Loader
+from paradicms_etl.model import Model
 from paradicms_etl.models.license import License
 from paradicms_etl.namespaces import bind_namespaces
 from paradicms_etl.pipeline import Pipeline
@@ -39,7 +40,7 @@ class CreativeCommonsPipeline(Pipeline):
             return {"rdf_file_contents": rdf_file_contents}
 
     class __CreativeCommonsTransformer(Transformer):
-        def transform(self, rdf_file_contents: Dict[str, bytes]):
+        def transform(self, rdf_file_contents: Dict[str, bytes]):  # type: ignore
             CC = Namespace("http://creativecommons.org/ns#")
             for rdf_file_name, rdf_file_bytes in rdf_file_contents.items():
                 graph = Graph()
@@ -59,13 +60,14 @@ class CreativeCommonsPipeline(Pipeline):
                 yield License.from_rdf(graph.resource(uri))
 
     class __CreativeCommonsLoader(Loader):
-        def load(self, *, models: Generator[License, None, None]):
+        def load(self, *, models: Iterable[Model]):
             creative_commons_licenses_py_file_path = (
                 Path(__file__).parent.parent / "models" / "creative_commons_licenses.py"
             )
             py_license_identifiers = set()
             py_license_reprs = []
             for license in models:
+                assert isinstance(license, License)
                 py_license_identifier = (
                     license.identifier.replace("-", "_").replace("+", "_plus").upper()
                 )
@@ -85,9 +87,9 @@ class CreativeCommonsPipeline(Pipeline):
                     en_license_graph.add((s, p, o))
 
                 py_license_reprs.append(
-                    f"    {py_license_identifier} = License.from_rdf(Graph().parse(data=r'''{en_license_graph.serialize(format='ttl').decode('utf-8')}''', format='ttl').resource(URIRef('{license.uri}')))"
+                    f"    {py_license_identifier} = License.from_rdf(Graph().parse(data=r'''{en_license_graph.serialize(format='ttl').decode('utf-8')}''', format='ttl').resource(URIRef('{license.uri}')))"  # type: ignore
                 )
-            py_license_reprs = "\n".join(py_license_reprs)
+            py_license_reprs_joined = "\n".join(py_license_reprs)
 
             with open(
                 creative_commons_licenses_py_file_path, "w+", encoding="utf-8"
@@ -104,7 +106,7 @@ from paradicms_etl.models.model_singletons import ModelSingletons
 class CreativeCommonsLicenses(ModelSingletons):
     _MODEL_CLASS = License
 
-{py_license_reprs}
+{py_license_reprs_joined}
 """
                 )
 

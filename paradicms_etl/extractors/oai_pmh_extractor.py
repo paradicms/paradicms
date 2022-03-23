@@ -2,10 +2,10 @@ import json
 from pathlib import Path
 from typing import Optional
 from urllib.request import urlopen
+from xml.dom.minidom import parseString
 from xml.etree.ElementTree import ElementTree
 
 from pathvalidate import sanitize_filename
-from xml.dom.minidom import parseString
 
 from paradicms_etl.extractor import Extractor
 
@@ -26,7 +26,7 @@ class OaiPmhExtractor(Extractor):
     def extract(self, *, force, storage):
         def record_identifier_file_path(record_identifier: str) -> Path:
             return self._extracted_data_dir_path / (
-                sanitize_filename(record_identifier) + ".xml"
+                str(sanitize_filename(record_identifier)) + ".xml"
             )
 
         record_identifiers_file_path = (

@@ -34,8 +34,8 @@ class CompositePipeline(Pipeline):
             **kwds,
         )
 
-        exclude_pipeline_ids = tuple(exclude_pipeline_id) if exclude_pipeline_id else ()
-        include_pipeline_ids = tuple(include_pipeline_id) if include_pipeline_id else ()
+        exclude_pipeline_ids = (exclude_pipeline_id,) if exclude_pipeline_id else ()
+        include_pipeline_ids = (include_pipeline_id,) if include_pipeline_id else ()
 
         filtered_pipeline_ids = [pipeline.id for pipeline in pipelines]
         for exclude_pipeline_id in exclude_pipeline_ids:

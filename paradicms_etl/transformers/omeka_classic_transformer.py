@@ -1,9 +1,8 @@
 from datetime import datetime
-from typing import Dict, Optional, Tuple
+from typing import Dict, Optional, Tuple, List
 
-from paradicms_etl.transformer import Transformer
 from pyformance import MetricsRegistry
-from rdflib import URIRef, DCTERMS
+from rdflib import URIRef, DCTERMS, Literal
 from tqdm import tqdm
 
 from paradicms_etl.models.collection import Collection
@@ -15,8 +14,9 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.work import Work
+from paradicms_etl.transformer import Transformer
 
-ElementTextTree = Dict[str, Dict[str, str]]
+ElementTextTree = Dict[str, Dict[str, List[str]]]
 
 
 def is_uri(value: str):
@@ -100,7 +100,7 @@ class OmekaClassicTransformer(Transformer):
             self._logger.info("%s: %s", key, value)
 
     def _get_element_texts_as_tree(self, omeka_resource) -> ElementTextTree:
-        result = {}
+        result: ElementTextTree = {}
         for element_text in omeka_resource["element_texts"]:
             text = element_text["text"].strip()
             if not text:
@@ -120,12 +120,14 @@ class OmekaClassicTransformer(Transformer):
         ):
             for property_i, property_ in enumerate(properties):
                 if property_.uri == title_property_uri:
-                    remaining_properties = list(properties[:property_i]) + list(
-                        properties[property_i + 1 :]
+                    remaining_properties = tuple(
+                        list(properties[:property_i])
+                        + list(properties[property_i + 1 :])
                     )
                     assert len(remaining_properties) == len(properties) - 1
                     title = property_.value
-                    return title, remaining_properties
+                    assert isinstance(title, Literal)
+                    return title.toPython(), remaining_properties
         raise NotImplementedError("no title property")
 
     def _log_unknown_element_texts(self, element_text_tree: ElementTextTree) -> None:
@@ -240,7 +242,7 @@ class OmekaClassicTransformer(Transformer):
         file_added = datetime.fromisoformat(file_["added"])
         file_modified = datetime.fromisoformat(file_["modified"])
 
-        images = []
+        images: List[Image] = []
         for key, url in file_["file_urls"].items():
             if url is None:
                 continue
@@ -299,16 +301,16 @@ class OmekaClassicTransformer(Transformer):
             endpoint_url = endpoint_url + "/"
 
         item_element_text_tree = self._get_element_texts_as_tree(item)
-        properties = set()
+        unique_properties = set()
         for property_ in self._transform_dublin_core_elements(
             element_text_tree=item_element_text_tree
         ):
-            properties.add(property_)
+            unique_properties.add(property_)
         for property_ in self._transform_item_type_metadata(
             element_text_tree=item_element_text_tree
         ):
-            properties.add(property_)
-        properties = tuple(properties)
+            unique_properties.add(property_)
+        properties = tuple(unique_properties)
         self._log_unknown_element_texts(item_element_text_tree)
         title, properties = self._get_title(properties)
         return Work.from_fields(

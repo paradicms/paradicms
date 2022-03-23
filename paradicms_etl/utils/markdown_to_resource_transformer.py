@@ -1,12 +1,12 @@
-from typing import Optional, Dict
+from typing import Optional, Dict, Type, Union
 
-import rdflib
 import yaml
 from markdown_it import MarkdownIt
 from markdown_it.renderer import RendererHTML
 from markdown_it.tree import SyntaxTreeNode
 from mdit_py_plugins.front_matter import front_matter_plugin
 from rdflib import Graph, Literal, BNode, RDF
+from rdflib.namespace import DefinedNamespace, Namespace
 from rdflib.resource import Resource
 from rdflib.term import Identifier
 
@@ -19,12 +19,14 @@ class MarkdownToResourceTransformer:
         self,
         *,
         markdown_it: MarkdownIt,
-        default_namespace: Optional[rdflib.Namespace] = None,
+        default_namespace: Union[Type[DefinedNamespace], Namespace, None] = None,
         graph: Optional[Graph] = None,
-        namespaces_by_prefix: Optional[Dict[str, rdflib.Namespace]] = None,
+        namespaces_by_prefix: Optional[
+            Dict[str, Union[Type[DefinedNamespace], Namespace]]
+        ] = None,
         resource_identifier_default: Optional[Identifier] = None,
     ):
-        self.__current_heading_id = None
+        self.__current_heading_id: Optional[str] = None
         self.__markdown_it = markdown_it
         if graph is None:
             graph = Graph()
@@ -36,7 +38,7 @@ class MarkdownToResourceTransformer:
             namespaces_by_prefix=namespaces_by_prefix,
             resource_identifier_default=resource_identifier_default,
         )
-        self.__result = None  # Create lazily
+        self.__result: Optional[Resource] = None  # Create lazily
 
     def _render_node_as_html(self, node: SyntaxTreeNode) -> str:
         return (
@@ -59,6 +61,7 @@ class MarkdownToResourceTransformer:
             if self.__resource_identifier_default is None:
                 raise ValueError("no rdf:subject in .md and no default specified")
             self.__result = self.__graph.resource(self.__resource_identifier_default)
+        assert self.__result is not None
         return self.__result
 
     def _visit_front_matter_node(self, front_matter_node: SyntaxTreeNode):
@@ -89,7 +92,7 @@ class MarkdownToResourceTransformer:
             raise ValueError(
                 "expected heading link node to have an href: " + heading_node.pretty()
             )
-        heading_link_href = heading_link_node.attrs["href"]
+        heading_link_href = str(heading_link_node.attrs["href"])
         if not heading_link_href.startswith("#"):
             raise ValueError(
                 "expected heading link node href to start with #: "

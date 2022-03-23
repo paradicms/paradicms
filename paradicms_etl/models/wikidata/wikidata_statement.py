@@ -13,19 +13,15 @@ class WikidataStatement:
     @dataclass
     class Qualifier:
         property_definition: WikidataPropertyDefinition
-        normalized_value: Union[Literal, URIRef, object]
-        value: Union[
-            Literal, URIRef, object
-        ]  # object = WikidataItem, avoid recursive type hint
+        normalized_value: Union[Literal, URIRef, "WikidataItem"]  # type: ignore # noqa
+        value: Union[Literal, URIRef, "WikidataItem"]  # type: ignore # noqa
 
     property_definition: WikidataPropertyDefinition
-    normalized_value: Union[Literal, None, URIRef, object]
+    normalized_value: Union[Literal, None, URIRef, "WikidataItem"]  # type: ignore # noqa
     qualifiers: Tuple[
         Qualifier, ...
     ]  # Only full statements have qualifiers, but having this on all statements simplifies other code
-    value: Union[
-        Literal, URIRef, object
-    ]  # object = WikidataItem, avoid recursive type hint
+    value: Union[Literal, URIRef, "WikidataItem"]  # type: ignore # noqa
 
     def qualifiers_by_property_label(self) -> Dict[str, Qualifier]:
         result = {}

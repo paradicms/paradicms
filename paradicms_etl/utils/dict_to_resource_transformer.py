@@ -1,15 +1,18 @@
 from inspect import isclass
-from typing import Dict, Any, Tuple, Optional
+from typing import Dict, Any, Tuple, Optional, Union, Type, List
 
-import rdflib
-from rdflib import URIRef, DCTERMS, Graph
+import rdflib.namespace
+from rdflib import URIRef, DCTERMS, Graph, Namespace
+from rdflib.namespace import DefinedNamespace
 from rdflib.resource import Resource
 from rdflib.term import Node, Literal, BNode, Identifier
 
-import paradicms_etl
+import paradicms_etl.namespaces
 
 
-def _create_namespaces_by_prefix_default() -> Dict[str, rdflib.Namespace]:
+def _create_namespaces_by_prefix_default() -> Dict[
+    str, Union[Type[DefinedNamespace], Namespace]
+]:
     namespaces_by_prefix = {}
     for namespace_module in (rdflib.namespace, paradicms_etl.namespaces):
         for attr in dir(namespace_module):
@@ -35,9 +38,11 @@ class DictToResourceTransformer:
     def __init__(
         self,
         *,
-        default_namespace: Optional[rdflib.Namespace] = None,
+        default_namespace: Union[Type[DefinedNamespace], Namespace] = None,
         graph: Optional[Graph] = None,
-        namespaces_by_prefix: Optional[Dict[str, rdflib.Namespace]] = None,
+        namespaces_by_prefix: Optional[
+            Dict[str, Union[Type[DefinedNamespace], Namespace]]
+        ] = None,
         resource_identifier_default: Optional[Identifier] = None,
     ):
         if default_namespace is None:
@@ -69,7 +74,8 @@ class DictToResourceTransformer:
                         raise ValueError("only one subject URI can be specified")
                     if not isinstance(value_node, URIRef):
                         raise TypeError(
-                            "subject URI must be a URIRef, not a " + type(value_node)
+                            "subject URI must be a URIRef, not a "
+                            + str(type(value_node))
                         )
                     resource = self.__graph.resource(value_node)
 
@@ -107,7 +113,7 @@ class DictToResourceTransformer:
                     bnode_resource.add(property_uri, sub_value_node)
             return (bnode_resource.identifier,)
         elif isinstance(value, (list, tuple)):
-            nodes = []
+            nodes: List[Node] = []
             for sub_value in value:
                 nodes.extend(self.transform_value_to_nodes(sub_value))
             return tuple(nodes)

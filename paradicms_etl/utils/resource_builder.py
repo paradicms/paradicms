@@ -35,7 +35,10 @@ class ResourceBuilder:
 
     def add_rights(self, rights: Optional[Rights]) -> "ResourceBuilder":
         if rights is not None:
-            rights.to_rdf(add_to_resource=self.__resource)
+            temp_graph = Graph()
+            rights_resource = rights.to_rdf(graph=temp_graph)
+            for p, o in rights_resource.predicate_objects():
+                self.__resource.add(p.identifier, o)
         return self
 
     def build(self) -> Resource:

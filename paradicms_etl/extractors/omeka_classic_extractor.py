@@ -24,13 +24,13 @@ class OmekaClassicExtractor(Extractor):
 
     def extract(self, *, force: bool):
         collections_file_path = self._extracted_data_dir_path / (
-            sanitize_filename(self.__endpoint_url + " collections") + ".json"
+            str(sanitize_filename(self.__endpoint_url + " collections")) + ".json"
         )
         files_file_path = self._extracted_data_dir_path / (
-            sanitize_filename(self.__endpoint_url + " files") + ".json"
+            str(sanitize_filename(self.__endpoint_url + " files")) + ".json"
         )
         items_file_path = self._extracted_data_dir_path / (
-            sanitize_filename(self.__endpoint_url + " items") + ".json"
+            str(sanitize_filename(self.__endpoint_url + " items")) + ".json"
         )
 
         if not collections_file_path.exists() or force:

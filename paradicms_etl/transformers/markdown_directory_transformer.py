@@ -1,13 +1,13 @@
 import json
 from dataclasses import dataclass
 from logging import Logger
-from typing import Dict, Optional, Tuple, Type
+from typing import Dict, Optional, Tuple, Type, Union, List
 from urllib.parse import quote
 
-import rdflib.namespace
 import stringcase
 import yaml
-from rdflib import DCTERMS, FOAF, Graph, Literal, URIRef
+from rdflib import DCTERMS, FOAF, Graph, Literal, URIRef, Namespace
+from rdflib.namespace import DefinedNamespace
 from rdflib.resource import Resource
 from yaml import FullLoader
 
@@ -64,7 +64,9 @@ class MarkdownDirectoryTransformer(Transformer):
         self,
         default_institution: Optional[Institution] = None,
         default_collection: Optional[Collection] = None,
-        namespaces_by_prefix: Optional[Dict[str, rdflib.Namespace]] = None,
+        namespaces_by_prefix: Optional[
+            Dict[str, Union[Type[DefinedNamespace], Namespace]]
+        ] = None,
         **kwds,
     ):
         Transformer.__init__(self, **kwds)
@@ -99,8 +101,8 @@ class MarkdownDirectoryTransformer(Transformer):
         )[f"{quote(model_type_name)}:{quote(model_id)}"]
 
     @staticmethod
-    def _pipeline_namespace(*, pipeline_id: str) -> rdflib.Namespace:
-        return rdflib.Namespace(f"urn:markdown:{pipeline_id}:")
+    def _pipeline_namespace(*, pipeline_id: str) -> Namespace:
+        return Namespace(f"urn:markdown:{pipeline_id}:")
 
     # Rather than managing the state of the transform as variable assignments in a particular order,
     # create a class instance per transform invocation.
@@ -109,7 +111,7 @@ class MarkdownDirectoryTransformer(Transformer):
         @dataclass(frozen=True)
         class __ModelTypeTraits:
             class_: Type[NamedModel]
-            default_namespace: rdflib.Namespace
+            default_namespace: Union[Type[DefinedNamespace], Namespace]
             label_property: Optional[URIRef] = None
 
             @property
@@ -160,7 +162,9 @@ class MarkdownDirectoryTransformer(Transformer):
             default_institution: Optional[Institution],
             logger: Logger,
             markdown_directory: MarkdownDirectory,
-            namespaces_by_prefix: Optional[Dict[str, rdflib.Namespace]],
+            namespaces_by_prefix: Optional[
+                Dict[str, Union[Type[DefinedNamespace], Namespace]]
+            ],
             pipeline_id: str,
         ):
             self.__default_collection = default_collection
@@ -169,15 +173,23 @@ class MarkdownDirectoryTransformer(Transformer):
             self.__markdown_directory = markdown_directory
             self.__namespaces_by_prefix = namespaces_by_prefix
             self.__pipeline_id = pipeline_id
-            self.__transformed_models_by_class = {}  # Then by id
-            self.__transformed_models_by_uri = {}
-            self.__untransformed_image_file_entries_by_model_type_traits = {}
+            self.__transformed_models_by_class: Dict[
+                Type, Dict[str, NamedModel]
+            ] = {}  # Then by id
+            self.__transformed_models_by_uri: Dict[str, NamedModel] = {}
+            self.__untransformed_image_file_entries_by_model_type_traits: Dict[
+                MarkdownDirectoryTransformer.__TransformInvocation.__ModelTypeTraits,
+                Dict[str, MarkdownDirectory.ImageFileEntry],
+            ] = {}
             for image_file_entry in markdown_directory.image_file_entries:
                 self.__untransformed_image_file_entries_by_model_type_traits.setdefault(
                     self.__model_type_traits_by_name(image_file_entry.model_type),
                     {},
                 )[image_file_entry.model_id] = image_file_entry
-            self.__untransformed_metadata_file_entries_by_model_type_traits = {}
+            self.__untransformed_metadata_file_entries_by_model_type_traits: Dict[
+                MarkdownDirectoryTransformer.__TransformInvocation.__ModelTypeTraits,
+                List[MarkdownDirectory.MetadataFileEntry],
+            ] = {}
             for metadata_file_entry in markdown_directory.metadata_file_entries:
                 self.__untransformed_metadata_file_entries_by_model_type_traits.setdefault(
                     self.__model_type_traits_by_name(metadata_file_entry.model_type),
@@ -294,10 +306,10 @@ class MarkdownDirectoryTransformer(Transformer):
                     resource=collection_resource,
                 )
 
-                collection = self.__transform_resource_to_model(
+                collection: Collection = self.__transform_resource_to_model(
                     model_resource=collection_resource,
                     model_type_traits=model_type_traits,
-                )
+                )  # type: ignore
                 if self.__default_collection is None:
                     if self.__default_institution is not None:
                         collection_institution_uri = collection_resource.value(
@@ -447,10 +459,10 @@ class MarkdownDirectoryTransformer(Transformer):
                     resource=institution_resource,
                 )
 
-                institution = self.__transform_resource_to_model(
+                institution: Institution = self.__transform_resource_to_model(
                     model_resource=institution_resource,
                     model_type_traits=model_type_traits,
-                )
+                )  # type: ignore
                 if self.__default_institution is None:
                     self.__default_institution = institution
                     self.__logger.debug(
@@ -643,7 +655,7 @@ class MarkdownDirectoryTransformer(Transformer):
                         ),
                     )
 
-    def transform(self, markdown_directory: MarkdownDirectory):
+    def transform(self, markdown_directory: MarkdownDirectory):  # type: ignore
         yield_known_licenses = True
         yield_known_rights_statements = True
 

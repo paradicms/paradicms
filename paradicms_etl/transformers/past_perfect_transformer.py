@@ -1,4 +1,4 @@
-from typing import Tuple, Union
+from typing import Tuple, Union, List
 from urllib.parse import quote
 
 from rdflib import URIRef, DCTERMS
@@ -37,7 +37,7 @@ class PastPerfectTransformer(Transformer):
 
         assert isinstance(database_object, DatabaseObject)
 
-        properties = []
+        properties: List[Property] = []
         for property_uri, attribute_values in (
             (
                 DCTERMS.alternative,

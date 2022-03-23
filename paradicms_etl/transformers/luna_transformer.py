@@ -1,7 +1,6 @@
 from datetime import datetime
-from typing import Dict, Generator, List, Tuple
+from typing import Dict, Generator, List, Tuple, Iterable, Any
 
-from paradicms_etl.transformer import Transformer
 from rdflib import URIRef, DCTERMS
 
 from paradicms_etl.extractors.luna_extractor import LunaExtractor
@@ -14,6 +13,7 @@ from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import VRA
+from paradicms_etl.transformer import Transformer
 
 
 class LunaTransformer(Transformer):
@@ -40,7 +40,7 @@ class LunaTransformer(Transformer):
     def _pop_qualified_field_values(
         field_values: Dict[str, List[str]],
         primary_field_name,
-        *qualifier_field_names: Tuple[str, ...],
+        *qualifier_field_names: str,
     ):
         """
         Fields such as "Title" have qualifying fields such as "Title Type",
@@ -55,7 +55,9 @@ class LunaTransformer(Transformer):
         primary_field_values = field_values.pop(primary_field_name, [])
         all_field_values = [primary_field_values]
         for qualifier_field_name in qualifier_field_names:
-            qualifier_field_values = field_values.pop(qualifier_field_name, [])
+            qualifier_field_values: List[Any] = field_values.pop(
+                qualifier_field_name, []
+            )
             if qualifier_field_values:
                 while len(qualifier_field_values) < len(primary_field_values):
                     qualifier_field_values.append(None)
@@ -64,7 +66,7 @@ class LunaTransformer(Transformer):
             all_field_values.append(qualifier_field_values)
         yield from zip(*all_field_values)
 
-    def transform(self, base_url: str, search_results):
+    def transform(self, base_url: str, search_results):  # type: ignore
         institution = self._transform_institution(
             base_url=base_url, institution_name=search_results["institutionName"]
         )
@@ -121,11 +123,11 @@ class LunaTransformer(Transformer):
         collections_by_id: Dict[str, Collection],
         institution: Institution,
         luna_object,
-    ) -> Generator[Model, None, None]:
+    ) -> Iterable[Model]:
         id_ = luna_object["id"].strip()
         assert id_
 
-        collection_uris = ()
+        collection_uris: Tuple[URIRef, ...] = ()
         for collection_id, collection in collections_by_id.items():
             if id_.startswith(collection_id):
                 collection_uris = (collection.uri,)

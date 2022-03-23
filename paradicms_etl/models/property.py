@@ -1,10 +1,11 @@
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Union
 
-from paradicms_etl.model import Model
 from rdflib import Literal, URIRef
 from rdflib.resource import Resource
 from rdflib.term import Node
+
+from paradicms_etl.model import Model
 
 
 @dataclass(init=True, unsafe_hash=True)
@@ -14,7 +15,7 @@ class Property:
     """
 
     uri: URIRef
-    value: [Model, Node]
+    value: Union[Model, Node]
 
     def __init__(
         self,

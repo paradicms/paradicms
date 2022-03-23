@@ -122,7 +122,7 @@ class Pipeline(ABC):
         if args.get("debug", False):
             logging_level = logging.DEBUG
         elif args.get("logging_level") is not None:
-            logging_level = getattr(logging, args["logging_level"].upper())
+            logging_level = getattr(logging, str(args["logging_level"]).upper())
         else:
             logging_level = logging.INFO
         logging.basicConfig(
@@ -135,8 +135,8 @@ class Pipeline(ABC):
             pipeline_kwds.pop(key, None)
         data_dir_path = pipeline_kwds.get("data_dir_path")
         if data_dir_path is not None:
-            pipeline_kwds["data_dir_path"] = Path(data_dir_path)
-        pipeline = cls(**pipeline_kwds)
+            pipeline_kwds["data_dir_path"] = Path(str(data_dir_path))
+        pipeline = cls(**pipeline_kwds)  # type: ignore
 
         force = bool(args.get("force", False))
         force_extract = force or bool(args.get("force_extract", False))

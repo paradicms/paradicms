@@ -1,6 +1,5 @@
-from typing import Generator, Optional, Set
+from typing import Optional, Set, Iterable
 
-from paradicms_etl.transformer import Transformer
 from rdflib import URIRef
 from stringcase import snakecase
 
@@ -16,6 +15,7 @@ from paradicms_etl.models.person import Person
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.work import Work
+from paradicms_etl.transformer import Transformer
 
 
 class ValidationTransformer(Transformer):
@@ -41,9 +41,7 @@ class ValidationTransformer(Transformer):
             self.__rights_statement_uris = set()
             self.__work_uris = set()
 
-        def validate(
-            self, models: Generator[Model, None, None]
-        ) -> Generator[Model, None, None]:
+        def validate(self, models: Iterable[Model]) -> Iterable[Model]:
             model_class_names_snake_case = set()
             missing_method_names = set()
 
@@ -219,7 +217,5 @@ class ValidationTransformer(Transformer):
         def _validate_work_references(self):
             pass
 
-    def transform(
-        self, models: Generator[Model, None, None]
-    ) -> Generator[Model, None, None]:
+    def transform(self, models: Iterable[Model]) -> Iterable[Model]:  # type: ignore
         yield from self.__Validator(logger=self._logger).validate(models)

@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Generator, Tuple
+from typing import Tuple, Iterable
 
 from paradicms_etl.loader import Loader
 from paradicms_etl.model import Model
@@ -17,5 +17,5 @@ class BufferingLoader(Loader):
     def _flush(self, models: Tuple[Model, ...]):
         raise NotImplementedError
 
-    def load(self, *, models: Generator[Model, None, None]):
+    def load(self, *, models: Iterable[Model]):
         self.__models.extend(models)

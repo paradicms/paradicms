@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Dict, Union
 
 from rdflib import Graph, Literal, RDF, RDFS, URIRef
 
@@ -31,6 +31,7 @@ class WikidataPropertyDefinition:
         for property_subject in graph.subjects(
             predicate=RDF.type, object=WIKIBASE.Property
         ):
+            assert isinstance(property_subject, URIRef)
             property_definition = cls.__from_rdf(
                 graph=graph, entity_uri=property_subject
             )
@@ -58,9 +59,9 @@ class WikidataPropertyDefinition:
         # wikibase:qualifierValueNormalized pqn:P244 ;
         # wikibase:referenceValueNormalized prn:P244 .
 
-        kwds = {"entity_uri": entity_uri}
+        kwds: Dict[str, Union[URIRef, str, None]] = {"entity_uri": entity_uri}
 
-        def get_property_uri(predicate: URIRef) -> Optional[None]:
+        def get_property_uri(predicate: URIRef) -> Optional[URIRef]:
             for object_ in graph.objects(subject=entity_uri, predicate=predicate):
                 assert isinstance(object_, URIRef)
                 return object_
@@ -90,7 +91,7 @@ class WikidataPropertyDefinition:
         assert labels
         kwds["label"] = labels[0]
 
-        return cls(**kwds)
+        return cls(**kwds)  # type:ignore
 
     def __repr__(self):
         return f"{self.__class__.__name__}(entity_uri={str(self.entity_uri)}, label={self.label})"

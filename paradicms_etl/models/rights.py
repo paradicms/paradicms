@@ -1,6 +1,6 @@
 from typing import Optional, Union, Tuple
 
-from rdflib import URIRef, DCTERMS, BNode, Literal
+from rdflib import URIRef, DCTERMS, BNode, Literal, Graph
 from rdflib.resource import Resource
 
 from paradicms_etl.model import Model
@@ -92,7 +92,8 @@ class Rights(Model):
     def statement(self) -> Union[str, URIRef, None]:
         return self.__singular_value(DCTERMS.rights)
 
-    def to_rdf(self, *, add_to_resource: Resource) -> None:
+    def to_rdf(self, graph: Graph) -> Resource:
+        resource = graph.resource(BNode())
         for p, o in self._resource.predicate_objects():
             if p.identifier not in self.__PROPERTY_URIS:
                 # Since the resource may belong to another model, carefully filter the properties
@@ -103,4 +104,5 @@ class Rights(Model):
             else:
                 assert isinstance(o, Literal)
                 o_value = o
-            add_to_resource.add(p.identifier, o_value)
+            resource.add(p.identifier, o_value)
+        return resource

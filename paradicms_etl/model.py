@@ -1,9 +1,11 @@
-from typing import Generator, Optional, Tuple, Union
+from typing import Generator, Optional, Tuple, Union, TypeVar, Any
 
 from rdflib import ConjunctiveGraph, Graph, Literal, RDF, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.namespaces import CMS
+
+_ValueT = TypeVar("_ValueT")
 
 
 class Model:
@@ -26,11 +28,13 @@ class Model:
 
     def __literal_values(
         self, p: Union[URIRef, Tuple[URIRef, ...]], expected_type=None
-    ) -> Generator[object, None, None]:
+    ) -> Generator[_ValueT, None, None]:
+        value: _ValueT
         for value in self.__values(p):
             if not isinstance(value, Literal):
                 continue
-            python_value = value.toPython()
+            literal: Literal = value
+            python_value = literal.toPython()
             if expected_type is not None and not isinstance(
                 python_value, expected_type
             ):
@@ -49,16 +53,19 @@ class Model:
 
     def _optional_str_or_text_value(
         self, p: Union[URIRef, Tuple[URIRef, ...]]
-    ) -> Union[str, "Text", None]:  # noqa: F821
+    ) -> Union[str, "Text", None]:  # type: ignore # noqa
+        value: Union[Literal, Resource]
         for value in self.__values(p):
             if isinstance(value, Literal):
-                python_value = value.toPython()
+                literal: Literal = value
+                python_value = literal.toPython()
                 if not isinstance(python_value, str):
                     raise TypeError(
                         f"expected {p} literal to be a string, not a {type(python_value)}"
                     )
             elif isinstance(value, Resource):
-                value_type = value.value(RDF.type)
+                resource: Resource = value
+                value_type = resource.value(RDF.type)
                 if (
                     not isinstance(value_type, Resource)
                     or value_type.identifier != CMS.Text
@@ -77,7 +84,7 @@ class Model:
         return self.__optional_value(self.__uri_values(p))
 
     @staticmethod
-    def __optional_value(values: Generator[object, None, None]) -> Optional[object]:
+    def __optional_value(values: Generator[_ValueT, None, None]) -> Optional[_ValueT]:
         for value in values:
             return value
         return None
@@ -97,15 +104,15 @@ class Model:
         return self.__required_values(self.__uri_values(p))
 
     @staticmethod
-    def __required_value(values: Generator[object, None, None]) -> object:
+    def __required_value(values: Generator[_ValueT, None, None]) -> _ValueT:
         for value in values:
             return value
         raise KeyError
 
     @staticmethod
     def __required_values(
-        values: Generator[object, None, None],
-    ) -> Tuple[object, ...]:
+        values: Generator[_ValueT, None, None],
+    ) -> Tuple[_ValueT, ...]:
         values_tuple = tuple(values)
         if values_tuple:
             return values_tuple
@@ -127,13 +134,14 @@ class Model:
     def __uri_values(
         self, p: Union[URIRef, Tuple[URIRef, ...]]
     ) -> Generator[URIRef, None, None]:
+        value: Any
         for value in self.__values(p):
             if isinstance(value, Resource) and isinstance(value.identifier, URIRef):
                 yield value.identifier
 
     def __values(
         self, p: Union[URIRef, Tuple[URIRef, ...]]
-    ) -> Generator[object, None, None]:
+    ) -> Generator[_ValueT, None, None]:
         if isinstance(p, URIRef):
             yield from self.__resource.objects(p)
         else:

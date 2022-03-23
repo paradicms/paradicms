@@ -1,9 +1,10 @@
-from typing import Union, Tuple, Text, Optional
+from typing import Union, Tuple, Optional
 
 from rdflib import URIRef, DCTERMS
 
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.location import Location
+from paradicms_etl.models.text import Text
 from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.namespaces import VRA, CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder

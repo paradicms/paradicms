@@ -47,7 +47,7 @@ class WikidataItem(NamedModel):
         return self.__description
 
     @classmethod
-    def from_rdf(
+    def from_wikidata_rdf(
         cls,
         *,
         graph: Graph,
@@ -63,7 +63,7 @@ class WikidataItem(NamedModel):
 
         items = []
         for item_subject in graph.subjects(predicate=RDF.type, object=WIKIBASE.Item):
-            item = cls.__from_rdf(
+            item = cls.__from_wikidata_rdf(
                 logger=logger,
                 property_definitions=property_definitions,
                 resource=graph.resource(item_subject),
@@ -108,7 +108,7 @@ class WikidataItem(NamedModel):
         return tuple(items)
 
     @classmethod
-    def __from_rdf(
+    def __from_wikidata_rdf(
         cls,
         *,
         logger: Logger,
@@ -200,8 +200,10 @@ class WikidataItem(NamedModel):
 
         # Direct claims often duplicate full statements
         # Only retain the full statement
-        statements = []
-        full_statements_by_property_definition = {}
+        statements: List[WikidataStatement] = []
+        full_statements_by_property_definition: Dict[
+            int, List[WikidataFullStatement]
+        ] = {}
         for full_statement in full_statements:
             full_statements_by_property_definition.setdefault(
                 id(full_statement.property_definition), []
@@ -268,7 +270,7 @@ class WikidataItem(NamedModel):
         return self.__statements
 
     def statements_by_property_label(self) -> Dict[str, List[WikidataStatement]]:
-        result = {}
+        result: Dict[str, List[WikidataStatement]] = {}
         for statement in self.statements:
             result.setdefault(statement.property_definition.label, []).append(statement)
         return result

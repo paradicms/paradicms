@@ -32,13 +32,13 @@ class LunaExtractor(Extractor):
         return (
             base_url.rstrip("/")
             + "/luna/servlet/as/search?"
-            + urlencode(query, quote_via=quote)
+            + urlencode(query, quote_via=quote)  # type: ignore
         )
 
     def extract(self, *, force: bool):
         url = self.create_search_url(base_url=self.__base_url, query=self.__query)
         cached_json_file_path = self._extracted_data_dir_path / (
-            sanitize_filename(url) + ".json"
+            str(sanitize_filename(url)) + ".json"
         )
 
         if force or not cached_json_file_path.is_file():

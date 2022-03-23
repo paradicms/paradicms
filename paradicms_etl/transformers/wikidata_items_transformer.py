@@ -52,12 +52,13 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
             item_model: NamedModel,
             statement: WikidataStatement,
         ):
+            assert isinstance(statement.value, URIRef)
             yield Image.from_fields(
                 depicts_uri=item_model.uri, title=item_model.label, uri=statement.value
             )
 
     class __PersonWikidataItemTransformer(__WikidataItemTransformer):
-        def _transform_item(self, *, item: WikidataItem):
+        def _transform_item(self, item: WikidataItem) -> NamedModel:
             return Person.from_fields(
                 name=item.label,
                 properties=tuple(self._get_properties(item)),

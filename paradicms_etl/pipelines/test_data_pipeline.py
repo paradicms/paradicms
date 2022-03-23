@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 from pathlib import Path
-from typing import Optional, Tuple, Dict
+from typing import Optional, Tuple, Dict, List
 from urllib.parse import quote
 
 from rdflib import DCTERMS, Literal, URIRef
@@ -201,7 +201,7 @@ class TestDataPipeline(Pipeline):
                 )
 
         def __generate_images(
-            self, *, depicts_uri: URIRef, rights: Rights, text_prefix: str
+            self, *, depicts_uri: URIRef, rights: Optional[Rights], text_prefix: str
         ):
             for image_i in range(self.__images_per_work):
                 original = Image.from_fields(
@@ -355,7 +355,7 @@ class TestDataPipeline(Pipeline):
             title_prefix: str,
             uri_prefix: str,
         ):
-            properties = []
+            properties: List[Property] = []
 
             work_i = self.__next_work_i
             self.__next_work_i += 1
@@ -498,8 +498,8 @@ class TestDataPipeline(Pipeline):
 
             yield WorkCreation.from_fields(
                 abstract=abstract,
-                contributor_uri=contributor_uris,
-                creator_uri=creator_uris,
+                contributor_uri=tuple(contributor_uris),
+                creator_uri=tuple(creator_uris),
                 date=creation_date_time_description,
                 location=Location.from_fields(lat=42.728104, long=-73.687576),
                 title=f"{work.title} creation",

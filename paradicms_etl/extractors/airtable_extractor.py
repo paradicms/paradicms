@@ -30,7 +30,7 @@ class AirtableExtractor(Extractor):
         self.__api_key = api_key
         self.__base_id = base_id
         if isinstance(tables, (list, tuple)):
-            self.__tables = {table: {} for table in tables}
+            self.__tables: Dict[str, Dict[str, str]] = {table: {} for table in tables}
         else:
             assert isinstance(tables, dict)
             self.__tables = tables
@@ -64,7 +64,7 @@ class AirtableExtractor(Extractor):
             )
 
             file_path = self._extracted_data_dir_path / (
-                sanitize_filename(url) + ".json"
+                str(sanitize_filename(url)) + ".json"
             )
             if not file_path.is_file() or force:
                 self._logger.debug("downloading %s to %s", url, file_path)

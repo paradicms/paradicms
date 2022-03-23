@@ -1,12 +1,13 @@
 from io import BytesIO
 from pathlib import Path
-from typing import Dict, Generator
+from typing import Dict, Iterable
 from zipfile import ZipFile
 
 from rdflib import DCTERMS, Graph, Literal
 
 from paradicms_etl.extractor import Extractor
 from paradicms_etl.loader import Loader
+from paradicms_etl.model import Model
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.namespaces import bind_namespaces
 from paradicms_etl.pipeline import Pipeline
@@ -40,7 +41,7 @@ class RightsStatementsDotOrgPipeline(Pipeline):
             return {"json_ld_file_contents": json_ld_file_contents}
 
     class __RightsStatementsDotOrgTransformer(Transformer):
-        def transform(self, json_ld_file_contents: Dict[str, bytes]):
+        def transform(self, json_ld_file_contents: Dict[str, bytes]):  # type: ignore
             for entry_id, json_ld_bytes in json_ld_file_contents.items():
                 graph = Graph()
                 graph.parse(BytesIO(json_ld_bytes), format="json-ld")
@@ -51,7 +52,7 @@ class RightsStatementsDotOrgPipeline(Pipeline):
                 yield RightsStatement.from_rdf(graph.resource(uri))
 
     class __RightsStatementsDotOrgLoader(Loader):
-        def load(self, *, models: Generator[RightsStatement, None, None]):
+        def load(self, *, models: Iterable[Model]):
             rights_statements_py_file_path = (
                 Path(__file__).parent.parent
                 / "models"
@@ -60,6 +61,7 @@ class RightsStatementsDotOrgPipeline(Pipeline):
             rights_statement_reprs = "\n\n".join(
                 f"    {rights_statement.identifier.replace('-', '_')} = RightsStatement.from_rdf(Graph().parse(data=r'''{rights_statement.to_rdf(bind_namespaces(Graph())).graph.serialize(format='ttl').decode('utf-8')}''', format='ttl').resource(URIRef('{rights_statement.uri}')))"
                 for rights_statement in models
+                if isinstance(rights_statement, RightsStatement)
             )
             with open(
                 rights_statements_py_file_path, "w+", encoding="utf-8"
