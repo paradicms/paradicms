@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "paradicums-gui"
+name = "paradicms-gui"
 version = "0.0.1"
 description = ""
 authors = ["Minor G. <minorg@server.fake>"]
