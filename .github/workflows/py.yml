@@ -30,7 +30,7 @@ jobs:
           path: gui/.venv
           key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
       - name: Install dependencies
-#        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: cd gui/loader && poetry install --no-interaction --no-root
       - run: cd gui/loader && poetry run black --check paradicms_gui
       - run: cd gui/loader && poetry run flake8 paradicms_gui
