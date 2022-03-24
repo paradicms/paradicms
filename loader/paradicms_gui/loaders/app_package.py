@@ -4,7 +4,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
-from typing import Optional, Union
+from typing import List, Optional, Union
 
 
 class AppPackage:
@@ -26,7 +26,7 @@ class AppPackage:
         if isinstance(app, Path):
             app_dir_path = app
         elif os.path.isdir(app):
-            app_dir_path = Path(self.__app)
+            app_dir_path = Path(app)
         else:
             app_dir_path = Path(__file__).parent.parent.parent.parent / "app" / app
         if not app_dir_path.is_dir():
@@ -144,7 +144,7 @@ class AppPackage:
         subprocess_env["EDITOR"] = ""
         self.__logger.info("subprocess environment variables: %s", subprocess_env)
 
-        args = ["yarn", script]
+        args: Union[str, List[str]] = ["yarn", script]
 
         if shell is None:
             shell = sys.platform == "win32"
@@ -174,7 +174,9 @@ class AppPackage:
                 file_count += 1
                 dir_size += entry.stat().st_size
             elif entry.is_dir():
-                subdir_size, subdir_file_count = AppPackage.__get_dir_size(entry.path)
+                subdir_size, subdir_file_count = AppPackage.__get_dir_size(
+                    Path(entry.path)
+                )
                 dir_size += subdir_size
                 file_count += subdir_file_count
         return dir_size, file_count

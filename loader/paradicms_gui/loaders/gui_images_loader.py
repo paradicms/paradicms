@@ -11,8 +11,8 @@ from rdflib import URIRef
 from tqdm import tqdm
 
 from paradicms_gui.image_archiver import ImageArchiver
-from paradicms_gui.loaders.gui_original_image_file_cache import (
-    GuiOriginalImageFileCache,
+from paradicms_gui.loaders.original_image_file_cache import (
+    OriginalImageFileCache,
 )
 from paradicms_gui.utils.thumbnail_image import thumbnail_image
 
@@ -48,7 +48,7 @@ class GuiImagesLoader(Loader):
 
         self.__image_archiver = image_archiver
 
-        self.__original_image_file_cache = GuiOriginalImageFileCache(
+        self.__original_image_file_cache = OriginalImageFileCache(
             cache_dir_path=self._loaded_data_dir_path / "original_image_cache",
             sleep_s_after_download=sleep_s_after_image_download,
         )
@@ -74,7 +74,7 @@ class GuiImagesLoader(Loader):
         *,
         original_image: Image,
         original_image_file_path: Path,
-    ) -> Optional[Tuple[Image, ...]]:
+    ) -> Tuple[Image, ...]:
         if not self.__thumbnail_max_dimensions:
             return ()
 
@@ -164,7 +164,7 @@ class GuiImagesLoader(Loader):
                     )
                 )
                 assert original_image_file_path
-            except GuiOriginalImageFileCache.CacheOriginalImageException:
+            except OriginalImageFileCache.CacheOriginalImageException:
                 self._logger.info(
                     "unable to cache original image %s, dropping image from GUI",
                     original_image.uri,

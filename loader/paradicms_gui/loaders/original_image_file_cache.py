@@ -6,11 +6,12 @@ from urllib.error import HTTPError
 from urllib.parse import unquote, urlparse
 
 from paradicms_etl.models.image import Image
+from rdflib import URIRef
 
 from paradicms_gui.file_cache import FileCache
 
 
-class GuiOriginalImageFileCache:
+class OriginalImageFileCache:
     """
     File-backed cache for original Images (i.e., Images with original_image_uri=None), retrieved from an external URI.
 
@@ -65,17 +66,18 @@ class GuiOriginalImageFileCache:
 
         if original_image_url is None:
             raise self.CacheOriginalImageException(
-                f"original image has unrecognized URL scheme(s)"
+                "original image has unrecognized URL scheme(s)"
             )
+        assert original_image_url_parsed is not None
 
         if original_image_url_parsed.scheme == "file":
-            original_image_file_path = unquote(original_image_url_parsed.path)
+            original_image_file_path_str = unquote(original_image_url_parsed.path)
             if isinstance(
                 PurePath(), PureWindowsPath
-            ) and original_image_file_path.startswith("/"):
-                original_image_file_path = PurePath(original_image_file_path[1:])
+            ) and original_image_file_path_str.startswith("/"):
+                original_image_file_path = PurePath(original_image_file_path_str[1:])
             else:
-                original_image_file_path = PurePath(original_image_file_path)
+                original_image_file_path = PurePath(original_image_file_path_str)
 
             if not os.path.isfile(original_image_file_path):
                 raise self.CacheOriginalImageException(
@@ -94,7 +96,7 @@ class GuiOriginalImageFileCache:
             assert original_image_url_parsed.scheme in ("http", "https")
             try:
                 original_image_file_path = self.__file_cache.get_file(
-                    original_image_url
+                    URIRef(original_image_url)
                 )
             except HTTPError as http_error:
                 if http_error.code == 404:

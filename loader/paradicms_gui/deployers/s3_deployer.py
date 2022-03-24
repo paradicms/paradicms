@@ -28,7 +28,7 @@ class S3Deployer(Deployer):
             client_kwds["aws_access_key_id"] = aws_access_key_id
         if aws_secret_access_key is not None:
             client_kwds["aws_secret_access_key"] = aws_secret_access_key
-        self.__s3_client = boto3.client("s3", **client_kwds)
+        self.__s3_client = boto3.client("s3", **client_kwds)  # type: ignore
 
     @property
     def s3_bucket_name(self) -> str:

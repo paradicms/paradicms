@@ -2,14 +2,14 @@ import logging
 from typing import Dict, Optional
 
 import boto3
+from configargparse import ArgParser
 from mypy_boto3_cloudfront.client import CloudFrontClient
+from mypy_boto3_route53.client import Route53Client
 from mypy_boto3_s3.service_resource import (
     Bucket,
     BucketWebsite,
     S3ServiceResource,
 )
-from mypy_boto3_route53.client import Route53Client
-from configargparse import ArgParser
 
 
 class AwsSiteCreator:
@@ -55,7 +55,7 @@ class AwsSiteCreator:
 
         cloud_front_client: CloudFrontClient = boto3.client(
             "cloudfront", **self.__aws_credential_kwds
-        )
+        )  # type: ignore
         self.__logger.debug("creating CloudFront distribution")
         try:
             create_distribution_result = cloud_front_client.create_distribution(
@@ -142,13 +142,11 @@ class AwsSiteCreator:
         s3_bucket_name = self.__fqdn
         s3_service_resource: S3ServiceResource = boto3.resource(
             "s3", **self.__aws_credential_kwds
-        )
+        )  # type: ignore
 
         self.__logger.debug("creating S3 bucket %s", s3_bucket_name)
         s3_bucket: Bucket = s3_service_resource.Bucket(s3_bucket_name)
-        create_bucket_result = s3_bucket.create(
-            ACL="public-read", Bucket=s3_bucket_name
-        )
+        create_bucket_result = s3_bucket.create(ACL="public-read")
         self.__logger.debug("create_bucket result: %s", create_bucket_result)
         self.__logger.info("created S3 bucket %s", s3_bucket_name)
 
@@ -167,7 +165,7 @@ class AwsSiteCreator:
             "Resource": "arn:aws:s3:::%(s3_bucket_name)s/*"
         }
     ]
-}        
+}
 """
             % locals()
         )
@@ -192,7 +190,7 @@ class AwsSiteCreator:
     def __create_route_53_record(self, *, cloud_front_distribution_domain_name: str):
         route_53_client: Route53Client = boto3.client(
             "route53", **self.__aws_credential_kwds
-        )
+        )  # type: ignore
         self.__logger.debug("creating Route 53 record for %s", self.__fqdn)
         route_53_client.change_resource_record_sets(
             HostedZoneId=self.__route_53_hosted_zone_id,

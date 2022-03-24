@@ -1,6 +1,6 @@
 import mimetypes
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Set
 
 import boto3
 
@@ -29,9 +29,9 @@ class S3ImageArchiver(ImageArchiver):
             client_kwds["aws_access_key_id"] = aws_access_key_id
         if aws_secret_access_key is not None:
             client_kwds["aws_secret_access_key"] = aws_secret_access_key
-        s3 = boto3.resource("s3", **client_kwds)
+        s3 = boto3.resource("s3", **client_kwds)  # type: ignore
         self.__s3_bucket = s3.Bucket(self.__s3_bucket_name)
-        self.__existing_s3_bucket_keys = None
+        self.__existing_s3_bucket_keys: Optional[Set[str]] = None
 
     def archive_image(self, *, image_file_path: Path) -> str:
         image_file_mime_type = get_image_file_mime_type(image_file_path)
