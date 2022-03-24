@@ -18,7 +18,7 @@ class AirtableExtractor(Extractor):
         *,
         api_key: str,
         base_id: str,
-        tables: Union[List[str], Tuple[str], Dict[str, Dict[str, str]]],
+        tables: Union[List[str], Tuple[str, ...], Dict[str, Dict[str, str]]],
         **kwds,
     ):
         """
