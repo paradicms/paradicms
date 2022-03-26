@@ -4,7 +4,7 @@ from rdflib.namespace import DefinedNamespace, Namespace
 
 class CMS(DefinedNamespace):
     _fail = True
-    _NS = Namespace("http://www.paradicms.org/ns#")
+    _NS = Namespace("http://www.paradicms.org/ns/cms#")
 
     # Properties
     collection: URIRef
