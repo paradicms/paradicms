@@ -1,5 +1,5 @@
 import {requireDefined} from "../requireDefined";
-import {FOAF} from "../vocabularies";
+import {FOAF} from "@paradicms/vocabularies";
 import {ModelMixin} from "./ModelMixin";
 
 export abstract class HasName extends ModelMixin {

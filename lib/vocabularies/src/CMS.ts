@@ -1,4 +1,4 @@
-import Namespace from "../Namespace";
+import Namespace from "./Namespace";
 
 export class CMS {
   static readonly NS = Namespace("http://www.paradicms.org/ns#");

@@ -1,11 +1,11 @@
 import {NamedModel} from "./NamedModel";
 import {DateTimeDescription} from "./DateTimeDescription";
-import {DCTERMS, VRA, XSD} from "./vocabularies";
 import {NamedNode} from "n3";
 import {Location} from "./Location";
 import {HasAbstract} from "./mixins";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
+import {DCTERMS, VRA, XSD} from "@paradicms/vocabularies";
 
 export class Event extends Mixin(NamedModel, HasAbstract) {
   @Memoize()

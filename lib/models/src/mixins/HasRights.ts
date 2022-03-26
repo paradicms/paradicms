@@ -1,7 +1,7 @@
 import {ModelMixin} from "./ModelMixin";
 import {Memoize} from "typescript-memoize";
 import {Rights} from "../Rights";
-import {DCTERMS} from "../vocabularies";
+import {DCTERMS} from "@paradicms/vocabularies";
 
 export abstract class HasRights extends ModelMixin {
   @Memoize()

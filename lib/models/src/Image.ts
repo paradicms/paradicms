@@ -1,13 +1,13 @@
 import {ImageDimensions} from "./ImageDimensions";
 import {NamedModel} from "./NamedModel";
 import {Literal, NamedNode} from "n3";
-import {CMS, DCTERMS, EXIF, FOAF, XSD} from "./vocabularies";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Memoize} from "typescript-memoize";
 import {requireDefined} from "./requireDefined";
 import {Mixin} from "ts-mixer";
 import {HasRights} from "./mixins";
+import {CMS, DCTERMS, EXIF, FOAF, XSD} from "@paradicms/vocabularies";
 
 export class Image extends Mixin(NamedModel, HasRights) {
   get depictsUri(): string {

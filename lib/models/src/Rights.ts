@@ -1,5 +1,4 @@
 import {Model} from "./Model";
-import {DCTERMS} from "./vocabularies";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
 import {Agent} from "./Agent";
@@ -8,6 +7,7 @@ import {Memoize} from "typescript-memoize";
 import {Mixin} from "ts-mixer";
 import {HasCreators} from "./mixins/HasCreators";
 import {HasContributors} from "./mixins/HasContributors";
+import {DCTERMS} from "@paradicms/vocabularies";
 
 export class Rights extends Mixin(Model, HasContributors, HasCreators) {
   private agentsOrStrings(property: NamedNode) {

@@ -1,10 +1,10 @@
 import {NamedModel} from "./NamedModel";
-import {DCTERMS, RDF} from "./vocabularies";
 import {Literal} from "n3";
 import {Memoize} from "typescript-memoize";
 import {requireDefined} from "./requireDefined";
 import {HasImages} from "./mixins";
 import {Mixin} from "ts-mixer";
+import {DCTERMS, RDF} from "@paradicms/vocabularies";
 
 export class NamedValue extends Mixin(NamedModel, HasImages) {
   get propertyUris(): readonly string[] {

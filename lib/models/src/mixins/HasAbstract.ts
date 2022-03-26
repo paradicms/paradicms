@@ -1,6 +1,6 @@
 import {Memoize} from "typescript-memoize";
 import {Text} from "../Text";
-import {DCTERMS} from "../vocabularies";
+import {DCTERMS} from "@paradicms/vocabularies";
 import {ModelMixin} from "./ModelMixin";
 
 export abstract class HasAbstract extends ModelMixin {

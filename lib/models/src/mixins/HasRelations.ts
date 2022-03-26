@@ -1,5 +1,5 @@
 import {ModelMixin} from "./ModelMixin";
-import {DCTERMS} from "../vocabularies";
+import {DCTERMS} from "@paradicms/vocabularies";
 
 export abstract class HasRelations extends ModelMixin {
   get wikipediaUrl(): string | null {

@@ -1,6 +1,6 @@
 import {NamedModel} from "./NamedModel";
-import {DC} from "./vocabularies";
 import {requireDefined} from "./requireDefined";
+import {DC} from "@paradicms/vocabularies";
 
 export class License extends NamedModel {
   get identifier(): string {

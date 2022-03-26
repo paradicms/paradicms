@@ -1,8 +1,8 @@
 import {Model} from "./Model";
-import {RDF} from "./vocabularies";
 import {requireDefined} from "./requireDefined";
 import {Mixin} from "ts-mixer";
 import {HasRights} from "./mixins/HasRights";
+import {RDF} from "@paradicms/vocabularies";
 
 export class Text extends Mixin(Model, HasRights) {
   toString() {

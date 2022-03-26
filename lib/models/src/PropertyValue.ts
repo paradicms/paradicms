@@ -3,9 +3,9 @@ import {Literal, NamedNode, Quad} from "n3";
 import {Text} from "./Text";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {Image} from "./Image";
-import {CMS, RDF} from "./vocabularies";
 import {Dataset} from "./Dataset";
 import {Agent} from "./Agent";
+import {CMS, RDF} from "@paradicms/vocabularies";
 
 export abstract class PropertyValue {
   static fromAgent(agent: Agent) {
