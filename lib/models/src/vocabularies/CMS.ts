@@ -5,7 +5,6 @@ export class CMS {
 
   // Properties
   static readonly collection = CMS.NS("collection");
-  static readonly configuration = CMS.NS("configuration");
   static readonly institution = CMS.NS("institution");
   static readonly imageMaxHeight = CMS.NS("imageMaxHeight");
   static readonly imageMaxWidth = CMS.NS("imageMaxWidth");
