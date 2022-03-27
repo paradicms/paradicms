@@ -9,7 +9,7 @@ import {
 } from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
-import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
+import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
 import fs from "fs";
 import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
@@ -17,8 +17,10 @@ import {
   useWorkSearchQueryParams,
   workSearchWorkJoinSelector,
 } from "@paradicms/react-search";
-import {AppConfiguration} from "@paradicms/configuration";
 import dynamic from "next/dynamic";
+import {BootstrapCollectionAppConfiguration} from "../lib/BootstrapCollectionAppConfiguration";
+import {readBootstrapCollectionAppConfiguration} from "../lib/readBootstrapCollectionAppConfiguration";
+import {defaultBootstrapCollectionAppConfiguration} from "../lib/defaultBootstrapCollectionAppConfiguration";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -34,7 +36,7 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: AppConfiguration;
+  readonly configuration: BootstrapCollectionAppConfiguration;
   readonly datasetString: string;
 }
 
@@ -55,15 +57,20 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   const workQueryService = useMemo<WorkQueryService>(
     () =>
       new LunrWorkQueryService({
-        configuration,
         dataset,
+        resultWorkPropertyUris: configuration.workProperties.map(
+          workProperty => workProperty.uri
+        ),
+        searchWorkPropertyUris: configuration.workProperties
+          .filter(workProperty => workProperty.searchable)
+          .map(workProperty => workProperty.uri),
       }),
     [configuration, dataset]
   );
 
-  const {onSearch, ...workSearchQueryParams} = useWorkSearchQueryParams(
-    configuration
-  );
+  const {onSearch, ...workSearchQueryParams} = useWorkSearchQueryParams({
+    defaultWorkQueryFilters: configuration.search?.filters,
+  });
 
   return (
     <Layout
@@ -91,7 +98,11 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
   const completeDataset = readDatasetFile(readFileSync);
-  const configuration = readAppConfigurationFile(readFileSync);
+  const configuration =
+    readBootstrapCollectionAppConfiguration(
+      readConfigurationFile(readFileSync),
+      completeDataset.store
+    ) ?? defaultBootstrapCollectionAppConfiguration;
 
   const collection = completeDataset.collections[0];
 
@@ -99,7 +110,12 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     props: {
       collectionUri: collection.uri,
       configuration,
-      datasetString: new DataSubsetter({completeDataset, configuration})
+      datasetString: new DataSubsetter({
+        completeDataset,
+        workPropertyUris: configuration.workProperties.map(
+          workProperty => workProperty.uri
+        ),
+      })
         .collectionDataset(collection, {
           institution: {},
           works: workSearchWorkJoinSelector(thumbnailTargetDimensions),

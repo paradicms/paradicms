@@ -1,12 +1,11 @@
 import {useWorkQueryParam} from "./useWorkQueryParam";
-import {AppConfiguration} from "@paradicms/configuration";
 import {WorkQuery} from "@paradicms/services";
 import {usePageQueryParam} from "./usePageQueryParam";
 import {Filter} from "@paradicms/filters";
 
-export const useWorkSearchQueryParams = (
-  configuration: AppConfiguration
-): {
+export const useWorkSearchQueryParams = (kwds?: {
+  defaultWorkQueryFilters?: readonly Filter[];
+}): {
   onChangeFilters: (filters: readonly Filter[]) => void;
   onSearch: (text: string) => void;
   setWorkQuery: (workQuery: WorkQuery) => void;
@@ -28,7 +27,7 @@ export const useWorkSearchQueryParams = (
 
   const [workQuery, setWorkQuery] = useWorkQueryParam(
     {
-      filters: configuration.search?.filters ?? [],
+      filters: kwds?.defaultWorkQueryFilters ?? [],
     },
     "query"
   );

@@ -14,15 +14,10 @@ import {AgentJoinSelector} from "./AgentJoinSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {NamedValueJoinSelector} from "./NamedValueJoinSelector";
 import {NamedValue} from "./NamedValue";
-import {PropertyConfiguration} from "@paradicms/configuration";
 import {WorkCreation} from "./WorkCreation";
 import {WorkEvent} from "./WorkEvent";
 import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
 import {visitWorkEvent} from "./WorkEventVisitor";
-
-interface DataSubsetterConfiguration {
-  readonly workProperties?: readonly PropertyConfiguration[];
-}
 
 /**
  * Subset a Dataset to reduce the amount of data passed between getStaticProps and the component.
@@ -36,14 +31,14 @@ interface DataSubsetterConfiguration {
  */
 export class DataSubsetter {
   private readonly completeDataset: Dataset;
-  private readonly configuration: DataSubsetterConfiguration;
+  private readonly workPropertyUris?: readonly string[];
 
   constructor(kwds: {
     completeDataset: Dataset;
-    configuration: DataSubsetterConfiguration;
+    workPropertyUris?: readonly string[];
   }) {
     this.completeDataset = kwds.completeDataset;
-    this.configuration = kwds.configuration;
+    this.workPropertyUris = kwds.workPropertyUris;
   }
 
   // Use the builder pattern internally rather than a more functional algorithm, such as merging datasets,
@@ -271,14 +266,9 @@ export class DataSubsetter {
         institutionUris.add(work.institutionUri);
       }
 
-      if (
-        joinSelector.propertyNamedValues &&
-        this.configuration.workProperties
-      ) {
-        for (const propertyConfiguration of this.configuration.workProperties) {
-          for (const namedValue of work.propertyNamedValues(
-            propertyConfiguration.uri
-          )) {
+      if (joinSelector.propertyNamedValues && this.workPropertyUris) {
+        for (const workPropertyUri of this.workPropertyUris) {
+          for (const namedValue of work.propertyNamedValues(workPropertyUri)) {
             if (!namedValuesByUri[namedValue.uri]) {
               namedValuesByUri[namedValue.uri] = namedValue;
             }

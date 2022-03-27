@@ -35,7 +35,6 @@ import {
   ValueFacetValue,
   ValueFacetValueThumbnail,
 } from "@paradicms/facets";
-import {PropertyConfiguration} from "@paradicms/configuration";
 import {GetWorkLocationsOptions} from "@paradicms/services/dist/GetWorkLocationsOptions";
 
 const basex = require("base-x");
@@ -55,41 +54,37 @@ const base58 = basex(
 //   }
 // }
 
-interface LunrWorkQueryServiceConfiguration {
-  readonly workProperties?: readonly PropertyConfiguration[];
-}
-
 interface MutableValueFacetValue<ValueT extends JsonPrimitiveType>
   extends Omit<ValueFacetValue<ValueT>, "count"> {
   count: number;
 }
 
 export class LunrWorkQueryService implements WorkQueryService {
-  private readonly configuration: LunrWorkQueryServiceConfiguration;
   private readonly dataset: Dataset;
   private readonly index: Index;
+  private readonly resultWorkPropertyUris: readonly string[];
 
   constructor(kwds: {
-    configuration: LunrWorkQueryServiceConfiguration;
-    dataset: Dataset;
+    readonly dataset: Dataset;
+    readonly resultWorkPropertyUris: readonly string[];
+    readonly searchWorkPropertyUris: readonly string[];
   }) {
-    this.configuration = kwds.configuration;
     this.dataset = kwds.dataset;
+    this.resultWorkPropertyUris = kwds.resultWorkPropertyUris;
+    const searchWorkPropertyUris = kwds.searchWorkPropertyUris;
 
     this.index = lunr(function() {
       this.field("abstract");
       this.field("title");
       const propertyFieldNamesByUri: {[index: string]: string} = {};
-      const workPropertyConfigurations =
-        kwds.configuration.workProperties ?? [];
-      for (const propertyConfiguration of workPropertyConfigurations) {
-        if (!propertyConfiguration.searchable) {
-          continue;
+      if (searchWorkPropertyUris) {
+        for (const workPropertyUri of searchWorkPropertyUris) {
+          const fieldName = LunrWorkQueryService.encodeFieldName(
+            workPropertyUri
+          );
+          propertyFieldNamesByUri[workPropertyUri] = fieldName;
+          this.field(fieldName);
         }
-        const propertyUri = propertyConfiguration.uri;
-        const fieldName = LunrWorkQueryService.encodeFieldName(propertyUri);
-        propertyFieldNamesByUri[propertyUri] = fieldName;
-        this.field(fieldName);
       }
       this.ref("uri");
 
@@ -98,15 +93,15 @@ export class LunrWorkQueryService implements WorkQueryService {
         if (work.abstract) {
           doc.abstract = work.abstract.toString();
         }
-        for (const propertyConfiguration of workPropertyConfigurations) {
-          const fieldName = propertyFieldNamesByUri[propertyConfiguration.uri];
-          if (!fieldName) {
-            continue;
-          }
-          for (const propertyValue of work.propertyValues(
-            propertyConfiguration.uri
-          )) {
-            doc[fieldName] = propertyValue.value;
+        if (searchWorkPropertyUris) {
+          for (const workPropertyUri of searchWorkPropertyUris) {
+            const fieldName = propertyFieldNamesByUri[workPropertyUri];
+            if (!fieldName) {
+              continue;
+            }
+            for (const propertyValue of work.propertyValues(workPropertyUri)) {
+              doc[fieldName] = propertyValue.value;
+            }
           }
         }
         this.add(doc);
@@ -317,7 +312,7 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       const slicedAgentsDataset = new DataSubsetter({
         completeDataset: this.dataset,
-        configuration: this.configuration,
+        workPropertyUris: this.resultWorkPropertyUris,
       }).agentsDataset(slicedAgents, agentJoinSelector);
 
       resolve({
@@ -376,7 +371,7 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       const slicedWorksDataset = new DataSubsetter({
         completeDataset: this.dataset,
-        configuration: this.configuration,
+        workPropertyUris: this.resultWorkPropertyUris,
       }).worksDataset(slicedWorks, workJoinSelector);
 
       console.debug(
@@ -515,7 +510,7 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       const slicedWorkEventsDataset = new DataSubsetter({
         completeDataset: this.dataset,
-        configuration: this.configuration,
+        workPropertyUris: this.resultWorkPropertyUris,
       }).workEventsDataset(workEvents, workEventJoinSelector);
 
       resolve({

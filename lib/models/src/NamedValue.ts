@@ -12,9 +12,7 @@ export class NamedValue extends Mixin(NamedModel, HasImages) {
       .filter(term => term.termType === "NamedNode")
       .map(term => term.value);
     if (propertyUris.length === 0) {
-      throw new RangeError(
-        "property value definition must link to one or more property definitions"
-      );
+      throw new RangeError("named value must link to one or more properties");
     }
     return propertyUris;
   }

@@ -1,4 +1,5 @@
 export * from "./CMS";
+export * from "./CONFIGURATION";
 export * from "./CONTACT";
 export * from "./DC";
 export * from "./DCTERMS";

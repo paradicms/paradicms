@@ -2,11 +2,10 @@ import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {Dataset, DataSubsetter} from "@paradicms/models";
-import {AppConfiguration} from "@paradicms/configuration";
 import {
   decodeFileName,
   encodeFileName,
-  readAppConfigurationFile,
+  readConfigurationFile,
   readDatasetFile,
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
@@ -18,6 +17,9 @@ import {
 import * as fs from "fs";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
+import {BootstrapCollectionAppConfiguration} from "../../lib/BootstrapCollectionAppConfiguration";
+import {readBootstrapCollectionAppConfiguration} from "../../lib/readBootstrapCollectionAppConfiguration";
+import {defaultBootstrapCollectionAppConfiguration} from "../../lib/defaultBootstrapCollectionAppConfiguration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
@@ -32,7 +34,7 @@ const WorkLocationsMap = dynamic<{
 );
 
 interface StaticProps {
-  readonly configuration: AppConfiguration;
+  readonly configuration: BootstrapCollectionAppConfiguration;
   readonly datasetString: string;
   readonly workUri: string;
 }
@@ -81,14 +83,20 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const workUri = decodeFileName(params!.workUri as string);
   const completeDataset = readDatasetFile(readFileSync);
-  const configuration = readAppConfigurationFile(readFileSync);
+  const configuration =
+    readBootstrapCollectionAppConfiguration(
+      readConfigurationFile(readFileSync),
+      completeDataset.store
+    ) ?? defaultBootstrapCollectionAppConfiguration;
 
   return {
     props: {
       configuration,
       datasetString: new DataSubsetter({
-        configuration,
         completeDataset,
+        workPropertyUris: configuration.workProperties.map(
+          workProperty => workProperty.uri
+        ),
       })
         .workDataset(completeDataset.workByUri(workUri), {
           agents: {

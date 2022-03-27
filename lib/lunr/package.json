@@ -3,7 +3,6 @@
   "name": "@paradicms/lunr",
   "description": "Paradicms lunr library",
   "dependencies": {
-    "@paradicms/configuration": "1.0.5",
     "@paradicms/models": "1.0.5",
     "@paradicms/services": "1.0.5",
     "@types/lunr": "^2.3.3",
