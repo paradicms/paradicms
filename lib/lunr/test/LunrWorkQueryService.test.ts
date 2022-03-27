@@ -2,15 +2,16 @@ import {expect} from "chai";
 import {LunrWorkQueryService} from "../src/LunrWorkQueryService";
 import {Dataset, visitWorkEvent, WorkCreation} from "@paradicms/models";
 import {testDataTrig} from "../../models/test/testDataTrig";
-import {defaultAppConfiguration} from "@paradicms/configuration";
 import {CollectionValueFacet, InstitutionValueFacet, StringPropertyValueFacet} from "@paradicms/facets";
+import {DCTERMS, VRA} from "@paradicms/vocabularies";
+import {StringPropertyValueFilter} from "@paradicms/filters";
 
 describe("LunrWorkQueryService", () => {
-  const configuration = defaultAppConfiguration;
   const dataset = Dataset.parse(testDataTrig);
   const sut = new LunrWorkQueryService({
-    configuration,
     dataset,
+    resultWorkPropertyUris: [DCTERMS.title.value],
+    searchWorkPropertyUris: [DCTERMS.title.value]
   });
 
   it("getWorkAgents return at least one agent from an empty query", async () => {
@@ -20,7 +21,7 @@ describe("LunrWorkQueryService", () => {
         offset: 0,
       },
       {
-        filters: configuration.search!.filters,
+        filters: [],
       }
     );
 
@@ -38,7 +39,7 @@ describe("LunrWorkQueryService", () => {
         offset: 0,
       },
       {
-        filters: configuration.search!.filters,
+        filters: [],
       }
     );
 
@@ -61,7 +62,7 @@ describe("LunrWorkQueryService", () => {
         offset: 0,
       },
       {
-        filters: configuration.search!.filters,
+        filters: [],
       }
     );
 
@@ -81,7 +82,7 @@ describe("LunrWorkQueryService", () => {
         }
       },
       {
-        filters: configuration.search!.filters,
+        filters: [],
       }
     );
 
@@ -98,7 +99,7 @@ describe("LunrWorkQueryService", () => {
 
   it("getWorkLocations should return all work locations", async () => {
     const result = await sut.getWorkLocations({}, {
-      filters: configuration.search!.filters,
+      filters: [],
     });
     // All locations should be represented
     expect(result.workLocations).to.have.length(dataset.works.flatMap(work => work.locations).length);
@@ -111,7 +112,7 @@ describe("LunrWorkQueryService", () => {
     }
   });
 
-  it("getWorks return at least one work from an empty query", async () => {
+  it("getWorks return facets", async () => {
     const result = await sut.getWorks(
       {
         limit: Number.MAX_SAFE_INTEGER,
@@ -124,11 +125,19 @@ describe("LunrWorkQueryService", () => {
         },
       },
       {
-        filters: configuration.search!.filters,
+        filters: [{
+          label: "Collection",
+          type: "CollectionValue",
+        }, {
+          label: "Institution",
+          type: "InstitutionValue"
+        }, {
+          label: "Publisher",
+          propertyUri: VRA.NS("technique").value,
+          type: "StringPropertyValue"
+        } as StringPropertyValueFilter],
       }
     );
-
-    expect(result.dataset.works).to.not.be.empty;
 
     const collectionValueFacet = result.facets.find(
       facet => facet.type === "CollectionValue"
@@ -152,6 +161,26 @@ describe("LunrWorkQueryService", () => {
     ).to.be.true;
   });
 
+  it("getWorks return at least one work from an empty query", async () => {
+    const result = await sut.getWorks(
+      {
+        limit: Number.MAX_SAFE_INTEGER,
+        offset: 0,
+        valueFacetValueThumbnailSelector: {
+          targetDimensions: {
+            height: 200,
+            width: 200,
+          },
+        },
+      },
+      {
+        filters: []
+      }
+    );
+
+    expect(result.dataset.works).to.not.be.empty;
+  });
+
   it("getWorks return fewer works from a freetext query", async () => {
     const allResult = await sut.getWorks(
       {
@@ -159,7 +188,7 @@ describe("LunrWorkQueryService", () => {
         limit: Number.MAX_SAFE_INTEGER,
       },
       {
-        filters: configuration.search!.filters,
+        filters: [],
       }
     );
 
@@ -169,7 +198,7 @@ describe("LunrWorkQueryService", () => {
         limit: Number.MAX_SAFE_INTEGER,
       },
       {
-        filters: configuration.search!.filters!,
+        filters: []!,
         text: "Institution0Collection0Work2",
       }
     );
