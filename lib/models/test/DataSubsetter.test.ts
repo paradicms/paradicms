@@ -30,7 +30,7 @@ describe("DataSubsetter", () => {
   const testDataset = Dataset.parse(testDataTrig);
   const sut = new DataSubsetter({
     completeDataset: testDataset,
-    configuration: {},
+    workPropertyUris: [],
   });
 
   it("should get institutions with thumbnails (institutions page)", () => {

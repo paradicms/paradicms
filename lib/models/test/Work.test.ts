@@ -1,6 +1,7 @@
 import {expect} from "chai";
-import {Dataset, DCTERMS, Text} from "../src";
+import {Dataset, Text} from "../src";
 import {testDataTrig} from "./testDataTrig";
+import {DCTERMS} from "@paradicms/vocabularies";
 
 describe("Work", () => {
   const dataset = Dataset.parse(testDataTrig);
