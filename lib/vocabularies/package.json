@@ -1,11 +1,11 @@
 {
   "author": "Minor Gordon",
-  "name": "@paradicms/configuration",
+  "name": "@paradicms/vocabularies",
+  "description": "Paradicms vocabularies library",
   "dependencies": {
-    "@paradicms/filters": "1.0.5",
-    "@paradicms/vocabularies": "1.0.5"
+    "@types/n3": "1.10.2",
+    "n3": "1.11.0"
   },
-  "description": "Paradicms configuration library",
   "devDependencies": {
     "rimraf": "3.0.2",
     "typescript": "^4.5.4"
@@ -15,7 +15,6 @@
     "dist"
   ],
   "main": "dist/index.js",
-  "private": true,
   "scripts": {
     "build": "tsc -b",
     "clean": "rimraf dist",

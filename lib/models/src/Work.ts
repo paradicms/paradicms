@@ -1,5 +1,4 @@
 import {NamedModel} from "./NamedModel";
-import {CMS, DCTERMS, RDF} from "./vocabularies";
 import {Collection} from "./Collection";
 import {Rights} from "./Rights";
 import {Text} from "./Text";
@@ -23,6 +22,7 @@ import {WorkLocation} from "./WorkLocation";
 import {visitWorkEvent} from "./WorkEventVisitor";
 import {WorkCreation} from "./WorkCreation";
 import {Location} from "./Location";
+import {CMS, DCTERMS, RDF} from "@paradicms/vocabularies";
 
 const getRightsWorkAgents = (
   rights: Rights | null,

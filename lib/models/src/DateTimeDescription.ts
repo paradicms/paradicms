@@ -1,7 +1,7 @@
-import { Model } from "./Model";
-import { TIME, XSD } from "./vocabularies";
-import { Literal, NamedNode } from "n3";
+import {Model} from "./Model";
+import {Literal, NamedNode} from "n3";
 import * as dayjs from "dayjs";
+import {TIME, XSD} from "@paradicms/vocabularies";
 
 export class DateTimeDescription extends Model {
   get day(): number | null {

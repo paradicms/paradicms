@@ -4,18 +4,20 @@ import {GetStaticProps} from "next";
 import {useRouter} from "next/router";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
-import {readAppConfigurationFile, readDatasetFile} from "@paradicms/next";
+import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
 import {Dataset, Text} from "@paradicms/models";
 import {Layout} from "../components/Layout";
 import {Col, Container, Row} from "reactstrap";
-import {AppConfiguration} from "@paradicms/configuration";
 import {RightsParagraph} from "@paradicms/bootstrap";
+import {defaultBootstrapExhibitionAppConfiguration} from "../lib/defaultBootstrapExhibitionAppConfiguration";
+import {readBootstrapExhibitionAppConfiguration} from "../lib/readBootstrapCollectionAppConfiguration";
+import {BootstrapExhibitionAppConfiguration} from "../lib/BootstrapExhibitionAppConfiguration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: AppConfiguration;
+  readonly configuration: BootstrapExhibitionAppConfiguration;
   readonly datasetString: string;
   readonly firstWorkUri: string;
 }
@@ -85,7 +87,11 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      configuration: readAppConfigurationFile(readFileSync),
+      configuration:
+        readBootstrapExhibitionAppConfiguration(
+          readConfigurationFile(readFileSync),
+          dataset.store
+        ) ?? defaultBootstrapExhibitionAppConfiguration,
       datasetString: dataset.stringify(),
       collectionUri: collection.uri,
       firstWorkUri: collection.works[0].uri,

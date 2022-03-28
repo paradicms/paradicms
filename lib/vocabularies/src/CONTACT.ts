@@ -1,4 +1,4 @@
-import Namespace from "../Namespace";
+import Namespace from "./Namespace";
 
 export class CONTACT {
   static readonly NS = Namespace("http://www.w3.org/2000/10/swap/pim/contact#");

@@ -1,4 +1,4 @@
-import {CONTACT, FOAF} from "./vocabularies";
+import {CONTACT, FOAF} from "@paradicms/vocabularies";
 import {Agent} from "./Agent";
 
 export class Person extends Agent {

@@ -5,7 +5,7 @@ import {Dataset, DataSubsetter} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
-  readAppConfigurationFile,
+  readConfigurationFile,
   readDatasetFile,
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
@@ -14,9 +14,11 @@ import fs from "fs";
 import {thumbnailTargetDimensions, WorkContainer} from "@paradicms/bootstrap";
 import Hammer from "react-hammerjs";
 import {useRouter} from "next/router";
-import {AppConfiguration} from "@paradicms/configuration";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
+import {BootstrapExhibitionAppConfiguration} from "../../lib/BootstrapExhibitionAppConfiguration";
+import {readBootstrapExhibitionAppConfiguration} from "../../lib/readBootstrapCollectionAppConfiguration";
+import {defaultBootstrapExhibitionAppConfiguration} from "../../lib/defaultBootstrapExhibitionAppConfiguration";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -32,7 +34,7 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: AppConfiguration;
+  readonly configuration: BootstrapExhibitionAppConfiguration;
   readonly currentWorkUri: string;
   readonly datasetString: string;
   readonly nextWorkUri: string | null;
@@ -132,7 +134,6 @@ export const getStaticProps: GetStaticProps = async ({
   const workUri = decodeFileName(params!.workUri as string);
 
   const completeDataset = readDatasetFile(readFileSync);
-  const configuration = readAppConfigurationFile(readFileSync);
 
   const currentWork = completeDataset.workByUri(workUri);
   const collectionUri = currentWork.collectionUris[0];
@@ -163,9 +164,13 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       collectionUri,
-      configuration,
+      configuration:
+        readBootstrapExhibitionAppConfiguration(
+          readConfigurationFile(readFileSync),
+          completeDataset.store
+        ) ?? defaultBootstrapExhibitionAppConfiguration,
       currentWorkUri: workUri,
-      datasetString: new DataSubsetter({completeDataset, configuration})
+      datasetString: new DataSubsetter({completeDataset, workPropertyUris: []})
         .worksDataset(
           workUris.map(workUri => completeDataset.workByUri(workUri)),
           {

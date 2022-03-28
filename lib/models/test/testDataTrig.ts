@@ -1,6 +1,6 @@
 // Trying to Dataset.parse in the const declaration causes circular dependency issues
 export const testDataTrig = `
-@prefix cms: <http://www.paradicms.org/ns#> .
+@prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
 @prefix creativecommons: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .

@@ -1,12 +1,16 @@
-import {AppConfiguration} from "./AppConfiguration";
+// import {AppConfiguration} from "./AppConfiguration";
+// import {PropertyConfiguration} from "./PropertyConfiguration";
+// import {SearchConfiguration} from "./SearchConfiguration";
+// import {StringPropertyValueFilter} from "@paradicms/filters";
+//
 import {PropertyConfiguration} from "./PropertyConfiguration";
 import {SearchConfiguration} from "./SearchConfiguration";
 import {StringPropertyValueFilter} from "@paradicms/filters";
 
-const imputeSearchConfiguration = (
+export const imputeSearchConfiguration = (
   propertyConfigurations: readonly PropertyConfiguration[],
   searchConfiguration: SearchConfiguration | undefined
-): SearchConfiguration | undefined => {
+): SearchConfiguration => {
   const searchConfigurationFilters =
     searchConfiguration?.filters?.concat() ?? [];
   for (const propertyConfiguration of propertyConfigurations) {
@@ -40,28 +44,10 @@ const imputeSearchConfiguration = (
     } as StringPropertyValueFilter);
   }
   if (!searchConfiguration && searchConfigurationFilters.length === 0) {
-    return undefined;
+    return {filters: []};
   }
   return {
     ...searchConfiguration,
     filters: searchConfigurationFilters,
   };
-};
-
-export const imputeAppConfiguration = (
-  inputAppConfiguration: AppConfiguration
-): AppConfiguration => {
-  if (!inputAppConfiguration.workProperties) {
-    return inputAppConfiguration;
-  }
-
-  const searchConfiguration = imputeSearchConfiguration(
-    inputAppConfiguration.workProperties,
-    inputAppConfiguration.search
-  );
-  if (!searchConfiguration) {
-    return inputAppConfiguration;
-  }
-
-  return {...inputAppConfiguration, search: searchConfiguration};
 };

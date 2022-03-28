@@ -1,5 +1,5 @@
 import {requireDefined} from "../requireDefined";
-import {DCTERMS} from "../vocabularies";
+import {DCTERMS} from "@paradicms/vocabularies";
 import {NamedNode, Term} from "n3";
 
 export abstract class HasTitle {

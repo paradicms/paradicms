@@ -1,11 +1,10 @@
-import Namespace from "../Namespace";
+import Namespace from "./Namespace";
 
 export class CMS {
-  static readonly NS = Namespace("http://www.paradicms.org/ns#");
+  static readonly NS = Namespace("http://www.paradicms.org/ns/cms#");
 
   // Properties
   static readonly collection = CMS.NS("collection");
-  static readonly configuration = CMS.NS("configuration");
   static readonly institution = CMS.NS("institution");
   static readonly imageMaxHeight = CMS.NS("imageMaxHeight");
   static readonly imageMaxWidth = CMS.NS("imageMaxWidth");

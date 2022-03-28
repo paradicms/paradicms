@@ -1,6 +1,6 @@
 import * as React from "react";
 import {ValueFilterControl} from "./ValueFilterControl";
-import {CreateFilterControlFactory} from "@paradicms/react-search/dist/CreateFilterControlFactory";
+import {CreateFilterControlFactory} from "@paradicms/react-search";
 
 export const bootstrapCreateFilterControlFactory: CreateFilterControlFactory = {
   createCollectionValueFilterControl: (facet, filter, onChangeFilter) => (

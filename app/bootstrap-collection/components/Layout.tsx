@@ -12,18 +12,18 @@ import {
   NavItem,
   Row,
 } from "reactstrap";
-import {NavbarSearchForm} from "@paradicms/bootstrap";
+import {
+  defaultBootstrapStylesheetHref,
+  NavbarSearchForm,
+} from "@paradicms/bootstrap";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";
-import {
-  AppConfiguration,
-  defaultAppConfiguration,
-} from "@paradicms/configuration";
+import {BootstrapCollectionAppConfiguration} from "../lib/BootstrapCollectionAppConfiguration";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string; readonly uri: string};
-  configuration: AppConfiguration;
+  configuration: BootstrapCollectionAppConfiguration;
   cardHeaderLinks?: React.ReactNodeArray;
   cardTitle?: React.ReactNode;
   className?: string;
@@ -66,10 +66,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         </title>
         <link
           rel="stylesheet"
-          href={
-            configuration.bootstrapStylesheetHref ??
-            defaultAppConfiguration.bootstrapStylesheetHref!
-          }
+          href={configuration.stylesheetHref ?? defaultBootstrapStylesheetHref}
         />
       </Head>
       <Container fluid>

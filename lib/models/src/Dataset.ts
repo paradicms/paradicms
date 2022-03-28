@@ -11,7 +11,6 @@ import {
   Writer,
   WriterOptions,
 } from "n3";
-import {CMS, prefixes, RDF} from "./vocabularies";
 import {Work} from "./Work";
 import {Person} from "./Person";
 import {NamedModel} from "./NamedModel";
@@ -24,6 +23,7 @@ import {WorkEvent} from "./WorkEvent";
 import {WorkCreation} from "./WorkCreation";
 import {Event} from "./Event";
 import {hasMixin} from "ts-mixer";
+import {CMS, prefixes, RDF} from "@paradicms/vocabularies";
 
 const eventClassesByRdfType = (() => {
   const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
