@@ -11,7 +11,7 @@ export const readAppConfiguration = <
     readonly graph: BlankNode | DefaultGraph | NamedNode;
     readonly node: BlankNode | NamedNode;
     readonly store: Store;
-    readonly stylesheetHref: string;
+    readonly stylesheetHref: string | null;
   }) => AppConfigurationT
 ): AppConfigurationT | null => {
   for (const store of [configurationStore, dataStore]) {
@@ -64,8 +64,7 @@ export const readAppConfiguration = <
             CONFIGURATION.stylesheetHref,
             typeQuad.graph
           )
-          .find(term => term.termType === "NamedNode")?.value ??
-        "https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css",
+          .find(term => term.termType === "NamedNode")?.value ?? null,
     });
   }
 

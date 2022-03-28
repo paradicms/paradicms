@@ -1,6 +1,7 @@
 export * from "./AgentCard";
 export * from "./AgentsGallery";
 export * from "./bootstrapCreateFilterControlFactory";
+export * from "./defaultBootstrapStylesheetHref";
 export * from "./FiltersBadges";
 export * from "./FiltersControlsAccordion";
 export * from "./getNamedModelLinks";

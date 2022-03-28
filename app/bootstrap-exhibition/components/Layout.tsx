@@ -5,16 +5,16 @@ import Link from "next/link";
 import Head from "next/head";
 import {Collection, Work} from "@paradicms/models";
 import {
-  AppConfiguration,
-  defaultAppConfiguration,
-} from "@paradicms/configuration";
-import {getNamedModelLinks} from "@paradicms/bootstrap";
+  defaultBootstrapStylesheetHref,
+  getNamedModelLinks,
+} from "@paradicms/bootstrap";
+import {BootstrapExhibitionAppConfiguration} from "../lib/BootstrapExhibitionAppConfiguration";
 
 const textStyle: React.CSSProperties = {fontSize: "xx-large"};
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: Collection;
-  configuration: AppConfiguration;
+  configuration: BootstrapExhibitionAppConfiguration;
   currentWork?: Work;
   nextWork?: {readonly uri: string};
   previousWork?: {readonly uri: string};
@@ -38,10 +38,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         </title>
         <link
           rel="stylesheet"
-          href={
-            configuration.bootstrapStylesheetHref ??
-            defaultAppConfiguration.bootstrapStylesheetHref!
-          }
+          href={configuration.stylesheetHref ?? defaultBootstrapStylesheetHref}
         />
       </Head>
       <Navbar className="navbar-light py-0">

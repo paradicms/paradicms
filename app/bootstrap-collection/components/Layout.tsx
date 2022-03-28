@@ -12,7 +12,10 @@ import {
   NavItem,
   Row,
 } from "reactstrap";
-import {NavbarSearchForm} from "@paradicms/bootstrap";
+import {
+  defaultBootstrapStylesheetHref,
+  NavbarSearchForm,
+} from "@paradicms/bootstrap";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";
@@ -61,7 +64,10 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         <title>
           {collection.title + (documentTitle ? " - " + documentTitle : "")}
         </title>
-        <link rel="stylesheet" href={configuration.stylesheetHref} />
+        <link
+          rel="stylesheet"
+          href={configuration.stylesheetHref ?? defaultBootstrapStylesheetHref}
+        />
       </Head>
       <Container fluid>
         <Row>

@@ -1,3 +1,3 @@
 export interface AppConfiguration {
-  readonly stylesheetHref: string;
+  readonly stylesheetHref: string | null;
 }
