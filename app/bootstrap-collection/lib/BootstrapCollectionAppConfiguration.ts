@@ -1,5 +1,8 @@
-import {AppConfiguration, SearchConfiguration} from "@paradicms/configuration";
-import {PropertyConfiguration} from "@paradicms/configuration/dist/PropertyConfiguration";
+import {
+  AppConfiguration,
+  PropertyConfiguration,
+  SearchConfiguration,
+} from "@paradicms/configuration";
 
 export interface BootstrapCollectionAppConfiguration extends AppConfiguration {
   readonly search: SearchConfiguration;

@@ -13,6 +13,7 @@ import {
   GetWorkAgentsResult,
   GetWorkEventsOptions,
   GetWorkEventsResult,
+  GetWorkLocationsOptions,
   GetWorkLocationsResult,
   GetWorksOptions,
   GetWorksResult,
@@ -35,7 +36,6 @@ import {
   ValueFacetValue,
   ValueFacetValueThumbnail,
 } from "@paradicms/facets";
-import {GetWorkLocationsOptions} from "@paradicms/services/dist/GetWorkLocationsOptions";
 
 const basex = require("base-x");
 const base58 = basex(
