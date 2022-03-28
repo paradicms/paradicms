@@ -12,6 +12,38 @@ const ttl = `
     dcterms:title "Creator" ;
     rdf:predicate dcterms:creator
   ]
+  ;
+  configuration:workProperty [
+    configuration:hidden true ;
+    configuration:searchable true ;
+    dcterms:title "Description" ;
+    rdf:predicate dcterms:description
+  ]
+  ;
+  configuration:workProperty [
+    configuration:filterable true ;
+    dcterms:title "Medium" ;
+    rdf:predicate dcterms:medium
+  ]
+  ;
+  configuration:workProperty [
+    configuration:filterable true ;
+    dcterms:title "Subject" ;
+    rdf:predicate dcterms:subject
+  ]
+  ;
+  configuration:workProperty [
+    configuration:hidden true ;
+    configuration:searchable true ;
+    dcterms:title "Title" ;
+    rdf:predicate dcterms:title
+  ]
+  ;
+  configuration:workProperty [
+    configuration:filterable true ;
+    dcterms:title "Type" ;
+    rdf:predicate dcterms:type
+  ]
   .
 `;
 

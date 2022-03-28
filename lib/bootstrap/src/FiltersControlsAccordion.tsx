@@ -33,7 +33,7 @@ export const FiltersControlsAccordion: React.FunctionComponent<{
   return (
     <Accordion {...accordionProps}>
       {filtersControls.map(({filter, control}, filterI) => (
-        <AccordionItem>
+        <AccordionItem key={filterI}>
           <AccordionHeader targetId={filterI.toString()}>
             {filter.label}
           </AccordionHeader>
