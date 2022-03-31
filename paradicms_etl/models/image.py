@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
-from rdflib import Literal, URIRef, Graph
+from rdflib import Literal, URIRef, Graph, RDF
 from rdflib.namespace import DCTERMS, FOAF
 
 from paradicms_etl.models.image_dimensions import ImageDimensions
@@ -55,6 +55,7 @@ class Image(NamedModel):
     ) -> "Image":
         resource_builder = (
             ResourceBuilder(uri)
+            .add(RDF.type, CMS[cls.__name__])
             .add(CMS.imageCopyable, copyable)
             .add(DCTERMS.created, created)
             .add(FOAF.depicts, depicts_uri)

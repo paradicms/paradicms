@@ -4,6 +4,7 @@ from rdflib import BNode, RDF
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.rights import Rights
+from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
@@ -30,7 +31,11 @@ class Text(Model):
     @classmethod
     def from_fields(cls, value: str, *, rights: Optional[Rights] = None) -> "Text":
         return cls(
-            ResourceBuilder(BNode()).add(RDF.value, value).add_rights(rights).build()
+            ResourceBuilder(BNode())
+            .add(RDF.type, CMS[cls.__name__])
+            .add(RDF.value, value)
+            .add_rights(rights)
+            .build()
         )
 
     @property

@@ -1,11 +1,11 @@
 from typing import Optional, Tuple
 
-from rdflib import URIRef
+from rdflib import URIRef, RDF
 from rdflib.namespace import FOAF
 
 from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.property import Property
-from paradicms_etl.namespaces import CONTACT
+from paradicms_etl.namespaces import CONTACT, CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
@@ -24,6 +24,7 @@ class Person(Agent):
     ) -> "Person":
         return cls(
             ResourceBuilder(uri)
+            .add(RDF.type, CMS[cls.__name__])
             .add(FOAF.familyName, family_name)
             .add(FOAF.givenName, given_name)
             .add(FOAF.name, name)

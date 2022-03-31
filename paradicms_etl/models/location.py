@@ -1,8 +1,9 @@
 from typing import Optional
 
-from rdflib import URIRef, BNode
+from rdflib import URIRef, BNode, RDF
 
 from paradicms_etl.model import Model
+from paradicms_etl.namespaces import CMS
 from paradicms_etl.namespaces.wgs import WGS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
@@ -20,6 +21,7 @@ class Location(Model):
             raise NotImplementedError("no support in the GUI for named Locations")
         return cls(
             ResourceBuilder(uri if uri is not None else BNode())
+            .add(RDF.type, CMS[cls.__name__])
             .add(WGS.lat, lat)
             .add(WGS.long, long)
             .build()

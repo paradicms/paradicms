@@ -6,6 +6,7 @@ from rdflib.resource import Resource
 from rdflib.term import Node, URIRef
 
 from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
@@ -28,6 +29,7 @@ class NamedValue(NamedModel):
             raise ValueError("must specify at least one property URI")
         return cls(
             ResourceBuilder(uri)
+            .add(RDF.type, CMS[cls.__name__])
             .add(DCTERMS.title, title)
             .add(RDF.predicate, property_uris)
             .add(RDF.value, value)

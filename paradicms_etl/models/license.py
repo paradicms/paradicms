@@ -1,8 +1,9 @@
 from typing import Optional
 
-from rdflib import DC, DCTERMS, URIRef
+from rdflib import DC, DCTERMS, URIRef, RDF
 
 from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
@@ -22,6 +23,7 @@ class License(NamedModel):
     ) -> "License":
         return cls(
             ResourceBuilder(uri)
+            .add(RDF.type, CMS[cls.__name__])
             .add(DC.identifier, identifier)
             .add(DC.title, title)
             .add(DCTERMS.hasVersion, version)

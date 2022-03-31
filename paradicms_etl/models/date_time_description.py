@@ -1,10 +1,10 @@
 import datetime
 from typing import Optional, Union
 
-from rdflib import BNode, Literal, XSD
+from rdflib import BNode, Literal, XSD, RDF
 
 from paradicms_etl.model import Model
-from paradicms_etl.namespaces import TIME
+from paradicms_etl.namespaces import TIME, CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
@@ -35,6 +35,7 @@ class DateTimeDescription(Model):
     ) -> "DateTimeDescription":
         return cls(
             ResourceBuilder(BNode())
+            .add(RDF.type, CMS[cls.__name__])
             # https://www.w3.org/TR/owl-time/#time:DateTimeDescription
             # .add(RDF.type, TIME.DateTimeDescription)
             # https://www.w3.org/TR/owl-time/#time:day
@@ -67,5 +68,6 @@ class DateTimeDescription(Model):
             .add(
                 TIME.year,
                 Literal(str(year), datatype=XSD.gYear) if year is not None else None,
-            ).build()
+            )
+            .build()
         )

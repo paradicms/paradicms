@@ -1,6 +1,6 @@
 from typing import Tuple, Union
 
-from rdflib import URIRef
+from rdflib import URIRef, RDF
 from rdflib.namespace import DCTERMS
 
 from paradicms_etl.models.named_model import NamedModel
@@ -30,6 +30,7 @@ class Collection(NamedModel):
     ) -> "Collection":
         return cls(
             ResourceBuilder(uri)
+            .add(RDF.type, CMS[cls.__name__])
             .add(DCTERMS.abstract, abstract)
             .add(CMS.institution, institution_uri)
             .add(DCTERMS.title, title)

@@ -36,7 +36,7 @@ class RdfFileLoader(BufferingLoader):
         conjunctive_graph = ConjunctiveGraph()
         bind_namespaces(conjunctive_graph.namespace_manager)
         for model in models:
-            assert isinstance(model, NamedModel)
+            assert isinstance(model, NamedModel), type(model)
             model_graph_uri = URIRef(
                 f"{self._pipeline_uri}:model:{hashlib.sha256(str(model.uri).encode('utf-8')).hexdigest()}"
             )

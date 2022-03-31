@@ -1,6 +1,6 @@
 from typing import Optional, Tuple, Union
 
-from rdflib import URIRef
+from rdflib import URIRef, RDF
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
@@ -44,6 +44,7 @@ class Work(NamedModel):
     ) -> "Work":
         return cls(
             ResourceBuilder(uri)
+            .add(RDF.type, CMS[cls.__name__])
             .add(DCTERMS.abstract, abstract)
             .add(CMS.collection, collection_uris)
             .add(CMS.institution, institution_uri)

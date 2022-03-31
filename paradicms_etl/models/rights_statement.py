@@ -1,8 +1,9 @@
 from typing import Optional, Tuple
 
-from rdflib import DCTERMS, SKOS, URIRef
+from rdflib import DCTERMS, SKOS, URIRef, RDF
 
 from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
@@ -30,6 +31,7 @@ class RightsStatement(NamedModel):
     ) -> "RightsStatement":
         return cls(
             ResourceBuilder(uri)
+            .add(RDF.type, CMS[cls.__name__])
             .add(SKOS.definition, definition)
             .add(DCTERMS.description, description)
             .add(DCTERMS.identifier, identifier)

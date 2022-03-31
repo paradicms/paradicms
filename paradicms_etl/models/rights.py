@@ -20,9 +20,6 @@ class Rights(Model):
         DCTERMS.rightsHolder,
     }
 
-    def __init__(self, resource: Resource):
-        Model.__init__(self, resource, add_rdf_type=False)
-
     @property
     def contributors(self) -> Tuple[Union[str, URIRef], ...]:
         return self.__plural_values(DCTERMS.contributor)

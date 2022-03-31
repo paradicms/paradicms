@@ -9,12 +9,8 @@ _ValueT = TypeVar("_ValueT")
 
 
 class Model:
-    def __init__(self, resource: Resource, add_rdf_type: bool = True):
+    def __init__(self, resource: Resource):
         self.__resource = resource
-        if add_rdf_type:
-            self.__resource.add(RDF.type, CMS[self.__class__.__name__])
-        # print(self.__class__.__name__, "resource:")
-        # print(self.__resource.graph.serialize().decode("utf-8"))
 
     @classmethod
     def from_rdf(cls, resource: Resource):

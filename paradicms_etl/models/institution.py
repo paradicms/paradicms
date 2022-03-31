@@ -1,11 +1,12 @@
 from typing import Optional, Tuple
 
-from rdflib import URIRef
+from rdflib import URIRef, RDF
 from rdflib.namespace import DCTERMS, FOAF
 
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
+from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
@@ -27,6 +28,7 @@ class Institution(NamedModel):
     ) -> "Institution":
         return cls(
             ResourceBuilder(uri)
+            .add(RDF.type, CMS[cls.__name__])
             .add(DCTERMS.abstract, abstract)
             .add(FOAF.name, name)
             .add_properties(properties)
