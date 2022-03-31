@@ -5,7 +5,7 @@ from rdflib import Literal, URIRef, Graph, RDF
 from rdflib.namespace import DCTERMS, FOAF
 
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespaces import CMS, EXIF
 
@@ -28,9 +28,9 @@ from paradicms_etl.namespaces import CMS, EXIF
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
-class Image(NamedModel):
+class Image(ResourceBackedNamedModel):
     def __init__(self, *args, **kwds):
-        NamedModel.__init__(self, *args, **kwds)
+        ResourceBackedNamedModel.__init__(self, *args, **kwds)
         self.depicts_uri
 
     @classmethod

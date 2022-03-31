@@ -3,12 +3,12 @@ from typing import Optional, Union
 
 from rdflib import BNode, Literal, XSD, RDF
 
-from paradicms_etl.model import Model
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.namespaces import TIME, CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
-class DateTimeDescription(Model):
+class DateTimeDescription(ResourceBackedModel):
     """
     Description of date and time structured with separate values for the various elements of a calendar-clock system.
 

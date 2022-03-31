@@ -1,11 +1,11 @@
 from rdflib import FOAF
 
-from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 
 
-class Agent(NamedModel):
+class Agent(ResourceBackedNamedModel):
     def __init__(self, *args, **kwds):
-        NamedModel.__init__(self, *args, **kwds)
+        ResourceBackedNamedModel.__init__(self, *args, **kwds)
         self.name
 
     @property

@@ -4,15 +4,15 @@ from rdflib import URIRef, RDF
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.property import Property
+from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
-class Work(NamedModel):
+class Work(ResourceBackedNamedModel):
     """
     Model of a work such as a painting or a garment.
 
@@ -20,7 +20,7 @@ class Work(NamedModel):
     """
 
     def __init__(self, *args, **kwds):
-        NamedModel.__init__(self, *args, **kwds)
+        ResourceBackedNamedModel.__init__(self, *args, **kwds)
         self.collection_uris
         self.institution_uri
         self.title

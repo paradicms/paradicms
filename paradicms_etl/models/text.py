@@ -2,13 +2,13 @@ from typing import Optional
 
 from rdflib import BNode, RDF
 
-from paradicms_etl.model import Model
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
-class Text(Model):
+class Text(ResourceBackedModel):
     """
     Model of a string with associated metadata, such as rights.
 
@@ -25,7 +25,7 @@ class Text(Model):
     """
 
     def __init__(self, *args, **kwds):
-        Model.__init__(self, *args, **kwds)
+        ResourceBackedModel.__init__(self, *args, **kwds)
         self.value
 
     @classmethod

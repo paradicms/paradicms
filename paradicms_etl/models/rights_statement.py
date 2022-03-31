@@ -2,18 +2,18 @@ from typing import Optional, Tuple
 
 from rdflib import DCTERMS, SKOS, URIRef, RDF
 
-from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
-class RightsStatement(NamedModel):
+class RightsStatement(ResourceBackedNamedModel):
     """
     A rights statement. Adapted from the rightsstatements.org data model (https://github.com/rightsstatements/data-model).
     """
 
     def __init__(self, *args, **kwds):
-        NamedModel.__init__(self, *args, **kwds)
+        ResourceBackedNamedModel.__init__(self, *args, **kwds)
         self._resource.add(RDF.type, CMS[self.__class__.__name__])
         self.identifier
         self.pref_label

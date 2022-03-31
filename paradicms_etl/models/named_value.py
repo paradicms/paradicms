@@ -5,14 +5,14 @@ from rdflib.namespace import RDF
 from rdflib.resource import Resource
 from rdflib.term import Node, URIRef
 
-from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
-class NamedValue(NamedModel):
+class NamedValue(ResourceBackedNamedModel):
     def __init__(self, *args, **kwds):
-        NamedModel.__init__(self, *args, **kwds)
+        ResourceBackedNamedModel.__init__(self, *args, **kwds)
         self.label
         self.property_uris
 

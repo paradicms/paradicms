@@ -2,13 +2,13 @@ from typing import Optional
 
 from rdflib import URIRef, BNode, RDF
 
-from paradicms_etl.model import Model
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.namespaces.wgs import WGS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
-class Location(Model):
+class Location(ResourceBackedModel):
     @classmethod
     def from_fields(
         cls,

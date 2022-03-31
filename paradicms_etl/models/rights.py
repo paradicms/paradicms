@@ -3,10 +3,10 @@ from typing import Optional, Union, Tuple
 from rdflib import URIRef, DCTERMS, BNode, Literal, Graph
 from rdflib.resource import Resource
 
-from paradicms_etl.model import Model
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 
 
-class Rights(Model):
+class Rights(ResourceBackedModel):
     """
     Captures a group of properties that specify the rights of another model,
     such as the license and the rights statement.

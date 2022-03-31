@@ -3,16 +3,16 @@ from typing import Optional, Tuple
 from rdflib import URIRef, RDF
 from rdflib.namespace import DCTERMS, FOAF
 
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.property import Property
+from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
-class Institution(NamedModel):
+class Institution(ResourceBackedNamedModel):
     def __init__(self, *args, **kwds):
-        NamedModel.__init__(self, *args, **kwds)
+        ResourceBackedNamedModel.__init__(self, *args, **kwds)
         self.name
 
     @classmethod

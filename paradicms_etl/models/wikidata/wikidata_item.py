@@ -4,7 +4,7 @@ from typing import Dict, List, Optional, Tuple
 from rdflib import Graph, Literal, RDF, RDFS, SKOS
 from rdflib.resource import Resource
 
-from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.wikidata.wikidata_article import WikidataArticle
 from paradicms_etl.models.wikidata.wikidata_direct_claim import WikidataDirectClaim
 from paradicms_etl.models.wikidata.wikidata_full_statement import WikidataFullStatement
@@ -17,7 +17,7 @@ from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
 from paradicms_etl.namespaces import SCHEMA
 
 
-class WikidataItem(NamedModel):
+class WikidataItem(ResourceBackedNamedModel):
     def __init__(
         self,
         *,
@@ -27,7 +27,7 @@ class WikidataItem(NamedModel):
         statements: Tuple[WikidataStatement, ...],
         resource: Resource,
     ):
-        NamedModel.__init__(self, resource=resource)
+        ResourceBackedNamedModel.__init__(self, resource=resource)
         self.__articles = articles
         self.__description = description
         self.__labels = labels
