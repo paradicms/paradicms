@@ -14,6 +14,7 @@ class RightsStatement(NamedModel):
 
     def __init__(self, *args, **kwds):
         NamedModel.__init__(self, *args, **kwds)
+        self._resource.add(RDF.type, CMS[self.__class__.__name__])
         self.identifier
         self.pref_label
 
