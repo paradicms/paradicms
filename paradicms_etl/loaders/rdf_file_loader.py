@@ -16,22 +16,38 @@ class RdfFileLoader(BufferingLoader):
     def __init__(
         self,
         *,
+        file_name: Optional[str] = None,
+        file_stem: Optional[str] = None,
         file_path: Optional[Path] = None,
         format: Optional[str] = FORMAT_DEFAULT,
         **kwds,
     ):
         BufferingLoader.__init__(self, **kwds)
+        if (file_name or file_stem or file_path) and not (
+            bool(file_name) ^ bool(file_stem) ^ bool(file_path)
+        ):
+            raise ValueError("may only specify one of file name, stem, or path")
+        self.__file_name = file_name
         self.__file_path = file_path
+        self.__file_stem = file_stem
         if format is None:
             format = self.FORMAT_DEFAULT
         self.__format = format
 
     def _flush(self, models):
-        file_path = self.__file_path
-        if file_path is None:
+        if self.__file_name is not None:
+            file_path = self._loaded_data_dir_path / self.__file_name
+        elif self.__file_path is not None:
+            file_path = self.__file_path
+        elif self.__file_stem is not None:
+            file_path = self._loaded_data_dir_path / (
+                self.__file_stem + "." + self.__format
+            )
+        else:
             file_path = self._loaded_data_dir_path / (
                 sanitize_filename(self._pipeline_id) + "." + self.__format
             )
+
         conjunctive_graph = self._new_conjunctive_graph()
         self._logger.debug("serializing %d models to a graph", len(models))
         for model in models:
