@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Union
 
 from rdflib import DCTERMS
 from rdflib.namespace import RDF
@@ -6,6 +6,7 @@ from rdflib.resource import Resource
 from rdflib.term import Node, URIRef
 
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
@@ -23,6 +24,7 @@ class NamedValue(ResourceBackedNamedModel):
         property_uris: Tuple[URIRef, ...],  # Child -> parent references
         uri: URIRef,
         value: Node,  # A property value
+        abstract: Union[str, Text, None] = None,
         title: Optional[str] = None,
     ) -> "NamedValue":
         if not property_uris:
@@ -30,6 +32,7 @@ class NamedValue(ResourceBackedNamedModel):
         return cls(
             ResourceBuilder(uri)
             .add(RDF.type, CMS[cls.__name__])
+            .add(DCTERMS.abstract, abstract)
             .add(DCTERMS.title, title)
             .add(RDF.predicate, property_uris)
             .add(RDF.value, value)
