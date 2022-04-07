@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 
 // plugins
 const CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -20,8 +21,7 @@ module.exports = (env, argv) => {
       hot: true,
       open: true,
       port: 9000,
-      // public: "tunnel.minorgordon.net",
-      stats: "minimal",
+      // public: "tunnel.minorgordon.net"
     },
     devtool: mode === "production" ? "hidden-source-map" : "eval-source-map",
     entry: {
@@ -57,10 +57,10 @@ module.exports = (env, argv) => {
           "*.pdf",
         ],
       }),
-      // new webpack.DefinePlugin({
-      //   DEVELOPMENT: mode === "development",
-      //   PRODUCTION: mode === "production",
-      // }),
+      new webpack.DefinePlugin({
+        DEVELOPMENT: mode === "development",
+        PRODUCTION: mode === "production",
+      }),
       new HtmlWebpackPlugin({
         hash: true,
         template: "index.html",
