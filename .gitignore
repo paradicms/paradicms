@@ -1,5 +1,5 @@
-/app/bootstrap-collection/public/img/archive/
-/app/bootstrap-exhibition/public/img/archive/
+/app/collection/public/img/archive/
+/app/exhibition/public/img/archive/
 dist/
 /lib/lunr/@paradicms/
 /lib/models/coverage/

@@ -1,16 +1,17 @@
 import os
+from pathlib import Path
+from typing import Tuple
+
 import pytest
 from paradicms_etl.model import Model
 from paradicms_etl.models.image import Image
 from paradicms_etl.pipelines.test_data_pipeline import TestDataPipeline
-from paradicms_gui.loaders.gui_loader import GuiLoader
-from pathlib import Path
-from typing import Tuple
 
+from paradicms_gui.loaders.gui_loader import GuiLoader
 from .nop_image_archiver import NopImageArchiver
 
 
-@pytest.mark.parametrize("app", ["bootstrap-collection", "bootstrap-exhibition"])
+@pytest.mark.parametrize("app", ["collection", "exhibition"])
 def test_load(app: str, test_data_models: Tuple[Model, ...], tmp_path):
     app_dir_path = Path(__file__).parent.parent.parent.parent.parent / "app" / app
     assert app_dir_path.is_dir(), app_dir_path
@@ -54,8 +55,8 @@ if False and os.environ.get("CI") is None:
             collections_per_institution=1,
             data_dir_path=data_dir_path,
             loader=GuiLoader(
+                app="collection",
                 data_dir_path=data_dir_path,
-                gui="bootstrap-collection",
                 pipeline_id=TestDataPipeline.ID,
             ),
             images_per_work=1,
