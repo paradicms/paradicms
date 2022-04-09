@@ -3,13 +3,21 @@ from typing import TypeVar, Union
 from rdflib import DC, DCTERMS, FOAF, OWL, SKOS, Graph
 from rdflib.namespace import NamespaceManager
 
-from paradicms_etl.namespaces.wgs import WGS
-
 _NamespaceManagerT = TypeVar("_NamespaceManagerT", bound=Union[Graph, NamespaceManager])
 
 
 def bind_namespaces(namespace_manager: _NamespaceManagerT) -> _NamespaceManagerT:
-    from paradicms_etl.namespaces import CMS, CONTACT, EXIF, PROV, SCHEMA, TIME, VRA
+    from paradicms_etl.namespaces import (
+        CMS,
+        CONTACT,
+        EXIF,
+        PROV,
+        SCHEMA,
+        TIME,
+        VRA,
+        WGS,
+        WORKSHEET,
+    )
 
     namespace_manager.bind("cms", CMS)
     namespace_manager.bind("contact", CONTACT)
@@ -26,4 +34,5 @@ def bind_namespaces(namespace_manager: _NamespaceManagerT) -> _NamespaceManagerT
     namespace_manager.bind("time", TIME)
     namespace_manager.bind("vra", VRA)
     namespace_manager.bind("wgs", WGS)
+    namespace_manager.bind("worksheet", WORKSHEET)
     return namespace_manager

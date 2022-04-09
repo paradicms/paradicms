@@ -5,7 +5,7 @@ from rdflib.namespace import DCTERMS
 
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.text import Text
-from paradicms_etl.namespaces import CMS
+from paradicms_etl.namespaces import WORKSHEET
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
@@ -25,10 +25,10 @@ class WorksheetFeature(ResourceBackedNamedModel):
     ) -> "WorksheetFeature":
         return cls(
             ResourceBuilder(uri)
-            .add(RDF.type, CMS[cls.__name__])
+            .add(RDF.type, WORKSHEET.Feature)
             .add(DCTERMS.abstract, abstract)
             .add(DCTERMS.title, title)
-            .add(CMS.worksheetFeatureSet, feature_set_uris)
+            .add(WORKSHEET.featureSet, feature_set_uris)
             .build()
         )
 

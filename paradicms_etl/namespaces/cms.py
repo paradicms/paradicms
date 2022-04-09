@@ -14,7 +14,6 @@ class CMS(DefinedNamespace):
     imageMaxWidth: URIRef
     imageSrc: URIRef
     work: URIRef
-    worksheetFeatureSet: URIRef
 
     # Resources
     Collection: URIRef
@@ -34,5 +33,3 @@ class CMS(DefinedNamespace):
     Work: URIRef
     WorkCreation: URIRef
     WorkEvent: URIRef
-    WorksheetFeature: URIRef
-    WorksheetFeatureSet: URIRef
