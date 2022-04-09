@@ -1,4 +1,4 @@
-import Namespace from "./Namespace";
+import {Namespace} from "./Namespace";
 
 export class XSD {
   static readonly NS = Namespace("http://www.w3.org/2001/XMLSchema#");
