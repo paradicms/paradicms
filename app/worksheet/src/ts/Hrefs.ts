@@ -1,4 +1,4 @@
-import {WorksheetStateMark} from "~/models/WorksheetStateMark";
+import {WorksheetMark} from "~/models/WorksheetMark";
 
 export class Hrefs {
   static get about() {
@@ -57,7 +57,7 @@ export class Hrefs {
     return "/worksheet/";
   }
 
-  static worksheetState(mark: WorksheetStateMark) {
+  static worksheetState(mark: WorksheetMark) {
     let href =
       "/worksheet/state/" +
       encodeURIComponent(mark.worksheetStateId.toString()) +

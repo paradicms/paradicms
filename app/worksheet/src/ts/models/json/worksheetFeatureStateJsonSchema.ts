@@ -1,7 +1,8 @@
 import * as yup from "yup";
+import {worksheetFeatureValueStateJsonSchema} from "~/models/json/worksheetFeatureValueStateJsonSchema";
 
 export const worksheetFeatureStateJsonSchema = yup.object({
-  featureUri: yup.string().required(),
-  selectedFeatureValueUris: yup.array(yup.string()),
   text: yup.string(),
+  uri: yup.string().required(),
+  values: yup.array(worksheetFeatureValueStateJsonSchema),
 });
