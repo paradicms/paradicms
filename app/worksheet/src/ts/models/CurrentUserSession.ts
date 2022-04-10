@@ -1,5 +1,7 @@
-import {CurrentUserSessionJson} from "~/models/json/CurrentUserSessionJson";
-import {currentUserSessionJsonSchema} from "~/models/json/currentUserSessionJsonSchema";
+import {currentUserSessionJsonSchema} from "~/models/jsonSchemas/currentUserSessionJsonSchema";
+import {InferType} from "yup";
+
+type CurrentUserSessionJson = InferType<typeof currentUserSessionJsonSchema>;
 
 export class CurrentUserSession {
   readonly accessToken: string;

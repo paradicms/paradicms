@@ -1,3 +1,4 @@
-import {UserSettingsJson} from "~/models/json/UserSettingsJson";
+import {InferType} from "yup";
+import {userSettingsJsonSchema} from "~/models/jsonSchemas/userSettingsJsonSchema";
 
-export type UserSettings = UserSettingsJson;
+export type UserSettings = InferType<typeof userSettingsJsonSchema>;

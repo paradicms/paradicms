@@ -1,3 +1,6 @@
-import {WorksheetConfigurationJson} from "~/models/json/WorksheetConfigurationJson";
+import {InferType} from "yup";
+import {worksheetConfigurationJsonSchema} from "~/models/jsonSchemas/worksheetConfigurationJsonSchema";
 
-export type WorksheetConfiguration = WorksheetConfigurationJson;
+export type WorksheetConfiguration = InferType<
+  typeof worksheetConfigurationJsonSchema
+>;

@@ -1,3 +1,6 @@
-import {WorksheetFeatureStateJson} from "~/models/json/WorksheetFeatureStateJson";
+import {InferType} from "yup";
+import {worksheetFeatureStateJsonSchema} from "~/models/jsonSchemas/worksheetFeatureStateJsonSchema";
 
-export type WorksheetFeatureState = WorksheetFeatureStateJson;
+export type WorksheetFeatureState = InferType<
+  typeof worksheetFeatureStateJsonSchema
+>;

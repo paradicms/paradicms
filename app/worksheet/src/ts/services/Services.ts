@@ -4,7 +4,7 @@ import {UserSettingsQueryService} from "~/services/UserSettingsQueryService";
 import {WorksheetDefinitionQueryService} from "~/services/worksheet/definition/WorksheetDefinitionQueryService";
 import {WorksheetStateCommandService} from "~/services/WorksheetStateCommandService";
 import {WorksheetStateQueryService} from "~/services/WorksheetStateQueryService";
-import {DefaultWorksheetConfiguration} from "~/models/DefaultWorksheetConfiguration";
+import {defaultWorksheetConfiguration} from "~/models/defaultWorksheetConfiguration";
 import {LocalStorageUserSettingsCommandService} from "~/services/LocalStorageUserSettingsCommandService";
 import {LocalStorageUserSettingsQueryService} from "~/services/LocalStorageUserSettingsQueryService";
 import {BundledWorksheetDefinitionQueryService} from "~/services/worksheet/definition/BundledWorksheetDefinitionQueryService";
@@ -47,7 +47,7 @@ export class Services {
   }
 
   static readonly default = new Services(
-    DefaultWorksheetConfiguration.instance
+    defaultWorksheetConfiguration.instance
   );
 
   readonly userSettingsCommandService: UserSettingsCommandService;

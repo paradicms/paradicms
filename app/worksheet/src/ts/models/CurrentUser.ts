@@ -1,9 +1,11 @@
 import {UserIdentityProvider} from "~/models/UserIdentityProvider";
-import {currentUserJsonSchema} from "~/models/json/currentUserJsonSchema";
+import {currentUserJsonSchema} from "~/models/jsonSchemas/currentUserJsonSchema";
 import {UserSettings} from "~/models/UserSettings";
 import {User} from "~/models/User";
 import {CurrentUserSession} from "~/models/CurrentUserSession";
-import {CurrentUserJson} from "~/models/json/CurrentUserJson";
+import {InferType} from "yup";
+
+type CurrentUserJson = InferType<typeof currentUserJsonSchema>;
 
 export class CurrentUser {
   constructor(kwds: {
