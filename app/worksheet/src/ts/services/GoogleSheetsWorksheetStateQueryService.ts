@@ -2,7 +2,7 @@
 import {WorksheetState} from "~/models/WorksheetState";
 import {NoSuchWorksheetStateException} from "~/services/NoSuchWorksheetStateException";
 import {WorksheetStateQueryService} from "~/services/WorksheetStateQueryService";
-import {GoogleSheetsWorksheetStateImporter} from "~/components/worksheet/state/importers/GoogleSheetsWorksheetStateImporter";
+import {GoogleSheetsWorksheetStateImporter} from "~/importers/GoogleSheetsWorksheetStateImporter";
 import {convertGapiErrorToException} from "~/services/GapiException";
 import * as _ from "lodash";
 

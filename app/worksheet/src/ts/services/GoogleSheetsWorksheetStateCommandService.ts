@@ -1,18 +1,18 @@
 ﻿import {GoogleSheetsWorksheetStateConfiguration} from "~/models/GoogleSheetsWorksheetStateConfiguration";
 import {WorksheetState} from "~/models/WorksheetState";
-import {WorksheetDefinitionQueryService} from "~/services/worksheet/definition/WorksheetDefinitionQueryService";
 import {NoSuchWorksheetStateException} from "~/services/NoSuchWorksheetStateException";
 import {WorksheetStateCommandService} from "~/services/WorksheetStateCommandService";
 import {GoogleSheetsWorksheetStateExporter} from "~/exporters/GoogleSheetsWorksheetStateExporter";
 import {convertGapiErrorToException} from "~/services/GapiException";
 import {GoogleSheetsWorksheetStateQueryService} from "~/services/GoogleSheetsWorksheetStateQueryService";
+import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 
 export class GoogleSheetsWorksheetStateCommandService
   implements WorksheetStateCommandService
 {
   constructor(
     private readonly configuration: GoogleSheetsWorksheetStateConfiguration,
-    private readonly worksheetDefinitionQueryService: WorksheetDefinitionQueryService
+    private readonly worksheetDefinition: WorksheetDefinition
   ) {}
 
   deleteWorksheetState(kwds: {id: string}): Promise<void> {
@@ -133,21 +133,11 @@ export class GoogleSheetsWorksheetStateCommandService
   private replaceWorksheetStates(
     newWorksheetStates: WorksheetState[]
   ): Promise<void> {
-    const self = this;
-    return new Promise((resolve, reject) => {
-      this.worksheetDefinitionQueryService.getWorksheetDefinition().then(
-        (worksheetDefinition) => {
-          self
-            .replaceFirstSheetData(
-              new GoogleSheetsWorksheetStateExporter().export(
-                worksheetDefinition,
-                newWorksheetStates
-              )
-            )
-            .then(resolve, reject);
-        },
-        (reason) => reject(reason)
-      );
-    });
+    return this.replaceFirstSheetData(
+      new GoogleSheetsWorksheetStateExporter().export(
+        this.worksheetDefinition,
+        newWorksheetStates
+      )
+    );
   }
 }
