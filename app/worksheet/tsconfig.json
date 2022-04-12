@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "jsx": "preserve",
     "lib": [
       "dom",
       "dom.iterable",
