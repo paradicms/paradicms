@@ -3,7 +3,7 @@ import {worksheetFeatureSetStateJsonSchema} from "~/models/jsonSchemas/worksheet
 
 export const worksheetStateJsonSchema = yup.object({
   ctime: yup.date().required(),
-  featureSets: yup.array(worksheetFeatureSetStateJsonSchema).required(),
+  featureSets: yup.array(worksheetFeatureSetStateJsonSchema),
   id: yup.string().required(),
   mtime: yup.date().required(),
   text: yup.string(),

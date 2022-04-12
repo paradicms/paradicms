@@ -1,7 +1,6 @@
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {WorksheetState} from "~/models/WorksheetState";
 import {WorksheetStateExporter} from "~/exporters/WorksheetStateExporter";
-import * as _ from "lodash";
 
 export class CsvWorksheetStateExporter
   implements WorksheetStateExporter<string[][]>
@@ -14,7 +13,7 @@ export class CsvWorksheetStateExporter
   ): string[][] {
     const rows: string[][] = [];
 
-    const featureHeader = (featureSetId: string, featureId: string) => {
+    const featureHeader = (featureSetUri: string, featureUri: string) => {
       if (worksheetStates.length === 1) {
         const worksheetState = worksheetStates[0];
         if (
@@ -22,25 +21,23 @@ export class CsvWorksheetStateExporter
           worksheetState.featureSets.length === 1
         ) {
           // # 318: don't prefix CSV header names if there is only one feature set defined in all worksheets
-          return featureId.toString();
+          return featureUri.toString();
         }
       }
 
-      const featureSetDefinition = worksheetDefinition.featureSets.find(
-        (checkFeatureSetDefinition) =>
-          checkFeatureSetDefinition.id === featureSetId
-      );
+      const featureSetDefinition =
+        worksheetDefinition.featureSetByUriOptional(featureSetUri);
       if (!featureSetDefinition) {
         return undefined;
       }
       // const featureDefinition = worksheetDefinition.features.find((featureDefinition) => featureDefinition.id.equals(featureId))!;
-      return featureSetDefinition.displayNameEn + "/" + featureId.toString();
+      return featureSetDefinition.title + "|" + featureUri.toString();
     };
 
     const headerRow = ["id", "ctime", "mtime", "description", "workType"];
     for (const featureSetDefinition of worksheetDefinition.featureSets) {
-      for (const featureId of featureSetDefinition.featureIds) {
-        const header = featureHeader(featureSetDefinition.id, featureId);
+      for (const featureUri of featureSetDefinition.featureUris) {
+        const header = featureHeader(featureSetDefinition.uri, featureUri);
         if (header) {
           headerRow.push(header);
         }
@@ -58,33 +55,40 @@ export class CsvWorksheetStateExporter
         dataRow[3] = worksheetState.text;
       }
 
-      if (_.isEmpty(worksheetState.featureSets)) {
+      if (
+        !worksheetState.featureSets ||
+        worksheetState.featureSets.length === 0
+      ) {
         continue;
       }
 
       const workType: string[] = [];
-      for (const featureSetState of worksheetState.featureSets) {
+      for (const featureSetState of worksheetState.featureSets ?? []) {
         const featureSetDefinition = worksheetDefinition.featureSets.find(
           (featureSetDefinition) =>
-            featureSetDefinition.id === featureSetState.id
+            featureSetDefinition.uri === featureSetState.uri
         );
         if (featureSetDefinition) {
-          workType.push(featureSetDefinition.displayNameEn);
+          workType.push(featureSetDefinition.title);
         }
 
-        for (const featureState of featureSetState.features) {
-          if (!featureState.selectedValueIds) {
+        for (const featureState of featureSetState.features ?? []) {
+          if (
+            !(featureState.values ?? []).some(
+              (featureValueState) => featureValueState.selected
+            )
+          ) {
             // Ignore text for now
             continue;
           }
 
-          const header = featureHeader(featureSetState.id, featureState.id);
+          const header = featureHeader(featureSetState.uri, featureState.uri);
           if (!header) {
             console.warn(
               "feature set + feature not present in definition? skipping: " +
-                featureSetState.id.toString() +
-                "/" +
-                featureState.id.toString()
+                featureSetState.uri.toString() +
+                "|" +
+                featureState.uri.toString()
             );
             continue;
           }
@@ -93,28 +97,30 @@ export class CsvWorksheetStateExporter
           if (dataRowIndex < 0) {
             console.warn(
               "feature set + feature not present in definition? skipping: " +
-                featureSetState.id.toString() +
-                "/" +
-                featureState.id.toString()
+                featureSetState.uri.toString() +
+                "|" +
+                featureState.uri.toString()
             );
             continue;
           }
 
           const values: string[] = [];
-          for (const selectedValueId of featureState.selectedValueIds) {
+          for (const featureValueState of featureState.values ?? []) {
+            if (!featureValueState.selected) {
+              continue;
+            }
             const featureValueDefinition =
-              worksheetDefinition.featureValues.find(
-                (featureValueDefinition) =>
-                  featureValueDefinition.id === selectedValueId
+              worksheetDefinition.featureValueByUriOptional(
+                featureValueState.uri
               );
             if (!featureValueDefinition) {
               console.warn(
                 "feature value not present in definition? skipping: " +
-                  selectedValueId.toString()
+                  featureValueState.uri
               );
               continue;
             }
-            values.push(featureValueDefinition.displayNameEn);
+            values.push(featureValueDefinition.value.value);
           }
           dataRow[dataRowIndex] = values.join(";");
         }

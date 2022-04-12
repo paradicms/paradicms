@@ -12,6 +12,7 @@ export * from "./Institution";
 export * from "./InstitutionJoinSelector";
 export * from "./License";
 export * from "./Location";
+export * from "./mixins";
 export * from "./Model";
 export * from "./ModelParameters";
 export * from "./NamedModel";

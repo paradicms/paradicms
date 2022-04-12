@@ -2,6 +2,7 @@ import {WorksheetState} from "~/models/WorksheetState";
 import {WorksheetMark} from "~/models/WorksheetMark";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {WorksheetFeatureSet} from "~/models/WorksheetFeatureSet";
+import {WorksheetFeatureSetState} from "~/models/WorksheetFeatureSetState";
 
 export class Worksheet {
   readonly definition: WorksheetDefinition;
@@ -21,9 +22,9 @@ export class Worksheet {
       (featureSetDefinition) =>
         new WorksheetFeatureSet({
           definition: featureSetDefinition,
-          initialState: initialState.featureSets.find(
+          initialState: initialState.featureSets?.find(
             (featureSetState) =>
-              featureSetState.featureSetUri === featureSetDefinition.uri
+              featureSetState.uri === featureSetDefinition.uri
           ),
         })
     );
@@ -33,9 +34,17 @@ export class Worksheet {
   }
 
   get state(): WorksheetState {
+    const featureSetStates: WorksheetFeatureSetState[] = [];
+    for (const featureSet of this.featureSets) {
+      const featureSetState = featureSet.state;
+      if (featureSetState) {
+        featureSetStates.push(featureSetState);
+      }
+    }
+
     return {
       ctime: this.stateCtime,
-      featureSets: this.featureSets.map((featureSet) => featureSet.state),
+      featureSets: featureSetStates.length > 0 ? featureSetStates : undefined,
       id: this.stateId,
       mtime: new Date(),
       text: this.text,

@@ -1,7 +1,6 @@
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {WorksheetState} from "~/models/WorksheetState";
 import {WorksheetStateExporter} from "~/exporters/WorksheetStateExporter";
-import * as _ from "lodash";
 
 export class GoogleSheetsWorksheetStateExporter
   implements WorksheetStateExporter<string[][]>
@@ -25,10 +24,8 @@ export class GoogleSheetsWorksheetStateExporter
     const headerRow = ["id", "ctime", "mtime", "description"];
     // Output all feature sets and values so they're represented in the CSV.
     for (const featureSetDefinition of worksheetDefinition.featureSets) {
-      for (const featureId of featureSetDefinition.featureIds) {
-        headerRow.push(
-          featureSetDefinition.id.toString() + "/" + featureId.toString()
-        );
+      for (const featureUri of featureSetDefinition.featureUris) {
+        headerRow.push(featureSetDefinition.uri + "|" + featureUri.toString());
       }
     }
     rows.push(headerRow);
@@ -49,34 +46,31 @@ export class GoogleSheetsWorksheetStateExporter
       for (const featureHeader of headerRow.slice(
         GoogleSheetsWorksheetStateExporter.FIRST_FEATURE_COLUMN_INDEX
       )) {
-        const [featureSetId, featureId] =
+        const [featureSetUri, featureUri] =
           GoogleSheetsWorksheetStateExporter.parseFeatureHeader(featureHeader);
-        const featureSetState = _.find(
-          worksheetState.featureSets,
+        const featureSetState = worksheetState.featureSets?.find(
           (existingFeatureSetState) =>
-            existingFeatureSetState.id === featureSetId
+            existingFeatureSetState.uri === featureSetUri
         );
         if (!featureSetState) {
           dataRow.push("");
           continue;
         }
-        const featureState = _.find(
-          featureSetState.features,
-          (existingFeatureState) => existingFeatureState.id === featureId
+        const featureState = featureSetState.features?.find(
+          (existingFeatureState) => existingFeatureState.uri === featureUri
         );
         if (!featureState) {
           dataRow.push("");
           continue;
         }
-        if (!featureState.selectedValueIds) {
+        const selectedFeatureValueUris = (featureState.values ?? [])
+          .filter((value) => value.selected)
+          .map((value) => value.uri);
+        if (selectedFeatureValueUris.length === 0) {
           dataRow.push("");
           continue;
         }
-        dataRow.push(
-          featureState.selectedValueIds
-            .map((valueId) => valueId.toString())
-            .join(";")
-        );
+        dataRow.push(selectedFeatureValueUris.join(";"));
       }
 
       rows.push(dataRow);

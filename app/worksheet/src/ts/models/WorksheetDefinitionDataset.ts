@@ -10,6 +10,9 @@ export class WorksheetDefinitionDataset extends Dataset {
     [index: string]: WorksheetFeatureDefinition;
   };
   private _worksheetFeatureSetDefinitions?: readonly WorksheetFeatureSetDefinition[];
+  private _worksheetFeatureSetDefinitionsByUriIndex?: {
+    [index: string]: WorksheetFeatureSetDefinition;
+  };
 
   static parse(
     input: string,
@@ -48,10 +51,14 @@ export class WorksheetDefinitionDataset extends Dataset {
 
   private readWorksheetFeatureSetDefinitions(): void {
     const worksheetFeatureSetDefinitions: WorksheetFeatureSetDefinition[] = [];
+    this._worksheetFeatureSetDefinitionsByUriIndex = {};
     this.readModels((kwds) => {
       const worksheetFeatureSetDefinition =
         this.readWorksheetFeatureSetDefinition(kwds);
       worksheetFeatureSetDefinitions.push(worksheetFeatureSetDefinition);
+      this._worksheetFeatureSetDefinitionsByUriIndex![
+        worksheetFeatureSetDefinition.uri
+      ] = worksheetFeatureSetDefinition;
     }, WORKSHEET.FeatureSet);
     this._worksheetFeatureSetDefinitions = worksheetFeatureSetDefinitions;
   }
@@ -72,6 +79,12 @@ export class WorksheetDefinitionDataset extends Dataset {
     return worksheetFeatureDefinition;
   }
 
+  worksheetFeatureDefinitionByUriOptional(
+    uri: string
+  ): WorksheetFeatureDefinition | null {
+    return this.worksheetFeatureDefinitionsByUriIndex[uri] ?? null;
+  }
+
   private get worksheetFeatureDefinitionsByUriIndex(): {
     [index: string]: WorksheetFeatureDefinition;
   } {
@@ -86,5 +99,20 @@ export class WorksheetDefinitionDataset extends Dataset {
       this.readWorksheetFeatureSetDefinitions();
     }
     return this._worksheetFeatureSetDefinitions!;
+  }
+
+  worksheetFeatureSetDefinitionByUriOptional(
+    uri: string
+  ): WorksheetFeatureSetDefinition | null {
+    return this.worksheetFeatureSetDefinitionsByUriIndex[uri] ?? null;
+  }
+
+  private get worksheetFeatureSetDefinitionsByUriIndex(): {
+    [index: string]: WorksheetFeatureSetDefinition;
+  } {
+    if (!this._worksheetFeatureSetDefinitionsByUriIndex) {
+      this.readWorksheetFeatureSetDefinitions();
+    }
+    return this._worksheetFeatureSetDefinitionsByUriIndex!;
   }
 }

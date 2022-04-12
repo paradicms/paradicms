@@ -1,10 +1,11 @@
-import {NamedModel} from "@paradicms/models";
+import {HasTitle, NamedModel} from "@paradicms/models";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
 import {WORKSHEET} from "~/vocabularies/WORKSHEET";
 import {Memoize} from "typescript-memoize";
 import {WorksheetDefinitionDataset} from "~/models/WorksheetDefinitionDataset";
+import {Mixin} from "ts-mixer";
 
-export class WorksheetFeatureSetDefinition extends NamedModel {
+export class WorksheetFeatureSetDefinition extends Mixin(NamedModel, HasTitle) {
   @Memoize()
   get features(): readonly WorksheetFeatureDefinition[] {
     return this.store
@@ -15,5 +16,9 @@ export class WorksheetFeatureSetDefinition extends NamedModel {
           this.dataset as WorksheetDefinitionDataset
         ).worksheetFeatureDefinitionByUri(quad.subject.value)
       );
+  }
+
+  get featureUris(): readonly string[] {
+    return this.features.map((feature) => feature.uri);
   }
 }

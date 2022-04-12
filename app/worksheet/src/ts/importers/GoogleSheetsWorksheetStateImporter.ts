@@ -2,7 +2,6 @@ import {WorksheetFeatureSetState} from "~/models/WorksheetFeatureSetState";
 import {WorksheetFeatureState} from "~/models/WorksheetFeatureState";
 import {WorksheetState} from "~/models/WorksheetState";
 import {GoogleSheetsWorksheetStateExporter} from "~/exporters/GoogleSheetsWorksheetStateExporter";
-import * as _ from "lodash";
 import * as Papa from "papaparse";
 
 export class GoogleSheetsWorksheetStateImporter {
@@ -37,14 +36,14 @@ export class GoogleSheetsWorksheetStateImporter {
         continue;
       }
       const id = dataRow[0];
-      const ctime = Date.parse(dataRow[1]);
-      const mtime = Date.parse(dataRow[2]);
+      const ctime = new Date(Date.parse(dataRow[1]));
+      const mtime = new Date(Date.parse(dataRow[2]));
 
       let description: string | undefined = dataRow[3];
       description = description.length ? description : undefined;
 
       // Build a map of maps of feature value id's.
-      const featureSetValueIds: {
+      const featureSetValueUris: {
         [index: string]: {[index: string]: string[]};
       } = {};
       dataRow
@@ -54,32 +53,40 @@ export class GoogleSheetsWorksheetStateImporter {
           if (!headerColumn) {
             return;
           }
-          const [featureSetId, featureId] = headerColumn;
-          if (!featureSetValueIds[featureSetId.toString()]) {
-            featureSetValueIds[featureSetId.toString()] = {};
+          const [featureSetUri, featureUri] = headerColumn;
+          if (!featureSetValueUris[featureSetUri.toString()]) {
+            featureSetValueUris[featureSetUri.toString()] = {};
           }
-          featureSetValueIds[featureSetId.toString()][featureId.toString()] =
+          featureSetValueUris[featureSetUri.toString()][featureUri.toString()] =
             dataColumn.length ? dataColumn.split(";") : [];
         });
       console.info(
-        "Feature set value ids: " + JSON.stringify(featureSetValueIds)
+        "Feature set value ids: " + JSON.stringify(featureSetValueUris)
       );
 
       const featureSetStates: WorksheetFeatureSetState[] = [];
-      for (const featureSetId of _.keys(featureSetValueIds)) {
+      for (const featureSetValueUri of Object.keys(featureSetValueUris)) {
         const featureStates: WorksheetFeatureState[] = [];
-        for (const featureId of _.keys(featureSetValueIds[featureSetId])) {
-          const selectedValueIds = featureSetValueIds[featureSetId][featureId];
+        for (const featureUri of Object.keys(
+          featureSetValueUris[featureSetValueUri]
+        )) {
+          const selectedValueUris =
+            featureSetValueUris[featureSetValueUri][featureUri];
           featureStates.push({
-            id: featureId,
-            selectedValueIds: selectedValueIds.length
-              ? selectedValueIds
-              : undefined,
+            uri: featureUri,
+            values:
+              selectedValueUris.length > 0
+                ? selectedValueUris.map((selectedValueUri) => ({
+                    selected: true,
+                    uri: selectedValueUri,
+                  }))
+                : undefined,
+            text: undefined,
           });
         }
         featureSetStates.push({
-          features: featureStates,
-          id: featureSetId,
+          features: featureStates.length > 0 ? featureStates : undefined,
+          uri: featureSetValueUri,
         });
       }
       worksheetStates.push({

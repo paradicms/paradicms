@@ -35,20 +35,18 @@ export class JsonLdWorksheetStateExporter
       href = href.substring(0, href.length - 4);
     }
     json["@id"] = "https://dressdiscover.org" + href;
-    for (const featureSetState of worksheetState.featureSets) {
-      for (const featureState of featureSetState.features) {
-        if (
-          !featureState.selectedValueIds ||
-          featureState.selectedValueIds.length === 0
-        ) {
+    for (const featureSetState of worksheetState.featureSets ?? []) {
+      for (const featureState of featureSetState.features ?? []) {
+        const selectedFeatureValueUris = (featureState.values ?? [])
+          .filter((value) => value.selected)
+          .map((value) => value.uri);
+
+        if (selectedFeatureValueUris.length === 0) {
           continue;
         }
-        const featureStateKey =
-          "cc:" + featureState.id.toString().replace(" ", "");
+        const featureStateKey = featureState.uri;
         context[featureStateKey] = {"@type": "@id"};
-        json[featureStateKey] = featureState.selectedValueIds.map(
-          (selectedValueId) => "cc:" + selectedValueId.toString()
-        );
+        json[featureStateKey] = selectedFeatureValueUris;
       }
     }
     return json;
