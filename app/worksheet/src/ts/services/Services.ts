@@ -1,36 +1,30 @@
 ﻿import {WorksheetConfiguration} from "~/models/WorksheetConfiguration";
 import {UserSettingsCommandService} from "~/services/UserSettingsCommandService";
 import {UserSettingsQueryService} from "~/services/UserSettingsQueryService";
-import {WorksheetDefinitionQueryService} from "~/services/worksheet/definition/WorksheetDefinitionQueryService";
 import {WorksheetStateCommandService} from "~/services/WorksheetStateCommandService";
 import {WorksheetStateQueryService} from "~/services/WorksheetStateQueryService";
-import {defaultWorksheetConfiguration} from "~/models/defaultWorksheetConfiguration";
 import {LocalStorageUserSettingsCommandService} from "~/services/LocalStorageUserSettingsCommandService";
 import {LocalStorageUserSettingsQueryService} from "~/services/LocalStorageUserSettingsQueryService";
-import {BundledWorksheetDefinitionQueryService} from "~/services/worksheet/definition/BundledWorksheetDefinitionQueryService";
 import {GoogleSheetsWorksheetStateCommandService} from "~/services/GoogleSheetsWorksheetStateCommandService";
 import {GoogleSheetsWorksheetStateQueryService} from "~/services/GoogleSheetsWorksheetStateQueryService";
 import {LocalStorageWorksheetStateCommandService} from "~/services/LocalStorageWorksheetStateCommandService";
 import {LocalStorageWorksheetStateQueryService} from "~/services/LocalStorageWorksheetStateQueryService";
+import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 
 export class Services {
-  constructor(readonly configuration: WorksheetConfiguration) {
+  constructor(
+    readonly configuration: WorksheetConfiguration,
+    worksheetDefinition: WorksheetDefinition
+  ) {
     this.userSettingsCommandService =
       new LocalStorageUserSettingsCommandService();
     this.userSettingsQueryService = new LocalStorageUserSettingsQueryService();
-
-    if (configuration.definition.bundled) {
-      this.worksheetDefinitionQueryService =
-        new BundledWorksheetDefinitionQueryService();
-    } else {
-      throw new RangeError();
-    }
 
     if (configuration.state.googleSheets) {
       this.worksheetStateCommandService =
         new GoogleSheetsWorksheetStateCommandService(
           configuration.state.googleSheets,
-          this.worksheetDefinitionQueryService
+          worksheetDefinition
         );
       this.worksheetStateQueryService =
         new GoogleSheetsWorksheetStateQueryService(
@@ -46,13 +40,8 @@ export class Services {
     }
   }
 
-  static readonly default = new Services(
-    defaultWorksheetConfiguration.instance
-  );
-
   readonly userSettingsCommandService: UserSettingsCommandService;
   readonly userSettingsQueryService: UserSettingsQueryService;
-  readonly worksheetDefinitionQueryService: WorksheetDefinitionQueryService;
   readonly worksheetStateCommandService: WorksheetStateCommandService;
   readonly worksheetStateQueryService: WorksheetStateQueryService;
 }
