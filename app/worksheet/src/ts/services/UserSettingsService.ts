@@ -1,8 +1,10 @@
 import {UserSettings} from "~/models/UserSettings";
 
-export interface UserSettingsCommandService {
+export interface UserSettingsService {
+  getUserSettings(userId: string): Promise<UserSettings>;
+
   putUserSettings(kwds: {
-    id: string;
+    userId: string;
     userSettings: UserSettings;
   }): Promise<void>;
 }

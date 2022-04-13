@@ -1,6 +1,5 @@
 import {CurrentUser} from "~/models/CurrentUser";
-import {CurrentUserContext} from "~/contexts/CurrentUserContext";
-import {useContext} from "react";
+import {useCurrentUserService} from "~/hooks/useCurrentUserService";
 
-export const useCurrentUser = () =>
-  useContext<CurrentUser | null>(CurrentUserContext);
+export const useCurrentUser = (): CurrentUser | null =>
+  useCurrentUserService().getCurrentUser();
