@@ -6,13 +6,13 @@ import {GoogleSheetsWorksheetStateService} from "~/services/GoogleSheetsWorkshee
 import {useWorksheetDefinition} from "~/hooks/useWorksheetDefinition";
 import {LocalStorageWorksheetStateService} from "~/services/LocalStorageWorksheetStateService";
 
-export const useWorksheetStateService = () => {
+export const useWorksheetStateService = (): WorksheetStateService | null => {
   const currentUser = useCurrentUser();
   const userSettingsService = useUserSettingsService();
   const worksheetDefinition = useWorksheetDefinition();
 
   const [worksheetStateService, setWorksheetStateService] =
-    useState<WorksheetStateService>();
+    useState<WorksheetStateService | null>(null);
 
   useEffect(() => {
     if (currentUser) {
