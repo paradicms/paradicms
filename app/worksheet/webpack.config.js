@@ -45,7 +45,7 @@ module.exports = (env, argv) => {
       devtoolModuleFilenameTemplate: "[absolute-resource-path]",
       devtoolFallbackModuleFilenameTemplate: "[absolute-resource-path]?[hash]",
       path: path.join(__dirname, "out"),
-      filename: "js/towndex.js",
+      filename: "js/worksheet.js",
       publicPath: "",
     },
     plugins: [
