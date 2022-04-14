@@ -24,14 +24,12 @@ export class GoogleSheetsWorksheetStateService
     this.worksheetDefinition = kwds.worksheetDefinition;
   }
 
-  deleteWorksheetState(kwds: {id: string}): Promise<void> {
+  deleteWorksheetState(id: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.getWorksheetStates().then(
         (worksheetStates) => {
           this.replaceWorksheetStates(
-            worksheetStates.filter(
-              (worksheetState) => worksheetState.id !== kwds.id
-            )
+            worksheetStates.filter((worksheetState) => worksheetState.id !== id)
           ).then(
             () => resolve(),
             (reason) => reject(reason)
@@ -113,16 +111,16 @@ export class GoogleSheetsWorksheetStateService
     return (gapi.client as any).sheets.spreadsheets;
   }
 
-  getWorksheetState(kwds: {id: string}): Promise<WorksheetState> {
+  getWorksheetState(id: string): Promise<WorksheetState> {
     return new Promise((resolve, reject) => {
       this.getWorksheetStates().then((worksheetStates) => {
         for (const worksheetState of worksheetStates) {
-          if (worksheetState.id === kwds.id) {
+          if (worksheetState.id === id) {
             resolve(worksheetState);
             return;
           }
         }
-        reject(new NoSuchWorksheetStateException(kwds.id));
+        reject(new NoSuchWorksheetStateException(id));
       }, reject);
     });
   }
@@ -147,22 +145,22 @@ export class GoogleSheetsWorksheetStateService
     });
   }
 
-  putWorksheetState(kwds: {state: WorksheetState}): Promise<void> {
+  putWorksheetState(state: WorksheetState): Promise<void> {
     return new Promise((resolve, reject) => {
       this.getWorksheetStates().then(
         (oldWorksheetStates) => {
           const newWorksheetStates: WorksheetState[] = [];
           let replaced: boolean = false;
           for (const oldWorksheetState of oldWorksheetStates) {
-            if (!replaced && oldWorksheetState.id === kwds.state.id) {
-              newWorksheetStates.push(kwds.state);
+            if (!replaced && oldWorksheetState.id === state.id) {
+              newWorksheetStates.push(state);
               replaced = true;
             } else {
               newWorksheetStates.push(oldWorksheetState);
             }
           }
           if (!replaced) {
-            newWorksheetStates.push(kwds.state);
+            newWorksheetStates.push(state);
           }
 
           this.replaceWorksheetStates(newWorksheetStates).then(

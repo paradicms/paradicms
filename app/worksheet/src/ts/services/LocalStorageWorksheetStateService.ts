@@ -6,20 +6,20 @@ import {WorksheetStateService} from "~/services/WorksheetStateService";
 export class LocalStorageWorksheetStateService
   implements WorksheetStateService
 {
-  deleteWorksheetState(kwds: {id: string}): Promise<void> {
+  deleteWorksheetState(id: string): Promise<void> {
     localStorage.removeItem(
-      LocalStorageWorksheetStateService.getWorksheetStateItemKey(kwds.id)
+      LocalStorageWorksheetStateService.getWorksheetStateItemKey(id)
     );
     return new Promise((resolve, reject) => resolve());
   }
 
-  getWorksheetState(kwds: {id: string}): Promise<WorksheetState> {
+  getWorksheetState(id: string): Promise<WorksheetState> {
     return new Promise((resolve, reject) => {
       const jsonString = localStorage.getItem(
-        LocalStorageWorksheetStateService.getWorksheetStateItemKey(kwds.id)
+        LocalStorageWorksheetStateService.getWorksheetStateItemKey(id)
       );
       if (jsonString == null) {
-        reject(new NoSuchWorksheetStateException(kwds.id));
+        reject(new NoSuchWorksheetStateException(id));
         return;
       }
       resolve(JSON.parse(jsonString));
@@ -63,10 +63,10 @@ export class LocalStorageWorksheetStateService
 
   private static readonly _WORKSHEET_ITEM_KEY_PREFIX = "worksheet/state/";
 
-  putWorksheetState(kwds: {state: WorksheetState}): Promise<void> {
+  putWorksheetState(state: WorksheetState): Promise<void> {
     localStorage.setItem(
-      LocalStorageWorksheetStateService.getWorksheetStateItemKey(kwds.state.id),
-      JSON.stringify(kwds.state)
+      LocalStorageWorksheetStateService.getWorksheetStateItemKey(state.id),
+      JSON.stringify(state)
     );
     return new Promise((resolve, reject) => resolve());
   }
