@@ -1,14 +1,15 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import Hammer from "hammerjs";
+// import Hammer from "hammerjs";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
-import {QueryParamProvider} from "use-query-params";
 import {WorksheetDefinitionDataset} from "~/models/WorksheetDefinitionDataset";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {WorksheetDefinitionContext} from "./contexts/WorksheetDefinitionContext";
 import {loadGapiClient} from "~/loadGapiClient";
+import {Hrefs} from "~/Hrefs";
+import {LoginPage} from "~/pages/LoginPage";
 
-delete Hammer.defaults.cssProps.userSelect;
+// delete Hammer.defaults.cssProps.userSelect;
 
 loadGapiClient().then(() =>
   fetch("/data.ttl").then((response) =>
@@ -19,11 +20,9 @@ loadGapiClient().then(() =>
       ReactDOM.render(
         <WorksheetDefinitionContext.Provider value={worksheetDefinition}>
           <Router>
-            <QueryParamProvider ReactRouterRoute={Route}>
-              <Routes>
-                <div />
-              </Routes>
-            </QueryParamProvider>
+            <Routes>
+              <Route path={Hrefs.login} element={<LoginPage />} />
+            </Routes>
           </Router>
         </WorksheetDefinitionContext.Provider>,
         document.getElementById("root")
