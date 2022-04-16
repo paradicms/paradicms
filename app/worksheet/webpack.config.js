@@ -49,14 +49,14 @@ module.exports = (env, argv) => {
       publicPath: "",
     },
     plugins: [
-      new CopyWebpackPlugin({
-        patterns: [
-          {from: dataFilePath, to: "data.ttl"},
-          "img",
-          "google*.html",
-          "*.pdf",
-        ],
-      }),
+      // new CopyWebpackPlugin({
+      //   patterns: [
+      //     {from: dataFilePath, to: "data.ttl"},
+      //     "img",
+      //     "google*.html",
+      //     "*.pdf",
+      //   ],
+      // }),
       new webpack.DefinePlugin({
         DEVELOPMENT: mode === "development",
         PRODUCTION: mode === "production",
