@@ -49,14 +49,14 @@ module.exports = (env, argv) => {
       publicPath: "",
     },
     plugins: [
-      // new CopyWebpackPlugin({
-      //   patterns: [
-      //     {from: dataFilePath, to: "data.ttl"},
-      //     "img",
-      //     "google*.html",
-      //     "*.pdf",
-      //   ],
-      // }),
+      new CopyWebpackPlugin({
+        patterns: [
+          {from: dataFilePath, to: "data.ttl"},
+          "img",
+          "google*.html",
+          "*.pdf",
+        ],
+      }),
       new webpack.DefinePlugin({
         DEVELOPMENT: mode === "development",
         PRODUCTION: mode === "production",
@@ -64,6 +64,11 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         hash: true,
         template: "index.html",
+        templateParameters: {
+          stylesheetHref:
+            process.env.STYLESHEET_HREF ??
+            "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css",
+        },
       }),
     ],
     resolve: {
