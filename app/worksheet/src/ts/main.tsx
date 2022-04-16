@@ -8,6 +8,7 @@ import {WorksheetDefinitionContext} from "./contexts/WorksheetDefinitionContext"
 import {loadGapiClient} from "~/loadGapiClient";
 import {Hrefs} from "~/Hrefs";
 import {LoginPage} from "~/pages/LoginPage";
+import {PrivacyPage} from "~/pages/PrivacyPage";
 
 // delete Hammer.defaults.cssProps.userSelect;
 
@@ -22,6 +23,7 @@ loadGapiClient().then(() =>
           <Router>
             <Routes>
               <Route path={Hrefs.login} element={<LoginPage />} />
+              <Route path={Hrefs.privacy} element={<PrivacyPage />} />
             </Routes>
           </Router>
         </WorksheetDefinitionContext.Provider>,
