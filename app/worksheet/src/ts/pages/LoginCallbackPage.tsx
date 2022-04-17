@@ -17,6 +17,7 @@ export const LoginCallbackPage: React.FunctionComponent = () => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [exception, setException] = useState<Exception | undefined>(undefined);
   const location = useLocation();
+  const [success, setSuccess] = useState<boolean>(false);
 
   useEffect(() => {
     currentUserService.deleteCurrentUser();
@@ -61,6 +62,8 @@ export const LoginCallbackPage: React.FunctionComponent = () => {
             });
 
             currentUserService.putCurrentUser(currentUser);
+
+            setSuccess(true);
           },
           (reason: any) => {
             setException(convertGapiErrorToException(reason));
@@ -78,7 +81,9 @@ export const LoginCallbackPage: React.FunctionComponent = () => {
 
   if (error || exception) {
     return <GenericErrorHandler exception={exception} error={error} />;
+  } else if (success) {
+    return <Navigate to={Hrefs.index} />;
+  } else {
+    return null;
   }
-
-  return <Navigate to={Hrefs.index} />;
 };
