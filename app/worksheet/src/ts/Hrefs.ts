@@ -18,10 +18,10 @@ export class Hrefs {
   }
 
   static get gitHub() {
-    return "https://github.com/minorg/dressdiscover";
+    return "https://github.com/dressdiscover";
   }
 
-  static get home() {
+  static get index() {
     return "/";
   }
 

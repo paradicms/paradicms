@@ -10,6 +10,7 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {Hrefs} from "~/Hrefs";
 import {LoginPage} from "~/pages/LoginPage";
 import {PrivacyPage} from "~/pages/PrivacyPage";
+import {LoginCallbackPage} from "~/pages/LoginCallbackPage";
 
 export const Application: React.FunctionComponent = () => {
   const [error, setError] = useState<any>(null);
@@ -62,6 +63,7 @@ export const Application: React.FunctionComponent = () => {
       <Router>
         <Routes>
           <Route path={Hrefs.login} element={<LoginPage />} />
+          <Route path={Hrefs.loginCallback} element={<LoginCallbackPage />} />
           <Route path={Hrefs.privacy} element={<PrivacyPage />} />
         </Routes>
       </Router>

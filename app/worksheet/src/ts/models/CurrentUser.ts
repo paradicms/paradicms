@@ -21,7 +21,7 @@ export class CurrentUser {
   }
 
   get id(): string {
-    return this.user.id;
+    return this.user.identityProviderId;
   }
 
   get identityProvider(): UserIdentityProvider {

@@ -5,10 +5,9 @@ export const userJsonSchema = yup.object({
   emailAddressVerified: yup.boolean(),
   familyName: yup.string(),
   givenName: yup.string(),
-  id: yup.string().required(),
   identityProvider: yup.number().required(),
+  identityProviderId: yup.string().required(),
   locale: yup.string(),
   name: yup.string(),
-  nickname: yup.string(),
   pictureUrl: yup.string(),
 });

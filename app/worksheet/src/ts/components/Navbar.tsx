@@ -47,7 +47,7 @@ export const Navbar: React.FunctionComponent = () => {
     }
     currentUserJsx = (
       <Collapse navbar>
-        <Nav className="ml-auto" navbar>
+        <Nav className="ms-auto" navbar>
           {currentUserJsx}
         </Nav>
       </Collapse>
@@ -59,7 +59,7 @@ export const Navbar: React.FunctionComponent = () => {
   return (
     <div>
       <BootstrapNavbar color="light" light expand="md">
-        <NavbarBrand href={Hrefs.home}>DressDiscover Worksheet</NavbarBrand>
+        <NavbarBrand href={Hrefs.index}>Worksheet</NavbarBrand>
         <Nav>
           <NavItem>
             <NavLink tag="a" href={Hrefs.gettingStarted}>

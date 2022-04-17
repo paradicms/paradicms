@@ -23,7 +23,7 @@ export const AuthorizationExceptionModal: React.FunctionComponent<{
   const onClickAnonymous = useCallback(
     () => () => {
       currentUserService.deleteCurrentUser();
-      navigate(Hrefs.home);
+      navigate(Hrefs.index);
     },
     [currentUserService, navigate]
   );
