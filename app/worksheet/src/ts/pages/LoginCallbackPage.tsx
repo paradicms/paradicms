@@ -11,6 +11,7 @@ import {convertGapiErrorToException} from "~/services/GapiException";
 import {GenericErrorHandler} from "~/components/GenericErrorHandler";
 import {Navigate} from "react-router-dom";
 import {Hrefs} from "~/Hrefs";
+import {Spinner} from "~/components/Spinner";
 
 export const LoginCallbackPage: React.FunctionComponent = () => {
   const currentUserService = useCurrentUserService();
@@ -84,6 +85,6 @@ export const LoginCallbackPage: React.FunctionComponent = () => {
   } else if (success) {
     return <Navigate to={Hrefs.index} />;
   } else {
-    return null;
+    return <Spinner />;
   }
 };

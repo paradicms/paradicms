@@ -1,24 +1,8 @@
 import {WorksheetMark} from "~/models/WorksheetMark";
 
 export class Hrefs {
-  static get about() {
-    return "/about";
-  }
-
-  static get contact() {
-    return "mailto:info@dressdiscover.org";
-  }
-
-  static get credits() {
-    return "/credits";
-  }
-
   static get gettingStarted() {
     return "/GettingStartedWithDressDiscover.pdf";
-  }
-
-  static get gitHub() {
-    return "https://github.com/dressdiscover";
   }
 
   static get index() {
@@ -45,16 +29,8 @@ export class Hrefs {
     return "/privacy";
   }
 
-  static get root() {
-    return "/";
-  }
-
   static get userSettings() {
     return "/userSettings";
-  }
-
-  static get worksheetStart() {
-    return "/worksheet/";
   }
 
   static worksheetState(mark: WorksheetMark) {

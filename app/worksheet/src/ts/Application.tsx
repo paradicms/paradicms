@@ -9,10 +9,11 @@ import {WorksheetDefinitionContext} from "~/contexts/WorksheetDefinitionContext"
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {Hrefs} from "~/Hrefs";
 import {LoginPage} from "~/pages/LoginPage";
-import {PrivacyPage} from "~/pages/PrivacyPage";
 import {LoginCallbackPage} from "~/pages/LoginCallbackPage";
 import {LogoutPage} from "~/pages/LogoutPage";
 import {LogoutCallbackPage} from "~/pages/LogoutCallbackPage";
+// import {IndexPage} from "~/pages/IndexPage";
+import {Spinner} from "~/components/Spinner";
 
 export const Application: React.FunctionComponent = () => {
   const [error, setError] = useState<any>(null);
@@ -64,11 +65,11 @@ export const Application: React.FunctionComponent = () => {
     <WorksheetDefinitionContext.Provider value={worksheetDefinition}>
       <Router>
         <Routes>
+          <Route path={Hrefs.index} element={<Spinner />} />
           <Route path={Hrefs.login} element={<LoginPage />} />
           <Route path={Hrefs.loginCallback} element={<LoginCallbackPage />} />
           <Route path={Hrefs.logout} element={<LogoutPage />} />
           <Route path={Hrefs.logoutCallback} element={<LogoutCallbackPage />} />
-          <Route path={Hrefs.privacy} element={<PrivacyPage />} />
         </Routes>
       </Router>
     </WorksheetDefinitionContext.Provider>

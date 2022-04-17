@@ -9,9 +9,7 @@ export const Footer: React.FunctionComponent = () => (
       <Row>&nbsp;</Row>
       <Row>
         <Col className="text-center" md="12">
-          <a href={Hrefs.contact}>Contact</a>&nbsp;|&nbsp;
           <Link to={Hrefs.privacy}>Privacy</Link>&nbsp;|&nbsp;
-          <a href={Hrefs.gitHub}>GitHub</a>
         </Col>
       </Row>
     </Container>
