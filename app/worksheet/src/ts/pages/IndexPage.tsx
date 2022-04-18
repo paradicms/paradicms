@@ -13,6 +13,7 @@ import {
   Container,
   Input,
   Row,
+  Table,
 } from "reactstrap";
 import classnames from "classnames";
 import {useWorksheetStateService} from "~/hooks/useWorksheetStateService";
@@ -127,11 +128,9 @@ export const IndexPage: React.FunctionComponent = () => {
                   <Row className="mb-5"></Row>
                   <Row>
                     <Col xs="12">
-                      {/*<ExistingWorksheetStates*/}
-                      {/*  onDeleteWorksheetState={this.onDeleteWorksheetState}*/}
-                      {/*  onRenameWorksheetState={this.onRenameWorksheetState}*/}
-                      {/*  worksheetStateIds={existingWorksheetStateIds}*/}
-                      {/*/>*/}
+                      <ExistingWorksheetStatesCard
+                        existingWorksheetStateIds={existingWorksheetStateIds}
+                      />
                     </Col>
                   </Row>
                 </>
@@ -142,6 +141,183 @@ export const IndexPage: React.FunctionComponent = () => {
       </Container>
     </Frame>
   );
+};
+
+const ExistingWorksheetStatesCard: React.FunctionComponent<{
+  existingWorksheetStateIds: readonly string[];
+}> = ({existingWorksheetStateIds}) => (
+  <Card>
+    <CardHeader>
+      <CardTitle className={classnames(["mb-0", "text-center"])}>
+        <b>Existing worksheets</b> from <WorksheetStateConfigurationHeadline />
+      </CardTitle>
+    </CardHeader>
+    <CardBody>
+      <Container fluid>
+        <Row>
+          <Col xs="12">
+            <Table className="table table-bordered w-100 worksheet-states">
+              <tbody>
+                {existingWorksheetStateIds.map((worksheetStateId) => (
+                  <ExistingWorksheetStateTableRow
+                    key={worksheetStateId}
+                    worksheetStateId={worksheetStateId}
+                  ></ExistingWorksheetStateTableRow>
+                ))}
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
+      </Container>
+    </CardBody>
+  </Card>
+);
+
+const ExistingWorksheetStateTableRow: React.FunctionComponent<{
+  worksheetStateId: string;
+}> = ({worksheetStateId}) => {
+  const [deleting, setDeleting] = useState<boolean>(false);
+  const [newWorksheetStateId, setNewWorksheetStateId] = useState<string>("");
+  const [renaming, setRenaming] = useState<boolean>(false);
+  const worksheetStateService = useWorksheetStateService();
+
+  const onRename = () => {
+    worksheetStateService!
+      .renameWorksheetState({
+        newId: newWorksheetStateId,
+        oldId: worksheetStateId,
+      })
+      .then(() => {
+        setNewWorksheetStateId("");
+        setRenaming(false);
+      });
+  };
+
+  if (!worksheetStateService) {
+    return null;
+  }
+
+  if (deleting) {
+    return (
+      <tr>
+        <td className="id leftmost">{worksheetStateId}</td>
+        <td className="inner prompt text-danger">
+          <span>Delete?</span>
+        </td>
+        <td className="cancel inner">
+          <Button
+            className="cancel-delete-button"
+            color="primary"
+            onClick={() => setDeleting(false)}
+            size="sm"
+          >
+            No
+          </Button>
+        </td>
+        <td className="confirm rightmost">
+          <Button
+            className="confirm-delete-button"
+            color="danger"
+            onClick={() => {
+              worksheetStateService!
+                .deleteWorksheetState(worksheetStateId)
+                .then(() => setDeleting(false));
+            }}
+            size="sm"
+          >
+            Yes
+          </Button>
+        </td>
+      </tr>
+    );
+  } else if (renaming) {
+    return (
+      <tr>
+        <td className="id leftmost">
+          <Input
+            autoFocus
+            className="form-control rename-input w-100"
+            onChange={(event) => setNewWorksheetStateId(event.target.value)}
+            onKeyPress={(event) => {
+              if (event.key === "Enter") {
+                event.stopPropagation();
+                onRename();
+              }
+            }}
+            placeholder="Rename"
+            value={newWorksheetStateId}
+            style={{display: "inline-block", width: "auto"}}
+            type="text"
+          />
+        </td>
+        <td className="inner prompt">&nbsp;</td>
+        <td className="cancel inner">
+          <Button
+            className="cancel-rename-button"
+            color="primary"
+            onClick={() => {
+              setNewWorksheetStateId("");
+              setRenaming(false);
+            }}
+          >
+            Cancel
+          </Button>
+        </td>
+        <td className="confirm rightmost">
+          <Button
+            className={classnames({
+              "confirm-rename-button": true,
+              invisible: !newWorksheetStateId,
+              visible: !!newWorksheetStateId,
+            })}
+            color="danger"
+            onClick={onRename}
+          >
+            Confirm
+          </Button>
+        </td>
+        <td>&nbsp;</td>
+      </tr>
+    );
+  } else {
+    return (
+      <tr>
+        <td className="id leftmost">
+          <Link
+            to={Hrefs.worksheetState({worksheetStateId})}
+            title="Open this worksheet"
+          >
+            {worksheetStateId}
+          </Link>
+        </td>
+        <td className="inner prompt">&nbsp;</td>
+        <td className="delete-button inner">
+          <Button
+            onClick={() => {
+              setDeleting(true);
+              setNewWorksheetStateId("");
+              setRenaming(false);
+            }}
+            title="Delete this worksheet"
+          >
+            <i className="fas fa-trash-alt"></i>
+          </Button>
+        </td>
+        <td className="rename-button rightmost">
+          <Button
+            onClick={() => {
+              setDeleting(false);
+              setNewWorksheetStateId("");
+              setRenaming(true);
+            }}
+            title="Rename this worksheet"
+          >
+            <i className="fas fa-pencil-alt"></i>
+          </Button>
+        </td>
+      </tr>
+    );
+  }
 };
 
 const NewWorksheetStateCard: React.FunctionComponent<{
