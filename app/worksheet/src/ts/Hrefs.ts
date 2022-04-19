@@ -33,20 +33,24 @@ export class Hrefs {
     return "/userSettings";
   }
 
-  static worksheetState(mark: WorksheetMark) {
+  static worksheetMark(mark: WorksheetMark) {
     let href =
       "/worksheet/state/" +
       encodeURIComponent(mark.worksheetStateId.toString()) +
       "/";
-    if (mark.featureSetId) {
+    if (mark.featureSetUri) {
       href +=
-        "feature_set/" + encodeURIComponent(mark.featureSetId.toString()) + "/";
-      if (mark.featureId) {
+        "feature_set/" + encodeURIComponent(mark.featureSetUri.toString()) + "/";
+      if (mark.featureUri) {
         href +=
-          "feature/" + encodeURIComponent(mark.featureId.toString()) + "/";
+          "feature/" + encodeURIComponent(mark.featureUri.toString()) + "/";
       }
     }
     href += mark.review ? "review" : "edit";
     return href;
+  }
+
+  static get worksheetStart() {
+    return this.index;
   }
 }

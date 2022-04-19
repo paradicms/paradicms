@@ -1,6 +1,6 @@
 export interface WorksheetMark {
-  readonly featureId?: string;
-  readonly featureSetId?: string;
+  readonly featureUri?: string;
+  readonly featureSetUri?: string;
   readonly review?: boolean;
   readonly worksheetStateId: string;
 }

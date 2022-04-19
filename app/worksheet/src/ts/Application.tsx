@@ -64,11 +64,11 @@ export const Application: React.FunctionComponent = () => {
     <WorksheetDefinitionContext.Provider value={worksheetDefinition}>
       <Router>
         <Routes>
-          <Route path={Hrefs.index} element={<WorksheetStartPage />} />
           <Route path={Hrefs.login} element={<LoginPage />} />
           <Route path={Hrefs.loginCallback} element={<LoginCallbackPage />} />
           <Route path={Hrefs.logout} element={<LogoutPage />} />
           <Route path={Hrefs.logoutCallback} element={<LogoutCallbackPage />} />
+          <Route path={Hrefs.worksheetStart} element={<WorksheetStartPage />} />
         </Routes>
       </Router>
     </WorksheetDefinitionContext.Provider>

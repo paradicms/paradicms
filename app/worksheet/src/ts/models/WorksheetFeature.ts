@@ -12,12 +12,13 @@ export class WorksheetFeature {
     definition: WorksheetFeatureDefinition;
     initialState?: WorksheetFeatureState;
   }) {
+    const {initialState} = kwds;
     this.definition = kwds.definition;
     this.values = this.definition.values.map(
       (valueDefinition) =>
         new WorksheetFeatureValue({
           definition: valueDefinition,
-          initialState: kwds.initialState?.values?.find(
+          initialState: initialState?.values?.find(
             (featureValueState) => featureValueState.uri === valueDefinition.uri
           ),
         })
@@ -39,5 +40,9 @@ export class WorksheetFeature {
           values: valueStates.length > 0 ? valueStates : undefined,
         }
       : undefined;
+  }
+
+  get uri(): string {
+    return this.definition.uri;
   }
 }

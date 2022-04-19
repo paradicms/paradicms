@@ -25,6 +25,7 @@ import {defaultWorksheetConfiguration} from "~/models/defaultWorksheetConfigurat
 import {Hrefs} from "~/Hrefs";
 import {Link, useNavigate} from "react-router-dom";
 import {Spinner} from "~/components/Spinner";
+import {Headline} from "~/components/Headline";
 
 export const WorksheetStartPage: React.FunctionComponent = () => {
   const [exception, setException] = useState<Exception | null>(null);
@@ -57,7 +58,7 @@ export const WorksheetStartPage: React.FunctionComponent = () => {
         })
         .then(() => {
           navigate(
-            Hrefs.worksheetState({worksheetStateId: newWorksheetStateId})
+            Hrefs.worksheetMark({worksheetStateId: newWorksheetStateId})
           );
         }, setException);
     },
@@ -75,7 +76,7 @@ export const WorksheetStartPage: React.FunctionComponent = () => {
       <Container fluid>
         <Row>
           <Col md="12">
-            <h4 className="mt-2 pb-2 pl-4 pt-2 text-center">Worksheet</h4>
+            <Headline>Worksheet</Headline>
           </Col>
         </Row>
         <Row>
@@ -284,7 +285,7 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
       <tr>
         <td className="id leftmost">
           <Link
-            to={Hrefs.worksheetState({worksheetStateId})}
+            to={Hrefs.worksheetMark({worksheetStateId})}
             title="Open this worksheet"
           >
             {worksheetStateId}

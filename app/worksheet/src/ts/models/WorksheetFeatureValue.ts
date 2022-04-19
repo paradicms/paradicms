@@ -13,9 +13,17 @@ export class WorksheetFeatureValue {
     this.selected = !!kwds.initialState?.selected;
   }
 
+  select(): void {
+    this.selected = true;
+  }
+
   get state(): WorksheetFeatureValueState | undefined {
     return this.selected
       ? {selected: this.selected, uri: this.definition.uri}
       : undefined;
+  }
+
+  unselect(): void {
+    this.selected = false;
   }
 }
