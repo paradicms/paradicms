@@ -12,8 +12,7 @@ import {LoginPage} from "~/pages/LoginPage";
 import {LoginCallbackPage} from "~/pages/LoginCallbackPage";
 import {LogoutPage} from "~/pages/LogoutPage";
 import {LogoutCallbackPage} from "~/pages/LogoutCallbackPage";
-// import {IndexPage} from "~/pages/IndexPage";
-import {Spinner} from "~/components/Spinner";
+import {WorksheetStartPage} from "~/pages/WorksheetStartPage";
 
 export const Application: React.FunctionComponent = () => {
   const [error, setError] = useState<any>(null);
@@ -65,7 +64,7 @@ export const Application: React.FunctionComponent = () => {
     <WorksheetDefinitionContext.Provider value={worksheetDefinition}>
       <Router>
         <Routes>
-          <Route path={Hrefs.index} element={<Spinner />} />
+          <Route path={Hrefs.index} element={<WorksheetStartPage />} />
           <Route path={Hrefs.login} element={<LoginPage />} />
           <Route path={Hrefs.loginCallback} element={<LoginCallbackPage />} />
           <Route path={Hrefs.logout} element={<LogoutPage />} />

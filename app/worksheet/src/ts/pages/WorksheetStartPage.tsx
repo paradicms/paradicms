@@ -26,7 +26,7 @@ import {Hrefs} from "~/Hrefs";
 import {Link, useNavigate} from "react-router-dom";
 import {Spinner} from "~/components/Spinner";
 
-export const IndexPage: React.FunctionComponent = () => {
+export const WorksheetStartPage: React.FunctionComponent = () => {
   const [exception, setException] = useState<Exception | null>(null);
   const [existingWorksheetStateIds, setExistingWorksheetStateIds] = useState<
     string[] | null
