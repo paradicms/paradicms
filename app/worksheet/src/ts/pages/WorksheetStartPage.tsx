@@ -26,6 +26,9 @@ import {Hrefs} from "~/Hrefs";
 import {Link, useNavigate} from "react-router-dom";
 import {Spinner} from "~/components/Spinner";
 import {Headline} from "~/components/Headline";
+import {defaultUserSettings} from "~/models/defaultUserSettings";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPencilAlt, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 
 export const WorksheetStartPage: React.FunctionComponent = () => {
   const [exception, setException] = useState<Exception | null>(null);
@@ -105,7 +108,7 @@ export const WorksheetStartPage: React.FunctionComponent = () => {
             <hr />
             <br />
             <div className="w-100 text-center">
-              <img className="img-fluid" src="../img/start-cropped.jpg"></img>
+              <img className="img-fluid" src="img/start-cropped.jpg"></img>
             </div>
           </Col>
           <Col className="text-left" lg="7" xs="12">
@@ -301,7 +304,7 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
             }}
             title="Delete this worksheet"
           >
-            <i className="fas fa-trash-alt"></i>
+            <FontAwesomeIcon icon={faTrashAlt} />
           </Button>
         </td>
         <td className="rename-button rightmost">
@@ -313,7 +316,7 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
             }}
             title="Rename this worksheet"
           >
-            <i className="fas fa-pencil-alt"></i>
+            <FontAwesomeIcon icon={faPencilAlt} />
           </Button>
         </td>
       </tr>
@@ -409,11 +412,7 @@ const WorksheetStateConfigurationHeadline: React.FunctionComponent = () => {
     if (currentUser) {
       userSettingsService
         .getUserSettings(currentUser.id)
-        .then(setUserSettings, () =>
-          setUserSettings({
-            worksheetConfiguration: defaultWorksheetConfiguration,
-          })
-        );
+        .then(setUserSettings, () => setUserSettings(defaultUserSettings));
     } else {
       setUserSettings({worksheetConfiguration: defaultWorksheetConfiguration});
     }

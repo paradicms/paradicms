@@ -23,7 +23,6 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
     headline: string;
     nextButtonEnabled: boolean;
     previousButtonEnabled: boolean;
-    save?: () => void;
     worksheet: Worksheet;
   }>
 > = ({
@@ -32,35 +31,31 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
   headline,
   nextButtonEnabled,
   previousButtonEnabled,
-  save,
   worksheet,
 }) => {
   const navigate = useNavigate();
 
   const onClickFinishButton = useCallback(() => {
-    if (save) {
-      save();
-    }
-    navigate(Hrefs.worksheetMark(worksheet.lastMark));
-  }, [navigate, save, worksheet]);
+    worksheet
+      .save()
+      .then(() => navigate(Hrefs.worksheetMark(worksheet.lastMark)));
+  }, [navigate, worksheet]);
 
   const onClickNextButton = useCallback(() => {
-    if (save) {
-      save();
-    }
-    navigate(Hrefs.worksheetMark(worksheet.nextMark));
-  }, [navigate, save, worksheet]);
+    worksheet
+      .save()
+      .then(() => navigate(Hrefs.worksheetMark(worksheet.nextMark)));
+  }, [navigate, worksheet]);
 
   const onClickPreviousButton = useCallback(() => {
-    if (save) {
-      save();
-    }
-    if (worksheet.currentMarkIndex > 0) {
-      navigate(Hrefs.worksheetMark(worksheet.previousMark));
-    } else {
-      navigate(Hrefs.index);
-    }
-  }, [navigate, save, worksheet]);
+    worksheet.save().then(() => {
+      if (worksheet.currentMarkIndex > 0) {
+        navigate(Hrefs.worksheetMark(worksheet.previousMark));
+      } else {
+        navigate(Hrefs.index);
+      }
+    });
+  }, [navigate, worksheet]);
 
   const breadcrumbItems: ReactNode[] = [];
   breadcrumbItems.push(
@@ -100,7 +95,7 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
     );
   }
 
-  const finishButtonEnabledFinal =
+  const finishOrNextButtonEnabled =
     typeof finishButtonEnabled !== "undefined"
       ? finishButtonEnabled
       : nextButtonEnabled;
@@ -135,8 +130,8 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
           &nbsp;
           <Button
             className={classnames({
-              invisible: !finishButtonEnabledFinal,
-              visible: finishButtonEnabledFinal,
+              invisible: !finishOrNextButtonEnabled,
+              visible: finishOrNextButtonEnabled,
             })}
             color="primary"
             size="lg"

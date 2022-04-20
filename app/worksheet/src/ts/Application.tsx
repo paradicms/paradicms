@@ -13,6 +13,7 @@ import {LoginCallbackPage} from "~/pages/LoginCallbackPage";
 import {LogoutPage} from "~/pages/LogoutPage";
 import {LogoutCallbackPage} from "~/pages/LogoutCallbackPage";
 import {WorksheetStartPage} from "~/pages/WorksheetStartPage";
+import {WorksheetEditPage} from "~/pages/WorksheetEditPage";
 
 export const Application: React.FunctionComponent = () => {
   const [error, setError] = useState<any>(null);
@@ -69,6 +70,10 @@ export const Application: React.FunctionComponent = () => {
           <Route path={Hrefs.logout} element={<LogoutPage />} />
           <Route path={Hrefs.logoutCallback} element={<LogoutCallbackPage />} />
           <Route path={Hrefs.worksheetStart} element={<WorksheetStartPage />} />
+          <Route
+            path="/:worksheetStateId/edit"
+            element={<WorksheetEditPage />}
+          />
         </Routes>
       </Router>
     </WorksheetDefinitionContext.Provider>

@@ -23,7 +23,7 @@ const isEqual = (
     return false;
   }
   return true;
-}
+};
 
 export class Worksheet {
   readonly currentMark: WorksheetMark;
@@ -56,8 +56,8 @@ export class Worksheet {
         })
     );
     this.featureSetsByUri = this.featureSets.reduce((map, featureSet) => {
-     map[featureSet.uri] = featureSet;
-     return map;
+      map[featureSet.uri] = featureSet;
+      return map;
     }, {} as {[index: string]: WorksheetFeatureSet});
     this.stateCtime = initialState.ctime;
     this.stateId = initialState.id;
@@ -67,9 +67,7 @@ export class Worksheet {
     this.marks = this.recalculateMarks(initialState);
   }
 
-  get currentFeature():
-    | WorksheetFeature
-    | undefined {
+  get currentFeature(): WorksheetFeature | undefined {
     if (!this.currentMark.featureUri) {
       return undefined;
     }
@@ -93,13 +91,15 @@ export class Worksheet {
         return markI;
       }
     }
-    throw new EvalError("current mark not found in state machine")
+    throw new EvalError("current mark not found in state machine");
   }
 
   private featureSetByUri(uri: string): WorksheetFeatureSet {
     const featureSet = this.featureSetsByUri[uri];
     if (!featureSet) {
-      throw new RangeError("no such feature set " + this.currentMark.featureSetUri);
+      throw new RangeError(
+        "no such feature set " + this.currentMark.featureSetUri
+      );
     }
     return featureSet;
   }
@@ -133,9 +133,7 @@ export class Worksheet {
   }
 
   get progressPercentage(): number {
-    return Math.round(
-      (this.currentMarkIndex / this.lastMarkIndex) * 100.0
-    );
+    return Math.round((this.currentMarkIndex / this.lastMarkIndex) * 100.0);
   }
 
   private recalculateMarks(state: WorksheetState): readonly WorksheetMark[] {
@@ -148,9 +146,7 @@ export class Worksheet {
     if (state.featureSets && state.featureSets.length > 0) {
       for (const featureSetState of state.featureSets) {
         const featureSetUri = featureSetState.uri;
-        const featureSet = this.featureSetByUri(
-          featureSetUri
-        );
+        const featureSet = this.featureSetByUri(featureSetUri);
 
         // Feature set start
         marks.push({
@@ -187,6 +183,13 @@ export class Worksheet {
 
   save(): Promise<void> {
     return this.stateService.putWorksheetState(this.state);
+  }
+
+  get selectedFeatureSetCount(): number {
+    return this.featureSets.reduce(
+      (count, featureSet) => (featureSet.selected ? count + 1 : count),
+      0
+    );
   }
 
   get state(): WorksheetState {

@@ -25,22 +25,15 @@ export class Hrefs {
     return "/logoutCallback";
   }
 
-  static get privacy() {
-    return "/privacy";
-  }
-
   static get userSettings() {
     return "/userSettings";
   }
 
   static worksheetMark(mark: WorksheetMark) {
-    let href =
-      "/worksheet/state/" +
-      encodeURIComponent(mark.worksheetStateId.toString()) +
-      "/";
+    let href = "/" + encodeURIComponent(mark.worksheetStateId.toString()) + "/";
     if (mark.featureSetUri) {
       href +=
-        "feature_set/" + encodeURIComponent(mark.featureSetUri.toString()) + "/";
+        "featureSet/" + encodeURIComponent(mark.featureSetUri.toString()) + "/";
       if (mark.featureUri) {
         href +=
           "feature/" + encodeURIComponent(mark.featureUri.toString()) + "/";

@@ -7,7 +7,14 @@ export class LocalStorageUserSettingsService implements UserSettingsService {
 
   getUserSettings(userId: string): Promise<UserSettings> {
     return new Promise((resolve) => {
-      resolve(this.getUserSettingsSync(userId));
+      const key =
+        LocalStorageUserSettingsService.getUserSettingsItemKey(userId);
+      const value = localStorage.getItem(key);
+      // console.info("read user settings from key=%s: %s (%s)", key, value);
+      if (!value) {
+        throw new NoSuchUserSettingsException(userId);
+      }
+      resolve(JSON.parse(value));
     });
   }
 
@@ -15,16 +22,6 @@ export class LocalStorageUserSettingsService implements UserSettingsService {
     return (
       LocalStorageUserSettingsService.USER_SETTINGS_ITEM_KEY_PREFIX + userId
     );
-  }
-
-  getUserSettingsSync(userId: string): UserSettings {
-    const key = LocalStorageUserSettingsService.getUserSettingsItemKey(userId);
-    const value = localStorage.getItem(key);
-    // console.info("read user settings from key=%s: %s (%s)", key, value);
-    if (!value) {
-      throw new NoSuchUserSettingsException(userId);
-    }
-    return JSON.parse(value);
   }
 
   putUserSettings(kwds: {

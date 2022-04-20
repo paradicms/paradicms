@@ -52,7 +52,7 @@ module.exports = (env, argv) => {
       new CopyWebpackPlugin({
         patterns: [
           {from: dataFilePath, to: "data.ttl"},
-          "img",
+          {from: "img", to: "img"},
           "google*.html",
           "*.pdf",
         ],
