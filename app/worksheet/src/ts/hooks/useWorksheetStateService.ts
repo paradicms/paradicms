@@ -1,6 +1,6 @@
 import {useUserSettingsService} from "~/hooks/useUserSettingsService";
 import {useCurrentUser} from "~/hooks/useCurrentUser";
-import {useEffect, useState} from "react";
+import {useEffect, useReducer} from "react";
 import {WorksheetStateService} from "~/services/WorksheetStateService";
 import {GoogleSheetsWorksheetStateService} from "~/services/GoogleSheetsWorksheetStateService";
 import {useWorksheetDefinition} from "~/hooks/useWorksheetDefinition";
@@ -8,36 +8,56 @@ import {LocalStorageWorksheetStateService} from "~/services/LocalStorageWorkshee
 import {UserSettings} from "~/models/UserSettings";
 import {defaultUserSettings} from "~/models/defaultUserSettings";
 
+interface WorksheetStateServiceReducerAction {
+  payload: WorksheetStateService;
+}
+
+interface WorksheetStateServiceReducerState {
+  worksheetStateService: WorksheetStateService | null;
+}
+
+const worksheetStateServiceReducer = (
+  state: WorksheetStateServiceReducerState,
+  action: WorksheetStateServiceReducerAction
+): WorksheetStateServiceReducerState => {
+  console.info("dispatch worksheet state service");
+  return {worksheetStateService: action.payload!};
+};
+
 export const useWorksheetStateService = (): WorksheetStateService | null => {
   const currentUser = useCurrentUser();
   const userSettingsService = useUserSettingsService();
   const worksheetDefinition = useWorksheetDefinition();
-
-  const [worksheetStateService, setWorksheetStateService] =
-    useState<WorksheetStateService | null>(null);
+  const [state, dispatch] = useReducer(worksheetStateServiceReducer, {
+    worksheetStateService: null,
+  });
 
   const setWorksheetStateServiceFromUserSettings = (
     userSettings: UserSettings
   ) => {
+    // console.info("setting WorksheetStateService");
     if (currentUser && userSettings.worksheetConfiguration.state.googleSheets) {
       console.info("using Google Sheets WorksheetStateService");
-      setWorksheetStateService(
-        new GoogleSheetsWorksheetStateService({
+      dispatch({
+        payload: new GoogleSheetsWorksheetStateService({
           accessToken: currentUser.session.accessToken,
           configuration: userSettings.worksheetConfiguration.state.googleSheets,
           worksheetDefinition,
-        })
-      );
+        }),
+      });
     } else if (userSettings.worksheetConfiguration.state.localStorage) {
       console.info("using localStorage WorksheetStateService");
-      setWorksheetStateService(new LocalStorageWorksheetStateService());
+      dispatch({
+        payload: new LocalStorageWorksheetStateService(),
+      });
     } else {
       throw new RangeError();
     }
   };
 
   useEffect(() => {
-    if (worksheetStateService) {
+    if (state.worksheetStateService) {
+      // console.info("already have worksheetStateService set");
       return;
     } else if (currentUser) {
       console.info("getting user settings");
@@ -52,5 +72,5 @@ export const useWorksheetStateService = (): WorksheetStateService | null => {
     }
   }, [currentUser, userSettingsService, worksheetDefinition]);
 
-  return worksheetStateService;
+  return state.worksheetStateService;
 };

@@ -4,6 +4,8 @@ import {Institution} from "./Institution";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
 import {
+  BlankNode,
+  DefaultGraph,
   NamedNode,
   Parser,
   ParserOptions,
@@ -520,20 +522,30 @@ export class Dataset {
   ): void {
     this.store.forEach(
       (quad) => {
-        if (quad.graph.termType !== "NamedNode") {
-          throw new RangeError(
-            `expected NamedNode graph, actual ${quad.graph.termType}`
-          );
+        switch (quad.graph.termType) {
+          case "DefaultGraph":
+          case "NamedNode":
+            break;
+          default:
+            throw new RangeError(
+              `expected NamedNode or default graph, actual ${quad.graph.termType}`
+            );
         }
-        if (quad.subject.termType !== "NamedNode") {
-          throw new RangeError(
-            `expected NamedNode subject, actual ${quad.subject.termType}`
-          );
+
+        switch (quad.subject.termType) {
+          case "BlankNode":
+          case "NamedNode":
+            break;
+          default:
+            throw new RangeError(
+              `expected BlankNode or NamedNode subject, actual ${quad.subject.termType}`
+            );
         }
+
         callback({
           dataset: this,
-          graphNode: quad.graph as NamedNode,
-          node: quad.subject as NamedNode,
+          graphNode: quad.graph as DefaultGraph | NamedNode,
+          node: quad.subject as BlankNode | NamedNode,
         });
       },
       null,

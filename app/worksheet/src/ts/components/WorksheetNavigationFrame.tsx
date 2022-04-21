@@ -99,50 +99,51 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
     typeof finishButtonEnabled !== "undefined"
       ? finishButtonEnabled
       : nextButtonEnabled;
-  const nextPreviousButtons = (
-    <Row>
-      <Col xs="12">
-        <div className="float-left">
-          <Button
-            className={classnames({
-              invisible: !previousButtonEnabled,
-              visible: !!previousButtonEnabled,
-            })}
-            color="primary"
-            size="lg"
-            onClick={onClickPreviousButton}
-          >
-            Previous
-          </Button>
-        </div>
-        <div className="float-right">
-          <Button
-            className={classnames({
-              invisible: !nextButtonEnabled,
-              visible: !!nextButtonEnabled,
-            })}
-            color="primary"
-            size="lg"
-            onClick={onClickNextButton}
-          >
-            Next
-          </Button>
-          &nbsp;
-          <Button
-            className={classnames({
-              invisible: !finishOrNextButtonEnabled,
-              visible: finishOrNextButtonEnabled,
-            })}
-            color="primary"
-            size="lg"
-            onClick={onClickFinishButton}
-          >
-            Finish
-          </Button>
-        </div>
-      </Col>
-    </Row>
-  );
+  const nextPreviousButtons =
+    finishOrNextButtonEnabled || nextButtonEnabled || previousButtonEnabled ? (
+      <Row>
+        <Col xs="12">
+          <div className="float-left">
+            <Button
+              className={classnames({
+                invisible: !previousButtonEnabled,
+                visible: !!previousButtonEnabled,
+              })}
+              color="primary"
+              size="lg"
+              onClick={onClickPreviousButton}
+            >
+              Previous
+            </Button>
+          </div>
+          <div className="float-right">
+            <Button
+              className={classnames({
+                invisible: !nextButtonEnabled,
+                visible: !!nextButtonEnabled,
+              })}
+              color="primary"
+              size="lg"
+              onClick={onClickNextButton}
+            >
+              Next
+            </Button>
+            &nbsp;
+            <Button
+              className={classnames({
+                invisible: !finishOrNextButtonEnabled,
+                visible: finishOrNextButtonEnabled,
+              })}
+              color="primary"
+              size="lg"
+              onClick={onClickFinishButton}
+            >
+              Finish
+            </Button>
+          </div>
+        </Col>
+      </Row>
+    ) : null;
 
   return (
     <Hammer
@@ -166,23 +167,24 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
             </Row>
             <Row>
               <Col md="12">
-                <Breadcrumb>{breadcrumbItems}</Breadcrumb>
-                <div className="progress-wrapper">
-                  <Progress
-                    className="h-100"
-                    bar
-                    value={worksheet.progressPercentage}
-                  ></Progress>
-                </div>
+                {breadcrumbItems.length > 1 ? (
+                  <Breadcrumb>{breadcrumbItems}</Breadcrumb>
+                ) : null}
+                {worksheet.progressPercentage > 0 ? (
+                  <div className="progress-wrapper">
+                    <Progress
+                      className="h-100"
+                      bar
+                      value={worksheet.progressPercentage}
+                    ></Progress>
+                  </div>
+                ) : null}
               </Col>
             </Row>
-            <Row>&nbsp;</Row>
             {nextPreviousButtons}
-            <Row>&nbsp;</Row>
-            <Row>
+            <Row className="my-2">
               <Col md="12">{children}</Col>
             </Row>
-            <Row>&nbsp;</Row>
             {nextPreviousButtons}
           </Container>
         </Frame>

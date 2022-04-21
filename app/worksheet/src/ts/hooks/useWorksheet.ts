@@ -1,20 +1,16 @@
 import {useWorksheetDefinition} from "~/hooks/useWorksheetDefinition";
 import {useWorksheetStateService} from "~/hooks/useWorksheetStateService";
-import {WorksheetState} from "~/models/WorksheetState";
-import {useEffect, useState} from "react";
+import {useEffect, useReducer} from "react";
 import {Worksheet} from "~/models/Worksheet";
-import {useMatch} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {WorksheetMark} from "~/models/WorksheetMark";
 import {useLocation} from "react-router";
 
 const useRouteWorksheetMark = (): WorksheetMark => {
   const location = useLocation();
-  const match = useMatch(location.pathname);
-  if (!match) {
-    throw new EvalError();
-  }
-  if (!match.params?.worksheetStateId) {
-    throw new EvalError();
+  const params = useParams();
+  if (!params.worksheetStateId) {
+    throw new EvalError(JSON.stringify(params));
   }
 
   let review: boolean;
@@ -27,35 +23,65 @@ const useRouteWorksheetMark = (): WorksheetMark => {
   }
 
   return {
-    featureUri: match.params.featureId,
-    featureSetUri: match.params.featureSetId,
+    featureUri: params.featureId,
+    featureSetUri: params.featureSetId,
     review: review ? review : undefined,
-    worksheetStateId: match.params.worksheetStateId,
+    worksheetStateId: params.worksheetStateId,
   };
+};
+
+interface WorksheetReducerAction {
+  payload: Worksheet;
 }
 
-export const useWorksheet = (): Worksheet | null => {
+interface WorksheetReducerState {
+  worksheet: Worksheet | null;
+}
+
+const worksheetReducer = (
+  state: WorksheetReducerState,
+  action: WorksheetReducerAction
+): WorksheetReducerState => {
+  console.info("dispatch worksheet");
+  return {worksheet: action.payload!};
+};
+
+export const useWorksheet = (): [
+  Worksheet | null,
+  React.Dispatch<WorksheetReducerAction>
+] => {
   const routeWorksheetMark = useRouteWorksheetMark();
   const worksheetDefinition = useWorksheetDefinition();
   const worksheetStateService = useWorksheetStateService();
-  const [worksheetState, setWorksheetState] = useState<WorksheetState | null>(
-    null
-  );
+  const [state, dispatch] = useReducer(worksheetReducer, {
+    worksheet: null,
+  });
+
   useEffect(() => {
     if (!worksheetStateService) {
       return;
     }
+    if (
+      state.worksheet &&
+      JSON.stringify(state.worksheet.currentMark) ===
+        JSON.stringify(routeWorksheetMark)
+    ) {
+      return;
+    }
+    console.info("Calling effect");
     worksheetStateService
       .getWorksheetState(routeWorksheetMark.worksheetStateId)
-      .then(setWorksheetState);
+      .then((worksheetState) =>
+        dispatch({
+          payload: new Worksheet({
+            currentMark: routeWorksheetMark,
+            definition: worksheetDefinition,
+            initialState: worksheetState,
+            stateService: worksheetStateService,
+          }),
+        })
+      );
   }, [routeWorksheetMark, worksheetStateService]);
-  if (!worksheetState || !worksheetStateService) {
-    return null;
-  }
-  return new Worksheet({
-    currentMark: routeWorksheetMark,
-    definition: worksheetDefinition,
-    initialState: worksheetState,
-    stateService: worksheetStateService,
-  });
+
+  return [state.worksheet, dispatch];
 };

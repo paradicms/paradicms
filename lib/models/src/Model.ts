@@ -1,10 +1,10 @@
-import {BlankNode, NamedNode, Store, Term} from "n3";
+import {BlankNode, DefaultGraph, NamedNode, Store, Term} from "n3";
 import {Dataset} from "./Dataset";
 import {ModelParameters} from "./ModelParameters";
 
 export class Model {
   readonly dataset: Dataset;
-  readonly graphNode: NamedNode;
+  readonly graphNode: DefaultGraph | NamedNode;
   protected readonly _node: BlankNode | NamedNode;
 
   constructor(kwds: ModelParameters) {
