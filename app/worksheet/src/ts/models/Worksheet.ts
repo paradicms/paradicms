@@ -182,7 +182,10 @@ export class Worksheet {
   }
 
   save(): Promise<void> {
-    return this.stateService.putWorksheetState(this.state);
+    const newState = this.state;
+    return this.stateService.putWorksheetState(newState).then(() => {
+      this.marks = this.recalculateMarks(newState);
+    });
   }
 
   get selectedFeatureSetCount(): number {

@@ -42,7 +42,6 @@ const worksheetReducer = (
   state: WorksheetReducerState,
   action: WorksheetReducerAction
 ): WorksheetReducerState => {
-  console.info("dispatch worksheet");
   return {worksheet: action.payload!};
 };
 

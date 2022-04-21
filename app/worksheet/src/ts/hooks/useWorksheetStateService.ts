@@ -20,7 +20,6 @@ const worksheetStateServiceReducer = (
   state: WorksheetStateServiceReducerState,
   action: WorksheetStateServiceReducerAction
 ): WorksheetStateServiceReducerState => {
-  console.info("dispatch worksheet state service");
   return {worksheetStateService: action.payload!};
 };
 

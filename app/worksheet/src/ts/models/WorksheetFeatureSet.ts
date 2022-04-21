@@ -55,12 +55,10 @@ export class WorksheetFeatureSet {
         featureStates.push(featureState);
       }
     }
-    return featureStates.length > 0
-      ? {
-          features: featureStates.length > 0 ? featureStates : undefined,
-          uri: this.definition.uri,
-        }
-      : undefined;
+    return {
+      features: featureStates.length > 0 ? featureStates : undefined,
+      uri: this.definition.uri,
+    };
   }
 
   unselect(): void {
