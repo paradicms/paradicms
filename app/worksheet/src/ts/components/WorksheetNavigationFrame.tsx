@@ -102,8 +102,8 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
   const nextPreviousButtons =
     finishOrNextButtonEnabled || nextButtonEnabled || previousButtonEnabled ? (
       <Row>
-        <Col xs="12">
-          <div className="float-left">
+        <Col style={{display: "flex"}} xs="12">
+          <div style={{flexGrow: 0}}>
             <Button
               className={classnames({
                 invisible: !previousButtonEnabled,
@@ -116,7 +116,8 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
               Previous
             </Button>
           </div>
-          <div className="float-right">
+          <span style={{flexGrow: 1}} />
+          <div style={{flexGrow: 0}}>
             <Button
               className={classnames({
                 invisible: !nextButtonEnabled,
@@ -161,9 +162,6 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
               <Col md="12">
                 <Headline>{headline}</Headline>
               </Col>
-            </Row>
-            <Row>
-              <Col md="12"></Col>
             </Row>
             <Row>
               <Col md="12">

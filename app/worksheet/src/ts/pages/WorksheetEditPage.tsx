@@ -90,8 +90,7 @@ export const WorksheetEditPage: React.FunctionComponent = () => {
             <Input
               onChange={(event) => {
                 worksheet.text = event.target.value;
-                event.stopPropagation();
-                // forceUpdate();
+                dispatchWorksheet({payload: worksheet});
               }}
               placeholder="Freetext description (optional)"
               rows="8"
