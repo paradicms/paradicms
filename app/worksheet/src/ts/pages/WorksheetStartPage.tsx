@@ -48,6 +48,40 @@ export const WorksheetStartPage: React.FunctionComponent = () => {
       .then(setExistingWorksheetStateIds, setException);
   }, [worksheetStateService]);
 
+  const onDeleteWorksheet = useCallback(
+    (worksheetStateId: string) => {
+      return worksheetStateService!
+        .deleteWorksheetState(worksheetStateId)
+        .then(
+          () =>
+            worksheetStateService!
+              .getWorksheetStateIds()
+              .then(setExistingWorksheetStateIds, setException),
+          setException
+        );
+    },
+    [worksheetStateService]
+  );
+
+  const onRenameWorksheet = useCallback(
+    (kwds: {newWorksheetStateId: string; oldWorksheetStateId: string}) => {
+      const {newWorksheetStateId, oldWorksheetStateId} = kwds;
+      return worksheetStateService!
+        .renameWorksheetState({
+          newId: newWorksheetStateId,
+          oldId: oldWorksheetStateId,
+        })
+        .then(
+          () =>
+            worksheetStateService!
+              .getWorksheetStateIds()
+              .then(setExistingWorksheetStateIds, setException),
+          setException
+        );
+    },
+    [worksheetStateService]
+  );
+
   const onStartNewWorksheet = useCallback(
     (newWorksheetStateId: string) => {
       const mtime = new Date();
@@ -134,6 +168,8 @@ export const WorksheetStartPage: React.FunctionComponent = () => {
                     <Col xs="12">
                       <ExistingWorksheetStatesCard
                         existingWorksheetStateIds={existingWorksheetStateIds}
+                        onDeleteWorksheet={onDeleteWorksheet}
+                        onRenameWorksheet={onRenameWorksheet}
                       />
                     </Col>
                   </Row>
@@ -149,7 +185,12 @@ export const WorksheetStartPage: React.FunctionComponent = () => {
 
 const ExistingWorksheetStatesCard: React.FunctionComponent<{
   existingWorksheetStateIds: readonly string[];
-}> = ({existingWorksheetStateIds}) => (
+  onDeleteWorksheet: (worksheetStateId: string) => Promise<void>;
+  onRenameWorksheet: (kwds: {
+    newWorksheetStateId: string;
+    oldWorksheetStateId: string;
+  }) => Promise<void>;
+}> = ({existingWorksheetStateIds, onDeleteWorksheet, onRenameWorksheet}) => (
   <Card>
     <CardHeader>
       <CardTitle className={classnames(["mb-0", "text-center"])}>
@@ -165,6 +206,15 @@ const ExistingWorksheetStatesCard: React.FunctionComponent<{
                 {existingWorksheetStateIds.map((worksheetStateId) => (
                   <ExistingWorksheetStateTableRow
                     key={worksheetStateId}
+                    onDeleteWorksheet={() =>
+                      onDeleteWorksheet(worksheetStateId)
+                    }
+                    onRenameWorksheet={(newWorksheetStateId) =>
+                      onRenameWorksheet({
+                        newWorksheetStateId,
+                        oldWorksheetStateId: worksheetStateId,
+                      })
+                    }
                     worksheetStateId={worksheetStateId}
                   ></ExistingWorksheetStateTableRow>
                 ))}
@@ -178,28 +228,20 @@ const ExistingWorksheetStatesCard: React.FunctionComponent<{
 );
 
 const ExistingWorksheetStateTableRow: React.FunctionComponent<{
+  onDeleteWorksheet: () => Promise<void>;
+  onRenameWorksheet: (newId: string) => Promise<void>;
   worksheetStateId: string;
-}> = ({worksheetStateId}) => {
+}> = ({onDeleteWorksheet, onRenameWorksheet, worksheetStateId}) => {
   const [deleting, setDeleting] = useState<boolean>(false);
   const [newWorksheetStateId, setNewWorksheetStateId] = useState<string>("");
   const [renaming, setRenaming] = useState<boolean>(false);
-  const worksheetStateService = useWorksheetStateService();
 
-  const onRename = () => {
-    worksheetStateService!
-      .renameWorksheetState({
-        newId: newWorksheetStateId,
-        oldId: worksheetStateId,
-      })
-      .then(() => {
-        setNewWorksheetStateId("");
-        setRenaming(false);
-      });
+  const onRenameWorksheetWrapper = () => {
+    onRenameWorksheet(newWorksheetStateId).then(() => {
+      setNewWorksheetStateId("");
+      setRenaming(false);
+    });
   };
-
-  if (!worksheetStateService) {
-    return null;
-  }
 
   if (deleting) {
     return (
@@ -222,11 +264,7 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
           <Button
             className="confirm-delete-button"
             color="danger"
-            onClick={() => {
-              worksheetStateService!
-                .deleteWorksheetState(worksheetStateId)
-                .then(() => setDeleting(false));
-            }}
+            onClick={() => onDeleteWorksheet().then(() => setDeleting(false))}
             size="sm"
           >
             Yes
@@ -245,7 +283,7 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
             onKeyPress={(event) => {
               if (event.key === "Enter") {
                 event.stopPropagation();
-                onRename();
+                onRenameWorksheetWrapper();
               }
             }}
             placeholder="Rename"
@@ -275,7 +313,7 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
               visible: !!newWorksheetStateId,
             })}
             color="danger"
-            onClick={onRename}
+            onClick={onRenameWorksheetWrapper}
           >
             Confirm
           </Button>
