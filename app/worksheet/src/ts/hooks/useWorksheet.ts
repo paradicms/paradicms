@@ -23,8 +23,8 @@ const useRouteWorksheetMark = (): WorksheetMark => {
   }
 
   return {
-    featureUri: params.featureId,
-    featureSetUri: params.featureSetId,
+    featureUri: params.featureUri,
+    featureSetUri: params.featureSetUri,
     review: review ? review : undefined,
     worksheetStateId: params.worksheetStateId,
   };
@@ -67,7 +67,6 @@ export const useWorksheet = (): [
     ) {
       return;
     }
-    console.info("Calling effect");
     worksheetStateService
       .getWorksheetState(routeWorksheetMark.worksheetStateId)
       .then((worksheetState) =>

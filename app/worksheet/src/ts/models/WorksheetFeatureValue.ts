@@ -26,4 +26,8 @@ export class WorksheetFeatureValue {
   unselect(): void {
     this.selected = false;
   }
+
+  get uri(): string {
+    return this.definition.uri;
+  }
 }
