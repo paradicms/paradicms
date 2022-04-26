@@ -246,23 +246,16 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
   if (deleting) {
     return (
       <tr>
-        <td className="id leftmost">{worksheetStateId}</td>
-        <td className="inner prompt text-danger">
+        <td className="align-middle text-left w-90">{worksheetStateId}</td>
+        <td className="align-middle text-center text-danger">
           <span>Delete?</span>
         </td>
-        <td className="cancel inner">
-          <Button
-            className="cancel-delete-button"
-            color="primary"
-            onClick={() => setDeleting(false)}
-            size="sm"
-          >
+        <td className="align-middle text-center">
+          <Button color="primary" onClick={() => setDeleting(false)} size="sm">
             No
           </Button>
-        </td>
-        <td className="confirm rightmost">
           <Button
-            className="confirm-delete-button"
+            className="ms-4"
             color="danger"
             onClick={() => onDeleteWorksheet().then(() => setDeleting(false))}
             size="sm"
@@ -275,10 +268,10 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
   } else if (renaming) {
     return (
       <tr>
-        <td className="id leftmost">
+        <td className="align-middle text-left w-90">
           <Input
             autoFocus
-            className="form-control rename-input w-100"
+            className="form-control w-100"
             onChange={(event) => setNewWorksheetStateId(event.target.value)}
             onKeyPress={(event) => {
               if (event.key === "Enter") {
@@ -292,10 +285,8 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
             type="text"
           />
         </td>
-        <td className="inner prompt">&nbsp;</td>
-        <td className="cancel inner">
+        <td className="align-middle text-center">
           <Button
-            className="cancel-rename-button"
             color="primary"
             onClick={() => {
               setNewWorksheetStateId("");
@@ -305,7 +296,7 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
             Cancel
           </Button>
         </td>
-        <td className="confirm rightmost">
+        <td className="align-middle text-center">
           <Button
             className={classnames({
               "confirm-rename-button": true,
@@ -318,13 +309,12 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
             Confirm
           </Button>
         </td>
-        <td>&nbsp;</td>
       </tr>
     );
   } else {
     return (
       <tr>
-        <td className="id leftmost">
+        <td className="align-middle text-left w-90">
           <Link
             to={Hrefs.worksheetMark({worksheetStateId})}
             title="Open this worksheet"
@@ -332,8 +322,7 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
             {worksheetStateId}
           </Link>
         </td>
-        <td className="inner prompt">&nbsp;</td>
-        <td className="delete-button inner">
+        <td className="align-middle text-center">
           <Button
             onClick={() => {
               setDeleting(true);
@@ -345,7 +334,7 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
             <FontAwesomeIcon icon={faTrashAlt} />
           </Button>
         </td>
-        <td className="rename-button rightmost">
+        <td className="align-middle text-center">
           <Button
             onClick={() => {
               setDeleting(false);

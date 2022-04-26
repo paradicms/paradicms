@@ -4,7 +4,7 @@ import * as React from "react";
 export const Frame: React.FunctionComponent<React.PropsWithChildren<{}>> = ({
   children,
 }) => (
-  <div style={{margin: "40px"}}>
+  <div className="mx-2 pt-2">
     <Navbar />
     {children}
   </div>

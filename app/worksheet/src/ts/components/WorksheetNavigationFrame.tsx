@@ -101,7 +101,7 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
       : nextButtonEnabled;
   const nextPreviousButtons =
     finishOrNextButtonEnabled || nextButtonEnabled || previousButtonEnabled ? (
-      <Row>
+      <Row className="mt-1">
         <Col style={{display: "flex"}} xs="12">
           <div style={{flexGrow: 0}}>
             <Button
@@ -169,7 +169,10 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
                   <Breadcrumb>{breadcrumbItems}</Breadcrumb>
                 ) : null}
                 {worksheet.progressPercentage > 0 ? (
-                  <div className="progress-wrapper">
+                  <div
+                    className="w-100"
+                    style={{backgroundColor: "darkgray", height: "20px"}}
+                  >
                     <Progress
                       className="h-100"
                       bar
@@ -180,7 +183,7 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
               </Col>
             </Row>
             {nextPreviousButtons}
-            <Row className="my-2">
+            <Row className="mt-1">
               <Col md="12">{children}</Col>
             </Row>
             {nextPreviousButtons}

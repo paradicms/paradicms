@@ -48,6 +48,11 @@ export const WorksheetEditPage: React.FunctionComponent = () => {
                     <td className="text-center">
                       <Button
                         active={featureSet.selected}
+                        className={
+                          featureSet.selected
+                            ? "border border-primary border-4"
+                            : undefined
+                        }
                         color="secondary"
                         onClick={() => {
                           featureSet.selected = !featureSet.selected;
