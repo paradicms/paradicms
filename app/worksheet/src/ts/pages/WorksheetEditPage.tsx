@@ -109,4 +109,4 @@ export const WorksheetEditPage: React.FunctionComponent = () => {
   );
 };
 
-(WorksheetEditPage as any).whyDidYouRender = true;
+// (WorksheetEditPage as any).whyDidYouRender = true;

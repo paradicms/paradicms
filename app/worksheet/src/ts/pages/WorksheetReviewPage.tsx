@@ -2,15 +2,15 @@ import * as React from "react";
 import {useWorksheet} from "~/hooks/useWorksheet";
 import {Spinner} from "~/components/Spinner";
 import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
-import Clipboard from "react-clipboard.js";
 import {Button, Col, Container, Form, Input, Row} from "reactstrap";
 import {StringWorksheetStateExporter} from "~/exporters/StringWorksheetStateExporter";
 import {TextWorksheetStateExporter} from "~/exporters/TextWorksheetStateExporter";
 import {CsvStringWorksheetStateExporter} from "~/exporters/CsvStringWorksheetStateExporter";
 import {JsonStringWorksheetStateExporter} from "~/exporters/JsonStringWorksheetStateExporter";
 import {JsonLdStringWorksheetStateExporter} from "~/exporters/JsonLdStringWorksheetStateExporter";
-import {useCallback, useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import {WorksheetFeatureSetTable} from "~/components/WorksheetFeatureSetTable";
+import CopyToClipboard = require("react-copy-to-clipboard");
 
 const STRING_EXPORTERS: StringWorksheetStateExporter[] = [
   new TextWorksheetStateExporter(),
@@ -24,13 +24,18 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
   const [selectedStringExporterIndex, setSelectedStringExporterIndex] =
     useState<number>(0);
 
-  const export_ = () =>
-    worksheet
-      ? STRING_EXPORTERS[selectedStringExporterIndex].export(
-          worksheet.definition,
-          [worksheet.state]
-        )
-      : "";
+  const [exportMessage, setExportMessage] = useState<string>("");
+
+  const exportedString = useMemo(
+    () =>
+      worksheet
+        ? STRING_EXPORTERS[selectedStringExporterIndex].export(
+            worksheet.definition,
+            [worksheet.state]
+          )
+        : "",
+    [selectedStringExporterIndex, worksheet]
+  );
 
   const onClickDownloadButton = useCallback(
     (event: React.MouseEvent) => {
@@ -38,7 +43,6 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
         throw new EvalError();
       }
 
-      const content = export_();
       const selectedStringExporter =
         STRING_EXPORTERS[selectedStringExporterIndex];
 
@@ -51,7 +55,7 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
         // IE10
         if (
           !(navigator as any).msSaveBlob(
-            new Blob([content], {type: mimeType}),
+            new Blob([exportedString], {type: mimeType}),
             fileName
           )
         ) {
@@ -59,7 +63,7 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
         }
       } else if ("download" in a) {
         //html5 A[download]
-        a.href = "data:" + mimeType + "," + encodeURIComponent(content);
+        a.href = "data:" + mimeType + "," + encodeURIComponent(exportedString);
         a.setAttribute("download", fileName);
         document.body.appendChild(a);
         a.click();
@@ -68,13 +72,13 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
         //do iframe dataURL download (old ch+FF):
         const f = document.createElement("iframe");
         document.body.appendChild(f);
-        f.src = "data:" + mimeType + "," + encodeURIComponent(content);
+        f.src = "data:" + mimeType + "," + encodeURIComponent(exportedString);
         setTimeout(() => {
           document.body.removeChild(f);
         }, 333);
       }
     },
-    [export_, selectedStringExporterIndex, worksheet]
+    [exportedString, selectedStringExporterIndex, worksheet]
   );
 
   const onClickEmailButton = useCallback(() => {
@@ -85,9 +89,9 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
       "mailto:?to=&subject=" +
         encodeURIComponent(worksheet.stateId) +
         "&body=" +
-        encodeURIComponent(export_())
+        encodeURIComponent(exportedString)
     );
-  }, [export_, worksheet]);
+  }, [exportedString, worksheet]);
 
   if (!worksheet) {
     return <Spinner />;
@@ -110,13 +114,26 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
             <span style={{flexGrow: 1}} />
             <div style={{flexGrow: 0}}>
               <Form>
-                <Clipboard
-                  className="btn btn-secondary copy-button"
-                  component="a"
-                  option-text={export_}
+                {exportMessage.length > 0 ? (
+                  <>
+                    <strong className="text-success">{exportMessage}</strong>
+                    &nbsp;
+                  </>
+                ) : null}
+                <CopyToClipboard
+                  text={exportedString}
+                  onCopy={() => {
+                    setExportMessage("Copied");
+                    setTimeout(() => setExportMessage(""), 2000);
+                  }}
                 >
-                  Copy
-                </Clipboard>
+                  <span
+                    className="btn btn-secondary"
+                    style={{cursor: "pointer"}}
+                  >
+                    Copy
+                  </span>
+                </CopyToClipboard>
                 &nbsp;
                 <Button color="secondary" onClick={onClickEmailButton}>
                   Email
