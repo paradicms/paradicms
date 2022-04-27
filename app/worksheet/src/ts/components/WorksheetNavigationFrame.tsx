@@ -159,12 +159,12 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
         <Frame>
           <Container fluid>
             <Row>
-              <Col md="12">
+              <Col xs="12">
                 <Headline>{headline}</Headline>
               </Col>
             </Row>
             <Row>
-              <Col md="12">
+              <Col xs="12">
                 {breadcrumbItems.length > 1 ? (
                   <Breadcrumb>{breadcrumbItems}</Breadcrumb>
                 ) : null}
@@ -184,7 +184,7 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
             </Row>
             {nextPreviousButtons}
             <Row className="mt-1">
-              <Col md="12">{children}</Col>
+              <Col xs="12">{children}</Col>
             </Row>
             {nextPreviousButtons}
           </Container>

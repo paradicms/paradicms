@@ -22,7 +22,7 @@ export const WorksheetEditPage: React.FunctionComponent = () => {
     >
       <Container fluid>
         <Row>
-          <Col md={12}>
+          <Col xs={12}>
             <h4>Select feature sets</h4>
             <p className="card-text">
               Select one or more feature sets to describe the object. Currently
@@ -90,7 +90,7 @@ export const WorksheetEditPage: React.FunctionComponent = () => {
           </Col>
         </Row>
         <Row className="mt-2">
-          <Col md={12}>
+          <Col xs={12}>
             <h4>Freetext description</h4>
             <Input
               onChange={(event) => {

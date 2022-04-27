@@ -204,7 +204,7 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
         </Row>
         {worksheet.state.text ? (
           <Row className="mt-2">
-            <Col md={12}>
+            <Col xs={12}>
               <h4>Freetext description</h4>
               <p>{worksheet.state.text}</p>
             </Col>

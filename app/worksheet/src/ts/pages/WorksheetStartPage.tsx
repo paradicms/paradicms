@@ -112,7 +112,7 @@ export const WorksheetStartPage: React.FunctionComponent = () => {
     <Frame>
       <Container fluid>
         <Row>
-          <Col md="12">
+          <Col xs="12">
             <Headline>Worksheet</Headline>
           </Col>
         </Row>
