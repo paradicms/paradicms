@@ -50,8 +50,7 @@ export const AuthorizationExceptionModal: React.FunctionComponent<{
                 </a>
               </Col>
             </Row>
-            <Row>&nbsp;</Row>
-            <Row>
+            <Row className="mt-4">
               <Col xs="12">
                 <Button
                   className="w-100"

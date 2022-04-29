@@ -17,7 +17,7 @@ export const FatalErrorModal: React.FunctionComponent<{
     if (error) {
       message = error.toString();
     } else if (exception) {
-      message = exception.toString();
+      message = JSON.stringify(exception);
     } else {
       message = "";
     }

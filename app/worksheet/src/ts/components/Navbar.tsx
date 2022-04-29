@@ -28,7 +28,7 @@ export const Navbar: React.FunctionComponent = () => {
           <DropdownToggle nav caret>
             {currentUser.name}
           </DropdownToggle>
-          <DropdownMenu right>
+          <DropdownMenu end>
             <DropdownItem>
               <Link to={Hrefs.userSettings}>Settings</Link>
             </DropdownItem>

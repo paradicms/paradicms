@@ -17,6 +17,7 @@ import {WorksheetEditPage} from "~/pages/WorksheetEditPage";
 import {WorksheetFeatureSetEditPage} from "~/pages/WorksheetFeatureSetEditPage";
 import {WorksheetFeatureEditPage} from "~/pages/WorksheetFeatureEditPage";
 import {WorksheetReviewPage} from "~/pages/WorksheetReviewPage";
+import {UserSettingsPage} from "~/pages/UserSettingsPage";
 
 export const Application: React.FunctionComponent = () => {
   const [error, setError] = useState<any>(null);
@@ -72,6 +73,7 @@ export const Application: React.FunctionComponent = () => {
           <Route path={Hrefs.loginCallback} element={<LoginCallbackPage />} />
           <Route path={Hrefs.logout} element={<LogoutPage />} />
           <Route path={Hrefs.logoutCallback} element={<LogoutCallbackPage />} />
+          <Route path={Hrefs.userSettings} element={<UserSettingsPage />} />
           <Route path={Hrefs.worksheetStart} element={<WorksheetStartPage />} />
           <Route
             path="/:worksheetStateId/edit"

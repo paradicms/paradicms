@@ -4,5 +4,5 @@ import {localStorageWorksheetStateConfigurationJsonSchema} from "~/models/jsonSc
 
 export const worksheetStateConfigurationJsonSchema = yup.object({
   googleSheets: googleSheetsWorksheetStateConfigurationJsonSchema.nullable(),
-  localStorage: localStorageWorksheetStateConfigurationJsonSchema,
+  localStorage: localStorageWorksheetStateConfigurationJsonSchema.nullable(),
 });
