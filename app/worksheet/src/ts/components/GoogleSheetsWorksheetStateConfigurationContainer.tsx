@@ -63,8 +63,14 @@ export const GoogleSheetsWorksheetStateConfigurationContainer: React.FunctionCom
     gapi.client.drive.files
       .delete({fileId: deletingExistingFile.id as string})
       .then(
-        () => refreshExistingFiles(),
-        (reason) => setException(convertGapiErrorToException(reason))
+        () => {
+          setDeletingExistingFile(null);
+          refreshExistingFiles();
+        },
+        (reason) => {
+          setDeletingExistingFile(null);
+          setException(convertGapiErrorToException(reason));
+        }
       );
   }, [currentUser, deletingExistingFile, refreshExistingFiles]);
 
@@ -96,7 +102,7 @@ export const GoogleSheetsWorksheetStateConfigurationContainer: React.FunctionCom
   if (deletingExistingFile) {
     console.info("Showing modal");
     return (
-      <Modal open={true}>
+      <Modal isOpen={true}>
         <ModalHeader>
           Are you sure you want to delete the sheet '{deletingExistingFile.name}
           '?
@@ -197,16 +203,15 @@ export const GoogleSheetsWorksheetStateConfigurationContainer: React.FunctionCom
       ) : null}
       <Row>
         <Col xs="6">
-          <Form>
+          <Form
+            onSubmit={(event) => {
+              onClickNewSheetButton();
+              event.preventDefault();
+            }}
+          >
             <Input
               type="text"
               onChange={(event) => setNewSheetName(event.target.value)}
-              onKeyPress={(event) => {
-                if (event.key === "Enter") {
-                  event.stopPropagation();
-                  onClickNewSheetButton();
-                }
-              }}
               placeholder="New sheet name"
               style={{width: "32em"}}
               value={newSheetName}

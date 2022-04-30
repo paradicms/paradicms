@@ -32,11 +32,9 @@ export class Hrefs {
   static worksheetMark(mark: WorksheetMark) {
     let href = "/" + encodeURIComponent(mark.worksheetStateId.toString()) + "/";
     if (mark.featureSetUri) {
-      href +=
-        "featureSet/" + encodeURIComponent(mark.featureSetUri.toString()) + "/";
+      href += "featureSet/" + encodeURIComponent(mark.featureSetUri) + "/";
       if (mark.featureUri) {
-        href +=
-          "feature/" + encodeURIComponent(mark.featureUri.toString()) + "/";
+        href += "feature/" + encodeURIComponent(mark.featureUri) + "/";
       }
     }
     href += mark.review ? "review" : "edit";

@@ -21,7 +21,7 @@ export class CsvWorksheetStateExporter
           worksheetState.featureSets.length === 1
         ) {
           // # 318: don't prefix CSV header names if there is only one feature set defined in all worksheets
-          return featureUri.toString();
+          return featureUri;
         }
       }
 
@@ -31,7 +31,7 @@ export class CsvWorksheetStateExporter
         return undefined;
       }
       // const featureDefinition = worksheetDefinition.features.find((featureDefinition) => featureDefinition.id.equals(featureId))!;
-      return featureSetDefinition.title + "|" + featureUri.toString();
+      return featureSetDefinition.title + "|" + featureUri;
     };
 
     const headerRow = ["id", "ctime", "mtime", "description", "workType"];

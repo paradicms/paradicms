@@ -402,9 +402,9 @@ const NewWorksheetStateCard: React.FunctionComponent<{
                   <Input
                     autoFocus
                     className="form-control"
-                    onChange={(event) =>
-                      setNewWorksheetStateIdInputValue(event.target.value)
-                    }
+                    onChange={(event) => {
+                      setNewWorksheetStateIdInputValue(event.target.value);
+                    }}
                     onKeyPress={(event) => {
                       if (event.key === "Enter") {
                         event.stopPropagation();
@@ -464,3 +464,5 @@ const WorksheetStateConfigurationHeadline: React.FunctionComponent = () => {
     </>
   );
 };
+
+// (WorksheetStartPage as any).whyDidYouRender = true;

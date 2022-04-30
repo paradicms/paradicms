@@ -7,12 +7,24 @@ export class GoogleSheetsWorksheetStateExporter
 {
   static readonly FIRST_FEATURE_COLUMN_INDEX = 4;
 
-  static parseFeatureHeader(featureHeader: string): [string, string] {
-    const split = featureHeader.split("/", 2);
-    if (split.length !== 2) {
-      throw new RangeError();
+  static parseHeader(header: string): {
+    featureSetUri: string;
+    featureUri?: string;
+  } {
+    const split = header.split("|", 2);
+    switch (split.length) {
+      case 1:
+        return {
+          featureSetUri: split[0],
+        };
+      case 2:
+        return {
+          featureSetUri: split[0],
+          featureUri: split[1],
+        };
+      default:
+        throw new RangeError();
     }
-    return [split[0], split[1]];
   }
 
   export(
@@ -24,8 +36,12 @@ export class GoogleSheetsWorksheetStateExporter
     const headerRow = ["id", "ctime", "mtime", "description"];
     // Output all feature sets and values so they're represented in the CSV.
     for (const featureSetDefinition of worksheetDefinition.featureSets) {
+      // Column for indicating the feature set is selecting
+      headerRow.push(featureSetDefinition.uri);
+      // Columns for each (feature set, feature) combination
+      // The cells under this column contain a list of selected feature values
       for (const featureUri of featureSetDefinition.featureUris) {
-        headerRow.push(featureSetDefinition.uri + "|" + featureUri.toString());
+        headerRow.push(featureSetDefinition.uri + "|" + featureUri);
       }
     }
     rows.push(headerRow);
@@ -43,17 +59,22 @@ export class GoogleSheetsWorksheetStateExporter
         dataRow.push("");
       }
 
-      for (const featureHeader of headerRow.slice(
+      for (const header of headerRow.slice(
         GoogleSheetsWorksheetStateExporter.FIRST_FEATURE_COLUMN_INDEX
       )) {
-        const [featureSetUri, featureUri] =
-          GoogleSheetsWorksheetStateExporter.parseFeatureHeader(featureHeader);
+        const {featureSetUri, featureUri} =
+          GoogleSheetsWorksheetStateExporter.parseHeader(header);
         const featureSetState = worksheetState.featureSets?.find(
           (existingFeatureSetState) =>
             existingFeatureSetState.uri === featureSetUri
         );
         if (!featureSetState) {
           dataRow.push("");
+          continue;
+        }
+        if (!featureUri) {
+          // Feature set is selected
+          dataRow.push("1");
           continue;
         }
         const featureState = featureSetState.features?.find(

@@ -2,6 +2,8 @@ import {CurrentUserService} from "~/services/CurrentUserService";
 import {CurrentUser} from "~/models/CurrentUser";
 
 export class LocalStorageCurrentUserService implements CurrentUserService {
+  // Cache the CurrentUser objects to prevent re-renders
+  private cachedCurrentUsersByJsonString: {[index: string]: CurrentUser} = {};
   private static readonly CURRENT_USER_ITEM_KEY = "currentUser";
 
   deleteCurrentUser() {
@@ -16,7 +18,14 @@ export class LocalStorageCurrentUserService implements CurrentUserService {
     if (!currentUserJsonString) {
       return null;
     }
-    return CurrentUser.fromJsonObject(JSON.parse(currentUserJsonString));
+    let currentUser =
+      this.cachedCurrentUsersByJsonString[currentUserJsonString];
+    if (currentUser) {
+      return currentUser;
+    }
+    currentUser = CurrentUser.fromJsonObject(JSON.parse(currentUserJsonString));
+    this.cachedCurrentUsersByJsonString[currentUserJsonString] = currentUser;
+    return currentUser;
   }
 
   putCurrentUser(currentUser: CurrentUser) {

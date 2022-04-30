@@ -1,9 +1,10 @@
 import * as React from "react";
 import {useWorksheet} from "~/hooks/useWorksheet";
-import {Button, Col, Container, Input, Row, Spinner, Table} from "reactstrap";
+import {Button, Col, Container, Input, Row, Table} from "reactstrap";
 import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
 // import {useReducer} from "react";
 import classnames from "classnames";
+import {Spinner} from "~/components/Spinner";
 
 export const WorksheetEditPage: React.FunctionComponent = () => {
   const [worksheet, dispatchWorksheet] = useWorksheet();

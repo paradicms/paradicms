@@ -1,5 +1,4 @@
 import {WorksheetFeatureSetState} from "~/models/WorksheetFeatureSetState";
-import {WorksheetFeatureState} from "~/models/WorksheetFeatureState";
 import {WorksheetState} from "~/models/WorksheetState";
 import {GoogleSheetsWorksheetStateExporter} from "~/exporters/GoogleSheetsWorksheetStateExporter";
 import * as Papa from "papaparse";
@@ -17,11 +16,12 @@ export class GoogleSheetsWorksheetStateImporter {
     ) {
       return [];
     }
-    const parsedHeaderColumns: any[] = headerRow
-      .slice(GoogleSheetsWorksheetStateExporter.FIRST_FEATURE_COLUMN_INDEX)
-      .map((headerColumn) =>
-        GoogleSheetsWorksheetStateExporter.parseFeatureHeader(headerColumn)
-      );
+    const parsedHeaderColumns: {featureSetUri: string; featureUri?: string}[] =
+      headerRow
+        .slice(GoogleSheetsWorksheetStateExporter.FIRST_FEATURE_COLUMN_INDEX)
+        .map((headerColumn) =>
+          GoogleSheetsWorksheetStateExporter.parseHeader(headerColumn)
+        );
 
     const worksheetStates: WorksheetState[] = [];
     for (const dataRow of csvRows.slice(1)) {
@@ -42,56 +42,72 @@ export class GoogleSheetsWorksheetStateImporter {
       let description: string | undefined = dataRow[3];
       description = description.length ? description : undefined;
 
-      // Build a map of maps of feature value id's.
-      const featureSetValueUris: {
-        [index: string]: {[index: string]: string[]};
-      } = {};
+      const featureSetStates: WorksheetFeatureSetState[] = [];
       dataRow
         .slice(GoogleSheetsWorksheetStateExporter.FIRST_FEATURE_COLUMN_INDEX)
-        .map((dataColumn, dataColumnI) => {
+        .forEach((dataColumn, dataColumnI) => {
+          if (dataColumn.length === 0) {
+            return;
+          }
           const headerColumn = parsedHeaderColumns[dataColumnI];
           if (!headerColumn) {
             return;
           }
-          const [featureSetUri, featureUri] = headerColumn;
-          if (!featureSetValueUris[featureSetUri.toString()]) {
-            featureSetValueUris[featureSetUri.toString()] = {};
+          const {featureSetUri, featureUri} = headerColumn;
+          let featureSetState = featureSetStates.find(
+            (featureSetState) => featureSetState.uri === featureSetUri
+          );
+          if (!featureSetState) {
+            featureSetState = {
+              features: undefined,
+              uri: featureSetUri,
+            };
+            featureSetStates.push(featureSetState);
           }
-          featureSetValueUris[featureSetUri.toString()][featureUri.toString()] =
-            dataColumn.length ? dataColumn.split(";") : [];
-        });
-      console.info(
-        "Feature set value ids: " + JSON.stringify(featureSetValueUris)
-      );
 
-      const featureSetStates: WorksheetFeatureSetState[] = [];
-      for (const featureSetValueUri of Object.keys(featureSetValueUris)) {
-        const featureStates: WorksheetFeatureState[] = [];
-        for (const featureUri of Object.keys(
-          featureSetValueUris[featureSetValueUri]
-        )) {
-          const selectedValueUris =
-            featureSetValueUris[featureSetValueUri][featureUri];
-          featureStates.push({
-            uri: featureUri,
-            values:
-              selectedValueUris.length > 0
-                ? selectedValueUris.map((selectedValueUri) => ({
-                    selected: true,
-                    uri: selectedValueUri,
-                  }))
-                : undefined,
-            text: undefined,
-          });
-        }
-        featureSetStates.push({
-          features: featureStates.length > 0 ? featureStates : undefined,
-          uri: featureSetValueUri,
+          if (!featureUri) {
+            // dataColumn was not empty, so this is a featureSet column
+            return;
+          }
+
+          let featureState = featureSetState.features?.find(
+            (feature) => feature.uri === featureUri
+          );
+          if (!featureState) {
+            featureState = {
+              text: undefined,
+              uri: featureUri,
+              values: undefined,
+            };
+            if (featureSetState.features) {
+              featureSetState.features.push(featureState);
+            } else {
+              featureSetState.features = [featureState];
+            }
+          }
+
+          const featureValueUris = dataColumn.split(";");
+          for (const featureValueUri of featureValueUris) {
+            let featureValueState = featureState.values?.find(
+              (featureValue) => featureValue.uri === featureValueUri
+            );
+            if (featureValueState) {
+              continue;
+            }
+            featureValueState = {
+              selected: true,
+              uri: featureValueUri,
+            };
+            if (featureState.values) {
+              featureState.values.push(featureValueState);
+            } else {
+              featureState.values = [featureValueState];
+            }
+          }
         });
-      }
       worksheetStates.push({
         ctime,
-        featureSets: featureSetStates,
+        featureSets: featureSetStates.length > 0 ? featureSetStates : undefined,
         id,
         mtime,
         text: description,

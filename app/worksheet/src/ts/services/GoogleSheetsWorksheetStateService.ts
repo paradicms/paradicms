@@ -42,7 +42,6 @@ export class GoogleSheetsWorksheetStateService
 
   private getFirstSheetData(): Promise<string[][]> {
     return new Promise((resolve, reject) => {
-      gapi.client.setToken({access_token: this.accessToken});
       this.getSpreadsheetsResource()
         .get({
           includeGridData: true,
@@ -108,6 +107,7 @@ export class GoogleSheetsWorksheetStateService
   }
 
   private getSpreadsheetsResource(): gapi.client.sheets.SpreadsheetsResource {
+    gapi.client.setToken({access_token: this.accessToken});
     return (gapi.client as any).sheets.spreadsheets;
   }
 
@@ -215,17 +215,32 @@ export class GoogleSheetsWorksheetStateService
       },
     });
     const rows: gapi.client.sheets.RowData[] = [];
+    let maxStringRowLength = -1;
     for (const stringRow of stringRows) {
+      if (stringRow.length > maxStringRowLength) {
+        maxStringRowLength = stringRow.length;
+      }
       const values: gapi.client.sheets.CellData[] = [];
       for (const stringCell of stringRow) {
         values.push({userEnteredValue: {stringValue: stringCell}});
       }
       rows.push({values});
     }
+
+    if (maxStringRowLength > 26) {
+      // By default a new sheet only has 26 columns
+      // https://github.com/OpenRefine/OpenRefine/issues/2760
+      requests.push({
+        appendDimension: {
+          dimension: "COLUMNS",
+          length: maxStringRowLength - 26,
+        },
+      });
+    }
+
     requests.push({appendCells: {fields: "*", rows}});
 
     return new Promise((resolve, reject) => {
-      gapi.client.setToken({access_token: this.accessToken});
       (this.getSpreadsheetsResource() as any)
         .batchUpdate({spreadsheetId}, {requests})
         .then(
