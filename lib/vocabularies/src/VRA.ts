@@ -1,4 +1,4 @@
-import Namespace from "./Namespace";
+import {Namespace} from "./Namespace";
 
 export class VRA {
   static NS = Namespace("http://purl.org/vra/");

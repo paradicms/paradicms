@@ -1,4 +1,4 @@
-import Namespace from "./Namespace";
+import {Namespace} from "./Namespace";
 
 export class FOAF {
   static readonly NS = Namespace("http://xmlns.com/foaf/0.1/");

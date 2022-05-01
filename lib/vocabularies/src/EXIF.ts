@@ -1,4 +1,4 @@
-import Namespace from "./Namespace";
+import {Namespace} from "./Namespace";
 
 export class EXIF {
   static readonly NS = Namespace("http://www.w3.org/2003/12/exif/ns#");

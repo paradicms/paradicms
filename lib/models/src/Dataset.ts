@@ -4,6 +4,8 @@ import {Institution} from "./Institution";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
 import {
+  BlankNode,
+  DefaultGraph,
   NamedNode,
   Parser,
   ParserOptions,
@@ -160,7 +162,7 @@ export class Dataset {
   imagesByOriginalImageUri(originalImageUri: string): readonly Image[] {
     // Exclude the original image itself
     return (this.imagesByOriginalImageUriIndex[originalImageUri] ?? []).filter(
-      image => image.originalImageUri === originalImageUri
+      (image) => image.originalImageUri === originalImageUri
     );
   }
 
@@ -259,7 +261,7 @@ export class Dataset {
         key,
         ":",
         keyModels
-          .map(model => model.uri)
+          .map((model) => model.uri)
           .sort()
           .join(" ")
       );
@@ -334,10 +336,17 @@ export class Dataset {
   }
 
   static parse(input: string, options?: ParserOptions): Dataset {
+    return new Dataset(Dataset.parseIntoStore(input, options));
+  }
+
+  protected static parseIntoStore(
+    input: string,
+    options?: ParserOptions
+  ): Store {
     const parser = new Parser(options);
     const store = new Store();
     store.addQuads(parser.parse(input));
-    return new Dataset(store);
+    return store;
   }
 
   get people(): readonly Person[] {
@@ -386,7 +395,7 @@ export class Dataset {
     const workEventsByWorkUriIndex: {[index: string]: WorkEvent[]} = {};
     this._workEventsByUriIndex = {};
 
-    this.readModels(kwds => {
+    this.readModels((kwds) => {
       const event = this.readEvent(kwds);
 
       if (hasMixin(event, WorkEvent)) {
@@ -419,7 +428,7 @@ export class Dataset {
     const collectionsByInstitutionUriIndex: {
       [index: string]: Collection[];
     } = {};
-    this.readModels(kwds => {
+    this.readModels((kwds) => {
       const collection = this.readCollection(kwds);
 
       collections.push(collection);
@@ -449,7 +458,7 @@ export class Dataset {
     const imagesByDepictsUriIndex: {[index: string]: Image[]} = {};
     const imagesByOriginalImageUriIndex: {[index: string]: Image[]} = {};
     this._imagesByUriIndex = {};
-    this.readModels(kwds => {
+    this.readModels((kwds) => {
       const image = this.readImage(kwds);
 
       images.push(image);
@@ -484,7 +493,7 @@ export class Dataset {
   private readInstitutions() {
     const institutions: Institution[] = [];
     this._institutionsByUriIndex = {};
-    this.readModels(kwds => {
+    this.readModels((kwds) => {
       const institution = this.readInstitution(kwds);
       institutions.push(institution);
       this._institutionsByUriIndex![institution.uri] = institution;
@@ -499,7 +508,7 @@ export class Dataset {
   private readLicenses() {
     const licenses: License[] = [];
     this._licensesByUriIndex = {};
-    this.readModels(kwds => {
+    this.readModels((kwds) => {
       const license = this.readLicense(kwds);
       licenses.push(license);
       this._licensesByUriIndex![license.uri] = license;
@@ -507,26 +516,36 @@ export class Dataset {
     this._licenses = licenses;
   }
 
-  private readModels(
+  protected readModels(
     callback: (kwds: ModelParameters) => void,
     type: NamedNode
   ): void {
     this.store.forEach(
-      quad => {
-        if (quad.graph.termType !== "NamedNode") {
-          throw new RangeError(
-            `expected NamedNode graph, actual ${quad.graph.termType}`
-          );
+      (quad) => {
+        switch (quad.graph.termType) {
+          case "DefaultGraph":
+          case "NamedNode":
+            break;
+          default:
+            throw new RangeError(
+              `expected NamedNode or default graph, actual ${quad.graph.termType}`
+            );
         }
-        if (quad.subject.termType !== "NamedNode") {
-          throw new RangeError(
-            `expected NamedNode subject, actual ${quad.subject.termType}`
-          );
+
+        switch (quad.subject.termType) {
+          case "BlankNode":
+          case "NamedNode":
+            break;
+          default:
+            throw new RangeError(
+              `expected BlankNode or NamedNode subject, actual ${quad.subject.termType}`
+            );
         }
+
         callback({
           dataset: this,
-          graphNode: quad.graph as NamedNode,
-          node: quad.subject as NamedNode,
+          graphNode: quad.graph as DefaultGraph | NamedNode,
+          node: quad.subject as BlankNode | NamedNode,
         });
       },
       null,
@@ -546,7 +565,7 @@ export class Dataset {
       [index: string]: NamedValue[];
     } = {};
     this._namedValuesByUriIndex = {};
-    this.readModels(kwds => {
+    this.readModels((kwds) => {
       const namedValue = this.readNamedValue(kwds);
 
       namedValues.push(namedValue);
@@ -573,7 +592,7 @@ export class Dataset {
   private readOrganizations() {
     const organizations: Organization[] = [];
     this._organizationsByUriIndex = {};
-    this.readModels(kwds => {
+    this.readModels((kwds) => {
       const organization = this.readOrganization(kwds);
       organizations.push(organization);
       this._organizationsByUriIndex![organization.uri] = organization;
@@ -584,7 +603,7 @@ export class Dataset {
   private readPeople() {
     const people: Person[] = [];
     this._peopleByUriIndex = {};
-    this.readModels(kwds => {
+    this.readModels((kwds) => {
       const person = this.readPerson(kwds);
       people.push(person);
       this._peopleByUriIndex![person.uri] = person;
@@ -603,7 +622,7 @@ export class Dataset {
   private readRightsStatements() {
     const rightsStatements: RightsStatement[] = [];
     this._rightsStatementsByUriIndex = {};
-    this.readModels(kwds => {
+    this.readModels((kwds) => {
       const rightsStatement = this.readRightsStatement(kwds);
       rightsStatements.push(rightsStatement);
       this._rightsStatementsByUriIndex![rightsStatement.uri] = rightsStatement;
@@ -621,7 +640,7 @@ export class Dataset {
     const worksByCollectionUriIndex: {[index: string]: Work[]} = {};
     const worksByInstitutionUriIndex: {[index: string]: Work[]} = {};
     this._worksByUriIndex = {};
-    this.readModels(kwds => {
+    this.readModels((kwds) => {
       const work = this.readWork(kwds);
 
       works.push(work);

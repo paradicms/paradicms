@@ -1,4 +1,4 @@
-import Namespace from "./Namespace";
+import {Namespace} from "./Namespace";
 
 export class DC {
   static readonly NS = Namespace("http://purl.org/dc/elements/1.1/");

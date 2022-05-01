@@ -1,4 +1,5 @@
 export {HasAbstract} from "./HasAbstract";
+export {HasContributors} from "./HasContributors";
 export {HasCreators} from "./HasCreators";
 export {HasImages} from "./HasImages";
 export {HasInstitution} from "./HasInstitution";
