@@ -1,6 +1,6 @@
-from typing import Union, Tuple
+from typing import Union, Tuple, Optional
 
-from rdflib import URIRef, RDF
+from rdflib import URIRef, RDF, SH
 from rdflib.namespace import DCTERMS
 
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
@@ -21,7 +21,8 @@ class WorksheetFeature(ResourceBackedNamedModel):
         feature_set_uris: Tuple[URIRef, ...],
         title: str,
         uri: URIRef,
-        abstract: Union[str, Text, None] = None
+        abstract: Union[str, Text, None] = None,
+        order: Optional[int] = None
     ) -> "WorksheetFeature":
         return cls(
             ResourceBuilder(uri)
@@ -29,6 +30,7 @@ class WorksheetFeature(ResourceBackedNamedModel):
             .add(DCTERMS.abstract, abstract)
             .add(DCTERMS.title, title)
             .add(WORKSHEET.featureSet, feature_set_uris)
+            .add(SH.order, order)
             .build()
         )
 
