@@ -1,6 +1,6 @@
 from typing import Optional, Tuple, Union
 
-from rdflib import DCTERMS
+from rdflib import DCTERMS, SKOS
 from rdflib.namespace import RDF
 from rdflib.resource import Resource
 from rdflib.term import Node, URIRef
@@ -25,6 +25,7 @@ class NamedValue(ResourceBackedNamedModel):
         uri: URIRef,
         value: Node,  # A property value
         abstract: Union[str, Text, None] = None,
+        alt_labels: Tuple[str, ...] = None,
         title: Optional[str] = None,
     ) -> "NamedValue":
         if not property_uris:
@@ -36,6 +37,8 @@ class NamedValue(ResourceBackedNamedModel):
             .add(DCTERMS.title, title)
             .add(RDF.predicate, property_uris)
             .add(RDF.value, value)
+            .add(SKOS.altLabel, alt_labels)
+            .add(SKOS.prefLabel, title)
             .build()
         )
 
