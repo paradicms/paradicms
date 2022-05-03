@@ -9,11 +9,12 @@ import {
   Row,
 } from "reactstrap";
 import {Image, Text} from "@paradicms/models";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {thumbnailTargetDimensions} from "@paradicms/bootstrap";
 import classnames from "classnames";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faInfoCircle} from "@fortawesome/free-solid-svg-icons";
+import {useLocation} from "react-router";
 
 interface Item {
   description: string | Text | null;
@@ -27,6 +28,9 @@ export const MasterDetailContainer: React.FunctionComponent<{
   items: readonly Item[];
 }> = ({items}) => {
   const [detailItem, setDetailItem] = useState<Item | null>(null);
+  const location = useLocation();
+  // Reset the detail whenever the location changes
+  useEffect(() => setDetailItem(null), [location]);
 
   return (
     <Container fluid>
