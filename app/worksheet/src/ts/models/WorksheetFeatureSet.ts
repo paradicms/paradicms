@@ -15,15 +15,17 @@ export class WorksheetFeatureSet {
   }) {
     const {initialState} = kwds;
     this.definition = kwds.definition;
-    this.features = this.definition.features.map(
-      (featureDefinition) =>
-        new WorksheetFeature({
-          definition: featureDefinition,
-          initialState: initialState?.features?.find(
-            (featureState) => featureState.uri === featureDefinition.uri
-          ),
-        })
-    );
+    this.features = this.definition.features
+      .map(
+        (featureDefinition) =>
+          new WorksheetFeature({
+            definition: featureDefinition,
+            initialState: initialState?.features?.find(
+              (featureState) => featureState.uri === featureDefinition.uri
+            ),
+          })
+      )
+      .sort((left, right) => left.definition.order - right.definition.order);
     this.featuresByUri = this.features.reduce((map, feature) => {
       map[feature.uri] = feature;
       return map;

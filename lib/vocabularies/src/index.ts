@@ -8,6 +8,7 @@ export * from "./FOAF";
 export * from "./Namespace";
 export * from "./prefixes";
 export * from "./RDF";
+export * from "./SH";
 export * from "./SKOS";
 export * from "./TIME";
 export * from "./VRA";
