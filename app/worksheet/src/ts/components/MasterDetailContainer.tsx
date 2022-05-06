@@ -10,13 +10,14 @@ import {
 } from "reactstrap";
 import {Image, Text} from "@paradicms/models";
 import {useEffect, useState} from "react";
-import {thumbnailTargetDimensions} from "@paradicms/bootstrap";
+import {RightsParagraph, thumbnailTargetDimensions} from "@paradicms/bootstrap";
 import classnames from "classnames";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faInfoCircle} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router";
 
 interface Item {
+  altLabels: string[] | null;
   description: string | Text | null;
   onToggleSelected: () => void | null;
   selected: boolean | null;
@@ -49,6 +50,82 @@ export const MasterDetailContainer: React.FunctionComponent<{
 };
 
 const ItemDetail: React.FunctionComponent<{item: Item}> = ({item}) => {
+  const rows: React.ReactElement[] = [];
+
+  if (item.thumbnail) {
+    rows.push(
+      <Row key={"row" + rows.length.toString()}>
+        <Col className="text-center" xs={12}>
+          <figure className="figure mb-0">
+            <img
+              src={item.thumbnail.src ?? item.thumbnail.uri}
+              className="figure-img img-fluid rounded"
+              alt={item.title}
+            />
+            {item.thumbnail.rights ? (
+              <figcaption>
+                <RightsParagraph
+                  material="Image"
+                  rights={item.thumbnail.rights}
+                  style={{fontSize: "xx-small"}}
+                />
+              </figcaption>
+            ) : null}
+          </figure>
+        </Col>
+      </Row>
+    );
+  }
+
+  if (item.description) {
+    rows.push(
+      <Row key={"row" + rows.length.toString()}>
+        <Col className="text-center" xs={12}>
+          <p>{item.description.toString()}</p>
+          {item.description instanceof Text && item.description.rights ? (
+            <RightsParagraph
+              material="Text"
+              rights={item.description.rights}
+              style={{fontSize: "xx-small"}}
+            />
+          ) : null}
+        </Col>
+      </Row>
+    );
+  }
+
+  if (item.altLabels && item.altLabels.length > 0) {
+    rows.push(
+      <Row key={"row" + rows.length.toString()}>
+        <Col xs={12}>
+          <h5 className="text-center">Variant terms</h5>
+          <ul>
+            {item.altLabels!.map((altLabel, altLabelI) => (
+              <li key={altLabelI}>{altLabel}</li>
+            ))}
+          </ul>
+        </Col>
+      </Row>
+    );
+  }
+
+  return (
+    <Card>
+      <CardHeader className="text-center" tag="h3">
+        {item.title}
+      </CardHeader>
+      <CardBody>
+        <Container fluid>
+          {rows.map((row, rowI) => (
+            <>
+              {rowI > 0 ? <hr key={"hr" + rowI} /> : null}
+              {row}
+            </>
+          ))}
+        </Container>
+      </CardBody>
+    </Card>
+  );
   return <div>{item.title}</div>;
 };
 
