@@ -1,11 +1,16 @@
-import {HasTitle, NamedModel} from "@paradicms/models";
+import {HasAbstract, HasImages, HasTitle, NamedModel} from "@paradicms/models";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
 import {WORKSHEET} from "~/vocabularies/WORKSHEET";
 import {Memoize} from "typescript-memoize";
 import {WorksheetDefinitionDataset} from "~/models/WorksheetDefinitionDataset";
 import {Mixin} from "ts-mixer";
 
-export class WorksheetFeatureSetDefinition extends Mixin(NamedModel, HasTitle) {
+export class WorksheetFeatureSetDefinition extends Mixin(
+  NamedModel,
+  HasAbstract,
+  HasImages,
+  HasTitle
+) {
   @Memoize()
   get features(): readonly WorksheetFeatureDefinition[] {
     return this.store

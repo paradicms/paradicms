@@ -1,10 +1,11 @@
 import * as React from "react";
 import {useWorksheet} from "~/hooks/useWorksheet";
-import {Button, Col, Container, Input, Row, Table} from "reactstrap";
+import {Col, Container, Input, Row} from "reactstrap";
 import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
 // import {useReducer} from "react";
-import classnames from "classnames";
 import {Spinner} from "~/components/Spinner";
+import {MasterDetailContainer} from "~/components/MasterDetailContainer";
+import {thumbnailTargetDimensions} from "@paradicms/bootstrap";
 
 export const WorksheetEditPage: React.FunctionComponent = () => {
   const [worksheet, dispatchWorksheet] = useWorksheet();
@@ -24,70 +25,34 @@ export const WorksheetEditPage: React.FunctionComponent = () => {
       <Container fluid>
         <Row>
           <Col xs={12}>
-            <h4>Select feature sets</h4>
-            <p className="card-text">
-              Select one or more feature sets to describe the object. Currently
-              the feature set for a Dress is the only one available, but more
-              will be added in the future.
-            </p>
-            <Table className="table-bordered">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Features</th>
-                </tr>
-              </thead>
-              <tbody>
-                {worksheet.featureSets.map((featureSet) => (
-                  <tr
-                    className={classnames({
-                      "feature-set": true,
-                      selected: featureSet.selected,
-                    })}
-                    key={featureSet.uri}
-                  >
-                    <td className="text-center">
-                      <Button
-                        active={featureSet.selected}
-                        className={
-                          featureSet.selected
-                            ? "border border-primary border-4"
-                            : undefined
-                        }
-                        color="secondary"
-                        onClick={() => {
-                          featureSet.selected = !featureSet.selected;
-                          dispatchWorksheet({payload: worksheet});
-                        }}
-                        size="lg"
-                      >
-                        {featureSet.definition.title}
-                      </Button>
-                      {/* <Input checked={this.isFeatureSetSelected(featureSetDefinition.id)} type="checkbox"></Input> */}
-                    </td>
-                    <td className="align-middle">
-                      {featureSet.features.map((feature, featureIndex) => (
-                        <React.Fragment key={feature.uri}>
-                          <span
-                            data-bind="text: displayName"
-                            style={{
-                              fontWeight:
-                                featureIndex % 2 === 0 ? "bold" : "normal",
-                            }}
-                          >
-                            {feature.definition.title}
-                          </span>
-                          {featureIndex + 1 < featureSet.features.length
-                            ? "  \u00b7"
-                            : null}
-                          &nbsp;
-                        </React.Fragment>
-                      ))}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <div className="text-center w-100">
+              <h4>Select feature sets</h4>
+              <p>Select one or more feature sets to describe the object.</p>
+            </div>
+          </Col>
+        </Row>
+        <Row className="mt-2">
+          <Col xs={12}>
+            <MasterDetailContainer
+              items={worksheet.featureSets
+                .concat()
+                .sort((left, right) =>
+                  left.definition.title!.localeCompare(right.definition.title!)
+                )
+                .map((featureSet) => ({
+                  altLabels: null,
+                  description: featureSet.definition.abstract,
+                  onToggleSelected: () => {
+                    featureSet.selected = !featureSet.selected;
+                    dispatchWorksheet({payload: worksheet});
+                  },
+                  selected: featureSet.selected,
+                  thumbnail: featureSet.definition.thumbnail({
+                    targetDimensions: thumbnailTargetDimensions,
+                  }),
+                  title: featureSet.definition.title!,
+                }))}
+            />
           </Col>
         </Row>
         <Row className="mt-2">
