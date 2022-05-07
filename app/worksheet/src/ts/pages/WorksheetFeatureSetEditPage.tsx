@@ -48,7 +48,9 @@ export const WorksheetFeatureSetEditPage: React.FunctionComponent = () => {
                 Hrefs.worksheetMark({
                   featureSetUri: featureSet.uri,
                   featureUri: feature.uri,
-                  worksheetStateId: worksheet?.stateId,
+                  review: false,
+                  view: worksheet!.currentMark.view,
+                  worksheetStateId: worksheet!.stateId,
                 })
               );
             },

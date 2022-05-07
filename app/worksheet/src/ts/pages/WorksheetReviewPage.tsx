@@ -210,7 +210,9 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
                                 to={Hrefs.worksheetMark({
                                   featureSetUri: featureSet.uri,
                                   featureUri: feature.uri,
-                                  worksheetStateId: worksheet?.stateId,
+                                  review: false,
+                                  view: worksheet!.currentMark.view,
+                                  worksheetStateId: worksheet!.stateId,
                                 })}
                               >
                                 {feature.definition.title}

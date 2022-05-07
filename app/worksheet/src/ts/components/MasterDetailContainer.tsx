@@ -19,6 +19,7 @@ import {useLocation} from "react-router";
 import {faImages, faTable, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {useQueryParam} from "use-query-params";
 import {WorksheetView} from "~/models/WorksheetView";
+import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 
 interface Item {
   altLabels: string[] | null;
@@ -38,9 +39,8 @@ export const MasterDetailContainer: React.FunctionComponent<{
   // Reset the detail whenever the location changes
   useEffect(() => setDetailItem(null), [location]);
   useEffect(() => setShowDetailItem(true), [detailItem]);
-  const [viewQueryParam, setView] = useQueryParam<string>("view");
-  const view =
-    viewQueryParam === "table" ? WorksheetView.TABLE : WorksheetView.GALLERY;
+  const [_, setView] = useQueryParam<string>("view");
+  const view = useRouteWorksheetMark().view ?? WorksheetView.GALLERY;
 
   return (
     <>

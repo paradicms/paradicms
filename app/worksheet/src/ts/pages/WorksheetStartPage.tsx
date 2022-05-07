@@ -95,7 +95,13 @@ export const WorksheetStartPage: React.FunctionComponent = () => {
         })
         .then(() => {
           navigate(
-            Hrefs.worksheetMark({worksheetStateId: newWorksheetStateId})
+            Hrefs.worksheetMark({
+              featureSetUri: null,
+              featureUri: null,
+              review: false,
+              view: null,
+              worksheetStateId: newWorksheetStateId,
+            })
           );
         }, setException);
     },
@@ -316,7 +322,13 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
       <tr>
         <td className="align-middle text-left w-90">
           <Link
-            to={Hrefs.worksheetMark({worksheetStateId})}
+            to={Hrefs.worksheetMark({
+              featureSetUri: null,
+              featureUri: null,
+              review: false,
+              view: null,
+              worksheetStateId,
+            })}
             title="Open this worksheet"
           >
             {worksheetStateId}

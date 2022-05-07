@@ -1,6 +1,8 @@
 import {WorksheetMark} from "~/models/WorksheetMark";
 import {useLocation} from "react-router";
 import {useParams} from "react-router-dom";
+import * as queryString from "query-string";
+import {WorksheetView} from "~/models/WorksheetView";
 
 export const useRouteWorksheetMark = (): WorksheetMark => {
   const location = useLocation();
@@ -18,10 +20,21 @@ export const useRouteWorksheetMark = (): WorksheetMark => {
     throw new RangeError(location.pathname);
   }
 
+  const parsedQueryString = queryString.parse(location.search);
+  let view: WorksheetView | null;
+  if (parsedQueryString.view === "gallery") {
+    view = WorksheetView.GALLERY;
+  } else if (parsedQueryString.view === "table") {
+    view = WorksheetView.TABLE;
+  } else {
+    view = null;
+  }
+
   return {
-    featureUri: params.featureUri,
-    featureSetUri: params.featureSetUri,
-    review: review ? review : undefined,
+    featureUri: params.featureUri ?? null,
+    featureSetUri: params.featureSetUri ?? null,
+    review: !!review,
+    view,
     worksheetStateId: params.worksheetStateId,
   };
 };

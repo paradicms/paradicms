@@ -30,7 +30,13 @@ export class JsonLdWorksheetStateExporter
     const context: any = {};
     context.cc = "https://w3id.org/costumeCore/ontology/";
     json["@context"] = context;
-    let href = Hrefs.worksheetMark({worksheetStateId: worksheetState.id});
+    let href = Hrefs.worksheetMark({
+      featureSetUri: null,
+      featureUri: null,
+      review: false,
+      view: null,
+      worksheetStateId: worksheetState.id,
+    });
     if (href.endsWith("/edit")) {
       href = href.substring(0, href.length - 4);
     }
