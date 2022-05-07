@@ -3,7 +3,6 @@ import {useWorksheet} from "~/hooks/useWorksheet";
 import {Spinner} from "~/components/Spinner";
 import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
 import {MasterDetailContainer} from "~/components/MasterDetailContainer";
-import {thumbnailTargetDimensions} from "@paradicms/bootstrap";
 import {useNavigate} from "react-router-dom";
 import {Hrefs} from "~/Hrefs";
 
@@ -43,6 +42,7 @@ export const WorksheetFeatureSetEditPage: React.FunctionComponent = () => {
           .map((feature) => ({
             altLabels: null,
             description: feature.definition.abstract,
+            images: feature.definition.images,
             onToggleSelected: () => {
               navigate(
                 Hrefs.worksheetMark({
@@ -55,9 +55,6 @@ export const WorksheetFeatureSetEditPage: React.FunctionComponent = () => {
               );
             },
             selected: null,
-            thumbnail: feature.definition.thumbnail({
-              targetDimensions: thumbnailTargetDimensions,
-            }),
             title: feature.definition.title,
           }))}
         mode={worksheet.currentMark.mode}

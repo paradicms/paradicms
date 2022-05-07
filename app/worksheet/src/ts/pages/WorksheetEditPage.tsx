@@ -5,7 +5,6 @@ import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
 // import {useReducer} from "react";
 import {Spinner} from "~/components/Spinner";
 import {MasterDetailContainer} from "~/components/MasterDetailContainer";
-import {thumbnailTargetDimensions} from "@paradicms/bootstrap";
 
 export const WorksheetEditPage: React.FunctionComponent = () => {
   const [worksheet, dispatchWorksheet] = useWorksheet();
@@ -42,14 +41,12 @@ export const WorksheetEditPage: React.FunctionComponent = () => {
                 .map((featureSet) => ({
                   altLabels: null,
                   description: featureSet.definition.abstract,
+                  images: featureSet.definition.images,
                   onToggleSelected: () => {
                     featureSet.selected = !featureSet.selected;
                     dispatchWorksheet({payload: worksheet});
                   },
                   selected: featureSet.selected,
-                  thumbnail: featureSet.definition.thumbnail({
-                    targetDimensions: thumbnailTargetDimensions,
-                  }),
                   title: featureSet.definition.title!,
                 }))}
               mode={worksheet.currentMark.mode}

@@ -1,39 +1,35 @@
 import * as React from "react";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {
   Button,
   Card,
   CardBody,
   CardHeader,
+  Carousel,
+  CarouselControl,
+  CarouselItem,
   Col,
   Container,
   Row,
   Table,
 } from "reactstrap";
-import {Image, Text} from "@paradicms/models";
+import {Image, selectThumbnail, Text} from "@paradicms/models";
 import {RightsParagraph, thumbnailTargetDimensions} from "@paradicms/bootstrap";
 import classnames from "classnames";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faInfoCircle, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router";
 import {WorksheetMode} from "~/models/WorksheetMode";
+import ImageZoom from "react-medium-image-zoom";
 
 interface Item {
   altLabels: string[] | null;
   description: string | Text | null;
+  images: readonly Image[];
   onToggleSelected: () => void | null;
   selected: boolean | null;
-  thumbnail: Image | null;
   title: string;
 }
-
-const thumbnailSrc = (thumbnail: Image | null) => {
-  if (thumbnail) {
-    return thumbnail.src ?? thumbnail.uri;
-  } else {
-    return Image.placeholderSrc(thumbnailTargetDimensions);
-  }
-};
 
 export const MasterDetailContainer: React.FunctionComponent<{
   mode: WorksheetMode | null;
@@ -77,26 +73,112 @@ const ItemDetailCard: React.FunctionComponent<{
 }> = ({item, onClose}) => {
   const rows: React.ReactElement[] = [];
 
-  if (item.thumbnail) {
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+
+  const originalImages = item.images.filter((image) => image.isOriginal);
+
+  const onClickNextImage = useCallback(() => {
+    // if (animating) return;
+    const nextIndex =
+      activeImageIndex === originalImages.length - 1 ? 0 : activeImageIndex + 1;
+    setActiveImageIndex(nextIndex);
+  }, [activeImageIndex]);
+
+  const onClickPreviousImage = useCallback(() => {
+    // if (animating) return;
+    const nextIndex =
+      activeImageIndex === 0 ? originalImages.length - 1 : activeImageIndex - 1;
+    setActiveImageIndex(nextIndex);
+  }, [activeImageIndex]);
+
+  if (originalImages.length > 0) {
+    const renderOriginalImage = (originalImage: Image) => {
+      const originalImageSrc = originalImage.src;
+      if (!originalImageSrc) {
+        return null;
+      }
+      const thumbnail = originalImage.thumbnail({
+        targetDimensions: thumbnailTargetDimensions,
+      });
+      const thumbnailSrc = thumbnail?.src;
+      if (!thumbnail || !thumbnailSrc) {
+        return (
+          <img
+            className="img"
+            src={originalImageSrc}
+            style={{
+              maxHeight: thumbnailTargetDimensions.height,
+              maxWidth: thumbnailTargetDimensions.width,
+            }}
+          />
+        );
+      }
+
+      return (
+        <div>
+          <div>
+            <ImageZoom
+              image={{
+                className: "img",
+                src: thumbnailSrc,
+                style: {
+                  maxHeight: thumbnailTargetDimensions.height,
+                  maxWidth: thumbnailTargetDimensions.width,
+                },
+              }}
+              zoomImage={{
+                className: "img--zoomed",
+                src: originalImageSrc,
+                style: originalImage?.exactDimensions ?? undefined,
+              }}
+            />
+          </div>
+          {originalImage.rights ? (
+            <div className="mt-2">
+              <RightsParagraph material="Image" rights={originalImage.rights} />
+            </div>
+          ) : null}
+        </div>
+      );
+    };
+
     rows.push(
       <Row key={"row" + rows.length.toString()}>
         <Col className="text-center" xs={12}>
-          <figure className="figure mb-0">
-            <img
-              src={item.thumbnail.src ?? item.thumbnail.uri}
-              className="figure-img img-fluid rounded"
-              alt={item.title}
+          <Carousel
+            activeIndex={activeImageIndex}
+            autoPlay={false}
+            next={onClickNextImage}
+            previous={onClickPreviousImage}
+            slide={false}
+          >
+            {/*<CarouselIndicators*/}
+            {/*  activeIndex={activeIndex}*/}
+            {/*  items={items}*/}
+            {/*  onClickHandler={goToIndex}*/}
+            {/*/>*/}
+            {originalImages.map((originalImage) => {
+              const renderedOriginalImage = renderOriginalImage(originalImage);
+              if (!renderedOriginalImage) {
+                return null;
+              }
+              return (
+                <CarouselItem key={originalImage.uri}>
+                  {renderedOriginalImage}
+                </CarouselItem>
+              );
+            })}
+            <CarouselControl
+              direction="prev"
+              directionText="Previous"
+              onClickHandler={onClickPreviousImage}
             />
-            {item.thumbnail.rights ? (
-              <figcaption>
-                <RightsParagraph
-                  material="Image"
-                  rights={item.thumbnail.rights}
-                  style={{fontSize: "xx-small"}}
-                />
-              </figcaption>
-            ) : null}
-          </figure>
+            <CarouselControl
+              direction="next"
+              directionText="Next"
+              onClickHandler={onClickNextImage}
+            />
+          </Carousel>
         </Col>
       </Row>
     );
@@ -174,7 +256,17 @@ const ItemsGallery: React.FunctionComponent<{
   <Container fluid>
     <Row>
       {items.map((item, itemI) => {
-        const {onToggleSelected, selected, thumbnail, title} = item;
+        const {onToggleSelected, images, selected, title} = item;
+
+        let thumbnail: Image | null = selectThumbnail(images, {
+          targetDimensions: thumbnailTargetDimensions,
+        });
+        let thumbnailSrc: string;
+        if (thumbnail) {
+          thumbnailSrc = thumbnail.src ?? thumbnail.uri;
+        } else {
+          thumbnailSrc = Image.placeholderSrc(thumbnailTargetDimensions);
+        }
 
         return (
           <Card
@@ -203,7 +295,7 @@ const ItemsGallery: React.FunctionComponent<{
               <a onClick={onToggleSelected}>
                 <img
                   className="figure-img rounded"
-                  src={thumbnailSrc(thumbnail)}
+                  src={thumbnailSrc}
                   style={{
                     height: thumbnailTargetDimensions.height,
                     width: thumbnailTargetDimensions.width,

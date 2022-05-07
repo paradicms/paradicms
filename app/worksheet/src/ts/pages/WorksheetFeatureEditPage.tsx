@@ -2,7 +2,6 @@ import * as React from "react";
 import {useWorksheet} from "~/hooks/useWorksheet";
 import {Spinner} from "~/components/Spinner";
 import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
-import {thumbnailTargetDimensions} from "@paradicms/bootstrap";
 import {NamedValue} from "@paradicms/models";
 import {useState} from "react";
 import {MasterDetailContainer} from "~/components/MasterDetailContainer";
@@ -46,14 +45,12 @@ export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
           .map((featureValue) => ({
             altLabels: featureValue.definition.altLabels,
             description: featureValue.definition.abstract,
+            images: featureValue.definition.images,
             onToggleSelected: () => {
               featureValue.selected = !featureValue.selected;
               dispatchWorksheet({payload: worksheet});
             },
             selected: featureValue.selected,
-            thumbnail: featureValue.definition.thumbnail({
-              targetDimensions: thumbnailTargetDimensions,
-            }),
             title: featureValue.definition.title!,
           }))}
         mode={worksheet.currentMark.mode}
