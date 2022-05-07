@@ -1,18 +1,28 @@
 import * as React from "react";
 import {useCallback, useEffect, useState} from "react";
-import {Image, ImageDimensions, Work} from "@paradicms/models";
+import {Image, ImageDimensions} from "@paradicms/models";
 import {Carousel, CarouselControl, CarouselItem} from "reactstrap";
 import ImageZoom from "react-medium-image-zoom";
-import {RightsTable} from "./RightsTable";
+import {thumbnailTargetDimensions as thumbnailTargetDimensionsDefault} from "./thumbnailTargetDimensions";
+import {RightsParagraph} from "./RightsParagraph";
 
-const thumbnailTargetDimensions: ImageDimensions = {height: 600, width: 600};
-
-export const WorkImagesCarousel: React.FunctionComponent<{
+export interface ImagesCarouselProps {
   hideImageRights?: boolean;
+  images: readonly Image[];
   onShowImage?: (newImage: Image) => void;
-  work: Work;
-}> = ({hideImageRights, onShowImage, work}) => {
-  const workOriginalImages = work.originalImages;
+  thumbnailTargetDimensions?: ImageDimensions;
+}
+
+export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
+  hideImageRights,
+  images,
+  onShowImage,
+  thumbnailTargetDimensions: thumbnailTargetDimensionsInput,
+}) => {
+  const originalImages = images.filter((image) => image.isOriginal);
+
+  const thumbnailTargetDimensions =
+    thumbnailTargetDimensionsInput ?? thumbnailTargetDimensionsDefault;
 
   const renderOriginalImage = (originalImage: Image) => {
     const originalImageSrc = originalImage.src;
@@ -57,8 +67,11 @@ export const WorkImagesCarousel: React.FunctionComponent<{
         </div>
         {!hideImageRights && originalImage && originalImage.rights ? (
           <div className="mt-2">
-            <h6 className="text-center">Image rights</h6>
-            <RightsTable rights={originalImage.rights} />
+            <RightsParagraph
+              material="Image"
+              rights={originalImage.rights}
+              style={{fontSize: "xx-small"}}
+            />
           </div>
         ) : null}
       </div>
@@ -66,31 +79,31 @@ export const WorkImagesCarousel: React.FunctionComponent<{
   };
 
   useEffect(() => {
-    if (onShowImage && workOriginalImages.length > 0) {
+    if (onShowImage && originalImages.length > 0) {
       // Invoke onChange with the first image
-      onShowImage(workOriginalImages[0]);
+      onShowImage(originalImages[0]);
     }
-  }, [work]);
+  }, [images]);
 
   const [activeIndex, setActiveIndex] = useState(0);
 
   const onClickNext = useCallback(() => {
     // if (animating) return;
     const nextIndex =
-      activeIndex === workOriginalImages.length - 1 ? 0 : activeIndex + 1;
+      activeIndex === originalImages.length - 1 ? 0 : activeIndex + 1;
     setActiveIndex(nextIndex);
     if (onShowImage) {
-      onShowImage(workOriginalImages[nextIndex]);
+      onShowImage(originalImages[nextIndex]);
     }
   }, [activeIndex]);
 
   const onClickPrevious = useCallback(() => {
     // if (animating) return;
     const nextIndex =
-      activeIndex === 0 ? workOriginalImages.length - 1 : activeIndex - 1;
+      activeIndex === 0 ? originalImages.length - 1 : activeIndex - 1;
     setActiveIndex(nextIndex);
     if (onShowImage) {
-      onShowImage(workOriginalImages[nextIndex]);
+      onShowImage(originalImages[nextIndex]);
     }
   }, [activeIndex]);
 
@@ -99,13 +112,9 @@ export const WorkImagesCarousel: React.FunctionComponent<{
   //   setActiveIndex(newIndex);
   // };
 
-  if (workOriginalImages.length === 1) {
-    console.debug(
-      "work",
-      work.uri,
-      "only has one image, rendering without carousel"
-    );
-    return renderOriginalImage(workOriginalImages[0]);
+  if (originalImages.length === 1) {
+    console.debug("only has one image, rendering without carousel");
+    return renderOriginalImage(originalImages[0]);
   }
 
   return (
@@ -121,7 +130,7 @@ export const WorkImagesCarousel: React.FunctionComponent<{
       {/*  items={items}*/}
       {/*  onClickHandler={goToIndex}*/}
       {/*/>*/}
-      {workOriginalImages.map(originalImage => {
+      {originalImages.map((originalImage) => {
         const renderedOriginalImage = renderOriginalImage(originalImage);
         if (!renderedOriginalImage) {
           return null;

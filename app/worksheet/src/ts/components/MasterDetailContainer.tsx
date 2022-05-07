@@ -1,26 +1,26 @@
 import * as React from "react";
-import {useCallback, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {
   Button,
   Card,
   CardBody,
   CardHeader,
-  Carousel,
-  CarouselControl,
-  CarouselItem,
   Col,
   Container,
   Row,
   Table,
 } from "reactstrap";
 import {Image, selectThumbnail, Text} from "@paradicms/models";
-import {RightsParagraph, thumbnailTargetDimensions} from "@paradicms/bootstrap";
+import {
+  ImagesCarousel,
+  RightsParagraph,
+  thumbnailTargetDimensions,
+} from "@paradicms/bootstrap";
 import classnames from "classnames";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faInfoCircle, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router";
 import {WorksheetMode} from "~/models/WorksheetMode";
-import ImageZoom from "react-medium-image-zoom";
 
 interface Item {
   altLabels: string[] | null;
@@ -73,116 +73,11 @@ const ItemDetailCard: React.FunctionComponent<{
 }> = ({item, onClose}) => {
   const rows: React.ReactElement[] = [];
 
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-
-  const originalImages = item.images.filter((image) => image.isOriginal);
-
-  const onClickNextImage = useCallback(() => {
-    // if (animating) return;
-    const nextIndex =
-      activeImageIndex === originalImages.length - 1 ? 0 : activeImageIndex + 1;
-    setActiveImageIndex(nextIndex);
-  }, [activeImageIndex]);
-
-  const onClickPreviousImage = useCallback(() => {
-    // if (animating) return;
-    const nextIndex =
-      activeImageIndex === 0 ? originalImages.length - 1 : activeImageIndex - 1;
-    setActiveImageIndex(nextIndex);
-  }, [activeImageIndex]);
-
-  if (originalImages.length > 0) {
-    const renderOriginalImage = (originalImage: Image) => {
-      const originalImageSrc = originalImage.src;
-      if (!originalImageSrc) {
-        return null;
-      }
-      const thumbnail = originalImage.thumbnail({
-        targetDimensions: thumbnailTargetDimensions,
-      });
-      const thumbnailSrc = thumbnail?.src;
-      if (!thumbnail || !thumbnailSrc) {
-        return (
-          <img
-            className="img"
-            src={originalImageSrc}
-            style={{
-              maxHeight: thumbnailTargetDimensions.height,
-              maxWidth: thumbnailTargetDimensions.width,
-            }}
-          />
-        );
-      }
-
-      return (
-        <div>
-          <div>
-            <ImageZoom
-              image={{
-                className: "img",
-                src: thumbnailSrc,
-                style: {
-                  maxHeight: thumbnailTargetDimensions.height,
-                  maxWidth: thumbnailTargetDimensions.width,
-                },
-              }}
-              zoomImage={{
-                className: "img--zoomed",
-                src: originalImageSrc,
-                style: originalImage?.exactDimensions ?? undefined,
-              }}
-            />
-          </div>
-          {originalImage.rights ? (
-            <div className="mt-2">
-              <RightsParagraph
-                material="Image"
-                rights={originalImage.rights}
-                style={{fontSize: "xx-small"}}
-              />
-            </div>
-          ) : null}
-        </div>
-      );
-    };
-
+  if (item.images.length > 0) {
     rows.push(
       <Row key={"row" + rows.length.toString()}>
         <Col className="text-center" xs={12}>
-          <Carousel
-            activeIndex={activeImageIndex}
-            autoPlay={false}
-            next={onClickNextImage}
-            previous={onClickPreviousImage}
-            slide={false}
-          >
-            {/*<CarouselIndicators*/}
-            {/*  activeIndex={activeIndex}*/}
-            {/*  items={items}*/}
-            {/*  onClickHandler={goToIndex}*/}
-            {/*/>*/}
-            {originalImages.map((originalImage) => {
-              const renderedOriginalImage = renderOriginalImage(originalImage);
-              if (!renderedOriginalImage) {
-                return null;
-              }
-              return (
-                <CarouselItem key={originalImage.uri}>
-                  {renderedOriginalImage}
-                </CarouselItem>
-              );
-            })}
-            <CarouselControl
-              direction="prev"
-              directionText="Previous"
-              onClickHandler={onClickPreviousImage}
-            />
-            <CarouselControl
-              direction="next"
-              directionText="Next"
-              onClickHandler={onClickNextImage}
-            />
-          </Carousel>
+          <ImagesCarousel images={item.images} />
         </Col>
       </Row>
     );
