@@ -56,6 +56,7 @@ export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
             }),
             title: featureValue.definition.title!,
           }))}
+        mode={worksheet.currentMark.mode}
       />
     </WorksheetNavigationFrame>
   );

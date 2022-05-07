@@ -2,7 +2,7 @@ import {WorksheetMark} from "~/models/WorksheetMark";
 import {useLocation} from "react-router";
 import {useParams} from "react-router-dom";
 import * as queryString from "query-string";
-import {WorksheetView} from "~/models/WorksheetView";
+import {WorksheetMode} from "~/models/WorksheetMode";
 
 export const useRouteWorksheetMark = (): WorksheetMark => {
   const location = useLocation();
@@ -21,20 +21,22 @@ export const useRouteWorksheetMark = (): WorksheetMark => {
   }
 
   const parsedQueryString = queryString.parse(location.search);
-  let view: WorksheetView | null;
-  if (parsedQueryString.view === "gallery") {
-    view = WorksheetView.GALLERY;
-  } else if (parsedQueryString.view === "table") {
-    view = WorksheetView.TABLE;
+  let mode: WorksheetMode | null;
+  if (
+    Object.values(WorksheetMode).some(
+      (mode: string) => mode === parsedQueryString.mode
+    )
+  ) {
+    mode = <WorksheetMode>parsedQueryString.mode;
   } else {
-    view = null;
+    mode = WorksheetMode.BEGINNER;
   }
 
   return {
     featureUri: params.featureUri ?? null,
     featureSetUri: params.featureSetUri ?? null,
+    mode,
     review,
-    view,
     worksheetStateId: params.worksheetStateId,
   };
 };

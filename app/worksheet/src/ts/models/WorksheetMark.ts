@@ -1,9 +1,9 @@
-import {WorksheetView} from "~/models/WorksheetView";
+import {WorksheetMode} from "~/models/WorksheetMode";
 
 export interface WorksheetMark {
   readonly featureUri: string | null;
   readonly featureSetUri: string | null;
+  readonly mode: WorksheetMode;
   readonly review: boolean;
-  readonly view: WorksheetView | null;
   readonly worksheetStateId: string;
 }

@@ -145,7 +145,7 @@ export class Worksheet {
       featureSetUri: null,
       featureUri: null,
       review: false,
-      view: this.currentMark.view,
+      mode: this.currentMark.mode,
       worksheetStateId,
     });
 
@@ -159,7 +159,7 @@ export class Worksheet {
           featureUri: null,
           featureSetUri,
           review: false,
-          view: this.currentMark.view,
+          mode: this.currentMark.mode,
           worksheetStateId,
         });
 
@@ -169,7 +169,7 @@ export class Worksheet {
             featureUri: feature.uri,
             featureSetUri,
             review: false,
-            view: this.currentMark.view,
+            mode: this.currentMark.mode,
             worksheetStateId,
           });
         }
@@ -179,7 +179,7 @@ export class Worksheet {
           featureSetUri,
           featureUri: null,
           review: true,
-          view: this.currentMark.view,
+          mode: this.currentMark.mode,
           worksheetStateId,
         });
       }
@@ -190,7 +190,7 @@ export class Worksheet {
       featureSetUri: null,
       featureUri: null,
       review: true,
-      view: this.currentMark.view,
+      mode: this.currentMark.mode,
       worksheetStateId,
     });
 

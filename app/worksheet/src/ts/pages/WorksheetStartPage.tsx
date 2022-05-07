@@ -98,8 +98,8 @@ export const WorksheetStartPage: React.FunctionComponent = () => {
             Hrefs.worksheetMark({
               featureSetUri: null,
               featureUri: null,
+              mode: null,
               review: false,
-              view: null,
               worksheetStateId: newWorksheetStateId,
             })
           );
@@ -325,8 +325,8 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
             to={Hrefs.worksheetMark({
               featureSetUri: null,
               featureUri: null,
+              mode: null,
               review: false,
-              view: null,
               worksheetStateId,
             })}
             title="Open this worksheet"

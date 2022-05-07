@@ -72,8 +72,8 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
           to={Hrefs.worksheetMark({
             featureSetUri: worksheet.currentFeatureSet.uri,
             featureUri: null,
+            mode: worksheet.currentMark.mode,
             review: false,
-            view: worksheet.currentMark.view,
             worksheetStateId: worksheet.stateId,
           })}
         >
@@ -89,8 +89,8 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
           to={Hrefs.worksheetMark({
             featureSetUri: worksheet.currentFeatureSet!.uri,
             featureUri: worksheet.currentFeature.uri,
+            mode: worksheet.currentMark.mode,
             review: false,
-            view: worksheet.currentMark.view,
             worksheetStateId: worksheet.stateId,
           })}
         >

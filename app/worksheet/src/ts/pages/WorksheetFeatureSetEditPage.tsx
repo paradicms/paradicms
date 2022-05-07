@@ -49,7 +49,7 @@ export const WorksheetFeatureSetEditPage: React.FunctionComponent = () => {
                   featureSetUri: featureSet.uri,
                   featureUri: feature.uri,
                   review: false,
-                  view: worksheet!.currentMark.view,
+                  mode: worksheet!.currentMark.mode,
                   worksheetStateId: worksheet!.stateId,
                 })
               );
@@ -60,6 +60,7 @@ export const WorksheetFeatureSetEditPage: React.FunctionComponent = () => {
             }),
             title: feature.definition.title,
           }))}
+        mode={worksheet.currentMark.mode}
       />
     </WorksheetNavigationFrame>
   );

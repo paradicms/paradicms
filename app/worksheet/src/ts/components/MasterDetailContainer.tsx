@@ -2,7 +2,6 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import {
   Button,
-  ButtonGroup,
   Card,
   CardBody,
   CardHeader,
@@ -15,16 +14,9 @@ import {Image, Text} from "@paradicms/models";
 import {RightsParagraph, thumbnailTargetDimensions} from "@paradicms/bootstrap";
 import classnames from "classnames";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-  faImages,
-  faInfoCircle,
-  faTable,
-  faTimes,
-} from "@fortawesome/free-solid-svg-icons";
+import {faInfoCircle, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router";
-import {useQueryParam} from "use-query-params";
-import {WorksheetView} from "~/models/WorksheetView";
-import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
+import {WorksheetMode} from "~/models/WorksheetMode";
 
 interface Item {
   altLabels: string[] | null;
@@ -44,63 +36,39 @@ const thumbnailSrc = (thumbnail: Image | null) => {
 };
 
 export const MasterDetailContainer: React.FunctionComponent<{
+  mode: WorksheetMode | null;
   items: readonly Item[];
-}> = ({items}) => {
+}> = ({items, mode}) => {
   const [detailItem, setDetailItem] = useState<Item | null>(null);
   const location = useLocation();
   // Reset the detail whenever the location changes
   useEffect(() => setDetailItem(null), [location]);
-  const [_, setView] = useQueryParam<string>("view");
-  const view = useRouteWorksheetMark().view ?? WorksheetView.GALLERY;
 
   return (
-    <>
-      <div className="d-flex">
-        <div style={{flexGrow: 1}} />
-        <div style={{flexGrow: 0}}>
-          <ButtonGroup>
-            <Button
-              active={view === WorksheetView.GALLERY}
-              onClick={() => setView(WorksheetView.GALLERY)}
-              title="Gallery view"
-            >
-              <FontAwesomeIcon icon={faImages} />
-            </Button>
-            <Button
-              active={view === WorksheetView.TABLE}
-              onClick={() => setView(WorksheetView.TABLE)}
-              title="Table view"
-            >
-              <FontAwesomeIcon icon={faTable} />
-            </Button>
-          </ButtonGroup>
-        </div>
-      </div>
-      <div className="d-flex mt-2">
-        <div style={{flexGrow: 1}}>
-          {view === WorksheetView.GALLERY ? (
-            <ItemsGallery items={items} setDetailItem={setDetailItem} />
-          ) : null}
-          {view === WorksheetView.TABLE ? (
-            <ItemsTable items={items} setDetailItem={setDetailItem} />
-          ) : null}
-        </div>
-        {detailItem ? (
-          <div
-            className="ms-2"
-            style={{
-              flexGrow: 0,
-              maxWidth: thumbnailTargetDimensions.width + 100,
-            }}
-          >
-            <ItemDetailCard
-              item={detailItem}
-              onClose={() => setDetailItem(null)}
-            />
-          </div>
+    <div className="d-flex mt-2">
+      <div style={{flexGrow: 1}}>
+        {mode === WorksheetMode.BEGINNER ? (
+          <ItemsGallery items={items} setDetailItem={setDetailItem} />
+        ) : null}
+        {mode !== WorksheetMode.BEGINNER ? (
+          <ItemsTable items={items} setDetailItem={setDetailItem} />
         ) : null}
       </div>
-    </>
+      {detailItem ? (
+        <div
+          className="ms-2"
+          style={{
+            flexGrow: 0,
+            maxWidth: thumbnailTargetDimensions.width + 100,
+          }}
+        >
+          <ItemDetailCard
+            item={detailItem}
+            onClose={() => setDetailItem(null)}
+          />
+        </div>
+      ) : null}
+    </div>
   );
 };
 

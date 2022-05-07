@@ -52,6 +52,7 @@ export const WorksheetEditPage: React.FunctionComponent = () => {
                   }),
                   title: featureSet.definition.title!,
                 }))}
+              mode={worksheet.currentMark.mode}
             />
           </Col>
         </Row>

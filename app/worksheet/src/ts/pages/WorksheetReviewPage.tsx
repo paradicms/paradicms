@@ -211,7 +211,7 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
                                   featureSetUri: featureSet.uri,
                                   featureUri: feature.uri,
                                   review: false,
-                                  view: worksheet!.currentMark.view,
+                                  mode: worksheet!.currentMark.mode,
                                   worksheetStateId: worksheet!.stateId,
                                 })}
                               >
