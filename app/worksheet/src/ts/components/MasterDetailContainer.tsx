@@ -15,6 +15,7 @@ import classnames from "classnames";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faInfoCircle} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router";
+import {faWindowClose} from "@fortawesome/free-solid-svg-icons";
 
 interface Item {
   altLabels: string[] | null;
@@ -29,27 +30,35 @@ export const MasterDetailContainer: React.FunctionComponent<{
   items: readonly Item[];
 }> = ({items}) => {
   const [detailItem, setDetailItem] = useState<Item | null>(null);
+  const [showDetailItem, setShowDetailItem] = useState<boolean>(true);
   const location = useLocation();
   // Reset the detail whenever the location changes
   useEffect(() => setDetailItem(null), [location]);
+  useEffect(() => setShowDetailItem(true), [detailItem]);
 
   return (
-    <Container fluid>
-      <Row>
-        <Col xs={detailItem ? 8 : 12}>
-          <ItemsGallery items={items} setDetailItem={setDetailItem} />
-        </Col>
-        {detailItem ? (
-          <Col xs={4}>
-            <ItemDetail item={detailItem} />
-          </Col>
-        ) : null}
-      </Row>
-    </Container>
+    <div className="d-flex">
+      <div style={{flexGrow: 1}}>
+        <ItemsGallery items={items} setDetailItem={setDetailItem} />
+      </div>
+      {detailItem && showDetailItem ? (
+        <div
+          style={{flexGrow: 0, maxWidth: thumbnailTargetDimensions.width + 100}}
+        >
+          <ItemDetailCard
+            item={detailItem}
+            onClose={() => setShowDetailItem(false)}
+          />
+        </div>
+      ) : null}
+    </div>
   );
 };
 
-const ItemDetail: React.FunctionComponent<{item: Item}> = ({item}) => {
+const ItemDetailCard: React.FunctionComponent<{
+  item: Item;
+  onClose: () => void;
+}> = ({item, onClose}) => {
   const rows: React.ReactElement[] = [];
 
   if (item.thumbnail) {
@@ -111,8 +120,21 @@ const ItemDetail: React.FunctionComponent<{item: Item}> = ({item}) => {
 
   return (
     <Card>
-      <CardHeader className="text-center" tag="h3">
-        {item.title}
+      <CardHeader className="d-flex">
+        <div
+          className="text-center"
+          style={{alignItems: "center", fontSize: "x-large", flexGrow: 1}}
+        >
+          {item.title}
+        </div>
+        <div style={{alignItems: "center", flexGrow: 0}}>
+          <Button color="link" onClick={onClose}>
+            <FontAwesomeIcon
+              icon={faWindowClose}
+              style={{height: "32px", width: "32px"}}
+            />
+          </Button>
+        </div>
       </CardHeader>
       <CardBody>
         <Container fluid>
