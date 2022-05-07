@@ -18,6 +18,7 @@ import {faInfoCircle} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router";
 import {faImages, faTable, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {useQueryParam} from "use-query-params";
+import {WorksheetView} from "~/models/WorksheetView";
 
 interface Item {
   altLabels: string[] | null;
@@ -26,11 +27,6 @@ interface Item {
   selected: boolean | null;
   thumbnail: Image | null;
   title: string;
-}
-
-enum View {
-  GALLERY = "gallery",
-  TABLE = "table",
 }
 
 export const MasterDetailContainer: React.FunctionComponent<{
@@ -43,7 +39,8 @@ export const MasterDetailContainer: React.FunctionComponent<{
   useEffect(() => setDetailItem(null), [location]);
   useEffect(() => setShowDetailItem(true), [detailItem]);
   const [viewQueryParam, setView] = useQueryParam<string>("view");
-  const view = viewQueryParam === "table" ? View.TABLE : View.GALLERY;
+  const view =
+    viewQueryParam === "table" ? WorksheetView.TABLE : WorksheetView.GALLERY;
 
   return (
     <>
@@ -52,15 +49,15 @@ export const MasterDetailContainer: React.FunctionComponent<{
         <div style={{flexGrow: 0}}>
           <ButtonGroup>
             <Button
-              active={view === View.GALLERY}
-              onClick={() => setView(View.GALLERY)}
+              active={view === WorksheetView.GALLERY}
+              onClick={() => setView(WorksheetView.GALLERY)}
               title="Gallery view"
             >
               <FontAwesomeIcon icon={faImages} />
             </Button>
             <Button
-              active={view === View.TABLE}
-              onClick={() => setView(View.TABLE)}
+              active={view === WorksheetView.TABLE}
+              onClick={() => setView(WorksheetView.TABLE)}
               title="Table view"
             >
               <FontAwesomeIcon icon={faTable} />
@@ -70,7 +67,7 @@ export const MasterDetailContainer: React.FunctionComponent<{
       </div>
       <div className="d-flex mt-2">
         <div style={{flexGrow: 1}}>
-          {view === View.GALLERY ? (
+          {view === WorksheetView.GALLERY ? (
             <ItemsGallery items={items} setDetailItem={setDetailItem} />
           ) : null}
         </div>
