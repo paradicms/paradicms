@@ -10,12 +10,15 @@ import {
   Button,
   Col,
   Container,
+  Input,
   Progress,
   Row,
 } from "reactstrap";
 import {Worksheet} from "~/models/Worksheet";
 import {Frame} from "~/components/Frame";
 import {Headline} from "~/components/Headline";
+import {useQueryParam} from "use-query-params";
+import {WorksheetMode} from "~/models/WorksheetMode";
 
 export const WorksheetNavigationFrame: React.FunctionComponent<
   React.PropsWithChildren<{
@@ -34,6 +37,8 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
   worksheet,
 }) => {
   const navigate = useNavigate();
+
+  const [_, setMode] = useQueryParam<string>("mode");
 
   const onClickFinishButton = useCallback(() => {
     worksheet
@@ -165,8 +170,24 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
           <Container fluid>
             <Row>
               <Col className="d-flex" xs="12">
-                <div className="flex-grow-1 text-center">
+                <div className="justify-content-center flex-grow-1">
                   <Headline>{headline}</Headline>
+                </div>
+                <div className="d-flex align-items-center">
+                  <strong>Mode</strong>&nbsp;&nbsp;
+                  <Input
+                    id="modeSelect"
+                    name="modeSelect"
+                    onChange={(event) => setMode(event.target.value)}
+                    type="select"
+                    value={worksheet.currentMark.mode}
+                  >
+                    <option value={WorksheetMode.BEGINNER}>Beginner</option>
+                    <option value={WorksheetMode.INTERMEDIATE}>
+                      Intermediate
+                    </option>
+                    <option value={WorksheetMode.ADVANCED}>Advanced</option>
+                  </Input>
                 </div>
               </Col>
             </Row>
