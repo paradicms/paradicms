@@ -229,58 +229,79 @@ const ItemsGallery: React.FunctionComponent<{
 const ItemsTable: React.FunctionComponent<{
   items: readonly Item[];
   setDetailItem: (item: Item) => void;
-}> = ({items, setDetailItem}) => (
-  <Table>
-    <tbody>
-      {items.map((item, itemI) => {
-        const {onToggleSelected, selected, title} = item;
+}> = ({items, setDetailItem}) => {
+  const chunks: Item[][] = [];
+  let chunk: Item[] = [];
+  for (const item of items) {
+    chunk.push(item);
+    if (chunk.length === 4) {
+      chunks.push(chunk);
+      chunk = [];
+    }
+  }
+  if (chunk.length > 0) {
+    chunks.push(chunk);
+  }
 
-        return (
-          <>
-            {/*{itemI > 0 ? (*/}
-            {/*  <tr>*/}
-            {/*    <td colSpan={2}>&nbsp;</td>*/}
-            {/*  </tr>*/}
-            {/*) : null}*/}
-            <tr
-              className={classnames({
-                "border-secondary": selected,
+  return (
+    <Container fluid>
+      <Row className="justify-content-center">
+        {chunks.map((items) => (
+          <Table className="d-inline-block" style={{maxWidth: "24rem"}}>
+            <tbody>
+              {items.map((item, itemI) => {
+                const {onToggleSelected, selected, title} = item;
+
+                return (
+                  <>
+                    {/*{itemI > 0 ? (*/}
+                    {/*  <tr>*/}
+                    {/*    <td colSpan={2}>&nbsp;</td>*/}
+                    {/*  </tr>*/}
+                    {/*) : null}*/}
+                    <tr
+                      className={classnames({
+                        "border-secondary": selected,
+                      })}
+                      style={{
+                        borderWidth: selected ? "2px" : undefined,
+                      }}
+                    >
+                      <td
+                        className="text-center"
+                        style={{
+                          width: "95%",
+                        }}
+                      >
+                        <Button
+                          active={!!selected}
+                          color="primary"
+                          onClick={onToggleSelected}
+                          style={{
+                            cursor: "pointer",
+                            textDecoration: "none",
+                            width: "90%",
+                          }}
+                        >
+                          {title}
+                        </Button>
+                      </td>
+                      <td className="text-center align-middle">
+                        <a onClick={() => setDetailItem(item)}>
+                          <FontAwesomeIcon
+                            icon={faInfoCircle}
+                            style={{height: "32px", width: "32px"}}
+                          />
+                        </a>
+                      </td>
+                    </tr>
+                  </>
+                );
               })}
-              style={{
-                borderWidth: selected ? "2px" : undefined,
-              }}
-            >
-              <td
-                className="text-center"
-                style={{
-                  width: "95%",
-                }}
-              >
-                <Button
-                  active={!!selected}
-                  color="primary"
-                  onClick={onToggleSelected}
-                  style={{
-                    cursor: "pointer",
-                    textDecoration: "none",
-                    width: "90%",
-                  }}
-                >
-                  {title}
-                </Button>
-              </td>
-              <td className="text-center align-middle">
-                <a onClick={() => setDetailItem(item)}>
-                  <FontAwesomeIcon
-                    icon={faInfoCircle}
-                    style={{height: "32px", width: "32px"}}
-                  />
-                </a>
-              </td>
-            </tr>
-          </>
-        );
-      })}
-    </tbody>
-  </Table>
-);
+            </tbody>
+          </Table>
+        ))}
+      </Row>
+    </Container>
+  );
+};
