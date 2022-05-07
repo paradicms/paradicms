@@ -1,6 +1,7 @@
 import * as React from "react";
 import {
   Button,
+  ButtonGroup,
   Card,
   CardBody,
   CardHeader,
@@ -15,7 +16,8 @@ import classnames from "classnames";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faInfoCircle} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router";
-import {faWindowClose} from "@fortawesome/free-solid-svg-icons";
+import {faImages, faTable, faTimes} from "@fortawesome/free-solid-svg-icons";
+import {useQueryParam} from "use-query-params";
 
 interface Item {
   altLabels: string[] | null;
@@ -24,6 +26,11 @@ interface Item {
   selected: boolean | null;
   thumbnail: Image | null;
   title: string;
+}
+
+enum View {
+  GALLERY = "gallery",
+  TABLE = "table",
 }
 
 export const MasterDetailContainer: React.FunctionComponent<{
@@ -35,23 +42,53 @@ export const MasterDetailContainer: React.FunctionComponent<{
   // Reset the detail whenever the location changes
   useEffect(() => setDetailItem(null), [location]);
   useEffect(() => setShowDetailItem(true), [detailItem]);
+  const [viewQueryParam, setView] = useQueryParam<string>("view");
+  const view = viewQueryParam === "table" ? View.TABLE : View.GALLERY;
 
   return (
-    <div className="d-flex">
-      <div style={{flexGrow: 1}}>
-        <ItemsGallery items={items} setDetailItem={setDetailItem} />
-      </div>
-      {detailItem && showDetailItem ? (
-        <div
-          style={{flexGrow: 0, maxWidth: thumbnailTargetDimensions.width + 100}}
-        >
-          <ItemDetailCard
-            item={detailItem}
-            onClose={() => setShowDetailItem(false)}
-          />
+    <>
+      <div className="d-flex">
+        <div style={{flexGrow: 1}} />
+        <div style={{flexGrow: 0}}>
+          <ButtonGroup>
+            <Button
+              active={view === View.GALLERY}
+              onClick={() => setView(View.GALLERY)}
+              title="Gallery view"
+            >
+              <FontAwesomeIcon icon={faImages} />
+            </Button>
+            <Button
+              active={view === View.TABLE}
+              onClick={() => setView(View.TABLE)}
+              title="Table view"
+            >
+              <FontAwesomeIcon icon={faTable} />
+            </Button>
+          </ButtonGroup>
         </div>
-      ) : null}
-    </div>
+      </div>
+      <div className="d-flex mt-2">
+        <div style={{flexGrow: 1}}>
+          {view === View.GALLERY ? (
+            <ItemsGallery items={items} setDetailItem={setDetailItem} />
+          ) : null}
+        </div>
+        {detailItem && showDetailItem ? (
+          <div
+            style={{
+              flexGrow: 0,
+              maxWidth: thumbnailTargetDimensions.width + 100,
+            }}
+          >
+            <ItemDetailCard
+              item={detailItem}
+              onClose={() => setShowDetailItem(false)}
+            />
+          </div>
+        ) : null}
+      </div>
+    </>
   );
 };
 
@@ -130,7 +167,7 @@ const ItemDetailCard: React.FunctionComponent<{
         <div style={{alignItems: "center", flexGrow: 0}}>
           <Button color="link" onClick={onClose}>
             <FontAwesomeIcon
-              icon={faWindowClose}
+              icon={faTimes}
               style={{height: "32px", width: "32px"}}
             />
           </Button>
