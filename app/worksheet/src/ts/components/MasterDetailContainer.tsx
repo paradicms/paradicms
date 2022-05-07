@@ -1,4 +1,5 @@
 import * as React from "react";
+import {useEffect, useState} from "react";
 import {
   Button,
   ButtonGroup,
@@ -8,15 +9,19 @@ import {
   Col,
   Container,
   Row,
+  Table,
 } from "reactstrap";
 import {Image, Text} from "@paradicms/models";
-import {useEffect, useState} from "react";
 import {RightsParagraph, thumbnailTargetDimensions} from "@paradicms/bootstrap";
 import classnames from "classnames";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faInfoCircle} from "@fortawesome/free-solid-svg-icons";
+import {
+  faImages,
+  faInfoCircle,
+  faTable,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router";
-import {faImages, faTable, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {useQueryParam} from "use-query-params";
 import {WorksheetView} from "~/models/WorksheetView";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
@@ -30,15 +35,21 @@ interface Item {
   title: string;
 }
 
+const thumbnailSrc = (thumbnail: Image | null) => {
+  if (thumbnail) {
+    return thumbnail.src ?? thumbnail.uri;
+  } else {
+    return Image.placeholderSrc(thumbnailTargetDimensions);
+  }
+};
+
 export const MasterDetailContainer: React.FunctionComponent<{
   items: readonly Item[];
 }> = ({items}) => {
   const [detailItem, setDetailItem] = useState<Item | null>(null);
-  const [showDetailItem, setShowDetailItem] = useState<boolean>(true);
   const location = useLocation();
   // Reset the detail whenever the location changes
   useEffect(() => setDetailItem(null), [location]);
-  useEffect(() => setShowDetailItem(true), [detailItem]);
   const [_, setView] = useQueryParam<string>("view");
   const view = useRouteWorksheetMark().view ?? WorksheetView.GALLERY;
 
@@ -70,9 +81,13 @@ export const MasterDetailContainer: React.FunctionComponent<{
           {view === WorksheetView.GALLERY ? (
             <ItemsGallery items={items} setDetailItem={setDetailItem} />
           ) : null}
+          {view === WorksheetView.TABLE ? (
+            <ItemsTable items={items} setDetailItem={setDetailItem} />
+          ) : null}
         </div>
-        {detailItem && showDetailItem ? (
+        {detailItem ? (
           <div
+            className="ms-2"
             style={{
               flexGrow: 0,
               maxWidth: thumbnailTargetDimensions.width + 100,
@@ -80,7 +95,7 @@ export const MasterDetailContainer: React.FunctionComponent<{
           >
             <ItemDetailCard
               item={detailItem}
-              onClose={() => setShowDetailItem(false)}
+              onClose={() => setDetailItem(null)}
             />
           </div>
         ) : null}
@@ -185,18 +200,6 @@ const ItemDetailCard: React.FunctionComponent<{
   return <div>{item.title}</div>;
 };
 
-// {thumbnail && thumbnail.rights ? (
-//   <figcaption
-//     className="figure-caption"
-//     style={{fontSize: "xx-small"}}
-//   >
-//     <RightsParagraph
-//       material="Image"
-//       rights={thumbnail.rights}
-//     />
-//   </figcaption>
-// ) : null}
-
 const ItemsGallery: React.FunctionComponent<{
   items: readonly Item[];
   setDetailItem: (item: Item) => void;
@@ -205,13 +208,6 @@ const ItemsGallery: React.FunctionComponent<{
     <Row>
       {items.map((item, itemI) => {
         const {onToggleSelected, selected, thumbnail, title} = item;
-
-        let thumbnailSrc: string;
-        if (thumbnail) {
-          thumbnailSrc = thumbnail.src ?? thumbnail.uri;
-        } else {
-          thumbnailSrc = Image.placeholderSrc(thumbnailTargetDimensions);
-        }
 
         return (
           <Card
@@ -225,6 +221,7 @@ const ItemsGallery: React.FunctionComponent<{
           >
             <CardHeader className="px-0 mt-2 text-center w-100">
               <Button
+                active={!!selected}
                 color="primary"
                 onClick={onToggleSelected}
                 style={{cursor: "pointer", textDecoration: "none"}}
@@ -239,7 +236,7 @@ const ItemsGallery: React.FunctionComponent<{
               <a onClick={onToggleSelected}>
                 <img
                   className="figure-img rounded"
-                  src={thumbnailSrc}
+                  src={thumbnailSrc(thumbnail)}
                   style={{
                     height: thumbnailTargetDimensions.height,
                     width: thumbnailTargetDimensions.width,
@@ -260,4 +257,63 @@ const ItemsGallery: React.FunctionComponent<{
       })}
     </Row>
   </Container>
+);
+
+const ItemsTable: React.FunctionComponent<{
+  items: readonly Item[];
+  setDetailItem: (item: Item) => void;
+}> = ({items, setDetailItem}) => (
+  <Table>
+    <tbody>
+      {items.map((item, itemI) => {
+        const {onToggleSelected, selected, title} = item;
+
+        return (
+          <>
+            {/*{itemI > 0 ? (*/}
+            {/*  <tr>*/}
+            {/*    <td colSpan={2}>&nbsp;</td>*/}
+            {/*  </tr>*/}
+            {/*) : null}*/}
+            <tr
+              className={classnames({
+                "border-secondary": selected,
+              })}
+              style={{
+                borderWidth: selected ? "2px" : undefined,
+              }}
+            >
+              <td
+                className="text-center"
+                style={{
+                  width: "95%",
+                }}
+              >
+                <Button
+                  active={!!selected}
+                  color="primary"
+                  onClick={onToggleSelected}
+                  style={{
+                    cursor: "pointer",
+                    textDecoration: "none",
+                    width: "90%",
+                  }}
+                >
+                  {title}
+                </Button>
+              </td>
+              <td className="text-center align-middle">
+                <a onClick={() => setDetailItem(item)}>
+                  <FontAwesomeIcon
+                    icon={faInfoCircle}
+                    style={{height: "32px", width: "32px"}}
+                  />
+                </a>
+              </td>
+            </tr>
+          </>
+        );
+      })}
+    </tbody>
+  </Table>
 );
