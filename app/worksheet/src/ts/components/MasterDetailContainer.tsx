@@ -135,7 +135,11 @@ const ItemDetailCard: React.FunctionComponent<{
           </div>
           {originalImage.rights ? (
             <div className="mt-2">
-              <RightsParagraph material="Image" rights={originalImage.rights} />
+              <RightsParagraph
+                material="Image"
+                rights={originalImage.rights}
+                style={{fontSize: "xx-small"}}
+              />
             </div>
           ) : null}
         </div>
