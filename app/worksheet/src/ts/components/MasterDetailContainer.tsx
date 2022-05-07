@@ -237,56 +237,54 @@ const ItemsTable: React.FunctionComponent<{
   return (
     <Container fluid>
       <Row className="justify-content-center">
-        {chunks.map((items) => (
-          <Table className="d-inline-block" style={{maxWidth: "24rem"}}>
+        {chunks.map((items, chunkI) => (
+          <Table
+            className="d-inline-block"
+            key={chunkI}
+            style={{maxWidth: "24rem"}}
+          >
             <tbody>
               {items.map((item, itemI) => {
                 const {onToggleSelected, selected, title} = item;
 
                 return (
-                  <>
-                    {/*{itemI > 0 ? (*/}
-                    {/*  <tr>*/}
-                    {/*    <td colSpan={2}>&nbsp;</td>*/}
-                    {/*  </tr>*/}
-                    {/*) : null}*/}
-                    <tr
-                      className={classnames({
-                        "border-secondary": selected,
-                      })}
+                  <tr
+                    className={classnames({
+                      "border-secondary": selected,
+                    })}
+                    key={itemI}
+                    style={{
+                      borderWidth: selected ? "2px" : undefined,
+                    }}
+                  >
+                    <td
+                      className="text-center"
                       style={{
-                        borderWidth: selected ? "2px" : undefined,
+                        width: "95%",
                       }}
                     >
-                      <td
-                        className="text-center"
+                      <Button
+                        active={!!selected}
+                        color="primary"
+                        onClick={onToggleSelected}
                         style={{
-                          width: "95%",
+                          cursor: "pointer",
+                          textDecoration: "none",
+                          width: "90%",
                         }}
                       >
-                        <Button
-                          active={!!selected}
-                          color="primary"
-                          onClick={onToggleSelected}
-                          style={{
-                            cursor: "pointer",
-                            textDecoration: "none",
-                            width: "90%",
-                          }}
-                        >
-                          {title}
-                        </Button>
-                      </td>
-                      <td className="text-center align-middle">
-                        <a onClick={() => setDetailItem(item)}>
-                          <FontAwesomeIcon
-                            icon={faInfoCircle}
-                            style={{height: "32px", width: "32px"}}
-                          />
-                        </a>
-                      </td>
-                    </tr>
-                  </>
+                        {title}
+                      </Button>
+                    </td>
+                    <td className="text-center align-middle">
+                      <a onClick={() => setDetailItem(item)}>
+                        <FontAwesomeIcon
+                          icon={faInfoCircle}
+                          style={{height: "32px", width: "32px"}}
+                        />
+                      </a>
+                    </td>
+                  </tr>
                 );
               })}
             </tbody>
