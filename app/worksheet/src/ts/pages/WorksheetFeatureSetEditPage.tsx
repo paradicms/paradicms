@@ -38,12 +38,24 @@ const WorksheetFeatureSelectsTable: React.FunctionComponent<{
                     }
                     dispatchFeatureSet();
                   }}
-                  options={feature.values.map((value) => ({
-                    label: value.definition.title,
-                    value: value.uri,
-                  }))}
+                  options={feature.values
+                    .concat()
+                    .sort((left, right) =>
+                      left.definition.title!.localeCompare(
+                        right.definition.title!
+                      )
+                    )
+                    .map((value) => ({
+                      label: value.definition.title,
+                      value: value.uri,
+                    }))}
                   value={feature.values
                     .filter((value) => value.selected)
+                    .sort((left, right) =>
+                      left.definition.title!.localeCompare(
+                        right.definition.title!
+                      )
+                    )
                     .map((value) => ({
                       label: value.definition.title,
                       value: value.uri,
