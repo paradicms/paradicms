@@ -33,7 +33,7 @@ export const useRouteWorksheetMark = (): WorksheetMark => {
   return {
     featureUri: params.featureUri ?? null,
     featureSetUri: params.featureSetUri ?? null,
-    review: !!review,
+    review,
     view,
     worksheetStateId: params.worksheetStateId,
   };
