@@ -5,6 +5,9 @@ import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
 import {NamedValue} from "@paradicms/models";
 import {useState} from "react";
 import {MasterDetailContainer} from "~/components/MasterDetailContainer";
+import {Navigate} from "react-router-dom";
+import {WorksheetMode} from "~/models/WorksheetMode";
+import {Hrefs} from "~/Hrefs";
 
 export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
   const [worksheet, dispatchWorksheet] = useWorksheet();
@@ -16,6 +19,21 @@ export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
   if (!worksheet) {
     return <Spinner />;
   }
+
+  if (worksheet.currentMark.mode === WorksheetMode.ADVANCED) {
+    // Advanced mode has pages per feature set but not pages per feature.
+    // The user likely switched to advanced mode will on a feature page.
+    // Redirect to the "parent" feature set page.
+    return (
+      <Navigate
+        to={Hrefs.worksheetMark({
+          ...worksheet.currentMark,
+          featureUri: null,
+        })}
+      />
+    );
+  }
+
   const feature = worksheet.currentFeature;
   if (!feature) {
     throw new EvalError("expected feature");
