@@ -109,11 +109,11 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
       <Container fluid>
         <Row>
           <Col className="d-flex p-0" xs="12">
-            <div style={{flexGrow: 0}}>
+            <div>
               <h3 className="card-title">Review</h3>
             </div>
-            <span style={{flexGrow: 1}} />
-            <div style={{flexGrow: 0}}>
+            <span className="flex-grow-1" />
+            <div>
               <Form>
                 {exportMessage.length > 0 ? (
                   <>

@@ -46,7 +46,7 @@ export const MasterDetailContainer: React.FunctionComponent<{
 
   return (
     <div className="d-flex mt-2">
-      <div style={{flexGrow: 1}}>
+      <div className="flex-grow-1">
         {mode === WorksheetMode.BEGINNER ? (
           <ItemsGallery items={items} setDetailItem={setDetailItem} />
         ) : null}
@@ -58,7 +58,6 @@ export const MasterDetailContainer: React.FunctionComponent<{
         <div
           className="ms-2"
           style={{
-            flexGrow: 0,
             maxWidth: thumbnailTargetDimensions.width + 100,
           }}
         >
@@ -139,12 +138,12 @@ const ItemDetailCard: React.FunctionComponent<{
     <Card>
       <CardHeader className="d-flex">
         <div
-          className="text-center"
-          style={{alignItems: "center", fontSize: "x-large", flexGrow: 1}}
+          className="align-items-center flex-grow-1 text-center"
+          style={{fontSize: "x-large"}}
         >
           {item.title}
         </div>
-        <div style={{alignItems: "center", flexGrow: 0}}>
+        <div className="align-items-center">
           <Button color="link" onClick={onClose}>
             <FontAwesomeIcon
               icon={faTimes}
