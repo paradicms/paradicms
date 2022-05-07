@@ -4,9 +4,25 @@ import {Memoize} from "typescript-memoize";
 import {requireDefined} from "./requireDefined";
 import {HasAbstract, HasImages} from "./mixins";
 import {Mixin} from "ts-mixer";
-import {DCTERMS, RDF} from "@paradicms/vocabularies";
+import {DCTERMS, RDF, SKOS} from "@paradicms/vocabularies";
 
 export class NamedValue extends Mixin(NamedModel, HasAbstract, HasImages) {
+  @Memoize()
+  get altLabels(): string[] {
+    return this.propertyObjects(SKOS.altLabel)
+      .filter((term) => term.termType === "Literal")
+      .map((term) => term.value);
+  }
+
+  @Memoize()
+  get prefLabel(): string | null {
+    return (
+      this.propertyObjects(SKOS.prefLabel).find(
+        (term) => term.termType === "Literal"
+      )?.value ?? null
+    );
+  }
+
   get propertyUris(): readonly string[] {
     const propertyUris: readonly string[] = this.propertyObjects(RDF.predicate)
       .filter((term) => term.termType === "NamedNode")

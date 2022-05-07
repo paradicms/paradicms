@@ -1,28 +1,47 @@
 import * as React from "react";
+import {useEffect, useState} from "react";
 import {
   Button,
+  ButtonGroup,
   Card,
   CardBody,
   CardHeader,
   Col,
   Container,
   Row,
+  Table,
 } from "reactstrap";
 import {Image, Text} from "@paradicms/models";
-import {useEffect, useState} from "react";
-import {thumbnailTargetDimensions} from "@paradicms/bootstrap";
+import {RightsParagraph, thumbnailTargetDimensions} from "@paradicms/bootstrap";
 import classnames from "classnames";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faInfoCircle} from "@fortawesome/free-solid-svg-icons";
+import {
+  faImages,
+  faInfoCircle,
+  faTable,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router";
+import {useQueryParam} from "use-query-params";
+import {WorksheetView} from "~/models/WorksheetView";
+import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 
 interface Item {
+  altLabels: string[] | null;
   description: string | Text | null;
   onToggleSelected: () => void | null;
   selected: boolean | null;
   thumbnail: Image | null;
   title: string;
 }
+
+const thumbnailSrc = (thumbnail: Image | null) => {
+  if (thumbnail) {
+    return thumbnail.src ?? thumbnail.uri;
+  } else {
+    return Image.placeholderSrc(thumbnailTargetDimensions);
+  }
+};
 
 export const MasterDetailContainer: React.FunctionComponent<{
   items: readonly Item[];
@@ -31,38 +50,155 @@ export const MasterDetailContainer: React.FunctionComponent<{
   const location = useLocation();
   // Reset the detail whenever the location changes
   useEffect(() => setDetailItem(null), [location]);
+  const [_, setView] = useQueryParam<string>("view");
+  const view = useRouteWorksheetMark().view ?? WorksheetView.GALLERY;
 
   return (
-    <Container fluid>
-      <Row>
-        <Col xs={detailItem ? 8 : 12}>
-          <ItemsGallery items={items} setDetailItem={setDetailItem} />
-        </Col>
+    <>
+      <div className="d-flex">
+        <div style={{flexGrow: 1}} />
+        <div style={{flexGrow: 0}}>
+          <ButtonGroup>
+            <Button
+              active={view === WorksheetView.GALLERY}
+              onClick={() => setView(WorksheetView.GALLERY)}
+              title="Gallery view"
+            >
+              <FontAwesomeIcon icon={faImages} />
+            </Button>
+            <Button
+              active={view === WorksheetView.TABLE}
+              onClick={() => setView(WorksheetView.TABLE)}
+              title="Table view"
+            >
+              <FontAwesomeIcon icon={faTable} />
+            </Button>
+          </ButtonGroup>
+        </div>
+      </div>
+      <div className="d-flex mt-2">
+        <div style={{flexGrow: 1}}>
+          {view === WorksheetView.GALLERY ? (
+            <ItemsGallery items={items} setDetailItem={setDetailItem} />
+          ) : null}
+          {view === WorksheetView.TABLE ? (
+            <ItemsTable items={items} setDetailItem={setDetailItem} />
+          ) : null}
+        </div>
         {detailItem ? (
-          <Col xs={4}>
-            <ItemDetail item={detailItem} />
-          </Col>
+          <div
+            className="ms-2"
+            style={{
+              flexGrow: 0,
+              maxWidth: thumbnailTargetDimensions.width + 100,
+            }}
+          >
+            <ItemDetailCard
+              item={detailItem}
+              onClose={() => setDetailItem(null)}
+            />
+          </div>
         ) : null}
-      </Row>
-    </Container>
+      </div>
+    </>
   );
 };
 
-const ItemDetail: React.FunctionComponent<{item: Item}> = ({item}) => {
+const ItemDetailCard: React.FunctionComponent<{
+  item: Item;
+  onClose: () => void;
+}> = ({item, onClose}) => {
+  const rows: React.ReactElement[] = [];
+
+  if (item.thumbnail) {
+    rows.push(
+      <Row key={"row" + rows.length.toString()}>
+        <Col className="text-center" xs={12}>
+          <figure className="figure mb-0">
+            <img
+              src={item.thumbnail.src ?? item.thumbnail.uri}
+              className="figure-img img-fluid rounded"
+              alt={item.title}
+            />
+            {item.thumbnail.rights ? (
+              <figcaption>
+                <RightsParagraph
+                  material="Image"
+                  rights={item.thumbnail.rights}
+                  style={{fontSize: "xx-small"}}
+                />
+              </figcaption>
+            ) : null}
+          </figure>
+        </Col>
+      </Row>
+    );
+  }
+
+  if (item.description) {
+    rows.push(
+      <Row key={"row" + rows.length.toString()}>
+        <Col className="text-center" xs={12}>
+          <p>{item.description.toString()}</p>
+          {item.description instanceof Text && item.description.rights ? (
+            <RightsParagraph
+              material="Text"
+              rights={item.description.rights}
+              style={{fontSize: "xx-small"}}
+            />
+          ) : null}
+        </Col>
+      </Row>
+    );
+  }
+
+  if (item.altLabels && item.altLabels.length > 0) {
+    rows.push(
+      <Row key={"row" + rows.length.toString()}>
+        <Col xs={12}>
+          <h5 className="text-center">Variant terms</h5>
+          <ul>
+            {item.altLabels!.map((altLabel, altLabelI) => (
+              <li key={altLabelI}>{altLabel}</li>
+            ))}
+          </ul>
+        </Col>
+      </Row>
+    );
+  }
+
+  return (
+    <Card>
+      <CardHeader className="d-flex">
+        <div
+          className="text-center"
+          style={{alignItems: "center", fontSize: "x-large", flexGrow: 1}}
+        >
+          {item.title}
+        </div>
+        <div style={{alignItems: "center", flexGrow: 0}}>
+          <Button color="link" onClick={onClose}>
+            <FontAwesomeIcon
+              icon={faTimes}
+              style={{height: "32px", width: "32px"}}
+            />
+          </Button>
+        </div>
+      </CardHeader>
+      <CardBody>
+        <Container fluid>
+          {rows.map((row, rowI) => (
+            <>
+              {rowI > 0 ? <hr key={"hr" + rowI} /> : null}
+              {row}
+            </>
+          ))}
+        </Container>
+      </CardBody>
+    </Card>
+  );
   return <div>{item.title}</div>;
 };
-
-// {thumbnail && thumbnail.rights ? (
-//   <figcaption
-//     className="figure-caption"
-//     style={{fontSize: "xx-small"}}
-//   >
-//     <RightsParagraph
-//       material="Image"
-//       rights={thumbnail.rights}
-//     />
-//   </figcaption>
-// ) : null}
 
 const ItemsGallery: React.FunctionComponent<{
   items: readonly Item[];
@@ -72,13 +208,6 @@ const ItemsGallery: React.FunctionComponent<{
     <Row>
       {items.map((item, itemI) => {
         const {onToggleSelected, selected, thumbnail, title} = item;
-
-        let thumbnailSrc: string;
-        if (thumbnail) {
-          thumbnailSrc = thumbnail.src ?? thumbnail.uri;
-        } else {
-          thumbnailSrc = Image.placeholderSrc(thumbnailTargetDimensions);
-        }
 
         return (
           <Card
@@ -92,6 +221,7 @@ const ItemsGallery: React.FunctionComponent<{
           >
             <CardHeader className="px-0 mt-2 text-center w-100">
               <Button
+                active={!!selected}
                 color="primary"
                 onClick={onToggleSelected}
                 style={{cursor: "pointer", textDecoration: "none"}}
@@ -106,7 +236,7 @@ const ItemsGallery: React.FunctionComponent<{
               <a onClick={onToggleSelected}>
                 <img
                   className="figure-img rounded"
-                  src={thumbnailSrc}
+                  src={thumbnailSrc(thumbnail)}
                   style={{
                     height: thumbnailTargetDimensions.height,
                     width: thumbnailTargetDimensions.width,
@@ -127,4 +257,63 @@ const ItemsGallery: React.FunctionComponent<{
       })}
     </Row>
   </Container>
+);
+
+const ItemsTable: React.FunctionComponent<{
+  items: readonly Item[];
+  setDetailItem: (item: Item) => void;
+}> = ({items, setDetailItem}) => (
+  <Table>
+    <tbody>
+      {items.map((item, itemI) => {
+        const {onToggleSelected, selected, title} = item;
+
+        return (
+          <>
+            {/*{itemI > 0 ? (*/}
+            {/*  <tr>*/}
+            {/*    <td colSpan={2}>&nbsp;</td>*/}
+            {/*  </tr>*/}
+            {/*) : null}*/}
+            <tr
+              className={classnames({
+                "border-secondary": selected,
+              })}
+              style={{
+                borderWidth: selected ? "2px" : undefined,
+              }}
+            >
+              <td
+                className="text-center"
+                style={{
+                  width: "95%",
+                }}
+              >
+                <Button
+                  active={!!selected}
+                  color="primary"
+                  onClick={onToggleSelected}
+                  style={{
+                    cursor: "pointer",
+                    textDecoration: "none",
+                    width: "90%",
+                  }}
+                >
+                  {title}
+                </Button>
+              </td>
+              <td className="text-center align-middle">
+                <a onClick={() => setDetailItem(item)}>
+                  <FontAwesomeIcon
+                    icon={faInfoCircle}
+                    style={{height: "32px", width: "32px"}}
+                  />
+                </a>
+              </td>
+            </tr>
+          </>
+        );
+      })}
+    </tbody>
+  </Table>
 );

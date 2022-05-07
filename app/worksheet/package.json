@@ -17,6 +17,7 @@
     "react-hammerjs": "1.0.1",
     "react-router-dom": "6.3.0",
     "reactstrap": "^9.0.1",
+    "use-query-params": "1.2.3",
     "yup": "0.32.11"
   },
   "devDependencies": {

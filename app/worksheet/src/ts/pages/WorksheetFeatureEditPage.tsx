@@ -44,6 +44,7 @@ export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
             left.definition.title!.localeCompare(right.definition.title!)
           )
           .map((featureValue) => ({
+            altLabels: featureValue.definition.altLabels,
             description: featureValue.definition.abstract,
             onToggleSelected: () => {
               featureValue.selected = !featureValue.selected;

@@ -2,15 +2,16 @@ import * as React from "react";
 import {useWorksheet} from "~/hooks/useWorksheet";
 import {Spinner} from "~/components/Spinner";
 import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
-import {Button, Col, Container, Form, Input, Row} from "reactstrap";
+import {Button, Col, Container, Form, Input, Row, Table} from "reactstrap";
 import {StringWorksheetStateExporter} from "~/exporters/StringWorksheetStateExporter";
 import {TextWorksheetStateExporter} from "~/exporters/TextWorksheetStateExporter";
 import {CsvStringWorksheetStateExporter} from "~/exporters/CsvStringWorksheetStateExporter";
 import {JsonStringWorksheetStateExporter} from "~/exporters/JsonStringWorksheetStateExporter";
 import {JsonLdStringWorksheetStateExporter} from "~/exporters/JsonLdStringWorksheetStateExporter";
 import {useCallback, useMemo, useState} from "react";
-import {WorksheetFeatureSetTable} from "~/components/WorksheetFeatureSetTable";
 import CopyToClipboard = require("react-copy-to-clipboard");
+import {Link} from "react-router-dom";
+import {Hrefs} from "~/Hrefs";
 
 const STRING_EXPORTERS: StringWorksheetStateExporter[] = [
   new TextWorksheetStateExporter(),
@@ -192,11 +193,49 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
               return (
                 <React.Fragment key={featureSet.uri}>
                   <h4 className="text-center">{featureSet.definition.title}</h4>
-                  <WorksheetFeatureSetTable
-                    featureSet={featureSet}
-                    includeFeatureDescriptions={false}
-                    worksheetStateId={worksheet.stateId}
-                  />
+                  <Table className="table-bordered">
+                    <thead>
+                      <tr>
+                        <th className="text-center w-25">Feature</th>
+                        <th className="text-center">Value(s)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {featureSet.features.map((feature) => {
+                        return (
+                          <tr key={feature.uri}>
+                            <td className="align-middle text-center w-25">
+                              <Link
+                                className="btn btn-lg btn-secondary w-100"
+                                to={Hrefs.worksheetMark({
+                                  featureSetUri: featureSet.uri,
+                                  featureUri: feature.uri,
+                                  review: false,
+                                  view: worksheet!.currentMark.view,
+                                  worksheetStateId: worksheet!.stateId,
+                                })}
+                              >
+                                {feature.definition.title}
+                              </Link>
+                            </td>
+                            <td className="align-middle">
+                              {feature.values
+                                .filter((value) => value.selected)
+                                .map((value) => (
+                                  <span
+                                    className="border border-info d-inline-block h4 m-2 p-2"
+                                    key={value.uri}
+                                    style={{borderWidth: "4px !important"}}
+                                  >
+                                    {value.definition.title}
+                                  </span>
+                                ))}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </Table>
                 </React.Fragment>
               );
             })}

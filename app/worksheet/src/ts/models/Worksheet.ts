@@ -141,7 +141,13 @@ export class Worksheet {
 
     // First state, always the worksheet start
     const worksheetStateId = state.id;
-    marks.push({worksheetStateId});
+    marks.push({
+      featureSetUri: null,
+      featureUri: null,
+      review: false,
+      view: this.currentMark.view,
+      worksheetStateId,
+    });
 
     if (state.featureSets && state.featureSets.length > 0) {
       for (const featureSetState of state.featureSets) {
@@ -150,7 +156,10 @@ export class Worksheet {
 
         // Feature set start
         marks.push({
+          featureUri: null,
           featureSetUri,
+          review: false,
+          view: this.currentMark.view,
           worksheetStateId,
         });
 
@@ -159,6 +168,8 @@ export class Worksheet {
           marks.push({
             featureUri: feature.uri,
             featureSetUri,
+            review: false,
+            view: this.currentMark.view,
             worksheetStateId,
           });
         }
@@ -166,7 +177,9 @@ export class Worksheet {
         // Feature set review
         marks.push({
           featureSetUri,
+          featureUri: null,
           review: true,
+          view: this.currentMark.view,
           worksheetStateId,
         });
       }
@@ -174,7 +187,10 @@ export class Worksheet {
 
     // Worksheet review, always the last state
     marks.push({
+      featureSetUri: null,
+      featureUri: null,
       review: true,
+      view: this.currentMark.view,
       worksheetStateId,
     });
 

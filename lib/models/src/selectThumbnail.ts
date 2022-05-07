@@ -21,7 +21,7 @@ export const selectThumbnail = <
   selector: ThumbnailSelector
 ): ImageT | null => {
   if (images.length === 0) {
-    console.warn("no images to select thumbnail from");
+    // console.warn("no images to select thumbnail from");
     return null;
   }
 
