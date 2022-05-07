@@ -2,10 +2,12 @@ import * as React from "react";
 import {useWorksheet} from "~/hooks/useWorksheet";
 import {Spinner} from "~/components/Spinner";
 import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
-import {thumbnailTargetDimensions} from "@paradicms/bootstrap";
 import {NamedValue} from "@paradicms/models";
 import {useState} from "react";
 import {MasterDetailContainer} from "~/components/MasterDetailContainer";
+import {Navigate} from "react-router-dom";
+import {WorksheetMode} from "~/models/WorksheetMode";
+import {Hrefs} from "~/Hrefs";
 
 export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
   const [worksheet, dispatchWorksheet] = useWorksheet();
@@ -17,6 +19,21 @@ export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
   if (!worksheet) {
     return <Spinner />;
   }
+
+  if (worksheet.currentMark.mode === WorksheetMode.ADVANCED) {
+    // Advanced mode has pages per feature set but not pages per feature.
+    // The user likely switched to advanced mode will on a feature page.
+    // Redirect to the "parent" feature set page.
+    return (
+      <Navigate
+        to={Hrefs.worksheetMark({
+          ...worksheet.currentMark,
+          featureUri: null,
+        })}
+      />
+    );
+  }
+
   const feature = worksheet.currentFeature;
   if (!feature) {
     throw new EvalError("expected feature");
@@ -24,6 +41,7 @@ export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
 
   return (
     <WorksheetNavigationFrame
+      dispatchWorksheet={dispatchWorksheet}
       headline={"Feature: " + feature.definition.title}
       finishButtonEnabled={true}
       nextButtonEnabled={true}
@@ -46,16 +64,15 @@ export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
           .map((featureValue) => ({
             altLabels: featureValue.definition.altLabels,
             description: featureValue.definition.abstract,
+            images: featureValue.definition.images,
             onToggleSelected: () => {
               featureValue.selected = !featureValue.selected;
               dispatchWorksheet({payload: worksheet});
             },
             selected: featureValue.selected,
-            thumbnail: featureValue.definition.thumbnail({
-              targetDimensions: thumbnailTargetDimensions,
-            }),
             title: featureValue.definition.title!,
           }))}
+        mode={worksheet.currentMark.mode}
       />
     </WorksheetNavigationFrame>
   );

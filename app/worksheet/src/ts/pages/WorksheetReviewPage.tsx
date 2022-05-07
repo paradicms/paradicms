@@ -21,7 +21,7 @@ const STRING_EXPORTERS: StringWorksheetStateExporter[] = [
 ];
 
 export const WorksheetReviewPage: React.FunctionComponent = () => {
-  const [worksheet, _] = useWorksheet();
+  const [worksheet, dispatchWorksheet] = useWorksheet();
   const [selectedStringExporterIndex, setSelectedStringExporterIndex] =
     useState<number>(0);
 
@@ -100,6 +100,7 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
 
   return (
     <WorksheetNavigationFrame
+      dispatchWorksheet={dispatchWorksheet}
       finishButtonEnabled={false}
       headline={`Worksheet: ${worksheet.stateId}`}
       nextButtonEnabled={false}
@@ -109,11 +110,11 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
       <Container fluid>
         <Row>
           <Col className="d-flex p-0" xs="12">
-            <div style={{flexGrow: 0}}>
+            <div>
               <h3 className="card-title">Review</h3>
             </div>
-            <span style={{flexGrow: 1}} />
-            <div style={{flexGrow: 0}}>
+            <span className="flex-grow-1" />
+            <div>
               <Form>
                 {exportMessage.length > 0 ? (
                   <>
@@ -211,7 +212,7 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
                                   featureSetUri: featureSet.uri,
                                   featureUri: feature.uri,
                                   review: false,
-                                  view: worksheet!.currentMark.view,
+                                  mode: worksheet!.currentMark.mode,
                                   worksheetStateId: worksheet!.stateId,
                                 })}
                               >

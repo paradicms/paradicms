@@ -14,11 +14,11 @@ import {
 } from "reactstrap";
 import * as React from "react";
 import {ComponentType, useMemo, useState} from "react";
-import {WorkImagesCarousel} from "./WorkImagesCarousel";
 import {RightsParagraph} from "./RightsParagraph";
 import {AgentCard} from "./AgentCard";
 import {WorkLocationSummary} from "@paradicms/services";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
+import {ImagesCarousel} from "./ImagesCarousel";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "x-small",
@@ -50,17 +50,15 @@ export const WorkContainer: React.FunctionComponent<{
   for (const workAgent of work.agents) {
     if (
       !workAgents.find(
-        uniqueWorkAgent => uniqueWorkAgent.agent.uri === workAgent.agent.uri
+        (uniqueWorkAgent) => uniqueWorkAgent.agent.uri === workAgent.agent.uri
       )
     ) {
       workAgents.push(workAgent);
     }
   }
 
-  const [
-    workImagesCarouselImage,
-    setCurrentWorkImagesCarouselImage,
-  ] = useState<Image | null>(null);
+  const [workImagesCarouselImage, setCurrentWorkImagesCarouselImage] =
+    useState<Image | null>(null);
 
   const [activeLeftColTabIndex, setActiveLeftColTabIndex] = useState(0);
 
@@ -71,11 +69,12 @@ export const WorkContainer: React.FunctionComponent<{
       content: (
         <Card className="border-0">
           <CardBody className="text-center">
-            <WorkImagesCarousel
+            <ImagesCarousel
               hideImageRights={true}
+              images={work.images}
               key={leftColTabs.length}
               onShowImage={setCurrentWorkImagesCarouselImage}
-              work={work}
+              thumbnailTargetDimensions={{height: 600, width: 600}}
             />
           </CardBody>
           {workImagesCarouselImage && workImagesCarouselImage.rights ? (
@@ -127,7 +126,7 @@ export const WorkContainer: React.FunctionComponent<{
     leftColTabs.push({
       title: "Map",
       content: React.createElement(workLocationsMapComponent, {
-        workLocations: work.locations.map(workLocation => ({
+        workLocations: work.locations.map((workLocation) => ({
           location: workLocation.location,
           role: workLocation.role,
           title: workLocation.title,

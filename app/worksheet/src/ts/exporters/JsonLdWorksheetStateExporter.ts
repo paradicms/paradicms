@@ -2,6 +2,7 @@ import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {WorksheetState} from "~/models/WorksheetState";
 import {WorksheetStateExporter} from "~/exporters/WorksheetStateExporter";
 import {Hrefs} from "~/Hrefs";
+import {WorksheetMode} from "~/models/WorksheetMode";
 
 export class JsonLdWorksheetStateExporter
   implements WorksheetStateExporter<any>
@@ -33,8 +34,8 @@ export class JsonLdWorksheetStateExporter
     let href = Hrefs.worksheetMark({
       featureSetUri: null,
       featureUri: null,
+      mode: WorksheetMode.BEGINNER,
       review: false,
-      view: null,
       worksheetStateId: worksheetState.id,
     });
     if (href.endsWith("/edit")) {

@@ -2,7 +2,6 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import {
   Button,
-  ButtonGroup,
   Card,
   CardBody,
   CardHeader,
@@ -11,96 +10,60 @@ import {
   Row,
   Table,
 } from "reactstrap";
-import {Image, Text} from "@paradicms/models";
-import {RightsParagraph, thumbnailTargetDimensions} from "@paradicms/bootstrap";
+import {Image, selectThumbnail, Text} from "@paradicms/models";
+import {
+  ImagesCarousel,
+  RightsParagraph,
+  thumbnailTargetDimensions,
+} from "@paradicms/bootstrap";
 import classnames from "classnames";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-  faImages,
-  faInfoCircle,
-  faTable,
-  faTimes,
-} from "@fortawesome/free-solid-svg-icons";
+import {faInfoCircle, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router";
-import {useQueryParam} from "use-query-params";
-import {WorksheetView} from "~/models/WorksheetView";
-import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
+import {WorksheetMode} from "~/models/WorksheetMode";
 
 interface Item {
   altLabels: string[] | null;
   description: string | Text | null;
+  images: readonly Image[];
   onToggleSelected: () => void | null;
   selected: boolean | null;
-  thumbnail: Image | null;
   title: string;
 }
 
-const thumbnailSrc = (thumbnail: Image | null) => {
-  if (thumbnail) {
-    return thumbnail.src ?? thumbnail.uri;
-  } else {
-    return Image.placeholderSrc(thumbnailTargetDimensions);
-  }
-};
-
 export const MasterDetailContainer: React.FunctionComponent<{
+  mode: WorksheetMode | null;
   items: readonly Item[];
-}> = ({items}) => {
+}> = ({items, mode}) => {
   const [detailItem, setDetailItem] = useState<Item | null>(null);
   const location = useLocation();
   // Reset the detail whenever the location changes
   useEffect(() => setDetailItem(null), [location]);
-  const [_, setView] = useQueryParam<string>("view");
-  const view = useRouteWorksheetMark().view ?? WorksheetView.GALLERY;
 
   return (
-    <>
-      <div className="d-flex">
-        <div style={{flexGrow: 1}} />
-        <div style={{flexGrow: 0}}>
-          <ButtonGroup>
-            <Button
-              active={view === WorksheetView.GALLERY}
-              onClick={() => setView(WorksheetView.GALLERY)}
-              title="Gallery view"
-            >
-              <FontAwesomeIcon icon={faImages} />
-            </Button>
-            <Button
-              active={view === WorksheetView.TABLE}
-              onClick={() => setView(WorksheetView.TABLE)}
-              title="Table view"
-            >
-              <FontAwesomeIcon icon={faTable} />
-            </Button>
-          </ButtonGroup>
-        </div>
-      </div>
-      <div className="d-flex mt-2">
-        <div style={{flexGrow: 1}}>
-          {view === WorksheetView.GALLERY ? (
-            <ItemsGallery items={items} setDetailItem={setDetailItem} />
-          ) : null}
-          {view === WorksheetView.TABLE ? (
-            <ItemsTable items={items} setDetailItem={setDetailItem} />
-          ) : null}
-        </div>
-        {detailItem ? (
-          <div
-            className="ms-2"
-            style={{
-              flexGrow: 0,
-              maxWidth: thumbnailTargetDimensions.width + 100,
-            }}
-          >
-            <ItemDetailCard
-              item={detailItem}
-              onClose={() => setDetailItem(null)}
-            />
-          </div>
+    <div className="d-flex mt-2">
+      <div className="flex-grow-1">
+        {mode === WorksheetMode.BEGINNER ? (
+          <ItemsGallery items={items} setDetailItem={setDetailItem} />
+        ) : null}
+        {mode !== WorksheetMode.BEGINNER ? (
+          <ItemsTable items={items} setDetailItem={setDetailItem} />
         ) : null}
       </div>
-    </>
+      {detailItem ? (
+        <div
+          className="ms-2"
+          style={{
+            maxWidth: thumbnailTargetDimensions.width + 100,
+          }}
+        >
+          <ItemDetailCard
+            item={detailItem}
+            onClose={() => setDetailItem(null)}
+          />
+        </div>
+      ) : null}
+    </div>
   );
 };
 
@@ -110,26 +73,11 @@ const ItemDetailCard: React.FunctionComponent<{
 }> = ({item, onClose}) => {
   const rows: React.ReactElement[] = [];
 
-  if (item.thumbnail) {
+  if (item.images.length > 0) {
     rows.push(
       <Row key={"row" + rows.length.toString()}>
         <Col className="text-center" xs={12}>
-          <figure className="figure mb-0">
-            <img
-              src={item.thumbnail.src ?? item.thumbnail.uri}
-              className="figure-img img-fluid rounded"
-              alt={item.title}
-            />
-            {item.thumbnail.rights ? (
-              <figcaption>
-                <RightsParagraph
-                  material="Image"
-                  rights={item.thumbnail.rights}
-                  style={{fontSize: "xx-small"}}
-                />
-              </figcaption>
-            ) : null}
-          </figure>
+          <ImagesCarousel images={item.images} />
         </Col>
       </Row>
     );
@@ -171,12 +119,12 @@ const ItemDetailCard: React.FunctionComponent<{
     <Card>
       <CardHeader className="d-flex">
         <div
-          className="text-center"
-          style={{alignItems: "center", fontSize: "x-large", flexGrow: 1}}
+          className="align-items-center flex-grow-1 text-center"
+          style={{fontSize: "x-large"}}
         >
           {item.title}
         </div>
-        <div style={{alignItems: "center", flexGrow: 0}}>
+        <div className="align-items-center">
           <Button color="link" onClick={onClose}>
             <FontAwesomeIcon
               icon={faTimes}
@@ -207,7 +155,17 @@ const ItemsGallery: React.FunctionComponent<{
   <Container fluid>
     <Row>
       {items.map((item, itemI) => {
-        const {onToggleSelected, selected, thumbnail, title} = item;
+        const {onToggleSelected, images, selected, title} = item;
+
+        let thumbnail: Image | null = selectThumbnail(images, {
+          targetDimensions: thumbnailTargetDimensions,
+        });
+        let thumbnailSrc: string;
+        if (thumbnail) {
+          thumbnailSrc = thumbnail.src ?? thumbnail.uri;
+        } else {
+          thumbnailSrc = Image.placeholderSrc(thumbnailTargetDimensions);
+        }
 
         return (
           <Card
@@ -236,7 +194,7 @@ const ItemsGallery: React.FunctionComponent<{
               <a onClick={onToggleSelected}>
                 <img
                   className="figure-img rounded"
-                  src={thumbnailSrc(thumbnail)}
+                  src={thumbnailSrc}
                   style={{
                     height: thumbnailTargetDimensions.height,
                     width: thumbnailTargetDimensions.width,
@@ -262,58 +220,77 @@ const ItemsGallery: React.FunctionComponent<{
 const ItemsTable: React.FunctionComponent<{
   items: readonly Item[];
   setDetailItem: (item: Item) => void;
-}> = ({items, setDetailItem}) => (
-  <Table>
-    <tbody>
-      {items.map((item, itemI) => {
-        const {onToggleSelected, selected, title} = item;
+}> = ({items, setDetailItem}) => {
+  const chunks: Item[][] = [];
+  let chunk: Item[] = [];
+  for (const item of items) {
+    chunk.push(item);
+    if (chunk.length === 4) {
+      chunks.push(chunk);
+      chunk = [];
+    }
+  }
+  if (chunk.length > 0) {
+    chunks.push(chunk);
+  }
 
-        return (
-          <>
-            {/*{itemI > 0 ? (*/}
-            {/*  <tr>*/}
-            {/*    <td colSpan={2}>&nbsp;</td>*/}
-            {/*  </tr>*/}
-            {/*) : null}*/}
-            <tr
-              className={classnames({
-                "border-secondary": selected,
+  return (
+    <Container fluid>
+      <Row className="justify-content-center">
+        {chunks.map((items, chunkI) => (
+          <Table
+            className="d-inline-block"
+            key={chunkI}
+            style={{maxWidth: "24rem"}}
+          >
+            <tbody>
+              {items.map((item, itemI) => {
+                const {onToggleSelected, selected, title} = item;
+
+                return (
+                  <tr
+                    className={classnames({
+                      "border-secondary": selected,
+                    })}
+                    key={itemI}
+                    style={{
+                      borderWidth: selected ? "2px" : undefined,
+                    }}
+                  >
+                    <td
+                      className="text-center"
+                      style={{
+                        width: "95%",
+                      }}
+                    >
+                      <Button
+                        active={!!selected}
+                        color="primary"
+                        onClick={onToggleSelected}
+                        style={{
+                          cursor: "pointer",
+                          textDecoration: "none",
+                          width: "90%",
+                        }}
+                      >
+                        {title}
+                      </Button>
+                    </td>
+                    <td className="text-center align-middle">
+                      <a onClick={() => setDetailItem(item)}>
+                        <FontAwesomeIcon
+                          icon={faInfoCircle}
+                          style={{height: "32px", width: "32px"}}
+                        />
+                      </a>
+                    </td>
+                  </tr>
+                );
               })}
-              style={{
-                borderWidth: selected ? "2px" : undefined,
-              }}
-            >
-              <td
-                className="text-center"
-                style={{
-                  width: "95%",
-                }}
-              >
-                <Button
-                  active={!!selected}
-                  color="primary"
-                  onClick={onToggleSelected}
-                  style={{
-                    cursor: "pointer",
-                    textDecoration: "none",
-                    width: "90%",
-                  }}
-                >
-                  {title}
-                </Button>
-              </td>
-              <td className="text-center align-middle">
-                <a onClick={() => setDetailItem(item)}>
-                  <FontAwesomeIcon
-                    icon={faInfoCircle}
-                    style={{height: "32px", width: "32px"}}
-                  />
-                </a>
-              </td>
-            </tr>
-          </>
-        );
-      })}
-    </tbody>
-  </Table>
-);
+            </tbody>
+          </Table>
+        ))}
+      </Row>
+    </Container>
+  );
+};

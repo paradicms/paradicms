@@ -5,6 +5,7 @@ import {WorksheetFeatureSet} from "~/models/WorksheetFeatureSet";
 import {WorksheetFeatureSetState} from "~/models/WorksheetFeatureSetState";
 import {WorksheetStateService} from "~/services/WorksheetStateService";
 import {WorksheetFeature} from "~/models/WorksheetFeature";
+import {WorksheetMode} from "~/models/WorksheetMode";
 
 const isEqual = (
   leftMark: WorksheetMark,
@@ -145,7 +146,7 @@ export class Worksheet {
       featureSetUri: null,
       featureUri: null,
       review: false,
-      view: this.currentMark.view,
+      mode: this.currentMark.mode,
       worksheetStateId,
     });
 
@@ -159,29 +160,31 @@ export class Worksheet {
           featureUri: null,
           featureSetUri,
           review: false,
-          view: this.currentMark.view,
+          mode: this.currentMark.mode,
           worksheetStateId,
         });
 
-        for (const feature of featureSet.features) {
-          // Feature start is the same as review
+        if (this.currentMark.mode !== WorksheetMode.ADVANCED) {
+          for (const feature of featureSet.features) {
+            // Feature start is the same as review
+            marks.push({
+              featureUri: feature.uri,
+              featureSetUri,
+              review: false,
+              mode: this.currentMark.mode,
+              worksheetStateId,
+            });
+          }
+
+          // Feature set review
           marks.push({
-            featureUri: feature.uri,
             featureSetUri,
-            review: false,
-            view: this.currentMark.view,
+            featureUri: null,
+            review: true,
+            mode: this.currentMark.mode,
             worksheetStateId,
           });
         }
-
-        // Feature set review
-        marks.push({
-          featureSetUri,
-          featureUri: null,
-          review: true,
-          view: this.currentMark.view,
-          worksheetStateId,
-        });
       }
     }
 
@@ -190,7 +193,7 @@ export class Worksheet {
       featureSetUri: null,
       featureUri: null,
       review: true,
-      view: this.currentMark.view,
+      mode: this.currentMark.mode,
       worksheetStateId,
     });
 

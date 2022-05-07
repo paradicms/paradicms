@@ -4,7 +4,7 @@ import {useEffect, useReducer} from "react";
 import {Worksheet} from "~/models/Worksheet";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 
-interface WorksheetReducerAction {
+export interface WorksheetReducerAction {
   payload: Worksheet;
 }
 

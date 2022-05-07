@@ -29,6 +29,7 @@ import {Headline} from "~/components/Headline";
 import {defaultUserSettings} from "~/models/defaultUserSettings";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import {WorksheetMode} from "~/models/WorksheetMode";
 
 export const WorksheetStartPage: React.FunctionComponent = () => {
   const [exception, setException] = useState<Exception | null>(null);
@@ -98,8 +99,8 @@ export const WorksheetStartPage: React.FunctionComponent = () => {
             Hrefs.worksheetMark({
               featureSetUri: null,
               featureUri: null,
+              mode: WorksheetMode.BEGINNER,
               review: false,
-              view: null,
               worksheetStateId: newWorksheetStateId,
             })
           );
@@ -325,8 +326,8 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
             to={Hrefs.worksheetMark({
               featureSetUri: null,
               featureUri: null,
+              mode: WorksheetMode.BEGINNER,
               review: false,
-              view: null,
               worksheetStateId,
             })}
             title="Open this worksheet"

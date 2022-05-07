@@ -38,8 +38,8 @@ export class Hrefs {
       }
     }
     href += mark.review ? "review" : "edit";
-    if (mark.view) {
-      href += "?view=" + mark.view;
+    if (mark.mode) {
+      href += "?mode=" + mark.mode;
     }
     return href;
   }

@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import {Hrefs} from "~/Hrefs";
 import * as React from "react";
-import {ReactNode, useCallback} from "react";
+import {Dispatch, ReactNode, useCallback} from "react";
 import Hammer from "react-hammerjs";
 import {Link, useNavigate} from "react-router-dom";
 import {
@@ -10,15 +10,20 @@ import {
   Button,
   Col,
   Container,
+  Input,
   Progress,
   Row,
 } from "reactstrap";
 import {Worksheet} from "~/models/Worksheet";
 import {Frame} from "~/components/Frame";
 import {Headline} from "~/components/Headline";
+import {useQueryParam} from "use-query-params";
+import {WorksheetMode} from "~/models/WorksheetMode";
+import {WorksheetReducerAction} from "~/hooks/useWorksheet";
 
 export const WorksheetNavigationFrame: React.FunctionComponent<
   React.PropsWithChildren<{
+    dispatchWorksheet: Dispatch<WorksheetReducerAction>;
     finishButtonEnabled: boolean;
     headline: string;
     nextButtonEnabled: boolean;
@@ -34,6 +39,8 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
   worksheet,
 }) => {
   const navigate = useNavigate();
+
+  const [_, setMode] = useQueryParam<string>("mode");
 
   const onClickFinishButton = useCallback(() => {
     worksheet
@@ -72,8 +79,8 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
           to={Hrefs.worksheetMark({
             featureSetUri: worksheet.currentFeatureSet.uri,
             featureUri: null,
+            mode: worksheet.currentMark.mode,
             review: false,
-            view: worksheet.currentMark.view,
             worksheetStateId: worksheet.stateId,
           })}
         >
@@ -89,8 +96,8 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
           to={Hrefs.worksheetMark({
             featureSetUri: worksheet.currentFeatureSet!.uri,
             featureUri: worksheet.currentFeature.uri,
+            mode: worksheet.currentMark.mode,
             review: false,
-            view: worksheet.currentMark.view,
             worksheetStateId: worksheet.stateId,
           })}
         >
@@ -104,11 +111,11 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
     typeof finishButtonEnabled !== "undefined"
       ? finishButtonEnabled
       : nextButtonEnabled;
-  const nextPreviousButtons =
+  const navigationButtons =
     finishOrNextButtonEnabled || nextButtonEnabled || previousButtonEnabled ? (
       <Row className="mt-1">
-        <Col style={{display: "flex"}} xs="12">
-          <div style={{flexGrow: 0}}>
+        <Col className="d-flex" xs="12">
+          <div>
             <Button
               className={classnames({
                 invisible: !previousButtonEnabled,
@@ -121,8 +128,8 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
               Previous
             </Button>
           </div>
-          <span style={{flexGrow: 1}} />
-          <div style={{flexGrow: 0}}>
+          <span className="flex-grow-1" />
+          <div>
             <Button
               className={classnames({
                 invisible: !nextButtonEnabled,
@@ -164,8 +171,29 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
         <Frame>
           <Container fluid>
             <Row>
-              <Col xs="12">
-                <Headline>{headline}</Headline>
+              <Col className="d-flex" xs="12">
+                <div className="justify-content-center flex-grow-1">
+                  <Headline>{headline}</Headline>
+                </div>
+                <div className="d-flex align-items-center">
+                  <strong>Mode</strong>&nbsp;&nbsp;
+                  <Input
+                    id="modeSelect"
+                    name="modeSelect"
+                    onChange={(event) => {
+                      const newMode = event.target.value;
+                      worksheet.save().then(() => setMode(newMode));
+                    }}
+                    type="select"
+                    value={worksheet.currentMark.mode}
+                  >
+                    <option value={WorksheetMode.BEGINNER}>Beginner</option>
+                    <option value={WorksheetMode.INTERMEDIATE}>
+                      Intermediate
+                    </option>
+                    <option value={WorksheetMode.ADVANCED}>Advanced</option>
+                  </Input>
+                </div>
               </Col>
             </Row>
             <Row>
@@ -187,11 +215,11 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
                 ) : null}
               </Col>
             </Row>
-            {nextPreviousButtons}
+            {navigationButtons}
             <Row className="mt-1">
               <Col xs="12">{children}</Col>
             </Row>
-            {nextPreviousButtons}
+            {navigationButtons}
           </Container>
         </Frame>
       </div>
