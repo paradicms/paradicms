@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import {Hrefs} from "~/Hrefs";
 import * as React from "react";
-import {ReactNode, useCallback} from "react";
+import {Dispatch, ReactNode, useCallback} from "react";
 import Hammer from "react-hammerjs";
 import {Link, useNavigate} from "react-router-dom";
 import {
@@ -19,9 +19,11 @@ import {Frame} from "~/components/Frame";
 import {Headline} from "~/components/Headline";
 import {useQueryParam} from "use-query-params";
 import {WorksheetMode} from "~/models/WorksheetMode";
+import {WorksheetReducerAction} from "~/hooks/useWorksheet";
 
 export const WorksheetNavigationFrame: React.FunctionComponent<
   React.PropsWithChildren<{
+    dispatchWorksheet: Dispatch<WorksheetReducerAction>;
     finishButtonEnabled: boolean;
     headline: string;
     nextButtonEnabled: boolean;
@@ -178,7 +180,10 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
                   <Input
                     id="modeSelect"
                     name="modeSelect"
-                    onChange={(event) => setMode(event.target.value)}
+                    onChange={(event) => {
+                      const newMode = event.target.value;
+                      worksheet.save().then(() => setMode(newMode));
+                    }}
                     type="select"
                     value={worksheet.currentMark.mode}
                   >

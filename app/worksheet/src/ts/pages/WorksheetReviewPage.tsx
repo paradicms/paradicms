@@ -21,7 +21,7 @@ const STRING_EXPORTERS: StringWorksheetStateExporter[] = [
 ];
 
 export const WorksheetReviewPage: React.FunctionComponent = () => {
-  const [worksheet, _] = useWorksheet();
+  const [worksheet, dispatchWorksheet] = useWorksheet();
   const [selectedStringExporterIndex, setSelectedStringExporterIndex] =
     useState<number>(0);
 
@@ -100,6 +100,7 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
 
   return (
     <WorksheetNavigationFrame
+      dispatchWorksheet={dispatchWorksheet}
       finishButtonEnabled={false}
       headline={`Worksheet: ${worksheet.stateId}`}
       nextButtonEnabled={false}

@@ -15,6 +15,7 @@ export const WorksheetEditPage: React.FunctionComponent = () => {
 
   return (
     <WorksheetNavigationFrame
+      dispatchWorksheet={dispatchWorksheet}
       headline={"Worksheet: " + worksheet.stateId}
       finishButtonEnabled={worksheet.selectedFeatureSetCount > 0}
       nextButtonEnabled={worksheet.selectedFeatureSetCount > 0}

@@ -83,6 +83,7 @@ export const WorksheetFeatureSetEditPage: React.FunctionComponent = () => {
 
   return (
     <WorksheetNavigationFrame
+      dispatchWorksheet={dispatchWorksheet}
       finishButtonEnabled={true}
       headline={`Feature Set: ${featureSet.definition.title}`}
       nextButtonEnabled={true}
