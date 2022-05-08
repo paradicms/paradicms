@@ -3,7 +3,7 @@ from typing import Optional, Tuple, Union
 from rdflib import DCTERMS, SKOS
 from rdflib.namespace import RDF
 from rdflib.resource import Resource
-from rdflib.term import Node, URIRef
+from rdflib.term import Node, URIRef, Literal
 
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.text import Text
@@ -25,7 +25,7 @@ class NamedValue(ResourceBackedNamedModel):
         uri: URIRef,
         value: Node,  # A property value
         abstract: Union[str, Text, None] = None,
-        alt_labels: Tuple[str, ...] = None,
+        alt_labels: Tuple[Union[str, Literal], ...] = None,
         title: Optional[str] = None,
     ) -> "NamedValue":
         if not property_uris:
