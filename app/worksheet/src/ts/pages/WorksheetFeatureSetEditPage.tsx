@@ -38,24 +38,12 @@ const WorksheetFeatureSelectsTable: React.FunctionComponent<{
                     }
                     dispatchFeatureSet();
                   }}
-                  options={feature.values
-                    .concat()
-                    .sort((left, right) =>
-                      left.definition.title!.localeCompare(
-                        right.definition.title!
-                      )
-                    )
-                    .map((value) => ({
-                      label: value.definition.title,
-                      value: value.uri,
-                    }))}
+                  options={feature.values.map((value) => ({
+                    label: value.definition.title,
+                    value: value.uri,
+                  }))}
                   value={feature.values
                     .filter((value) => value.selected)
-                    .sort((left, right) =>
-                      left.definition.title!.localeCompare(
-                        right.definition.title!
-                      )
-                    )
                     .map((value) => ({
                       label: value.definition.title,
                       value: value.uri,
@@ -107,29 +95,24 @@ export const WorksheetFeatureSetEditPage: React.FunctionComponent = () => {
             </p>
           </div>
           <MasterDetailContainer
-            items={featureSet.features
-              .concat()
-              .sort((left, right) =>
-                left.definition.title!.localeCompare(right.definition.title!)
-              )
-              .map((feature) => ({
-                altLabels: null,
-                description: feature.definition.abstract,
-                images: feature.definition.images,
-                onToggleSelected: () => {
-                  navigate(
-                    Hrefs.worksheetMark({
-                      featureSetUri: featureSet.uri,
-                      featureUri: feature.uri,
-                      review: false,
-                      mode: worksheet!.currentMark.mode,
-                      worksheetStateId: worksheet!.stateId,
-                    })
-                  );
-                },
-                selected: null,
-                title: feature.definition.title,
-              }))}
+            items={featureSet.features.map((feature) => ({
+              altLabels: null,
+              description: feature.definition.abstract,
+              images: feature.definition.images,
+              onToggleSelected: () => {
+                navigate(
+                  Hrefs.worksheetMark({
+                    featureSetUri: featureSet.uri,
+                    featureUri: feature.uri,
+                    review: false,
+                    mode: worksheet!.currentMark.mode,
+                    worksheetStateId: worksheet!.stateId,
+                  })
+                );
+              },
+              selected: null,
+              title: feature.definition.title,
+            }))}
             mode={worksheet.currentMark.mode}
           />
         </>

@@ -46,16 +46,20 @@ export class Worksheet {
     const {initialState} = kwds;
     this.currentMark = kwds.currentMark;
     this.definition = kwds.definition;
-    this.featureSets = this.definition.featureSets.map(
-      (featureSetDefinition) =>
-        new WorksheetFeatureSet({
-          definition: featureSetDefinition,
-          initialState: initialState.featureSets?.find(
-            (featureSetState) =>
-              featureSetState.uri === featureSetDefinition.uri
-          ),
-        })
-    );
+    this.featureSets = this.definition.featureSets
+      .map(
+        (featureSetDefinition) =>
+          new WorksheetFeatureSet({
+            definition: featureSetDefinition,
+            initialState: initialState.featureSets?.find(
+              (featureSetState) =>
+                featureSetState.uri === featureSetDefinition.uri
+            ),
+          })
+      )
+      .sort((left, right) =>
+        left.definition.title!.localeCompare(right.definition.title!)
+      );
     this.featureSetsByUri = this.featureSets.reduce((map, featureSet) => {
       map[featureSet.uri] = featureSet;
       return map;

@@ -14,15 +14,20 @@ export class WorksheetFeature {
   }) {
     const {initialState} = kwds;
     this.definition = kwds.definition;
-    this.values = this.definition.values.map(
-      (valueDefinition) =>
-        new WorksheetFeatureValue({
-          definition: valueDefinition,
-          initialState: initialState?.values?.find(
-            (featureValueState) => featureValueState.uri === valueDefinition.uri
-          ),
-        })
-    );
+    this.values = this.definition.values
+      .map(
+        (valueDefinition) =>
+          new WorksheetFeatureValue({
+            definition: valueDefinition,
+            initialState: initialState?.values?.find(
+              (featureValueState) =>
+                featureValueState.uri === valueDefinition.uri
+            ),
+          })
+      )
+      .sort((left, right) =>
+        left.definition.title!.localeCompare(right.definition.title!)
+      );
   }
 
   get state(): WorksheetFeatureState | undefined {

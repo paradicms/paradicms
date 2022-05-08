@@ -56,22 +56,17 @@ export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
         </p>
       </div>
       <MasterDetailContainer
-        items={feature.values
-          .concat()
-          .sort((left, right) =>
-            left.definition.title!.localeCompare(right.definition.title!)
-          )
-          .map((featureValue) => ({
-            altLabels: featureValue.definition.altLabels,
-            description: featureValue.definition.abstract,
-            images: featureValue.definition.images,
-            onToggleSelected: () => {
-              featureValue.selected = !featureValue.selected;
-              dispatchWorksheet({payload: worksheet});
-            },
-            selected: featureValue.selected,
-            title: featureValue.definition.title!,
-          }))}
+        items={feature.values.map((featureValue) => ({
+          altLabels: featureValue.definition.altLabels,
+          description: featureValue.definition.abstract,
+          images: featureValue.definition.images,
+          onToggleSelected: () => {
+            featureValue.selected = !featureValue.selected;
+            dispatchWorksheet({payload: worksheet});
+          },
+          selected: featureValue.selected,
+          title: featureValue.definition.title!,
+        }))}
         mode={worksheet.currentMark.mode}
       />
     </WorksheetNavigationFrame>

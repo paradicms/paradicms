@@ -34,22 +34,17 @@ export const WorksheetEditPage: React.FunctionComponent = () => {
         <Row className="mt-2">
           <Col xs={12}>
             <MasterDetailContainer
-              items={worksheet.featureSets
-                .concat()
-                .sort((left, right) =>
-                  left.definition.title!.localeCompare(right.definition.title!)
-                )
-                .map((featureSet) => ({
-                  altLabels: null,
-                  description: featureSet.definition.abstract,
-                  images: featureSet.definition.images,
-                  onToggleSelected: () => {
-                    featureSet.selected = !featureSet.selected;
-                    dispatchWorksheet({payload: worksheet});
-                  },
-                  selected: featureSet.selected,
-                  title: featureSet.definition.title!,
-                }))}
+              items={worksheet.featureSets.map((featureSet) => ({
+                altLabels: null,
+                description: featureSet.definition.abstract,
+                images: featureSet.definition.images,
+                onToggleSelected: () => {
+                  featureSet.selected = !featureSet.selected;
+                  dispatchWorksheet({payload: worksheet});
+                },
+                selected: featureSet.selected,
+                title: featureSet.definition.title!,
+              }))}
               mode={worksheet.currentMark.mode}
             />
           </Col>
