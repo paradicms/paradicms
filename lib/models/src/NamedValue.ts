@@ -1,5 +1,5 @@
 import {NamedModel} from "./NamedModel";
-import {Term} from "n3";
+import {Literal, Term} from "n3";
 import {Memoize} from "typescript-memoize";
 import {requireDefined} from "./requireDefined";
 import {HasAbstract, HasImages} from "./mixins";
@@ -8,10 +8,10 @@ import {DCTERMS, RDF, SKOS} from "@paradicms/vocabularies";
 
 export class NamedValue extends Mixin(NamedModel, HasAbstract, HasImages) {
   @Memoize()
-  get altLabels(): string[] {
-    return this.propertyObjects(SKOS.altLabel)
-      .filter((term) => term.termType === "Literal")
-      .map((term) => term.value);
+  get altLabels(): readonly Literal[] {
+    return this.propertyObjects(SKOS.altLabel).filter(
+      (term) => term.termType === "Literal"
+    ) as Literal[];
   }
 
   @Memoize()

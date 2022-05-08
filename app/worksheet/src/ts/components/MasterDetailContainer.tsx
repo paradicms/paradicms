@@ -21,9 +21,11 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faInfoCircle, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router";
 import {WorksheetMode} from "~/models/WorksheetMode";
+import {Literal} from "n3";
+import ISO6391 from "iso-639-1";
 
 interface Item {
-  altLabels: string[] | null;
+  altLabels: readonly Literal[] | null;
   description: string | Text | null;
   images: readonly Image[];
   onToggleSelected: () => void | null;
@@ -76,7 +78,7 @@ const ItemDetailCard: React.FunctionComponent<{
   if (item.images.length > 0) {
     rows.push(
       <Row key={"row" + rows.length.toString()}>
-        <Col className="text-center" xs={12}>
+        <Col className="p-0 text-center" xs={12}>
           <ImagesCarousel images={item.images} />
         </Col>
       </Row>
@@ -86,7 +88,7 @@ const ItemDetailCard: React.FunctionComponent<{
   if (item.description) {
     rows.push(
       <Row key={"row" + rows.length.toString()}>
-        <Col className="text-center" xs={12}>
+        <Col className="p-0 text-center" xs={12}>
           <p>{item.description.toString()}</p>
           {item.description instanceof Text && item.description.rights ? (
             <RightsParagraph
@@ -101,13 +103,45 @@ const ItemDetailCard: React.FunctionComponent<{
   }
 
   if (item.altLabels && item.altLabels.length > 0) {
+    const altLabelsByLanguageCode: {[index: string]: string[]} = {};
+    for (const altLabel of item.altLabels) {
+      let languageCodeAltLabels = altLabelsByLanguageCode[altLabel.language];
+      if (!languageCodeAltLabels) {
+        languageCodeAltLabels = altLabelsByLanguageCode[altLabel.language] = [];
+      }
+      languageCodeAltLabels.push(altLabel.value);
+    }
+
+    let altLabelLanguageCodes = Object.keys(altLabelsByLanguageCode).sort();
+    if (altLabelLanguageCodes.some((languageCode) => languageCode === "en")) {
+      altLabelLanguageCodes = ["en"].concat(
+        altLabelLanguageCodes.filter((languageCode) => languageCode !== "en")
+      );
+    }
+
     rows.push(
       <Row key={"row" + rows.length.toString()}>
-        <Col xs={12}>
+        <Col className="p-0" xs={12}>
           <h5 className="text-center">Variant terms</h5>
           <ul>
-            {item.altLabels!.map((altLabel, altLabelI) => (
-              <li key={altLabelI}>{altLabel}</li>
+            {altLabelLanguageCodes.map((languageCode) => (
+              <li key={languageCode}>
+                {ISO6391.getName(languageCode)}
+                {ISO6391.getNativeName(languageCode) !==
+                ISO6391.getName(languageCode) ? (
+                  <>
+                    &nbsp;/&nbsp;
+                    {ISO6391.getNativeName(languageCode)}
+                  </>
+                ) : null}
+                <ul>
+                  {altLabelsByLanguageCode[languageCode]
+                    .sort()
+                    .map((altLabel, altLabelI) => (
+                      <li key={altLabelI}>{altLabel}</li>
+                    ))}
+                </ul>
+              </li>
             ))}
           </ul>
         </Col>
