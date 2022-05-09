@@ -87,7 +87,7 @@ export class Worksheet {
     if (!this.currentMark.featureSetUri) {
       return undefined;
     }
-    return this.featureSetByUri(this.currentMark.featureSetUri);
+    return this.featureSetsByUri[this.currentMark.featureSetUri];
   }
 
   get currentMarkIndex(): number {
@@ -97,16 +97,6 @@ export class Worksheet {
       }
     }
     throw new EvalError("current mark not found in state machine");
-  }
-
-  private featureSetByUri(uri: string): WorksheetFeatureSet {
-    const featureSet = this.featureSetsByUri[uri];
-    if (!featureSet) {
-      throw new RangeError(
-        "no such feature set " + this.currentMark.featureSetUri
-      );
-    }
-    return featureSet;
   }
 
   get firstMark(): WorksheetMark {
@@ -157,7 +147,11 @@ export class Worksheet {
     if (state.featureSets && state.featureSets.length > 0) {
       for (const featureSetState of state.featureSets) {
         const featureSetUri = featureSetState.uri;
-        const featureSet = this.featureSetByUri(featureSetUri);
+        const featureSet = this.featureSetsByUri[featureSetUri];
+
+        if (!featureSet) {
+          continue;
+        }
 
         // Feature set start
         marks.push({

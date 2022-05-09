@@ -12,6 +12,7 @@ import {useCallback, useMemo, useState} from "react";
 import CopyToClipboard = require("react-copy-to-clipboard");
 import {Link} from "react-router-dom";
 import {Hrefs} from "~/Hrefs";
+import {GenericErrorHandler} from "~/components/GenericErrorHandler";
 
 const STRING_EXPORTERS: StringWorksheetStateExporter[] = [
   new TextWorksheetStateExporter(),
@@ -21,7 +22,12 @@ const STRING_EXPORTERS: StringWorksheetStateExporter[] = [
 ];
 
 export const WorksheetReviewPage: React.FunctionComponent = () => {
-  const [worksheet, dispatchWorksheet] = useWorksheet();
+  const {
+    dispatchWorksheet,
+    exception: worksheetException,
+    worksheet,
+  } = useWorksheet();
+
   const [selectedStringExporterIndex, setSelectedStringExporterIndex] =
     useState<number>(0);
 
@@ -94,7 +100,9 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
     );
   }, [exportedString, worksheet]);
 
-  if (!worksheet) {
+  if (worksheetException) {
+    return <GenericErrorHandler exception={worksheetException} />;
+  } else if (!worksheet) {
     return <Spinner />;
   }
 

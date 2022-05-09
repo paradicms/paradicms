@@ -59,7 +59,7 @@ export const useWorksheetStateService = (): WorksheetStateService | null => {
       // console.info("already have worksheetStateService set");
       return;
     } else if (currentUser) {
-      console.info("getting user settings");
+      // console.info("getting user settings");
       userSettingsService
         .getUserSettings(currentUser.id)
         .then(setWorksheetStateServiceFromUserSettings, () =>

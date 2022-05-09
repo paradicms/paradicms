@@ -5,11 +5,18 @@ import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
 // import {useReducer} from "react";
 import {Spinner} from "~/components/Spinner";
 import {MasterDetailContainer} from "~/components/MasterDetailContainer";
+import {GenericErrorHandler} from "~/components/GenericErrorHandler";
 
 export const WorksheetEditPage: React.FunctionComponent = () => {
-  const [worksheet, dispatchWorksheet] = useWorksheet();
+  const {
+    dispatchWorksheet,
+    exception: worksheetException,
+    worksheet,
+  } = useWorksheet();
 
-  if (!worksheet) {
+  if (worksheetException) {
+    return <GenericErrorHandler exception={worksheetException} />;
+  } else if (!worksheet) {
     return <Spinner />;
   }
 

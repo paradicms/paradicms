@@ -6,10 +6,6 @@ import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
 export class WorksheetDefinition {
   constructor(private readonly dataset: WorksheetDefinitionDataset) {}
 
-  featureByUriOptional(uri: string): WorksheetFeatureDefinition | null {
-    return this.dataset.worksheetFeatureDefinitionByUriOptional(uri);
-  }
-
   get features(): readonly WorksheetFeatureDefinition[] {
     return this.dataset.worksheetFeatureDefinitions;
   }

@@ -177,6 +177,7 @@ export const WorksheetStartPage: React.FunctionComponent = () => {
                         existingWorksheetStateIds={existingWorksheetStateIds}
                         onDeleteWorksheet={onDeleteWorksheet}
                         onRenameWorksheet={onRenameWorksheet}
+                        setException={setException}
                       />
                     </Col>
                   </Row>
@@ -197,7 +198,13 @@ const ExistingWorksheetStatesCard: React.FunctionComponent<{
     newWorksheetStateId: string;
     oldWorksheetStateId: string;
   }) => Promise<void>;
-}> = ({existingWorksheetStateIds, onDeleteWorksheet, onRenameWorksheet}) => (
+  setException: (exception: Exception) => void;
+}> = ({
+  existingWorksheetStateIds,
+  onDeleteWorksheet,
+  onRenameWorksheet,
+  setException,
+}) => (
   <Card>
     <CardHeader>
       <CardTitle className={classnames(["mb-0", "text-center"])}>
@@ -222,6 +229,7 @@ const ExistingWorksheetStatesCard: React.FunctionComponent<{
                         oldWorksheetStateId: worksheetStateId,
                       })
                     }
+                    setException={setException}
                     worksheetStateId={worksheetStateId}
                   ></ExistingWorksheetStateTableRow>
                 ))}
@@ -237,8 +245,14 @@ const ExistingWorksheetStatesCard: React.FunctionComponent<{
 const ExistingWorksheetStateTableRow: React.FunctionComponent<{
   onDeleteWorksheet: () => Promise<void>;
   onRenameWorksheet: (newId: string) => Promise<void>;
+  setException: (exception: Exception) => void;
   worksheetStateId: string;
-}> = ({onDeleteWorksheet, onRenameWorksheet, worksheetStateId}) => {
+}> = ({
+  onDeleteWorksheet,
+  onRenameWorksheet,
+  setException,
+  worksheetStateId,
+}) => {
   const [deleting, setDeleting] = useState<boolean>(false);
   const [newWorksheetStateId, setNewWorksheetStateId] = useState<string>("");
   const [renaming, setRenaming] = useState<boolean>(false);
@@ -247,7 +261,7 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
     onRenameWorksheet(newWorksheetStateId).then(() => {
       setNewWorksheetStateId("");
       setRenaming(false);
-    });
+    }, setException);
   };
 
   if (deleting) {
@@ -264,7 +278,9 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
           <Button
             className="ms-4"
             color="danger"
-            onClick={() => onDeleteWorksheet().then(() => setDeleting(false))}
+            onClick={() =>
+              onDeleteWorksheet().then(() => setDeleting(false), setException)
+            }
             size="sm"
           >
             Yes
