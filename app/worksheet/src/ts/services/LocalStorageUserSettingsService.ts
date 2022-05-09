@@ -6,13 +6,14 @@ export class LocalStorageUserSettingsService implements UserSettingsService {
   private static readonly USER_SETTINGS_ITEM_KEY_PREFIX = "userSettings";
 
   getUserSettings(userId: string): Promise<UserSettings> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const key =
         LocalStorageUserSettingsService.getUserSettingsItemKey(userId);
       const value = localStorage.getItem(key);
       // console.info("read user settings from key=%s: %s (%s)", key, value);
       if (!value) {
-        throw new NoSuchUserSettingsException(userId);
+        reject(new NoSuchUserSettingsException(userId));
+        return;
       }
       resolve(JSON.parse(value));
     });
