@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import {Hrefs} from "~/Hrefs";
 import * as React from "react";
-import {Dispatch, ReactNode, useCallback} from "react";
+import {Dispatch, ReactNode, useCallback, useState} from "react";
 import Hammer from "react-hammerjs";
 import {Link, useNavigate} from "react-router-dom";
 import {
@@ -20,6 +20,8 @@ import {Headline} from "~/components/Headline";
 import {useQueryParam} from "use-query-params";
 import {WorksheetMode} from "~/models/WorksheetMode";
 import {WorksheetReducerAction} from "~/hooks/useWorksheet";
+import {Exception} from "~/Exception";
+import {GenericErrorHandler} from "~/components/GenericErrorHandler";
 
 export const WorksheetNavigationFrame: React.FunctionComponent<
   React.PropsWithChildren<{
@@ -41,17 +43,24 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
   const navigate = useNavigate();
 
   const [_, setMode] = useQueryParam<string>("mode");
+  const [exception, setException] = useState<Exception | null>(null);
 
   const onClickFinishButton = useCallback(() => {
     worksheet
       .save()
-      .then(() => navigate(Hrefs.worksheetMark(worksheet.lastMark)));
+      .then(
+        () => navigate(Hrefs.worksheetMark(worksheet.lastMark)),
+        setException
+      );
   }, [navigate, worksheet]);
 
   const onClickNextButton = useCallback(() => {
     worksheet
       .save()
-      .then(() => navigate(Hrefs.worksheetMark(worksheet.nextMark)));
+      .then(
+        () => navigate(Hrefs.worksheetMark(worksheet.nextMark)),
+        setException
+      );
   }, [navigate, worksheet]);
 
   const onClickPreviousButton = useCallback(() => {
@@ -61,8 +70,12 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
       } else {
         navigate(Hrefs.index);
       }
-    });
+    }, setException);
   }, [navigate, worksheet]);
+
+  if (exception) {
+    return <GenericErrorHandler exception={exception} />;
+  }
 
   const breadcrumbItems: ReactNode[] = [];
   breadcrumbItems.push(
@@ -182,7 +195,9 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
                     name="modeSelect"
                     onChange={(event) => {
                       const newMode = event.target.value;
-                      worksheet.save().then(() => setMode(newMode));
+                      worksheet
+                        .save()
+                        .then(() => setMode(newMode), setException);
                     }}
                     type="select"
                     value={worksheet.currentMark.mode}

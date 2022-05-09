@@ -9,6 +9,7 @@ import {WorksheetMode} from "~/models/WorksheetMode";
 import {WorksheetFeatureSet} from "~/models/WorksheetFeatureSet";
 import {Table} from "reactstrap";
 import Select from "react-select";
+import {GenericErrorHandler} from "~/components/GenericErrorHandler";
 
 const WorksheetFeatureSelectsTable: React.FunctionComponent<{
   dispatchFeatureSet: () => void;
@@ -60,10 +61,19 @@ const WorksheetFeatureSelectsTable: React.FunctionComponent<{
 
 export const WorksheetFeatureSetEditPage: React.FunctionComponent = () => {
   const navigate = useNavigate();
-  const [worksheet, dispatchWorksheet] = useWorksheet();
-  if (!worksheet) {
+
+  const {
+    dispatchWorksheet,
+    exception: worksheetException,
+    worksheet,
+  } = useWorksheet();
+
+  if (worksheetException) {
+    return <GenericErrorHandler exception={worksheetException} />;
+  } else if (!worksheet) {
     return <Spinner />;
   }
+
   const featureSet = worksheet.currentFeatureSet;
   if (!featureSet) {
     throw new EvalError("expected feature set");

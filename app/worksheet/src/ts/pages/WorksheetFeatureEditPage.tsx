@@ -2,21 +2,22 @@ import * as React from "react";
 import {useWorksheet} from "~/hooks/useWorksheet";
 import {Spinner} from "~/components/Spinner";
 import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
-import {NamedValue} from "@paradicms/models";
-import {useState} from "react";
 import {MasterDetailContainer} from "~/components/MasterDetailContainer";
 import {Navigate} from "react-router-dom";
 import {WorksheetMode} from "~/models/WorksheetMode";
 import {Hrefs} from "~/Hrefs";
+import {GenericErrorHandler} from "~/components/GenericErrorHandler";
 
 export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
-  const [worksheet, dispatchWorksheet] = useWorksheet();
+  const {
+    dispatchWorksheet,
+    exception: worksheetException,
+    worksheet,
+  } = useWorksheet();
 
-  // @ts-ignore
-  const [detailFeatureValue, setDetailFeatureValue] =
-    useState<NamedValue | null>(null);
-
-  if (!worksheet) {
+  if (worksheetException) {
+    return <GenericErrorHandler exception={worksheetException} />;
+  } else if (!worksheet) {
     return <Spinner />;
   }
 

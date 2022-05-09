@@ -1,8 +1,9 @@
 import {useWorksheetDefinition} from "~/hooks/useWorksheetDefinition";
 import {useWorksheetStateService} from "~/hooks/useWorksheetStateService";
-import {useEffect, useReducer} from "react";
+import {useEffect, useReducer, useState} from "react";
 import {Worksheet} from "~/models/Worksheet";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
+import {Exception} from "~/Exception";
 
 export interface WorksheetReducerAction {
   payload: Worksheet;
@@ -19,16 +20,18 @@ const worksheetReducer = (
   return {worksheet: action.payload!};
 };
 
-export const useWorksheet = (): [
-  Worksheet | null,
-  React.Dispatch<WorksheetReducerAction>
-] => {
+export const useWorksheet = (): {
+  exception: Exception | null;
+  dispatchWorksheet: React.Dispatch<WorksheetReducerAction>;
+  worksheet: Worksheet | null;
+} => {
   const routeWorksheetMark = useRouteWorksheetMark();
   const worksheetDefinition = useWorksheetDefinition();
   const worksheetStateService = useWorksheetStateService();
-  const [state, dispatch] = useReducer(worksheetReducer, {
+  const [state, dispatchWorksheet] = useReducer(worksheetReducer, {
     worksheet: null,
   });
+  const [exception, setException] = useState<Exception | null>(null);
 
   useEffect(() => {
     if (!worksheetStateService) {
@@ -43,17 +46,19 @@ export const useWorksheet = (): [
     }
     worksheetStateService
       .getWorksheetState(routeWorksheetMark.worksheetStateId)
-      .then((worksheetState) =>
-        dispatch({
-          payload: new Worksheet({
-            currentMark: routeWorksheetMark,
-            definition: worksheetDefinition,
-            initialState: worksheetState,
-            stateService: worksheetStateService,
+      .then(
+        (worksheetState) =>
+          dispatchWorksheet({
+            payload: new Worksheet({
+              currentMark: routeWorksheetMark,
+              definition: worksheetDefinition,
+              initialState: worksheetState,
+              stateService: worksheetStateService,
+            }),
           }),
-        })
+        setException
       );
   }, [routeWorksheetMark, worksheetStateService]);
 
-  return [state.worksheet, dispatch];
+  return {exception, dispatchWorksheet, worksheet: state.worksheet};
 };
