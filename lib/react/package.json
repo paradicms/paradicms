@@ -1,0 +1,35 @@
+{
+  "author": "Minor Gordon",
+  "name": "@paradicms/react",
+  "description": "Paradicms React library",
+  "dependencies": {
+    "@types/qs": "6.9.7",
+    "@types/react": "17.0.38",
+    "@types/react-dom": "17.0.11",
+    "qs": "6.9.6",
+    "query-string": "5.1.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "use-query-params": "1.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "14.17.32",
+    "prettier": "^1.19.1",
+    "rimraf": "3.0.2",
+    "typescript": "^4.5.4"
+  },
+  "license": "GPL-3.0-only",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "private": true,
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rimraf dist",
+    "rebuild": "rimraf dist && tsc -b",
+    "watch": "tsc -w --preserveWatchOutput"
+  },
+  "types": "dist/index.d.ts",
+  "version": "1.0.5"
+}

@@ -1,0 +1,41 @@
+{
+  "author": "Minor Gordon",
+  "name": "@paradicms/lunr",
+  "description": "Paradicms lunr library",
+  "dependencies": {
+    "@paradicms/models": "1.0.5",
+    "@paradicms/services": "1.0.5",
+    "@types/lunr": "^2.3.3",
+    "base-x": "^3.0.8",
+    "lunr": "^2.3.8",
+    "ts-invariant": "0.9.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.15",
+    "@types/mocha": "^8.2.1",
+    "@types/node": "14.17.32",
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1",
+    "mocha-profiler": "1.0.0",
+    "rimraf": "3.0.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.5.4"
+  },
+  "license": "GPL-3.0-only",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "private": true,
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rimraf dist",
+    "rebuild": "rimraf dist && tsc -b",
+    "test": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' mocha -r ts-node/register 'test/**/*.ts'",
+    "test-profile": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' mocha -r ts-node/register -r mocha-profiler 'test/**/*.ts'",
+    "test-watch": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' mocha -r ts-node/register -w 'test/**/*.ts'",
+    "watch": "tsc -w --preserveWatchOutput"
+  },
+  "types": "dist/index.d.ts",
+  "version": "1.0.5"
+}

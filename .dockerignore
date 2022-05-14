@@ -1,0 +1,11 @@
+**/dist/
+/etl/test/
+**/.git/
+**/.github/
+/gui/integration-test/
+/gui/loader/test/
+**/node_modules/
+**/*.pyc
+**/script/
+**/venv/
+**/.vscode/

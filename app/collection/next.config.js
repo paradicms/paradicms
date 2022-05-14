@@ -1,0 +1,1 @@
+../../lib/next/next.config.js

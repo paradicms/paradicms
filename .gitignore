@@ -1,0 +1,12 @@
+/app/collection/public/img/archive/
+/app/exhibition/public/img/archive/
+dist/
+/lib/lunr/@paradicms/
+/lib/models/coverage/
+/lib/models/@paradicms/
+.next/
+node_modules/
+null/
+.nyc_output/
+out/
+yarn-error.log

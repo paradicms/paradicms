@@ -1,0 +1,34 @@
+{
+  "name": "collection",
+  "description": "Collection GUI for paradicms",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Minor Gordon",
+  "license": "GPL-3.0-only",
+  "main": "n/a",
+  "dependencies": {
+    "@paradicms/bootstrap": "1.0.5",
+    "@paradicms/configuration": "1.0.5",
+    "@paradicms/lunr": "1.0.5",
+    "@paradicms/next": "1.0.5",
+    "@types/leaflet": "1.7.8",
+    "leaflet": "1.7.1",
+    "next": "12.0.7",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-leaflet": "3.2.5",
+    "react-router-dom": "5.2.0"
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "5.1.8",
+    "rimraf": "3.0.2"
+  },
+  "scripts": {
+    "clean": "rimraf .next && rimraf out",
+    "dev": "next dev",
+    "build": "next build",
+    "export": "next export",
+    "serve": "serve out",
+    "start": "next start"
+  }
+}
