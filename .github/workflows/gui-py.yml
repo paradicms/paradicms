@@ -1,21 +1,15 @@
-name: Build and test Python
+name: Build and test GUI Python
 on:
   push:
     paths:
-      - "loader/**"
+      - "gui/loader/**"
   workflow_dispatch:
 jobs:
   build:
     name: Build and test Python
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          repository: paradicms/etl
-          path: etl
-      - uses: actions/checkout@v3
-        with:
-          path: gui
+      - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
           python-version: "3.9.x"
@@ -27,8 +21,8 @@ jobs:
         id: cached-poetry-dependencies
         uses: actions/cache@v2
         with:
-          path: gui/.venv
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          path: gui/loader/.venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('gui/loader/poetry.lock') }}
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: cd gui/loader && poetry install --no-interaction --no-root

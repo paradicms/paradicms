@@ -1,7 +1,7 @@
-name: Build
+name: Build and test ETL
 on: [push, workflow_dispatch]
 jobs:
-  build:
+  etl:
     name: Build and test
     runs-on: ubuntu-latest
     steps:
@@ -18,26 +18,20 @@ jobs:
         uses: actions/cache@v2
         with:
           path: .venv
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('etl/poetry.lock') }}
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: poetry install --no-interaction --no-root
-      - run: poetry run black --check paradicms_etl
-      - run: poetry run flake8 paradicms_etl
-      - run: poetry run mypy paradicms_etl
+        run: cd etl && poetry install --no-interaction --no-root
+      - run: cd etl && poetry run black --check paradicms_etl
+      - run: cd etl && poetry run flake8 paradicms_etl
+      - run: cd etl && poetry run mypy paradicms_etl
       - name: Run Python unit tests
         run: |
+          cd etl
           mkdir test-results
           poetry run pytest --junitxml=test-results/junit.xml
       - name: Publish unit test results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-          files: test-results/*.xml
-      - name: Repository dispatch to gui
-        uses: peter-evans/repository-dispatch@v1
-        if: github.ref == 'refs/heads/master'
-        with:
-          event-type: etl-build-event
-          repository: paradicms/gui
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          files: etl/test-results/*.xml

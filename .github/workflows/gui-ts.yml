@@ -1,31 +1,18 @@
-name: Build and test TypeScript
+name: Build and test GUI TypeScript
 on:
   push:
     paths-ignore:
-      - 'loader/**'
+      - 'etl/**'
+      - 'gui/loader/**'
   workflow_dispatch:
-  repository_dispatch:
-    types: [etl-build-event]
 jobs:
   build:
-    name: Build and test TypeScript
+    name: Build and test GUI TypeScript
     runs-on: ubuntu-latest
     env:
       NEXT_TELEMETRY_DISABLED: "1"
     steps:
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
-        id: extract_branch
-      - name: Check out the etl repo
-        uses: actions/checkout@v2
-        with:
-          path: etl
-          repository: paradicms/etl
-      - name: Check out the gui repo
-        uses: actions/checkout@v2
-        with:
-          path: gui
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: "14"
@@ -37,7 +24,7 @@ jobs:
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('gui/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Cache Next.js cache
@@ -64,12 +51,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-        if: steps.extract_branch.outputs.branch == 'master'
-      - name: Move Dockerfile to be above both checkouts
-        run: |
-          mv gui/.dockerignore .
-          mv gui/Dockerfile .
-          echo "$PWD"
+        if: github.ref == 'refs/heads/master'
       - name: Build container image
         uses: docker/build-push-action@v2
         with:
@@ -77,4 +59,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.repository }}:latest
-        if: steps.extract_branch.outputs.branch == 'master'
+        if: github.ref == 'refs/heads/master'
