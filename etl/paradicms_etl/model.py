@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from rdflib import Graph, RDF
+from rdflib import Graph
 from rdflib.resource import Resource
 
 
