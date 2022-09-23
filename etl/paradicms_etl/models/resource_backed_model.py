@@ -12,7 +12,6 @@ _ValueT = TypeVar("_ValueT")
 class ResourceBackedModel(Model):
     def __init__(self, resource: Resource):
         self.__resource = resource
-        self._required_uri_value(RDF.type)
 
     @classmethod
     def from_rdf(cls, resource: Resource):
