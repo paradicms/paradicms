@@ -547,7 +547,7 @@ class MarkdownDirectoryTransformer(Transformer):
             except Exception as e:
                 raise ValueError(f"error deserializing {metadata_file_entry}") from e
 
-            expected_rdf_type = CMS[model_type_traits.class_.__name__]
+            expected_rdf_type = getattr(CMS, model_type_traits.class_.__name__)
             actual_rdf_type = resource.value(RDF.type)
             if actual_rdf_type is None:
                 resource.add(RDF.type, expected_rdf_type)
