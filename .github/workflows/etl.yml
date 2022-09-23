@@ -22,7 +22,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: etl/.venv
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('etl/poetry.lock') }}
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('etl/poetry.lock') }}-v2
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: cd etl && poetry install --no-interaction --no-root
