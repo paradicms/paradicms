@@ -6,7 +6,7 @@ from urllib.parse import quote
 
 import stringcase
 import yaml
-from rdflib import DCTERMS, FOAF, Graph, Literal, URIRef, Namespace
+from rdflib import DCTERMS, FOAF, Graph, Literal, URIRef, Namespace, RDF
 from rdflib.namespace import DefinedNamespace
 from rdflib.resource import Resource
 from yaml import FullLoader
@@ -296,7 +296,7 @@ class MarkdownDirectoryTransformer(Transformer):
                 model_type_traits, tuple()
             ):
                 collection_resource = self.__transform_metadata_file_entry_to_resource(
-                    metadata_file_entry
+                    metadata_file_entry=metadata_file_entry
                 )
 
                 self.__set_resource_institution_uri(collection_resource)
@@ -341,7 +341,7 @@ class MarkdownDirectoryTransformer(Transformer):
                 model_type_traits, tuple()
             ):
                 image_resource = self.__transform_metadata_file_entry_to_resource(
-                    metadata_file_entry
+                    metadata_file_entry=metadata_file_entry
                 )
 
                 if image_resource.value(FOAF.depicts) is None:
@@ -451,7 +451,7 @@ class MarkdownDirectoryTransformer(Transformer):
                 model_type_traits, tuple()
             ):
                 institution_resource = self.__transform_metadata_file_entry_to_resource(
-                    metadata_file_entry
+                    metadata_file_entry=metadata_file_entry
                 )
                 self.__set_resource_label(
                     model_id=metadata_file_entry.model_id,
@@ -511,11 +511,11 @@ class MarkdownDirectoryTransformer(Transformer):
 
             try:
                 if metadata_file_entry.format == "json":
-                    return dict_to_resource_transformer.transform_dict_to_resource(
+                    resource = dict_to_resource_transformer.transform_dict_to_resource(
                         json.loads(metadata_file_entry.source)
                     )
                 elif metadata_file_entry.format == "md":
-                    return MarkdownToResourceTransformer.transform(
+                    resource = MarkdownToResourceTransformer.transform(
                         default_namespace=model_type_traits.default_namespace,
                         graph=graph,
                         namespaces_by_prefix=namespaces_by_prefix,
@@ -523,7 +523,7 @@ class MarkdownDirectoryTransformer(Transformer):
                         resource_identifier_default=resource_identifier_default,
                     )
                 elif metadata_file_entry.format == "yaml":
-                    return dict_to_resource_transformer.transform_dict_to_resource(
+                    resource = dict_to_resource_transformer.transform_dict_to_resource(
                         yaml.load(metadata_file_entry.source, Loader=FullLoader)
                     )
                 else:
@@ -539,13 +539,27 @@ class MarkdownDirectoryTransformer(Transformer):
                         if isinstance(subject, URIRef)
                     ]
                     if len(uri_subjects) == 1:
-                        return graph.resource(uri_subjects[0])
+                        resource = graph.resource(uri_subjects[0])
                     else:
                         raise ValueError(
                             f"metadata file {metadata_file_entry.model_type}/{metadata_file_entry.model_id}.{metadata_file_entry.format} has {len(uri_subjects)} named subjects"
                         )
             except Exception as e:
                 raise ValueError(f"error deserializing {metadata_file_entry}") from e
+
+            expected_rdf_type = CMS[model_type_traits.class_.__name__]
+            actual_rdf_type = resource.value(RDF.type)
+            if actual_rdf_type is None:
+                resource.add(RDF.type, expected_rdf_type)
+            else:
+                if not isinstance(actual_rdf_type, Resource):
+                    raise ValueError(f"{metadata_file_entry} rdf:type is not a URI")
+                if actual_rdf_type.identifier != expected_rdf_type:
+                    raise ValueError(
+                        f"{metadata_file_entry} rdf_type is {actual_rdf_type.identifier}, expected {expected_rdf_type}"
+                    )
+
+            return resource
 
         def __transform_other_metadata_file_entries(self) -> None:
             for (
