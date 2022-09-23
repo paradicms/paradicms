@@ -2,6 +2,7 @@ name: Build and test GUI Python
 on:
   push:
     paths:
+      - ".github/workflows/gui-py.yml"
       - "gui/loader/**"
   workflow_dispatch:
 jobs:

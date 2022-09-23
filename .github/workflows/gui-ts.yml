@@ -2,6 +2,8 @@ name: Build and test GUI TypeScript
 on:
   push:
     paths-ignore:
+      - '.github/workflows/etl.yml'
+      - '.github/workflows/gui-py.yml'
       - 'etl/**'
       - 'gui/loader/**'
   workflow_dispatch:

@@ -2,6 +2,7 @@ name: Build and test ETL
 on:
   push:
     paths:
+      - ".github/workflows/etl.yml"
       - "etl/**"
   workflow_dispatch:
 jobs:
