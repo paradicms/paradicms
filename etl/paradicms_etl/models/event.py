@@ -1,6 +1,5 @@
-from importlib.resources import Resource
-
 from rdflib import RDF
+from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.namespaces import CMS
