@@ -18,6 +18,10 @@ class DateTimeDescription(ResourceBackedModel):
     (https://www.w3.org/TR/owl-time/#time:DateTimeDescription)
     """
 
+    def __init__(self, *args, **kwds):
+        ResourceBackedModel.__init__(self, *args, **kwds)
+        self._check_rdf_type(CMS[self.__class__.__name__])
+
     @classmethod
     def from_date(cls, date: datetime.date) -> "DateTimeDescription":
         return cls.from_fields(day=date.day, month=date.month, year=date.year)

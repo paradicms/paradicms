@@ -26,6 +26,7 @@ class Text(ResourceBackedModel):
 
     def __init__(self, *args, **kwds):
         ResourceBackedModel.__init__(self, *args, **kwds)
+        self._check_rdf_type(CMS[self.__class__.__name__])
         self.value
 
     @classmethod

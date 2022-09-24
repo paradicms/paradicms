@@ -10,6 +10,10 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class Person(Agent):
+    def __init__(self, *args, **kwds):
+        Agent.__init__(self, *args, **kwds)
+        self._check_rdf_type(CMS[self.__class__.__name__])
+
     @classmethod
     def from_fields(
         cls,

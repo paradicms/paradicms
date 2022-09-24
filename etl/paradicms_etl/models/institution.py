@@ -13,6 +13,7 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 class Institution(ResourceBackedNamedModel):
     def __init__(self, *args, **kwds):
         ResourceBackedNamedModel.__init__(self, *args, **kwds)
+        self._check_rdf_type(CMS[self.__class__.__name__])
         self.name
 
     @classmethod

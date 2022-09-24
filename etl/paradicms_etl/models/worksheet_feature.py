@@ -12,6 +12,7 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 class WorksheetFeature(ResourceBackedNamedModel):
     def __init__(self, *args, **kwds):
         ResourceBackedNamedModel.__init__(self, *args, **kwds)
+        self._check_rdf_type(WORKSHEET.Feature)
         self.title
 
     @classmethod
