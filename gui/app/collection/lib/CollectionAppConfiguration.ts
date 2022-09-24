@@ -4,7 +4,7 @@ import {
   SearchConfiguration,
 } from "@paradicms/configuration";
 
-export interface BootstrapCollectionAppConfiguration extends AppConfiguration {
+export interface CollectionAppConfiguration extends AppConfiguration {
   readonly search: SearchConfiguration;
   readonly workProperties: readonly PropertyConfiguration[];
 }

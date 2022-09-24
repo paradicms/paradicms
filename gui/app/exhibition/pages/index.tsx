@@ -9,15 +9,15 @@ import {Dataset, Text} from "@paradicms/models";
 import {Layout} from "../components/Layout";
 import {Col, Container, Row} from "reactstrap";
 import {RightsParagraph} from "@paradicms/bootstrap";
-import {defaultBootstrapExhibitionAppConfiguration} from "../lib/defaultBootstrapExhibitionAppConfiguration";
-import {readBootstrapExhibitionAppConfiguration} from "../lib/readBootstrapCollectionAppConfiguration";
-import {BootstrapExhibitionAppConfiguration} from "../lib/BootstrapExhibitionAppConfiguration";
+import {defaultExhibitionAppConfiguration} from "../lib/defaultExhibitionAppConfiguration";
+import {readExhibitionAppConfiguration} from "../lib/readCollectionAppConfiguration";
+import {ExhibitionAppConfiguration} from "../lib/ExhibitionAppConfiguration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: BootstrapExhibitionAppConfiguration;
+  readonly configuration: ExhibitionAppConfiguration;
   readonly datasetString: string;
   readonly firstWorkUri: string;
 }
@@ -88,10 +88,10 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   return {
     props: {
       configuration:
-        readBootstrapExhibitionAppConfiguration(
+        readExhibitionAppConfiguration(
           readConfigurationFile(readFileSync),
           dataset.store
-        ) ?? defaultBootstrapExhibitionAppConfiguration,
+        ) ?? defaultExhibitionAppConfiguration,
       datasetString: dataset.stringify(),
       collectionUri: collection.uri,
       firstWorkUri: collection.works[0].uri,

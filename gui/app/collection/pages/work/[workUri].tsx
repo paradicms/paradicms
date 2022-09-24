@@ -17,9 +17,9 @@ import {
 import * as fs from "fs";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
-import {BootstrapCollectionAppConfiguration} from "../../lib/BootstrapCollectionAppConfiguration";
-import {readBootstrapCollectionAppConfiguration} from "../../lib/readBootstrapCollectionAppConfiguration";
-import {defaultBootstrapCollectionAppConfiguration} from "../../lib/defaultBootstrapCollectionAppConfiguration";
+import {CollectionAppConfiguration} from "../../lib/CollectionAppConfiguration";
+import {readCollectionAppConfiguration} from "../../lib/readCollectionAppConfiguration";
+import {defaultCollectionAppConfiguration} from "../../lib/defaultCollectionAppConfiguration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
@@ -34,7 +34,7 @@ const WorkLocationsMap = dynamic<{
 );
 
 interface StaticProps {
-  readonly configuration: BootstrapCollectionAppConfiguration;
+  readonly configuration: CollectionAppConfiguration;
   readonly datasetString: string;
   readonly workUri: string;
 }
@@ -84,10 +84,10 @@ export const getStaticProps: GetStaticProps = async ({
   const workUri = decodeFileName(params!.workUri as string);
   const completeDataset = readDatasetFile(readFileSync);
   const configuration =
-    readBootstrapCollectionAppConfiguration(
+    readCollectionAppConfiguration(
       readConfigurationFile(readFileSync),
       completeDataset.store
-    ) ?? defaultBootstrapCollectionAppConfiguration;
+    ) ?? defaultCollectionAppConfiguration;
 
   return {
     props: {

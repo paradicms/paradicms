@@ -19,11 +19,11 @@ import {
 import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";
-import {BootstrapCollectionAppConfiguration} from "../lib/BootstrapCollectionAppConfiguration";
+import {CollectionAppConfiguration} from "../lib/CollectionAppConfiguration";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string; readonly uri: string};
-  configuration: BootstrapCollectionAppConfiguration;
+  configuration: CollectionAppConfiguration;
   cardHeaderLinks?: React.ReactNodeArray;
   cardTitle?: React.ReactNode;
   className?: string;

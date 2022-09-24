@@ -8,13 +8,13 @@ import {
   defaultBootstrapStylesheetHref,
   getNamedModelLinks,
 } from "@paradicms/bootstrap";
-import {BootstrapExhibitionAppConfiguration} from "../lib/BootstrapExhibitionAppConfiguration";
+import {ExhibitionAppConfiguration} from "../lib/ExhibitionAppConfiguration";
 
 const textStyle: React.CSSProperties = {fontSize: "xx-large"};
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: Collection;
-  configuration: BootstrapExhibitionAppConfiguration;
+  configuration: ExhibitionAppConfiguration;
   currentWork?: Work;
   nextWork?: {readonly uri: string};
   previousWork?: {readonly uri: string};

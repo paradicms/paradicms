@@ -18,9 +18,9 @@ import {
   workSearchWorkJoinSelector,
 } from "@paradicms/react-search";
 import dynamic from "next/dynamic";
-import {BootstrapCollectionAppConfiguration} from "../lib/BootstrapCollectionAppConfiguration";
-import {readBootstrapCollectionAppConfiguration} from "../lib/readBootstrapCollectionAppConfiguration";
-import {defaultBootstrapCollectionAppConfiguration} from "../lib/defaultBootstrapCollectionAppConfiguration";
+import {CollectionAppConfiguration} from "../lib/CollectionAppConfiguration";
+import {readCollectionAppConfiguration} from "../lib/readCollectionAppConfiguration";
+import {defaultCollectionAppConfiguration} from "../lib/defaultCollectionAppConfiguration";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -36,7 +36,7 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: BootstrapCollectionAppConfiguration;
+  readonly configuration: CollectionAppConfiguration;
   readonly datasetString: string;
 }
 
@@ -99,10 +99,10 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 }> => {
   const completeDataset = readDatasetFile(readFileSync);
   const configuration =
-    readBootstrapCollectionAppConfiguration(
+    readCollectionAppConfiguration(
       readConfigurationFile(readFileSync),
       completeDataset.store
-    ) ?? defaultBootstrapCollectionAppConfiguration;
+    ) ?? defaultCollectionAppConfiguration;
 
   const collection = completeDataset.collections[0];
 

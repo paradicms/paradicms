@@ -1,4 +1,4 @@
-import {readBootstrapCollectionAppConfiguration} from "./readBootstrapCollectionAppConfiguration";
+import {readCollectionAppConfiguration} from "./readCollectionAppConfiguration";
 import {Parser, Store} from "n3";
 
 const ttl = `
@@ -47,7 +47,7 @@ const ttl = `
   .
 `;
 
-export const defaultBootstrapCollectionAppConfiguration = readBootstrapCollectionAppConfiguration(
+export const defaultCollectionAppConfiguration = readCollectionAppConfiguration(
   new Store(new Parser().parse(ttl)),
   new Store()
 )!;

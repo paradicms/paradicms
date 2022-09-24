@@ -1,12 +1,12 @@
-import {BootstrapExhibitionAppConfiguration} from "./BootstrapExhibitionAppConfiguration";
+import {ExhibitionAppConfiguration} from "./ExhibitionAppConfiguration";
 import {Store} from "n3";
 import {readAppConfiguration} from "@paradicms/configuration";
 
-export const readBootstrapExhibitionAppConfiguration = (
+export const readExhibitionAppConfiguration = (
   configurationStore: Store | null,
   datasetStore: Store
-): BootstrapExhibitionAppConfiguration | null => {
-  return readAppConfiguration<BootstrapExhibitionAppConfiguration>(
+): ExhibitionAppConfiguration | null => {
+  return readAppConfiguration<ExhibitionAppConfiguration>(
     configurationStore,
     datasetStore,
     ({graph, node, store, ...appConfigurationProps}) => {

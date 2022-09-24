@@ -16,9 +16,9 @@ import Hammer from "react-hammerjs";
 import {useRouter} from "next/router";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
-import {BootstrapExhibitionAppConfiguration} from "../../lib/BootstrapExhibitionAppConfiguration";
-import {readBootstrapExhibitionAppConfiguration} from "../../lib/readBootstrapCollectionAppConfiguration";
-import {defaultBootstrapExhibitionAppConfiguration} from "../../lib/defaultBootstrapExhibitionAppConfiguration";
+import {ExhibitionAppConfiguration} from "../../lib/ExhibitionAppConfiguration";
+import {readExhibitionAppConfiguration} from "../../lib/readCollectionAppConfiguration";
+import {defaultExhibitionAppConfiguration} from "../../lib/defaultExhibitionAppConfiguration";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -34,7 +34,7 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: BootstrapExhibitionAppConfiguration;
+  readonly configuration: ExhibitionAppConfiguration;
   readonly currentWorkUri: string;
   readonly datasetString: string;
   readonly nextWorkUri: string | null;
@@ -165,10 +165,10 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       collectionUri,
       configuration:
-        readBootstrapExhibitionAppConfiguration(
+        readExhibitionAppConfiguration(
           readConfigurationFile(readFileSync),
           completeDataset.store
-        ) ?? defaultBootstrapExhibitionAppConfiguration,
+        ) ?? defaultExhibitionAppConfiguration,
       currentWorkUri: workUri,
       datasetString: new DataSubsetter({completeDataset, workPropertyUris: []})
         .worksDataset(

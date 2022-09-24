@@ -1,4 +1,4 @@
-import {BootstrapCollectionAppConfiguration} from "./BootstrapCollectionAppConfiguration";
+import {CollectionAppConfiguration} from "./CollectionAppConfiguration";
 import {BlankNode, NamedNode, Store} from "n3";
 import {
   imputeSearchConfiguration,
@@ -7,11 +7,11 @@ import {
 } from "@paradicms/configuration";
 import {CONFIGURATION} from "@paradicms/vocabularies";
 
-export const readBootstrapCollectionAppConfiguration = (
+export const readCollectionAppConfiguration = (
   configurationStore: Store | null,
   datasetStore: Store
-): BootstrapCollectionAppConfiguration | null => {
-  return readAppConfiguration<BootstrapCollectionAppConfiguration>(
+): CollectionAppConfiguration | null => {
+  return readAppConfiguration<CollectionAppConfiguration>(
     configurationStore,
     datasetStore,
     ({graph, node, store, ...appConfigurationProps}) => {
