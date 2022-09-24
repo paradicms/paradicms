@@ -12,8 +12,9 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class NamedValue(ResourceBackedNamedModel):
-    def __init__(self, *args, **kwds):
-        ResourceBackedNamedModel.__init__(self, *args, **kwds)
+    def __init__(self, resource: Resource):
+        resource.add(RDF.type, CMS[self.__class__.__name__])
+        ResourceBackedNamedModel.__init__(self, resource)
         self.label
         self.property_uris
 
@@ -32,7 +33,6 @@ class NamedValue(ResourceBackedNamedModel):
             raise ValueError("must specify at least one property URI")
         return cls(
             ResourceBuilder(uri)
-            .add(RDF.type, CMS[cls.__name__])
             .add(DCTERMS.abstract, abstract)
             .add(DCTERMS.title, title)
             .add(RDF.predicate, property_uris)

@@ -1,6 +1,7 @@
 from typing import Optional
 
 from rdflib import BNode, RDF
+from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.rights import Rights
@@ -24,19 +25,15 @@ class Text(ResourceBackedModel):
     <text bnode> dcterms:license <license URI> .
     """
 
-    def __init__(self, *args, **kwds):
-        ResourceBackedModel.__init__(self, *args, **kwds)
-        self._check_rdf_type(CMS[self.__class__.__name__])
+    def __init__(self, resource: Resource):
+        resource.add(RDF.type, CMS[self.__class__.__name__])
+        ResourceBackedModel.__init__(self, resource)
         self.value
 
     @classmethod
     def from_fields(cls, value: str, *, rights: Optional[Rights] = None) -> "Text":
         return cls(
-            ResourceBuilder(BNode())
-            .add(RDF.type, CMS[cls.__name__])
-            .add(RDF.value, value)
-            .add_rights(rights)
-            .build()
+            ResourceBuilder(BNode()).add(RDF.value, value).add_rights(rights).build()
         )
 
     @property

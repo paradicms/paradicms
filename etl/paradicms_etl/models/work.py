@@ -19,9 +19,9 @@ class Work(ResourceBackedNamedModel):
     This is the same concept as Work in VRA Core.
     """
 
-    def __init__(self, *args, **kwds):
-        ResourceBackedNamedModel.__init__(self, *args, **kwds)
-        self._check_rdf_type(CMS[self.__class__.__name__])
+    def __init__(self, resource: Resource):
+        resource.add(RDF.type, CMS[self.__class__.__name__])
+        ResourceBackedNamedModel.__init__(self, resource)
         self.collection_uris
         self.institution_uri
         self.title
@@ -45,7 +45,6 @@ class Work(ResourceBackedNamedModel):
     ) -> "Work":
         return cls(
             ResourceBuilder(uri)
-            .add(RDF.type, CMS[cls.__name__])
             .add(DCTERMS.abstract, abstract)
             .add(CMS.collection, collection_uris)
             .add(CMS.institution, institution_uri)

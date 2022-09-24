@@ -27,7 +27,7 @@ class WikidataItem(ResourceBackedNamedModel):
         statements: Tuple[WikidataStatement, ...],
         resource: Resource,
     ):
-        ResourceBackedNamedModel.__init__(self, resource=resource)
+        ResourceBackedNamedModel.__init__(self, resource)
         self.__articles = articles
         self.__description = description
         self.__labels = labels

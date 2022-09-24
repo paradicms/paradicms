@@ -1,13 +1,14 @@
 from rdflib import RDF, URIRef
+from rdflib.resource import Resource
 
 from paradicms_etl.models.event import Event
 from paradicms_etl.namespaces import CMS
 
 
 class WorkEvent(Event):
-    def __init__(self, *args, **kwds):
-        Event.__init__(self, *args, **kwds)
-        self._resource.add(RDF.type, CMS.WorkEvent)
+    def __init__(self, resource: Resource):
+        resource.add(RDF.type, CMS.WorkEvent)
+        Event.__init__(self, resource)
         self.work_uri
 
     @property

@@ -16,6 +16,7 @@ class CMS(DefinedNamespace):
     work: URIRef
 
     # Resources
+    Agent: URIRef
     Collection: URIRef
     Configuration: URIRef
     DateTimeDescription: URIRef

@@ -13,16 +13,6 @@ class ResourceBackedModel(Model):
     def __init__(self, resource: Resource):
         self.__resource = resource
 
-    def _check_rdf_type(self, expected_rdf_type: URIRef):
-        for actual_rdf_type in self.__values(RDF.type):
-            if not isinstance(actual_rdf_type, Resource):
-                raise ValueError("non-Resource rdf:type")
-            if not isinstance(actual_rdf_type.identifier, URIRef):
-                raise ValueError("non-URIRef rdf:type")
-            if actual_rdf_type.identifier == expected_rdf_type:
-                return
-        raise ValueError("missing expected rdf:type " + expected_rdf_type)
-
     @classmethod
     def from_rdf(cls, resource: Resource):
         graph = Graph()

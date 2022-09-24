@@ -1,6 +1,7 @@
 from typing import Union, Tuple, Optional
 
 from rdflib import URIRef, DCTERMS, RDF
+from rdflib.resource import Resource
 
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.location import Location
@@ -11,8 +12,9 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class WorkCreation(WorkEvent):
-    def __init__(self, *args, **kwds):
-        WorkEvent.__init__(self, *args, **kwds)
+    def __init__(self, resource: Resource):
+        resource.add(RDF.type, CMS[self.__class__.__name__])
+        WorkEvent.__init__(self, resource)
         self.creator_uris
 
     @property
@@ -39,7 +41,6 @@ class WorkCreation(WorkEvent):
 
         return cls(
             ResourceBuilder(uri)
-            .add(RDF.type, CMS[cls.__name__])
             .add(DCTERMS.abstract, abstract)
             .add(DCTERMS.contributor, contributor_uri)
             .add(DCTERMS.creator, creator_uri)

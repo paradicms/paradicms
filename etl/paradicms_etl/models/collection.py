@@ -2,6 +2,7 @@ from typing import Tuple, Union
 
 from rdflib import URIRef, RDF
 from rdflib.namespace import DCTERMS
+from rdflib.resource import Resource
 
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
@@ -11,9 +12,9 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class Collection(ResourceBackedNamedModel):
-    def __init__(self, *args, **kwds):
-        ResourceBackedNamedModel.__init__(self, *args, **kwds)
-        self._check_rdf_type(CMS[self.__class__.__name__])
+    def __init__(self, resource: Resource):
+        resource.add(RDF.type, CMS[self.__class__.__name__])
+        ResourceBackedNamedModel.__init__(self, resource)
         self.institution_uri
         self.title
 
@@ -31,7 +32,6 @@ class Collection(ResourceBackedNamedModel):
     ) -> "Collection":
         return cls(
             ResourceBuilder(uri)
-            .add(RDF.type, CMS[cls.__name__])
             .add(DCTERMS.abstract, abstract)
             .add(CMS.institution, institution_uri)
             .add(DCTERMS.title, title)

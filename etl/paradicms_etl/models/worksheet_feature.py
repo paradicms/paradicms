@@ -2,6 +2,7 @@ from typing import Union, Tuple, Optional
 
 from rdflib import URIRef, RDF, SH
 from rdflib.namespace import DCTERMS
+from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.text import Text
@@ -10,9 +11,9 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class WorksheetFeature(ResourceBackedNamedModel):
-    def __init__(self, *args, **kwds):
-        ResourceBackedNamedModel.__init__(self, *args, **kwds)
-        self._check_rdf_type(WORKSHEET.Feature)
+    def __init__(self, resource: Resource):
+        resource.add(RDF.type, WORKSHEET.Feature)
+        ResourceBackedNamedModel.__init__(self, resource)
         self.title
 
     @classmethod
@@ -27,7 +28,6 @@ class WorksheetFeature(ResourceBackedNamedModel):
     ) -> "WorksheetFeature":
         return cls(
             ResourceBuilder(uri)
-            .add(RDF.type, WORKSHEET.Feature)
             .add(DCTERMS.abstract, abstract)
             .add(DCTERMS.title, title)
             .add(WORKSHEET.featureSet, feature_set_uris)

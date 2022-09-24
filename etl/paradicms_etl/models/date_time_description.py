@@ -6,6 +6,7 @@ from rdflib import BNode, Literal, XSD, RDF
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.namespaces import TIME, CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
+from rdflib.resource import Resource
 
 
 class DateTimeDescription(ResourceBackedModel):
@@ -18,9 +19,9 @@ class DateTimeDescription(ResourceBackedModel):
     (https://www.w3.org/TR/owl-time/#time:DateTimeDescription)
     """
 
-    def __init__(self, *args, **kwds):
-        ResourceBackedModel.__init__(self, *args, **kwds)
-        self._check_rdf_type(CMS[self.__class__.__name__])
+    def __init__(self, resource: Resource):
+        resource.add(RDF.type, CMS[self.__class__.__name__])
+        ResourceBackedModel.__init__(self, resource)
 
     @classmethod
     def from_date(cls, date: datetime.date) -> "DateTimeDescription":
@@ -39,7 +40,6 @@ class DateTimeDescription(ResourceBackedModel):
     ) -> "DateTimeDescription":
         return cls(
             ResourceBuilder(BNode())
-            .add(RDF.type, CMS[cls.__name__])
             # https://www.w3.org/TR/owl-time/#time:DateTimeDescription
             # .add(RDF.type, TIME.DateTimeDescription)
             # https://www.w3.org/TR/owl-time/#time:day
@@ -72,6 +72,5 @@ class DateTimeDescription(ResourceBackedModel):
             .add(
                 TIME.year,
                 Literal(str(year), datatype=XSD.gYear) if year is not None else None,
-            )
-            .build()
+            ).build()
         )

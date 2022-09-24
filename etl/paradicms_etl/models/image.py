@@ -3,6 +3,7 @@ from typing import Optional
 
 from rdflib import Literal, URIRef, Graph, RDF
 from rdflib.namespace import DCTERMS, FOAF
+from rdflib.resource import Resource
 
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
@@ -29,9 +30,9 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class Image(ResourceBackedNamedModel):
-    def __init__(self, *args, **kwds):
-        ResourceBackedNamedModel.__init__(self, *args, **kwds)
-        self._check_rdf_type(CMS[self.__class__.__name__])
+    def __init__(self, resource: Resource):
+        resource.add(RDF.type, CMS[self.__class__.__name__])
+        ResourceBackedNamedModel.__init__(self, resource)
         self.depicts_uri
 
     @classmethod
@@ -56,7 +57,6 @@ class Image(ResourceBackedNamedModel):
     ) -> "Image":
         resource_builder = (
             ResourceBuilder(uri)
-            .add(RDF.type, CMS[cls.__name__])
             .add(CMS.imageCopyable, copyable)
             .add(DCTERMS.created, created)
             .add(FOAF.depicts, depicts_uri)

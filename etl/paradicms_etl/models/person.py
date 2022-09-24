@@ -7,12 +7,13 @@ from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.property import Property
 from paradicms_etl.namespaces import CONTACT, CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
+from rdflib.resource import Resource
 
 
 class Person(Agent):
-    def __init__(self, *args, **kwds):
-        Agent.__init__(self, *args, **kwds)
-        self._check_rdf_type(CMS[self.__class__.__name__])
+    def __init__(self, resource: Resource):
+        resource.add(RDF.type, CMS[self.__class__.__name__])
+        Agent.__init__(self, resource)
 
     @classmethod
     def from_fields(
@@ -28,7 +29,6 @@ class Person(Agent):
     ) -> "Person":
         return cls(
             ResourceBuilder(uri)
-            .add(RDF.type, CMS[cls.__name__])
             .add(FOAF.familyName, family_name)
             .add(FOAF.givenName, given_name)
             .add(FOAF.name, name)
