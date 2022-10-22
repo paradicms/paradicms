@@ -6,7 +6,6 @@ build/
 /data/markdown_directory/loaded/
 /data/rights_statements_dot_org/
 dist/
-*.egg-info/
 *.iml
 /lib/ts/lunr/@paradicms/
 /lib/ts/models/coverage/
@@ -18,5 +17,4 @@ null/
 .nyc_output/
 out/
 *.pyc
-venv/
 yarn-error.log

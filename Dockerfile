@@ -5,7 +5,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 COPY . /paradicms
 
 RUN cd /paradicms/etl && pip3 install -qqq .
-RUN cd /paradicms/gui/loader && pip3 install -qqq .
-RUN cd /paradicms/gui && yarn install && yarn build-lib
+RUN cd /paradicms/ssg && pip3 install -qqq .
+RUN cd /paradicms && yarn install && yarn build-lib
 
-RUN cd /paradicms && rm -fr etl gui/loader /root/.cache
+RUN cd /paradicms && rm -fr etl ssg /root/.cache
