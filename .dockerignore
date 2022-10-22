@@ -2,8 +2,8 @@
 /data/
 **/dist/
 /etl/test/
-**/.git/
-**/.github/
+/.git/
+/.github/
 **/*.iml
 **/.mypy_cache/
 **/.next/
