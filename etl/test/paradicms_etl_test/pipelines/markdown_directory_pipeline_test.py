@@ -26,8 +26,7 @@ class __MarkdownDirectoryPipeline(Pipeline):
         )
 
 
-def test_extract_transform_load():
-    data_dir_path = Path(__file__).absolute().parent.parent.parent.parent / "data"
+def test_extract_transform_load(data_dir_path: Path):
     data_file_path = (
         data_dir_path
         / __MarkdownDirectoryPipeline.ID
