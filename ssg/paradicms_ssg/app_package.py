@@ -28,7 +28,7 @@ class AppPackage:
         elif os.path.isdir(app):
             app_dir_path = Path(app)
         else:
-            app_dir_path = Path(__file__).parent.parent.parent.parent / "app" / app
+            app_dir_path = Path(__file__).parent.parent.parent / "app" / app
         if not app_dir_path.is_dir():
             raise ValueError(f"{app_dir_path} does not exist")
 
