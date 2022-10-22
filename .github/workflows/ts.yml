@@ -1,11 +1,6 @@
 name: Build and test TypeScript
 on:
   push:
-    paths:
-      - '.github/workflows/etl.yml'
-      - '.github/workflows/ssg.yml'
-      - 'app/**'
-      - 'lib/ts/**'
   workflow_dispatch:
 jobs:
   build:
