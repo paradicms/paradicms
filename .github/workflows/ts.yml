@@ -1,15 +1,15 @@
-name: Build and test GUI TypeScript
+name: Build and test TypeScript
 on:
   push:
-    paths-ignore:
+    paths:
       - '.github/workflows/etl.yml'
-      - '.github/workflows/gui-py.yml'
-      - 'etl/**'
-      - 'gui/loader/**'
+      - '.github/workflows/ssg.yml'
+      - 'app/**'
+      - 'lib/ts/**'
   workflow_dispatch:
 jobs:
   build:
-    name: Build and test GUI TypeScript
+    name: Build and test TypeScript
     runs-on: ubuntu-latest
     env:
       NEXT_TELEMETRY_DISABLED: "1"
@@ -26,27 +26,21 @@ jobs:
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('gui/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Cache Next.js cache
         uses: actions/cache@v2
         with:
-          path: gui/app/*/.next/cache
+          path: app/*/.next/cache
           key: ${{ runner.OS }}-next
-      - name: Build and test gui
+      - name: Build and test TypeScript
         run: |
-          cd gui
           export PATH=$PATH:$PWD/node_modules/.bin
           yarn install
-          export DATA_FILE_PATH=`realpath $PWD/../etl/data/test_data/loaded/data.trig`
+          export DATA_FILE_PATH=`realpath $PWD/data/test_data/loaded/data.trig`
           yarn build
           yarn test
-      # Commented out to speed up the build
-      #      - name: Test gui_loader
-      #        run: |
-      #          cd etl
-      #          pytest --junitxml=test-results/gui_loader.xml test/paradicms_etl_test/loaders/gui/gui_builder_test.py test/paradicms_etl_test/loaders/gui/gui_loader_test.py
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v1
         with:

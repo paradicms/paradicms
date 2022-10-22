@@ -2,8 +2,8 @@ name: Build and test GUI Python
 on:
   push:
     paths:
-      - ".github/workflows/gui-py.yml"
-      - "gui/loader/**"
+      - ".github/workflows/ssg.yml"
+      - "ssg/**"
   workflow_dispatch:
 jobs:
   build:
@@ -22,11 +22,11 @@ jobs:
         id: cached-poetry-dependencies
         uses: actions/cache@v2
         with:
-          path: gui/loader/.venv
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('gui/loader/poetry.lock') }}
+          path: ssg/.venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('ssg/poetry.lock') }}
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: cd gui/loader && poetry install --no-interaction --no-root
-      - run: cd gui/loader && poetry run black --check paradicms_gui
-      - run: cd gui/loader && poetry run flake8 paradicms_gui
-      - run: cd gui/loader && poetry run mypy paradicms_gui
+        run: cd ssg && poetry install --no-interaction --no-root
+      - run: cd ssg && poetry run black --check paradicms_gui
+      - run: cd ssg && poetry run flake8 paradicms_gui
+      - run: cd ssg && poetry run mypy paradicms_gui
