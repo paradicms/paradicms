@@ -1,1 +1,1 @@
-../../lib/next/next-env.d.ts
+../../lib/ts/next/next-env.d.ts
