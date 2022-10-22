@@ -4,7 +4,7 @@ from urllib.request import urlretrieve
 from paradicms_etl.models.image import Image
 from rdflib import URIRef
 
-from paradicms_ssg.loaders.original_image_file_cache import (
+from paradicms_ssg.original_image_file_cache import (
     OriginalImageFileCache,
 )
 

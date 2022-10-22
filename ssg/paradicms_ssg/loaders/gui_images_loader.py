@@ -11,7 +11,7 @@ from rdflib import URIRef
 from tqdm import tqdm
 
 from paradicms_ssg.image_archiver import ImageArchiver
-from paradicms_ssg.loaders.original_image_file_cache import (
+from paradicms_ssg.original_image_file_cache import (
     OriginalImageFileCache,
 )
 from paradicms_ssg.utils.thumbnail_image import thumbnail_image
