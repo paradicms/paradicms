@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from shutil import rmtree
 
-from paradicms_gui.deployers.fs_deployer import FsDeployer
+from paradicms_ssg.deployers.fs_deployer import FsDeployer
 
 
 def test_archive_rename(tmp_path):

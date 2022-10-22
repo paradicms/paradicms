@@ -2,7 +2,7 @@ from datetime import datetime
 from pathlib import Path
 from shutil import copytree, rmtree
 
-from paradicms_gui.deployer import Deployer
+from paradicms_ssg.deployer import Deployer
 
 
 class FsDeployer(Deployer):

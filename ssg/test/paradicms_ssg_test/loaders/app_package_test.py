@@ -4,7 +4,7 @@ from typing import Tuple
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.model import Model
 
-from paradicms_gui.loaders.app_package import AppPackage
+from paradicms_ssg.loaders.app_package import AppPackage
 
 APP = "collection"
 

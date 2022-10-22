@@ -6,8 +6,8 @@ import boto3
 from rdflib import URIRef
 from tqdm import tqdm
 
-from paradicms_gui.deployer import Deployer
-from paradicms_gui.utils.get_generic_file_mime_type import get_generic_file_mime_type
+from paradicms_ssg.deployer import Deployer
+from paradicms_ssg.utils.get_generic_file_mime_type import get_generic_file_mime_type
 
 
 class S3Deployer(Deployer):

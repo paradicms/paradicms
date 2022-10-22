@@ -4,9 +4,9 @@ from typing import Optional, Set
 
 import boto3
 
-from paradicms_gui.image_archiver import ImageArchiver
-from paradicms_gui.utils.get_image_file_mime_type import get_image_file_mime_type
-from paradicms_gui.utils.sha256_hash_file import sha256_hash_file
+from paradicms_ssg.image_archiver import ImageArchiver
+from paradicms_ssg.utils.get_image_file_mime_type import get_image_file_mime_type
+from paradicms_ssg.utils.sha256_hash_file import sha256_hash_file
 
 
 class S3ImageArchiver(ImageArchiver):

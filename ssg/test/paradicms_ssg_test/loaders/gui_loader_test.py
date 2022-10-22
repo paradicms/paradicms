@@ -7,7 +7,7 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.image import Image
 from paradicms_etl.pipelines.test_data_pipeline import TestDataPipeline
 
-from paradicms_gui.loaders.gui_loader import GuiLoader
+from paradicms_ssg.loaders.gui_loader import GuiLoader
 from .nop_image_archiver import NopImageArchiver
 
 

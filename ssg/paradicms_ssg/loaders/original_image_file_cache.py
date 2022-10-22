@@ -8,7 +8,7 @@ from urllib.parse import unquote, urlparse
 from paradicms_etl.models.image import Image
 from rdflib import URIRef
 
-from paradicms_gui.file_cache import FileCache
+from paradicms_ssg.file_cache import FileCache
 
 
 class OriginalImageFileCache:

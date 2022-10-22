@@ -6,12 +6,12 @@ from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 
-from paradicms_gui.deployer import Deployer
-from paradicms_gui.image_archiver import ImageArchiver
-from paradicms_gui.deployers.fs_deployer import FsDeployer
-from paradicms_gui.image_archivers.fs_image_archiver import FsImageArchiver
-from paradicms_gui.loaders.app_package import AppPackage
-from paradicms_gui.loaders.gui_images_loader import GuiImagesLoader
+from paradicms_ssg.deployer import Deployer
+from paradicms_ssg.image_archiver import ImageArchiver
+from paradicms_ssg.deployers.fs_deployer import FsDeployer
+from paradicms_ssg.image_archivers.fs_image_archiver import FsImageArchiver
+from paradicms_ssg.loaders.app_package import AppPackage
+from paradicms_ssg.loaders.gui_images_loader import GuiImagesLoader
 
 
 class GuiLoader(BufferingLoader):

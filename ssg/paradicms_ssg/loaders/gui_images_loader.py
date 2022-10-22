@@ -10,11 +10,11 @@ from pathvalidate import sanitize_filename
 from rdflib import URIRef
 from tqdm import tqdm
 
-from paradicms_gui.image_archiver import ImageArchiver
-from paradicms_gui.loaders.original_image_file_cache import (
+from paradicms_ssg.image_archiver import ImageArchiver
+from paradicms_ssg.loaders.original_image_file_cache import (
     OriginalImageFileCache,
 )
-from paradicms_gui.utils.thumbnail_image import thumbnail_image
+from paradicms_ssg.utils.thumbnail_image import thumbnail_image
 
 
 class GuiImagesLoader(Loader):

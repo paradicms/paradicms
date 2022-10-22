@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Tuple
 
-from paradicms_gui.loaders.gui_images_loader import GuiImagesLoader
+from paradicms_ssg.loaders.gui_images_loader import GuiImagesLoader
 from paradicms_etl.models.image import Image
 from .nop_image_archiver import NopImageArchiver
 

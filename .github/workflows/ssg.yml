@@ -27,6 +27,6 @@ jobs:
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: cd ssg && poetry install --no-interaction --no-root
-      - run: cd ssg && poetry run black --check paradicms_gui
-      - run: cd ssg && poetry run flake8 paradicms_gui
-      - run: cd ssg && poetry run mypy paradicms_gui
+      - run: cd ssg && poetry run black --check paradicms_ssg
+      - run: cd ssg && poetry run flake8 paradicms_ssg
+      - run: cd ssg && poetry run mypy paradicms_ssg

@@ -2,7 +2,7 @@ import os
 import urllib
 from pathlib import Path
 
-from paradicms_gui.deployers.s3_deployer import S3Deployer
+from paradicms_ssg.deployers.s3_deployer import S3Deployer
 
 
 def test_deploy(tmp_path):
