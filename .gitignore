@@ -17,4 +17,5 @@ null/
 .nyc_output/
 out/
 *.pyc
+.pytest_cache/
 yarn-error.log
