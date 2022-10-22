@@ -17,13 +17,13 @@ from paradicms_ssg.original_image_file_cache import (
 from paradicms_ssg.utils.thumbnail_image import thumbnail_image
 
 
-class GuiImagesLoader(Loader):
+class ImagesLoader(Loader):
     """
     Loader that:
     - Thumbnails images
     - Archives original images and thumbnails
 
-    Separated from GuiLoader for modularity and testability.
+    Separated from AppLoader for modularity and testability.
     """
 
     class __ArchiveThumbnailImagesException(Exception):

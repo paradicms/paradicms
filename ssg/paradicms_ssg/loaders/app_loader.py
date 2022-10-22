@@ -11,17 +11,17 @@ from paradicms_ssg.image_archiver import ImageArchiver
 from paradicms_ssg.deployers.fs_deployer import FsDeployer
 from paradicms_ssg.image_archivers.fs_image_archiver import FsImageArchiver
 from paradicms_ssg.app_package import AppPackage
-from paradicms_ssg.loaders.gui_images_loader import GuiImagesLoader
+from paradicms_ssg.loaders.gui_images_loader import ImagesLoader
 
 
-class GuiLoader(BufferingLoader):
+class AppLoader(BufferingLoader):
     """
     Loader that statically generates a web site using one of the GUI implementations in gui/.
 
     The loader:
     - Writes the input data to an rdf/turtle file
     - Archives original images (via an ImageArchiver)
-    - Thumbnails images and archives them (via GuiImagesLoader)
+    - Thumbnails images and archives them (via ImagesLoader)
     - Calls npm to generate the site (via AppPackage)
     - Optionally deploys the generated site (via a Deployer)
 
@@ -40,7 +40,7 @@ class GuiLoader(BufferingLoader):
         sleep_s_after_image_download: Optional[float] = None,
         thumbnail_max_dimensions: Tuple[
             ImageDimensions, ...
-        ] = GuiImagesLoader.THUMBNAIL_MAX_DIMENSIONS_DEFAULT,
+        ] = ImagesLoader.THUMBNAIL_MAX_DIMENSIONS_DEFAULT,
         **kwds,
     ):
         """
@@ -106,7 +106,7 @@ class GuiLoader(BufferingLoader):
                 len(copyable_original_images),
             )
             gui_images.extend(
-                GuiImagesLoader(
+                ImagesLoader(
                     image_archiver=image_archiver,
                     loaded_data_dir_path=self._loaded_data_dir_path,
                     pipeline_id=self._pipeline_id,

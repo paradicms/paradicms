@@ -15,7 +15,7 @@ class OriginalImageFileCache:
     """
     File-backed cache for original Images (i.e., Images with original_image_uri=None), retrieved from an external URI.
 
-    Separated from GuiLoader for modularity and testability.
+    Separated from AppLoader for modularity and testability.
     """
 
     class CacheOriginalImageException(Exception):

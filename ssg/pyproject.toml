@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "paradicms-gui"
+name = "paradicms-ssg"
 version = "0.0.1"
 description = ""
 authors = ["Minor G. <minorg@server.fake>"]
@@ -17,7 +17,7 @@ mypy = "^0.931"
 mypy-boto3-cloudfront = "1.16.11.0"
 mypy-boto3-route53 = "1.16.11.0"
 mypy-boto3-s3 = "1.16.11.0"
-paradicms-etl = { path = "../../etl", develop = true }
+paradicms-etl = { path = "../etl", develop = true }
 pytest = "^7.0.1"
 
 [build-system]

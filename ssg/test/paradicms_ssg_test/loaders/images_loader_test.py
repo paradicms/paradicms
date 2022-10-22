@@ -1,13 +1,13 @@
 from pathlib import Path
 from typing import Tuple
 
-from paradicms_ssg.loaders.gui_images_loader import GuiImagesLoader
+from paradicms_ssg.loaders.gui_images_loader import ImagesLoader
 from paradicms_etl.models.image import Image
 from .nop_image_archiver import NopImageArchiver
 
 
 def test_load(test_data_original_images: Tuple[Image, ...], tmp_path):
-    loader = GuiImagesLoader(
+    loader = ImagesLoader(
         data_dir_path=Path(tmp_path),
         image_archiver=NopImageArchiver(),
         pipeline_id="test",

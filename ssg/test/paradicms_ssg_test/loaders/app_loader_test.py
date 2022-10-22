@@ -7,7 +7,7 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.image import Image
 from paradicms_etl.pipelines.test_data_pipeline import TestDataPipeline
 
-from paradicms_ssg.loaders.gui_loader import GuiLoader
+from paradicms_ssg.loaders.app_loader import AppLoader
 from .nop_image_archiver import NopImageArchiver
 
 
@@ -22,7 +22,7 @@ def test_load(app: str, test_data_models: Tuple[Model, ...], tmp_path):
 
     loaded_data_dir_path = Path(tmp_path)
 
-    gui_loader = GuiLoader(
+    app_loader = AppLoader(
         app=app,
         image_archiver=NopImageArchiver(),
         loaded_data_dir_path=loaded_data_dir_path,
@@ -40,8 +40,8 @@ def test_load(app: str, test_data_models: Tuple[Model, ...], tmp_path):
             other_models.append(model)
 
     # Only pass in one original image so the test doesn't take too long
-    gui_loader.load(models=[original_images[0]] + other_models)
-    gui_loader.flush()
+    app_loader.load(models=[original_images[0]] + other_models)
+    app_loader.flush()
 
     assert (loaded_data_dir_path / "data" / "test.trig").is_file()
     assert (loaded_data_dir_path / "deployed" / "index.html").is_file()
@@ -54,7 +54,7 @@ if False and os.environ.get("CI") is None:
         TestDataPipeline(
             collections_per_institution=1,
             data_dir_path=data_dir_path,
-            loader=GuiLoader(
+            loader=AppLoader(
                 app="collection",
                 data_dir_path=data_dir_path,
                 pipeline_id=TestDataPipeline.ID,
