@@ -58,17 +58,7 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
         worksheet.stateId + "." + selectedStringExporter.fileExtension;
       const mimeType = selectedStringExporter.mimeType;
 
-      if ((navigator as any).msSaveBlob) {
-        // IE10
-        if (
-          !(navigator as any).msSaveBlob(
-            new Blob([exportedString], {type: mimeType}),
-            fileName
-          )
-        ) {
-          event.stopPropagation();
-        }
-      } else if ("download" in a) {
+      if ("download" in a) {
         //html5 A[download]
         a.href = "data:" + mimeType + "," + encodeURIComponent(exportedString);
         a.setAttribute("download", fileName);
