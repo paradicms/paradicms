@@ -7,7 +7,7 @@
     "@paradicms/react-dom": "1.0.5",
     "@paradicms/services": "1.0.5",
     "react-data-table-component": "6.11.7",
-    "react-is": "18.2.0",
+    "react-is": "18.0.0",
     "styled-components": "5.3.3"
   },
   "devDependencies": {
