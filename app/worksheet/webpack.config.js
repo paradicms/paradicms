@@ -70,13 +70,19 @@ module.exports = (env, argv) => {
             "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css",
         },
       }),
+      new webpack.ProvidePlugin({
+        process: "process/browser",
+      }),
     ],
     resolve: {
-      extensions: [".js", ".ts", ".tsx"],
-      mainFields: ["module", "browser", "main"],
       alias: {
         "~": path.resolve(__dirname, "src/ts"),
       },
+      extensions: [".js", ".ts", ".tsx"],
+      fallback: {
+        buffer: require.resolve("buffer/"),
+      },
+      mainFields: ["module", "browser", "main"],
     },
     target: "web",
   };
