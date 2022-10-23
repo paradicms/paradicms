@@ -1,7 +1,7 @@
 {
   "author": "Minor Gordon",
-  "name": "@paradicms/react",
-  "description": "Paradicms React library",
+  "name": "@paradicms/react-dom",
+  "description": "Paradicms React DOM library",
   "dependencies": {
     "@types/qs": "6.9.7",
     "@types/react": "17.0.38",
