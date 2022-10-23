@@ -21,15 +21,17 @@ import Link from "next/link";
 import Head from "next/head";
 import {CollectionAppConfiguration} from "../lib/CollectionAppConfiguration";
 
-export const Layout: React.FunctionComponent<React.PropsWithChildren<{
-  collection: {readonly title: string; readonly uri: string};
-  configuration: CollectionAppConfiguration;
-  cardHeaderLinks?: React.ReactNodeArray;
-  cardTitle?: React.ReactNode;
-  className?: string;
-  documentTitle?: string;
-  onSearch?: (text: string) => void;
-}>> = ({
+export const Layout: React.FunctionComponent<
+  React.PropsWithChildren<{
+    collection: {readonly title: string; readonly uri: string};
+    configuration: CollectionAppConfiguration;
+    cardHeaderLinks?: React.ReactElement[];
+    cardTitle?: React.ReactNode;
+    className?: string;
+    documentTitle?: string;
+    onSearch?: (text: string) => void;
+  }>
+> = ({
   cardHeaderLinks,
   cardTitle,
   collection,

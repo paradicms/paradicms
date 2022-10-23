@@ -4,10 +4,10 @@ export const getNamedModelLinks = (kwds: {
   readonly page: string | null;
   readonly wikidataConceptUri: string | null;
   readonly wikipediaUrl: string | null;
-}): React.ReactNodeArray => {
+}): React.ReactElement[] => {
   const {page, wikidataConceptUri, wikipediaUrl} = kwds;
 
-  const links: React.ReactNodeArray = [];
+  const links: React.ReactElement[] = [];
 
   for (const link of [
     {

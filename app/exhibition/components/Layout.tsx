@@ -12,13 +12,15 @@ import {ExhibitionAppConfiguration} from "../lib/ExhibitionAppConfiguration";
 
 const textStyle: React.CSSProperties = {fontSize: "xx-large"};
 
-export const Layout: React.FunctionComponent<React.PropsWithChildren<{
-  collection: Collection;
-  configuration: ExhibitionAppConfiguration;
-  currentWork?: Work;
-  nextWork?: {readonly uri: string};
-  previousWork?: {readonly uri: string};
-}>> = ({
+export const Layout: React.FunctionComponent<
+  React.PropsWithChildren<{
+    collection: Collection;
+    configuration: ExhibitionAppConfiguration;
+    currentWork?: Work;
+    nextWork?: {readonly uri: string};
+    previousWork?: {readonly uri: string};
+  }>
+> = ({
   collection,
   children,
   configuration,
@@ -26,7 +28,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   nextWork,
   previousWork,
 }) => {
-  const currentWorkLinks: React.ReactNodeArray = currentWork
+  const currentWorkLinks: React.ReactElement[] = currentWork
     ? getNamedModelLinks(currentWork)
     : [];
 

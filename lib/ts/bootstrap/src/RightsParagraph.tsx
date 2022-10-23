@@ -9,8 +9,8 @@ export const RightsParagraph: React.FunctionComponent<{
   rights: Rights;
   style?: React.CSSProperties;
 }> = ({material, rights, style}) => {
-  const rightsElements: React.ReactNodeArray = useMemo(() => {
-    const result: React.ReactNodeArray = [];
+  const rightsElements: React.ReactElement[] = useMemo(() => {
+    const result: React.ReactElement[] = [];
 
     const pushRightsElement = (rightsElement: React.ReactNode) => {
       if (result.length > 0) {
