@@ -38,10 +38,10 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
-    "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web",
-    "test": "jest --watchAll"
+    "start": "expo start",
+    "test-watch": "jest --watchAll",
+    "web": "expo start --web"
   }
 }

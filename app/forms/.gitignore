@@ -9,4 +9,5 @@
 dist/
 node_modules/
 npm-debug.*
+__tests__/
 web-build/
