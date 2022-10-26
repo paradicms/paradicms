@@ -3,6 +3,7 @@
   "name": "@paradicms/shacl",
   "description": "Paradicms SHACL library",
   "dependencies": {
+    "@types/rdf-validate-shacl": "^0.4.0",
     "rdf-validate-shacl": "0.4.5"
   },
   "devDependencies": {

@@ -1,1 +1,1 @@
-export * from "./Shapes";
+export * from "./ShapesGraph";
