@@ -25,10 +25,8 @@ describe("Shapes", () => {
 
   it("should parse the shapes correctly", () => {
     expect(shapes).to.not.be.undefined;
-    // expect(sut.images).to.not.be.empty;
-    // expect(sut.originalImages).to.not.be.empty;
-    // expect(sut.thumbnail({targetDimensions: {height: 600, width: 600}})).to.not
-    //   .be.null;
+    expect(shapes.nodeShapes).to.have.length(2);
+    expect(shapes.propertyShapes).to.have.length(6);
   });
 
   it("should validate a valid data graph", () => {
