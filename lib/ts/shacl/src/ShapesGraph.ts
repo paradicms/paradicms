@@ -30,6 +30,12 @@ export class ShapesGraph {
     this.propertyShapesByUri = shapes.propertyShapesByUri;
   }
 
+  get namedNodeShapes(): readonly NodeShape[] {
+    return this.nodeShapes.filter(
+      (nodeShape) => nodeShape.node.termType === "NamedNode"
+    );
+  }
+
   nodeShapeByUri(nodeShapeUri: string): NodeShape {
     const nodeShape = this.nodeShapesByUri[nodeShapeUri];
     if (!nodeShape) {

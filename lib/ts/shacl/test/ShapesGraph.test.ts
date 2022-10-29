@@ -26,6 +26,7 @@ describe("Shapes", () => {
   it("should parse the shapes correctly", () => {
     expect(shapes).to.not.be.undefined;
     expect(shapes.nodeShapes).to.have.length(4);
+    expect(shapes.namedNodeShapes).to.have.length(2);
     expect(shapes.propertyShapes).to.have.length(6);
   });
 
