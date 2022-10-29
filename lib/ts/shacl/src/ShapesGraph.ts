@@ -86,11 +86,6 @@ export class ShapesGraph {
     propertyShapes: PropertyShape[];
     propertyShapesByUri: {[index: string]: PropertyShape};
   } {
-    const nodeShapes: NodeShape[] = [];
-    const nodeShapesByUri: {[index: string]: NodeShape} = {};
-    const propertyShapes: PropertyShape[] = [];
-    const propertyShapesByUri: {[index: string]: PropertyShape} = {};
-
     // Collect the shape identifiers in sets
     const shapeBlankNodesByValue: {[index: string]: BlankNode} = {};
     const shapeNamedNodesByValue: {[index: string]: NamedNode} = {};
@@ -110,31 +105,73 @@ export class ShapesGraph {
     };
 
     // Test each shape condition
+    // https://www.w3.org/TR/shacl/#shapes
 
-    // Subject is a SHACL instance of sh:NodeShape
-    store.forSubjects(addShapeNodeValue, RDF.type, SH.NodeShape, graph);
+    // Subject is a SHACL instance of sh:NodeShape or sh:PropertyShape
+    for (const rdfType of [SH.NodeShape, SH.PropertyShape]) {
+      store.forSubjects(addShapeNodeValue, RDF.type, rdfType, graph);
+    }
 
-    // Subject is a SHACL instance of sh:PropertyShape
-    store.forSubjects(addShapeNodeValue, RDF.type, SH.PropertyShape, graph);
+    // Subject of a triple with sh:targetClass, sh:targetNode, sh:targetObjectsOf, or sh:targetSubjectsOf predicate
+    for (const predicate of [
+      SH.targetClass,
+      SH.targetNode,
+      SH.targetObjectsOf,
+      SH.targetSubjectsOf,
+    ]) {
+      store.forSubjects(addShapeNodeValue, predicate, null, graph);
+    }
 
-    // Subject of a triple with sh:targetClass predicate
-    store.forSubjects(addShapeNodeValue, SH.targetClass, null, graph);
-
-    // Subject of a triple with sh:targetNode predicate
-    store.forSubjects(addShapeNodeValue, SH.targetNode, null, graph);
-
-    // Subject of a triple with sh:targetObjectsOf predicate
-    store.forSubjects(addShapeNodeValue, SH.targetObjectsOf, null, graph);
-
-    // Subject of a triple with sh:targetSubjectsOf predicate
-    store.forSubjects(addShapeNodeValue, SH.targetSubjectsOf, null, graph);
-
-    // TODO: Subject of a triple that has a parameter as predicate
+    // Subject of a triple that has a parameter as predicate
+    // https://www.w3.org/TR/shacl/#constraints
+    // https://www.w3.org/TR/shacl/#core-components
+    for (const predicate of [
+      SH.class_,
+      SH.datatype,
+      SH.nodeKind,
+      SH.minCount,
+      SH.maxCount,
+      SH.minExclusive,
+      SH.minInclusive,
+      SH.maxExclusive,
+      SH.maxInclusive,
+      SH.minLength,
+      SH.maxLength,
+      SH.pattern,
+      SH.languageIn,
+      SH.uniqueLang,
+      SH.equals,
+      SH.disjoint,
+      SH.lessThan,
+      SH.lessThanOrEquals,
+      SH.not,
+      SH.and,
+      SH.or,
+      SH.xone,
+      SH.node,
+      SH.property,
+      SH.qualifiedValueShape,
+      SH.qualifiedMinCount,
+      SH.qualifiedMaxCount,
+      SH.closed,
+      SH.ignoredProperties,
+      SH.hasValue,
+      SH.in_,
+    ]) {
+      store.forSubjects(addShapeNodeValue, predicate, null, graph);
+    }
 
     // Object of a shape-expecting, non-list-taking parameter such as sh:node
     // TODO: handle list-taking parameters
-    store.forObjects(addShapeNodeValue, null, SH.node, graph);
-    store.forObjects(addShapeNodeValue, null, SH.property, graph);
+    for (const predicate of [SH.node, SH.property]) {
+      store.forObjects(addShapeNodeValue, null, predicate, graph);
+    }
+
+    // Separate shapes into node and property shapes.
+    const nodeShapes: NodeShape[] = [];
+    const nodeShapesByUri: {[index: string]: NodeShape} = {};
+    const propertyShapes: PropertyShape[] = [];
+    const propertyShapesByUri: {[index: string]: PropertyShape} = {};
 
     const addShape = (shapeNode: BlankNode | NamedNode) => {
       if (store.some((quad) => true, shapeNode, SH.path, null, graph)) {
