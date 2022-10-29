@@ -14,7 +14,7 @@
     "test": "wsrun --exclude-missing test"
   },
   "workspaces": {
-    "nohoist": ["forms/**"],
+    "nohoist": ["forms/expo"],
     "packages": [
       "app/*",
       "lib/ts/*"
