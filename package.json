@@ -13,8 +13,11 @@
     "watch-lib": "wsrun --exclude-missing -p '@paradicms/*' --prefix watch",
     "test": "wsrun --exclude-missing test"
   },
-  "workspaces": [
-    "app/*",
-    "lib/ts/*"
-  ]
+  "workspaces": {
+    "nohoist": ["forms/**"],
+    "packages": [
+      "app/*",
+      "lib/ts/*"
+    ]
+  }
 }
