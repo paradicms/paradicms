@@ -3,7 +3,6 @@
   "version": "1.0.5",
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
-    "@expo/webpack-config": "^0.17.0",
     "@paradicms/react-native-shacl-forms": "1.0.5",
     "@react-navigation/bottom-tabs": "^6.0.5",
     "@react-navigation/native": "^6.0.2",
