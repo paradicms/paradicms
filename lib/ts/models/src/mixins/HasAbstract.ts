@@ -6,7 +6,7 @@ import {ModelMixin} from "./ModelMixin";
 export abstract class HasAbstract extends ModelMixin {
   @Memoize()
   get abstract(): string | Text | null {
-    for (const term of this.propertyObjects(DCTERMS.abstract)) {
+    for (const term of this.getObjects(DCTERMS.abstract)) {
       switch (term.termType) {
         case "BlankNode":
           return new Text({

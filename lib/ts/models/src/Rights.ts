@@ -11,7 +11,7 @@ import {DCTERMS} from "@paradicms/vocabularies";
 
 export class Rights extends Mixin(Model, HasContributors, HasCreators) {
   private agentsOrStrings(property: NamedNode) {
-    return this.propertyObjects(DCTERMS.creator).flatMap(term => {
+    return this.getObjects(DCTERMS.creator).flatMap((term) => {
       switch (term.termType) {
         case "Literal":
           return term.value;
@@ -25,7 +25,7 @@ export class Rights extends Mixin(Model, HasContributors, HasCreators) {
 
   @Memoize()
   get agents(): readonly Agent[] {
-    return this.agentUris.map(agentUri => this.dataset.agentByUri(agentUri));
+    return this.agentUris.map((agentUri) => this.dataset.agentByUri(agentUri));
   }
 
   @Memoize()
@@ -36,16 +36,16 @@ export class Rights extends Mixin(Model, HasContributors, HasCreators) {
   }
 
   get holderAgents(): readonly Agent[] {
-    return this.holderAgentUris.map(agentUri =>
+    return this.holderAgentUris.map((agentUri) =>
       this.dataset.agentByUri(agentUri)
     );
   }
 
   @Memoize()
   get holderAgentUris(): readonly string[] {
-    return this.propertyObjects(DCTERMS.rightsHolder)
-      .filter(term => term.termType === "NamedNode")
-      .map(term => term.value);
+    return this.getObjects(DCTERMS.rightsHolder)
+      .filter((term) => term.termType === "NamedNode")
+      .map((term) => term.value);
   }
 
   @Memoize()
@@ -55,8 +55,8 @@ export class Rights extends Mixin(Model, HasContributors, HasCreators) {
 
   @Memoize()
   get license(): License | string | null {
-    const term = this.propertyObjects(DCTERMS.license).find(
-      term => term.termType === "Literal" || term.termType === "NamedNode"
+    const term = this.getObjects(DCTERMS.license).find(
+      (term) => term.termType === "Literal" || term.termType === "NamedNode"
     );
     if (!term) {
       return null;
@@ -73,8 +73,8 @@ export class Rights extends Mixin(Model, HasContributors, HasCreators) {
 
   @Memoize()
   get statement(): RightsStatement | string | null {
-    const term = this.propertyObjects(DCTERMS.rights).find(
-      term => term.termType === "Literal" || term.termType === "NamedNode"
+    const term = this.getObjects(DCTERMS.rights).find(
+      (term) => term.termType === "Literal" || term.termType === "NamedNode"
     );
     if (!term) {
       return null;

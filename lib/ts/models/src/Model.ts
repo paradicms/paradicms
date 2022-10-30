@@ -13,12 +13,12 @@ export class Model {
     this._node = kwds.node;
   }
 
-  get node(): BlankNode | NamedNode {
-    return this._node;
+  protected getObjects(property: NamedNode): readonly Term[] {
+    return this.store.getObjects(this.node, property, this.graphNode);
   }
 
-  protected propertyObjects(property: NamedNode): readonly Term[] {
-    return this.store.getObjects(this.node, property, this.graphNode);
+  get node(): BlankNode | NamedNode {
+    return this._node;
   }
 
   protected get store(): Store {

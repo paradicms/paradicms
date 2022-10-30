@@ -5,7 +5,7 @@ import {TIME, XSD} from "@paradicms/vocabularies";
 
 export class DateTimeDescription extends Model {
   get day(): number | null {
-    for (const term of this.propertyObjects(TIME.day)) {
+    for (const term of this.getObjects(TIME.day)) {
       if (term.termType !== "Literal") {
         continue;
       }
@@ -36,7 +36,7 @@ export class DateTimeDescription extends Model {
   }
 
   get month(): number | null {
-    for (const term of this.propertyObjects(TIME.month)) {
+    for (const term of this.getObjects(TIME.month)) {
       if (term.termType !== "Literal") {
         continue;
       }
@@ -59,7 +59,7 @@ export class DateTimeDescription extends Model {
   }
 
   private optionalInt(property: NamedNode): number | null {
-    for (const term of this.propertyObjects(property)) {
+    for (const term of this.getObjects(property)) {
       if (term.termType !== "Literal") {
         continue;
       }
@@ -72,7 +72,7 @@ export class DateTimeDescription extends Model {
   }
 
   get second(): number | null {
-    for (const term of this.propertyObjects(TIME.second)) {
+    for (const term of this.getObjects(TIME.second)) {
       if (term.termType !== "Literal") {
         continue;
       }
@@ -138,7 +138,7 @@ export class DateTimeDescription extends Model {
   }
 
   get year(): number | null {
-    for (const term of this.propertyObjects(TIME.year)) {
+    for (const term of this.getObjects(TIME.year)) {
       if (term.termType !== "Literal") {
         continue;
       }

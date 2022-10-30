@@ -9,7 +9,7 @@ import {DCTERMS, RDF, SKOS} from "@paradicms/vocabularies";
 export class NamedValue extends Mixin(NamedModel, HasAbstract, HasImages) {
   @Memoize()
   get altLabels(): readonly Literal[] {
-    return this.propertyObjects(SKOS.altLabel).filter(
+    return this.getObjects(SKOS.altLabel).filter(
       (term) => term.termType === "Literal"
     ) as Literal[];
   }
@@ -17,14 +17,14 @@ export class NamedValue extends Mixin(NamedModel, HasAbstract, HasImages) {
   @Memoize()
   get prefLabel(): string | null {
     return (
-      this.propertyObjects(SKOS.prefLabel).find(
+      this.getObjects(SKOS.prefLabel).find(
         (term) => term.termType === "Literal"
       )?.value ?? null
     );
   }
 
   get propertyUris(): readonly string[] {
-    const propertyUris: readonly string[] = this.propertyObjects(RDF.predicate)
+    const propertyUris: readonly string[] = this.getObjects(RDF.predicate)
       .filter((term) => term.termType === "NamedNode")
       .map((term) => term.value);
     if (propertyUris.length === 0) {
@@ -36,13 +36,12 @@ export class NamedValue extends Mixin(NamedModel, HasAbstract, HasImages) {
   @Memoize()
   get title(): string | null {
     return (
-      this.propertyObjects(DCTERMS.title).find(
-        (term) => term.termType === "Literal"
-      )?.value ?? null
+      this.getObjects(DCTERMS.title).find((term) => term.termType === "Literal")
+        ?.value ?? null
     );
   }
 
   get value(): Term {
-    return requireDefined(this.propertyObjects(RDF.value)[0]);
+    return requireDefined(this.getObjects(RDF.value)[0]);
   }
 }

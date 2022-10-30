@@ -11,7 +11,7 @@ export class Text extends Mixin(Model, HasRights) {
 
   get value(): string {
     return requireDefined(
-      this.propertyObjects(RDF.value).find(term => term.termType === "Literal")
+      this.getObjects(RDF.value).find((term) => term.termType === "Literal")
     ).value;
   }
 }

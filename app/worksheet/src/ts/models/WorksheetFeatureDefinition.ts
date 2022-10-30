@@ -11,7 +11,7 @@ export class WorksheetFeatureDefinition extends Mixin(
   HasTitle
 ) {
   get order(): number {
-    const integerLiteral = this.propertyObjects(SH.order).find(
+    const integerLiteral = this.getObjects(SH.order).find(
       (term) =>
         term.termType === "Literal" && term.datatype.value === XSD.integer.value
     );

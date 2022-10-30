@@ -12,8 +12,8 @@ import {CMS, DCTERMS, EXIF, FOAF, XSD} from "@paradicms/vocabularies";
 export class Image extends Mixin(NamedModel, HasRights) {
   get depictsUri(): string {
     return requireDefined(
-      this.propertyObjects(FOAF.depicts).find(
-        term => term.termType === "NamedNode"
+      this.getObjects(FOAF.depicts).find(
+        (term) => term.termType === "NamedNode"
       )
     ).value;
   }
@@ -35,12 +35,12 @@ export class Image extends Mixin(NamedModel, HasRights) {
     heightProperty: NamedNode,
     widthProperty: NamedNode
   ): ImageDimensions | null {
-    const heightLiteral = this.propertyObjects(heightProperty).find(
-      term =>
+    const heightLiteral = this.getObjects(heightProperty).find(
+      (term) =>
         term.termType === "Literal" && term.datatype.value === XSD.integer.value
     ) as Literal | undefined;
-    const widthLiteral = this.propertyObjects(widthProperty).find(
-      term =>
+    const widthLiteral = this.getObjects(widthProperty).find(
+      (term) =>
         term.termType === "Literal" && term.datatype.value === XSD.integer.value
     ) as Literal | undefined;
 
@@ -90,8 +90,8 @@ export class Image extends Mixin(NamedModel, HasRights) {
   }
 
   get src(): string | null {
-    const srcLiteral = this.propertyObjects(CMS.imageSrc).find(
-      term => term.termType === "Literal"
+    const srcLiteral = this.getObjects(CMS.imageSrc).find(
+      (term) => term.termType === "Literal"
     );
     if (srcLiteral) {
       return srcLiteral.value;
@@ -115,9 +115,8 @@ export class Image extends Mixin(NamedModel, HasRights) {
 
   get title(): string | null {
     return (
-      this.propertyObjects(DCTERMS.title).find(
-        term => term.termType === "Literal"
-      )?.value ?? null
+      this.getObjects(DCTERMS.title).find((term) => term.termType === "Literal")
+        ?.value ?? null
     );
   }
 }

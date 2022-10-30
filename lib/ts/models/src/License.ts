@@ -5,15 +5,13 @@ import {DC} from "@paradicms/vocabularies";
 export class License extends NamedModel {
   get identifier(): string {
     return requireDefined(
-      this.propertyObjects(DC.identifier).find(
-        term => term.termType === "Literal"
-      )
+      this.getObjects(DC.identifier).find((term) => term.termType === "Literal")
     ).value;
   }
 
   get title(): string {
     return requireDefined(
-      this.propertyObjects(DC.title).find(term => term.termType === "Literal")
+      this.getObjects(DC.title).find((term) => term.termType === "Literal")
     ).value;
   }
 

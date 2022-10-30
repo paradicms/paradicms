@@ -10,7 +10,7 @@ export class WorkEvent extends Event {
 
   get workUri(): string {
     return requireDefined(
-      this.propertyObjects(CMS.work).find(term => term.termType === "NamedNode")
+      this.getObjects(CMS.work).find((term) => term.termType === "NamedNode")
     ).value;
   }
 }

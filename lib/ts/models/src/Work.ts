@@ -118,21 +118,21 @@ export class Work extends Mixin(
   }
 
   get collections(): readonly Collection[] {
-    return this.collectionUris.map(collectionUri =>
+    return this.collectionUris.map((collectionUri) =>
       this.dataset.collectionByUri(collectionUri)
     );
   }
 
   @Memoize()
   get collectionUris(): readonly string[] {
-    return this.propertyObjects(CMS.collection)
-      .filter(term => term.termType === "NamedNode")
-      .map(term => term.value);
+    return this.getObjects(CMS.collection)
+      .filter((term) => term.termType === "NamedNode")
+      .map((term) => term.value);
   }
 
   @Memoize()
   get description(): string | Text | null {
-    for (const term of this.propertyObjects(DCTERMS.abstract)) {
+    for (const term of this.getObjects(DCTERMS.abstract)) {
       switch (term.termType) {
         case "BlankNode":
           return new Text({
@@ -180,7 +180,7 @@ export class Work extends Mixin(
   propertyNamedValues(propertyUri: string): readonly NamedValue[] {
     const result: NamedValue[] = [];
     this.store.forEach(
-      quad => {
+      (quad) => {
         if (quad.object.termType !== "NamedNode") {
           return;
         }

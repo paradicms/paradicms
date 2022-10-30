@@ -10,8 +10,8 @@ export abstract class HasInstitution extends ModelMixin {
 
   get institutionUri(): string {
     return requireDefined(
-      this.propertyObjects(CMS.institution).find(
-        term => term.termType === "NamedNode"
+      this.getObjects(CMS.institution).find(
+        (term) => term.termType === "NamedNode"
       )
     ).value;
   }

@@ -75,7 +75,7 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
   private datePropertyValue(
     property: NamedNode
   ): DateTimeDescription | number | string | null {
-    for (const term of this.propertyObjects(property)) {
+    for (const term of this.getObjects(property)) {
       switch (term.termType) {
         case "BlankNode":
           return new DateTimeDescription({
@@ -106,7 +106,7 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
 
   @Memoize()
   get location(): Location | string | null {
-    for (const term of this.propertyObjects(DCTERMS.spatial)) {
+    for (const term of this.getObjects(DCTERMS.spatial)) {
       switch (term.termType) {
         case "BlankNode":
           return new Location({
@@ -152,9 +152,8 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
 
   get title(): string | null {
     return (
-      this.propertyObjects(DCTERMS.title).find(
-        term => term.termType === "Literal"
-      )?.value ?? null
+      this.getObjects(DCTERMS.title).find((term) => term.termType === "Literal")
+        ?.value ?? null
     );
   }
 }
