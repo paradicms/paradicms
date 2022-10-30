@@ -13,21 +13,32 @@ import * as SHACLValidator from "rdf-validate-shacl";
 import * as ValidationReport from "rdf-validate-shacl/src/validation-report";
 import {NodeShape} from "./NodeShape";
 import {PropertyShape} from "./PropertyShape";
+import {PropertyGroup} from "./PropertyGroup";
 
 export class ShapesGraph {
   readonly graph: DefaultGraph | NamedNode;
   readonly nodeShapes: readonly NodeShape[];
   private nodeShapesByUri: {[index: string]: NodeShape} = {};
+  // @ts-ignore
+  private propertyGroups: readonly PropertyGroup[];
+  private propertyGroupsByUri: {[index: string]: PropertyGroup} = {};
   readonly propertyShapes: readonly PropertyShape[];
   private propertyShapesByUri: {[index: string]: PropertyShape} = {};
 
   constructor(readonly store: Store) {
     this.graph = ShapesGraph.readGraph(store);
-    const shapes = ShapesGraph.readShapes(this.graph, this, store);
-    this.nodeShapes = shapes.nodeShapes;
-    this.nodeShapesByUri = shapes.nodeShapesByUri;
-    this.propertyShapes = shapes.propertyShapes;
-    this.propertyShapesByUri = shapes.propertyShapesByUri;
+
+    const {nodeShapes, nodeShapesByUri, propertyShapes, propertyShapesByUri} =
+      ShapesGraph.readShapes(this.graph, this, store);
+    this.nodeShapes = nodeShapes;
+    this.nodeShapesByUri = nodeShapesByUri;
+    this.propertyShapes = propertyShapes;
+    this.propertyShapesByUri = propertyShapesByUri;
+
+    const {propertyGroups, propertyGroupsByUri} =
+      ShapesGraph.readPropertyGroups(this.graph, this, store);
+    this.propertyGroups = propertyGroups;
+    this.propertyGroupsByUri = propertyGroupsByUri;
   }
 
   get namedNodeShapes(): readonly NodeShape[] {
@@ -58,6 +69,14 @@ export class ShapesGraph {
     return store;
   }
 
+  propertyGroupByUri(propertyGroupUri: string): PropertyGroup {
+    const propertyGroup = this.propertyGroupsByUri[propertyGroupUri];
+    if (!propertyGroup) {
+      throw new RangeError("no such property group " + propertyGroupUri);
+    }
+    return propertyGroup;
+  }
+
   propertyShapeByUri(propertyShapeUri: string): PropertyShape {
     const propertyShape = this.propertyShapesByUri[propertyShapeUri];
     if (!propertyShape) {
@@ -80,6 +99,32 @@ export class ShapesGraph {
           `expected NamedNode or default graph, actual ${graphs[0].termType}`
         );
     }
+  }
+
+  private static readPropertyGroups(
+    graph: DefaultGraph | NamedNode,
+    shapesGraph: ShapesGraph,
+    store: Store
+  ): {
+    propertyGroups: PropertyGroup[];
+    propertyGroupsByUri: {[index: string]: PropertyGroup};
+  } {
+    const propertyGroups: PropertyGroup[] = [];
+    const propertyGroupsByUri: {[index: string]: PropertyGroup} = {};
+    store.forSubjects(
+      (subject) => {
+        if (subject.termType !== "NamedNode") {
+          return;
+        }
+        const propertyGroup = new PropertyGroup({node: subject, shapesGraph});
+        propertyGroups.push(propertyGroup);
+        propertyGroupsByUri[subject.value] = propertyGroup;
+      },
+      RDF.type,
+      SH.PropertyGroup,
+      graph
+    );
+    return {propertyGroups, propertyGroupsByUri};
   }
 
   private static readShapes(

@@ -45,5 +45,6 @@ export class SH {
 
   // Resources
   static readonly NodeShape = SH.NS("NodeShape");
+  static readonly PropertyGroup = SH.NS("PropertyGroup");
   static readonly PropertyShape = SH.NS("PropertyShape");
 }
