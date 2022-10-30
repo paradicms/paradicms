@@ -1,1 +1,1 @@
-export * from "./NodeViewer";
+export * from "./viewers";
