@@ -1,3 +1,5 @@
+import {CMS} from "./CMS";
+import {CONFIGURATION} from "./CONFIGURATION";
 import {FOAF} from "./FOAF";
 import {RDF} from "./RDF";
 import {DC} from "./DC";
@@ -9,18 +11,24 @@ import {VRA} from "./VRA";
 import {SKOS} from "./SKOS";
 import {TIME} from "./TIME";
 import {WGS} from "./WGS";
-import {CMS} from "./CMS";
+import {RDFS} from "./RDFS";
+import {CONTACT} from "./CONTACT";
+import {SH} from "./SH";
 
 export const prefixes: Prefixes = {
   cms: CMS.NS(""),
+  configuration: CONFIGURATION.NS(""),
+  contact: CONTACT.NS(""),
   dc: DC.NS(""),
   dcterms: DCTERMS.NS(""),
   exif: EXIF.NS(""),
   foaf: FOAF.NS(""),
   rdf: RDF.NS(""),
+  rdfs: RDFS.NS(""),
+  sh: SH.NS(""),
   skos: SKOS.NS(""),
   time: TIME.NS(""),
   vra: VRA.NS(""),
-  xsd: XSD.NS(""),
   wgs: WGS.NS(""),
+  xsd: XSD.NS(""),
 };
