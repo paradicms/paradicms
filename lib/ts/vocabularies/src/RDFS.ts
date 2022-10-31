@@ -5,4 +5,8 @@ export class RDFS {
 
   // Properties
   static readonly label = RDFS.NS("label");
+  static readonly subClassOf = RDFS.NS("subClassOf");
+
+  // Resources
+  static readonly Class = RDFS.NS("Class");
 }
