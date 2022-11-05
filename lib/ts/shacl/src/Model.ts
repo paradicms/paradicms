@@ -5,10 +5,7 @@ export abstract class Model {
   protected readonly _node: BlankNode | NamedNode;
   protected readonly shapesGraph: ShapesGraph;
 
-  protected constructor(kwds: {
-    node: BlankNode | NamedNode;
-    shapesGraph: ShapesGraph;
-  }) {
+  constructor(kwds: {node: BlankNode | NamedNode; shapesGraph: ShapesGraph}) {
     this._node = kwds.node;
     this.shapesGraph = kwds.shapesGraph;
   }

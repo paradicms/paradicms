@@ -1,19 +1,34 @@
-import {DataGraph} from "./DataGraph";
-import {NodeShape, ShapesGraph} from "@paradicms/shacl";
+import {DataGraph, NodeShape, ShapesGraph} from "@paradicms/shacl";
 import {FormNode} from "./FormNode";
 import {DataGraphNode} from "./DataGraphNode";
-import {NamedNode} from "n3";
+import {DataFactory, NamedNode} from "n3";
+import {RDF} from "@paradicms/vocabularies";
 
-export class FormData {
-  private readonly dataGraph: DataGraph;
-  private readonly shapesGraph: ShapesGraph;
+export class Form {
+  readonly dataGraph: DataGraph;
+  readonly shapesGraph: ShapesGraph;
 
   constructor(kwds: {dataGraph: DataGraph; shapesGraph: ShapesGraph}) {
     this.dataGraph = kwds.dataGraph;
     this.shapesGraph = kwds.shapesGraph;
   }
 
-  addNode(rdfType: NamedNode): FormNode {}
+  addNode(kwds: {dataGraphNode: NamedNode; rdfType: NamedNode}): FormNode {
+    const {dataGraphNode, rdfType} = kwds;
+
+    // Add (node, rdf:type, ...)
+    // Assumes the shapes graph has a class or implicit class target
+    this.dataGraph.store.add(
+      DataFactory.quad(dataGraphNode, RDF.type, rdfType)
+    );
+
+    throw new EvalError();
+    // return new FormNode({
+    //   dataGraphNode,
+    //   form: this,
+    //   this.this.shapesGraph.
+    // });
+  }
 
   get nodes(): readonly FormNode[] {
     return Object.values(this.nodesByUri);
@@ -22,13 +37,13 @@ export class FormData {
   get nodesByUri(): {[index: string]: FormNode} {
     const formNodesByUri: {
       [index: string]: {
-        formData: FormData;
+        form: Form;
         dataGraphNode: DataGraphNode;
         shapes: NodeShape[];
       };
     } = {};
     for (const nodeShape of this.shapesGraph.nodeShapes) {
-      for (const target of nodeShape.targets(this.dataGraph.store)) {
+      for (const target of this.dataGraph.shapeFocusNodes(nodeShape)) {
         if (target.termType !== "NamedNode") {
           continue;
         }
@@ -37,7 +52,7 @@ export class FormData {
           formNode.shapes.push(nodeShape);
         } else {
           formNodesByUri[target.value] = formNode = {
-            formData: this,
+            form: this,
             dataGraphNode: target,
             shapes: [nodeShape],
           };

@@ -59,10 +59,7 @@ export class ShapesGraph {
     return new ShapesGraph(ShapesGraph.parseIntoStore(input, options));
   }
 
-  protected static parseIntoStore(
-    input: string,
-    options?: ParserOptions
-  ): Store {
+  private static parseIntoStore(input: string, options?: ParserOptions): Store {
     const parser = new Parser(options);
     const store = new Store();
     store.addQuads(parser.parse(input));
