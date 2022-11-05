@@ -1,5 +1,6 @@
 import {DataGraphNode} from "./DataGraphNode";
 import {FormNodeType} from "./FormNodeType";
+import {OTerm, Term} from "n3";
 
 export class FormNode {
   readonly dataGraphNode: DataGraphNode;
@@ -8,6 +9,28 @@ export class FormNode {
   constructor(kwds: {dataGraphNode: DataGraphNode; type: FormNodeType}) {
     this.dataGraphNode = kwds.dataGraphNode;
     this.type = kwds.type;
+  }
+
+  delete(): void {
+    const store = this.type.form.dataGraph.store;
+
+    // Delete (s, p, o)
+    // Recursively delete (blankNode, p, o) where (s, p, blankNode)
+    const deleteQuadsWithSubject = (subject: Term) => {
+      for (const quad of store.getQuads(
+        subject,
+        null as OTerm,
+        null as OTerm,
+        null as OTerm
+      )) {
+        if (quad.object.termType === "BlankNode") {
+          deleteQuadsWithSubject(quad.object);
+        }
+        store.delete(quad);
+      }
+    };
+
+    deleteQuadsWithSubject(this.dataGraphNode);
   }
 
   // get properties(): readonly FormProperty[] {}
