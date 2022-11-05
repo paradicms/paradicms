@@ -3,7 +3,7 @@ import {NamedNode} from "n3";
 import {FormNode} from "./FormNode";
 
 export class FormProperty {
-  // private readonly formNode: FormNode;
+  readonly formNode: FormNode;
   readonly path: NamedNode;
   readonly shapes: readonly PropertyShape[];
 
@@ -12,7 +12,7 @@ export class FormProperty {
     path: NamedNode;
     shapes: readonly PropertyShape[];
   }) {
-    // this.formNode = kwds.formNode;
+    this.formNode = kwds.formNode;
     this.path = kwds.path;
     this.shapes = kwds.shapes;
   }
