@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {DataGraph, FocusNode, ShapesGraph} from "../src";
+import {DataGraph, FocusNode, PropertyShape, ShapesGraph} from "../src";
 import {testShapesGraphTtl} from "./testShapesGraphTtl";
 import {validTestDataGraphTtl} from "./validTestDataGraphTtl";
 import {invalidTestDataGraphTtl} from "./invalidTestDataGraphTtl";
@@ -15,6 +15,37 @@ describe("ShaclProcessor", () => {
     invalidDataGraph = DataGraph.parse(invalidTestDataGraphTtl);
     validDataGraph = DataGraph.parse(validTestDataGraphTtl);
     shapesGraph = ShapesGraph.parse(testShapesGraphTtl);
+  });
+
+  it("should get the property shapes for a focus node that has them", () => {
+    const propertyShapes: PropertyShape[] = [];
+    new ShaclProcessor({
+      dataGraph: validDataGraph,
+      shapesGraph,
+    }).someFocusNodePropertyShapes(propertyShape => {
+      propertyShapes.push(propertyShape);
+      return false;
+    }, DataFactory.namedNode("urn:example:MinorGordon"));
+    expect(propertyShapes).to.have.length(4);
+    expect(
+      propertyShapes.find(propertyShape =>
+        propertyShape.path.equals(
+          DataFactory.namedNode("http://schema.org/givenName")
+        )
+      )
+    ).to.not.be.undefined;
+  });
+
+  it("should get no property shapes for a focus node that has none", () => {
+    const propertyShapes: PropertyShape[] = [];
+    new ShaclProcessor({
+      dataGraph: validDataGraph,
+      shapesGraph,
+    }).someFocusNodePropertyShapes(propertyShape => {
+      propertyShapes.push(propertyShape);
+      return false;
+    }, DataFactory.namedNode("urn:example:troy"));
+    expect(propertyShapes).to.have.length(0);
   });
 
   it("should get the focus nodes for a shape", () => {

@@ -1,4 +1,4 @@
-import {NamedNode} from "n3";
+import {BlankNode, NamedNode} from "n3";
 import {Shape} from "./Shape";
 import {RDF, RDFS} from "@paradicms/vocabularies";
 import {FocusNode} from "./FocusNode";
@@ -7,8 +7,11 @@ import {ShapesGraph} from "./ShapesGraph";
 import * as ValidationReport from "rdf-validate-shacl/src/validation-report";
 import * as SHACLValidator from "rdf-validate-shacl";
 import {TermSet} from "./TermSet";
+import {PropertyShape} from "./PropertyShape";
 
-type SomeFocusNodeShapeCallback = (shape: Shape) => boolean;
+type SomeFocusNodePropertyShapeCallback = (
+  propertyShape: PropertyShape
+) => boolean;
 type SomeShapeFocusNodeCallback = (focusNode: FocusNode) => boolean;
 
 // const deduplicateFocusNodes = (
@@ -34,10 +37,55 @@ export class ShaclProcessor {
     this.shapesGraph = kwds.shapesGraph;
   }
 
-  someFocusNodeShapes(
-    callback: SomeFocusNodeShapeCallback,
+  someFocusNodePropertyShapes(
+    callback: SomeFocusNodePropertyShapeCallback,
     focusNode: FocusNode
   ): boolean {
+    const seenPropertyShapeNodeSet = new TermSet<BlankNode | NamedNode>();
+
+    // Find node shapes that target the focus node, then look for their sh:properties's
+    for (const nodeShape of this.shapesGraph.nodeShapes) {
+      if (
+        !this.someShapeFocusNodes(
+          shapeFocusNode => shapeFocusNode.equals(focusNode),
+          nodeShape
+        )
+      ) {
+        continue;
+      }
+
+      // Node shape has the focusNode as a focus node
+
+      // Pick up property shapes via sh:property
+      for (const propertyShape of nodeShape.properties) {
+        if (!seenPropertyShapeNodeSet.add(propertyShape.node)) {
+          if (callback(propertyShape)) {
+            return true;
+          }
+        }
+      }
+    }
+
+    // Pick up property shapes that target the focus node
+    for (const propertyShape of this.shapesGraph.propertyShapes) {
+      if (
+        !this.someShapeFocusNodes(
+          shapeFocusNode => shapeFocusNode.equals(focusNode),
+          propertyShape
+        )
+      ) {
+        continue;
+      }
+
+      // Property shape has the focusNode as a focus node
+
+      if (!seenPropertyShapeNodeSet.add(propertyShape.node)) {
+        if (callback(propertyShape)) {
+          return true;
+        }
+      }
+    }
+
     return false;
   }
 
