@@ -3,6 +3,9 @@ import {RDF, RDFS, SH} from "@paradicms/vocabularies";
 import {Literal, NamedNode} from "n3";
 
 export class Shape extends Model {
+  /**
+   * The rdf:Class's this shape is or is a subClassOf.
+   */
   get implicitClassTargets(): readonly NamedNode[] {
     const isRdfsClass = (rdfType: NamedNode) => {
       if (rdfType.equals(RDFS.Class)) {

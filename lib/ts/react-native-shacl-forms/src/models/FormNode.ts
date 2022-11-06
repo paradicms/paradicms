@@ -1,6 +1,7 @@
 import {DataGraphNode} from "./DataGraphNode";
 import {FormNodeType} from "./FormNodeType";
 import {OTerm, Term} from "n3";
+import {PropertyShape} from "@paradicms/shacl";
 
 export class FormNode {
   readonly dataGraphNode: DataGraphNode;
@@ -35,33 +36,23 @@ export class FormNode {
 
   // get properties(): readonly FormProperty[] {}
 
-  // const formNodesByUri: {
-  //   [index: string]: {
-  //     form: Form;
-  //     dataGraphNode: DataGraphNode;
-  //     shapes: NodeShape[];
-  //   };
-  // } = {};
-  // for (const nodeShape of this.form.shapesGraph.nodeShapes) {
-  //   for (const target of this.form.dataGraph.shapeFocusNodes(nodeShape)) {
-  //     if (target.termType !== "NamedNode") {
-  //       continue;
-  //     }
-  //     let formNode = formNodesByUri[target.value];
-  //     if (formNode) {
-  //       formNode.shapes.push(nodeShape);
-  //     } else {
-  //       formNodesByUri[target.value] = formNode = {
-  //         form: this,
-  //         dataGraphNode: target,
-  //         shapes: [nodeShape],
-  //       };
-  //     }
-  //   }
-  // }
-  // const result: {[index: string]: FormNode} = {};
-  // for (const uri of Object.keys(formNodesByUri)) {
-  //   result[uri] = new FormNode(formNodesByUri[uri]);
-  // }
-  // return result;
+  // @ts-ignore
+  private get propertyShapes(): readonly PropertyShape[] {
+    // All applicable node shapes, and all their sh:properties
+    // All applicable property shapes
+
+    const propertyShapes: PropertyShape[] = [];
+    for (const propertyShape of this.type.form.shapesGraph.propertyShapes) {
+      if (
+        this.type.form.dataGraph.someShapeFocusNode(
+          focusNode => focusNode.equals(this.dataGraphNode),
+          propertyShape
+        )
+      ) {
+        propertyShapes.push(propertyShape);
+      }
+    }
+
+    return [];
+  }
 }
