@@ -41,17 +41,17 @@ export class FormNode {
     // All applicable node shapes, and all their sh:properties
     // All applicable property shapes
 
-    const propertyShapes: PropertyShape[] = [];
-    for (const propertyShape of this.type.form.shapesGraph.propertyShapes) {
-      if (
-        this.type.form.dataGraph.someShapeFocusNode(
-          focusNode => focusNode.equals(this.dataGraphNode),
-          propertyShape
-        )
-      ) {
-        propertyShapes.push(propertyShape);
-      }
-    }
+    // const propertyShapes: PropertyShape[] = [];
+    // for (const propertyShape of this.type.form.shapesGraph.propertyShapes) {
+    //   if (
+    //     this.type.form.dataGraph.someShapeFocusNode(
+    //       focusNode => focusNode.equals(this.dataGraphNode),
+    //       propertyShape
+    //     )
+    //   ) {
+    //     propertyShapes.push(propertyShape);
+    //   }
+    // }
 
     return [];
   }
