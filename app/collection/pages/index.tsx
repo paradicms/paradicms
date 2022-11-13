@@ -9,7 +9,7 @@ import {
 } from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
-import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
+import {readConfigurationFile} from "@paradicms/next";
 import fs from "fs";
 import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
@@ -97,7 +97,7 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const completeDataset = readDatasetFile(readFileSync);
+  const completeDataset = readModelSetFile(readFileSync);
   const configuration =
     readCollectionAppConfiguration(
       readConfigurationFile(readFileSync),
@@ -110,7 +110,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     props: {
       collectionUri: collection.uri,
       configuration,
-      modelSetString: new DataSubsetter({
+      modelSetString: new ModelSubsetter({
         completeDataset,
         workPropertyUris: configuration.workProperties.map(
           workProperty => workProperty.uri

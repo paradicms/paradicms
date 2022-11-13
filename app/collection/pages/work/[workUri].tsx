@@ -1,12 +1,12 @@
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
-import {DataSubsetter, ModelSet} from "@paradicms/models";
+import {ModelSet, ModelSubsetter} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
   readConfigurationFile,
-  readDatasetFile,
+  readModelSetFile,
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {
@@ -66,7 +66,7 @@ export default WorkPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {workUri: string}}[] = [];
-  for (const work of readDatasetFile(readFileSync).works) {
+  for (const work of readModelSetFile(readFileSync).works) {
     paths.push({
       params: {
         workUri: encodeFileName(work.uri),
@@ -84,7 +84,7 @@ export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
   const workUri = decodeFileName(params!.workUri as string);
-  const completeDataset = readDatasetFile(readFileSync);
+  const completeDataset = readModelSetFile(readFileSync);
   const configuration =
     readCollectionAppConfiguration(
       readConfigurationFile(readFileSync),
@@ -94,7 +94,7 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       configuration,
-      modelSetString: new DataSubsetter({
+      modelSetString: new ModelSubsetter({
         completeDataset,
         workPropertyUris: configuration.workProperties.map(
           workProperty => workProperty.uri

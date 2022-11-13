@@ -4,7 +4,7 @@ import {GetStaticProps} from "next";
 import {useRouter} from "next/router";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
-import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
+import {readConfigurationFile, readModelSetFile} from "@paradicms/next";
 import {ModelSet, Text} from "@paradicms/models";
 import {Layout} from "../components/Layout";
 import {Col, Container, Row} from "reactstrap";
@@ -84,7 +84,7 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const modelSet = readDatasetFile(readFileSync);
+  const modelSet = readModelSetFile(readFileSync);
   const collection = modelSet.collections[0];
 
   return {

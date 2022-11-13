@@ -1,8 +1,8 @@
 import {
   Agent,
-  DataSubsetter,
   Image,
   ModelSet,
+  ModelSubsetter,
   ThumbnailSelector,
   Work,
 } from "@paradicms/models";
@@ -310,7 +310,7 @@ export class LunrWorkQueryService implements WorkQueryService {
         .sort((left, right) => left.name.localeCompare(right.name));
       const slicedAgents = agents.slice(offset, offset + limit);
 
-      const slicedAgentsDataset = new DataSubsetter({
+      const slicedAgentsDataset = new ModelSubsetter({
         completeDataset: this.modelSet,
         workPropertyUris: this.resultWorkPropertyUris,
       }).agentsDataset(slicedAgents, agentJoinSelector);
@@ -369,7 +369,7 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       // console.debug("Search sliced works count:", slicedWorks.length);
 
-      const slicedWorksDataset = new DataSubsetter({
+      const slicedWorksDataset = new ModelSubsetter({
         completeDataset: this.modelSet,
         workPropertyUris: this.resultWorkPropertyUris,
       }).worksDataset(slicedWorks, workJoinSelector);
@@ -508,7 +508,7 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       const slicedWorkEvents = workEvents.slice(offset, offset + limit);
 
-      const slicedWorkEventsDataset = new DataSubsetter({
+      const slicedWorkEventsDataset = new ModelSubsetter({
         completeDataset: this.modelSet,
         workPropertyUris: this.resultWorkPropertyUris,
       }).workEventsDataset(workEvents, workEventJoinSelector);

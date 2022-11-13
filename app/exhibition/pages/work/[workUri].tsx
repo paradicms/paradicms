@@ -1,12 +1,12 @@
 import * as React from "react";
 import {useCallback, useMemo} from "react";
 import {Layout} from "components/Layout";
-import {DataSubsetter, ModelSet} from "@paradicms/models";
+import {ModelSet, ModelSubsetter} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
   readConfigurationFile,
-  readDatasetFile,
+  readModelSetFile,
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Hrefs} from "lib/Hrefs";
@@ -114,7 +114,7 @@ export default WorkPage;
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {workUri: string}}[] = [];
 
-  for (const work of readDatasetFile(readFileSync).works) {
+  for (const work of readModelSetFile(readFileSync).works) {
     paths.push({
       params: {
         workUri: encodeFileName(work.uri),
@@ -133,7 +133,7 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const workUri = decodeFileName(params!.workUri as string);
 
-  const completeDataset = readDatasetFile(readFileSync);
+  const completeDataset = readModelSetFile(readFileSync);
 
   const currentWork = completeDataset.workByUri(workUri);
   const collectionUri = currentWork.collectionUris[0];
@@ -170,7 +170,10 @@ export const getStaticProps: GetStaticProps = async ({
           completeDataset.store
         ) ?? defaultExhibitionAppConfiguration,
       currentWorkUri: workUri,
-      modelSetString: new DataSubsetter({completeDataset, workPropertyUris: []})
+      modelSetString: new ModelSubsetter({
+        completeDataset,
+        workPropertyUris: [],
+      })
         .worksDataset(
           workUris.map(workUri => completeDataset.workByUri(workUri)),
           {
