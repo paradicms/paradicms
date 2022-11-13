@@ -25,11 +25,11 @@ import {WorkEvent} from "./WorkEvent";
 import {WorkCreation} from "./WorkCreation";
 import {Event} from "./Event";
 import {hasMixin} from "ts-mixer";
-import {CMS, prefixes, RDF} from "@paradicms/vocabularies";
+import {cms, prefixes, rdf} from "@paradicms/vocabularies";
 
 const eventClassesByRdfType = (() => {
   const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
-  result[CMS.WorkCreation.value] = WorkCreation;
+  result[cms.WorkCreation.value] = WorkCreation;
   return result;
 })();
 
@@ -379,7 +379,7 @@ export class ModelSet {
   protected readEvent(kwds: ModelParameters): Event {
     for (const eventRdfType of this.store.getObjects(
       kwds.node,
-      RDF.type,
+      rdf.type,
       kwds.graphNode
     )) {
       const eventClass = eventClassesByRdfType[eventRdfType.value];
@@ -412,7 +412,7 @@ export class ModelSet {
       } else {
         throw new EvalError();
       }
-    }, CMS.Event);
+    }, cms.Event);
 
     this._workEvents = workEvents;
     this._workEventsByWorkUriIndex = workEventsByWorkUriIndex;
@@ -444,7 +444,7 @@ export class ModelSet {
           collection,
         ];
       }
-    }, CMS.Collection);
+    }, cms.Collection);
     this._collections = collections;
     this._collectionsByInstitutionUriIndex = collectionsByInstitutionUriIndex;
   }
@@ -480,7 +480,7 @@ export class ModelSet {
       }
 
       this._imagesByUriIndex![image.uri] = image;
-    }, CMS.Image);
+    }, cms.Image);
     this._images = images;
     this._imagesByDepictsUriIndex = imagesByDepictsUriIndex;
     this._imagesByOriginalImageUriIndex = imagesByOriginalImageUriIndex;
@@ -497,7 +497,7 @@ export class ModelSet {
       const institution = this.readInstitution(kwds);
       institutions.push(institution);
       this._institutionsByUriIndex![institution.uri] = institution;
-    }, CMS.Institution);
+    }, cms.Institution);
     this._institutions = institutions;
   }
 
@@ -512,7 +512,7 @@ export class ModelSet {
       const license = this.readLicense(kwds);
       licenses.push(license);
       this._licensesByUriIndex![license.uri] = license;
-    }, CMS.License);
+    }, cms.License);
     this._licenses = licenses;
   }
 
@@ -549,7 +549,7 @@ export class ModelSet {
         });
       },
       null,
-      RDF.type,
+      rdf.type,
       type,
       null
     );
@@ -580,7 +580,7 @@ export class ModelSet {
       }
 
       this._namedValuesByUriIndex![namedValue.uri] = namedValue;
-    }, CMS.NamedValue);
+    }, cms.NamedValue);
     this._namedValues = namedValues;
     this._namedValuesByPropertyUriIndex = namedValuesByPropertyUriIndex;
   }
@@ -596,7 +596,7 @@ export class ModelSet {
       const organization = this.readOrganization(kwds);
       organizations.push(organization);
       this._organizationsByUriIndex![organization.uri] = organization;
-    }, CMS.Organization);
+    }, cms.Organization);
     this._organizations = organizations;
   }
 
@@ -607,7 +607,7 @@ export class ModelSet {
       const person = this.readPerson(kwds);
       people.push(person);
       this._peopleByUriIndex![person.uri] = person;
-    }, CMS.Person);
+    }, cms.Person);
     this._people = people;
   }
 
@@ -626,7 +626,7 @@ export class ModelSet {
       const rightsStatement = this.readRightsStatement(kwds);
       rightsStatements.push(rightsStatement);
       this._rightsStatementsByUriIndex![rightsStatement.uri] = rightsStatement;
-    }, CMS.RightsStatement);
+    }, cms.RightsStatement);
     this._rightsStatements = rightsStatements;
   }
 
@@ -671,7 +671,7 @@ export class ModelSet {
       }
 
       this._worksByUriIndex![work.uri] = work;
-    }, CMS.Work);
+    }, cms.Work);
     this._works = works;
     this._worksByAgentUriIndex = worksByAgentUriIndex;
     this._worksByCollectionUriIndex = worksByCollectionUriIndex;

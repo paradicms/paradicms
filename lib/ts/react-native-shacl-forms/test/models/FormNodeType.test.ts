@@ -9,7 +9,7 @@ beforeEach(() => {
   sut = testForm().nodeTypes[0];
 });
 
-test("has expected RDF type", () => {
+test("has expected rdf type", () => {
   expect(
     sut.rdfType.equals(DataFactory.namedNode("http://schema.org/Person"))
   ).toBeTruthy();

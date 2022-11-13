@@ -1,4 +1,4 @@
-import {NamedNode} from "n3";
+import {NamedNode} from "@rdfjs/types";
 import {ModelMixin} from "./ModelMixin";
 
 export abstract class NamedModelMixin extends ModelMixin {

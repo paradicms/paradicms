@@ -1,5 +1,5 @@
 import {ModelSet} from "../ModelSet";
-import {BlankNode, NamedNode, Term} from "n3";
+import {BlankNode, NamedNode, Term} from "@rdfjs/types";
 
 export abstract class ModelMixin {
   abstract readonly modelSet: ModelSet;

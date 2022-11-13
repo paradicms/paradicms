@@ -5,14 +5,13 @@ import {WGS} from "@paradicms/vocabularies";
 export class Location extends Model {
   get lat(): number {
     return parseFloat(
-      requireDefined(this.getObjects(WGS.lat).find((term) => term.termType))
-        .value
+      requireDefined(this.getObjects(wgs.lat).find(term => term.termType)).value
     );
   }
 
   get long(): number {
     return parseFloat(
-      requireDefined(this.getObjects(WGS.long).find((term) => term.termType))
+      requireDefined(this.getObjects(wgs.long).find(term => term.termType))
         .value
     );
   }

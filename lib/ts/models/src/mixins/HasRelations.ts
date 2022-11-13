@@ -1,10 +1,10 @@
 import {ModelMixin} from "./ModelMixin";
-import {DCTERMS} from "@paradicms/vocabularies";
+import {dcterms} from "@paradicms/vocabularies";
 
 export abstract class HasRelations extends ModelMixin {
   get wikipediaUrl(): string | null {
     return (
-      this.getObjects(DCTERMS.relation).find((term) => {
+      this.getObjects(dcterms.relation).find(term => {
         if (term.termType !== "NamedNode") {
           return false;
         }
@@ -15,7 +15,7 @@ export abstract class HasRelations extends ModelMixin {
 
   get wikidataConceptUri(): string | null {
     return (
-      this.getObjects(DCTERMS.relation).find((term) => {
+      this.getObjects(dcterms.relation).find(term => {
         if (term.termType !== "NamedNode") {
           return false;
         }

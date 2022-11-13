@@ -1,6 +1,6 @@
 import {AppConfiguration} from "./AppConfiguration";
 import {BlankNode, DefaultGraph, NamedNode, Store} from "n3";
-import {CONFIGURATION, RDF} from "@paradicms/vocabularies";
+import {CONFIGURATION, rdf} from "@paradicms/vocabularies";
 
 export const readAppConfiguration = <
   AppConfigurationT extends AppConfiguration
@@ -21,7 +21,7 @@ export const readAppConfiguration = <
 
     const typeQuads = store.getQuads(
       null,
-      RDF.type,
+      rdf.type,
       CONFIGURATION.AppConfiguration,
       null
     );

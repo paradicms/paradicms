@@ -1,36 +1,36 @@
-// import {CMS} from "./CMS";
+// import {cms} from "./cms";
 // import {CONFIGURATION} from "./CONFIGURATION";
-// import {FOAF} from "./FOAF";
-// import {RDF} from "./RDF";
+// import {foaf} from "./foaf";
+// import {rdf} from "./rdf";
 // import {DC} from "./DC";
-// import {DCTERMS} from "./DCTERMS";
+// import {dcterms} from "./dcterms";
 // // import {Prefixes} from "n3";
-// import {EXIF} from "./EXIF";
-// import {XSD} from "./XSD";
-// import {VRA} from "./VRA";
-// import {SKOS} from "./SKOS";
-// import {TIME} from "./TIME";
-// import {WGS} from "./WGS";
-// import {RDFS} from "./RDFS";
-// import {CONTACT} from "./CONTACT";
-// import {SH} from "./SH";
-// import {DASH} from "./DASH";
+// import {exif} from "./exif";
+// import {xsd} from "./xsd";
+// import {vra} from "./vra";
+// import {skos} from "./skos";
+// import {time} from "./time";
+// import {wgs} from "./wgs";
+// import {rdfs} from "./rdfs";
+// import {contact} from "./contact";
+// import {sh} from "./sh";
+// import {dash} from "./dash";
 //
 // export const prefixes: Prefixes = {
-//   cms: CMS.NS(""),
+//   cms: cms.NS(""),
 //   configuration: CONFIGURATION.NS(""),
-//   contact: CONTACT.NS(""),
-//   dash: DASH.NS(""),
-//   dc: DC.NS(""),
-//   dcterms: DCTERMS.NS(""),
-//   exif: EXIF.NS(""),
-//   foaf: FOAF.NS(""),
-//   rdf: RDF.NS(""),
-//   rdfs: RDFS.NS(""),
-//   sh: SH.NS(""),
-//   skos: SKOS.NS(""),
-//   time: TIME.NS(""),
-//   vra: VRA.NS(""),
-//   wgs: WGS.NS(""),
-//   xsd: XSD.NS(""),
+//   contact: contact.NS(""),
+//   dash: dash.NS(""),
+//   dc11: DC.NS(""),
+//   dcterms: dcterms.NS(""),
+//   exif: exif.NS(""),
+//   foaf: foaf.NS(""),
+//   rdf: rdf.NS(""),
+//   rdfs: rdfs.NS(""),
+//   sh: sh.NS(""),
+//   skos: skos.NS(""),
+//   time: time.NS(""),
+//   vra: vra.NS(""),
+//   wgs: wgs.NS(""),
+//   xsd: xsd.NS(""),
 // };

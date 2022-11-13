@@ -3,8 +3,8 @@ export const testDataTrig = `
 @prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
 @prefix creativecommons: <http://creativecommons.org/ns#> .
-@prefix dc: <http://purl.org/dc/elements/1.1/> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dc11: <http://purl.org/dc11/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc11/terms/> .
 @prefix exif: <http://www.w3.org/2003/12/exif/ns#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix ns1: <urn:paradicms_etl:pipeline:test_data:model:> .
@@ -82,9 +82,9 @@ ns1:15d8eebfa990c5e1b271c2c06cee48428dca1f909f5a3b19ffb43fe1553ba5ee {
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice,
             creativecommons:ShareAlike ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-sa" ;
-        dc:title "Attribution-ShareAlike 4.0 International"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-sa" ;
+        dc11:title "Attribution-ShareAlike 4.0 International"@en ;
         dcterms:hasVersion "4.0" ;
         foaf:logo <http://i.creativecommons.org/l/by-sa/4.0/80x15.png>,
             <http://i.creativecommons.org/l/by-sa/4.0/88x31.png> .
@@ -130,9 +130,9 @@ ns1:3f6b74dcae87cfaea646ab8a36ca487461868d535778d87fc8cc4043eb8e01bc {
             creativecommons:Reproduction ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nd" ;
-        dc:title "Attribution-NoDerivs 3.0 Unported"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nd" ;
+        dc11:title "Attribution-NoDerivs 3.0 Unported"@en ;
         dcterms:hasVersion "3.0" ;
         foaf:logo <http://i.creativecommons.org/l/by-nd/3.0/80x15.png>,
             <http://i.creativecommons.org/l/by-nd/3.0/88x31.png> .
@@ -221,9 +221,9 @@ ns1:28a2b48756d1d3243de8de523fba700eacb086f78e9f279092316d9485886ecb {
             creativecommons:Reproduction ;
         creativecommons:prohibits creativecommons:HighIncomeNationUse ;
         creativecommons:requires creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "devnations" ;
-        dc:title "Developing Nations License"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "devnations" ;
+        dc11:title "Developing Nations License"@en ;
         dcterms:hasVersion "2.0" ;
         foaf:logo <http://i.creativecommons.org/l/devnations/2.0/80x15.png>,
             <http://i.creativecommons.org/l/devnations/2.0/88x31.png> .
@@ -505,9 +505,9 @@ ns1:73ee7d3e4028e98a09f0405aa404cb564e77a66f13753e143fcca84793851516 {
             creativecommons:Reproduction ;
         creativecommons:prohibits creativecommons:CommercialUse ;
         creativecommons:requires creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "nd-nc" ;
-        dc:title "NoDerivs-NonCommercial 1.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "nd-nc" ;
+        dc11:title "NoDerivs-NonCommercial 1.0 Generic"@en ;
         dcterms:hasVersion "1.0" ;
         foaf:logo <http://i.creativecommons.org/l/nd-nc/1.0/88x31.png> .
 }
@@ -1484,9 +1484,9 @@ ns1:f9ba32750c65b622e4ca49f627fed5a1b99885dc0511ceb332731e58ebdfc330 {
             creativecommons:Reproduction ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by" ;
-        dc:title "Attribution 4.0 International"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by" ;
+        dc11:title "Attribution 4.0 International"@en ;
         dcterms:hasVersion "4.0" ;
         foaf:logo <http://i.creativecommons.org/l/by/4.0/80x15.png>,
             <http://i.creativecommons.org/l/by/4.0/88x31.png> .
@@ -1534,9 +1534,9 @@ ns1:baa52d7b05871daf1a4ae470c33f1b10fa4416d44edca7916233d61dab3c0d5b {
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice,
             creativecommons:ShareAlike ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nc-sa" ;
-        dc:title "Attribution-NonCommercial-ShareAlike 1.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nc-sa" ;
+        dc11:title "Attribution-NonCommercial-ShareAlike 1.0 Generic"@en ;
         dcterms:hasVersion "1.0" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc-sa/2.0/> ;
         foaf:logo <http://i.creativecommons.org/l/by-nc-sa/1.0/80x15.png>,
@@ -1807,9 +1807,9 @@ ns1:92f858a0d8e3a8c0da81604b5481afff870f0f5b8992609af7ea3b68d45e7e58 {
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice,
             creativecommons:ShareAlike ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-sa" ;
-        dc:title "Attribution-ShareAlike 3.0 Unported"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-sa" ;
+        dc11:title "Attribution-ShareAlike 3.0 Unported"@en ;
         dcterms:hasVersion "3.0" ;
         foaf:logo <http://i.creativecommons.org/l/by-sa/3.0/80x15.png>,
             <http://i.creativecommons.org/l/by-sa/3.0/88x31.png> .
@@ -2719,9 +2719,9 @@ ns1:5932758d093ba7a0e2b6fb926011b4b338d1fd248ce59b0c44c2a609c720b5c2 {
         creativecommons:prohibits creativecommons:CommercialUse ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nc-nd" ;
-        dc:title "Attribution-NonCommercial-NoDerivs 2.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nc-nd" ;
+        dc11:title "Attribution-NonCommercial-NoDerivs 2.0 Generic"@en ;
         dcterms:hasVersion "2.0" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc-nd/2.5/> ;
         foaf:logo <http://i.creativecommons.org/l/by-nc-nd/2.0/80x15.png>,
@@ -3038,9 +3038,9 @@ ns1:93bcf3b687b3031f01aad9583c245e0af791186b9921556ceb1188aca10fd076 {
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice,
             creativecommons:ShareAlike ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nc-sa" ;
-        dc:title "Attribution-NonCommercial-ShareAlike 4.0 International"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nc-sa" ;
+        dc11:title "Attribution-NonCommercial-ShareAlike 4.0 International"@en ;
         dcterms:hasVersion "4.0" ;
         foaf:logo <http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png>,
             <http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png> .
@@ -3484,9 +3484,9 @@ ns1:27f63167b823cd6674f9224b42f6b3b4bffcd941a287f0fe1918e2ec7f5289cc {
         creativecommons:prohibits creativecommons:CommercialUse ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nc-nd" ;
-        dc:title "Attribution-NonCommercial-NoDerivs 2.5 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nc-nd" ;
+        dc11:title "Attribution-NonCommercial-NoDerivs 2.5 Generic"@en ;
         dcterms:hasVersion "2.5" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc-nd/3.0/> ;
         foaf:logo <http://i.creativecommons.org/l/by-nc-nd/2.5/80x15.png>,
@@ -3539,9 +3539,9 @@ ns1:949e777524f6987743fde37dbee843843b5174e418404ce5759cc080bb977ea0 {
             creativecommons:Sharing ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "sampling+" ;
-        dc:title "Sampling Plus 1.0"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "sampling+" ;
+        dc11:title "Sampling Plus 1.0"@en ;
         dcterms:hasVersion "1.0" ;
         foaf:logo <http://i.creativecommons.org/l/sampling+/1.0/80x15.png>,
             <http://i.creativecommons.org/l/sampling+/1.0/88x31.png> .
@@ -3831,8 +3831,8 @@ ns1:9d3566a0cc87a2cd4d12656292db11835ed30280da2b1503d0b37c5b0600595b {
             creativecommons:Distribution,
             creativecommons:Reproduction ;
         creativecommons:requires creativecommons:Notice ;
-        dc:identifier "BSD" ;
-        dc:title "BSD License",
+        dc11:identifier "BSD" ;
+        dc11:title "BSD License",
             "BSD"@en .
 }
 
@@ -4096,9 +4096,9 @@ ns1:e12b7a5ba59111b0f0d01e3f6097e88c38ac6ca28865360f4837f263651330d9 {
         creativecommons:permits creativecommons:Distribution,
             creativecommons:Reproduction ;
         creativecommons:requires creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "nd" ;
-        dc:title "NoDerivs 1.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "nd" ;
+        dc11:title "NoDerivs 1.0 Generic"@en ;
         dcterms:hasVersion "1.0" ;
         foaf:logo <http://i.creativecommons.org/l/nd/1.0/88x31.png> .
 }
@@ -4121,9 +4121,9 @@ ns1:281d88cc578c0d448041ba25484c87dde9f4bd3ec556b2f7184b39f976100c0d {
         creativecommons:prohibits creativecommons:CommercialUse ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nc" ;
-        dc:title "Attribution-NonCommercial 2.5 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nc" ;
+        dc11:title "Attribution-NonCommercial 2.5 Generic"@en ;
         dcterms:hasVersion "2.5" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc/3.0/> ;
         foaf:logo <http://i.creativecommons.org/l/by-nc/2.5/80x15.png>,
@@ -4656,9 +4656,9 @@ ns1:a30276a57f503252f4572b824cdeeca8e8c3022f53b3643158ee37355746e925 {
         creativecommons:requires creativecommons:Notice,
             creativecommons:ShareAlike,
             creativecommons:SourceCode ;
-        dc:creator <http://fsf.org> ;
-        dc:identifier "GPL" ;
-        dc:title "GNU General Public License"@en ;
+        dc11:creator <http://fsf.org> ;
+        dc11:identifier "GPL" ;
+        dc11:title "GNU General Public License"@en ;
         dcterms:hasVersion "2.0" ;
         foaf:logo <http://i.creativecommons.org/l/GPL/2.0/88x62.png> .
 }
@@ -4807,8 +4807,8 @@ ns1:3b1f012a1e45fd230b5f3dbbe166f303b28f9d47955fe4ed6f138c1247b19a38 {
         creativecommons:permits creativecommons:DerivativeWorks,
             creativecommons:Distribution,
             creativecommons:Reproduction ;
-        dc:identifier "mark" ;
-        dc:title "Public Domain Mark 1.0"@en ;
+        dc11:identifier "mark" ;
+        dc11:title "Public Domain Mark 1.0"@en ;
         dcterms:hasVersion "1.0" ;
         foaf:logo <http://i.creativecommons.org/p/mark/1.0/80x15.png>,
             <http://i.creativecommons.org/p/mark/1.0/88x31.png> .
@@ -5363,9 +5363,9 @@ ns1:de92662e627c8d9a961d85ac1384ac63470688a61dab4ec32d6cf426a8e70ae4 {
         creativecommons:prohibits creativecommons:CommercialUse ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nc" ;
-        dc:title "Attribution-NonCommercial 3.0 Unported"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nc" ;
+        dc11:title "Attribution-NonCommercial 3.0 Unported"@en ;
         dcterms:hasVersion "3.0" ;
         foaf:logo <http://i.creativecommons.org/l/by-nc/3.0/80x15.png>,
             <http://i.creativecommons.org/l/by-nc/3.0/88x31.png> .
@@ -5393,9 +5393,9 @@ ns1:ac727278b2c4e66690268159eb76431e0ed37f23490bb84e9f3cddd379866070 {
         creativecommons:prohibits creativecommons:CommercialUse ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nc-nd" ;
-        dc:title "Attribution-NonCommercial-NoDerivatives 4.0 International"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nc-nd" ;
+        dc11:title "Attribution-NonCommercial-NoDerivatives 4.0 International"@en ;
         dcterms:hasVersion "4.0" ;
         foaf:logo <http://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png>,
             <http://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png> .
@@ -5469,9 +5469,9 @@ ns1:be7d09b84847d96b55d5818990384e5aadc3cc45248fbf6ac78bbcfacfa80e36 {
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice,
             creativecommons:ShareAlike ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nc-sa" ;
-        dc:title "Attribution-NonCommercial-ShareAlike 3.0 Unported"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nc-sa" ;
+        dc11:title "Attribution-NonCommercial-ShareAlike 3.0 Unported"@en ;
         dcterms:hasVersion "3.0" ;
         foaf:logo <http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png>,
             <http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png> .
@@ -5654,9 +5654,9 @@ ns1:5c60b18e9c1f244a9297368e3b6524926121f4cf0054b60822ec41bd651aeddf {
             creativecommons:Reproduction ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nd" ;
-        dc:title "Attribution-NoDerivs 2.5 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nd" ;
+        dc11:title "Attribution-NoDerivs 2.5 Generic"@en ;
         dcterms:hasVersion "2.5" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nd/3.0/> ;
         foaf:logo <http://i.creativecommons.org/l/by-nd/2.5/80x15.png>,
@@ -6032,8 +6032,8 @@ ns1:261eaede4865b2578b6d1ef428d49764ec14c0e5a439f3c168faebd37a6e52d6 {
         creativecommons:permits creativecommons:DerivativeWorks,
             creativecommons:Distribution,
             creativecommons:Reproduction ;
-        dc:identifier "CC0" ;
-        dc:title "CC0 1.0 Universal"@en ;
+        dc11:identifier "CC0" ;
+        dc11:title "CC0 1.0 Universal"@en ;
         dcterms:hasVersion "1.0" ;
         foaf:logo <http://i.creativecommons.org/p/zero/1.0/80x15.png>,
             <http://i.creativecommons.org/p/zero/1.0/88x31.png> .
@@ -6289,9 +6289,9 @@ ns1:19b9589fc9283c284e71572314c10d68b4fefdbbe72297e83e05e268c72d3eab {
             creativecommons:Reproduction ;
         creativecommons:prohibits creativecommons:CommercialUse ;
         creativecommons:requires creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "nc" ;
-        dc:title "NonCommercial 1.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "nc" ;
+        dc11:title "NonCommercial 1.0 Generic"@en ;
         dcterms:hasVersion "1.0" ;
         foaf:logo <http://i.creativecommons.org/l/nc/1.0/88x31.png> .
 }
@@ -6829,9 +6829,9 @@ ns1:8eab10301397e98f0b207d3e890be10cd713ab41680c2e6b4dd40333ae3ae334 {
             creativecommons:Reproduction ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by" ;
-        dc:title "Attribution 2.5 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by" ;
+        dc11:title "Attribution 2.5 Generic"@en ;
         dcterms:hasVersion "2.5" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by/3.0/> ;
         foaf:logo <http://i.creativecommons.org/l/by/2.5/80x15.png>,
@@ -7196,9 +7196,9 @@ ns1:72c0f437dd086771a4e309d22d11b3c046d7b5f11e80376304398927be4782f8 {
         creativecommons:requires creativecommons:Notice,
             creativecommons:ShareAlike,
             creativecommons:SourceCode ;
-        dc:creator <http://fsf.org> ;
-        dc:identifier "LGPL" ;
-        dc:title "GNU Lesser General Public License"@en ;
+        dc11:creator <http://fsf.org> ;
+        dc11:identifier "LGPL" ;
+        dc11:title "GNU Lesser General Public License"@en ;
         dcterms:hasVersion "2.1" ;
         foaf:logo <http://i.creativecommons.org/l/LGPL/2.1/88x62.png> .
 }
@@ -7800,9 +7800,9 @@ ns1:dde774ecb11e048dfe01b2de6d1dd48a8f46cf0ec12fd4a1cb373e36f6b3ec9c {
         creativecommons:prohibits creativecommons:CommercialUse ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nd-nc" ;
-        dc:title "Attribution-NoDerivs-NonCommercial 1.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nd-nc" ;
+        dc11:title "Attribution-NoDerivs-NonCommercial 1.0 Generic"@en ;
         dcterms:hasVersion "1.0" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc-nd/2.0/> ;
         foaf:logo <http://i.creativecommons.org/l/by-nd-nc/1.0/80x15.png>,
@@ -8038,9 +8038,9 @@ ns1:c6929f92fc3a7b339071c1604a3d1bda96ea13e62605568a1ea382ec817df717 {
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice,
             creativecommons:ShareAlike ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nc-sa" ;
-        dc:title "Attribution-NonCommercial-ShareAlike 2.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nc-sa" ;
+        dc11:title "Attribution-NonCommercial-ShareAlike 2.0 Generic"@en ;
         dcterms:hasVersion "2.0" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc-sa/2.5/> ;
         foaf:logo <http://i.creativecommons.org/l/by-nc-sa/2.0/80x15.png>,
@@ -8498,9 +8498,9 @@ ns1:d565421b2e53c38db09c9f868f25d9e6217488dc60a0d952c0bb8df865399a1d {
         creativecommons:prohibits creativecommons:CommercialUse ;
         creativecommons:requires creativecommons:Notice,
             creativecommons:ShareAlike ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "nc-sa" ;
-        dc:title "NonCommercial-ShareAlike 1.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "nc-sa" ;
+        dc11:title "NonCommercial-ShareAlike 1.0 Generic"@en ;
         dcterms:hasVersion "1.0" ;
         foaf:logo <http://i.creativecommons.org/l/nc-sa/1.0/88x31.png> .
 }
@@ -8848,9 +8848,9 @@ ns1:726fb9aadee7008b855842d89d10c8df4800a4ae0ae04377a1b12cf971e3db4c {
         creativecommons:prohibits creativecommons:CommercialUse ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nc" ;
-        dc:title "Attribution-NonCommercial 4.0 International"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nc" ;
+        dc11:title "Attribution-NonCommercial 4.0 International"@en ;
         dcterms:hasVersion "4.0" ;
         foaf:logo <http://i.creativecommons.org/l/by-nc/4.0/80x15.png>,
             <http://i.creativecommons.org/l/by-nc/4.0/88x31.png> .
@@ -9157,9 +9157,9 @@ ns1:3222211e34e73c6c91b8c071f35d5c1fe49fbbc92e1091f0dfec5ab0dd775c44 {
         creativecommons:prohibits creativecommons:CommercialUse ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nc" ;
-        dc:title "Attribution-NonCommercial 1.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nc" ;
+        dc11:title "Attribution-NonCommercial 1.0 Generic"@en ;
         dcterms:hasVersion "1.0" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc/2.0/> ;
         foaf:logo <http://i.creativecommons.org/l/by-nc/1.0/80x15.png>,
@@ -9314,9 +9314,9 @@ ns1:cd9dc2e21a825bcb81dc05d1f5f38ab1b025ea0356c00a545cbc32342eae6e81 {
             creativecommons:Reproduction ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nd" ;
-        dc:title "Attribution-NoDerivs 1.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nd" ;
+        dc11:title "Attribution-NoDerivs 1.0 Generic"@en ;
         dcterms:hasVersion "1.0" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nd/2.0/> ;
         foaf:logo <http://i.creativecommons.org/l/by-nd/1.0/80x15.png>,
@@ -9334,9 +9334,9 @@ ns1:b83436d581e5ef1409e491d9ca6dd02015110f9ec3de4319123256d189325b2a {
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice,
             creativecommons:ShareAlike ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-sa" ;
-        dc:title "Attribution-ShareAlike 2.5 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-sa" ;
+        dc11:title "Attribution-ShareAlike 2.5 Generic"@en ;
         dcterms:hasVersion "2.5" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by-sa/3.0/> ;
         foaf:logo <http://i.creativecommons.org/l/by-sa/2.5/80x15.png>,
@@ -9399,9 +9399,9 @@ ns1:3c46525f40cbdb26a48809b0499757addc846c367ca9a38f7316ab3c5566da22 {
             creativecommons:Reproduction ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nd" ;
-        dc:title "Attribution-NoDerivs 2.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nd" ;
+        dc11:title "Attribution-NoDerivs 2.0 Generic"@en ;
         dcterms:hasVersion "2.0" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nd/2.5/> ;
         foaf:logo <http://i.creativecommons.org/l/by-nd/2.0/80x15.png>,
@@ -9419,9 +9419,9 @@ ns1:422e6bf0a60dd762cc7144db5b8998897f09542c204cd055591e8df8c986b579 {
             creativecommons:Reproduction ;
         creativecommons:requires creativecommons:Notice,
             creativecommons:ShareAlike ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "sa" ;
-        dc:title "ShareAlike 1.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "sa" ;
+        dc11:title "ShareAlike 1.0 Generic"@en ;
         dcterms:hasVersion "1.0" ;
         foaf:logo <http://i.creativecommons.org/l/sa/1.0/88x31.png> .
 }
@@ -9464,9 +9464,9 @@ ns1:fc2fb178f6f018ff2ed9d0bf421197361ad7bf5af8d638d4852d50f0358de294 {
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice,
             creativecommons:ShareAlike ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nc-sa" ;
-        dc:title "Attribution-NonCommercial-ShareAlike 2.5 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nc-sa" ;
+        dc11:title "Attribution-NonCommercial-ShareAlike 2.5 Generic"@en ;
         dcterms:hasVersion "2.5" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc-sa/3.0/> ;
         foaf:logo <http://i.creativecommons.org/l/by-nc-sa/2.5/80x15.png>,
@@ -9647,9 +9647,9 @@ ns1:431e7107ad4f90bce983a5837d79551ece601306ef3156abb34336de071d1da7 {
         creativecommons:prohibits creativecommons:CommercialUse ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "nc-sampling+" ;
-        dc:title "NonCommercial Sampling Plus 1.0"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "nc-sampling+" ;
+        dc11:title "NonCommercial Sampling Plus 1.0"@en ;
         dcterms:hasVersion "1.0" ;
         foaf:logo <http://i.creativecommons.org/l/nc-sampling+/1.0/80x15.png>,
             <http://i.creativecommons.org/l/nc-sampling+/1.0/88x31.png> .
@@ -9876,9 +9876,9 @@ ns1:48d5081c9dc301339cba8b775fbe4921bea00ab15722d502b78d5fbcf9cdaa25 {
         creativecommons:prohibits creativecommons:CommercialUse ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nc-nd" ;
-        dc:title "Attribution-NonCommercial-NoDerivs 3.0 Unported"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nc-nd" ;
+        dc11:title "Attribution-NonCommercial-NoDerivs 3.0 Unported"@en ;
         dcterms:hasVersion "3.0" ;
         foaf:logo <http://i.creativecommons.org/l/by-nc-nd/3.0/80x15.png>,
             <http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png> .
@@ -10004,9 +10004,9 @@ ns1:0ec9fab2cee4a14c23858890f0cf5ed603e6df2b8bc06be11386504a3d522c3d {
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice,
             creativecommons:ShareAlike ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-sa" ;
-        dc:title "Attribution-ShareAlike 1.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-sa" ;
+        dc11:title "Attribution-ShareAlike 1.0 Generic"@en ;
         dcterms:hasVersion "1.0" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by-sa/2.0/> ;
         foaf:logo <http://i.creativecommons.org/l/by-sa/1.0/80x15.png>,
@@ -10714,8 +10714,8 @@ ns1:6ebb50e62f58367d9a83af931ee249252bd209ca1801143b4cbf60ac7acfccbb {
             creativecommons:Distribution,
             creativecommons:Reproduction ;
         creativecommons:requires creativecommons:Notice ;
-        dc:identifier "MIT" ;
-        dc:title "MIT License",
+        dc11:identifier "MIT" ;
+        dc11:title "MIT License",
             "MIT"@en .
 }
 
@@ -11615,9 +11615,9 @@ ns1:6cccfd94e1b0d407257aead32db43d29da89182aa90afb6f500c3bbce06e95d8 {
             creativecommons:Reproduction ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by" ;
-        dc:title "Attribution 3.0 Unported"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by" ;
+        dc11:title "Attribution 3.0 Unported"@en ;
         dcterms:hasVersion "3.0" ;
         foaf:logo <http://i.creativecommons.org/l/by/3.0/80x15.png>,
             <http://i.creativecommons.org/l/by/3.0/88x31.png> .
@@ -11634,9 +11634,9 @@ ns1:44525bde91f71b227e91a05306079779e2d07c9e4961d36191f207c8ca5ecd23 {
         creativecommons:prohibits creativecommons:CommercialUse ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nc" ;
-        dc:title "Attribution-NonCommercial 2.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nc" ;
+        dc11:title "Attribution-NonCommercial 2.0 Generic"@en ;
         dcterms:hasVersion "2.0" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by-nc/2.5/> ;
         foaf:logo <http://i.creativecommons.org/l/by-nc/2.0/80x15.png>,
@@ -12149,9 +12149,9 @@ ns1:b33085f08fbb14097f03dfefb01b07298a52f6c5377c5e95c362dc9473ecd87b {
             creativecommons:Reproduction ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-nd" ;
-        dc:title "Attribution-NoDerivatives 4.0 International"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-nd" ;
+        dc11:title "Attribution-NoDerivatives 4.0 International"@en ;
         dcterms:hasVersion "4.0" ;
         foaf:logo <http://i.creativecommons.org/l/by-nd/4.0/80x15.png>,
             <http://i.creativecommons.org/l/by-nd/4.0/88x31.png> .
@@ -12218,9 +12218,9 @@ ns1:603602cb92be180e5a22b5885ae55f57c9ff524ae590f2dfe4a016bf5d119da2 {
             creativecommons:Reproduction ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by" ;
-        dc:title "Attribution 2.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by" ;
+        dc11:title "Attribution 2.0 Generic"@en ;
         dcterms:hasVersion "2.0" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by/2.5/> ;
         foaf:logo <http://i.creativecommons.org/l/by/2.0/80x15.png>,
@@ -12413,9 +12413,9 @@ ns1:3f2b50209ae2621d139719d92931c993e3e83d8dfd48c14bb928a4b6a4bb4e94 {
             creativecommons:Reproduction ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by" ;
-        dc:title "Attribution 1.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by" ;
+        dc11:title "Attribution 1.0 Generic"@en ;
         dcterms:hasVersion "1.0" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by/2.0/> ;
         foaf:logo <http://i.creativecommons.org/l/by/1.0/80x15.png>,
@@ -12721,9 +12721,9 @@ ns1:7c246556dfdb249a6aea71c957540bdf284189544c882257e67f4470a38f041d {
             creativecommons:Reproduction ;
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "sampling" ;
-        dc:title "Sampling 1.0"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "sampling" ;
+        dc11:title "Sampling 1.0"@en ;
         dcterms:hasVersion "1.0" ;
         foaf:logo <http://i.creativecommons.org/l/sampling/1.0/80x15.png>,
             <http://i.creativecommons.org/l/sampling/1.0/88x31.png> .
@@ -13119,9 +13119,9 @@ ns1:248823f612ca203999e96f7ee3ee1881e7fbae4b22e4816ffb8c1d3d3f55057f {
         creativecommons:requires creativecommons:Attribution,
             creativecommons:Notice,
             creativecommons:ShareAlike ;
-        dc:creator <http://creativecommons.org> ;
-        dc:identifier "by-sa" ;
-        dc:title "Attribution-ShareAlike 2.0 Generic"@en ;
+        dc11:creator <http://creativecommons.org> ;
+        dc11:identifier "by-sa" ;
+        dc11:title "Attribution-ShareAlike 2.0 Generic"@en ;
         dcterms:hasVersion "2.0" ;
         dcterms:isReplacedBy <http://creativecommons.org/licenses/by-sa/2.5/> ;
         foaf:logo <http://i.creativecommons.org/l/by-sa/2.0/80x15.png>,
@@ -13706,8 +13706,8 @@ ns1:4b108eeabc320ae000654c6f353cc0e19f2b8ee3be1f77de52cae91f7982dc3f {
         creativecommons:permits creativecommons:DerivativeWorks,
             creativecommons:Distribution,
             creativecommons:Reproduction ;
-        dc:identifier "publicdomain" ;
-        dc:title "Public Domain"@en ;
+        dc11:identifier "publicdomain" ;
+        dc11:title "Public Domain"@en ;
         foaf:logo <http://i.creativecommons.org/l/publicdomain/80x15.png>,
             <http://i.creativecommons.org/l/publicdomain/88x31.png> .
 }

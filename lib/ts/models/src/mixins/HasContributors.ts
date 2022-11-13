@@ -1,12 +1,12 @@
 import {Memoize} from "typescript-memoize";
 import {Agent} from "../Agent";
-import {DCTERMS} from "@paradicms/vocabularies";
+import {dcterms} from "@paradicms/vocabularies";
 import {ModelMixin} from "./ModelMixin";
 
 export abstract class HasContributors extends ModelMixin {
   @Memoize()
   get contributors(): readonly (Agent | string)[] {
-    return this.getObjects(DCTERMS.contributor).flatMap(term => {
+    return this.getObjects(dcterms.contributor).flatMap(term => {
       switch (term.termType) {
         case "Literal":
           return term.value;
@@ -26,7 +26,7 @@ export abstract class HasContributors extends ModelMixin {
 
   @Memoize()
   get contributorAgentUris(): readonly string[] {
-    return this.getObjects(DCTERMS.contributor)
+    return this.getObjects(dcterms.contributor)
       .filter(term => term.termType === "NamedNode")
       .map(term => term.value);
   }

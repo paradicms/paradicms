@@ -10,7 +10,7 @@ export class PropertyGroup extends Model {
 
   get label(): string | null {
     return (
-      this.getObjects(RDFS.label).find((term) => term.termType === "Literal")
+      this.getObjects(rdfs.label).find(term => term.termType === "Literal")
         ?.value ?? null
     );
   }

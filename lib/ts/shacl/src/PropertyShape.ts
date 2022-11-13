@@ -1,20 +1,20 @@
 import {Shape} from "./Shape";
 import {BlankNode, Literal, NamedNode} from "n3";
-import {DASH, SH, XSD} from "@paradicms/vocabularies";
+import {sh, xsd} from "@paradicms/vocabularies";
 import {PropertyGroup} from "./PropertyGroup";
 import {requireDefined} from "./requireDefined";
 
 export class PropertyShape extends Shape {
   get datatype(): NamedNode | null {
     return (
-      (this.getObjects(SH.datatype).find(term => term.termType === "NamedNode")
+      (this.getObjects(sh.datatype).find(term => term.termType === "NamedNode")
         ?.value as NamedNode | undefined) ?? null
     );
   }
 
   get defaultValue(): BlankNode | NamedNode | Literal | null {
     return (
-      (this.getObjects(SH.defaultValue).find(term => {
+      (this.getObjects(sh.defaultValue).find(term => {
         switch (term.termType) {
           case "BlankNode":
           case "NamedNode":
@@ -29,14 +29,14 @@ export class PropertyShape extends Shape {
 
   get description(): string | null {
     return (
-      this.getObjects(SH.description).find(term => term.termType === "Literal")
+      this.getObjects(sh.description).find(term => term.termType === "Literal")
         ?.value ?? null
     );
   }
 
   get editor(): NamedNode | null {
     return (
-      (this.getObjects(DASH.editor).find(
+      (this.getObjects(dash.editor).find(
         term => term.termType === "NamedNode"
       ) as NamedNode | undefined) ?? null
     );
@@ -46,14 +46,14 @@ export class PropertyShape extends Shape {
     const literal = this.getObjects(property).find(
       term =>
         term.termType === "Literal" &&
-        (!term.datatype || term.datatype.equals(XSD.integer)) &&
+        (!term.datatype || term.datatype.equals(xsd.integer)) &&
         !Number.isNaN(Number.parseInt(term.value))
     );
     return literal ? Number.parseInt(literal.value) : null;
   }
 
   get group(): PropertyGroup | null {
-    for (const groupObject of this.getObjects(SH.group)) {
+    for (const groupObject of this.getObjects(sh.group)) {
       if (groupObject.termType === "NamedNode") {
         return this.shapesGraph.propertyGroupByNode(groupObject);
       }
@@ -62,22 +62,22 @@ export class PropertyShape extends Shape {
   }
 
   get maxCount(): number | null {
-    return this.getIntegerLiteralObject(SH.maxCount);
+    return this.getIntegerLiteralObject(sh.maxCount);
   }
 
   get minCount(): number | null {
-    return this.getIntegerLiteralObject(SH.minCount);
+    return this.getIntegerLiteralObject(sh.minCount);
   }
 
   get name(): string | null {
     return (
-      this.getObjects(SH.name_).find(term => term.termType === "Literal")
+      this.getObjects(sh.name_).find(term => term.termType === "Literal")
         ?.value ?? null
     );
   }
 
   get order(): number | null {
-    for (const orderObject of this.getObjects(SH.order)) {
+    for (const orderObject of this.getObjects(sh.order)) {
       if (orderObject.termType !== "Literal") {
         continue;
       }
@@ -91,15 +91,15 @@ export class PropertyShape extends Shape {
 
   get path(): NamedNode {
     return requireDefined(
-      this.getObjects(SH.path).find(term => term.termType === "NamedNode")
+      this.getObjects(sh.path).find(term => term.termType === "NamedNode")
     ) as NamedNode;
   }
 
   get singleLine(): boolean | null {
-    for (const singleLine of this.getObjects(DASH.singleLine)) {
+    for (const singleLine of this.getObjects(dash.singleLine)) {
       if (singleLine.termType !== "Literal") {
         continue;
-      } else if (!singleLine.datatype.equals(XSD.boolean_)) {
+      } else if (!singleLine.datatype.equals(xsd.boolean_)) {
         continue;
       }
       switch (singleLine.value.toLowerCase()) {
@@ -116,7 +116,7 @@ export class PropertyShape extends Shape {
 
   get viewer(): NamedNode | null {
     return (
-      (this.getObjects(DASH.viewer).find(
+      (this.getObjects(dash.viewer).find(
         term => term.termType === "NamedNode"
       ) as NamedNode | undefined) ?? null
     );

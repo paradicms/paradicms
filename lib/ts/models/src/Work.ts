@@ -5,7 +5,7 @@ import {Text} from "./Text";
 import {Memoize} from "typescript-memoize";
 import {PropertyValue} from "./PropertyValue";
 import {NamedValue} from "./NamedValue";
-import {NamedNode} from "n3";
+import {NamedNode} from "@rdfjs/types";
 import {WorkAgent} from "./WorkAgent";
 import {Mixin} from "ts-mixer";
 import {
@@ -22,7 +22,7 @@ import {WorkLocation} from "./WorkLocation";
 import {visitWorkEvent} from "./WorkEventVisitor";
 import {WorkCreation} from "./WorkCreation";
 import {Location} from "./Location";
-import {CMS, DCTERMS, RDF} from "@paradicms/vocabularies";
+import {cms, dcterms, rdf} from "@paradicms/vocabularies";
 
 const getRightsWorkAgents = (
   rights: Rights | null,
@@ -125,14 +125,14 @@ export class Work extends Mixin(
 
   @Memoize()
   get collectionUris(): readonly string[] {
-    return this.getObjects(CMS.collection)
+    return this.getObjects(cms.collection)
       .filter(term => term.termType === "NamedNode")
       .map(term => term.value);
   }
 
   @Memoize()
   get description(): string | Text | null {
-    for (const term of this.getObjects(DCTERMS.abstract)) {
+    for (const term of this.getObjects(dcterms.abstract)) {
       switch (term.termType) {
         case "BlankNode":
           return new Text({
@@ -186,8 +186,8 @@ export class Work extends Mixin(
         }
         const rdfTypeQuads = this.store.getQuads(
           quad.object,
-          RDF.type,
-          CMS.NamedValue,
+          rdf.type,
+          cms.NamedValue,
           null
         );
         if (rdfTypeQuads.length == 0) {

@@ -1,7 +1,7 @@
 import {DataFactory, NamedNode, OTerm} from "n3";
 import {Form} from "./Form";
 import {FormNode} from "./FormNode";
-import {RDF} from "@paradicms/vocabularies";
+import {rdf} from "@paradicms/vocabularies";
 import {Model} from "./Model";
 import {DataGraph, ShapesGraph} from "@paradicms/shacl";
 
@@ -19,7 +19,7 @@ export class FormNodeType extends Model {
     // Add (node, rdf:type, ...)
     // Assumes the shapes graph has a class or implicit class target
     this.form.dataGraph.store.add(
-      DataFactory.quad(dataGraphNode, RDF.type, this.rdfType)
+      DataFactory.quad(dataGraphNode, rdf.type, this.rdfType)
     );
 
     return new FormNode({
@@ -38,7 +38,7 @@ export class FormNodeType extends Model {
 
   get nodesByUri(): {[index: string]: FormNode} {
     return this.form.dataGraph.store
-      .getSubjects(RDF.type, this.rdfType, null as OTerm)
+      .getSubjects(rdf.type, this.rdfType, null as OTerm)
       .reduce((map, subject) => {
         if (subject.termType === "NamedNode" && !map[subject.value]) {
           map[subject.value] = new FormNode({

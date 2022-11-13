@@ -1,7 +1,7 @@
 import {Event} from "./Event";
 import {requireDefined} from "./requireDefined";
 import {Work} from "./Work";
-import {CMS} from "@paradicms/vocabularies";
+import {cms} from "@paradicms/vocabularies";
 
 export class WorkEvent extends Event {
   get work(): Work {
@@ -10,7 +10,7 @@ export class WorkEvent extends Event {
 
   get workUri(): string {
     return requireDefined(
-      this.getObjects(CMS.work).find(term => term.termType === "NamedNode")
+      this.getObjects(cms.work).find(term => term.termType === "NamedNode")
     ).value;
   }
 }

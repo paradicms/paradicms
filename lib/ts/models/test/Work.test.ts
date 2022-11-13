@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import {ModelSet, Text} from "../src";
 import {testDataTrig} from "./testDataTrig";
-import {DCTERMS} from "@paradicms/vocabularies";
+import {dcterms} from "@paradicms/vocabularies";
 
 describe("Work", () => {
   const modelSet = ModelSet.parse(testDataTrig);
@@ -57,14 +57,14 @@ describe("Work", () => {
   });
 
   it("should get the work's property values (literal)", () => {
-    const propertyValues = sut.propertyValues(DCTERMS.title.value);
+    const propertyValues = sut.propertyValues(dcterms.title.value);
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];
     expect(propertyValue.value).to.eq(sut.title);
   });
 
   it("should get the work's property values (named)", () => {
-    const propertyValues = sut.propertyNamedValues(DCTERMS.subject.value);
+    const propertyValues = sut.propertyNamedValues(dcterms.subject.value);
     expect(propertyValues).to.have.length(2);
     const propertyValue = propertyValues[0];
     expect(propertyValue.value.value).to.satisfy((text: string) =>
@@ -73,7 +73,7 @@ describe("Work", () => {
   });
 
   it("should get the work's property values (Text)", () => {
-    const propertyValues = sut.propertyValues(DCTERMS.abstract.value);
+    const propertyValues = sut.propertyValues(dcterms.abstract.value);
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];
     expect(propertyValue.value).to.eq((sut.abstract as Text).value);

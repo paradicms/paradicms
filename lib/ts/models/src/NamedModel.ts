@@ -1,4 +1,4 @@
-import {NamedNode} from "n3";
+import {NamedNode} from "@rdfjs/types";
 import {Model} from "./Model";
 
 export class NamedModel extends Model {

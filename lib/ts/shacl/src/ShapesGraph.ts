@@ -8,7 +8,7 @@ import {
   Store,
   Variable,
 } from "n3";
-import {RDF, SH} from "@paradicms/vocabularies";
+import {rdf, sh} from "@paradicms/vocabularies";
 import {NodeShape} from "./NodeShape";
 import {PropertyShape} from "./PropertyShape";
 import {PropertyGroup} from "./PropertyGroup";
@@ -113,8 +113,8 @@ export class ShapesGraph {
         propertyGroups.push(propertyGroup);
         propertyGroupsByNode.put(subject, propertyGroup);
       },
-      RDF.type,
-      SH.PropertyGroup,
+      rdf.type,
+      sh.PropertyGroup,
       graph
     );
     return {propertyGroups, propertyGroupsByNode};
@@ -149,16 +149,16 @@ export class ShapesGraph {
     // https://www.w3.org/TR/shacl/#shapes
 
     // Subject is a SHACL instance of sh:NodeShape or sh:PropertyShape
-    for (const rdfType of [SH.NodeShape, SH.PropertyShape]) {
-      store.forSubjects(addShapeNode, RDF.type, rdfType, graph);
+    for (const rdfType of [sh.NodeShape, sh.PropertyShape]) {
+      store.forSubjects(addShapeNode, rdf.type, rdfType, graph);
     }
 
     // Subject of a triple with sh:targetClass, sh:targetNode, sh:targetObjectsOf, or sh:targetSubjectsOf predicate
     for (const predicate of [
-      SH.targetClass,
-      SH.targetNode,
-      SH.targetObjectsOf,
-      SH.targetSubjectsOf,
+      sh.targetClass,
+      sh.targetNode,
+      sh.targetObjectsOf,
+      sh.targetSubjectsOf,
     ]) {
       store.forSubjects(addShapeNode, predicate, null, graph);
     }
@@ -167,44 +167,44 @@ export class ShapesGraph {
     // https://www.w3.org/TR/shacl/#constraints
     // https://www.w3.org/TR/shacl/#core-components
     for (const predicate of [
-      SH.class_,
-      SH.datatype,
-      SH.nodeKind,
-      SH.minCount,
-      SH.maxCount,
-      SH.minExclusive,
-      SH.minInclusive,
-      SH.maxExclusive,
-      SH.maxInclusive,
-      SH.minLength,
-      SH.maxLength,
-      SH.pattern,
-      SH.languageIn,
-      SH.uniqueLang,
-      SH.equals,
-      SH.disjoint,
-      SH.lessThan,
-      SH.lessThanOrEquals,
-      SH.not,
-      SH.and,
-      SH.or,
-      SH.xone,
-      SH.node,
-      SH.property,
-      SH.qualifiedValueShape,
-      SH.qualifiedMinCount,
-      SH.qualifiedMaxCount,
-      SH.closed,
-      SH.ignoredProperties,
-      SH.hasValue,
-      SH.in_,
+      sh.class_,
+      sh.datatype,
+      sh.nodeKind,
+      sh.minCount,
+      sh.maxCount,
+      sh.minExclusive,
+      sh.minInclusive,
+      sh.maxExclusive,
+      sh.maxInclusive,
+      sh.minLength,
+      sh.maxLength,
+      sh.pattern,
+      sh.languageIn,
+      sh.uniqueLang,
+      sh.equals,
+      sh.disjoint,
+      sh.lessThan,
+      sh.lessThanOrEquals,
+      sh.not,
+      sh.and,
+      sh.or,
+      sh.xone,
+      sh.node,
+      sh.property,
+      sh.qualifiedValueShape,
+      sh.qualifiedMinCount,
+      sh.qualifiedMaxCount,
+      sh.closed,
+      sh.ignoredProperties,
+      sh.hasValue,
+      sh.in_,
     ]) {
       store.forSubjects(addShapeNode, predicate, null, graph);
     }
 
     // Object of a shape-expecting, non-list-taking parameter such as sh:node
     // TODO: handle list-taking parameters
-    for (const predicate of [SH.node, SH.property]) {
+    for (const predicate of [sh.node, sh.property]) {
       store.forObjects(addShapeNode, null, predicate, graph);
     }
 
@@ -221,7 +221,7 @@ export class ShapesGraph {
     > = new TermMap();
 
     for (const shapeNode of shapeNodeSet.values) {
-      if (store.some(quad => true, shapeNode, SH.path, null, graph)) {
+      if (store.some(quad => true, shapeNode, sh.path, null, graph)) {
         // A property shape is a shape in the shapes graph that is the subject of a triple that has sh:path as its predicate. A shape has at most one value for sh:path. Each value of sh:path in a shape must be a well-formed SHACL property path. It is recommended, but not required, for a property shape to be declared as a SHACL instance of sh:PropertyShape. SHACL instances of sh:PropertyShape have one value for the property sh:path.
         const propertyShape = new PropertyShape({
           node: shapeNode,

@@ -3,15 +3,15 @@ import {LunrWorkQueryService} from "../src/LunrWorkQueryService";
 import {ModelSet, visitWorkEvent, WorkCreation} from "@paradicms/models";
 import {testDataTrig} from "../../models/test/testDataTrig";
 import {CollectionValueFacet, InstitutionValueFacet, StringPropertyValueFacet} from "@paradicms/facets";
-import {DCTERMS, VRA} from "@paradicms/vocabularies";
+import {dcterms, vra} from "@paradicms/vocabularies";
 import {StringPropertyValueFilter} from "@paradicms/filters";
 
 describe("LunrWorkQueryService", () => {
   const modelSet = ModelSet.parse(testDataTrig);
   const sut = new LunrWorkQueryService({
     modelSet,
-    resultWorkPropertyUris: [DCTERMS.title.value],
-    searchWorkPropertyUris: [DCTERMS.title.value]
+    resultWorkPropertyUris: [dcterms.title.value],
+    searchWorkPropertyUris: [dcterms.title.value]
   });
 
   it("getWorkAgents return at least one agent from an empty query", async () => {
@@ -133,7 +133,7 @@ describe("LunrWorkQueryService", () => {
           type: "InstitutionValue"
         }, {
           label: "Publisher",
-          propertyUri: VRA.NS("technique").value,
+          propertyUri: vra.NS("technique").value,
           type: "StringPropertyValue"
         } as StringPropertyValueFilter],
       }

@@ -1,12 +1,12 @@
 import {Memoize} from "typescript-memoize";
 import {Text} from "../Text";
-import {DCTERMS} from "@paradicms/vocabularies";
+import {dcterms} from "@paradicms/vocabularies";
 import {ModelMixin} from "./ModelMixin";
 
 export abstract class HasAbstract extends ModelMixin {
   @Memoize()
   get abstract(): string | Text | null {
-    for (const term of this.getObjects(DCTERMS.abstract)) {
+    for (const term of this.getObjects(dcterms.abstract)) {
       switch (term.termType) {
         case "BlankNode":
           return new Text({

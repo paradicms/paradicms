@@ -1,6 +1,6 @@
 import {BlankNode, NamedNode} from "n3";
 import {Shape} from "./Shape";
-import {RDF, RDFS} from "@paradicms/vocabularies";
+import {rdf, RDFS} from "@paradicms/vocabularies";
 import {FocusNode} from "./FocusNode";
 import {DataGraph} from "./DataGraph";
 import {ShapesGraph} from "./ShapesGraph";
@@ -112,7 +112,7 @@ export class ShaclProcessor {
           }
         },
         null,
-        RDF.type,
+        rdf.type,
         targetClass,
         null
       )
@@ -130,7 +130,7 @@ export class ShaclProcessor {
           quad.subject
         ),
       null,
-      RDFS.subClassOf,
+      rdfs.subClassOf,
       targetClass,
       null
     );

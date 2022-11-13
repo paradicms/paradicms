@@ -1,18 +1,18 @@
 import {ImageDimensions} from "./ImageDimensions";
 import {NamedModel} from "./NamedModel";
-import {Literal, NamedNode} from "n3";
+import {Literal, NamedNode} from "@rdfjs/types";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Memoize} from "typescript-memoize";
 import {requireDefined} from "./requireDefined";
 import {Mixin} from "ts-mixer";
 import {HasRights} from "./mixins";
-import {CMS, DCTERMS, EXIF, FOAF, XSD} from "@paradicms/vocabularies";
+import {dcterms, exif, foaf} from "@paradicms/vocabularies";
 
 export class Image extends Mixin(NamedModel, HasRights) {
   get depictsUri(): string {
     return requireDefined(
-      this.getObjects(FOAF.depicts).find(term => term.termType === "NamedNode")
+      this.getObjects(foaf.depicts).find(term => term.termType === "NamedNode")
     ).value;
   }
 
@@ -26,7 +26,7 @@ export class Image extends Mixin(NamedModel, HasRights) {
 
   @Memoize()
   get exactDimensions(): ImageDimensions | null {
-    return this.imageDimensions(EXIF.height, EXIF.width);
+    return this.imageDimensions(exif.height, exif.width);
   }
 
   private imageDimensions(
@@ -35,11 +35,11 @@ export class Image extends Mixin(NamedModel, HasRights) {
   ): ImageDimensions | null {
     const heightLiteral = this.getObjects(heightProperty).find(
       term =>
-        term.termType === "Literal" && term.datatype.value === XSD.integer.value
+        term.termType === "Literal" && term.datatype.value === xsd.integer.value
     ) as Literal | undefined;
     const widthLiteral = this.getObjects(widthProperty).find(
       term =>
-        term.termType === "Literal" && term.datatype.value === XSD.integer.value
+        term.termType === "Literal" && term.datatype.value === xsd.integer.value
     ) as Literal | undefined;
 
     if (heightLiteral && widthLiteral) {
@@ -62,12 +62,12 @@ export class Image extends Mixin(NamedModel, HasRights) {
 
   @Memoize()
   get maxDimensions(): ImageDimensions | null {
-    return this.imageDimensions(CMS.imageMaxHeight, CMS.imageMaxWidth);
+    return this.imageDimensions(cms.imageMaxHeight, cms.imageMaxWidth);
   }
 
   get originalImageUri(): string | null {
     const originalImageUriSubjects = this.store.getSubjects(
-      FOAF.thumbnail,
+      foaf.thumbnail,
       this.node,
       null
     );
@@ -88,7 +88,7 @@ export class Image extends Mixin(NamedModel, HasRights) {
   }
 
   get src(): string | null {
-    const srcLiteral = this.getObjects(CMS.imageSrc).find(
+    const srcLiteral = this.getObjects(cms.imageSrc).find(
       term => term.termType === "Literal"
     );
     if (srcLiteral) {
@@ -113,7 +113,7 @@ export class Image extends Mixin(NamedModel, HasRights) {
 
   get title(): string | null {
     return (
-      this.getObjects(DCTERMS.title).find(term => term.termType === "Literal")
+      this.getObjects(dcterms.title).find(term => term.termType === "Literal")
         ?.value ?? null
     );
   }

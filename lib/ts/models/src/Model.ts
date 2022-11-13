@@ -1,4 +1,4 @@
-import {BlankNode, DefaultGraph, NamedNode, Store, Term} from "n3";
+import {BlankNode, DefaultGraph, NamedNode, Store, Term} from "@rdfjs/types";
 import {ModelSet} from "./ModelSet";
 import {ModelParameters} from "./ModelParameters";
 

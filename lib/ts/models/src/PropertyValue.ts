@@ -1,11 +1,11 @@
 import {NamedValue} from "./NamedValue";
-import {Literal, NamedNode, Quad} from "n3";
+import {Literal, NamedNode, Quad} from "@rdfjs/types";
 import {Text} from "./Text";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {Image} from "./Image";
 import {ModelSet} from "./ModelSet";
 import {Agent} from "./Agent";
-import {CMS, RDF} from "@paradicms/vocabularies";
+import {cms, rdf} from "@paradicms/vocabularies";
 
 export abstract class PropertyValue {
   static fromAgent(agent: Agent) {
@@ -33,8 +33,8 @@ export abstract class PropertyValue {
       case "BlankNode": {
         const objectRdfTypeQuads = modelSet.store.getQuads(
           quad.object,
-          RDF.type,
-          CMS.Text,
+          rdf.type,
+          cms.Text,
           quad.graph
         );
         if (objectRdfTypeQuads.length === 0) {

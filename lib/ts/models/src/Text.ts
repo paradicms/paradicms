@@ -2,7 +2,7 @@ import {Model} from "./Model";
 import {requireDefined} from "./requireDefined";
 import {Mixin} from "ts-mixer";
 import {HasRights} from "./mixins/HasRights";
-import {RDF} from "@paradicms/vocabularies";
+import {rdf} from "@paradicms/vocabularies";
 
 export class Text extends Mixin(Model, HasRights) {
   toString() {
@@ -11,7 +11,7 @@ export class Text extends Mixin(Model, HasRights) {
 
   get value(): string {
     return requireDefined(
-      this.getObjects(RDF.value).find((term) => term.termType === "Literal")
+      this.getObjects(rdf.value).find(term => term.termType === "Literal")
     ).value;
   }
 }
