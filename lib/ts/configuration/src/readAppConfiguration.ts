@@ -1,25 +1,25 @@
 import {AppConfiguration} from "./AppConfiguration";
-import {BlankNode, DefaultGraph, NamedNode, Store} from "n3";
+import {BlankNode, Dataset, DefaultGraph, NamedNode} from "n3";
 import {CONFIGURATION, rdf} from "@paradicms/vocabularies";
 
 export const readAppConfiguration = <
   AppConfigurationT extends AppConfiguration
 >(
-  configurationStore: Store | null,
-  dataStore: Store,
+  configurationDataset: Dataset | null,
+  dataDataset: Dataset,
   factory: (kwds: {
     readonly graph: BlankNode | DefaultGraph | NamedNode;
     readonly node: BlankNode | NamedNode;
-    readonly store: Store;
+    readonly dataset: Dataset;
     readonly stylesheetHref: string | null;
   }) => AppConfigurationT
 ): AppConfigurationT | null => {
-  for (const store of [configurationStore, dataStore]) {
-    if (!store) {
+  for (const dataset of [configurationDataset, dataDataset]) {
+    if (!dataset) {
       continue;
     }
 
-    const typeQuads = store.getQuads(
+    const typeQuads = dataset.getQuads(
       null,
       rdf.type,
       CONFIGURATION.AppConfiguration,
@@ -56,9 +56,9 @@ export const readAppConfiguration = <
     return factory({
       graph: typeQuad.graph as DefaultGraph | NamedNode | BlankNode,
       node: typeQuad.subject as BlankNode | NamedNode,
-      store,
+      dataset,
       stylesheetHref:
-        store
+        dataset
           .getObjects(
             typeQuad.subject,
             CONFIGURATION.stylesheetHref,

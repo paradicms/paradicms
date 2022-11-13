@@ -15,10 +15,10 @@ export abstract class Model {
   }
 
   protected getObjects(property: NamedNode): readonly Term[] {
-    return this.store.getObjects(this.node, property, this.shapesGraph.graph);
+    return this.dataset.getObjects(this.node, property, this.shapesGraph.graph);
   }
 
-  protected get store() {
-    return this.shapesGraph.store;
+  protected get dataset() {
+    return this.shapesGraph.dataset;
   }
 }

@@ -1,5 +1,5 @@
 import {readCollectionAppConfiguration} from "./readCollectionAppConfiguration";
-import {Parser, Store} from "n3";
+import {Dataset, Parser} from "n3";
 
 const ttl = `
 @prefix configuration: <http://www.paradicms.org/ns/configuration#> .
@@ -48,6 +48,6 @@ const ttl = `
 `;
 
 export const defaultCollectionAppConfiguration = readCollectionAppConfiguration(
-  new Store(new Parser().parse(ttl)),
-  new Store()
+  new Dataset(new Parser().parse(ttl)),
+  new Dataset()
 )!;

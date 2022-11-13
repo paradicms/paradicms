@@ -1,4 +1,4 @@
-import {BlankNode, DefaultGraph, NamedNode, Store, Term} from "@rdfjs/types";
+import {BlankNode, Dataset, DefaultGraph, NamedNode, Term} from "@rdfjs/types";
 import {ModelSet} from "./ModelSet";
 import {ModelParameters} from "./ModelParameters";
 
@@ -14,14 +14,14 @@ export class Model {
   }
 
   protected getObjects(property: NamedNode): readonly Term[] {
-    return this.store.getObjects(this.node, property, this.graphNode);
+    return this.dataset.getObjects(this.node, property, this.graphNode);
   }
 
   get node(): BlankNode | NamedNode {
     return this._node;
   }
 
-  protected get store(): Store {
-    return this.modelSet.store;
+  protected get dataset(): Dataset {
+    return this.modelSet.dataset;
   }
 }

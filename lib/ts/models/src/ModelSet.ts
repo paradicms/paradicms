@@ -3,7 +3,7 @@ import {Image} from "./Image";
 import {Institution} from "./Institution";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
-import {BlankNode, DefaultGraph, NamedNode, Store} from "@rdfjs/types";
+import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
 import {Work} from "./Work";
 import {Person} from "./Person";
 import {NamedModel} from "./NamedModel";
@@ -66,7 +66,7 @@ export class ModelSet {
   private _worksByInstitutionUriIndex?: {[index: string]: readonly Work[]};
   private _worksByUriIndex?: {[index: string]: Work};
 
-  constructor(readonly store: Store) {}
+  constructor(readonly dataset: Dataset) {}
 
   agentByUri(agentUri: string): Agent {
     for (const index of [this.organizationsByUriIndex, this.peopleByUriIndex]) {
@@ -230,7 +230,7 @@ export class ModelSet {
   logContents(): void {
     console.log(
       "ModelSet:",
-      this.store.getSubjects(null, null, null).length,
+      this.dataset.getSubjects(null, null, null).length,
       "subjects"
     );
     const models: {[index: string]: readonly NamedModel[]} = {
@@ -327,17 +327,17 @@ export class ModelSet {
   }
 
   // static parse(input: string, options?: ParserOptions): ModelSet {
-  //   return new ModelSet(ModelSet.parseIntoStore(input, options));
+  //   return new ModelSet(ModelSet.parseIntoDataset(input, options));
   // }
   //
-  // protected static parseIntoStore(
+  // protected static parseIntoDataset(
   //   input: string,
   //   options?: ParserOptions
-  // ): Store {
+  // ): Dataset {
   //   const parser = new Parser(options);
-  //   const store = new Store();
-  //   store.addQuads(parser.parse(input));
-  //   return store;
+  //   const dataset = new Dataset();
+  //   dataset.addQuads(parser.parse(input));
+  //   return dataset;
   // }
 
   get people(): readonly Person[] {
@@ -368,7 +368,7 @@ export class ModelSet {
   }
 
   protected readEvent(kwds: ModelParameters): Event {
-    for (const eventRdfType of this.store.getObjects(
+    for (const eventRdfType of this.dataset.getObjects(
       kwds.node,
       rdf.type,
       kwds.graphNode
@@ -511,7 +511,7 @@ export class ModelSet {
     callback: (kwds: ModelParameters) => void,
     type: NamedNode
   ): void {
-    this.store.forEach(
+    this.dataset.forEach(
       quad => {
         switch (quad.graph.termType) {
           case "DefaultGraph":
@@ -701,7 +701,7 @@ export class ModelSet {
   //     augmentedOptions.prefixes = prefixes;
   //   }
   //   const writer = new Writer(augmentedOptions);
-  //   writer.addQuads(this.store.getQuads(null, null, null, null));
+  //   writer.addQuads(this.dataset.getQuads(null, null, null, null));
   //   let resultString: string;
   //   writer.end((error, result: string) => (resultString = result));
   //   return resultString!;

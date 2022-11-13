@@ -31,7 +31,7 @@ export abstract class PropertyValue {
   ): PropertyValue | null {
     switch (quad.object.termType) {
       case "BlankNode": {
-        const objectRdfTypeQuads = modelSet.store.getQuads(
+        const objectRdfTypeQuads = modelSet.dataset.getQuads(
           quad.object,
           rdf.type,
           cms.Text,

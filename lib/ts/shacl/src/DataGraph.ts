@@ -1,16 +1,19 @@
-import {Parser, ParserOptions, Store} from "n3";
+import {Dataset, Parser, ParserOptions} from "n3";
 
 export class DataGraph {
-  constructor(private readonly store: Store) {}
+  constructor(private readonly dataset: Dataset) {}
 
   static parse(input: string, options?: ParserOptions): DataGraph {
-    return new DataGraph(DataGraph.parseIntoStore(input, options));
+    return new DataGraph(DataGraph.parseIntoDataset(input, options));
   }
 
-  private static parseIntoStore(input: string, options?: ParserOptions): Store {
+  private static parseIntoDataset(
+    input: string,
+    options?: ParserOptions
+  ): Dataset {
     const parser = new Parser(options);
-    const store = new Store();
-    store.addQuads(parser.parse(input));
-    return store;
+    const dataset = new Dataset();
+    dataset.addQuads(parser.parse(input));
+    return dataset;
   }
 }

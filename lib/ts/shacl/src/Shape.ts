@@ -11,7 +11,7 @@ export class Shape extends Model {
       if (rdfType.equals(rdfs.Class)) {
         return true;
       }
-      for (const parentRdfType of this.store.getObjects(
+      for (const parentRdfType of this.dataset.getObjects(
         rdfType,
         rdfs.subClassOf,
         this.shapesGraph.graph

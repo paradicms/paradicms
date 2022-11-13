@@ -1,5 +1,5 @@
 import {CollectionAppConfiguration} from "./CollectionAppConfiguration";
-import {BlankNode, NamedNode, Store} from "@rdfjs/types";
+import {BlankNode, Dataset, NamedNode} from "@rdfjs/types";
 import {
   imputeSearchConfiguration,
   readAppConfiguration,
@@ -8,14 +8,14 @@ import {
 import {configuration} from "@paradicms/vocabularies";
 
 export const readCollectionAppConfiguration = (
-  configurationStore: Store | null,
-  modelSetStore: Store
+  configurationDataset: Dataset | null,
+  modelSetDataset: Dataset
 ): CollectionAppConfiguration | null => {
   return readAppConfiguration<CollectionAppConfiguration>(
-    configurationStore,
-    modelSetStore,
-    ({graph, node, store, ...appConfigurationProps}) => {
-      const workProperties = store
+    configurationDataset,
+    modelSetDataset,
+    ({graph, node, dataset, ...appConfigurationProps}) => {
+      const workProperties = dataset
         .getObjects(node, configuration.workProperty, graph)
         .filter(
           term => term.termType === "BlankNode" || term.termType === "NamedNode"
@@ -24,7 +24,7 @@ export const readCollectionAppConfiguration = (
           readPropertyConfiguration({
             node: node as BlankNode | NamedNode,
             graph,
-            store,
+            dataset,
           })
         );
 

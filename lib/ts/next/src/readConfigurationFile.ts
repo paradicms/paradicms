@@ -1,25 +1,25 @@
-import {Parser, Store} from "n3";
+import {Dataset, Parser} from "n3";
 
-let _configurationStore: Store | null | undefined;
+let _configurationDataset: Dataset | null | undefined;
 
 export const readConfigurationFile = (
   // There are issues importing "fs" from a library, so pass in the function we need here
   // https://github.com/vercel/next.js/issues/7755
   readFileSync: (filePath: string) => string
-): Store | null => {
-  if (typeof _configurationStore === "undefined") {
+): Dataset | null => {
+  if (typeof _configurationDataset === "undefined") {
     const configurationFilePath: string | undefined =
       process.env.CONFIGURATION_FILE_PATH;
     if (configurationFilePath) {
       const parser = new Parser();
-      _configurationStore = new Store();
-      _configurationStore.addQuads(
+      _configurationDataset = new Dataset();
+      _configurationDataset.addQuads(
         parser.parse(readFileSync(configurationFilePath).toString())
       );
     } else {
-      _configurationStore = null;
+      _configurationDataset = null;
     }
   }
 
-  return _configurationStore!;
+  return _configurationDataset!;
 };

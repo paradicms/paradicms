@@ -92,7 +92,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
       configuration:
         readExhibitionAppConfiguration(
           readConfigurationFile(readFileSync),
-          modelSet.store
+          modelSet.dataset
         ) ?? defaultExhibitionAppConfiguration,
       modelSetString: modelSet.stringify(),
       collectionUri: collection.uri,

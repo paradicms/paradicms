@@ -1,11 +1,11 @@
 import {
   BlankNode,
+  Dataset,
   DefaultGraph,
   Literal,
   NamedNode,
   Parser,
   ParserOptions,
-  Store,
   Variable,
 } from "n3";
 import {rdf, sh} from "@paradicms/vocabularies";
@@ -30,15 +30,15 @@ export class ShapesGraph {
     PropertyShape
   >;
 
-  constructor(readonly store: Store) {
-    this.graph = ShapesGraph.readGraph(store);
+  constructor(readonly dataset: Dataset) {
+    this.graph = ShapesGraph.readGraph(dataset);
 
     const {
       nodeShapes,
       nodeShapesByNode,
       propertyShapes,
       propertyShapesByNode,
-    } = ShapesGraph.readShapes(this.graph, this, store);
+    } = ShapesGraph.readShapes(this.graph, this, dataset);
     this.nodeShapes = nodeShapes;
     this.nodeShapesByNode = nodeShapesByNode;
     this.propertyShapes = propertyShapes;
@@ -47,7 +47,7 @@ export class ShapesGraph {
     const {
       propertyGroups,
       propertyGroupsByNode,
-    } = ShapesGraph.readPropertyGroups(this.graph, this, store);
+    } = ShapesGraph.readPropertyGroups(this.graph, this, dataset);
     this.propertyGroups = propertyGroups;
     this.propertyGroupsByNode = propertyGroupsByNode;
   }
@@ -57,14 +57,17 @@ export class ShapesGraph {
   }
 
   static parse(input: string, options?: ParserOptions): ShapesGraph {
-    return new ShapesGraph(ShapesGraph.parseIntoStore(input, options));
+    return new ShapesGraph(ShapesGraph.parseIntoDataset(input, options));
   }
 
-  private static parseIntoStore(input: string, options?: ParserOptions): Store {
+  private static parseIntoDataset(
+    input: string,
+    options?: ParserOptions
+  ): Dataset {
     const parser = new Parser(options);
-    const store = new Store();
-    store.addQuads(parser.parse(input));
-    return store;
+    const dataset = new Dataset();
+    dataset.addQuads(parser.parse(input));
+    return dataset;
   }
 
   propertyGroupByNode(propertyGroupNode: NamedNode): PropertyGroup {
@@ -75,8 +78,8 @@ export class ShapesGraph {
     return this.propertyShapesByNode.get(propertyShapeNode);
   }
 
-  private static readGraph(store: Store): DefaultGraph | NamedNode {
-    const graphs = store.getGraphs(null, null, null);
+  private static readGraph(dataset: Dataset): DefaultGraph | NamedNode {
+    const graphs = dataset.getGraphs(null, null, null);
     if (graphs.length !== 1) {
       throw new RangeError("expected a single graph");
     }
@@ -94,7 +97,7 @@ export class ShapesGraph {
   private static readPropertyGroups(
     graph: DefaultGraph | NamedNode,
     shapesGraph: ShapesGraph,
-    store: Store
+    dataset: Dataset
   ): {
     propertyGroups: PropertyGroup[];
     propertyGroupsByNode: TermMap<NamedNode, PropertyGroup>;
@@ -104,7 +107,7 @@ export class ShapesGraph {
       NamedNode,
       PropertyGroup
     > = new TermMap();
-    store.forSubjects(
+    dataset.forSubjects(
       subject => {
         if (subject.termType !== "NamedNode") {
           return;
@@ -123,7 +126,7 @@ export class ShapesGraph {
   private static readShapes(
     graph: DefaultGraph | NamedNode,
     shapesGraph: ShapesGraph,
-    store: Store
+    dataset: Dataset
   ): {
     nodeShapes: NodeShape[];
     nodeShapesByNode: TermMap<BlankNode | NamedNode, NodeShape>;
@@ -150,7 +153,7 @@ export class ShapesGraph {
 
     // Subject is a SHACL instance of sh:NodeShape or sh:PropertyShape
     for (const rdfType of [sh.NodeShape, sh.PropertyShape]) {
-      store.forSubjects(addShapeNode, rdf.type, rdfType, graph);
+      dataset.forSubjects(addShapeNode, rdf.type, rdfType, graph);
     }
 
     // Subject of a triple with sh:targetClass, sh:targetNode, sh:targetObjectsOf, or sh:targetSubjectsOf predicate
@@ -160,7 +163,7 @@ export class ShapesGraph {
       sh.targetObjectsOf,
       sh.targetSubjectsOf,
     ]) {
-      store.forSubjects(addShapeNode, predicate, null, graph);
+      dataset.forSubjects(addShapeNode, predicate, null, graph);
     }
 
     // Subject of a triple that has a parameter as predicate
@@ -199,13 +202,13 @@ export class ShapesGraph {
       sh.hasValue,
       sh.in_,
     ]) {
-      store.forSubjects(addShapeNode, predicate, null, graph);
+      dataset.forSubjects(addShapeNode, predicate, null, graph);
     }
 
     // Object of a shape-expecting, non-list-taking parameter such as sh:node
     // TODO: handle list-taking parameters
     for (const predicate of [sh.node, sh.property]) {
-      store.forObjects(addShapeNode, null, predicate, graph);
+      dataset.forObjects(addShapeNode, null, predicate, graph);
     }
 
     // Separate shapes into node and property shapes.
@@ -221,7 +224,7 @@ export class ShapesGraph {
     > = new TermMap();
 
     for (const shapeNode of shapeNodeSet.values) {
-      if (store.some(quad => true, shapeNode, sh.path, null, graph)) {
+      if (dataset.some(quad => true, shapeNode, sh.path, null, graph)) {
         // A property shape is a shape in the shapes graph that is the subject of a triple that has sh:path as its predicate. A shape has at most one value for sh:path. Each value of sh:path in a shape must be a well-formed SHACL property path. It is recommended, but not required, for a property shape to be declared as a SHACL instance of sh:PropertyShape. SHACL instances of sh:PropertyShape have one value for the property sh:path.
         const propertyShape = new PropertyShape({
           node: shapeNode,

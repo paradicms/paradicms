@@ -179,12 +179,12 @@ export class Work extends Mixin(
   @Memoize()
   propertyNamedValues(propertyUri: string): readonly NamedValue[] {
     const result: NamedValue[] = [];
-    this.store.forEach(
+    this.dataset.forEach(
       quad => {
         if (quad.object.termType !== "NamedNode") {
           return;
         }
-        const rdfTypeQuads = this.store.getQuads(
+        const rdfTypeQuads = this.dataset.getQuads(
           quad.object,
           rdf.type,
           cms.NamedValue,
@@ -213,7 +213,7 @@ export class Work extends Mixin(
   propertyValues(propertyUri: string): readonly PropertyValue[] {
     return PropertyValue.fromQuads(
       this.modelSet,
-      this.store.getQuads(
+      this.dataset.getQuads(
         this.node,
         new NamedNode(propertyUri),
         null,

@@ -13,7 +13,7 @@ export class WorksheetFeatureSetDefinition extends Mixin(
 ) {
   @Memoize()
   get features(): readonly WorksheetFeatureDefinition[] {
-    return this.store
+    return this.dataset
       .getQuads(null, WORKSHEET.featureSet, this.node, null)
       .filter(quad => quad.subject.termType === "NamedNode")
       .map(quad =>

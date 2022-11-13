@@ -64,7 +64,7 @@ export class Image extends Mixin(NamedModel, HasRights) {
   }
 
   get originalImageUri(): string | null {
-    const originalImageUriSubjects = this.store.getSubjects(
+    const originalImageUriSubjects = this.dataset.getSubjects(
       foaf.thumbnail,
       this.node,
       null

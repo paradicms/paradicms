@@ -99,7 +99,7 @@ export class ShaclProcessor {
   ): boolean {
     // Get instances of the targetClass
     if (
-      this.dataGraph.store.some(
+      this.dataGraph.dataset.some(
         quad => {
           switch (quad.subject.termType) {
             case "BlankNode":
@@ -121,7 +121,7 @@ export class ShaclProcessor {
     }
 
     // Recurse into targetClass's sub-classes
-    return this.dataGraph.store.some(
+    return this.dataGraph.dataset.some(
       quad =>
         quad.subject.termType === "NamedNode" &&
         this.someShapeClassFocusNodesRecursive(
@@ -178,7 +178,7 @@ export class ShaclProcessor {
           return callback(targetNode);
         case "NamedNode":
           if (
-            this.dataGraph.store.some(
+            this.dataGraph.dataset.some(
               () => true,
               targetNode,
               null,
@@ -201,7 +201,7 @@ export class ShaclProcessor {
   ): boolean {
     // If s is a shape in a shapes graph SG and s has value p for sh:targetObjectsOf in SG then the set of nodes in a data graph DG that are objects of triples in DG with predicate p is a target from DG for s in SG.
     return shape.targetObjectsOf.some(p =>
-      this.dataGraph.store.some(
+      this.dataGraph.dataset.some(
         quad => {
           switch (quad.object.termType) {
             case "BlankNode":
@@ -230,7 +230,7 @@ export class ShaclProcessor {
   ): boolean {
     // If s is a shape in a shapes graph SG and s has value p for sh:targetSubjectsOf in SG then the set of nodes in a data graph DG that are subjects of triples in DG with predicate p is a target from DG for s in SG.
     return shape.targetSubjectsOf.some(p =>
-      this.dataGraph.store.some(
+      this.dataGraph.dataset.some(
         quad => {
           switch (quad.subject.termType) {
             case "BlankNode":
@@ -272,7 +272,7 @@ export class ShaclProcessor {
   }
 
   validate(): ValidationReport {
-    const validator = new SHACLValidator(this.shapesGraph.store);
-    return validator.validate(this.dataGraph.store);
+    const validator = new SHACLValidator(this.shapesGraph.dataset);
+    return validator.validate(this.dataGraph.dataset);
   }
 }

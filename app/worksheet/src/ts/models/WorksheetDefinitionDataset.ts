@@ -19,7 +19,7 @@ export class WorksheetDefinitionModelSet extends ModelSet {
     options?: ParserOptions
   ): WorksheetDefinitionModelSet {
     return new WorksheetDefinitionModelSet(
-      ModelSet.parseIntoStore(input, options)
+      ModelSet.parseIntoDataset(input, options)
     );
   }
 

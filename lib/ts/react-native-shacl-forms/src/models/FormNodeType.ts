@@ -18,7 +18,7 @@ export class FormNodeType extends Model {
   addNode(dataGraphNode: NamedNode): FormNode {
     // Add (node, rdf:type, ...)
     // Assumes the shapes graph has a class or implicit class target
-    this.form.dataGraph.store.add(
+    this.form.dataGraph.dataset.add(
       DataFactory.quad(dataGraphNode, rdf.type, this.rdfType)
     );
 
@@ -37,7 +37,7 @@ export class FormNodeType extends Model {
   }
 
   get nodesByUri(): {[index: string]: FormNode} {
-    return this.form.dataGraph.store
+    return this.form.dataGraph.dataset
       .getSubjects(rdf.type, this.rdfType, null as OTerm)
       .reduce((map, subject) => {
         if (subject.termType === "NamedNode" && !map[subject.value]) {

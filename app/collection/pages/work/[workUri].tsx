@@ -88,7 +88,7 @@ export const getStaticProps: GetStaticProps = async ({
   const configuration =
     readCollectionAppConfiguration(
       readConfigurationFile(readFileSync),
-      completeModelSet.store
+      completeModelSet.dataset
     ) ?? defaultCollectionAppConfiguration;
 
   return {

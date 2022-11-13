@@ -17,12 +17,12 @@ export class FormNode extends Model {
   }
 
   delete(): void {
-    const store = this.type.form.dataGraph.store;
+    const dataset = this.type.form.dataGraph.dataset;
 
     // Delete (s, p, o)
     // Recursively delete (blankNode, p, o) where (s, p, blankNode)
     const deleteQuadsWithSubject = (subject: Term) => {
-      for (const quad of store.getQuads(
+      for (const quad of dataset.getQuads(
         subject,
         null as OTerm,
         null as OTerm,
@@ -31,7 +31,7 @@ export class FormNode extends Model {
         if (quad.object.termType === "BlankNode") {
           deleteQuadsWithSubject(quad.object);
         }
-        store.delete(quad);
+        dataset.delete(quad);
       }
     };
 

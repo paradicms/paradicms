@@ -167,7 +167,7 @@ export const getStaticProps: GetStaticProps = async ({
       configuration:
         readExhibitionAppConfiguration(
           readConfigurationFile(readFileSync),
-          completeModelSet.store
+          completeModelSet.dataset
         ) ?? defaultExhibitionAppConfiguration,
       currentWorkUri: workUri,
       modelSetString: new ModelSubsetter({

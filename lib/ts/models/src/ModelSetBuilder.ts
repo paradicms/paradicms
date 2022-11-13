@@ -5,7 +5,7 @@ import {Collection} from "./Collection";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
 import {NamedValue} from "./NamedValue";
-import {Store} from "n3";
+import {Dataset} from "n3";
 import {Work} from "./Work";
 import {Person} from "./Person";
 import {Organization} from "./Organization";
@@ -183,7 +183,7 @@ export class ModelSetBuilder {
   }
 
   build(): ModelSet {
-    const store = new Store();
+    const dataset = new Dataset();
     for (const modelsByUri of [
       this.collectionsByUri,
       this.eventsByUri,
@@ -202,11 +202,11 @@ export class ModelSetBuilder {
       for (const modelUri of Object.keys(modelsByUri)) {
         const model = modelsByUri[modelUri];
         // Add all quads that belong to the model's graph
-        store.addQuads(
-          model.modelSet.store.getQuads(null, null, null, model.graphNode)
+        dataset.addQuads(
+          model.modelSet.dataset.getQuads(null, null, null, model.graphNode)
         );
       }
     }
-    return new ModelSet(store);
+    return new ModelSet(dataset);
   }
 }

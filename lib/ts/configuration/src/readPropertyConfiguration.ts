@@ -1,22 +1,22 @@
-import {BlankNode, DefaultGraph, NamedNode, Store} from "n3";
+import {BlankNode, Dataset, DefaultGraph, NamedNode} from "n3";
 import {CONFIGURATION, dcterms, rdf, xsd} from "@paradicms/vocabularies";
 import {PropertyConfiguration} from "./PropertyConfiguration";
 
 export const readPropertyConfiguration = (kwds: {
   graph: BlankNode | DefaultGraph | NamedNode;
   node: BlankNode | NamedNode;
-  store: Store;
+  dataset: Dataset;
 }): PropertyConfiguration => {
-  const {graph, node, store} = kwds;
+  const {graph, node, dataset} = kwds;
 
-  const uri = store
+  const uri = dataset
     .getObjects(node, rdf.predicate, graph)
     .find(term => term.termType === "NamedNode")?.value;
   if (!uri) {
     throw new RangeError("property configuration has no rdf:predicate");
   }
 
-  const label = store
+  const label = dataset
     .getObjects(node, dcterms.title, graph)
     .find(term => term.termType === "Literal")?.value;
   if (!label) {
@@ -24,7 +24,7 @@ export const readPropertyConfiguration = (kwds: {
   }
 
   const booleanValue = (propertyUri: NamedNode): boolean =>
-    store
+    dataset
       .getObjects(node, propertyUri, graph)
       .some(
         term =>
