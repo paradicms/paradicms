@@ -9,11 +9,11 @@ import {configuration} from "@paradicms/vocabularies";
 
 export const readCollectionAppConfiguration = (
   configurationStore: Store | null,
-  datasetStore: Store
+  modelSetStore: Store
 ): CollectionAppConfiguration | null => {
   return readAppConfiguration<CollectionAppConfiguration>(
     configurationStore,
-    datasetStore,
+    modelSetStore,
     ({graph, node, store, ...appConfigurationProps}) => {
       const workProperties = store
         .getObjects(node, configuration.workProperty, graph)

@@ -4,11 +4,11 @@ import {readAppConfiguration} from "@paradicms/configuration";
 
 export const readExhibitionAppConfiguration = (
   configurationStore: Store | null,
-  datasetStore: Store
+  modelSetStore: Store
 ): ExhibitionAppConfiguration | null => {
   return readAppConfiguration<ExhibitionAppConfiguration>(
     configurationStore,
-    datasetStore,
+    modelSetStore,
     ({graph, node, store, ...appConfigurationProps}) => {
       return {
         ...appConfigurationProps,
