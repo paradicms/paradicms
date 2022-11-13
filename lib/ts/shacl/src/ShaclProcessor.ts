@@ -58,7 +58,7 @@ export class ShaclProcessor {
 
       // Pick up property shapes via sh:property
       for (const propertyShape of nodeShape.properties) {
-        if (!seenPropertyShapeNodeSet.add(propertyShape.node)) {
+        if (seenPropertyShapeNodeSet.add(propertyShape.node)) {
           if (callback(propertyShape)) {
             return true;
           }
@@ -79,7 +79,7 @@ export class ShaclProcessor {
 
       // Property shape has the focusNode as a focus node
 
-      if (!seenPropertyShapeNodeSet.add(propertyShape.node)) {
+      if (seenPropertyShapeNodeSet.add(propertyShape.node)) {
         if (callback(propertyShape)) {
           return true;
         }
@@ -104,7 +104,7 @@ export class ShaclProcessor {
           switch (quad.subject.termType) {
             case "BlankNode":
             case "NamedNode":
-              if (!seenFocusNodeSet.add(quad.subject)) {
+              if (seenFocusNodeSet.add(quad.subject)) {
                 return callback(quad.subject);
               }
             default:
@@ -185,7 +185,7 @@ export class ShaclProcessor {
               null,
               null
             ) &&
-            !seenFocusNodeSet.add(targetNode)
+            seenFocusNodeSet.add(targetNode)
           ) {
             return callback(targetNode);
           }
@@ -206,7 +206,7 @@ export class ShaclProcessor {
           switch (quad.object.termType) {
             case "BlankNode":
             case "NamedNode":
-              if (!seenFocusNodeSet.add(quad.object)) {
+              if (seenFocusNodeSet.add(quad.object)) {
                 return callback(quad.object);
               }
             case "Literal":
@@ -235,7 +235,7 @@ export class ShaclProcessor {
           switch (quad.subject.termType) {
             case "BlankNode":
             case "NamedNode":
-              if (!seenFocusNodeSet.add(quad.subject)) {
+              if (seenFocusNodeSet.add(quad.subject)) {
                 return callback(quad.subject);
               }
             default:

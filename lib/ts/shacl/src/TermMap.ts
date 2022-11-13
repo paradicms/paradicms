@@ -4,44 +4,81 @@ import {Term} from "n3";
  * A map of Terms to values.
  */
 export class TermMap<TermT extends Term, ValueT> {
+  // Bucket terms by type and value
+  // In each bucket keep a list of the stored terms to test with .equals()
   private readonly map: {
-    [termType: string]: {[termValue: string]: ValueT};
+    [termType: string]: {[termValue: string]: [[TermT, ValueT]]};
   } = {};
 
   get(term: TermT): ValueT {
-    const value: ValueT = (this.map[term.termType] ?? {})[term.value];
-    if (typeof value === "undefined") {
+    const value = this.getOptional(term);
+    if (value) {
+      return value;
+    } else {
       throw new RangeError(
         `missing termType=${term.termType} value=${term.value}`
       );
     }
-    return value;
+  }
+
+  getOptional(term: TermT): ValueT | undefined {
+    const termTypeBucket = this.map[term.termType];
+    if (!termTypeBucket) {
+      return undefined;
+    }
+
+    const termValueBucket = termTypeBucket[term.value];
+    if (!termValueBucket) {
+      return undefined;
+    }
+
+    for (const termValueBucketEntry of termValueBucket) {
+      if (termValueBucketEntry[0].equals(term)) {
+        return termValueBucketEntry[1];
+      }
+    }
   }
 
   has(term: TermT): boolean {
-    if (typeof this.map[term.termType] === "undefined") {
-      return false;
-    }
-    if (typeof this.map[term.termType][term.value] === "undefined") {
-      return false;
-    }
-    return true;
+    return typeof this.getOptional(term) !== "undefined";
   }
 
   put(term: TermT, value: ValueT): ValueT | undefined {
-    if (!this.map[term.termType]) {
-      this.map[term.termType] = {};
+    if (typeof value === "undefined") {
+      throw new RangeError("undefined values are not allowed");
     }
-    const existingValue = this.map[term.termType][term.value];
-    this.map[term.termType][term.value] = value;
-    return existingValue;
+
+    let termTypeBucket = this.map[term.termType];
+    if (!termTypeBucket) {
+      this.map[term.termType] = termTypeBucket = {};
+    }
+
+    let termValueBucket: [[TermT, ValueT]] = termTypeBucket[term.value];
+    if (!termValueBucket) {
+      termTypeBucket[term.value] = [[term, value]];
+      return undefined;
+    }
+
+    for (const termValueBucketEntry of termValueBucket) {
+      if (termValueBucketEntry[0].equals(term)) {
+        const existingValue = termValueBucketEntry[1];
+        termValueBucketEntry[1] = value;
+        return existingValue;
+      }
+    }
+    termValueBucket.push([term, value]);
+    return undefined;
   }
 
   get values(): readonly ValueT[] {
     const values: ValueT[] = [];
     for (const termType in this.map) {
-      for (const termValue in this.map[termType]) {
-        values.push(this.map[termType][termValue]);
+      const termTypeBucket = this.map[termType];
+      for (const termValue in termTypeBucket) {
+        const termValueBucket = termTypeBucket[termValue];
+        for (const termValueBucketEntry of termValueBucket) {
+          values.push(termValueBucketEntry[1]);
+        }
       }
     }
     return values;

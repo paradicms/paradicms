@@ -1,6 +1,7 @@
 export * from "./CMS";
 export * from "./CONFIGURATION";
 export * from "./CONTACT";
+export * from "./DASH";
 export * from "./DC";
 export * from "./DCTERMS";
 export * from "./EXIF";

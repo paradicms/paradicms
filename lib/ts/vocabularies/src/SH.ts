@@ -9,8 +9,11 @@ export class SH {
   static readonly class_ = SH.NS("class");
   static readonly closed = SH.NS("closed");
   static readonly datatype = SH.NS("datatype");
+  static readonly defaultValue = SH.NS("defaultValue");
+  static readonly description = SH.NS("description");
   static readonly disjoint = SH.NS("disjoint");
   static readonly equals = SH.NS("equals");
+  static readonly group = SH.NS("group");
   static readonly hasValue = SH.NS("hasValue");
   static readonly ignoredProperties = SH.NS("ignoredProperties");
   static readonly in_ = SH.NS("in");
@@ -25,6 +28,7 @@ export class SH {
   static readonly minExclusive = SH.NS("minExclusive");
   static readonly minInclusive = SH.NS("minInclusive");
   static readonly minLength = SH.NS("minLength");
+  static readonly name_ = SH.NS("name");
   static readonly node = SH.NS("node");
   static readonly nodeKind = SH.NS("nodeKind");
   static readonly not = SH.NS("not");

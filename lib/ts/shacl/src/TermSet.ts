@@ -8,7 +8,7 @@ export class TermSet<TermT extends Term> {
   private readonly map: TermMap<TermT, TermT> = new TermMap();
 
   add(term: TermT): boolean {
-    return !!this.map.put(term, term);
+    return typeof this.map.put(term, term) === "undefined";
   }
 
   has(term: TermT): boolean {

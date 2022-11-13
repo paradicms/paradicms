@@ -1,7 +1,7 @@
 import {Parser, ParserOptions, Store} from "n3";
 
 export class DataGraph {
-  constructor(readonly store: Store) {}
+  constructor(private readonly store: Store) {}
 
   static parse(input: string, options?: ParserOptions): DataGraph {
     return new DataGraph(DataGraph.parseIntoStore(input, options));

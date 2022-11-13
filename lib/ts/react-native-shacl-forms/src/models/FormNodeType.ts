@@ -2,12 +2,15 @@ import {DataFactory, NamedNode, OTerm} from "n3";
 import {Form} from "./Form";
 import {FormNode} from "./FormNode";
 import {RDF} from "@paradicms/vocabularies";
+import {Model} from "./Model";
+import {DataGraph, ShapesGraph} from "@paradicms/shacl";
 
-export class FormNodeType {
+export class FormNodeType extends Model {
   readonly form: Form;
   readonly rdfType: NamedNode;
 
   constructor(kwds: {form: Form; rdfType: NamedNode}) {
+    super();
     this.form = kwds.form;
     this.rdfType = kwds.rdfType;
   }
@@ -23,6 +26,10 @@ export class FormNodeType {
       dataGraphNode: dataGraphNode,
       type: this,
     });
+  }
+
+  get dataGraph(): DataGraph {
+    return this.form.dataGraph;
   }
 
   get nodes(): readonly FormNode[] {
@@ -41,5 +48,9 @@ export class FormNodeType {
         }
         return map;
       }, {} as {[index: string]: FormNode});
+  }
+
+  get shapesGraph(): ShapesGraph {
+    return this.form.shapesGraph;
   }
 }

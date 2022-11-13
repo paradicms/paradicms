@@ -1,13 +1,17 @@
-import {DataGraphNode} from "./DataGraphNode";
 import {FormNodeType} from "./FormNodeType";
-import {OTerm, Term} from "n3";
-import {PropertyShape} from "@paradicms/shacl";
+import {NamedNode, OTerm, Term} from "n3";
+import {DataGraph, PropertyShape, ShapesGraph} from "@paradicms/shacl";
+import {FormProperty} from "./FormProperty";
+import {TermMap} from "@paradicms/shacl/dist/TermMap";
+import {ShaclProcessor} from "@paradicms/shacl/dist/ShaclProcessor";
+import {Model} from "./Model";
 
-export class FormNode {
-  readonly dataGraphNode: DataGraphNode;
+export class FormNode extends Model {
+  readonly dataGraphNode: NamedNode;
   readonly type: FormNodeType;
 
-  constructor(kwds: {dataGraphNode: DataGraphNode; type: FormNodeType}) {
+  constructor(kwds: {dataGraphNode: NamedNode; type: FormNodeType}) {
+    super();
     this.dataGraphNode = kwds.dataGraphNode;
     this.type = kwds.type;
   }
@@ -34,25 +38,62 @@ export class FormNode {
     deleteQuadsWithSubject(this.dataGraphNode);
   }
 
-  // get properties(): readonly FormProperty[] {}
+  get dataGraph(): DataGraph {
+    return this.type.dataGraph;
+  }
 
-  // @ts-ignore
-  private get propertyShapes(): readonly PropertyShape[] {
-    // All applicable node shapes, and all their sh:properties
-    // All applicable property shapes
+  get properties(): readonly FormProperty[] {
+    return this.propertyShapesByPath.values
+      .concat()
+      .sort(
+        (
+          leftPropertyShapes: PropertyShape[],
+          rightPropertyShapes: PropertyShape[]
+        ) => {
+          const propertyShapesOrder = (
+            propertyShapes: readonly PropertyShape[]
+          ): number =>
+            propertyShapes.find(propertyShape => propertyShape.order !== null)
+              ?.order ?? 0;
 
-    // const propertyShapes: PropertyShape[] = [];
-    // for (const propertyShape of this.type.form.shapesGraph.propertyShapes) {
-    //   if (
-    //     this.type.form.dataGraph.someShapeFocusNode(
-    //       focusNode => focusNode.equals(this.dataGraphNode),
-    //       propertyShape
-    //     )
-    //   ) {
-    //     propertyShapes.push(propertyShape);
-    //   }
-    // }
+          // If present at property shapes, the recommended use of sh:order is to sort the property shapes in an ascending order,
+          // for example so that properties with smaller order are placed above (or to the left) of properties with larger order.
+          return (
+            propertyShapesOrder(leftPropertyShapes) -
+            propertyShapesOrder(rightPropertyShapes)
+          );
+        }
+      )
+      .map(
+        propertyShapes =>
+          new FormProperty({
+            formNode: this,
+            path: propertyShapes[0].path,
+            shapes: propertyShapes,
+          })
+      );
+  }
 
-    return [];
+  private get propertyShapesByPath(): TermMap<NamedNode, PropertyShape[]> {
+    const propertyShapesByPath = new TermMap<NamedNode, PropertyShape[]>();
+    new ShaclProcessor({
+      dataGraph: this.type.form.dataGraph,
+      shapesGraph: this.type.form.shapesGraph,
+    }).someFocusNodePropertyShapes(propertyShape => {
+      const existingPropertyShapes = propertyShapesByPath.getOptional(
+        propertyShape.path
+      );
+      if (existingPropertyShapes) {
+        existingPropertyShapes.push(propertyShape);
+      } else {
+        propertyShapesByPath.put(propertyShape.path, [propertyShape]);
+      }
+      return false;
+    }, this.dataGraphNode);
+    return propertyShapesByPath;
+  }
+
+  get shapesGraph(): ShapesGraph {
+    return this.type.shapesGraph;
   }
 }

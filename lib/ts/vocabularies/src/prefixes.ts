@@ -14,11 +14,13 @@ import {WGS} from "./WGS";
 import {RDFS} from "./RDFS";
 import {CONTACT} from "./CONTACT";
 import {SH} from "./SH";
+import {DASH} from "./DASH";
 
 export const prefixes: Prefixes = {
   cms: CMS.NS(""),
   configuration: CONFIGURATION.NS(""),
   contact: CONTACT.NS(""),
+  dash: DASH.NS(""),
   dc: DC.NS(""),
   dcterms: DCTERMS.NS(""),
   exif: EXIF.NS(""),
