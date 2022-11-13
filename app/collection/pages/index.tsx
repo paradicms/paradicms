@@ -37,21 +37,21 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 interface StaticProps {
   readonly collectionUri: string;
   readonly configuration: CollectionAppConfiguration;
-  readonly datasetString: string;
+  readonly modelSetString: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
   configuration,
-  datasetString,
+  modelSetString,
 }) => {
-  const dataset = useMemo<Dataset>(() => Dataset.parse(datasetString), [
-    datasetString,
+  const dataset = useMemo<Dataset>(() => Dataset.parse(modelSetString), [
+    modelSetString,
   ]);
 
   const collection = useMemo<Collection>(
     () => dataset.collectionByUri(collectionUri),
-    [collectionUri, datasetString]
+    [collectionUri, modelSetString]
   );
 
   const workQueryService = useMemo<WorkQueryService>(
@@ -110,7 +110,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     props: {
       collectionUri: collection.uri,
       configuration,
-      datasetString: new DataSubsetter({
+      modelSetString: new DataSubsetter({
         completeDataset,
         workPropertyUris: configuration.workProperties.map(
           workProperty => workProperty.uri

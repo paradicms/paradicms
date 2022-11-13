@@ -36,7 +36,7 @@ interface StaticProps {
   readonly collectionUri: string;
   readonly configuration: ExhibitionAppConfiguration;
   readonly currentWorkUri: string;
-  readonly datasetString: string;
+  readonly modelSetString: string;
   readonly nextWorkUri: string | null;
   readonly previousWorkUri: string | null;
 }
@@ -45,14 +45,14 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
   configuration,
   currentWorkUri,
-  datasetString,
+  modelSetString,
   nextWorkUri,
   previousWorkUri,
 }) => {
   const router = useRouter();
 
-  const dataset = useMemo<Dataset>(() => Dataset.parse(datasetString), [
-    datasetString,
+  const dataset = useMemo<Dataset>(() => Dataset.parse(modelSetString), [
+    modelSetString,
   ]);
   const collection = dataset.collectionByUri(collectionUri);
   const currentWork = dataset.workByUri(currentWorkUri);
@@ -170,7 +170,7 @@ export const getStaticProps: GetStaticProps = async ({
           completeDataset.store
         ) ?? defaultExhibitionAppConfiguration,
       currentWorkUri: workUri,
-      datasetString: new DataSubsetter({completeDataset, workPropertyUris: []})
+      modelSetString: new DataSubsetter({completeDataset, workPropertyUris: []})
         .worksDataset(
           workUris.map(workUri => completeDataset.workByUri(workUri)),
           {

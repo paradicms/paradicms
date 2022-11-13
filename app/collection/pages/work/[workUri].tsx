@@ -35,16 +35,18 @@ const WorkLocationsMap = dynamic<{
 
 interface StaticProps {
   readonly configuration: CollectionAppConfiguration;
-  readonly datasetString: string;
+  readonly modelSetString: string;
   readonly workUri: string;
 }
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
   configuration,
-  datasetString,
+  modelSetString,
   workUri,
 }) => {
-  const dataset = useMemo(() => Dataset.parse(datasetString), [datasetString]);
+  const dataset = useMemo(() => Dataset.parse(modelSetString), [
+    modelSetString,
+  ]);
   const work = dataset.workByUri(workUri);
   const collection = work.collections[0];
 
@@ -92,7 +94,7 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       configuration,
-      datasetString: new DataSubsetter({
+      modelSetString: new DataSubsetter({
         completeDataset,
         workPropertyUris: configuration.workProperties.map(
           workProperty => workProperty.uri

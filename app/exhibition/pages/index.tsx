@@ -18,19 +18,21 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 interface StaticProps {
   readonly collectionUri: string;
   readonly configuration: ExhibitionAppConfiguration;
-  readonly datasetString: string;
+  readonly modelSetString: string;
   readonly firstWorkUri: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
   configuration,
-  datasetString,
+  modelSetString,
   firstWorkUri,
 }) => {
   const router = useRouter();
 
-  const dataset = useMemo(() => Dataset.parse(datasetString), [datasetString]);
+  const dataset = useMemo(() => Dataset.parse(modelSetString), [
+    modelSetString,
+  ]);
   const collection = dataset.collectionByUri(collectionUri);
   const collectionAbstract = collection.abstract;
 
@@ -92,7 +94,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
           readConfigurationFile(readFileSync),
           dataset.store
         ) ?? defaultExhibitionAppConfiguration,
-      datasetString: dataset.stringify(),
+      modelSetString: dataset.stringify(),
       collectionUri: collection.uri,
       firstWorkUri: collection.works[0].uri,
     },
