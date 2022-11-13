@@ -326,20 +326,6 @@ export class ModelSet {
     return this._organizationsByUriIndex!;
   }
 
-  // static parse(input: string, options?: ParserOptions): ModelSet {
-  //   return new ModelSet(ModelSet.parseIntoDataset(input, options));
-  // }
-  //
-  // protected static parseIntoDataset(
-  //   input: string,
-  //   options?: ParserOptions
-  // ): Dataset {
-  //   const parser = new Parser(options);
-  //   const dataset = new Dataset();
-  //   dataset.addQuads(parser.parse(input));
-  //   return dataset;
-  // }
-
   get people(): readonly Person[] {
     if (!this._people) {
       this.readPeople();
