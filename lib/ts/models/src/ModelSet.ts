@@ -34,14 +34,14 @@ const eventClassesByRdfType = (() => {
 })();
 
 /**
- * Lazily indexes the contents of an immutable Dataset to provide quick lookups and subsetting.
+ * Lazily indexes the contents of an immutable ModelSet to provide quick lookups and subsetting.
  *
  * For example, a GUI that has one work per page needs a quick workByUri lookup in getStaticProps.
  *
  * IndexedDataset is used by getStaticProps to cut down Datasets, which means it must deal in JSON-serializable interfaces/works rather than classes.
  * (JoinedDataset does the latter, because it is only used on the component side.)
  */
-export class Dataset {
+export class ModelSet {
   private _collections?: readonly Collection[];
   private _collectionsByInstitutionUriIndex?: {
     [index: string]: readonly Collection[];
@@ -162,7 +162,7 @@ export class Dataset {
   imagesByOriginalImageUri(originalImageUri: string): readonly Image[] {
     // Exclude the original image itself
     return (this.imagesByOriginalImageUriIndex[originalImageUri] ?? []).filter(
-      (image) => image.originalImageUri === originalImageUri
+      image => image.originalImageUri === originalImageUri
     );
   }
 
@@ -238,7 +238,7 @@ export class Dataset {
 
   logContents(): void {
     console.log(
-      "Dataset:",
+      "ModelSet:",
       this.store.getSubjects(null, null, null).length,
       "subjects"
     );
@@ -261,7 +261,7 @@ export class Dataset {
         key,
         ":",
         keyModels
-          .map((model) => model.uri)
+          .map(model => model.uri)
           .sort()
           .join(" ")
       );
@@ -335,8 +335,8 @@ export class Dataset {
     return this._organizationsByUriIndex!;
   }
 
-  static parse(input: string, options?: ParserOptions): Dataset {
-    return new Dataset(Dataset.parseIntoStore(input, options));
+  static parse(input: string, options?: ParserOptions): ModelSet {
+    return new ModelSet(ModelSet.parseIntoStore(input, options));
   }
 
   protected static parseIntoStore(
@@ -395,7 +395,7 @@ export class Dataset {
     const workEventsByWorkUriIndex: {[index: string]: WorkEvent[]} = {};
     this._workEventsByUriIndex = {};
 
-    this.readModels((kwds) => {
+    this.readModels(kwds => {
       const event = this.readEvent(kwds);
 
       if (hasMixin(event, WorkEvent)) {
@@ -428,7 +428,7 @@ export class Dataset {
     const collectionsByInstitutionUriIndex: {
       [index: string]: Collection[];
     } = {};
-    this.readModels((kwds) => {
+    this.readModels(kwds => {
       const collection = this.readCollection(kwds);
 
       collections.push(collection);
@@ -458,7 +458,7 @@ export class Dataset {
     const imagesByDepictsUriIndex: {[index: string]: Image[]} = {};
     const imagesByOriginalImageUriIndex: {[index: string]: Image[]} = {};
     this._imagesByUriIndex = {};
-    this.readModels((kwds) => {
+    this.readModels(kwds => {
       const image = this.readImage(kwds);
 
       images.push(image);
@@ -493,7 +493,7 @@ export class Dataset {
   private readInstitutions() {
     const institutions: Institution[] = [];
     this._institutionsByUriIndex = {};
-    this.readModels((kwds) => {
+    this.readModels(kwds => {
       const institution = this.readInstitution(kwds);
       institutions.push(institution);
       this._institutionsByUriIndex![institution.uri] = institution;
@@ -508,7 +508,7 @@ export class Dataset {
   private readLicenses() {
     const licenses: License[] = [];
     this._licensesByUriIndex = {};
-    this.readModels((kwds) => {
+    this.readModels(kwds => {
       const license = this.readLicense(kwds);
       licenses.push(license);
       this._licensesByUriIndex![license.uri] = license;
@@ -521,7 +521,7 @@ export class Dataset {
     type: NamedNode
   ): void {
     this.store.forEach(
-      (quad) => {
+      quad => {
         switch (quad.graph.termType) {
           case "DefaultGraph":
           case "NamedNode":
@@ -565,7 +565,7 @@ export class Dataset {
       [index: string]: NamedValue[];
     } = {};
     this._namedValuesByUriIndex = {};
-    this.readModels((kwds) => {
+    this.readModels(kwds => {
       const namedValue = this.readNamedValue(kwds);
 
       namedValues.push(namedValue);
@@ -592,7 +592,7 @@ export class Dataset {
   private readOrganizations() {
     const organizations: Organization[] = [];
     this._organizationsByUriIndex = {};
-    this.readModels((kwds) => {
+    this.readModels(kwds => {
       const organization = this.readOrganization(kwds);
       organizations.push(organization);
       this._organizationsByUriIndex![organization.uri] = organization;
@@ -603,7 +603,7 @@ export class Dataset {
   private readPeople() {
     const people: Person[] = [];
     this._peopleByUriIndex = {};
-    this.readModels((kwds) => {
+    this.readModels(kwds => {
       const person = this.readPerson(kwds);
       people.push(person);
       this._peopleByUriIndex![person.uri] = person;
@@ -622,7 +622,7 @@ export class Dataset {
   private readRightsStatements() {
     const rightsStatements: RightsStatement[] = [];
     this._rightsStatementsByUriIndex = {};
-    this.readModels((kwds) => {
+    this.readModels(kwds => {
       const rightsStatement = this.readRightsStatement(kwds);
       rightsStatements.push(rightsStatement);
       this._rightsStatementsByUriIndex![rightsStatement.uri] = rightsStatement;
@@ -640,7 +640,7 @@ export class Dataset {
     const worksByCollectionUriIndex: {[index: string]: Work[]} = {};
     const worksByInstitutionUriIndex: {[index: string]: Work[]} = {};
     this._worksByUriIndex = {};
-    this.readModels((kwds) => {
+    this.readModels(kwds => {
       const work = this.readWork(kwds);
 
       works.push(work);

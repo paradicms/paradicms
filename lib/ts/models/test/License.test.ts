@@ -1,9 +1,9 @@
 import {expect} from "chai";
-import {Dataset} from "../src";
+import {ModelSet} from "../src";
 import {testDataTrig} from "./testDataTrig";
 
 describe("License", () => {
-  const sut = Dataset.parse(testDataTrig).licenses[0];
+  const sut = ModelSet.parse(testDataTrig).licenses[0];
 
   it("should get the license's identifier", () => {
     expect(sut.identifier).to.not.be.empty;

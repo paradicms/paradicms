@@ -1,9 +1,9 @@
-import {Dataset} from "./Dataset";
+import {ModelSet} from "./ModelSet";
 import {Rights} from "./Rights";
 import {CollectionJoinSelector} from "./CollectionJoinSelector";
 import {InstitutionJoinSelector} from "./InstitutionJoinSelector";
 import {Collection} from "./Collection";
-import {DatasetBuilder} from "./DatasetBuilder";
+import {ModelSetBuilder} from "./ModelSetBuilder";
 import {Institution} from "./Institution";
 import {WorkJoinSelector} from "./WorkJoinSelector";
 import {Work} from "./Work";
@@ -20,21 +20,21 @@ import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
 import {visitWorkEvent} from "./WorkEventVisitor";
 
 /**
- * Subset a Dataset to reduce the amount of data passed between getStaticProps and the component.
+ * Subset a ModelSet to reduce the amount of data passed between getStaticProps and the component.
  *
- * Re: join selectors. A caller can select which connected models to include in a Dataset.
+ * Re: join selectors. A caller can select which connected models to include in a ModelSet.
  * For example, return a collection's institution along with the collection.
  * An undefined joinSelector means don't return any connected models.
  * An empty joinSelector ({}) means return the connected models themselves but none of their connected models (i.e., no recursion).
  * For example, a joinSelector on Institution with collections: {} will return all of the Collection instances associated with that Institution,
  * but no models connected to the Collections (i.e., their Works).
  */
-export class DataSubsetter {
-  private readonly completeDataset: Dataset;
+export class ModelSubsetter {
+  private readonly completeDataset: ModelSet;
   private readonly workPropertyUris?: readonly string[];
 
   constructor(kwds: {
-    completeDataset: Dataset;
+    completeDataset: ModelSet;
     workPropertyUris?: readonly string[];
   }) {
     this.completeDataset = kwds.completeDataset;
@@ -45,9 +45,9 @@ export class DataSubsetter {
   // which was the initial implementation
   private addAgentDataset(
     agent: Agent,
-    builder: DatasetBuilder,
+    builder: ModelSetBuilder,
     joinSelector: AgentJoinSelector
-  ): DatasetBuilder {
+  ): ModelSetBuilder {
     builder.addAgent(agent);
 
     if (joinSelector.thumbnail) {
@@ -71,10 +71,10 @@ export class DataSubsetter {
   }
 
   private addCollectionDataset(
-    builder: DatasetBuilder,
+    builder: ModelSetBuilder,
     collection: Collection,
     joinSelector: CollectionJoinSelector
-  ): DatasetBuilder {
+  ): ModelSetBuilder {
     builder.addCollection(collection);
 
     if (joinSelector.thumbnail) {
@@ -114,19 +114,19 @@ export class DataSubsetter {
 
   private addImageDataset(
     agentJoinSelector: AgentJoinSelector,
-    builder: DatasetBuilder,
+    builder: ModelSetBuilder,
     image: Image
-  ): DatasetBuilder {
+  ): ModelSetBuilder {
     builder.addImage(image);
     this.addRightsDataset(agentJoinSelector, builder, image.rights);
     return builder;
   }
 
   private addInstitutionDataset(
-    builder: DatasetBuilder,
+    builder: ModelSetBuilder,
     institution: Institution,
     joinSelector: InstitutionJoinSelector
-  ): DatasetBuilder {
+  ): ModelSetBuilder {
     builder.addInstitution(institution);
     this.addRightsDataset({}, builder, institution.rights);
 
@@ -177,7 +177,7 @@ export class DataSubsetter {
   }
 
   private addNamedValuesDataset(
-    builder: DatasetBuilder,
+    builder: ModelSetBuilder,
     namedValues: readonly NamedValue[],
     joinSelector: NamedValueJoinSelector
   ) {
@@ -196,18 +196,18 @@ export class DataSubsetter {
   }
 
   private addWorkDataset(
-    builder: DatasetBuilder,
+    builder: ModelSetBuilder,
     work: Work,
     joinSelector: WorkJoinSelector
-  ): DatasetBuilder {
+  ): ModelSetBuilder {
     return this.addWorkDatasets(builder, [work], joinSelector);
   }
 
   private addWorkDatasets(
-    builder: DatasetBuilder,
+    builder: ModelSetBuilder,
     works: readonly Work[],
     joinSelector: WorkJoinSelector
-  ): DatasetBuilder {
+  ): ModelSetBuilder {
     const collectionUris = joinSelector.collections
       ? new Set<string>()
       : undefined;
@@ -310,9 +310,9 @@ export class DataSubsetter {
 
   private addRightsDataset(
     agentJoinSelector: AgentJoinSelector,
-    builder: DatasetBuilder,
+    builder: ModelSetBuilder,
     rights: Rights | null
-  ): DatasetBuilder {
+  ): ModelSetBuilder {
     if (!rights) {
       return builder;
     }
@@ -335,10 +335,10 @@ export class DataSubsetter {
   }
 
   private addWorkCreationDataset(
-    builder: DatasetBuilder,
+    builder: ModelSetBuilder,
     joinSelector: WorkEventJoinSelector,
     workCreation: WorkCreation
-  ): DatasetBuilder {
+  ): ModelSetBuilder {
     builder.addEvent(workCreation);
     if (joinSelector.agents) {
       for (const creatorAgent of workCreation.creatorAgents) {
@@ -352,13 +352,13 @@ export class DataSubsetter {
   }
 
   private addWorkEventDataset(
-    builder: DatasetBuilder,
+    builder: ModelSetBuilder,
     joinSelector: WorkEventJoinSelector,
     workEvent: WorkEvent
-  ): DatasetBuilder {
+  ): ModelSetBuilder {
     const self = this;
     return visitWorkEvent(workEvent, {
-      visitWorkCreation(workCreation: WorkCreation): DatasetBuilder {
+      visitWorkCreation(workCreation: WorkCreation): ModelSetBuilder {
         return self.addWorkCreationDataset(builder, joinSelector, workCreation);
       },
     });
@@ -367,8 +367,8 @@ export class DataSubsetter {
   agentsDataset(
     agents: readonly Agent[],
     joinSelector?: AgentJoinSelector
-  ): Dataset {
-    const builder = new DatasetBuilder();
+  ): ModelSet {
+    const builder = new ModelSetBuilder();
     for (const agent of agents) {
       this.addAgentDataset(agent, builder, joinSelector ?? {});
     }
@@ -378,9 +378,9 @@ export class DataSubsetter {
   collectionDataset(
     collection: Collection,
     joinSelector?: CollectionJoinSelector
-  ): Dataset {
+  ): ModelSet {
     return this.addCollectionDataset(
-      new DatasetBuilder(),
+      new ModelSetBuilder(),
       collection,
       joinSelector ?? {}
     ).build();
@@ -389,9 +389,9 @@ export class DataSubsetter {
   institutionDataset(
     institution: Institution,
     joinSelector?: InstitutionJoinSelector
-  ): Dataset {
+  ): ModelSet {
     return this.addInstitutionDataset(
-      new DatasetBuilder(),
+      new ModelSetBuilder(),
       institution,
       joinSelector ?? {}
     ).build();
@@ -400,17 +400,17 @@ export class DataSubsetter {
   institutionsDataset(
     institutions: readonly Institution[],
     joinSelector?: InstitutionJoinSelector
-  ): Dataset {
-    const builder = new DatasetBuilder();
+  ): ModelSet {
+    const builder = new ModelSetBuilder();
     for (const institution of institutions) {
       this.addInstitutionDataset(builder, institution, joinSelector ?? {});
     }
     return builder.build();
   }
 
-  workDataset(work: Work, joinSelector?: WorkJoinSelector): Dataset {
+  workDataset(work: Work, joinSelector?: WorkJoinSelector): ModelSet {
     return this.addWorkDataset(
-      new DatasetBuilder(),
+      new ModelSetBuilder(),
       work,
       joinSelector ?? {}
     ).build();
@@ -419,8 +419,8 @@ export class DataSubsetter {
   workEventsDataset(
     workEvents: readonly WorkEvent[],
     joinSelector?: WorkEventJoinSelector
-  ): Dataset {
-    const builder = new DatasetBuilder();
+  ): ModelSet {
+    const builder = new ModelSetBuilder();
     for (const workEvent of workEvents) {
       this.addWorkEventDataset(builder, joinSelector ?? {}, workEvent);
     }
@@ -430,8 +430,8 @@ export class DataSubsetter {
   worksDataset(
     works: readonly Work[],
     joinSelector?: WorkJoinSelector
-  ): Dataset {
-    const builder = new DatasetBuilder();
+  ): ModelSet {
+    const builder = new ModelSetBuilder();
     this.addWorkDatasets(builder, works, joinSelector ?? {});
     return builder.build();
   }

@@ -1,9 +1,9 @@
 import {expect} from "chai";
-import {Dataset} from "../src";
+import {ModelSet} from "../src";
 import {testDataTrig} from "./testDataTrig";
 
 describe("RightsStatement", () => {
-  const sut = Dataset.parse(testDataTrig).rightsStatements[0];
+  const sut = ModelSet.parse(testDataTrig).rightsStatements[0];
 
   it("should get the statement's definition", () => {
     expect(sut.definition).to.not.be.empty;

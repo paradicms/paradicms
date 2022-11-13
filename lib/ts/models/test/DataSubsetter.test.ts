@@ -1,7 +1,7 @@
 import {expect} from "chai";
-import {DataSubsetter} from "../src/DataSubsetter";
+import {ModelSubsetter} from "../src/ModelSubsetter";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
-import {Dataset, License, RightsStatement} from "../src";
+import {ModelSet, License, RightsStatement} from "../src";
 import {NamedModel} from "../src/NamedModel";
 import {testDataTrig} from "./testDataTrig";
 import {WorkCreation} from "../src/WorkCreation";
@@ -27,8 +27,8 @@ const expectModelsDeepEq = <ModelT extends NamedModel>(
   );
 
 describe("DataSubsetter", () => {
-  const testDataset = Dataset.parse(testDataTrig);
-  const sut = new DataSubsetter({
+  const testDataset = ModelSet.parse(testDataTrig);
+  const sut = new ModelSubsetter({
     completeDataset: testDataset,
     workPropertyUris: [],
   });

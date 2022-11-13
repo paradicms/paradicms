@@ -1,9 +1,9 @@
 import {expect} from "chai";
-import {Dataset} from "../src";
+import {ModelSet} from "../src";
 import {testDataTrig} from "./testDataTrig";
 
 describe("Institution", () => {
-  const sut = Dataset.parse(testDataTrig).institutions[0];
+  const sut = ModelSet.parse(testDataTrig).institutions[0];
 
   it("should get the institution's collections", () => {
     expect(sut.collections).to.not.be.empty;

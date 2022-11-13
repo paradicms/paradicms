@@ -3,7 +3,7 @@ import {Literal, NamedNode, Quad} from "n3";
 import {Text} from "./Text";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {Image} from "./Image";
-import {Dataset} from "./Dataset";
+import {ModelSet} from "./ModelSet";
 import {Agent} from "./Agent";
 import {CMS, RDF} from "@paradicms/vocabularies";
 
@@ -25,7 +25,7 @@ export abstract class PropertyValue {
     return new NamedPropertyValue(namedValue);
   }
 
-  private static fromQuad(dataset: Dataset, quad: Quad): PropertyValue | null {
+  private static fromQuad(dataset: ModelSet, quad: Quad): PropertyValue | null {
     switch (quad.object.termType) {
       case "BlankNode": {
         const objectRdfTypeQuads = dataset.store.getQuads(
@@ -78,7 +78,7 @@ export abstract class PropertyValue {
   }
 
   static fromQuads(
-    dataset: Dataset,
+    dataset: ModelSet,
     quads: readonly Quad[]
   ): readonly PropertyValue[] {
     const propertyValues: PropertyValue[] = [];

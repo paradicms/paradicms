@@ -3,7 +3,7 @@ import {CollectionJoinSelector} from "./CollectionJoinSelector";
 import {WorkJoinSelector} from "./WorkJoinSelector";
 
 /**
- * See note in DataSubsetter re: the use of this interface.
+ * See note in ModelSubsetter re: the use of this interface.
  */
 export interface InstitutionJoinSelector {
   // Return all Collections whose institutionUri refers to this Institution.

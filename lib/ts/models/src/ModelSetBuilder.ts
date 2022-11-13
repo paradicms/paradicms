@@ -1,6 +1,6 @@
 import {Institution} from "./Institution";
 import {Image} from "./Image";
-import {Dataset} from "./Dataset";
+import {ModelSet} from "./ModelSet";
 import {Collection} from "./Collection";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
@@ -12,7 +12,7 @@ import {Organization} from "./Organization";
 import {Agent} from "./Agent";
 import {Event} from "./Event";
 
-export class DatasetBuilder {
+export class ModelSetBuilder {
   private collectionsByUri: {[index: string]: Collection} | undefined;
   private institutionsByUri: {[index: string]: Institution} | undefined;
   private eventsByUri: {[index: string]: Event} | undefined;
@@ -35,7 +35,7 @@ export class DatasetBuilder {
   }
 
   addCollection(collection: Collection) {
-    this.collectionsByUri = DatasetBuilder.addNamedModel(
+    this.collectionsByUri = ModelSetBuilder.addNamedModel(
       this.collectionsByUri,
       collection
     );
@@ -43,7 +43,7 @@ export class DatasetBuilder {
   }
 
   addCollections(collections: readonly Collection[]) {
-    this.collectionsByUri = DatasetBuilder.addNamedModels(
+    this.collectionsByUri = ModelSetBuilder.addNamedModels(
       this.collectionsByUri,
       collections
     );
@@ -51,12 +51,12 @@ export class DatasetBuilder {
   }
 
   addEvent(event: Event) {
-    this.eventsByUri = DatasetBuilder.addNamedModel(this.eventsByUri, event);
+    this.eventsByUri = ModelSetBuilder.addNamedModel(this.eventsByUri, event);
     return this;
   }
 
   addInstitution(institution: Institution) {
-    this.institutionsByUri = DatasetBuilder.addNamedModel(
+    this.institutionsByUri = ModelSetBuilder.addNamedModel(
       this.institutionsByUri,
       institution
     );
@@ -64,7 +64,7 @@ export class DatasetBuilder {
   }
 
   addInstitutions(institutions: readonly Institution[]) {
-    this.institutionsByUri = DatasetBuilder.addNamedModels(
+    this.institutionsByUri = ModelSetBuilder.addNamedModels(
       this.institutionsByUri,
       institutions
     );
@@ -72,17 +72,17 @@ export class DatasetBuilder {
   }
 
   addImage(image: Image) {
-    this.imagesByUri = DatasetBuilder.addNamedModel(this.imagesByUri, image);
+    this.imagesByUri = ModelSetBuilder.addNamedModel(this.imagesByUri, image);
     return this;
   }
 
   addImages(images: readonly Image[]) {
-    this.imagesByUri = DatasetBuilder.addNamedModels(this.imagesByUri, images);
+    this.imagesByUri = ModelSetBuilder.addNamedModels(this.imagesByUri, images);
     return this;
   }
 
   addLicense(license: License) {
-    this.licensesByUri = DatasetBuilder.addNamedModel(
+    this.licensesByUri = ModelSetBuilder.addNamedModel(
       this.licensesByUri,
       license
     );
@@ -90,7 +90,7 @@ export class DatasetBuilder {
   }
 
   addLicenses(licenses: readonly License[]) {
-    this.licensesByUri = DatasetBuilder.addNamedModels(
+    this.licensesByUri = ModelSetBuilder.addNamedModels(
       this.licensesByUri,
       licenses
     );
@@ -128,7 +128,7 @@ export class DatasetBuilder {
   }
 
   addOrganization(organization: Organization) {
-    this.organizationsByUri = DatasetBuilder.addNamedModel(
+    this.organizationsByUri = ModelSetBuilder.addNamedModel(
       this.organizationsByUri,
       organization
     );
@@ -136,22 +136,22 @@ export class DatasetBuilder {
   }
 
   addPerson(person: Person) {
-    this.peopleByUri = DatasetBuilder.addNamedModel(this.peopleByUri, person);
+    this.peopleByUri = ModelSetBuilder.addNamedModel(this.peopleByUri, person);
     return this;
   }
 
   addWork(work: Work) {
-    this.worksByUri = DatasetBuilder.addNamedModel(this.worksByUri, work);
+    this.worksByUri = ModelSetBuilder.addNamedModel(this.worksByUri, work);
     return this;
   }
 
   addWorks(works: readonly Work[]) {
-    this.worksByUri = DatasetBuilder.addNamedModels(this.worksByUri, works);
+    this.worksByUri = ModelSetBuilder.addNamedModels(this.worksByUri, works);
     return this;
   }
 
   addNamedValue(namedValue: NamedValue) {
-    this.namedValuesByUri = DatasetBuilder.addNamedModel(
+    this.namedValuesByUri = ModelSetBuilder.addNamedModel(
       this.namedValuesByUri,
       namedValue
     );
@@ -159,7 +159,7 @@ export class DatasetBuilder {
   }
 
   addNamedValues(namedValues: readonly NamedValue[]) {
-    this.namedValuesByUri = DatasetBuilder.addNamedModels(
+    this.namedValuesByUri = ModelSetBuilder.addNamedModels(
       this.namedValuesByUri,
       namedValues
     );
@@ -167,7 +167,7 @@ export class DatasetBuilder {
   }
 
   addRightsStatement(rightsStatement: RightsStatement) {
-    this.rightsStatementsByUri = DatasetBuilder.addNamedModel(
+    this.rightsStatementsByUri = ModelSetBuilder.addNamedModel(
       this.rightsStatementsByUri,
       rightsStatement
     );
@@ -175,14 +175,14 @@ export class DatasetBuilder {
   }
 
   addRightsStatements(rightsStatements: readonly RightsStatement[]) {
-    this.rightsStatementsByUri = DatasetBuilder.addNamedModels(
+    this.rightsStatementsByUri = ModelSetBuilder.addNamedModels(
       this.rightsStatementsByUri,
       rightsStatements
     );
     return this;
   }
 
-  build(): Dataset {
+  build(): ModelSet {
     const store = new Store();
     for (const modelsByUri of [
       this.collectionsByUri,
@@ -207,6 +207,6 @@ export class DatasetBuilder {
         );
       }
     }
-    return new Dataset(store);
+    return new ModelSet(store);
   }
 }

@@ -1,9 +1,9 @@
 import {expect} from "chai";
-import {Dataset} from "../src";
+import {ModelSet} from "../src";
 import {testDataTrig} from "./testDataTrig";
 
 describe("NamedValue", () => {
-  const dataset = Dataset.parse(testDataTrig);
+  const dataset = ModelSet.parse(testDataTrig);
   const sut = dataset.namedValuesByPropertyUri(
     dataset.namedValues[0].propertyUris[0]
   )[0];

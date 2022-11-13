@@ -1,9 +1,9 @@
 import {expect} from "chai";
-import {Dataset} from "../src";
+import {ModelSet} from "../src";
 import {testDataTrig} from "./testDataTrig";
 
 describe("Organization", () => {
-  const sut = Dataset.parse(testDataTrig).organizationByUri(
+  const sut = ModelSet.parse(testDataTrig).organizationByUri(
     "http://example.com/organization4"
   );
 

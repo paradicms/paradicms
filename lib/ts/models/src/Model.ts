@@ -1,9 +1,9 @@
 import {BlankNode, DefaultGraph, NamedNode, Store, Term} from "n3";
-import {Dataset} from "./Dataset";
+import {ModelSet} from "./ModelSet";
 import {ModelParameters} from "./ModelParameters";
 
 export class Model {
-  readonly dataset: Dataset;
+  readonly dataset: ModelSet;
   readonly graphNode: DefaultGraph | NamedNode;
   protected readonly _node: BlankNode | NamedNode;
 

@@ -1,10 +1,10 @@
 import {expect} from "chai";
-import {Dataset, Text} from "../src";
+import {ModelSet, Text} from "../src";
 import {testDataTrig} from "./testDataTrig";
 import {DCTERMS} from "@paradicms/vocabularies";
 
 describe("Work", () => {
-  const dataset = Dataset.parse(testDataTrig);
+  const dataset = ModelSet.parse(testDataTrig);
   const sut = dataset.workByUri(
     "http://example.com/institution0/collection0/work2"
   );

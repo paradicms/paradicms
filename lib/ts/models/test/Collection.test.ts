@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
-import {Dataset, Text} from "../src";
+import {ModelSet, Text} from "../src";
 import {testDataTrig} from "./testDataTrig";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
@@ -8,7 +8,7 @@ const THUMBNAIL_SELECTOR: ThumbnailSelector = {
 };
 
 describe("Collection", () => {
-  const sut = Dataset.parse(testDataTrig).collections[0];
+  const sut = ModelSet.parse(testDataTrig).collections[0];
 
   it("should get the collection's abstract", () => {
     expect(sut.abstract).to.be.instanceof(Text);

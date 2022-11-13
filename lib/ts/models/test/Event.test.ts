@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {Dataset} from "../src";
+import {ModelSet} from "../src";
 import {testDataTrig} from "./testDataTrig";
 import {DateTimeDescription} from "../src/DateTimeDescription";
 import {Location} from "../src/Location";
@@ -7,7 +7,7 @@ import {Text} from "../src/Text";
 import {Event} from "../src/Event";
 
 describe("Event", () => {
-  const dataset = Dataset.parse(testDataTrig);
+  const dataset = ModelSet.parse(testDataTrig);
   const sut: Event = dataset.workEvents[0];
 
   before(() => {

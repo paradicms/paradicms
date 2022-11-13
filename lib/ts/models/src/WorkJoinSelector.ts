@@ -6,7 +6,7 @@ import {NamedValueJoinSelector} from "./NamedValueJoinSelector";
 import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
 
 /**
- * See note in DataSubsetter re: the use of this interface.
+ * See note in ModelSubsetter re: the use of this interface.
  */
 export interface WorkJoinSelector {
   agents?: AgentJoinSelector;

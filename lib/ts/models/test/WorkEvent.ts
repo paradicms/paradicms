@@ -1,9 +1,9 @@
 import {expect} from "chai";
-import {Dataset, WorkEvent} from "../src";
+import {ModelSet, WorkEvent} from "../src";
 import {testDataTrig} from "./testDataTrig";
 
 describe("WorkEvent", () => {
-  const dataset = Dataset.parse(testDataTrig);
+  const dataset = ModelSet.parse(testDataTrig);
   const work = dataset.works[0];
   const sut: WorkEvent = dataset.workEventsByWork(work.uri)[0];
 

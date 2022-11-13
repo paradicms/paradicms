@@ -1,10 +1,10 @@
 import {expect} from "chai";
-import {Dataset} from "../src";
+import {ModelSet} from "../src";
 import {testDataTrig} from "./testDataTrig";
 import {DateTimeDescription} from "../src/DateTimeDescription";
 
 describe("DateTimeDescription", () => {
-  const dataset = Dataset.parse(testDataTrig);
+  const dataset = ModelSet.parse(testDataTrig);
   const sut: DateTimeDescription = dataset.workEventsByWork(
     dataset.works[0].uri
   )[0].date! as DateTimeDescription;

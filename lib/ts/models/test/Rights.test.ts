@@ -1,12 +1,12 @@
 import {expect} from "chai";
 import {License} from "../src/License";
 import {RightsStatement} from "../src/RightsStatement";
-import {Dataset} from "../src";
+import {ModelSet} from "../src";
 import {Agent} from "../src/Agent";
 import {testDataTrig} from "./testDataTrig";
 
 describe("Rights", () => {
-  const sut = Dataset.parse(testDataTrig).works[0].rights!;
+  const sut = ModelSet.parse(testDataTrig).works[0].rights!;
 
   it("should have a joined contributor", () => {
     expect(sut.contributors).to.not.be.empty;
