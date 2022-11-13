@@ -1,13 +1,13 @@
 import {expect} from "chai";
 import {LunrWorkQueryService} from "../src/LunrWorkQueryService";
-import {Dataset, visitWorkEvent, WorkCreation} from "@paradicms/models";
+import {ModelSet, visitWorkEvent, WorkCreation} from "@paradicms/models";
 import {testDataTrig} from "../../models/test/testDataTrig";
 import {CollectionValueFacet, InstitutionValueFacet, StringPropertyValueFacet} from "@paradicms/facets";
 import {DCTERMS, VRA} from "@paradicms/vocabularies";
 import {StringPropertyValueFilter} from "@paradicms/filters";
 
 describe("LunrWorkQueryService", () => {
-  const modelSet = Dataset.parse(testDataTrig);
+  const modelSet = ModelSet.parse(testDataTrig);
   const sut = new LunrWorkQueryService({
     modelSet,
     resultWorkPropertyUris: [DCTERMS.title.value],

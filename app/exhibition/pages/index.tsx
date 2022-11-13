@@ -5,7 +5,7 @@ import {useRouter} from "next/router";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
 import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
-import {Dataset, Text} from "@paradicms/models";
+import {ModelSet, Text} from "@paradicms/models";
 import {Layout} from "../components/Layout";
 import {Col, Container, Row} from "reactstrap";
 import {RightsParagraph} from "@paradicms/bootstrap";
@@ -30,7 +30,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
 }) => {
   const router = useRouter();
 
-  const modelSet = useMemo(() => Dataset.parse(modelSetString), [
+  const modelSet = useMemo(() => ModelSet.parse(modelSetString), [
     modelSetString,
   ]);
   const collection = modelSet.collectionByUri(collectionUri);

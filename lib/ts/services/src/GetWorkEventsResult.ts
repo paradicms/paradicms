@@ -1,7 +1,7 @@
-import {Dataset} from "@paradicms/models";
+import {ModelSet} from "@paradicms/models";
 
 export interface GetWorkEventsResult {
-  readonly modelSet: Dataset;
+  readonly modelSet: ModelSet;
   readonly totalWorkEventsCount: number;
   readonly workEventUris: readonly string[];
 }

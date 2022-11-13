@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useCallback, useMemo} from "react";
 import {Layout} from "components/Layout";
-import {Dataset, DataSubsetter} from "@paradicms/models";
+import {DataSubsetter, ModelSet} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
@@ -51,7 +51,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 }) => {
   const router = useRouter();
 
-  const modelSet = useMemo<Dataset>(() => Dataset.parse(modelSetString), [
+  const modelSet = useMemo<ModelSet>(() => ModelSet.parse(modelSetString), [
     modelSetString,
   ]);
   const collection = modelSet.collectionByUri(collectionUri);

@@ -1,10 +1,10 @@
-import {Dataset, ModelParameters} from "@paradicms/models";
+import {ModelParameters, ModelSet} from "@paradicms/models";
 import {ParserOptions} from "n3";
 import {WorksheetFeatureSetDefinition} from "~/models/WorksheetFeatureSetDefinition";
 import {WORKSHEET} from "~/vocabularies/WORKSHEET";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
 
-export class WorksheetDefinitionDataset extends Dataset {
+export class WorksheetDefinitionDataset extends ModelSet {
   private _worksheetFeatureDefinitions?: readonly WorksheetFeatureDefinition[];
   private _worksheetFeatureDefinitionsByUriIndex?: {
     [index: string]: WorksheetFeatureDefinition;
@@ -19,7 +19,7 @@ export class WorksheetDefinitionDataset extends Dataset {
     options?: ParserOptions
   ): WorksheetDefinitionDataset {
     return new WorksheetDefinitionDataset(
-      Dataset.parseIntoStore(input, options)
+      ModelSet.parseIntoStore(input, options)
     );
   }
 
@@ -32,9 +32,10 @@ export class WorksheetDefinitionDataset extends Dataset {
   private readWorksheetFeatureDefinitions(): void {
     const worksheetFeatureDefinitions: WorksheetFeatureDefinition[] = [];
     this._worksheetFeatureDefinitionsByUriIndex = {};
-    this.readModels((kwds) => {
-      const worksheetFeatureDefinition =
-        this.readWorksheetFeatureDefinition(kwds);
+    this.readModels(kwds => {
+      const worksheetFeatureDefinition = this.readWorksheetFeatureDefinition(
+        kwds
+      );
       worksheetFeatureDefinitions.push(worksheetFeatureDefinition);
       this._worksheetFeatureDefinitionsByUriIndex![
         worksheetFeatureDefinition.uri
@@ -52,9 +53,10 @@ export class WorksheetDefinitionDataset extends Dataset {
   private readWorksheetFeatureSetDefinitions(): void {
     const worksheetFeatureSetDefinitions: WorksheetFeatureSetDefinition[] = [];
     this._worksheetFeatureSetDefinitionsByUriIndex = {};
-    this.readModels((kwds) => {
-      const worksheetFeatureSetDefinition =
-        this.readWorksheetFeatureSetDefinition(kwds);
+    this.readModels(kwds => {
+      const worksheetFeatureSetDefinition = this.readWorksheetFeatureSetDefinition(
+        kwds
+      );
       worksheetFeatureSetDefinitions.push(worksheetFeatureSetDefinition);
       this._worksheetFeatureSetDefinitionsByUriIndex![
         worksheetFeatureSetDefinition.uri
@@ -71,8 +73,8 @@ export class WorksheetDefinitionDataset extends Dataset {
   }
 
   worksheetFeatureDefinitionByUri(uri: string): WorksheetFeatureDefinition {
-    const worksheetFeatureDefinition =
-      this.worksheetFeatureDefinitionsByUriIndex[uri];
+    const worksheetFeatureDefinition = this
+      .worksheetFeatureDefinitionsByUriIndex[uri];
     if (!worksheetFeatureDefinition) {
       throw new RangeError("no such worksheet feature definition " + uri);
     }

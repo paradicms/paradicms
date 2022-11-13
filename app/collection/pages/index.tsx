@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useMemo} from "react";
-import {Collection, Dataset, DataSubsetter} from "@paradicms/models";
+import {Collection, DataSubsetter, ModelSet} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {
@@ -45,7 +45,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   configuration,
   modelSetString,
 }) => {
-  const modelSet = useMemo<Dataset>(() => Dataset.parse(modelSetString), [
+  const modelSet = useMemo<ModelSet>(() => ModelSet.parse(modelSetString), [
     modelSetString,
   ]);
 

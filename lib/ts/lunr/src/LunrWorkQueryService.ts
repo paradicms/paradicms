@@ -1,8 +1,8 @@
 import {
   Agent,
-  Dataset,
   DataSubsetter,
   Image,
+  ModelSet,
   ThumbnailSelector,
   Work,
 } from "@paradicms/models";
@@ -60,12 +60,12 @@ interface MutableValueFacetValue<ValueT extends JsonPrimitiveType>
 }
 
 export class LunrWorkQueryService implements WorkQueryService {
-  private readonly modelSet: Dataset;
+  private readonly modelSet: ModelSet;
   private readonly index: Index;
   private readonly resultWorkPropertyUris: readonly string[];
 
   constructor(kwds: {
-    readonly modelSet: Dataset;
+    readonly modelSet: ModelSet;
     readonly resultWorkPropertyUris: readonly string[];
     readonly searchWorkPropertyUris: readonly string[];
   }) {

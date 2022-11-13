@@ -4,7 +4,7 @@ import {RightsStatement} from "../src/RightsStatement";
 import {expect} from "chai";
 import {testDataTrig} from "./testDataTrig";
 
-describe("Dataset", () => {
+describe("ModelSet", () => {
   const sut = ModelSet.parse(testDataTrig);
 
   it("should exercise all indices", () => {

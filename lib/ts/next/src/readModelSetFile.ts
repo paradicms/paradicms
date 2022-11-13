@@ -1,13 +1,13 @@
-import {Dataset} from "@paradicms/models";
+import {ModelSet} from "@paradicms/models";
 import {ParserOptions} from "n3";
 
-let _dataset: Dataset | undefined;
+let _dataset: ModelSet | undefined;
 
-export const readDatasetFile = (
+export const readModelSetFile = (
   // There are issues importing "fs" from a library, so pass in the function we need here
   // https://github.com/vercel/next.js/issues/7755
   readFileSync: (filePath: string) => string
-): Dataset => {
+): ModelSet => {
   if (!_dataset) {
     const dataFilePath: string | undefined = process.env.DATA_FILE_PATH;
     if (!dataFilePath) {
@@ -26,7 +26,7 @@ export const readDatasetFile = (
       );
     }
 
-    _dataset = Dataset.parse(
+    _dataset = ModelSet.parse(
       readFileSync(dataFilePath).toString(),
       parserOptions
     );
