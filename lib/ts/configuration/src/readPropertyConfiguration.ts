@@ -1,5 +1,5 @@
 import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
-import {CONFIGURATION, dcterms, rdf, xsd} from "@paradicms/vocabularies";
+import {configuration, dcterms, rdf, xsd} from "@paradicms/vocabularies";
 import {PropertyConfiguration} from "./PropertyConfiguration";
 
 export const readPropertyConfiguration = (kwds: {
@@ -10,34 +10,38 @@ export const readPropertyConfiguration = (kwds: {
   const {graph, node, dataset} = kwds;
 
   const uri = dataset
-    .getObjects(node, rdf.predicate, graph)
-    .find(term => term.termType === "NamedNode")?.value;
+    .match(node, rdf.predicate, null, graph)
+    .toArray()
+    .find(quad => quad.object.termType === "NamedNode")?.object.value;
   if (!uri) {
     throw new RangeError("property configuration has no rdf:predicate");
   }
 
   const label = dataset
-    .getObjects(node, dcterms.title, graph)
-    .find(term => term.termType === "Literal")?.value;
+    .match(node, dcterms.title, null, graph)
+    .toArray()
+    .find(quad => quad.object.termType === "Literal")?.object.value;
   if (!label) {
     throw new RangeError("property configuration has no dcterms:title");
   }
 
   const booleanValue = (propertyUri: NamedNode): boolean =>
     dataset
-      .getObjects(node, propertyUri, graph)
+      .match(node, propertyUri, null, graph)
+      .toArray()
+      .map(quad => quad.object)
       .some(
         term =>
           term.termType === "Literal" &&
-          term.datatype.value === xsd.boolean_.value &&
+          term.datatype.value === xsd.boolean.value &&
           (term.value === "true" || term.value === "1")
       );
 
   return {
-    filterable: booleanValue(CONFIGURATION.filterable),
-    hidden: booleanValue(CONFIGURATION.hidden),
+    filterable: booleanValue(configuration.filterable),
+    hidden: booleanValue(configuration.hidden),
     label,
-    searchable: booleanValue(CONFIGURATION.searchable),
+    searchable: booleanValue(configuration.searchable),
     uri,
   };
 };

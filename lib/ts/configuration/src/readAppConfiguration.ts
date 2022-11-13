@@ -19,12 +19,9 @@ export const readAppConfiguration = <
       continue;
     }
 
-    const typeQuads = dataset.getQuads(
-      null,
-      rdf.type,
-      configuration.AppConfiguration,
-      null
-    );
+    const typeQuads = dataset
+      .match(null, rdf.type, configuration.AppConfiguration, null)
+      .toArray();
     if (typeQuads.length === 0) {
       continue;
     } else if (typeQuads.length > 1) {
@@ -59,12 +56,15 @@ export const readAppConfiguration = <
       dataset,
       stylesheetHref:
         dataset
-          .getObjects(
+          .match(
             typeQuad.subject,
             configuration.stylesheetHref,
+            null,
             typeQuad.graph
           )
-          .find(term => term.termType === "NamedNode")?.value ?? null,
+          .toArray()
+          .find(quad => quad.object.termType === "NamedNode")?.object.value ??
+        null,
     });
   }
 
