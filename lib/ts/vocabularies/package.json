@@ -3,8 +3,7 @@
   "name": "@paradicms/vocabularies",
   "description": "Paradicms vocabularies library",
   "dependencies": {
-    "@types/n3": "1.10.4",
-    "n3": "1.16.2"
+    "@tpluscode/rdf-ns-builders": "2.0.1"
   },
   "devDependencies": {
     "rimraf": "3.0.2",

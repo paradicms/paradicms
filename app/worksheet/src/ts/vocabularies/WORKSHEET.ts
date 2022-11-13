@@ -1,12 +1,17 @@
-import {Namespace} from "@paradicms/vocabularies";
+import namespace, {NamespaceBuilder} from "@rdf-esm/namespace";
+import {NamedNode} from "@rdfjs/types";
 
-export class WORKSHEET {
-  static readonly NS = Namespace("http://www.paradicms.org/ns/worksheet#");
+interface Worksheet {
+  "": NamedNode<"http://www.paradicms.org/ns/worksheet#">;
 
   // Properties
-  static readonly featureSet = WORKSHEET.NS("featureSet");
+  featureSet: NamedNode<"http://www.paradicms.org/ns/worksheet#featureSet">;
 
   // Resources
-  static readonly Feature = WORKSHEET.NS("Feature");
-  static readonly FeatureSet = WORKSHEET.NS("FeatureSet");
+  Feature: NamedNode<"http://www.paradicms.org/ns/worksheet#Feature">;
+  FeatureSet: NamedNode<"http://www.paradicms.org/ns/worksheet#FeatureSet">;
 }
+
+const builder = namespace("http://www.paradicms.org/ns/worksheet#") as any;
+export const strict = builder as NamespaceBuilder<keyof Worksheet> & Worksheet;
+export const loose = builder as NamespaceBuilder & Worksheet;
