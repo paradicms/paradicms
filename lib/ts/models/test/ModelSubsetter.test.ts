@@ -27,33 +27,33 @@ const expectModelsDeepEq = <ModelT extends NamedModel>(
   );
 
 describe("ModelSubsetter", () => {
-  const testDataset = ModelSet.parse(testDataTrig);
+  const testModelSet = ModelSet.parse(testDataTrig);
   const sut = new ModelSubsetter({
-    completeDataset: testDataset,
+    completeModelSet: testModelSet,
     workPropertyUris: [],
   });
 
   it("should get institutions with thumbnails (institutions page)", () => {
-    const modelSet = sut.institutionsDataset(testDataset.institutions, {
+    const modelSet = sut.institutionsModelSet(testModelSet.institutions, {
       thumbnail: THUMBNAIL_SELECTOR,
     });
     expectModelsDeepEq(
       modelSet.images,
-      testDataset.institutions.map(
+      testModelSet.institutions.map(
         institution => institution.thumbnail(THUMBNAIL_SELECTOR)!
       )
     );
-    expectModelsDeepEq(modelSet.institutions, testDataset.institutions);
+    expectModelsDeepEq(modelSet.institutions, testModelSet.institutions);
   });
 
   it("should get an institution with its collections and their thumbnails (institution page)", () => {
-    const institution = testDataset.institutions[0];
-    const modelSet = sut.institutionDataset(institution, {
+    const institution = testModelSet.institutions[0];
+    const modelSet = sut.institutionModelSet(institution, {
       collections: {thumbnail: THUMBNAIL_SELECTOR},
     });
     expectModelsDeepEq(
       modelSet.collections,
-      testDataset.collections.filter(
+      testModelSet.collections.filter(
         collection => collection.institutionUri === institution.uri
       )
     );
@@ -69,29 +69,29 @@ describe("ModelSubsetter", () => {
   });
 
   it("should get a collection with its works and their thumbnails (collection page)", () => {
-    const collection = testDataset.collections[0];
-    const modelSet = sut.collectionDataset(collection, {
+    const collection = testModelSet.collections[0];
+    const modelSet = sut.collectionModelSet(collection, {
       works: {
         propertyNamedValues: {thumbnail: THUMBNAIL_SELECTOR},
         thumbnail: THUMBNAIL_SELECTOR,
       },
     });
     expectModelsDeepEq(modelSet.collections, [collection]);
-    const images = testDataset
+    const images = testModelSet
       .collectionWorks(collection.uri)
       .map(work => work.thumbnail(THUMBNAIL_SELECTOR)!);
-    // for (const namedValue of testDataset.namedValues) {
+    // for (const namedValue of testModelSet.namedValues) {
     //   images.push(namedValue.thumbnail(THUMBNAIL_SELECTOR)!);
     // }
     expectModelsDeepEq(modelSet.images, images);
     expectModelsDeepEq(modelSet.licenses, [
-      testDataset.licenses.find(
+      testModelSet.licenses.find(
         license => license.uri === "http://creativecommons.org/licenses/nc/1.0/"
       )!,
     ]);
     expectModelsDeepEq(
       modelSet.works,
-      testDataset.works.filter(work =>
+      testModelSet.works.filter(work =>
         work.collectionUris.some(
           collectionUri => collectionUri === collection.uri
         )
@@ -99,7 +99,7 @@ describe("ModelSubsetter", () => {
     );
     // expect(modelSet.namedValues).to.not.be.empty;
     expectModelsDeepEq(modelSet.rightsStatements, [
-      testDataset.rightsStatements.find(
+      testModelSet.rightsStatements.find(
         rightsStatement =>
           rightsStatement.uri ===
           "http://rightsstatements.org/vocab/InC-EDU/1.0/"
@@ -108,8 +108,8 @@ describe("ModelSubsetter", () => {
   });
 
   it("should get a work with its institution, collections, all images, agents, and agents' thumbnails (work page)", () => {
-    const work = testDataset.works[0];
-    const modelSet = sut.workDataset(work, {
+    const work = testModelSet.works[0];
+    const modelSet = sut.workModelSet(work, {
       agents: {
         thumbnail: THUMBNAIL_SELECTOR,
       },
@@ -120,7 +120,7 @@ describe("ModelSubsetter", () => {
     });
     expectModelsDeepEq(
       modelSet.collections,
-      testDataset.collections.filter(collection =>
+      testModelSet.collections.filter(collection =>
         work.collectionUris.some(
           workCollectionUri => workCollectionUri === collection.uri
         )
@@ -128,7 +128,7 @@ describe("ModelSubsetter", () => {
     );
     expectModelsDeepEq(
       modelSet.images,
-      testDataset.images.filter(
+      testModelSet.images.filter(
         image =>
           image.depictsUri === work.uri ||
           work.rights!.agents.some(agent => agent.uri === image.depictsUri)
@@ -139,27 +139,27 @@ describe("ModelSubsetter", () => {
       expect(agent.thumbnail(THUMBNAIL_SELECTOR)).to.not.be.null;
     }
     expectModelsDeepEq(modelSet.institutions, [
-      testDataset.institutions.find(
+      testModelSet.institutions.find(
         institution => institution.uri === work.institutionUri
       )!,
     ]);
     expectModelsDeepEq(modelSet.licenses, [
-      testDataset.licenses.find(
+      testModelSet.licenses.find(
         license => license.uri === (work.rights!.license! as License).uri
       )!,
     ]);
     expectModelsDeepEq(
       modelSet.agents,
-      testDataset.agents.filter(datasetAgent =>
+      testModelSet.agents.filter(modelSetAgent =>
         work.rights!.agents.some(
-          workAgent => workAgent.uri === datasetAgent.uri
+          workAgent => workAgent.uri === modelSetAgent.uri
         )
       )
     );
     expectModelsDeepEq(modelSet.works, [work]);
     expect(modelSet.namedValues).to.be.empty;
     expectModelsDeepEq(modelSet.rightsStatements, [
-      testDataset.rightsStatements.find(
+      testModelSet.rightsStatements.find(
         rightsStatement =>
           rightsStatement.uri ===
           (work.rights!.statement! as RightsStatement).uri
@@ -168,12 +168,12 @@ describe("ModelSubsetter", () => {
   });
 
   it("should get a work event subset", () => {
-    const work = testDataset.works[0];
-    const workCreation: WorkCreation = testDataset
+    const work = testModelSet.works[0];
+    const workCreation: WorkCreation = testModelSet
       .workEventsByWork(work.uri)
       .find(event => event instanceof WorkCreation)! as WorkCreation;
 
-    const modelSet = sut.workEventsDataset([workCreation], {
+    const modelSet = sut.workEventsModelSet([workCreation], {
       agents: {},
       work: {},
     });

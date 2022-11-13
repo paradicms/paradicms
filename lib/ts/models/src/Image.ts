@@ -7,7 +7,7 @@ import {Memoize} from "typescript-memoize";
 import {requireDefined} from "./requireDefined";
 import {Mixin} from "ts-mixer";
 import {HasRights} from "./mixins";
-import {dcterms, exif, foaf} from "@paradicms/vocabularies";
+import {cms, dcterms, exif, foaf, xsd} from "@paradicms/vocabularies";
 
 export class Image extends Mixin(NamedModel, HasRights) {
   get depictsUri(): string {
@@ -34,12 +34,10 @@ export class Image extends Mixin(NamedModel, HasRights) {
     widthProperty: NamedNode
   ): ImageDimensions | null {
     const heightLiteral = this.getObjects(heightProperty).find(
-      term =>
-        term.termType === "Literal" && term.datatype.value === xsd.integer.value
+      term => term.termType === "Literal" && term.datatype.equals(xsd.integer)
     ) as Literal | undefined;
     const widthLiteral = this.getObjects(widthProperty).find(
-      term =>
-        term.termType === "Literal" && term.datatype.value === xsd.integer.value
+      term => term.termType === "Literal" && term.datatype.equals(xsd.integer)
     ) as Literal | undefined;
 
     if (heightLiteral && widthLiteral) {

@@ -1,14 +1,14 @@
 import {ModelSet} from "@paradicms/models";
 import {ParserOptions} from "n3";
 
-let _dataset: ModelSet | undefined;
+let _modelSet: ModelSet | undefined;
 
 export const readModelSetFile = (
   // There are issues importing "fs" from a library, so pass in the function we need here
   // https://github.com/vercel/next.js/issues/7755
   readFileSync: (filePath: string) => string
 ): ModelSet => {
-  if (!_dataset) {
+  if (!_modelSet) {
     const dataFilePath: string | undefined = process.env.DATA_FILE_PATH;
     if (!dataFilePath) {
       throw new EvalError("must specify a data file path");
@@ -26,10 +26,10 @@ export const readModelSetFile = (
       );
     }
 
-    _dataset = ModelSet.parse(
+    _modelSet = ModelSet.parse(
       readFileSync(dataFilePath).toString(),
       parserOptions
     );
   }
-  return _dataset;
+  return _modelSet;
 };

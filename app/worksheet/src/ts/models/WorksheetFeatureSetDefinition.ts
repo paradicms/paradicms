@@ -2,7 +2,7 @@ import {HasAbstract, HasImages, HasTitle, NamedModel} from "@paradicms/models";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
 import {WORKSHEET} from "~/vocabularies/WORKSHEET";
 import {Memoize} from "typescript-memoize";
-import {WorksheetDefinitionDataset} from "~/models/WorksheetDefinitionDataset";
+import {WorksheetDefinitionModelSet} from "~/models/WorksheetDefinitionModelSet";
 import {Mixin} from "ts-mixer";
 
 export class WorksheetFeatureSetDefinition extends Mixin(
@@ -18,7 +18,7 @@ export class WorksheetFeatureSetDefinition extends Mixin(
       .filter(quad => quad.subject.termType === "NamedNode")
       .map(quad =>
         (this
-          .modelSet as WorksheetDefinitionDataset).worksheetFeatureDefinitionByUri(
+          .modelSet as WorksheetDefinitionModelSet).worksheetFeatureDefinitionByUri(
           quad.subject.value
         )
       );

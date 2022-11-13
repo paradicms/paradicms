@@ -84,23 +84,23 @@ export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
   const workUri = decodeFileName(params!.workUri as string);
-  const completeDataset = readModelSetFile(readFileSync);
+  const completeModelSet = readModelSetFile(readFileSync);
   const configuration =
     readCollectionAppConfiguration(
       readConfigurationFile(readFileSync),
-      completeDataset.store
+      completeModelSet.store
     ) ?? defaultCollectionAppConfiguration;
 
   return {
     props: {
       configuration,
       modelSetString: new ModelSubsetter({
-        completeDataset,
+        completeModelSet,
         workPropertyUris: configuration.workProperties.map(
           workProperty => workProperty.uri
         ),
       })
-        .workDataset(completeDataset.workByUri(workUri), {
+        .workModelSet(completeModelSet.workByUri(workUri), {
           agents: {
             thumbnail: {targetDimensions: thumbnailTargetDimensions},
           },

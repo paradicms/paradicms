@@ -3,8 +3,7 @@ import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {Exception} from "~/Exception";
 import {loadGapiClient} from "~/loadGapiClient";
 import {FatalErrorModal} from "~/components/FatalErrorModal";
-import React = require("react");
-import {WorksheetDefinitionDataset} from "~/models/WorksheetDefinitionDataset";
+import {WorksheetDefinitionModelSet} from "~/models/WorksheetDefinitionModelSet";
 import {WorksheetDefinitionContext} from "~/contexts/WorksheetDefinitionContext";
 import {
   BrowserRouter as Router,
@@ -25,6 +24,7 @@ import {WorksheetReviewPage} from "~/pages/WorksheetReviewPage";
 import {UserSettingsPage} from "~/pages/UserSettingsPage";
 import {useLocation} from "react-router";
 import {QueryParamProvider} from "use-query-params";
+import React = require("react");
 
 const RouteAdapter: React.FunctionComponent<{children?: any}> = ({
   children,
@@ -50,8 +50,10 @@ export const Application: React.FunctionComponent = () => {
   const [error, setError] = useState<any>(null);
   const [exception, setException] = useState<Exception | null>(null);
   const [gapiClientLoaded, setGapiClientLoaded] = useState<boolean>(false);
-  const [worksheetDefinition, setWorksheetDefinition] =
-    useState<WorksheetDefinition | null>(null);
+  const [
+    worksheetDefinition,
+    setWorksheetDefinition,
+  ] = useState<WorksheetDefinition | null>(null);
 
   useEffect(() => {
     console.info("loading GAPI client");
@@ -61,18 +63,19 @@ export const Application: React.FunctionComponent = () => {
   useEffect(() => {
     console.info("fetching worksheet definition");
     fetch("/data.ttl").then(
-      (response) =>
-        response.text().then((responseText) => {
-          let worksheetDefinitionDataset: WorksheetDefinitionDataset;
+      response =>
+        response.text().then(responseText => {
+          let worksheetDefinitionModelSet: WorksheetDefinitionModelSet;
           try {
-            worksheetDefinitionDataset =
-              WorksheetDefinitionDataset.parse(responseText);
+            worksheetDefinitionModelSet = WorksheetDefinitionModelSet.parse(
+              responseText
+            );
           } catch (e) {
             setError(e);
             return;
           }
           setWorksheetDefinition(
-            new WorksheetDefinition(worksheetDefinitionDataset)
+            new WorksheetDefinition(worksheetDefinitionModelSet)
           );
         }, setError),
       setError

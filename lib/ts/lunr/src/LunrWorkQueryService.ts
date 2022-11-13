@@ -310,13 +310,13 @@ export class LunrWorkQueryService implements WorkQueryService {
         .sort((left, right) => left.name.localeCompare(right.name));
       const slicedAgents = agents.slice(offset, offset + limit);
 
-      const slicedAgentsDataset = new ModelSubsetter({
-        completeDataset: this.modelSet,
+      const slicedAgentsModelSet = new ModelSubsetter({
+        completeModelSet: this.modelSet,
         workPropertyUris: this.resultWorkPropertyUris,
-      }).agentsDataset(slicedAgents, agentJoinSelector);
+      }).agentsModelSet(slicedAgents, agentJoinSelector);
 
       resolve({
-        modelSet: slicedAgentsDataset,
+        modelSet: slicedAgentsModelSet,
         totalWorkAgentsCount: agents.length,
         workAgentUris: slicedAgents.map(agent => agent.uri),
       });
@@ -369,23 +369,23 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       // console.debug("Search sliced works count:", slicedWorks.length);
 
-      const slicedWorksDataset = new ModelSubsetter({
-        completeDataset: this.modelSet,
+      const slicedWorksModelSet = new ModelSubsetter({
+        completeModelSet: this.modelSet,
         workPropertyUris: this.resultWorkPropertyUris,
-      }).worksDataset(slicedWorks, workJoinSelector);
+      }).worksModelSet(slicedWorks, workJoinSelector);
 
       console.debug(
         "Search results modelSet:",
-        Object.keys(slicedWorksDataset)
+        Object.keys(slicedWorksModelSet)
           .map(
             key =>
-              `${key}: ${((slicedWorksDataset as any)[key] as any[]).length}`
+              `${key}: ${((slicedWorksModelSet as any)[key] as any[]).length}`
           )
           .join(", ")
       );
 
       resolve({
-        modelSet: slicedWorksDataset,
+        modelSet: slicedWorksModelSet,
         facets,
         totalWorksCount: filteredWorks.length,
       });
@@ -508,13 +508,13 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       const slicedWorkEvents = workEvents.slice(offset, offset + limit);
 
-      const slicedWorkEventsDataset = new ModelSubsetter({
-        completeDataset: this.modelSet,
+      const slicedWorkEventsModelSet = new ModelSubsetter({
+        completeModelSet: this.modelSet,
         workPropertyUris: this.resultWorkPropertyUris,
-      }).workEventsDataset(workEvents, workEventJoinSelector);
+      }).workEventsModelSet(workEvents, workEventJoinSelector);
 
       resolve({
-        modelSet: slicedWorkEventsDataset,
+        modelSet: slicedWorkEventsModelSet,
         totalWorkEventsCount: workEvents.length,
         workEventUris: slicedWorkEvents.map(workEvent => workEvent.uri),
       });

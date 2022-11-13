@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useMemo} from "react";
-import {Collection, DataSubsetter, ModelSet} from "@paradicms/models";
+import {Collection, ModelSet} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {
@@ -97,26 +97,26 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const completeDataset = readModelSetFile(readFileSync);
+  const completeModelSet = readModelSetFile(readFileSync);
   const configuration =
     readCollectionAppConfiguration(
       readConfigurationFile(readFileSync),
-      completeDataset.store
+      completeModelSet.store
     ) ?? defaultCollectionAppConfiguration;
 
-  const collection = completeDataset.collections[0];
+  const collection = completeModelSet.collections[0];
 
   return {
     props: {
       collectionUri: collection.uri,
       configuration,
       modelSetString: new ModelSubsetter({
-        completeDataset,
+        completeModelSet,
         workPropertyUris: configuration.workProperties.map(
           workProperty => workProperty.uri
         ),
       })
-        .collectionDataset(collection, {
+        .collectionModelSet(collection, {
           institution: {},
           works: workSearchWorkJoinSelector(thumbnailTargetDimensions),
         })

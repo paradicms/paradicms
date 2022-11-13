@@ -4,7 +4,7 @@ import {WorksheetFeatureSetDefinition} from "~/models/WorksheetFeatureSetDefinit
 import {WORKSHEET} from "~/vocabularies/WORKSHEET";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
 
-export class WorksheetDefinitionDataset extends ModelSet {
+export class WorksheetDefinitionModelSet extends ModelSet {
   private _worksheetFeatureDefinitions?: readonly WorksheetFeatureDefinition[];
   private _worksheetFeatureDefinitionsByUriIndex?: {
     [index: string]: WorksheetFeatureDefinition;
@@ -17,8 +17,8 @@ export class WorksheetDefinitionDataset extends ModelSet {
   static parse(
     input: string,
     options?: ParserOptions
-  ): WorksheetDefinitionDataset {
-    return new WorksheetDefinitionDataset(
+  ): WorksheetDefinitionModelSet {
+    return new WorksheetDefinitionModelSet(
       ModelSet.parseIntoStore(input, options)
     );
   }

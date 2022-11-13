@@ -133,11 +133,11 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const workUri = decodeFileName(params!.workUri as string);
 
-  const completeDataset = readModelSetFile(readFileSync);
+  const completeModelSet = readModelSetFile(readFileSync);
 
-  const currentWork = completeDataset.workByUri(workUri);
+  const currentWork = completeModelSet.workByUri(workUri);
   const collectionUri = currentWork.collectionUris[0];
-  const collectionWorks = completeDataset.collectionWorks(collectionUri);
+  const collectionWorks = completeModelSet.collectionWorks(collectionUri);
 
   const currentWorkI = collectionWorks.findIndex(
     work => work.uri === currentWork.uri
@@ -167,15 +167,15 @@ export const getStaticProps: GetStaticProps = async ({
       configuration:
         readExhibitionAppConfiguration(
           readConfigurationFile(readFileSync),
-          completeDataset.store
+          completeModelSet.store
         ) ?? defaultExhibitionAppConfiguration,
       currentWorkUri: workUri,
       modelSetString: new ModelSubsetter({
-        completeDataset,
+        completeModelSet,
         workPropertyUris: [],
       })
-        .worksDataset(
-          workUris.map(workUri => completeDataset.workByUri(workUri)),
+        .worksModelSet(
+          workUris.map(workUri => completeModelSet.workByUri(workUri)),
           {
             agents: {
               thumbnail: {targetDimensions: thumbnailTargetDimensions},

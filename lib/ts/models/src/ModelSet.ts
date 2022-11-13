@@ -3,16 +3,7 @@ import {Image} from "./Image";
 import {Institution} from "./Institution";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
-import {
-  BlankNode,
-  DefaultGraph,
-  NamedNode,
-  Parser,
-  ParserOptions,
-  Store,
-  Writer,
-  WriterOptions,
-} from "n3";
+import {BlankNode, DefaultGraph, NamedNode, Store} from "@rdfjs/types";
 import {Work} from "./Work";
 import {Person} from "./Person";
 import {NamedModel} from "./NamedModel";
@@ -25,7 +16,7 @@ import {WorkEvent} from "./WorkEvent";
 import {WorkCreation} from "./WorkCreation";
 import {Event} from "./Event";
 import {hasMixin} from "ts-mixer";
-import {cms, prefixes, rdf} from "@paradicms/vocabularies";
+import {cms, rdf} from "@paradicms/vocabularies";
 
 const eventClassesByRdfType = (() => {
   const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
@@ -38,8 +29,8 @@ const eventClassesByRdfType = (() => {
  *
  * For example, a GUI that has one work per page needs a quick workByUri lookup in getStaticProps.
  *
- * IndexedDataset is used by getStaticProps to cut down Datasets, which means it must deal in JSON-serializable interfaces/works rather than classes.
- * (JoinedDataset does the latter, because it is only used on the component side.)
+ * IndexedModelSet is used by getStaticProps to cut down ModelSets, which means it must deal in JSON-serializable interfaces/works rather than classes.
+ * (JoinedModelSet does the latter, because it is only used on the component side.)
  */
 export class ModelSet {
   private _collections?: readonly Collection[];
@@ -335,19 +326,19 @@ export class ModelSet {
     return this._organizationsByUriIndex!;
   }
 
-  static parse(input: string, options?: ParserOptions): ModelSet {
-    return new ModelSet(ModelSet.parseIntoStore(input, options));
-  }
-
-  protected static parseIntoStore(
-    input: string,
-    options?: ParserOptions
-  ): Store {
-    const parser = new Parser(options);
-    const store = new Store();
-    store.addQuads(parser.parse(input));
-    return store;
-  }
+  // static parse(input: string, options?: ParserOptions): ModelSet {
+  //   return new ModelSet(ModelSet.parseIntoStore(input, options));
+  // }
+  //
+  // protected static parseIntoStore(
+  //   input: string,
+  //   options?: ParserOptions
+  // ): Store {
+  //   const parser = new Parser(options);
+  //   const store = new Store();
+  //   store.addQuads(parser.parse(input));
+  //   return store;
+  // }
 
   get people(): readonly Person[] {
     if (!this._people) {
@@ -701,20 +692,20 @@ export class ModelSet {
     return this._rightsStatementsByUriIndex!;
   }
 
-  stringify(options?: WriterOptions): string {
-    const augmentedOptions: WriterOptions = {...options};
-    if (!augmentedOptions.format) {
-      augmentedOptions.format = "Turtle";
-    }
-    if (!augmentedOptions.prefixes) {
-      augmentedOptions.prefixes = prefixes;
-    }
-    const writer = new Writer(augmentedOptions);
-    writer.addQuads(this.store.getQuads(null, null, null, null));
-    let resultString: string;
-    writer.end((error, result: string) => (resultString = result));
-    return resultString!;
-  }
+  // stringify(options?: WriterOptions): string {
+  //   const augmentedOptions: WriterOptions = {...options};
+  //   if (!augmentedOptions.format) {
+  //     augmentedOptions.format = "Turtle";
+  //   }
+  //   if (!augmentedOptions.prefixes) {
+  //     augmentedOptions.prefixes = prefixes;
+  //   }
+  //   const writer = new Writer(augmentedOptions);
+  //   writer.addQuads(this.store.getQuads(null, null, null, null));
+  //   let resultString: string;
+  //   writer.end((error, result: string) => (resultString = result));
+  //   return resultString!;
+  // }
 
   workByUri(workUri: string): Work {
     const work = this.worksByUriIndex[workUri];

@@ -1,10 +1,10 @@
 import {WorksheetFeatureSetDefinition} from "~/models/WorksheetFeatureSetDefinition";
-import {WorksheetDefinitionDataset} from "~/models/WorksheetDefinitionDataset";
+import {WorksheetDefinitionModelSet} from "~/models/WorksheetDefinitionModelSet";
 import {WorksheetFeatureValueDefinition} from "~/models/WorksheetFeatureValueDefinition";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
 
 export class WorksheetDefinition {
-  constructor(private readonly modelSet: WorksheetDefinitionDataset) {}
+  constructor(private readonly modelSet: WorksheetDefinitionModelSet) {}
 
   get features(): readonly WorksheetFeatureDefinition[] {
     return this.modelSet.worksheetFeatureDefinitions;
