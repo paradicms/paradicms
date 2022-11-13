@@ -1,12 +1,13 @@
 import {expect} from "chai";
 import {ShapesGraph} from "../src";
 import {testShapesGraphTtl} from "./testShapesGraphTtl";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("ShapesGraph", () => {
   let shapesGraph: ShapesGraph;
 
   before(() => {
-    shapesGraph = ShapesGraph.parse(testShapesGraphTtl);
+    shapesGraph = new ShapesGraph(parseIntoDataset(testShapesGraphTtl));
   });
 
   it("should parse the shapes correctly", () => {

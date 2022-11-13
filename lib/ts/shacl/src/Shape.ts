@@ -1,5 +1,5 @@
 import {Model} from "./Model";
-import {rdf, sh} from "@paradicms/vocabularies";
+import {rdf, rdfs, sh} from "@paradicms/vocabularies";
 import {Literal, NamedNode} from "@rdfjs/types";
 
 export class Shape extends Model {
@@ -11,11 +11,10 @@ export class Shape extends Model {
       if (rdfType.equals(rdfs.Class)) {
         return true;
       }
-      for (const parentRdfType of this.dataset.getObjects(
-        rdfType,
-        rdfs.subClassOf,
-        this.shapesGraph.graph
-      )) {
+      for (const parentRdfType of this.dataset
+        .match(rdfType, rdfs.subClassOf, null, this.shapesGraph.graph)
+        .toArray()
+        .map(quad => quad.object)) {
         if (
           parentRdfType.termType === "NamedNode" &&
           isRdfsClass(parentRdfType)

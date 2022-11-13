@@ -6,7 +6,7 @@ import {DataGraph} from "./DataGraph";
 import {ShapesGraph} from "./ShapesGraph";
 import * as ValidationReport from "rdf-validate-shacl/src/validation-report";
 import * as SHACLValidator from "rdf-validate-shacl";
-import {TermSet} from "./TermSet";
+import {TermSet} from "../../rdf/src/TermSet";
 import {PropertyShape} from "./PropertyShape";
 
 type SomeFocusNodePropertyShapeCallback = (
@@ -99,41 +99,33 @@ export class ShaclProcessor {
   ): boolean {
     // Get instances of the targetClass
     if (
-      this.dataGraph.dataset.some(
-        quad => {
-          switch (quad.subject.termType) {
-            case "BlankNode":
-            case "NamedNode":
-              if (seenFocusNodeSet.add(quad.subject)) {
-                return callback(quad.subject);
-              }
-            default:
-              return false;
-          }
-        },
-        null,
-        rdf.type,
-        targetClass,
-        null
-      )
+      this.dataGraph.match(null, rdf.type, targetClass).some(quad => {
+        switch (quad.subject.termType) {
+          case "BlankNode":
+          case "NamedNode":
+            if (seenFocusNodeSet.add(quad.subject)) {
+              return callback(quad.subject);
+            }
+          default:
+            return false;
+        }
+      })
     ) {
       return true;
     }
 
     // Recurse into targetClass's sub-classes
-    return this.dataGraph.dataset.some(
-      quad =>
-        quad.subject.termType === "NamedNode" &&
-        this.someShapeClassFocusNodesRecursive(
-          callback,
-          seenFocusNodeSet,
-          quad.subject
-        ),
-      null,
-      rdfs.subClassOf,
-      targetClass,
-      null
-    );
+    return this.dataGraph
+      .match(null, rdfs.subClassOf, targetClass, null)
+      .some(
+        quad =>
+          quad.subject.termType === "NamedNode" &&
+          this.someShapeClassFocusNodesRecursive(
+            callback,
+            seenFocusNodeSet,
+            quad.subject
+          )
+      );
   }
 
   private someShapeImplicitClassFocusNodes(
@@ -178,13 +170,7 @@ export class ShaclProcessor {
           return callback(targetNode);
         case "NamedNode":
           if (
-            this.dataGraph.dataset.some(
-              () => true,
-              targetNode,
-              null,
-              null,
-              null
-            ) &&
+            this.dataGraph.match(targetNode, null, null, null).size > 0 &&
             seenFocusNodeSet.add(targetNode)
           ) {
             return callback(targetNode);
@@ -201,25 +187,19 @@ export class ShaclProcessor {
   ): boolean {
     // If s is a shape in a shapes graph SG and s has value p for sh:targetObjectsOf in SG then the set of nodes in a data graph DG that are objects of triples in DG with predicate p is a target from DG for s in SG.
     return shape.targetObjectsOf.some(p =>
-      this.dataGraph.dataset.some(
-        quad => {
-          switch (quad.object.termType) {
-            case "BlankNode":
-            case "NamedNode":
-              if (seenFocusNodeSet.add(quad.object)) {
-                return callback(quad.object);
-              }
-            case "Literal":
+      this.dataGraph.match(null, p, null, null).some(quad => {
+        switch (quad.object.termType) {
+          case "BlankNode":
+          case "NamedNode":
+            if (seenFocusNodeSet.add(quad.object)) {
               return callback(quad.object);
-            default:
-              return false;
-          }
-        },
-        null,
-        p,
-        null,
-        null
-      )
+            }
+          case "Literal":
+            return callback(quad.object);
+          default:
+            return false;
+        }
+      })
     );
   }
 
@@ -230,23 +210,17 @@ export class ShaclProcessor {
   ): boolean {
     // If s is a shape in a shapes graph SG and s has value p for sh:targetSubjectsOf in SG then the set of nodes in a data graph DG that are subjects of triples in DG with predicate p is a target from DG for s in SG.
     return shape.targetSubjectsOf.some(p =>
-      this.dataGraph.dataset.some(
-        quad => {
-          switch (quad.subject.termType) {
-            case "BlankNode":
-            case "NamedNode":
-              if (seenFocusNodeSet.add(quad.subject)) {
-                return callback(quad.subject);
-              }
-            default:
-              return false;
-          }
-        },
-        null,
-        p,
-        null,
-        null
-      )
+      this.dataGraph.match(null, p, null, null).some(quad => {
+        switch (quad.subject.termType) {
+          case "BlankNode":
+          case "NamedNode":
+            if (seenFocusNodeSet.add(quad.subject)) {
+              return callback(quad.subject);
+            }
+          default:
+            return false;
+        }
+      })
     );
   }
 
@@ -273,6 +247,6 @@ export class ShaclProcessor {
 
   validate(): ValidationReport {
     const validator = new SHACLValidator(this.shapesGraph.dataset);
-    return validator.validate(this.dataGraph.dataset);
+    return validator.validate(this.dataGraph);
   }
 }

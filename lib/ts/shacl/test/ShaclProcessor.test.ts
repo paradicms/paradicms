@@ -5,6 +5,7 @@ import {validTestDataGraphTtl} from "./validTestDataGraphTtl";
 import {invalidTestDataGraphTtl} from "./invalidTestDataGraphTtl";
 import {ShaclProcessor} from "../src/ShaclProcessor";
 import {DataFactory} from "n3";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("ShaclProcessor", () => {
   let invalidDataGraph: DataGraph;
@@ -12,9 +13,9 @@ describe("ShaclProcessor", () => {
   let shapesGraph: ShapesGraph;
 
   before(() => {
-    invalidDataGraph = DataGraph.parse(invalidTestDataGraphTtl);
-    validDataGraph = DataGraph.parse(validTestDataGraphTtl);
-    shapesGraph = ShapesGraph.parse(testShapesGraphTtl);
+    invalidDataGraph = parseIntoDataset(invalidTestDataGraphTtl);
+    validDataGraph = parseIntoDataset(validTestDataGraphTtl);
+    shapesGraph = new ShapesGraph(parseIntoDataset(testShapesGraphTtl));
   });
 
   it("should get the property shapes for a focus node that has them", () => {

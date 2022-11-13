@@ -17,6 +17,7 @@ import {Event} from "./Event";
 import {hasMixin} from "ts-mixer";
 import {cms, rdf} from "@paradicms/vocabularies";
 import {requireDefined} from "@paradicms/rdf";
+import {TermSet} from "@paradicms/shacl/dist/TermSet";
 
 const eventClassesByRdfType = (() => {
   const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
@@ -491,6 +492,7 @@ export class ModelSet {
     callback: (kwds: ModelParameters) => void,
     type: NamedNode
   ): void {
+    const uniqueModelSubjects = new TermSet();
     this.dataset.match(null, rdf.type, type, null).forEach(quad => {
       switch (quad.graph.termType) {
         case "DefaultGraph":
@@ -510,6 +512,10 @@ export class ModelSet {
           throw new RangeError(
             `expected BlankNode or NamedNode subject, actual ${quad.subject.termType}`
           );
+      }
+
+      if (!uniqueModelSubjects.add(quad.subject)) {
+        return;
       }
 
       callback({

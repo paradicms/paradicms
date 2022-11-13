@@ -15,7 +15,10 @@ export abstract class Model {
   }
 
   protected getObjects(property: NamedNode): readonly Term[] {
-    return this.dataset.getObjects(this.node, property, this.shapesGraph.graph);
+    return this.dataset
+      .match(this.node, property, null, null)
+      .toArray()
+      .map(quad => quad.object);
   }
 
   protected get dataset() {

@@ -17,21 +17,14 @@ export class FormNode extends Model {
   }
 
   delete(): void {
-    const dataset = this.type.form.dataGraph.dataset;
-
     // Delete (s, p, o)
     // Recursively delete (blankNode, p, o) where (s, p, blankNode)
     const deleteQuadsWithSubject = (subject: Term) => {
-      for (const quad of dataset.getQuads(
-        subject,
-        null as OTerm,
-        null as OTerm,
-        null as OTerm
-      )) {
+      for (const quad of this.dataGraph.match(subject, null, null, null)) {
         if (quad.object.termType === "BlankNode") {
           deleteQuadsWithSubject(quad.object);
         }
-        dataset.delete(quad);
+        this.dataGraph.delete(quad);
       }
     };
 
@@ -77,8 +70,8 @@ export class FormNode extends Model {
   private get propertyShapesByPath(): TermMap<NamedNode, PropertyShape[]> {
     const propertyShapesByPath = new TermMap<NamedNode, PropertyShape[]>();
     new ShaclProcessor({
-      dataGraph: this.type.form.dataGraph,
-      shapesGraph: this.type.form.shapesGraph,
+      dataGraph: this.dataGraph,
+      shapesGraph: this.shapesGraph,
     }).someFocusNodePropertyShapes(propertyShape => {
       const existingPropertyShapes = propertyShapesByPath.getOptional(
         propertyShape.path

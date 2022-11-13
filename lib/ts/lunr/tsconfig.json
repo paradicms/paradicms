@@ -3,6 +3,7 @@
     "baseUrl": "./src",
     "esModuleInterop": true,
     "lib": [
+      "dom",
       "es2019.array"
     ],
     "outDir": "./dist"

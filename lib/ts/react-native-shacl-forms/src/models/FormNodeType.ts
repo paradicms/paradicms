@@ -1,9 +1,10 @@
-import {DataFactory, NamedNode, OTerm} from "n3";
+import {DataFactory} from "n3";
 import {Form} from "./Form";
 import {FormNode} from "./FormNode";
 import {rdf} from "@paradicms/vocabularies";
 import {Model} from "./Model";
 import {DataGraph, ShapesGraph} from "@paradicms/shacl";
+import {NamedNode} from "@rdfjs/types";
 
 export class FormNodeType extends Model {
   readonly form: Form;
@@ -18,9 +19,7 @@ export class FormNodeType extends Model {
   addNode(dataGraphNode: NamedNode): FormNode {
     // Add (node, rdf:type, ...)
     // Assumes the shapes graph has a class or implicit class target
-    this.form.dataGraph.dataset.add(
-      DataFactory.quad(dataGraphNode, rdf.type, this.rdfType)
-    );
+    this.dataGraph.add(DataFactory.quad(dataGraphNode, rdf.type, this.rdfType));
 
     return new FormNode({
       dataGraphNode: dataGraphNode,
@@ -37,9 +36,10 @@ export class FormNodeType extends Model {
   }
 
   get nodesByUri(): {[index: string]: FormNode} {
-    return this.form.dataGraph.dataset
-      .getSubjects(rdf.type, this.rdfType, null as OTerm)
-      .reduce((map, subject) => {
+    return this.dataGraph
+      .match(null, rdf.type, this.rdfType, null)
+      .reduce((map, quad) => {
+        const subject = quad.subject;
         if (subject.termType === "NamedNode" && !map[subject.value]) {
           map[subject.value] = new FormNode({
             dataGraphNode: subject,

@@ -80,9 +80,19 @@ export const n3StoreToDataset = (n3Store: Store): Dataset => {
     },
     reduce<A>(
       callback: (accumulator: A, quad: Quad, dataset: Dataset<Quad, Quad>) => A,
-      initialValue: A | undefined
+      initialValue: A
     ): A {
-      throw new EvalError("not implemented");
+      let accumulator = initialValue;
+      n3Store.forEach(
+        quad => {
+          accumulator = callback(accumulator, quad, this);
+        },
+        null,
+        null,
+        null,
+        null
+      );
+      return accumulator;
     },
     size: n3Store.size,
     some(
