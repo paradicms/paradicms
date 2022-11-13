@@ -7,9 +7,9 @@ import {DCTERMS, VRA} from "@paradicms/vocabularies";
 import {StringPropertyValueFilter} from "@paradicms/filters";
 
 describe("LunrWorkQueryService", () => {
-  const dataset = Dataset.parse(testDataTrig);
+  const modelSet = Dataset.parse(testDataTrig);
   const sut = new LunrWorkQueryService({
-    dataset,
+    modelSet,
     resultWorkPropertyUris: [DCTERMS.title.value],
     searchWorkPropertyUris: [DCTERMS.title.value]
   });
@@ -25,8 +25,8 @@ describe("LunrWorkQueryService", () => {
       }
     );
 
-    expect(result.dataset.agents).to.not.be.empty;
-    expect(result.dataset.works).to.be.empty;
+    expect(result.modelSet.agents).to.not.be.empty;
+    expect(result.modelSet.works).to.be.empty;
   });
 
   it("getWorkAgents return the works associated with an agent", async () => {
@@ -43,10 +43,10 @@ describe("LunrWorkQueryService", () => {
       }
     );
 
-    expect(result.dataset.agents).to.not.be.empty;
+    expect(result.modelSet.agents).to.not.be.empty;
     let haveAgentWorks = false;
-    for (const agent of result.dataset.agents) {
-      const agentWorks = result.dataset.agentWorks(agent.uri);
+    for (const agent of result.modelSet.agents) {
+      const agentWorks = result.modelSet.agentWorks(agent.uri);
       haveAgentWorks ||= agentWorks.length > 0;
       for (const work of agentWorks) {
         expect(work.agents.some(workAgent => workAgent.agent.uri === agent.uri)).to.be.true;
@@ -67,7 +67,7 @@ describe("LunrWorkQueryService", () => {
     );
 
     expect(result.totalWorkEventsCount).to.be.gt(0);
-    expect(result.dataset.workEvents).to.have.length(result.totalWorkEventsCount);
+    expect(result.modelSet.workEvents).to.have.length(result.totalWorkEventsCount);
     expect(result.workEventUris).to.have.length(result.totalWorkEventsCount);
   });
 
@@ -86,8 +86,8 @@ describe("LunrWorkQueryService", () => {
       }
     );
 
-    expect(result.dataset.works).to.not.be.empty;
-    for (const workEvent of result.dataset.workEvents) {
+    expect(result.modelSet.works).to.not.be.empty;
+    for (const workEvent of result.modelSet.workEvents) {
       expect(workEvent.work).to.not.be.null;
       visitWorkEvent(workEvent, {
         visitWorkCreation(workCreation: WorkCreation): void {
@@ -102,8 +102,8 @@ describe("LunrWorkQueryService", () => {
       filters: [],
     });
     // All locations should be represented
-    expect(result.workLocations).to.have.length(dataset.works.flatMap(work => work.locations).length);
-    for (const work of dataset.works) {
+    expect(result.workLocations).to.have.length(modelSet.works.flatMap(work => work.locations).length);
+    for (const work of modelSet.works) {
       for (const workLocation of work.locations) {
         const resultWorkLocation = result.workLocations.find(resultWorkLocation => resultWorkLocation.work.uri === work.uri && resultWorkLocation.location.lat === workLocation.location.lat && resultWorkLocation.location.long === workLocation.location.long);
         expect(resultWorkLocation).to.not.be.undefined;
@@ -178,7 +178,7 @@ describe("LunrWorkQueryService", () => {
       }
     );
 
-    expect(result.dataset.works).to.not.be.empty;
+    expect(result.modelSet.works).to.not.be.empty;
   });
 
   it("getWorks return fewer works from a freetext query", async () => {
@@ -203,10 +203,10 @@ describe("LunrWorkQueryService", () => {
       }
     );
 
-    expect(allResult.dataset.works).to.not.be.empty;
-    expect(fewerResult.dataset.works).to.not.be.empty;
-    expect(fewerResult.dataset.works.length).to.be.lessThan(
-      allResult.dataset.works.length
+    expect(allResult.modelSet.works).to.not.be.empty;
+    expect(fewerResult.modelSet.works).to.not.be.empty;
+    expect(fewerResult.modelSet.works.length).to.be.lessThan(
+      allResult.modelSet.works.length
     );
   });
 });

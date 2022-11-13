@@ -7,8 +7,8 @@ import {Text} from "../src/Text";
 import {Event} from "../src/Event";
 
 describe("Event", () => {
-  const dataset = ModelSet.parse(testDataTrig);
-  const sut: Event = dataset.workEvents[0];
+  const modelSet = ModelSet.parse(testDataTrig);
+  const sut: Event = modelSet.workEvents[0];
 
   before(() => {
     expect(sut).is.not.undefined;
@@ -16,14 +16,14 @@ describe("Event", () => {
 
   it("should get the abstract", () => {
     expect(
-      dataset.workEvents.some(workEvent => {
+      modelSet.workEvents.some(workEvent => {
         const abstract = workEvent.abstract;
         return abstract instanceof Text;
       })
     ).to.be.true;
 
-    expect(dataset.workEvents.some(workEvent => workEvent.abstract === null)).to
-      .be.true;
+    expect(modelSet.workEvents.some(workEvent => workEvent.abstract === null))
+      .to.be.true;
   });
 
   it("should get the date", () => {

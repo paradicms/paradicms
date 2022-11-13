@@ -10,7 +10,7 @@ export abstract class HasAbstract extends ModelMixin {
       switch (term.termType) {
         case "BlankNode":
           return new Text({
-            dataset: this.dataset,
+            modelSet: this.modelSet,
             graphNode: this.graphNode,
             node: term,
           });

@@ -12,7 +12,7 @@ export class WorksheetFeatureDefinition extends Mixin(
 ) {
   get order(): number {
     const integerLiteral = this.getObjects(SH.order).find(
-      (term) =>
+      term =>
         term.termType === "Literal" && term.datatype.value === XSD.integer.value
     );
     return integerLiteral ? parseInt(integerLiteral.value) : 0;
@@ -20,6 +20,6 @@ export class WorksheetFeatureDefinition extends Mixin(
 
   @Memoize()
   get values(): readonly WorksheetFeatureValueDefinition[] {
-    return this.dataset.namedValuesByPropertyUri(this.uri);
+    return this.modelSet.namedValuesByPropertyUri(this.uri);
   }
 }

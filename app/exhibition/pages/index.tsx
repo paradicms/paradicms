@@ -30,10 +30,10 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
 }) => {
   const router = useRouter();
 
-  const dataset = useMemo(() => Dataset.parse(modelSetString), [
+  const modelSet = useMemo(() => Dataset.parse(modelSetString), [
     modelSetString,
   ]);
-  const collection = dataset.collectionByUri(collectionUri);
+  const collection = modelSet.collectionByUri(collectionUri);
   const collectionAbstract = collection.abstract;
 
   React.useEffect(() => {
@@ -84,17 +84,17 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const dataset = readDatasetFile(readFileSync);
-  const collection = dataset.collections[0];
+  const modelSet = readDatasetFile(readFileSync);
+  const collection = modelSet.collections[0];
 
   return {
     props: {
       configuration:
         readExhibitionAppConfiguration(
           readConfigurationFile(readFileSync),
-          dataset.store
+          modelSet.store
         ) ?? defaultExhibitionAppConfiguration,
-      modelSetString: dataset.stringify(),
+      modelSetString: modelSet.stringify(),
       collectionUri: collection.uri,
       firstWorkUri: collection.works[0].uri,
     },

@@ -543,7 +543,7 @@ export class ModelSet {
         }
 
         callback({
-          dataset: this,
+          modelSet: this,
           graphNode: quad.graph as DefaultGraph | NamedNode,
           node: quad.subject as BlankNode | NamedNode,
         });

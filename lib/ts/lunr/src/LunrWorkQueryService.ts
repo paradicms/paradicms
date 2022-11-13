@@ -60,16 +60,16 @@ interface MutableValueFacetValue<ValueT extends JsonPrimitiveType>
 }
 
 export class LunrWorkQueryService implements WorkQueryService {
-  private readonly dataset: Dataset;
+  private readonly modelSet: Dataset;
   private readonly index: Index;
   private readonly resultWorkPropertyUris: readonly string[];
 
   constructor(kwds: {
-    readonly dataset: Dataset;
+    readonly modelSet: Dataset;
     readonly resultWorkPropertyUris: readonly string[];
     readonly searchWorkPropertyUris: readonly string[];
   }) {
-    this.dataset = kwds.dataset;
+    this.modelSet = kwds.modelSet;
     this.resultWorkPropertyUris = kwds.resultWorkPropertyUris;
     const searchWorkPropertyUris = kwds.searchWorkPropertyUris;
 
@@ -88,7 +88,7 @@ export class LunrWorkQueryService implements WorkQueryService {
       }
       this.ref("uri");
 
-      for (const work of kwds.dataset.works) {
+      for (const work of kwds.modelSet.works) {
         const doc: any = {title: work.title, uri: work.uri};
         if (work.abstract) {
           doc.abstract = work.abstract.toString();
@@ -136,7 +136,7 @@ export class LunrWorkQueryService implements WorkQueryService {
               if (value) {
                 value.count++;
               } else {
-                const collection = this.dataset.collectionByUri(collectionUri);
+                const collection = this.modelSet.collectionByUri(collectionUri);
                 values[collectionUri] = {
                   count: 1,
                   label: collection.title,
@@ -167,7 +167,7 @@ export class LunrWorkQueryService implements WorkQueryService {
             if (value) {
               value.count++;
             } else {
-              const institution = this.dataset.institutionByUri(
+              const institution = this.modelSet.institutionByUri(
                 work.institutionUri
               );
               values[work.institutionUri] = {
@@ -311,12 +311,12 @@ export class LunrWorkQueryService implements WorkQueryService {
       const slicedAgents = agents.slice(offset, offset + limit);
 
       const slicedAgentsDataset = new DataSubsetter({
-        completeDataset: this.dataset,
+        completeDataset: this.modelSet,
         workPropertyUris: this.resultWorkPropertyUris,
       }).agentsDataset(slicedAgents, agentJoinSelector);
 
       resolve({
-        dataset: slicedAgentsDataset,
+        modelSet: slicedAgentsDataset,
         totalWorkAgentsCount: agents.length,
         workAgentUris: slicedAgents.map(agent => agent.uri),
       });
@@ -370,12 +370,12 @@ export class LunrWorkQueryService implements WorkQueryService {
       // console.debug("Search sliced works count:", slicedWorks.length);
 
       const slicedWorksDataset = new DataSubsetter({
-        completeDataset: this.dataset,
+        completeDataset: this.modelSet,
         workPropertyUris: this.resultWorkPropertyUris,
       }).worksDataset(slicedWorks, workJoinSelector);
 
       console.debug(
-        "Search results dataset:",
+        "Search results modelSet:",
         Object.keys(slicedWorksDataset)
           .map(
             key =>
@@ -385,7 +385,7 @@ export class LunrWorkQueryService implements WorkQueryService {
       );
 
       resolve({
-        dataset: slicedWorksDataset,
+        modelSet: slicedWorksDataset,
         facets,
         totalWorksCount: filteredWorks.length,
       });
@@ -397,10 +397,10 @@ export class LunrWorkQueryService implements WorkQueryService {
       // Anything matching the fulltext search
       return this.index
         .search(query.text)
-        .map(({ref}) => this.dataset.workByUri(ref));
+        .map(({ref}) => this.modelSet.workByUri(ref));
     } else {
       // All works
-      return this.dataset.works;
+      return this.modelSet.works;
     }
   }
 
@@ -509,12 +509,12 @@ export class LunrWorkQueryService implements WorkQueryService {
       const slicedWorkEvents = workEvents.slice(offset, offset + limit);
 
       const slicedWorkEventsDataset = new DataSubsetter({
-        completeDataset: this.dataset,
+        completeDataset: this.modelSet,
         workPropertyUris: this.resultWorkPropertyUris,
       }).workEventsDataset(workEvents, workEventJoinSelector);
 
       resolve({
-        dataset: slicedWorkEventsDataset,
+        modelSet: slicedWorkEventsDataset,
         totalWorkEventsCount: workEvents.length,
         workEventUris: slicedWorkEvents.map(workEvent => workEvent.uri),
       });

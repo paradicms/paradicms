@@ -5,12 +5,12 @@ import {CMS} from "@paradicms/vocabularies";
 
 export class WorkEvent extends Event {
   get work(): Work {
-    return this.dataset.workByUri(this.workUri);
+    return this.modelSet.workByUri(this.workUri);
   }
 
   get workUri(): string {
     return requireDefined(
-      this.getObjects(CMS.work).find((term) => term.termType === "NamedNode")
+      this.getObjects(CMS.work).find(term => term.termType === "NamedNode")
     ).value;
   }
 }

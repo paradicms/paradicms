@@ -3,12 +3,12 @@ import {ModelSet} from "./ModelSet";
 import {ModelParameters} from "./ModelParameters";
 
 export class Model {
-  readonly dataset: ModelSet;
+  readonly modelSet: ModelSet;
   readonly graphNode: DefaultGraph | NamedNode;
   protected readonly _node: BlankNode | NamedNode;
 
   constructor(kwds: ModelParameters) {
-    this.dataset = kwds.dataset;
+    this.modelSet = kwds.modelSet;
     this.graphNode = kwds.graphNode;
     this._node = kwds.node;
   }
@@ -22,6 +22,6 @@ export class Model {
   }
 
   protected get store(): Store {
-    return this.dataset.store;
+    return this.modelSet.store;
   }
 }

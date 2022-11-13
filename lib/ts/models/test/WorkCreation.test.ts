@@ -4,9 +4,9 @@ import {testDataTrig} from "./testDataTrig";
 import {WorkCreation} from "../src/WorkCreation";
 
 describe("WorkCreation", () => {
-  const dataset = ModelSet.parse(testDataTrig);
-  const work = dataset.works[0];
-  const sut: WorkCreation = dataset
+  const modelSet = ModelSet.parse(testDataTrig);
+  const work = modelSet.works[0];
+  const sut: WorkCreation = modelSet
     .workEventsByWork(work.uri)
     .find(event => event instanceof WorkCreation)! as WorkCreation;
 
@@ -16,7 +16,7 @@ describe("WorkCreation", () => {
 
   it("should expose the creator", () => {
     const creator = sut.creatorAgents[0];
-    dataset.agentByUri(creator.uri);
+    modelSet.agentByUri(creator.uri);
     expect(work.agents.some(agent => agent.agent.uri === creator.uri)).to.be
       .true;
   });

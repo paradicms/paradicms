@@ -239,7 +239,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
       <Container fluid>
         <Row>
           <WorksGallery
-            works={getWorksResult.dataset.works}
+            works={getWorksResult.modelSet.works}
             renderInstitutionLink={renderInstitutionLink}
             renderWorkLink={renderWorkLink}
           />
@@ -269,7 +269,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
         <Row>
           <AgentsGallery
             agents={getWorkAgentsResult.workAgentUris.map(workAgentUri =>
-              getWorkAgentsResult.dataset.agentByUri(workAgentUri)
+              getWorkAgentsResult.modelSet.agentByUri(workAgentUri)
             )}
           />
         </Row>
@@ -302,7 +302,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
         })}
         setPage={setWorkEventsPage}
         workEvents={getWorkEventsResult.workEventUris.map(workEventUri =>
-          getWorkEventsResult.dataset.workEventByUri(workEventUri)
+          getWorkEventsResult.modelSet.workEventByUri(workEventUri)
         )}
       />
     ) : null,

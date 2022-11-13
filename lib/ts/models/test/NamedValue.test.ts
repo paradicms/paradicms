@@ -3,9 +3,9 @@ import {ModelSet} from "../src";
 import {testDataTrig} from "./testDataTrig";
 
 describe("NamedValue", () => {
-  const dataset = ModelSet.parse(testDataTrig);
-  const sut = dataset.namedValuesByPropertyUri(
-    dataset.namedValues[0].propertyUris[0]
+  const modelSet = ModelSet.parse(testDataTrig);
+  const sut = modelSet.namedValuesByPropertyUri(
+    modelSet.namedValues[0].propertyUris[0]
   )[0];
 
   it("should get the title", () => {

@@ -15,15 +15,16 @@ export class WorksheetFeatureSetDefinition extends Mixin(
   get features(): readonly WorksheetFeatureDefinition[] {
     return this.store
       .getQuads(null, WORKSHEET.featureSet, this.node, null)
-      .filter((quad) => quad.subject.termType === "NamedNode")
-      .map((quad) =>
-        (
-          this.dataset as WorksheetDefinitionDataset
-        ).worksheetFeatureDefinitionByUri(quad.subject.value)
+      .filter(quad => quad.subject.termType === "NamedNode")
+      .map(quad =>
+        (this
+          .modelSet as WorksheetDefinitionDataset).worksheetFeatureDefinitionByUri(
+          quad.subject.value
+        )
       );
   }
 
   get featureUris(): readonly string[] {
-    return this.features.map((feature) => feature.uri);
+    return this.features.map(feature => feature.uri);
   }
 }

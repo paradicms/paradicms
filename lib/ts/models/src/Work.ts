@@ -118,16 +118,16 @@ export class Work extends Mixin(
   }
 
   get collections(): readonly Collection[] {
-    return this.collectionUris.map((collectionUri) =>
-      this.dataset.collectionByUri(collectionUri)
+    return this.collectionUris.map(collectionUri =>
+      this.modelSet.collectionByUri(collectionUri)
     );
   }
 
   @Memoize()
   get collectionUris(): readonly string[] {
     return this.getObjects(CMS.collection)
-      .filter((term) => term.termType === "NamedNode")
-      .map((term) => term.value);
+      .filter(term => term.termType === "NamedNode")
+      .map(term => term.value);
   }
 
   @Memoize()
@@ -136,7 +136,7 @@ export class Work extends Mixin(
       switch (term.termType) {
         case "BlankNode":
           return new Text({
-            dataset: this.dataset,
+            modelSet: this.modelSet,
             graphNode: this.graphNode,
             node: term,
           });
@@ -148,7 +148,7 @@ export class Work extends Mixin(
   }
 
   get events(): readonly WorkEvent[] {
-    return this.dataset.workEventsByWork(this.uri);
+    return this.modelSet.workEventsByWork(this.uri);
   }
 
   @Memoize()
@@ -180,7 +180,7 @@ export class Work extends Mixin(
   propertyNamedValues(propertyUri: string): readonly NamedValue[] {
     const result: NamedValue[] = [];
     this.store.forEach(
-      (quad) => {
+      quad => {
         if (quad.object.termType !== "NamedNode") {
           return;
         }
@@ -195,7 +195,7 @@ export class Work extends Mixin(
         }
         result.push(
           new NamedValue({
-            dataset: this.dataset,
+            modelSet: this.modelSet,
             graphNode: rdfTypeQuads[0].graph as NamedNode,
             node: quad.object,
           })
@@ -212,7 +212,7 @@ export class Work extends Mixin(
   @Memoize()
   propertyValues(propertyUri: string): readonly PropertyValue[] {
     return PropertyValue.fromQuads(
-      this.dataset,
+      this.modelSet,
       this.store.getQuads(
         this.node,
         new NamedNode(propertyUri),

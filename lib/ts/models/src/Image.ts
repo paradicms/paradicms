@@ -12,9 +12,7 @@ import {CMS, DCTERMS, EXIF, FOAF, XSD} from "@paradicms/vocabularies";
 export class Image extends Mixin(NamedModel, HasRights) {
   get depictsUri(): string {
     return requireDefined(
-      this.getObjects(FOAF.depicts).find(
-        (term) => term.termType === "NamedNode"
-      )
+      this.getObjects(FOAF.depicts).find(term => term.termType === "NamedNode")
     ).value;
   }
 
@@ -23,7 +21,7 @@ export class Image extends Mixin(NamedModel, HasRights) {
       // This is a derived image
       return [];
     }
-    return this.dataset.imagesByOriginalImageUri(this.uri);
+    return this.modelSet.imagesByOriginalImageUri(this.uri);
   }
 
   @Memoize()
@@ -36,11 +34,11 @@ export class Image extends Mixin(NamedModel, HasRights) {
     widthProperty: NamedNode
   ): ImageDimensions | null {
     const heightLiteral = this.getObjects(heightProperty).find(
-      (term) =>
+      term =>
         term.termType === "Literal" && term.datatype.value === XSD.integer.value
     ) as Literal | undefined;
     const widthLiteral = this.getObjects(widthProperty).find(
-      (term) =>
+      term =>
         term.termType === "Literal" && term.datatype.value === XSD.integer.value
     ) as Literal | undefined;
 
@@ -80,7 +78,7 @@ export class Image extends Mixin(NamedModel, HasRights) {
 
   get originalImage(): Image {
     const originalImageUri = this.originalImageUri;
-    return originalImageUri ? this.dataset.imageByUri(originalImageUri) : this;
+    return originalImageUri ? this.modelSet.imageByUri(originalImageUri) : this;
   }
 
   static placeholderSrc(dimensions: ImageDimensions) {
@@ -91,7 +89,7 @@ export class Image extends Mixin(NamedModel, HasRights) {
 
   get src(): string | null {
     const srcLiteral = this.getObjects(CMS.imageSrc).find(
-      (term) => term.termType === "Literal"
+      term => term.termType === "Literal"
     );
     if (srcLiteral) {
       return srcLiteral.value;
@@ -115,7 +113,7 @@ export class Image extends Mixin(NamedModel, HasRights) {
 
   get title(): string | null {
     return (
-      this.getObjects(DCTERMS.title).find((term) => term.termType === "Literal")
+      this.getObjects(DCTERMS.title).find(term => term.termType === "Literal")
         ?.value ?? null
     );
   }

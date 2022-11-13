@@ -3,8 +3,8 @@ import {ModelSet, Text} from "../src";
 import {testDataTrig} from "./testDataTrig";
 
 describe("Text", () => {
-  const dataset = ModelSet.parse(testDataTrig);
-  const work = dataset.workByUri(
+  const modelSet = ModelSet.parse(testDataTrig);
+  const work = modelSet.workByUri(
     "http://example.com/institution0/collection0/work2"
   );
   const sut: Text = work.abstract! as Text;

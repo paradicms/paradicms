@@ -203,7 +203,7 @@ export class ModelSetBuilder {
         const model = modelsByUri[modelUri];
         // Add all quads that belong to the model's graph
         store.addQuads(
-          model.dataset.store.getQuads(null, null, null, model.graphNode)
+          model.modelSet.store.getQuads(null, null, null, model.graphNode)
         );
       }
     }

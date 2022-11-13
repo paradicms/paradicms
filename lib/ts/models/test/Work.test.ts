@@ -4,8 +4,8 @@ import {testDataTrig} from "./testDataTrig";
 import {DCTERMS} from "@paradicms/vocabularies";
 
 describe("Work", () => {
-  const dataset = ModelSet.parse(testDataTrig);
-  const sut = dataset.workByUri(
+  const modelSet = ModelSet.parse(testDataTrig);
+  const sut = modelSet.workByUri(
     "http://example.com/institution0/collection0/work2"
   );
 
@@ -29,7 +29,7 @@ describe("Work", () => {
 
   it("should get the work's images", () => {
     expect(sut.images.map(image => image.uri).sort()).to.deep.eq(
-      dataset.images
+      modelSet.images
         .filter(image => image.depictsUri === sut.uri)
         .map(image => image.uri)
         .sort()
@@ -42,7 +42,7 @@ describe("Work", () => {
 
   it("should get the work's images", () => {
     expect(sut.originalImages.map(image => image.uri).sort()).to.deep.eq(
-      dataset.images
+      modelSet.images
         .filter(
           image =>
             image.depictsUri === sut.uri && image.originalImageUri === null

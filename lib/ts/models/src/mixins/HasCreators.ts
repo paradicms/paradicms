@@ -6,12 +6,12 @@ import {ModelMixin} from "./ModelMixin";
 export abstract class HasCreators extends ModelMixin {
   @Memoize()
   get creators(): readonly (Agent | string)[] {
-    return this.getObjects(DCTERMS.creator).flatMap((term) => {
+    return this.getObjects(DCTERMS.creator).flatMap(term => {
       switch (term.termType) {
         case "Literal":
           return term.value;
         case "NamedNode":
-          return this.dataset.agentByUri(term.value);
+          return this.modelSet.agentByUri(term.value);
         default:
           return [];
       }
@@ -19,15 +19,15 @@ export abstract class HasCreators extends ModelMixin {
   }
 
   get creatorAgents(): readonly Agent[] {
-    return this.creatorAgentUris.map((agentUri) =>
-      this.dataset.agentByUri(agentUri)
+    return this.creatorAgentUris.map(agentUri =>
+      this.modelSet.agentByUri(agentUri)
     );
   }
 
   @Memoize()
   get creatorAgentUris(): readonly string[] {
     return this.getObjects(DCTERMS.creator)
-      .filter((term) => term.termType === "NamedNode")
-      .map((term) => term.value);
+      .filter(term => term.termType === "NamedNode")
+      .map(term => term.value);
   }
 }

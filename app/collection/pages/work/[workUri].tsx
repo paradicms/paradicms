@@ -44,10 +44,10 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   modelSetString,
   workUri,
 }) => {
-  const dataset = useMemo(() => Dataset.parse(modelSetString), [
+  const modelSet = useMemo(() => Dataset.parse(modelSetString), [
     modelSetString,
   ]);
-  const work = dataset.workByUri(workUri);
+  const work = modelSet.workByUri(workUri);
   const collection = work.collections[0];
 
   return (

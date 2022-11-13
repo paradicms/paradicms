@@ -79,7 +79,7 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
       switch (term.termType) {
         case "BlankNode":
           return new DateTimeDescription({
-            dataset: this.dataset,
+            modelSet: this.modelSet,
             graphNode: this.graphNode,
             node: term,
           });
@@ -110,7 +110,7 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
       switch (term.termType) {
         case "BlankNode":
           return new Location({
-            dataset: this.dataset,
+            modelSet: this.modelSet,
             graphNode: this.graphNode,
             node: term,
           });
@@ -152,7 +152,7 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
 
   get title(): string | null {
     return (
-      this.getObjects(DCTERMS.title).find((term) => term.termType === "Literal")
+      this.getObjects(DCTERMS.title).find(term => term.termType === "Literal")
         ?.value ?? null
     );
   }

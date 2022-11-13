@@ -15,11 +15,11 @@ export class Institution extends Mixin(
   HasRights
 ) {
   get collections(): readonly Collection[] {
-    return this.dataset.institutionCollections(this.uri);
+    return this.modelSet.institutionCollections(this.uri);
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {
-    const institutionImages: readonly Image[] = this.dataset.imagesByDepictsUri(
+    const institutionImages: readonly Image[] = this.modelSet.imagesByDepictsUri(
       this.uri
     );
     if (institutionImages.length > 0) {

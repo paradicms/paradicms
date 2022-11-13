@@ -51,11 +51,11 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 }) => {
   const router = useRouter();
 
-  const dataset = useMemo<Dataset>(() => Dataset.parse(modelSetString), [
+  const modelSet = useMemo<Dataset>(() => Dataset.parse(modelSetString), [
     modelSetString,
   ]);
-  const collection = dataset.collectionByUri(collectionUri);
-  const currentWork = dataset.workByUri(currentWorkUri);
+  const collection = modelSet.collectionByUri(collectionUri);
+  const currentWork = modelSet.workByUri(currentWorkUri);
 
   const onGoToNextWork = useCallback(() => {
     if (nextWorkUri) {

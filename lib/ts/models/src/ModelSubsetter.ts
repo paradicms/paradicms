@@ -85,7 +85,7 @@ export class ModelSubsetter {
         this.addImageDataset({}, builder, thumbnailImage);
         if (thumbnailImage.depictsUri !== collection.uri) {
           // The thumbnail either depicts the collection or one of the collection's works.
-          // If the latter case we need to include the work in the dataset.
+          // If the latter case we need to include the work in the modelSet.
           builder.addWork(
             this.completeDataset.workByUri(thumbnailImage.depictsUri)
           );

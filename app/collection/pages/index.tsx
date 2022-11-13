@@ -45,19 +45,19 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   configuration,
   modelSetString,
 }) => {
-  const dataset = useMemo<Dataset>(() => Dataset.parse(modelSetString), [
+  const modelSet = useMemo<Dataset>(() => Dataset.parse(modelSetString), [
     modelSetString,
   ]);
 
   const collection = useMemo<Collection>(
-    () => dataset.collectionByUri(collectionUri),
+    () => modelSet.collectionByUri(collectionUri),
     [collectionUri, modelSetString]
   );
 
   const workQueryService = useMemo<WorkQueryService>(
     () =>
       new LunrWorkQueryService({
-        dataset,
+        modelSet,
         resultWorkPropertyUris: configuration.workProperties.map(
           workProperty => workProperty.uri
         ),
@@ -65,7 +65,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
           .filter(workProperty => workProperty.searchable)
           .map(workProperty => workProperty.uri),
       }),
-    [configuration, dataset]
+    [configuration, modelSet]
   );
 
   const {onSearch, ...workSearchQueryParams} = useWorkSearchQueryParams({

@@ -6,12 +6,12 @@ import {ModelMixin} from "./ModelMixin";
 export abstract class HasContributors extends ModelMixin {
   @Memoize()
   get contributors(): readonly (Agent | string)[] {
-    return this.getObjects(DCTERMS.contributor).flatMap((term) => {
+    return this.getObjects(DCTERMS.contributor).flatMap(term => {
       switch (term.termType) {
         case "Literal":
           return term.value;
         case "NamedNode":
-          return this.dataset.agentByUri(term.value);
+          return this.modelSet.agentByUri(term.value);
         default:
           return [];
       }
@@ -19,15 +19,15 @@ export abstract class HasContributors extends ModelMixin {
   }
 
   get contributorAgents(): readonly Agent[] {
-    return this.contributorAgentUris.map((agentUri) =>
-      this.dataset.agentByUri(agentUri)
+    return this.contributorAgentUris.map(agentUri =>
+      this.modelSet.agentByUri(agentUri)
     );
   }
 
   @Memoize()
   get contributorAgentUris(): readonly string[] {
     return this.getObjects(DCTERMS.contributor)
-      .filter((term) => term.termType === "NamedNode")
-      .map((term) => term.value);
+      .filter(term => term.termType === "NamedNode")
+      .map(term => term.value);
   }
 }

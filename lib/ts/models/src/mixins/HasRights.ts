@@ -13,7 +13,7 @@ export abstract class HasRights extends ModelMixin {
       this.getObjects(DCTERMS.rightsHolder).length > 0
     ) {
       return new Rights({
-        dataset: this.dataset,
+        modelSet: this.modelSet,
         graphNode: this.graphNode,
         node: this._node,
       });

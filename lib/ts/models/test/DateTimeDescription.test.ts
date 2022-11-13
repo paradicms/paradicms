@@ -4,9 +4,9 @@ import {testDataTrig} from "./testDataTrig";
 import {DateTimeDescription} from "../src/DateTimeDescription";
 
 describe("DateTimeDescription", () => {
-  const dataset = ModelSet.parse(testDataTrig);
-  const sut: DateTimeDescription = dataset.workEventsByWork(
-    dataset.works[0].uri
+  const modelSet = ModelSet.parse(testDataTrig);
+  const sut: DateTimeDescription = modelSet.workEventsByWork(
+    modelSet.works[0].uri
   )[0].date! as DateTimeDescription;
 
   before(() => {

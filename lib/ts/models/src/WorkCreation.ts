@@ -10,7 +10,7 @@ export class WorkCreation extends Mixin(
   HasCreators
 ) {
   get agents(): readonly Agent[] {
-    return this.agentUris.map(agentUri => this.dataset.agentByUri(agentUri));
+    return this.agentUris.map(agentUri => this.modelSet.agentByUri(agentUri));
   }
 
   get agentUris(): readonly string[] {

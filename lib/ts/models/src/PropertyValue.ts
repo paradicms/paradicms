@@ -25,10 +25,13 @@ export abstract class PropertyValue {
     return new NamedPropertyValue(namedValue);
   }
 
-  private static fromQuad(dataset: ModelSet, quad: Quad): PropertyValue | null {
+  private static fromQuad(
+    modelSet: ModelSet,
+    quad: Quad
+  ): PropertyValue | null {
     switch (quad.object.termType) {
       case "BlankNode": {
-        const objectRdfTypeQuads = dataset.store.getQuads(
+        const objectRdfTypeQuads = modelSet.store.getQuads(
           quad.object,
           RDF.type,
           CMS.Text,
@@ -39,7 +42,7 @@ export abstract class PropertyValue {
         }
         return PropertyValue.fromText(
           new Text({
-            dataset,
+            modelSet,
             graphNode: quad.graph as NamedNode, // Blank node must be in the same graph as the current node
             node: quad.object,
           })
@@ -49,13 +52,15 @@ export abstract class PropertyValue {
         // #78 index lookups take half as much time (amortized over multiple works)
         // as getting the rdf:type of the NamedNode and branching on its value.
         {
-          const namedValue = dataset.namedValueByUriOptional(quad.object.value);
+          const namedValue = modelSet.namedValueByUriOptional(
+            quad.object.value
+          );
           if (namedValue) {
             return PropertyValue.fromNamedValue(namedValue);
           }
         }
         {
-          const organization = dataset.organizationByUriOptional(
+          const organization = modelSet.organizationByUriOptional(
             quad.object.value
           );
           if (organization) {
@@ -63,7 +68,7 @@ export abstract class PropertyValue {
           }
         }
         {
-          const person = dataset.personByUriOptional(quad.object.value);
+          const person = modelSet.personByUriOptional(quad.object.value);
           if (person) {
             return PropertyValue.fromAgent(person);
           }
@@ -78,12 +83,12 @@ export abstract class PropertyValue {
   }
 
   static fromQuads(
-    dataset: ModelSet,
+    modelSet: ModelSet,
     quads: readonly Quad[]
   ): readonly PropertyValue[] {
     const propertyValues: PropertyValue[] = [];
     for (const quad of quads) {
-      const propertyValue = PropertyValue.fromQuad(dataset, quad);
+      const propertyValue = PropertyValue.fromQuad(modelSet, quad);
       if (propertyValue) {
         propertyValues.push(propertyValue);
       }
