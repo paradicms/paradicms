@@ -1,5 +1,5 @@
 import {FormNodeType} from "./FormNodeType";
-import {NamedNode, OTerm, Term} from "n3";
+import {NamedNode, Term} from "@rdfjs/types";
 import {DataGraph, PropertyShape, ShapesGraph} from "@paradicms/shacl";
 import {FormProperty} from "./FormProperty";
 import {TermMap} from "@paradicms/shacl/dist/TermMap";

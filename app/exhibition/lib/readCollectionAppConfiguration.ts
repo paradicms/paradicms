@@ -1,5 +1,5 @@
 import {ExhibitionAppConfiguration} from "./ExhibitionAppConfiguration";
-import {Dataset} from "n3";
+import {Dataset} from "@rdfjs/types";
 import {readAppConfiguration} from "@paradicms/configuration";
 
 export const readExhibitionAppConfiguration = (

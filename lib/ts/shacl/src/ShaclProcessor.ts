@@ -1,6 +1,6 @@
-import {BlankNode, NamedNode} from "n3";
+import {BlankNode, NamedNode} from "@rdfjs/types";
 import {Shape} from "./Shape";
-import {rdf, RDFS} from "@paradicms/vocabularies";
+import {rdf, rdfs} from "@paradicms/vocabularies";
 import {FocusNode} from "./FocusNode";
 import {DataGraph} from "./DataGraph";
 import {ShapesGraph} from "./ShapesGraph";

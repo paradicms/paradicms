@@ -1,7 +1,6 @@
 import {ModelParameters, ModelSet} from "@paradicms/models";
 import {ParserOptions} from "n3";
 import {WorksheetFeatureSetDefinition} from "~/models/WorksheetFeatureSetDefinition";
-import {WORKSHEET} from "~/vocabularies/WORKSHEET";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
 
 export class WorksheetDefinitionModelSet extends ModelSet {
@@ -40,7 +39,7 @@ export class WorksheetDefinitionModelSet extends ModelSet {
       this._worksheetFeatureDefinitionsByUriIndex![
         worksheetFeatureDefinition.uri
       ] = worksheetFeatureDefinition;
-    }, WORKSHEET.Feature);
+    }, worksheet.Feature);
     this._worksheetFeatureDefinitions = worksheetFeatureDefinitions;
   }
 
@@ -61,7 +60,7 @@ export class WorksheetDefinitionModelSet extends ModelSet {
       this._worksheetFeatureSetDefinitionsByUriIndex![
         worksheetFeatureSetDefinition.uri
       ] = worksheetFeatureSetDefinition;
-    }, WORKSHEET.FeatureSet);
+    }, worksheet.FeatureSet);
     this._worksheetFeatureSetDefinitions = worksheetFeatureSetDefinitions;
   }
 

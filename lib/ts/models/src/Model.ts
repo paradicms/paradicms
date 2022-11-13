@@ -14,7 +14,11 @@ export class Model {
   }
 
   protected getObjects(property: NamedNode): readonly Term[] {
-    return this.dataset.getObjects(this.node, property, this.graphNode);
+    const objects: Term[] = [];
+    this.dataset
+      .match(this.node, property, null, this.graphNode)
+      .forEach(quad => objects.push(quad.object));
+    return objects;
   }
 
   get node(): BlankNode | NamedNode {

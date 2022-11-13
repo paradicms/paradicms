@@ -1,6 +1,6 @@
-import {NamedNode} from "n3";
+import {NamedNode} from "@rdfjs/types";
 import {ShapesGraph} from "./ShapesGraph";
-import {RDFS} from "@paradicms/vocabularies";
+import {rdfs} from "@paradicms/vocabularies";
 import {Model} from "./Model";
 
 export class PropertyGroup extends Model {

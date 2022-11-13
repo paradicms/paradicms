@@ -1,6 +1,6 @@
 import {Model} from "./Model";
 import {rdf, sh} from "@paradicms/vocabularies";
-import {Literal, NamedNode} from "n3";
+import {Literal, NamedNode} from "@rdfjs/types";
 
 export class Shape extends Model {
   /**

@@ -5,7 +5,7 @@ import {Collection} from "./Collection";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
 import {NamedValue} from "./NamedValue";
-import {Dataset} from "n3";
+import {Dataset} from "@rdfjs/types";
 import {Work} from "./Work";
 import {Person} from "./Person";
 import {Organization} from "./Organization";
@@ -203,7 +203,7 @@ export class ModelSetBuilder {
         const model = modelsByUri[modelUri];
         // Add all quads that belong to the model's graph
         dataset.addQuads(
-          model.modelSet.dataset.getQuads(null, null, null, model.graphNode)
+          model.modelSet.dataset.match(null, null, null, model.graphNode)
         );
       }
     }

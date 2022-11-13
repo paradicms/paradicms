@@ -1,4 +1,4 @@
-import {BlankNode, Dataset, DefaultGraph, NamedNode} from "n3";
+import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
 import {CONFIGURATION, dcterms, rdf, xsd} from "@paradicms/vocabularies";
 import {PropertyConfiguration} from "./PropertyConfiguration";
 

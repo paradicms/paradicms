@@ -1,5 +1,5 @@
 import {Shape} from "./Shape";
-import {BlankNode, Literal, NamedNode} from "n3";
+import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
 import {sh, xsd} from "@paradicms/vocabularies";
 import {PropertyGroup} from "./PropertyGroup";
 import {requireDefined} from "./requireDefined";

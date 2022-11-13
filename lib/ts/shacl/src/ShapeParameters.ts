@@ -1,4 +1,4 @@
-import {BlankNode, NamedNode} from "n3";
+import {BlankNode, NamedNode} from "@rdfjs/types";
 import {ShapesGraph} from "./ShapesGraph";
 
 export interface ShapeParameters {

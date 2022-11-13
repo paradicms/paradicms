@@ -1,5 +1,5 @@
 import {TermMap} from "./TermMap";
-import {Term} from "n3";
+import {Term} from "@rdfjs/types";
 
 /**
  * Set of Terms.

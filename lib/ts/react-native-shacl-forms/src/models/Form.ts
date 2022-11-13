@@ -1,5 +1,5 @@
 import {DataGraph, ShapesGraph} from "@paradicms/shacl";
-import {NamedNode} from "n3";
+import {NamedNode} from "@rdfjs/types";
 import {FormNodeType} from "./FormNodeType";
 import {Model} from "./Model";
 

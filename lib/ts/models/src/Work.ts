@@ -184,13 +184,13 @@ export class Work extends Mixin(
         if (quad.object.termType !== "NamedNode") {
           return;
         }
-        const rdfTypeQuads = this.dataset.getQuads(
+        const rdfTypeQuads = this.dataset.match(
           quad.object,
           rdf.type,
           cms.NamedValue,
           null
         );
-        if (rdfTypeQuads.length == 0) {
+        if (rdfTypeQuads.size == 0) {
           return;
         }
         result.push(

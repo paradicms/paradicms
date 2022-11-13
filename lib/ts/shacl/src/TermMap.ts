@@ -1,4 +1,4 @@
-import {Term} from "n3";
+import {Term} from "@rdfjs/types";
 
 /**
  * A map of Terms to values.

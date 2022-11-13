@@ -4,10 +4,8 @@ import {
   DefaultGraph,
   Literal,
   NamedNode,
-  Parser,
-  ParserOptions,
   Variable,
-} from "n3";
+} from "@rdfjs/types";
 import {rdf, sh} from "@paradicms/vocabularies";
 import {NodeShape} from "./NodeShape";
 import {PropertyShape} from "./PropertyShape";
@@ -56,19 +54,19 @@ export class ShapesGraph {
     return this.nodeShapesByNode.get(nodeShapeNode);
   }
 
-  static parse(input: string, options?: ParserOptions): ShapesGraph {
-    return new ShapesGraph(ShapesGraph.parseIntoDataset(input, options));
-  }
-
-  private static parseIntoDataset(
-    input: string,
-    options?: ParserOptions
-  ): Dataset {
-    const parser = new Parser(options);
-    const dataset = new Dataset();
-    dataset.addQuads(parser.parse(input));
-    return dataset;
-  }
+  // static parse(input: string, options?: ParserOptions): ShapesGraph {
+  //   return new ShapesGraph(ShapesGraph.parseIntoDataset(input, options));
+  // }
+  //
+  // private static parseIntoDataset(
+  //   input: string,
+  //   options?: ParserOptions
+  // ): Dataset {
+  //   const parser = new Parser(options);
+  //   const dataset = new Dataset();
+  //   dataset.addQuads(parser.parse(input));
+  //   return dataset;
+  // }
 
   propertyGroupByNode(propertyGroupNode: NamedNode): PropertyGroup {
     return this.propertyGroupsByNode.get(propertyGroupNode);

@@ -1,6 +1,6 @@
 import {AppConfiguration} from "./AppConfiguration";
-import {BlankNode, Dataset, DefaultGraph, NamedNode} from "n3";
-import {CONFIGURATION, rdf} from "@paradicms/vocabularies";
+import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
+import {configuration, rdf} from "@paradicms/vocabularies";
 
 export const readAppConfiguration = <
   AppConfigurationT extends AppConfiguration
@@ -22,7 +22,7 @@ export const readAppConfiguration = <
     const typeQuads = dataset.getQuads(
       null,
       rdf.type,
-      CONFIGURATION.AppConfiguration,
+      configuration.AppConfiguration,
       null
     );
     if (typeQuads.length === 0) {
@@ -61,7 +61,7 @@ export const readAppConfiguration = <
         dataset
           .getObjects(
             typeQuad.subject,
-            CONFIGURATION.stylesheetHref,
+            configuration.stylesheetHref,
             typeQuad.graph
           )
           .find(term => term.termType === "NamedNode")?.value ?? null,

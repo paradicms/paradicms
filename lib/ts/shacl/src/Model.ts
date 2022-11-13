@@ -1,4 +1,4 @@
-import {BlankNode, NamedNode, Term} from "n3";
+import {BlankNode, NamedNode, Term} from "@rdfjs/types";
 import {ShapesGraph} from "./ShapesGraph";
 
 export abstract class Model {
