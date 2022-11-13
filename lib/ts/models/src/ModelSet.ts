@@ -11,12 +11,12 @@ import {NamedValue} from "./NamedValue";
 import {Organization} from "./Organization";
 import {Agent} from "./Agent";
 import {ModelParameters} from "./ModelParameters";
-import {requireDefined} from "./requireDefined";
 import {WorkEvent} from "./WorkEvent";
 import {WorkCreation} from "./WorkCreation";
 import {Event} from "./Event";
 import {hasMixin} from "ts-mixer";
 import {cms, rdf} from "@paradicms/vocabularies";
+import {requireDefined} from "@paradicms/rdf";
 
 const eventClassesByRdfType = (() => {
   const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
@@ -228,11 +228,6 @@ export class ModelSet {
   }
 
   logContents(): void {
-    console.log(
-      "ModelSet:",
-      this.dataset.getSubjects(null, null, null).length,
-      "subjects"
-    );
     const models: {[index: string]: readonly NamedModel[]} = {
       collections: this.collections,
       institutions: this.institutions,
@@ -354,11 +349,10 @@ export class ModelSet {
   }
 
   protected readEvent(kwds: ModelParameters): Event {
-    for (const eventRdfType of this.dataset.getObjects(
-      kwds.node,
-      rdf.type,
-      kwds.graphNode
-    )) {
+    for (const eventRdfType of this.dataset
+      .match(kwds.node, rdf.type, null, kwds.graphNode)
+      .toArray()
+      .map(quad => quad.object)) {
       const eventClass = eventClassesByRdfType[eventRdfType.value];
       if (eventClass) {
         return new eventClass(kwds);
@@ -497,39 +491,33 @@ export class ModelSet {
     callback: (kwds: ModelParameters) => void,
     type: NamedNode
   ): void {
-    this.dataset.forEach(
-      quad => {
-        switch (quad.graph.termType) {
-          case "DefaultGraph":
-          case "NamedNode":
-            break;
-          default:
-            throw new RangeError(
-              `expected NamedNode or default graph, actual ${quad.graph.termType}`
-            );
-        }
+    this.dataset.match(null, rdf.type, type, null).forEach(quad => {
+      switch (quad.graph.termType) {
+        case "DefaultGraph":
+        case "NamedNode":
+          break;
+        default:
+          throw new RangeError(
+            `expected NamedNode or default graph, actual ${quad.graph.termType}`
+          );
+      }
 
-        switch (quad.subject.termType) {
-          case "BlankNode":
-          case "NamedNode":
-            break;
-          default:
-            throw new RangeError(
-              `expected BlankNode or NamedNode subject, actual ${quad.subject.termType}`
-            );
-        }
+      switch (quad.subject.termType) {
+        case "BlankNode":
+        case "NamedNode":
+          break;
+        default:
+          throw new RangeError(
+            `expected BlankNode or NamedNode subject, actual ${quad.subject.termType}`
+          );
+      }
 
-        callback({
-          modelSet: this,
-          graphNode: quad.graph as DefaultGraph | NamedNode,
-          node: quad.subject as BlankNode | NamedNode,
-        });
-      },
-      null,
-      rdf.type,
-      type,
-      null
-    );
+      callback({
+        modelSet: this,
+        graphNode: quad.graph as DefaultGraph | NamedNode,
+        node: quad.subject as BlankNode | NamedNode,
+      });
+    });
   }
 
   protected readNamedValue(kwds: ModelParameters): NamedValue {

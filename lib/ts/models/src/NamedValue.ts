@@ -1,10 +1,10 @@
 import {NamedModel} from "./NamedModel";
 import {Literal, Term} from "@rdfjs/types";
 import {Memoize} from "typescript-memoize";
-import {requireDefined} from "./requireDefined";
 import {HasAbstract, HasImages} from "./mixins";
 import {Mixin} from "ts-mixer";
 import {dcterms, rdf, skos} from "@paradicms/vocabularies";
+import {requireDefined} from "@paradicms/rdf";
 
 export class NamedValue extends Mixin(NamedModel, HasAbstract, HasImages) {
   @Memoize()

@@ -1,6 +1,6 @@
 import {Model} from "./Model";
-import {requireDefined} from "./requireDefined";
-import {WGS} from "@paradicms/vocabularies";
+import {wgs} from "@paradicms/vocabularies";
+import {requireDefined} from "@paradicms/rdf";
 
 export class Location extends Model {
   get lat(): number {

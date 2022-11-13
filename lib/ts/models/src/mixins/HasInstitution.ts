@@ -1,7 +1,7 @@
 import {Institution} from "../Institution";
-import {requireDefined} from "../requireDefined";
 import {cms} from "@paradicms/vocabularies";
 import {ModelMixin} from "./ModelMixin";
+import {requireDefined} from "@paradicms/rdf";
 
 export abstract class HasInstitution extends ModelMixin {
   get institution(): Institution {

@@ -2,13 +2,14 @@ import {expect} from "chai";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {ModelSet, Text} from "../src";
 import {testDataTrig} from "./testDataTrig";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
 };
 
 describe("Collection", () => {
-  const sut = ModelSet.parse(testDataTrig).collections[0];
+  const sut = new ModelSet(parseIntoDataset(testDataTrig)).collections[0];
 
   it("should get the collection's abstract", () => {
     expect(sut.abstract).to.be.instanceof(Text);

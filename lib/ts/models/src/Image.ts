@@ -4,10 +4,10 @@ import {Literal, NamedNode} from "@rdfjs/types";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Memoize} from "typescript-memoize";
-import {requireDefined} from "./requireDefined";
 import {Mixin} from "ts-mixer";
 import {HasRights} from "./mixins";
 import {cms, dcterms, exif, foaf, xsd} from "@paradicms/vocabularies";
+import {requireDefined} from "@paradicms/rdf";
 
 export class Image extends Mixin(NamedModel, HasRights) {
   get depictsUri(): string {
@@ -64,11 +64,10 @@ export class Image extends Mixin(NamedModel, HasRights) {
   }
 
   get originalImageUri(): string | null {
-    const originalImageUriSubjects = this.dataset.getSubjects(
-      foaf.thumbnail,
-      this.node,
-      null
-    );
+    const originalImageUriSubjects = this.dataset
+      .match(null, foaf.thumbnail, this.node, null)
+      .toArray()
+      .map(quad => quad.subject);
     return originalImageUriSubjects.length > 0
       ? originalImageUriSubjects[0].value
       : null;

@@ -1,6 +1,6 @@
-import {requireDefined} from "../requireDefined";
 import {dcterms} from "@paradicms/vocabularies";
 import {NamedNode, Term} from "@rdfjs/types";
+import {requireDefined} from "@paradicms/rdf";
 
 export abstract class HasTitle {
   protected abstract getObjects(property: NamedNode): readonly Term[];

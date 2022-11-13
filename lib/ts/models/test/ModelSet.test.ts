@@ -3,9 +3,10 @@ import {License} from "../src/License";
 import {RightsStatement} from "../src/RightsStatement";
 import {expect} from "chai";
 import {testDataTrig} from "./testDataTrig";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("ModelSet", () => {
-  const sut = ModelSet.parse(testDataTrig);
+  const sut = new ModelSet(parseIntoDataset(testDataTrig));
 
   it("should exercise all indices", () => {
     const institutions = sut.institutions;

@@ -8,6 +8,7 @@ import {NamedValue} from "./NamedValue";
 import {NamedNode} from "@rdfjs/types";
 import {WorkAgent} from "./WorkAgent";
 import {Mixin} from "ts-mixer";
+import {DataFactory} from "n3";
 import {
   HasAbstract,
   HasImages,
@@ -179,18 +180,21 @@ export class Work extends Mixin(
   @Memoize()
   propertyNamedValues(propertyUri: string): readonly NamedValue[] {
     const result: NamedValue[] = [];
-    this.dataset.forEach(
-      quad => {
+    this.dataset
+      .match(
+        this.node,
+        DataFactory.namedNode(propertyUri),
+        null,
+        this.graphNode
+      )
+      .forEach(quad => {
         if (quad.object.termType !== "NamedNode") {
           return;
         }
-        const rdfTypeQuads = this.dataset.match(
-          quad.object,
-          rdf.type,
-          cms.NamedValue,
-          null
-        );
-        if (rdfTypeQuads.size == 0) {
+        const rdfTypeQuads = this.dataset
+          .match(quad.object, rdf.type, cms.NamedValue, null)
+          .toArray();
+        if (rdfTypeQuads.length == 0) {
           return;
         }
         result.push(
@@ -200,12 +204,7 @@ export class Work extends Mixin(
             node: quad.object,
           })
         );
-      },
-      this.node,
-      new NamedNode(propertyUri),
-      null,
-      this.graphNode
-    );
+      });
     return result;
   }
 
@@ -213,12 +212,14 @@ export class Work extends Mixin(
   propertyValues(propertyUri: string): readonly PropertyValue[] {
     return PropertyValue.fromQuads(
       this.modelSet,
-      this.dataset.getQuads(
-        this.node,
-        new NamedNode(propertyUri),
-        null,
-        this.graphNode
-      )
+      this.dataset
+        .match(
+          this.node,
+          DataFactory.namedNode(propertyUri),
+          null,
+          this.graphNode
+        )
+        .toArray()
     );
   }
 }

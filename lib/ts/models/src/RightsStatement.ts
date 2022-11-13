@@ -1,6 +1,6 @@
 import {NamedModel} from "./NamedModel";
-import {requireDefined} from "./requireDefined";
 import {dcterms, skos} from "@paradicms/vocabularies";
+import {requireDefined} from "@paradicms/rdf";
 
 export class RightsStatement extends NamedModel {
   get definition(): string | null {

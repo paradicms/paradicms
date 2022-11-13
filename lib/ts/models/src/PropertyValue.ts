@@ -31,13 +31,10 @@ export abstract class PropertyValue {
   ): PropertyValue | null {
     switch (quad.object.termType) {
       case "BlankNode": {
-        const objectRdfTypeQuads = modelSet.dataset.getQuads(
-          quad.object,
-          rdf.type,
-          cms.Text,
-          quad.graph
-        );
-        if (objectRdfTypeQuads.length === 0) {
+        if (
+          modelSet.dataset.match(quad.object, rdf.type, cms.Text, quad.graph)
+            .size === 0
+        ) {
           return null;
         }
         return PropertyValue.fromText(

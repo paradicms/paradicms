@@ -1,8 +1,8 @@
 import {Shape} from "./Shape";
 import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
-import {sh, xsd} from "@paradicms/vocabularies";
+import {dash, sh, xsd} from "@paradicms/vocabularies";
 import {PropertyGroup} from "./PropertyGroup";
-import {requireDefined} from "./requireDefined";
+import {requireDefined} from "@paradicms/rdf";
 
 export class PropertyShape extends Shape {
   get datatype(): NamedNode | null {
@@ -71,7 +71,7 @@ export class PropertyShape extends Shape {
 
   get name(): string | null {
     return (
-      this.getObjects(sh.name_).find(term => term.termType === "Literal")
+      this.getObjects(sh.name).find(term => term.termType === "Literal")
         ?.value ?? null
     );
   }
@@ -99,7 +99,7 @@ export class PropertyShape extends Shape {
     for (const singleLine of this.getObjects(dash.singleLine)) {
       if (singleLine.termType !== "Literal") {
         continue;
-      } else if (!singleLine.datatype.equals(xsd.boolean_)) {
+      } else if (!singleLine.datatype.equals(xsd.boolean)) {
         continue;
       }
       switch (singleLine.value.toLowerCase()) {

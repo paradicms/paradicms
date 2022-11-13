@@ -1,5 +1,6 @@
 import {ModelSet} from "@paradicms/models";
 import {ParserOptions} from "n3";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 let _modelSet: ModelSet | undefined;
 
@@ -26,9 +27,8 @@ export const readModelSetFile = (
       );
     }
 
-    _modelSet = ModelSet.parse(
-      readFileSync(dataFilePath).toString(),
-      parserOptions
+    _modelSet = new ModelSet(
+      parseIntoDataset(readFileSync(dataFilePath).toString(), parserOptions)
     );
   }
   return _modelSet;

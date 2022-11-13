@@ -1,7 +1,7 @@
 import {Event} from "./Event";
-import {requireDefined} from "./requireDefined";
 import {Work} from "./Work";
 import {cms} from "@paradicms/vocabularies";
+import {requireDefined} from "@paradicms/rdf";
 
 export class WorkEvent extends Event {
   get work(): Work {

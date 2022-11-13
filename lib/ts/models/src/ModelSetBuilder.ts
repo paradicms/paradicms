@@ -5,12 +5,13 @@ import {Collection} from "./Collection";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
 import {NamedValue} from "./NamedValue";
-import {Dataset} from "@rdfjs/types";
 import {Work} from "./Work";
 import {Person} from "./Person";
 import {Organization} from "./Organization";
 import {Agent} from "./Agent";
 import {Event} from "./Event";
+import {Store} from "n3";
+import {n3StoreToDataset} from "@paradicms/rdf";
 
 export class ModelSetBuilder {
   private collectionsByUri: {[index: string]: Collection} | undefined;
@@ -183,7 +184,7 @@ export class ModelSetBuilder {
   }
 
   build(): ModelSet {
-    const dataset = new Dataset();
+    const store = new Store();
     for (const modelsByUri of [
       this.collectionsByUri,
       this.eventsByUri,
@@ -202,11 +203,16 @@ export class ModelSetBuilder {
       for (const modelUri of Object.keys(modelsByUri)) {
         const model = modelsByUri[modelUri];
         // Add all quads that belong to the model's graph
-        dataset.addQuads(
-          model.modelSet.dataset.match(null, null, null, model.graphNode)
-        );
+        for (const quad of model.modelSet.dataset.match(
+          null,
+          null,
+          null,
+          model.graphNode
+        )) {
+          store.add(quad);
+        }
       }
     }
-    return new ModelSet(dataset);
+    return new ModelSet(n3StoreToDataset(store));
   }
 }

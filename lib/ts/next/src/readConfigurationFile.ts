@@ -1,4 +1,5 @@
-import {Dataset, Parser} from "n3";
+import {Dataset} from "@rdfjs/types";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 let _configurationDataset: Dataset | null | undefined;
 
@@ -11,10 +12,8 @@ export const readConfigurationFile = (
     const configurationFilePath: string | undefined =
       process.env.CONFIGURATION_FILE_PATH;
     if (configurationFilePath) {
-      const parser = new Parser();
-      _configurationDataset = new Dataset();
-      _configurationDataset.addQuads(
-        parser.parse(readFileSync(configurationFilePath).toString())
+      _configurationDataset = parseIntoDataset(
+        readFileSync(configurationFilePath).toString()
       );
     } else {
       _configurationDataset = null;
