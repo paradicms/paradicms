@@ -10,6 +10,7 @@ import {cms, dcterms, exif, foaf, xsd} from "@paradicms/vocabularies";
 import {requireDefined} from "@paradicms/rdf";
 
 export class Image extends Mixin(NamedModel, HasRights) {
+  @Memoize()
   get depictsUri(): string {
     return requireDefined(
       this.getObjects(foaf.depicts).find(term => term.termType === "NamedNode")
@@ -63,6 +64,7 @@ export class Image extends Mixin(NamedModel, HasRights) {
     return this.imageDimensions(cms.imageMaxHeight, cms.imageMaxWidth);
   }
 
+  @Memoize()
   get originalImageUri(): string | null {
     const originalImageUriSubjects = this.dataset
       .match(null, foaf.thumbnail, this.node, null)
@@ -84,6 +86,7 @@ export class Image extends Mixin(NamedModel, HasRights) {
     }?text=${encodeURIComponent("Missing image")}`;
   }
 
+  @Memoize()
   get src(): string | null {
     const srcLiteral = this.getObjects(cms.imageSrc).find(
       term => term.termType === "Literal"
@@ -108,6 +111,7 @@ export class Image extends Mixin(NamedModel, HasRights) {
     );
   }
 
+  @Memoize()
   get title(): string | null {
     return (
       this.getObjects(dcterms.title).find(term => term.termType === "Literal")
