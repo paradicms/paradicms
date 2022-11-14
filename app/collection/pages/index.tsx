@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useMemo} from "react";
-import {Collection, ModelSet} from "@paradicms/models";
+import {Collection, ModelSet, ModelSubsetter} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {
@@ -9,7 +9,7 @@ import {
 } from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
-import {readConfigurationFile} from "@paradicms/next";
+import {readConfigurationFile, readModelSetFile} from "@paradicms/next";
 import fs from "fs";
 import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";

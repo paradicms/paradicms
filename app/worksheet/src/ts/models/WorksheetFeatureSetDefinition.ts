@@ -1,6 +1,6 @@
 import {HasAbstract, HasImages, HasTitle, NamedModel} from "@paradicms/models";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
-import {worksheet} from "~/vocabularies/worksheet";
+import {worksheet} from "~/vocabularies";
 import {Memoize} from "typescript-memoize";
 import {WorksheetDefinitionModelSet} from "~/models/WorksheetDefinitionModelSet";
 import {Mixin} from "ts-mixer";
@@ -14,7 +14,8 @@ export class WorksheetFeatureSetDefinition extends Mixin(
   @Memoize()
   get features(): readonly WorksheetFeatureDefinition[] {
     return this.dataset
-      .getQuads(null, worksheet.featureSet, this.node, null)
+      .match(null, worksheet.featureSet, this.node, null)
+      .toArray()
       .filter(quad => quad.subject.termType === "NamedNode")
       .map(quad =>
         (this

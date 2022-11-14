@@ -16,7 +16,9 @@ export const readCollectionAppConfiguration = (
     modelSetDataset,
     ({graph, node, dataset, ...appConfigurationProps}) => {
       const workProperties = dataset
-        .getObjects(node, configuration.workProperty, graph)
+        .match(node, configuration.workProperty, null, graph)
+        .toArray()
+        .map(quad => quad.object)
         .filter(
           term => term.termType === "BlankNode" || term.termType === "NamedNode"
         )
