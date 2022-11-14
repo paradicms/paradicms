@@ -17,19 +17,13 @@ beforeEach(() => {
 
 test("delete existing node", () => {
   expect(nodeType.nodes).toHaveLength(1);
-  expect(
-    nodeType.form.dataGraph.dataset.countQuads(null, null, null, null)
-  ).toEqual(8);
+  expect(nodeType.dataGraph.size).toEqual(8);
 
   node.delete();
 
   expect(nodeType.nodes).toHaveLength(0);
-  expect(
-    nodeType.form.dataGraph.dataset.countQuads(null, null, null, null)
-  ).not.toEqual(0);
-  expect(
-    nodeType.form.dataGraph.dataset.countQuads(null, null, null, null)
-  ).toEqual(2);
+  expect(nodeType.dataGraph.size).not.toEqual(0);
+  expect(nodeType.dataGraph.size).toEqual(2);
 });
 
 test("get properties", () => {
