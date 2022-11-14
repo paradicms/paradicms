@@ -24,6 +24,7 @@ import {WorksheetReviewPage} from "~/pages/WorksheetReviewPage";
 import {UserSettingsPage} from "~/pages/UserSettingsPage";
 import {useLocation} from "react-router";
 import {QueryParamProvider} from "use-query-params";
+import {parseIntoDataset} from "@paradicms/rdf";
 import React = require("react");
 
 const RouteAdapter: React.FunctionComponent<{children?: any}> = ({
@@ -67,8 +68,8 @@ export const Application: React.FunctionComponent = () => {
         response.text().then(responseText => {
           let worksheetDefinitionModelSet: WorksheetDefinitionModelSet;
           try {
-            worksheetDefinitionModelSet = WorksheetDefinitionModelSet.parse(
-              responseText
+            worksheetDefinitionModelSet = new WorksheetDefinitionModelSet(
+              parseIntoDataset(responseText)
             );
           } catch (e) {
             setError(e);

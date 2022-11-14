@@ -20,6 +20,7 @@ import {WorkLocationSummary} from "@paradicms/services";
 import {CollectionAppConfiguration} from "../../lib/CollectionAppConfiguration";
 import {readCollectionAppConfiguration} from "../../lib/readCollectionAppConfiguration";
 import {defaultCollectionAppConfiguration} from "../../lib/defaultCollectionAppConfiguration";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
@@ -44,9 +45,10 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   modelSetString,
   workUri,
 }) => {
-  const modelSet = useMemo(() => ModelSet.parse(modelSetString), [
-    modelSetString,
-  ]);
+  const modelSet = useMemo(
+    () => new ModelSet(parseIntoDataset(modelSetString)),
+    [modelSetString]
+  );
   const work = modelSet.workByUri(workUri);
   const collection = work.collections[0];
 

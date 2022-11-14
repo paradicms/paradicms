@@ -1,9 +1,7 @@
 import {ModelParameters, ModelSet} from "@paradicms/models";
-import {ParserOptions} from "n3";
 import {WorksheetFeatureSetDefinition} from "~/models/WorksheetFeatureSetDefinition";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
 import {strict as worksheet} from "~/vocabularies/worksheet";
-import {parseIntoDataset} from "@paradicms/rdf";
 
 export class WorksheetDefinitionModelSet extends ModelSet {
   private _worksheetFeatureDefinitions?: readonly WorksheetFeatureDefinition[];
@@ -14,13 +12,6 @@ export class WorksheetDefinitionModelSet extends ModelSet {
   private _worksheetFeatureSetDefinitionsByUriIndex?: {
     [index: string]: WorksheetFeatureSetDefinition;
   };
-
-  static parse(
-    input: string,
-    options?: ParserOptions
-  ): WorksheetDefinitionModelSet {
-    return new WorksheetDefinitionModelSet(parseIntoDataset(input, options));
-  }
 
   private readWorksheetFeatureDefinition(
     kwds: ModelParameters

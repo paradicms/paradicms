@@ -5,9 +5,10 @@ import {DateTimeDescription} from "../src/DateTimeDescription";
 import {Location} from "../src/Location";
 import {Text} from "../src/Text";
 import {Event} from "../src/Event";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("Event", () => {
-  const modelSet = ModelSet.parse(testDataTrig);
+  const modelSet = new ModelSet(parseIntoDataset(testDataTrig));
   const sut: Event = modelSet.workEvents[0];
 
   before(() => {

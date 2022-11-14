@@ -19,6 +19,7 @@ import {WorkLocationSummary} from "@paradicms/services";
 import {ExhibitionAppConfiguration} from "../../lib/ExhibitionAppConfiguration";
 import {readExhibitionAppConfiguration} from "../../lib/readCollectionAppConfiguration";
 import {defaultExhibitionAppConfiguration} from "../../lib/defaultExhibitionAppConfiguration";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -51,9 +52,10 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 }) => {
   const router = useRouter();
 
-  const modelSet = useMemo<ModelSet>(() => ModelSet.parse(modelSetString), [
-    modelSetString,
-  ]);
+  const modelSet = useMemo<ModelSet>(
+    () => new ModelSet(parseIntoDataset(modelSetString)),
+    [modelSetString]
+  );
   const collection = modelSet.collectionByUri(collectionUri);
   const currentWork = modelSet.workByUri(currentWorkUri);
 

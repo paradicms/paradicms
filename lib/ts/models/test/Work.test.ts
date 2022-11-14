@@ -2,9 +2,10 @@ import {expect} from "chai";
 import {ModelSet, Text} from "../src";
 import {testDataTrig} from "./testDataTrig";
 import {dcterms} from "@paradicms/vocabularies";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("Work", () => {
-  const modelSet = ModelSet.parse(testDataTrig);
+  const modelSet = new ModelSet(parseIntoDataset(testDataTrig));
   const sut = modelSet.workByUri(
     "http://example.com/institution0/collection0/work2"
   );

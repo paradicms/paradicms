@@ -89,7 +89,7 @@ describe("ModelSet", () => {
     sut.logContents();
   });
 
-  // it("should serialize itself", () => {
-  //   expect(sut.stringify()).to.not.be.empty;
-  // });
+  it("should serialize itself", () => {
+    expect(sut.stringify()).to.not.be.empty;
+  });
 });

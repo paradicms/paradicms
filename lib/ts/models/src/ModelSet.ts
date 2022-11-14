@@ -16,7 +16,7 @@ import {WorkCreation} from "./WorkCreation";
 import {Event} from "./Event";
 import {hasMixin} from "ts-mixer";
 import {cms, rdf} from "@paradicms/vocabularies";
-import {requireDefined} from "@paradicms/rdf";
+import {datasetToString, requireDefined} from "@paradicms/rdf";
 import {TermSet} from "@paradicms/shacl/dist/TermSet";
 
 const eventClassesByRdfType = (() => {
@@ -672,56 +672,9 @@ export class ModelSet {
     return this._rightsStatementsByUriIndex!;
   }
 
-  // import {cms} from "./cms";
-  // import {CONFIGURATION} from "./CONFIGURATION";
-  // import {foaf} from "./foaf";
-  // import {rdf} from "./rdf";
-  // import {DC} from "./DC";
-  // import {dcterms} from "./dcterms";
-  // // import {Prefixes} from "n3";
-  // import {exif} from "./exif";
-  // import {xsd} from "./xsd";
-  // import {vra} from "./vra";
-  // import {skos} from "./skos";
-  // import {time} from "./time";
-  // import {wgs} from "./wgs";
-  // import {rdfs} from "./rdfs";
-  // import {contact} from "./contact";
-  // import {sh} from "./sh";
-  // import {dash} from "./dash";
-  //
-  // export const prefixes: Prefixes = {
-  //   cms: cms.NS(""),
-  //   configuration: CONFIGURATION.NS(""),
-  //   contact: contact.NS(""),
-  //   dash: dash.NS(""),
-  //   dc11: DC.NS(""),
-  //   dcterms: dcterms.NS(""),
-  //   exif: exif.NS(""),
-  //   foaf: foaf.NS(""),
-  //   rdf: rdf.NS(""),
-  //   rdfs: rdfs.NS(""),
-  //   sh: sh.NS(""),
-  //   skos: skos.NS(""),
-  //   time: time.NS(""),
-  //   vra: vra.NS(""),
-  //   wgs: wgs.NS(""),
-  //   xsd: xsd.NS(""),
-  // };
-  // stringify(options?: WriterOptions): string {
-  //   const augmentedOptions: WriterOptions = {...options};
-  //   if (!augmentedOptions.format) {
-  //     augmentedOptions.format = "Turtle";
-  //   }
-  //   if (!augmentedOptions.prefixes) {
-  //     augmentedOptions.prefixes = prefixes;
-  //   }
-  //   const writer = new Writer(augmentedOptions);
-  //   writer.addQuads(this.dataset.getQuads(null, null, null, null));
-  //   let resultString: string;
-  //   writer.end((error, result: string) => (resultString = result));
-  //   return resultString!;
-  // }
+  stringify(): string {
+    return datasetToString(this.dataset);
+  }
 
   workByUri(workUri: string): Work {
     const work = this.worksByUriIndex[workUri];

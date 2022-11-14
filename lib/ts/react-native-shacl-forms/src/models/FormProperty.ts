@@ -19,6 +19,18 @@ export class FormProperty extends Model {
     this.shapes = kwds.shapes;
   }
 
+  private shapeProperty<T>(
+    propertyGetter: (shape: PropertyShape) => T | null
+  ): T | null {
+    for (const shape of this.shapes) {
+      const propertyValue = propertyGetter(shape);
+      if (typeof propertyValue !== null) {
+        return propertyValue;
+      }
+    }
+    return null;
+  }
+
   get dataGraph(): DataGraph {
     return this.formNode.dataGraph;
   }
@@ -28,33 +40,46 @@ export class FormProperty extends Model {
   }
 
   get editor(): NamedNode | null {
-    for (const shape of this.shapes) {
-      const editor = shape.editor;
+    {
+      const editor = this.shapeProperty(shape => shape.editor);
       if (editor) {
         return editor;
       }
+    }
+
+    const datatype = this.shapeProperty(shape => shape.datatype);
+    if (datatype) {
     }
 
     return null;
   }
 
   get maxCount(): number | null {
-    return this.shapes.find(shape => shape.maxCount !== null)?.maxCount ?? null;
+    return this.shapeProperty(shape => shape.maxCount);
   }
 
   get minCount(): number | null {
-    return this.shapes.find(shape => shape.minCount !== null)?.minCount ?? null;
+    return this.shapeProperty(shape => shape.minCount);
   }
 
   get shapesGraph(): ShapesGraph {
     return this.formNode.shapesGraph;
   }
 
-  private get valueDatatype(): NamedNode | null {
-
-  }
-
   get values(): readonly (BlankNode | Literal | NamedNode)[] {
-    return this.dataGraph.
+    return this.dataGraph
+      .match(this.dataGraphNode, this.path, null, null)
+      .toArray()
+      .map(quad => quad.object)
+      .filter(object => {
+        switch (object.termType) {
+          case "BlankNode":
+          case "Literal":
+          case "NamedNode":
+            return true;
+          default:
+            return false;
+        }
+      }) as (BlankNode | Literal | NamedNode)[];
   }
 }

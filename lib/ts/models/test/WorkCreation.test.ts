@@ -2,9 +2,10 @@ import {expect} from "chai";
 import {ModelSet} from "../src";
 import {testDataTrig} from "./testDataTrig";
 import {WorkCreation} from "../src/WorkCreation";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("WorkCreation", () => {
-  const modelSet = ModelSet.parse(testDataTrig);
+  const modelSet = new ModelSet(parseIntoDataset(testDataTrig));
   const work = modelSet.works[0];
   const sut: WorkCreation = modelSet
     .workEventsByWork(work.uri)

@@ -1,9 +1,10 @@
 import {expect} from "chai";
 import {ModelSet} from "../src";
 import {testDataTrig} from "./testDataTrig";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("Organization", () => {
-  const sut = ModelSet.parse(testDataTrig).organizationByUri(
+  const sut = new ModelSet(parseIntoDataset(testDataTrig)).organizationByUri(
     "http://example.com/organization4"
   );
 

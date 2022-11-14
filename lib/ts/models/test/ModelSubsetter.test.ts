@@ -5,6 +5,7 @@ import {License, ModelSet, RightsStatement} from "../src";
 import {NamedModel} from "../src/NamedModel";
 import {testDataTrig} from "./testDataTrig";
 import {WorkCreation} from "../src/WorkCreation";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
@@ -27,7 +28,7 @@ const expectModelsDeepEq = <ModelT extends NamedModel>(
   );
 
 describe("ModelSubsetter", () => {
-  const testModelSet = ModelSet.parse(testDataTrig);
+  const testModelSet = new ModelSet(parseIntoDataset(testDataTrig));
   const sut = new ModelSubsetter({
     completeModelSet: testModelSet,
     workPropertyUris: [],

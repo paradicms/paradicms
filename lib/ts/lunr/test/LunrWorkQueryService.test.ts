@@ -5,9 +5,10 @@ import {testDataTrig} from "../../models/test/testDataTrig";
 import {CollectionValueFacet, InstitutionValueFacet, StringPropertyValueFacet} from "@paradicms/facets";
 import {dcterms, vra} from "@paradicms/vocabularies";
 import {StringPropertyValueFilter} from "@paradicms/filters";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("LunrWorkQueryService", () => {
-  const modelSet = ModelSet.parse(testDataTrig);
+  const modelSet = new ModelSet(parseIntoDataset(testDataTrig));
   const sut = new LunrWorkQueryService({
     modelSet,
     resultWorkPropertyUris: [dcterms.title.value],

@@ -4,9 +4,10 @@ import {RightsStatement} from "../src/RightsStatement";
 import {ModelSet} from "../src";
 import {Agent} from "../src/Agent";
 import {testDataTrig} from "./testDataTrig";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("Rights", () => {
-  const sut = ModelSet.parse(testDataTrig).works[0].rights!;
+  const sut = new ModelSet(parseIntoDataset(testDataTrig)).works[0].rights!;
 
   it("should have a joined contributor", () => {
     expect(sut.contributors).to.not.be.empty;

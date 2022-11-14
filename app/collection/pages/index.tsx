@@ -21,6 +21,7 @@ import dynamic from "next/dynamic";
 import {CollectionAppConfiguration} from "../lib/CollectionAppConfiguration";
 import {readCollectionAppConfiguration} from "../lib/readCollectionAppConfiguration";
 import {defaultCollectionAppConfiguration} from "../lib/defaultCollectionAppConfiguration";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -45,9 +46,10 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   configuration,
   modelSetString,
 }) => {
-  const modelSet = useMemo<ModelSet>(() => ModelSet.parse(modelSetString), [
-    modelSetString,
-  ]);
+  const modelSet = useMemo<ModelSet>(
+    () => new ModelSet(parseIntoDataset(modelSetString)),
+    [modelSetString]
+  );
 
   const collection = useMemo<Collection>(
     () => modelSet.collectionByUri(collectionUri),

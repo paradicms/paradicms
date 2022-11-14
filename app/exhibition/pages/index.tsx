@@ -12,6 +12,7 @@ import {RightsParagraph} from "@paradicms/bootstrap";
 import {defaultExhibitionAppConfiguration} from "../lib/defaultExhibitionAppConfiguration";
 import {readExhibitionAppConfiguration} from "../lib/readCollectionAppConfiguration";
 import {ExhibitionAppConfiguration} from "../lib/ExhibitionAppConfiguration";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
@@ -30,9 +31,10 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
 }) => {
   const router = useRouter();
 
-  const modelSet = useMemo(() => ModelSet.parse(modelSetString), [
-    modelSetString,
-  ]);
+  const modelSet = useMemo(
+    () => new ModelSet(parseIntoDataset(modelSetString)),
+    [modelSetString]
+  );
   const collection = modelSet.collectionByUri(collectionUri);
   const collectionAbstract = collection.abstract;
 

@@ -1,9 +1,10 @@
 import {expect} from "chai";
 import {ModelSet} from "../src";
 import {testDataTrig} from "./testDataTrig";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("Institution", () => {
-  const sut = ModelSet.parse(testDataTrig).institutions[0];
+  const sut = new ModelSet(parseIntoDataset(testDataTrig)).institutions[0];
 
   it("should get the institution's collections", () => {
     expect(sut.collections).to.not.be.empty;
