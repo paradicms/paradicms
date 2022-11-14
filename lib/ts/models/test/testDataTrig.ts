@@ -3,8 +3,8 @@ export const testDataTrig = `
 @prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
 @prefix creativecommons: <http://creativecommons.org/ns#> .
-@prefix dc11: <http://purl.org/dc11/elements/1.1/> .
-@prefix dcterms: <http://purl.org/dc11/terms/> .
+@prefix dc11: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix exif: <http://www.w3.org/2003/12/exif/ns#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix ns1: <urn:paradicms_etl:pipeline:test_data:model:> .
