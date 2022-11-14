@@ -134,7 +134,7 @@ describe("LunrWorkQueryService", () => {
           type: "InstitutionValue"
         }, {
           label: "Publisher",
-          propertyUri: vra.NS("technique").value,
+          propertyUri: vra.technique.value,
           type: "StringPropertyValue"
         } as StringPropertyValueFilter],
       }

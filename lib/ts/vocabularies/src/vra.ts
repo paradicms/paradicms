@@ -7,6 +7,7 @@ interface Vra {
   // Properties
   earliestDate: NamedNode<"http://purl.org/vra/earliestDate">;
   latestDate: NamedNode<"http://purl.org/vra/latestDate">;
+  technique: NamedNode<"http://purl.org/vra/technique">;
 }
 
 const builder = namespace("http://purl.org/vra/") as any;
