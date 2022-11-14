@@ -1,6 +1,6 @@
 export * from "./createDataset";
+export * from "./datasetCoreToDataset";
 export * from "./datasetToString";
-export * from "./n3StoreToDataset";
 export * from "./parseIntoDataset";
 export * from "./requireDefined";
 export * from "./TermMap";

@@ -1,6 +1,6 @@
 import {Dataset} from "@rdfjs/types";
 import {Parser, ParserOptions, Store} from "n3";
-import {n3StoreToDataset} from "./n3StoreToDataset";
+import {datasetCoreToDataset} from "./datasetCoreToDataset";
 
 export const parseIntoDataset = (
   input: string,
@@ -9,5 +9,5 @@ export const parseIntoDataset = (
   const parser = new Parser(options);
   const store = new Store();
   store.addQuads(parser.parse(input));
-  return n3StoreToDataset(store);
+  return datasetCoreToDataset(store);
 };

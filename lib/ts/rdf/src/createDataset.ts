@@ -1,5 +1,5 @@
 import {Dataset} from "@rdfjs/types";
-import {n3StoreToDataset} from "./n3StoreToDataset";
+import {datasetCoreToDataset} from "./datasetCoreToDataset";
 import {Store} from "n3";
 
-export const createDataset = (): Dataset => n3StoreToDataset(new Store());
+export const createDataset = (): Dataset => datasetCoreToDataset(new Store());
