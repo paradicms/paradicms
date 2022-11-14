@@ -3,6 +3,7 @@ import {Memoize} from "typescript-memoize";
 import {WorksheetFeatureValueDefinition} from "~/models/WorksheetFeatureValueDefinition";
 import {Mixin} from "ts-mixer";
 import {sh, xsd} from "@paradicms/vocabularies";
+import {parseIntOrNull} from "@paradicms/utilities";
 
 export class WorksheetFeatureDefinition extends Mixin(
   NamedModel,
@@ -11,11 +12,14 @@ export class WorksheetFeatureDefinition extends Mixin(
   HasTitle
 ) {
   get order(): number {
-    const integerLiteral = this.getObjects(sh.order).find(
-      term =>
-        term.termType === "Literal" && term.datatype.value === xsd.integer.value
+    return (
+      this.findAndMapObject(sh.order, term =>
+        term.termType == "Literal" &&
+        (!term.datatype || term.datatype.equals(xsd.integer))
+          ? parseIntOrNull(term.value)
+          : null
+      ) ?? 0
     );
-    return integerLiteral ? parseInt(integerLiteral.value) : 0;
   }
 
   @Memoize()

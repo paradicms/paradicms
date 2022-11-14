@@ -10,15 +10,15 @@ import {HasContributors} from "./mixins/HasContributors";
 import {dcterms} from "@paradicms/vocabularies";
 
 export class Rights extends Mixin(Model, HasContributors, HasCreators) {
-  private agentsOrStrings(property: NamedNode) {
-    return this.getObjects(dcterms.creator).flatMap(term => {
+  private agentsOrStrings(property: NamedNode): readonly (Agent | string)[] {
+    return this.filterAndMapObjects(dcterms.creator, term => {
       switch (term.termType) {
         case "Literal":
           return term.value;
         case "NamedNode":
           return this.modelSet.agentByUri(term.value);
         default:
-          return [];
+          return null;
       }
     });
   }
@@ -43,9 +43,9 @@ export class Rights extends Mixin(Model, HasContributors, HasCreators) {
 
   @Memoize()
   get holderAgentUris(): readonly string[] {
-    return this.getObjects(dcterms.rightsHolder)
-      .filter(term => term.termType === "NamedNode")
-      .map(term => term.value);
+    return this.filterAndMapObjects(dcterms.rightsHolder, term =>
+      term.termType === "NamedNode" ? term.value : null
+    );
   }
 
   @Memoize()
@@ -55,37 +55,29 @@ export class Rights extends Mixin(Model, HasContributors, HasCreators) {
 
   @Memoize()
   get license(): License | string | null {
-    const term = this.getObjects(dcterms.license).find(
-      term => term.termType === "Literal" || term.termType === "NamedNode"
-    );
-    if (!term) {
-      return null;
-    }
-    switch (term.termType) {
-      case "Literal":
-        return term.value;
-      case "NamedNode":
-        return this.modelSet.licenseByUri(term.value);
-      default:
-        throw new EvalError();
-    }
+    return this.findAndMapObject(dcterms.license, term => {
+      switch (term.termType) {
+        case "Literal":
+          return term.value;
+        case "NamedNode":
+          return this.modelSet.licenseByUri(term.value);
+        default:
+          return null;
+      }
+    });
   }
 
   @Memoize()
   get statement(): RightsStatement | string | null {
-    const term = this.getObjects(dcterms.rights).find(
-      term => term.termType === "Literal" || term.termType === "NamedNode"
-    );
-    if (!term) {
-      return null;
-    }
-    switch (term.termType) {
-      case "Literal":
-        return term.value;
-      case "NamedNode":
-        return this.modelSet.rightsStatementByUri(term.value);
-      default:
-        throw new EvalError();
-    }
+    return this.findAndMapObject(dcterms.license, term => {
+      switch (term.termType) {
+        case "Literal":
+          return term.value;
+        case "NamedNode":
+          return this.modelSet.rightsStatementByUri(term.value);
+        default:
+          return null;
+      }
+    });
   }
 }

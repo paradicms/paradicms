@@ -11,13 +11,15 @@ export class Shape extends Model {
       if (rdfType.equals(rdfs.Class)) {
         return true;
       }
-      for (const parentRdfType of this.dataset
-        .match(rdfType, rdfs.subClassOf, null, this.shapesGraph.graph)
-        .toArray()
-        .map(quad => quad.object)) {
+      for (const parentRdfTypeQuad of this.dataset.match(
+        rdfType,
+        rdfs.subClassOf,
+        null,
+        this.shapesGraph.graphNode
+      )) {
         if (
-          parentRdfType.termType === "NamedNode" &&
-          isRdfsClass(parentRdfType)
+          parentRdfTypeQuad.object.termType === "NamedNode" &&
+          isRdfsClass(parentRdfTypeQuad.object)
         ) {
           return true;
         }
@@ -25,35 +27,32 @@ export class Shape extends Model {
       return false;
     };
 
-    return this.getObjects(rdf.type)
-      .filter(term => term.termType === "NamedNode")
-      .map(term => term as NamedNode)
-      .filter(isRdfsClass);
+    return this.filterAndMapObjects(rdf.type, term =>
+      term.termType === "NamedNode" && isRdfsClass(term) ? term : null
+    );
   }
 
   get targetClasses(): readonly NamedNode[] {
-    return this.getObjects(sh.targetClass)
-      .filter(term => term.termType === "NamedNode")
-      .map(term => term as NamedNode);
+    return this.filterAndMapObjects(sh.targetClass, term =>
+      term.termType === "NamedNode" ? term : null
+    );
   }
 
   get targetNodes(): readonly (Literal | NamedNode)[] {
-    return this.getObjects(sh.targetNode)
-      .filter(
-        term => term.termType === "Literal" || term.termType === "NamedNode"
-      )
-      .map(term => term as Literal | NamedNode);
+    return this.filterAndMapObjects(sh.targetNode, term =>
+      term.termType === "Literal" || term.termType === "NamedNode" ? term : null
+    );
   }
 
   get targetObjectsOf(): readonly NamedNode[] {
-    return this.getObjects(sh.targetObjectsOf)
-      .filter(term => term.termType === "NamedNode")
-      .map(term => term as NamedNode);
+    return this.filterAndMapObjects(sh.targetObjectsOf, term =>
+      term.termType === "NamedNode" ? term : null
+    );
   }
 
   get targetSubjectsOf(): readonly NamedNode[] {
-    return this.getObjects(sh.targetSubjectsOf)
-      .filter(term => term.termType === "NamedNode")
-      .map(term => term as NamedNode);
+    return this.filterAndMapObjects(sh.targetSubjectsOf, term =>
+      term.termType === "NamedNode" ? term : null
+    );
   }
 }

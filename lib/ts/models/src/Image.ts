@@ -1,20 +1,22 @@
 import {ImageDimensions} from "./ImageDimensions";
 import {NamedModel} from "./NamedModel";
-import {Literal, NamedNode} from "@rdfjs/types";
+import {NamedNode} from "@rdfjs/types";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Memoize} from "typescript-memoize";
 import {Mixin} from "ts-mixer";
 import {HasRights} from "./mixins";
 import {cms, dcterms, exif, foaf, xsd} from "@paradicms/vocabularies";
-import {requireDefined} from "@paradicms/rdf";
+import {parseIntOrNull, requireNonNull} from "@paradicms/utilities";
 
 export class Image extends Mixin(NamedModel, HasRights) {
   @Memoize()
   get depictsUri(): string {
-    return requireDefined(
-      this.getObjects(foaf.depicts).find(term => term.termType === "NamedNode")
-    ).value;
+    return requireNonNull(
+      this.findAndMapObject(foaf.depicts, term =>
+        term.termType === "NamedNode" ? term.value : null
+      )
+    );
   }
 
   get derivedImages(): readonly Image[] {
@@ -34,19 +36,20 @@ export class Image extends Mixin(NamedModel, HasRights) {
     heightProperty: NamedNode,
     widthProperty: NamedNode
   ): ImageDimensions | null {
-    const heightLiteral = this.getObjects(heightProperty).find(
-      term => term.termType === "Literal" && term.datatype.equals(xsd.integer)
-    ) as Literal | undefined;
-    const widthLiteral = this.getObjects(widthProperty).find(
-      term => term.termType === "Literal" && term.datatype.equals(xsd.integer)
-    ) as Literal | undefined;
+    const integerPropertyValue = (property: NamedNode) =>
+      this.findAndMapObject(property, term =>
+        term.termType == "Literal" &&
+        (!term.datatype || term.datatype.equals(xsd.integer))
+          ? parseIntOrNull(term.value)
+          : null
+      );
 
-    if (heightLiteral && widthLiteral) {
-      return {
-        height: parseInt(heightLiteral.value),
-        width: parseInt(widthLiteral.value),
-      };
-    } else if (heightLiteral || widthLiteral) {
+    const height = integerPropertyValue(heightProperty);
+    const width = integerPropertyValue(widthProperty);
+
+    if (height !== null && width !== null) {
+      return {height, width};
+    } else if (height !== null || width !== null) {
       throw new RangeError(
         "must specify both width and height if either is specified"
       );
@@ -88,11 +91,11 @@ export class Image extends Mixin(NamedModel, HasRights) {
 
   @Memoize()
   get src(): string | null {
-    const srcLiteral = this.getObjects(cms.imageSrc).find(
-      term => term.termType === "Literal"
+    const src = this.findAndMapObject(cms.imageSrc, term =>
+      term.termType === "Literal" ? term.value : null
     );
-    if (srcLiteral) {
-      return srcLiteral.value;
+    if (src) {
+      return src;
     } else if (
       this.uri.startsWith("http://") ||
       this.uri.startsWith("https://")
@@ -113,9 +116,8 @@ export class Image extends Mixin(NamedModel, HasRights) {
 
   @Memoize()
   get title(): string | null {
-    return (
-      this.getObjects(dcterms.title).find(term => term.termType === "Literal")
-        ?.value ?? null
+    return this.findAndMapObject(dcterms.title, term =>
+      term.termType === "Literal" ? term.value : null
     );
   }
 }

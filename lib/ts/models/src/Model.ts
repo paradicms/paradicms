@@ -1,30 +1,19 @@
-import {BlankNode, Dataset, DefaultGraph, NamedNode, Term} from "@rdfjs/types";
+import {Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
 import {ModelSet} from "./ModelSet";
 import {ModelParameters} from "./ModelParameters";
+import {Resource} from "@paradicms/rdf";
 
-export class Model {
+export class Model extends Resource {
   readonly modelSet: ModelSet;
   readonly graphNode: DefaultGraph | NamedNode;
-  protected readonly _node: BlankNode | NamedNode;
 
   constructor(kwds: ModelParameters) {
+    super({node: kwds.node});
     this.modelSet = kwds.modelSet;
     this.graphNode = kwds.graphNode;
-    this._node = kwds.node;
   }
 
-  protected getObjects(property: NamedNode): readonly Term[] {
-    return this.dataset
-      .match(this.node, property, null, this.graphNode)
-      .toArray()
-      .map(quad => quad.object);
-  }
-
-  get node(): BlankNode | NamedNode {
-    return this._node;
-  }
-
-  protected get dataset(): Dataset {
+  get dataset(): Dataset {
     return this.modelSet.dataset;
   }
 }

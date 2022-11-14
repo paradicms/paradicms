@@ -6,7 +6,7 @@ import {PropertyGroup} from "./PropertyGroup";
 import {TermMap, TermSet} from "@paradicms/rdf";
 
 export class ShapesGraph {
-  readonly graph: DefaultGraph | NamedNode;
+  readonly graphNode: DefaultGraph | NamedNode;
   readonly nodeShapes: readonly NodeShape[];
   // @ts-ignore
   private readonly nodeShapesByNode: TermMap<BlankNode | NamedNode, NodeShape>;
@@ -21,14 +21,14 @@ export class ShapesGraph {
   >;
 
   constructor(readonly dataset: Dataset) {
-    this.graph = ShapesGraph.readGraph(dataset);
+    this.graphNode = ShapesGraph.readGraph(dataset);
 
     const {
       nodeShapes,
       nodeShapesByNode,
       propertyShapes,
       propertyShapesByNode,
-    } = ShapesGraph.readShapes(dataset, this.graph, this);
+    } = ShapesGraph.readShapes(dataset, this.graphNode, this);
     this.nodeShapes = nodeShapes;
     this.nodeShapesByNode = nodeShapesByNode;
     this.propertyShapes = propertyShapes;
@@ -37,7 +37,7 @@ export class ShapesGraph {
     const {
       propertyGroups,
       propertyGroupsByNode,
-    } = ShapesGraph.readPropertyGroups(dataset, this.graph, this);
+    } = ShapesGraph.readPropertyGroups(dataset, this.graphNode, this);
     this.propertyGroups = propertyGroups;
     this.propertyGroupsByNode = propertyGroupsByNode;
   }

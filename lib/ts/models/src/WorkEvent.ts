@@ -1,7 +1,7 @@
 import {Event} from "./Event";
 import {Work} from "./Work";
 import {cms} from "@paradicms/vocabularies";
-import {requireDefined} from "@paradicms/rdf";
+import {requireNonNull} from "@paradicms/utilities";
 
 export class WorkEvent extends Event {
   get work(): Work {
@@ -9,8 +9,10 @@ export class WorkEvent extends Event {
   }
 
   get workUri(): string {
-    return requireDefined(
-      this.getObjects(cms.work).find(term => term.termType === "NamedNode")
-    ).value;
+    return requireNonNull(
+      this.findAndMapObject(cms.work, term =>
+        term.termType === "NamedNode" ? term.value : null
+      )
+    );
   }
 }

@@ -1,27 +1,20 @@
-import {BlankNode, NamedNode, Term} from "@rdfjs/types";
+import {BlankNode, NamedNode} from "@rdfjs/types";
 import {ShapesGraph} from "./ShapesGraph";
+import {Resource} from "@paradicms/rdf";
 
-export abstract class Model {
-  protected readonly _node: BlankNode | NamedNode;
+export abstract class Model extends Resource {
   protected readonly shapesGraph: ShapesGraph;
 
   constructor(kwds: {node: BlankNode | NamedNode; shapesGraph: ShapesGraph}) {
-    this._node = kwds.node;
+    super({node: kwds.node});
     this.shapesGraph = kwds.shapesGraph;
   }
 
-  get node(): BlankNode | NamedNode {
-    return this._node;
-  }
-
-  protected getObjects(property: NamedNode): readonly Term[] {
-    return this.dataset
-      .match(this.node, property, null, null)
-      .toArray()
-      .map(quad => quad.object);
-  }
-
-  protected get dataset() {
+  get dataset() {
     return this.shapesGraph.dataset;
+  }
+
+  get graphNode() {
+    return this.shapesGraph.graphNode;
   }
 }

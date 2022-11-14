@@ -2,123 +2,113 @@ import {Shape} from "./Shape";
 import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
 import {dash, sh, xsd} from "@paradicms/vocabularies";
 import {PropertyGroup} from "./PropertyGroup";
-import {requireDefined} from "@paradicms/rdf";
+import {
+  parseFloatOrNull,
+  parseIntOrNull,
+  requireNonNull,
+} from "@paradicms/utilities";
 
 export class PropertyShape extends Shape {
   get datatype(): NamedNode | null {
-    return (
-      (this.getObjects(sh.datatype).find(term => term.termType === "NamedNode")
-        ?.value as NamedNode | undefined) ?? null
+    return this.findAndMapObject(sh.datatype, term =>
+      term.termType === "NamedNode" ? term : null
     );
   }
 
   get defaultValue(): BlankNode | NamedNode | Literal | null {
-    return (
-      (this.getObjects(sh.defaultValue).find(term => {
-        switch (term.termType) {
-          case "BlankNode":
-          case "NamedNode":
-          case "Literal":
-            return true;
-          default:
-            return false;
-        }
-      })?.value as BlankNode | NamedNode | Literal | undefined) ?? null
-    );
+    return this.findAndMapObject(sh.defaultValue, term => {
+      switch (term.termType) {
+        case "BlankNode":
+        case "NamedNode":
+        case "Literal":
+          return term;
+        default:
+          return null;
+      }
+    });
   }
 
   get description(): string | null {
-    return (
-      this.getObjects(sh.description).find(term => term.termType === "Literal")
-        ?.value ?? null
+    return this.findAndMapObject(sh.description, term =>
+      term.termType === "Literal" ? term.value : null
     );
   }
 
   get editor(): NamedNode | null {
-    return (
-      (this.getObjects(dash.editor).find(
-        term => term.termType === "NamedNode"
-      ) as NamedNode | undefined) ?? null
+    return this.findAndMapObject(dash.editor, term =>
+      term.termType === "NamedNode" ? term : null
     );
-  }
-
-  private getIntegerLiteralObject(property: NamedNode): number | null {
-    const literal = this.getObjects(property).find(
-      term =>
-        term.termType === "Literal" &&
-        (!term.datatype || term.datatype.equals(xsd.integer)) &&
-        !Number.isNaN(Number.parseInt(term.value))
-    );
-    return literal ? Number.parseInt(literal.value) : null;
   }
 
   get group(): PropertyGroup | null {
-    for (const groupObject of this.getObjects(sh.group)) {
-      if (groupObject.termType === "NamedNode") {
-        return this.shapesGraph.propertyGroupByNode(groupObject);
-      }
-    }
-    return null;
+    return this.findAndMapObject(sh.group, term =>
+      term.termType === "NamedNode"
+        ? this.shapesGraph.propertyGroupByNode(term)
+        : null
+    );
   }
 
   get maxCount(): number | null {
-    return this.getIntegerLiteralObject(sh.maxCount);
+    return this.findAndMapObject(sh.maxCount, term =>
+      term.termType == "Literal" &&
+      (!term.datatype || term.datatype.equals(xsd.integer))
+        ? parseIntOrNull(term.value)
+        : null
+    );
   }
 
   get minCount(): number | null {
-    return this.getIntegerLiteralObject(sh.minCount);
+    return this.findAndMapObject(sh.minCount, term =>
+      term.termType == "Literal" &&
+      (!term.datatype || term.datatype.equals(xsd.integer))
+        ? parseIntOrNull(term.value)
+        : null
+    );
   }
 
   get name(): string | null {
-    return (
-      this.getObjects(sh.name).find(term => term.termType === "Literal")
-        ?.value ?? null
+    return this.findAndMapObject(sh.name, term =>
+      term.termType === "Literal" ? term.value : null
     );
   }
 
   get order(): number | null {
-    for (const orderObject of this.getObjects(sh.order)) {
-      if (orderObject.termType !== "Literal") {
-        continue;
-      }
-      const order = Number.parseFloat(orderObject.value);
-      if (!Number.isNaN(order)) {
-        return order;
-      }
-    }
-    return null;
+    return this.findAndMapObject(sh.maxCount, term =>
+      term.termType == "Literal" ? parseFloatOrNull(term.value) : null
+    );
   }
 
   get path(): NamedNode {
-    return requireDefined(
-      this.getObjects(sh.path).find(term => term.termType === "NamedNode")
-    ) as NamedNode;
+    return requireNonNull(
+      this.findAndMapObject(sh.path, term =>
+        term.termType === "NamedNode" ? (term as NamedNode) : null
+      )
+    );
   }
 
   get singleLine(): boolean | null {
-    for (const singleLine of this.getObjects(dash.singleLine)) {
-      if (singleLine.termType !== "Literal") {
-        continue;
-      } else if (!singleLine.datatype.equals(xsd.boolean)) {
-        continue;
+    return this.findAndMapObject(dash.singleLine, term => {
+      if (term.termType !== "Literal") {
+        return null;
+      } else if (!term.datatype.equals(xsd.boolean)) {
+        return null;
       }
-      switch (singleLine.value.toLowerCase()) {
+      switch (term.value.toLowerCase()) {
         case "1":
         case "true":
           return true;
         case "0":
         case "false":
           return false;
+        default:
+          return null;
       }
-    }
-    return null;
+    });
   }
 
   get viewer(): NamedNode | null {
-    return (
-      (this.getObjects(dash.viewer).find(
-        term => term.termType === "NamedNode"
-      ) as NamedNode | undefined) ?? null
+    return this.findAndMapObject(dash.viewer, term =>
+      term.termType === "NamedNode" ? (term as NamedNode) : null
     );
   }
 }

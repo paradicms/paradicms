@@ -5,9 +5,9 @@ import {time, xsd} from "@paradicms/vocabularies";
 
 export class DateTimeDescription extends Model {
   get day(): number | null {
-    for (const term of this.getObjects(time.day)) {
+    return this.findAndMapObject(time.day, term => {
       if (term.termType !== "Literal") {
-        continue;
+        return null;
       }
       const literal: Literal = term;
       if (literal.datatype.value === xsd.gDay.value) {
@@ -22,9 +22,10 @@ export class DateTimeDescription extends Model {
         return parseInt(match[1]);
       } else if (literal.datatype.value === xsd.integer.value) {
         return parseInt(literal.value);
+      } else {
+        return null;
       }
-    }
-    return null;
+    });
   }
 
   get hour(): number | null {
@@ -36,9 +37,9 @@ export class DateTimeDescription extends Model {
   }
 
   get month(): number | null {
-    for (const term of this.getObjects(time.month)) {
+    return this.findAndMapObject(time.month, term => {
       if (term.termType !== "Literal") {
-        continue;
+        return null;
       }
       const literal: Literal = term;
       if (literal.datatype.value === xsd.gMonth.value) {
@@ -53,37 +54,39 @@ export class DateTimeDescription extends Model {
         return parseInt(match[1]);
       } else if (literal.datatype.value === xsd.integer.value) {
         return parseInt(literal.value);
+      } else {
+        return null;
       }
-    }
-    return null;
+    });
   }
 
   private optionalInt(property: NamedNode): number | null {
-    for (const term of this.getObjects(property)) {
+    return this.findAndMapObject(property, term => {
       if (term.termType !== "Literal") {
-        continue;
+        return null;
       }
       const literal: Literal = term;
       if (literal.datatype.value === xsd.integer.value) {
         return parseInt(literal.value);
       }
-    }
-    return null;
+      return null;
+    });
   }
 
   get second(): number | null {
-    for (const term of this.getObjects(time.second)) {
+    return this.findAndMapObject(time.second, term => {
       if (term.termType !== "Literal") {
-        continue;
+        return null;
       }
       const literal: Literal = term;
       if (literal.datatype.value === xsd.decimal.value) {
         return parseFloat(literal.value);
       } else if (literal.datatype.value === xsd.integer.value) {
         return parseInt(literal.value);
+      } else {
+        return null;
       }
-    }
-    return null;
+    });
   }
 
   toString() {
@@ -138,9 +141,9 @@ export class DateTimeDescription extends Model {
   }
 
   get year(): number | null {
-    for (const term of this.getObjects(time.year)) {
+    return this.findAndMapObject(time.year, term => {
       if (term.termType !== "Literal") {
-        continue;
+        return null;
       }
       const literal: Literal = term;
       if (literal.datatype.value === xsd.gYear.value) {
@@ -155,8 +158,9 @@ export class DateTimeDescription extends Model {
         return parseInt(match[1]);
       } else if (literal.datatype.value === xsd.integer.value) {
         return parseInt(literal.value);
+      } else {
+        return null;
       }
-    }
-    return null;
+    });
   }
 }

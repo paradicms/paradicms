@@ -1,35 +1,34 @@
 import {NamedModel} from "./NamedModel";
 import {dcterms, skos} from "@paradicms/vocabularies";
-import {requireDefined} from "@paradicms/rdf";
+import {requireNonNull} from "@paradicms/utilities";
 
 export class RightsStatement extends NamedModel {
   get definition(): string | null {
-    return (
-      this.getObjects(skos.definition).find(term => term.termType === "Literal")
-        ?.value ?? null
+    return this.findAndMapObject(skos.definition, term =>
+      term.termType === "Literal" ? term.value : null
     );
   }
 
   get description(): string | null {
-    return (
-      this.getObjects(dcterms.description).find(
-        term => term.termType === "Literal"
-      )?.value ?? null
+    return this.findAndMapObject(dcterms.description, term =>
+      term.termType === "Literal" ? term.value : null
     );
   }
 
   get identifier(): string {
-    return requireDefined(
-      this.getObjects(dcterms.identifier).find(
-        term => term.termType === "Literal"
+    return requireNonNull(
+      this.findAndMapObject(dcterms.identifier, term =>
+        term.termType === "Literal" ? term.value : null
       )
-    ).value;
+    );
   }
 
   get prefLabel(): string {
-    return requireDefined(
-      this.getObjects(skos.prefLabel).find(term => term.termType === "Literal")
-    ).value;
+    return requireNonNull(
+      this.findAndMapObject(skos.prefLabel, term =>
+        term.termType === "Literal" ? term.value : null
+      )
+    );
   }
 
   toString() {

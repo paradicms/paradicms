@@ -126,14 +126,14 @@ export class Work extends Mixin(
 
   @Memoize()
   get collectionUris(): readonly string[] {
-    return this.getObjects(cms.collection)
-      .filter(term => term.termType === "NamedNode")
-      .map(term => term.value);
+    return this.filterAndMapObjects(cms.collection, term =>
+      term.termType === "NamedNode" ? term.value : null
+    );
   }
 
   @Memoize()
   get description(): string | Text | null {
-    for (const term of this.getObjects(dcterms.abstract)) {
+    return this.findAndMapObject(dcterms.abstract, term => {
       switch (term.termType) {
         case "BlankNode":
           return new Text({
@@ -143,9 +143,10 @@ export class Work extends Mixin(
           });
         case "Literal":
           return term.value;
+        default:
+          return null;
       }
-    }
-    return null;
+    });
   }
 
   get events(): readonly WorkEvent[] {
@@ -179,33 +180,26 @@ export class Work extends Mixin(
 
   @Memoize()
   propertyNamedValues(propertyUri: string): readonly NamedValue[] {
-    const result: NamedValue[] = [];
-    this.dataset
-      .match(
-        this.node,
-        DataFactory.namedNode(propertyUri),
-        null,
-        this.graphNode
-      )
-      .forEach(quad => {
-        if (quad.object.termType !== "NamedNode") {
-          return;
+    return this.filterAndMapObjects(
+      DataFactory.namedNode(propertyUri),
+      term => {
+        if (term.termType !== "NamedNode") {
+          return null;
         }
         const rdfTypeQuads = this.dataset
-          .match(quad.object, rdf.type, cms.NamedValue, null)
+          .match(term, rdf.type, cms.NamedValue, null)
           .toArray();
-        if (rdfTypeQuads.length == 0) {
-          return;
-        }
-        result.push(
-          new NamedValue({
+        if (rdfTypeQuads.length > 0) {
+          return new NamedValue({
             modelSet: this.modelSet,
             graphNode: rdfTypeQuads[0].graph as NamedNode,
-            node: quad.object,
-          })
-        );
-      });
-    return result;
+            node: term,
+          });
+        } else {
+          return null;
+        }
+      }
+    );
   }
 
   @Memoize()

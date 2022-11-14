@@ -9,9 +9,8 @@ export class PropertyGroup extends Model {
   }
 
   get label(): string | null {
-    return (
-      this.getObjects(rdfs.label).find(term => term.termType === "Literal")
-        ?.value ?? null
+    return this.findAndMapObject(rdfs.label, term =>
+      term.termType === "Literal" ? term.value : null
     );
   }
 }

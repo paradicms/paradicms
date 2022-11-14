@@ -15,7 +15,8 @@ import {WorkEvent} from "./WorkEvent";
 import {WorkCreation} from "./WorkCreation";
 import {Event} from "./Event";
 import {hasMixin} from "ts-mixer";
-import {datasetToString, requireDefined, TermSet} from "@paradicms/rdf";
+import {datasetToString, TermSet} from "@paradicms/rdf";
+import {requireDefined} from "@paradicms/utilities";
 import {
   cms,
   configuration,

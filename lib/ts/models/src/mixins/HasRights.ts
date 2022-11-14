@@ -7,10 +7,10 @@ export abstract class HasRights extends ModelMixin {
   @Memoize()
   get rights(): Rights | null {
     if (
-      this.getObjects(dcterms.creator).length > 0 ||
-      this.getObjects(dcterms.license).length > 0 ||
-      this.getObjects(dcterms.rights).length > 0 ||
-      this.getObjects(dcterms.rightsHolder).length > 0
+      this.hasObject(dcterms.creator) ||
+      this.hasObject(dcterms.license) ||
+      this.hasObject(dcterms.rights) ||
+      this.hasObject(dcterms.rightsHolder)
     ) {
       return new Rights({
         modelSet: this.modelSet,
