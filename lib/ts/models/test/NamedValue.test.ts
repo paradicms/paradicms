@@ -17,9 +17,9 @@ describe("NamedValue", () => {
     expect(sut.value.value).to.not.be.empty;
   });
 
-  it("should get associated images", () => {
+  (it("should get associated images", () => {
     expect(sut.images).to.not.be.empty;
-  });
+  }) as any).timeout(5000);
 
   it("should get a thumbnail from the associated images", () => {
     expect(sut.thumbnail({targetDimensions: {height: 200, width: 200}})).to.not

@@ -8,7 +8,7 @@ import {parseIntoDataset} from "@paradicms/rdf";
 describe("ModelSet", () => {
   const sut = new ModelSet(parseIntoDataset(testDataTrig));
 
-  it("should exercise all indices", () => {
+  (it("should exercise all indices", () => {
     const institutions = sut.institutions;
     expect(institutions).to.have.length(2);
     for (const institution of institutions) {
@@ -83,7 +83,7 @@ describe("ModelSet", () => {
           .some(otherWorkEvent => otherWorkEvent.uri === workEvent.uri)
       );
     }
-  });
+  }) as any).timeout(5000);
 
   it("should log its contents", () => {
     sut.logContents();

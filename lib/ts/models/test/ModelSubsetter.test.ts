@@ -34,7 +34,7 @@ describe("ModelSubsetter", () => {
     workPropertyUris: [],
   });
 
-  it("should get institutions with thumbnails (institutions page)", () => {
+  (it("should get institutions with thumbnails (institutions page)", () => {
     const modelSet = sut.institutionsModelSet(testModelSet.institutions, {
       thumbnail: THUMBNAIL_SELECTOR,
     });
@@ -45,7 +45,7 @@ describe("ModelSubsetter", () => {
       )
     );
     expectModelsDeepEq(modelSet.institutions, testModelSet.institutions);
-  });
+  }) as any).timeout(5000);
 
   it("should get an institution with its collections and their thumbnails (institution page)", () => {
     const institution = testModelSet.institutions[0];

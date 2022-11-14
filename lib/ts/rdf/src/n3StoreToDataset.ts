@@ -14,10 +14,7 @@ export const n3StoreToDataset = (n3Store: Store): Dataset => {
       return other.every(quad => n3Store.has(quad));
     },
     delete(quad: Quad): Dataset<Quad, Quad> {
-      const countBefore = n3Store.countQuads(null, null, null, null);
       n3Store.delete(quad);
-      const countAfter = n3Store.countQuads(null, null, null, null);
-      console.log(countBefore, countAfter);
       return this;
     },
     difference(other: Dataset<Quad>): Dataset<Quad, Quad> {
