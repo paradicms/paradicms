@@ -6,7 +6,7 @@ import {DataGraph} from "./DataGraph";
 import {ShapesGraph} from "./ShapesGraph";
 import * as ValidationReport from "rdf-validate-shacl/src/validation-report";
 import * as SHACLValidator from "rdf-validate-shacl";
-import {TermSet} from "../../rdf/src/TermSet";
+import {TermSet} from "@paradicms/rdf";
 import {PropertyShape} from "./PropertyShape";
 
 type SomeFocusNodePropertyShapeCallback = (

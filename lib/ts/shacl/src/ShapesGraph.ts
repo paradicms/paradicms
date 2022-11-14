@@ -3,8 +3,7 @@ import {rdf, sh} from "@paradicms/vocabularies";
 import {NodeShape} from "./NodeShape";
 import {PropertyShape} from "./PropertyShape";
 import {PropertyGroup} from "./PropertyGroup";
-import {TermMap} from "../../rdf/src/TermMap";
-import {TermSet} from "../../rdf/src/TermSet";
+import {TermMap, TermSet} from "@paradicms/rdf";
 
 export class ShapesGraph {
   readonly graph: DefaultGraph | NamedNode;

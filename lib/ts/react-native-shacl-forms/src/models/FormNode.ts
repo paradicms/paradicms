@@ -1,10 +1,14 @@
 import {FormNodeType} from "./FormNodeType";
 import {NamedNode, Term} from "@rdfjs/types";
-import {DataGraph, PropertyShape, ShapesGraph} from "@paradicms/shacl";
+import {
+  DataGraph,
+  PropertyShape,
+  ShaclProcessor,
+  ShapesGraph,
+} from "@paradicms/shacl";
 import {FormProperty} from "./FormProperty";
-import {TermMap} from "@paradicms/shacl/dist/TermMap";
-import {ShaclProcessor} from "@paradicms/shacl/dist/ShaclProcessor";
 import {Model} from "./Model";
+import {TermMap} from "@paradicms/rdf";
 
 export class FormNode extends Model {
   readonly dataGraphNode: NamedNode;
