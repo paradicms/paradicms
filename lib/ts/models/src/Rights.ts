@@ -69,7 +69,7 @@ export class Rights extends Mixin(Model, HasContributors, HasCreators) {
 
   @Memoize()
   get statement(): RightsStatement | string | null {
-    return this.findAndMapObject(dcterms.license, term => {
+    return this.findAndMapObject(dcterms.rights, term => {
       switch (term.termType) {
         case "Literal":
           return term.value;
