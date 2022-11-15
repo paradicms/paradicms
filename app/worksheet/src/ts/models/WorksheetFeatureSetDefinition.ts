@@ -13,16 +13,23 @@ export class WorksheetFeatureSetDefinition extends Mixin(
 ) {
   @Memoize()
   get features(): readonly WorksheetFeatureDefinition[] {
-    return this.dataset
-      .match(null, worksheet.featureSet, this.node, null)
-      .toArray()
-      .filter(quad => quad.subject.termType === "NamedNode")
-      .map(quad =>
-        (this
-          .modelSet as WorksheetDefinitionModelSet).worksheetFeatureDefinitionByUri(
-          quad.subject.value
-        )
-      );
+    const features: WorksheetFeatureDefinition[] = [];
+    for (const quad of this.dataset.match(
+      null,
+      worksheet.featureSet,
+      this.node,
+      null
+    )) {
+      if (quad.subject.termType === "NamedNode") {
+        features.push(
+          (this
+            .modelSet as WorksheetDefinitionModelSet).worksheetFeatureDefinitionByUri(
+            quad.subject.value
+          )
+        );
+      }
+    }
+    return features;
   }
 
   get featureUris(): readonly string[] {

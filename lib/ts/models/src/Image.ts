@@ -69,13 +69,15 @@ export class Image extends Mixin(NamedModel, HasRights) {
 
   @Memoize()
   get originalImageUri(): string | null {
-    const originalImageUriSubjects = this.dataset
-      .match(null, foaf.thumbnail, this.node, null)
-      .toArray()
-      .map(quad => quad.subject);
-    return originalImageUriSubjects.length > 0
-      ? originalImageUriSubjects[0].value
-      : null;
+    for (const quad of this.dataset.match(
+      null,
+      foaf.thumbnail,
+      this.node,
+      null
+    )) {
+      return quad.subject.value;
+    }
+    return null;
   }
 
   get originalImage(): Image {

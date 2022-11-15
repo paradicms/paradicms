@@ -186,18 +186,19 @@ export class Work extends Mixin(
         if (term.termType !== "NamedNode") {
           return null;
         }
-        const rdfTypeQuads = this.dataset
-          .match(term, rdf.type, cms.NamedValue, null)
-          .toArray();
-        if (rdfTypeQuads.length > 0) {
+        for (const rdfTypeQuad of this.dataset.match(
+          term,
+          rdf.type,
+          cms.NamedValue,
+          null
+        )) {
           return new NamedValue({
             modelSet: this.modelSet,
-            graphNode: rdfTypeQuads[0].graph as NamedNode,
+            graphNode: rdfTypeQuad.graph as NamedNode,
             node: term,
           });
-        } else {
-          return null;
         }
+        return null;
       }
     );
   }

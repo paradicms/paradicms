@@ -367,11 +367,13 @@ export class ModelSet {
   }
 
   protected readEvent(kwds: ModelParameters): Event {
-    for (const eventRdfType of this.dataset
-      .match(kwds.node, rdf.type, null, kwds.graphNode)
-      .toArray()
-      .map(quad => quad.object)) {
-      const eventClass = eventClassesByRdfType[eventRdfType.value];
+    for (const quad of this.dataset.match(
+      kwds.node,
+      rdf.type,
+      null,
+      kwds.graphNode
+    )) {
+      const eventClass = eventClassesByRdfType[quad.object.value];
       if (eventClass) {
         return new eventClass(kwds);
       }
