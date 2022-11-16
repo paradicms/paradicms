@@ -10,6 +10,18 @@ export class TermMap<TermT extends Term, ValueT> {
     [termType: string]: {[termValue: string]: [[TermT, ValueT]]};
   } = {};
 
+  get keys(): readonly TermT[] {
+    const keys: TermT[] = [];
+    for (const termType in this.map) {
+      for (const termValue in this.map[termType]) {
+        for (const entry of this.map[termType][termValue]) {
+          keys.push(entry[0]);
+        }
+      }
+    }
+    return keys;
+  }
+
   get(term: TermT): ValueT {
     const value = this.getOptional(term);
     if (value) {

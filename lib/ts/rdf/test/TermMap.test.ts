@@ -11,6 +11,15 @@ describe("TermMap", () => {
     sut = new TermMap();
   });
 
+  it("should return keys", () => {
+    expect(sut.keys).to.be.empty;
+    sut.put(key1, 1);
+    expect(sut.keys).to.have.length(1);
+    expect(sut.keys[0].equals(key1)).to.be.true;
+    sut.put(key2, 1);
+    expect(sut.keys).to.have.length(2);
+  });
+
   it("should return a previously-put value", () => {
     sut.put(key1, 1);
     expect(sut.get(key1)).to.eq(1);
