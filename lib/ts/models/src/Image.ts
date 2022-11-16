@@ -69,15 +69,9 @@ export class Image extends Mixin(NamedModel, HasRights) {
 
   @Memoize()
   get originalImageUri(): string | null {
-    for (const quad of this.dataset.match(
-      null,
-      foaf.thumbnail,
-      this.node,
-      null
-    )) {
-      return quad.subject.value;
-    }
-    return null;
+    return this.findAndMapObject(cms.thumbnailOf, term =>
+      term.termType === "NamedNode" ? term.value : null
+    );
   }
 
   get originalImage(): Image {

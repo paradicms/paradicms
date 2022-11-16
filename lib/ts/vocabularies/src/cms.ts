@@ -10,6 +10,7 @@ interface Cms {
   imageMaxHeight: NamedNode<"http://www.paradicms.org/ns/cms#imageMaxHeight">;
   imageMaxWidth: NamedNode<"http://www.paradicms.org/ns/cms#imageMaxWidth">;
   imageSrc: NamedNode<"http://www.paradicms.org/ns/cms#imageSrc">;
+  thumbnailOf: NamedNode<"http://www.paradicms.org/ns/cms#thumbnailOf">;
   work: NamedNode<"http://www.paradicms.org/ns/cms#work">;
 
   // Resources

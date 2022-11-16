@@ -9,23 +9,6 @@ from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespaces import CMS, EXIF
-
-# def image_dimensions(height_p, width_p):
-#     height = resource_wrapper.optional_python_value(height_p, int)
-#     width = resource_wrapper.optional_python_value(width_p, int)
-#     if height is not None and width is not None:
-#         return ImageDimensions(height=height, width=width)
-#     elif height is None and width is None:
-#         return None
-#     else:
-#         raise ValueError(f"expected both height and width properties")
-#
-# exact_dimensions = image_dimensions(EXIF.height, EXIF.width)
-# max_dimensions = (
-#     image_dimensions(CMS.imageMaxHeight, CMS.imageMaxWidth)
-#     if exact_dimensions is None
-#     else None
-# )
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
@@ -77,7 +60,11 @@ class Image(ResourceBackedNamedModel):
         resource = resource_builder.build()
 
         if original_image_uri is not None:
+            # (original, foaf:thumbnail, derived)
             resource.graph.add((original_image_uri, FOAF.thumbnail, uri))
+            # (derived, cms:thumbnailOf, original)
+            # These quads are faster to query than the foaf:thumbnail ones.
+            resource_builder.add(CMS.thumbnailOf, original_image_uri)
 
         return cls(resource)
 
