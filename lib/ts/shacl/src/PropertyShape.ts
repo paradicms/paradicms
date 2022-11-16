@@ -7,6 +7,7 @@ import {
   parseIntOrNull,
   requireNonNull,
 } from "@paradicms/utilities";
+import {readRdfList} from "@paradicms/rdf";
 
 export class PropertyShape extends Shape {
   get datatype(): NamedNode | null {
@@ -70,6 +71,32 @@ export class PropertyShape extends Shape {
     return this.findAndMapObject(sh.name, term =>
       term.termType === "Literal" ? term.value : null
     );
+  }
+
+  get or(): readonly PropertyShape[] {
+    const propertyShapes: PropertyShape[] = [];
+    for (const orQuad of this.dataset.match(
+      this.node,
+      sh.or,
+      null,
+      this.shapesGraph.graphNode
+    )) {
+      for (const propertyShapeNode of readRdfList({
+        dataset: this.dataset,
+        graph: this.shapesGraph.graphNode,
+        node: orQuad.object,
+      })) {
+        switch (propertyShapeNode.termType) {
+          case "BlankNode":
+          case "NamedNode":
+            propertyShapes.push(
+              this.shapesGraph.propertyShapeByNode(propertyShapeNode)
+            );
+            break;
+        }
+      }
+    }
+    return propertyShapes;
   }
 
   get order(): number | null {
