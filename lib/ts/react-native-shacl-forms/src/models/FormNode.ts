@@ -41,39 +41,37 @@ export class FormNode extends Model {
 
   get properties(): readonly FormProperty[] {
     return this.propertyShapesByPath.values
-      .concat()
-      .sort(
-        (
-          leftPropertyShapes: PropertyShape[],
-          rightPropertyShapes: PropertyShape[]
-        ) => {
-          const propertyShapesOrder = (
-            propertyShapes: readonly PropertyShape[]
-          ): number =>
-            propertyShapes.find(propertyShape => propertyShape.order !== null)
-              ?.order ?? 0;
-
-          // If present at property shapes, the recommended use of sh:order is to sort the property shapes in an ascending order,
-          // for example so that properties with smaller order are placed above (or to the left) of properties with larger order.
-          const orderDifference =
-            propertyShapesOrder(leftPropertyShapes) -
-            propertyShapesOrder(rightPropertyShapes);
-          if (orderDifference !== 0) {
-            return orderDifference;
-          } else {
-            // If the order is the same, sort by path
-            return leftPropertyShapes[0].path.value.localeCompare(
-              rightPropertyShapes[0].path.value
+      .map(pathPropertyShapes => {
+        switch (pathPropertyShapes.length) {
+          case 0:
+            throw new EvalError("should never happen");
+          case 1:
+            return pathPropertyShapes[0];
+          default:
+            throw new EvalError(
+              "not implemented: synthesize a PropertyShape with sh:and the multiple shapes with the same sh:path"
             );
-          }
         }
-      )
+      })
+      .sort((leftPropertyShape, rightPropertyShape) => {
+        // If present at property shapes, the recommended use of sh:order is to sort the property shapes in an ascending order,
+        // for example so that properties with smaller order are placed above (or to the left) of properties with larger order.
+        const orderDifference =
+          (leftPropertyShape.order ?? 0) - (rightPropertyShape.order ?? 0);
+        if (orderDifference !== 0) {
+          return orderDifference;
+        } else {
+          // If the order is the same, sort by path
+          return leftPropertyShape.path.value.localeCompare(
+            rightPropertyShape.path.value
+          );
+        }
+      })
       .map(
-        propertyShapes =>
+        propertyShape =>
           new FormProperty({
             formNode: this,
-            path: propertyShapes[0].path,
-            shapes: propertyShapes,
+            shape: propertyShape,
           })
       );
   }
