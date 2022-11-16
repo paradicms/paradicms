@@ -55,10 +55,17 @@ export class FormNode extends Model {
 
           // If present at property shapes, the recommended use of sh:order is to sort the property shapes in an ascending order,
           // for example so that properties with smaller order are placed above (or to the left) of properties with larger order.
-          return (
+          const orderDifference =
             propertyShapesOrder(leftPropertyShapes) -
-            propertyShapesOrder(rightPropertyShapes)
-          );
+            propertyShapesOrder(rightPropertyShapes);
+          if (orderDifference !== 0) {
+            return orderDifference;
+          } else {
+            // If the order is the same, sort by path
+            return leftPropertyShapes[0].path.value.localeCompare(
+              rightPropertyShapes[0].path.value
+            );
+          }
         }
       )
       .map(
