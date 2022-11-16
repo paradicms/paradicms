@@ -29,11 +29,11 @@ describe("Collection", () => {
     expect(sut.uri).to.eq(sut.uri);
   });
 
-  (it("should get the collection's thumbnail", () => {
+  it("should get the collection's thumbnail", () => {
     const thumbnail = sut.thumbnail(THUMBNAIL_SELECTOR);
     expect(thumbnail).to.not.be.null;
     expect(thumbnail!.depictsUri).to.not.eq(sut.uri);
     expect(sut.works.some(work => work.uri === thumbnail!.depictsUri)).to.be
       .true;
-  }) as any).timeout(5000);
+  });
 });
