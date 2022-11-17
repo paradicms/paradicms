@@ -10,6 +10,18 @@ export class TermMap<TermT extends Term, ValueT> {
     [termType: string]: {[termValue: string]: [[TermT, ValueT]]};
   } = {};
 
+  get entries(): readonly {key: TermT; value: ValueT}[] {
+    const entries: {key: TermT; value: ValueT}[] = [];
+    for (const termType in this.map) {
+      for (const termValue in this.map[termType]) {
+        for (const entry of this.map[termType][termValue]) {
+          entries.push({key: entry[0], value: entry[1]});
+        }
+      }
+    }
+    return entries;
+  }
+
   get keys(): readonly TermT[] {
     const keys: TermT[] = [];
     for (const termType in this.map) {
