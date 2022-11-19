@@ -8,7 +8,7 @@ import {NamedValue} from "./NamedValue";
 import {NamedNode} from "@rdfjs/types";
 import {WorkAgent} from "./WorkAgent";
 import {Mixin} from "ts-mixer";
-import {DataFactory} from "n3";
+import {DataFactory} from "@paradicms/rdf";
 import {
   HasAbstract,
   HasImages,

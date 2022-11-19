@@ -1,4 +1,4 @@
-import {DataFactory} from "n3";
+import {DataFactory} from "@paradicms/rdf";
 import {Form} from "./Form";
 import {FormNode} from "./FormNode";
 import {rdf} from "@paradicms/vocabularies";

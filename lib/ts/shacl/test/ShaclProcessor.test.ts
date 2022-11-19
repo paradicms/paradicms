@@ -1,8 +1,7 @@
 import {expect} from "chai";
 import {DataGraph, FocusNode, PropertyShape, ShapesGraph} from "../src";
 import {ShaclProcessor} from "../src/ShaclProcessor";
-import {DataFactory} from "n3";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {DataFactory, parseIntoDataset} from "@paradicms/rdf";
 import {schema} from "@paradicms/vocabularies";
 import {
   invalidTestDataGraphTtl,

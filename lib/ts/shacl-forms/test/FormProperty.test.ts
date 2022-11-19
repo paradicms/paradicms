@@ -1,7 +1,7 @@
 import {testForm} from "./testForm";
 import {dash, schema} from "@paradicms/vocabularies";
 import {expect} from "chai";
-import {DataFactory} from "n3";
+import {DataFactory} from "@paradicms/rdf";
 import {FormNode, FormNodeType, FormProperty} from "../src";
 
 describe("FormProperty", () => {

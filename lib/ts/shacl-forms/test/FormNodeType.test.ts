@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {DataFactory} from "n3";
+import {DataFactory} from "@paradicms/rdf";
 import {testForm} from "./testForm";
 import {schema} from "@paradicms/vocabularies";
 import {FormNodeType} from "../src";
