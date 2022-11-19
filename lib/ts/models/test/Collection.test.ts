@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {ModelSet, Text} from "../src";
-import {testDataTrig} from "./testDataTrig";
+import {testDataTrig} from "@paradicms/test";
 import {parseIntoDataset} from "@paradicms/rdf";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {

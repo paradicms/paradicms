@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import {ModelSet} from "../src";
-import {testDataTrig} from "./testDataTrig";
+import {testDataTrig} from "@paradicms/test";
 import {WorkCreation} from "../src/WorkCreation";
 import {parseIntoDataset} from "@paradicms/rdf";
 

@@ -1,8 +1,8 @@
 import {expect} from "chai";
 import {ShapesGraph} from "../src";
-import {testShapesGraphTtl} from "../../test/src/testShapesGraphTtl";
 import {DataFactory} from "n3";
 import {parseIntoDataset} from "@paradicms/rdf";
+import {testShapesGraphTtl} from "@paradicms/test";
 
 describe("Shapes", () => {
   let shapes: ShapesGraph;

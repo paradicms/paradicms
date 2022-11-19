@@ -1,9 +1,8 @@
-import {Form} from "../../../shacl-forms/src/Form";
-import {validTestDataGraphTtl} from "../validTestDataGraphTtl";
 import {ShapesGraph} from "@paradicms/shacl";
-import {testShapesGraphTtl} from "../testShapesGraphTtl";
 import {parseIntoDataset} from "@paradicms/rdf";
 import {schema} from "@paradicms/vocabularies";
+import {Form} from "../src";
+import {testShapesGraphTtl, validTestDataGraphTtl} from "@paradicms/test";
 
 export const testForm = () =>
   new Form({

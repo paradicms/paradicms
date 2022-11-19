@@ -3,7 +3,7 @@ import {License} from "../src/License";
 import {RightsStatement} from "../src/RightsStatement";
 import {ModelSet} from "../src";
 import {Agent} from "../src/Agent";
-import {testDataTrig} from "./testDataTrig";
+import {testDataTrig} from "@paradicms/test";
 import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("Rights", () => {

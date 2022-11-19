@@ -1,18 +1,13 @@
 export const invalidTestDataGraphTtl = `
+@prefix paradicms: <http://www.paradicms.org/ns#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix schema: <http://schema.org/> .
-
-<urn:example:MinorGordon> a schema:Person ;
-    schema:birthDate "2022-11-19"^^xsd:date;
-    schema:givenName "Minor" ;
+paradicms:MinorGordon a schema:Person ;
+    schema:givenName 2 ;
     schema:gender "male" ;
     schema:address [
         schema:postalCode 12180 ;
-        schema:streetAddress "Unknown"
+        schema:streetAddress 1
     ]
-    .
-    
-<urn:example:Troy> a schema:Place ;
-    schema:name "Troy"
     .
 `;

@@ -3,7 +3,7 @@ import {ModelSubsetter} from "../src/ModelSubsetter";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {License, ModelSet, RightsStatement} from "../src";
 import {NamedModel} from "../src/NamedModel";
-import {testDataTrig} from "./testDataTrig";
+import {testDataTrig} from "@paradicms/test";
 import {WorkCreation} from "../src/WorkCreation";
 import {parseIntoDataset} from "@paradicms/rdf";
 

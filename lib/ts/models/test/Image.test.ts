@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import {Image, ModelSet} from "../src";
-import {testDataTrig} from "./testDataTrig";
+import {testDataTrig} from "@paradicms/test";
 import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("Image", () => {

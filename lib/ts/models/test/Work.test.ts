@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import {ModelSet, Text} from "../src";
-import {testDataTrig} from "./testDataTrig";
+import {testDataTrig} from "@paradicms/test";
 import {dcterms} from "@paradicms/vocabularies";
 import {parseIntoDataset} from "@paradicms/rdf";
 

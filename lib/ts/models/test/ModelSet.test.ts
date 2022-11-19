@@ -2,7 +2,7 @@ import {ModelSet} from "../src/ModelSet";
 import {License} from "../src/License";
 import {RightsStatement} from "../src/RightsStatement";
 import {expect} from "chai";
-import {testDataTrig} from "./testDataTrig";
+import {testDataTrig} from "@paradicms/test";
 import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("ModelSet", () => {
