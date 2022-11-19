@@ -1,16 +1,14 @@
 import {testForm} from "./testForm";
 import {FormNode} from "../../src/models/FormNode";
 import {FormNodeType} from "../../src/models/FormNodeType";
-import {DataFactory} from "n3";
+import {schema} from "@paradicms/vocabularies";
 
 let node: FormNode;
 let nodeType: FormNodeType;
 
 beforeEach(() => {
   nodeType = testForm().nodeTypes.find(testNodeType =>
-    testNodeType.rdfType.equals(
-      DataFactory.namedNode("http://schema.org/Person")
-    )
+    testNodeType.rdfType.equals(schema.Person)
   )!;
   node = nodeType.nodes[0];
 });

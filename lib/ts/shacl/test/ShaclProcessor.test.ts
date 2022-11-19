@@ -6,6 +6,7 @@ import {invalidTestDataGraphTtl} from "./invalidTestDataGraphTtl";
 import {ShaclProcessor} from "../src/ShaclProcessor";
 import {DataFactory} from "n3";
 import {parseIntoDataset} from "@paradicms/rdf";
+import {schema} from "@paradicms/vocabularies";
 
 describe("ShaclProcessor", () => {
   let invalidDataGraph: DataGraph;
@@ -30,9 +31,7 @@ describe("ShaclProcessor", () => {
     expect(propertyShapes).to.have.length(4);
     expect(
       propertyShapes.find(propertyShape =>
-        propertyShape.path.equals(
-          DataFactory.namedNode("http://schema.org/givenName")
-        )
+        propertyShape.path.equals(schema.givenName)
       )
     ).to.not.be.undefined;
   });

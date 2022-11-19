@@ -2,6 +2,7 @@ import {expect} from "@jest/globals";
 import {DataFactory} from "n3";
 import {testForm} from "./testForm";
 import {FormNodeType} from "../../src/models/FormNodeType";
+import {schema} from "@paradicms/vocabularies";
 
 let sut: FormNodeType;
 
@@ -10,9 +11,7 @@ beforeEach(() => {
 });
 
 test("has expected rdf type", () => {
-  expect(
-    sut.rdfType.equals(DataFactory.namedNode("http://schema.org/Person"))
-  ).toBeTruthy();
+  expect(sut.rdfType.equals(schema.Person)).toBeTruthy();
 });
 
 test("has one existing node", () => {
