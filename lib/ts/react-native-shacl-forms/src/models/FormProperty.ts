@@ -2,33 +2,17 @@ import {DataGraph, PropertyShape, ShapesGraph} from "@paradicms/shacl";
 import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
 import {FormNode} from "./FormNode";
 import {Model} from "./Model";
+import {TermMap} from "@paradicms/rdf";
+import {dashEditorScorers} from "./DashFormPropertyWidgetScorers";
 
 export class FormProperty extends Model {
   readonly formNode: FormNode;
-  readonly path: NamedNode;
-  readonly shapes: readonly PropertyShape[];
+  readonly shape: PropertyShape;
 
-  constructor(kwds: {
-    formNode: FormNode;
-    path: NamedNode;
-    shapes: readonly PropertyShape[];
-  }) {
+  constructor(kwds: {formNode: FormNode; shape: PropertyShape}) {
     super();
     this.formNode = kwds.formNode;
-    this.path = kwds.path;
-    this.shapes = kwds.shapes;
-  }
-
-  private shapeProperty<T>(
-    propertyGetter: (shape: PropertyShape) => T | null
-  ): T | null {
-    for (const shape of this.shapes) {
-      const propertyValue = propertyGetter(shape);
-      if (typeof propertyValue !== null) {
-        return propertyValue;
-      }
-    }
-    return null;
+    this.shape = kwds.shape;
   }
 
   get dataGraph(): DataGraph {
@@ -41,25 +25,26 @@ export class FormProperty extends Model {
 
   get editor(): NamedNode | null {
     {
-      const editor = this.shapeProperty(shape => shape.editor);
+      const editor = this.shape.editor;
       if (editor) {
         return editor;
       }
     }
 
-    const datatype = this.shapeProperty(shape => shape.datatype);
-    if (datatype) {
+    const scores: TermMap<NamedNode, number> = new TermMap();
+    const scorers = dashEditorScorers;
+    for (const scorer of scorers) {
+      const score = scorer.score(this);
+      if (score !== null) {
+        scores.put(scorer.widgetName, score);
+      }
     }
 
     return null;
   }
 
-  get maxCount(): number | null {
-    return this.shapeProperty(shape => shape.maxCount);
-  }
-
-  get minCount(): number | null {
-    return this.shapeProperty(shape => shape.minCount);
+  get path(): NamedNode {
+    return this.shape.path;
   }
 
   get shapesGraph(): ShapesGraph {

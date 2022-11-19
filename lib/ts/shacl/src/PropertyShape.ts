@@ -8,8 +8,15 @@ import {
   requireNonNull,
 } from "@paradicms/utilities";
 import {readRdfList} from "@paradicms/rdf";
+import {NodeShape} from "./NodeShape";
 
 export class PropertyShape extends Shape {
+  get classes(): readonly NamedNode[] {
+    return this.filterAndMapObjects(sh.class, term =>
+      term.termType === "NamedNode" ? term : null
+    );
+  }
+
   get datatype(): NamedNode | null {
     return this.findAndMapObject(sh.datatype, term =>
       term.termType === "NamedNode" ? term : null
@@ -49,6 +56,21 @@ export class PropertyShape extends Shape {
     );
   }
 
+  get in_(): readonly (BlankNode | NamedNode | Literal)[] | null {
+    return this.findAndMapObject(sh.in, term => {
+      switch (term.termType) {
+        case "BlankNode":
+        case "NamedNode":
+          return readRdfList({
+            dataset: this.dataset,
+            node: term,
+          });
+        default:
+          return null;
+      }
+    });
+  }
+
   get maxCount(): number | null {
     return this.findAndMapObject(sh.maxCount, term =>
       term.termType == "Literal" &&
@@ -73,6 +95,18 @@ export class PropertyShape extends Shape {
     );
   }
 
+  get nodeShapes(): readonly NodeShape[] {
+    return this.filterAndMapObjects(sh.node, term => {
+      switch (term.termType) {
+        case "BlankNode":
+        case "NamedNode":
+          return this.shapesGraph.nodeShapeByNode(term);
+        default:
+          return null;
+      }
+    });
+  }
+
   get or(): readonly PropertyShape[] {
     const propertyShapes: PropertyShape[] = [];
     for (const orQuad of this.dataset.match(
@@ -81,6 +115,14 @@ export class PropertyShape extends Shape {
       null,
       this.shapesGraph.graphNode
     )) {
+      switch (orQuad.object.termType) {
+        case "BlankNode":
+        case "NamedNode":
+          break;
+        default:
+          continue;
+      }
+
       for (const propertyShapeNode of readRdfList({
         dataset: this.dataset,
         graph: this.shapesGraph.graphNode,
