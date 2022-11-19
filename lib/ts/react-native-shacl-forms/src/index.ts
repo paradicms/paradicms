@@ -1,2 +1,1 @@
-export * from "../../shacl-forms/src";
-export * from "./viewers";
+export * from "./editors";

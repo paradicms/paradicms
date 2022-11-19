@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<TextInput
+  onChangeText={[Function]}
+  placeholder="given name"
+  style={
+    {
+      "borderWidth": 1,
+      "height": 40,
+      "margin": 12,
+      "padding": 10,
+    }
+  }
+  value="Minor"
+/>
+`;

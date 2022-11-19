@@ -1,10 +1,27 @@
 import {DataGraph, PropertyShape, ShapesGraph} from "@paradicms/shacl";
-import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
+import {BlankNode, DatasetCore, Literal, NamedNode, Term} from "@rdfjs/types";
 import {FormNode} from "./FormNode";
 import {Model} from "./Model";
-import {TermMap} from "@paradicms/rdf";
+import {DataFactory, TermMap} from "@paradicms/rdf";
 import {FormPropertyWidgetScorer} from "./FormPropertyWidgetScorer";
 import {dashEditorScorers} from "./DashFormPropertyWidgetScorers";
+import {rdfs} from "@paradicms/vocabularies";
+import {NonNullable} from "@paradicms/utilities";
+
+type FormPropertyValue = BlankNode | Literal | NamedNode;
+
+const checkFormPropertyValueTermType = (term: Term): FormPropertyValue => {
+  switch (term.termType) {
+    case "BlankNode":
+    case "Literal":
+    case "NamedNode":
+      return term;
+    default:
+      throw new EvalError(
+        "unexpected form property value type: " + term.termType
+      );
+  }
+};
 
 export class FormProperty extends Model {
   readonly formNode: FormNode;
@@ -33,6 +50,39 @@ export class FormProperty extends Model {
     }
 
     return this.mostSuitableWidget(dashEditorScorers);
+  }
+
+  findAndMapValue<T>(
+    callback: (value: FormPropertyValue) => NonNullable<T> | null
+  ): NonNullable<T> | null {
+    for (const valueQuad of this.matchValues()) {
+      const mappedValue = callback(
+        checkFormPropertyValueTermType(valueQuad.object)
+      );
+      if (mappedValue !== null) {
+        return mappedValue;
+      }
+    }
+    return null;
+  }
+
+  filterAndMapValues<T>(
+    callback: (value: FormPropertyValue) => NonNullable<T> | null
+  ): readonly NonNullable<T>[] | null {
+    const mappedValues: NonNullable<T>[] = [];
+    for (const valueQuad of this.matchValues()) {
+      const mappedValue = callback(
+        checkFormPropertyValueTermType(valueQuad.object)
+      );
+      if (mappedValue !== null) {
+        mappedValues.push(mappedValue);
+      }
+    }
+    return mappedValues;
+  }
+
+  private matchValues(): DatasetCore {
+    return this.dataGraph.match(this.dataGraphNode, this.path, null, null);
   }
 
   private mostSuitableWidget(
@@ -67,6 +117,26 @@ export class FormProperty extends Model {
     }
   }
 
+  get name(): string | null {
+    const shName = this.shape.name;
+    if (shName) {
+      return shName;
+    }
+
+    for (const rdfsLabelQuad of this.dataGraph.match(
+      this.path,
+      rdfs.label,
+      null,
+      null
+    )) {
+      if (rdfsLabelQuad.object.termType === "Literal") {
+        return rdfsLabelQuad.object.value;
+      }
+    }
+
+    return null;
+  }
+
   get path(): NamedNode {
     return this.shape.path;
   }
@@ -75,20 +145,14 @@ export class FormProperty extends Model {
     return this.formNode.shapesGraph;
   }
 
-  get values(): readonly (BlankNode | Literal | NamedNode)[] {
-    return this.dataGraph
-      .match(this.dataGraphNode, this.path, null, null)
-      .toArray()
-      .map(quad => quad.object)
-      .filter(object => {
-        switch (object.termType) {
-          case "BlankNode":
-          case "Literal":
-          case "NamedNode":
-            return true;
-          default:
-            return false;
-        }
-      }) as (BlankNode | Literal | NamedNode)[];
+  set value(term: FormPropertyValue) {
+    this.values = [term];
+  }
+
+  set values(terms: readonly FormPropertyValue[]) {
+    this.dataGraph.deleteMatches(this.dataGraphNode, this.path);
+    this.dataGraph.addAll(
+      terms.map(term => DataFactory.quad(this.dataGraphNode, this.path, term))
+    );
   }
 }
