@@ -1,7 +1,7 @@
 import {expect} from "@jest/globals";
 import {DataFactory} from "n3";
 import {testForm} from "./testForm";
-import {FormNodeType} from "../../src/models/FormNodeType";
+import {FormNodeType} from "../../../shacl-forms/src/FormNodeType";
 import {schema} from "@paradicms/vocabularies";
 
 let sut: FormNodeType;

@@ -1,5 +1,5 @@
 import {expect} from "@jest/globals";
-import {Form} from "../../src/models/Form";
+import {Form} from "../../../shacl-forms/src/Form";
 import {testForm} from "./testForm";
 
 let sut: Form;

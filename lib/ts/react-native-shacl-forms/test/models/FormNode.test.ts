@@ -1,6 +1,6 @@
 import {testForm} from "./testForm";
-import {FormNode} from "../../src/models/FormNode";
-import {FormNodeType} from "../../src/models/FormNodeType";
+import {FormNode} from "../../../shacl-forms/src/FormNode";
+import {FormNodeType} from "../../../shacl-forms/src/FormNodeType";
 import {schema} from "@paradicms/vocabularies";
 
 let node: FormNode;
