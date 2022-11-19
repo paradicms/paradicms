@@ -1,13 +1,9 @@
 {
   "author": "Minor Gordon",
-  "name": "@paradicms/rdf",
-  "description": "Paradicms RDF library",
+  "name": "@paradicms/shacl-forms",
+  "description": "Paradicms reusable library for SHACL form builders",
   "dependencies": {
-    "@paradicms/utilities": "1.0.5",
-    "@rdfjs/types": "1.1.0",
-    "@tpluscode/rdf-ns-builders": "2.0.1",
-    "@types/n3": "1.10.4",
-    "n3": "1.16.3"
+    "@paradicms/shacl": "1.0.5"
   },
   "devDependencies": {
     "@paradicms/test": "1.0.5",

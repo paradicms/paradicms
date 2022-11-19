@@ -1,8 +1,8 @@
 import {expect} from "chai";
 import {DataGraph, FocusNode, PropertyShape, ShapesGraph} from "../src";
-import {testShapesGraphTtl} from "./testShapesGraphTtl";
-import {validTestDataGraphTtl} from "./validTestDataGraphTtl";
-import {invalidTestDataGraphTtl} from "./invalidTestDataGraphTtl";
+import {testShapesGraphTtl} from "../../test/src/testShapesGraphTtl";
+import {validTestDataGraphTtl} from "../../test/src/validTestDataGraphTtl";
+import {invalidTestDataGraphTtl} from "../../test/src/invalidTestDataGraphTtl";
 import {ShaclProcessor} from "../src/ShaclProcessor";
 import {DataFactory} from "n3";
 import {parseIntoDataset} from "@paradicms/rdf";

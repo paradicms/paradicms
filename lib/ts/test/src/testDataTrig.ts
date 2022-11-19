@@ -1,4 +1,3 @@
-// Trying to ModelSet.parse in the const declaration causes circular dependency issues
 export const testDataTrig = `
 @prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .

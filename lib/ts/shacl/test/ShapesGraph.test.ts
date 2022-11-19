@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import {ShapesGraph} from "../src";
-import {testShapesGraphTtl} from "./testShapesGraphTtl";
+import {testShapesGraphTtl} from "../../test/src/testShapesGraphTtl";
 import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("ShapesGraph", () => {

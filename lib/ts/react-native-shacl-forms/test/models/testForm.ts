@@ -1,4 +1,4 @@
-import {Form} from "../../src/models/Form";
+import {Form} from "../../../shacl-forms/src/Form";
 import {validTestDataGraphTtl} from "../validTestDataGraphTtl";
 import {ShapesGraph} from "@paradicms/shacl";
 import {testShapesGraphTtl} from "../testShapesGraphTtl";
