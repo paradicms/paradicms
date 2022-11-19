@@ -1,5 +1,5 @@
 export const testShapesGraphTtl = `
-    @prefix dash: <http://datashapes.org/dash#> .
+@prefix dash: <http://datashapes.org/dash#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <http://schema.org/> .
@@ -16,6 +16,7 @@ schema:PersonShape
     ] ;
     sh:property [
         sh:path schema:birthDate ;
+        sh:datatype xsd:date ;
         sh:lessThan schema:deathDate ;
         sh:maxCount 1 ;
     ] ;

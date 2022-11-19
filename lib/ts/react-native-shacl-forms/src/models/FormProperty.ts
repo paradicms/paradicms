@@ -3,6 +3,7 @@ import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
 import {FormNode} from "./FormNode";
 import {Model} from "./Model";
 import {TermMap} from "@paradicms/rdf";
+import {FormPropertyWidgetScorer} from "./FormPropertyWidgetScorer";
 import {dashEditorScorers} from "./DashFormPropertyWidgetScorers";
 
 export class FormProperty extends Model {
@@ -31,16 +32,39 @@ export class FormProperty extends Model {
       }
     }
 
+    return this.mostSuitableWidget(dashEditorScorers);
+  }
+
+  private mostSuitableWidget(
+    scorers: readonly FormPropertyWidgetScorer[]
+  ): NamedNode | null {
     const scores: TermMap<NamedNode, number> = new TermMap();
-    const scorers = dashEditorScorers;
+
     for (const scorer of scorers) {
       const score = scorer.score(this);
-      if (score !== null) {
+      if (score !== null && score > 0) {
         scores.put(scorer.widgetName, score);
       }
     }
 
-    return null;
+    const scoreEntries = scores.entries;
+    switch (scoreEntries.length) {
+      case 0:
+        return null;
+      case 1:
+        return scoreEntries[0].key;
+      default:
+        return scoreEntries.reduce((highestScoreEntry, scoreEntry) => {
+          if (
+            !highestScoreEntry ||
+            scoreEntry.value > highestScoreEntry.value
+          ) {
+            return scoreEntry;
+          } else {
+            return highestScoreEntry;
+          }
+        }, undefined as {key: NamedNode; value: number} | undefined)!.key;
+    }
   }
 
   get path(): NamedNode {
