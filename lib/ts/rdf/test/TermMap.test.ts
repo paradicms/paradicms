@@ -41,6 +41,12 @@ describe("TermMap", () => {
     expect(sut.get(key1)).to.eq(2);
   });
 
+  it("should throw an exception when getting missing key", () => {
+    expect(() => sut.get(key1)).to.throw(
+      `missing termType=${key1.termType} value=${key1.value}`
+    );
+  });
+
   it("should return has = false for an absent key", () => {
     sut.put(key1, 1);
     expect(sut.has(key2)).to.be.false;
@@ -52,10 +58,14 @@ describe("TermMap", () => {
     expect(sut.has(key2)).to.be.true;
   });
 
-  it("should throw an exception when getting missing key", () => {
-    expect(() => sut.get(key1)).to.throw(
-      `missing termType=${key1.termType} value=${key1.value}`
-    );
+  it("should return the size", () => {
+    expect(sut.size).to.eq(0);
+    sut.put(key1, 1);
+    expect(sut.size).to.eq(1);
+    sut.put(key2, 2);
+    expect(sut.size).to.eq(2);
+    sut.put(key2, 3);
+    expect(sut.size).to.eq(2);
   });
 
   it("should return values", () => {

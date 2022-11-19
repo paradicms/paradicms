@@ -12,25 +12,23 @@ export class TermMap<TermT extends Term, ValueT> {
 
   get entries(): readonly {key: TermT; value: ValueT}[] {
     const entries: {key: TermT; value: ValueT}[] = [];
+    this.forEachEntry((key, value) => entries.push({key, value}));
+    return entries;
+  }
+
+  private forEachEntry(callback: (key: TermT, value: ValueT) => void): void {
     for (const termType in this.map) {
       for (const termValue in this.map[termType]) {
         for (const entry of this.map[termType][termValue]) {
-          entries.push({key: entry[0], value: entry[1]});
+          callback(entry[0], entry[1]);
         }
       }
     }
-    return entries;
   }
 
   get keys(): readonly TermT[] {
     const keys: TermT[] = [];
-    for (const termType in this.map) {
-      for (const termValue in this.map[termType]) {
-        for (const entry of this.map[termType][termValue]) {
-          keys.push(entry[0]);
-        }
-      }
-    }
+    this.forEachEntry(key => keys.push(key));
     return keys;
   }
 
@@ -94,17 +92,15 @@ export class TermMap<TermT extends Term, ValueT> {
     return undefined;
   }
 
+  get size(): number {
+    let size = 0;
+    this.forEachEntry(() => size++);
+    return size;
+  }
+
   get values(): readonly ValueT[] {
     const values: ValueT[] = [];
-    for (const termType in this.map) {
-      const termTypeBucket = this.map[termType];
-      for (const termValue in termTypeBucket) {
-        const termValueBucket = termTypeBucket[termValue];
-        for (const termValueBucketEntry of termValueBucket) {
-          values.push(termValueBucketEntry[1]);
-        }
-      }
-    }
+    this.forEachEntry((_, value) => values.push(value));
     return values;
   }
 }
