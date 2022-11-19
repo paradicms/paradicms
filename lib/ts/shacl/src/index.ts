@@ -1,5 +1,6 @@
 export * from "./DataGraph";
 export * from "./FocusNode";
+export * from "./NodeKind";
 export * from "./NodeShape";
 export * from "./PropertyGroup";
 export * from "./PropertyShape";
