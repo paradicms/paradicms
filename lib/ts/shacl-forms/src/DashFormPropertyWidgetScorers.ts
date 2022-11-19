@@ -3,7 +3,7 @@ import {FormPropertyWidgetScorer} from "./FormPropertyWidgetScorer";
 import {FormProperty} from "./FormProperty";
 import {NodeKind} from "@paradicms/shacl";
 
-const DashAutoCompleteEditor: FormPropertyWidgetScorer = {
+const DashAutoCompleteEditorScorer: FormPropertyWidgetScorer = {
   score(formProperty: FormProperty): number | null {
     const values = formProperty.values;
 
@@ -96,7 +96,7 @@ const DashBooleanSelectEditorScorer: FormPropertyWidgetScorer = {
   widgetName: dash.BooleanSelectEditor,
 };
 
-const DashDatePickerEditor: FormPropertyWidgetScorer = {
+const DashDatePickerEditorScorer: FormPropertyWidgetScorer = {
   score(formProperty: FormProperty): number | null {
     const values = formProperty.values;
     if (
@@ -122,7 +122,7 @@ const DashDatePickerEditor: FormPropertyWidgetScorer = {
   widgetName: dash.DatePickerEditor,
 };
 
-const DashDateTimePickerEditor: FormPropertyWidgetScorer = {
+const DashDateTimePickerEditorScorer: FormPropertyWidgetScorer = {
   score(formProperty: FormProperty): number | null {
     const values = formProperty.values;
     if (
@@ -222,7 +222,7 @@ const DashRichTextEditorScorer: FormPropertyWidgetScorer = {
   widgetName: dash.RichTextEditor,
 };
 
-const DashSubClassEditor: FormPropertyWidgetScorer = {
+const DashSubClassEditorScorer: FormPropertyWidgetScorer = {
   score(formProperty: FormProperty): number | null {
     // null i.e. this should be selected explicitly through a dash:editor statement
     return null;
@@ -345,16 +345,16 @@ const DashURIEditorScorer: FormPropertyWidgetScorer = {
 };
 
 export const dashEditorScorers = [
-  DashAutoCompleteEditor,
+  DashAutoCompleteEditorScorer,
   // Skip dash:BlankNodeEditor
   DashBooleanSelectEditorScorer,
-  DashDatePickerEditor,
-  DashDateTimePickerEditor,
+  DashDatePickerEditorScorer,
+  DashDateTimePickerEditorScorer,
   DashDetailsEditorScorer,
   DashEnumSelectEditorScorer,
   DashInstancesSelectEditorScorer,
   DashRichTextEditorScorer,
-  DashSubClassEditor,
+  DashSubClassEditorScorer,
   DashTextAreaEditorScorer,
   // Skip dash:TextAreaWithLangEditor
   DashTextFieldEditorScorer,

@@ -2,7 +2,7 @@ import * as React from "react";
 import * as renderer from "react-test-renderer";
 import {testForm} from "../testForm";
 import {schema} from "@paradicms/vocabularies";
-import {TextFieldEditor} from "../../src/editors";
+import {TextInputFormPropertyEditor} from "../../src/editors";
 import {FormProperty} from "@paradicms/shacl-forms";
 
 test("renders correctly", () => {
@@ -10,7 +10,12 @@ test("renders correctly", () => {
     (property: FormProperty) => property.path.equals(schema.givenName)
   )!;
   const tree = renderer
-    .create(<TextFieldEditor formProperty={formProperty} />)
+    .create(
+      <TextInputFormPropertyEditor
+        formProperty={formProperty}
+        onChange={() => {}}
+      />
+    )
     .toJSON();
   expect(tree).toMatchSnapshot();
 });
