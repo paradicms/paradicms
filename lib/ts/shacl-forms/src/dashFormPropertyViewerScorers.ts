@@ -1,14 +1,17 @@
 import {FormPropertyWidgetScorer} from "./FormPropertyWidgetScorer";
 import {FormProperty} from "./FormProperty";
 import {dash, rdf, xsd} from "@paradicms/vocabularies";
+import {FormPropertyValue} from "./FormPropertyValue";
 
 const DashBlankNodeViewerScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
-    const values = formProperty.values;
-    if (values.length === 0) {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
+    if (formPropertyValues.length === 0) {
       return 0;
     }
-    if (values.every(value => value.termType === "BlankNode")) {
+    if (formPropertyValues.every(value => value.termType === "BlankNode")) {
       // 1 for blank nodes
       return 1;
     } else {
@@ -21,12 +24,14 @@ const DashBlankNodeViewerScorer: FormPropertyWidgetScorer = {
 };
 
 const DashDetailsViewerScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
-    const values = formProperty.values;
-    if (values.length === 0) {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
+    if (formPropertyValues.length === 0) {
       return 0;
     }
-    if (values.every(value => value.termType === "Literal")) {
+    if (formPropertyValues.every(value => value.termType === "Literal")) {
       // 0 for literals
       return 0;
     } else {
@@ -39,20 +44,22 @@ const DashDetailsViewerScorer: FormPropertyWidgetScorer = {
 };
 
 const DashHtmlViewerScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
-    const values = formProperty.values;
-    if (values.length === 0) {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
+    if (formPropertyValues.length === 0) {
       return 0;
     }
     if (
-      values.every(
+      formPropertyValues.every(
         value => value.termType === "Literal" && value.datatype.equals(rdf.HTML)
       )
     ) {
       // 50 for literals with datatype rdf:HTML
       return 50;
     } else {
-      // 0 for all other values
+      // 0 for all other formPropertyValues
       return 0;
     }
   },
@@ -61,13 +68,15 @@ const DashHtmlViewerScorer: FormPropertyWidgetScorer = {
 };
 
 const DashHyperlinkViewerScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
-    const values = formProperty.values;
-    if (values.length === 0) {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
+    if (formPropertyValues.length === 0) {
       return 0;
     }
     if (
-      values.every(
+      formPropertyValues.every(
         value =>
           value.termType === "Literal" && value.datatype.equals(xsd.anyURI)
       )
@@ -75,7 +84,7 @@ const DashHyperlinkViewerScorer: FormPropertyWidgetScorer = {
       // 50 for literals with datatype xsd:anyURI
       return 50;
     } else if (
-      values.every(
+      formPropertyValues.every(
         value =>
           value.termType === "Literal" && value.datatype.equals(xsd.string)
       )
@@ -83,7 +92,7 @@ const DashHyperlinkViewerScorer: FormPropertyWidgetScorer = {
       // null for xsd:string literals
       return null;
     } else {
-      // 0 for all other values
+      // 0 for all other formPropertyValues
       return 0;
     }
   },
@@ -92,13 +101,15 @@ const DashHyperlinkViewerScorer: FormPropertyWidgetScorer = {
 };
 
 const DashImageViewerScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
-    const values = formProperty.values;
-    if (values.length === 0) {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
+    if (formPropertyValues.length === 0) {
       return 0;
     }
     if (
-      values.every(value => {
+      formPropertyValues.every(value => {
         switch (value.termType) {
           case "NamedNode":
           case "Literal":
@@ -130,12 +141,14 @@ const DashImageViewerScorer: FormPropertyWidgetScorer = {
 };
 
 const DashLabelViewerScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
-    const values = formProperty.values;
-    if (values.length === 0) {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
+    if (formPropertyValues.length === 0) {
       return 0;
     }
-    if (values.every(value => value.termType === "NamedNode")) {
+    if (formPropertyValues.every(value => value.termType === "NamedNode")) {
       // 5 if the value is an IRI
       return 5;
     } else {
@@ -148,13 +161,15 @@ const DashLabelViewerScorer: FormPropertyWidgetScorer = {
 };
 
 const DashLangStringViewer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
-    const values = formProperty.values;
-    if (values.length === 0) {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
+    if (formPropertyValues.length === 0) {
       return 0;
     }
     if (
-      values.every(
+      formPropertyValues.every(
         value =>
           value.termType === "Literal" && value.datatype.equals(rdf.langString)
       )
@@ -171,12 +186,14 @@ const DashLangStringViewer: FormPropertyWidgetScorer = {
 };
 
 const DashLiteralViewerScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
-    const values = formProperty.values;
-    if (values.length === 0) {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
+    if (formPropertyValues.length === 0) {
       return 0;
     }
-    if (values.every(value => value.termType === "Literal")) {
+    if (formPropertyValues.every(value => value.termType === "Literal")) {
       // 5 if the value is a literal
       return 1;
     } else {
@@ -189,12 +206,14 @@ const DashLiteralViewerScorer: FormPropertyWidgetScorer = {
 };
 
 const DashURIViewerScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
-    const values = formProperty.values;
-    if (values.length === 0) {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
+    if (formPropertyValues.length === 0) {
       return 0;
     }
-    if (values.every(value => value.termType === "NamedNode")) {
+    if (formPropertyValues.every(value => value.termType === "NamedNode")) {
       // 1 if the value is an IRI
       return 1;
     } else {
@@ -207,7 +226,10 @@ const DashURIViewerScorer: FormPropertyWidgetScorer = {
 };
 
 const DashValueTableViewerScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
     return null;
   },
 

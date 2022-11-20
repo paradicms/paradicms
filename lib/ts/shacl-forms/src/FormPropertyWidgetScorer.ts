@@ -1,5 +1,6 @@
 import {FormProperty} from "./FormProperty";
 import {NamedNode} from "@rdfjs/types";
+import {FormPropertyValue} from "./FormPropertyValue";
 
 export interface FormPropertyWidgetScorer {
   /**
@@ -11,6 +12,9 @@ export interface FormPropertyWidgetScorer {
    *   null if the widget may or may not be suitable, yet can be selected manually
    * @param formProperty
    */
-  score(formProperty: FormProperty): number | null;
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null;
   readonly widgetName: NamedNode;
 }

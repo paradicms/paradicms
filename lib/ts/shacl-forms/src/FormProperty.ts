@@ -1,5 +1,5 @@
 import {DataGraph, PropertyShape, ShapesGraph} from "@paradicms/shacl";
-import {BlankNode, DatasetCore, Literal, NamedNode, Term} from "@rdfjs/types";
+import {DatasetCore, NamedNode, Term} from "@rdfjs/types";
 import {FormNode} from "./FormNode";
 import {Model} from "./Model";
 import {DataFactory, TermMap} from "@paradicms/rdf";
@@ -7,8 +7,7 @@ import {FormPropertyWidgetScorer} from "./FormPropertyWidgetScorer";
 import {dashFormPropertyEditorScorers} from "./dashFormPropertyEditorScorers";
 import {rdfs} from "@paradicms/vocabularies";
 import {NonNullable} from "@paradicms/utilities";
-
-type FormPropertyValue = BlankNode | Literal | NamedNode;
+import {FormPropertyValue} from "./FormPropertyValue";
 
 const checkFormPropertyValueTermType = (term: Term): FormPropertyValue => {
   switch (term.termType) {
@@ -89,9 +88,10 @@ export class FormProperty extends Model {
     scorers: readonly FormPropertyWidgetScorer[]
   ): NamedNode | null {
     const scores: TermMap<NamedNode, number> = new TermMap();
+    const thisValues = this.values;
 
     for (const scorer of scorers) {
-      const score = scorer.score(this);
+      const score = scorer.score(this, thisValues);
       if (score !== null && score > 0) {
         scores.put(scorer.widgetName, score);
       }

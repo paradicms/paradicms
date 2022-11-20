@@ -2,14 +2,16 @@ import {dash, rdf, xsd} from "@paradicms/vocabularies";
 import {FormPropertyWidgetScorer} from "./FormPropertyWidgetScorer";
 import {FormProperty} from "./FormProperty";
 import {NodeKind} from "@paradicms/shacl";
+import {FormPropertyValue} from "./FormPropertyValue";
 
 const DashAutoCompleteEditorScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
-    const values = formProperty.values;
-
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
     if (
-      values.length > 0 &&
-      values.every(value => value.termType === "NamedNode")
+      formPropertyValues.length > 0 &&
+      formPropertyValues.every(value => value.termType === "NamedNode")
     ) {
       // 1 if the value is an IRI.
       return 1;
@@ -33,11 +35,13 @@ const DashAutoCompleteEditorScorer: FormPropertyWidgetScorer = {
 };
 
 const DashBooleanSelectEditorScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
-    const values = formProperty.values;
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
     if (
-      values.length > 0 &&
-      values.every(
+      formPropertyValues.length > 0 &&
+      formPropertyValues.every(
         term => term.termType === "Literal" && term.datatype.equals(xsd.boolean)
       )
     ) {
@@ -97,11 +101,13 @@ const DashBooleanSelectEditorScorer: FormPropertyWidgetScorer = {
 };
 
 const DashDatePickerEditorScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
-    const values = formProperty.values;
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
     if (
-      values.length > 0 &&
-      values.every(
+      formPropertyValues.length > 0 &&
+      formPropertyValues.every(
         value => value.termType === "Literal" && value.datatype.equals(xsd.date)
       )
     ) {
@@ -123,11 +129,13 @@ const DashDatePickerEditorScorer: FormPropertyWidgetScorer = {
 };
 
 const DashDateTimePickerEditorScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
-    const values = formProperty.values;
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
     if (
-      values.length > 0 &&
-      values.every(
+      formPropertyValues.length > 0 &&
+      formPropertyValues.every(
         value =>
           value.termType === "Literal" && value.datatype.equals(xsd.dateTime)
       )
@@ -150,7 +158,10 @@ const DashDateTimePickerEditorScorer: FormPropertyWidgetScorer = {
 };
 
 const DashDetailsEditorScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
     if (
       formProperty.shape.classes.length > 0 ||
       formProperty.shape.nodeShapes.length > 0
@@ -167,7 +178,10 @@ const DashDetailsEditorScorer: FormPropertyWidgetScorer = {
 };
 
 const DashEnumSelectEditorScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
     if (formProperty.shape.in_ && formProperty.shape.in_.length > 0) {
       // 10 if there exists a sh:in constraint for the same property at the current focus node
       return 10;
@@ -181,7 +195,10 @@ const DashEnumSelectEditorScorer: FormPropertyWidgetScorer = {
 };
 
 const DashInstancesSelectEditorScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
     if (formProperty.shape.classes.length > 0) {
       // null if there exists a sh:class for the property
       return null;
@@ -195,11 +212,13 @@ const DashInstancesSelectEditorScorer: FormPropertyWidgetScorer = {
 };
 
 const DashRichTextEditorScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
-    const values = formProperty.values;
-    if (values.length > 0) {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
+    if (formPropertyValues.length > 0) {
       if (
-        values.every(
+        formPropertyValues.every(
           value =>
             value.termType === "Literal" && value.datatype.equals(rdf.HTML)
         )
@@ -223,7 +242,10 @@ const DashRichTextEditorScorer: FormPropertyWidgetScorer = {
 };
 
 const DashSubClassEditorScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
     // null i.e. this should be selected explicitly through a dash:editor statement
     return null;
   },
@@ -232,13 +254,15 @@ const DashSubClassEditorScorer: FormPropertyWidgetScorer = {
 };
 
 const DashTextAreaEditorScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
     const datatype = formProperty.shape.datatype;
     const singleLine = formProperty.shape.singleLine;
-    const values = formProperty.values;
     const valuesAreXsdStringLiterals =
-      values.length > 0 &&
-      values.every(
+      formPropertyValues.length > 0 &&
+      formPropertyValues.every(
         term => term.termType === "Literal" && term.datatype.equals(xsd.string)
       );
 
@@ -282,11 +306,13 @@ const DashTextAreaEditorScorer: FormPropertyWidgetScorer = {
 };
 
 const DashTextFieldEditorScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
-    const values = formProperty.values;
-    if (values.length > 0) {
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
+    if (formPropertyValues.length > 0) {
       // 10 if the value is a literal that is neither rdf:langString nor xsd:boolean. 0 otherwise.
-      for (const value of values) {
+      for (const value of formPropertyValues) {
         if (value.termType !== "Literal") {
           return 0;
         }
@@ -317,11 +343,13 @@ const DashTextFieldEditorScorer: FormPropertyWidgetScorer = {
 };
 
 const DashURIEditorScorer: FormPropertyWidgetScorer = {
-  score(formProperty: FormProperty): number | null {
-    const values = formProperty.values;
+  score(
+    formProperty: FormProperty,
+    formPropertyValues: readonly FormPropertyValue[]
+  ): number | null {
     const valuesAreIris =
-      values.length > 0 &&
-      values.every(value => value.termType === "NamedNode");
+      formPropertyValues.length > 0 &&
+      formPropertyValues.every(value => value.termType === "NamedNode");
     const nodeKind = formProperty.shape.nodeKind;
 
     if (
