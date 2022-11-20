@@ -4,7 +4,7 @@ import {FormNode} from "./FormNode";
 import {Model} from "./Model";
 import {DataFactory, TermMap} from "@paradicms/rdf";
 import {FormPropertyWidgetScorer} from "./FormPropertyWidgetScorer";
-import {dashEditorScorers} from "./DashFormPropertyWidgetScorers";
+import {dashFormPropertyEditorScorers} from "./dashFormPropertyEditorScorers";
 import {rdfs} from "@paradicms/vocabularies";
 import {NonNullable} from "@paradicms/utilities";
 
@@ -49,7 +49,7 @@ export class FormProperty extends Model {
       }
     }
 
-    return this.mostSuitableWidget(dashEditorScorers);
+    return this.mostSuitableWidget(dashFormPropertyEditorScorers);
   }
 
   findAndMapValue<T>(

@@ -344,7 +344,7 @@ const DashURIEditorScorer: FormPropertyWidgetScorer = {
   widgetName: dash.URIEditor,
 };
 
-export const dashEditorScorers = [
+export const dashFormPropertyEditorScorers: readonly FormPropertyWidgetScorer[] = [
   DashAutoCompleteEditorScorer,
   // Skip dash:BlankNodeEditor
   DashBooleanSelectEditorScorer,
@@ -363,8 +363,8 @@ export const dashEditorScorers = [
 ];
 
 if (
-  new Set(dashEditorScorers.map(scorer => scorer.widgetName.value)).size !==
-  dashEditorScorers.length
+  new Set(dashFormPropertyEditorScorers.map(scorer => scorer.widgetName.value))
+    .size !== dashFormPropertyEditorScorers.length
 ) {
   throw new EvalError("duplicate widget names");
 }
