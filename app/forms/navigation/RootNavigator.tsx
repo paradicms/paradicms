@@ -1,6 +1,6 @@
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
-import NotFoundScreen from "../screens/NotFoundScreen";
-import ModalScreen from "../screens/ModalScreen";
+import {NotFoundScreen} from "../screens/NotFoundScreen";
+import {ModalScreen} from "../screens/ModalScreen";
 import * as React from "react";
 import {RootTabNavigator} from "./RootTabNavigator";
 import {RootStackParamList} from "./RootStackParamList";

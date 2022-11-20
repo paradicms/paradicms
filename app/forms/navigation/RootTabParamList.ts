@@ -1,4 +1,4 @@
 export type RootTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+  Home: undefined;
+  Settings: undefined;
 };

@@ -8,12 +8,10 @@ import {
 } from "@react-navigation/native";
 import * as React from "react";
 import {RootNavigator} from "./navigation/RootNavigator";
-import {testForm} from "./data/testForm";
 
 export default function App() {
   // const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
-  const form = testForm;
 
   return (
     <SafeAreaProvider>
@@ -21,7 +19,7 @@ export default function App() {
         theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
       >
         <RootNavigator />
-      </NavigationContainer>{" "}
+      </NavigationContainer>
       <StatusBar />
     </SafeAreaProvider>
   );

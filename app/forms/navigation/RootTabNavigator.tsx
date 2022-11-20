@@ -1,24 +1,15 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
 import {FontAwesome} from "@expo/vector-icons";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import * as React from "react";
 import {Pressable} from "react-native";
 
 import Colors from "../constants/Colors";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import {HomeScreen} from "../screens/HomeScreen";
+import {SettingsScreen} from "../screens/SettingsScreen";
 import {useColorScheme} from "@paradicms/react-native";
 import {RootTabParamList} from "./RootTabParamList";
 import {RootTabScreenProps} from "./RootTabScreenProps";
 
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 export function RootTabNavigator() {
@@ -26,16 +17,16 @@ export function RootTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
     >
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({navigation}: RootTabScreenProps<"TabOne">) => ({
-          title: "Tab One",
+        name="Home"
+        component={HomeScreen}
+        options={({navigation}: RootTabScreenProps<"Home">) => ({
+          title: "Home",
           tabBarIcon: ({color}) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
@@ -55,10 +46,10 @@ export function RootTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
+        name="Settings"
+        component={SettingsScreen}
         options={{
-          title: "Tab Two",
+          title: "Settings",
           tabBarIcon: ({color}) => <TabBarIcon name="code" color={color} />,
         }}
       />
@@ -66,9 +57,6 @@ export function RootTabNavigator() {
   );
 }
 
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
