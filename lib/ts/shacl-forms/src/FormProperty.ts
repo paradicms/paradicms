@@ -8,6 +8,7 @@ import {dashFormPropertyEditorScorers} from "./dashFormPropertyEditorScorers";
 import {rdfs} from "@paradicms/vocabularies";
 import {NonNullable} from "@paradicms/utilities";
 import {FormPropertyValue} from "./FormPropertyValue";
+import {dashFormPropertyViewerScorers} from "./dashFormPropertyViewerScorers";
 
 const checkFormPropertyValueTermType = (term: Term): FormPropertyValue => {
   switch (term.termType) {
@@ -41,11 +42,9 @@ export class FormProperty extends Model {
   }
 
   get editor(): NamedNode | null {
-    {
-      const editor = this.shape.editor;
-      if (editor) {
-        return editor;
-      }
+    const editor = this.shape.editor;
+    if (editor) {
+      return editor;
     }
 
     return this.mostSuitableWidget(dashFormPropertyEditorScorers);
@@ -67,7 +66,7 @@ export class FormProperty extends Model {
 
   filterAndMapValues<T>(
     callback: (value: FormPropertyValue) => NonNullable<T> | null
-  ): readonly NonNullable<T>[] | null {
+  ): readonly NonNullable<T>[] {
     const mappedValues: NonNullable<T>[] = [];
     for (const valueQuad of this.matchValues()) {
       const mappedValue = callback(
@@ -149,10 +148,27 @@ export class FormProperty extends Model {
     this.values = [term];
   }
 
+  get values(): readonly FormPropertyValue[] {
+    const values: FormPropertyValue[] = [];
+    for (const valueQuad of this.matchValues()) {
+      values.push(checkFormPropertyValueTermType(valueQuad.object));
+    }
+    return values;
+  }
+
   set values(terms: readonly FormPropertyValue[]) {
     this.dataGraph.deleteMatches(this.dataGraphNode, this.path);
     this.dataGraph.addAll(
       terms.map(term => DataFactory.quad(this.dataGraphNode, this.path, term))
     );
+  }
+
+  get viewer(): NamedNode | null {
+    const viewer = this.shape.viewer;
+    if (viewer) {
+      return viewer;
+    }
+
+    return this.mostSuitableWidget(dashFormPropertyViewerScorers);
   }
 }

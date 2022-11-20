@@ -5,6 +5,7 @@ import {DataFactory} from "@paradicms/rdf";
 import {FormNode, FormNodeType, FormProperty} from "../src";
 
 describe("FormProperty", () => {
+  let addressProperty: FormProperty;
   let birthDateProperty: FormProperty;
   let givenNameProperty: FormProperty;
   let node: FormNode;
@@ -15,6 +16,9 @@ describe("FormProperty", () => {
       testNodeType.rdfType.equals(schema.Person)
     )!;
     node = nodeType.nodes[0];
+    addressProperty = node.properties.find(property_ =>
+      property_.path.equals(schema.address)
+    )!;
     birthDateProperty = node.properties.find(property_ =>
       property_.path.equals(schema.birthDate)
     )!;
@@ -43,5 +47,17 @@ describe("FormProperty", () => {
     expect(givenNameProperty.values).to.have.length(1);
     expect(givenNameProperty.values[0].equals(DataFactory.literal("Minor"))).to
       .be.true;
+  });
+
+  it("schema:address has a blank node viewer", () => {
+    const viewer = addressProperty.viewer;
+    expect(viewer).not.to.be.null;
+    expect(viewer!.equals(dash.BlankNodeViewer)).to.be.true;
+  });
+
+  it("schema:givenName has a literal viewer", () => {
+    const viewer = givenNameProperty.viewer;
+    expect(viewer).not.to.be.null;
+    expect(viewer!.equals(dash.LiteralViewer)).to.be.true;
   });
 });

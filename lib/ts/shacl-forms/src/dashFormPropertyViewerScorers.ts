@@ -202,7 +202,7 @@ const DashLiteralViewerScorer: FormPropertyWidgetScorer = {
     }
   },
 
-  widgetName: dash.LabelViewer,
+  widgetName: dash.LiteralViewer,
 };
 
 const DashURIViewerScorer: FormPropertyWidgetScorer = {
@@ -222,7 +222,7 @@ const DashURIViewerScorer: FormPropertyWidgetScorer = {
     }
   },
 
-  widgetName: dash.LabelViewer,
+  widgetName: dash.URIViewer,
 };
 
 const DashValueTableViewerScorer: FormPropertyWidgetScorer = {
@@ -233,7 +233,7 @@ const DashValueTableViewerScorer: FormPropertyWidgetScorer = {
     return null;
   },
 
-  widgetName: dash.LabelViewer,
+  widgetName: dash.ValueTableViewer,
 };
 
 export const dashFormPropertyViewerScorers: readonly FormPropertyWidgetScorer[] = [
