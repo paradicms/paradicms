@@ -1,25 +1,28 @@
-// import {StatusBar} from "expo-status-bar";
-// import {SafeAreaProvider} from "react-native-safe-area-context";
-//
-// import useCachedResources from "./hooks/useCachedResources";
-// import Navigation from "./navigation";
-// import {useColorScheme} from "@paradicms/react-native";
-import {NodeViewer} from "@paradicms/react-native-shacl-forms";
+import {SafeAreaProvider} from "react-native-safe-area-context";
+import {StatusBar} from "expo-status-bar";
+import {useColorScheme} from "@paradicms/react-native";
+import {
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+} from "@react-navigation/native";
+import * as React from "react";
+import {RootNavigator} from "./navigation/RootNavigator";
+import {testForm} from "./data/testForm";
 
 export default function App() {
-  return <NodeViewer />;
-
   // const isLoadingComplete = useCachedResources();
-  // const colorScheme = useColorScheme();
-  //
-  // if (!isLoadingComplete) {
-  //   return null;
-  // } else {
-  //   return (
-  //     <SafeAreaProvider>
-  //       <Navigation colorScheme={colorScheme} />
-  //       <StatusBar />
-  //     </SafeAreaProvider>
-  //   );
-  // }
+  const colorScheme = useColorScheme();
+  const form = testForm;
+
+  return (
+    <SafeAreaProvider>
+      <NavigationContainer
+        theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+      >
+        <RootNavigator />
+      </NavigationContainer>{" "}
+      <StatusBar />
+    </SafeAreaProvider>
+  );
 }
