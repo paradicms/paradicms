@@ -3,17 +3,19 @@ import {Form} from "./Form";
 import {FormNode} from "./FormNode";
 import {rdf} from "@paradicms/vocabularies";
 import {Model} from "./Model";
-import {DataGraph, ShapesGraph} from "@paradicms/shacl";
+import {DataGraph, NodeShape, ShapesGraph} from "@paradicms/shacl";
 import {NamedNode} from "@rdfjs/types";
 
 export class FormNodeType extends Model {
   readonly form: Form;
   readonly rdfType: NamedNode;
+  readonly shape: NodeShape;
 
-  constructor(kwds: {form: Form; rdfType: NamedNode}) {
+  constructor(kwds: {form: Form; rdfType: NamedNode; shape: NodeShape}) {
     super();
     this.form = kwds.form;
     this.rdfType = kwds.rdfType;
+    this.shape = kwds.shape;
   }
 
   addNode(dataGraphNode: NamedNode): FormNode {

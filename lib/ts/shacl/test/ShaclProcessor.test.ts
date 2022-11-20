@@ -1,5 +1,11 @@
 import {expect} from "chai";
-import {DataGraph, FocusNode, PropertyShape, ShapesGraph} from "../src";
+import {
+  DataGraph,
+  FocusNode,
+  NodeShape,
+  PropertyShape,
+  ShapesGraph,
+} from "../src";
 import {ShaclProcessor} from "../src/ShaclProcessor";
 import {DataFactory, parseIntoDataset} from "@paradicms/rdf";
 import {schema} from "@paradicms/vocabularies";
@@ -18,6 +24,18 @@ describe("ShaclProcessor", () => {
     invalidDataGraph = parseIntoDataset(invalidTestDataGraphTtl);
     validDataGraph = parseIntoDataset(validTestDataGraphTtl);
     shapesGraph = new ShapesGraph(parseIntoDataset(testShapesGraphTtl));
+  });
+
+  it("should get the node shapes for a given rdf:type", () => {
+    const nodeShapes: NodeShape[] = [];
+    new ShaclProcessor({
+      dataGraph: validDataGraph,
+      shapesGraph,
+    }).someRdfTypeNodeShapes(nodeShape => {
+      nodeShapes.push(nodeShape);
+      return false;
+    }, schema.Person);
+    expect(nodeShapes).to.have.length(1);
   });
 
   it("should get the property shapes for a focus node that has them", () => {

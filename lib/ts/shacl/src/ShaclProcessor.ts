@@ -6,12 +6,11 @@ import {DataGraph} from "./DataGraph";
 import {ShapesGraph} from "./ShapesGraph";
 import * as ValidationReport from "rdf-validate-shacl/src/validation-report";
 import * as SHACLValidator from "rdf-validate-shacl";
-import {TermSet} from "@paradicms/rdf";
+import {hasRdfSuperClass, TermSet} from "@paradicms/rdf";
 import {PropertyShape} from "./PropertyShape";
+import {NodeShape} from "./NodeShape";
+import {NodeKind} from "./NodeKind";
 
-type SomeFocusNodePropertyShapeCallback = (
-  propertyShape: PropertyShape
-) => boolean;
 type SomeShapeFocusNodeCallback = (focusNode: FocusNode) => boolean;
 
 // const deduplicateFocusNodes = (
@@ -38,7 +37,7 @@ export class ShaclProcessor {
   }
 
   someFocusNodePropertyShapes(
-    callback: SomeFocusNodePropertyShapeCallback,
+    callback: (propertyShape: PropertyShape) => boolean,
     focusNode: FocusNode
   ): boolean {
     const seenPropertyShapeNodeSet = new TermSet<BlankNode | NamedNode>();
@@ -81,6 +80,58 @@ export class ShaclProcessor {
 
       if (seenPropertyShapeNodeSet.add(propertyShape.node)) {
         if (callback(propertyShape)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  someRdfTypeNodeShapes(
+    callback: (nodeShape: NodeShape) => boolean,
+    rdfType: NamedNode
+  ): boolean {
+    const nodeShapeTargetsRdfType = (nodeShape: NodeShape): boolean => {
+      if (
+        nodeShape.nodeKind !== null &&
+        nodeShape.nodeKind === NodeKind.LITERAL
+      ) {
+        return false;
+      }
+
+      for (const targetClass of nodeShape.targetClasses) {
+        if (
+          rdfType.equals(targetClass) ||
+          hasRdfSuperClass({
+            dataset: this.shapesGraph.dataset,
+            subClass: rdfType,
+            superClass: targetClass,
+          })
+        ) {
+          return true;
+        }
+      }
+
+      for (const targetClass of nodeShape.implicitClassTargets) {
+        if (
+          rdfType.equals(targetClass) ||
+          hasRdfSuperClass({
+            dataset: this.shapesGraph.dataset,
+            subClass: rdfType,
+            superClass: targetClass,
+          })
+        ) {
+          return true;
+        }
+      }
+
+      return false;
+    };
+
+    for (const nodeShape of this.shapesGraph.nodeShapes) {
+      if (nodeShapeTargetsRdfType(nodeShape)) {
+        if (callback(nodeShape)) {
           return true;
         }
       }
