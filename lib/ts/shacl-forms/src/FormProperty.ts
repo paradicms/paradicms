@@ -79,6 +79,14 @@ export class FormProperty extends Model {
     return mappedValues;
   }
 
+  get id(): string {
+    return this.path.value;
+  }
+
+  get label(): string {
+    return this.shape.name ?? this.pathLabel ?? this.path.value;
+  }
+
   private matchValues(): DatasetCore {
     return this.dataGraph.match(this.dataGraphNode, this.path, null, null);
   }
@@ -116,12 +124,11 @@ export class FormProperty extends Model {
     }
   }
 
-  get name(): string | null {
-    const shName = this.shape.name;
-    if (shName) {
-      return shName;
-    }
+  get path(): NamedNode {
+    return this.shape.path;
+  }
 
+  private get pathLabel(): string | null {
     for (const rdfsLabelQuad of this.dataGraph.match(
       this.path,
       rdfs.label,
@@ -134,10 +141,6 @@ export class FormProperty extends Model {
     }
 
     return null;
-  }
-
-  get path(): NamedNode {
-    return this.shape.path;
   }
 
   get shapesGraph(): ShapesGraph {

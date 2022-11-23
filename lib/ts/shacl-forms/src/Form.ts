@@ -20,4 +20,20 @@ export class Form extends Model {
     );
     this.shapesGraph = kwds.shapesGraph;
   }
+
+  get id(): string {
+    throw new EvalError("not implemented");
+  }
+
+  get label(): string {
+    throw new EvalError("not implemented");
+  }
+
+  nodeTypeById(id: string): FormNodeType {
+    const nodeType = this.nodeTypes.find(nodeType => nodeType.id === id);
+    if (!nodeType) {
+      throw new RangeError("unknown form node type id: " + id);
+    }
+    return nodeType;
+  }
 }

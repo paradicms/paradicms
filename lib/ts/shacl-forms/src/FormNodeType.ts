@@ -33,6 +33,14 @@ export class FormNodeType extends Model {
     return this.form.dataGraph;
   }
 
+  get id(): string {
+    return this.rdfType.value;
+  }
+
+  get label(): string {
+    return this.shape.name ?? this.rdfType.value;
+  }
+
   get nodes(): readonly FormNode[] {
     return Object.values(this.nodesByUri);
   }

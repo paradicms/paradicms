@@ -5,6 +5,12 @@ import {NodeKind} from "./NodeKind";
 import {hasRdfSuperClass} from "@paradicms/rdf";
 
 export class Shape extends Model {
+  get description(): string | null {
+    return this.findAndMapObject(sh.description, term =>
+      term.termType === "Literal" ? term.value : null
+    );
+  }
+
   /**
    * The rdf:Class's this shape is or is a subClassOf.
    */
@@ -19,6 +25,12 @@ export class Shape extends Model {
       })
         ? term
         : null
+    );
+  }
+
+  get name(): string | null {
+    return this.findAndMapObject(sh.name, term =>
+      term.termType === "Literal" ? term.value : null
     );
   }
 

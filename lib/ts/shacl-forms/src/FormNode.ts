@@ -39,6 +39,14 @@ export class FormNode extends Model {
     return this.type.dataGraph;
   }
 
+  get id(): string {
+    return this.dataGraphNode.value;
+  }
+
+  get label(): string {
+    return this.dataGraphNode.value;
+  }
+
   get properties(): readonly FormProperty[] {
     return this.propertyShapesByPath.values
       .map(pathPropertyShapes => {

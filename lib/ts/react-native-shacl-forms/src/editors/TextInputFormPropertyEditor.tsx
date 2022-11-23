@@ -20,7 +20,7 @@ export const TextInputFormPropertyEditor: React.FunctionComponent<{
         formProperty.value = DataFactory.literal(text, xsd.string);
         onChange();
       }}
-      placeholder={formProperty.name ?? undefined}
+      placeholder={formProperty.label}
       style={{
         height: 40,
         margin: 12,
