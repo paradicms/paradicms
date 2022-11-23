@@ -1,5 +1,5 @@
 import {Shape} from "./Shape";
-import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
+import {BlankNode, Literal, NamedNode, Term} from "@rdfjs/types";
 import {dash, sh, xsd} from "@paradicms/vocabularies";
 import {PropertyGroup} from "./PropertyGroup";
 import {
@@ -9,6 +9,19 @@ import {
 } from "@paradicms/utilities";
 import {readRdfList} from "@paradicms/rdf";
 import {NodeShape} from "./NodeShape";
+
+type PropertyShapeValue = BlankNode | Literal | NamedNode;
+
+const hasPropertyShapeValueTermType = (term: Term): boolean => {
+  switch (term.termType) {
+    case "BlankNode":
+    case "NamedNode":
+    case "Literal":
+      return true;
+    default:
+      return false;
+  }
+};
 
 export class PropertyShape extends Shape {
   get classes(): readonly NamedNode[] {
@@ -23,22 +36,9 @@ export class PropertyShape extends Shape {
     );
   }
 
-  get defaultValue(): BlankNode | NamedNode | Literal | null {
-    return this.findAndMapObject(sh.defaultValue, term => {
-      switch (term.termType) {
-        case "BlankNode":
-        case "NamedNode":
-        case "Literal":
-          return term;
-        default:
-          return null;
-      }
-    });
-  }
-
-  get description(): string | null {
-    return this.findAndMapObject(sh.description, term =>
-      term.termType === "Literal" ? term.value : null
+  get defaultValue(): PropertyShapeValue | null {
+    return this.findAndMapObject(sh.defaultValue, term =>
+      hasPropertyShapeValueTermType(term) ? (term as PropertyShapeValue) : null
     );
   }
 
@@ -56,7 +56,13 @@ export class PropertyShape extends Shape {
     );
   }
 
-  get in_(): readonly (BlankNode | NamedNode | Literal)[] | null {
+  get hasValue(): PropertyShapeValue | null {
+    return this.findAndMapObject(sh.hasValue, term =>
+      hasPropertyShapeValueTermType(term) ? (term as PropertyShapeValue) : null
+    );
+  }
+
+  get in_(): readonly PropertyShapeValue[] | null {
     return this.findAndMapObject(sh.in, term => {
       switch (term.termType) {
         case "BlankNode":
@@ -86,12 +92,6 @@ export class PropertyShape extends Shape {
       (!term.datatype || term.datatype.equals(xsd.integer))
         ? parseIntOrNull(term.value)
         : null
-    );
-  }
-
-  get name(): string | null {
-    return this.findAndMapObject(sh.name, term =>
-      term.termType === "Literal" ? term.value : null
     );
   }
 
