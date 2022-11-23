@@ -1,4 +1,4 @@
 export type RootTabParamList = {
-  Home: undefined;
+  Form: {formNodeTypeId?: string; formNodeId?: string} | undefined;
   Settings: undefined;
 };

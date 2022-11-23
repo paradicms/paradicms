@@ -1,10 +1,9 @@
 import {FontAwesome} from "@expo/vector-icons";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import * as React from "react";
-import {Pressable} from "react-native";
 
 import Colors from "../constants/Colors";
-import {HomeScreen} from "../screens/HomeScreen";
+import {FormScreen} from "../screens/FormScreen";
 import {SettingsScreen} from "../screens/SettingsScreen";
 import {useColorScheme} from "@paradicms/react-native";
 import {RootTabParamList} from "./RootTabParamList";
@@ -17,32 +16,32 @@ export function RootTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Form"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
     >
       <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={({navigation}: RootTabScreenProps<"Home">) => ({
-          title: "Home",
-          tabBarIcon: ({color}) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("Modal")}
-              style={({pressed}) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{marginRight: 15}}
-              />
-            </Pressable>
-          ),
+        name="Form"
+        component={FormScreen}
+        options={({navigation}: RootTabScreenProps<"Form">) => ({
+          title: "Form",
+          tabBarIcon: ({color}) => <TabBarIcon name="list-alt" color={color} />,
+          // headerRight: () => (
+          //   <Pressable
+          //     onPress={() => navigation.navigate("Modal")}
+          //     style={({pressed}) => ({
+          //       opacity: pressed ? 0.5 : 1,
+          //     })}
+          //   >
+          //     <FontAwesome
+          //       name="info-circle"
+          //       size={25}
+          //       color={Colors[colorScheme].text}
+          //       style={{marginRight: 15}}
+          //     />
+          //   </Pressable>
+          // ),
         })}
       />
       <BottomTab.Screen
@@ -50,7 +49,7 @@ export function RootTabNavigator() {
         component={SettingsScreen}
         options={{
           title: "Settings",
-          tabBarIcon: ({color}) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({color}) => <TabBarIcon name="gear" color={color} />,
         }}
       />
     </BottomTab.Navigator>
