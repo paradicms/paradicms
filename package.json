@@ -15,7 +15,7 @@
     "test-lib": "wsrun --exclude-missing  -p '@paradicms/*' --prefix test"
   },
   "workspaces": {
-    "nohoist": ["forms/expo"],
+    "nohoist": ["forms/expo", "forms/@expo/vector-icons"],
     "packages": [
       "app/*",
       "lib/ts/*"

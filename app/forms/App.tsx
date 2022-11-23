@@ -8,10 +8,16 @@ import {
 } from "@react-navigation/native";
 import * as React from "react";
 import {RootNavigator} from "./navigation/RootNavigator";
+import useCachedResources from "./hooks/useCachedResources";
 
 export default function App() {
-  // const isLoadingComplete = useCachedResources();
+  const loadedCachedResources = useCachedResources();
+
   const colorScheme = useColorScheme();
+
+  if (!loadedCachedResources) {
+    return null;
+  }
 
   return (
     <SafeAreaProvider>
