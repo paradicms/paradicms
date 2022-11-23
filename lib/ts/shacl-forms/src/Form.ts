@@ -1,4 +1,9 @@
-import {DataGraph, ShapesGraph} from "@paradicms/shacl";
+import {
+  DataGraph,
+  NodeShape,
+  ShaclProcessor,
+  ShapesGraph,
+} from "@paradicms/shacl";
 import {NamedNode} from "@rdfjs/types";
 import {FormNodeType} from "./FormNodeType";
 import {Model} from "./Model";
@@ -15,9 +20,35 @@ export class Form extends Model {
   }) {
     super();
     this.dataGraph = kwds.dataGraph;
-    this.nodeTypes = kwds.nodeRdfTypes.map(
-      nodeRdfType => new FormNodeType({form: this, rdfType: nodeRdfType})
-    );
+    this.nodeTypes = kwds.nodeRdfTypes.map(nodeRdfType => {
+      const nodeShapes: NodeShape[] = [];
+      new ShaclProcessor({
+        dataGraph: kwds.dataGraph,
+        shapesGraph: kwds.shapesGraph,
+      }).someRdfTypeNodeShapes(nodeShape => {
+        nodeShapes.push(nodeShape);
+        return false;
+      }, nodeRdfType);
+      let nodeShape: NodeShape;
+      switch (nodeShapes.length) {
+        case 0:
+          throw new RangeError(
+            `rdf:type ${nodeRdfType.value} has no associated node shape`
+          );
+        case 1:
+          nodeShape = nodeShapes[0];
+          break;
+        default:
+          throw new EvalError(
+            "synthesize a blank NodeShape with sh:and the multiple shapes"
+          );
+      }
+      return new FormNodeType({
+        form: this,
+        rdfType: nodeRdfType,
+        shape: nodeShape,
+      });
+    });
     this.shapesGraph = kwds.shapesGraph;
   }
 
