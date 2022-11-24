@@ -8,6 +8,7 @@ export const testShapesGraphTtl = `
 
 schema:PersonShape
     a sh:NodeShape ;
+    sh:name "Person" ;
     sh:targetClass schema:Person ;
     sh:property [
         sh:path schema:givenName ;
