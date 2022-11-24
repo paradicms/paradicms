@@ -2,23 +2,22 @@ import {FontAwesome} from "@expo/vector-icons";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import * as React from "react";
 
-import Colors from "../constants/Colors";
 import {FormScreen} from "../screens/FormScreen";
 import {SettingsScreen} from "../screens/SettingsScreen";
-import {useColorScheme} from "@paradicms/react-native";
 import {RootTabParamList} from "./RootTabParamList";
 import {RootTabScreenProps} from "./RootTabScreenProps";
+import {useTheme} from "@rneui/themed";
 
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 export function RootTabNavigator() {
-  const colorScheme = useColorScheme();
+  const theme = useTheme();
 
   return (
     <BottomTab.Navigator
       initialRouteName="Form"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarActiveTintColor: theme.theme.colors.primary,
       }}
     >
       <BottomTab.Screen

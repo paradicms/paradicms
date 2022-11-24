@@ -1,8 +1,8 @@
 import * as React from "react";
-import {TextInput} from "react-native";
 import {FormProperty} from "@paradicms/shacl-forms";
 import {DataFactory} from "@paradicms/rdf";
 import {xsd} from "@paradicms/vocabularies";
+import {Input} from "@rneui/themed";
 
 export const TextInputFormPropertyEditor: React.FunctionComponent<{
   formProperty: FormProperty;
@@ -15,8 +15,9 @@ export const TextInputFormPropertyEditor: React.FunctionComponent<{
   );
 
   return (
-    <TextInput
-      onChangeText={text => {
+    <Input
+      // @ts-ignore
+      onChangeText={(text: string) => {
         formProperty.value = DataFactory.literal(text, xsd.string);
         onChange();
       }}

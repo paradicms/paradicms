@@ -1,26 +1,20 @@
 import {StatusBar} from "expo-status-bar";
 import * as React from "react";
-import {Platform, StyleSheet} from "react-native";
+import {Platform, StyleSheet, View} from "react-native";
+import {Text} from "@rneui/themed";
 
-import {ThemedText} from "../components/ThemedText";
-import {ThemedView} from "../components/ThemedView";
 import {RootStackScreenProps} from "../navigation/RootStackScreenProps";
 
 export const ModalScreen: React.FunctionComponent<RootStackScreenProps<
   "Modal"
 >> = () => (
-  <ThemedView style={styles.container}>
-    <ThemedText style={styles.title}>Modal</ThemedText>
-    <ThemedView
-      style={styles.separator}
-      lightColor="#eee"
-      darkColor="rgba(255,255,255,0.1)"
-    />
-    {/*<EditScreenInfo path="/screens/ModalScreen.tsx" />*/}
+  <View style={styles.container}>
+    <Text style={styles.title}>Modal</Text>
+    <View style={styles.separator} />
 
     {/* Use a light status bar on iOS to account for the black space above the modal */}
     <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
-  </ThemedView>
+  </View>
 );
 
 const styles = StyleSheet.create({

@@ -1,22 +1,16 @@
 import * as React from "react";
-import {StyleSheet} from "react-native";
+import {StyleSheet, View} from "react-native";
+import {Text} from "@rneui/themed";
 
 import {RootTabScreenProps} from "../navigation/RootTabScreenProps";
-import {ThemedView} from "../components/ThemedView";
-import {ThemedText} from "../components/ThemedText";
 
 export const SettingsScreen: React.FunctionComponent<RootTabScreenProps<
   "Settings"
 >> = ({navigation}) => (
-  <ThemedView style={styles.container}>
-    <ThemedText style={styles.title}>Settings</ThemedText>
-    <ThemedView
-      style={styles.separator}
-      lightColor="#eee"
-      darkColor="rgba(255,255,255,0.1)"
-    />
-    {/*<EditScreenInfo path="/screens/SettingsScreen.tsx" />*/}
-  </ThemedView>
+  <View style={styles.container}>
+    <Text style={styles.title}>Settings</Text>
+    <View style={styles.separator} />
+  </View>
 );
 
 const styles = StyleSheet.create({

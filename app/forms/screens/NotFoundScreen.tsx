@@ -1,22 +1,21 @@
 import * as React from "react";
-import {StyleSheet, TouchableOpacity} from "react-native";
+import {StyleSheet, TouchableOpacity, View} from "react-native";
+import {Text} from "@rneui/themed";
 
 import {RootStackScreenProps} from "../navigation/RootStackScreenProps";
-import {ThemedView} from "../components/ThemedView";
-import {ThemedText} from "../components/ThemedText";
 
 export const NotFoundScreen: React.FunctionComponent<RootStackScreenProps<
   "NotFound"
 >> = ({navigation}) => (
-  <ThemedView style={styles.container}>
-    <ThemedText style={styles.title}>This screen doesn't exist.</ThemedText>
+  <View style={styles.container}>
+    <Text style={styles.title}>This screen doesn't exist.</Text>
     <TouchableOpacity
       onPress={() => navigation.replace("Root")}
       style={styles.link}
     >
-      <ThemedText style={styles.linkText}>Go to home screen!</ThemedText>
+      <Text style={styles.linkText}>Go to home screen!</Text>
     </TouchableOpacity>
-  </ThemedView>
+  </View>
 );
 
 const styles = StyleSheet.create({

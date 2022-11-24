@@ -1,6 +1,5 @@
 import * as React from "react";
-import {StyleSheet} from "react-native";
-import {ThemedView} from "../components/ThemedView";
+import {StyleSheet, View} from "react-native";
 import {RootTabScreenProps} from "../navigation/RootTabScreenProps";
 import {testForm} from "../data/testForm";
 import {FormViewer} from "@paradicms/react-native-shacl-forms";
@@ -11,20 +10,16 @@ export const FormScreen: React.FunctionComponent<RootTabScreenProps<
   const form = testForm;
 
   return (
-    <ThemedView style={styles.container}>
-      {/*<ThemedText style={styles.title}>Home</ThemedText>*/}
-      <ThemedView
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
+    <View style={styles.container}>
+      {/*<Text style={styles.title}>Home</ThemedText>*/}
+      <View style={styles.separator} />
       <FormViewer
         form={form}
         onSelectFormNodeType={formNodeType =>
           navigation.navigate("Form", {formNodeTypeId: formNodeType.id})
         }
       />
-    </ThemedView>
+    </View>
   );
 };
 
