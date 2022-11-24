@@ -42,10 +42,10 @@ export class FormNodeType extends Model {
   }
 
   get nodes(): readonly FormNode[] {
-    return Object.values(this.nodesByUri);
+    return Object.values(this.nodesById);
   }
 
-  get nodesByUri(): {[index: string]: FormNode} {
+  get nodesById(): {[index: string]: FormNode} {
     return this.dataGraph
       .match(null, rdf.type, this.rdfType, null)
       .reduce((map, quad) => {
