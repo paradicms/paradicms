@@ -15,6 +15,9 @@ export const createFormPropertyViewer = (kwds: {
   }
 
   if (viewer.equals(dash.LiteralViewer)) {
+    console.info(
+      `form property ${formProperty.id} has supported viewer ${viewer.value}`
+    );
     return <TextFormPropertyViewer formProperty={formProperty} />;
   } else {
     console.warn(

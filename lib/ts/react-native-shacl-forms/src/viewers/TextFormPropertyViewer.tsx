@@ -10,12 +10,18 @@ export const TextFormPropertyViewer: React.FunctionComponent<{
     value => value.termType === "Literal"
   );
   if (values.length === 0) {
+    console.warn(`form property ${formProperty.id} has no values`);
     return null;
   }
+  console.info(
+    `form property ${formProperty.id} has ${values.length} value(s)`
+  );
 
   return (
     <View>
-      <View style={styles.labelContainer}></View>
+      <View style={styles.labelContainer}>
+        <Text>${formProperty.label}</Text>
+      </View>
       <View style={styles.valuesContainer}>
         {values.map((value, valueI) => (
           <Text key={valueI}>{value.value}</Text>
