@@ -1,17 +1,61 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<TextInput
-  onChangeText={[Function]}
-  placeholder="given name"
+<View
   style={
     {
-      "borderWidth": 1,
-      "height": 40,
-      "margin": 12,
-      "padding": 10,
+      "paddingHorizontal": 10,
+      "width": "100%",
     }
   }
-  value="Minor"
-/>
+  testID="RNE__Input__view-wrapper"
+>
+  <View
+    collapsable={false}
+    style={
+      {
+        "alignItems": "center",
+        "borderBottomWidth": 1,
+        "borderColor": "#86939e",
+        "flexDirection": "row",
+        "transform": [
+          {
+            "translateX": 0,
+          },
+        ],
+      }
+    }
+  >
+    <TextInput
+      editable={true}
+      onChangeText={[Function]}
+      placeholder="given name"
+      placeholderTextColor="#86939e"
+      style={
+        {
+          "borderWidth": 1,
+          "color": "#242424",
+          "flex": 1,
+          "fontSize": 18,
+          "height": 40,
+          "margin": 12,
+          "minHeight": 40,
+          "padding": 10,
+        }
+      }
+      testID="RNE__Input__text-input"
+      underlineColorAndroid="transparent"
+      value="Minor"
+    />
+  </View>
+  <Text
+    style={
+      {
+        "color": "#ff190c",
+        "fontSize": 12,
+        "margin": 5,
+      }
+    }
+  />
+</View>
 `;
