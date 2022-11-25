@@ -11,6 +11,7 @@ export const createFormPropertyEditor = (kwds: {
 
   const editor = formProperty.editor;
   if (!editor) {
+    console.warn(`form property ${formProperty.id} has no editor`);
     return null;
   }
 
@@ -22,6 +23,9 @@ export const createFormPropertyEditor = (kwds: {
       />
     );
   } else {
+    console.warn(
+      `form property ${formProperty.id} has unsupported editor ${editor.value}`
+    );
     return null;
   }
 };
