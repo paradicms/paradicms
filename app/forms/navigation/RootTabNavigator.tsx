@@ -7,11 +7,19 @@ import {SettingsScreen} from "../screens/SettingsScreen";
 import {RootTabParamList} from "./RootTabParamList";
 import {RootTabScreenProps} from "./RootTabScreenProps";
 import {useTheme} from "@rneui/themed";
+import {resolveFormScreenRouteParams} from "../screens/resolveFormScreenRouteParams";
+import {useForm} from "../hooks/useForm";
+import {Pressable} from "react-native";
 
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 export function RootTabNavigator() {
+  const {form} = useForm();
   const theme = useTheme();
+
+  if (!form) {
+    return null;
+  }
 
   return (
     <BottomTab.Navigator
@@ -23,25 +31,64 @@ export function RootTabNavigator() {
       <BottomTab.Screen
         name="Form"
         component={FormScreen}
-        options={({navigation}: RootTabScreenProps<"Form">) => ({
-          title: "Form",
-          tabBarIcon: ({color}) => <TabBarIcon name="list-alt" color={color} />,
-          // headerRight: () => (
-          //   <Pressable
-          //     onPress={() => navigation.navigate("Modal")}
-          //     style={({pressed}) => ({
-          //       opacity: pressed ? 0.5 : 1,
-          //     })}
-          //   >
-          //     <FontAwesome
-          //       name="info-circle"
-          //       size={25}
-          //       color={Colors[colorScheme].text}
-          //       style={{marginRight: 15}}
-          //     />
-          //   </Pressable>
-          // ),
-        })}
+        options={({navigation, route}: RootTabScreenProps<"Form">) => {
+          const {formNode, formNodeType} = resolveFormScreenRouteParams(
+            form,
+            route
+          );
+          return {
+            tabBarIcon: ({color}) => (
+              <TabBarIcon name="list-alt" color={color} />
+            ),
+            title: formNode?.label ?? formNodeType?.label ?? "Form",
+            headerLeft: () => {
+              const arrowLeft = (
+                <FontAwesome
+                  name="arrow-left"
+                  color={theme.theme.colors.black}
+                  size={25}
+                  style={{marginLeft: 15}}
+                />
+              );
+              if (formNode) {
+                return (
+                  <Pressable
+                    onPress={() =>
+                      navigation.navigate("Form", {
+                        formNodeTypeId: formNode.type.id,
+                      })
+                    }
+                  >
+                    {arrowLeft}
+                  </Pressable>
+                );
+              } else if (formNodeType) {
+                return (
+                  <Pressable onPress={() => navigation.navigate("Form")}>
+                    {arrowLeft}
+                  </Pressable>
+                );
+              } else {
+                return null;
+              }
+            },
+            // headerRight: () => (
+            //   <Pressable
+            //     onPress={() => navigation.navigate("Modal")}
+            //     style={({pressed}) => ({
+            //       opacity: pressed ? 0.5 : 1,
+            //     })}
+            //   >
+            //     <FontAwesome
+            //       name="info-circle"
+            //       size={25}
+            //       color={Colors[colorScheme].text}
+            //       style={{marginRight: 15}}
+            //     />
+            //   </Pressable>
+            // ),
+          };
+        }}
       />
       <BottomTab.Screen
         name="Settings"

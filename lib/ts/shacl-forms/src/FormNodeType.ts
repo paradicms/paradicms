@@ -41,11 +41,22 @@ export class FormNodeType extends Model {
     return this.shape.name ?? this.rdfType.value;
   }
 
+  nodeById(id: string): FormNode {
+    const dataGraphNode = DataFactory.namedNode(id);
+    for (const _ of this.dataGraph.match(null, rdf.type, this.rdfType, null)) {
+      return new FormNode({
+        dataGraphNode,
+        type: this,
+      });
+    }
+    throw new RangeError("no such form node " + id);
+  }
+
   get nodes(): readonly FormNode[] {
     return Object.values(this.nodesById);
   }
 
-  get nodesById(): {[index: string]: FormNode} {
+  private get nodesById(): {[index: string]: FormNode} {
     return this.dataGraph
       .match(null, rdf.type, this.rdfType, null)
       .reduce((map, quad) => {
