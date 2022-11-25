@@ -13,18 +13,20 @@ export const TextFormPropertyViewer: React.FunctionComponent<{
     console.warn(`form property ${formProperty.id} has no values`);
     return null;
   }
-  console.info(
-    `form property ${formProperty.id} has ${values.length} value(s)`
-  );
+  // console.info(
+  //   `form property ${formProperty.id} has ${values.length} value(s)`
+  // );
 
   return (
     <View>
       <View style={styles.labelContainer}>
-        <Text>${formProperty.label}</Text>
+        <Text style={styles.label}>{formProperty.label}</Text>
       </View>
       <View style={styles.valuesContainer}>
         {values.map((value, valueI) => (
-          <Text key={valueI}>{value.value}</Text>
+          <Text key={valueI} style={styles.value}>
+            {value.value}
+          </Text>
         ))}
       </View>
     </View>
@@ -32,12 +34,14 @@ export const TextFormPropertyViewer: React.FunctionComponent<{
 };
 
 const styles = StyleSheet.create({
-  labelContainer: {
-    alignItems: "flex-start",
-    flex: 1,
+  label: {
+    fontWeight: "bold",
   },
-  valuesContainer: {
+  labelContainer: {
     alignItems: "center",
-    flex: 1,
+  },
+  value: {},
+  valuesContainer: {
+    marginTop: 5,
   },
 });

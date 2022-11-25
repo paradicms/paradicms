@@ -1,0 +1,154 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View>
+  <View
+    style={
+      {
+        "marginBottom": 25,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "marginBottom": 25,
+      }
+    }
+  >
+    <View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+          }
+        }
+      >
+        <Text
+          accessibilityRole="text"
+          style={
+            {
+              "color": "#242424",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          http://schema.org/gender
+        </Text>
+      </View>
+      <View
+        style={
+          {
+            "marginTop": 5,
+          }
+        }
+      >
+        <Text
+          accessibilityRole="text"
+          style={
+            {
+              "color": "#242424",
+            }
+          }
+        >
+          male
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "marginBottom": 25,
+      }
+    }
+  >
+    <View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+          }
+        }
+      >
+        <Text
+          accessibilityRole="text"
+          style={
+            {
+              "color": "#242424",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          given name
+        </Text>
+      </View>
+      <View
+        style={
+          {
+            "marginTop": 5,
+          }
+        }
+      >
+        <Text
+          accessibilityRole="text"
+          style={
+            {
+              "color": "#242424",
+            }
+          }
+        >
+          Minor
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "marginBottom": 25,
+      }
+    }
+  >
+    <View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+          }
+        }
+      >
+        <Text
+          accessibilityRole="text"
+          style={
+            {
+              "color": "#242424",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          http://schema.org/birthDate
+        </Text>
+      </View>
+      <View
+        style={
+          {
+            "marginTop": 5,
+          }
+        }
+      >
+        <Text
+          accessibilityRole="text"
+          style={
+            {
+              "color": "#242424",
+            }
+          }
+        >
+          2022-11-19
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;

@@ -1,6 +1,6 @@
 import * as React from "react";
 import {FormNode} from "@paradicms/shacl-forms";
-import {View} from "react-native";
+import {StyleSheet, View} from "react-native";
 import {createFormPropertyViewer} from "./createFormPropertyViewer";
 
 export const FormNodeViewer: React.FunctionComponent<{
@@ -8,9 +8,15 @@ export const FormNodeViewer: React.FunctionComponent<{
 }> = ({formNode}) => (
   <View>
     {formNode.properties.map(formProperty => (
-      <View key={formProperty.id}>
+      <View key={formProperty.id} style={styles.formPropertyViewerContainer}>
         {createFormPropertyViewer({formProperty})}
       </View>
     ))}
   </View>
 );
+
+const styles = StyleSheet.create({
+  formPropertyViewerContainer: {
+    marginBottom: 25,
+  },
+});
