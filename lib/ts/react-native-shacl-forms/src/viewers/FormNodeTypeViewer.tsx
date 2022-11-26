@@ -1,7 +1,7 @@
 import * as React from "react";
 import {FormNode, FormNodeType} from "@paradicms/shacl-forms";
 import {View} from "react-native";
-import {Button} from "@rneui/themed";
+import {Button, ListItem} from "@rneui/themed";
 
 export const FormNodeTypeViewer: React.FunctionComponent<{
   formNodeType: FormNodeType;
@@ -9,11 +9,12 @@ export const FormNodeTypeViewer: React.FunctionComponent<{
 }> = ({formNodeType, onSelectFormNode}) => (
   <View>
     {formNodeType.nodes.map(formNode => (
-      <Button
-        key={formNode.id}
-        onPress={() => onSelectFormNode(formNode)}
-        title={formNode.label}
-      />
+      <ListItem key={formNode.id}>
+        <Button
+          onPress={() => onSelectFormNode(formNode)}
+          title={formNode.label}
+        />
+      </ListItem>
     ))}
   </View>
 );

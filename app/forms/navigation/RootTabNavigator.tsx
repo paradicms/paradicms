@@ -55,7 +55,7 @@ export function RootTabNavigator() {
                   <Pressable
                     onPress={() =>
                       navigation.navigate("Form", {
-                        formNodeTypeId: formNode.type.id,
+                        formNodeTypeId: formNodeType!.id,
                       })
                     }
                   >

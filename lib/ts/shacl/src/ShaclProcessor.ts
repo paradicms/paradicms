@@ -179,7 +179,7 @@ export class ShaclProcessor {
       );
   }
 
-  private someShapeImplicitClassFocusNodes(
+  private someShapeImplicitClassTargetFocusNodes(
     callback: SomeShapeFocusNodeCallback,
     seenFocusNodeSet: TermSet<FocusNode>,
     shape: Shape
@@ -283,7 +283,7 @@ export class ShaclProcessor {
     for (const someShapeFocusNodesMethod of [
       this.someShapeTargetNodeFocusNodes,
       this.someShapeTargetClassFocusNodes,
-      this.someShapeImplicitClassFocusNodes,
+      this.someShapeImplicitClassTargetFocusNodes,
       this.someShapeTargetSubjectsOfFocusNodes,
       this.someShapeTargetObjectsOfFocusNodes,
     ]) {

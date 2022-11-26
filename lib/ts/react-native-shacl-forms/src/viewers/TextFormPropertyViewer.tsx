@@ -1,7 +1,7 @@
 import {FormProperty} from "@paradicms/shacl-forms";
 import * as React from "react";
-import {StyleSheet, View} from "react-native";
-import {ListItem, Text} from "@rneui/themed";
+import {StyleSheet, Text, View} from "react-native";
+import {ListItem} from "@rneui/themed";
 
 export const TextFormPropertyViewer: React.FunctionComponent<{
   formProperty: FormProperty;
@@ -22,8 +22,8 @@ export const TextFormPropertyViewer: React.FunctionComponent<{
       <View style={styles.valuesContainer}>
         {values.map((value, valueI) => (
           <ListItem key={valueI}>
-            <ListItem.Content>
-              <Text style={styles.value}>{value.value}</Text>
+            <ListItem.Content style={styles.value}>
+              <ListItem.Title>{value.value}</ListItem.Title>
             </ListItem.Content>
           </ListItem>
         ))}

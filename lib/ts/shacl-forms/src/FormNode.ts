@@ -1,7 +1,7 @@
-import {FormNodeType} from "./FormNodeType";
-import {NamedNode, Term} from "@rdfjs/types";
+import {BlankNode, NamedNode, Term} from "@rdfjs/types";
 import {
   DataGraph,
+  NodeShape,
   PropertyShape,
   ShaclProcessor,
   ShapesGraph,
@@ -12,13 +12,22 @@ import {TermMap} from "@paradicms/rdf";
 import {rdfs} from "@paradicms/vocabularies";
 
 export class FormNode extends Model {
-  readonly dataGraphNode: NamedNode;
-  readonly type: FormNodeType;
+  readonly dataGraph: DataGraph;
+  readonly dataGraphNode: BlankNode | NamedNode;
+  readonly shape: NodeShape;
+  readonly shapesGraph: ShapesGraph;
 
-  constructor(kwds: {dataGraphNode: NamedNode; type: FormNodeType}) {
+  constructor(kwds: {
+    dataGraph: DataGraph;
+    dataGraphNode: BlankNode | NamedNode;
+    shape: NodeShape;
+    shapesGraph: ShapesGraph;
+  }) {
     super();
+    this.dataGraph = kwds.dataGraph;
     this.dataGraphNode = kwds.dataGraphNode;
-    this.type = kwds.type;
+    this.shape = kwds.shape;
+    this.shapesGraph = kwds.shapesGraph;
   }
 
   delete(): void {
@@ -34,10 +43,6 @@ export class FormNode extends Model {
     };
 
     deleteQuadsWithSubject(this.dataGraphNode);
-  }
-
-  get dataGraph(): DataGraph {
-    return this.type.dataGraph;
   }
 
   get id(): string {
@@ -117,9 +122,5 @@ export class FormNode extends Model {
     }
 
     return null;
-  }
-
-  get shapesGraph(): ShapesGraph {
-    return this.type.shapesGraph;
   }
 }

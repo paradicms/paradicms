@@ -24,8 +24,10 @@ export class FormNodeType extends Model {
     this.dataGraph.add(DataFactory.quad(dataGraphNode, rdf.type, this.rdfType));
 
     return new FormNode({
+      dataGraph: this.dataGraph,
       dataGraphNode: dataGraphNode,
-      type: this,
+      shape: this.shape,
+      shapesGraph: this.shapesGraph,
     });
   }
 
@@ -45,8 +47,10 @@ export class FormNodeType extends Model {
     const dataGraphNode = DataFactory.namedNode(id);
     for (const _ of this.dataGraph.match(null, rdf.type, this.rdfType, null)) {
       return new FormNode({
+        dataGraph: this.dataGraph,
         dataGraphNode,
-        type: this,
+        shape: this.shape,
+        shapesGraph: this.shapesGraph,
       });
     }
     throw new RangeError("no such form node " + id);
@@ -63,8 +67,10 @@ export class FormNodeType extends Model {
         const subject = quad.subject;
         if (subject.termType === "NamedNode" && !map[subject.value]) {
           map[subject.value] = new FormNode({
+            dataGraph: this.dataGraph,
             dataGraphNode: subject,
-            type: this,
+            shape: this.shape,
+            shapesGraph: this.shapesGraph,
           });
         }
         return map;

@@ -1,22 +1,17 @@
 import * as React from "react";
 import {FormNode} from "@paradicms/shacl-forms";
-import {StyleSheet, View} from "react-native";
+import {View} from "react-native";
 import {createFormPropertyViewer} from "./createFormPropertyViewer";
+import {ListItem} from "@rneui/themed";
 
 export const FormNodeViewer: React.FunctionComponent<{
   formNode: FormNode;
 }> = ({formNode}) => (
   <View>
     {formNode.properties.map(formProperty => (
-      <View key={formProperty.id} style={styles.formPropertyViewerContainer}>
+      <ListItem bottomDivider key={formProperty.id}>
         {createFormPropertyViewer({formProperty})}
-      </View>
+      </ListItem>
     ))}
   </View>
 );
-
-const styles = StyleSheet.create({
-  formPropertyViewerContainer: {
-    marginBottom: 25,
-  },
-});
