@@ -33,6 +33,7 @@ schema:PersonShape
 schema:AddressShape
     a sh:NodeShape ;
     sh:closed true ;
+    sh:name "Address" ;
     sh:property [
         sh:path schema:streetAddress ;
         sh:datatype xsd:string ;

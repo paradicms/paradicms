@@ -1,7 +1,7 @@
 import {FormProperty} from "@paradicms/shacl-forms";
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
-import {Text} from "@rneui/themed";
+import {ListItem, Text} from "@rneui/themed";
 
 export const TextFormPropertyViewer: React.FunctionComponent<{
   formProperty: FormProperty;
@@ -10,12 +10,9 @@ export const TextFormPropertyViewer: React.FunctionComponent<{
     value => value.termType === "Literal"
   );
   if (values.length === 0) {
-    console.warn(`form property ${formProperty.id} has no values`);
+    console.info(`form property ${formProperty.id} has no values`);
     return null;
   }
-  // console.info(
-  //   `form property ${formProperty.id} has ${values.length} value(s)`
-  // );
 
   return (
     <View>
@@ -24,9 +21,11 @@ export const TextFormPropertyViewer: React.FunctionComponent<{
       </View>
       <View style={styles.valuesContainer}>
         {values.map((value, valueI) => (
-          <Text key={valueI} style={styles.value}>
-            {value.value}
-          </Text>
+          <ListItem key={valueI}>
+            <ListItem.Content>
+              <Text style={styles.value}>{value.value}</Text>
+            </ListItem.Content>
+          </ListItem>
         ))}
       </View>
     </View>
