@@ -46,6 +46,6 @@ describe("FormNode", () => {
 
   it("should get properties of an address BlankNode", () => {
     const properties = addressFormNode.properties;
-    expect(properties).to.have.length(5);
+    expect(properties).to.have.length(2);
   });
 });
