@@ -1,32 +1,17 @@
 import {BlankNode, NamedNode} from "@rdfjs/types";
 import {Shape} from "./Shape";
-import {rdf, rdfs} from "@paradicms/vocabularies";
 import {FocusNode} from "./FocusNode";
 import {DataGraph} from "./DataGraph";
 import {ShapesGraph} from "./ShapesGraph";
 import * as ValidationReport from "rdf-validate-shacl/src/validation-report";
-import * as SHACLValidator from "rdf-validate-shacl";
-import {hasRdfSuperClass} from "@paradicms/rdf";
+import SHACLValidator from "rdf-validate-shacl";
+import {getRdfInstances, hasRdfSuperClass} from "@paradicms/rdf";
 import TermSet from "@rdfjs/term-set";
 import {PropertyShape} from "./PropertyShape";
 import {NodeShape} from "./NodeShape";
 import {NodeKind} from "./NodeKind";
 
 type SomeShapeFocusNodeCallback = (focusNode: FocusNode) => boolean;
-
-// const deduplicateFocusNodes = (
-//   focusNodes: readonly FocusNode[]
-// ): readonly FocusNode[] => {
-//   const uniqueFocusNodes: FocusNode[] = [];
-//   for (const term of focusNodes) {
-//     if (
-//       !uniqueFocusNodes.some((uniqueFocusNode) => term.equals(uniqueFocusNode))
-//     ) {
-//       uniqueFocusNodes.push(term);
-//     }
-//   }
-//   return uniqueFocusNodes;
-// };
 
 export class ShaclProcessor {
   private readonly dataGraph: DataGraph;
@@ -37,6 +22,9 @@ export class ShaclProcessor {
     this.shapesGraph = kwds.shapesGraph;
   }
 
+  /**
+   * Some (existential quantification) method that traverses property shapes that have the given focus node in their set of focus nodes.
+   */
   someFocusNodePropertyShapes(
     callback: (propertyShape: PropertyShape) => boolean,
     focusNode: FocusNode
@@ -89,6 +77,9 @@ export class ShaclProcessor {
     return false;
   }
 
+  /**
+   * Some (existential quantification) method that traverses node shapes that target the given rdf:type.
+   */
   someRdfTypeNodeShapes(
     callback: (nodeShape: NodeShape) => boolean,
     rdfType: NamedNode
@@ -142,44 +133,9 @@ export class ShaclProcessor {
   }
 
   /**
-   * Get instances of the targetClass or its sub-classes
+   * Some (existential quantification) method that traverses focus nodes that are instances of the shape if the shape is
+   * an rdfs:Class or a sub-class of rdfs:Class (implicit class targets).
    */
-  private someShapeClassFocusNodesRecursive(
-    callback: SomeShapeFocusNodeCallback,
-    seenFocusNodeSet: TermSet<FocusNode>,
-    targetClass: NamedNode
-  ): boolean {
-    // Get instances of the targetClass
-    if (
-      this.dataGraph.match(null, rdf.type, targetClass).some(quad => {
-        switch (quad.subject.termType) {
-          case "BlankNode":
-          case "NamedNode":
-            if (seenFocusNodeSet.add(quad.subject)) {
-              return callback(quad.subject);
-            }
-          default:
-            return false;
-        }
-      })
-    ) {
-      return true;
-    }
-
-    // Recurse into targetClass's sub-classes
-    return this.dataGraph
-      .match(null, rdfs.subClassOf, targetClass, null)
-      .some(
-        quad =>
-          quad.subject.termType === "NamedNode" &&
-          this.someShapeClassFocusNodesRecursive(
-            callback,
-            seenFocusNodeSet,
-            quad.subject
-          )
-      );
-  }
-
   private someShapeImplicitClassTargetFocusNodes(
     callback: SomeShapeFocusNodeCallback,
     seenFocusNodeSet: TermSet<FocusNode>,
@@ -187,29 +143,89 @@ export class ShaclProcessor {
   ): boolean {
     // If the shape has an rdf:type of rdfs:Class or a sub-class of rdfs:Class,
     // all data graph instances of the shape or its sub-classes are focusNodes.
-    return shape.implicitClassTargets.some(rdfType =>
-      this.someShapeClassFocusNodesRecursive(
-        callback,
-        seenFocusNodeSet,
-        rdfType
-      )
-    );
+    return shape.implicitClassTargets.some(rdfType => {
+      for (const focusNode of getRdfInstances({
+        class_: rdfType,
+        dataset: this.dataGraph,
+      })) {
+        if (seenFocusNodeSet.add(focusNode) && callback(focusNode)) {
+          return true;
+        }
+      }
+      return false;
+    });
   }
 
+  /**
+   * Some (existential quantification) method that traverses focus nodes that are the objects of a property shape
+   * with an sh:node constraint.
+   */
+  private someShapeShNodeFocusNodes(
+    callback: SomeShapeFocusNodeCallback,
+    seenFocusNodeSet: TermSet<FocusNode>,
+    shape: Shape
+  ): boolean {
+    if (!(shape instanceof NodeShape)) {
+      return false;
+    }
+
+    const nodeShape: NodeShape = shape;
+
+    // Traverse all property shapes
+    for (const propertyShape of this.shapesGraph.propertyShapes) {
+      for (const propertyShapeNodeShape of propertyShape.nodeShapes) {
+        // If a property shape has a sh:node referencing nodeShape
+        if (!propertyShapeNodeShape.node.equals(nodeShape.node)) {
+          continue;
+        }
+        // Then the objects of all quads with the property shape path are focus nodes of nodeShape
+        // TODO: does the subject need to match nodeShape?
+        for (const quad of this.dataGraph.match(
+          null,
+          propertyShape.path,
+          null,
+          null
+        )) {
+          switch (quad.object.termType) {
+            case "BlankNode":
+            case "NamedNode":
+              const focusNode = quad.object as BlankNode | NamedNode;
+              if (seenFocusNodeSet.add(focusNode) && callback(focusNode)) {
+                return true;
+              }
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Some (existential quantification) method that traverses focus nodes that are instances of a target class
+   * (sh:targetClass) for a shape.
+   */
   private someShapeTargetClassFocusNodes(
     callback: SomeShapeFocusNodeCallback,
     seenFocusNodeSet: TermSet<FocusNode>,
     shape: Shape
   ): boolean {
-    return shape.targetClasses.some(targetClass =>
-      this.someShapeClassFocusNodesRecursive(
-        callback,
-        seenFocusNodeSet,
-        targetClass
-      )
-    );
+    return shape.targetClasses.some(targetClass => {
+      for (const focusNode of getRdfInstances({
+        class_: targetClass,
+        dataset: this.dataGraph,
+      })) {
+        if (seenFocusNodeSet.add(focusNode) && callback(focusNode)) {
+          return true;
+        }
+      }
+      return false;
+    });
   }
 
+  /**
+   * Some (existential quantification) method that traverses focus nodes that are targeted by a shape via sh:targetNode.
+   */
   private someShapeTargetNodeFocusNodes(
     callback: SomeShapeFocusNodeCallback,
     seenFocusNodeSet: TermSet<FocusNode>,
@@ -232,6 +248,10 @@ export class ShaclProcessor {
     });
   }
 
+  /**
+   * Some (existential quantification) method that traverses focus nodes that are targeted by a shape via
+   * sh:targetObjectsOf.
+   */
   private someShapeTargetObjectsOfFocusNodes(
     callback: SomeShapeFocusNodeCallback,
     seenFocusNodeSet: TermSet<FocusNode>,
@@ -255,6 +275,10 @@ export class ShaclProcessor {
     );
   }
 
+  /**
+   * Some (existential quantification) method that traverses focus nodes that are targeted by a shape via
+   * sh:targetSubjectsOf.
+   */
   private someShapeTargetSubjectsOfFocusNodes(
     callback: SomeShapeFocusNodeCallback,
     seenFocusNodeSet: TermSet<FocusNode>,
@@ -276,37 +300,32 @@ export class ShaclProcessor {
     );
   }
 
+  /**
+   * Some (existential quantification) method that traverses focus nodes of a shape.
+   */
   someShapeFocusNodes(
     callback: SomeShapeFocusNodeCallback,
     shape: Shape
   ): boolean {
-    // The set of focus nodes for a shape may be identified as follows:
     const seenFocusNodeSet = new TermSet<FocusNode>();
 
-    // specified in a shape using target declarations
-    for (const someShapeTargetFocusNodesMethod of [
+    // The set of focus nodes for a shape may be identified as follows:
+    for (const someShapeFocusNodesMethod of [
+      // specified in a shape using target declarations
       this.someShapeTargetNodeFocusNodes,
       this.someShapeTargetClassFocusNodes,
       this.someShapeImplicitClassTargetFocusNodes,
       this.someShapeTargetSubjectsOfFocusNodes,
       this.someShapeTargetObjectsOfFocusNodes,
+      // specified in any constraint that references a shape in parameters of shape-expecting constraint parameters (e.g. sh:node)
+      this.someShapeShNodeFocusNodes,
     ]) {
       if (
-        someShapeTargetFocusNodesMethod.bind(this)(
-          callback,
-          seenFocusNodeSet,
-          shape
-        )
+        someShapeFocusNodesMethod.bind(this)(callback, seenFocusNodeSet, shape)
       ) {
         return true;
       }
     }
-
-    // specified in any constraint that references a shape in parameters of shape-expecting constraint parameters (e.g. sh:node)
-    // TODO
-    // Traverse all property shapes
-    // If a property shape has a sh:node referencing the node shape
-    // The focus nodes for the node shape include the objects of all quads with that property shape path
 
     return false;
   }
