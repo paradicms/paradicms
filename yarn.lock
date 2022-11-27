@@ -2462,6 +2462,20 @@
   dependencies:
     "@rdfjs/data-model" "^1.1.0"
 
+"@rdfjs/term-map@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@rdfjs/term-map/-/term-map-2.0.0.tgz#6360314e9b62a1d540b213865403130721be1123"
+  integrity sha512-z0K8AgLsJGTrh+dGkXNl/oT9vBdMei4xq1MIeGN360oimA81Q+ruQUKFCbYNRRZS03tVHPBzqXUal/DezFGPEA==
+  dependencies:
+    "@rdfjs/to-ntriples" "^2.0.0"
+
+"@rdfjs/term-set@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@rdfjs/term-set/-/term-set-2.0.1.tgz#bbf406e0477c226e65753da2da0089cbbe847ab5"
+  integrity sha512-ZD8IwSY7tPpevs2iaQEsesAu8c7TO4GKHQHObbehUE4odKa9BuhuimdNuYwBoyVprTtHARaW6VW+0Jsu7ehD+Q==
+  dependencies:
+    "@rdfjs/to-ntriples" "^2.0.0"
+
 "@rdfjs/term-set@^1.1.0":
   version "1.1.0"
   resolved "https://registry.npmjs.org/@rdfjs/term-set/-/term-set-1.1.0.tgz"
@@ -3163,6 +3177,20 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/rdfjs__namespace/-/rdfjs__namespace-2.0.0.tgz#8830386855f07fee87d6316f0f7af9365725160a"
   integrity sha512-bpVmmBrwg4plwfSNtwbwIYtZEpGFPWHTlfa1iftSY03+V+2wq+pfZxYkZwrhZwyh/Dxy5usIrVt04Rvigc4uXg==
+  dependencies:
+    rdf-js "^4.0.2"
+
+"@types/rdfjs__term-map@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/rdfjs__term-map/-/rdfjs__term-map-2.0.0.tgz#e09797e7c64bf5ab7ef0e1b130b9f125d7994663"
+  integrity sha512-6guPNzPIEwPdpSpwDvuhcawvAu+aCIkiLxOdJMb3ymPltywes/ItPBcs1L4xPQyae4nqYgc4NhcsgUIBjt1XPQ==
+  dependencies:
+    rdf-js "^4.0.2"
+
+"@types/rdfjs__term-set@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@types/rdfjs__term-set/-/rdfjs__term-set-2.0.1.tgz#8815e080f7d5ee5875c5de7ece3f0f4f6bc51781"
+  integrity sha512-yN+IE/7auop9M6MC9HkaZHSjUb864Oe+w4STJXsZFign+gjL4bpkdPT7tvEJQp1vQ3Fx6dwPTIZeqVl70EFSWg==
   dependencies:
     rdf-js "^4.0.2"
 
