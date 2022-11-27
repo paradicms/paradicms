@@ -42,7 +42,7 @@ export class ShaclProcessor {
   ): boolean {
     const seenPropertyShapeNodeSet = new TermSet<BlankNode | NamedNode>();
 
-    // Find node shapes that target the focus node, then look for their sh:properties's
+    // Find node shapes that target the focus node, then look for their sh:property's
     for (const nodeShape of this.shapesGraph.nodeShapes) {
       if (
         !this.someShapeFocusNodes(
@@ -279,8 +279,11 @@ export class ShaclProcessor {
     callback: SomeShapeFocusNodeCallback,
     shape: Shape
   ): boolean {
+    // The set of focus nodes for a shape may be identified as follows:
     const seenFocusNodeSet = new TermSet<FocusNode>();
-    for (const someShapeFocusNodesMethod of [
+
+    // specified in a shape using target declarations
+    for (const someShapeTargetFocusNodesMethod of [
       this.someShapeTargetNodeFocusNodes,
       this.someShapeTargetClassFocusNodes,
       this.someShapeImplicitClassTargetFocusNodes,
@@ -288,11 +291,22 @@ export class ShaclProcessor {
       this.someShapeTargetObjectsOfFocusNodes,
     ]) {
       if (
-        someShapeFocusNodesMethod.bind(this)(callback, seenFocusNodeSet, shape)
+        someShapeTargetFocusNodesMethod.bind(this)(
+          callback,
+          seenFocusNodeSet,
+          shape
+        )
       ) {
         return true;
       }
     }
+
+    // specified in any constraint that references a shape in parameters of shape-expecting constraint parameters (e.g. sh:node)
+    // TODO
+    // Traverse all property shapes
+    // If a property shape has a sh:node referencing the node shape
+    // The focus nodes for the node shape include the objects of all quads with that property shape path
+
     return false;
   }
 
