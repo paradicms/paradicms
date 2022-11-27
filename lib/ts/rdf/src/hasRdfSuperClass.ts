@@ -1,6 +1,6 @@
 import {Dataset, DefaultGraph, NamedNode, Term} from "@rdfjs/types";
 import {rdfs} from "@tpluscode/rdf-ns-builders";
-import {TermSet} from "./TermSet";
+import TermSet from "@rdfjs/term-set";
 
 export const hasRdfSuperClass = (kwds: {
   dataset: Dataset;

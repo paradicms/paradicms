@@ -8,7 +8,8 @@ import {
 } from "@paradicms/shacl";
 import {FormProperty} from "./FormProperty";
 import {Model} from "./Model";
-import {TermMap} from "@paradicms/rdf";
+import TermMap from "@rdfjs/term-map";
+
 import {rdfs} from "@paradicms/vocabularies";
 
 export class FormNode extends Model {
@@ -54,7 +55,7 @@ export class FormNode extends Model {
   }
 
   get properties(): readonly FormProperty[] {
-    return this.propertyShapesByPath.values
+    return [...this.propertyShapesByPath.values()]
       .map(pathPropertyShapes => {
         switch (pathPropertyShapes.length) {
           case 0:
@@ -96,13 +97,13 @@ export class FormNode extends Model {
       dataGraph: this.dataGraph,
       shapesGraph: this.shapesGraph,
     }).someFocusNodePropertyShapes(propertyShape => {
-      const existingPropertyShapes = propertyShapesByPath.getOptional(
+      const existingPropertyShapes = propertyShapesByPath.get(
         propertyShape.path
       );
       if (existingPropertyShapes) {
         existingPropertyShapes.push(propertyShape);
       } else {
-        propertyShapesByPath.put(propertyShape.path, [propertyShape]);
+        propertyShapesByPath.set(propertyShape.path, [propertyShape]);
       }
       return false;
     }, this.dataGraphNode);

@@ -3,7 +3,9 @@ import {rdf, sh} from "@paradicms/vocabularies";
 import {NodeShape} from "./NodeShape";
 import {PropertyShape} from "./PropertyShape";
 import {PropertyGroup} from "./PropertyGroup";
-import {TermMap, TermSet} from "@paradicms/rdf";
+import TermMap from "@rdfjs/term-map";
+import TermSet from "@rdfjs/term-set";
+import {requireDefined} from "@paradicms/utilities";
 
 export class ShapesGraph {
   readonly graphNode: DefaultGraph | NamedNode;
@@ -43,7 +45,7 @@ export class ShapesGraph {
   }
 
   nodeShapeByNode(nodeShapeNode: BlankNode | NamedNode): NodeShape {
-    return this.nodeShapesByNode.get(nodeShapeNode);
+    return requireDefined(this.nodeShapesByNode.get(nodeShapeNode));
   }
 
   // static parse(input: string, options?: ParserOptions): ShapesGraph {
@@ -61,18 +63,20 @@ export class ShapesGraph {
   // }
 
   propertyGroupByNode(propertyGroupNode: NamedNode): PropertyGroup {
-    return this.propertyGroupsByNode.get(propertyGroupNode);
+    return requireDefined(this.propertyGroupsByNode.get(propertyGroupNode));
   }
 
   propertyShapeByNode(propertyShapeNode: BlankNode | NamedNode): PropertyShape {
-    return this.propertyShapesByNode.get(propertyShapeNode);
+    return requireDefined(this.propertyShapesByNode.get(propertyShapeNode));
   }
 
   private static readGraph(dataset: Dataset): DefaultGraph | NamedNode {
-    const graphs = dataset.reduce((termSet, quad) => {
-      termSet.add(quad.graph);
-      return termSet;
-    }, new TermSet()).values;
+    const graphs = [
+      ...dataset.reduce((termSet, quad) => {
+        termSet.add(quad.graph);
+        return termSet;
+      }, new TermSet()),
+    ];
     if (graphs.length !== 1) {
       throw new RangeError("expected a single graph");
     }
@@ -109,7 +113,7 @@ export class ShapesGraph {
       }
       const propertyGroup = new PropertyGroup({node: subject, shapesGraph});
       propertyGroups.push(propertyGroup);
-      propertyGroupsByNode.put(subject, propertyGroup);
+      propertyGroupsByNode.set(subject, propertyGroup);
     });
     return {propertyGroups, propertyGroupsByNode};
   }
@@ -220,7 +224,7 @@ export class ShapesGraph {
       PropertyShape
     > = new TermMap();
 
-    for (const shapeNode of shapeNodeSet.values) {
+    for (const shapeNode of shapeNodeSet) {
       if (dataset.match(shapeNode, sh.path, null, graph).size > 0) {
         // A property shape is a shape in the shapes graph that is the subject of a triple that has sh:path as its predicate. A shape has at most one value for sh:path. Each value of sh:path in a shape must be a well-formed SHACL property path. It is recommended, but not required, for a property shape to be declared as a SHACL instance of sh:PropertyShape. SHACL instances of sh:PropertyShape have one value for the property sh:path.
         const propertyShape = new PropertyShape({
@@ -228,12 +232,12 @@ export class ShapesGraph {
           shapesGraph,
         });
         propertyShapes.push(propertyShape);
-        propertyShapesByNode.put(propertyShape.node, propertyShape);
+        propertyShapesByNode.set(propertyShape.node, propertyShape);
       } else {
         // A node shape is a shape in the shapes graph that is not the subject of a triple with sh:path as its predicate. It is recommended, but not required, for a node shape to be declared as a SHACL instance of sh:NodeShape. SHACL instances of sh:NodeShape cannot have a value for the property sh:path.
         const nodeShape = new NodeShape({node: shapeNode, shapesGraph});
         nodeShapes.push(nodeShape);
-        nodeShapesByNode.put(nodeShape.node, nodeShape);
+        nodeShapesByNode.set(nodeShape.node, nodeShape);
       }
     }
 

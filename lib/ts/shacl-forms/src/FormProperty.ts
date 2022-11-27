@@ -2,11 +2,13 @@ import {DataGraph, PropertyShape, ShapesGraph} from "@paradicms/shacl";
 import {DatasetCore, NamedNode, Term} from "@rdfjs/types";
 import {FormNode} from "./FormNode";
 import {Model} from "./Model";
-import {DataFactory, TermMap} from "@paradicms/rdf";
+import {DataFactory} from "@paradicms/rdf";
+import TermMap from "@rdfjs/term-map";
+import {NonNullable} from "@paradicms/utilities";
+
 import {FormPropertyWidgetScorer} from "./FormPropertyWidgetScorer";
 import {dashFormPropertyEditorScorers} from "./dashFormPropertyEditorScorers";
 import {rdfs} from "@paradicms/vocabularies";
-import {NonNullable} from "@paradicms/utilities";
 import {FormPropertyValue} from "./FormPropertyValue";
 import {dashFormPropertyViewerScorers} from "./dashFormPropertyViewerScorers";
 
@@ -100,27 +102,24 @@ export class FormProperty extends Model {
     for (const scorer of scorers) {
       const score = scorer.score(this, thisValues);
       if (score !== null && score > 0) {
-        scores.put(scorer.widgetName, score);
+        scores.set(scorer.widgetName, score);
       }
     }
 
-    const scoreEntries = scores.entries;
+    const scoreEntries = [...scores.entries()];
     switch (scoreEntries.length) {
       case 0:
         return null;
       case 1:
-        return scoreEntries[0].key;
+        return scoreEntries[0][0];
       default:
         return scoreEntries.reduce((highestScoreEntry, scoreEntry) => {
-          if (
-            !highestScoreEntry ||
-            scoreEntry.value > highestScoreEntry.value
-          ) {
+          if (!highestScoreEntry || scoreEntry[1] > highestScoreEntry[1]) {
             return scoreEntry;
           } else {
             return highestScoreEntry;
           }
-        }, undefined as {key: NamedNode; value: number} | undefined)!.key;
+        }, undefined as [NamedNode, Number] | undefined)![0];
     }
   }
 
