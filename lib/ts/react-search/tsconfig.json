@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
-    "esModuleInterop": true,
     "outDir": "./dist"
   },
   "exclude": [

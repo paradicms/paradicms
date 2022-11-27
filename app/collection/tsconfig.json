@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "esModuleInterop": true,
     "noEmit": true,
     "isolatedModules": true,
     "jsx": "preserve",
