@@ -3,8 +3,9 @@ import {dash} from "@paradicms/vocabularies";
 import {FormProperty} from "@paradicms/shacl-forms";
 import {TextFormPropertyViewer} from "./TextFormPropertyViewer";
 import {BlankNodeFormPropertyViewer} from "./BlankNodeFormPropertyViewer";
+import {FormPropertyViewerFactory} from "./FormPropertyViewerFactory";
 
-export const createFormPropertyViewer = (kwds: {
+export const createFormPropertyViewer: FormPropertyViewerFactory = (kwds: {
   formProperty: FormProperty;
 }): React.ReactElement | null => {
   const {formProperty} = kwds;
@@ -16,7 +17,12 @@ export const createFormPropertyViewer = (kwds: {
   }
 
   if (viewer.equals(dash.BlankNodeViewer)) {
-    return <BlankNodeFormPropertyViewer formProperty={formProperty} />;
+    return (
+      <BlankNodeFormPropertyViewer
+        formProperty={formProperty}
+        formPropertyViewerFactory={createFormPropertyViewer}
+      />
+    );
   } else if (viewer.equals(dash.LiteralViewer)) {
     return <TextFormPropertyViewer formProperty={formProperty} />;
   } else {

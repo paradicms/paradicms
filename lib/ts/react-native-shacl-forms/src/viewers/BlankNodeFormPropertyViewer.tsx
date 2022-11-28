@@ -4,10 +4,12 @@ import {StyleSheet, View} from "react-native";
 import {ListItem, Text} from "@rneui/themed";
 import {FormNodeViewer} from "./FormNodeViewer";
 import {BlankNode, NamedNode} from "@rdfjs/types";
+import {FormPropertyViewerFactory} from "./FormPropertyViewerFactory";
 
 export const BlankNodeFormPropertyViewer: React.FunctionComponent<{
   formProperty: FormProperty;
-}> = ({formProperty}) => {
+  formPropertyViewerFactory: FormPropertyViewerFactory;
+}> = ({formProperty, formPropertyViewerFactory}) => {
   const values = formProperty.values.filter(
     value => value.termType === "BlankNode"
   );
@@ -43,7 +45,10 @@ export const BlankNodeFormPropertyViewer: React.FunctionComponent<{
           });
           return (
             <ListItem key={valueI}>
-              <FormNodeViewer formNode={formNode} />
+              <FormNodeViewer
+                formNode={formNode}
+                formPropertyViewerFactory={formPropertyViewerFactory}
+              />
             </ListItem>
           );
         })}

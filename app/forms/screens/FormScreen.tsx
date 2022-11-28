@@ -9,6 +9,7 @@ import {
 import {FormNodeViewer} from "@paradicms/react-native-shacl-forms/dist/viewers/FormNodeViewer";
 import {resolveFormScreenRouteParams} from "./resolveFormScreenRouteParams";
 import {useForm} from "../hooks/useForm";
+import {createFormPropertyViewer} from "@paradicms/react-native-shacl-forms/dist/viewers/createFormPropertyViewer";
 
 export const FormScreen: React.FunctionComponent<RootTabScreenProps<
   "Form"
@@ -21,7 +22,12 @@ export const FormScreen: React.FunctionComponent<RootTabScreenProps<
     }
     const {formNode, formNodeType} = resolveFormScreenRouteParams(form, route);
     if (formNode) {
-      return <FormNodeViewer formNode={formNode} />;
+      return (
+        <FormNodeViewer
+          formNode={formNode}
+          formPropertyViewerFactory={createFormPropertyViewer}
+        />
+      );
     } else if (formNodeType) {
       return (
         <FormNodeTypeViewer

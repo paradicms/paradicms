@@ -1,16 +1,17 @@
 import * as React from "react";
 import {FormNode} from "@paradicms/shacl-forms";
 import {View} from "react-native";
-import {createFormPropertyViewer} from "./createFormPropertyViewer";
 import {ListItem} from "@rneui/themed";
+import {FormPropertyViewerFactory} from "./FormPropertyViewerFactory";
 
 export const FormNodeViewer: React.FunctionComponent<{
   formNode: FormNode;
-}> = ({formNode}) => (
+  formPropertyViewerFactory: FormPropertyViewerFactory;
+}> = ({formNode, formPropertyViewerFactory}) => (
   <View>
     {formNode.properties.map(formProperty => (
       <ListItem bottomDivider key={formProperty.id}>
-        {createFormPropertyViewer({formProperty})}
+        {formPropertyViewerFactory({formProperty})}
       </ListItem>
     ))}
   </View>

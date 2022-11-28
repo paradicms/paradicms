@@ -114,7 +114,7 @@ const DashImageViewerScorer: FormPropertyWidgetScorer = {
           case "NamedNode":
           case "Literal":
             const lowerCaseValue = value.value.toLowerCase();
-            for (const imageFileExtension in [
+            for (const imageFileExtension of [
               ".png",
               ".jpg",
               ".jpeg",
@@ -125,6 +125,7 @@ const DashImageViewerScorer: FormPropertyWidgetScorer = {
                 return true;
               }
             }
+            break;
         }
         return false;
       })
