@@ -35,7 +35,7 @@ export const BlankNodeFormPropertyViewer: React.FunctionComponent<{
       <View style={styles.labelContainer}>
         <Text style={styles.label}>{formProperty.label}</Text>
       </View>
-      <View style={styles.valuesContainer}>
+      <View>
         {values.map((value, valueI) => {
           const formNode = new FormNode({
             dataGraph: formProperty.dataGraph,
@@ -63,9 +63,5 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     alignItems: "center",
-  },
-  value: {},
-  valuesContainer: {
-    marginTop: 5,
   },
 });

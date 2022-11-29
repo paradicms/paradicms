@@ -31,7 +31,7 @@ export class RightsStatement extends NamedModel {
     );
   }
 
-  toString() {
+  override toString() {
     return this.prefLabel;
   }
 }

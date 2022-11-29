@@ -106,9 +106,9 @@ export class FormProperty extends Model {
       }
     }
 
-    if (scores.size > 0) {
-      console.info("widget scores: ", [...scores.entries()]);
-    }
+    // if (scores.size > 0) {
+    //   console.info("widget scores: ", [...scores.entries()]);
+    // }
 
     const scoreEntries = [...scores.entries()];
     switch (scoreEntries.length) {

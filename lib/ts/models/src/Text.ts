@@ -5,7 +5,7 @@ import {rdf} from "@paradicms/vocabularies";
 import {requireNonNull} from "@paradicms/utilities";
 
 export class Text extends Mixin(Model, HasRights) {
-  toString() {
+  override toString() {
     return this.value;
   }
 

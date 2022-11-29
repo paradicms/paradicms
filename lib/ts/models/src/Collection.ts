@@ -13,7 +13,7 @@ export class Collection extends Mixin(
   HasImages,
   HasTitle
 ) {
-  thumbnail(selector: ThumbnailSelector): Image | null {
+  override thumbnail(selector: ThumbnailSelector): Image | null {
     const collectionImages: readonly Image[] = this.modelSet.imagesByDepictsUri(
       this.uri
     );

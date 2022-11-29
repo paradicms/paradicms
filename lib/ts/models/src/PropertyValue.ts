@@ -147,7 +147,7 @@ class NamedPropertyValue extends PropertyValue {
     return this.namedValue.title ?? this.value;
   }
 
-  thumbnail(selector: ThumbnailSelector) {
+  override thumbnail(selector: ThumbnailSelector) {
     return this.namedValue.thumbnail(selector);
   }
 

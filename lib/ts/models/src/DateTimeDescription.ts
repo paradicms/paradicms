@@ -89,14 +89,14 @@ export class DateTimeDescription extends Model {
     });
   }
 
-  toString() {
+  override toString() {
     const year = this.year;
 
     if (year === null) {
       return "(unknown)";
     }
 
-    let dayjs_ = dayjs();
+    let dayjs_ = (dayjs as any)();
 
     // https://day.js.org/docs/en/display/format
     let dateFormat = "";

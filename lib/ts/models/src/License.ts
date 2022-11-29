@@ -19,7 +19,7 @@ export class License extends NamedModel {
     );
   }
 
-  toString() {
+  override toString() {
     return this.title;
   }
 }

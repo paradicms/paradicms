@@ -19,10 +19,10 @@ export const TextFormPropertyViewer: React.FunctionComponent<{
       <View style={styles.labelContainer}>
         <Text style={styles.label}>{formProperty.label}</Text>
       </View>
-      <View style={styles.valuesContainer}>
+      <View>
         {values.map((value, valueI) => (
           <ListItem key={valueI}>
-            <ListItem.Content style={styles.value}>
+            <ListItem.Content>
               <ListItem.Title>{value.value}</ListItem.Title>
             </ListItem.Content>
           </ListItem>
@@ -38,9 +38,5 @@ const styles = StyleSheet.create({
   },
   labelContainer: {
     alignItems: "center",
-  },
-  value: {},
-  valuesContainer: {
-    marginTop: 5,
   },
 });

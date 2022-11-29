@@ -18,7 +18,7 @@ export class Institution extends Mixin(
     return this.modelSet.institutionCollections(this.uri);
   }
 
-  thumbnail(selector: ThumbnailSelector): Image | null {
+  override thumbnail(selector: ThumbnailSelector): Image | null {
     const institutionImages: readonly Image[] = this.modelSet.imagesByDepictsUri(
       this.uri
     );
