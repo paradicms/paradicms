@@ -7,6 +7,7 @@ import {useForm} from "../hooks/useForm";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {FormNodeViewerScreen} from "../screens/FormNodeViewerScreen";
 import {FormNodeTypeViewerScreen} from "../screens/FormNodeTypeViewerScreen";
+import {Button} from "react-native";
 
 const Stack = createNativeStackNavigator<FormStackParamList>();
 
@@ -42,6 +43,14 @@ export const FormStackNavigator: React.FunctionComponent = () => {
           const formNodeType = form!.nodeTypeById(route.params.formNodeTypeId);
           const formNode = formNodeType.nodeById(route.params.formNodeId);
           return {
+            headerRight: () => (
+              <Button
+                onPress={() =>
+                  navigation.push("FormNodeEditorScreen", route.params)
+                }
+                title="Edit"
+              />
+            ),
             title: formNode.label,
           };
         }}
