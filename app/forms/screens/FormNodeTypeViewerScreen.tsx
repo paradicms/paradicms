@@ -20,7 +20,7 @@ export const FormNodeTypeViewerScreen: React.FunctionComponent<FormStackScreenPr
       <FormNodeTypeViewer
         formNodeType={formNodeType}
         onSelectFormNode={formNode =>
-          navigation.navigate("FormNodeViewerScreen", {
+          navigation.push("FormNodeViewerScreen", {
             formNodeId: formNode.id,
             formNodeTypeId: formNodeType.id,
           })
