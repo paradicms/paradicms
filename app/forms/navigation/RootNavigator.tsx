@@ -1,28 +1,25 @@
-import {createNativeStackNavigator} from "@react-navigation/native-stack";
-import {NotFoundScreen} from "../screens/NotFoundScreen";
-import {ModalScreen} from "../screens/ModalScreen";
 import * as React from "react";
-import {RootTabNavigator} from "./RootTabNavigator";
-import {RootStackParamList} from "./RootStackParamList";
+import {createDrawerNavigator} from "@react-navigation/drawer";
+import {SettingsScreen} from "../screens/SettingsScreen";
+import {FormStackNavigator} from "./FormStackNavigator";
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Drawer = createDrawerNavigator();
 
 export const RootNavigator: React.FunctionComponent = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Root"
-        component={RootTabNavigator}
+    <Drawer.Navigator>
+      <Drawer.Screen
+        name="Form"
+        component={FormStackNavigator}
         options={{headerShown: false}}
       />
-      <Stack.Screen
-        name="NotFound"
-        component={NotFoundScreen}
-        options={{title: "Oops!"}}
+      <Drawer.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          title: "Settings",
+        }}
       />
-      <Stack.Group screenOptions={{presentation: "modal"}}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
-    </Stack.Navigator>
+    </Drawer.Navigator>
   );
 };
