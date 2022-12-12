@@ -16,17 +16,21 @@ export const TextFormPropertyViewer: React.FunctionComponent<{
 
   return (
     <View>
-      <View style={styles.labelContainer}>
+      <View>
         <Text style={styles.label}>{formProperty.label}</Text>
       </View>
       <View>
-        {values.map((value, valueI) => (
-          <ListItem key={valueI}>
-            <ListItem.Content>
-              <ListItem.Title>{value.value}</ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
-        ))}
+        {values.length > 0 ? (
+          values.map((value, valueI) => (
+            <ListItem key={valueI}>
+              <ListItem.Content>
+                <Text>{value.value}</Text>
+              </ListItem.Content>
+            </ListItem>
+          ))
+        ) : (
+          <Text>{values[0].value}</Text>
+        )}
       </View>
     </View>
   );
@@ -35,8 +39,5 @@ export const TextFormPropertyViewer: React.FunctionComponent<{
 const styles = StyleSheet.create({
   label: {
     fontWeight: "bold",
-  },
-  labelContainer: {
-    alignItems: "center",
   },
 });
