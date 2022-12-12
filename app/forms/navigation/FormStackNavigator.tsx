@@ -7,12 +7,15 @@ import {useForm} from "../hooks/useForm";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {FormNodeViewerScreen} from "../screens/FormNodeViewerScreen";
 import {FormNodeTypeViewerScreen} from "../screens/FormNodeTypeViewerScreen";
-import {Button} from "react-native";
+import {FormNodeEditorScreen} from "../screens/FormNodeEditorScreen";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import {useTheme} from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator<FormStackParamList>();
 
 export const FormStackNavigator: React.FunctionComponent = () => {
   const {form} = useForm();
+  const theme = useTheme();
 
   if (!form) {
     return null;
@@ -21,10 +24,33 @@ export const FormStackNavigator: React.FunctionComponent = () => {
   return (
     <Stack.Navigator initialRouteName="FormViewerScreen">
       <Stack.Screen
+        name="FormNodeEditorScreen"
+        component={FormNodeEditorScreen}
+        options={({
+          navigation,
+          route,
+        }: FormStackScreenProps<"FormNodeEditorScreen">) => {
+          const formNodeType = form!.nodeTypeById(route.params.formNodeTypeId);
+          const formNode = formNodeType.nodeById(route.params.formNodeId);
+          return {
+            headerRight: () => (
+              <FontAwesome.Button
+                backgroundColor="transparent"
+                color={theme.colors.primary}
+                name="save"
+                onPress={() =>
+                  navigation.push("FormNodeViewerScreen", route.params)
+                }
+              />
+            ),
+            title: "Edit: " + formNode.label,
+          };
+        }}
+      />
+      <Stack.Screen
         name="FormNodeTypeViewerScreen"
         component={FormNodeTypeViewerScreen}
         options={({
-          navigation,
           route,
         }: FormStackScreenProps<"FormNodeTypeViewerScreen">) => {
           const formNodeType = form!.nodeTypeById(route.params.formNodeTypeId);
@@ -44,11 +70,13 @@ export const FormStackNavigator: React.FunctionComponent = () => {
           const formNode = formNodeType.nodeById(route.params.formNodeId);
           return {
             headerRight: () => (
-              <Button
+              <FontAwesome.Button
+                backgroundColor="transparent"
+                color={theme.colors.primary}
+                name="edit"
                 onPress={() =>
                   navigation.push("FormNodeEditorScreen", route.params)
                 }
-                title="Edit"
               />
             ),
             title: formNode.label,
