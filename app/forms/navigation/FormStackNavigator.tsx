@@ -43,7 +43,7 @@ export const FormStackNavigator: React.FunctionComponent = () => {
                 }
               />
             ),
-            title: "Edit: " + formNode.label,
+            title: formNode.label,
           };
         }}
       />
