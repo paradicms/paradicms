@@ -1,10 +1,9 @@
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
 import {Text} from "@rneui/themed";
+import {RootScreenProps} from "../navigation/RootScreenProps";
 
-import {FormStackScreenProps} from "../navigation/RootTabScreenProps";
-
-export const SettingsScreen: React.FunctionComponent<FormStackScreenProps<
+export const SettingsScreen: React.FunctionComponent<RootScreenProps<
   "Settings"
 >> = ({navigation}) => (
   <View style={styles.container}>

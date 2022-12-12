@@ -10,7 +10,7 @@ export const FormNodeViewer: React.FunctionComponent<{
   const formProperties = formNode.properties;
   return (
     <>
-      {formProperties.map((formProperty, formPropertyI) => (
+      {formNode.properties.map((formProperty, formPropertyI) => (
         <ListItem
           bottomDivider={
             formPropertyI + 1 < formProperties.length ? true : undefined
