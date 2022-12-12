@@ -86,7 +86,18 @@ export class FormProperty extends Model {
   }
 
   get label(): string {
-    return this.shape.name ?? this.pathLabel ?? this.path.value;
+    if (this.shape.name) {
+      return this.shape.name;
+    } else if (this.pathLabel) {
+      return this.pathLabel;
+    } else if (
+      this.shape.nodeShapes.length === 1 &&
+      this.shape.nodeShapes[0].name
+    ) {
+      return this.shape.nodeShapes[0].name;
+    } else {
+      return this.path.value;
+    }
   }
 
   private matchValues(): DatasetCore {
