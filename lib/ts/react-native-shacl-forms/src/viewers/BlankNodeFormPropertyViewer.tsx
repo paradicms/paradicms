@@ -30,26 +30,36 @@ export const BlankNodeFormPropertyViewer: React.FunctionComponent<{
   }
   const nodeShape = nodeShapes[0];
 
+  const ValueViewer: React.FunctionComponent<{
+    value: BlankNode | NamedNode;
+  }> = ({value}) => (
+    <FormNodeViewer
+      formNode={
+        new FormNode({
+          dataGraph: formProperty.dataGraph,
+          dataGraphNode: value,
+          shape: nodeShape,
+          shapesGraph: formProperty.shapesGraph,
+        })
+      }
+      formPropertyViewerFactory={formPropertyViewerFactory}
+    />
+  );
+
   return (
     <View>
-      <Text style={styles.label}>{formProperty.label}</Text>
-      <View>
-        {values.map((value, valueI) => (
-          <ListItem key={valueI}>
-            <FormNodeViewer
-              formNode={
-                new FormNode({
-                  dataGraph: formProperty.dataGraph,
-                  dataGraphNode: value as BlankNode | NamedNode,
-                  shape: nodeShape,
-                  shapesGraph: formProperty.shapesGraph,
-                })
-              }
-              formPropertyViewerFactory={formPropertyViewerFactory}
-            />
+      <Text key={0} style={styles.label}>
+        {formProperty.label}
+      </Text>
+      {values.length === 1 ? (
+        <ValueViewer value={values[0] as BlankNode | NamedNode} />
+      ) : (
+        values.map((value, valueI) => (
+          <ListItem key={valueI + 1}>
+            <ValueViewer value={value as BlankNode | NamedNode} />
           </ListItem>
-        ))}
-      </View>
+        ))
+      )}
     </View>
   );
 };

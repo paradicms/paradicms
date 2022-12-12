@@ -1,6 +1,5 @@
 import * as React from "react";
 import {FormNode} from "@paradicms/shacl-forms";
-import {ScrollView} from "react-native";
 import {ListItem} from "@rneui/themed";
 import {FormPropertyViewerFactory} from "./FormPropertyViewerFactory";
 
@@ -10,7 +9,7 @@ export const FormNodeViewer: React.FunctionComponent<{
 }> = ({formNode, formPropertyViewerFactory}) => {
   const formProperties = formNode.properties;
   return (
-    <ScrollView>
+    <>
       {formProperties.map((formProperty, formPropertyI) => (
         <ListItem
           bottomDivider={
@@ -21,6 +20,6 @@ export const FormNodeViewer: React.FunctionComponent<{
           {formPropertyViewerFactory({formProperty})}
         </ListItem>
       ))}
-    </ScrollView>
+    </>
   );
 };
