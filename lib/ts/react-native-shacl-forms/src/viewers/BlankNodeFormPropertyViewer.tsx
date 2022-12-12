@@ -32,26 +32,23 @@ export const BlankNodeFormPropertyViewer: React.FunctionComponent<{
 
   return (
     <View>
-      <View style={styles.labelContainer}>
-        <Text style={styles.label}>{formProperty.label}</Text>
-      </View>
+      <Text style={styles.label}>{formProperty.label}</Text>
       <View>
-        {values.map((value, valueI) => {
-          const formNode = new FormNode({
-            dataGraph: formProperty.dataGraph,
-            dataGraphNode: value as BlankNode | NamedNode,
-            shape: nodeShape,
-            shapesGraph: formProperty.shapesGraph,
-          });
-          return (
-            <ListItem key={valueI}>
-              <FormNodeViewer
-                formNode={formNode}
-                formPropertyViewerFactory={formPropertyViewerFactory}
-              />
-            </ListItem>
-          );
-        })}
+        {values.map((value, valueI) => (
+          <ListItem key={valueI}>
+            <FormNodeViewer
+              formNode={
+                new FormNode({
+                  dataGraph: formProperty.dataGraph,
+                  dataGraphNode: value as BlankNode | NamedNode,
+                  shape: nodeShape,
+                  shapesGraph: formProperty.shapesGraph,
+                })
+              }
+              formPropertyViewerFactory={formPropertyViewerFactory}
+            />
+          </ListItem>
+        ))}
       </View>
     </View>
   );
@@ -60,8 +57,5 @@ export const BlankNodeFormPropertyViewer: React.FunctionComponent<{
 const styles = StyleSheet.create({
   label: {
     fontWeight: "bold",
-  },
-  labelContainer: {
-    alignItems: "center",
   },
 });
