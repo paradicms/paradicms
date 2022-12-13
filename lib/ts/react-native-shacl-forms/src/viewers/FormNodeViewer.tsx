@@ -27,8 +27,8 @@ export const FormNodeViewer: React.FunctionComponent<{
         <ListItem.Accordion
           bottomDivider={formPropertyI + 1 < formProperties.length}
           content={
-            <Text key={0} style={styles.label}>
-              Property: {formProperty.label}
+            <Text key={0}>
+              Property: <Text style={styles.label}>{formProperty.label}</Text>
             </Text>
           }
           containerStyle={{marginBottom: theme.spacing.xs}}
