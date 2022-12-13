@@ -1,15 +1,21 @@
 import {FormNode, FormProperty} from "@paradicms/shacl-forms";
 import * as React from "react";
+import {useState} from "react";
 import {StyleSheet, View} from "react-native";
 import {ListItem, Text} from "@rneui/themed";
 import {FormNodeViewer} from "./FormNodeViewer";
-import {BlankNode, NamedNode} from "@rdfjs/types";
 import {FormPropertyViewerFactory} from "./FormPropertyViewerFactory";
+import {BlankNode, NamedNode} from "@rdfjs/types";
+import {Icons} from "../Icons";
+// import {FontAwesome} from "@expo/vector-icons";
 
 export const BlankNodeFormPropertyViewer: React.FunctionComponent<{
   formProperty: FormProperty;
   formPropertyViewerFactory: FormPropertyViewerFactory;
-}> = ({formProperty, formPropertyViewerFactory}) => {
+  icons: Icons;
+}> = ({formProperty, formPropertyViewerFactory, icons}) => {
+  const [expanded, setExpanded] = useState<boolean>(false);
+
   const values = formProperty.values.filter(
     value => value.termType === "BlankNode"
   );
@@ -37,29 +43,44 @@ export const BlankNodeFormPropertyViewer: React.FunctionComponent<{
       formNode={
         new FormNode({
           dataGraph: formProperty.dataGraph,
-          dataGraphNode: value,
+          dataGraphNode: value as BlankNode | NamedNode,
           shape: nodeShape,
           shapesGraph: formProperty.shapesGraph,
         })
       }
       formPropertyViewerFactory={formPropertyViewerFactory}
+      icons={icons}
     />
   );
 
   return (
     <View>
-      <Text key={0} style={styles.label}>
-        {formProperty.label}
-      </Text>
-      {values.length === 1 ? (
-        <ValueViewer value={values[0] as BlankNode | NamedNode} />
-      ) : (
-        values.map((value, valueI) => (
-          <ListItem key={valueI + 1}>
-            <ValueViewer value={value as BlankNode | NamedNode} />
-          </ListItem>
-        ))
-      )}
+      <ListItem.Accordion
+        content={
+          <Text key={0} style={styles.label}>
+            {formProperty.label}
+          </Text>
+        }
+        expandIcon={icons.chevronUp}
+        icon={icons.chevronDown}
+        isExpanded={expanded}
+        onPress={() => setExpanded(!expanded)}
+      >
+        {values.length === 1 ? (
+          <ValueViewer value={values[0] as BlankNode | NamedNode} />
+        ) : (
+          values.map((value, valueI) => (
+            <ListItem.Accordion
+              content={`${formProperty.label} ${valueI + 1}`}
+              expandIcon={icons.chevronUp}
+              icon={icons.chevronDown}
+              key={valueI + 1}
+            >
+              <ValueViewer value={value as BlankNode | NamedNode} />
+            </ListItem.Accordion>
+          ))
+        )}
+      </ListItem.Accordion>
     </View>
   );
 };

@@ -4,11 +4,13 @@ import {FormProperty} from "@paradicms/shacl-forms";
 import {TextFormPropertyViewer} from "./TextFormPropertyViewer";
 import {BlankNodeFormPropertyViewer} from "./BlankNodeFormPropertyViewer";
 import {FormPropertyViewerFactory} from "./FormPropertyViewerFactory";
+import {Icons} from "../Icons";
 
 export const createFormPropertyViewer: FormPropertyViewerFactory = (kwds: {
   formProperty: FormProperty;
+  icons: Icons;
 }): React.ReactElement | null => {
-  const {formProperty} = kwds;
+  const {formProperty, icons} = kwds;
 
   const viewer = formProperty.viewer;
   if (!viewer) {
@@ -21,6 +23,7 @@ export const createFormPropertyViewer: FormPropertyViewerFactory = (kwds: {
       <BlankNodeFormPropertyViewer
         formProperty={formProperty}
         formPropertyViewerFactory={createFormPropertyViewer}
+        icons={icons}
       />
     );
   } else if (viewer.equals(dash.LiteralViewer)) {

@@ -8,14 +8,14 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {FormNodeViewerScreen} from "../screens/FormNodeViewerScreen";
 import {FormNodeTypeViewerScreen} from "../screens/FormNodeTypeViewerScreen";
 import {FormNodeEditorScreen} from "../screens/FormNodeEditorScreen";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import {useTheme} from "@react-navigation/native";
+import {FontAwesome} from "@expo/vector-icons";
+import {useTheme} from "@rneui/themed";
 
 const Stack = createNativeStackNavigator<FormStackParamList>();
 
 export const FormStackNavigator: React.FunctionComponent = () => {
   const {form} = useForm();
-  const theme = useTheme();
+  const {theme} = useTheme();
 
   if (!form) {
     return null;
