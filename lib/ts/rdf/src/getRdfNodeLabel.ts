@@ -11,7 +11,10 @@ export const getRdfNodeLabel = (kwds: {
 
   for (const labelPredicate of labelPredicates) {
     for (const labelQuad of dataset.match(node, labelPredicate, null, null)) {
-      if (labelQuad.object.termType === "Literal") {
+      if (
+        labelQuad.object.termType === "Literal" &&
+        labelQuad.object.value.length > 0
+      ) {
         return labelQuad.object.value;
       }
     }

@@ -88,7 +88,7 @@ export class FormProperty extends Model {
     let labelCandidate: string | null = null;
     for (labelCandidate of [
       this.shape.name,
-      getRdfNodeLabel(this.path),
+      getRdfNodeLabel({dataset: this.dataGraph, node: this.path}),
       this.shape.nodeShapes.length === 1 ? this.shape.nodeShapes[0].name : null,
     ]) {
       if (labelCandidate) {

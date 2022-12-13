@@ -1,6 +1,6 @@
 import {FormProperty} from "@paradicms/shacl-forms";
 import * as React from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {Text, View} from "react-native";
 import {ListItem} from "@rneui/themed";
 
 export const TextFormPropertyViewer: React.FunctionComponent<{
@@ -16,28 +16,17 @@ export const TextFormPropertyViewer: React.FunctionComponent<{
 
   return (
     <View>
-      <View>
-        <Text style={styles.label}>{formProperty.label}</Text>
-      </View>
-      <View>
-        {values.length > 0 ? (
-          values.map((value, valueI) => (
-            <ListItem key={valueI}>
-              <ListItem.Content>
-                <Text>{value.value}</Text>
-              </ListItem.Content>
-            </ListItem>
-          ))
-        ) : (
-          <Text>{values[0].value}</Text>
-        )}
-      </View>
+      {values.length > 0 ? (
+        values.map((value, valueI) => (
+          <ListItem key={valueI}>
+            <ListItem.Content>
+              <Text>{value.value}</Text>
+            </ListItem.Content>
+          </ListItem>
+        ))
+      ) : (
+        <Text>{values[0].value}</Text>
+      )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  label: {
-    fontWeight: "bold",
-  },
-});
