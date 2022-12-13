@@ -1,8 +1,9 @@
 import {FormProperty} from "@paradicms/shacl-forms";
-import {IconFactory} from "../IconFactory";
 import * as React from "react";
+import {IconFactory} from "../IconFactory";
 
-export type FormPropertyViewerFactory = (kwds: {
+export type FormPropertyEditorFactory = (kwds: {
   formProperty: FormProperty;
   iconFactory: IconFactory;
+  onChange: () => void;
 }) => React.ReactElement | null;

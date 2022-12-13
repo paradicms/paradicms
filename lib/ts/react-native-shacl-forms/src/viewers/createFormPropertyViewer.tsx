@@ -1,17 +1,13 @@
 import * as React from "react";
 import {dash} from "@paradicms/vocabularies";
-import {FormProperty} from "@paradicms/shacl-forms";
 import {TextFormPropertyViewer} from "./TextFormPropertyViewer";
 import {BlankNodeFormPropertyViewer} from "./BlankNodeFormPropertyViewer";
 import {FormPropertyViewerFactory} from "./FormPropertyViewerFactory";
-import {IconFactory} from "../IconFactory";
 
-export const createFormPropertyViewer: FormPropertyViewerFactory = (kwds: {
-  formProperty: FormProperty;
-  iconFactory: IconFactory;
-}): React.ReactElement | null => {
-  const {formProperty, iconFactory} = kwds;
-
+export const createFormPropertyViewer: FormPropertyViewerFactory = ({
+  formProperty,
+  iconFactory,
+}) => {
   const viewer = formProperty.viewer;
   if (!viewer) {
     console.info(`form property ${formProperty.id} has no viewer`);

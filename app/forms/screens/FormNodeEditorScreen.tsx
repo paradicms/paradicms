@@ -2,7 +2,9 @@ import * as React from "react";
 import {ScrollView} from "react-native";
 import {FormStackScreenProps} from "../navigation/FormStackScreenProps";
 import {useForm} from "../hooks/useForm";
-import {Text} from "@rneui/themed";
+import {FormNodeEditor} from "@paradicms/react-native-shacl-forms";
+import {createFormPropertyEditor} from "@paradicms/react-native-shacl-forms/dist/editors/createFormPropertyEditor";
+import {fontAwesomeIconFactory} from "../fontAwesomeIconFactory";
 
 export const FormNodeEditorScreen: React.FunctionComponent<FormStackScreenProps<
   "FormNodeEditorScreen"
@@ -18,11 +20,12 @@ export const FormNodeEditorScreen: React.FunctionComponent<FormStackScreenProps<
 
   return (
     <ScrollView>
-      <Text>Implement the editor here</Text>
-      {/*<FormNodeViewer*/}
-      {/*  formNode={formNode}*/}
-      {/*  formPropertyViewerFactory={createFormPropertyViewer}*/}
-      {/*/>*/}
+      <FormNodeEditor
+        formPropertyEditorFactory={createFormPropertyEditor}
+        formNode={formNode}
+        iconFactory={fontAwesomeIconFactory}
+        onChange={() => {}}
+      />
     </ScrollView>
   );
 };

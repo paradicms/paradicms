@@ -1,14 +1,12 @@
 import * as React from "react";
 import {dash} from "@paradicms/vocabularies";
-import {FormProperty} from "@paradicms/shacl-forms";
 import {TextInputFormPropertyEditor} from "./TextInputFormPropertyEditor";
+import {FormPropertyEditorFactory} from "./FormPropertyEditorFactory";
 
-export const createFormPropertyEditor = (kwds: {
-  formProperty: FormProperty;
-  onChange: () => void;
-}): React.ReactElement | null => {
-  const {formProperty, onChange} = kwds;
-
+export const createFormPropertyEditor: FormPropertyEditorFactory = ({
+  formProperty,
+  onChange,
+}) => {
   const editor = formProperty.editor;
   if (!editor) {
     console.warn(`form property ${formProperty.id} has no editor`);
