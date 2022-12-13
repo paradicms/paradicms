@@ -2,13 +2,12 @@ import {DataGraph, PropertyShape, ShapesGraph} from "@paradicms/shacl";
 import {DatasetCore, NamedNode, Term} from "@rdfjs/types";
 import {FormNode} from "./FormNode";
 import {Model} from "./Model";
-import {DataFactory} from "@paradicms/rdf";
+import {DataFactory, getRdfNodeLabel} from "@paradicms/rdf";
 import TermMap from "@rdfjs/term-map";
 import {NonNullable} from "@paradicms/utilities";
 
 import {FormPropertyWidgetScorer} from "./FormPropertyWidgetScorer";
 import {dashFormPropertyEditorScorers} from "./dashFormPropertyEditorScorers";
-import {rdfs} from "@paradicms/vocabularies";
 import {FormPropertyValue} from "./FormPropertyValue";
 import {dashFormPropertyViewerScorers} from "./dashFormPropertyViewerScorers";
 
@@ -86,18 +85,18 @@ export class FormProperty extends Model {
   }
 
   get label(): string {
-    if (this.shape.name) {
-      return this.shape.name;
-    } else if (this.pathLabel) {
-      return this.pathLabel;
-    } else if (
-      this.shape.nodeShapes.length === 1 &&
-      this.shape.nodeShapes[0].name
-    ) {
-      return this.shape.nodeShapes[0].name;
-    } else {
-      return this.path.value;
+    let labelCandidate: string | null = null;
+    for (labelCandidate of [
+      this.shape.name,
+      getRdfNodeLabel(this.path),
+      this.shape.nodeShapes.length === 1 ? this.shape.nodeShapes[0].name : null,
+    ]) {
+      if (labelCandidate) {
+        return labelCandidate;
+      }
     }
+
+    return this.path.value;
   }
 
   private matchValues(): DatasetCore {
@@ -143,21 +142,6 @@ export class FormProperty extends Model {
 
   get path(): NamedNode {
     return this.shape.path;
-  }
-
-  private get pathLabel(): string | null {
-    for (const rdfsLabelQuad of this.dataGraph.match(
-      this.path,
-      rdfs.label,
-      null,
-      null
-    )) {
-      if (rdfsLabelQuad.object.termType === "Literal") {
-        return rdfsLabelQuad.object.value;
-      }
-    }
-
-    return null;
   }
 
   get shapesGraph(): ShapesGraph {

@@ -9,8 +9,7 @@ import {
 import {FormProperty} from "./FormProperty";
 import {Model} from "./Model";
 import TermMap from "@rdfjs/term-map";
-
-import {rdfs} from "@paradicms/vocabularies";
+import {getRdfNodeLabel} from "@paradicms/rdf";
 
 export class FormNode extends Model {
   readonly dataGraph: DataGraph;
@@ -51,7 +50,10 @@ export class FormNode extends Model {
   }
 
   get label(): string {
-    return this.rdfsLabel ?? this.dataGraphNode.value;
+    return (
+      getRdfNodeLabel({dataset: this.dataGraph, node: this.dataGraphNode}) ??
+      this.dataGraphNode.value
+    );
   }
 
   get properties(): readonly FormProperty[] {
@@ -108,20 +110,5 @@ export class FormNode extends Model {
       return false;
     }, this.dataGraphNode);
     return propertyShapesByPath;
-  }
-
-  private get rdfsLabel(): string | null {
-    for (const rdfsLabelQuad of this.dataGraph.match(
-      this.dataGraphNode,
-      rdfs.label,
-      null,
-      null
-    )) {
-      if (rdfsLabelQuad.object.termType === "Literal") {
-        return rdfsLabelQuad.object.value;
-      }
-    }
-
-    return null;
   }
 }
