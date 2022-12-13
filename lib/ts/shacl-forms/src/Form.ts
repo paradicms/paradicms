@@ -53,11 +53,11 @@ export class Form extends Model {
   }
 
   get id(): string {
-    throw new EvalError("not implemented");
+    throw new EvalError("not implemented: Form.id");
   }
 
   get label(): string {
-    throw new EvalError("not implemented");
+    throw new EvalError("not implemented: Form.label");
   }
 
   nodeTypeById(id: string): FormNodeType {

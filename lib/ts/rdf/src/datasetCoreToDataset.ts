@@ -18,10 +18,10 @@ export const datasetCoreToDataset = (datasetCore: DatasetCore): Dataset => {
       return this;
     },
     difference(other: Dataset<Quad>): Dataset<Quad, Quad> {
-      throw new EvalError("not implemented");
+      throw new EvalError("not implemented: difference");
     },
     equals(other: Dataset<Quad>): boolean {
-      throw new EvalError("not implemented");
+      throw new EvalError("not implemented: equals");
     },
     every(
       iteratee: (quad: Quad, dataset: Dataset<Quad, Quad>) => boolean
@@ -55,10 +55,10 @@ export const datasetCoreToDataset = (datasetCore: DatasetCore): Dataset => {
       return datasetCore.has(quad);
     },
     import(stream: Stream<Quad>): Promise<Dataset<Quad, Quad>> {
-      throw new EvalError("not implemented");
+      throw new EvalError("not implemented: import");
     },
     intersection(other: Dataset<Quad>): Dataset<Quad, Quad> {
-      throw new EvalError("not implemented");
+      throw new EvalError("not implemented: intersection");
     },
     map(
       iteratee: (quad: Quad, dataset: Dataset<Quad>) => Quad
@@ -96,10 +96,10 @@ export const datasetCoreToDataset = (datasetCore: DatasetCore): Dataset => {
       return [...datasetCore];
     },
     toStream(): Stream<Quad> {
-      throw new EvalError("not implemented");
+      throw new EvalError("not implemented: toStream");
     },
     union(quads: Dataset<Quad>): Dataset<Quad, Quad> {
-      throw new EvalError("not implemented");
+      throw new EvalError("not implemented: union");
     },
     deleteMatches(
       subject?: Term,
@@ -107,7 +107,14 @@ export const datasetCoreToDataset = (datasetCore: DatasetCore): Dataset => {
       object?: Term,
       graph?: Term
     ): Dataset<Quad, Quad> {
-      throw new EvalError("not implemented");
+      const quadsToDelete: Quad[] = [];
+      for (const quad of datasetCore.match(subject, predicate, object, graph)) {
+        quadsToDelete.push(quad);
+      }
+      for (const quad of quadsToDelete) {
+        datasetCore.delete(quad);
+      }
+      return this;
     },
     match(
       subject?: Term | null,
@@ -120,10 +127,10 @@ export const datasetCoreToDataset = (datasetCore: DatasetCore): Dataset => {
       );
     },
     toCanonical(): string {
-      throw new EvalError("not implemented");
+      throw new EvalError("not implemented: toCanonical");
     },
     toString(): string {
-      throw new EvalError("not implemented");
+      throw new EvalError("not implemented: toString");
     },
     addAll(quads: Dataset<Quad> | Quad[]): Dataset<Quad, Quad> {
       for (const quad of quads) {
