@@ -111,9 +111,12 @@ export class FormProperty extends Model {
     const thisValues = this.values;
 
     for (const scorer of scorers) {
-      const score = scorer.score(this, thisValues);
+      const {score, widget} = scorer({
+        formProperty: this,
+        formPropertyValues: thisValues,
+      });
       if (score !== null && score > 0) {
-        scores.set(scorer.widgetName, score);
+        scores.set(widget, score);
       }
     }
 
