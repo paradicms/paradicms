@@ -2,13 +2,13 @@ import * as React from "react";
 import {FormNode} from "@paradicms/shacl-forms";
 import {ListItem} from "@rneui/themed";
 import {FormPropertyViewerFactory} from "./FormPropertyViewerFactory";
-import {Icons} from "../Icons";
+import {IconFactory} from "../IconFactory";
 
 export const FormNodeViewer: React.FunctionComponent<{
   formNode: FormNode;
   formPropertyViewerFactory: FormPropertyViewerFactory;
-  icons: Icons;
-}> = ({formNode, formPropertyViewerFactory, icons}) => {
+  iconFactory: IconFactory;
+}> = ({formNode, formPropertyViewerFactory, iconFactory}) => {
   const formProperties = formNode.properties;
   return (
     <>
@@ -19,7 +19,7 @@ export const FormNodeViewer: React.FunctionComponent<{
           }
           key={formProperty.id}
         >
-          {formPropertyViewerFactory({formProperty, icons})}
+          {formPropertyViewerFactory({formProperty, iconFactory})}
         </ListItem>
       ))}
     </>

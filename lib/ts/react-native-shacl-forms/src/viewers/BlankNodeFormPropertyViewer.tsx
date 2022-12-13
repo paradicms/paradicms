@@ -6,14 +6,14 @@ import {ListItem, Text} from "@rneui/themed";
 import {FormNodeViewer} from "./FormNodeViewer";
 import {FormPropertyViewerFactory} from "./FormPropertyViewerFactory";
 import {BlankNode, NamedNode} from "@rdfjs/types";
-import {Icons} from "../Icons";
+import {IconFactory} from "../IconFactory";
 // import {FontAwesome} from "@expo/vector-icons";
 
 export const BlankNodeFormPropertyViewer: React.FunctionComponent<{
   formProperty: FormProperty;
   formPropertyViewerFactory: FormPropertyViewerFactory;
-  icons: Icons;
-}> = ({formProperty, formPropertyViewerFactory, icons}) => {
+  iconFactory: IconFactory;
+}> = ({formProperty, formPropertyViewerFactory, iconFactory}) => {
   const [expanded, setExpanded] = useState<boolean>(false);
 
   const values = formProperty.values.filter(
@@ -49,7 +49,7 @@ export const BlankNodeFormPropertyViewer: React.FunctionComponent<{
         })
       }
       formPropertyViewerFactory={formPropertyViewerFactory}
-      icons={icons}
+      iconFactory={iconFactory}
     />
   );
 
@@ -61,8 +61,8 @@ export const BlankNodeFormPropertyViewer: React.FunctionComponent<{
             {formProperty.label}
           </Text>
         }
-        expandIcon={icons.chevronUp}
-        icon={icons.chevronDown}
+        expandIcon={iconFactory({name: "chevron-up"})}
+        icon={iconFactory({name: "chevron-down"})}
         isExpanded={expanded}
         onPress={() => setExpanded(!expanded)}
       >
@@ -72,8 +72,8 @@ export const BlankNodeFormPropertyViewer: React.FunctionComponent<{
           values.map((value, valueI) => (
             <ListItem.Accordion
               content={`${formProperty.label} ${valueI + 1}`}
-              expandIcon={icons.chevronUp}
-              icon={icons.chevronDown}
+              expandIcon={iconFactory({name: "chevron-up"})}
+              icon={iconFactory({name: "chevron-down"})}
               key={valueI + 1}
             >
               <ValueViewer value={value as BlankNode | NamedNode} />

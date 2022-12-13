@@ -1,3 +1,3 @@
 export * from "./editors";
-export * from "./Icons";
+export * from "./IconFactory";
 export * from "./viewers";
