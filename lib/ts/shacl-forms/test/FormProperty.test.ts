@@ -39,6 +39,14 @@ describe("FormProperty", () => {
     expect(editor!.equals(dash.TextFieldEditor)).to.be.true;
   });
 
+  it("schema:givenName should have a human-readable label", () => {
+    expect(givenNameProperty.label).to.eq("given name");
+  });
+
+  it("schema:birthDate should fall back to a URI label", () => {
+    expect(birthDateProperty.label).to.eq(schema.birthDate.value);
+  });
+
   it("expect path to have the right value", () => {
     expect(givenNameProperty.path.equals(schema.givenName)).to.be.true;
   });
@@ -47,6 +55,39 @@ describe("FormProperty", () => {
     expect(givenNameProperty.values).to.have.length(1);
     expect(givenNameProperty.values[0].equals(DataFactory.literal("Minor"))).to
       .be.true;
+  });
+
+  it("set schema:givenName to a new value", () => {
+    expect(givenNameProperty.values).to.have.length(1);
+    expect(givenNameProperty.values[0].equals(DataFactory.literal("Minor"))).to
+      .be.true;
+
+    givenNameProperty.value = DataFactory.literal("MinorE");
+    expect(givenNameProperty.values).to.have.length(1);
+    expect(givenNameProperty.values[0].equals(DataFactory.literal("MinorE"))).to
+      .be.true;
+  });
+
+  it("set schema:givenName to multiple new values", () => {
+    expect(givenNameProperty.values).to.have.length(1);
+    expect(givenNameProperty.values[0].equals(DataFactory.literal("Minor"))).to
+      .be.true;
+
+    givenNameProperty.values = [
+      DataFactory.literal("MinorE"),
+      DataFactory.literal("MinorX"),
+    ];
+    expect(givenNameProperty.values).to.have.length(2);
+    expect(
+      givenNameProperty.values.some(value =>
+        value.equals(DataFactory.literal("MinorE"))
+      )
+    ).to.be.true;
+    expect(
+      givenNameProperty.values.some(value =>
+        value.equals(DataFactory.literal("MinorX"))
+      )
+    ).to.be.true;
   });
 
   it("schema:address has a blank node viewer", () => {
