@@ -27,8 +27,6 @@
         "backgroundColor": "#ffffff"
       }
     },
-    "web": {
-      "favicon": "./assets/images/favicon.png"
-    }
+    "platforms": ["android", "ios"]
   }
 }
