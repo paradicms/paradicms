@@ -1,5 +1,4 @@
-import * as React from "react";
-import {useEffect, useReducer} from "react";
+import {useCallback, useEffect, useReducer} from "react";
 import {testForm} from "../data/testForm";
 import {Form} from "@paradicms/shacl-forms";
 
@@ -19,10 +18,10 @@ const formReducer = (
 };
 
 export const useForm = (): {
-  dispatchForm: React.Dispatch<FormReducerAction>;
+  dispatchForm: () => void;
   form: Form | null;
 } => {
-  const [state, dispatchForm] = useReducer(formReducer, {
+  const [state, dispatchFormToReducer] = useReducer(formReducer, {
     form: null,
   });
 
@@ -31,8 +30,16 @@ export const useForm = (): {
       return;
     }
 
-    dispatchForm({payload: testForm});
+    dispatchFormToReducer({payload: testForm});
   }, []);
+
+  const dispatchForm: () => void = useCallback(() => {
+    if (state.form) {
+      dispatchFormToReducer({payload: state.form});
+    } else {
+      console.error("called dispatchForm when form is not set");
+    }
+  }, [state, dispatchFormToReducer]);
 
   return {dispatchForm, form: state.form};
 };

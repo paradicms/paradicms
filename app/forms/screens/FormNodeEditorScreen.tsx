@@ -9,7 +9,7 @@ import {fontAwesomeIconFactory} from "../fontAwesomeIconFactory";
 export const FormNodeEditorScreen: React.FunctionComponent<FormStackScreenProps<
   "FormNodeEditorScreen"
 >> = ({navigation, route}) => {
-  const {form} = useForm();
+  const {dispatchForm, form} = useForm();
 
   if (!form) {
     return null;
@@ -24,7 +24,7 @@ export const FormNodeEditorScreen: React.FunctionComponent<FormStackScreenProps<
         formPropertyEditorFactory={createFormPropertyEditor}
         formNode={formNode}
         iconFactory={fontAwesomeIconFactory}
-        onChange={() => {}}
+        onChange={dispatchForm}
       />
     </ScrollView>
   );
