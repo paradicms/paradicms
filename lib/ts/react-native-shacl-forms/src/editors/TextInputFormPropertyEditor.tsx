@@ -22,12 +22,6 @@ export const TextInputFormPropertyEditor: React.FunctionComponent<{
         onChange();
       }}
       placeholder={formProperty.label}
-      style={{
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-      }}
       value={value ?? ""}
     />
   );

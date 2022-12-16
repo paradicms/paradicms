@@ -2,6 +2,7 @@ import * as React from "react";
 import {dash} from "@paradicms/vocabularies";
 import {TextInputFormPropertyEditor} from "./TextInputFormPropertyEditor";
 import {FormPropertyEditorFactory} from "./FormPropertyEditorFactory";
+import {DateTimePickerFormPropertyEditor} from "./DateTimePickerFormPropertyEditor";
 
 export const createFormPropertyEditor: FormPropertyEditorFactory = ({
   formProperty,
@@ -13,7 +14,15 @@ export const createFormPropertyEditor: FormPropertyEditorFactory = ({
     return null;
   }
 
-  if (editor.equals(dash.TextFieldEditor)) {
+  if (editor.equals(dash.DatePickerEditor)) {
+    return (
+      <DateTimePickerFormPropertyEditor
+        formProperty={formProperty}
+        mode="date"
+        onChange={onChange}
+      />
+    );
+  } else if (editor.equals(dash.TextFieldEditor)) {
     return (
       <TextInputFormPropertyEditor
         formProperty={formProperty}

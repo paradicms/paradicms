@@ -60,7 +60,7 @@ export const FormNodeLayout: React.FunctionComponent<{
         >
           <View
             style={{
-              marginLeft: theme.spacing.xl,
+              marginLeft: theme.spacing.md,
               marginBottom:
                 formPropertyI + 1 < formProperties.length
                   ? theme.spacing.xl
