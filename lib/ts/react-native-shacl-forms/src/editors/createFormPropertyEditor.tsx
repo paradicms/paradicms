@@ -3,6 +3,7 @@ import {dash} from "@paradicms/vocabularies";
 import {TextInputFormPropertyEditor} from "./TextInputFormPropertyEditor";
 import {FormPropertyEditorFactory} from "./FormPropertyEditorFactory";
 import {DateTimePickerFormPropertyEditor} from "./DateTimePickerFormPropertyEditor";
+import {DropDownPickerFormPropertyEditor} from "./DropDownPickerFormPropertyEditor";
 
 export const createFormPropertyEditor: FormPropertyEditorFactory = ({
   formProperty,
@@ -10,7 +11,7 @@ export const createFormPropertyEditor: FormPropertyEditorFactory = ({
 }) => {
   const editor = formProperty.editor;
   if (!editor) {
-    console.warn(`form property ${formProperty.id} has no editor`);
+    // console.warn(`form property ${formProperty.id} has no editor`);
     return null;
   }
 
@@ -19,6 +20,13 @@ export const createFormPropertyEditor: FormPropertyEditorFactory = ({
       <DateTimePickerFormPropertyEditor
         formProperty={formProperty}
         mode="date"
+        onChange={onChange}
+      />
+    );
+  } else if (editor.equals(dash.EnumSelectEditor)) {
+    return (
+      <DropDownPickerFormPropertyEditor
+        formProperty={formProperty}
         onChange={onChange}
       />
     );
