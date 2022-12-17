@@ -1,5 +1,4 @@
 import * as React from "react";
-import {ScrollView} from "react-native";
 import {FormStackScreenProps} from "../navigation/FormStackScreenProps";
 import {useForm} from "../hooks/useForm";
 import {FormNodeEditor} from "@paradicms/react-native-shacl-forms";
@@ -19,13 +18,11 @@ export const FormNodeEditorScreen: React.FunctionComponent<FormStackScreenProps<
   const formNode = formNodeType.nodeById(route.params.formNodeId);
 
   return (
-    <ScrollView>
-      <FormNodeEditor
-        formPropertyEditorFactory={createFormPropertyEditor}
-        formNode={formNode}
-        iconFactory={fontAwesomeIconFactory}
-        onChange={dispatchForm}
-      />
-    </ScrollView>
+    <FormNodeEditor
+      formPropertyEditorFactory={createFormPropertyEditor}
+      formNode={formNode}
+      iconFactory={fontAwesomeIconFactory}
+      onChange={dispatchForm}
+    />
   );
 };

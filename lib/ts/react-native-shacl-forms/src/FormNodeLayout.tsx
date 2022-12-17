@@ -3,7 +3,7 @@ import {useState} from "react";
 import {FormNode, FormProperty} from "@paradicms/shacl-forms";
 import {ListItem, Text, useTheme} from "@rneui/themed";
 import {IconFactory} from "./IconFactory";
-import {StyleSheet, View} from "react-native";
+import {FlatList, ListRenderItem, StyleSheet, View} from "react-native";
 
 export const FormNodeLayout: React.FunctionComponent<{
   formNode: FormNode;
@@ -23,55 +23,58 @@ export const FormNodeLayout: React.FunctionComponent<{
     return null;
   }
 
+  const renderFormProperty: ListRenderItem<FormProperty> = ({
+    index: formPropertyI,
+    item: formProperty,
+  }) => (
+    <ListItem.Accordion
+      bottomDivider={formPropertyI + 1 < formProperties.length}
+      content={
+        <Text key={0}>
+          Property: <Text style={styles.label}>{formProperty.label}</Text>
+        </Text>
+      }
+      containerStyle={{marginBottom: theme.spacing.xs}}
+      expandIcon={iconFactory({name: "chevron-up"})}
+      key={formProperty.id}
+      icon={iconFactory({name: "chevron-down"})}
+      isExpanded={expandedFormPropertyIds.some(
+        formPropertyId => formPropertyId === formProperty.id
+      )}
+      onPress={() => {
+        const filteredExpandedFormPropertyIds = expandedFormPropertyIds.filter(
+          formPropertyId => formPropertyId !== formProperty.id
+        );
+        if (
+          filteredExpandedFormPropertyIds.length <
+          expandedFormPropertyIds.length
+        ) {
+          // Was expanded, un-expand
+          setExpandedFormPropertyIds(filteredExpandedFormPropertyIds);
+        } else {
+          // Was not expanded, expand
+          setExpandedFormPropertyIds(
+            expandedFormPropertyIds.concat(formProperty.id)
+          );
+        }
+      }}
+    >
+      <View
+        style={{
+          marginLeft: theme.spacing.md,
+          marginBottom:
+            formPropertyI + 1 < formProperties.length
+              ? theme.spacing.xl
+              : undefined,
+        }}
+      >
+        {formPropertyWidgetFactory({formProperty, iconFactory})}
+      </View>
+    </ListItem.Accordion>
+  );
+
   return (
-    <>
-      {formNode.properties.map((formProperty, formPropertyI) => (
-        <ListItem.Accordion
-          bottomDivider={formPropertyI + 1 < formProperties.length}
-          content={
-            <Text key={0}>
-              Property: <Text style={styles.label}>{formProperty.label}</Text>
-            </Text>
-          }
-          containerStyle={{marginBottom: theme.spacing.xs}}
-          expandIcon={iconFactory({name: "chevron-up"})}
-          key={formProperty.id}
-          icon={iconFactory({name: "chevron-down"})}
-          isExpanded={expandedFormPropertyIds.some(
-            formPropertyId => formPropertyId === formProperty.id
-          )}
-          onPress={() => {
-            const filteredExpandedFormPropertyIds = expandedFormPropertyIds.filter(
-              formPropertyId => formPropertyId !== formProperty.id
-            );
-            if (
-              filteredExpandedFormPropertyIds.length <
-              expandedFormPropertyIds.length
-            ) {
-              // Was expanded, un-expand
-              setExpandedFormPropertyIds(filteredExpandedFormPropertyIds);
-            } else {
-              // Was not expanded, expand
-              setExpandedFormPropertyIds(
-                expandedFormPropertyIds.concat(formProperty.id)
-              );
-            }
-          }}
-        >
-          <View
-            style={{
-              marginLeft: theme.spacing.md,
-              marginBottom:
-                formPropertyI + 1 < formProperties.length
-                  ? theme.spacing.xl
-                  : undefined,
-            }}
-          >
-            {formPropertyWidgetFactory({formProperty, iconFactory})}
-          </View>
-        </ListItem.Accordion>
-      ))}
-    </>
+    <FlatList data={formNode.properties} renderItem={renderFormProperty} />
   );
 };
 
