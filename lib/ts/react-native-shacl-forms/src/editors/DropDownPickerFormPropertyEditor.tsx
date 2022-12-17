@@ -11,11 +11,12 @@ export const DropDownPickerFormPropertyEditor: React.FunctionComponent<{
 }> = ({formProperty, onChange}) => {
   const [open, setOpen] = useState<boolean>(false);
 
-  const items: {
+  type Item = {
     label: string;
     value: string;
     valueTerm: BlankNode | Literal | NamedNode;
-  }[] = [];
+  };
+  const items: Item[] = [];
   for (const valueTerm of formProperty.shape.in_ ?? []) {
     switch (valueTerm.termType) {
       case "BlankNode":
@@ -47,16 +48,15 @@ export const DropDownPickerFormPropertyEditor: React.FunctionComponent<{
 
   return (
     <DropDownPicker
+      dropDownDirection="TOP"
       items={items}
       open={open}
       setOpen={setOpen}
-      setValue={() => (value: string) => {
-        for (const item of items) {
-          if (value === item.value) {
-            formProperty.value = item.valueTerm;
-          }
-        }
+      onSelectItem={item => {
+        formProperty.value = (item as Item).valueTerm;
+        onChange();
       }}
+      setValue={callback => {}}
       value={value}
     />
   );
