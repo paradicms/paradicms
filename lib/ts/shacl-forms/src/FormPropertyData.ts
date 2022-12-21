@@ -1,7 +1,6 @@
 import {DataGraph, PropertyShape, ShapesGraph} from "@paradicms/shacl";
 import {DatasetCore, NamedNode, Term} from "@rdfjs/types";
-import {FormNode} from "./FormNode";
-import {FormModel} from "./FormModel";
+import {FormNodeData} from "./FormNodeData";
 import {DataFactory, getRdfNodeLabel} from "@paradicms/rdf";
 import TermMap from "@rdfjs/term-map";
 import {NonNullable} from "@paradicms/utilities";
@@ -24,12 +23,11 @@ const checkFormPropertyValueTermType = (term: Term): FormPropertyValue => {
   }
 };
 
-export class FormProperty extends FormModel {
-  readonly formNode: FormNode;
+export class FormPropertyData {
+  readonly formNode: FormNodeData;
   readonly shape: PropertyShape;
 
-  constructor(kwds: {formNode: FormNode; shape: PropertyShape}) {
-    super();
+  constructor(kwds: {formNode: FormNodeData; shape: PropertyShape}) {
     this.formNode = kwds.formNode;
     this.shape = kwds.shape;
   }

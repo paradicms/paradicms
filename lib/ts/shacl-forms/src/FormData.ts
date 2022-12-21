@@ -5,16 +5,15 @@ import {
   ShapesGraph,
 } from "@paradicms/shacl";
 import {NamedNode} from "@rdfjs/types";
-import {FormNodeType} from "./FormNodeType";
+import {FormNodeTypeData} from "./FormNodeTypeData";
 
-export class Form {
+export class FormData {
   readonly dataGraph: DataGraph;
-  readonly nodeTypes: readonly FormNodeType[];
+  readonly nodeTypes: readonly FormNodeTypeData[];
   readonly shapesGraph: ShapesGraph;
 
   constructor(kwds: {
     dataGraph: DataGraph;
-    id: string;
     nodeRdfTypes: readonly NamedNode[];
     shapesGraph: ShapesGraph;
   }) {
@@ -42,7 +41,7 @@ export class Form {
             "synthesize a blank NodeShape with sh:and the multiple shapes"
           );
       }
-      return new FormNodeType({
+      return new FormNodeTypeData({
         form: this,
         rdfType: nodeRdfType,
         shape: nodeShape,
@@ -51,7 +50,7 @@ export class Form {
     this.shapesGraph = kwds.shapesGraph;
   }
 
-  nodeTypeById(id: string): FormNodeType {
+  nodeTypeById(id: string): FormNodeTypeData {
     const nodeType = this.nodeTypes.find(nodeType => nodeType.id === id);
     if (!nodeType) {
       throw new RangeError("unknown form node type id: " + id);

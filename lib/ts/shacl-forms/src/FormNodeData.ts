@@ -6,12 +6,11 @@ import {
   ShaclProcessor,
   ShapesGraph,
 } from "@paradicms/shacl";
-import {FormProperty} from "./FormProperty";
-import {FormModel} from "./FormModel";
+import {FormPropertyData} from "./FormPropertyData";
 import TermMap from "@rdfjs/term-map";
 import {getRdfNodeLabel} from "@paradicms/rdf";
 
-export class FormNode extends FormModel {
+export class FormNodeData {
   readonly dataGraph: DataGraph;
   readonly dataGraphNode: BlankNode | NamedNode;
   readonly shape: NodeShape;
@@ -23,7 +22,6 @@ export class FormNode extends FormModel {
     shape: NodeShape;
     shapesGraph: ShapesGraph;
   }) {
-    super();
     this.dataGraph = kwds.dataGraph;
     this.dataGraphNode = kwds.dataGraphNode;
     this.shape = kwds.shape;
@@ -56,7 +54,7 @@ export class FormNode extends FormModel {
     );
   }
 
-  get properties(): readonly FormProperty[] {
+  get properties(): readonly FormPropertyData[] {
     return [...this.propertyShapesByPath.values()]
       .map(pathPropertyShapes => {
         switch (pathPropertyShapes.length) {
@@ -86,7 +84,7 @@ export class FormNode extends FormModel {
       })
       .map(
         propertyShape =>
-          new FormProperty({
+          new FormPropertyData({
             formNode: this,
             shape: propertyShape,
           })

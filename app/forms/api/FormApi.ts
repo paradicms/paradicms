@@ -5,5 +5,5 @@ export interface FormApi {
 
   getFormIds(): Promise<readonly string[]>;
 
-  putForm(form: Form): Promise<void>;
+  putForm(id: string, form: Form): Promise<void>;
 }

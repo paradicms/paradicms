@@ -1,29 +1,27 @@
 import {DataFactory} from "@paradicms/rdf";
-import {Form} from "./Form";
-import {FormNode} from "./FormNode";
+import {FormData} from "./FormData";
+import {FormNodeData} from "./FormNodeData";
 import {rdf} from "@paradicms/vocabularies";
-import {FormModel} from "./FormModel";
 import {DataGraph, NodeShape, ShapesGraph} from "@paradicms/shacl";
 import {NamedNode} from "@rdfjs/types";
 
-export class FormNodeType extends FormModel {
-  readonly form: Form;
+export class FormNodeTypeData {
+  readonly form: FormData;
   readonly rdfType: NamedNode;
   readonly shape: NodeShape;
 
-  constructor(kwds: {form: Form; rdfType: NamedNode; shape: NodeShape}) {
-    super();
+  constructor(kwds: {form: FormData; rdfType: NamedNode; shape: NodeShape}) {
     this.form = kwds.form;
     this.rdfType = kwds.rdfType;
     this.shape = kwds.shape;
   }
 
-  addNode(dataGraphNode: NamedNode): FormNode {
+  addNode(dataGraphNode: NamedNode): FormNodeData {
     // Add (node, rdf:type, ...)
     // Assumes the shapes graph has a class or implicit class target
     this.dataGraph.add(DataFactory.quad(dataGraphNode, rdf.type, this.rdfType));
 
-    return new FormNode({
+    return new FormNodeData({
       dataGraph: this.dataGraph,
       dataGraphNode: dataGraphNode,
       shape: this.shape,
@@ -43,10 +41,10 @@ export class FormNodeType extends FormModel {
     return this.shape.name ?? this.rdfType.value;
   }
 
-  nodeById(id: string): FormNode {
+  nodeById(id: string): FormNodeData {
     const dataGraphNode = DataFactory.namedNode(id);
     for (const _ of this.dataGraph.match(null, rdf.type, this.rdfType, null)) {
-      return new FormNode({
+      return new FormNodeData({
         dataGraph: this.dataGraph,
         dataGraphNode,
         shape: this.shape,
@@ -56,17 +54,17 @@ export class FormNodeType extends FormModel {
     throw new RangeError("no such form node " + id);
   }
 
-  get nodes(): readonly FormNode[] {
+  get nodes(): readonly FormNodeData[] {
     return Object.values(this.nodesById);
   }
 
-  private get nodesById(): {[index: string]: FormNode} {
+  private get nodesById(): {[index: string]: FormNodeData} {
     return this.dataGraph
       .match(null, rdf.type, this.rdfType, null)
       .reduce((map, quad) => {
         const subject = quad.subject;
         if (subject.termType === "NamedNode" && !map[subject.value]) {
-          map[subject.value] = new FormNode({
+          map[subject.value] = new FormNodeData({
             dataGraph: this.dataGraph,
             dataGraphNode: subject,
             shape: this.shape,
@@ -74,7 +72,7 @@ export class FormNodeType extends FormModel {
           });
         }
         return map;
-      }, {} as {[index: string]: FormNode});
+      }, {} as {[index: string]: FormNodeData});
   }
 
   get shapesGraph(): ShapesGraph {

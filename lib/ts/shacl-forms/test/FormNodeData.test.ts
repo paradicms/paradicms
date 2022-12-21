@@ -1,16 +1,16 @@
 import {expect} from "chai";
-import {testForm} from "./testForm";
+import {testFormData} from "./testFormData";
 import {schema} from "@paradicms/vocabularies";
-import {FormNode, FormNodeType} from "../src";
+import {FormNodeData, FormNodeTypeData} from "../src";
 import {BlankNode} from "@rdfjs/types";
 
-describe("FormNode", () => {
-  let addressFormNode: FormNode;
-  let personFormNode: FormNode;
-  let personFormNodeType: FormNodeType;
+describe("FormNodeData", () => {
+  let addressFormNode: FormNodeData;
+  let personFormNode: FormNodeData;
+  let personFormNodeType: FormNodeTypeData;
 
   beforeEach(() => {
-    personFormNodeType = testForm().nodeTypes.find(testNodeType =>
+    personFormNodeType = testFormData().nodeTypes.find(testNodeType =>
       testNodeType.rdfType.equals(schema.Person)
     )!;
     personFormNode = personFormNodeType.nodes[0];
@@ -18,7 +18,7 @@ describe("FormNode", () => {
       property.path.equals(schema.address)
     )!;
     expect(addressFormProperty).not.to.be.undefined;
-    addressFormNode = new FormNode({
+    addressFormNode = new FormNodeData({
       dataGraph: personFormNode.dataGraph,
       dataGraphNode: addressFormProperty.values.find(
         value => value.termType === "BlankNode"
