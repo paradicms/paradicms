@@ -2,7 +2,7 @@ import {BlankNode, NamedNode} from "@rdfjs/types";
 import {ShapesGraph} from "./ShapesGraph";
 import {Resource} from "@paradicms/rdf";
 
-export abstract class Model extends Resource {
+export abstract class ShaclModel extends Resource {
   protected readonly shapesGraph: ShapesGraph;
 
   constructor(kwds: {node: BlankNode | NamedNode; shapesGraph: ShapesGraph}) {

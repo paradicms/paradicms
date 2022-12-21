@@ -1,9 +1,9 @@
 import {NamedNode} from "@rdfjs/types";
 import {ShapesGraph} from "./ShapesGraph";
 import {rdfs} from "@paradicms/vocabularies";
-import {Model} from "./Model";
+import {ShaclModel} from "./ShaclModel";
 
-export class PropertyGroup extends Model {
+export class PropertyGroup extends ShaclModel {
   constructor(kwds: {node: NamedNode; shapesGraph: ShapesGraph}) {
     super(kwds);
   }

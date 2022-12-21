@@ -1,10 +1,10 @@
-import {Model} from "./Model";
+import {ShaclModel} from "./ShaclModel";
 import {rdf, rdfs, sh} from "@paradicms/vocabularies";
 import {Literal, NamedNode} from "@rdfjs/types";
 import {NodeKind} from "./NodeKind";
 import {hasRdfSuperClass} from "@paradicms/rdf";
 
-export class Shape extends Model {
+export class Shape extends ShaclModel {
   get description(): string | null {
     return this.findAndMapObject(sh.description, term =>
       term.termType === "Literal" ? term.value : null
