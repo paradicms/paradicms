@@ -1,2 +1,2 @@
-export * from "./FormNodeEditor";
-export * from "./TextInputFormPropertyEditor";
+export * from "./FormNodeDataEditor";
+export * from "./TextInputFormPropertyDataEditor";

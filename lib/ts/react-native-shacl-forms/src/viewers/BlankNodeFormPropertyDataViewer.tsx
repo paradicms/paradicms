@@ -1,37 +1,37 @@
-import {FormNode, FormProperty} from "@paradicms/shacl-forms";
+import {FormNodeData, FormPropertyData} from "@paradicms/shacl-forms";
 import * as React from "react";
 import {useState} from "react";
 import {View} from "react-native";
 import {ListItem, Text, useTheme} from "@rneui/themed";
-import {FormNodeViewer} from "./FormNodeViewer";
-import {FormPropertyViewerFactory} from "./FormPropertyViewerFactory";
+import {FormNodeDataViewer} from "./FormNodeDataViewer";
+import {FormPropertyDataViewerFactory} from "./FormPropertyDataViewerFactory";
 import {BlankNode, NamedNode} from "@rdfjs/types";
 import {IconFactory} from "../IconFactory";
 import {getRdfNodeLabel} from "@paradicms/rdf";
 
-export const BlankNodeFormPropertyViewer: React.FunctionComponent<{
-  formProperty: FormProperty;
-  formPropertyViewerFactory: FormPropertyViewerFactory;
+export const BlankNodeFormPropertyDataViewer: React.FunctionComponent<{
+  formPropertyData: FormPropertyData;
+  formPropertyDataViewerFactory: FormPropertyDataViewerFactory;
   iconFactory: IconFactory;
-}> = ({formProperty, formPropertyViewerFactory, iconFactory}) => {
+}> = ({formPropertyData, formPropertyDataViewerFactory, iconFactory}) => {
   const [expandedValueI, setExpandedValueI] = useState<number>(-1);
   const {theme} = useTheme();
 
-  const values = formProperty.values.filter(
+  const values = formPropertyData.values.filter(
     value => value.termType === "BlankNode"
   );
   if (values.length === 0) {
-    console.info(`form property ${formProperty.id} has no values`);
+    console.info(`form property ${formPropertyData.id} has no values`);
     return null;
   }
 
-  const nodeShapes = formProperty.shape.nodeShapes;
+  const nodeShapes = formPropertyData.shape.nodeShapes;
   if (nodeShapes.length === 0) {
-    console.info(`form property ${formProperty.id} has no node shapes`);
+    console.info(`form property ${formPropertyData.id} has no node shapes`);
     return null;
   } else if (nodeShapes.length > 1) {
     console.info(
-      `form property ${formProperty.id} has ${nodeShapes.length} node shapes`
+      `form property ${formPropertyData.id} has ${nodeShapes.length} node shapes`
     );
     return null;
   }
@@ -44,9 +44,9 @@ export const BlankNodeFormPropertyViewer: React.FunctionComponent<{
           content={
             <Text>
               {getRdfNodeLabel({
-                dataset: formProperty.dataGraph,
+                dataset: formPropertyData.dataGraph,
                 node: value as BlankNode | NamedNode,
-              }) ?? `${formProperty.label} ${valueI + 1}`}
+              }) ?? `${formPropertyData.label} ${valueI + 1}`}
             </Text>
           }
           expandIcon={iconFactory({name: "chevron-up"})}
@@ -58,16 +58,16 @@ export const BlankNodeFormPropertyViewer: React.FunctionComponent<{
           }
         >
           <View style={{marginLeft: theme.spacing.xl}}>
-            <FormNodeViewer
-              formNode={
-                new FormNode({
-                  dataGraph: formProperty.dataGraph,
+            <FormNodeDataViewer
+              formNodeData={
+                new FormNodeData({
+                  dataGraph: formPropertyData.dataGraph,
                   dataGraphNode: value as BlankNode | NamedNode,
                   shape: nodeShape,
-                  shapesGraph: formProperty.shapesGraph,
+                  shapesGraph: formPropertyData.shapesGraph,
                 })
               }
-              formPropertyViewerFactory={formPropertyViewerFactory}
+              formPropertyDataViewerFactory={formPropertyDataViewerFactory}
               iconFactory={iconFactory}
             />
           </View>

@@ -2,7 +2,7 @@ import * as React from "react";
 import * as renderer from "react-test-renderer";
 import {testForm} from "../testForm";
 import {schema} from "@paradicms/vocabularies";
-import {TextInputFormPropertyEditor} from "../../src/editors";
+import {TextInputFormPropertyDataEditor} from "../../src/editors";
 import {FormProperty} from "@paradicms/shacl-forms";
 
 test("renders correctly", () => {
@@ -11,8 +11,8 @@ test("renders correctly", () => {
   )!;
   const tree = renderer
     .create(
-      <TextInputFormPropertyEditor
-        formProperty={formProperty}
+      <TextInputFormPropertyDataEditor
+        formPropertyData={formProperty}
         onChange={() => {}}
       />
     )

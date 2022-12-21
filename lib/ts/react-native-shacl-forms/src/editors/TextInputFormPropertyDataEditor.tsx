@@ -1,14 +1,14 @@
 import * as React from "react";
-import {FormProperty} from "@paradicms/shacl-forms";
+import {FormPropertyData} from "@paradicms/shacl-forms";
 import {DataFactory} from "@paradicms/rdf";
 import {xsd} from "@paradicms/vocabularies";
 import {Input} from "@rneui/themed";
 
-export const TextInputFormPropertyEditor: React.FunctionComponent<{
-  formProperty: FormProperty;
+export const TextInputFormPropertyDataEditor: React.FunctionComponent<{
+  formPropertyData: FormPropertyData;
   onChange: () => void;
-}> = ({formProperty, onChange}) => {
-  const value = formProperty.findAndMapValue(value =>
+}> = ({formPropertyData, onChange}) => {
+  const value = formPropertyData.findAndMapValue(value =>
     value.termType === "Literal" && value.datatype.equals(xsd.string)
       ? value.value
       : null
@@ -18,10 +18,10 @@ export const TextInputFormPropertyEditor: React.FunctionComponent<{
     <Input
       // @ts-ignore
       onChangeText={(text: string) => {
-        formProperty.value = DataFactory.literal(text, xsd.string);
+        formPropertyData.value = DataFactory.literal(text, xsd.string);
         onChange();
       }}
-      placeholder={formProperty.label}
+      placeholder={formPropertyData.label}
       value={value ?? ""}
     />
   );

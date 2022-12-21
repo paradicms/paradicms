@@ -1,19 +1,19 @@
 import * as React from "react";
 import {useState} from "react";
-import {FormNode, FormProperty} from "@paradicms/shacl-forms";
+import {FormNodeData, FormPropertyData} from "@paradicms/shacl-forms";
 import {ListItem, Text, useTheme} from "@rneui/themed";
 import {IconFactory} from "./IconFactory";
 import {FlatList, ListRenderItem, StyleSheet, View} from "react-native";
 
-export const FormNodeLayout: React.FunctionComponent<{
-  formNode: FormNode;
-  formPropertyWidgetFactory: (kwds: {
-    formProperty: FormProperty;
+export const FormNodeDataLayout: React.FunctionComponent<{
+  formNodeData: FormNodeData;
+  formPropertyDataWidgetFactory: (kwds: {
+    formPropertyData: FormPropertyData;
     iconFactory: IconFactory;
   }) => React.ReactElement | null;
   iconFactory: IconFactory;
-}> = ({formNode, formPropertyWidgetFactory, iconFactory}) => {
-  const formProperties = formNode.properties;
+}> = ({formNodeData, formPropertyDataWidgetFactory, iconFactory}) => {
+  const formProperties = formNodeData.properties;
   const [expandedFormPropertyIds, setExpandedFormPropertyIds] = useState<
     readonly string[]
   >(formProperties.map(formProperty => formProperty.id));
@@ -23,7 +23,7 @@ export const FormNodeLayout: React.FunctionComponent<{
     return null;
   }
 
-  const renderFormProperty: ListRenderItem<FormProperty> = ({
+  const renderFormPropertyData: ListRenderItem<FormPropertyData> = ({
     index: formPropertyI,
     item: formProperty,
   }) => (
@@ -68,13 +68,19 @@ export const FormNodeLayout: React.FunctionComponent<{
               : undefined,
         }}
       >
-        {formPropertyWidgetFactory({formProperty, iconFactory})}
+        {formPropertyDataWidgetFactory({
+          formPropertyData: formProperty,
+          iconFactory,
+        })}
       </View>
     </ListItem.Accordion>
   );
 
   return (
-    <FlatList data={formNode.properties} renderItem={renderFormProperty} />
+    <FlatList
+      data={formNodeData.properties}
+      renderItem={renderFormPropertyData}
+    />
   );
 };
 

@@ -1,15 +1,15 @@
 import * as React from "react";
-import {Form, FormNodeType} from "@paradicms/shacl-forms";
+import {FormData, FormNodeTypeData} from "@paradicms/shacl-forms";
 import {View} from "react-native";
 import {Button, ListItem} from "@rneui/themed";
 
-export const FormViewer: React.FunctionComponent<{
-  form: Form;
-  onSelectFormNodeType: (formNodeType: FormNodeType) => void;
-}> = ({form, onSelectFormNodeType}) => {
+export const FormDataViewer: React.FunctionComponent<{
+  formData: FormData;
+  onSelectFormNodeType: (formNodeTypeData: FormNodeTypeData) => void;
+}> = ({formData, onSelectFormNodeType}) => {
   return (
     <View>
-      {form.nodeTypes.map(formNodeType => (
+      {formData.nodeTypes.map(formNodeType => (
         <ListItem bottomDivider key={formNodeType.id}>
           <Button
             onPress={() => onSelectFormNodeType(formNodeType)}
