@@ -6,11 +6,9 @@ import {
 } from "@paradicms/shacl";
 import {NamedNode} from "@rdfjs/types";
 import {FormNodeType} from "./FormNodeType";
-import {FormModel} from "./FormModel";
 
-export class Form extends FormModel {
+export class Form {
   readonly dataGraph: DataGraph;
-  readonly id: string;
   readonly nodeTypes: readonly FormNodeType[];
   readonly shapesGraph: ShapesGraph;
 
@@ -20,9 +18,7 @@ export class Form extends FormModel {
     nodeRdfTypes: readonly NamedNode[];
     shapesGraph: ShapesGraph;
   }) {
-    super();
     this.dataGraph = kwds.dataGraph;
-    this.id = kwds.id;
     this.nodeTypes = kwds.nodeRdfTypes.map(nodeRdfType => {
       const nodeShapes: NodeShape[] = [];
       new ShaclProcessor({
@@ -53,10 +49,6 @@ export class Form extends FormModel {
       });
     });
     this.shapesGraph = kwds.shapesGraph;
-  }
-
-  get label(): string {
-    return this.id;
   }
 
   nodeTypeById(id: string): FormNodeType {
