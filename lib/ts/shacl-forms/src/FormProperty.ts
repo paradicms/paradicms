@@ -1,7 +1,7 @@
 import {DataGraph, PropertyShape, ShapesGraph} from "@paradicms/shacl";
 import {DatasetCore, NamedNode, Term} from "@rdfjs/types";
 import {FormNode} from "./FormNode";
-import {Model} from "./Model";
+import {FormModel} from "./FormModel";
 import {DataFactory, getRdfNodeLabel} from "@paradicms/rdf";
 import TermMap from "@rdfjs/term-map";
 import {NonNullable} from "@paradicms/utilities";
@@ -24,7 +24,7 @@ const checkFormPropertyValueTermType = (term: Term): FormPropertyValue => {
   }
 };
 
-export class FormProperty extends Model {
+export class FormProperty extends FormModel {
   readonly formNode: FormNode;
   readonly shape: PropertyShape;
 

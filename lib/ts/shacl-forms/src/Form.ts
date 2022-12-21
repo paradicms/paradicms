@@ -6,9 +6,9 @@ import {
 } from "@paradicms/shacl";
 import {NamedNode} from "@rdfjs/types";
 import {FormNodeType} from "./FormNodeType";
-import {Model} from "./Model";
+import {FormModel} from "./FormModel";
 
-export class Form extends Model {
+export class Form extends FormModel {
   readonly dataGraph: DataGraph;
   readonly id: string;
   readonly nodeTypes: readonly FormNodeType[];

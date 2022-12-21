@@ -2,11 +2,11 @@ import {DataFactory} from "@paradicms/rdf";
 import {Form} from "./Form";
 import {FormNode} from "./FormNode";
 import {rdf} from "@paradicms/vocabularies";
-import {Model} from "./Model";
+import {FormModel} from "./FormModel";
 import {DataGraph, NodeShape, ShapesGraph} from "@paradicms/shacl";
 import {NamedNode} from "@rdfjs/types";
 
-export class FormNodeType extends Model {
+export class FormNodeType extends FormModel {
   readonly form: Form;
   readonly rdfType: NamedNode;
   readonly shape: NodeShape;

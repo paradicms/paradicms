@@ -1,6 +1,6 @@
 import {DataGraph, ShapesGraph} from "@paradicms/shacl";
 
-export abstract class Model {
+export abstract class FormModel {
   abstract readonly dataGraph: DataGraph;
   abstract readonly shapesGraph: ShapesGraph;
 

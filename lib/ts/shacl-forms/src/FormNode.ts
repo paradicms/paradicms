@@ -7,11 +7,11 @@ import {
   ShapesGraph,
 } from "@paradicms/shacl";
 import {FormProperty} from "./FormProperty";
-import {Model} from "./Model";
+import {FormModel} from "./FormModel";
 import TermMap from "@rdfjs/term-map";
 import {getRdfNodeLabel} from "@paradicms/rdf";
 
-export class FormNode extends Model {
+export class FormNode extends FormModel {
   readonly dataGraph: DataGraph;
   readonly dataGraphNode: BlankNode | NamedNode;
   readonly shape: NodeShape;
