@@ -10,16 +10,19 @@ import {Model} from "./Model";
 
 export class Form extends Model {
   readonly dataGraph: DataGraph;
+  readonly id: string;
   readonly nodeTypes: readonly FormNodeType[];
   readonly shapesGraph: ShapesGraph;
 
   constructor(kwds: {
     dataGraph: DataGraph;
+    id: string;
     nodeRdfTypes: readonly NamedNode[];
     shapesGraph: ShapesGraph;
   }) {
     super();
     this.dataGraph = kwds.dataGraph;
+    this.id = kwds.id;
     this.nodeTypes = kwds.nodeRdfTypes.map(nodeRdfType => {
       const nodeShapes: NodeShape[] = [];
       new ShaclProcessor({
@@ -52,12 +55,8 @@ export class Form extends Model {
     this.shapesGraph = kwds.shapesGraph;
   }
 
-  get id(): string {
-    throw new EvalError("not implemented: Form.id");
-  }
-
   get label(): string {
-    throw new EvalError("not implemented: Form.label");
+    return this.id;
   }
 
   nodeTypeById(id: string): FormNodeType {
