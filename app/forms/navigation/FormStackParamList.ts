@@ -1,6 +1,6 @@
 export type FormStackParamList = {
-  FormNodeEditorScreen: {formNodeId: string; formNodeTypeId: string};
-  FormNodeTypeViewerScreen: {formNodeTypeId: string};
-  FormNodeViewerScreen: {formNodeId: string; formNodeTypeId: string};
-  FormViewerScreen: undefined;
+  FormNodeDataEditorScreen: {formNodeId: string; formNodeTypeId: string};
+  FormNodeTypeDataViewerScreen: {formNodeTypeId: string};
+  FormNodeDataViewerScreen: {formNodeId: string; formNodeTypeId: string};
+  FormDataViewerScreen: undefined;
 };

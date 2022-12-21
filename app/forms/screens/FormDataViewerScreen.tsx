@@ -1,24 +1,24 @@
 import * as React from "react";
 import {StyleSheet, View} from "react-native";
 import {FormStackScreenProps} from "../navigation/FormStackScreenProps";
-import {FormViewer} from "@paradicms/react-native-shacl-forms";
-import {useForm} from "../hooks/useForm";
+import {FormDataViewer} from "@paradicms/react-native-shacl-forms";
+import {useFormData} from "../hooks/useFormData";
 
-export const FormViewerScreen: React.FunctionComponent<FormStackScreenProps<
-  "FormViewerScreen"
+export const FormDataViewerScreen: React.FunctionComponent<FormStackScreenProps<
+  "FormDataViewerScreen"
 >> = ({navigation, route}) => {
-  const {form} = useForm();
+  const {formData} = useFormData();
 
-  if (!form) {
+  if (!formData) {
     return null;
   }
 
   return (
     <View style={styles.container}>
-      <FormViewer
-        form={form}
+      <FormDataViewer
+        formData={formData}
         onSelectFormNodeType={formNodeType =>
-          navigation.push("FormNodeTypeViewerScreen", {
+          navigation.push("FormNodeTypeDataViewerScreen", {
             formNodeTypeId: formNodeType.id,
           })
         }
