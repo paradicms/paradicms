@@ -10,7 +10,7 @@ import {FormShape} from "./FormShape";
 export class FormData {
   readonly dataGraph: DataGraph;
   readonly nodeTypes: readonly FormNodeTypeData[];
-  readonly shape: FormShape;
+  protected readonly _shape: FormShape;
 
   constructor(kwds: {dataGraph: DataGraph; shape: FormShape}) {
     this.dataGraph = kwds.dataGraph;
@@ -43,7 +43,7 @@ export class FormData {
         shape: nodeShape,
       });
     });
-    this.shape = kwds.shape;
+    this._shape = kwds.shape;
   }
 
   nodeTypeById(id: string): FormNodeTypeData {
@@ -52,6 +52,10 @@ export class FormData {
       throw new RangeError("unknown form node type id: " + id);
     }
     return nodeType;
+  }
+
+  get shape(): FormShape {
+    return this._shape;
   }
 
   get shapesGraph(): ShapesGraph {
