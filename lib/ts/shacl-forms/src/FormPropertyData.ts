@@ -1,4 +1,4 @@
-import {DataGraph, PropertyShape, ShapesGraph} from "@paradicms/shacl";
+import {DataGraph, PropertyShape} from "@paradicms/shacl";
 import {DatasetCore, NamedNode, Term} from "@rdfjs/types";
 import {FormNodeData} from "./FormNodeData";
 import {DataFactory, getRdfNodeLabel} from "@paradicms/rdf";
@@ -140,10 +140,6 @@ export class FormPropertyData {
 
   get path(): NamedNode {
     return this.shape.path;
-  }
-
-  get shapesGraph(): ShapesGraph {
-    return this.formNode.shapesGraph;
   }
 
   set value(term: FormPropertyValue) {

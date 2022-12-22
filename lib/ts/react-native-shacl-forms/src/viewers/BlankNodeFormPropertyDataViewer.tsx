@@ -64,7 +64,6 @@ export const BlankNodeFormPropertyDataViewer: React.FunctionComponent<{
                   dataGraph: formPropertyData.dataGraph,
                   dataGraphNode: value as BlankNode | NamedNode,
                   shape: nodeShape,
-                  shapesGraph: formPropertyData.shapesGraph,
                 })
               }
               formPropertyDataViewerFactory={formPropertyDataViewerFactory}

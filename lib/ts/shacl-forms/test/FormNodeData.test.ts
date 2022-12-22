@@ -24,7 +24,6 @@ describe("FormNodeData", () => {
         value => value.termType === "BlankNode"
       )! as BlankNode,
       shape: addressFormProperty.shape.nodeShapes[0],
-      shapesGraph: personFormNode.shapesGraph,
     });
   });
 

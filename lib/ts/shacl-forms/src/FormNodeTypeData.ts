@@ -25,7 +25,6 @@ export class FormNodeTypeData {
       dataGraph: this.dataGraph,
       dataGraphNode: dataGraphNode,
       shape: this.shape,
-      shapesGraph: this.shapesGraph,
     });
   }
 
@@ -48,7 +47,6 @@ export class FormNodeTypeData {
         dataGraph: this.dataGraph,
         dataGraphNode,
         shape: this.shape,
-        shapesGraph: this.shapesGraph,
       });
     }
     throw new RangeError("no such form node " + id);
@@ -68,7 +66,6 @@ export class FormNodeTypeData {
             dataGraph: this.dataGraph,
             dataGraphNode: subject,
             shape: this.shape,
-            shapesGraph: this.shapesGraph,
           });
         }
         return map;

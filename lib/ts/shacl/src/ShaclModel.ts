@@ -3,7 +3,7 @@ import {ShapesGraph} from "./ShapesGraph";
 import {Resource} from "@paradicms/rdf";
 
 export abstract class ShaclModel extends Resource {
-  protected readonly shapesGraph: ShapesGraph;
+  readonly shapesGraph: ShapesGraph;
 
   constructor(kwds: {node: BlankNode | NamedNode; shapesGraph: ShapesGraph}) {
     super({node: kwds.node});

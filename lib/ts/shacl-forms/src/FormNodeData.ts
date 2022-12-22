@@ -4,7 +4,6 @@ import {
   NodeShape,
   PropertyShape,
   ShaclProcessor,
-  ShapesGraph,
 } from "@paradicms/shacl";
 import {FormPropertyData} from "./FormPropertyData";
 import TermMap from "@rdfjs/term-map";
@@ -14,18 +13,15 @@ export class FormNodeData {
   readonly dataGraph: DataGraph;
   readonly dataGraphNode: BlankNode | NamedNode;
   readonly shape: NodeShape;
-  readonly shapesGraph: ShapesGraph;
 
   constructor(kwds: {
     dataGraph: DataGraph;
     dataGraphNode: BlankNode | NamedNode;
     shape: NodeShape;
-    shapesGraph: ShapesGraph;
   }) {
     this.dataGraph = kwds.dataGraph;
     this.dataGraphNode = kwds.dataGraphNode;
     this.shape = kwds.shape;
-    this.shapesGraph = kwds.shapesGraph;
   }
 
   delete(): void {
@@ -95,7 +91,7 @@ export class FormNodeData {
     const propertyShapesByPath = new TermMap<NamedNode, PropertyShape[]>();
     new ShaclProcessor({
       dataGraph: this.dataGraph,
-      shapesGraph: this.shapesGraph,
+      shapesGraph: this.shape.shapesGraph,
     }).someFocusNodePropertyShapes(propertyShape => {
       const existingPropertyShapes = propertyShapesByPath.get(
         propertyShape.path

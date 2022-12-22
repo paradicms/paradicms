@@ -4,25 +4,21 @@ import {
   ShaclProcessor,
   ShapesGraph,
 } from "@paradicms/shacl";
-import {NamedNode} from "@rdfjs/types";
 import {FormNodeTypeData} from "./FormNodeTypeData";
+import {FormShape} from "./FormShape";
 
 export class FormData {
   readonly dataGraph: DataGraph;
   readonly nodeTypes: readonly FormNodeTypeData[];
-  readonly shapesGraph: ShapesGraph;
+  readonly shape: FormShape;
 
-  constructor(kwds: {
-    dataGraph: DataGraph;
-    nodeRdfTypes: readonly NamedNode[];
-    shapesGraph: ShapesGraph;
-  }) {
+  constructor(kwds: {dataGraph: DataGraph; shape: FormShape}) {
     this.dataGraph = kwds.dataGraph;
-    this.nodeTypes = kwds.nodeRdfTypes.map(nodeRdfType => {
+    this.nodeTypes = kwds.shape.nodeRdfTypes.map(nodeRdfType => {
       const nodeShapes: NodeShape[] = [];
       new ShaclProcessor({
         dataGraph: kwds.dataGraph,
-        shapesGraph: kwds.shapesGraph,
+        shapesGraph: kwds.shape.shapesGraph,
       }).someRdfTypeNodeShapes(nodeShape => {
         nodeShapes.push(nodeShape);
         return false;
@@ -47,7 +43,7 @@ export class FormData {
         shape: nodeShape,
       });
     });
-    this.shapesGraph = kwds.shapesGraph;
+    this.shape = kwds.shape;
   }
 
   nodeTypeById(id: string): FormNodeTypeData {
@@ -56,5 +52,9 @@ export class FormData {
       throw new RangeError("unknown form node type id: " + id);
     }
     return nodeType;
+  }
+
+  get shapesGraph(): ShapesGraph {
+    return this.shape.shapesGraph;
   }
 }
