@@ -2,9 +2,9 @@ import {schema} from "@paradicms/vocabularies";
 import {ShapesGraph} from "@paradicms/shacl";
 import {parseIntoDataset} from "@paradicms/rdf";
 import {testShapesGraphTtl} from "./testShapesGraphTtl";
-import {NamedFormShape} from "../models/NamedFormShape";
+import {AppFormShape} from "../models/AppFormShape";
 
-export const testNamedFormShape = new NamedFormShape({
+export const testAppFormShape = new AppFormShape({
   id: "test",
   label: "Test form shape",
   nodeRdfTypes: [schema.Person],

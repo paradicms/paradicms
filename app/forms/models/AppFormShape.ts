@@ -2,7 +2,7 @@ import {FormShape} from "@paradicms/shacl-forms";
 import {NamedNode} from "@rdfjs/types";
 import {ShapesGraph} from "@paradicms/shacl";
 
-export class NamedFormShape extends FormShape {
+export class AppFormShape extends FormShape {
   readonly id: string;
   readonly label: string;
 

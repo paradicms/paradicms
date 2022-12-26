@@ -1,6 +1,6 @@
 import {FormData} from "@paradicms/shacl-forms";
 import {useCallback, useEffect, useReducer} from "react";
-import {testNamedFormData} from "../data/testNamedFormData";
+import {testAppFormData} from "../data/testAppFormData";
 
 export interface FormDataReducerAction {
   payload: FormData;
@@ -30,7 +30,7 @@ export const useFormData = (): {
       return;
     }
 
-    dispatchFormDataToReducer({payload: testNamedFormData});
+    dispatchFormDataToReducer({payload: testAppFormData});
   }, []);
 
   const dispatchFormData: () => void = useCallback(() => {
