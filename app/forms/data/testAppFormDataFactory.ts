@@ -3,7 +3,7 @@ import {validTestDataGraphTtl} from "./validTestDataGraphTtl";
 import {testAppFormShape} from "./testAppFormShape";
 import {AppFormData} from "../models/AppFormData";
 
-export const testAppFormData = () =>
+export const testAppFormDataFactory = () =>
   new AppFormData({
     dataGraph: parseIntoDataset(validTestDataGraphTtl),
     id: "test",
