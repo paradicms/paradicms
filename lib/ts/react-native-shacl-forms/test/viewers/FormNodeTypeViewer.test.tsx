@@ -9,7 +9,7 @@ test("renders correctly", () => {
     .create(
       <FormNodeTypeDataViewer
         formNodeTypeData={formNodeType}
-        onSelectFormNode={() => {}}
+        onSelectFormNodeData={() => {}}
       />
     )
     .toJSON();

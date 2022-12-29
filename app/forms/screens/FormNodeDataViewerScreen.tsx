@@ -9,15 +9,22 @@ import {
 
 export const FormNodeDataViewerScreen: React.FunctionComponent<FormStackScreenProps<
   "FormNodeDataViewerScreen"
->> = ({route}) => {
-  const {formData} = useFormData();
+>> = ({navigation, route}) => {
+  const {error, formData} = useFormData(route.params.formDataId);
+
+  if (error) {
+    navigation.navigate("FormErrorScreen", {...route.params, error});
+    return null;
+  }
 
   if (!formData) {
     return null;
   }
 
-  const formNodeTypeData = formData.nodeTypeById(route.params.formNodeTypeId);
-  const formNodeData = formNodeTypeData.nodeById(route.params.formNodeId);
+  const formNodeTypeData = formData.nodeTypeById(
+    route.params.formNodeTypeDataId
+  );
+  const formNodeData = formNodeTypeData.nodeById(route.params.formNodeDataId);
 
   return (
     <FormNodeDataViewer

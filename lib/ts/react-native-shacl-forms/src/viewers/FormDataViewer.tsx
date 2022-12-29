@@ -5,14 +5,14 @@ import {Button, ListItem} from "@rneui/themed";
 
 export const FormDataViewer: React.FunctionComponent<{
   formData: FormData;
-  onSelectFormNodeType: (formNodeTypeData: FormNodeTypeData) => void;
-}> = ({formData, onSelectFormNodeType}) => {
+  onSelectFormNodeTypeData: (formNodeTypeData: FormNodeTypeData) => void;
+}> = ({formData, onSelectFormNodeTypeData}) => {
   return (
     <View>
       {formData.nodeTypes.map(formNodeType => (
         <ListItem bottomDivider key={formNodeType.id}>
           <Button
-            onPress={() => onSelectFormNodeType(formNodeType)}
+            onPress={() => onSelectFormNodeTypeData(formNodeType)}
             title={formNodeType.label}
           />
         </ListItem>

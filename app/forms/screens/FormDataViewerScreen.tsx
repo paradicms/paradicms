@@ -7,7 +7,17 @@ import {useFormData} from "../hooks/useFormData";
 export const FormDataViewerScreen: React.FunctionComponent<FormStackScreenProps<
   "FormDataViewerScreen"
 >> = ({navigation, route}) => {
-  const {formData} = useFormData();
+  const {error, formData} = useFormData(route.params.formDataId);
+
+  if (error) {
+    navigation.navigate("FormErrorScreen", {
+      formDataId: route.params.formDataId,
+      formNodeDataId: null,
+      formNodeTypeDataId: null,
+      error,
+    });
+    return null;
+  }
 
   if (!formData) {
     return null;
@@ -17,9 +27,10 @@ export const FormDataViewerScreen: React.FunctionComponent<FormStackScreenProps<
     <View style={styles.container}>
       <FormDataViewer
         formData={formData}
-        onSelectFormNodeType={formNodeType =>
+        onSelectFormNodeTypeData={formNodeTypeData =>
           navigation.push("FormNodeTypeDataViewerScreen", {
-            formNodeTypeId: formNodeType.id,
+            formDataId: formData.id,
+            formNodeTypeDataId: formNodeTypeData.id,
           })
         }
       />

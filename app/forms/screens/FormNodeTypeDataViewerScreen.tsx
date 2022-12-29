@@ -7,22 +7,34 @@ import {FormNodeTypeDataViewer} from "@paradicms/react-native-shacl-forms";
 export const FormNodeTypeDataViewerScreen: React.FunctionComponent<FormStackScreenProps<
   "FormNodeTypeDataViewerScreen"
 >> = ({navigation, route}) => {
-  const {formData} = useFormData();
+  const {error, formData} = useFormData(route.params.formDataId);
+
+  if (error) {
+    navigation.navigate("FormErrorScreen", {
+      ...route.params,
+      formNodeDataId: null,
+      error,
+    });
+    return null;
+  }
 
   if (!formData) {
     return null;
   }
 
-  const formNodeTypeData = formData.nodeTypeById(route.params.formNodeTypeId);
+  const formNodeTypeData = formData.nodeTypeById(
+    route.params.formNodeTypeDataId
+  );
 
   return (
     <View style={styles.container}>
       <FormNodeTypeDataViewer
         formNodeTypeData={formNodeTypeData}
-        onSelectFormNode={formNode =>
+        onSelectFormNodeData={formNodeData =>
           navigation.push("FormNodeDataViewerScreen", {
-            formNodeId: formNode.id,
-            formNodeTypeId: formNodeTypeData.id,
+            formDataId: route.params.formDataId,
+            formNodeDataId: formNodeData.id,
+            formNodeTypeDataId: formNodeTypeData.id,
           })
         }
       />
