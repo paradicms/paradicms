@@ -1,4 +1,3 @@
-export interface AppFormShapeSummary {
-  readonly id: string;
-  readonly label: string;
-}
+import {AppFormModelSummary} from "./AppFormModelSummary";
+
+export type AppFormShapeSummary = AppFormModelSummary;

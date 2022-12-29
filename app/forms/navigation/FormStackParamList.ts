@@ -1,25 +1,27 @@
+import {AppFormModelSummary} from "../models/AppFormModelSummary";
+
 export type FormStackParamList = {
   FormErrorScreen: {
-    formDataId: string | null;
-    formNodeDataId: string | null;
-    formNodeTypeDataId: string | null;
+    formData: AppFormModelSummary | null;
+    formNodeData: AppFormModelSummary | null;
+    formNodeTypeData: AppFormModelSummary | null;
     error: any;
   };
   FormNodeDataEditorScreen: {
-    formDataId: string;
-    formNodeDataId: string;
-    formNodeTypeDataId: string;
+    formData: AppFormModelSummary;
+    formNodeData: AppFormModelSummary;
+    formNodeTypeData: AppFormModelSummary;
   };
   FormNodeTypeDataViewerScreen: {
-    formDataId: string;
-    formNodeTypeDataId: string;
+    formData: AppFormModelSummary;
+    formNodeTypeData: AppFormModelSummary;
   };
   FormNodeDataViewerScreen: {
-    formDataId: string;
-    formNodeDataId: string;
-    formNodeTypeDataId: string;
+    formData: AppFormModelSummary;
+    formNodeData: AppFormModelSummary;
+    formNodeTypeData: AppFormModelSummary;
   };
-  FormDataSummariesViewerScreen: {formShapeId: string};
-  FormDataViewerScreen: {formDataId: string};
+  FormDataSummariesViewerScreen: {formShape: AppFormModelSummary};
+  FormDataViewerScreen: {formData: AppFormModelSummary};
   FormShapeSummariesViewerScreen: undefined;
 };

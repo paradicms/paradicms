@@ -3,7 +3,6 @@ import * as React from "react";
 import {FormDataViewerScreen} from "../screens/FormDataViewerScreen";
 import {FormStackParamList} from "./FormStackParamList";
 import {FormStackScreenProps} from "./FormStackScreenProps";
-import {useFormData} from "../hooks/useFormData";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {FormNodeDataViewerScreen} from "../screens/FormNodeDataViewerScreen";
 import {FormNodeTypeDataViewerScreen} from "../screens/FormNodeTypeDataViewerScreen";
@@ -15,12 +14,7 @@ import {FormErrorScreen} from "../screens/FormErrorViewerScreen";
 const Stack = createNativeStackNavigator<FormStackParamList>();
 
 export const FormStackNavigator: React.FunctionComponent = () => {
-  const {formData} = useFormData();
   const {theme} = useTheme();
-
-  if (!formData) {
-    return null;
-  }
 
   return (
     <Stack.Navigator initialRouteName="FormDataViewerScreen">
@@ -32,10 +26,6 @@ export const FormStackNavigator: React.FunctionComponent = () => {
             navigation,
             route,
           }: FormStackScreenProps<"FormNodeDataEditorScreen">) => {
-            const formNodeType = formData!.nodeTypeById(
-              route.params.formNodeTypeDataId
-            );
-            const formNode = formNodeType.nodeById(route.params.formNodeDataId);
             return {
               headerRight: () => (
                 <FontAwesome.Button
@@ -47,7 +37,7 @@ export const FormStackNavigator: React.FunctionComponent = () => {
                   }
                 />
               ),
-              title: formNode.label,
+              title: route.params.formNodeData.label,
             };
           }}
         />
@@ -57,11 +47,8 @@ export const FormStackNavigator: React.FunctionComponent = () => {
           options={({
             route,
           }: FormStackScreenProps<"FormNodeTypeDataViewerScreen">) => {
-            const formNodeType = formData!.nodeTypeById(
-              route.params.formNodeTypeDataId
-            );
             return {
-              title: formNodeType.label,
+              title: route.params.formNodeTypeData.label,
             };
           }}
         />
@@ -72,10 +59,6 @@ export const FormStackNavigator: React.FunctionComponent = () => {
             navigation,
             route,
           }: FormStackScreenProps<"FormNodeDataViewerScreen">) => {
-            const formNodeType = formData!.nodeTypeById(
-              route.params.formNodeTypeDataId
-            );
-            const formNode = formNodeType.nodeById(route.params.formNodeDataId);
             return {
               headerRight: () => (
                 <FontAwesome.Button
@@ -87,18 +70,15 @@ export const FormStackNavigator: React.FunctionComponent = () => {
                   }
                 />
               ),
-              title: formNode.label,
+              title: route.params.formNodeData.label,
             };
           }}
         />
         <Stack.Screen
           name="FormDataViewerScreen"
           component={FormDataViewerScreen}
-          options={({
-            navigation,
-            route,
-          }: FormStackScreenProps<"FormDataViewerScreen">) => ({
-            title: "FormData",
+          options={({route}: FormStackScreenProps<"FormDataViewerScreen">) => ({
+            title: route.params.formData.label,
           })}
         />
       </Stack.Group>

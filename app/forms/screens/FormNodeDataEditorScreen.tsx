@@ -10,7 +10,7 @@ import {useFormData} from "../hooks/useFormData";
 export const FormNodeDataEditorScreen: React.FunctionComponent<FormStackScreenProps<
   "FormNodeDataEditorScreen"
 >> = ({navigation, route}) => {
-  const {error, formData, saveFormData} = useFormData(route.params.formDataId);
+  const {error, formData, saveFormData} = useFormData(route.params.formData.id);
 
   if (error) {
     navigation.navigate("FormErrorScreen", {...route.params, error});
@@ -22,9 +22,9 @@ export const FormNodeDataEditorScreen: React.FunctionComponent<FormStackScreenPr
   }
 
   const formNodeTypeData = formData.nodeTypeById(
-    route.params.formNodeTypeDataId
+    route.params.formNodeTypeData.id
   );
-  const formNodeData = formNodeTypeData.nodeById(route.params.formNodeDataId);
+  const formNodeData = formNodeTypeData.nodeById(route.params.formNodeData.id);
 
   return (
     <FormNodeDataEditor
