@@ -10,6 +10,7 @@ import {FormNodeDataEditorScreen} from "../screens/FormNodeDataEditorScreen";
 import {FontAwesome} from "@expo/vector-icons";
 import {useTheme} from "@rneui/themed";
 import {FormErrorScreen} from "../screens/FormErrorViewerScreen";
+import {FormShapeSummariesViewerScreen} from "../screens/FormShapeSummariesViewerScreen";
 
 const Stack = createNativeStackNavigator<FormStackParamList>();
 
@@ -17,8 +18,15 @@ export const FormStackNavigator: React.FunctionComponent = () => {
   const {theme} = useTheme();
 
   return (
-    <Stack.Navigator initialRouteName="FormDataViewerScreen">
+    <Stack.Navigator initialRouteName="FormShapeSummariesViewerScreen">
       <Stack.Group>
+        <Stack.Screen
+          name="FormDataViewerScreen"
+          component={FormDataViewerScreen}
+          options={({route}: FormStackScreenProps<"FormDataViewerScreen">) => ({
+            title: route.params.formData.label,
+          })}
+        />
         <Stack.Screen
           name="FormNodeDataEditorScreen"
           component={FormNodeDataEditorScreen}
@@ -75,11 +83,9 @@ export const FormStackNavigator: React.FunctionComponent = () => {
           }}
         />
         <Stack.Screen
-          name="FormDataViewerScreen"
-          component={FormDataViewerScreen}
-          options={({route}: FormStackScreenProps<"FormDataViewerScreen">) => ({
-            title: route.params.formData.label,
-          })}
+          name="FormShapeSummariesViewerScreen"
+          component={FormShapeSummariesViewerScreen}
+          options={{title: "Shapes"}}
         />
       </Stack.Group>
       <Stack.Group screenOptions={{presentation: "modal"}}>
