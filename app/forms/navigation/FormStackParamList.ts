@@ -1,7 +1,7 @@
 import {AppFormModelSummary} from "../models/AppFormModelSummary";
 
 export type FormStackParamList = {
-  FormErrorScreen: {
+  FormErrorViewerScreen: {
     formData: AppFormModelSummary | null;
     formNodeData: AppFormModelSummary | null;
     formNodeTypeData: AppFormModelSummary | null;

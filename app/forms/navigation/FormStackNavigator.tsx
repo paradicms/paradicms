@@ -9,7 +9,7 @@ import {FormNodeTypeDataViewerScreen} from "../screens/FormNodeTypeDataViewerScr
 import {FormNodeDataEditorScreen} from "../screens/FormNodeDataEditorScreen";
 import {FontAwesome} from "@expo/vector-icons";
 import {useTheme} from "@rneui/themed";
-import {FormErrorScreen} from "../screens/FormErrorViewerScreen";
+import {FormErrorViewerScreen} from "../screens/FormErrorViewerScreen";
 import {FormShapeSummariesViewerScreen} from "../screens/FormShapeSummariesViewerScreen";
 
 const Stack = createNativeStackNavigator<FormStackParamList>();
@@ -90,7 +90,7 @@ export const FormStackNavigator: React.FunctionComponent = () => {
       </Stack.Group>
       <Stack.Group screenOptions={{presentation: "modal"}}>
         <Stack.Screen
-          component={FormErrorScreen}
+          component={FormErrorViewerScreen}
           name="FormErrorScreen"
         ></Stack.Screen>
       </Stack.Group>

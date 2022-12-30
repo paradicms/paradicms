@@ -3,8 +3,8 @@ import {FormStackScreenProps} from "../navigation/FormStackScreenProps";
 import {View} from "react-native";
 import {Text} from "@rneui/themed";
 
-export const FormErrorScreen: React.FunctionComponent<FormStackScreenProps<
-  "FormErrorScreen"
+export const FormErrorViewerScreen: React.FunctionComponent<FormStackScreenProps<
+  "FormErrorViewerScreen"
 >> = ({route}) => {
   return (
     <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
