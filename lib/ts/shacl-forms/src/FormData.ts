@@ -6,14 +6,25 @@ import {
 } from "@paradicms/shacl";
 import {FormNodeTypeData} from "./FormNodeTypeData";
 import {FormShape} from "./FormShape";
+import {FormModel} from "./FormModel";
 
-export class FormData {
+export class FormData extends FormModel {
+  readonly id: string;
   readonly dataGraph: DataGraph;
+  readonly label: string;
   readonly nodeTypes: readonly FormNodeTypeData[];
   protected readonly _shape: FormShape;
 
-  constructor(kwds: {dataGraph: DataGraph; shape: FormShape}) {
+  constructor(kwds: {
+    dataGraph: DataGraph;
+    id: string;
+    label: string;
+    shape: FormShape;
+  }) {
+    super();
     this.dataGraph = kwds.dataGraph;
+    this.id = kwds.id;
+    this.label = kwds.label;
     this.nodeTypes = kwds.shape.nodeRdfTypes.map(nodeRdfType => {
       const nodeShapes: NodeShape[] = [];
       new ShaclProcessor({

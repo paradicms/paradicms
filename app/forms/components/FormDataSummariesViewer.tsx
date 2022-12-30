@@ -1,13 +1,13 @@
 import {AppFormDataSummary} from "../models/AppFormDataSummary";
-import {StyleSheet, View} from "react-native";
 import {Button, ListItem} from "@rneui/themed";
 import * as React from "react";
+import {CenteredView} from "./CenteredView";
 
 export const FormDataSummariesViewer: React.FunctionComponent<{
   formDataSummaries: readonly AppFormDataSummary[];
   onSelectFormDataSummary: (formDataSummary: AppFormDataSummary) => void;
 }> = ({formDataSummaries, onSelectFormDataSummary}) => (
-  <View style={styles.container}>
+  <CenteredView>
     {formDataSummaries.map(formDataSummary => (
       <ListItem key={formDataSummary.id}>
         <Button
@@ -16,13 +16,5 @@ export const FormDataSummariesViewer: React.FunctionComponent<{
         />
       </ListItem>
     ))}
-  </View>
+  </CenteredView>
 );
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

@@ -4,13 +4,15 @@ import {FormNodeData} from "./FormNodeData";
 import {rdf} from "@paradicms/vocabularies";
 import {DataGraph, NodeShape, ShapesGraph} from "@paradicms/shacl";
 import {NamedNode} from "@rdfjs/types";
+import {FormModel} from "./FormModel";
 
-export class FormNodeTypeData {
+export class FormNodeTypeData extends FormModel {
   readonly form: FormData;
   readonly rdfType: NamedNode;
   readonly shape: NodeShape;
 
   constructor(kwds: {form: FormData; rdfType: NamedNode; shape: NodeShape}) {
+    super();
     this.form = kwds.form;
     this.rdfType = kwds.rdfType;
     this.shape = kwds.shape;

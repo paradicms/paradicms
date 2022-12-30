@@ -9,6 +9,7 @@ import {FormPropertyWidgetScorer} from "./FormPropertyWidgetScorer";
 import {dashFormPropertyEditorScorers} from "./dashFormPropertyEditorScorers";
 import {FormPropertyValue} from "./FormPropertyValue";
 import {dashFormPropertyViewerScorers} from "./dashFormPropertyViewerScorers";
+import {FormModel} from "./FormModel";
 
 const checkFormPropertyValueTermType = (term: Term): FormPropertyValue => {
   switch (term.termType) {
@@ -23,11 +24,12 @@ const checkFormPropertyValueTermType = (term: Term): FormPropertyValue => {
   }
 };
 
-export class FormPropertyData {
+export class FormPropertyData extends FormModel {
   readonly formNode: FormNodeData;
   readonly shape: PropertyShape;
 
   constructor(kwds: {formNode: FormNodeData; shape: PropertyShape}) {
+    super();
     this.formNode = kwds.formNode;
     this.shape = kwds.shape;
   }

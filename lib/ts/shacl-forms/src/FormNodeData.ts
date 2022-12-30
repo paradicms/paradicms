@@ -8,8 +8,9 @@ import {
 import {FormPropertyData} from "./FormPropertyData";
 import TermMap from "@rdfjs/term-map";
 import {getRdfNodeLabel} from "@paradicms/rdf";
+import {FormModel} from "./FormModel";
 
-export class FormNodeData {
+export class FormNodeData extends FormModel {
   readonly dataGraph: DataGraph;
   readonly dataGraphNode: BlankNode | NamedNode;
   readonly shape: NodeShape;
@@ -19,6 +20,7 @@ export class FormNodeData {
     dataGraphNode: BlankNode | NamedNode;
     shape: NodeShape;
   }) {
+    super();
     this.dataGraph = kwds.dataGraph;
     this.dataGraphNode = kwds.dataGraphNode;
     this.shape = kwds.shape;
