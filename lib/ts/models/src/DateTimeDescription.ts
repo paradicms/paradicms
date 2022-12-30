@@ -1,6 +1,6 @@
 import {Model} from "./Model";
 import {Literal, NamedNode} from "@rdfjs/types";
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 import {time, xsd} from "@paradicms/vocabularies";
 
 export class DateTimeDescription extends Model {
