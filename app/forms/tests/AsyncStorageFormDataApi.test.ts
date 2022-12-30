@@ -21,9 +21,7 @@ describe("AsyncStorageFormDataApi", () => {
 
     await sut.putFormData(testFormData);
 
-    expect(await sut.getFormDataSummaries()).toEqual([
-      {id: testFormData.id, label: testFormData.label},
-    ]);
+    expect(await sut.getFormDataSummaries()).toEqual([testFormData.summary]);
   });
 
   it("gets a specific form data", async () => {

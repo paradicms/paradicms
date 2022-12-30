@@ -14,9 +14,7 @@ describe("AsyncStorageFormShapeApi", () => {
 
     await sut.putFormShape(testFormShape);
 
-    expect(await sut.getFormShapeSummaries()).toEqual([
-      {id: testFormShape.id, label: testFormShape.label},
-    ]);
+    expect(await sut.getFormShapeSummaries()).toEqual([testFormShape.summary]);
   });
 
   it("gets a specific form shape", async () => {

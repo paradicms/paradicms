@@ -1,8 +1,8 @@
 import * as React from "react";
-import {StyleSheet, View} from "react-native";
 import {FormStackScreenProps} from "../navigation/FormStackScreenProps";
 import {useFormData} from "../hooks/useFormData";
 import {FormNodeTypeDataViewer} from "@paradicms/react-native-shacl-forms";
+import {CenteredView} from "../components/CenteredView";
 
 export const FormNodeTypeDataViewerScreen: React.FunctionComponent<FormStackScreenProps<
   "FormNodeTypeDataViewerScreen"
@@ -27,24 +27,16 @@ export const FormNodeTypeDataViewerScreen: React.FunctionComponent<FormStackScre
   );
 
   return (
-    <View style={styles.container}>
+    <CenteredView>
       <FormNodeTypeDataViewer
         formNodeTypeData={formNodeTypeData}
         onSelectFormNodeData={formNodeData =>
           navigation.push("FormNodeDataViewerScreen", {
             ...route.params,
-            formNodeData: {id: formNodeData.id, label: formNodeData.label},
+            formNodeData: formNodeData.summary,
           })
         }
       />
-    </View>
+    </CenteredView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

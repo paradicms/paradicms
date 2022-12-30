@@ -28,10 +28,7 @@ export const FormShapeSummariesViewerScreen: React.FunctionComponent<FormStackSc
       formShapeSummaries={formShapeSummaries}
       onSelectFormShapeSummary={formShapeSummary =>
         navigation.push("FormDataSummariesViewerScreen", {
-          formShape: {
-            id: formShapeSummary.id,
-            label: formShapeSummary.label,
-          },
+          formShape: formShapeSummary,
         })
       }
     />
