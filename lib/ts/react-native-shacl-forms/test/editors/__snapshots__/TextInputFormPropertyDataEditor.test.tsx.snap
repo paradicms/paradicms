@@ -33,14 +33,10 @@ exports[`renders correctly 1`] = `
       placeholderTextColor="#86939e"
       style={
         {
-          "borderWidth": 1,
           "color": "#242424",
           "flex": 1,
           "fontSize": 18,
-          "height": 40,
-          "margin": 12,
           "minHeight": 40,
-          "padding": 10,
         }
       }
       testID="RNE__Input__text-input"

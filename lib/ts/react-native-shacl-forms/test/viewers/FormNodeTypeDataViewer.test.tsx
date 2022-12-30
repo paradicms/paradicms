@@ -1,10 +1,10 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
-import {testForm} from "../testForm";
+import {testFormData} from "../testFormData";
 import {FormNodeTypeDataViewer} from "../../src";
 
 test("renders correctly", () => {
-  const formNodeType = testForm().nodeTypes[0];
+  const formNodeType = testFormData().nodeTypes[0];
   const tree = renderer
     .create(
       <FormNodeTypeDataViewer
