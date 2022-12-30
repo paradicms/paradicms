@@ -10,7 +10,7 @@ export const FormNodeTypeDataViewerScreen: React.FunctionComponent<FormStackScre
   const {error, formData} = useFormData(route.params.formData.id);
 
   if (error) {
-    navigation.navigate("FormErrorScreen", {
+    navigation.navigate("FormErrorViewerScreen", {
       ...route.params,
       formNodeData: null,
       error,

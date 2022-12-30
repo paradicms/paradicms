@@ -91,7 +91,7 @@ export const FormStackNavigator: React.FunctionComponent = () => {
       <Stack.Group screenOptions={{presentation: "modal"}}>
         <Stack.Screen
           component={FormErrorViewerScreen}
-          name="FormErrorScreen"
+          name="FormErrorViewerScreen"
         ></Stack.Screen>
       </Stack.Group>
     </Stack.Navigator>

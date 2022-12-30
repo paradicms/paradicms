@@ -13,7 +13,7 @@ export const FormNodeDataEditorScreen: React.FunctionComponent<FormStackScreenPr
   const {error, formData, saveFormData} = useFormData(route.params.formData.id);
 
   if (error) {
-    navigation.navigate("FormErrorScreen", {...route.params, error});
+    navigation.navigate("FormErrorViewerScreen", {...route.params, error});
     return null;
   }
 
