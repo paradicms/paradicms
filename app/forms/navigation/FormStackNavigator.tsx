@@ -11,6 +11,7 @@ import {FontAwesome} from "@expo/vector-icons";
 import {useTheme} from "@rneui/themed";
 import {FormErrorViewerScreen} from "../screens/FormErrorViewerScreen";
 import {FormShapeSummariesViewerScreen} from "../screens/FormShapeSummariesViewerScreen";
+import {FormDataSummariesViewerScreen} from "../screens/FormDataSummariesViewerScreen";
 
 const Stack = createNativeStackNavigator<FormStackParamList>();
 
@@ -20,6 +21,15 @@ export const FormStackNavigator: React.FunctionComponent = () => {
   return (
     <Stack.Navigator initialRouteName="FormShapeSummariesViewerScreen">
       <Stack.Group>
+        <Stack.Screen
+          name="FormDataSummariesViewerScreen"
+          component={FormDataSummariesViewerScreen}
+          options={({
+            route,
+          }: FormStackScreenProps<"FormDataSummariesViewerScreen">) => ({
+            title: route.params.formShape.label,
+          })}
+        />
         <Stack.Screen
           name="FormDataViewerScreen"
           component={FormDataViewerScreen}
