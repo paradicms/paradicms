@@ -3,14 +3,14 @@ import {useEffect, useState} from "react";
 import {FormStackScreenProps} from "../navigation/FormStackScreenProps";
 import {useFormDataApi} from "../hooks/useFormDataApi";
 import {FormDataSummariesViewer} from "../components/FormDataSummariesViewer";
-import {AppFormDataSummary} from "../models/AppFormDataSummary";
+import {FormDataSummary} from "@paradicms/shacl-forms";
 
 export const FormDataSummariesViewerScreen: React.FunctionComponent<FormStackScreenProps<
   "FormDataSummariesViewerScreen"
 >> = ({navigation, route}) => {
   const {formDataApi} = useFormDataApi();
   const [formDataSummaries, setFormDataSummaries] = useState<
-    readonly AppFormDataSummary[] | null
+    readonly FormDataSummary[] | null
   >(null);
 
   useEffect(() => {

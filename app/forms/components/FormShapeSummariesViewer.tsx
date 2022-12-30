@@ -1,11 +1,11 @@
-import {AppFormShapeSummary} from "../models/AppFormShapeSummary";
 import {Button, ListItem} from "@rneui/themed";
 import * as React from "react";
 import {CenteredView} from "./CenteredView";
+import {FormShapeSummary} from "@paradicms/shacl-forms";
 
 export const FormShapeSummariesViewer: React.FunctionComponent<{
-  formShapeSummaries: readonly AppFormShapeSummary[];
-  onSelectFormShapeSummary: (formShapeSummary: AppFormShapeSummary) => void;
+  formShapeSummaries: readonly FormShapeSummary[];
+  onSelectFormShapeSummary: (formShapeSummary: FormShapeSummary) => void;
 }> = ({formShapeSummaries, onSelectFormShapeSummary}) => (
   <CenteredView>
     {formShapeSummaries.map(formShapeSummary => (

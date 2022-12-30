@@ -1,10 +1,9 @@
-import {AppFormData} from "../models/AppFormData";
-import {AppFormDataSummary} from "../models/AppFormDataSummary";
+import {FormData, FormDataSummary} from "@paradicms/shacl-forms";
 
 export interface FormDataApi {
-  getFormData(id: string): Promise<AppFormData>;
+  getFormData(id: string): Promise<FormData>;
 
-  getFormDataSummaries(): Promise<readonly AppFormDataSummary[]>;
+  getFormDataSummaries(): Promise<readonly FormDataSummary[]>;
 
-  putFormData(formData: AppFormData): Promise<void>;
+  putFormData(formData: FormData): Promise<void>;
 }

@@ -2,7 +2,7 @@ import {FormDataApi} from "../api/FormDataApi";
 import {useEffect, useReducer} from "react";
 import {AsyncStorageFormDataApi} from "../api/AsyncStorageFormDataApi";
 import {useFormShapeApi} from "./useFormShapeApi";
-import {testAppFormDataFactory} from "../data/testAppFormDataFactory";
+import {testFormDataFactory} from "../data/testFormDataFactory";
 
 export interface ReducerAction {
   payload: FormDataApi;
@@ -35,7 +35,7 @@ export const useFormDataApi = (): {formDataApi: FormDataApi | null} => {
     // Prepopulate
     const formDataApi = new AsyncStorageFormDataApi(formShapeApi);
     formDataApi
-      .putFormData(testAppFormDataFactory())
+      .putFormData(testFormDataFactory())
       .then(() => dispatch({payload: formDataApi}));
   }, [formShapeApi]);
 

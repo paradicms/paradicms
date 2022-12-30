@@ -1,7 +1,7 @@
 import {FormShapeApi} from "../api/FormShapeApi";
 import {useEffect, useReducer} from "react";
 import {AsyncStorageFormShapeApi} from "../api/AsyncStorageFormShapeApi";
-import {testAppFormShape} from "../data/testAppFormShape";
+import {testFormShape} from "../data/testFormShape";
 
 export interface ReducerAction {
   payload: FormShapeApi;
@@ -28,7 +28,7 @@ export const useFormShapeApi = (): {formShapeApi: FormShapeApi | null} => {
     // Prepopulate
     const formShapeApi = new AsyncStorageFormShapeApi();
     formShapeApi
-      .putFormShape(testAppFormShape)
+      .putFormShape(testFormShape)
       .then(() => dispatch({payload: formShapeApi}));
   }, []);
 

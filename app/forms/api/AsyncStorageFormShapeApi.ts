@@ -1,11 +1,10 @@
 import {FormShapeApi} from "./FormShapeApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {AppFormShape} from "../models/AppFormShape";
 import * as yup from "yup";
 import {InferType} from "yup";
 import {DataFactory, parseIntoDataset} from "@paradicms/rdf";
 import {ShapesGraph} from "@paradicms/shacl";
-import {AppFormShapeSummary} from "../models/AppFormShapeSummary";
+import {FormShape, FormShapeSummary} from "@paradicms/shacl-forms";
 
 const formShapeItemKeyPrefix = "form-shape-";
 const formShapeItemKey = (formShapeId: string) =>
@@ -19,14 +18,14 @@ const formShapeItemValueSchema = yup.object({
 type FormShapeItemValueType = InferType<typeof formShapeItemValueSchema>;
 
 export class AsyncStorageFormShapeApi implements FormShapeApi {
-  getFormShape(id: string): Promise<AppFormShape> {
+  getFormShape(id: string): Promise<FormShape> {
     return AsyncStorage.getItem(formShapeItemKey(id)).then(itemValueJson => {
       if (!itemValueJson) {
         throw new RangeError(id);
       }
       const itemValue = JSON.parse(itemValueJson);
       formShapeItemValueSchema.validateSync(itemValue);
-      return new AppFormShape({
+      return new FormShape({
         id: itemValue.id,
         label: itemValue.label,
         nodeRdfTypes: itemValue.nodeRdfTypes.map(DataFactory.namedNode),
@@ -35,7 +34,7 @@ export class AsyncStorageFormShapeApi implements FormShapeApi {
     });
   }
 
-  getFormShapeSummaries(): Promise<readonly AppFormShapeSummary[]> {
+  getFormShapeSummaries(): Promise<readonly FormShapeSummary[]> {
     return AsyncStorage.getAllKeys().then(keys =>
       Promise.all(
         keys.flatMap(key => {
@@ -60,7 +59,7 @@ export class AsyncStorageFormShapeApi implements FormShapeApi {
     );
   }
 
-  putFormShape(formShape: AppFormShape): Promise<void> {
+  putFormShape(formShape: FormShape): Promise<void> {
     return new Promise((resolve, reject) => {
       const itemValue: FormShapeItemValueType = {
         id: formShape.id,

@@ -1,10 +1,9 @@
 import {FormDataApi} from "./FormDataApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {AppFormData} from "../models/AppFormData";
 import * as yup from "yup";
 import {InferType} from "yup";
 import {parseIntoDataset} from "@paradicms/rdf";
-import {AppFormDataSummary} from "../models/AppFormDataSummary";
+import {FormData, FormDataSummary} from "@paradicms/shacl-forms";
 import {FormShapeApi} from "./FormShapeApi";
 
 const formDataItemKeyPrefix = "form-data-";
@@ -21,7 +20,7 @@ type FormDataItemValueType = InferType<typeof formDataItemValueSchema>;
 export class AsyncStorageFormDataApi implements FormDataApi {
   constructor(private readonly formShapeApi: FormShapeApi) {}
 
-  getFormData(id: string): Promise<AppFormData> {
+  getFormData(id: string): Promise<FormData> {
     return AsyncStorage.getItem(formDataItemKey(id)).then(itemValueJson => {
       if (!itemValueJson) {
         throw new RangeError(id);
@@ -31,7 +30,7 @@ export class AsyncStorageFormDataApi implements FormDataApi {
       const dataGraph = parseIntoDataset(itemValue.dataGraph);
       return this.formShapeApi.getFormShape(itemValue.shapeId).then(
         shape =>
-          new AppFormData({
+          new FormData({
             dataGraph,
             id: itemValue.id,
             label: itemValue.label,
@@ -41,7 +40,7 @@ export class AsyncStorageFormDataApi implements FormDataApi {
     });
   }
 
-  getFormDataSummaries(): Promise<readonly AppFormDataSummary[]> {
+  getFormDataSummaries(): Promise<readonly FormDataSummary[]> {
     return AsyncStorage.getAllKeys().then(keys =>
       Promise.all(
         keys.flatMap(key => {
@@ -66,7 +65,7 @@ export class AsyncStorageFormDataApi implements FormDataApi {
     );
   }
 
-  putFormData(formData: AppFormData): Promise<void> {
+  putFormData(formData: FormData): Promise<void> {
     return new Promise((resolve, reject) => {
       const itemValue: FormDataItemValueType = {
         dataGraph: formData.dataGraph.toString(),

@@ -1,17 +1,17 @@
 import {useCallback, useEffect, useState} from "react";
 import {useFormDataApi} from "./useFormDataApi";
-import {AppFormData} from "../models/AppFormData";
+import {FormData} from "@paradicms/shacl-forms";
 
 export const useFormData = (
   formDataId: string
 ): {
   error: any | null;
-  formData: AppFormData | null;
+  formData: FormData | null;
   saveFormData: () => void;
 } => {
   const [error, setError] = useState<any>(null);
   const {formDataApi} = useFormDataApi();
-  const [formData, setFormData] = useState<AppFormData | null>(null);
+  const [formData, setFormData] = useState<FormData | null>(null);
 
   useEffect(() => {
     if (formDataApi && !formData && !error) {

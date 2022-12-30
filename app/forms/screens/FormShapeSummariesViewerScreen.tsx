@@ -2,15 +2,15 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import {FormStackScreenProps} from "../navigation/FormStackScreenProps";
 import {useFormShapeApi} from "../hooks/useFormShapeApi";
-import {AppFormShapeSummary} from "../models/AppFormShapeSummary";
 import {FormShapeSummariesViewer} from "../components/FormShapeSummariesViewer";
+import {FormShapeSummary} from "@paradicms/shacl-forms";
 
 export const FormShapeSummariesViewerScreen: React.FunctionComponent<FormStackScreenProps<
   "FormShapeSummariesViewerScreen"
 >> = ({navigation, route}) => {
   const {formShapeApi} = useFormShapeApi();
   const [formShapeSummaries, setFormShapeSummaries] = useState<
-    readonly AppFormShapeSummary[] | null
+    readonly FormShapeSummary[] | null
   >(null);
 
   useEffect(() => {

@@ -1,10 +1,9 @@
-import {AppFormShape} from "../models/AppFormShape";
-import {AppFormShapeSummary} from "../models/AppFormShapeSummary";
+import {FormShape, FormShapeSummary} from "@paradicms/shacl-forms";
 
 export interface FormShapeApi {
-  getFormShape(id: string): Promise<AppFormShape>;
+  getFormShape(id: string): Promise<FormShape>;
 
-  getFormShapeSummaries(): Promise<readonly AppFormShapeSummary[]>;
+  getFormShapeSummaries(): Promise<readonly FormShapeSummary[]>;
 
-  putFormShape(formShape: AppFormShape): Promise<void>;
+  putFormShape(formShape: FormShape): Promise<void>;
 }

@@ -1,27 +1,31 @@
-import {AppFormModelSummary} from "../models/AppFormModelSummary";
+import {
+  FormDataSummary,
+  FormModelSummary,
+  FormShapeSummary,
+} from "@paradicms/shacl-forms";
 
 export type FormStackParamList = {
   FormErrorViewerScreen: {
-    formData: AppFormModelSummary | null;
-    formNodeData: AppFormModelSummary | null;
-    formNodeTypeData: AppFormModelSummary | null;
+    formData: FormDataSummary | null;
+    formNodeData: FormModelSummary | null;
+    formNodeTypeData: FormModelSummary | null;
     error: any;
   };
   FormNodeDataEditorScreen: {
-    formData: AppFormModelSummary;
-    formNodeData: AppFormModelSummary;
-    formNodeTypeData: AppFormModelSummary;
+    formData: FormDataSummary;
+    formNodeData: FormModelSummary;
+    formNodeTypeData: FormModelSummary;
   };
   FormNodeTypeDataViewerScreen: {
-    formData: AppFormModelSummary;
-    formNodeTypeData: AppFormModelSummary;
+    formData: FormDataSummary;
+    formNodeTypeData: FormModelSummary;
   };
   FormNodeDataViewerScreen: {
-    formData: AppFormModelSummary;
-    formNodeData: AppFormModelSummary;
-    formNodeTypeData: AppFormModelSummary;
+    formData: FormDataSummary;
+    formNodeData: FormModelSummary;
+    formNodeTypeData: FormModelSummary;
   };
-  FormDataSummariesViewerScreen: {formShape: AppFormModelSummary};
-  FormDataViewerScreen: {formData: AppFormModelSummary};
+  FormDataSummariesViewerScreen: {formShape: FormShapeSummary};
+  FormDataViewerScreen: {formData: FormDataSummary};
   FormShapeSummariesViewerScreen: undefined;
 };

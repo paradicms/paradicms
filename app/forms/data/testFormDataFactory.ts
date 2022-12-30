@@ -1,12 +1,12 @@
 import {parseIntoDataset} from "@paradicms/rdf";
 import {validTestDataGraphTtl} from "./validTestDataGraphTtl";
-import {testAppFormShape} from "./testAppFormShape";
-import {AppFormData} from "../models/AppFormData";
+import {testFormShape} from "./testFormShape";
+import {FormData} from "@paradicms/shacl-forms";
 
-export const testAppFormDataFactory = () =>
-  new AppFormData({
+export const testFormDataFactory = () =>
+  new FormData({
     dataGraph: parseIntoDataset(validTestDataGraphTtl),
     id: "test",
     label: "Test form data",
-    shape: testAppFormShape,
+    shape: testFormShape,
   });

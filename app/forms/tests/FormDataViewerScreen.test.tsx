@@ -1,17 +1,16 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
 import {FormDataViewerScreen} from "../screens/FormDataViewerScreen";
-import {testAppFormDataFactory} from "../data/testAppFormDataFactory";
+import {testFormDataFactory} from "../data/testFormDataFactory";
 
 test("renders correctly", () => {
-  const formData = testAppFormDataFactory();
   const tree = renderer
     .create(
       <FormDataViewerScreen
         // @ts-ignore
         navigation={{push: jest.fn()}}
         // @ts-ignore
-        route={{params: {formData: {id: formData.id, label: formData.label}}}}
+        route={{params: {formData: testFormDataFactory().summary}}}
       />
     )
     .toJSON();

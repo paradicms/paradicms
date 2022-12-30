@@ -1,5 +1,5 @@
 import {AsyncStorageFormShapeApi} from "../api/AsyncStorageFormShapeApi";
-import {testAppFormShape} from "../data/testAppFormShape";
+import {testFormShape} from "../data/testFormShape";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 describe("AsyncStorageFormShapeApi", () => {
@@ -12,28 +12,28 @@ describe("AsyncStorageFormShapeApi", () => {
   it("gets an array of form shape summaries", async () => {
     expect(await sut.getFormShapeSummaries()).toEqual([]);
 
-    await sut.putFormShape(testAppFormShape);
+    await sut.putFormShape(testFormShape);
 
     expect(await sut.getFormShapeSummaries()).toEqual([
-      {id: testAppFormShape.id, label: testAppFormShape.label},
+      {id: testFormShape.id, label: testFormShape.label},
     ]);
   });
 
   it("gets a specific form shape", async () => {
-    await sut.putFormShape(testAppFormShape);
+    await sut.putFormShape(testFormShape);
 
-    expect((await sut.getFormShape(testAppFormShape.id)).id).toEqual(
-      testAppFormShape.id
+    expect((await sut.getFormShape(testFormShape.id)).id).toEqual(
+      testFormShape.id
     );
   });
 
   it("throws an error on a shape that's missing", async () => {
-    expect(sut.getFormShape(testAppFormShape.id)).rejects.toEqual(
-      testAppFormShape.id
+    expect(sut.getFormShape(testFormShape.id)).rejects.toEqual(
+      testFormShape.id
     );
   });
 
   it("puts a form shape", async () => {
-    await sut.putFormShape(testAppFormShape);
+    await sut.putFormShape(testFormShape);
   });
 });
