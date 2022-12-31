@@ -1,12 +1,12 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
-import {testFormData} from "../testFormData";
+import {testFormDataFactory} from "../testFormDataFactory";
 import {schema} from "@paradicms/vocabularies";
 import {TextInputFormPropertyDataEditor} from "../../src/editors/TextInputFormPropertyDataEditor";
 import {FormPropertyData} from "@paradicms/shacl-forms";
 
 test("renders correctly", () => {
-  const formPropertyData = testFormData().nodeTypes[0].nodes[0].properties.find(
+  const formPropertyData = testFormDataFactory().nodeTypes[0].nodes[0].properties.find(
     (property: FormPropertyData) => property.path.equals(schema.givenName)
   )!;
   const tree = renderer

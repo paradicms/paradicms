@@ -1,4 +1,4 @@
-import {testFormData} from "./testFormData";
+import {testFormDataFactory} from "./testFormDataFactory";
 import {dash, schema} from "@paradicms/vocabularies";
 import {expect} from "chai";
 import {DataFactory} from "@paradicms/rdf";
@@ -12,7 +12,7 @@ describe("FormPropertyData", () => {
   let nodeType: FormNodeTypeData;
 
   beforeEach(() => {
-    nodeType = testFormData().nodeTypes.find(testNodeType =>
+    nodeType = testFormDataFactory().nodeTypes.find(testNodeType =>
       testNodeType.rdfType.equals(schema.Person)
     )!;
     node = nodeType.nodes[0];

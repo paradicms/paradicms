@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import {DataFactory} from "@paradicms/rdf";
-import {testFormData} from "./testFormData";
+import {testFormDataFactory} from "./testFormDataFactory";
 import {schema} from "@paradicms/vocabularies";
 import {FormNodeTypeData} from "../src";
 
@@ -8,7 +8,7 @@ describe("FormNodeTypeData", () => {
   let sut: FormNodeTypeData;
 
   beforeEach(() => {
-    sut = testFormData().nodeTypes[0];
+    sut = testFormDataFactory().nodeTypes[0];
   });
 
   it("has expected rdf type", () => {

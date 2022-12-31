@@ -1,10 +1,10 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
-import {testFormData} from "../testFormData";
+import {testFormDataFactory} from "../testFormDataFactory";
 import {FormDataViewer} from "../../src";
 
 test("renders correctly", () => {
-  const form = testFormData();
+  const form = testFormDataFactory();
   const tree = renderer
     .create(
       <FormDataViewer formData={form} onSelectFormNodeTypeData={() => {}} />

@@ -8,7 +8,6 @@ exports[`renders correctly 1`] = `
         {
           "alignItems": "center",
           "backgroundColor": "#ffffff",
-          "borderBottomWidth": 0.5,
           "borderColor": "#bcbbc1",
           "flexDirection": "row",
           "padding": 14,

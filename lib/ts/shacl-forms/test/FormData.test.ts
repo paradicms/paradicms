@@ -1,12 +1,12 @@
 import {expect} from "chai";
-import {testFormData} from "./testFormData";
+import {testFormDataFactory} from "./testFormDataFactory";
 import {FormData} from "../src";
 
 describe("FormData", () => {
   let sut: FormData;
 
   beforeEach(() => {
-    sut = testFormData();
+    sut = testFormDataFactory();
   });
 
   it("has one node type", () => {

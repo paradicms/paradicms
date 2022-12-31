@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {testFormData} from "./testFormData";
+import {testFormDataFactory} from "./testFormDataFactory";
 import {schema} from "@paradicms/vocabularies";
 import {FormNodeData, FormNodeTypeData} from "../src";
 import {BlankNode} from "@rdfjs/types";
@@ -10,7 +10,7 @@ describe("FormNodeData", () => {
   let personFormNodeType: FormNodeTypeData;
 
   beforeEach(() => {
-    personFormNodeType = testFormData().nodeTypes.find(testNodeType =>
+    personFormNodeType = testFormDataFactory().nodeTypes.find(testNodeType =>
       testNodeType.rdfType.equals(schema.Person)
     )!;
     personFormNode = personFormNodeType.nodes[0];
