@@ -1,9 +1,18 @@
-import {Dataset} from "../Dataset";
-import {BlankNode, NamedNode, Term} from "n3";
+import {ModelSet} from "../ModelSet";
+import {BlankNode, NamedNode, Term} from "@rdfjs/types";
+import {NonNullable} from "@paradicms/utilities";
 
 export abstract class ModelMixin {
-  abstract readonly dataset: Dataset;
+  abstract readonly modelSet: ModelSet;
   abstract readonly graphNode: NamedNode;
   protected abstract readonly _node: BlankNode | NamedNode;
-  protected abstract propertyObjects(property: NamedNode): readonly Term[];
+  protected abstract filterAndMapObjects<T>(
+    property: NamedNode,
+    callback: (value: Term) => NonNullable<T> | null
+  ): readonly NonNullable<T>[];
+  protected abstract findAndMapObject<T>(
+    property: NamedNode,
+    callback: (value: Term) => NonNullable<T> | null
+  ): NonNullable<T> | null;
+  protected abstract hasObject(property: NamedNode): boolean;
 }

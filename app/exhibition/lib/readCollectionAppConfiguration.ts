@@ -1,15 +1,15 @@
 import {ExhibitionAppConfiguration} from "./ExhibitionAppConfiguration";
-import {Store} from "n3";
+import {Dataset} from "@rdfjs/types";
 import {readAppConfiguration} from "@paradicms/configuration";
 
 export const readExhibitionAppConfiguration = (
-  configurationStore: Store | null,
-  datasetStore: Store
+  configurationDataset: Dataset | null,
+  modelSetDataset: Dataset
 ): ExhibitionAppConfiguration | null => {
   return readAppConfiguration<ExhibitionAppConfiguration>(
-    configurationStore,
-    datasetStore,
-    ({graph, node, store, ...appConfigurationProps}) => {
+    configurationDataset,
+    modelSetDataset,
+    ({graph, node, dataset, ...appConfigurationProps}) => {
       return {
         ...appConfigurationProps,
       };

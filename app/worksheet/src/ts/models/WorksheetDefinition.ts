@@ -1,30 +1,30 @@
 import {WorksheetFeatureSetDefinition} from "~/models/WorksheetFeatureSetDefinition";
-import {WorksheetDefinitionDataset} from "~/models/WorksheetDefinitionDataset";
+import {WorksheetDefinitionModelSet} from "~/models/WorksheetDefinitionModelSet";
 import {WorksheetFeatureValueDefinition} from "~/models/WorksheetFeatureValueDefinition";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
 
 export class WorksheetDefinition {
-  constructor(private readonly dataset: WorksheetDefinitionDataset) {}
+  constructor(private readonly modelSet: WorksheetDefinitionModelSet) {}
 
   get features(): readonly WorksheetFeatureDefinition[] {
-    return this.dataset.worksheetFeatureDefinitions;
+    return this.modelSet.worksheetFeatureDefinitions;
   }
 
   featureSetByUriOptional(uri: string): WorksheetFeatureSetDefinition | null {
-    return this.dataset.worksheetFeatureSetDefinitionByUriOptional(uri);
+    return this.modelSet.worksheetFeatureSetDefinitionByUriOptional(uri);
   }
 
   get featureSets(): readonly WorksheetFeatureSetDefinition[] {
-    return this.dataset.worksheetFeatureSetDefinitions;
+    return this.modelSet.worksheetFeatureSetDefinitions;
   }
 
   featureValueByUriOptional(
     uri: string
   ): WorksheetFeatureValueDefinition | null {
-    return this.dataset.namedValueByUriOptional(uri);
+    return this.modelSet.namedValueByUriOptional(uri);
   }
 
   get featureValues(): readonly WorksheetFeatureValueDefinition[] {
-    return this.dataset.namedValues;
+    return this.modelSet.namedValues;
   }
 }

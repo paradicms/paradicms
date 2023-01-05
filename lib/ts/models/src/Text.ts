@@ -1,17 +1,19 @@
 import {Model} from "./Model";
-import {requireDefined} from "./requireDefined";
 import {Mixin} from "ts-mixer";
 import {HasRights} from "./mixins/HasRights";
-import {RDF} from "@paradicms/vocabularies";
+import {rdf} from "@paradicms/vocabularies";
+import {requireNonNull} from "@paradicms/utilities";
 
 export class Text extends Mixin(Model, HasRights) {
-  toString() {
+  override toString() {
     return this.value;
   }
 
   get value(): string {
-    return requireDefined(
-      this.propertyObjects(RDF.value).find(term => term.termType === "Literal")
-    ).value;
+    return requireNonNull(
+      this.findAndMapObject(rdf.value, term =>
+        term.termType == "Literal" ? term.value : null
+      )
+    );
   }
 }

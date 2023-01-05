@@ -1,41 +1,37 @@
 import {NamedModel} from "./NamedModel";
-import {requireDefined} from "./requireDefined";
-import {DCTERMS, SKOS} from "@paradicms/vocabularies";
+import {dcterms, skos} from "@paradicms/vocabularies";
+import {requireNonNull} from "@paradicms/utilities";
 
 export class RightsStatement extends NamedModel {
   get definition(): string | null {
-    return (
-      this.propertyObjects(SKOS.definition).find(
-        term => term.termType === "Literal"
-      )?.value ?? null
+    return this.findAndMapObject(skos.definition, term =>
+      term.termType === "Literal" ? term.value : null
     );
   }
 
   get description(): string | null {
-    return (
-      this.propertyObjects(DCTERMS.description).find(
-        term => term.termType === "Literal"
-      )?.value ?? null
+    return this.findAndMapObject(dcterms.description, term =>
+      term.termType === "Literal" ? term.value : null
     );
   }
 
   get identifier(): string {
-    return requireDefined(
-      this.propertyObjects(DCTERMS.identifier).find(
-        term => term.termType === "Literal"
+    return requireNonNull(
+      this.findAndMapObject(dcterms.identifier, term =>
+        term.termType === "Literal" ? term.value : null
       )
-    ).value;
+    );
   }
 
   get prefLabel(): string {
-    return requireDefined(
-      this.propertyObjects(SKOS.prefLabel).find(
-        term => term.termType === "Literal"
+    return requireNonNull(
+      this.findAndMapObject(skos.prefLabel, term =>
+        term.termType === "Literal" ? term.value : null
       )
-    ).value;
+    );
   }
 
-  toString() {
+  override toString() {
     return this.prefLabel;
   }
 }

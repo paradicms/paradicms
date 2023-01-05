@@ -1,19 +1,21 @@
 import {Model} from "./Model";
-import {requireDefined} from "./requireDefined";
-import {WGS} from "@paradicms/vocabularies";
+import {wgs} from "@paradicms/vocabularies";
+import {parseFloatOrNull, requireNonNull} from "@paradicms/utilities";
 
 export class Location extends Model {
   get lat(): number {
-    return parseFloat(
-      requireDefined(this.propertyObjects(WGS.lat).find(term => term.termType))
-        .value
+    return requireNonNull(
+      this.findAndMapObject(wgs.lat, term =>
+        term.termType == "Literal" ? parseFloatOrNull(term.value) : null
+      )
     );
   }
 
   get long(): number {
-    return parseFloat(
-      requireDefined(this.propertyObjects(WGS.long).find(term => term.termType))
-        .value
+    return requireNonNull(
+      this.findAndMapObject(wgs.long, term =>
+        term.termType == "Literal" ? parseFloatOrNull(term.value) : null
+      )
     );
   }
 }

@@ -1,18 +1,18 @@
 import {Institution} from "../Institution";
-import {requireDefined} from "../requireDefined";
-import {CMS} from "@paradicms/vocabularies";
+import {cms} from "@paradicms/vocabularies";
 import {ModelMixin} from "./ModelMixin";
+import {requireNonNull} from "@paradicms/utilities";
 
 export abstract class HasInstitution extends ModelMixin {
   get institution(): Institution {
-    return this.dataset.institutionByUri(this.institutionUri);
+    return this.modelSet.institutionByUri(this.institutionUri);
   }
 
   get institutionUri(): string {
-    return requireDefined(
-      this.propertyObjects(CMS.institution).find(
-        term => term.termType === "NamedNode"
+    return requireNonNull(
+      this.findAndMapObject(cms.institution, term =>
+        term.termType === "NamedNode" ? term.value : null
       )
-    ).value;
+    );
   }
 }

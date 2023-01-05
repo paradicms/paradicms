@@ -1,15 +1,13 @@
-import {requireDefined} from "../requireDefined";
-import {DCTERMS} from "@paradicms/vocabularies";
-import {NamedNode, Term} from "n3";
+import {dcterms} from "@paradicms/vocabularies";
+import {requireNonNull} from "@paradicms/utilities";
+import {ModelMixin} from "./ModelMixin";
 
-export abstract class HasTitle {
-  protected abstract propertyObjects(property: NamedNode): readonly Term[];
-
+export abstract class HasTitle extends ModelMixin {
   get title(): string {
-    return requireDefined(
-      this.propertyObjects(DCTERMS.title).find(
-        term => term.termType === "Literal"
+    return requireNonNull(
+      this.findAndMapObject(dcterms.title, term =>
+        term.termType === "Literal" ? term.value : null
       )
-    ).value;
+    );
   }
 }

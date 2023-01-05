@@ -9,7 +9,7 @@ export class Agent extends Mixin(
   HasPage,
   HasRelations
 ) {
-  toString() {
+  override toString() {
     return this.name;
   }
 }

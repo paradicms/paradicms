@@ -1,28 +1,22 @@
-import {CONTACT, FOAF} from "@paradicms/vocabularies";
+import {contact, foaf} from "@paradicms/vocabularies";
 import {Agent} from "./Agent";
 
 export class Person extends Agent {
   get familyName(): string | null {
-    return (
-      this.propertyObjects(FOAF.familyName).find(
-        term => term.termType === "Literal"
-      )?.value ?? null
+    return this.findAndMapObject(foaf.familyName, term =>
+      term.termType === "Literal" ? term.value : null
     );
   }
 
   get givenName(): string | null {
-    return (
-      this.propertyObjects(FOAF.givenName).find(
-        term => term.termType === "Literal"
-      )?.value ?? null
+    return this.findAndMapObject(foaf.givenName, term =>
+      term.termType === "Literal" ? term.value : null
     );
   }
 
   get sortName(): string | null {
-    return (
-      this.propertyObjects(CONTACT.sortName).find(
-        term => term.termType === "Literal"
-      )?.value ?? null
+    return this.findAndMapObject(contact.sortName, term =>
+      term.termType === "Literal" ? term.value : null
     );
   }
 }

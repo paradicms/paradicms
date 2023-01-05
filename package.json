@@ -10,10 +10,15 @@
     "clean-lib": "wsrun --exclude-missing -p '@paradicms/*' --prefix clean",
     "rebuild-lib": "wsrun --exclude-missing -p '@paradicms/*' --prefix --stages rebuild",
     "watch": "wsrun --exclude-missing --prefix watch",
-    "test": "wsrun --exclude-missing test"
+    "watch-lib": "wsrun --exclude-missing -p '@paradicms/*' --prefix watch",
+    "test": "wsrun --exclude-missing test",
+    "test-lib": "wsrun --exclude-missing  -p '@paradicms/*' --prefix test"
   },
-  "workspaces": [
-    "app/*",
-    "lib/ts/*"
-  ]
+  "workspaces": {
+    "nohoist": ["forms/expo", "forms/@expo/vector-icons"],
+    "packages": [
+      "app/*",
+      "lib/ts/*"
+    ]
+  }
 }

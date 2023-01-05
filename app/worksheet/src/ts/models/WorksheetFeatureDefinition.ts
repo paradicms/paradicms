@@ -2,7 +2,8 @@ import {HasAbstract, HasImages, HasTitle, NamedModel} from "@paradicms/models";
 import {Memoize} from "typescript-memoize";
 import {WorksheetFeatureValueDefinition} from "~/models/WorksheetFeatureValueDefinition";
 import {Mixin} from "ts-mixer";
-import {SH, XSD} from "@paradicms/vocabularies";
+import {sh, xsd} from "@paradicms/vocabularies";
+import {parseIntOrNull} from "@paradicms/utilities";
 
 export class WorksheetFeatureDefinition extends Mixin(
   NamedModel,
@@ -11,15 +12,18 @@ export class WorksheetFeatureDefinition extends Mixin(
   HasTitle
 ) {
   get order(): number {
-    const integerLiteral = this.propertyObjects(SH.order).find(
-      (term) =>
-        term.termType === "Literal" && term.datatype.value === XSD.integer.value
+    return (
+      this.findAndMapObject(sh.order, term =>
+        term.termType == "Literal" &&
+        (!term.datatype || term.datatype.equals(xsd.integer))
+          ? parseIntOrNull(term.value)
+          : null
+      ) ?? 0
     );
-    return integerLiteral ? parseInt(integerLiteral.value) : 0;
   }
 
   @Memoize()
   get values(): readonly WorksheetFeatureValueDefinition[] {
-    return this.dataset.namedValuesByPropertyUri(this.uri);
+    return this.modelSet.namedValuesByPropertyUri(this.uri);
   }
 }

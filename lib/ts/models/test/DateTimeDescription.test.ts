@@ -1,12 +1,13 @@
 import {expect} from "chai";
-import {Dataset} from "../src";
-import {testDataTrig} from "./testDataTrig";
+import {ModelSet} from "../src";
+import {testDataTrig} from "@paradicms/test";
 import {DateTimeDescription} from "../src/DateTimeDescription";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("DateTimeDescription", () => {
-  const dataset = Dataset.parse(testDataTrig);
-  const sut: DateTimeDescription = dataset.workEventsByWork(
-    dataset.works[0].uri
+  const modelSet = new ModelSet(parseIntoDataset(testDataTrig));
+  const sut: DateTimeDescription = modelSet.workEventsByWork(
+    modelSet.works[0].uri
   )[0].date! as DateTimeDescription;
 
   before(() => {

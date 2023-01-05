@@ -1,33 +1,33 @@
 import {Memoize} from "typescript-memoize";
 import {Agent} from "../Agent";
-import {DCTERMS} from "@paradicms/vocabularies";
+import {dcterms} from "@paradicms/vocabularies";
 import {ModelMixin} from "./ModelMixin";
 
 export abstract class HasContributors extends ModelMixin {
   @Memoize()
   get contributors(): readonly (Agent | string)[] {
-    return this.propertyObjects(DCTERMS.contributor).flatMap(term => {
+    return this.filterAndMapObjects(dcterms.contributor, term => {
       switch (term.termType) {
         case "Literal":
           return term.value;
         case "NamedNode":
-          return this.dataset.agentByUri(term.value);
+          return this.modelSet.agentByUri(term.value);
         default:
-          return [];
+          return null;
       }
     });
   }
 
   get contributorAgents(): readonly Agent[] {
     return this.contributorAgentUris.map(agentUri =>
-      this.dataset.agentByUri(agentUri)
+      this.modelSet.agentByUri(agentUri)
     );
   }
 
   @Memoize()
   get contributorAgentUris(): readonly string[] {
-    return this.propertyObjects(DCTERMS.contributor)
-      .filter(term => term.termType === "NamedNode")
-      .map(term => term.value);
+    return this.filterAndMapObjects(dcterms.contributor, term =>
+      term.termType === "NamedNode" ? term.value : null
+    );
   }
 }

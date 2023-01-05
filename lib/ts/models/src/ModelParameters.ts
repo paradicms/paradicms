@@ -1,8 +1,8 @@
-import {Dataset} from "./Dataset";
-import {BlankNode, DefaultGraph, NamedNode} from "n3";
+import {ModelSet} from "./ModelSet";
+import {BlankNode, DefaultGraph, NamedNode} from "@rdfjs/types";
 
 export interface ModelParameters {
-  dataset: Dataset;
+  modelSet: ModelSet;
   graphNode: DefaultGraph | NamedNode;
   node: BlankNode | NamedNode;
 }

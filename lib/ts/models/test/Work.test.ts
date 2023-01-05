@@ -1,11 +1,12 @@
 import {expect} from "chai";
-import {Dataset, Text} from "../src";
-import {testDataTrig} from "./testDataTrig";
-import {DCTERMS} from "@paradicms/vocabularies";
+import {ModelSet, Text} from "../src";
+import {testDataTrig} from "@paradicms/test";
+import {dcterms} from "@paradicms/vocabularies";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("Work", () => {
-  const dataset = Dataset.parse(testDataTrig);
-  const sut = dataset.workByUri(
+  const modelSet = new ModelSet(parseIntoDataset(testDataTrig));
+  const sut = modelSet.workByUri(
     "http://example.com/institution0/collection0/work2"
   );
 
@@ -29,7 +30,7 @@ describe("Work", () => {
 
   it("should get the work's images", () => {
     expect(sut.images.map(image => image.uri).sort()).to.deep.eq(
-      dataset.images
+      modelSet.images
         .filter(image => image.depictsUri === sut.uri)
         .map(image => image.uri)
         .sort()
@@ -42,7 +43,7 @@ describe("Work", () => {
 
   it("should get the work's images", () => {
     expect(sut.originalImages.map(image => image.uri).sort()).to.deep.eq(
-      dataset.images
+      modelSet.images
         .filter(
           image =>
             image.depictsUri === sut.uri && image.originalImageUri === null
@@ -57,14 +58,14 @@ describe("Work", () => {
   });
 
   it("should get the work's property values (literal)", () => {
-    const propertyValues = sut.propertyValues(DCTERMS.title.value);
+    const propertyValues = sut.propertyValues(dcterms.title.value);
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];
     expect(propertyValue.value).to.eq(sut.title);
   });
 
   it("should get the work's property values (named)", () => {
-    const propertyValues = sut.propertyNamedValues(DCTERMS.subject.value);
+    const propertyValues = sut.propertyNamedValues(dcterms.subject.value);
     expect(propertyValues).to.have.length(2);
     const propertyValue = propertyValues[0];
     expect(propertyValue.value.value).to.satisfy((text: string) =>
@@ -73,7 +74,7 @@ describe("Work", () => {
   });
 
   it("should get the work's property values (Text)", () => {
-    const propertyValues = sut.propertyValues(DCTERMS.abstract.value);
+    const propertyValues = sut.propertyValues(dcterms.abstract.value);
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];
     expect(propertyValue.value).to.eq((sut.abstract as Text).value);

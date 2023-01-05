@@ -5,9 +5,10 @@ import {Text} from "./Text";
 import {Memoize} from "typescript-memoize";
 import {PropertyValue} from "./PropertyValue";
 import {NamedValue} from "./NamedValue";
-import {NamedNode} from "n3";
+import {NamedNode} from "@rdfjs/types";
 import {WorkAgent} from "./WorkAgent";
 import {Mixin} from "ts-mixer";
+import {DataFactory} from "@paradicms/rdf";
 import {
   HasAbstract,
   HasImages,
@@ -22,7 +23,7 @@ import {WorkLocation} from "./WorkLocation";
 import {visitWorkEvent} from "./WorkEventVisitor";
 import {WorkCreation} from "./WorkCreation";
 import {Location} from "./Location";
-import {CMS, DCTERMS, RDF} from "@paradicms/vocabularies";
+import {cms, dcterms, rdf} from "@paradicms/vocabularies";
 
 const getRightsWorkAgents = (
   rights: Rights | null,
@@ -119,36 +120,37 @@ export class Work extends Mixin(
 
   get collections(): readonly Collection[] {
     return this.collectionUris.map(collectionUri =>
-      this.dataset.collectionByUri(collectionUri)
+      this.modelSet.collectionByUri(collectionUri)
     );
   }
 
   @Memoize()
   get collectionUris(): readonly string[] {
-    return this.propertyObjects(CMS.collection)
-      .filter(term => term.termType === "NamedNode")
-      .map(term => term.value);
+    return this.filterAndMapObjects(cms.collection, term =>
+      term.termType === "NamedNode" ? term.value : null
+    );
   }
 
   @Memoize()
   get description(): string | Text | null {
-    for (const term of this.propertyObjects(DCTERMS.abstract)) {
+    return this.findAndMapObject(dcterms.abstract, term => {
       switch (term.termType) {
         case "BlankNode":
           return new Text({
-            dataset: this.dataset,
+            modelSet: this.modelSet,
             graphNode: this.graphNode,
             node: term,
           });
         case "Literal":
           return term.value;
+        default:
+          return null;
       }
-    }
-    return null;
+    });
   }
 
   get events(): readonly WorkEvent[] {
-    return this.dataset.workEventsByWork(this.uri);
+    return this.modelSet.workEventsByWork(this.uri);
   }
 
   @Memoize()
@@ -178,47 +180,41 @@ export class Work extends Mixin(
 
   @Memoize()
   propertyNamedValues(propertyUri: string): readonly NamedValue[] {
-    const result: NamedValue[] = [];
-    this.store.forEach(
-      quad => {
-        if (quad.object.termType !== "NamedNode") {
-          return;
+    return this.filterAndMapObjects(
+      DataFactory.namedNode(propertyUri),
+      term => {
+        if (term.termType !== "NamedNode") {
+          return null;
         }
-        const rdfTypeQuads = this.store.getQuads(
-          quad.object,
-          RDF.type,
-          CMS.NamedValue,
+        for (const rdfTypeQuad of this.dataset.match(
+          term,
+          rdf.type,
+          cms.NamedValue,
           null
-        );
-        if (rdfTypeQuads.length == 0) {
-          return;
+        )) {
+          return new NamedValue({
+            modelSet: this.modelSet,
+            graphNode: rdfTypeQuad.graph as NamedNode,
+            node: term,
+          });
         }
-        result.push(
-          new NamedValue({
-            dataset: this.dataset,
-            graphNode: rdfTypeQuads[0].graph as NamedNode,
-            node: quad.object,
-          })
-        );
-      },
-      this.node,
-      new NamedNode(propertyUri),
-      null,
-      this.graphNode
+        return null;
+      }
     );
-    return result;
   }
 
   @Memoize()
   propertyValues(propertyUri: string): readonly PropertyValue[] {
     return PropertyValue.fromQuads(
-      this.dataset,
-      this.store.getQuads(
-        this.node,
-        new NamedNode(propertyUri),
-        null,
-        this.graphNode
-      )
+      this.modelSet,
+      this.dataset
+        .match(
+          this.node,
+          DataFactory.namedNode(propertyUri),
+          null,
+          this.graphNode
+        )
+        .toArray()
     );
   }
 }

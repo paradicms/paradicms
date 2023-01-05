@@ -1,12 +1,12 @@
 import * as React from "react";
 import {useCallback, useMemo} from "react";
 import {Layout} from "components/Layout";
-import {Dataset, DataSubsetter} from "@paradicms/models";
+import {ModelSet, ModelSubsetter} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
   readConfigurationFile,
-  readDatasetFile,
+  readModelSetFile,
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Hrefs} from "lib/Hrefs";
@@ -19,6 +19,7 @@ import {WorkLocationSummary} from "@paradicms/services";
 import {ExhibitionAppConfiguration} from "../../lib/ExhibitionAppConfiguration";
 import {readExhibitionAppConfiguration} from "../../lib/readCollectionAppConfiguration";
 import {defaultExhibitionAppConfiguration} from "../../lib/defaultExhibitionAppConfiguration";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -36,7 +37,7 @@ interface StaticProps {
   readonly collectionUri: string;
   readonly configuration: ExhibitionAppConfiguration;
   readonly currentWorkUri: string;
-  readonly datasetString: string;
+  readonly modelSetString: string;
   readonly nextWorkUri: string | null;
   readonly previousWorkUri: string | null;
 }
@@ -45,17 +46,18 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
   configuration,
   currentWorkUri,
-  datasetString,
+  modelSetString,
   nextWorkUri,
   previousWorkUri,
 }) => {
   const router = useRouter();
 
-  const dataset = useMemo<Dataset>(() => Dataset.parse(datasetString), [
-    datasetString,
-  ]);
-  const collection = dataset.collectionByUri(collectionUri);
-  const currentWork = dataset.workByUri(currentWorkUri);
+  const modelSet = useMemo<ModelSet>(
+    () => new ModelSet(parseIntoDataset(modelSetString)),
+    [modelSetString]
+  );
+  const collection = modelSet.collectionByUri(collectionUri);
+  const currentWork = modelSet.workByUri(currentWorkUri);
 
   const onGoToNextWork = useCallback(() => {
     if (nextWorkUri) {
@@ -114,7 +116,7 @@ export default WorkPage;
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {workUri: string}}[] = [];
 
-  for (const work of readDatasetFile(readFileSync).works) {
+  for (const work of readModelSetFile(readFileSync).works) {
     paths.push({
       params: {
         workUri: encodeFileName(work.uri),
@@ -133,11 +135,11 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const workUri = decodeFileName(params!.workUri as string);
 
-  const completeDataset = readDatasetFile(readFileSync);
+  const completeModelSet = readModelSetFile(readFileSync);
 
-  const currentWork = completeDataset.workByUri(workUri);
+  const currentWork = completeModelSet.workByUri(workUri);
   const collectionUri = currentWork.collectionUris[0];
-  const collectionWorks = completeDataset.collectionWorks(collectionUri);
+  const collectionWorks = completeModelSet.collectionWorks(collectionUri);
 
   const currentWorkI = collectionWorks.findIndex(
     work => work.uri === currentWork.uri
@@ -167,12 +169,15 @@ export const getStaticProps: GetStaticProps = async ({
       configuration:
         readExhibitionAppConfiguration(
           readConfigurationFile(readFileSync),
-          completeDataset.store
+          completeModelSet.dataset
         ) ?? defaultExhibitionAppConfiguration,
       currentWorkUri: workUri,
-      datasetString: new DataSubsetter({completeDataset, workPropertyUris: []})
-        .worksDataset(
-          workUris.map(workUri => completeDataset.workByUri(workUri)),
+      modelSetString: new ModelSubsetter({
+        completeModelSet,
+        workPropertyUris: [],
+      })
+        .worksModelSet(
+          workUris.map(workUri => completeModelSet.workByUri(workUri)),
           {
             agents: {
               thumbnail: {targetDimensions: thumbnailTargetDimensions},

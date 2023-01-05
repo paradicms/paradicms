@@ -5,7 +5,7 @@ import {NamedModelMixin} from "./NamedModelMixin";
 
 export abstract class HasImages extends NamedModelMixin {
   get images(): readonly Image[] {
-    return this.dataset.imagesByDepictsUri(this.uri);
+    return this.modelSet.imagesByDepictsUri(this.uri);
   }
 
   get originalImages(): readonly Image[] {

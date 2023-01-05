@@ -4,7 +4,7 @@ interface ImageDimensions {
 }
 
 export interface ValueFacetValueThumbnail {
-  // Can't use class Models since facets are not assumed to be part of the Dataset.
+  // Can't use class Models since facets are not assumed to be part of the ModelSet.
   readonly exactDimensions: ImageDimensions | null;
   readonly maxDimensions: ImageDimensions | null;
   rights: {

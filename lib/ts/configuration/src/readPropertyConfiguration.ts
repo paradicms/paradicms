@@ -1,43 +1,47 @@
-import {BlankNode, DefaultGraph, NamedNode, Store} from "n3";
-import {CONFIGURATION, DCTERMS, RDF, XSD} from "@paradicms/vocabularies";
+import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
+import {configuration, dcterms, rdf, xsd} from "@paradicms/vocabularies";
 import {PropertyConfiguration} from "./PropertyConfiguration";
 
 export const readPropertyConfiguration = (kwds: {
   graph: BlankNode | DefaultGraph | NamedNode;
   node: BlankNode | NamedNode;
-  store: Store;
+  dataset: Dataset;
 }): PropertyConfiguration => {
-  const {graph, node, store} = kwds;
+  const {graph, node, dataset} = kwds;
 
-  const uri = store
-    .getObjects(node, RDF.predicate, graph)
-    .find(term => term.termType === "NamedNode")?.value;
+  const uri = dataset
+    .match(node, rdf.predicate, null, graph)
+    .toArray()
+    .find(quad => quad.object.termType === "NamedNode")?.object.value;
   if (!uri) {
     throw new RangeError("property configuration has no rdf:predicate");
   }
 
-  const label = store
-    .getObjects(node, DCTERMS.title, graph)
-    .find(term => term.termType === "Literal")?.value;
+  const label = dataset
+    .match(node, dcterms.title, null, graph)
+    .toArray()
+    .find(quad => quad.object.termType === "Literal")?.object.value;
   if (!label) {
     throw new RangeError("property configuration has no dcterms:title");
   }
 
   const booleanValue = (propertyUri: NamedNode): boolean =>
-    store
-      .getObjects(node, propertyUri, graph)
+    dataset
+      .match(node, propertyUri, null, graph)
+      .toArray()
+      .map(quad => quad.object)
       .some(
         term =>
           term.termType === "Literal" &&
-          term.datatype.value === XSD.boolean_.value &&
+          term.datatype.value === xsd.boolean.value &&
           (term.value === "true" || term.value === "1")
       );
 
   return {
-    filterable: booleanValue(CONFIGURATION.filterable),
-    hidden: booleanValue(CONFIGURATION.hidden),
+    filterable: booleanValue(configuration.filterable),
+    hidden: booleanValue(configuration.hidden),
     label,
-    searchable: booleanValue(CONFIGURATION.searchable),
+    searchable: booleanValue(configuration.searchable),
     uri,
   };
 };

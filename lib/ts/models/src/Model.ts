@@ -1,27 +1,19 @@
-import {BlankNode, DefaultGraph, NamedNode, Store, Term} from "n3";
-import {Dataset} from "./Dataset";
+import {Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
+import {ModelSet} from "./ModelSet";
 import {ModelParameters} from "./ModelParameters";
+import {Resource} from "@paradicms/rdf";
 
-export class Model {
-  readonly dataset: Dataset;
+export class Model extends Resource {
+  readonly modelSet: ModelSet;
   readonly graphNode: DefaultGraph | NamedNode;
-  protected readonly _node: BlankNode | NamedNode;
 
   constructor(kwds: ModelParameters) {
-    this.dataset = kwds.dataset;
+    super({node: kwds.node});
+    this.modelSet = kwds.modelSet;
     this.graphNode = kwds.graphNode;
-    this._node = kwds.node;
   }
 
-  get node(): BlankNode | NamedNode {
-    return this._node;
-  }
-
-  protected propertyObjects(property: NamedNode): readonly Term[] {
-    return this.store.getObjects(this.node, property, this.graphNode);
-  }
-
-  protected get store(): Store {
-    return this.dataset.store;
+  get dataset(): Dataset {
+    return this.modelSet.dataset;
   }
 }

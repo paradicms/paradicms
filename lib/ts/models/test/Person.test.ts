@@ -1,9 +1,10 @@
 import {expect} from "chai";
-import {Dataset} from "../src";
-import {testDataTrig} from "./testDataTrig";
+import {ModelSet} from "../src";
+import {testDataTrig} from "@paradicms/test";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("Person", () => {
-  const sut = Dataset.parse(testDataTrig).personByUri(
+  const sut = new ModelSet(parseIntoDataset(testDataTrig)).personByUri(
     "http://example.com/person4"
   );
 

@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useMemo} from "react";
-import {Collection, Dataset, DataSubsetter} from "@paradicms/models";
+import {Collection, ModelSet, ModelSubsetter} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {
@@ -9,7 +9,7 @@ import {
 } from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
-import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
+import {readConfigurationFile, readModelSetFile} from "@paradicms/next";
 import fs from "fs";
 import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
@@ -21,6 +21,7 @@ import dynamic from "next/dynamic";
 import {CollectionAppConfiguration} from "../lib/CollectionAppConfiguration";
 import {readCollectionAppConfiguration} from "../lib/readCollectionAppConfiguration";
 import {defaultCollectionAppConfiguration} from "../lib/defaultCollectionAppConfiguration";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -37,27 +38,28 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 interface StaticProps {
   readonly collectionUri: string;
   readonly configuration: CollectionAppConfiguration;
-  readonly datasetString: string;
+  readonly modelSetString: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
   configuration,
-  datasetString,
+  modelSetString,
 }) => {
-  const dataset = useMemo<Dataset>(() => Dataset.parse(datasetString), [
-    datasetString,
-  ]);
+  const modelSet = useMemo<ModelSet>(
+    () => new ModelSet(parseIntoDataset(modelSetString)),
+    [modelSetString]
+  );
 
   const collection = useMemo<Collection>(
-    () => dataset.collectionByUri(collectionUri),
-    [collectionUri, datasetString]
+    () => modelSet.collectionByUri(collectionUri),
+    [collectionUri, modelSetString]
   );
 
   const workQueryService = useMemo<WorkQueryService>(
     () =>
       new LunrWorkQueryService({
-        dataset,
+        modelSet,
         resultWorkPropertyUris: configuration.workProperties.map(
           workProperty => workProperty.uri
         ),
@@ -65,7 +67,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
           .filter(workProperty => workProperty.searchable)
           .map(workProperty => workProperty.uri),
       }),
-    [configuration, dataset]
+    [configuration, modelSet]
   );
 
   const {onSearch, ...workSearchQueryParams} = useWorkSearchQueryParams({
@@ -97,26 +99,26 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const completeDataset = readDatasetFile(readFileSync);
+  const completeModelSet = readModelSetFile(readFileSync);
   const configuration =
     readCollectionAppConfiguration(
       readConfigurationFile(readFileSync),
-      completeDataset.store
+      completeModelSet.dataset
     ) ?? defaultCollectionAppConfiguration;
 
-  const collection = completeDataset.collections[0];
+  const collection = completeModelSet.collections[0];
 
   return {
     props: {
       collectionUri: collection.uri,
       configuration,
-      datasetString: new DataSubsetter({
-        completeDataset,
+      modelSetString: new ModelSubsetter({
+        completeModelSet,
         workPropertyUris: configuration.workProperties.map(
           workProperty => workProperty.uri
         ),
       })
-        .collectionDataset(collection, {
+        .collectionModelSet(collection, {
           institution: {},
           works: workSearchWorkJoinSelector(thumbnailTargetDimensions),
         })

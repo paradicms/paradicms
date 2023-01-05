@@ -1,23 +1,25 @@
 import {NamedModel} from "./NamedModel";
-import {requireDefined} from "./requireDefined";
-import {DC} from "@paradicms/vocabularies";
+import {dc11} from "@paradicms/vocabularies";
+import {requireNonNull} from "@paradicms/utilities";
 
 export class License extends NamedModel {
   get identifier(): string {
-    return requireDefined(
-      this.propertyObjects(DC.identifier).find(
-        term => term.termType === "Literal"
+    return requireNonNull(
+      this.findAndMapObject(dc11.identifier, term =>
+        term.termType === "Literal" ? term.value : null
       )
-    ).value;
+    );
   }
 
   get title(): string {
-    return requireDefined(
-      this.propertyObjects(DC.title).find(term => term.termType === "Literal")
-    ).value;
+    return requireNonNull(
+      this.findAndMapObject(dc11.title, term =>
+        term.termType === "Literal" ? term.value : null
+      )
+    );
   }
 
-  toString() {
+  override toString() {
     return this.title;
   }
 }

@@ -1,16 +1,16 @@
 import {Model} from "./Model";
-import {Literal, NamedNode} from "n3";
-import * as dayjs from "dayjs";
-import {TIME, XSD} from "@paradicms/vocabularies";
+import {Literal, NamedNode} from "@rdfjs/types";
+import dayjs from "dayjs";
+import {time, xsd} from "@paradicms/vocabularies";
 
 export class DateTimeDescription extends Model {
   get day(): number | null {
-    for (const term of this.propertyObjects(TIME.day)) {
+    return this.findAndMapObject(time.day, term => {
       if (term.termType !== "Literal") {
-        continue;
+        return null;
       }
       const literal: Literal = term;
-      if (literal.datatype.value === XSD.gDay.value) {
+      if (literal.datatype.value === xsd.gDay.value) {
         // https://www.w3.org/TR/xmlschema11-2/#gDay
         const match = literal.value.match(
           /---(0[1-9]|[12][0-9]|3[01])(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?/
@@ -20,28 +20,29 @@ export class DateTimeDescription extends Model {
         }
         // "---09" -> ["---09", "09", undefined, undefined, undefined, undefined, 0, "---09", undefined]
         return parseInt(match[1]);
-      } else if (literal.datatype.value === XSD.integer.value) {
+      } else if (literal.datatype.value === xsd.integer.value) {
         return parseInt(literal.value);
+      } else {
+        return null;
       }
-    }
-    return null;
+    });
   }
 
   get hour(): number | null {
-    return this.optionalInt(TIME.hour);
+    return this.optionalInt(time.hour);
   }
 
   get minute(): number | null {
-    return this.optionalInt(TIME.minute);
+    return this.optionalInt(time.minute);
   }
 
   get month(): number | null {
-    for (const term of this.propertyObjects(TIME.month)) {
+    return this.findAndMapObject(time.month, term => {
       if (term.termType !== "Literal") {
-        continue;
+        return null;
       }
       const literal: Literal = term;
-      if (literal.datatype.value === XSD.gMonth.value) {
+      if (literal.datatype.value === xsd.gMonth.value) {
         // https://www.w3.org/TR/xmlschema11-2/#gMonth
         const match = literal.value.match(
           /--(0[1-9]|1[0-2])(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?/
@@ -51,49 +52,51 @@ export class DateTimeDescription extends Model {
         }
         // "--01" -> ["--01", "01", undefined, undefined, undefined, undefined, 0, "--01", undefined]
         return parseInt(match[1]);
-      } else if (literal.datatype.value === XSD.integer.value) {
+      } else if (literal.datatype.value === xsd.integer.value) {
         return parseInt(literal.value);
+      } else {
+        return null;
       }
-    }
-    return null;
+    });
   }
 
   private optionalInt(property: NamedNode): number | null {
-    for (const term of this.propertyObjects(property)) {
+    return this.findAndMapObject(property, term => {
       if (term.termType !== "Literal") {
-        continue;
+        return null;
       }
       const literal: Literal = term;
-      if (literal.datatype.value === XSD.integer.value) {
+      if (literal.datatype.value === xsd.integer.value) {
         return parseInt(literal.value);
       }
-    }
-    return null;
+      return null;
+    });
   }
 
   get second(): number | null {
-    for (const term of this.propertyObjects(TIME.second)) {
+    return this.findAndMapObject(time.second, term => {
       if (term.termType !== "Literal") {
-        continue;
+        return null;
       }
       const literal: Literal = term;
-      if (literal.datatype.value === XSD.decimal.value) {
+      if (literal.datatype.value === xsd.decimal.value) {
         return parseFloat(literal.value);
-      } else if (literal.datatype.value === XSD.integer.value) {
+      } else if (literal.datatype.value === xsd.integer.value) {
         return parseInt(literal.value);
+      } else {
+        return null;
       }
-    }
-    return null;
+    });
   }
 
-  toString() {
+  override toString() {
     const year = this.year;
 
     if (year === null) {
       return "(unknown)";
     }
 
-    let dayjs_ = dayjs();
+    let dayjs_ = (dayjs as any)();
 
     // https://day.js.org/docs/en/display/format
     let dateFormat = "";
@@ -138,12 +141,12 @@ export class DateTimeDescription extends Model {
   }
 
   get year(): number | null {
-    for (const term of this.propertyObjects(TIME.year)) {
+    return this.findAndMapObject(time.year, term => {
       if (term.termType !== "Literal") {
-        continue;
+        return null;
       }
       const literal: Literal = term;
-      if (literal.datatype.value === XSD.gYear.value) {
+      if (literal.datatype.value === xsd.gYear.value) {
         // https://www.w3.org/TR/xmlschema11-2/#gYear
         const match = literal.value.match(
           /-?([1-9][0-9]{3,}|0[0-9]{3})(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?/
@@ -153,10 +156,11 @@ export class DateTimeDescription extends Model {
         }
         // "2022" -> ["2022", "2022", undefined, undefined, undefined, undefined, 0, "2022", undefined]
         return parseInt(match[1]);
-      } else if (literal.datatype.value === XSD.integer.value) {
+      } else if (literal.datatype.value === xsd.integer.value) {
         return parseInt(literal.value);
+      } else {
+        return null;
       }
-    }
-    return null;
+    });
   }
 }

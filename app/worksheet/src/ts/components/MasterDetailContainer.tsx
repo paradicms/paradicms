@@ -21,7 +21,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faInfoCircle, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {useLocation} from "react-router";
 import {WorksheetMode} from "~/models/WorksheetMode";
-import {Literal} from "n3";
+import {Literal} from "@rdfjs/types";
 import ISO6391 from "iso-639-1";
 
 interface Item {
@@ -113,9 +113,9 @@ const ItemDetailCard: React.FunctionComponent<{
     }
 
     let altLabelLanguageCodes = Object.keys(altLabelsByLanguageCode).sort();
-    if (altLabelLanguageCodes.some((languageCode) => languageCode === "en")) {
+    if (altLabelLanguageCodes.some(languageCode => languageCode === "en")) {
       altLabelLanguageCodes = ["en"].concat(
-        altLabelLanguageCodes.filter((languageCode) => languageCode !== "en")
+        altLabelLanguageCodes.filter(languageCode => languageCode !== "en")
       );
     }
 
@@ -124,7 +124,7 @@ const ItemDetailCard: React.FunctionComponent<{
         <Col className="p-0" xs={12}>
           <h5 className="text-center">Variant terms</h5>
           <ul>
-            {altLabelLanguageCodes.map((languageCode) => (
+            {altLabelLanguageCodes.map(languageCode => (
               <li key={languageCode}>
                 {ISO6391.getName(languageCode)}
                 {ISO6391.getNativeName(languageCode) !==

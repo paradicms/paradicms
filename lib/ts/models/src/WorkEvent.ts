@@ -1,16 +1,18 @@
 import {Event} from "./Event";
-import {requireDefined} from "./requireDefined";
 import {Work} from "./Work";
-import {CMS} from "@paradicms/vocabularies";
+import {cms} from "@paradicms/vocabularies";
+import {requireNonNull} from "@paradicms/utilities";
 
 export class WorkEvent extends Event {
   get work(): Work {
-    return this.dataset.workByUri(this.workUri);
+    return this.modelSet.workByUri(this.workUri);
   }
 
   get workUri(): string {
-    return requireDefined(
-      this.propertyObjects(CMS.work).find(term => term.termType === "NamedNode")
-    ).value;
+    return requireNonNull(
+      this.findAndMapObject(cms.work, term =>
+        term.termType === "NamedNode" ? term.value : null
+      )
+    );
   }
 }

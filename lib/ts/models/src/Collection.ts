@@ -13,8 +13,8 @@ export class Collection extends Mixin(
   HasImages,
   HasTitle
 ) {
-  thumbnail(selector: ThumbnailSelector): Image | null {
-    const collectionImages: readonly Image[] = this.dataset.imagesByDepictsUri(
+  override thumbnail(selector: ThumbnailSelector): Image | null {
+    const collectionImages: readonly Image[] = this.modelSet.imagesByDepictsUri(
       this.uri
     );
     if (collectionImages.length > 0) {
@@ -34,6 +34,6 @@ export class Collection extends Mixin(
   }
 
   get works(): readonly Work[] {
-    return this.dataset.collectionWorks(this.uri);
+    return this.modelSet.collectionWorks(this.uri);
   }
 }

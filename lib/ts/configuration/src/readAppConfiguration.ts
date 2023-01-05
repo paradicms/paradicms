@@ -1,30 +1,27 @@
 import {AppConfiguration} from "./AppConfiguration";
-import {BlankNode, DefaultGraph, NamedNode, Store} from "n3";
-import {CONFIGURATION, RDF} from "@paradicms/vocabularies";
+import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
+import {configuration, rdf} from "@paradicms/vocabularies";
 
 export const readAppConfiguration = <
   AppConfigurationT extends AppConfiguration
 >(
-  configurationStore: Store | null,
-  dataStore: Store,
+  configurationDataset: Dataset | null,
+  dataDataset: Dataset,
   factory: (kwds: {
     readonly graph: BlankNode | DefaultGraph | NamedNode;
     readonly node: BlankNode | NamedNode;
-    readonly store: Store;
+    readonly dataset: Dataset;
     readonly stylesheetHref: string | null;
   }) => AppConfigurationT
 ): AppConfigurationT | null => {
-  for (const store of [configurationStore, dataStore]) {
-    if (!store) {
+  for (const dataset of [configurationDataset, dataDataset]) {
+    if (!dataset) {
       continue;
     }
 
-    const typeQuads = store.getQuads(
-      null,
-      RDF.type,
-      CONFIGURATION.AppConfiguration,
-      null
-    );
+    const typeQuads = dataset
+      .match(null, rdf.type, configuration.AppConfiguration, null)
+      .toArray();
     if (typeQuads.length === 0) {
       continue;
     } else if (typeQuads.length > 1) {
@@ -56,15 +53,18 @@ export const readAppConfiguration = <
     return factory({
       graph: typeQuad.graph as DefaultGraph | NamedNode | BlankNode,
       node: typeQuad.subject as BlankNode | NamedNode,
-      store,
+      dataset,
       stylesheetHref:
-        store
-          .getObjects(
+        dataset
+          .match(
             typeQuad.subject,
-            CONFIGURATION.stylesheetHref,
+            configuration.stylesheetHref,
+            null,
             typeQuad.graph
           )
-          .find(term => term.termType === "NamedNode")?.value ?? null,
+          .toArray()
+          .find(quad => quad.object.termType === "NamedNode")?.object.value ??
+        null,
     });
   }
 

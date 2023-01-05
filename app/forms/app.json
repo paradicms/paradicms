@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "forms",
+    "slug": "forms",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "org.paradicms.forms"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "platforms": [
+      "android",
+      "ios"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "da70f3ce-bd58-4ae4-8419-25bf0386e773"
+      }
+    }
+  }
+}

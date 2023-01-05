@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useCallback, useMemo} from "react";
-import DataTable, {IDataTableColumn} from "react-data-table-component";
+import DataTable, {TableColumn} from "react-data-table-component";
 import {ValueFacet} from "@paradicms/facets";
 import {
   JsonPrimitiveType,
@@ -37,7 +37,7 @@ export const ValueFilterTable = <T extends JsonPrimitiveType>(
     [facet, filter]
   );
 
-  const dataTableColumns = useMemo((): IDataTableColumn<DataTableRow<T>>[] => {
+  const dataTableColumns = useMemo((): TableColumn<DataTableRow<T>>[] => {
     return [
       {
         name: "Label",

@@ -1,18 +1,16 @@
-import {FOAF} from "@paradicms/vocabularies";
+import {foaf} from "@paradicms/vocabularies";
 import {ModelMixin} from "./ModelMixin";
 
 export abstract class HasPage extends ModelMixin {
   get page(): string | null {
-    return (
-      this.propertyObjects(FOAF.page).find(term => {
-        switch (term.termType) {
-          case "Literal":
-          case "NamedNode":
-            return true;
-          default:
-            return false;
-        }
-      })?.value ?? null
-    );
+    return this.findAndMapObject(foaf.page, term => {
+      switch (term.termType) {
+        case "Literal":
+        case "NamedNode":
+          return term.value;
+        default:
+          return null;
+      }
+    });
   }
 }

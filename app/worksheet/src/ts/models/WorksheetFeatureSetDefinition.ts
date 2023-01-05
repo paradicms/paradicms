@@ -1,8 +1,8 @@
 import {HasAbstract, HasImages, HasTitle, NamedModel} from "@paradicms/models";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
-import {WORKSHEET} from "~/vocabularies/WORKSHEET";
+import {worksheet} from "~/vocabularies";
 import {Memoize} from "typescript-memoize";
-import {WorksheetDefinitionDataset} from "~/models/WorksheetDefinitionDataset";
+import {WorksheetDefinitionModelSet} from "~/models/WorksheetDefinitionModelSet";
 import {Mixin} from "ts-mixer";
 
 export class WorksheetFeatureSetDefinition extends Mixin(
@@ -13,17 +13,26 @@ export class WorksheetFeatureSetDefinition extends Mixin(
 ) {
   @Memoize()
   get features(): readonly WorksheetFeatureDefinition[] {
-    return this.store
-      .getQuads(null, WORKSHEET.featureSet, this.node, null)
-      .filter((quad) => quad.subject.termType === "NamedNode")
-      .map((quad) =>
-        (
-          this.dataset as WorksheetDefinitionDataset
-        ).worksheetFeatureDefinitionByUri(quad.subject.value)
-      );
+    const features: WorksheetFeatureDefinition[] = [];
+    for (const quad of this.dataset.match(
+      null,
+      worksheet.featureSet,
+      this.node,
+      null
+    )) {
+      if (quad.subject.termType === "NamedNode") {
+        features.push(
+          (this
+            .modelSet as WorksheetDefinitionModelSet).worksheetFeatureDefinitionByUri(
+            quad.subject.value
+          )
+        );
+      }
+    }
+    return features;
   }
 
   get featureUris(): readonly string[] {
-    return this.features.map((feature) => feature.uri);
+    return this.features.map(feature => feature.uri);
   }
 }

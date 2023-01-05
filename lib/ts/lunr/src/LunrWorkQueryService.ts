@@ -1,8 +1,8 @@
 import {
   Agent,
-  Dataset,
-  DataSubsetter,
   Image,
+  ModelSet,
+  ModelSubsetter,
   ThumbnailSelector,
   Work,
 } from "@paradicms/models";
@@ -60,16 +60,16 @@ interface MutableValueFacetValue<ValueT extends JsonPrimitiveType>
 }
 
 export class LunrWorkQueryService implements WorkQueryService {
-  private readonly dataset: Dataset;
+  private readonly modelSet: ModelSet;
   private readonly index: Index;
   private readonly resultWorkPropertyUris: readonly string[];
 
   constructor(kwds: {
-    readonly dataset: Dataset;
+    readonly modelSet: ModelSet;
     readonly resultWorkPropertyUris: readonly string[];
     readonly searchWorkPropertyUris: readonly string[];
   }) {
-    this.dataset = kwds.dataset;
+    this.modelSet = kwds.modelSet;
     this.resultWorkPropertyUris = kwds.resultWorkPropertyUris;
     const searchWorkPropertyUris = kwds.searchWorkPropertyUris;
 
@@ -88,7 +88,7 @@ export class LunrWorkQueryService implements WorkQueryService {
       }
       this.ref("uri");
 
-      for (const work of kwds.dataset.works) {
+      for (const work of kwds.modelSet.works) {
         const doc: any = {title: work.title, uri: work.uri};
         if (work.abstract) {
           doc.abstract = work.abstract.toString();
@@ -136,7 +136,7 @@ export class LunrWorkQueryService implements WorkQueryService {
               if (value) {
                 value.count++;
               } else {
-                const collection = this.dataset.collectionByUri(collectionUri);
+                const collection = this.modelSet.collectionByUri(collectionUri);
                 values[collectionUri] = {
                   count: 1,
                   label: collection.title,
@@ -167,7 +167,7 @@ export class LunrWorkQueryService implements WorkQueryService {
             if (value) {
               value.count++;
             } else {
-              const institution = this.dataset.institutionByUri(
+              const institution = this.modelSet.institutionByUri(
                 work.institutionUri
               );
               values[work.institutionUri] = {
@@ -310,13 +310,13 @@ export class LunrWorkQueryService implements WorkQueryService {
         .sort((left, right) => left.name.localeCompare(right.name));
       const slicedAgents = agents.slice(offset, offset + limit);
 
-      const slicedAgentsDataset = new DataSubsetter({
-        completeDataset: this.dataset,
+      const slicedAgentsModelSet = new ModelSubsetter({
+        completeModelSet: this.modelSet,
         workPropertyUris: this.resultWorkPropertyUris,
-      }).agentsDataset(slicedAgents, agentJoinSelector);
+      }).agentsModelSet(slicedAgents, agentJoinSelector);
 
       resolve({
-        dataset: slicedAgentsDataset,
+        modelSet: slicedAgentsModelSet,
         totalWorkAgentsCount: agents.length,
         workAgentUris: slicedAgents.map(agent => agent.uri),
       });
@@ -369,23 +369,23 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       // console.debug("Search sliced works count:", slicedWorks.length);
 
-      const slicedWorksDataset = new DataSubsetter({
-        completeDataset: this.dataset,
+      const slicedWorksModelSet = new ModelSubsetter({
+        completeModelSet: this.modelSet,
         workPropertyUris: this.resultWorkPropertyUris,
-      }).worksDataset(slicedWorks, workJoinSelector);
+      }).worksModelSet(slicedWorks, workJoinSelector);
 
       console.debug(
-        "Search results dataset:",
-        Object.keys(slicedWorksDataset)
+        "Search results modelSet:",
+        Object.keys(slicedWorksModelSet)
           .map(
             key =>
-              `${key}: ${((slicedWorksDataset as any)[key] as any[]).length}`
+              `${key}: ${((slicedWorksModelSet as any)[key] as any[]).length}`
           )
           .join(", ")
       );
 
       resolve({
-        dataset: slicedWorksDataset,
+        modelSet: slicedWorksModelSet,
         facets,
         totalWorksCount: filteredWorks.length,
       });
@@ -397,10 +397,10 @@ export class LunrWorkQueryService implements WorkQueryService {
       // Anything matching the fulltext search
       return this.index
         .search(query.text)
-        .map(({ref}) => this.dataset.workByUri(ref));
+        .map(({ref}) => this.modelSet.workByUri(ref));
     } else {
       // All works
-      return this.dataset.works;
+      return this.modelSet.works;
     }
   }
 
@@ -508,13 +508,13 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       const slicedWorkEvents = workEvents.slice(offset, offset + limit);
 
-      const slicedWorkEventsDataset = new DataSubsetter({
-        completeDataset: this.dataset,
+      const slicedWorkEventsModelSet = new ModelSubsetter({
+        completeModelSet: this.modelSet,
         workPropertyUris: this.resultWorkPropertyUris,
-      }).workEventsDataset(workEvents, workEventJoinSelector);
+      }).workEventsModelSet(workEvents, workEventJoinSelector);
 
       resolve({
-        dataset: slicedWorkEventsDataset,
+        modelSet: slicedWorkEventsModelSet,
         totalWorkEventsCount: workEvents.length,
         workEventUris: slicedWorkEvents.map(workEvent => workEvent.uri),
       });

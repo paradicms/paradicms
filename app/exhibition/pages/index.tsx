@@ -4,34 +4,38 @@ import {GetStaticProps} from "next";
 import {useRouter} from "next/router";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
-import {readConfigurationFile, readDatasetFile} from "@paradicms/next";
-import {Dataset, Text} from "@paradicms/models";
+import {readConfigurationFile, readModelSetFile} from "@paradicms/next";
+import {ModelSet, Text} from "@paradicms/models";
 import {Layout} from "../components/Layout";
 import {Col, Container, Row} from "reactstrap";
 import {RightsParagraph} from "@paradicms/bootstrap";
 import {defaultExhibitionAppConfiguration} from "../lib/defaultExhibitionAppConfiguration";
 import {readExhibitionAppConfiguration} from "../lib/readCollectionAppConfiguration";
 import {ExhibitionAppConfiguration} from "../lib/ExhibitionAppConfiguration";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly collectionUri: string;
   readonly configuration: ExhibitionAppConfiguration;
-  readonly datasetString: string;
+  readonly modelSetString: string;
   readonly firstWorkUri: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
   configuration,
-  datasetString,
+  modelSetString,
   firstWorkUri,
 }) => {
   const router = useRouter();
 
-  const dataset = useMemo(() => Dataset.parse(datasetString), [datasetString]);
-  const collection = dataset.collectionByUri(collectionUri);
+  const modelSet = useMemo(
+    () => new ModelSet(parseIntoDataset(modelSetString)),
+    [modelSetString]
+  );
+  const collection = modelSet.collectionByUri(collectionUri);
   const collectionAbstract = collection.abstract;
 
   React.useEffect(() => {
@@ -82,17 +86,17 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const dataset = readDatasetFile(readFileSync);
-  const collection = dataset.collections[0];
+  const modelSet = readModelSetFile(readFileSync);
+  const collection = modelSet.collections[0];
 
   return {
     props: {
       configuration:
         readExhibitionAppConfiguration(
           readConfigurationFile(readFileSync),
-          dataset.store
+          modelSet.dataset
         ) ?? defaultExhibitionAppConfiguration,
-      datasetString: dataset.stringify(),
+      modelSetString: modelSet.stringify(),
       collectionUri: collection.uri,
       firstWorkUri: collection.works[0].uri,
     },

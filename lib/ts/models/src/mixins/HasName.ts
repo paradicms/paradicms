@@ -1,11 +1,13 @@
-import {requireDefined} from "../requireDefined";
-import {FOAF} from "@paradicms/vocabularies";
 import {ModelMixin} from "./ModelMixin";
+import {foaf} from "@paradicms/vocabularies";
+import {requireNonNull} from "@paradicms/utilities";
 
 export abstract class HasName extends ModelMixin {
   get name(): string {
-    return requireDefined(
-      this.propertyObjects(FOAF.name_).find(term => term.termType === "Literal")
-    ).value;
+    return requireNonNull(
+      this.findAndMapObject(foaf.name, term =>
+        term.termType === "Literal" ? term.value : null
+      )
+    );
   }
 }

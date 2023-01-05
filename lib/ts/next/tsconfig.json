@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
-    "esModuleInterop": true,
     "lib": [
       "dom",
       "dom.iterable"

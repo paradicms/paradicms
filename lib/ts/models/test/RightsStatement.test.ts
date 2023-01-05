@@ -1,9 +1,10 @@
 import {expect} from "chai";
-import {Dataset} from "../src";
-import {testDataTrig} from "./testDataTrig";
+import {ModelSet} from "../src";
+import {testDataTrig} from "@paradicms/test";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("RightsStatement", () => {
-  const sut = Dataset.parse(testDataTrig).rightsStatements[0];
+  const sut = new ModelSet(parseIntoDataset(testDataTrig)).rightsStatements[0];
 
   it("should get the statement's definition", () => {
     expect(sut.definition).to.not.be.empty;

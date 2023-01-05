@@ -1,11 +1,12 @@
 import {expect} from "chai";
-import {Dataset, WorkEvent} from "../src";
-import {testDataTrig} from "./testDataTrig";
+import {ModelSet, WorkEvent} from "../src";
+import {testDataTrig} from "@paradicms/test";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("WorkEvent", () => {
-  const dataset = Dataset.parse(testDataTrig);
-  const work = dataset.works[0];
-  const sut: WorkEvent = dataset.workEventsByWork(work.uri)[0];
+  const modelSet = new ModelSet(parseIntoDataset(testDataTrig));
+  const work = modelSet.works[0];
+  const sut: WorkEvent = modelSet.workEventsByWork(work.uri)[0];
 
   before(() => {
     expect(sut).is.not.undefined;

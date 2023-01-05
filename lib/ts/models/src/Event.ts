@@ -1,11 +1,11 @@
 import {NamedModel} from "./NamedModel";
 import {DateTimeDescription} from "./DateTimeDescription";
-import {NamedNode} from "n3";
+import {NamedNode} from "@rdfjs/types";
 import {Location} from "./Location";
 import {HasAbstract} from "./mixins";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
-import {DCTERMS, VRA, XSD} from "@paradicms/vocabularies";
+import {dcterms, vra, xsd} from "@paradicms/vocabularies";
 
 export class Event extends Mixin(NamedModel, HasAbstract) {
   @Memoize()
@@ -69,56 +69,58 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
 
   @Memoize()
   get date(): DateTimeDescription | number | string | null {
-    return this.datePropertyValue(DCTERMS.date);
+    return this.datePropertyValue(dcterms.date);
   }
 
   private datePropertyValue(
     property: NamedNode
   ): DateTimeDescription | number | string | null {
-    for (const term of this.propertyObjects(property)) {
+    return this.findAndMapObject(property, term => {
       switch (term.termType) {
         case "BlankNode":
           return new DateTimeDescription({
-            dataset: this.dataset,
+            modelSet: this.modelSet,
             graphNode: this.graphNode,
             node: term,
           });
         case "Literal":
-          if (term.datatype.value === XSD.integer.value) {
+          if (term.datatype.value === xsd.integer.value) {
             return parseInt(term.value);
           } else {
             return term.value;
           }
+        default:
+          return null;
       }
-    }
-    return null;
+    });
   }
 
   @Memoize()
   get earliestDate(): DateTimeDescription | number | string | null {
-    return this.datePropertyValue(VRA.earliestDate);
+    return this.datePropertyValue(vra.earliestDate);
   }
 
   @Memoize()
   get latestDate(): DateTimeDescription | number | string | null {
-    return this.datePropertyValue(VRA.latestDate);
+    return this.datePropertyValue(vra.latestDate);
   }
 
   @Memoize()
   get location(): Location | string | null {
-    for (const term of this.propertyObjects(DCTERMS.spatial)) {
+    return this.findAndMapObject(dcterms.spatial, term => {
       switch (term.termType) {
         case "BlankNode":
           return new Location({
-            dataset: this.dataset,
+            modelSet: this.modelSet,
             graphNode: this.graphNode,
             node: term,
           });
         case "Literal":
           return term.value;
+        default:
+          return null;
       }
-    }
-    return null;
+    });
   }
 
   /**
@@ -151,10 +153,8 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
   }
 
   get title(): string | null {
-    return (
-      this.propertyObjects(DCTERMS.title).find(
-        term => term.termType === "Literal"
-      )?.value ?? null
+    return this.findAndMapObject(dcterms.title, term =>
+      term.termType === "Literal" ? term.value : null
     );
   }
 }

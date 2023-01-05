@@ -1,12 +1,12 @@
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
-import {Dataset, DataSubsetter} from "@paradicms/models";
+import {ModelSet, ModelSubsetter} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
   readConfigurationFile,
-  readDatasetFile,
+  readModelSetFile,
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {
@@ -20,6 +20,7 @@ import {WorkLocationSummary} from "@paradicms/services";
 import {CollectionAppConfiguration} from "../../lib/CollectionAppConfiguration";
 import {readCollectionAppConfiguration} from "../../lib/readCollectionAppConfiguration";
 import {defaultCollectionAppConfiguration} from "../../lib/defaultCollectionAppConfiguration";
+import {parseIntoDataset} from "@paradicms/rdf";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
@@ -35,17 +36,20 @@ const WorkLocationsMap = dynamic<{
 
 interface StaticProps {
   readonly configuration: CollectionAppConfiguration;
-  readonly datasetString: string;
+  readonly modelSetString: string;
   readonly workUri: string;
 }
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
   configuration,
-  datasetString,
+  modelSetString,
   workUri,
 }) => {
-  const dataset = useMemo(() => Dataset.parse(datasetString), [datasetString]);
-  const work = dataset.workByUri(workUri);
+  const modelSet = useMemo(
+    () => new ModelSet(parseIntoDataset(modelSetString)),
+    [modelSetString]
+  );
+  const work = modelSet.workByUri(workUri);
   const collection = work.collections[0];
 
   return (
@@ -64,7 +68,7 @@ export default WorkPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {workUri: string}}[] = [];
-  for (const work of readDatasetFile(readFileSync).works) {
+  for (const work of readModelSetFile(readFileSync).works) {
     paths.push({
       params: {
         workUri: encodeFileName(work.uri),
@@ -82,23 +86,23 @@ export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
   const workUri = decodeFileName(params!.workUri as string);
-  const completeDataset = readDatasetFile(readFileSync);
+  const completeModelSet = readModelSetFile(readFileSync);
   const configuration =
     readCollectionAppConfiguration(
       readConfigurationFile(readFileSync),
-      completeDataset.store
+      completeModelSet.dataset
     ) ?? defaultCollectionAppConfiguration;
 
   return {
     props: {
       configuration,
-      datasetString: new DataSubsetter({
-        completeDataset,
+      modelSetString: new ModelSubsetter({
+        completeModelSet,
         workPropertyUris: configuration.workProperties.map(
           workProperty => workProperty.uri
         ),
       })
-        .workDataset(completeDataset.workByUri(workUri), {
+        .workModelSet(completeModelSet.workByUri(workUri), {
           agents: {
             thumbnail: {targetDimensions: thumbnailTargetDimensions},
           },
