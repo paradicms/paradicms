@@ -2,11 +2,7 @@ import * as React from "react";
 import {useCallback, useMemo} from "react";
 import DataTable, {TableColumn} from "react-data-table-component";
 import {ValueFacet} from "@paradicms/facets";
-import {
-  JsonPrimitiveType,
-  ValueFilter,
-  ValueFilterState,
-} from "@paradicms/filters";
+import {JsonPrimitiveType, ValueFilter, ValueFilterState,} from "@paradicms/filters";
 
 type DataTableRow<T extends JsonPrimitiveType> = {
   count: number;
@@ -29,11 +25,12 @@ export const ValueFilterTable = <T extends JsonPrimitiveType>(
   const {facet, filter, onChange} = props;
 
   const state = useMemo(
-    () =>
-      new ValueFilterState({
+    () => {
+      return new ValueFilterState({
         filter,
         valueUniverse: facet.values.map(value => value.value),
-      }),
+      })
+    },
     [facet, filter]
   );
 
@@ -81,6 +78,8 @@ export const ValueFilterTable = <T extends JsonPrimitiveType>(
       selectedCount: number;
       selectedRows: DataTableRow<T>[];
     }) => {
+      const oldStateSnapshot = state.snapshot;
+
       const {allSelected, selectedRows} = kwds;
       if (allSelected) {
         state.includeAll();
@@ -96,7 +95,14 @@ export const ValueFilterTable = <T extends JsonPrimitiveType>(
         }
       }
 
-      onChange(state.snapshot);
+      const newStateSnapshot = state.snapshot;
+
+      if (JSON.stringify(oldStateSnapshot) !== JSON.stringify(newStateSnapshot)) {
+        onChange(newStateSnapshot);
+      }
+      // } else {
+      //   console.debug("ValueFilterTable: state snapshot has not changed");
+      // }
     },
     [state]
   );
