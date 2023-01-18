@@ -1,8 +1,8 @@
 import mimetypes
 from pathlib import Path
-from typing import Optional, Set
 
 import boto3
+from typing import Optional, Set
 
 from paradicms_ssg.image_archiver import ImageArchiver
 from paradicms_ssg.utils.get_image_file_mime_type import get_image_file_mime_type
@@ -14,8 +14,6 @@ class S3ImageArchiver(ImageArchiver):
         self,
         *,
         s3_bucket_name: str,
-        aws_access_key_id: Optional[str] = None,
-        aws_secret_access_key: Optional[str] = None,
         force_upload: bool = False,
         **kwds,
     ):
@@ -24,12 +22,7 @@ class S3ImageArchiver(ImageArchiver):
         self.__force_upload = force_upload
         self.__s3_bucket_name = s3_bucket_name
 
-        client_kwds = {}
-        if aws_access_key_id is not None:
-            client_kwds["aws_access_key_id"] = aws_access_key_id
-        if aws_secret_access_key is not None:
-            client_kwds["aws_secret_access_key"] = aws_secret_access_key
-        s3 = boto3.resource("s3", **client_kwds)  # type: ignore
+        s3 = boto3.resource("s3")  # type: ignore
         self.__s3_bucket = s3.Bucket(self.__s3_bucket_name)
         self.__existing_s3_bucket_keys: Optional[Set[str]] = None
 

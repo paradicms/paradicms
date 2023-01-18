@@ -1,6 +1,5 @@
 import os.path
 from pathlib import Path
-from typing import Optional
 
 import boto3
 from rdflib import URIRef
@@ -15,20 +14,12 @@ class S3Deployer(Deployer):
         self,
         *,
         s3_bucket_name: str,
-        aws_access_key_id: Optional[str] = None,
-        aws_secret_access_key: Optional[str] = None,
         **kwds,
     ):
         Deployer.__init__(self, **kwds)
 
         self.__s3_bucket_name = s3_bucket_name
-
-        client_kwds = {}
-        if aws_access_key_id is not None:
-            client_kwds["aws_access_key_id"] = aws_access_key_id
-        if aws_secret_access_key is not None:
-            client_kwds["aws_secret_access_key"] = aws_secret_access_key
-        self.__s3_client = boto3.client("s3", **client_kwds)  # type: ignore
+        self.__s3_client = boto3.client("s3")  # type: ignore
 
     @property
     def s3_bucket_name(self) -> str:

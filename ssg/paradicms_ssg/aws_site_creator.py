@@ -1,5 +1,4 @@
 import logging
-from typing import Dict, Optional
 
 import boto3
 from configargparse import ArgParser
@@ -19,24 +18,11 @@ class AwsSiteCreator:
         acm_certificate_arn: str,
         fqdn: str,
         route_53_hosted_zone_id: str,
-        aws_access_key_id: Optional[str] = None,
-        aws_secret_access_key: Optional[str] = None,
     ):
         self.__acm_certificate_arn = acm_certificate_arn
-        self.__aws_access_key_id = aws_access_key_id
-        self.__aws_secret_access_key = aws_secret_access_key
         self.__fqdn = fqdn
         self.__logger = logging.getLogger(self.__class__.__name__)
         self.__route_53_hosted_zone_id = route_53_hosted_zone_id
-
-    @property
-    def __aws_credential_kwds(self) -> Dict[str, str]:
-        kwds = {}
-        if self.__aws_access_key_id is not None:
-            kwds["aws_access_key_id"] = self.__aws_access_key_id
-        if self.__aws_secret_access_key is not None:
-            kwds["aws_secret_access_key"] = self.__aws_secret_access_key
-        return kwds
 
     def create_aws_site(self):
         s3_bucket_name = self.__create_s3_bucket()
@@ -54,7 +40,7 @@ class AwsSiteCreator:
         """
 
         cloud_front_client: CloudFrontClient = boto3.client(
-            "cloudfront", **self.__aws_credential_kwds
+            "cloudfront"
         )  # type: ignore
         self.__logger.debug("creating CloudFront distribution")
         try:
@@ -141,7 +127,7 @@ class AwsSiteCreator:
 
         s3_bucket_name = self.__fqdn
         s3_service_resource: S3ServiceResource = boto3.resource(
-            "s3", **self.__aws_credential_kwds
+            "s3"
         )  # type: ignore
 
         self.__logger.debug("creating S3 bucket %s", s3_bucket_name)
@@ -189,7 +175,7 @@ class AwsSiteCreator:
 
     def __create_route_53_record(self, *, cloud_front_distribution_domain_name: str):
         route_53_client: Route53Client = boto3.client(
-            "route53", **self.__aws_credential_kwds
+            "route53"
         )  # type: ignore
         self.__logger.debug("creating Route 53 record for %s", self.__fqdn)
         route_53_client.change_resource_record_sets(
@@ -221,14 +207,6 @@ class AwsSiteCreator:
             "--acm-certificate-arn",
             help="ARN of Amazon Certificate Manager (ACM) certificate",
             required=True,
-        )
-        arg_parser.add_argument(
-            "--aws-access-key-id",
-            help="AWS access key id; if not specified, will be retrieved from the environment",
-        )
-        arg_parser.add_argument(
-            "--aws-secret-access-key",
-            help="AWS secret access key; if not specified, will be retrieved from the environment",
         )
         arg_parser.add_argument("-c", is_config_file=True, help="config file path")
         arg_parser.add_argument(
