@@ -9,9 +9,8 @@ from paradicms_ssg.image_archivers.s3_image_archiver import S3ImageArchiver
 
 
 def test_archive_image(tmp_path):
-    for key in ("AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"):
-        if key not in os.environ:
-            return
+    if not (Path.home() / ".aws" / "credentials").is_file() and not ("AWS_ACCESS_KEY_ID" in os.environ and "AWS_SECRET_ACCESS_KEY" in os.environ):
+        return
 
     image_cache = FileCache(cache_dir_path=Path(tmp_path))
     sut = S3ImageArchiver(s3_bucket_name="paradicms-test-images")

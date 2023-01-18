@@ -1,8 +1,9 @@
 import os.path
+from datetime import datetime
 from pathlib import Path
+from typing import Optional
 
 import boto3
-from rdflib import URIRef
 from tqdm import tqdm
 
 from paradicms_ssg.deployer import Deployer
@@ -14,10 +15,13 @@ class S3Deployer(Deployer):
         self,
         *,
         s3_bucket_name: str,
+        cloudfront_distribution_id: Optional[str] = None,
         **kwds,
     ):
         Deployer.__init__(self, **kwds)
 
+        self.__cloudfront_client = boto3.client("cloudfront") if cloudfront_distribution_id is not None else None
+        self.__cloudfront_distribution_id = cloudfront_distribution_id
         self.__s3_bucket_name = s3_bucket_name
         self.__s3_client = boto3.client("s3")  # type: ignore
 
@@ -27,7 +31,7 @@ class S3Deployer(Deployer):
 
     @property
     def s3_bucket_url(self) -> str:
-        return URIRef(f"https://{self.__s3_bucket_name}.s3.amazonaws.com")
+        return f"https://{self.__s3_bucket_name}.s3.amazonaws.com"
 
     def deploy(self, *, app_out_dir_path: Path) -> None:
         gui_out_file_paths = []
@@ -63,3 +67,18 @@ class S3Deployer(Deployer):
             app_out_dir_path,
             self.s3_bucket_url,
         )
+
+        if self.__cloudfront_distribution_id is not None:
+            self._logger.debug("invaliding CloudFront distribution %s", self.__cloudfront_distribution_id)
+            self.__cloudfront_client.create_invalidation(
+                DistributionId=self.__cloudfront_distribution_id,
+                InvalidationBatch={
+                    "CallerReference": str(int(datetime.timestamp(datetime.now()) * 1000)),
+                    "Paths": {
+                        "Quantity": 1,
+                        "Items": ["/*"]
+                    }
+                }
+            )
+            self._logger.info("invalidated CloudFront distribution %s", self.__cloudfront_distribution_id)
+

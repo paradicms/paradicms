@@ -6,15 +6,14 @@ from paradicms_ssg.deployers.s3_deployer import S3Deployer
 
 
 def test_deploy(tmp_path):
-    for key in ("AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"):
-        if key not in os.environ:
-            return
+    if not (Path.home() / ".aws" / "credentials").is_file() and not ("AWS_ACCESS_KEY_ID" in os.environ and "AWS_SECRET_ACCESS_KEY" in os.environ):
+        return
 
     tmp_dir_path = Path(tmp_path)
     (tmp_dir_path / "subdir").mkdir()
     (tmp_dir_path / "subdir" / "test.txt").touch()
 
-    sut = S3Deployer(s3_bucket_name="paradicms-test-deployment")
+    sut = S3Deployer(s3_bucket_name="paradicms-test-deployment", cloudfront_distribution_id="E23RHFPD4JI8YV")
     sut.deploy(app_out_dir_path=tmp_dir_path)
 
     with urllib.request.urlopen(
