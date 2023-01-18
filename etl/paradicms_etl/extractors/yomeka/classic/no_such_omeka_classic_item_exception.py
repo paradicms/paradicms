@@ -1,0 +1,2 @@
+class NoSuchOmekaClassicItemException(Exception):
+    pass

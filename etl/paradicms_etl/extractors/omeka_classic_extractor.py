@@ -13,7 +13,7 @@ class OmekaClassicExtractor(Extractor):
 
     def __init__(self, api_key: str, endpoint_url: str, **kwds):
         Extractor.__init__(self, **kwds)
-        from yomeka.classic.omeka_classic_rest_api_client import (
+        from .yomeka.classic.omeka_classic_rest_api_client import (
             OmekaClassicRestApiClient,
         )
 
