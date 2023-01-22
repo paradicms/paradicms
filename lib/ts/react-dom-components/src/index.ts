@@ -16,7 +16,6 @@ export * from "./NavbarSearchForm";
 export * from "./Pagination";
 export * from "./RightsParagraph";
 export * from "./RightsStatementLink";
-export * from "./RightsTable";
 export * from "./thumbnailTargetDimensions";
 export * from "./ValueFilterBadges";
 export * from "./ValueFilterControl";

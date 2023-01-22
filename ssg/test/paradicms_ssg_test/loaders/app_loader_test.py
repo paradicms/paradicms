@@ -11,7 +11,7 @@ from paradicms_ssg.loaders.app_loader import AppLoader
 from .nop_image_archiver import NopImageArchiver
 
 
-@pytest.mark.parametrize("app", ["collection", "exhibition"])
+@pytest.mark.parametrize("app", ["multi-page-exhibition", "search"])
 def test_load(app: str, test_data_models: Tuple[Model, ...], tmp_path):
     app_dir_path = Path(__file__).parent.parent.parent.parent.parent / "app" / app
     assert app_dir_path.is_dir(), app_dir_path

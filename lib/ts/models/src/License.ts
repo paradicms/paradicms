@@ -11,6 +11,17 @@ export class License extends NamedModel {
     );
   }
 
+  get requiresAttribution() {
+    console.info("attribution:",this.uri);
+    switch (this.uri) {
+      case "http://creativecommons.org/publicdomain/mark/1.0/":
+      case "http://creativecommons.org/publicdomain/zero/1.0/":
+        return false;
+      default:
+        return true;
+    }
+  }
+
   get title(): string {
     return requireNonNull(
       this.findAndMapObject(dc11.title, term =>

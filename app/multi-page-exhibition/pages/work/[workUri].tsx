@@ -11,9 +11,9 @@ import Hammer from "react-hammerjs";
 import {useRouter} from "next/router";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
-import {ExhibitionAppConfiguration} from "../../lib/ExhibitionAppConfiguration";
-import {readExhibitionAppConfiguration} from "../../lib/readExhibitionAppConfiguration";
-import {defaultExhibitionAppConfiguration} from "../../lib/defaultExhibitionAppConfiguration";
+import {MultiPageExhibitionAppConfiguration} from "../../lib/MultiPageExhibitionAppConfiguration";
+import {readMultiPageExhibitionAppConfiguration} from "../../lib/readMultiPageExhibitionAppConfiguration";
+import {defaultMultiPageExhibitionAppConfiguration} from "../../lib/defaultMultiPageExhibitionAppConfiguration";
 import {parseIntoDataset} from "@paradicms/rdf";
 
 const WorkLocationsMap = dynamic<{
@@ -30,7 +30,7 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: ExhibitionAppConfiguration;
+  readonly configuration: MultiPageExhibitionAppConfiguration;
   readonly currentWorkUri: string;
   readonly modelSetString: string;
   readonly nextWorkUri: string | null;
@@ -162,10 +162,10 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       collectionUri,
       configuration:
-        readExhibitionAppConfiguration(
+        readMultiPageExhibitionAppConfiguration(
           readConfigurationFile(readFileSync),
           completeModelSet.dataset
-        ) ?? defaultExhibitionAppConfiguration,
+        ) ?? defaultMultiPageExhibitionAppConfiguration,
       currentWorkUri: workUri,
       modelSetString: new ModelSubsetter({
         completeModelSet,

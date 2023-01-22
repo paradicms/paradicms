@@ -1,6 +1,6 @@
 {
-  "name": "exhibition",
-  "description": "Exhibition GUI for paradicms",
+  "name": "multi-page-exhibition",
+  "description": "Multi-page exhibition GUI for paradicms",
   "version": "1.0.0",
   "private": true,
   "author": "Minor Gordon",

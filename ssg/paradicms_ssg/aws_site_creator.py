@@ -126,9 +126,7 @@ class AwsSiteCreator:
         """
 
         s3_bucket_name = self.__fqdn
-        s3_service_resource: S3ServiceResource = boto3.resource(
-            "s3"
-        )  # type: ignore
+        s3_service_resource: S3ServiceResource = boto3.resource("s3")  # type: ignore
 
         self.__logger.debug("creating S3 bucket %s", s3_bucket_name)
         s3_bucket: Bucket = s3_service_resource.Bucket(s3_bucket_name)
@@ -174,9 +172,7 @@ class AwsSiteCreator:
         return s3_bucket_name
 
     def __create_route_53_record(self, *, cloud_front_distribution_domain_name: str):
-        route_53_client: Route53Client = boto3.client(
-            "route53"
-        )  # type: ignore
+        route_53_client: Route53Client = boto3.client("route53")  # type: ignore
         self.__logger.debug("creating Route 53 record for %s", self.__fqdn)
         route_53_client.change_resource_record_sets(
             HostedZoneId=self.__route_53_hosted_zone_id,
