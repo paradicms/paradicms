@@ -17,6 +17,7 @@ export * from "./thumbnailTargetDimensions";
 export * from "./ValueFilterBadges";
 export * from "./ValueFilterControl";
 export * from "./ValueFilterGallery";
+export * from "./ValueFilterTable";
 export * from "./WorkCard";
 export * from "./WorkContainer";
 export * from "./WorkEventsTimeline";
