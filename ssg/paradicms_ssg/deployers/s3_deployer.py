@@ -73,6 +73,7 @@ class S3Deployer(Deployer):
         )
 
         if self.__cloudfront_distribution_id is not None:
+            assert self.__cloudfront_client is not None
             self._logger.debug(
                 "invaliding CloudFront distribution %s",
                 self.__cloudfront_distribution_id,
