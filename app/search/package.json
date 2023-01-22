@@ -1,6 +1,6 @@
 {
   "name": "collection",
-  "description": "Collection GUI for paradicms",
+  "description": "Search GUI for paradicms",
   "version": "1.0.0",
   "private": true,
   "author": "Minor Gordon",
