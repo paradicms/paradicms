@@ -5,14 +5,14 @@ import Link from "next/link";
 import Head from "next/head";
 import {Collection, Work} from "@paradicms/models";
 import {defaultBootstrapStylesheetHref, getNamedModelLinks,} from "@paradicms/react-dom-components";
-import {ExhibitionAppConfiguration} from "../lib/ExhibitionAppConfiguration";
+import {MultiPageExhibitionAppConfiguration} from "../lib/MultiPageExhibitionAppConfiguration";
 
 const textStyle: React.CSSProperties = {fontSize: "xx-large"};
 
 export const Layout: React.FunctionComponent<
   React.PropsWithChildren<{
     collection: Collection;
-    configuration: ExhibitionAppConfiguration;
+    configuration: MultiPageExhibitionAppConfiguration;
     currentWork?: Work;
     nextWork?: {readonly uri: string};
     previousWork?: {readonly uri: string};

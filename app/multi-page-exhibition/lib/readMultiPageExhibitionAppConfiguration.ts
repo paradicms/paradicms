@@ -1,12 +1,12 @@
-import {ExhibitionAppConfiguration} from "./ExhibitionAppConfiguration";
+import {MultiPageExhibitionAppConfiguration} from "./MultiPageExhibitionAppConfiguration";
 import {Dataset} from "@rdfjs/types";
 import {readAppConfiguration} from "@paradicms/configuration";
 
-export const readExhibitionAppConfiguration = (
+export const readMultiPageExhibitionAppConfiguration = (
   configurationDataset: Dataset | null,
   modelSetDataset: Dataset
-): ExhibitionAppConfiguration | null => {
-  return readAppConfiguration<ExhibitionAppConfiguration>(
+): MultiPageExhibitionAppConfiguration | null => {
+  return readAppConfiguration<MultiPageExhibitionAppConfiguration>(
     configurationDataset,
     modelSetDataset,
     ({graph, node, dataset, ...appConfigurationProps}) => {

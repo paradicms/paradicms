@@ -9,16 +9,16 @@ import {ModelSet, Text} from "@paradicms/models";
 import {Layout} from "../components/Layout";
 import {Col, Container, Row} from "reactstrap";
 import {RightsParagraph} from "@paradicms/react-dom-components";
-import {defaultExhibitionAppConfiguration} from "../lib/defaultExhibitionAppConfiguration";
-import {readExhibitionAppConfiguration} from "../lib/readExhibitionAppConfiguration";
-import {ExhibitionAppConfiguration} from "../lib/ExhibitionAppConfiguration";
+import {defaultMultiPageExhibitionAppConfiguration} from "../lib/defaultMultiPageExhibitionAppConfiguration";
+import {readMultiPageExhibitionAppConfiguration} from "../lib/readMultiPageExhibitionAppConfiguration";
+import {MultiPageExhibitionAppConfiguration} from "../lib/MultiPageExhibitionAppConfiguration";
 import {parseIntoDataset} from "@paradicms/rdf";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: ExhibitionAppConfiguration;
+  readonly configuration: MultiPageExhibitionAppConfiguration;
   readonly modelSetString: string;
   readonly firstWorkUri: string;
 }
@@ -92,10 +92,10 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   return {
     props: {
       configuration:
-        readExhibitionAppConfiguration(
+        readMultiPageExhibitionAppConfiguration(
           readConfigurationFile(readFileSync),
           modelSet.dataset
-        ) ?? defaultExhibitionAppConfiguration,
+        ) ?? defaultMultiPageExhibitionAppConfiguration,
       modelSetString: modelSet.stringify(),
       collectionUri: collection.uri,
       firstWorkUri: collection.works[0].uri,
