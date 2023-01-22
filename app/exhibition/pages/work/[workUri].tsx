@@ -2,12 +2,7 @@ import * as React from "react";
 import {useCallback, useMemo} from "react";
 import {Layout} from "components/Layout";
 import {ModelSet, ModelSubsetter} from "@paradicms/models";
-import {
-  decodeFileName,
-  encodeFileName,
-  readConfigurationFile,
-  readModelSetFile,
-} from "@paradicms/next";
+import {decodeFileName, encodeFileName, readConfigurationFile, readModelSetFile,} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";

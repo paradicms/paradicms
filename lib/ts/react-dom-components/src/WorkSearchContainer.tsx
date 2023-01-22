@@ -1,13 +1,4 @@
-import {
-  Col,
-  Container,
-  Nav,
-  NavItem,
-  NavLink,
-  Row,
-  TabContent,
-  TabPane,
-} from "reactstrap";
+import {Col, Container, Nav, NavItem, NavLink, Row, TabContent, TabPane,} from "reactstrap";
 import * as React from "react";
 import {ComponentType, useEffect, useState} from "react";
 import {FiltersBadges} from "./FiltersBadges";
@@ -23,17 +14,15 @@ import {
   WorkQueryService,
 } from "@paradicms/services";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
-import {
-  calculatePageMax,
-  createFilterControls,
-  workSearchWorkJoinSelector,
-} from "@paradicms/react-search";
 import {Filter} from "@paradicms/filters";
 import {useQueryParam} from "use-query-params";
 import {AgentsGallery} from "./AgentsGallery";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
 import {bootstrapCreateFilterControlFactory} from "./bootstrapCreateFilterControlFactory";
 import {FiltersControlsAccordion} from "./FiltersControlsAccordion";
+import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
+import {createFilterControls} from "./createFilterControls";
+import {calculatePageMax} from "./calculatePageMax";
 
 const OBJECTS_PER_PAGE = 4;
 

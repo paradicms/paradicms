@@ -2,18 +2,9 @@ import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {ModelSet, ModelSubsetter} from "@paradicms/models";
-import {
-  decodeFileName,
-  encodeFileName,
-  readConfigurationFile,
-  readModelSetFile,
-} from "@paradicms/next";
+import {decodeFileName, encodeFileName, readConfigurationFile, readModelSetFile,} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {
-  getNamedModelLinks,
-  thumbnailTargetDimensions,
-  WorkContainer,
-} from "@paradicms/bootstrap";
+import {getNamedModelLinks, thumbnailTargetDimensions, WorkContainer,} from "@paradicms/bootstrap";
 import * as fs from "fs";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";

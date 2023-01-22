@@ -3,20 +3,14 @@ import {useMemo} from "react";
 import {Collection, ModelSet, ModelSubsetter} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
-import {
-  thumbnailTargetDimensions,
-  WorkSearchContainer,
-} from "@paradicms/bootstrap";
+import {thumbnailTargetDimensions, WorkSearchContainer,} from "@paradicms/bootstrap";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {readConfigurationFile, readModelSetFile} from "@paradicms/next";
 import fs from "fs";
 import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
-import {
-  useWorkSearchQueryParams,
-  workSearchWorkJoinSelector,
-} from "@paradicms/react-search";
+import {useWorkSearchQueryParams, workSearchWorkJoinSelector,} from "@paradicms/react-search";
 import dynamic from "next/dynamic";
 import {CollectionAppConfiguration} from "../lib/CollectionAppConfiguration";
 import {readCollectionAppConfiguration} from "../lib/readCollectionAppConfiguration";

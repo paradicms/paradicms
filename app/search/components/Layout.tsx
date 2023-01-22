@@ -1,21 +1,7 @@
 import * as React from "react";
 import {Hrefs} from "lib/Hrefs";
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Col,
-  Container,
-  Nav,
-  Navbar,
-  NavbarBrand,
-  NavItem,
-  Row,
-} from "reactstrap";
-import {
-  defaultBootstrapStylesheetHref,
-  NavbarSearchForm,
-} from "@paradicms/bootstrap";
+import {Card, CardBody, CardHeader, Col, Container, Nav, Navbar, NavbarBrand, NavItem, Row,} from "reactstrap";
+import {defaultBootstrapStylesheetHref, NavbarSearchForm,} from "@paradicms/react-dom-components";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";

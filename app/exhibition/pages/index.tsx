@@ -8,7 +8,7 @@ import {readConfigurationFile, readModelSetFile} from "@paradicms/next";
 import {ModelSet, Text} from "@paradicms/models";
 import {Layout} from "../components/Layout";
 import {Col, Container, Row} from "reactstrap";
-import {RightsParagraph} from "@paradicms/bootstrap";
+import {RightsParagraph} from "@paradicms/react-dom-components";
 import {defaultExhibitionAppConfiguration} from "../lib/defaultExhibitionAppConfiguration";
 import {readExhibitionAppConfiguration} from "../lib/readCollectionAppConfiguration";
 import {ExhibitionAppConfiguration} from "../lib/ExhibitionAppConfiguration";

@@ -1,18 +1,8 @@
 import * as React from "react";
 import {ValueFilterBadges} from "./ValueFilterBadges";
-import {
-  CollectionValueFilter,
-  Filter,
-  InstitutionValueFilter,
-  StringPropertyValueFilter,
-} from "@paradicms/filters";
-import {
-  CollectionValueFacet,
-  Facet,
-  InstitutionValueFacet,
-  StringPropertyValueFacet,
-} from "@paradicms/facets";
-import {visitFilter} from "@paradicms/react-search";
+import {CollectionValueFilter, Filter, InstitutionValueFilter, StringPropertyValueFilter,} from "@paradicms/filters";
+import {CollectionValueFacet, Facet, InstitutionValueFacet, StringPropertyValueFacet,} from "@paradicms/facets";
+import {visitFilter} from "./FilterVisitor";
 
 export const FiltersBadges: React.FunctionComponent<{
   facets: readonly Facet[];

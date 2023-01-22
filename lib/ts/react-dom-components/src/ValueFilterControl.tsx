@@ -1,15 +1,7 @@
 import * as React from "react";
 import {useCallback, useState} from "react";
-import {ValueFilterTable} from "@paradicms/react-search";
-import {
-  Button,
-  Col,
-  Container,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  Row,
-} from "reactstrap";
+import {ValueFilterTable} from "./ValueFilterTable";
+import {Button, Col, Container, Modal, ModalBody, ModalHeader, Row,} from "reactstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faImages} from "@fortawesome/free-solid-svg-icons";
 import {ValueFilterGallery} from "./ValueFilterGallery";

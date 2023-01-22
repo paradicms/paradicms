@@ -1,21 +1,8 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  Col,
-  Container,
-  Row,
-  Table,
-} from "reactstrap";
+import {Button, Card, CardBody, CardHeader, Col, Container, Row, Table,} from "reactstrap";
 import {Image, selectThumbnail, Text} from "@paradicms/models";
-import {
-  ImagesCarousel,
-  RightsParagraph,
-  thumbnailTargetDimensions,
-} from "@paradicms/bootstrap";
+import {ImagesCarousel, RightsParagraph, thumbnailTargetDimensions,} from "@paradicms/bootstrap";
 import classnames from "classnames";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faInfoCircle, faTimes} from "@fortawesome/free-solid-svg-icons";

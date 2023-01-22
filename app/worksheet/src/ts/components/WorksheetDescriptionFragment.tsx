@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Text} from "@paradicms/models";
-import {RightsParagraph} from "@paradicms/bootstrap";
+import {RightsParagraph} from "@paradicms/react-dom-components";
 
 export const WorksheetDescriptionFragment: React.FunctionComponent<{
   description: string | Text | null;

@@ -6,11 +6,8 @@
     "@paradicms/models": "1.0.5",
     "@paradicms/react-dom": "1.0.5",
     "@paradicms/services": "1.0.5",
-    "react-data-table-component": "7.5.3",
     "react": "18.0.0",
-    "react-dom": "18.0.0",
-    "react-is": "18.0.0",
-    "styled-components": "5.3.6"
+    "react-dom": "18.0.0"
   },
   "devDependencies": {
     "rimraf": "3.0.2",
