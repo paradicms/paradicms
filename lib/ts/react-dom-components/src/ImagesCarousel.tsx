@@ -19,7 +19,7 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
   onShowImage,
   thumbnailTargetDimensions: thumbnailTargetDimensionsInput,
 }) => {
-  const originalImages = images.filter((image) => image.isOriginal);
+  const originalImages = images.filter(image => image.isOriginal);
 
   const thumbnailTargetDimensions =
     thumbnailTargetDimensionsInput ?? thumbnailTargetDimensionsDefault;
@@ -113,7 +113,7 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
   // };
 
   if (originalImages.length === 1) {
-    console.debug("only has one image, rendering without carousel");
+    // console.debug("only has one image, rendering without carousel");
     return renderOriginalImage(originalImages[0]);
   }
 
@@ -130,7 +130,7 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
       {/*  items={items}*/}
       {/*  onClickHandler={goToIndex}*/}
       {/*/>*/}
-      {originalImages.map((originalImage) => {
+      {originalImages.map(originalImage => {
         const renderedOriginalImage = renderOriginalImage(originalImage);
         if (!renderedOriginalImage) {
           return null;
