@@ -20,7 +20,11 @@ class S3Deployer(Deployer):
     ):
         Deployer.__init__(self, **kwds)
 
-        self.__cloudfront_client = boto3.client("cloudfront") if cloudfront_distribution_id is not None else None
+        self.__cloudfront_client = (
+            boto3.client("cloudfront")
+            if cloudfront_distribution_id is not None
+            else None
+        )
         self.__cloudfront_distribution_id = cloudfront_distribution_id
         self.__s3_bucket_name = s3_bucket_name
         self.__s3_client = boto3.client("s3")  # type: ignore
@@ -69,16 +73,20 @@ class S3Deployer(Deployer):
         )
 
         if self.__cloudfront_distribution_id is not None:
-            self._logger.debug("invaliding CloudFront distribution %s", self.__cloudfront_distribution_id)
+            self._logger.debug(
+                "invaliding CloudFront distribution %s",
+                self.__cloudfront_distribution_id,
+            )
             self.__cloudfront_client.create_invalidation(
                 DistributionId=self.__cloudfront_distribution_id,
                 InvalidationBatch={
-                    "CallerReference": str(int(datetime.timestamp(datetime.now()) * 1000)),
-                    "Paths": {
-                        "Quantity": 1,
-                        "Items": ["/*"]
-                    }
-                }
+                    "CallerReference": str(
+                        int(datetime.timestamp(datetime.now()) * 1000)
+                    ),
+                    "Paths": {"Quantity": 1, "Items": ["/*"]},
+                },
             )
-            self._logger.info("invalidated CloudFront distribution %s", self.__cloudfront_distribution_id)
-
+            self._logger.info(
+                "invalidated CloudFront distribution %s",
+                self.__cloudfront_distribution_id,
+            )
