@@ -1,7 +1,7 @@
 {
   "author": "Minor Gordon",
-  "name": "@paradicms/bootstrap",
-  "description": "Paradicms Bootstrap library",
+  "name": "@paradicms/react-dom-components",
+  "description": "Paradicms React-DOM components library",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
