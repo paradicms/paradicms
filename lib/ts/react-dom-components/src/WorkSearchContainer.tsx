@@ -5,13 +5,13 @@ import {FiltersBadges} from "./FiltersBadges";
 import {WorksGallery} from "./WorksGallery";
 import {Pagination} from "./Pagination";
 import {
-  GetWorkAgentsResult,
-  GetWorkEventsResult,
-  GetWorkLocationsResult,
-  GetWorksResult,
-  WorkLocationSummary,
-  WorkQuery,
-  WorkQueryService,
+    GetWorkAgentsResult,
+    GetWorkEventsResult,
+    GetWorkLocationsResult,
+    GetWorksResult,
+    WorkLocationSummary,
+    WorkQuery,
+    WorkQueryService,
 } from "@paradicms/services";
 import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 import {Filter} from "@paradicms/filters";
@@ -22,7 +22,7 @@ import {bootstrapCreateFilterControlFactory} from "./bootstrapCreateFilterContro
 import {FiltersControlsAccordion} from "./FiltersControlsAccordion";
 import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 import {createFilterControls} from "./createFilterControls";
-import {calculatePageMax} from "./calculatePageMax";
+import {calculatePageMax} from "@paradicms/utilities";
 
 const OBJECTS_PER_PAGE = 4;
 

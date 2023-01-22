@@ -1,7 +1,6 @@
 export * from "./AgentCard";
 export * from "./AgentsGallery";
 export * from "./bootstrapCreateFilterControlFactory";
-export * from "./calculatePageMax";
 export * from "./createFilterControl";
 export * from "./CreateFilterControlFactory";
 export * from "./createFilterControls";

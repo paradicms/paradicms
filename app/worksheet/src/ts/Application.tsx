@@ -5,12 +5,7 @@ import {loadGapiClient} from "~/loadGapiClient";
 import {FatalErrorModal} from "~/components/FatalErrorModal";
 import {WorksheetDefinitionModelSet} from "~/models/WorksheetDefinitionModelSet";
 import {WorksheetDefinitionContext} from "~/contexts/WorksheetDefinitionContext";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes, useNavigate,} from "react-router-dom";
 import {Hrefs} from "~/Hrefs";
 import {LoginPage} from "~/pages/LoginPage";
 import {LoginCallbackPage} from "~/pages/LoginCallbackPage";
@@ -99,7 +94,7 @@ export const Application: React.FunctionComponent = () => {
   return (
     <WorksheetDefinitionContext.Provider value={worksheetDefinition}>
       <Router>
-        <QueryParamProvider ReactRouterRoute={RouteAdapter}>
+        <QueryParamProvider adapter={RouteAdapter}>
           <Routes>
             <Route path={Hrefs.login} element={<LoginPage />} />
             <Route path={Hrefs.loginCallback} element={<LoginCallbackPage />} />
