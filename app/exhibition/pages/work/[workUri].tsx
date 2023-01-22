@@ -6,13 +6,13 @@ import {decodeFileName, encodeFileName, readConfigurationFile, readModelSetFile,
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
-import {thumbnailTargetDimensions, WorkContainer} from "@paradicms/bootstrap";
+import {thumbnailTargetDimensions, WorkContainer} from "@paradicms/react-dom-components";
 import Hammer from "react-hammerjs";
 import {useRouter} from "next/router";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
 import {ExhibitionAppConfiguration} from "../../lib/ExhibitionAppConfiguration";
-import {readExhibitionAppConfiguration} from "../../lib/readCollectionAppConfiguration";
+import {readExhibitionAppConfiguration} from "../../lib/readExhibitionAppConfiguration";
 import {defaultExhibitionAppConfiguration} from "../../lib/defaultExhibitionAppConfiguration";
 import {parseIntoDataset} from "@paradicms/rdf";
 

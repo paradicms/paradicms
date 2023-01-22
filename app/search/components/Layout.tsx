@@ -5,12 +5,12 @@ import {defaultBootstrapStylesheetHref, NavbarSearchForm,} from "@paradicms/reac
 import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";
-import {CollectionAppConfiguration} from "../lib/CollectionAppConfiguration";
+import {SearchAppConfiguration} from "../lib/SearchAppConfiguration";
 
 export const Layout: React.FunctionComponent<
   React.PropsWithChildren<{
     collection: {readonly title: string; readonly uri: string};
-    configuration: CollectionAppConfiguration;
+    configuration: SearchAppConfiguration;
     cardHeaderLinks?: React.ReactElement[];
     cardTitle?: React.ReactNode;
     className?: string;

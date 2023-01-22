@@ -4,13 +4,13 @@ import {Layout} from "components/Layout";
 import {ModelSet, ModelSubsetter} from "@paradicms/models";
 import {decodeFileName, encodeFileName, readConfigurationFile, readModelSetFile,} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {getNamedModelLinks, thumbnailTargetDimensions, WorkContainer,} from "@paradicms/bootstrap";
+import {getNamedModelLinks, thumbnailTargetDimensions, WorkContainer,} from "@paradicms/react-dom-components";
 import * as fs from "fs";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
-import {CollectionAppConfiguration} from "../../lib/CollectionAppConfiguration";
-import {readCollectionAppConfiguration} from "../../lib/readCollectionAppConfiguration";
-import {defaultCollectionAppConfiguration} from "../../lib/defaultCollectionAppConfiguration";
+import {SearchAppConfiguration} from "../../lib/SearchAppConfiguration";
+import {readSearchAppConfiguration} from "../../lib/readSearchAppConfiguration";
+import {defaultSearchAppConfiguration} from "../../lib/defaultSearchAppConfiguration";
 import {parseIntoDataset} from "@paradicms/rdf";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
@@ -26,7 +26,7 @@ const WorkLocationsMap = dynamic<{
 );
 
 interface StaticProps {
-  readonly configuration: CollectionAppConfiguration;
+  readonly configuration: SearchAppConfiguration;
   readonly modelSetString: string;
   readonly workUri: string;
 }
@@ -79,10 +79,10 @@ export const getStaticProps: GetStaticProps = async ({
   const workUri = decodeFileName(params!.workUri as string);
   const completeModelSet = readModelSetFile(readFileSync);
   const configuration =
-    readCollectionAppConfiguration(
+    readSearchAppConfiguration(
       readConfigurationFile(readFileSync),
       completeModelSet.dataset
-    ) ?? defaultCollectionAppConfiguration;
+    ) ?? defaultSearchAppConfiguration;
 
   return {
     props: {

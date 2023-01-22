@@ -4,7 +4,7 @@ import {Nav, Navbar, NavItem, NavLink} from "reactstrap";
 import Link from "next/link";
 import Head from "next/head";
 import {Collection, Work} from "@paradicms/models";
-import {defaultBootstrapStylesheetHref, getNamedModelLinks,} from "@paradicms/bootstrap";
+import {defaultBootstrapStylesheetHref, getNamedModelLinks,} from "@paradicms/react-dom-components";
 import {ExhibitionAppConfiguration} from "../lib/ExhibitionAppConfiguration";
 
 const textStyle: React.CSSProperties = {fontSize: "xx-large"};

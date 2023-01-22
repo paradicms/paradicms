@@ -1,7 +1,7 @@
 {
   "author": "Minor Gordon",
-  "name": "@paradicms/react-search",
-  "description": "Paradicms React search functionality",
+  "name": "@paradicms/react-dom-hooks",
+  "description": "Paradicms React hooks",
   "dependencies": {
     "@paradicms/models": "1.0.5",
     "@paradicms/react-dom": "1.0.5",

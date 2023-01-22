@@ -3,18 +3,22 @@ import {useMemo} from "react";
 import {Collection, ModelSet, ModelSubsetter} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
-import {thumbnailTargetDimensions, WorkSearchContainer,} from "@paradicms/bootstrap";
+import {
+    thumbnailTargetDimensions,
+    WorkSearchContainer,
+    workSearchWorkJoinSelector,
+} from "@paradicms/react-dom-components";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
 import {readConfigurationFile, readModelSetFile} from "@paradicms/next";
 import fs from "fs";
 import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
-import {useWorkSearchQueryParams, workSearchWorkJoinSelector,} from "@paradicms/react-search";
+import {useWorkSearchQueryParams} from "@paradicms/react-dom-hooks";
 import dynamic from "next/dynamic";
-import {CollectionAppConfiguration} from "../lib/CollectionAppConfiguration";
-import {readCollectionAppConfiguration} from "../lib/readCollectionAppConfiguration";
-import {defaultCollectionAppConfiguration} from "../lib/defaultCollectionAppConfiguration";
+import {SearchAppConfiguration} from "../lib/SearchAppConfiguration";
+import {readSearchAppConfiguration} from "../lib/readSearchAppConfiguration";
+import {defaultSearchAppConfiguration} from "../lib/defaultSearchAppConfiguration";
 import {parseIntoDataset} from "@paradicms/rdf";
 
 const WorkLocationsMap = dynamic<{
@@ -31,7 +35,7 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: CollectionAppConfiguration;
+  readonly configuration: SearchAppConfiguration;
   readonly modelSetString: string;
 }
 
@@ -95,10 +99,10 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 }> => {
   const completeModelSet = readModelSetFile(readFileSync);
   const configuration =
-    readCollectionAppConfiguration(
+    readSearchAppConfiguration(
       readConfigurationFile(readFileSync),
       completeModelSet.dataset
-    ) ?? defaultCollectionAppConfiguration;
+    ) ?? defaultSearchAppConfiguration;
 
   const collection = completeModelSet.collections[0];
 

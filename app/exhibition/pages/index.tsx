@@ -10,7 +10,7 @@ import {Layout} from "../components/Layout";
 import {Col, Container, Row} from "reactstrap";
 import {RightsParagraph} from "@paradicms/react-dom-components";
 import {defaultExhibitionAppConfiguration} from "../lib/defaultExhibitionAppConfiguration";
-import {readExhibitionAppConfiguration} from "../lib/readCollectionAppConfiguration";
+import {readExhibitionAppConfiguration} from "../lib/readExhibitionAppConfiguration";
 import {ExhibitionAppConfiguration} from "../lib/ExhibitionAppConfiguration";
 import {parseIntoDataset} from "@paradicms/rdf";
 
