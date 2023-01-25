@@ -20,6 +20,7 @@ import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";
 import {SearchAppConfiguration} from "../lib/SearchAppConfiguration";
+import {getDefaultWorkQueryFilters} from "../lib/getDefaultWorkQueryFilters";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {readonly title: string; readonly uri: string};
@@ -42,20 +43,18 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
 
   // @ts-ignore
   let onSearch: ((text: string) => void) | undefined;
-  if (configuration.search) {
-    if (onSearchUserDefined) {
-      onSearch = onSearchUserDefined;
-    } else {
-      onSearch = (text: string) => {
-        const href = Hrefs.collection({
-          filters: configuration.search!.filters ?? [],
-          text: text,
-        }).toString();
-        console.info("redirecting to search href", href);
-        router.push(href);
-        return null;
-      };
-    }
+  if (onSearchUserDefined) {
+    onSearch = onSearchUserDefined;
+  } else {
+    onSearch = (text: string) => {
+      const href = Hrefs.home({
+        filters: getDefaultWorkQueryFilters(configuration.workProperties),
+        text,
+      });
+      // console.info("redirecting to search href", href);
+      router.push(href);
+      return null;
+    };
   }
 
   return (
@@ -74,7 +73,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
           <Col>
             <Navbar>
               <NavbarBrand className="me-auto" tag="div">
-                <Link href={Hrefs.home}>{collection.title}</Link>
+                <Link href={Hrefs.home()}>{collection.title}</Link>
               </NavbarBrand>
               {onSearch ? (
                 <Nav navbar>

@@ -10,5 +10,13 @@ export const useWorkQueryParam = (
     WorkQuery | undefined
   >(name, new JsonQueryParamConfig<WorkQuery>());
 
-  return [workQueryQueryParam ?? defaultWorkQuery, setWorkQuery];
+  if (!workQueryQueryParam) {
+    return [defaultWorkQuery, setWorkQuery];
+  }
+
+  let {filters, ...otherWorkQuery} = workQueryQueryParam;
+  if (filters.length === 0) {
+    filters = defaultWorkQuery.filters;
+  }
+  return [{filters, ...otherWorkQuery}, setWorkQuery];
 };
