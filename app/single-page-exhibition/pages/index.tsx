@@ -1,12 +1,5 @@
 import * as React from "react";
-import {
-  UIEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-  WheelEvent,
-} from "react";
+import {useMemo} from "react";
 import {GetStaticProps} from "next";
 import fs from "fs";
 import {readConfigurationFile, readModelSetFile} from "@paradicms/next";
@@ -114,36 +107,6 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     return pages;
   }, [modelSet]);
 
-  const onScroll = useCallback((e: UIEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  }, []);
-
-  const [currentPage, setCurrentPage] = useState<number>(0);
-
-  const onWheel = useCallback(
-    (e: WheelEvent) => {
-      if (e.deltaY < 0) {
-        if (currentPage > 0) {
-          setCurrentPage(currentPage - 1);
-        }
-      } else if (e.deltaY > 0) {
-        if (currentPage < pages.length) {
-          setCurrentPage(currentPage + 1);
-        }
-      }
-    },
-    [currentPage, pages]
-  );
-
-  useEffect(() => {
-    const pageElement = document.getElementById("page-" + currentPage);
-    if (pageElement) {
-      console.info("Go to page", currentPage);
-      window.scrollTo(pageElement.offsetLeft, pageElement.offsetTop);
-      document.body.scrollTop = pageElement.offsetTop;
-    }
-  }, [currentPage]);
-
   if (pages.length === 0) {
     return null;
   }
@@ -157,17 +120,21 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
           href={configuration.stylesheetHref ?? defaultBootstrapStylesheetHref}
         />
       </Head>
-      <div onScroll={onScroll} onWheel={onWheel}>
-        {pages.map((page, pageI) => (
-          <div
-            className="d-flex"
-            key={pageI}
-            style={{alignItems: "center", height: "100vh", width: "100%"}}
-          >
-            <div id={"page-" + pageI}>{page}</div>
-          </div>
-        ))}
-      </div>
+      {pages.map((page, pageI) => (
+        <div
+          className="d-flex"
+          id={"page-" + pageI}
+          key={pageI}
+          style={{
+            alignItems: "center",
+            height: "100vh",
+            maxHeight: "100vh",
+            width: "100%",
+          }}
+        >
+          {page}
+        </div>
+      ))}
     </>
   );
 };
