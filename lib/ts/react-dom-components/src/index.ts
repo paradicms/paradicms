@@ -21,6 +21,7 @@ export * from "./ValueFilterBadges";
 export * from "./ValueFilterControl";
 export * from "./ValueFilterGallery";
 export * from "./ValueFilterTable";
+export * from "./WorkAgentsCarousel";
 export * from "./WorkCard";
 export * from "./WorkContainer";
 export * from "./WorkEventsTimeline";

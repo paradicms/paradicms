@@ -15,10 +15,10 @@ import {
 import * as React from "react";
 import {ComponentType, useMemo, useState} from "react";
 import {RightsParagraph} from "./RightsParagraph";
-import {AgentCard} from "./AgentCard";
 import {WorkLocationSummary} from "@paradicms/services";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
 import {ImagesCarousel} from "./ImagesCarousel";
+import {WorkAgentsCarousel} from "./WorkAgentsCarousel";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "x-small",
@@ -50,15 +50,17 @@ export const WorkContainer: React.FunctionComponent<{
   for (const workAgent of work.agents) {
     if (
       !workAgents.find(
-        (uniqueWorkAgent) => uniqueWorkAgent.agent.uri === workAgent.agent.uri
+        uniqueWorkAgent => uniqueWorkAgent.agent.uri === workAgent.agent.uri
       )
     ) {
       workAgents.push(workAgent);
     }
   }
 
-  const [workImagesCarouselImage, setCurrentWorkImagesCarouselImage] =
-    useState<Image | null>(null);
+  const [
+    workImagesCarouselImage,
+    setCurrentWorkImagesCarouselImage,
+  ] = useState<Image | null>(null);
 
   const [activeLeftColTabIndex, setActiveLeftColTabIndex] = useState(0);
 
@@ -93,20 +95,7 @@ export const WorkContainer: React.FunctionComponent<{
   if (workAgents.length > 0) {
     leftColTabs.push({
       title: "People",
-      content: (
-        <Container fluid key={leftColTabs.length}>
-          {workAgents.map((workAgent, workAgentIndex) => (
-            <Row
-              className={workAgentIndex > 0 ? "mt-4" : "mt-2"}
-              key={workAgentIndex}
-            >
-              <Col xs={12} className="p-0">
-                <AgentCard agent={workAgent.agent} role={workAgent.role} />
-              </Col>
-            </Row>
-          ))}
-        </Container>
-      ),
+      content: <WorkAgentsCarousel workAgents={work.agents} />,
     });
   }
   if (work.events.length > 0) {
@@ -126,7 +115,7 @@ export const WorkContainer: React.FunctionComponent<{
     leftColTabs.push({
       title: "Map",
       content: React.createElement(workLocationsMapComponent, {
-        workLocations: work.locations.map((workLocation) => ({
+        workLocations: work.locations.map(workLocation => ({
           location: workLocation.location,
           role: workLocation.role,
           title: workLocation.title,
