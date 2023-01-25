@@ -12,7 +12,7 @@ import {
   TabContent,
   TabPane,
 } from "reactstrap";
-import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
+import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
 import {RightsParagraph} from "./RightsParagraph";
 import {getNamedModelLinks} from "./getNamedModelLinks";
 
@@ -35,10 +35,10 @@ export const WorkCard: React.FunctionComponent<{
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const workLinks = getNamedModelLinks(work);
   const thumbnail = work.thumbnail({
-    targetDimensions: thumbnailTargetDimensions,
+    targetDimensions: smallThumbnailTargetDimensions,
   });
   const thumbnailSrc =
-    thumbnail?.src ?? Image.placeholderSrc(thumbnailTargetDimensions);
+    thumbnail?.src ?? Image.placeholderSrc(smallThumbnailTargetDimensions);
 
   const tabs: {content: React.ReactNode; title: string}[] = [];
   tabs.push({
@@ -49,8 +49,8 @@ export const WorkCard: React.FunctionComponent<{
           <img
             src={thumbnailSrc}
             style={{
-              maxHeight: thumbnailTargetDimensions.height,
-              maxWidth: thumbnailTargetDimensions.width,
+              maxHeight: smallThumbnailTargetDimensions.height,
+              maxWidth: smallThumbnailTargetDimensions.width,
             }}
             title={work.title}
           />

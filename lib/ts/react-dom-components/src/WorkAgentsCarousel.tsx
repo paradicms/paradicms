@@ -1,16 +1,22 @@
 import * as React from "react";
 import {useCallback, useState} from "react";
-import {WorkAgent} from "@paradicms/models";
+import {ImageDimensions, WorkAgent} from "@paradicms/models";
 import {AgentCard} from "./AgentCard";
-import {Carousel, CarouselControl, CarouselItem} from "reactstrap";
+import {Carousel, CarouselItem} from "reactstrap";
+import {FontAwesomeCarouselControl} from "./FontAwesomeCarouselControl";
 
 export const WorkAgentsCarousel: React.FunctionComponent<{
+  thumbnailTargetDimensions?: ImageDimensions;
   workAgents: readonly WorkAgent[];
-}> = ({workAgents}) => {
+}> = ({thumbnailTargetDimensions, workAgents}) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const renderWorkAgent = (workAgent: WorkAgent) => (
-    <AgentCard agent={workAgent.agent} role={workAgent.role} />
+    <AgentCard
+      agent={workAgent.agent}
+      role={workAgent.role}
+      thumbnailTargetDimensions={thumbnailTargetDimensions}
+    />
   );
 
   const onClickNext = useCallback(() => {
@@ -52,12 +58,12 @@ export const WorkAgentsCarousel: React.FunctionComponent<{
           {renderWorkAgent(workAgent)}
         </CarouselItem>
       ))}
-      <CarouselControl
+      <FontAwesomeCarouselControl
         direction="prev"
         directionText="Previous"
         onClickHandler={onClickPrevious}
       />
-      <CarouselControl
+      <FontAwesomeCarouselControl
         direction="next"
         directionText="Next"
         onClickHandler={onClickNext}

@@ -19,6 +19,7 @@ import {WorkLocationSummary} from "@paradicms/services";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
 import {ImagesCarousel} from "./ImagesCarousel";
 import {WorkAgentsCarousel} from "./WorkAgentsCarousel";
+import {largeThumbnailTargetDimensions} from "./largeThumbnailTargetDimensions";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "x-small",
@@ -76,7 +77,7 @@ export const WorkContainer: React.FunctionComponent<{
               images={work.images}
               key={leftColTabs.length}
               onShowImage={setCurrentWorkImagesCarouselImage}
-              thumbnailTargetDimensions={{height: 600, width: 600}}
+              thumbnailTargetDimensions={largeThumbnailTargetDimensions}
             />
           </CardBody>
           {workImagesCarouselImage && workImagesCarouselImage.rights ? (
@@ -95,7 +96,12 @@ export const WorkContainer: React.FunctionComponent<{
   if (workAgents.length > 0) {
     leftColTabs.push({
       title: "People",
-      content: <WorkAgentsCarousel workAgents={work.agents} />,
+      content: (
+        <WorkAgentsCarousel
+          thumbnailTargetDimensions={largeThumbnailTargetDimensions}
+          workAgents={work.agents}
+        />
+      ),
     });
   }
   if (work.events.length > 0) {
@@ -183,7 +189,10 @@ export const WorkContainer: React.FunctionComponent<{
             sm={12}
             lg={rightCol ? 8 : 12}
             xl={rightCol ? 6 : 12}
-            style={{minHeight: 600, minWidth: 600}}
+            style={{
+              minHeight: largeThumbnailTargetDimensions.height,
+              minWidth: largeThumbnailTargetDimensions.width,
+            }}
           >
             {leftCol}
           </Col>

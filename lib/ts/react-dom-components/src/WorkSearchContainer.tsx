@@ -1,19 +1,28 @@
-import {Col, Container, Nav, NavItem, NavLink, Row, TabContent, TabPane,} from "reactstrap";
+import {
+  Col,
+  Container,
+  Nav,
+  NavItem,
+  NavLink,
+  Row,
+  TabContent,
+  TabPane,
+} from "reactstrap";
 import * as React from "react";
 import {ComponentType, useEffect, useState} from "react";
 import {FiltersBadges} from "./FiltersBadges";
 import {WorksGallery} from "./WorksGallery";
 import {Pagination} from "./Pagination";
 import {
-    GetWorkAgentsResult,
-    GetWorkEventsResult,
-    GetWorkLocationsResult,
-    GetWorksResult,
-    WorkLocationSummary,
-    WorkQuery,
-    WorkQueryService,
+  GetWorkAgentsResult,
+  GetWorkEventsResult,
+  GetWorkLocationsResult,
+  GetWorksResult,
+  WorkLocationSummary,
+  WorkQuery,
+  WorkQueryService,
 } from "@paradicms/services";
-import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
+import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
 import {Filter} from "@paradicms/filters";
 import {useQueryParam} from "use-query-params";
 import {AgentsGallery} from "./AgentsGallery";
@@ -114,10 +123,10 @@ export const WorkSearchContainer: React.FunctionComponent<{
             limit: OBJECTS_PER_PAGE,
             offset: worksPage * OBJECTS_PER_PAGE,
             valueFacetValueThumbnailSelector: {
-              targetDimensions: thumbnailTargetDimensions,
+              targetDimensions: smallThumbnailTargetDimensions,
             },
             workJoinSelector: workSearchWorkJoinSelector(
-              thumbnailTargetDimensions
+              smallThumbnailTargetDimensions
             ),
           },
           workQuery
@@ -139,7 +148,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
         .getWorkAgents(
           {
             agentJoinSelector: {
-              thumbnail: {targetDimensions: thumbnailTargetDimensions},
+              thumbnail: {targetDimensions: smallThumbnailTargetDimensions},
               works: {},
             },
             limit: OBJECTS_PER_PAGE,
