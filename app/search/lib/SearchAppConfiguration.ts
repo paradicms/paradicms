@@ -1,6 +1,9 @@
-import {AppConfiguration, PropertyConfiguration, SearchConfiguration,} from "@paradicms/configuration";
+import {
+  AppConfiguration,
+  PropertyConfiguration,
+} from "@paradicms/configuration";
 
 export interface SearchAppConfiguration extends AppConfiguration {
-  readonly search: SearchConfiguration;
+  readonly objectsPerPage?: number;
   readonly workProperties: readonly PropertyConfiguration[];
 }

@@ -32,11 +32,10 @@ import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 import {createFilterControls} from "./createFilterControls";
 import {calculatePageMax} from "@paradicms/utilities";
 
-const OBJECTS_PER_PAGE = 4;
-
 type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
 
 export const WorkSearchContainer: React.FunctionComponent<{
+  objectsPerPage: number;
   onChangeFilters: (filters: readonly Filter[]) => void;
   renderInstitutionLink?: (
     institutionUri: string,
@@ -59,6 +58,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
   workQueryService: WorkQueryService;
   worksPage: number;
 }> = ({
+  objectsPerPage,
   onChangeFilters,
   renderInstitutionLink,
   renderWorkLink,
@@ -114,13 +114,13 @@ export const WorkSearchContainer: React.FunctionComponent<{
       (activeTabKey === "works" || getWorksResult === null) &&
       !loadingWorks
     ) {
-      console.debug("getWorks");
+      // console.debug("getWorks");
       setLoadingWorks(true);
       workQueryService
         .getWorks(
           {
-            limit: OBJECTS_PER_PAGE,
-            offset: worksPage * OBJECTS_PER_PAGE,
+            limit: objectsPerPage,
+            offset: worksPage * objectsPerPage,
             valueFacetValueThumbnailSelector: {
               targetDimensions: smallThumbnailTargetDimensions,
             },
@@ -131,7 +131,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
           workQuery
         )
         .then(getWorksResult => {
-          console.debug("getWorks result:", getWorksResult.totalWorksCount);
+          // console.debug("getWorks result:", getWorksResult.totalWorksCount);
           setGetWorksResult(getWorksResult);
           setLoadingWorks(false);
         });
@@ -141,7 +141,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
   // Effect that responds to switching to the work agents tab
   useEffect(() => {
     if (activeTabKey === "workAgents" && !loadingWorkAgents) {
-      console.debug("getWorkAgents");
+      // console.debug("getWorkAgents");
       setLoadingWorkAgents(true);
       workQueryService
         .getWorkAgents(
@@ -150,16 +150,16 @@ export const WorkSearchContainer: React.FunctionComponent<{
               thumbnail: {targetDimensions: smallThumbnailTargetDimensions},
               works: {},
             },
-            limit: OBJECTS_PER_PAGE,
-            offset: workAgentsPage * OBJECTS_PER_PAGE,
+            limit: objectsPerPage,
+            offset: workAgentsPage * objectsPerPage,
           },
           workQuery
         )
         .then(getWorkAgentsResult => {
-          console.debug(
-            "getWorkAgents result:",
-            getWorkAgentsResult.totalWorkAgentsCount
-          );
+          // console.debug(
+          //   "getWorkAgents result:",
+          //   getWorkAgentsResult.totalWorkAgentsCount
+          // );
           setGetWorkAgentsResult(getWorkAgentsResult);
           setLoadingWorkAgents(false);
         });
@@ -169,13 +169,13 @@ export const WorkSearchContainer: React.FunctionComponent<{
   // Effect that responds to switching to the work events tab
   useEffect(() => {
     if (activeTabKey === "workEvents" && !loadingWorkEvents) {
-      console.debug("getWorkEvents");
+      // console.debug("getWorkEvents");
       setLoadingWorkEvents(true);
       // "Paging" the timeline loads more events rather than typical pagination.
       workQueryService
         .getWorkEvents(
           {
-            limit: (workEventsPage + 1) * OBJECTS_PER_PAGE,
+            limit: (workEventsPage + 1) * objectsPerPage,
             offset: 0,
             requireDate: true,
             workEventJoinSelector: {
@@ -185,10 +185,10 @@ export const WorkSearchContainer: React.FunctionComponent<{
           workQuery
         )
         .then(getWorkEventsResult => {
-          console.info(
-            "getWorkEvents result:",
-            getWorkEventsResult.totalWorkEventsCount
-          );
+          // console.info(
+          //   "getWorkEvents result:",
+          //   getWorkEventsResult.totalWorkEventsCount
+          // );
           setGetWorkEventsResult(getWorkEventsResult);
           setLoadingWorkEvents(false);
         });
@@ -198,15 +198,15 @@ export const WorkSearchContainer: React.FunctionComponent<{
   // Effect that responds to switching to the work locations tab
   useEffect(() => {
     if (activeTabKey === "workLocations" && !loadingWorkLocations) {
-      console.debug("getWorkLocations");
+      // console.debug("getWorkLocations");
       setLoadingWorkLocations(true);
       workQueryService
         .getWorkLocations({}, workQuery)
         .then(getWorkLocationsResult => {
-          console.debug(
-            "getWorkLocations result:",
-            getWorkLocationsResult.workLocations.length
-          );
+          // console.debug(
+          //   "getWorkLocations result:",
+          //   getWorkLocationsResult.workLocations.length
+          // );
           setGetWorkLocationsResult(getWorkLocationsResult);
           setLoadingWorkLocations(false);
         });
@@ -245,7 +245,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
             <Pagination
               count={
                 calculatePageMax({
-                  objectsPerPage: OBJECTS_PER_PAGE,
+                  objectsPerPage,
                   totalObjects: getWorksResult.totalWorksCount,
                 }) + 1
               }
@@ -274,7 +274,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
             <Pagination
               count={
                 calculatePageMax({
-                  objectsPerPage: OBJECTS_PER_PAGE,
+                  objectsPerPage,
                   totalObjects: getWorkAgentsResult.totalWorkAgentsCount,
                 }) + 1
               }
@@ -293,7 +293,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
       <WorkEventsTimeline
         page={workEventsPage}
         pageMax={calculatePageMax({
-          objectsPerPage: OBJECTS_PER_PAGE,
+          objectsPerPage,
           totalObjects: getWorkEventsResult.totalWorkEventsCount,
         })}
         setPage={setWorkEventsPage}
