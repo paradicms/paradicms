@@ -27,7 +27,6 @@ import {Filter} from "@paradicms/filters";
 import {useQueryParam} from "use-query-params";
 import {AgentsGallery} from "./AgentsGallery";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
-import {bootstrapCreateFilterControlFactory} from "./bootstrapCreateFilterControlFactory";
 import {FiltersControlsAccordion} from "./FiltersControlsAccordion";
 import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 import {createFilterControls} from "./createFilterControls";
@@ -224,7 +223,6 @@ export const WorkSearchContainer: React.FunctionComponent<{
 
   const filtersControls = createFilterControls({
     facets: getWorksResult.facets,
-    factory: bootstrapCreateFilterControlFactory,
     filters: workQuery.filters,
     onChangeFilters,
   });

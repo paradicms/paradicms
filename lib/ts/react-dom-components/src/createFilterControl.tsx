@@ -12,18 +12,17 @@ import {
 } from "@paradicms/facets";
 import {visitFilter} from "./FilterVisitor";
 import React from "react";
-import {CreateFilterControlFactory} from "./CreateFilterControlFactory";
+import {ValueFilterControl} from "./ValueFilterControl";
 
 /**
  * Create a control React element for a filter. Delegates to the factory for UI-framework specific elements.
  */
 export const createFilterControl = (kwds: {
   facets: readonly Facet[];
-  factory: CreateFilterControlFactory;
   filter: Filter;
   onChangeFilter: (newFilter: Filter) => void;
 }): React.ReactElement | null => {
-  const {facets, factory, filter, onChangeFilter} = kwds;
+  const {facets, filter, onChangeFilter} = kwds;
 
   return visitFilter(
     filter,
@@ -39,10 +38,12 @@ export const createFilterControl = (kwds: {
           // console.info("collection values facet has <= 1 values, eliding");
           return null;
         }
-        return factory.createCollectionValueFilterControl(
-          facet,
-          filter,
-          onChangeFilter
+        return (
+          <ValueFilterControl
+            facet={facet}
+            filter={filter}
+            onChange={onChangeFilter}
+          />
         );
       },
 
@@ -56,10 +57,12 @@ export const createFilterControl = (kwds: {
         if (facet.values.length + (facet.unknownCount ? 1 : 0) <= 1) {
           return null;
         }
-        return factory.createInstitutionValueFilterControl(
-          facet,
-          filter,
-          onChangeFilter
+        return (
+          <ValueFilterControl
+            facet={facet}
+            filter={filter}
+            onChange={onChangeFilter}
+          />
         );
       },
 
@@ -78,10 +81,12 @@ export const createFilterControl = (kwds: {
           // );
           return null;
         }
-        return factory.createStringPropertyValueFilterControl(
-          facet,
-          filter,
-          onChangeFilter
+        return (
+          <ValueFilterControl
+            facet={facet}
+            filter={filter}
+            onChange={onChangeFilter}
+          />
         );
       },
     },
