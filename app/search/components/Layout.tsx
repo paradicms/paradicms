@@ -1,23 +1,36 @@
 import * as React from "react";
 import {Hrefs} from "lib/Hrefs";
-import {Card, CardBody, CardHeader, Col, Container, Nav, Navbar, NavbarBrand, NavItem, Row,} from "reactstrap";
-import {defaultBootstrapStylesheetHref, NavbarSearchForm,} from "@paradicms/react-dom-components";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  Container,
+  Nav,
+  Navbar,
+  NavbarBrand,
+  NavItem,
+  Row,
+} from "reactstrap";
+import {
+  defaultBootstrapStylesheetHref,
+  NavbarSearchForm,
+} from "@paradicms/react-dom-components";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";
 import {SearchAppConfiguration} from "../lib/SearchAppConfiguration";
+import {getDefaultWorkQueryFilters} from "../lib/getDefaultWorkQueryFilters";
 
-export const Layout: React.FunctionComponent<
-  React.PropsWithChildren<{
-    collection: {readonly title: string; readonly uri: string};
-    configuration: SearchAppConfiguration;
-    cardHeaderLinks?: React.ReactElement[];
-    cardTitle?: React.ReactNode;
-    className?: string;
-    documentTitle?: string;
-    onSearch?: (text: string) => void;
-  }>
-> = ({
+export const Layout: React.FunctionComponent<React.PropsWithChildren<{
+  collection: {readonly title: string; readonly uri: string};
+  configuration: SearchAppConfiguration;
+  cardHeaderLinks?: React.ReactElement[];
+  cardTitle?: React.ReactNode;
+  className?: string;
+  documentTitle?: string;
+  onSearch?: (text: string) => void;
+}>> = ({
   cardHeaderLinks,
   cardTitle,
   collection,
@@ -30,20 +43,18 @@ export const Layout: React.FunctionComponent<
 
   // @ts-ignore
   let onSearch: ((text: string) => void) | undefined;
-  if (configuration.search) {
-    if (onSearchUserDefined) {
-      onSearch = onSearchUserDefined;
-    } else {
-      onSearch = (text: string) => {
-        const href = Hrefs.collection({
-          filters: configuration.search!.filters ?? [],
-          text: text,
-        }).toString();
-        console.info("redirecting to search href", href);
-        router.push(href);
-        return null;
-      };
-    }
+  if (onSearchUserDefined) {
+    onSearch = onSearchUserDefined;
+  } else {
+    onSearch = (text: string) => {
+      const href = Hrefs.home({
+        filters: getDefaultWorkQueryFilters(configuration.workProperties),
+        text,
+      });
+      // console.info("redirecting to search href", href);
+      router.push(href);
+      return null;
+    };
   }
 
   return (
@@ -62,7 +73,7 @@ export const Layout: React.FunctionComponent<
           <Col>
             <Navbar>
               <NavbarBrand className="me-auto" tag="div">
-                <Link href={Hrefs.home}>{collection.title}</Link>
+                <Link href={Hrefs.home()}>{collection.title}</Link>
               </NavbarBrand>
               {onSearch ? (
                 <Nav navbar>

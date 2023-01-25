@@ -20,6 +20,7 @@ import {SearchAppConfiguration} from "../lib/SearchAppConfiguration";
 import {readSearchAppConfiguration} from "../lib/readSearchAppConfiguration";
 import {defaultSearchAppConfiguration} from "../lib/defaultSearchAppConfiguration";
 import {parseIntoDataset} from "@paradicms/rdf";
+import {getDefaultWorkQueryFilters} from "../lib/getDefaultWorkQueryFilters";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -69,7 +70,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   );
 
   const {onSearch, ...workSearchQueryParams} = useWorkSearchQueryParams({
-    defaultWorkQueryFilters: configuration.search?.filters,
+    filters: getDefaultWorkQueryFilters(configuration.workProperties),
   });
 
   return (
@@ -79,6 +80,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
       onSearch={onSearch}
     >
       <WorkSearchContainer
+        objectsPerPage={configuration.objectsPerPage ?? 10}
         renderWorkLink={(workUri, children) => (
           <Link href={Hrefs.work(workUri)}>
             <a>{children}</a>

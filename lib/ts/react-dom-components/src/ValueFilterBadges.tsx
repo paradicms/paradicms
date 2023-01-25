@@ -9,6 +9,28 @@ interface ValueFilterBadgesProps<T extends JsonPrimitiveType> {
   onChange: (newFilter: ValueFilter<T>) => void;
 }
 
+const ValueFilterBadge: React.FunctionComponent<React.PropsWithChildren<{
+  onClick: () => void;
+}>> = ({children, onClick}) => (
+  <h5 className="d-inline-block mb-0 ms-2">
+    <Badge
+      className="d-inline-flex align-items-center justify-content-start px-2 py-1"
+      color="secondary"
+      pill
+    >
+      {children}
+      <button
+        type="button"
+        className="btn-close btn-sm"
+        onClick={e => {
+          e.stopPropagation();
+          onClick();
+        }}
+      ></button>
+    </Badge>
+  </h5>
+);
+
 export const ValueFilterBadges = <T extends JsonPrimitiveType>(
   props: ValueFilterBadgesProps<T>
 ) => {
@@ -18,114 +40,74 @@ export const ValueFilterBadges = <T extends JsonPrimitiveType>(
 
   if (filter.excludeKnown) {
     filterBadges.push(
-      <h5 className="d-inline-block ms-2" key={`${filter.label}-excludeKnown`}>
-        <Badge className="p-2" color="warning" pill>
-          Exclude&nbsp;
-          {filter.label}: Known&nbsp;
-          <button
-            type="button"
-            className="btn-close"
-            onClick={e => {
-              e.stopPropagation();
-              const {excludeKnown, ...otherFilterProps} = filter;
-              onChange(otherFilterProps);
-            }}
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </Badge>
-      </h5>
+      <ValueFilterBadge
+        key={`${filter.label}-excludeKnown`}
+        onClick={() => {
+          const {excludeKnown, ...otherFilterProps} = filter;
+          onChange(otherFilterProps);
+        }}
+      >
+        Exclude&nbsp;{filter.label}: Known&nbsp;
+      </ValueFilterBadge>
     );
   }
 
   if (filter.excludeUnknown) {
     filterBadges.push(
-      <h5
-        className="d-inline-block ms-2"
+      <ValueFilterBadge
         key={`${filter.label}-excludeUnknown`}
+        onClick={() => {
+          const {excludeUnknown, ...otherFilterProps} = filter;
+          onChange(otherFilterProps);
+        }}
       >
-        <Badge className="p-2" color="warning" pill>
-          Exclude&nbsp;
-          {filter.label}: Unknown&nbsp;
-          <button
-            type="button"
-            className="btn-close"
-            onClick={e => {
-              e.stopPropagation();
-              const {excludeUnknown, ...otherFilterProps} = filter;
-              onChange(otherFilterProps);
-            }}
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </Badge>
-      </h5>
+        Exclude&nbsp;{filter.label}: Unknown&nbsp;
+      </ValueFilterBadge>
     );
   }
 
   (filter.excludeValues ?? []).forEach((excludeValue, excludeValueI) => {
     filterBadges.push(
-      <h5
-        className="d-inline-block ms-2"
+      <ValueFilterBadge
         key={`${filter.label}-excludeValue-${excludeValueI}`}
+        onClick={() => {
+          const newExcludeValues = filter.excludeValues!.concat();
+          newExcludeValues.splice(excludeValueI, 1);
+          onChange({
+            ...filter,
+            excludeValues:
+              newExcludeValues.length > 0 ? newExcludeValues : undefined,
+          });
+        }}
       >
-        <Badge className="p-2" color="warning" pill>
-          Exclude&nbsp;
-          {filter.label}:&nbsp;
-          {facet?.values.find(facetValue => facetValue.value === excludeValue)
-            ?.label ?? excludeValue}
-          &nbsp;
-          <button
-            type="button"
-            className="btn-close"
-            onClick={e => {
-              e.stopPropagation();
-              const newExcludeValues = filter.excludeValues!.concat();
-              newExcludeValues.splice(excludeValueI, 1);
-              onChange({
-                ...filter,
-                excludeValues:
-                  newExcludeValues.length > 0 ? newExcludeValues : undefined,
-              });
-            }}
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </Badge>
-      </h5>
+        Exclude&nbsp;
+        {filter.label}:&nbsp;
+        {facet?.values.find(facetValue => facetValue.value === excludeValue)
+          ?.label ?? excludeValue}
+        &nbsp;
+      </ValueFilterBadge>
     );
   });
 
   (filter.includeValues ?? []).forEach((includeValue, includeValueI) => {
     filterBadges.push(
-      <h5
-        className="d-inline-block ms-2"
-        key={`${filter.label}-includeValue-${includeValueI}`}
+      <ValueFilterBadge
+        onClick={() => {
+          const newIncludeValues = filter.includeValues!.concat();
+          newIncludeValues.splice(includeValueI, 1);
+          onChange({
+            ...filter,
+            includeValues:
+              newIncludeValues.length > 0 ? newIncludeValues : undefined,
+          });
+        }}
       >
-        <Badge className="p-2" color="warning" pill>
-          Include&nbsp;
-          {filter.label}:&nbsp;
-          {facet?.values.find(facetValue => facetValue.value === includeValue)
-            ?.label ?? includeValue}
-          &nbsp;
-          <button
-            type="button"
-            className="btn-close"
-            onClick={e => {
-              e.stopPropagation();
-              const newIncludeValues = filter.includeValues!.concat();
-              newIncludeValues.splice(includeValueI, 1);
-              onChange({
-                ...filter,
-                includeValues:
-                  newIncludeValues.length > 0 ? newIncludeValues : undefined,
-              });
-            }}
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </Badge>
-      </h5>
+        Include&nbsp;
+        {filter.label}:&nbsp;
+        {facet?.values.find(facetValue => facetValue.value === includeValue)
+          ?.label ?? includeValue}
+        &nbsp;
+      </ValueFilterBadge>
     );
   });
 

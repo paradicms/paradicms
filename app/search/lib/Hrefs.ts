@@ -3,7 +3,7 @@ import {WorkQuery} from "@paradicms/services";
 import * as qs from "qs";
 
 export class Hrefs {
-  static collection(workQuery?: WorkQuery): string {
+  static home(workQuery?: WorkQuery): string {
     return (
       "/" +
       qs.stringify(
@@ -13,10 +13,6 @@ export class Hrefs {
         }
       )
     );
-  }
-
-  static get home(): string {
-    return Hrefs.collection();
   }
 
   static work(workUri: string): string {

@@ -3,8 +3,8 @@ import {WorkQuery} from "@paradicms/services";
 import {usePageQueryParam} from "./usePageQueryParam";
 import {Filter} from "@paradicms/filters";
 
-export const useWorkSearchQueryParams = (kwds?: {
-  defaultWorkQueryFilters?: readonly Filter[];
+export const useWorkSearchQueryParams = (defaultWorkQuery: {
+  filters: readonly Filter[];
 }): {
   onChangeFilters: (filters: readonly Filter[]) => void;
   onSearch: (text: string) => void;
@@ -26,9 +26,7 @@ export const useWorkSearchQueryParams = (kwds?: {
   const [worksPage, setWorksPage] = usePageQueryParam("worksPage");
 
   const [workQuery, setWorkQuery] = useWorkQueryParam(
-    {
-      filters: kwds?.defaultWorkQueryFilters ?? [],
-    },
+    defaultWorkQuery,
     "query"
   );
 
@@ -43,7 +41,7 @@ export const useWorkSearchQueryParams = (kwds?: {
       setWorkAgentsPage(undefined);
       setWorkEventsPage(undefined);
       setWorksPage(undefined);
-      setWorkQuery({...workQuery, text});
+      setWorkQuery({filters: [], text});
     },
     setWorkAgentsPage,
     setWorkEventsPage,

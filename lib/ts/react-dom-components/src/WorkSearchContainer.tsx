@@ -32,11 +32,10 @@ import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 import {createFilterControls} from "./createFilterControls";
 import {calculatePageMax} from "@paradicms/utilities";
 
-const OBJECTS_PER_PAGE = 4;
-
 type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
 
 export const WorkSearchContainer: React.FunctionComponent<{
+  objectsPerPage: number;
   onChangeFilters: (filters: readonly Filter[]) => void;
   renderInstitutionLink?: (
     institutionUri: string,
@@ -59,6 +58,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
   workQueryService: WorkQueryService;
   worksPage: number;
 }> = ({
+  objectsPerPage,
   onChangeFilters,
   renderInstitutionLink,
   renderWorkLink,
@@ -114,13 +114,13 @@ export const WorkSearchContainer: React.FunctionComponent<{
       (activeTabKey === "works" || getWorksResult === null) &&
       !loadingWorks
     ) {
-      console.debug("getWorks");
+      // console.debug("getWorks");
       setLoadingWorks(true);
       workQueryService
         .getWorks(
           {
-            limit: OBJECTS_PER_PAGE,
-            offset: worksPage * OBJECTS_PER_PAGE,
+            limit: objectsPerPage,
+            offset: worksPage * objectsPerPage,
             valueFacetValueThumbnailSelector: {
               targetDimensions: smallThumbnailTargetDimensions,
             },
@@ -131,7 +131,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
           workQuery
         )
         .then(getWorksResult => {
-          console.debug("getWorks result:", getWorksResult.totalWorksCount);
+          // console.debug("getWorks result:", getWorksResult.totalWorksCount);
           setGetWorksResult(getWorksResult);
           setLoadingWorks(false);
         });
@@ -141,7 +141,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
   // Effect that responds to switching to the work agents tab
   useEffect(() => {
     if (activeTabKey === "workAgents" && !loadingWorkAgents) {
-      console.debug("getWorkAgents");
+      // console.debug("getWorkAgents");
       setLoadingWorkAgents(true);
       workQueryService
         .getWorkAgents(
@@ -150,16 +150,16 @@ export const WorkSearchContainer: React.FunctionComponent<{
               thumbnail: {targetDimensions: smallThumbnailTargetDimensions},
               works: {},
             },
-            limit: OBJECTS_PER_PAGE,
-            offset: workAgentsPage * OBJECTS_PER_PAGE,
+            limit: objectsPerPage,
+            offset: workAgentsPage * objectsPerPage,
           },
           workQuery
         )
         .then(getWorkAgentsResult => {
-          console.debug(
-            "getWorkAgents result:",
-            getWorkAgentsResult.totalWorkAgentsCount
-          );
+          // console.debug(
+          //   "getWorkAgents result:",
+          //   getWorkAgentsResult.totalWorkAgentsCount
+          // );
           setGetWorkAgentsResult(getWorkAgentsResult);
           setLoadingWorkAgents(false);
         });
@@ -169,13 +169,13 @@ export const WorkSearchContainer: React.FunctionComponent<{
   // Effect that responds to switching to the work events tab
   useEffect(() => {
     if (activeTabKey === "workEvents" && !loadingWorkEvents) {
-      console.debug("getWorkEvents");
+      // console.debug("getWorkEvents");
       setLoadingWorkEvents(true);
       // "Paging" the timeline loads more events rather than typical pagination.
       workQueryService
         .getWorkEvents(
           {
-            limit: (workEventsPage + 1) * OBJECTS_PER_PAGE,
+            limit: (workEventsPage + 1) * objectsPerPage,
             offset: 0,
             requireDate: true,
             workEventJoinSelector: {
@@ -185,10 +185,10 @@ export const WorkSearchContainer: React.FunctionComponent<{
           workQuery
         )
         .then(getWorkEventsResult => {
-          console.info(
-            "getWorkEvents result:",
-            getWorkEventsResult.totalWorkEventsCount
-          );
+          // console.info(
+          //   "getWorkEvents result:",
+          //   getWorkEventsResult.totalWorkEventsCount
+          // );
           setGetWorkEventsResult(getWorkEventsResult);
           setLoadingWorkEvents(false);
         });
@@ -198,15 +198,15 @@ export const WorkSearchContainer: React.FunctionComponent<{
   // Effect that responds to switching to the work locations tab
   useEffect(() => {
     if (activeTabKey === "workLocations" && !loadingWorkLocations) {
-      console.debug("getWorkLocations");
+      // console.debug("getWorkLocations");
       setLoadingWorkLocations(true);
       workQueryService
         .getWorkLocations({}, workQuery)
         .then(getWorkLocationsResult => {
-          console.debug(
-            "getWorkLocations result:",
-            getWorkLocationsResult.workLocations.length
-          );
+          // console.debug(
+          //   "getWorkLocations result:",
+          //   getWorkLocationsResult.workLocations.length
+          // );
           setGetWorkLocationsResult(getWorkLocationsResult);
           setLoadingWorkLocations(false);
         });
@@ -245,7 +245,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
             <Pagination
               count={
                 calculatePageMax({
-                  objectsPerPage: OBJECTS_PER_PAGE,
+                  objectsPerPage,
                   totalObjects: getWorksResult.totalWorksCount,
                 }) + 1
               }
@@ -274,7 +274,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
             <Pagination
               count={
                 calculatePageMax({
-                  objectsPerPage: OBJECTS_PER_PAGE,
+                  objectsPerPage,
                   totalObjects: getWorkAgentsResult.totalWorkAgentsCount,
                 }) + 1
               }
@@ -293,7 +293,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
       <WorkEventsTimeline
         page={workEventsPage}
         pageMax={calculatePageMax({
-          objectsPerPage: OBJECTS_PER_PAGE,
+          objectsPerPage,
           totalObjects: getWorkEventsResult.totalWorkEventsCount,
         })}
         setPage={setWorkEventsPage}
@@ -318,80 +318,75 @@ export const WorkSearchContainer: React.FunctionComponent<{
   }
 
   return (
-    <Container fluid>
-      {getWorksResult.totalWorksCount > 0 ? (
-        <>
-          <Row>
-            <Col className="d-flex justify-content-between" xs={12}>
-              <h4>
-                <span>{getWorksResult.totalWorksCount}</span>&nbsp;
+    <Container className="px-0" fluid>
+      <>
+        <Row>
+          <Col className="d-flex justify-content-between" xs={12}>
+            <h6 className="mb-0">
+              <span>{getWorksResult.totalWorksCount}</span>&nbsp;
+              <span>
+                {getWorksResult.totalWorksCount === 1 ? "work" : "works"}
+              </span>
+              &nbsp;
+              {workQuery.text ? (
                 <span>
-                  {getWorksResult.totalWorksCount === 1 ? "work" : "works"}
+                  matching <i>{workQuery.text}</i>
                 </span>
-                &nbsp;
-                {workQuery.text ? (
-                  <span>
-                    matching <i>{workQuery.text}</i>
-                  </span>
-                ) : (
-                  <span>matched</span>
-                )}
-              </h4>
-              {workQuery.filters.length > 0 ? (
-                <div>
-                  <FiltersBadges
-                    facets={getWorksResult.facets}
-                    filters={workQuery.filters}
-                    onChangeFilters={onChangeFilters}
-                  />
-                </div>
-              ) : null}
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <hr />
-            </Col>
-          </Row>
-        </>
-      ) : null}
-      <Row>
-        {filtersControls.length > 0 ? (
-          <Col xs="2">
-            <FiltersControlsAccordion filtersControls={filtersControls} />
+              ) : (
+                <span>matched</span>
+              )}
+            </h6>
+            {workQuery.filters.length > 0 ? (
+              <div>
+                <FiltersBadges
+                  facets={getWorksResult.facets}
+                  filters={workQuery.filters}
+                  onChangeFilters={onChangeFilters}
+                />
+              </div>
+            ) : null}
           </Col>
-        ) : null}
-        <Col xs={filtersControls.length > 0 ? 10 : 12}>
-          {tabs.length === 1 ? (
-            tabs[0].content
-          ) : (
-            <>
-              <Nav tabs>
-                {tabs.map(tab => (
-                  <NavItem key={tab.key}>
-                    <NavLink
-                      className={
-                        activeTabKey === tab.key ? "active" : undefined
-                      }
-                      onClick={() => setActiveTabKey(tab.key)}
-                      style={{cursor: "pointer", fontSize: "small"}}
-                    >
-                      {tab.title}
-                    </NavLink>
-                  </NavItem>
-                ))}
-              </Nav>
-              <TabContent activeTab={activeTabKey}>
-                {tabs.map(tab => (
-                  <TabPane key={tab.key} tabId={tab.key}>
-                    <div className="mt-2">{tab.content}</div>
-                  </TabPane>
-                ))}
-              </TabContent>
-            </>
-          )}
-        </Col>
-      </Row>
+        </Row>
+      </>
+      {getWorksResult.totalWorksCount > 0 ? (
+        <Row>
+          {filtersControls.length > 0 ? (
+            <Col xs={3}>
+              <FiltersControlsAccordion filtersControls={filtersControls} />
+            </Col>
+          ) : null}
+          <Col xs={filtersControls.length > 0 ? 9 : 12}>
+            {tabs.length === 1 ? (
+              tabs[0].content
+            ) : (
+              <>
+                <Nav tabs>
+                  {tabs.map(tab => (
+                    <NavItem key={tab.key}>
+                      <NavLink
+                        className={
+                          activeTabKey === tab.key ? "active" : undefined
+                        }
+                        onClick={() => setActiveTabKey(tab.key)}
+                        style={{cursor: "pointer", fontSize: "small"}}
+                      >
+                        {tab.title}
+                      </NavLink>
+                    </NavItem>
+                  ))}
+                </Nav>
+                <TabContent activeTab={activeTabKey}>
+                  {tabs.map(tab => (
+                    <TabPane key={tab.key} tabId={tab.key}>
+                      <div className="mt-2">{tab.content}</div>
+                    </TabPane>
+                  ))}
+                </TabContent>
+              </>
+            )}
+          </Col>
+        </Row>
+      ) : null}
     </Container>
   );
 };

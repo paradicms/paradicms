@@ -11,7 +11,7 @@ import {Filter} from "@paradicms/filters";
 export const FiltersControlsAccordion: React.FunctionComponent<{
   filtersControls: readonly {control: React.ReactElement; filter: Filter}[];
 }> = ({filtersControls}) => {
-  const [openAccordionId, setOpenAccordionId] = useState<string>("");
+  const [openAccordionId, setOpenAccordionId] = useState<string>("0");
 
   const toggleFilterAccordion = useCallback(
     (newOpenAccordionId: string) => {
@@ -35,7 +35,7 @@ export const FiltersControlsAccordion: React.FunctionComponent<{
       {filtersControls.map(({filter, control}, filterI) => (
         <AccordionItem key={filterI}>
           <AccordionHeader targetId={filterI.toString()}>
-            {filter.label}
+            <span style={{fontSize: "smaller"}}>{filter.label}</span>
           </AccordionHeader>
           <AccordionBody accordionId={filterI.toString()}>
             {control}
