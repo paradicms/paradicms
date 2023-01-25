@@ -4,9 +4,9 @@ import {Collection, ModelSet, ModelSubsetter} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {
-    thumbnailTargetDimensions,
-    WorkSearchContainer,
-    workSearchWorkJoinSelector,
+  smallThumbnailTargetDimensions,
+  WorkSearchContainer,
+  workSearchWorkJoinSelector,
 } from "@paradicms/react-dom-components";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
@@ -118,7 +118,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
       })
         .collectionModelSet(collection, {
           institution: {},
-          works: workSearchWorkJoinSelector(thumbnailTargetDimensions),
+          works: workSearchWorkJoinSelector(smallThumbnailTargetDimensions),
         })
         .stringify(),
     },

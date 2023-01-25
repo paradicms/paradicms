@@ -2,9 +2,10 @@ import logging
 import os
 import shutil
 import subprocess
-import sys
 from pathlib import Path
 from typing import List, Optional, Union
+
+import sys
 
 
 class AppPackage:
@@ -136,7 +137,7 @@ class AppPackage:
     ):
         subprocess_env = os.environ.copy()
         if self.__base_url_path:
-            subprocess_env["GUI_BASE_URL_PATH"] = self.__base_url_path
+            subprocess_env["BASE_URL_PATH"] = self.__base_url_path
         if configuration_file_path is not None:
             subprocess_env["CONFIGURATION_FILE_PATH"] = str(configuration_file_path)
         if data_file_path is not None:

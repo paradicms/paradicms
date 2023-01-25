@@ -1,5 +1,3 @@
-/app/collection/public/img/archive/
-/app/multi-page-exhibition/public/img/archive/
 build/
 /data/creative_commons/
 /data/gordon-book-export/
@@ -16,6 +14,7 @@ node_modules/
 null/
 .nyc_output/
 out/
+**/public/img/archive/
 *.pyc
 .pytest_cache/
 yarn-error.log

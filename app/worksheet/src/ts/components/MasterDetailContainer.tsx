@@ -1,8 +1,21 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {Button, Card, CardBody, CardHeader, Col, Container, Row, Table,} from "reactstrap";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  Container,
+  Row,
+  Table,
+} from "reactstrap";
 import {Image, selectThumbnail, Text} from "@paradicms/models";
-import {ImagesCarousel, RightsParagraph, thumbnailTargetDimensions,} from "@paradicms/react-dom-components";
+import {
+  ImagesCarousel,
+  RightsParagraph,
+  smallThumbnailTargetDimensions,
+} from "@paradicms/react-dom-components";
 import classnames from "classnames";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faInfoCircle, faTimes} from "@fortawesome/free-solid-svg-icons";
@@ -43,7 +56,7 @@ export const MasterDetailContainer: React.FunctionComponent<{
         <div
           className="ms-2"
           style={{
-            maxWidth: thumbnailTargetDimensions.width + 100,
+            maxWidth: smallThumbnailTargetDimensions.width + 100,
           }}
         >
           <ItemDetailCard
@@ -77,7 +90,8 @@ const ItemDetailCard: React.FunctionComponent<{
       <Row key={"row" + rows.length.toString()}>
         <Col className="p-0 text-center" xs={12}>
           <p>{item.description.toString()}</p>
-          {item.description instanceof Text && item.description.rights ? (
+          {item.description instanceof Text &&
+          item.description.rights?.requiresAttribution ? (
             <RightsParagraph
               material="Text"
               rights={item.description.rights}
@@ -179,13 +193,13 @@ const ItemsGallery: React.FunctionComponent<{
         const {onToggleSelected, images, selected, title} = item;
 
         let thumbnail: Image | null = selectThumbnail(images, {
-          targetDimensions: thumbnailTargetDimensions,
+          targetDimensions: smallThumbnailTargetDimensions,
         });
         let thumbnailSrc: string;
         if (thumbnail) {
           thumbnailSrc = thumbnail.src ?? thumbnail.uri;
         } else {
-          thumbnailSrc = Image.placeholderSrc(thumbnailTargetDimensions);
+          thumbnailSrc = Image.placeholderSrc(smallThumbnailTargetDimensions);
         }
 
         return (
@@ -217,8 +231,8 @@ const ItemsGallery: React.FunctionComponent<{
                   className="figure-img rounded"
                   src={thumbnailSrc}
                   style={{
-                    height: thumbnailTargetDimensions.height,
-                    width: thumbnailTargetDimensions.width,
+                    height: smallThumbnailTargetDimensions.height,
+                    width: smallThumbnailTargetDimensions.width,
                   }}
                 />
               </a>

@@ -1,10 +1,11 @@
 import * as React from "react";
 import {useCallback, useEffect, useState} from "react";
 import {Image, ImageDimensions} from "@paradicms/models";
-import {Carousel, CarouselControl, CarouselItem} from "reactstrap";
+import {Carousel, CarouselItem} from "reactstrap";
 import ImageZoom from "react-medium-image-zoom";
-import {thumbnailTargetDimensions as thumbnailTargetDimensionsDefault} from "./thumbnailTargetDimensions";
+import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
 import {RightsParagraph} from "./RightsParagraph";
+import {FontAwesomeCarouselControl} from "./FontAwesomeCarouselControl";
 
 export interface ImagesCarouselProps {
   hideImageRights?: boolean;
@@ -22,7 +23,7 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
   const originalImages = images.filter(image => image.isOriginal);
 
   const thumbnailTargetDimensions =
-    thumbnailTargetDimensionsInput ?? thumbnailTargetDimensionsDefault;
+    thumbnailTargetDimensionsInput ?? smallThumbnailTargetDimensions;
 
   const renderOriginalImage = (originalImage: Image) => {
     const originalImageSrc = originalImage.src;
@@ -65,7 +66,7 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
             }}
           />
         </div>
-        {!hideImageRights && originalImage && originalImage.rights ? (
+        {!hideImageRights && originalImage?.rights?.requiresAttribution ? (
           <div className="mt-2">
             <RightsParagraph
               material="Image"
@@ -141,12 +142,13 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
           </CarouselItem>
         );
       })}
-      <CarouselControl
+      <FontAwesomeCarouselControl
+        className="text-primary"
         direction="prev"
         directionText="Previous"
         onClickHandler={onClickPrevious}
       />
-      <CarouselControl
+      <FontAwesomeCarouselControl
         direction="next"
         directionText="Next"
         onClickHandler={onClickNext}

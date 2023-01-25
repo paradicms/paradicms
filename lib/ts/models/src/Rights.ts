@@ -67,6 +67,14 @@ export class Rights extends Mixin(Model, HasContributors, HasCreators) {
     });
   }
 
+  get requiresAttribution(): boolean {
+    const license = this.license;
+    if (license instanceof License && !license.requiresAttribution) {
+      return false;
+    }
+    return true;
+  }
+
   @Memoize()
   get statement(): RightsStatement | string | null {
     return this.findAndMapObject(dcterms.rights, term => {

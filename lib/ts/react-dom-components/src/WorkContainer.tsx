@@ -15,10 +15,11 @@ import {
 import * as React from "react";
 import {ComponentType, useMemo, useState} from "react";
 import {RightsParagraph} from "./RightsParagraph";
-import {AgentCard} from "./AgentCard";
 import {WorkLocationSummary} from "@paradicms/services";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
 import {ImagesCarousel} from "./ImagesCarousel";
+import {WorkAgentsCarousel} from "./WorkAgentsCarousel";
+import {largeThumbnailTargetDimensions} from "./largeThumbnailTargetDimensions";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "x-small",
@@ -50,15 +51,17 @@ export const WorkContainer: React.FunctionComponent<{
   for (const workAgent of work.agents) {
     if (
       !workAgents.find(
-        (uniqueWorkAgent) => uniqueWorkAgent.agent.uri === workAgent.agent.uri
+        uniqueWorkAgent => uniqueWorkAgent.agent.uri === workAgent.agent.uri
       )
     ) {
       workAgents.push(workAgent);
     }
   }
 
-  const [workImagesCarouselImage, setCurrentWorkImagesCarouselImage] =
-    useState<Image | null>(null);
+  const [
+    workImagesCarouselImage,
+    setCurrentWorkImagesCarouselImage,
+  ] = useState<Image | null>(null);
 
   const [activeLeftColTabIndex, setActiveLeftColTabIndex] = useState(0);
 
@@ -74,10 +77,10 @@ export const WorkContainer: React.FunctionComponent<{
               images={work.images}
               key={leftColTabs.length}
               onShowImage={setCurrentWorkImagesCarouselImage}
-              thumbnailTargetDimensions={{height: 600, width: 600}}
+              thumbnailTargetDimensions={largeThumbnailTargetDimensions}
             />
           </CardBody>
-          {workImagesCarouselImage && workImagesCarouselImage.rights ? (
+          {workImagesCarouselImage?.rights?.requiresAttribution ? (
             <CardFooter className="text-center">
               <RightsParagraph
                 material="Image"
@@ -94,18 +97,10 @@ export const WorkContainer: React.FunctionComponent<{
     leftColTabs.push({
       title: "People",
       content: (
-        <Container fluid key={leftColTabs.length}>
-          {workAgents.map((workAgent, workAgentIndex) => (
-            <Row
-              className={workAgentIndex > 0 ? "mt-4" : "mt-2"}
-              key={workAgentIndex}
-            >
-              <Col xs={12} className="p-0">
-                <AgentCard agent={workAgent.agent} role={workAgent.role} />
-              </Col>
-            </Row>
-          ))}
-        </Container>
+        <WorkAgentsCarousel
+          thumbnailTargetDimensions={largeThumbnailTargetDimensions}
+          workAgents={work.agents}
+        />
       ),
     });
   }
@@ -126,7 +121,7 @@ export const WorkContainer: React.FunctionComponent<{
     leftColTabs.push({
       title: "Map",
       content: React.createElement(workLocationsMapComponent, {
-        workLocations: work.locations.map((workLocation) => ({
+        workLocations: work.locations.map(workLocation => ({
           location: workLocation.location,
           role: workLocation.role,
           title: workLocation.title,
@@ -144,7 +139,7 @@ export const WorkContainer: React.FunctionComponent<{
     leftCol = leftColTabs[0].content;
   } else if (leftColTabs.length > 1) {
     leftCol = (
-      <>
+      <div className="h-100">
         <Nav tabs>
           {leftColTabs.map((navTab, navTabIndex) => (
             <NavItem key={navTabIndex}>
@@ -159,14 +154,21 @@ export const WorkContainer: React.FunctionComponent<{
             </NavItem>
           ))}
         </Nav>
-        <TabContent activeTab={activeLeftColTabIndex.toString()}>
+        <TabContent
+          activeTab={activeLeftColTabIndex.toString()}
+          className="h-100"
+        >
           {leftColTabs.map((navTab, navTabIndex) => (
-            <TabPane key={navTabIndex} tabId={navTabIndex.toString()}>
+            <TabPane
+              className="h-100"
+              key={navTabIndex}
+              tabId={navTabIndex.toString()}
+            >
               <div className="mt-2">{navTab.content}</div>
             </TabPane>
           ))}
         </TabContent>
-      </>
+      </div>
     );
   }
 
@@ -194,7 +196,10 @@ export const WorkContainer: React.FunctionComponent<{
             sm={12}
             lg={rightCol ? 8 : 12}
             xl={rightCol ? 6 : 12}
-            style={{minHeight: 600, minWidth: 600}}
+            style={{
+              minHeight: largeThumbnailTargetDimensions.height,
+              minWidth: largeThumbnailTargetDimensions.width,
+            }}
           >
             {leftCol}
           </Col>
@@ -209,7 +214,7 @@ export const WorkContainer: React.FunctionComponent<{
           {rightCol}
         </Col>
       </Row>
-      {workAbstract && workAbstractRights ? (
+      {workAbstract && workAbstractRights?.requiresAttribution ? (
         <Row className="mt-2">
           <Col style={{textAlign: "center"}} xs={12}>
             <RightsParagraph

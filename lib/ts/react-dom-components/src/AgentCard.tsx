@@ -1,16 +1,22 @@
-import {Agent, Image} from "@paradicms/models";
+import {Agent, Image, ImageDimensions} from "@paradicms/models";
 import {Card, CardBody, CardFooter, CardHeader} from "reactstrap";
-import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
 import {RightsParagraph} from "./RightsParagraph";
 import * as React from "react";
 import {getNamedModelLinks} from "./getNamedModelLinks";
+import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
 
 export const AgentCard: React.FunctionComponent<{
   agent: Agent;
   role?: string;
-}> = ({agent, role}) => {
+  thumbnailTargetDimensions?: ImageDimensions;
+}> = ({
+  agent,
+  role,
+  thumbnailTargetDimensions: optionalThumbnailTargetDimensions,
+}) => {
   const agentLinks = getNamedModelLinks(agent);
-
+  const thumbnailTargetDimensions =
+    optionalThumbnailTargetDimensions ?? smallThumbnailTargetDimensions;
   const thumbnail = agent.thumbnail({
     targetDimensions: thumbnailTargetDimensions,
   });
@@ -37,7 +43,7 @@ export const AgentCard: React.FunctionComponent<{
           title={agent.name}
         />
       </CardBody>
-      {thumbnail?.rights ? (
+      {thumbnail?.rights?.requiresAttribution ? (
         <CardFooter>
           <RightsParagraph
             material="Image"

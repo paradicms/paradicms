@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useCallback, useMemo, useState} from "react";
 import {Image} from "@paradicms/models";
-import {thumbnailTargetDimensions} from "./thumbnailTargetDimensions";
+import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
 import classNames from "classnames";
 import {
   Accordion,
@@ -36,7 +36,7 @@ const ValueFacetValueCard = <T extends JsonPrimitiveType>(
 
   const thumbnailSrc = value.thumbnail
     ? value.thumbnail.src
-    : Image.placeholderSrc(thumbnailTargetDimensions);
+    : Image.placeholderSrc(smallThumbnailTargetDimensions);
 
   const onToggle = useCallback(() => {
     if (filterState.includesValue(value.value)) {
@@ -88,10 +88,10 @@ const ValueFacetValueCard = <T extends JsonPrimitiveType>(
         <CardImg
           src={thumbnailSrc}
           style={{
-            height: thumbnailTargetDimensions.height,
+            height: smallThumbnailTargetDimensions.height,
             marginBottom: "20px",
             marginTop: "20px",
-            width: thumbnailTargetDimensions.width,
+            width: smallThumbnailTargetDimensions.width,
           }}
           title={value.label ?? value.value.toString()}
         />

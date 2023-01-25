@@ -1,4 +1,4 @@
-import {License, Rights} from "@paradicms/models";
+import {Rights} from "@paradicms/models";
 import * as React from "react";
 import {useMemo} from "react";
 import {RightsStatementLink} from "./RightsStatementLink";
@@ -9,12 +9,11 @@ export const RightsParagraph: React.FunctionComponent<{
   rights: Rights;
   style?: React.CSSProperties;
 }> = ({material, rights, style}) => {
-  const rightsElements: React.ReactElement[] = useMemo(() => {
-    const license = rights.license;
-    if (license instanceof License && !license.requiresAttribution) {
-      return [];
-    }
+  if (!rights.requiresAttribution) {
+    return null;
+  }
 
+  const rightsElements: React.ReactElement[] = useMemo(() => {
     const result: React.ReactElement[] = [];
 
     const pushRightsElement = (rightsElement: React.ReactNode) => {
@@ -54,10 +53,10 @@ export const RightsParagraph: React.FunctionComponent<{
       );
     }
 
-    if (license) {
+    if (rights.license) {
       pushRightsElement(
         <span>
-          <i>License</i>: {<LicenseLink license={license} />}
+          <i>License</i>: {<LicenseLink license={rights.license} />}
         </span>
       );
     }
