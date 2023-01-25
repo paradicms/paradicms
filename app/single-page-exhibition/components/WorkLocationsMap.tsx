@@ -1,8 +1,6 @@
 import * as React from "react";
 import {WorkLocationSummary} from "@paradicms/services";
 import {MapContainer, Marker, TileLayer, Tooltip} from "react-leaflet";
-import {useRouter} from "next/router";
-import {Hrefs} from "../lib/Hrefs";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {faLightbulb} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -23,8 +21,6 @@ export const WorkLocationsMap: React.FunctionComponent<{
     return null;
   }
 
-  const router = useRouter();
-
   return (
     <MapContainer
       center={[workLocations[0].location.lat, workLocations[0].location.long]}
@@ -37,9 +33,9 @@ export const WorkLocationsMap: React.FunctionComponent<{
       />
       {workLocations.map((workLocation, workLocationIndex) => (
         <Marker
-          eventHandlers={{
-            click: () => router.push(Hrefs.work(workLocation.work.uri)),
-          }}
+          // eventHandlers={{
+          //   click: () => router.push(Hrefs.work(workLocation.work.uri)),
+          // }}
           key={workLocationIndex}
           position={[workLocation.location.lat, workLocation.location.long]}
         >
