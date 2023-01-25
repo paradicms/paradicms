@@ -3,7 +3,7 @@ import {Card, CardBody, CardFooter, CardHeader} from "reactstrap";
 import {RightsParagraph} from "./RightsParagraph";
 import * as React from "react";
 import {getNamedModelLinks} from "./getNamedModelLinks";
-import {smallThumbnailTargetDimensions as thumbnailTargetDimensionsDefault} from "./smallThumbnailTargetDimensions";
+import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
 
 export const AgentCard: React.FunctionComponent<{
   agent: Agent;
@@ -16,7 +16,7 @@ export const AgentCard: React.FunctionComponent<{
 }) => {
   const agentLinks = getNamedModelLinks(agent);
   const thumbnailTargetDimensions =
-    optionalThumbnailTargetDimensions ?? thumbnailTargetDimensionsDefault;
+    optionalThumbnailTargetDimensions ?? smallThumbnailTargetDimensions;
   const thumbnail = agent.thumbnail({
     targetDimensions: thumbnailTargetDimensions,
   });

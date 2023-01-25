@@ -3,7 +3,7 @@ import {useCallback, useEffect, useState} from "react";
 import {Image, ImageDimensions} from "@paradicms/models";
 import {Carousel, CarouselItem} from "reactstrap";
 import ImageZoom from "react-medium-image-zoom";
-import {smallThumbnailTargetDimensions as thumbnailTargetDimensionsDefault} from "./smallThumbnailTargetDimensions";
+import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
 import {RightsParagraph} from "./RightsParagraph";
 import {FontAwesomeCarouselControl} from "./FontAwesomeCarouselControl";
 
@@ -23,7 +23,7 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
   const originalImages = images.filter(image => image.isOriginal);
 
   const thumbnailTargetDimensions =
-    thumbnailTargetDimensionsInput ?? thumbnailTargetDimensionsDefault;
+    thumbnailTargetDimensionsInput ?? smallThumbnailTargetDimensions;
 
   const renderOriginalImage = (originalImage: Image) => {
     const originalImageSrc = originalImage.src;

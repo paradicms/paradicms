@@ -2,9 +2,18 @@ import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "components/Layout";
 import {ModelSet, ModelSubsetter} from "@paradicms/models";
-import {decodeFileName, encodeFileName, readConfigurationFile, readModelSetFile,} from "@paradicms/next";
+import {
+  decodeFileName,
+  encodeFileName,
+  readConfigurationFile,
+  readModelSetFile,
+} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {getNamedModelLinks, thumbnailTargetDimensions, WorkContainer,} from "@paradicms/react-dom-components";
+import {
+  getNamedModelLinks,
+  smallThumbnailTargetDimensions,
+  WorkContainer,
+} from "@paradicms/react-dom-components";
 import * as fs from "fs";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
@@ -95,7 +104,7 @@ export const getStaticProps: GetStaticProps = async ({
       })
         .workModelSet(completeModelSet.workByUri(workUri), {
           agents: {
-            thumbnail: {targetDimensions: thumbnailTargetDimensions},
+            thumbnail: {targetDimensions: smallThumbnailTargetDimensions},
           },
           allImages: true,
           collections: {},

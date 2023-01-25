@@ -2,11 +2,19 @@ import * as React from "react";
 import {useCallback, useMemo} from "react";
 import {Layout} from "components/Layout";
 import {ModelSet, ModelSubsetter} from "@paradicms/models";
-import {decodeFileName, encodeFileName, readConfigurationFile, readModelSetFile,} from "@paradicms/next";
+import {
+  decodeFileName,
+  encodeFileName,
+  readConfigurationFile,
+  readModelSetFile,
+} from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
-import {thumbnailTargetDimensions, WorkContainer} from "@paradicms/react-dom-components";
+import {
+  smallThumbnailTargetDimensions,
+  WorkContainer,
+} from "@paradicms/react-dom-components";
 import Hammer from "react-hammerjs";
 import {useRouter} from "next/router";
 import dynamic from "next/dynamic";
@@ -175,7 +183,7 @@ export const getStaticProps: GetStaticProps = async ({
           workUris.map(workUri => completeModelSet.workByUri(workUri)),
           {
             agents: {
-              thumbnail: {targetDimensions: thumbnailTargetDimensions},
+              thumbnail: {targetDimensions: smallThumbnailTargetDimensions},
             },
             allImages: true,
             collections: {},
