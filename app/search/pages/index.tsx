@@ -70,9 +70,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   );
 
   const {onSearch, ...workSearchQueryParams} = useWorkSearchQueryParams({
-    defaultWorkQueryFilters: getDefaultWorkQueryFilters(
-      configuration.workProperties
-    ),
+    filters: getDefaultWorkQueryFilters(configuration.workProperties),
   });
 
   return (
