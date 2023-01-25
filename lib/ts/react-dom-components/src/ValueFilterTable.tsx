@@ -2,7 +2,11 @@ import * as React from "react";
 import {useCallback, useMemo} from "react";
 import DataTable, {TableColumn} from "react-data-table-component";
 import {ValueFacet} from "@paradicms/facets";
-import {JsonPrimitiveType, ValueFilter, ValueFilterState,} from "@paradicms/filters";
+import {
+  JsonPrimitiveType,
+  ValueFilter,
+  ValueFilterState,
+} from "@paradicms/filters";
 
 type DataTableRow<T extends JsonPrimitiveType> = {
   count: number;
@@ -24,15 +28,12 @@ export const ValueFilterTable = <T extends JsonPrimitiveType>(
   // @ts-ignore
   const {facet, filter, onChange} = props;
 
-  const state = useMemo(
-    () => {
-      return new ValueFilterState({
-        filter,
-        valueUniverse: facet.values.map(value => value.value),
-      })
-    },
-    [facet, filter]
-  );
+  const state = useMemo(() => {
+    return new ValueFilterState({
+      filter,
+      valueUniverse: facet.values.map(value => value.value),
+    });
+  }, [facet, filter]);
 
   const dataTableColumns = useMemo((): TableColumn<DataTableRow<T>>[] => {
     return [
@@ -97,7 +98,9 @@ export const ValueFilterTable = <T extends JsonPrimitiveType>(
 
       const newStateSnapshot = state.snapshot;
 
-      if (JSON.stringify(oldStateSnapshot) !== JSON.stringify(newStateSnapshot)) {
+      if (
+        JSON.stringify(oldStateSnapshot) !== JSON.stringify(newStateSnapshot)
+      ) {
         onChange(newStateSnapshot);
       }
       // } else {
@@ -111,6 +114,7 @@ export const ValueFilterTable = <T extends JsonPrimitiveType>(
     <DataTable
       columns={dataTableColumns}
       data={dataTableRows}
+      dense={true}
       noContextMenu={true}
       noHeader={true}
       selectableRows={true}

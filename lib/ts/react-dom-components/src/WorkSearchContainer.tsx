@@ -318,80 +318,75 @@ export const WorkSearchContainer: React.FunctionComponent<{
   }
 
   return (
-    <Container fluid>
-      {getWorksResult.totalWorksCount > 0 ? (
-        <>
-          <Row>
-            <Col className="d-flex justify-content-between" xs={12}>
-              <h4>
-                <span>{getWorksResult.totalWorksCount}</span>&nbsp;
+    <Container className="px-0" fluid>
+      <>
+        <Row>
+          <Col className="d-flex justify-content-between" xs={12}>
+            <h6 className="mb-0">
+              <span>{getWorksResult.totalWorksCount}</span>&nbsp;
+              <span>
+                {getWorksResult.totalWorksCount === 1 ? "work" : "works"}
+              </span>
+              &nbsp;
+              {workQuery.text ? (
                 <span>
-                  {getWorksResult.totalWorksCount === 1 ? "work" : "works"}
+                  matching <i>{workQuery.text}</i>
                 </span>
-                &nbsp;
-                {workQuery.text ? (
-                  <span>
-                    matching <i>{workQuery.text}</i>
-                  </span>
-                ) : (
-                  <span>matched</span>
-                )}
-              </h4>
-              {workQuery.filters.length > 0 ? (
-                <div>
-                  <FiltersBadges
-                    facets={getWorksResult.facets}
-                    filters={workQuery.filters}
-                    onChangeFilters={onChangeFilters}
-                  />
-                </div>
-              ) : null}
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <hr />
-            </Col>
-          </Row>
-        </>
-      ) : null}
-      <Row>
-        {filtersControls.length > 0 ? (
-          <Col xs="2">
-            <FiltersControlsAccordion filtersControls={filtersControls} />
+              ) : (
+                <span>matched</span>
+              )}
+            </h6>
+            {workQuery.filters.length > 0 ? (
+              <div>
+                <FiltersBadges
+                  facets={getWorksResult.facets}
+                  filters={workQuery.filters}
+                  onChangeFilters={onChangeFilters}
+                />
+              </div>
+            ) : null}
           </Col>
-        ) : null}
-        <Col xs={filtersControls.length > 0 ? 10 : 12}>
-          {tabs.length === 1 ? (
-            tabs[0].content
-          ) : (
-            <>
-              <Nav tabs>
-                {tabs.map(tab => (
-                  <NavItem key={tab.key}>
-                    <NavLink
-                      className={
-                        activeTabKey === tab.key ? "active" : undefined
-                      }
-                      onClick={() => setActiveTabKey(tab.key)}
-                      style={{cursor: "pointer", fontSize: "small"}}
-                    >
-                      {tab.title}
-                    </NavLink>
-                  </NavItem>
-                ))}
-              </Nav>
-              <TabContent activeTab={activeTabKey}>
-                {tabs.map(tab => (
-                  <TabPane key={tab.key} tabId={tab.key}>
-                    <div className="mt-2">{tab.content}</div>
-                  </TabPane>
-                ))}
-              </TabContent>
-            </>
-          )}
-        </Col>
-      </Row>
+        </Row>
+      </>
+      {getWorksResult.totalWorksCount > 0 ? (
+        <Row>
+          {filtersControls.length > 0 ? (
+            <Col xs={3}>
+              <FiltersControlsAccordion filtersControls={filtersControls} />
+            </Col>
+          ) : null}
+          <Col xs={filtersControls.length > 0 ? 9 : 12}>
+            {tabs.length === 1 ? (
+              tabs[0].content
+            ) : (
+              <>
+                <Nav tabs>
+                  {tabs.map(tab => (
+                    <NavItem key={tab.key}>
+                      <NavLink
+                        className={
+                          activeTabKey === tab.key ? "active" : undefined
+                        }
+                        onClick={() => setActiveTabKey(tab.key)}
+                        style={{cursor: "pointer", fontSize: "small"}}
+                      >
+                        {tab.title}
+                      </NavLink>
+                    </NavItem>
+                  ))}
+                </Nav>
+                <TabContent activeTab={activeTabKey}>
+                  {tabs.map(tab => (
+                    <TabPane key={tab.key} tabId={tab.key}>
+                      <div className="mt-2">{tab.content}</div>
+                    </TabPane>
+                  ))}
+                </TabContent>
+              </>
+            )}
+          </Col>
+        </Row>
+      ) : null}
     </Container>
   );
 };

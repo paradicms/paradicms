@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useCallback, useState} from "react";
 import {ValueFilterTable} from "./ValueFilterTable";
-import {Button, Col, Container, Modal, ModalBody, ModalHeader, Row,} from "reactstrap";
+import {Col, Container, Modal, ModalBody, ModalHeader, Row} from "reactstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faImages} from "@fortawesome/free-solid-svg-icons";
 import {ValueFilterGallery} from "./ValueFilterGallery";
@@ -38,13 +38,13 @@ export const ValueFilterControl = <T extends JsonPrimitiveType>(
       <Container fluid>
         <Row className="mt-2">
           <Col className="d-flex justify-content-end" xs={12}>
-            <Button
-              color="primary"
+            <FontAwesomeIcon
+              className="text-primary"
+              icon={faImages}
               onClick={() => setGalleryModalOpen(true)}
+              style={{cursor: "pointer", maxHeight: "24px"}}
               title="gallery view"
-            >
-              <FontAwesomeIcon icon={faImages} />
-            </Button>
+            />
           </Col>
         </Row>
         <Row>

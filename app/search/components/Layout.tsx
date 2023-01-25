@@ -1,23 +1,35 @@
 import * as React from "react";
 import {Hrefs} from "lib/Hrefs";
-import {Card, CardBody, CardHeader, Col, Container, Nav, Navbar, NavbarBrand, NavItem, Row,} from "reactstrap";
-import {defaultBootstrapStylesheetHref, NavbarSearchForm,} from "@paradicms/react-dom-components";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  Container,
+  Nav,
+  Navbar,
+  NavbarBrand,
+  NavItem,
+  Row,
+} from "reactstrap";
+import {
+  defaultBootstrapStylesheetHref,
+  NavbarSearchForm,
+} from "@paradicms/react-dom-components";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";
 import {SearchAppConfiguration} from "../lib/SearchAppConfiguration";
 
-export const Layout: React.FunctionComponent<
-  React.PropsWithChildren<{
-    collection: {readonly title: string; readonly uri: string};
-    configuration: SearchAppConfiguration;
-    cardHeaderLinks?: React.ReactElement[];
-    cardTitle?: React.ReactNode;
-    className?: string;
-    documentTitle?: string;
-    onSearch?: (text: string) => void;
-  }>
-> = ({
+export const Layout: React.FunctionComponent<React.PropsWithChildren<{
+  collection: {readonly title: string; readonly uri: string};
+  configuration: SearchAppConfiguration;
+  cardHeaderLinks?: React.ReactElement[];
+  cardTitle?: React.ReactNode;
+  className?: string;
+  documentTitle?: string;
+  onSearch?: (text: string) => void;
+}>> = ({
   cardHeaderLinks,
   cardTitle,
   collection,

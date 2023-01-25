@@ -43,7 +43,7 @@ export const useWorkSearchQueryParams = (kwds?: {
       setWorkAgentsPage(undefined);
       setWorkEventsPage(undefined);
       setWorksPage(undefined);
-      setWorkQuery({...workQuery, text});
+      setWorkQuery({filters: [], text});
     },
     setWorkAgentsPage,
     setWorkEventsPage,
