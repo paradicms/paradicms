@@ -70,7 +70,8 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
             ></Col>
           </Row>
         ) : null}
-        {collectionAbstract instanceof Text && collectionAbstract.rights ? (
+        {collectionAbstract instanceof Text &&
+        collectionAbstract.rights?.requiresAttribution ? (
           <Row className="mt-2">
             <Col className="text-center" xs={12}>
               <RightsParagraph
@@ -86,7 +87,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
 
     for (const work of collection.works) {
       pages.push(
-        <Container fluid>
+        <Container fluid style={{minHeight: "90vh"}}>
           <Row>
             <Col className="text-center" xs={12}>
               <h2>{work.title}</h2>

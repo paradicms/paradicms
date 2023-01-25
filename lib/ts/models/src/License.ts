@@ -11,7 +11,7 @@ export class License extends NamedModel {
     );
   }
 
-  get requiresAttribution() {
+  get requiresAttribution(): boolean {
     switch (this.uri) {
       case "http://creativecommons.org/publicdomain/mark/1.0/":
       case "http://creativecommons.org/publicdomain/zero/1.0/":

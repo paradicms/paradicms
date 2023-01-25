@@ -1,8 +1,21 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {Button, Card, CardBody, CardHeader, Col, Container, Row, Table,} from "reactstrap";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  Container,
+  Row,
+  Table,
+} from "reactstrap";
 import {Image, selectThumbnail, Text} from "@paradicms/models";
-import {ImagesCarousel, RightsParagraph, thumbnailTargetDimensions,} from "@paradicms/react-dom-components";
+import {
+  ImagesCarousel,
+  RightsParagraph,
+  thumbnailTargetDimensions,
+} from "@paradicms/react-dom-components";
 import classnames from "classnames";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faInfoCircle, faTimes} from "@fortawesome/free-solid-svg-icons";
@@ -77,7 +90,8 @@ const ItemDetailCard: React.FunctionComponent<{
       <Row key={"row" + rows.length.toString()}>
         <Col className="p-0 text-center" xs={12}>
           <p>{item.description.toString()}</p>
-          {item.description instanceof Text && item.description.rights ? (
+          {item.description instanceof Text &&
+          item.description.rights?.requiresAttribution ? (
             <RightsParagraph
               material="Text"
               rights={item.description.rights}

@@ -43,7 +43,7 @@ export const AgentCard: React.FunctionComponent<{
           title={agent.name}
         />
       </CardBody>
-      {thumbnail?.rights ? (
+      {thumbnail?.rights?.requiresAttribution ? (
         <CardFooter>
           <RightsParagraph
             material="Image"

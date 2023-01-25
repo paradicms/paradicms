@@ -6,8 +6,8 @@ import {
 import {faEllipsisV} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {getWorkEventIcon} from "./getWorkEventIcon";
-import React = require("react");
 import {RightsParagraph} from "./RightsParagraph";
+import React = require("react");
 
 export const WorkEventsTimeline: React.FunctionComponent<{
   readonly page: number; // 0-based
@@ -32,7 +32,7 @@ export const WorkEventsTimeline: React.FunctionComponent<{
                 }}
               ></div>
               {workEvent.abstract instanceof Text &&
-              workEvent.abstract.rights ? (
+              workEvent.abstract.rights?.requiresAttribution ? (
                 <RightsParagraph
                   material="Text"
                   rights={workEvent.abstract.rights}

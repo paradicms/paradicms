@@ -55,7 +55,7 @@ export const WorkCard: React.FunctionComponent<{
             title={work.title}
           />
         </CardBody>
-        {thumbnail && thumbnail.rights ? (
+        {thumbnail && thumbnail.rights?.requiresAttribution ? (
           <CardFooter>
             <RightsParagraph
               material="Image"
@@ -75,7 +75,8 @@ export const WorkCard: React.FunctionComponent<{
           <CardBody style={{fontSize: "small"}}>
             {work.abstract.toString()}
           </CardBody>
-          {work.abstract instanceof Text && work.abstract.rights ? (
+          {work.abstract instanceof Text &&
+          work.abstract.rights?.requiresAttribution ? (
             <CardFooter className="text-center">
               <RightsParagraph
                 material="Text"

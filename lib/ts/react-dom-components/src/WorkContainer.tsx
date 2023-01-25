@@ -80,7 +80,7 @@ export const WorkContainer: React.FunctionComponent<{
               thumbnailTargetDimensions={largeThumbnailTargetDimensions}
             />
           </CardBody>
-          {workImagesCarouselImage && workImagesCarouselImage.rights ? (
+          {workImagesCarouselImage?.rights?.requiresAttribution ? (
             <CardFooter className="text-center">
               <RightsParagraph
                 material="Image"
@@ -139,7 +139,7 @@ export const WorkContainer: React.FunctionComponent<{
     leftCol = leftColTabs[0].content;
   } else if (leftColTabs.length > 1) {
     leftCol = (
-      <>
+      <div className="h-100">
         <Nav tabs>
           {leftColTabs.map((navTab, navTabIndex) => (
             <NavItem key={navTabIndex}>
@@ -154,14 +154,21 @@ export const WorkContainer: React.FunctionComponent<{
             </NavItem>
           ))}
         </Nav>
-        <TabContent activeTab={activeLeftColTabIndex.toString()}>
+        <TabContent
+          activeTab={activeLeftColTabIndex.toString()}
+          className="h-100"
+        >
           {leftColTabs.map((navTab, navTabIndex) => (
-            <TabPane key={navTabIndex} tabId={navTabIndex.toString()}>
+            <TabPane
+              className="h-100"
+              key={navTabIndex}
+              tabId={navTabIndex.toString()}
+            >
               <div className="mt-2">{navTab.content}</div>
             </TabPane>
           ))}
         </TabContent>
-      </>
+      </div>
     );
   }
 
@@ -207,7 +214,7 @@ export const WorkContainer: React.FunctionComponent<{
           {rightCol}
         </Col>
       </Row>
-      {workAbstract && workAbstractRights ? (
+      {workAbstract && workAbstractRights?.requiresAttribution ? (
         <Row className="mt-2">
           <Col style={{textAlign: "center"}} xs={12}>
             <RightsParagraph
