@@ -52,42 +52,53 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
 
     const collectionAbstract = collection.abstract;
     pages.push(
-      <Container fluid>
-        <Row>
-          <Col className="text-center" xs={12}>
-            <h1>{collection.title}</h1>
-          </Col>
-        </Row>
-        {collectionAbstract ? (
+      <div
+        className="d-flex align-items-center justify-content-center"
+        style={{height: "100vh"}}
+      >
+        <Container fluid>
           <Row>
-            <Col
-              className="offset-lg-4 text-wrap"
-              lg={4}
-              xs={12}
-              dangerouslySetInnerHTML={{
-                __html: collectionAbstract.toString(),
-              }}
-            ></Col>
-          </Row>
-        ) : null}
-        {collectionAbstract instanceof Text &&
-        collectionAbstract.rights?.requiresAttribution ? (
-          <Row className="mt-2">
             <Col className="text-center" xs={12}>
-              <RightsParagraph
-                material="Text"
-                rights={collectionAbstract.rights}
-                style={{fontSize: "xx-small"}}
-              />
+              <h1>{collection.title}</h1>
             </Col>
           </Row>
-        ) : null}
-      </Container>
+          {collectionAbstract ? (
+            <Row>
+              <Col
+                className="offset-lg-4 text-wrap"
+                lg={4}
+                xs={12}
+                dangerouslySetInnerHTML={{
+                  __html: collectionAbstract.toString(),
+                }}
+              ></Col>
+            </Row>
+          ) : null}
+          {collectionAbstract instanceof Text &&
+          collectionAbstract.rights?.requiresAttribution ? (
+            <Row className="mt-2">
+              <Col className="text-center" xs={12}>
+                <RightsParagraph
+                  material="Text"
+                  rights={collectionAbstract.rights}
+                  style={{fontSize: "xx-small"}}
+                />
+              </Col>
+            </Row>
+          ) : null}
+        </Container>
+      </div>
     );
 
-    for (const work of collection.works) {
+    collection.works.forEach((work, workI) => {
       pages.push(
-        <Container fluid style={{minHeight: "90vh"}}>
+        <Container
+          fluid
+          style={{
+            marginBottom:
+              workI + 1 < collection.works.length ? "50vh" : undefined,
+          }}
+        >
           <Row>
             <Col className="text-center" xs={12}>
               <h2>{work.title}</h2>
@@ -103,7 +114,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
           </Row>
         </Container>
       );
-    }
+    });
 
     return pages;
   }, [modelSet]);
@@ -122,17 +133,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
         />
       </Head>
       {pages.map((page, pageI) => (
-        <div
-          className="d-flex"
-          id={"page-" + pageI}
-          key={pageI}
-          style={{
-            alignItems: "center",
-            height: "100vh",
-            maxHeight: "100vh",
-            width: "100%",
-          }}
-        >
+        <div id={"page-" + pageI} key={pageI}>
           {page}
         </div>
       ))}
