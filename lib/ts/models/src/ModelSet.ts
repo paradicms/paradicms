@@ -43,6 +43,24 @@ const eventClassesByRdfType = (() => {
   return result;
 })();
 
+const sortNamedModelsArray = <NamedModelT extends NamedModel>(
+  namedModels: readonly NamedModelT[]
+): readonly NamedModelT[] => {
+  const sortedNamedModels = namedModels.concat();
+  sortedNamedModels.sort((left, right) => left.uri.localeCompare(right.uri));
+  return sortedNamedModels;
+};
+
+const sortNamedModelsMultimap = <NamedModelT extends NamedModel>(namedModels: {
+  [index: string]: readonly NamedModelT[];
+}): {[index: string]: readonly NamedModelT[]} => {
+  const sortedNamedModels: {[index: string]: readonly NamedModelT[]} = {};
+  for (const key of Object.keys(namedModels)) {
+    sortedNamedModels[key] = sortNamedModelsArray(namedModels[key]);
+  }
+  return sortedNamedModels;
+};
+
 /**
  * Lazily indexes the contents of an immutable ModelSet to provide quick lookups and subsetting.
  *
@@ -406,7 +424,7 @@ export class ModelSet {
       }
     }, cms.Event);
 
-    this._workEvents = workEvents;
+    this._workEvents = sortNamedModelsArray(workEvents);
     this._workEventsByWorkUriIndex = workEventsByWorkUriIndex;
   }
 
@@ -437,8 +455,10 @@ export class ModelSet {
         ];
       }
     }, cms.Collection);
-    this._collections = collections;
-    this._collectionsByInstitutionUriIndex = collectionsByInstitutionUriIndex;
+    this._collections = sortNamedModelsArray(collections);
+    this._collectionsByInstitutionUriIndex = sortNamedModelsMultimap(
+      collectionsByInstitutionUriIndex
+    );
   }
 
   protected readImage(kwds: ModelParameters): Image {
@@ -473,9 +493,13 @@ export class ModelSet {
 
       this._imagesByUriIndex![image.uri] = image;
     }, cms.Image);
-    this._images = images;
-    this._imagesByDepictsUriIndex = imagesByDepictsUriIndex;
-    this._imagesByOriginalImageUriIndex = imagesByOriginalImageUriIndex;
+    this._images = sortNamedModelsArray(images);
+    this._imagesByDepictsUriIndex = sortNamedModelsMultimap(
+      imagesByDepictsUriIndex
+    );
+    this._imagesByOriginalImageUriIndex = sortNamedModelsMultimap(
+      imagesByOriginalImageUriIndex
+    );
   }
 
   protected readInstitution(kwds: ModelParameters): Institution {
@@ -490,7 +514,7 @@ export class ModelSet {
       institutions.push(institution);
       this._institutionsByUriIndex![institution.uri] = institution;
     }, cms.Institution);
-    this._institutions = institutions;
+    this._institutions = sortNamedModelsArray(institutions);
   }
 
   protected readLicense(kwds: ModelParameters): License {
@@ -505,7 +529,7 @@ export class ModelSet {
       licenses.push(license);
       this._licensesByUriIndex![license.uri] = license;
     }, cms.License);
-    this._licenses = licenses;
+    this._licenses = sortNamedModelsArray(licenses);
   }
 
   protected readModels(
@@ -572,8 +596,10 @@ export class ModelSet {
 
       this._namedValuesByUriIndex![namedValue.uri] = namedValue;
     }, cms.NamedValue);
-    this._namedValues = namedValues;
-    this._namedValuesByPropertyUriIndex = namedValuesByPropertyUriIndex;
+    this._namedValues = sortNamedModelsArray(namedValues);
+    this._namedValuesByPropertyUriIndex = sortNamedModelsMultimap(
+      namedValuesByPropertyUriIndex
+    );
   }
 
   protected readOrganization(kwds: ModelParameters): Organization {
@@ -588,7 +614,7 @@ export class ModelSet {
       organizations.push(organization);
       this._organizationsByUriIndex![organization.uri] = organization;
     }, cms.Organization);
-    this._organizations = organizations;
+    this._organizations = sortNamedModelsArray(organizations);
   }
 
   private readPeople() {
@@ -599,7 +625,7 @@ export class ModelSet {
       people.push(person);
       this._peopleByUriIndex![person.uri] = person;
     }, cms.Person);
-    this._people = people;
+    this._people = sortNamedModelsArray(people);
   }
 
   private readPerson(kwds: ModelParameters): Person {
@@ -618,7 +644,7 @@ export class ModelSet {
       rightsStatements.push(rightsStatement);
       this._rightsStatementsByUriIndex![rightsStatement.uri] = rightsStatement;
     }, cms.RightsStatement);
-    this._rightsStatements = rightsStatements;
+    this._rightsStatements = sortNamedModelsArray(rightsStatements);
   }
 
   protected readWork(kwds: ModelParameters): Work {
@@ -663,10 +689,14 @@ export class ModelSet {
 
       this._worksByUriIndex![work.uri] = work;
     }, cms.Work);
-    this._works = works;
-    this._worksByAgentUriIndex = worksByAgentUriIndex;
-    this._worksByCollectionUriIndex = worksByCollectionUriIndex;
-    this._worksByInstitutionUriIndex = worksByInstitutionUriIndex;
+    this._works = sortNamedModelsArray(works);
+    this._worksByAgentUriIndex = sortNamedModelsMultimap(worksByAgentUriIndex);
+    this._worksByCollectionUriIndex = sortNamedModelsMultimap(
+      worksByCollectionUriIndex
+    );
+    this._worksByInstitutionUriIndex = sortNamedModelsMultimap(
+      worksByInstitutionUriIndex
+    );
   }
 
   get rightsStatements(): readonly RightsStatement[] {
