@@ -139,7 +139,7 @@ export const WorkContainer: React.FunctionComponent<{
     leftCol = leftColTabs[0].content;
   } else if (leftColTabs.length > 1) {
     leftCol = (
-      <div className="h-100">
+      <div>
         <Nav tabs>
           {leftColTabs.map((navTab, navTabIndex) => (
             <NavItem key={navTabIndex}>
@@ -154,16 +154,9 @@ export const WorkContainer: React.FunctionComponent<{
             </NavItem>
           ))}
         </Nav>
-        <TabContent
-          activeTab={activeLeftColTabIndex.toString()}
-          className="h-100"
-        >
+        <TabContent activeTab={activeLeftColTabIndex.toString()}>
           {leftColTabs.map((navTab, navTabIndex) => (
-            <TabPane
-              className="h-100"
-              key={navTabIndex}
-              tabId={navTabIndex.toString()}
-            >
+            <TabPane key={navTabIndex} tabId={navTabIndex.toString()}>
               <div className="mt-2">{navTab.content}</div>
             </TabPane>
           ))}
@@ -191,16 +184,7 @@ export const WorkContainer: React.FunctionComponent<{
     <Container fluid>
       <Row>
         {leftCol ? (
-          <Col
-            xs={12}
-            sm={12}
-            lg={rightCol ? 8 : 12}
-            xl={rightCol ? 6 : 12}
-            style={{
-              minHeight: largeThumbnailTargetDimensions.height,
-              minWidth: largeThumbnailTargetDimensions.width,
-            }}
-          >
+          <Col xs={12} sm={12} lg={rightCol ? 8 : 12} xl={rightCol ? 6 : 12}>
             {leftCol}
           </Col>
         ) : null}
