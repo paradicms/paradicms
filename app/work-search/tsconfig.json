@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./work-search",
     "noEmit": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -12,12 +12,12 @@
     "skipLibCheck": true
   },
   "include": [
-    "next-env.d.ts",
+    "work-search/next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "work-search/node_modules"
   ],
-  "extends": "../../tsconfig.base.json"
+  "extends": "../tsconfig.base.json"
 }
