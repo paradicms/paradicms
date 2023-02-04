@@ -1,6 +1,6 @@
 {
   "name": "single-page-exhibition",
-  "description": "Single-page exhibition GUI for paradicms",
+  "description": "Single-page exhibition app for paradicms",
   "version": "1.0.0",
   "private": true,
   "author": "Minor Gordon",
