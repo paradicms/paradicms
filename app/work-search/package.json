@@ -1,6 +1,6 @@
 {
-  "name": "search",
-  "description": "Search GUI for paradicms",
+  "name": "work-search",
+  "description": "Work search app for paradicms",
   "version": "1.0.0",
   "private": true,
   "author": "Minor Gordon",
