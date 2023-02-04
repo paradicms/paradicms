@@ -2,8 +2,8 @@ name: Build and test SSG Python
 on:
   push:
     paths:
-      - ".github/workflows/ssg.yml"
-      - "ssg/**"
+      - ".github/workflows/lib-py-ssg.yml"
+      - "lib/py/ssg/**"
   workflow_dispatch:
 jobs:
   build:
@@ -22,11 +22,11 @@ jobs:
         id: cached-poetry-dependencies
         uses: actions/cache@v2
         with:
-          path: ssg/.venv
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('ssg/poetry.lock') }}
+          path: lib/py/ssg/.venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('lib/py/ssg/poetry.lock') }}
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: cd ssg && poetry install --no-interaction --no-root
-      - run: cd ssg && poetry run black --check paradicms_ssg
-      - run: cd ssg && poetry run flake8 paradicms_ssg
-      - run: cd ssg && poetry run mypy paradicms_ssg
+        run: cd lib/py/ssg && poetry install --no-interaction --no-root
+      - run: cd lib/py/ssg && poetry run black --check paradicms_ssg
+      - run: cd lib/py/ssg && poetry run flake8 paradicms_ssg
+      - run: cd lib/py/ssg && poetry run mypy paradicms_ssg

@@ -2,8 +2,8 @@ name: Build and test ETL
 on:
   push:
     paths:
-      - ".github/workflows/etl.yml"
-      - "etl/**"
+      - ".github/workflows/lib-py-etl.yml"
+      - "lib/py/etl/**"
   workflow_dispatch:
 jobs:
   etl:
@@ -22,21 +22,21 @@ jobs:
         id: cached-poetry-dependencies
         uses: actions/cache@v2
         with:
-          path: etl/.venv
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('etl/poetry.lock') }}-v2
+          path: lib/py/etl/.venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('lib/py/etl/poetry.lock') }}-v2
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: cd etl && poetry install --no-interaction --no-root
-      - run: cd etl && poetry run black --check paradicms_etl
-      - run: cd etl && poetry run flake8 paradicms_etl
-      - run: cd etl && poetry run mypy paradicms_etl
+        run: cd lib/py/etl && poetry install --no-interaction --no-root
+      - run: cd lib/py/etl && poetry run black --check paradicms_etl
+      - run: cd lib/py/etl && poetry run flake8 paradicms_etl
+      - run: cd lib/py/etl && poetry run mypy paradicms_etl
       - name: Run Python unit tests
         run: |
-          cd etl
+          cd lib/py/etl
           mkdir test-results
           poetry run pytest --junitxml=test-results/junit.xml
       - name: Publish unit test results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-          files: etl/test-results/*.xml
+          files: lib/py/etl/test-results/*.xml
