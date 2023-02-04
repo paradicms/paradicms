@@ -1,11 +1,11 @@
-FROM nikolaik/python-nodejs:python3.9-nodejs14-slim
+FROM nikolaik/python-nodejs:python3.11-nodejs18-slim
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY . /paradicms
 
-RUN cd /paradicms/etl && pip3 install -qqq .
-RUN cd /paradicms/ssg && pip3 install -qqq .
+RUN cd /paradicms/lib/py/etl && pip3 install -qqq .
+RUN cd /paradicms/lib/py/ssg && pip3 install -qqq .
 RUN cd /paradicms && yarn install && yarn build-lib
 
-RUN cd /paradicms && rm -fr etl ssg /root/.cache
+RUN cd /paradicms && rm -fr lib/py /root/.cache
