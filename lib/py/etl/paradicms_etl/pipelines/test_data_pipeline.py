@@ -528,7 +528,9 @@ class TestDataPipeline(Pipeline):
                 )
 
     def __init__(self, loader: Optional[Loader] = None, **kwds):
-        root_dir_path = Path(__file__).absolute().parent.parent.parent.parent.parent.parent
+        root_dir_path = (
+            Path(__file__).absolute().parent.parent.parent.parent.parent.parent
+        )
         if loader is None:
             loader = CompositeLoader(
                 loaders=(
