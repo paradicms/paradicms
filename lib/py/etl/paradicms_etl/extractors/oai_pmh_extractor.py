@@ -17,22 +17,30 @@ class OaiPmhExtractor:
     """
 
     def __init__(
-        self, *, endpoint_url: str, metadata_prefix: str, set_: Optional[str] = None
+        self,
+        *,
+        endpoint_url: str,
+        extracted_data_dir_path: Path,
+        metadata_prefix: str,
+        set_: Optional[str] = None
     ):
         self.__endpoint_url = endpoint_url
+        self.__extracted_data_dir_path = extracted_data_dir_path
         self.__metadata_prefix = metadata_prefix
         self.__set = set_
 
-    def __call__(self, *, extracted_data_dir_path: Path, force: bool, **kwds):
+    def __call__(self, *, force: bool, **kwds):
+        self.__extracted_data_dir_path.mkdir(parents=True, exist_ok=True)
+
         def record_identifier_file_path(record_identifier: str) -> Path:
-            return self._extracted_data_dir_path / (
+            return self.__extracted_data_dir_path / (
                 str(sanitize_filename(record_identifier)) + ".xml"
             )
 
         record_identifiers_file_path = (
-            extracted_data_dir_path / "record_identifiers.json"
+            self.__extracted_data_dir_path / "record_identifiers.json"
         )
-        if record_identifiers_file_path.exists:
+        if record_identifiers_file_path.exists():
             with open(record_identifiers_file_path) as record_identifiers_file:
                 record_identifiers = tuple(json.load(record_identifiers_file))
                 record_etrees = []

@@ -10,7 +10,7 @@ class OmekaClassicExtractor:
     Extractor for Omeka Classic (https://omeka.org/classic/) API endpoints.
     """
 
-    def __init__(self, api_key: str, endpoint_url: str):
+    def __init__(self, api_key: str, endpoint_url: str, extracted_data_dir_path: Path):
         from .yomeka.classic.omeka_classic_rest_api_client import (
             OmekaClassicRestApiClient,
         )
@@ -19,15 +19,17 @@ class OmekaClassicExtractor:
             api_key=api_key, endpoint_url=endpoint_url
         )
         self.__endpoint_url = endpoint_url
+        self.__extracted_data_dir_path = extracted_data_dir_path
 
-    def __call__(self, *, extracted_data_dir_path: Path, force: bool, **kwds):
-        collections_file_path = extracted_data_dir_path / (
+    def __call__(self, *, force: bool, **kwds):
+        self.__extracted_data_dir_path.mkdir(parents=True, exist_ok=True)
+        collections_file_path = self.__extracted_data_dir_path / (
             str(sanitize_filename(self.__endpoint_url + " collections")) + ".json"
         )
-        files_file_path = extracted_data_dir_path / (
+        files_file_path = self.__extracted_data_dir_path / (
             str(sanitize_filename(self.__endpoint_url + " files")) + ".json"
         )
-        items_file_path = extracted_data_dir_path / (
+        items_file_path = self.__extracted_data_dir_path / (
             str(sanitize_filename(self.__endpoint_url + " items")) + ".json"
         )
 

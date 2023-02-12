@@ -17,10 +17,10 @@ class Pipeline(ABC):
     def __init__(
         self,
         *,
-        data_dir_path: Path,
         extractor: Extractor,
         id: str,
         transformer: Transformer,
+        data_dir_path: Optional[Path] = None,
         loader: Optional[Loader] = None,
         validate_transform: bool = True,
         **kwds,
@@ -33,6 +33,7 @@ class Pipeline(ABC):
         :param transformer: transformer implementation
         """
 
+        assert data_dir_path is not None
         self.__data_dir_path = data_dir_path
         self.__extractor = extractor
         self.__id = id
@@ -76,7 +77,7 @@ class Pipeline(ABC):
         return self.__transform(self.__extract(force=force_extract))
 
     def __extract(self, *, force: bool = False) -> Optional[Dict[str, object]]:
-        return self.__extractor.extract(
+        return self.__extractor(
             extracted_data_dir_path=self.__extracted_data_dir_path,
             force=force,
             pipeline_id=self.__id,
@@ -110,7 +111,7 @@ class Pipeline(ABC):
         return self.__logger
 
     def __load(self, models: Iterable[Model]) -> Any:
-        return self.loader.load(
+        return self.__loader(
             flush=True,
             loaded_data_dir_path=self.__loaded_data_dir_path,
             models=models,
@@ -128,6 +129,10 @@ class Pipeline(ABC):
         loaded_data_dir_path = (self.__data_dir_path / self.__id / "loaded").absolute()
         loaded_data_dir_path.mkdir(parents=True, exist_ok=True)
         return loaded_data_dir_path
+
+    @property
+    def loader(self):
+        return self.__loader
 
     @classmethod
     def main(cls, args: Optional[Dict[str, object]] = None):
@@ -160,10 +165,6 @@ class Pipeline(ABC):
         force_extract = force or bool(args.get("force_extract", False))
 
         pipeline.extract_transform_load(force_extract=force_extract)
-
-    @property
-    def loader(self):
-        return self.__loader
 
     def __transform(self, extract_kwds: Optional[Dict[str, Any]]) -> Iterable[Model]:
         if extract_kwds is None:

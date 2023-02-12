@@ -15,10 +15,12 @@ class WikidataQidExtractor:
     Extractor that downloads a set of Wikidata concepts (identified by QIDs) in RDF.
     """
 
-    def __init__(self, qids: Tuple[str, ...]):
+    def __init__(self, extracted_data_dir_path: Path, qids: Tuple[str, ...]):
+        self.__extracted_data_dir_path = extracted_data_dir_path
         self.__qids = qids
 
-    def __call__(self, *, extracted_data_dir_path: Path, force: bool, **kwds):
+    def __call__(self, *, force: bool, **kwds):
+        self.__extracted_data_dir_path.mkdir(parents=True, exist_ok=True)
         rdf_file_paths = []
 
         # 20211003 Python thinks the Wikidata certificate is expired, so ignore it
@@ -28,7 +30,7 @@ class WikidataQidExtractor:
 
         for qid in self.__qids:
             file_name = f"{qid}.ttl"
-            file_path = extracted_data_dir_path / file_name
+            file_path = self.__extracted_data_dir_path / file_name
             if file_path.is_file() and not force:
                 rdf_file_paths.append(file_path)
                 logger.info("%s already downloaded, skipping", file_path)
