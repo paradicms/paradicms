@@ -1,5 +1,5 @@
-from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.extractors.omeka_classic_extractor import OmekaClassicExtractor
+from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.transformers.omeka_classic_transformer import OmekaClassicTransformer
 
 
@@ -47,6 +47,10 @@ class OmekaClassicPipeline(Pipeline):
         arg_parser.add_argument(
             "--endpoint-url", help="Omeka API endpoint URL", required=True
         )
+        arg_parser.add_argument("--institution-image-uri")
+        arg_parser.add_argument("--institution-name", required=True)
+        arg_parser.add_argument("--institution-rights")
+        arg_parser.add_argument("--institution-uri", required=True)
         arg_parser.add_argument(
             "--pipeline-id",
             help="unique identifier for this pipeline, used to isolate its cache",
