@@ -4,10 +4,11 @@ from pathlib import Path
 import pytest
 from pathvalidate import sanitize_filename
 
+from
 from paradicms_etl.extractors.markdown_directory_extractor import (
-    MarkdownDirectoryExtractor,
+    markdown_directory_extractor,
 )
-from paradicms_etl.loaders.nop_loader import NopLoader
+from paradicms_etl.loaders.nop_loader import nop_loader
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.person import Person
 from paradicms_etl.pipeline import Pipeline
@@ -23,12 +24,10 @@ class __MarkdownDirectoryPipeline(Pipeline):
     def __init__(self, id: str, markdown_directory_path: Path):
         Pipeline.__init__(
             self,
-            extractor=MarkdownDirectoryExtractor(
-                extracted_data_dir_path=markdown_directory_path, pipeline_id=id
-            ),
+            extractor=markdown_directory_extractor,
             id=id,
-            transformer=MarkdownDirectoryTransformer(pipeline_id=id),
-            loader=NopLoader(data_dir_path=markdown_directory_path, pipeline_id=id),
+            transformer=MarkdownDirectoryTransformer(),
+            loader=nop_loader,
         )
 
 

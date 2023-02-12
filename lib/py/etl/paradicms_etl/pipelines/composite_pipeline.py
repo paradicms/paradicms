@@ -2,11 +2,11 @@ from typing import List, Optional, Tuple
 
 from configargparse import ArgParser
 
-from paradicms_etl.extractors.nop_extractor import NopExtractor
+from paradicms_etl.extractors.nop_extractor import nop_extractor
 from paradicms_etl.loader import Loader
 from paradicms_etl.pipeline import Pipeline
-from paradicms_etl.transformers.nop_transformer import NopTransformer
-from paradicms_etl.transformers.validation_transformer import ValidationTransformer
+from paradicms_etl.transformers.nop_transformer import nop_transformer
+from paradicms_etl.transformers.validation_transformer import validation_transformer
 
 
 class CompositePipeline(Pipeline):
@@ -27,10 +27,10 @@ class CompositePipeline(Pipeline):
     ):
         Pipeline.__init__(
             self,
-            extractor=NopExtractor(pipeline_id=id, **kwds),
+            extractor=nop_extractor,
             id=id,
             loader=loader,
-            transformer=NopTransformer(pipeline_id=id, **kwds),
+            transformer=nop_transformer,
             **kwds,
         )
 
@@ -71,14 +71,11 @@ class CompositePipeline(Pipeline):
             for pipeline in self.__pipelines:
                 yield from pipeline.extract_transform(**kwds)
 
-        transform_result = extract_transform()
+        models = extract_transform()
         if self.__validate_transform:
-            transform_result = ValidationTransformer(pipeline_id=self.id).transform(
-                transform_result
-            )
+            models = validation_transformer(models)
 
-        self.loader.load(transform_result)
-        self.loader.flush()
+        self.loader.load(flush=True, models=models)
 
     @property
     def _pipelines(self) -> Tuple[Pipeline, ...]:

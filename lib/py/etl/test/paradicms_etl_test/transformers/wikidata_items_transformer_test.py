@@ -18,18 +18,13 @@ from paradicms_etl.transformers.wikidata_items_transformer import (
 
 @pytest.mark.skipif("CI" in os.environ, reason="don't connect to Wikidata in CI")
 def test_transform(tmpdir):
-    graph = WikidataQidExtractor(
-        data_dir_path=Path(tmpdir),
-        pipeline_id="test",
-        qids=(
-            "Q160534",
-            "Q698487",
-        ),
-    ).extract(force=False)[
+    graph = WikidataQidExtractor(qids=("Q160534", "Q698487",),)(
+        extracted_data_dir_path=Path(tmpdir), force=False, pipeline_id="test"
+    )[
         "graph"
     ]  # Jack Kerouac, The Kiss - Gustav Klimt
 
-    sut = WikidataItemsTransformer(pipeline_id="test")
+    sut = WikidataItemsTransformer()
     models = tuple(sut.transform(graph=graph))
     assert len(models) == 8
 

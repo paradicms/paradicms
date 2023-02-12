@@ -6,6 +6,11 @@ from paradicms_etl.model import Model
 
 class Loader(Protocol):
     def __call__(
-        self, *, flush: bool, loaded_data_dir_path: Path, models: Iterable[Model]
+        self,
+        *,
+        flush: bool,
+        loaded_data_dir_path: Path,
+        models: Iterable[Model],
+        pipeline_id: str
     ) -> Any:
         pass

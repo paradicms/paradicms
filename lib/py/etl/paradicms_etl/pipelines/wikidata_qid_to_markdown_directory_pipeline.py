@@ -4,9 +4,9 @@ from typing import List, Optional
 from configargparse import ArgParser
 from rdflib import URIRef
 
-from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.extractors.wikidata_qid_extractor import WikidataQidExtractor
 from paradicms_etl.loaders.markdown_directory_loader import MarkdownDirectoryLoader
+from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.transformers.markdown_directory_transformer import (
     MarkdownDirectoryTransformer,
 )
@@ -45,20 +45,14 @@ class WikidataQidToMarkdownDirectoryPipeline(Pipeline):
 
         Pipeline.__init__(
             self,
-            extractor=WikidataQidExtractor(
-                qids=tuple(qid), pipeline_id=pipeline_id, **kwds
-            ),
+            extractor=WikidataQidExtractor(qids=tuple(qid)),
             id=pipeline_id,
             loader=MarkdownDirectoryLoader(
-                loaded_data_dir_path=Path(markdown_directory_path),
-                pipeline_id=pipeline_id,
-                **kwds
+                loaded_data_dir_path=Path(markdown_directory_path)
             ),
             transformer=WikidataItemsTransformer(
                 collection_uri=URIRef(collection_uri),
                 institution_uri=URIRef(institution_uri),
-                pipeline_id=pipeline_id,
-                **kwds
             ),
             **kwds
         )

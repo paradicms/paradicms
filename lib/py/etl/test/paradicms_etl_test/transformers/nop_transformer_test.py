@@ -1,5 +1,5 @@
-from paradicms_etl.transformers.nop_transformer import NopTransformer
+from paradicms_etl.transformers.nop_transformer import nop_transformer
 
 
 def test_transform():
-    assert NopTransformer(pipeline_id="test").transform() == ()
+    assert nop_transformer() == ()

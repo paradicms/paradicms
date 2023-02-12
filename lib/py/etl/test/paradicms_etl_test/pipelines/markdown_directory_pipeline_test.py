@@ -1,10 +1,10 @@
 from pathlib import Path
 
-from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.extractors.markdown_directory_extractor import (
-    MarkdownDirectoryExtractor,
+    markdown_directory_extractor,
 )
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
+from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.transformers.markdown_directory_transformer import (
     MarkdownDirectoryTransformer,
 )
@@ -16,12 +16,11 @@ class __MarkdownDirectoryPipeline(Pipeline):
     def __init__(self, data_dir_path: Path):
         Pipeline.__init__(
             self,
-            extractor=MarkdownDirectoryExtractor(
-                data_dir_path=data_dir_path, pipeline_id=self.ID
-            ),
+            data_dir_path=data_dir_path,
+            extractor=markdown_directory_extractor,
             id=self.ID,
-            transformer=MarkdownDirectoryTransformer(pipeline_id=self.ID),
-            loader=RdfFileLoader(data_dir_path=data_dir_path, pipeline_id=self.ID),
+            transformer=MarkdownDirectoryTransformer(),
+            loader=RdfFileLoader(),
             validate_transform=False,
         )
 

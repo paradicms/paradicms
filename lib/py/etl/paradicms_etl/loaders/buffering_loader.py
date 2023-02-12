@@ -9,11 +9,11 @@ class BufferingLoader:
         self.__models = []
 
     @abstractmethod
-    def _flush(self, models: Tuple[Model, ...]):
+    def _flush(self, *, models: Tuple[Model, ...], pipeline_id: str):
         raise NotImplementedError
 
-    def __call__(self, *, flush: bool, models: Iterable[Model]):
+    def __call__(self, *, flush: bool, models: Iterable[Model], pipeline_id: str):
         self.__models.extend(models)
         if flush:
-            self._flush(tuple(models))
+            self._flush(models=tuple(models), pipeline_id=pipeline_id)
             self.__models = []

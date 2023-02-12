@@ -10,13 +10,14 @@ from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.model import Model
 from paradicms_etl.transformer import Transformer
-from paradicms_etl.transformers.validation_transformer import ValidationTransformer
+from paradicms_etl.transformers.validation_transformer import validation_transformer
 
 
 class Pipeline(ABC):
     def __init__(
         self,
         *,
+        data_dir_path: Path,
         extractor: Extractor,
         id: str,
         transformer: Transformer,
@@ -31,10 +32,12 @@ class Pipeline(ABC):
         :param loader: optional loader; if not specified, a default loader will be used
         :param transformer: transformer implementation
         """
+
+        self.__data_dir_path = data_dir_path
         self.__extractor = extractor
         self.__id = id
         if loader is None:
-            loader = RdfFileLoader(pipeline_id=id, **kwds)
+            loader = RdfFileLoader()
         self.__loader = loader
         self.__logger = logging.getLogger(self.__class__.__name__)
         self.__transformer = transformer
@@ -94,12 +97,37 @@ class Pipeline(ABC):
     def extractor(self):
         return self.__extractor
 
-    def __load(self, models: Iterable[Model]) -> Any:
-        return self.loader.load(flush=True, models=models)
+    @property
+    def id(self):
+        return self.__id
+
+    # @staticmethod
+    # def id_to_uri(id_: str) -> URIRef:
+    #     return URIRef("urn:paradicms_etl:pipeline:" + id_)
 
     @property
     def _logger(self):
         return self.__logger
+
+    def __load(self, models: Iterable[Model]) -> Any:
+        return self.loader.load(
+            flush=True,
+            loaded_data_dir_path=self.__loaded_data_dir_path,
+            models=models,
+            pipeline_id=self.__id,
+        )
+
+    @property
+    def __loaded_data_dir_path(self) -> Path:
+        """
+        Directory to use to store loaded data.
+        The directory is created on demand when this method is called.
+        A loader does not have to use this directory. It can load data into an external database, for example.
+        """
+
+        loaded_data_dir_path = (self.__data_dir_path / self.__id / "loaded").absolute()
+        loaded_data_dir_path.mkdir(parents=True, exist_ok=True)
+        return loaded_data_dir_path
 
     @classmethod
     def main(cls, args: Optional[Dict[str, object]] = None):
@@ -134,28 +162,6 @@ class Pipeline(ABC):
         pipeline.extract_transform_load(force_extract=force_extract)
 
     @property
-    def id(self):
-        return self.__id
-
-    # @staticmethod
-    # def id_to_uri(id_: str) -> URIRef:
-    #     return URIRef("urn:paradicms_etl:pipeline:" + id_)
-
-    @property
-    def __loaded_data_dir_path(self) -> Path:
-        """
-        Directory to use to store loaded data.
-        The directory is created on demand when this method is called.
-        A loader does not have to use this directory. It can load data into an external database, for example.
-        """
-
-        loaded_data_dir_path = (
-            self.__data_dir_path / self._pipeline_id / "loaded"
-        ).absolute()
-        loaded_data_dir_path.mkdir(parents=True, exist_ok=True)
-        return loaded_data_dir_path
-
-    @property
     def loader(self):
         return self.__loader
 
@@ -164,7 +170,7 @@ class Pipeline(ABC):
             extract_kwds = {}
         transform_result = self.transformer(**extract_kwds)
         if self.__validate_transform:
-            return ValidationTransformer(transform_result)
+            return validation_transformer(transform_result)
         else:
             return transform_result
 
