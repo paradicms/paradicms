@@ -10,7 +10,7 @@ from paradicms_etl.models.markdown_directory import MarkdownDirectory
 logger = logging.getLogger(__name__)
 
 
-def MarkdownDirectoryExtractor(*, extracted_data_dir_path: Path, **kwds):
+def markdown_directory_extractor(*, extracted_data_dir_path: Path, **kwds):
     """
     Extract entries from a directory with the structure:
     work/id1.md

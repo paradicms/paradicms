@@ -86,9 +86,8 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
         *,
         collection_uri: Optional[URIRef] = None,
         institution_uri: Optional[URIRef] = None,
-        **kwds,
     ):
-        _WikidataItemsTransformer.__init__(self, **kwds)
+        _WikidataItemsTransformer.__init__(self)
         self.__collection_uri = collection_uri
         self.__institution_uri = institution_uri
 

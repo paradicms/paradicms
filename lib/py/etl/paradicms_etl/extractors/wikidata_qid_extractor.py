@@ -1,23 +1,24 @@
+import logging
 import shutil
 import ssl
+from pathlib import Path
 from typing import Tuple
 from urllib.request import urlopen
 
 from rdflib import Graph
 
-from paradicms_etl.extractor import Extractor
+logger = logging.getLogger(__name__)
 
 
-class WikidataQidExtractor(Extractor):
+class WikidataQidExtractor:
     """
     Extractor that downloads a set of Wikidata concepts (identified by QIDs) in RDF.
     """
 
-    def __init__(self, qids: Tuple[str, ...], **kwds):
-        Extractor.__init__(self, **kwds)
+    def __init__(self, qids: Tuple[str, ...]):
         self.__qids = qids
 
-    def extract(self, *, force: bool):
+    def __call__(self, *, extracted_data_dir_path: Path, force: bool, **kwds):
         rdf_file_paths = []
 
         # 20211003 Python thinks the Wikidata certificate is expired, so ignore it
@@ -27,19 +28,19 @@ class WikidataQidExtractor(Extractor):
 
         for qid in self.__qids:
             file_name = f"{qid}.ttl"
-            file_path = self._extracted_data_dir_path / file_name
+            file_path = extracted_data_dir_path / file_name
             if file_path.is_file() and not force:
                 rdf_file_paths.append(file_path)
-                self._logger.info("%s already downloaded, skipping", file_path)
+                logger.info("%s already downloaded, skipping", file_path)
                 continue
 
             url = f"https://www.wikidata.org/entity/{file_name}"
-            self._logger.debug("downloading %s to %s", url, file_path)
+            logger.debug("downloading %s to %s", url, file_path)
             with urlopen(url, context=ssl_ctx) as response, open(
                 file_path, "wb"
             ) as file_:
                 shutil.copyfileobj(response, file_)
-            self._logger.info("downloaded %s to %s", url, file_path)
+            logger.info("downloaded %s to %s", url, file_path)
             rdf_file_paths.append(file_path)
 
         graph = Graph()

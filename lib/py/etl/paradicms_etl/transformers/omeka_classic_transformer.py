@@ -16,7 +16,6 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.work import Work
-from paradicms_etl.transformer import Transformer
 
 ElementTextTree = Dict[str, Dict[str, List[str]]]
 
@@ -25,7 +24,7 @@ def is_uri(value: str):
     return value.startswith("http://") or value.startswith("https://")
 
 
-class OmekaClassicTransformer(Transformer):
+class OmekaClassicTransformer:
     def __init__(
         self,
         *,
@@ -38,9 +37,7 @@ class OmekaClassicTransformer(Transformer):
         square_thumbnail_width_px: int,
         thumbnail_max_height_px: int,
         thumbnail_max_width_px: int,
-        **kwds
     ):
-        Transformer.__init__(self, **kwds)
         # Single _ so we can use getattr
         self._fullsize_max_height_px = fullsize_max_height_px
         self._fullsize_max_width_px = fullsize_max_width_px
@@ -55,7 +52,7 @@ class OmekaClassicTransformer(Transformer):
         self.__transform_item_timer = self._metrics_registry.timer("transform_item")
         self.__transform_file_timer = self._metrics_registry.timer("transform_file")
 
-    def transform(self, *, collections, endpoint_url, files, items):
+    def __call__(self, *, collections, endpoint_url, files, items):
         yield from CreativeCommonsLicenses.as_tuple()
         yield from RightsStatementsDotOrgRightsStatements.as_tuple()
 
@@ -298,7 +295,7 @@ class OmekaClassicTransformer(Transformer):
         collection_uris_by_id: Dict[int, URIRef],
         endpoint_url: str,
         institution_uri: URIRef,
-        item
+        item,
     ) -> Optional[Work]:
         if item["collection"] is None:
             return None

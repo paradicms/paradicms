@@ -28,14 +28,13 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_creation import WorkCreation
 from paradicms_etl.namespaces import CMS
-from paradicms_etl.transformer import Transformer
 from paradicms_etl.utils.dict_to_resource_transformer import DictToResourceTransformer
 from paradicms_etl.utils.markdown_to_resource_transformer import (
     MarkdownToResourceTransformer,
 )
 
 
-class MarkdownDirectoryTransformer(Transformer):
+class MarkdownDirectoryTransformer:
     """
     Transform a directory of Markdown files to a set of models.
 
@@ -62,14 +61,13 @@ class MarkdownDirectoryTransformer(Transformer):
 
     def __init__(
         self,
+        *,
         default_institution: Optional[Institution] = None,
         default_collection: Optional[Collection] = None,
         namespaces_by_prefix: Optional[
             Dict[str, Union[Type[DefinedNamespace], Namespace]]
         ] = None,
-        **kwds,
     ):
-        Transformer.__init__(self, **kwds)
         if default_institution is None and default_collection is not None:
             raise ValueError(
                 "default institution must be supplied if default collection is"
@@ -669,7 +667,7 @@ class MarkdownDirectoryTransformer(Transformer):
                         ),
                     )
 
-    def transform(self, markdown_directory: MarkdownDirectory):  # type: ignore
+    def __call__(self, *, markdown_directory: MarkdownDirectory):  # type: ignore
         yield_known_licenses = True
         yield_known_rights_statements = True
 

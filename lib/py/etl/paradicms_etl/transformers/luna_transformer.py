@@ -13,10 +13,9 @@ from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import VRA
-from paradicms_etl.transformer import Transformer
 
 
-class LunaTransformer(Transformer):
+class LunaTransformer:
     # __OBJECT_FIELD_PROPERTY_DEFINITIONS = {
     #     "Reproduction Record ID": None,
     #     "Work Class": None,
@@ -66,7 +65,7 @@ class LunaTransformer(Transformer):
             all_field_values.append(qualifier_field_values)
         yield from zip(*all_field_values)
 
-    def transform(self, base_url: str, search_results):  # type: ignore
+    def __call__(self, *, base_url: str, search_results):  # type: ignore
         institution = self._transform_institution(
             base_url=base_url, institution_name=search_results["institutionName"]
         )
