@@ -1,3 +1,5 @@
+import logging
+from pathlib import Path
 from typing import Dict, Optional, Union, Type, Any, Iterable
 
 import yaml
@@ -7,34 +9,31 @@ from rdflib.namespace import DefinedNamespace
 from rdflib.resource import Resource
 from stringcase import snakecase
 
-from paradicms_etl.loader import Loader
 from paradicms_etl.model import Model
 from paradicms_etl.utils.dict_to_resource_transformer import DictToResourceTransformer
 
+logger = logging.getLogger(__name__)
 
-class MarkdownDirectoryLoader(Loader):
+
+class MarkdownDirectoryLoader:
     def __init__(
         self,
         *,
         namespaces_by_prefix: Optional[
             Dict[str, Union[Type[DefinedNamespace], Namespace]]
         ] = None,
-        **kwds,
     ):
-        Loader.__init__(self, **kwds)
         if namespaces_by_prefix is None:
             namespaces_by_prefix = (
                 DictToResourceTransformer.NAMESPACES_BY_PREFIX_DEFAULT
             )
         self.__namespaces_by_prefix = namespaces_by_prefix.copy()
 
-    def load(self, *, models: Iterable[Model]):
+    def __call__(self, *, loaded_data_dir_path: Path, models: Iterable[Model]):
         for model in models:
             model_id = model.label
             if model_id is None:
-                self._logger.warning(
-                    f"model {getattr(model, 'uri', '<blank>')} has no label"
-                )
+                logger.warning(f"model {getattr(model, 'uri', '<blank>')} has no label")
                 continue
             model_type = snakecase(model.__class__.__name__)
             model_graph = Graph()
@@ -47,7 +46,7 @@ class MarkdownDirectoryLoader(Loader):
 
             md_front_matter = self.__transform_model_resource_to_dict(model_resource)
 
-            md_dir_path = self._loaded_data_dir_path / model_type
+            md_dir_path = loaded_data_dir_path / model_type
             md_dir_path.mkdir(parents=True, exist_ok=True)
 
             md_file_path = md_dir_path / (str(sanitize_filename(model_id)) + ".md")
@@ -74,7 +73,7 @@ class MarkdownDirectoryLoader(Loader):
                 if p_namespace is None or str(namespace) > len(str(p_namespace)):
                     p_prefix, p_namespace = prefix, namespace
             if p_prefix is None:
-                self._logger.warning(
+                logger.warning(
                     "(%s, %s, object) does not have an associated namespace prefix",
                     model_resource.identifier,
                     p,
@@ -87,9 +86,7 @@ class MarkdownDirectoryLoader(Loader):
                 if isinstance(md_o, Literal) or not isinstance(
                     md_o, (float, int, bool, str)
                 ):
-                    self._logger.warning(
-                        "unable to serialize non-scalar literal: %s", md_o
-                    )
+                    logger.warning("unable to serialize non-scalar literal: %s", md_o)
                     continue
             elif isinstance(o, Resource):
                 if isinstance(o.identifier, URIRef):

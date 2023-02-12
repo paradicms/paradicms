@@ -1,8 +1,9 @@
-from paradicms_etl.loader import Loader
+from typing import Iterable
+
+from paradicms_etl.model import Model
 
 
-class NopLoader(Loader):
-    def load(self, *, models):
-        # Iterate over models to exhaust the generator
-        for _ in models:
-            pass
+def NopLoader(*, models: Iterable[Model], **kwds):
+    # Iterate over models to exhaust the generator
+    for _ in models:
+        pass
