@@ -1,14 +1,14 @@
 import logging
 from abc import ABC
 from pathlib import Path
+from typing import Dict, Optional, Any, Iterable
 
 from configargparse import ArgParser
-from rdflib import URIRef
-from typing import Dict, Optional
 
 from paradicms_etl.extractor import Extractor
 from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
+from paradicms_etl.model import Model
 from paradicms_etl.transformer import Transformer
 from paradicms_etl.transformers.validation_transformer import ValidationTransformer
 
@@ -69,38 +69,33 @@ class Pipeline(ABC):
             help="set logging-level level (see Python logging module)",
         )
 
-    @classmethod
-    def _add_collection_arguments(cls, arg_parser: ArgParser) -> None:
-        arg_parser.add_argument("--collection-title", required=True)
-        arg_parser.add_argument("--collection-uri", required=True)
-
-    @classmethod
-    def _add_institution_arguments(cls, arg_parser: ArgParser) -> None:
-        arg_parser.add_argument("--institution-image-uri")
-        arg_parser.add_argument("--institution-name", required=True)
-        arg_parser.add_argument("--institution-rights")
-        arg_parser.add_argument("--institution-uri", required=True)
-
     def extract_transform(self, *, force_extract: bool = False):
-        extract_kwds = self.extractor.extract(force=force_extract)
-        if not extract_kwds:
-            extract_kwds = {}
-        transform_result = self.transformer.transform(**extract_kwds)
-        if self.__validate_transform:
-            return ValidationTransformer(pipeline_id=self.__id).transform(
-                transform_result
-            )
-        else:
-            return transform_result
+        return self.__transform(self.__extract(force=force_extract))
+
+    def __extract(self, *, force: bool = False) -> Optional[Dict[str, object]]:
+        return self.__extractor.extract(
+            extracted_data_dir_path=self.__extracted_data_dir_path,
+            force=force,
+            pipeline_id=self.__id,
+        )
 
     def extract_transform_load(self, *, force_extract: bool = False):
-        models = self.extract_transform(force_extract=force_extract)
-        self.loader.load(models=models)
-        return self.loader.flush()
+        return self.__load(self.extract_transform(force_extract=force_extract))
+
+    @property
+    def __extracted_data_dir_path(self) -> Path:
+        extracted_data_dir_path = (
+            self.__data_dir_path / self.__id / "extracted"
+        ).absolute()
+        extracted_data_dir_path.mkdir(parents=True, exist_ok=True)
+        return extracted_data_dir_path
 
     @property
     def extractor(self):
         return self.__extractor
+
+    def __load(self, models: Iterable[Model]) -> Any:
+        return self.loader.load(flush=True, models=models)
 
     @property
     def _logger(self):
@@ -142,18 +137,41 @@ class Pipeline(ABC):
     def id(self):
         return self.__id
 
-    @staticmethod
-    def id_to_uri(id_: str) -> URIRef:
-        return URIRef("urn:paradicms_etl:pipeline:" + id_)
+    # @staticmethod
+    # def id_to_uri(id_: str) -> URIRef:
+    #     return URIRef("urn:paradicms_etl:pipeline:" + id_)
+
+    @property
+    def __loaded_data_dir_path(self) -> Path:
+        """
+        Directory to use to store loaded data.
+        The directory is created on demand when this method is called.
+        A loader does not have to use this directory. It can load data into an external database, for example.
+        """
+
+        loaded_data_dir_path = (
+            self.__data_dir_path / self._pipeline_id / "loaded"
+        ).absolute()
+        loaded_data_dir_path.mkdir(parents=True, exist_ok=True)
+        return loaded_data_dir_path
 
     @property
     def loader(self):
         return self.__loader
 
+    def __transform(self, extract_kwds: Optional[Dict[str, Any]]) -> Iterable[Model]:
+        if extract_kwds is None:
+            extract_kwds = {}
+        transform_result = self.transformer(**extract_kwds)
+        if self.__validate_transform:
+            return ValidationTransformer(transform_result)
+        else:
+            return transform_result
+
     @property
     def transformer(self):
         return self.__transformer
 
-    @property
-    def uri(self) -> URIRef:
-        return self.id_to_uri(self.id)
+    # @property
+    # def uri(self) -> URIRef:
+    #     return self.id_to_uri(self.id)
