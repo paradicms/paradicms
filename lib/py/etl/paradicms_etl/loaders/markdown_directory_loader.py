@@ -19,17 +19,19 @@ class MarkdownDirectoryLoader:
     def __init__(
         self,
         *,
+        loaded_data_dir_path: Path,
         namespaces_by_prefix: Optional[
             Dict[str, Union[Type[DefinedNamespace], Namespace]]
         ] = None,
     ):
+        self.__loaded_data_dir_path = loaded_data_dir_path
         if namespaces_by_prefix is None:
             namespaces_by_prefix = (
                 DictToResourceTransformer.NAMESPACES_BY_PREFIX_DEFAULT
             )
         self.__namespaces_by_prefix = namespaces_by_prefix.copy()
 
-    def __call__(self, *, loaded_data_dir_path: Path, models: Iterable[Model]):
+    def __call__(self, *, models: Iterable[Model]):
         for model in models:
             model_id = model.label
             if model_id is None:
@@ -46,7 +48,7 @@ class MarkdownDirectoryLoader:
 
             md_front_matter = self.__transform_model_resource_to_dict(model_resource)
 
-            md_dir_path = loaded_data_dir_path / model_type
+            md_dir_path = self.__loaded_data_dir_path / model_type
             md_dir_path.mkdir(parents=True, exist_ok=True)
 
             md_file_path = md_dir_path / (str(sanitize_filename(model_id)) + ".md")
