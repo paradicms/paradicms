@@ -96,7 +96,7 @@ class TestDataPipeline(Pipeline):
             self.__next_work_i = 0
             self.__works_per_institution = works_per_institution
 
-        def transform(self):
+        def __call__(self):
             yield from CreativeCommonsLicenses.as_tuple()
             yield RightsStatementsDotOrgRightsStatements.InC_EDU
 
@@ -524,7 +524,7 @@ class TestDataPipeline(Pipeline):
                     uri_prefix=f"{institution.uri}/shared/work",
                 )
 
-    def __init__(self, loader: Optional[Loader] = None, **kwds):
+    def __init__(self, loader: Optional[Loader] = None):
         root_dir_path = (
             Path(__file__).absolute().parent.parent.parent.parent.parent.parent
         )
@@ -545,18 +545,18 @@ class TestDataPipeline(Pipeline):
                         / "data"
                         / "test_data"
                         / "loaded"
-                        / "data.trig"
+                        / "data.trig",
+                        pipeline_id=self.ID,
                     ),
                 )
             )
 
         Pipeline.__init__(
             self,
-            extractor=nop_extractor(),
+            extractor=nop_extractor,
             id=self.ID,
             loader=loader,
             transformer=self.__TestDataTransformer(),
-            **kwds,
         )
 
 

@@ -1,6 +1,5 @@
 import logging
 from abc import ABC
-from pathlib import Path
 from typing import Dict, Optional, Any, Iterable
 
 from configargparse import ArgParser
@@ -20,7 +19,6 @@ class Pipeline(ABC):
         extractor: Extractor,
         id: str,
         transformer: Transformer,
-        data_dir_path: Optional[Path] = None,
         loader: Optional[Loader] = None,
         validate_transform: bool = True,
         **kwds,
@@ -33,8 +31,6 @@ class Pipeline(ABC):
         :param transformer: transformer implementation
         """
 
-        assert data_dir_path is not None
-        self.__data_dir_path = data_dir_path
         self.__extractor = extractor
         self.__id = id
         if loader is None:
@@ -50,10 +46,10 @@ class Pipeline(ABC):
         Add pipeline-specific arguments. The parsed arguments are passed to the constructor as keywords.
         """
         arg_parser.add_argument("-c", is_config_file=True, help="config file path")
-        arg_parser.add_argument(
-            "--data-dir-path",
-            help="path to a directory to store extracted data and transformed models",
-        )
+        # arg_parser.add_argument(
+        #     "--data-dir-path",
+        #     help="path to a directory to store extracted data and transformed models",
+        # )
         arg_parser.add_argument(
             "--debug", action="store_true", help="turn on debugging"
         )
@@ -77,22 +73,10 @@ class Pipeline(ABC):
         return self.__transform(self.__extract(force=force_extract))
 
     def __extract(self, *, force: bool = False) -> Optional[Dict[str, object]]:
-        return self.__extractor(
-            extracted_data_dir_path=self.__extracted_data_dir_path,
-            force=force,
-            pipeline_id=self.__id,
-        )
+        return self.__extractor(force=force)
 
     def extract_transform_load(self, *, force_extract: bool = False):
         return self.__load(self.extract_transform(force_extract=force_extract))
-
-    @property
-    def __extracted_data_dir_path(self) -> Path:
-        extracted_data_dir_path = (
-            self.__data_dir_path / self.__id / "extracted"
-        ).absolute()
-        extracted_data_dir_path.mkdir(parents=True, exist_ok=True)
-        return extracted_data_dir_path
 
     @property
     def extractor(self):
@@ -102,33 +86,12 @@ class Pipeline(ABC):
     def id(self):
         return self.__id
 
-    # @staticmethod
-    # def id_to_uri(id_: str) -> URIRef:
-    #     return URIRef("urn:paradicms_etl:pipeline:" + id_)
-
     @property
     def _logger(self):
         return self.__logger
 
     def __load(self, models: Iterable[Model]) -> Any:
-        return self.__loader(
-            flush=True,
-            loaded_data_dir_path=self.__loaded_data_dir_path,
-            models=models,
-            pipeline_id=self.__id,
-        )
-
-    @property
-    def __loaded_data_dir_path(self) -> Path:
-        """
-        Directory to use to store loaded data.
-        The directory is created on demand when this method is called.
-        A loader does not have to use this directory. It can load data into an external database, for example.
-        """
-
-        loaded_data_dir_path = (self.__data_dir_path / self.__id / "loaded").absolute()
-        loaded_data_dir_path.mkdir(parents=True, exist_ok=True)
-        return loaded_data_dir_path
+        return self.__loader(flush=True, models=models)
 
     @property
     def loader(self):
@@ -154,11 +117,8 @@ class Pipeline(ABC):
         )
 
         pipeline_kwds = args.copy()
-        for key in ("force", "force_extract", "logging_level"):
+        for key in ("c", "debug", "force", "force_extract", "logging_level"):
             pipeline_kwds.pop(key, None)
-        data_dir_path = pipeline_kwds.get("data_dir_path")
-        if data_dir_path is not None:
-            pipeline_kwds["data_dir_path"] = Path(str(data_dir_path))
         pipeline = cls(**pipeline_kwds)  # type: ignore
 
         force = bool(args.get("force", False))
@@ -178,7 +138,3 @@ class Pipeline(ABC):
     @property
     def transformer(self):
         return self.__transformer
-
-    # @property
-    # def uri(self) -> URIRef:
-    #     return self.id_to_uri(self.id)

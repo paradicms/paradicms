@@ -11,4 +11,4 @@ class CompositeLoader:
     def __call__(self, *, models: Iterable[Model], **kwds):
         models_frozen = tuple(models)
         for loader in self.__loaders:
-            loader.load(models=models_frozen, **kwds)
+            loader(models=models_frozen, **kwds)

@@ -21,12 +21,14 @@ class RdfFileLoader(BufferingLoader):
         *,
         file_path: Optional[Path] = None,
         format: Optional[str] = FORMAT_DEFAULT,
+        pipeline_id: str,
     ):
         BufferingLoader.__init__(self)
         self.__file_path = file_path
         if format is None:
             format = self.FORMAT_DEFAULT
         self.__format = format
+        self.__pipeline_id = pipeline_id
 
     def _flush(self, *, models: Tuple[Model, ...]):
         conjunctive_graph = self._new_conjunctive_graph()
@@ -34,7 +36,7 @@ class RdfFileLoader(BufferingLoader):
         for model in models:
             assert isinstance(model, NamedModel), type(model)
             model_graph_uri = URIRef(
-                f"{self._pipeline_uri}:model:{hashlib.sha256(str(model.uri).encode('utf-8')).hexdigest()}"
+                f"urn:paradicms_etl:pipeline:{self.__pipeline_id}:model:{hashlib.sha256(str(model.uri).encode('utf-8')).hexdigest()}"
             )
             model_graph = conjunctive_graph.get_context(model_graph_uri)
             model.to_rdf(graph=model_graph)
