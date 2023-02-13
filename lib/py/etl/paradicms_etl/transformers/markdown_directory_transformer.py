@@ -82,7 +82,9 @@ class MarkdownDirectoryTransformer:
         self.__pipeline_id = pipeline_id
 
     @staticmethod
-    def default_collection_uri(*, markdown_directory_name: str, pipeline_id: str):
+    def default_collection_uri(
+        *, markdown_directory_name: str, pipeline_id: str
+    ) -> URIRef:
         return MarkdownDirectoryTransformer._model_uri(
             pipeline_id=pipeline_id,
             model_type_name="collection",
@@ -90,7 +92,7 @@ class MarkdownDirectoryTransformer:
         )
 
     @staticmethod
-    def default_institution_uri(*, pipeline_id: str):
+    def default_institution_uri(*, pipeline_id: str) -> URIRef:
         return MarkdownDirectoryTransformer._model_uri(
             pipeline_id=pipeline_id,
             model_type_name="institution",

@@ -13,18 +13,22 @@ from paradicms_etl.transformers.markdown_directory_transformer import (
 from paradicms_etl.transformers.wikidata_items_transformer import (
     WikidataItemsTransformer,
 )
+from paradicms_etl.utils.existing_directory_argument_type import (
+    existing_directory_argument_type,
+)
+from paradicms_etl.utils.uri_argument_type import uri_argument_type
 
 
 class WikidataQidToMarkdownDirectoryPipeline(Pipeline):
     def __init__(
         self,
         *,
-        data_dir_path: str,
-        markdown_directory_path: str,
+        data_dir_path: Path,
+        markdown_directory_path: Path,
         pipeline_id: str,
         qid: List[str],
-        institution_uri: Optional[str] = None,
-        collection_uri: Optional[str] = None,
+        institution_uri: Optional[URIRef] = None,
+        collection_uri: Optional[URIRef] = None,
         **kwds
     ):
         if collection_uri is None:
@@ -47,7 +51,9 @@ class WikidataQidToMarkdownDirectoryPipeline(Pipeline):
         Pipeline.__init__(
             self,
             extractor=WikidataQidExtractor(
-                extracted_data_dir_path=Path(data_dir_path) / pipeline_id / "extracted",
+                extracted_data_dir_path=Pipeline._extracted_data_dir_path(
+                    data_dir_path=data_dir_path, pipeline_id=pipeline_id
+                ),
                 qids=tuple(qid),
             ),
             id=pipeline_id,
@@ -55,8 +61,8 @@ class WikidataQidToMarkdownDirectoryPipeline(Pipeline):
                 loaded_data_dir_path=Path(markdown_directory_path)
             ),
             transformer=WikidataItemsTransformer(
-                collection_uri=URIRef(collection_uri),
-                institution_uri=URIRef(institution_uri),
+                collection_uri=collection_uri,
+                institution_uri=institution_uri,
             ),
             **kwds
         )
@@ -64,10 +70,14 @@ class WikidataQidToMarkdownDirectoryPipeline(Pipeline):
     @classmethod
     def add_arguments(cls, arg_parser: ArgParser) -> None:
         Pipeline.add_arguments(arg_parser)
-        arg_parser.add_argument("--data-dir-path", required=True)
-        arg_parser.add_argument("--collection-uri")
-        arg_parser.add_argument("--institution-uri")
-        arg_parser.add_argument("--markdown-directory-path", required=True)
+        cls._add_data_dir_path_argument(arg_parser)
+        arg_parser.add_argument("--collection-uri", type=uri_argument_type)
+        arg_parser.add_argument("--institution-uri", type=uri_argument_type)
+        arg_parser.add_argument(
+            "--markdown-directory-path",
+            required=True,
+            type=existing_directory_argument_type,
+        )
         arg_parser.add_argument("--pipeline-id", required=True)
         arg_parser.add_argument("qid", nargs="+")
 

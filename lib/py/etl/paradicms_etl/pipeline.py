@@ -1,5 +1,6 @@
 import logging
 from abc import ABC
+from pathlib import Path
 from typing import Dict, Optional, Any, Iterable
 
 from configargparse import ArgParser
@@ -10,6 +11,9 @@ from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.model import Model
 from paradicms_etl.transformer import Transformer
 from paradicms_etl.transformers.validation_transformer import validation_transformer
+from paradicms_etl.utils.existing_directory_argument_type import (
+    existing_directory_argument_type,
+)
 
 
 class Pipeline(ABC):
@@ -69,6 +73,15 @@ class Pipeline(ABC):
             help="set logging-level level (see Python logging module)",
         )
 
+    @classmethod
+    def _add_data_dir_path_argument(cls, arg_parser: ArgParser):
+        arg_parser.add_argument(
+            "--data-dir-path",
+            help="path to an existing directory to store cached extracted data and/or loaded data",
+            required=True,
+            type=existing_directory_argument_type,
+        )
+
     def extract_transform(self, *, force_extract: bool = False):
         return self.__transform(self.__extract(force=force_extract))
 
@@ -77,6 +90,10 @@ class Pipeline(ABC):
 
     def extract_transform_load(self, *, force_extract: bool = False):
         return self.__load(self.extract_transform(force_extract=force_extract))
+
+    @staticmethod
+    def _extracted_data_dir_path(*, data_dir_path: Path, pipeline_id: str):
+        return data_dir_path / pipeline_id / "extracted"
 
     @property
     def extractor(self):
@@ -92,6 +109,10 @@ class Pipeline(ABC):
 
     def __load(self, models: Iterable[Model]) -> Any:
         return self.__loader(flush=True, models=models)
+
+    @staticmethod
+    def _loaded_data_dir_path(*, data_dir_path: Path, pipeline_id: str):
+        return data_dir_path / pipeline_id / "loaded"
 
     @property
     def loader(self):
