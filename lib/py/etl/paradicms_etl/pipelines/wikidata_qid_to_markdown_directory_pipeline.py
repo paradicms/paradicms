@@ -19,6 +19,7 @@ class WikidataQidToMarkdownDirectoryPipeline(Pipeline):
     def __init__(
         self,
         *,
+        data_dir_path: str,
         markdown_directory_path: str,
         pipeline_id: str,
         qid: List[str],
@@ -45,7 +46,10 @@ class WikidataQidToMarkdownDirectoryPipeline(Pipeline):
 
         Pipeline.__init__(
             self,
-            extractor=WikidataQidExtractor(qids=tuple(qid)),
+            extractor=WikidataQidExtractor(
+                extracted_data_dir_path=Path(data_dir_path) / pipeline_id / "extracted",
+                qids=tuple(qid),
+            ),
             id=pipeline_id,
             loader=MarkdownDirectoryLoader(
                 loaded_data_dir_path=Path(markdown_directory_path)
@@ -60,6 +64,7 @@ class WikidataQidToMarkdownDirectoryPipeline(Pipeline):
     @classmethod
     def add_arguments(cls, arg_parser: ArgParser) -> None:
         Pipeline.add_arguments(arg_parser)
+        arg_parser.add_argument("--data-dir-path", required=True)
         arg_parser.add_argument("--collection-uri")
         arg_parser.add_argument("--institution-uri")
         arg_parser.add_argument("--markdown-directory-path", required=True)

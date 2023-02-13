@@ -1,4 +1,5 @@
 import json
+import logging
 from dataclasses import dataclass
 from logging import Logger
 from typing import Dict, Optional, Tuple, Type, Union, List
@@ -32,6 +33,8 @@ from paradicms_etl.utils.dict_to_resource_transformer import DictToResourceTrans
 from paradicms_etl.utils.markdown_to_resource_transformer import (
     MarkdownToResourceTransformer,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class MarkdownDirectoryTransformer:
@@ -67,6 +70,7 @@ class MarkdownDirectoryTransformer:
         namespaces_by_prefix: Optional[
             Dict[str, Union[Type[DefinedNamespace], Namespace]]
         ] = None,
+        pipeline_id: str,
     ):
         if default_institution is None and default_collection is not None:
             raise ValueError(
@@ -75,6 +79,7 @@ class MarkdownDirectoryTransformer:
         self.__default_collection = default_collection
         self.__default_institution = default_institution
         self.__namespaces_by_prefix = namespaces_by_prefix
+        self.__pipeline_id = pipeline_id
 
     @staticmethod
     def default_collection_uri(*, markdown_directory_name: str, pipeline_id: str):
@@ -674,10 +679,10 @@ class MarkdownDirectoryTransformer:
         for model in self.__TransformInvocation(
             default_collection=self.__default_collection,
             default_institution=self.__default_institution,
-            logger=self._logger,
+            logger=logger,
             markdown_directory=markdown_directory,
             namespaces_by_prefix=self.__namespaces_by_prefix,
-            pipeline_id=self._pipeline_id,
+            pipeline_id=self.__pipeline_id,
         )():
             yield model
 

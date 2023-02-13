@@ -106,10 +106,9 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
 
     def _transform_human_item(self, item: WikidataItem):
         yield from self.__PersonWikidataItemTransformer(
-            collection_uri=self.__collection_uri,
-            institution_uri=self.__institution_uri,
-            pipeline_id=self._pipeline_id,
-        ).transform(item)
+            # collection_uri=self.__collection_uri,
+            # institution_uri=self.__institution_uri,
+        )(item=item)
 
     def _transform_painting_item(self, item: WikidataItem):
         yield from self.__transform_work_item(item=item)
@@ -136,5 +135,4 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
         yield from self.__WorkWikidataItemTransformer(
             collection_uri=self.__collection_uri,
             institution_uri=self.__institution_uri,
-            pipeline_id=self._pipeline_id,
         ).transform(item)

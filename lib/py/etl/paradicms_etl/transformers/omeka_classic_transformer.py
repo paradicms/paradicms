@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 from typing import Dict, Optional, Tuple, List
 
@@ -18,6 +19,7 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 from paradicms_etl.models.work import Work
 
 ElementTextTree = Dict[str, Dict[str, List[str]]]
+logger = logging.getLogger(__name__)
 
 
 def is_uri(value: str):
@@ -82,7 +84,7 @@ class OmekaClassicTransformer:
 
         for item in tqdm(items, desc="Omeka items"):
             if not item["public"]:
-                self._logger.debug("item %s private, skipping", item["id"])
+                logger.debug("item %s private, skipping", item["id"])
                 continue
 
             with self.__transform_item_timer.time():
@@ -106,7 +108,7 @@ class OmekaClassicTransformer:
                 yield from transformed_files
 
         for key, value in self._metrics_registry.dump_metrics().items():
-            self._logger.info("%s: %s", key, value)
+            logger.info("%s: %s", key, value)
 
     def _get_element_texts_as_tree(self, omeka_resource) -> ElementTextTree:
         result: ElementTextTree = {}
@@ -142,7 +144,7 @@ class OmekaClassicTransformer:
     def _log_unknown_element_texts(self, element_text_tree: ElementTextTree) -> None:
         for element_set_name in element_text_tree.keys():
             if element_text_tree[element_set_name]:
-                self._logger.warn(
+                logger.warn(
                     "unknown %s element names: %s",
                     element_set_name,
                     tuple(element_text_tree[element_set_name]),
@@ -215,7 +217,7 @@ class OmekaClassicTransformer:
                     properties.add(Property(property_uri, value))
 
         if dc_element_text_tree:
-            self._logger.warn(
+            logger.warn(
                 "unknown Dublin Core element names: %s",
                 tuple(dc_element_text_tree.keys()),
             )
@@ -242,11 +244,9 @@ class OmekaClassicTransformer:
                     width=file_metadata_video["resolution_x"],
                 )
             else:
-                self._logger.debug(
-                    "file %s has no resolution in its metadata", file_["id"]
-                )
+                logger.debug("file %s has no resolution in its metadata", file_["id"])
         else:
-            self._logger.debug("file %s has no metadata", file_["id"])
+            logger.debug("file %s has no metadata", file_["id"])
 
         file_added = datetime.fromisoformat(file_["added"])
         file_modified = datetime.fromisoformat(file_["modified"])

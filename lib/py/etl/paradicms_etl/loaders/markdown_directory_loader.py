@@ -31,7 +31,7 @@ class MarkdownDirectoryLoader:
             )
         self.__namespaces_by_prefix = namespaces_by_prefix.copy()
 
-    def __call__(self, *, models: Iterable[Model]):
+    def __call__(self, *, models: Iterable[Model], **kwds):
         for model in models:
             model_id = model.label
             if model_id is None:
