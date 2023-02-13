@@ -20,9 +20,8 @@ def download_file(
     """
 
     downloaded_file_path = downloaded_file_dir_path / (
-        sanitize_filename(from_url) + file_extension
-        if file_extension is not None
-        else ""
+        sanitize_filename(from_url)
+        + (file_extension if file_extension is not None else "")
     )
     if not force and downloaded_file_path.exists():
         logger.info(

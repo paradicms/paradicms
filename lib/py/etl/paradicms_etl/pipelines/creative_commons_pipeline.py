@@ -1,6 +1,7 @@
 import logging
 from io import BytesIO
 from pathlib import Path
+from tempfile import TemporaryDirectory
 from typing import Dict, Iterable
 from zipfile import ZipFile
 
@@ -29,30 +30,32 @@ class CreativeCommonsPipeline(Pipeline):
         )
 
     @staticmethod
-    def __extract(*, extracted_data_dir_path: Path, force: bool):
-        zip_file_path = download_file(
-            downloaded_file_dir_path=extracted_data_dir_path,
-            from_url="https://github.com/creativecommons/cc.licenserdf/archive/refs/heads/master.zip",
-            force=force,
-        )
-        rdf_file_contents = {}
-        with ZipFile(zip_file_path) as zip_file:
-            entry_names = tuple(zip_file.namelist())
-            ENTRY_NAME_PREFIX = "cc.licenserdf-master/cc/licenserdf/licenses/"
-            for entry_name in entry_names:
-                if not entry_name.startswith(ENTRY_NAME_PREFIX):
-                    continue
-                file_name = entry_name[len(ENTRY_NAME_PREFIX) :]
-                if not file_name:
-                    continue
-                if not file_name.endswith(".rdf"):
-                    continue
-                with zip_file.open(entry_name) as zip_file_entry:
-                    rdf_file_contents[file_name] = zip_file_entry.read()
-        return {"rdf_file_contents": rdf_file_contents}
+    def __extract(*, force: bool, **kwds):
+        with TemporaryDirectory() as temp_dir:
+            print(temp_dir)
+            zip_file_path = download_file(
+                downloaded_file_dir_path=Path(temp_dir),
+                from_url="https://github.com/creativecommons/cc.licenserdf/archive/refs/heads/master.zip",
+                force=force,
+            )
+            rdf_file_contents = {}
+            with ZipFile(zip_file_path) as zip_file:
+                entry_names = tuple(zip_file.namelist())
+                ENTRY_NAME_PREFIX = "cc.licenserdf-master/cc/licenserdf/licenses/"
+                for entry_name in entry_names:
+                    if not entry_name.startswith(ENTRY_NAME_PREFIX):
+                        continue
+                    file_name = entry_name[len(ENTRY_NAME_PREFIX) :]
+                    if not file_name:
+                        continue
+                    if not file_name.endswith(".rdf"):
+                        continue
+                    with zip_file.open(entry_name) as zip_file_entry:
+                        rdf_file_contents[file_name] = zip_file_entry.read()
+            return {"rdf_file_contents": rdf_file_contents}
 
     @staticmethod
-    def __load(*, models: Iterable[Model]):
+    def __load(*, models: Iterable[Model], **kwds):
         creative_commons_licenses_py_file_path = (
             Path(__file__).parent.parent / "models" / "creative_commons_licenses.py"
         )
