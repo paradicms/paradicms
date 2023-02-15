@@ -19,16 +19,16 @@ from paradicms_etl.transformers.markdown_directory_transformer import (
 def test_transform(data_dir_path: Path):
     markdown_directory_data_dir_path = data_dir_path / "markdown_directory"
     extractor = MarkdownDirectoryExtractor(
-        extracted_data_dir_path=markdown_directory_data_dir_path / "extracted",
-        pipeline_id="test",
+        markdown_directory_path=markdown_directory_data_dir_path / "extracted"
     )
     models = tuple(
         MarkdownDirectoryTransformer(
-            collection_uri="urn:markdown:test:collection:default",
-            institution_name="Markdown directory test institution",
-            collection_title="Markdown directory test collection",
-            institution_uri="urn:markdown:test:institution:default",
-        )(**extractor.extract())
+            # collection_uri="urn:markdown:test:collection:default",
+            # institution_name="Markdown directory test institution",
+            # collection_title="Markdown directory test collection",
+            # institution_uri="urn:markdown:test:institution:default",
+            pipeline_id="test"
+        )(**extractor())
     )
     assert models
     for model in models:

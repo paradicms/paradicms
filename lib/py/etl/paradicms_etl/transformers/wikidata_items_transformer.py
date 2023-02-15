@@ -98,11 +98,11 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
             f"unable to find method {transform_method_name} to transform item {item.uri}",
         )
 
-    def transform(self, **kwds):
+    def __call__(self, **kwds):
         yield CreativeCommonsLicenses.BY_SA_3_0
         yield RightsStatementsDotOrgRightsStatements.InC
 
-        yield from _WikidataItemsTransformer.transform(self, **kwds)
+        yield from _WikidataItemsTransformer.__call__(self, **kwds)
 
     def _transform_human_item(self, item: WikidataItem):
         yield from self.__PersonWikidataItemTransformer(
@@ -135,4 +135,4 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
         yield from self.__WorkWikidataItemTransformer(
             collection_uri=self.__collection_uri,
             institution_uri=self.__institution_uri,
-        ).transform(item)
+        )(item=item)
