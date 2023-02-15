@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from rdflib import URIRef
 
 from paradicms_ssg.file_cache import FileCache
@@ -7,9 +5,8 @@ from paradicms_ssg.image_archivers.fs_image_archiver import FsImageArchiver
 
 
 def test_archive_image(tmp_path):
-    tmp_dir_path = Path(tmp_path)
-    archive_dir_path = tmp_dir_path / "archive"
-    cache_dir_path = tmp_dir_path / "cache"
+    archive_dir_path = tmp_path / "archive"
+    cache_dir_path = tmp_path / "cache"
     cache_dir_path.mkdir()
 
     image_cache = FileCache(cache_dir_path=cache_dir_path)
@@ -17,7 +14,7 @@ def test_archive_image(tmp_path):
         base_url="/img/archive/", root_directory_path=archive_dir_path
     )
 
-    archived_url = sut.archive_image(
+    archived_url = sut(
         image_file_path=image_cache.get_file(URIRef("https://place-hold.it/1000x1000"))
     )
     assert archived_url

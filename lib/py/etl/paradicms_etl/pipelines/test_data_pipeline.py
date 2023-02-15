@@ -5,9 +5,8 @@ from urllib.parse import quote
 
 from rdflib import DCTERMS, Literal, URIRef
 
-from paradicms_etl.extractors.nop_extractor import NopExtractor
+from paradicms_etl.extractors.nop_extractor import nop_extractor
 from paradicms_etl.loader import Loader
-from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.collection import Collection
@@ -30,13 +29,12 @@ from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_creation import WorkCreation
 from paradicms_etl.namespaces import VRA
 from paradicms_etl.pipeline import Pipeline
-from paradicms_etl.transformer import Transformer
 
 
 class TestDataPipeline(Pipeline):
     ID = "test_data"
 
-    class __TestDataTransformer(Transformer):
+    class __TestDataTransformer:
         __FACETED_PROPERTY_VALUES = (
             (
                 VRA.culturalContext,
@@ -90,16 +88,14 @@ class TestDataPipeline(Pipeline):
             images_per_work=2,
             institutions=2,
             works_per_institution=4,  # Works per page is 20
-            **kwds,
         ):
-            Transformer.__init__(self, **kwds)
             self.__institutions = institutions
             self.__collections_per_institution = collections_per_institution
             self.__images_per_work = images_per_work
             self.__next_work_i = 0
             self.__works_per_institution = works_per_institution
 
-        def transform(self):
+        def __call__(self):
             yield from CreativeCommonsLicenses.as_tuple()
             yield RightsStatementsDotOrgRightsStatements.InC_EDU
 
@@ -527,42 +523,22 @@ class TestDataPipeline(Pipeline):
                     uri_prefix=f"{institution.uri}/shared/work",
                 )
 
-    def __init__(self, loader: Optional[Loader] = None, **kwds):
+    def __init__(self, loader: Optional[Loader] = None):
         root_dir_path = (
             Path(__file__).absolute().parent.parent.parent.parent.parent.parent
         )
         if loader is None:
-            loader = CompositeLoader(
-                loaders=(
-                    # RdfFileLoader(
-                    #     file_path=root_dir_path
-                    #     / "gui"
-                    #     / "integration"
-                    #     / "material-ui-union"
-                    #     / "cypress"
-                    #     / "fixtures"
-                    #     / "data.ttl",
-                    #     pipeline_id=self.ID,
-                    # ),
-                    RdfFileLoader(
-                        file_path=root_dir_path
-                        / "data"
-                        / "test_data"
-                        / "loaded"
-                        / "data.trig",
-                        pipeline_id=self.ID,
-                    ),
-                ),
+            loader = RdfFileLoader(
+                file_path=root_dir_path / "data" / "test_data" / "loaded" / "data.trig",
                 pipeline_id=self.ID,
             )
 
         Pipeline.__init__(
             self,
-            extractor=NopExtractor(pipeline_id=self.ID),
+            extractor=nop_extractor,
             id=self.ID,
             loader=loader,
-            transformer=self.__TestDataTransformer(pipeline_id=self.ID, **kwds),
-            **kwds,
+            transformer=self.__TestDataTransformer(),
         )
 
 

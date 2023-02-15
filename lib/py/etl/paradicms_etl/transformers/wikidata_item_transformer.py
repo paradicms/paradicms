@@ -1,3 +1,4 @@
+import logging
 from abc import abstractmethod
 from typing import Dict, Tuple, Iterable
 
@@ -5,11 +6,12 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
 from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
-from paradicms_etl.transformer import Transformer
 from paradicms_etl.utils.sanitize_method_name import sanitize_method_name
 
+logger = logging.getLogger(__name__)
 
-class WikidataItemTransformer(Transformer):
+
+class WikidataItemTransformer:
     """
     Abstract base class for transformers that accept a single WikidataItem and transform it into zero or more paradicms Models.
 
@@ -26,7 +28,7 @@ class WikidataItemTransformer(Transformer):
     There is a similar process for _transform_statement_qualifiers.
     """
 
-    def transform(self, item: WikidataItem) -> Iterable[Model]:  # type: ignore
+    def __call__(self, *, item: WikidataItem) -> Iterable[Model]:  # type: ignore
         item_model = self._transform_item(item=item)
 
         for model in self._transform_statements(
@@ -66,7 +68,7 @@ class WikidataItemTransformer(Transformer):
         try:
             transform_method = getattr(self, transform_method_name)
         except AttributeError:
-            self._logger.warning(
+            logger.warning(
                 "unable to find method %s to transform %s statement on item %s: %s",
                 transform_method_name,
                 statement.property_definition.label,
@@ -80,7 +82,7 @@ class WikidataItemTransformer(Transformer):
         )
 
         # for statement_qualifier_kwd in statement_qualifier_kwds.keys():
-        #     self._logger.debug(
+        #     logger.debug(
         #         "statement qualifier: %s on %s",
         #         statement_qualifier_kwd,
         #         statement.property_definition.label,
@@ -118,7 +120,7 @@ class WikidataItemTransformer(Transformer):
             try:
                 transform_method = getattr(self, transform_method_name)
             except AttributeError:
-                self._logger.warning(
+                logger.warning(
                     "unable to find method %s to transform %s statement qualifier on %s statement on item %s: %s",
                     transform_method_name,
                     qualifier.property_definition.label,

@@ -1,4 +1,5 @@
 import json
+import logging
 from dataclasses import dataclass
 from logging import Logger
 from typing import Dict, Optional, Tuple, Type, Union, List
@@ -28,14 +29,15 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_creation import WorkCreation
 from paradicms_etl.namespaces import CMS
-from paradicms_etl.transformer import Transformer
 from paradicms_etl.utils.dict_to_resource_transformer import DictToResourceTransformer
 from paradicms_etl.utils.markdown_to_resource_transformer import (
     MarkdownToResourceTransformer,
 )
 
+logger = logging.getLogger(__name__)
 
-class MarkdownDirectoryTransformer(Transformer):
+
+class MarkdownDirectoryTransformer:
     """
     Transform a directory of Markdown files to a set of models.
 
@@ -62,14 +64,14 @@ class MarkdownDirectoryTransformer(Transformer):
 
     def __init__(
         self,
+        *,
         default_institution: Optional[Institution] = None,
         default_collection: Optional[Collection] = None,
         namespaces_by_prefix: Optional[
             Dict[str, Union[Type[DefinedNamespace], Namespace]]
         ] = None,
-        **kwds,
+        pipeline_id: str,
     ):
-        Transformer.__init__(self, **kwds)
         if default_institution is None and default_collection is not None:
             raise ValueError(
                 "default institution must be supplied if default collection is"
@@ -77,9 +79,12 @@ class MarkdownDirectoryTransformer(Transformer):
         self.__default_collection = default_collection
         self.__default_institution = default_institution
         self.__namespaces_by_prefix = namespaces_by_prefix
+        self.__pipeline_id = pipeline_id
 
     @staticmethod
-    def default_collection_uri(*, markdown_directory_name: str, pipeline_id: str):
+    def default_collection_uri(
+        *, markdown_directory_name: str, pipeline_id: str
+    ) -> URIRef:
         return MarkdownDirectoryTransformer._model_uri(
             pipeline_id=pipeline_id,
             model_type_name="collection",
@@ -87,7 +92,7 @@ class MarkdownDirectoryTransformer(Transformer):
         )
 
     @staticmethod
-    def default_institution_uri(*, pipeline_id: str):
+    def default_institution_uri(*, pipeline_id: str) -> URIRef:
         return MarkdownDirectoryTransformer._model_uri(
             pipeline_id=pipeline_id,
             model_type_name="institution",
@@ -669,17 +674,17 @@ class MarkdownDirectoryTransformer(Transformer):
                         ),
                     )
 
-    def transform(self, markdown_directory: MarkdownDirectory):  # type: ignore
+    def __call__(self, *, markdown_directory: MarkdownDirectory):  # type: ignore
         yield_known_licenses = True
         yield_known_rights_statements = True
 
         for model in self.__TransformInvocation(
             default_collection=self.__default_collection,
             default_institution=self.__default_institution,
-            logger=self._logger,
+            logger=logger,
             markdown_directory=markdown_directory,
             namespaces_by_prefix=self.__namespaces_by_prefix,
-            pipeline_id=self._pipeline_id,
+            pipeline_id=self.__pipeline_id,
         )():
             yield model
 

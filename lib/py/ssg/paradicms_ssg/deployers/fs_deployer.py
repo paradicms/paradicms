@@ -1,11 +1,12 @@
+import logging
 from datetime import datetime
 from pathlib import Path
 from shutil import copytree, rmtree
 
-from paradicms_ssg.deployer import Deployer
+logger = logging.getLogger(__name__)
 
 
-class FsDeployer(Deployer):
+class FsDeployer:
     """
     Deployer to the file system.
 
@@ -32,13 +33,12 @@ class FsDeployer(Deployer):
         :param deploy_dir_path: directory to "deploy" the GUI to
         """
 
-        Deployer.__init__(self)
         self.__archive = archive
         self.__clean = clean
         self.__copy = copy
         self.__deploy_dir_path = deploy_dir_path
 
-    def deploy(self, *, app_out_dir_path: Path):
+    def __call__(self, *, app_out_dir_path: Path):
         if self.__archive:
             current_deploy_dir_path = self.__deploy_dir_path / "current"
 
@@ -47,7 +47,7 @@ class FsDeployer(Deployer):
                     self.__deploy_dir_path
                     / f"pre-{datetime.now().isoformat().split('.')[0].replace('-', '').replace(':', '')}"
                 )
-                self._logger.info(
+                logger.info(
                     "renaming existing deploy directory %s to %s",
                     current_deploy_dir_path,
                     archive_deploy_dir_path,
@@ -60,18 +60,14 @@ class FsDeployer(Deployer):
             current_deploy_dir_path = self.__deploy_dir_path
 
         if (self.__clean or not self.__copy) and current_deploy_dir_path.is_dir():
-            self._logger.info(
+            logger.info(
                 "deleting existing %s before populating it", current_deploy_dir_path
             )
             rmtree(current_deploy_dir_path)
 
         if self.__copy:
-            self._logger.info(
-                "copying %s to %s", app_out_dir_path, current_deploy_dir_path
-            )
+            logger.info("copying %s to %s", app_out_dir_path, current_deploy_dir_path)
             copytree(app_out_dir_path, current_deploy_dir_path, dirs_exist_ok=True)
         else:
-            self._logger.info(
-                "renaming %s to %s", app_out_dir_path, current_deploy_dir_path
-            )
+            logger.info("renaming %s to %s", app_out_dir_path, current_deploy_dir_path)
             app_out_dir_path.rename(current_deploy_dir_path)

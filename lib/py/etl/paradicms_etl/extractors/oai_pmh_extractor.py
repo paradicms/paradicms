@@ -1,41 +1,51 @@
 import json
+import logging
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 from urllib.request import urlopen
 from xml.dom.minidom import parseString
-from xml.etree.ElementTree import ElementTree
+from xml.etree.ElementTree import fromstring as ElementTree_fromstring, ElementTree
 
 from pathvalidate import sanitize_filename
 
-from paradicms_etl.extractor import Extractor
+logger = logging.getLogger(__name__)
 
 
-class OaiPmhExtractor(Extractor):
+class OaiPmhExtractor:
     """
     Extractor for OAI compliant endpoints that expose OAI-PMH metadata (https://www.openarchives.org/pmh/).
     """
 
     def __init__(
-        self, *, endpoint_url: str, metadata_prefix: str, set_: Optional[str] = None
+        self,
+        *,
+        endpoint_url: str,
+        extracted_data_dir_path: Path,
+        metadata_prefix: str,
+        set_: Optional[str] = None
     ):
-        Extractor.__init__(self)
         self.__endpoint_url = endpoint_url
+        self.__extracted_data_dir_path = extracted_data_dir_path
         self.__metadata_prefix = metadata_prefix
         self.__set = set_
 
-    def extract(self, *, force, storage):
+    def __call__(self, *, force: bool, **kwds):
+        self.__extracted_data_dir_path.mkdir(parents=True, exist_ok=True)
+
         def record_identifier_file_path(record_identifier: str) -> Path:
-            return self._extracted_data_dir_path / (
+            return self.__extracted_data_dir_path / (
                 str(sanitize_filename(record_identifier)) + ".xml"
             )
 
         record_identifiers_file_path = (
-            self._extracted_data_dir_path / "record_identifiers.json"
+            self.__extracted_data_dir_path / "record_identifiers.json"
         )
-        if record_identifiers_file_path.exists:
+
+        record_identifiers: List[str]
+        record_etrees: List[ElementTree] = []
+        if record_identifiers_file_path.exists():
             with open(record_identifiers_file_path) as record_identifiers_file:
-                record_identifiers = tuple(json.load(record_identifiers_file))
-                record_etrees = []
+                record_identifiers = list(json.load(record_identifiers_file))
                 for record_identifier in record_identifiers:
                     with open(record_identifier_file_path(record_identifier)) as f:
                         record_etree = ElementTree()
@@ -44,7 +54,6 @@ class OaiPmhExtractor(Extractor):
                 return {"record_etrees": tuple(record_etrees)}
 
         base_url = self.__endpoint_url + "?verb=ListRecords"
-        record_etrees = []
         record_identifiers = []
         resumption_token = None
         while True:
@@ -54,19 +63,19 @@ class OaiPmhExtractor(Extractor):
                 url = base_url + "&metadataPrefix=" + self.__metadata_prefix
                 if self.__set is not None:
                     url = url + "&set=" + self.__set
-            self._logger.debug("reading URL %s", url)
+            logger.debug("reading URL %s", url)
             url_f = urlopen(url)
             try:
                 xml_str = url_f.read()
             finally:
                 url_f.close()
-            self._logger.debug("read XML from URL %s: \n%s", url, xml_str)
+            logger.debug("read XML from URL %s: \n%s", url, xml_str)
             dom = parseString(xml_str)
             ListRecords_elements = dom.documentElement.getElementsByTagName(
                 "ListRecords"
             )
             if len(ListRecords_elements) == 0:
-                self._logger.error("no ListRecords element in XML: \n%s", xml_str)
+                logger.error("no ListRecords element in XML: \n%s", xml_str)
                 return
             ListRecords_element = ListRecords_elements[0]
             for record_element in ListRecords_element.getElementsByTagName("record"):
@@ -83,10 +92,12 @@ class OaiPmhExtractor(Extractor):
                     record_identifier_file_path(record_identifier), "w+"
                 ) as record_identifier_file:
                     record_identifier_file.write(record_element_xml)
-                record_etrees.append(ElementTree.fromstring(record_element_xml))
+                record_etrees.append(
+                    ElementTree(ElementTree_fromstring(record_element_xml))
+                )
 
                 if len(record_identifiers) % 50 == 0:
-                    self._logger.info("read %d records", len(record_identifiers))
+                    logger.info("read %d records", len(record_identifiers))
             resumption_token = None
             for resumption_token_element in ListRecords_element.getElementsByTagName(
                 "resumptionToken"

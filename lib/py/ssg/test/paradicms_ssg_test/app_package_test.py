@@ -1,4 +1,3 @@
-from pathlib import Path
 from typing import Tuple
 
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
@@ -25,13 +24,12 @@ def test_build(test_data_models: Tuple[Model, ...], tmp_path):
 
     pipeline_id = "test"
     gui_data_loader = RdfFileLoader(
-        loaded_data_dir_path=Path(tmp_path), pipeline_id=pipeline_id
+        loaded_data_dir_path=tmp_path, pipeline_id=pipeline_id
     )
-    gui_data_loader.load(models=test_data_models)
-    gui_data_loader.flush()
+    gui_data_loader(flush=True, models=test_data_models)
 
     app_out_dir_path = app_package.build(
-        data_file_path=Path(tmp_path) / (pipeline_id + ".trig")
+        data_file_path=tmp_path / (pipeline_id + ".trig")
     )
     assert app_out_dir_path == (app_package.app_dir_path / "out")
     assert app_out_dir_path.is_dir()

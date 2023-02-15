@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 from typing import Dict, Generator, List, Tuple, Iterable, Any
 
@@ -13,10 +14,11 @@ from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import VRA
-from paradicms_etl.transformer import Transformer
+
+logger = logging.getLogger(__name__)
 
 
-class LunaTransformer(Transformer):
+class LunaTransformer:
     # __OBJECT_FIELD_PROPERTY_DEFINITIONS = {
     #     "Reproduction Record ID": None,
     #     "Work Class": None,
@@ -66,7 +68,7 @@ class LunaTransformer(Transformer):
             all_field_values.append(qualifier_field_values)
         yield from zip(*all_field_values)
 
-    def transform(self, base_url: str, search_results):  # type: ignore
+    def __call__(self, *, base_url: str, search_results):  # type: ignore
         institution = self._transform_institution(
             base_url=base_url, institution_name=search_results["institutionName"]
         )
@@ -149,9 +151,7 @@ class LunaTransformer(Transformer):
             for field_name, field_values in field_value_pair.items():
                 assert field_name not in field_values_dict, field_name
                 field_values_dict[field_name] = field_values
-                self._logger.debug(
-                    "object %s: field %s = %s", id_, field_name, field_values
-                )
+                logger.debug("object %s: field %s = %s", id_, field_name, field_values)
 
         properties = self._transform_object_field_values(field_values=field_values_dict)
 
@@ -172,7 +172,7 @@ class LunaTransformer(Transformer):
         )
 
         for field_name, field_values in field_values_dict.items():
-            self._logger.warning(
+            logger.warning(
                 "work %s: untransformed field %s = %s", id_, field_name, field_values
             )
 

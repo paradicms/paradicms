@@ -1,5 +1,5 @@
-from paradicms_etl.extractors.nop_extractor import NopExtractor
+from paradicms_etl.extractors.nop_extractor import nop_extractor
 
 
 def test_extract():
-    assert NopExtractor(pipeline_id="test").extract() == {}
+    assert nop_extractor() == {}

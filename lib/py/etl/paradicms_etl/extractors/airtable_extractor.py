@@ -1,14 +1,16 @@
 import json
+import logging
+from pathlib import Path
 from typing import Dict, List, Tuple, Union
 from urllib.parse import quote
 from urllib.request import urlopen
 
 from pathvalidate import sanitize_filename
 
-from paradicms_etl.extractor import Extractor
+logger = logging.getLogger(__name__)
 
 
-class AirtableExtractor(Extractor):
+class AirtableExtractor:
     """
     Extractor for an Airtable (https://airtable.com/) base.
     """
@@ -18,25 +20,26 @@ class AirtableExtractor(Extractor):
         *,
         api_key: str,
         base_id: str,
+        extracted_data_dir_path: Path,
         tables: Union[List[str], Tuple[str, ...], Dict[str, Dict[str, str]]],
-        **kwds,
     ):
         """
         :param api_key: Airtable API key
         :param base_id: Airtable base identifier
         :param tables: a list or a union of table [names] or a dict where the keys are table names and the values are API query parameters
         """
-        Extractor.__init__(self, **kwds)
         self.__api_key = api_key
         self.__base_id = base_id
+        self.__extracted_data_dir_path = extracted_data_dir_path
         if isinstance(tables, (list, tuple)):
             self.__tables: Dict[str, Dict[str, str]] = {table: {} for table in tables}
         else:
             assert isinstance(tables, dict)
             self.__tables = tables
 
-    def extract(self, *, force: bool):
+    def __call__(self, *, force: bool, **kwds):
         records_by_table = {}
+        self.__extracted_data_dir_path.mkdir(parents=True, exist_ok=True)
         for table, query_parameters in self.__tables.items():
             records_by_table[table] = self.__extract_table_records(
                 force=force, table=table, query_parameters=query_parameters
@@ -63,11 +66,11 @@ class AirtableExtractor(Extractor):
                 )
             )
 
-            file_path = self._extracted_data_dir_path / (
+            file_path = self.__extracted_data_dir_path / (
                 str(sanitize_filename(url)) + ".json"
             )
             if not file_path.is_file() or force:
-                self._logger.debug("downloading %s to %s", url, file_path)
+                logger.debug("downloading %s to %s", url, file_path)
                 f = urlopen(url)
                 try:
                     response_str = f.read()
@@ -79,7 +82,7 @@ class AirtableExtractor(Extractor):
             with open(file_path, "rb") as file_:
                 file_json = json.load(file_)
             file_records = file_json["records"]
-            self._logger.debug(
+            logger.debug(
                 "extracted %d records from %s (%s)", len(file_records), url, file_path
             )
             records.extend(file_records)

@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 from typing import Dict, Optional, Tuple, List
 
@@ -9,37 +10,42 @@ from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
+from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.property import Property
+from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.work import Work
-from paradicms_etl.transformer import Transformer
 
 ElementTextTree = Dict[str, Dict[str, List[str]]]
+logger = logging.getLogger(__name__)
 
 
 def is_uri(value: str):
     return value.startswith("http://") or value.startswith("https://")
 
 
-class OmekaClassicTransformer(Transformer):
+class OmekaClassicTransformer:
     def __init__(
         self,
         *,
         fullsize_max_height_px: int,
         fullsize_max_width_px: int,
+        institution_name: str,
+        institution_uri: URIRef,
+        institution_rights: Optional[str] = None,
         square_thumbnail_height_px: int,
         square_thumbnail_width_px: int,
         thumbnail_max_height_px: int,
         thumbnail_max_width_px: int,
-        **kwds
     ):
-        Transformer.__init__(self, **kwds)
         # Single _ so we can use getattr
         self._fullsize_max_height_px = fullsize_max_height_px
         self._fullsize_max_width_px = fullsize_max_width_px
-        self.__institution_kwds = kwds
+        self.__institution_name = institution_name
+        self.__institution_uri = institution_uri
+        self.__institution_rights = institution_rights
         self._metrics_registry = MetricsRegistry()
         self._square_thumbnail_height_px = square_thumbnail_height_px
         self._square_thumbnail_width_px = square_thumbnail_width_px
@@ -48,14 +54,19 @@ class OmekaClassicTransformer(Transformer):
         self.__transform_item_timer = self._metrics_registry.timer("transform_item")
         self.__transform_file_timer = self._metrics_registry.timer("transform_file")
 
-    def transform(self, *, collections, endpoint_url, files, items):
+    def __call__(self, *, collections, endpoint_url, files, items):
         yield from CreativeCommonsLicenses.as_tuple()
         yield from RightsStatementsDotOrgRightsStatements.as_tuple()
 
-        institution = self._transform_institution_from_arguments(
-            **self.__institution_kwds
+        institution = Institution.from_fields(
+            name=self.__institution_name,
+            rights=Rights.from_fields(
+                holder=self.__institution_name, statement=self.__institution_rights
+            )
+            if self.__institution_rights is not None
+            else None,
+            uri=self.__institution_uri,
         )
-        yield institution
 
         collection_uris_by_id = {}
         for collection in tqdm(collections, desc="Omeka collections"):
@@ -73,7 +84,7 @@ class OmekaClassicTransformer(Transformer):
 
         for item in tqdm(items, desc="Omeka items"):
             if not item["public"]:
-                self._logger.debug("item %s private, skipping", item["id"])
+                logger.debug("item %s private, skipping", item["id"])
                 continue
 
             with self.__transform_item_timer.time():
@@ -97,7 +108,7 @@ class OmekaClassicTransformer(Transformer):
                 yield from transformed_files
 
         for key, value in self._metrics_registry.dump_metrics().items():
-            self._logger.info("%s: %s", key, value)
+            logger.info("%s: %s", key, value)
 
     def _get_element_texts_as_tree(self, omeka_resource) -> ElementTextTree:
         result: ElementTextTree = {}
@@ -133,7 +144,7 @@ class OmekaClassicTransformer(Transformer):
     def _log_unknown_element_texts(self, element_text_tree: ElementTextTree) -> None:
         for element_set_name in element_text_tree.keys():
             if element_text_tree[element_set_name]:
-                self._logger.warn(
+                logger.warn(
                     "unknown %s element names: %s",
                     element_set_name,
                     tuple(element_text_tree[element_set_name]),
@@ -206,7 +217,7 @@ class OmekaClassicTransformer(Transformer):
                     properties.add(Property(property_uri, value))
 
         if dc_element_text_tree:
-            self._logger.warn(
+            logger.warn(
                 "unknown Dublin Core element names: %s",
                 tuple(dc_element_text_tree.keys()),
             )
@@ -233,11 +244,9 @@ class OmekaClassicTransformer(Transformer):
                     width=file_metadata_video["resolution_x"],
                 )
             else:
-                self._logger.debug(
-                    "file %s has no resolution in its metadata", file_["id"]
-                )
+                logger.debug("file %s has no resolution in its metadata", file_["id"])
         else:
-            self._logger.debug("file %s has no metadata", file_["id"])
+            logger.debug("file %s has no metadata", file_["id"])
 
         file_added = datetime.fromisoformat(file_["added"])
         file_modified = datetime.fromisoformat(file_["modified"])
@@ -286,7 +295,7 @@ class OmekaClassicTransformer(Transformer):
         collection_uris_by_id: Dict[int, URIRef],
         endpoint_url: str,
         institution_uri: URIRef,
-        item
+        item,
     ) -> Optional[Work]:
         if item["collection"] is None:
             return None

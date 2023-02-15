@@ -1,12 +1,8 @@
-from pathlib import Path
-
 from paradicms_etl.loaders.collecting_loader import CollectingLoader
 
 
-def test_load(test_data_models, tmpdir):
-    loader = CollectingLoader(data_dir_path=Path(tmpdir), pipeline_id="test")
-    loader.load(models=test_data_models)
-    actual = loader.flush()
+def test_load(test_data_models, tmp_path):
+    actual = CollectingLoader()(flush=True, models=test_data_models)
     assert tuple(sorted(model.uri for model in actual)) == tuple(
         sorted(model.uri for model in test_data_models)
     )

@@ -2,10 +2,12 @@ from pathlib import Path
 
 from rdflib import URIRef
 
-from paradicms_etl.extractors.markdown_directory_extractor import MarkdownDirectoryExtractor
+from paradicms_etl.extractors.markdown_directory_extractor import (
+    MarkdownDirectoryExtractor,
+)
 from paradicms_etl.models.collection import Collection
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.image import Image
+from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
@@ -13,20 +15,20 @@ from paradicms_etl.transformers.markdown_directory_transformer import (
     MarkdownDirectoryTransformer,
 )
 
+
 def test_transform(data_dir_path: Path):
     markdown_directory_data_dir_path = data_dir_path / "markdown_directory"
     extractor = MarkdownDirectoryExtractor(
-        extracted_data_dir_path=markdown_directory_data_dir_path / "extracted",
-        pipeline_id="test",
+        markdown_directory_path=markdown_directory_data_dir_path / "extracted"
     )
     models = tuple(
         MarkdownDirectoryTransformer(
-            collection_uri="urn:markdown:test:collection:default",
-            institution_name="Markdown directory test institution",
-            collection_title="Markdown directory test collection",
-            institution_uri="urn:markdown:test:institution:default",
-            pipeline_id="test",
-        ).transform(**extractor.extract())
+            # collection_uri="urn:markdown:test:collection:default",
+            # institution_name="Markdown directory test institution",
+            # collection_title="Markdown directory test collection",
+            # institution_uri="urn:markdown:test:institution:default",
+            pipeline_id="test"
+        )(**extractor())
     )
     assert models
     for model in models:

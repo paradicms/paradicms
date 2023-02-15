@@ -1,3 +1,4 @@
+import logging
 from typing import Tuple, Iterable, Dict
 
 from rdflib import Graph, URIRef
@@ -5,11 +6,12 @@ from rdflib import Graph, URIRef
 from paradicms_etl.model import Model
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
-from paradicms_etl.transformer import Transformer
 from paradicms_etl.utils.sanitize_method_name import sanitize_method_name
 
+logger = logging.getLogger(__name__)
 
-class _WikidataItemsTransformer(Transformer):
+
+class _WikidataItemsTransformer:
     """
     Abstract base class for transformers that accept an rdflib Graph containing Wikidata items and generate zero or more
     paradicms Models.
@@ -28,15 +30,15 @@ class _WikidataItemsTransformer(Transformer):
     def _log_missing_transform_method(
         self, *, item: WikidataItem, transform_method_name: str
     ):
-        self._logger.warning(
+        logger.warning(
             "unable to find method %s to transform item %s",
             transform_method_name,
             item.uri,
         )
 
-    def transform(self, *, graph: Graph) -> Iterable[Model]:  # type: ignore
+    def __call__(self, *, graph: Graph) -> Iterable[Model]:  # type: ignore
         yield from self._transform_items(
-            WikidataItem.from_wikidata_rdf(graph=graph, logger=self._logger)
+            WikidataItem.from_wikidata_rdf(graph=graph, logger=logger)
         )
 
     def _transform_item(self, item: WikidataItem) -> Iterable[NamedModel]:
@@ -44,7 +46,7 @@ class _WikidataItemsTransformer(Transformer):
             "instance of", None
         )
         if not instance_of_statements:
-            self._logger.debug("item %s has no instance of statements", item.uri)
+            logger.debug("item %s has no instance of statements", item.uri)
             return
 
         assert isinstance(instance_of_statements[0].value, WikidataItem)
@@ -72,30 +74,28 @@ class _WikidataItemsTransformer(Transformer):
                 if model.uri == item.uri:
                     assert model.uri not in authoritative_models_by_uri, model.uri
                     authoritative_models_by_uri[model.uri] = model
-                    self._logger.debug("authoritative model %s", model.uri)
+                    logger.debug("authoritative model %s", model.uri)
                 else:
-                    self._logger.debug("non-authoritative model %s", model.uri)
+                    logger.debug("non-authoritative model %s", model.uri)
                     existing_non_authoritative_model = (
                         non_authoritative_models_by_uri.get(model.uri)
                     )
                     if existing_non_authoritative_model is None:
                         non_authoritative_models_by_uri[model.uri] = model
                     elif existing_non_authoritative_model != model:
-                        self._logger.info(
+                        logger.info(
                             "conflicting non-authoritative model %s: %s vs %s",
                             model.uri,
                             existing_non_authoritative_model,
                             model,
                         )
                     else:
-                        self._logger.debug(
-                            "duplicate non-authoritative model %s", model.uri
-                        )
+                        logger.debug("duplicate non-authoritative model %s", model.uri)
 
         yield from authoritative_models_by_uri.values()
         for model in non_authoritative_models_by_uri.values():
             if model.uri in authoritative_models_by_uri:
-                self._logger.info(
+                logger.info(
                     "ignoring non-authoritative model %s in favor of authoritative version",
                     model.uri,
                 )

@@ -1,5 +1,4 @@
 import os
-from pathlib import Path
 
 import pytest
 from rdflib import Graph
@@ -8,11 +7,11 @@ from paradicms_etl.extractors.wikidata_qid_extractor import WikidataQidExtractor
 
 
 @pytest.mark.skipif("CI" in os.environ, reason="don't connect to Wikidata in CI")
-def test_extract(tmpdir):
+def test_extract(tmp_path):
     sut = WikidataQidExtractor(
-        data_dir_path=Path(tmpdir), pipeline_id="test", qids=("Q160534", "Q167518")
+        extracted_data_dir_path=tmp_path, qids=("Q160534", "Q167518")
     )  # Jack Kerouac, Neal Cassady
-    result = sut.extract(force=False)
+    result = sut(force=False)
     graph = result["graph"]
     assert isinstance(graph, Graph)
     assert len(graph)
