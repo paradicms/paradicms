@@ -32,20 +32,16 @@ class WikidataQidToMarkdownDirectoryPipeline(Pipeline):
         **kwds
     ):
         if collection_uri is None:
-            collection_uri = str(
-                MarkdownDirectoryTransformer.default_collection_uri(
-                    markdown_directory_name=str(
-                        Path(markdown_directory_path).absolute().name
-                    ),
-                    pipeline_id=pipeline_id,
-                )
+            collection_uri = MarkdownDirectoryTransformer.default_collection_uri(
+                markdown_directory_name=str(
+                    Path(markdown_directory_path).absolute().name
+                ),
+                pipeline_id=pipeline_id,
             )
 
         if institution_uri is None:
-            institution_uri = str(
-                MarkdownDirectoryTransformer.default_institution_uri(
-                    pipeline_id=pipeline_id
-                )
+            institution_uri = MarkdownDirectoryTransformer.default_institution_uri(
+                pipeline_id=pipeline_id
             )
 
         Pipeline.__init__(

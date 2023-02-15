@@ -1,10 +1,10 @@
 import json
 import logging
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 from urllib.request import urlopen
 from xml.dom.minidom import parseString
-from xml.etree.ElementTree import ElementTree
+from xml.etree.ElementTree import fromstring as ElementTree_fromstring, ElementTree
 
 from pathvalidate import sanitize_filename
 
@@ -40,10 +40,12 @@ class OaiPmhExtractor:
         record_identifiers_file_path = (
             self.__extracted_data_dir_path / "record_identifiers.json"
         )
+
+        record_identifiers: List[str]
+        record_etrees: List[ElementTree] = []
         if record_identifiers_file_path.exists():
             with open(record_identifiers_file_path) as record_identifiers_file:
-                record_identifiers = tuple(json.load(record_identifiers_file))
-                record_etrees = []
+                record_identifiers = list(json.load(record_identifiers_file))
                 for record_identifier in record_identifiers:
                     with open(record_identifier_file_path(record_identifier)) as f:
                         record_etree = ElementTree()
@@ -52,7 +54,6 @@ class OaiPmhExtractor:
                 return {"record_etrees": tuple(record_etrees)}
 
         base_url = self.__endpoint_url + "?verb=ListRecords"
-        record_etrees = []
         record_identifiers = []
         resumption_token = None
         while True:
@@ -91,7 +92,9 @@ class OaiPmhExtractor:
                     record_identifier_file_path(record_identifier), "w+"
                 ) as record_identifier_file:
                     record_identifier_file.write(record_element_xml)
-                record_etrees.append(ElementTree.fromstring(record_element_xml))
+                record_etrees.append(
+                    ElementTree(ElementTree_fromstring(record_element_xml))
+                )
 
                 if len(record_identifiers) % 50 == 0:
                     logger.info("read %d records", len(record_identifiers))

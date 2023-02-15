@@ -7,7 +7,6 @@ from rdflib import DCTERMS, Literal, URIRef
 
 from paradicms_etl.extractors.nop_extractor import nop_extractor
 from paradicms_etl.loader import Loader
-from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.collection import Collection
@@ -529,26 +528,9 @@ class TestDataPipeline(Pipeline):
             Path(__file__).absolute().parent.parent.parent.parent.parent.parent
         )
         if loader is None:
-            loader = CompositeLoader(
-                loaders=(
-                    # RdfFileLoader(
-                    #     file_path=root_dir_path
-                    #     / "gui"
-                    #     / "integration"
-                    #     / "material-ui-union"
-                    #     / "cypress"
-                    #     / "fixtures"
-                    #     / "data.ttl",
-                    # ),
-                    RdfFileLoader(
-                        file_path=root_dir_path
-                        / "data"
-                        / "test_data"
-                        / "loaded"
-                        / "data.trig",
-                        pipeline_id=self.ID,
-                    ),
-                )
+            loader = RdfFileLoader(
+                file_path=root_dir_path / "data" / "test_data" / "loaded" / "data.trig",
+                pipeline_id=self.ID,
             )
 
         Pipeline.__init__(

@@ -7,7 +7,6 @@ from configargparse import ArgParser
 
 from paradicms_etl.extractor import Extractor
 from paradicms_etl.loader import Loader
-from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.model import Model
 from paradicms_etl.transformer import Transformer
 from paradicms_etl.transformers.validation_transformer import validation_transformer
@@ -22,8 +21,8 @@ class Pipeline(ABC):
         *,
         extractor: Extractor,
         id: str,
+        loader: Loader,
         transformer: Transformer,
-        loader: Optional[Loader] = None,
         validate_transform: bool = True,
         **kwds,
     ):
@@ -37,8 +36,6 @@ class Pipeline(ABC):
 
         self.__extractor = extractor
         self.__id = id
-        if loader is None:
-            loader = RdfFileLoader()
         self.__loader = loader
         self.__logger = logging.getLogger(self.__class__.__name__)
         self.__transformer = transformer

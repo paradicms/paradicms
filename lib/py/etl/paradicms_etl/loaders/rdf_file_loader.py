@@ -19,9 +19,9 @@ class RdfFileLoader(BufferingLoader):
     def __init__(
         self,
         *,
-        file_path: Optional[Path] = None,
-        format: Optional[str] = FORMAT_DEFAULT,
+        file_path: Path,
         pipeline_id: str,
+        format: Optional[str] = FORMAT_DEFAULT,
     ):
         BufferingLoader.__init__(self)
         self.__file_path = file_path

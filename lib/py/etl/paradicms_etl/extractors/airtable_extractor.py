@@ -66,7 +66,7 @@ class AirtableExtractor:
                 )
             )
 
-            file_path = extracted_data_dir_path / (
+            file_path = self.__extracted_data_dir_path / (
                 str(sanitize_filename(url)) + ".json"
             )
             if not file_path.is_file() or force:
