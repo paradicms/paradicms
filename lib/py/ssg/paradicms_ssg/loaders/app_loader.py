@@ -6,11 +6,11 @@ from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 
-from paradicms_ssg.deployer import Deployer
-from paradicms_ssg.image_archiver import ImageArchiver
-from paradicms_ssg.deployers.fs_deployer import FsDeployer
-from paradicms_ssg.image_archivers.fs_image_archiver import FsImageArchiver
 from paradicms_ssg.app_package import AppPackage
+from paradicms_ssg.deployer import Deployer
+from paradicms_ssg.deployers.fs_deployer import FsDeployer
+from paradicms_ssg.image_archiver import ImageArchiver
+from paradicms_ssg.image_archivers.fs_image_archiver import FsImageArchiver
 from paradicms_ssg.loaders.images_loader import ImagesLoader
 
 
@@ -32,6 +32,7 @@ class AppLoader(BufferingLoader):
         self,
         *,
         app: Union[Path, str],
+        loaded_data_dir_path: Path,
         base_url_path: str = "",
         configuration_file_path: Optional[Path] = None,
         deployer: Optional[Deployer] = None,
@@ -61,6 +62,7 @@ class AppLoader(BufferingLoader):
         self.__deployer = deployer
         self.__dev = dev
         self.__image_archiver = image_archiver
+        self.__loaded_data_dir_path = loaded_data_dir_path
         self.__sleep_s_after_image_download = sleep_s_after_image_download
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
 
@@ -108,7 +110,7 @@ class AppLoader(BufferingLoader):
             gui_images.extend(
                 ImagesLoader(
                     image_archiver=image_archiver,
-                    loaded_data_dir_path=self._loaded_data_dir_path,
+                    loaded_data_dir_path=self.__loaded_data_dir_path,
                     pipeline_id=self._pipeline_id,
                     sleep_s_after_image_download=self.__sleep_s_after_image_download,
                     thumbnail_max_dimensions=self.__thumbnail_max_dimensions,
@@ -117,7 +119,7 @@ class AppLoader(BufferingLoader):
 
             models = tuple(gui_images + other_models)
 
-        data_dir_path = self._loaded_data_dir_path / "data"
+        data_dir_path = self.__loaded_data_dir_path / "data"
         data_loader = RdfFileLoader(
             loaded_data_dir_path=data_dir_path,
             pipeline_id=self._pipeline_id,
@@ -142,7 +144,7 @@ class AppLoader(BufferingLoader):
             deployer = self.__deployer
             if deployer is None:
                 deployer = FsDeployer(
-                    deploy_dir_path=self._loaded_data_dir_path / "deployed"
+                    deploy_dir_path=self.__loaded_data_dir_path / "deployed"
                 )
 
             deployer.deploy(app_out_dir_path=app_out_dir_path)

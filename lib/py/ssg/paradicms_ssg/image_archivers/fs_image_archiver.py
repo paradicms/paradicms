@@ -2,27 +2,23 @@ import mimetypes
 import shutil
 from pathlib import Path
 
-from paradicms_ssg.image_archiver import ImageArchiver
 from paradicms_ssg.utils.get_image_file_mime_type import get_image_file_mime_type
 from paradicms_ssg.utils.sha256_hash_file import sha256_hash_file
 
 
-class FsImageArchiver(ImageArchiver):
+class FsImageArchiver:
     def __init__(
         self,
         *,
         base_url: str,
         root_directory_path: Path,
         force_overwrite: bool = False,
-        **kwds,
     ):
-        ImageArchiver.__init__(self, **kwds)
-
         self.__base_url = base_url.rstrip("/") + "/"
         self.__force_overwrite = force_overwrite
         self.__root_directory_path = root_directory_path
 
-    def archive_image(self, *, image_file_path: Path) -> str:
+    def __call__(self, *, image_file_path: Path) -> str:
         image_file_mime_type = get_image_file_mime_type(image_file_path)
 
         guess_file_ext = mimetypes.guess_extension(image_file_mime_type, strict=False)
