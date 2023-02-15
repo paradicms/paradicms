@@ -34,13 +34,13 @@ class CreativeCommonsPipeline(Pipeline):
         with TemporaryDirectory() as temp_dir:
             zip_file_path = download_file(
                 downloaded_file_dir_path=Path(temp_dir),
-                from_url="https://github.com/creativecommons/cc.licenserdf/archive/refs/heads/master.zip",
+                from_url="https://github.com/creativecommons/cc.licenserdf/archive/refs/heads/main.zip",
                 force=force,
             )
             rdf_file_contents = {}
             with ZipFile(zip_file_path) as zip_file:
                 entry_names = tuple(zip_file.namelist())
-                ENTRY_NAME_PREFIX = "cc.licenserdf-master/cc/licenserdf/licenses/"
+                ENTRY_NAME_PREFIX = "cc.licenserdf-main/cc/licenserdf/licenses/"
                 for entry_name in entry_names:
                     if not entry_name.startswith(ENTRY_NAME_PREFIX):
                         continue
@@ -81,7 +81,7 @@ class CreativeCommonsPipeline(Pipeline):
                 en_license_graph.add((s, p, o))
 
             py_license_reprs.append(
-                f"    {py_license_identifier} = License.from_rdf(Graph().parse(data=r'''{en_license_graph.serialize(format='ttl').decode('utf-8')}''', format='ttl').resource(URIRef('{license.uri}')))"  # type: ignore
+                f"    {py_license_identifier} = License.from_rdf(Graph().parse(data=r'''{en_license_graph.serialize(format='ttl')}''', format='ttl').resource(URIRef('{license.uri}')))"  # type: ignore
             )
         py_license_reprs_joined = "\n".join(py_license_reprs)
 
