@@ -16,13 +16,10 @@ class OmekaClassicPipeline(Pipeline):
         square_thumbnail_width_px: int,
         thumbnail_height_px: int,
         thumbnail_width_px: int,
-        **kwds
     ):
         Pipeline.__init__(
             self,
-            extractor=OmekaClassicExtractor(
-                api_key=api_key, endpoint_url=endpoint_url, **kwds
-            ),
+            extractor=OmekaClassicExtractor(api_key=api_key, endpoint_url=endpoint_url),
             id=pipeline_id,
             transformer=OmekaClassicTransformer(
                 fullsize_height_px=fullsize_height_px,
@@ -31,9 +28,7 @@ class OmekaClassicPipeline(Pipeline):
                 square_thumbnail_width_px=square_thumbnail_width_px,
                 thumbnail_height_px=thumbnail_height_px,
                 thumbnail_width_px=thumbnail_width_px,
-                **kwds
             ),
-            **kwds
         )
 
     @classmethod
