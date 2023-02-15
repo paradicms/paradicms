@@ -1,5 +1,6 @@
 from io import BytesIO
 from pathlib import Path
+from tempfile import TemporaryDirectory
 from typing import Dict, Iterable
 from zipfile import ZipFile
 
@@ -16,36 +17,39 @@ class RightsStatementsDotOrgPipeline(Pipeline):
     ID = "rights_statements_dot_org"
 
     @staticmethod
-    def __extract(*, extracted_data_dir_path: Path, force: bool):
-        zip_file_path = download_file(
-            downloaded_file_dir_path=extracted_data_dir_path,
-            force=force,
-            from_url="https://github.com/rightsstatements/data-model/archive/refs/heads/master.zip",
-        )
-        json_ld_file_contents = {}
-        with ZipFile(zip_file_path) as zip_file:
-            entry_names = tuple(zip_file.namelist())
-            ENTRY_NAME_PREFIX = "data-model-master/"
-            ENTRY_NAME_SUFFIX = "_en.json"
-            for entry_name in entry_names:
-                assert entry_name.startswith(ENTRY_NAME_PREFIX)
-                if not entry_name.endswith(ENTRY_NAME_SUFFIX):
-                    continue
-                with zip_file.open(entry_name) as zip_file_entry:
-                    id_ = entry_name[len(ENTRY_NAME_PREFIX) : -len(ENTRY_NAME_SUFFIX)]
-                    assert id_ not in json_ld_file_contents
-                    json_ld_file_contents[id_] = zip_file_entry.read()
-        return {"json_ld_file_contents": json_ld_file_contents}
+    def __extract(*, force: bool):
+        with TemporaryDirectory() as temp_dir:
+            zip_file_path = download_file(
+                downloaded_file_dir_path=Path(temp_dir),
+                force=force,
+                from_url="https://github.com/rightsstatements/data-model/archive/refs/heads/master.zip",
+            )
+            json_ld_file_contents = {}
+            with ZipFile(zip_file_path) as zip_file:
+                entry_names = tuple(zip_file.namelist())
+                ENTRY_NAME_PREFIX = "data-model-master/"
+                ENTRY_NAME_SUFFIX = "_en.json"
+                for entry_name in entry_names:
+                    assert entry_name.startswith(ENTRY_NAME_PREFIX)
+                    if not entry_name.endswith(ENTRY_NAME_SUFFIX):
+                        continue
+                    with zip_file.open(entry_name) as zip_file_entry:
+                        id_ = entry_name[
+                            len(ENTRY_NAME_PREFIX) : -len(ENTRY_NAME_SUFFIX)
+                        ]
+                        assert id_ not in json_ld_file_contents
+                        json_ld_file_contents[id_] = zip_file_entry.read()
+            return {"json_ld_file_contents": json_ld_file_contents}
 
     @staticmethod
-    def __load(*, models: Iterable[Model]):
+    def __load(*, models: Iterable[Model], **kwds):
         rights_statements_py_file_path = (
             Path(__file__).parent.parent
             / "models"
             / "rights_statements_dot_org_rights_statements.py"
         )
         rights_statement_reprs = "\n\n".join(
-            f"    {rights_statement.identifier.replace('-', '_')} = RightsStatement.from_rdf(Graph().parse(data=r'''{rights_statement.to_rdf(bind_namespaces(Graph())).graph.serialize(format='ttl').decode('utf-8')}''', format='ttl').resource(URIRef('{rights_statement.uri}')))"
+            f"    {rights_statement.identifier.replace('-', '_')} = RightsStatement.from_rdf(Graph().parse(data=r'''{rights_statement.to_rdf(bind_namespaces(Graph())).graph.serialize(format='ttl')}''', format='ttl').resource(URIRef('{rights_statement.uri}')))"
             for rights_statement in models
             if isinstance(rights_statement, RightsStatement)
         )

@@ -32,7 +32,6 @@ class CreativeCommonsPipeline(Pipeline):
     @staticmethod
     def __extract(*, force: bool, **kwds):
         with TemporaryDirectory() as temp_dir:
-            print(temp_dir)
             zip_file_path = download_file(
                 downloaded_file_dir_path=Path(temp_dir),
                 from_url="https://github.com/creativecommons/cc.licenserdf/archive/refs/heads/master.zip",
