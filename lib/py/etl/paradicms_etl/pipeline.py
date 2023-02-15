@@ -82,7 +82,7 @@ class Pipeline(ABC):
             type=existing_directory_argument_type,
         )
 
-    def extract_transform(self, *, force_extract: bool = False):
+    def extract_transform(self, *, force_extract: bool = False) -> Iterable[Model]:
         return self.__transform(self.__extract(force=force_extract))
 
     def __extract(self, *, force: bool = False) -> Optional[Dict[str, object]]:

@@ -15,13 +15,14 @@ from paradicms_etl.transformers.markdown_directory_transformer import (
 
 
 class __MarkdownDirectoryPipeline(Pipeline):
-    def __init__(self, data_dir_path: Path, id: str):
+    def __init__(self, loaded_data_dir_path: Path, id: str):
         Pipeline.__init__(
             self,
-            data_dir_path=data_dir_path,
-            extractor=MarkdownDirectoryExtractor(),
+            extractor=MarkdownDirectoryExtractor(
+                markdown_directory_path=loaded_data_dir_path
+            ),
             id=id,
-            transformer=MarkdownDirectoryTransformer(),
+            transformer=MarkdownDirectoryTransformer(pipeline_id=id),
             loader=nop_loader,
         )
 
@@ -31,11 +32,9 @@ def test_load(test_data_models, tmp_path):
     pipeline_id = "test"
     loaded_data_dir_path = data_dir_path / pipeline_id / "loaded"
 
-    MarkdownDirectoryLoader()(
+    MarkdownDirectoryLoader(loaded_data_dir_path=loaded_data_dir_path)(
         flush=True,
-        loaded_data_dir_path=loaded_data_dir_path,
         models=test_data_models,
-        pipeline_id=pipeline_id,
     )
 
     expected_work = next(work for work in test_data_models if isinstance(work, Work))
@@ -46,11 +45,9 @@ def test_load(test_data_models, tmp_path):
     )
     assert expected_md_file_path.exists()
 
-    loaded_data_dir_path.rename(data_dir_path / pipeline_id / "extracted")
-
     actual_models = tuple(
         __MarkdownDirectoryPipeline(
-            data_dir_path=data_dir_path, id=pipeline_id
+            loaded_data_dir_path=loaded_data_dir_path, id=pipeline_id
         ).extract_transform()
     )
     actual_work = next(

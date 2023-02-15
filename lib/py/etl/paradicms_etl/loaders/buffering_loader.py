@@ -15,5 +15,8 @@ class BufferingLoader:
     def __call__(self, *, flush: bool, models: Iterable[Model]):
         self.__models.extend(models)
         if flush:
-            self._flush(models=tuple(models))
+            result = self._flush(models=tuple(models))
             self.__models = []
+            return result
+        else:
+            return None
