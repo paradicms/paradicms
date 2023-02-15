@@ -139,7 +139,7 @@ class ImagesLoader:
         assert len(archived_thumbnail_images) == len(self.__thumbnail_max_dimensions)
         return tuple(archived_thumbnail_images)
 
-    def __call__(self, *, models) -> Generator[Image, None, None]:
+    def __call__(self, *, models, **kwds) -> Generator[Image, None, None]:
         """
         Archive an original image and its thumbnails.
         :return a generator of (1) a copy of image with the archived image URL and (2) new Images for the thumbnails
