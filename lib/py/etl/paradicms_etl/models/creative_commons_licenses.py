@@ -7,5 +7,3 @@ from paradicms_etl.models.model_singletons import ModelSingletons
 
 class CreativeCommonsLicenses(ModelSingletons):
     _MODEL_CLASS = License
-
-
