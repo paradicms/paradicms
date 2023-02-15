@@ -33,12 +33,11 @@ class __MarkdownDirectoryPipeline(Pipeline):
 
 
 @pytest.mark.skipif("CI" in os.environ, reason="don't connect to Wikidata in CI")
-def test_extract_transform_load(tmpdir):
-    tmpdir_path = Path(tmpdir)
+def test_extract_transform_load(tmp_path):
     pipeline_id = "test"
-    data_dir_path = tmpdir_path / "data"
+    data_dir_path = tmp_path / "data"
     data_dir_path.mkdir()
-    markdown_directory_path = tmpdir_path / "md"
+    markdown_directory_path = tmp_path / "md"
     markdown_directory_path.mkdir()
     pipeline = WikidataQidToMarkdownDirectoryPipeline(
         data_dir_path=data_dir_path,

@@ -26,8 +26,8 @@ class __MarkdownDirectoryPipeline(Pipeline):
         )
 
 
-def test_load(test_data_models, tmpdir):
-    data_dir_path = Path(tmpdir)
+def test_load(test_data_models, tmp_path):
+    data_dir_path = tmp_path
     pipeline_id = "test"
     loaded_data_dir_path = data_dir_path / pipeline_id / "loaded"
 
