@@ -75,7 +75,7 @@ class CompositePipeline(Pipeline):
         if self.__validate_transform:
             models = validation_transformer(models)
 
-        self.loader.load(flush=True, models=models)
+        self.loader(flush=True, models=models)
 
     @property
     def _pipelines(self) -> Tuple[Pipeline, ...]:
