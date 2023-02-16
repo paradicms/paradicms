@@ -32,9 +32,9 @@ from paradicms_etl.pipeline import Pipeline
 
 
 class SyntheticDataPipeline(Pipeline):
-    ID = "test_data"
+    ID = "synthetic_data"
 
-    class __TestDataTransformer:
+    class __SyntheticDataTransformer:
         __FACETED_PROPERTY_VALUES = (
             (
                 VRA.culturalContext,
@@ -327,7 +327,7 @@ class SyntheticDataPipeline(Pipeline):
                         property_uris=(property_uri,),
                         title=f"Named value {named_value_urn_i}",
                         uri=URIRef(
-                            f"urn:paradicms_etl:pipeline:test_data:named_value:{named_value_urn_i}"
+                            f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:named_value:{named_value_urn_i}"
                         ),
                         value=Literal(property_value),
                     )
@@ -538,7 +538,7 @@ class SyntheticDataPipeline(Pipeline):
             extractor=nop_extractor,
             id=self.ID,
             loader=loader,
-            transformer=self.__TestDataTransformer(),
+            transformer=self.__SyntheticDataTransformer(),
         )
 
 
