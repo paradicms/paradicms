@@ -31,7 +31,7 @@ from paradicms_etl.namespaces import VRA
 from paradicms_etl.pipeline import Pipeline
 
 
-class TestDataPipeline(Pipeline):
+class SyntheticDataPipeline(Pipeline):
     ID = "test_data"
 
     class __TestDataTransformer:
@@ -529,7 +529,7 @@ class TestDataPipeline(Pipeline):
         )
         if loader is None:
             loader = RdfFileLoader(
-                file_path=root_dir_path / "data" / "test_data" / "loaded" / "data.trig",
+                file_path=root_dir_path / "data" / "synthetic" / "synthetic_data.trig",
                 pipeline_id=self.ID,
             )
 
@@ -543,4 +543,4 @@ class TestDataPipeline(Pipeline):
 
 
 if __name__ == "__main__":
-    TestDataPipeline.main()
+    SyntheticDataPipeline.main()
