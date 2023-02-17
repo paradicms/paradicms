@@ -40,7 +40,7 @@ class Excel2010Extractor:
         for sheet_name in workbook.sheetnames:
             sheet = workbook[sheet_name]
             header_row = None
-            row_dicts = {}
+            row_dicts = []
             for row_i, row in enumerate(sheet.rows):
                 if row_i == 0:
                     header_row = row
