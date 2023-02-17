@@ -13,7 +13,7 @@ from paradicms_etl.utils.module_namespaces import module_namespaces
 class DictToResourceTransformer:
     DEFAULT_NAMESPACE_DEFAULT = DCTERMS
     NAMESPACES_BY_PREFIX_DEFAULT = module_namespaces(
-        (rdflib.namespace, paradicms_etl.namespaces)
+        rdflib.namespace, paradicms_etl.namespaces
     )
 
     def __init__(
