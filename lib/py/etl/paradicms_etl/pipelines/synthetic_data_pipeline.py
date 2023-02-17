@@ -31,10 +31,10 @@ from paradicms_etl.namespaces import VRA
 from paradicms_etl.pipeline import Pipeline
 
 
-class TestDataPipeline(Pipeline):
-    ID = "test_data"
+class SyntheticDataPipeline(Pipeline):
+    ID = "synthetic_data"
 
-    class __TestDataTransformer:
+    class __SyntheticDataTransformer:
         __FACETED_PROPERTY_VALUES = (
             (
                 VRA.culturalContext,
@@ -327,7 +327,7 @@ class TestDataPipeline(Pipeline):
                         property_uris=(property_uri,),
                         title=f"Named value {named_value_urn_i}",
                         uri=URIRef(
-                            f"urn:paradicms_etl:pipeline:test_data:named_value:{named_value_urn_i}"
+                            f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:named_value:{named_value_urn_i}"
                         ),
                         value=Literal(property_value),
                     )
@@ -529,7 +529,7 @@ class TestDataPipeline(Pipeline):
         )
         if loader is None:
             loader = RdfFileLoader(
-                file_path=root_dir_path / "data" / "test_data" / "loaded" / "data.trig",
+                file_path=root_dir_path / "data" / "synthetic" / "synthetic_data.trig",
                 pipeline_id=self.ID,
             )
 
@@ -538,9 +538,9 @@ class TestDataPipeline(Pipeline):
             extractor=nop_extractor,
             id=self.ID,
             loader=loader,
-            transformer=self.__TestDataTransformer(),
+            transformer=self.__SyntheticDataTransformer(),
         )
 
 
 if __name__ == "__main__":
-    TestDataPipeline.main()
+    SyntheticDataPipeline.main()

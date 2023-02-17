@@ -33,6 +33,6 @@ jobs:
         run: |
           export PATH=$PATH:$PWD/node_modules/.bin
           yarn install
-          export DATA_FILE_PATH=`realpath $PWD/data/test_data/loaded/data.trig`
+          export DATA_FILE_PATH=`realpath $PWD/data/synthetic/synthetic_data.trig`
           yarn build
           yarn test
