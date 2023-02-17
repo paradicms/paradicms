@@ -7,8 +7,6 @@ from urllib.request import urlopen
 
 from rdflib import Graph
 
-logger = logging.getLogger(__name__)
-
 
 class WikidataQidExtractor:
     """
@@ -18,6 +16,7 @@ class WikidataQidExtractor:
     def __init__(self, extracted_data_dir_path: Path, qids: Tuple[str, ...]):
         self.__extracted_data_dir_path = extracted_data_dir_path
         self.__qids = qids
+        self.__logger = logging.getLogger(__name__)
 
     def __call__(self, *, force: bool, **kwds):
         self.__extracted_data_dir_path.mkdir(parents=True, exist_ok=True)
@@ -33,16 +32,16 @@ class WikidataQidExtractor:
             file_path = self.__extracted_data_dir_path / file_name
             if file_path.is_file() and not force:
                 rdf_file_paths.append(file_path)
-                logger.info("%s already downloaded, skipping", file_path)
+                self.__logger.info("%s already downloaded, skipping", file_path)
                 continue
 
             url = f"https://www.wikidata.org/entity/{file_name}"
-            logger.debug("downloading %s to %s", url, file_path)
+            self.__logger.debug("downloading %s to %s", url, file_path)
             with urlopen(url, context=ssl_ctx) as response, open(
                 file_path, "wb"
             ) as file_:
                 shutil.copyfileobj(response, file_)
-            logger.info("downloaded %s to %s", url, file_path)
+            self.__logger.info("downloaded %s to %s", url, file_path)
             rdf_file_paths.append(file_path)
 
         graph = Graph()

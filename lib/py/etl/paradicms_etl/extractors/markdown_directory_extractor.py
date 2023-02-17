@@ -7,11 +7,10 @@ from PIL import Image, UnidentifiedImageError
 
 from paradicms_etl.models.markdown_directory import MarkdownDirectory
 
-logger = logging.getLogger(__name__)
-
 
 class MarkdownDirectoryExtractor:
     def __init__(self, *, markdown_directory_path: Path):
+        self.__logger = logging.getLogger(__name__)
         self.__markdown_directory_path = markdown_directory_path
 
     def __call__(self, **kwds):
@@ -35,7 +34,7 @@ class MarkdownDirectoryExtractor:
                 continue
             dir_relpath = dir_path.relative_to(root_dir_path)
             if str(dir_relpath).startswith("."):
-                logger.debug("skipping hidden directory %s", dir_path)
+                self.__logger.debug("skipping hidden directory %s", dir_path)
                 continue
             model_type = str(dir_relpath).replace(os.path.sep, "/")
             for file_name in file_names:

@@ -15,13 +15,13 @@ class GoogleSheetsExtractor:
 
     def __extract(self, *, extracted_data_dir_path: Path, force: bool):
         xlsx_file_path = extracted_data_dir_path / (self.__spreadsheet_id + ".xlsx")
-        urlretrieve(
-            f"https://docs.google.com/spreadsheets/u/0/d/{self.__spreadsheet_id}/export?"
-            f"format=xlsx&id={self.__spreadsheet_id}",
-            filename=str(xlsx_file_path),
-        )
-        models = tuple(Excel2010Extractor(xlsx_file_path=xlsx_file_path))
-        return iter(models)
+        if not xlsx_file_path.is_file() or force:
+            urlretrieve(
+                f"https://docs.google.com/spreadsheets/u/0/d/{self.__spreadsheet_id}/export?"
+                f"format=xlsx&id={self.__spreadsheet_id}",
+                filename=str(xlsx_file_path),
+            )
+        return Excel2010Extractor(xlsx_file_path=xlsx_file_path)
 
     def __call__(self, *, force: bool, **kwds):
         if self.__extracted_data_dir_path is not None:
@@ -30,4 +30,6 @@ class GoogleSheetsExtractor:
             )
         else:
             with TemporaryDirectory() as temp_dir:
-                return self.__extract(extracted_data_dir_path=temp_dir, force=force)
+                return self.__extract(
+                    extracted_data_dir_path=Path(temp_dir), force=force
+                )

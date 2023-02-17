@@ -34,8 +34,6 @@ from paradicms_etl.utils.markdown_to_resource_transformer import (
     MarkdownToResourceTransformer,
 )
 
-logger = logging.getLogger(__name__)
-
 
 class MarkdownDirectoryTransformer:
     """
@@ -78,6 +76,7 @@ class MarkdownDirectoryTransformer:
             )
         self.__default_collection = default_collection
         self.__default_institution = default_institution
+        self.__logger = logging.getLogger(__name__)
         self.__namespaces_by_prefix = namespaces_by_prefix
         self.__pipeline_id = pipeline_id
 
@@ -681,7 +680,7 @@ class MarkdownDirectoryTransformer:
         for model in self.__TransformInvocation(
             default_collection=self.__default_collection,
             default_institution=self.__default_institution,
-            logger=logger,
+            logger=self.__logger,
             markdown_directory=markdown_directory,
             namespaces_by_prefix=self.__namespaces_by_prefix,
             pipeline_id=self.__pipeline_id,

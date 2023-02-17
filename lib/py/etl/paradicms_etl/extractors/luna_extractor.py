@@ -1,11 +1,8 @@
 import json
-import logging
 from pathlib import Path
 from urllib.parse import urlencode, quote
 
 from paradicms_etl.utils.download_file import download_file
-
-logger = logging.getLogger(__name__)
 
 
 class LunaExtractor:

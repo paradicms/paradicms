@@ -12,8 +12,6 @@ from stringcase import snakecase
 from paradicms_etl.model import Model
 from paradicms_etl.utils.dict_to_resource_transformer import DictToResourceTransformer
 
-logger = logging.getLogger(__name__)
-
 
 class MarkdownDirectoryLoader:
     def __init__(
@@ -25,6 +23,7 @@ class MarkdownDirectoryLoader:
         ] = None,
     ):
         self.__loaded_data_dir_path = loaded_data_dir_path
+        self.__logger = logging.getLogger(__name__)
         if namespaces_by_prefix is None:
             namespaces_by_prefix = (
                 DictToResourceTransformer.NAMESPACES_BY_PREFIX_DEFAULT
@@ -35,7 +34,9 @@ class MarkdownDirectoryLoader:
         for model in models:
             model_id = model.label
             if model_id is None:
-                logger.warning(f"model {getattr(model, 'uri', '<blank>')} has no label")
+                self.__logger.warning(
+                    f"model {getattr(model, 'uri', '<blank>')} has no label"
+                )
                 continue
             model_type = snakecase(model.__class__.__name__)
             model_graph = Graph()
@@ -75,7 +76,7 @@ class MarkdownDirectoryLoader:
                 if p_namespace is None or str(namespace) > len(str(p_namespace)):
                     p_prefix, p_namespace = prefix, namespace
             if p_prefix is None:
-                logger.warning(
+                self.__logger.warning(
                     "(%s, %s, object) does not have an associated namespace prefix",
                     model_resource.identifier,
                     p,
@@ -88,7 +89,9 @@ class MarkdownDirectoryLoader:
                 if isinstance(md_o, Literal) or not isinstance(
                     md_o, (float, int, bool, str)
                 ):
-                    logger.warning("unable to serialize non-scalar literal: %s", md_o)
+                    self.__logger.warning(
+                        "unable to serialize non-scalar literal: %s", md_o
+                    )
                     continue
             elif isinstance(o, Resource):
                 if isinstance(o.identifier, URIRef):

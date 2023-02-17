@@ -23,7 +23,7 @@ class __MarkdownDirectoryPipeline(Pipeline):
             id=self.ID,
             transformer=MarkdownDirectoryTransformer(pipeline_id=self.ID),
             loader=RdfFileLoader(
-                file_path=data_dir_path
+                rdf_file_path=data_dir_path
                 / self.ID
                 / "loaded"
                 / "markdown_directory.trig",

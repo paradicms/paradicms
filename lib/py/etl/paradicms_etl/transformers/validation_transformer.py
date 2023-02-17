@@ -17,8 +17,6 @@ from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.work import Work
 
-logger = logging.getLogger(__name__)
-
 
 class __Validator:
     def __init__(self):
@@ -26,6 +24,7 @@ class __Validator:
         self.__image_depicts_uris = set()
         self.__institution_uris = set()
         self.__license_uris = set()
+        self.__logger = logging.getLogger(__name__)
         self.__model_uris = set()
         self.__organization_uris = set()
         self.__person_uris = set()
@@ -55,7 +54,7 @@ class __Validator:
                 validate_method = getattr(self, validate_method_name)
             except AttributeError:
                 if validate_method_name not in missing_method_names:
-                    logger.warning("missing %s method", validate_method_name)
+                    self.__logger.warning("missing %s method", validate_method_name)
                     missing_method_names.add(validate_method_name)
                 validate_method = None
 
@@ -74,7 +73,9 @@ class __Validator:
                 )
             except AttributeError:
                 if validate_references_method_name not in missing_method_names:
-                    logger.warning("missing %s method", validate_references_method_name)
+                    self.__logger.warning(
+                        "missing %s method", validate_references_method_name
+                    )
                     missing_method_names.add(validate_references_method_name)
                 validate_references_method = None
 
@@ -196,7 +197,7 @@ class __Validator:
                     )
             for universe_uri in universe_uris:
                 if universe_uri not in referenced_uris:
-                    (logger.warning if warn else logger.debug)(
+                    (self.__logger.warning if warn else self.__logger.debug)(
                         f"unreferenced {uri_type} URI: %s", universe_uri
                     )
 

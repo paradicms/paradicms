@@ -8,8 +8,6 @@ from xml.etree.ElementTree import fromstring as ElementTree_fromstring, ElementT
 
 from pathvalidate import sanitize_filename
 
-logger = logging.getLogger(__name__)
-
 
 class OaiPmhExtractor:
     """
@@ -26,6 +24,7 @@ class OaiPmhExtractor:
     ):
         self.__endpoint_url = endpoint_url
         self.__extracted_data_dir_path = extracted_data_dir_path
+        self.__logger = logging.getLogger(__name__)
         self.__metadata_prefix = metadata_prefix
         self.__set = set_
 
@@ -63,19 +62,19 @@ class OaiPmhExtractor:
                 url = base_url + "&metadataPrefix=" + self.__metadata_prefix
                 if self.__set is not None:
                     url = url + "&set=" + self.__set
-            logger.debug("reading URL %s", url)
+            self.__logger.debug("reading URL %s", url)
             url_f = urlopen(url)
             try:
                 xml_str = url_f.read()
             finally:
                 url_f.close()
-            logger.debug("read XML from URL %s: \n%s", url, xml_str)
+            self.__logger.debug("read XML from URL %s: \n%s", url, xml_str)
             dom = parseString(xml_str)
             ListRecords_elements = dom.documentElement.getElementsByTagName(
                 "ListRecords"
             )
             if len(ListRecords_elements) == 0:
-                logger.error("no ListRecords element in XML: \n%s", xml_str)
+                self.__logger.error("no ListRecords element in XML: \n%s", xml_str)
                 return
             ListRecords_element = ListRecords_elements[0]
             for record_element in ListRecords_element.getElementsByTagName("record"):
@@ -97,7 +96,7 @@ class OaiPmhExtractor:
                 )
 
                 if len(record_identifiers) % 50 == 0:
-                    logger.info("read %d records", len(record_identifiers))
+                    self.__logger.info("read %d records", len(record_identifiers))
             resumption_token = None
             for resumption_token_element in ListRecords_element.getElementsByTagName(
                 "resumptionToken"

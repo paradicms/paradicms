@@ -16,8 +16,6 @@ from paradicms_ssg.original_image_file_cache import (
 )
 from paradicms_ssg.utils.thumbnail_image import thumbnail_image
 
-logger = logging.getLogger(__name__)
-
 
 class ImagesLoader:
     """
@@ -47,6 +45,7 @@ class ImagesLoader:
         ] = THUMBNAIL_MAX_DIMENSIONS_DEFAULT,
     ):
         self.__image_archiver = image_archiver
+        self.__logger = logging.getLogger(__name__)
 
         self.__original_image_file_cache = OriginalImageFileCache(
             cache_dir_path=loaded_data_dir_path / "original_image_cache",
@@ -145,7 +144,7 @@ class ImagesLoader:
         :return a generator of (1) a copy of image with the archived image URL and (2) new Images for the thumbnails
         """
 
-        logger.info("loading GUI images")
+        self.__logger.info("loading GUI images")
         for model in tqdm(models):
             if not isinstance(model, Image):
                 raise TypeError("model is not an Image: " + type(model))
@@ -165,7 +164,7 @@ class ImagesLoader:
                 )
                 assert original_image_file_path
             except OriginalImageFileCache.CacheOriginalImageException:
-                logger.info(
+                self.__logger.info(
                     "unable to cache original image %s, dropping image from GUI",
                     original_image.uri,
                     exc_info=True,
@@ -182,7 +181,7 @@ class ImagesLoader:
                 original_image_file_path=original_image_file_path,
             )
             # except self.__Exception:
-            #     logger.info(
+            #     self.__logger.info(
             #         "unable to archive original image %s, dropping image from GUI",
             #         original_image.uri,
             #         exc_info=True,
@@ -198,7 +197,7 @@ class ImagesLoader:
                     original_image_file_path=original_image_file_path,
                 )
             except self.__ArchiveThumbnailImagesException:
-                logger.info(
+                self.__logger.info(
                     "unable to thumbnail original image %s, dropping image from GUI",
                     original_image.uri,
                     exc_info=True,
@@ -206,7 +205,7 @@ class ImagesLoader:
                 continue
             archived_images.extend(archived_thumbnail_images)
 
-            logger.debug(
+            self.__logger.debug(
                 "archived %d images (1 original, %d thumbnails) from %s",
                 len(archived_images),
                 len(archived_images) - 1,
@@ -215,4 +214,4 @@ class ImagesLoader:
 
             yield from archived_images
 
-        logger.info("loaded GUI images")
+        self.__logger.info("loaded GUI images")

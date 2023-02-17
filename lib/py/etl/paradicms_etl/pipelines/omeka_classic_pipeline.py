@@ -37,7 +37,7 @@ class OmekaClassicPipeline(Pipeline):
             ),
             id=pipeline_id,
             loader=RdfFileLoader(
-                file_path=self._loaded_data_dir_path(
+                rdf_file_path=self._loaded_data_dir_path(
                     data_dir_path=data_dir_path, pipeline_id=pipeline_id
                 )
                 / "data.trig",

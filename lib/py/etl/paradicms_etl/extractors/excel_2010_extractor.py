@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 from typing import Dict, Any
 
@@ -29,6 +30,7 @@ def _convert_csv_row_to_json_object(csv_row_dict: Dict[str, Any]) -> Dict[str, A
 
 class Excel2010Extractor:
     def __init__(self, *, xlsx_file_path: Path):
+        self.__logger = logging.getLogger(__name__)
         self.__xlsx_file_path = xlsx_file_path
 
     def __call__(self, **kwds):
