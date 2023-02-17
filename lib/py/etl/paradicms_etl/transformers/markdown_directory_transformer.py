@@ -99,10 +99,16 @@ class MarkdownDirectoryTransformer:
         )
 
     @staticmethod
-    def _model_uri(*, pipeline_id: str, model_type_name: str, model_id: str) -> URIRef:
-        return MarkdownDirectoryTransformer._pipeline_namespace(
-            pipeline_id=pipeline_id
-        )[f"{quote(model_type_name)}:{quote(model_id)}"]
+    def _model_type_namespace(*, model_type_name: str, pipeline_id: str) -> Namespace:
+        return Namespace(
+            f"{MarkdownDirectoryTransformer._pipeline_namespace(pipeline_id=pipeline_id)}{quote(model_type_name)}:"
+        )
+
+    @staticmethod
+    def _model_uri(*, model_id: str, model_type_name: str, pipeline_id: str) -> URIRef:
+        return MarkdownDirectoryTransformer._model_type_namespace(
+            model_type_name=model_type_name, pipeline_id=pipeline_id
+        )[quote(model_id)]
 
     @staticmethod
     def _pipeline_namespace(*, pipeline_id: str) -> Namespace:
@@ -493,12 +499,25 @@ class MarkdownDirectoryTransformer:
                     DictToResourceTransformer.NAMESPACES_BY_PREFIX_DEFAULT
                 )
             namespaces_by_prefix = namespaces_by_prefix.copy()
-            assert "md" not in namespaces_by_prefix
+            if "md" in namespaces_by_prefix:
+                raise ValueError("the namespace prefix 'md' is reserved")
             namespaces_by_prefix[
                 "md"
             ] = MarkdownDirectoryTransformer._pipeline_namespace(
                 pipeline_id=self.__pipeline_id
             )
+            for model_type_name in self.__MODEL_TYPE_TRAITS_BY_NAME.keys():
+                if model_type_name not in namespaces_by_prefix:
+                    namespaces_by_prefix[
+                        model_type_name
+                    ] = MarkdownDirectoryTransformer._model_type_namespace(
+                        model_type_name=model_type_name, pipeline_id=self.__pipeline_id
+                    )
+                else:
+                    self.__logger.debug(
+                        "namespace prefix '%s' already mapped, can't use for internal model type reference",
+                        model_type_name,
+                    )
 
             resource_identifier_default = MarkdownDirectoryTransformer._model_uri(
                 model_id=metadata_file_entry.model_id,

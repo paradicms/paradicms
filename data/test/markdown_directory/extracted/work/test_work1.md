@@ -1,6 +1,6 @@
 ---
 abstract:
-    creator: <md:person:test_person>
+    creator: <person:test_person>
     rightsHolder: "Abstract rights holder"
 creator: <md:person:test_person>
 license: <http://creativecommons.org/licenses/by-sa/2.0/>
