@@ -13,6 +13,9 @@ class RightsStatement(ResourceBackedNamedModel):
     A rights statement. Adapted from the rightsstatements.org data model (https://github.com/rightsstatements/data-model).
     """
 
+    DEFAULT_NAMESPACE = SKOS
+    LABEL_PROPERTY = SKOS.prefLabel
+
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedNamedModel.__init__(self, resource)

@@ -12,6 +12,9 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class Collection(ResourceBackedNamedModel):
+    DEFAULT_NAMESPACE = DCTERMS
+    LABEL_PROPERTY = DCTERMS.title
+
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedNamedModel.__init__(self, resource)

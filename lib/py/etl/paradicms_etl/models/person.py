@@ -2,15 +2,18 @@ from typing import Optional, Tuple
 
 from rdflib import URIRef, RDF
 from rdflib.namespace import FOAF
+from rdflib.resource import Resource
 
 from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.property import Property
 from paradicms_etl.namespaces import CONTACT, CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
-from rdflib.resource import Resource
 
 
 class Person(Agent):
+    DEFAULT_NAMESPACE = FOAF
+    LABEL_PROPERTY = FOAF.name
+
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         Agent.__init__(self, resource)

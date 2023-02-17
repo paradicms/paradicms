@@ -13,6 +13,9 @@ class License(ResourceBackedNamedModel):
     A license. Adapted from the creativecommons.org license RDF (https://github.com/creativecommons/cc.licenserdf).
     """
 
+    DEFAULT_NAMESPACE = DC
+    LABEL_PROPERTY = DC.title
+
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedNamedModel.__init__(self, resource)
