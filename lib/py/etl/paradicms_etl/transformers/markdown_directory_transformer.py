@@ -76,6 +76,28 @@ class MarkdownDirectoryTransformer:
         self.__default_collection = default_collection
         self.__default_institution = default_institution
         self.__logger = logging.getLogger(__name__)
+        if namespaces_by_prefix is None:
+            namespaces_by_prefix = (
+                DictToResourceTransformer.NAMESPACES_BY_PREFIX_DEFAULT
+            )
+        namespaces_by_prefix = namespaces_by_prefix.copy()
+        if "md" in namespaces_by_prefix:
+            raise ValueError("the namespace prefix 'md' is reserved")
+        namespaces_by_prefix["md"] = MarkdownDirectoryTransformer._pipeline_namespace(
+            pipeline_id=pipeline_id
+        )
+        for model_type_name in ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME.keys():
+            if model_type_name not in namespaces_by_prefix:
+                namespaces_by_prefix[
+                    model_type_name
+                ] = MarkdownDirectoryTransformer._model_type_namespace(
+                    model_type_name=model_type_name, pipeline_id=pipeline_id
+                )
+            else:
+                self.__logger.debug(
+                    "namespace prefix '%s' already mapped, can't use for internal model type reference",
+                    model_type_name,
+                )
         self.__namespaces_by_prefix = namespaces_by_prefix
         self.__pipeline_id = pipeline_id
 
@@ -436,32 +458,6 @@ class MarkdownDirectoryTransformer:
 
             graph = Graph()
 
-            namespaces_by_prefix = self.__namespaces_by_prefix
-            if namespaces_by_prefix is None:
-                namespaces_by_prefix = (
-                    DictToResourceTransformer.NAMESPACES_BY_PREFIX_DEFAULT
-                )
-            namespaces_by_prefix = namespaces_by_prefix.copy()
-            if "md" in namespaces_by_prefix:
-                raise ValueError("the namespace prefix 'md' is reserved")
-            namespaces_by_prefix[
-                "md"
-            ] = MarkdownDirectoryTransformer._pipeline_namespace(
-                pipeline_id=self.__pipeline_id
-            )
-            for model_type_name in ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME.keys():
-                if model_type_name not in namespaces_by_prefix:
-                    namespaces_by_prefix[
-                        model_type_name
-                    ] = MarkdownDirectoryTransformer._model_type_namespace(
-                        model_type_name=model_type_name, pipeline_id=self.__pipeline_id
-                    )
-                else:
-                    self.__logger.debug(
-                        "namespace prefix '%s' already mapped, can't use for internal model type reference",
-                        model_type_name,
-                    )
-
             resource_identifier_default = MarkdownDirectoryTransformer._model_uri(
                 model_id=metadata_file_entry.model_id,
                 model_type_name=snakecase(model_class.__name__),
@@ -471,7 +467,7 @@ class MarkdownDirectoryTransformer:
             dict_to_resource_transformer = DictToResourceTransformer(
                 default_namespace=model_class.DEFAULT_NAMESPACE,
                 graph=graph,
-                namespaces_by_prefix=namespaces_by_prefix,
+                namespaces_by_prefix=self.__namespaces_by_prefix,
                 resource_identifier_default=resource_identifier_default,
             )
 
@@ -484,7 +480,7 @@ class MarkdownDirectoryTransformer:
                     resource = MarkdownToResourceTransformer.transform(
                         default_namespace=model_class.DEFAULT_NAMESPACE,
                         graph=graph,
-                        namespaces_by_prefix=namespaces_by_prefix,
+                        namespaces_by_prefix=self.__namespaces_by_prefix,
                         markdown=metadata_file_entry.source,
                         resource_identifier_default=resource_identifier_default,
                     )
