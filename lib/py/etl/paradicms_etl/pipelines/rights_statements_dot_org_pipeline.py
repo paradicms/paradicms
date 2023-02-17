@@ -20,9 +20,9 @@ class RightsStatementsDotOrgPipeline(Pipeline):
     def __extract(*, force: bool):
         with TemporaryDirectory() as temp_dir:
             zip_file_path = download_file(
-                downloaded_file_dir_path=Path(temp_dir),
                 force=force,
                 from_url="https://github.com/rightsstatements/data-model/archive/refs/heads/master.zip",
+                to_dir_path=Path(temp_dir),
             )
             json_ld_file_contents = {}
             with ZipFile(zip_file_path) as zip_file:

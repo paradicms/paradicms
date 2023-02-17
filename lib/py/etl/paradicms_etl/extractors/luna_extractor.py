@@ -35,10 +35,10 @@ class LunaExtractor:
     def __call__(self, *, force: bool, **kwds):
         url = self.create_search_url(base_url=self.__base_url, query=self.__query)
         cached_json_file_path = download_file(
-            downloaded_file_dir_path=self.__extracted_data_dir_path,
-            file_extension=".json",
             force=force,
             from_url=url,
+            to_dir_path=self.__extracted_data_dir_path,
+            to_file_extension=".json",
         )
 
         with open(cached_json_file_path) as cached_json_file:

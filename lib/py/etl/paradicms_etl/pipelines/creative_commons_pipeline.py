@@ -32,9 +32,9 @@ class CreativeCommonsPipeline(Pipeline):
     def __extract(*, force: bool, **kwds):
         with TemporaryDirectory() as temp_dir:
             zip_file_path = download_file(
-                downloaded_file_dir_path=Path(temp_dir),
-                from_url="https://github.com/creativecommons/cc.licenserdf/archive/refs/heads/main.zip",
                 force=force,
+                from_url="https://github.com/creativecommons/cc.licenserdf/archive/refs/heads/main.zip",
+                to_dir_path=Path(temp_dir),
             )
             rdf_file_contents = {}
             with ZipFile(zip_file_path) as zip_file:
