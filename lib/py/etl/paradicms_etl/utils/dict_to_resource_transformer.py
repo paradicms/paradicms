@@ -1,4 +1,3 @@
-from inspect import isclass
 from typing import Dict, Any, Tuple, Optional, Union, Type, List
 
 import rdflib.namespace
@@ -8,32 +7,14 @@ from rdflib.resource import Resource
 from rdflib.term import Node, Literal, BNode, Identifier
 
 import paradicms_etl.namespaces
-
-
-def _create_namespaces_by_prefix_default() -> Dict[
-    str, Union[Type[DefinedNamespace], Namespace]
-]:
-    namespaces_by_prefix = {}
-    for namespace_module in (rdflib.namespace, paradicms_etl.namespaces):
-        for attr in dir(namespace_module):
-            if attr.upper() != attr:
-                continue
-            value = getattr(namespace_module, attr)
-            if (
-                isinstance(value, rdflib.namespace.Namespace)
-                or isinstance(value, rdflib.namespace.ClosedNamespace)
-                or (
-                    isclass(value)
-                    and issubclass(value, rdflib.namespace.DefinedNamespace)
-                )
-            ):
-                namespaces_by_prefix[attr.lower()] = value
-    return namespaces_by_prefix
+from paradicms_etl.utils.module_namespaces import module_namespaces
 
 
 class DictToResourceTransformer:
     DEFAULT_NAMESPACE_DEFAULT = DCTERMS
-    NAMESPACES_BY_PREFIX_DEFAULT = _create_namespaces_by_prefix_default()
+    NAMESPACES_BY_PREFIX_DEFAULT = module_namespaces(
+        (rdflib.namespace, paradicms_etl.namespaces)
+    )
 
     def __init__(
         self,
