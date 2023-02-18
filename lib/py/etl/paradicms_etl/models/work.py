@@ -20,6 +20,7 @@ class Work(ResourceBackedNamedModel):
     """
 
     DEFAULT_NAMESPACE = DCTERMS
+    JSON_LD_CONTEXT = {"@vocab": str(DCTERMS)}
     LABEL_PROPERTY = DCTERMS.title
 
     def __init__(self, resource: Resource):

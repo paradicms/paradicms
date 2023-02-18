@@ -13,6 +13,10 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 class Collection(ResourceBackedNamedModel):
     DEFAULT_NAMESPACE = DCTERMS
+    JSON_LD_CONTEXT = {
+        "@vocab": str(DCTERMS),
+        "institution": {"@id": str(CMS.institution), "@type": "@id"},
+    }
     LABEL_PROPERTY = DCTERMS.title
 
     def __init__(self, resource: Resource):

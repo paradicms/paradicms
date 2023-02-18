@@ -14,6 +14,7 @@ class License(ResourceBackedNamedModel):
     """
 
     DEFAULT_NAMESPACE = DC
+    JSON_LD_CONTEXT = {"@vocab": str(DC)}
     LABEL_PROPERTY = DC.title
 
     def __init__(self, resource: Resource):

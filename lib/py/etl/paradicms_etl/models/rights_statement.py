@@ -14,6 +14,7 @@ class RightsStatement(ResourceBackedNamedModel):
     """
 
     DEFAULT_NAMESPACE = SKOS
+    JSON_LD_CONTEXT = {"@vocab": str(SKOS)}
     LABEL_PROPERTY = SKOS.prefLabel
 
     def __init__(self, resource: Resource):

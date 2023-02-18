@@ -12,6 +12,8 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class NamedValue(ResourceBackedNamedModel):
+    JSON_LD_CONTEXT = {"@vocab": str(DCTERMS)}
+
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedNamedModel.__init__(self, resource)

@@ -12,6 +12,7 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 class Person(Agent):
     DEFAULT_NAMESPACE = FOAF
+    JSON_LD_CONTEXT = {"@vocab": str(FOAF)}
     LABEL_PROPERTY = FOAF.name
 
     def __init__(self, resource: Resource):

@@ -10,6 +10,8 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class Location(ResourceBackedModel):
+    JSON_LD_CONTEXT = {"@vocab": str(WGS)}
+
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedModel.__init__(self, resource)

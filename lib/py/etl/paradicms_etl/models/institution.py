@@ -13,6 +13,7 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 class Institution(ResourceBackedNamedModel):
     DEFAULT_NAMESPACE = DCTERMS
+    JSON_LD_CONTEXT = {"@vocab": str(DCTERMS)}
     LABEL_PROPERTY = FOAF.name
 
     def __init__(self, resource: Resource):
