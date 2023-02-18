@@ -13,8 +13,6 @@ class RightsStatement(ResourceBackedNamedModel):
     A rights statement. Adapted from the rightsstatements.org data model (https://github.com/rightsstatements/data-model).
     """
 
-    DEFAULT_NAMESPACE = SKOS
-    JSON_LD_CONTEXT = {"@vocab": str(SKOS)}
     LABEL_PROPERTY = SKOS.prefLabel
 
     def __init__(self, resource: Resource):
@@ -49,6 +47,19 @@ class RightsStatement(ResourceBackedNamedModel):
     @property
     def identifier(self) -> str:
         return self._required_str_value(DCTERMS.identifier)
+
+    @classmethod
+    def json_ld_context(cls):
+        context = ResourceBackedNamedModel.json_ld_context().copy()
+        context.update({
+            "definition": {"@id": str(SKOS.definition)},
+            "description": {"@id": str(DCTERMS.description)},
+            "identifier": {"@id": str(DCTERMS.identifier)},
+            "note": {"@id": str(SKOS.note)},
+            "prefLabel": {"@id": str(SKOS.prefLabel)},
+            "scopeNote": {"@id": str(SKOS.scopeNote)},
+        })
+        return context
 
     @property
     def label(self) -> str:

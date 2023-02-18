@@ -39,6 +39,16 @@ class License(ResourceBackedNamedModel):
     def identifier(self) -> str:
         return self._required_str_value(DC.identifier)
 
+    @classmethod
+    def json_ld_context(cls):
+        context = ResourceBackedNamedModel.json_ld_context().copy()
+        context.update({
+            "identifier": {"@id": str(DC.identifier)},
+            "title": {"@id": str(DC.title)},
+            "version": {"@id": str(DCTERMS.hasVersion)},
+        })
+        return context
+
     @property
     def label(self) -> str:
         return self.title

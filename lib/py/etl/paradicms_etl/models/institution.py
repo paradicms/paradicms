@@ -12,8 +12,6 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class Institution(ResourceBackedNamedModel):
-    DEFAULT_NAMESPACE = DCTERMS
-    JSON_LD_CONTEXT = {"@vocab": str(DCTERMS)}
     LABEL_PROPERTY = FOAF.name
 
     def __init__(self, resource: Resource):
@@ -40,6 +38,16 @@ class Institution(ResourceBackedNamedModel):
             .add_rights(rights)
             .build()
         )
+
+    @classmethod
+    def json_ld_context(cls):
+        context = ResourceBackedNamedModel.json_ld_context().copy()
+        context.update({
+            "abstract": {"@id": str(DCTERMS.abstract)},
+            "name": {"@id": str(FOAF.name)}
+        })
+        context.update(Rights.json_ld_context())
+        return context
 
     @property
     def label(self) -> str:

@@ -36,6 +36,15 @@ class Text(ResourceBackedModel):
             ResourceBuilder(BNode()).add(RDF.value, value).add_rights(rights).build()
         )
 
+    @classmethod
+    def json_ld_context(cls):
+        context = ResourceBackedModel.json_ld_context().copy()
+        context.update({
+            "value": {"@id": str(RDF.value)},
+        })
+        context.update(Rights.json_ld_context())
+        return context
+
     @property
     def rights(self) -> Optional[Rights]:
         return Rights.from_rdf(resource=self._resource)

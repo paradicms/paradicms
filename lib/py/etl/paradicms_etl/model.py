@@ -6,6 +6,13 @@ from rdflib.resource import Resource
 
 
 class Model(ABC):
+    @classmethod
+    def json_ld_context(cls):
+        """
+        Return a JSON-LD context that can be used to parse/serialize a JSON version of this model.
+        """
+        return {}
+
     @property
     def label(self) -> Optional[str]:
         pass

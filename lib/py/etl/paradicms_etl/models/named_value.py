@@ -12,8 +12,6 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class NamedValue(ResourceBackedNamedModel):
-    JSON_LD_CONTEXT = {"@vocab": str(DCTERMS)}
-
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedNamedModel.__init__(self, resource)
@@ -43,6 +41,18 @@ class NamedValue(ResourceBackedNamedModel):
             .add(SKOS.prefLabel, title)
             .build()
         )
+
+    @classmethod
+    def json_ld_context(cls):
+        context = ResourceBackedNamedModel.json_ld_context().copy()
+        context.update({
+            "abstract": {"@id": str(DCTERMS.abstract)},
+            "altLabel": {"@id": str(SKOS.altLabel)},
+            "property": {"@id": str(RDF.predicate), "@type": "@id"},
+            "title": {"@id": str(DCTERMS.title)},
+            "value": {"@id": str(RDF.value)},
+        })
+        return context
 
     @property
     def property_uris(self) -> Tuple[URIRef, ...]:

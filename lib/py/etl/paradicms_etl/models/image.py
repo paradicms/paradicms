@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
-from rdflib import Literal, URIRef, Graph, RDF
+from rdflib import Literal, URIRef, Graph, RDF, XSD
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
@@ -80,6 +80,27 @@ class Image(ResourceBackedNamedModel):
     @property
     def depicts_uri(self) -> URIRef:
         return self._required_uri_value(FOAF.depicts)
+
+    @classmethod
+    def json_ld_context(cls):
+        context = ResourceBackedNamedModel.json_ld_context().copy()
+        context.update({
+            "copyable": {"@id": str(CMS.imageCopyable), "@type": str(XSD.boolean)},
+            "created": {"@id": str(DCTERMS.created), "@type": str(XSD.dateTime)},
+            "depicts": {"@id": str(FOAF.depicts), "@type": "@id"},
+            "format": {"@id": str(DCTERMS.format)},
+            "height": {"@id": str(EXIF.height), "@type": str(XSD.integer)},
+            "maxHeight": {"@id": str(CMS.imageMaxHeight), "@type": str(XSD.integer)},
+            "maxWidth": {"@id": str(CMS.imageMaxWidth), "@type": str(XSD.integer)},
+            "modified": {"@id": str(DCTERMS.modified), "@type": str(XSD.dateTime)},
+            "src": {"@id": str(CMS.imageSrc)},
+            "thumbnail": {"@id": str(FOAF.thumbnail), "@type": "@id"},
+            "thumbnailOf": {"@id": str(CMS.thumbnailOf), "@type": "@id"},
+            "title": {"@id": str(DCTERMS.title), "@type": "@id"},
+            "width": {"@id": str(EXIF.width), "@type": str(XSD.integer)},
+        })
+        context.update(Rights.json_ld_context())
+        return context
 
     @property
     def original_image_uri(self) -> Optional[URIRef]:

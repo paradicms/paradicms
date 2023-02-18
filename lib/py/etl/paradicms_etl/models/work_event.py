@@ -11,6 +11,14 @@ class WorkEvent(Event):
         Event.__init__(self, resource)
         self.work_uri
 
+    @classmethod
+    def json_ld_context(cls):
+        context = Event.json_ld_context().copy()
+        context.update({
+            "work": {"@id": str(CMS.work), "@type": "@id"},
+        })
+        return context
+
     @property
     def work_uri(self) -> URIRef:
         return self._required_uri_value(CMS.work)

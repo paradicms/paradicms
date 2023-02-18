@@ -1,6 +1,6 @@
 from typing import Optional
 
-from rdflib import URIRef, BNode, RDF
+from rdflib import URIRef, BNode, RDF, XSD
 from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
@@ -32,6 +32,15 @@ class Location(ResourceBackedModel):
             .add(WGS.long, long)
             .build()
         )
+
+    @classmethod
+    def json_ld_context(cls):
+        context = ResourceBackedModel.json_ld_context().copy()
+        context.update({
+            "lat": {"@id": str(WGS.lat), "@type": str(XSD.decimal)},
+            "long": {"@id": str(WGS.long), "@type": str(XSD.decimal)},
+        })
+        return context
 
     @property
     def uri(self) -> Optional[URIRef]:

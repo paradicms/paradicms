@@ -12,11 +12,6 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class Collection(ResourceBackedNamedModel):
-    DEFAULT_NAMESPACE = DCTERMS
-    JSON_LD_CONTEXT = {
-        "@vocab": str(DCTERMS),
-        "institution": {"@id": str(CMS.institution), "@type": "@id"},
-    }
     LABEL_PROPERTY = DCTERMS.title
 
     def __init__(self, resource: Resource):
@@ -45,6 +40,16 @@ class Collection(ResourceBackedNamedModel):
             .add_properties(properties)
             .build()
         )
+
+    @classmethod
+    def json_ld_context(cls):
+        context = ResourceBackedNamedModel.json_ld_context().copy()
+        context.update({
+          "abstract": {"@id": str(DCTERMS.abstract)},
+          "institution": {"@id": str(CMS.institution), "@type": "@id"},
+          "title": {"@id": str(DCTERMS.title)}
+        })
+        return context
 
     @property
     def label(self) -> str:

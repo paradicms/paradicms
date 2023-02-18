@@ -12,8 +12,6 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class WorkCreation(WorkEvent):
-    DEFAULT_NAMESPACE = DCTERMS
-    JSON_LD_CONTEXT = {"@vocab": str(DCTERMS)}
     LABEL_PROPERTY = DCTERMS.title
 
     def __init__(self, resource: Resource):
@@ -56,3 +54,18 @@ class WorkCreation(WorkEvent):
             .add(CMS.work, work_uri)
             .build()
         )
+
+    @classmethod
+    def json_ld_context(cls):
+        context = WorkEvent.json_ld_context().copy()
+        context.update({
+            "abstract": {"@id": str(DCTERMS.abstract)},
+            "contributor": {"@id": str(DCTERMS.contributor), "@type": "@id"},
+            "creator": {"@id": str(DCTERMS.creator), "@type": "@id"},
+            "date": {"@id": str(DCTERMS.creator)},
+            "earliestDate": {"@id": str(VRA.earliestDate)},
+            "latestDate": {"@id": str(VRA.latestDate)},
+            "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
+            "title": {"@id": str(DCTERMS.title)},
+        })
+        return context

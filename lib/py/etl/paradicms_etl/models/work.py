@@ -19,8 +19,6 @@ class Work(ResourceBackedNamedModel):
     This is the same concept as Work in VRA Core.
     """
 
-    DEFAULT_NAMESPACE = DCTERMS
-    JSON_LD_CONTEXT = {"@vocab": str(DCTERMS)}
     LABEL_PROPERTY = DCTERMS.title
 
     def __init__(self, resource: Resource):
@@ -75,6 +73,19 @@ class Work(ResourceBackedNamedModel):
     @property
     def institution_uri(self):
         return self._required_uri_value(CMS.institution)
+
+    @classmethod
+    def json_ld_context(cls):
+        context = ResourceBackedNamedModel.json_ld_context().copy()
+        context.update({
+            "abstract": {"@id": str(DCTERMS.abstract)},
+            "collection": {"@id": str(CMS.collection), "@type": "@id"},
+            "institution": {"@id": str(CMS.institution), "@type": "@id"},
+            "page": {"@id": str(FOAF.page)},
+            "title": {"@id": str(DCTERMS.title)},
+        })
+        context.update(Rights.json_ld_context())
+        return context
 
     @property
     def label(self) -> str:
