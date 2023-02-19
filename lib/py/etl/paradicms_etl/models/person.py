@@ -46,7 +46,6 @@ class Person(Agent):
             {
                 "familyName": {"@id": str(FOAF.familyName)},
                 "givenName": {"@id": str(FOAF.givenName)},
-                "name": {"@id": str(FOAF.name)},
                 "page": {"@id": str(FOAF.page)},
                 "sortName": {"@id": str(CONTACT.sortName)},
             }
