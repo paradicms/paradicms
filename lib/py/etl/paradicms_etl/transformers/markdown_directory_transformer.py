@@ -74,40 +74,6 @@ class MarkdownDirectoryTransformer:
         self.__logger = logging.getLogger(__name__)
         self.__pipeline_id = pipeline_id
 
-    @staticmethod
-    def default_collection_uri(
-        *, markdown_directory_name: str, pipeline_id: str
-    ) -> URIRef:
-        return MarkdownDirectoryTransformer._model_uri(
-            pipeline_id=pipeline_id,
-            model_type_name="collection",
-            model_id=markdown_directory_name,
-        )
-
-    @staticmethod
-    def default_institution_uri(*, pipeline_id: str) -> URIRef:
-        return MarkdownDirectoryTransformer._model_uri(
-            pipeline_id=pipeline_id,
-            model_type_name="institution",
-            model_id=MarkdownDirectoryTransformer._DEFAULT_INSTITUTION_MODEL_ID,
-        )
-
-    @staticmethod
-    def _model_type_namespace(*, model_type_name: str, pipeline_id: str) -> Namespace:
-        return Namespace(
-            f"{MarkdownDirectoryTransformer._pipeline_namespace(pipeline_id=pipeline_id)}{quote(model_type_name)}:"
-        )
-
-    @staticmethod
-    def _model_uri(*, model_id: str, model_type_name: str, pipeline_id: str) -> URIRef:
-        return MarkdownDirectoryTransformer._model_type_namespace(
-            model_type_name=model_type_name, pipeline_id=pipeline_id
-        )[quote(model_id)]
-
-    @staticmethod
-    def _pipeline_namespace(*, pipeline_id: str) -> Namespace:
-        return Namespace(f"urn:markdown:{pipeline_id}:")
-
     # Rather than managing the state of the transform as variable assignments in a particular order,
     # create a class instance per transform invocation.
     # The state includes things like the default institution, which is synthesized if needed.
@@ -136,12 +102,19 @@ class MarkdownDirectoryTransformer:
             self.__logger = logger
             self.__markdown_directory = markdown_directory
             self.__pipeline_id = pipeline_id
+
+            self.__json_ld_context = {"md": str(self.__pipeline_namespace)}
+            for model_type_name in ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME.keys():
+                self.__json_ld_context["md-" + model_type_name] = str(
+                    self.__model_type_namespace(model_type_name=model_type_name)
+                )
+
             self.__transformed_models_by_class: Dict[
                 Type, Dict[str, NamedModel]
             ] = {}  # Then by id
             self.__transformed_models_by_uri: Dict[str, NamedModel] = {}
             self.__untransformed_image_file_entries_by_model_class: Dict[
-                MarkdownDirectoryTransformer.__TransformInvocation.__ModelTypeTraits,
+                Type[NamedModel],
                 Dict[str, MarkdownDirectory.ImageFileEntry],
             ] = {}
             for image_file_entry in markdown_directory.image_file_entries:
@@ -150,7 +123,7 @@ class MarkdownDirectoryTransformer:
                     {},
                 )[image_file_entry.model_id] = image_file_entry
             self.__untransformed_metadata_file_entries_by_model_class: Dict[
-                MarkdownDirectoryTransformer.__TransformInvocation.__ModelTypeTraits,
+                Type[NamedModel],
                 List[MarkdownDirectory.MetadataFileEntry],
             ] = {}
             for metadata_file_entry in markdown_directory.metadata_file_entries:
@@ -189,15 +162,27 @@ class MarkdownDirectoryTransformer:
             self.__transform_image_file_entries()
             return tuple(self.__transformed_models_by_uri.values())
 
+        def __default_collection_uri(self, *, markdown_directory_name: str) -> URIRef:
+            return self.__model_uri(
+                model_type_name="collection",
+                model_id=markdown_directory_name,
+            )
+
+        @property
+        def __default_institution_uri(self) -> URIRef:
+            return self.__model_uri(
+                model_type_name="institution",
+                model_id=MarkdownDirectoryTransformer._DEFAULT_INSTITUTION_MODEL_ID,
+            )
+
         def __get_or_synthesize_default_collection(self) -> Collection:
             if self.__default_collection is None:
                 model_id = self.__markdown_directory.name
                 self.__default_collection = Collection.from_fields(
                     institution_uri=self.__get_or_synthesize_default_institution().uri,
                     title=self.__markdown_directory.name,
-                    uri=MarkdownDirectoryTransformer.default_collection_uri(
-                        markdown_directory_name=self.__markdown_directory.name,
-                        pipeline_id=self.__pipeline_id,
+                    uri=self.__default_collection_uri(
+                        markdown_directory_name=self.__markdown_directory.name
                     ),
                 )
                 self.__buffer_transformed_model(
@@ -212,15 +197,25 @@ class MarkdownDirectoryTransformer:
                 model_id = MarkdownDirectoryTransformer._DEFAULT_INSTITUTION_MODEL_ID
                 self.__default_institution = Institution.from_fields(
                     name="Default institution",
-                    uri=MarkdownDirectoryTransformer.default_institution_uri(
-                        pipeline_id=self.__pipeline_id
-                    ),
+                    uri=self.__default_institution_uri,
                 )
                 self.__buffer_transformed_model(
                     model_id=model_id,
                     transformed_model=self.__default_institution,
                 )
             return self.__default_institution
+
+        def __model_type_namespace(self, *, model_type_name: str) -> Namespace:
+            return Namespace(f"{self.__pipeline_namespace}{quote(model_type_name)}:")
+
+        def __model_uri(self, *, model_id: str, model_type_name: str) -> URIRef:
+            return self.__model_type_namespace(model_type_name=model_type_name)[
+                quote(model_id)
+            ]
+
+        @property
+        def __pipeline_namespace(self) -> Namespace:
+            return Namespace(f"urn:markdown:{self.__pipeline_id}:")
 
         def __set_resource_institution_uri(self, resource: Resource) -> None:
             if resource.value(CMS.institution) is None:
@@ -389,8 +384,7 @@ class MarkdownDirectoryTransformer:
                         transformed_model=Image.from_fields(
                             depicts_uri=transformed_model.uri,
                             src=image_file_entry.path.as_uri(),
-                            uri=MarkdownDirectoryTransformer._model_uri(
-                                pipeline_id=self.__pipeline_id,
+                            uri=self.__model_uri(
                                 model_id=image_file_entry.model_id,
                                 model_type_name=snakecase(Image.__name__),
                             ),
@@ -437,10 +431,9 @@ class MarkdownDirectoryTransformer:
 
             graph = Graph()
 
-            resource_identifier_default = MarkdownDirectoryTransformer._model_uri(
+            resource_identifier_default = self.__model_uri(
                 model_id=metadata_file_entry.model_id,
                 model_type_name=snakecase(model_class.__name__),
-                pipeline_id=self.__pipeline_id,
             )
 
             try:
@@ -457,19 +450,12 @@ class MarkdownDirectoryTransformer:
                     if "@id" not in json_ld_object:
                         json_ld_object["@id"] = resource_identifier_default
 
-                    json_ld_context_updates = {"md": str(MarkdownDirectoryTransformer._pipeline_namespace(pipeline_id=self.__pipeline_id))}
-                    for model_type_name in ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME.keys():
-                            json_ld_context_updates[
-                                "md-" + model_type_name
-                            ] = str(MarkdownDirectoryTransformer._model_type_namespace(
-                                model_type_name=model_type_name, pipeline_id=self.__pipeline_id
-                            ))
-                    json_ld_context = safe_dict_update(model_class.json_ld_context(), json_ld_context_updates)
+                    json_ld_context = safe_dict_update(
+                        model_class.json_ld_context(), self.__json_ld_context
+                    )
 
                     graph.parse(
-                        data=json_ld_object,
-                        context=json_ld_context,
-                        format="json-ld"
+                        data=json_ld_object, context=json_ld_context, format="json-ld"
                     )
                 else:
                     # Assume it's an RDF serialization
