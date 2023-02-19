@@ -26,6 +26,7 @@ def download_file(
         to_file_name = str(sanitize_filename(from_url))
         if to_file_extension is not None:
             to_file_name += to_file_extension
+        to_file_path = to_dir_path / to_file_name
 
     if not force and to_file_path.exists():
         logger.info(
