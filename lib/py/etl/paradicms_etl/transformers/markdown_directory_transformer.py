@@ -431,7 +431,7 @@ class MarkdownDirectoryTransformer:
 
             graph = Graph()
 
-            resource_identifier_default = self.__model_uri(
+            model_uri = self.__model_uri(
                 model_id=metadata_file_entry.model_id,
                 model_type_name=snakecase(model_class.__name__),
             )
@@ -448,7 +448,7 @@ class MarkdownDirectoryTransformer:
                     )
 
                     if "@id" not in json_ld_object:
-                        json_ld_object["@id"] = resource_identifier_default
+                        json_ld_object["@id"] = model_uri
 
                     json_ld_context = safe_dict_update(
                         model_class.json_ld_context(), self.__json_ld_context
@@ -462,12 +462,12 @@ class MarkdownDirectoryTransformer:
                     graph.parse(
                         data=metadata_file_entry.source,
                         format=metadata_file_entry.format,
-                        publicID=resource_identifier_default,
+                        publicID=model_uri,
                     )
             except Exception as e:
                 raise ValueError(f"error deserializing {metadata_file_entry}") from e
 
-            graph_str = graph.serialize(format="turtle")
+            # graph_str = graph.serialize(format="turtle")
 
             uri_subjects = {
                 subject for subject in graph.subjects() if isinstance(subject, URIRef)
