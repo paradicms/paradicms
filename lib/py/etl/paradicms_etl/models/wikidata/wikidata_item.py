@@ -1,7 +1,7 @@
 from logging import Logger
 from typing import Dict, List, Optional, Tuple
 
-from rdflib import Graph, Literal, RDF, RDFS, SKOS
+from rdflib import Graph, Literal, RDF, RDFS, SKOS, SDO
 from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
@@ -14,7 +14,6 @@ from paradicms_etl.models.wikidata.wikidata_property_definition import (
     WikidataPropertyDefinition,
 )
 from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
-from paradicms_etl.namespaces import SCHEMA
 
 
 class WikidataItem(ResourceBackedNamedModel):
@@ -119,7 +118,7 @@ class WikidataItem(ResourceBackedNamedModel):
         Read the item corresponding to the given URI.
         """
 
-        IGNORE_PREDICATES = {SCHEMA.description, SCHEMA.name, RDF.type, RDFS.label}
+        IGNORE_PREDICATES = {SDO.description, SDO.name, RDF.type, RDFS.label}
 
         alt_labels = []
         description = None
@@ -154,7 +153,7 @@ class WikidataItem(ResourceBackedNamedModel):
                 pref_label = object_.value
                 continue
 
-            if predicate == SCHEMA.description:
+            if predicate == SDO.description:
                 assert isinstance(object_, Literal)
                 description = object_.value
                 continue
@@ -242,11 +241,9 @@ class WikidataItem(ResourceBackedNamedModel):
                     logger=logger, resource=resource.graph.resource(article_uri)
                 )
                 for article_uri in resource.graph.subjects(
-                    predicate=SCHEMA.about, object=resource.identifier
+                    predicate=SDO.about, object=resource.identifier
                 )
-                if tuple(
-                    resource.graph.triples((article_uri, RDF.type, SCHEMA.Article))
-                )
+                if tuple(resource.graph.triples((article_uri, RDF.type, SDO.Article)))
             ),
             description=description,
             labels=WikidataItemLabels(
