@@ -8,6 +8,7 @@ from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.property import Property
 from paradicms_etl.namespaces import CONTACT, CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class Person(Agent):
@@ -36,4 +37,17 @@ class Person(Agent):
             .add_properties(properties)
             .add(CONTACT.sortName, sort_name)
             .build()
+        )
+
+    @classmethod
+    def json_ld_context(cls):
+        return safe_dict_update(
+            Agent.json_ld_context(),
+            {
+                "familyName": {"@id": str(FOAF.familyName)},
+                "givenName": {"@id": str(FOAF.givenName)},
+                "name": {"@id": str(FOAF.name)},
+                "page": {"@id": str(FOAF.page)},
+                "sortName": {"@id": str(CONTACT.sortName)},
+            }
         )

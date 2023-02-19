@@ -7,6 +7,7 @@ from rdflib.resource import Resource
 from paradicms_etl.models.agent import Agent
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class Organization(Agent):
@@ -20,4 +21,13 @@ class Organization(Agent):
     ) -> "Organization":
         return cls(
             ResourceBuilder(uri).add(FOAF.name, name).add(FOAF.page, page).build()
+        )
+
+    @classmethod
+    def json_ld_context(cls):
+        return safe_dict_update(
+            Agent.json_ld_context(),
+            {
+                "page": {"@id": str(FOAF.page)}
+            }
         )
