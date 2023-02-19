@@ -1,8 +1,12 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
+import rdflib
 from rdflib import Graph
 from rdflib.resource import Resource
+
+import paradicms_etl
+from paradicms_etl.utils.module_namespaces import module_namespaces
 
 
 class Model(ABC):
@@ -11,7 +15,13 @@ class Model(ABC):
         """
         Return a JSON-LD context that can be used to parse/serialize a JSON version of this model.
         """
-        return {}
+
+        context = {"@version": 1.1}
+        for namespace_prefix, namespace in module_namespaces(
+            rdflib.namespace, paradicms_etl.namespaces
+        ).items():
+            context[namespace_prefix] = str(namespace)
+        return context
 
     @property
     def label(self) -> Optional[str]:
