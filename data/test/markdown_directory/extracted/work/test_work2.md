@@ -1,7 +1,7 @@
 ---
-creator: <md:person:test_person>
-license: <http://creativecommons.org/licenses/by-sa/2.0/>
-rights: <http://rightsstatements.org/vocab/InC/1.0/>
+creator: md:person:test_person
+license: http://creativecommons.org/licenses/by-sa/2.0/
+rights: http://rightsstatements.org/vocab/InC/1.0/
 title: Test work 2
 ---
 
