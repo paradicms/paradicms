@@ -30,6 +30,7 @@ from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.markdown_to_dict_transformer import (
     MarkdownToDictTransformer,
 )
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class MarkdownDirectoryTransformer:
@@ -459,16 +460,11 @@ class MarkdownDirectoryTransformer:
                     json_ld_context_updates = {"md": str(MarkdownDirectoryTransformer._pipeline_namespace(pipeline_id=self.__pipeline_id))}
                     for model_type_name in ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME.keys():
                             json_ld_context_updates[
-                                model_type_name
+                                "md-" + model_type_name
                             ] = str(MarkdownDirectoryTransformer._model_type_namespace(
                                 model_type_name=model_type_name, pipeline_id=self.__pipeline_id
                             ))
-                    json_ld_context = model_class.json_ld_context()
-                    for key, value in json_ld_context_updates.items():
-                        if key not in json_ld_context:
-                            json_ld_context[key] = value
-                        else:
-                            self.__logger.warning("'%s' already in JSON-LD context for %s, skipping", key, model_class.__name__)
+                    json_ld_context = safe_dict_update(model_class.json_ld_context(), json_ld_context_updates)
 
                     graph.parse(
                         data=json_ld_object,
