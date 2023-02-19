@@ -26,8 +26,5 @@ class Organization(Agent):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            Agent.json_ld_context(),
-            {
-                "page": {"@id": str(FOAF.page)}
-            }
+            Agent.json_ld_context(), {"page": {"@id": str(FOAF.page)}}
         )

@@ -53,7 +53,7 @@ class NamedValue(ResourceBackedNamedModel):
                 "property": {"@id": str(RDF.predicate), "@type": "@id"},
                 "title": {"@id": str(DCTERMS.title)},
                 "value": {"@id": str(RDF.value)},
-            }
+            },
         )
 
     @property

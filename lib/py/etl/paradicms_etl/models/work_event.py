@@ -18,7 +18,7 @@ class WorkEvent(Event):
             Event.json_ld_context(),
             {
                 "work": {"@id": str(CMS.work), "@type": "@id"},
-            }
+            },
         )
 
     @property

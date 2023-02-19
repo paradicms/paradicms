@@ -77,16 +77,19 @@ class Work(ResourceBackedNamedModel):
 
     @classmethod
     def json_ld_context(cls):
-        return safe_dict_update(safe_dict_update(
-            ResourceBackedNamedModel.json_ld_context(),
-            {
-                "abstract": {"@id": str(DCTERMS.abstract)},
-                "collection": {"@id": str(CMS.collection), "@type": "@id"},
-                "institution": {"@id": str(CMS.institution), "@type": "@id"},
-                "page": {"@id": str(FOAF.page)},
-                "title": {"@id": str(DCTERMS.title)},
-            }
-        ), Rights.json_ld_context())
+        return safe_dict_update(
+            safe_dict_update(
+                ResourceBackedNamedModel.json_ld_context(),
+                {
+                    "abstract": {"@id": str(DCTERMS.abstract)},
+                    "collection": {"@id": str(CMS.collection), "@type": "@id"},
+                    "institution": {"@id": str(CMS.institution), "@type": "@id"},
+                    "page": {"@id": str(FOAF.page)},
+                    "title": {"@id": str(DCTERMS.title)},
+                },
+            ),
+            Rights.json_ld_context(),
+        )
 
     @property
     def label(self) -> str:

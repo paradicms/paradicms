@@ -48,5 +48,5 @@ class Person(Agent):
                 "givenName": {"@id": str(FOAF.givenName)},
                 "page": {"@id": str(FOAF.page)},
                 "sortName": {"@id": str(CONTACT.sortName)},
-            }
+            },
         )

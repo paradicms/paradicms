@@ -48,7 +48,7 @@ class License(ResourceBackedNamedModel):
                 "identifier": {"@id": str(DC.identifier)},
                 "title": {"@id": str(DC.title)},
                 "version": {"@id": str(DCTERMS.hasVersion)},
-            }
+            },
         )
 
     @property

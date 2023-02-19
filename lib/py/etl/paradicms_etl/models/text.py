@@ -39,12 +39,15 @@ class Text(ResourceBackedModel):
 
     @classmethod
     def json_ld_context(cls):
-        return safe_dict_update(safe_dict_update(
-            ResourceBackedModel.json_ld_context(),
-            {
-                "value": {"@id": str(RDF.value)},
-            }
-        ), Rights.json_ld_context())
+        return safe_dict_update(
+            safe_dict_update(
+                ResourceBackedModel.json_ld_context(),
+                {
+                    "value": {"@id": str(RDF.value)},
+                },
+            ),
+            Rights.json_ld_context(),
+        )
 
     @property
     def rights(self) -> Optional[Rights]:

@@ -42,13 +42,16 @@ class Institution(ResourceBackedNamedModel):
 
     @classmethod
     def json_ld_context(cls):
-        return safe_dict_update(safe_dict_update(
-            ResourceBackedNamedModel.json_ld_context(),
-            {
-                "abstract": {"@id": str(DCTERMS.abstract)},
-                "name": {"@id": str(FOAF.name)}
-            },
-        ), Rights.json_ld_context())
+        return safe_dict_update(
+            safe_dict_update(
+                ResourceBackedNamedModel.json_ld_context(),
+                {
+                    "abstract": {"@id": str(DCTERMS.abstract)},
+                    "name": {"@id": str(FOAF.name)},
+                },
+            ),
+            Rights.json_ld_context(),
+        )
 
     @property
     def label(self) -> str:

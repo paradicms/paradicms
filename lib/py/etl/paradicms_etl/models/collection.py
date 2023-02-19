@@ -49,8 +49,8 @@ class Collection(ResourceBackedNamedModel):
             {
                 "abstract": {"@id": str(DCTERMS.abstract)},
                 "institution": {"@id": str(CMS.institution), "@type": "@id"},
-                "title": {"@id": str(DCTERMS.title)}
-            }
+                "title": {"@id": str(DCTERMS.title)},
+            },
         )
 
     @property

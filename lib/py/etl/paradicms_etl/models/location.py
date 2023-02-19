@@ -41,7 +41,7 @@ class Location(ResourceBackedModel):
             {
                 "lat": {"@id": str(WGS.lat), "@type": str(XSD.decimal)},
                 "long": {"@id": str(WGS.long), "@type": str(XSD.decimal)},
-            }
+            },
         )
 
     @property

@@ -8,7 +8,19 @@ from rdflib.resource import Resource
 import paradicms_etl
 from paradicms_etl.utils.module_namespaces import module_namespaces
 
-_EXCLUDE_NAMESPACE_PREFIXES_FROM_JSON_LD_CONTEXT = {"brick", "csvw", "odrl2", "prof", "qb", "sosa", "ssn", "vann", "void", "xmlns"}
+_EXCLUDE_NAMESPACE_PREFIXES_FROM_JSON_LD_CONTEXT = {
+    "brick",
+    "csvw",
+    "odrl2",
+    "prof",
+    "qb",
+    "sosa",
+    "ssn",
+    "vann",
+    "void",
+    "xmlns",
+}
+
 
 class Model(ABC):
     @classmethod

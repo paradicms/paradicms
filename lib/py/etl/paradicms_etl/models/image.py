@@ -84,24 +84,42 @@ class Image(ResourceBackedNamedModel):
 
     @classmethod
     def json_ld_context(cls):
-        return safe_dict_update(safe_dict_update(
-            ResourceBackedNamedModel.json_ld_context(),
-            {
-                "copyable": {"@id": str(CMS.imageCopyable), "@type": str(XSD.boolean)},
-                "created": {"@id": str(DCTERMS.created), "@type": str(XSD.dateTime)},
-                "depicts": {"@id": str(FOAF.depicts), "@type": "@id"},
-                "format": {"@id": str(DCTERMS.format)},
-                "height": {"@id": str(EXIF.height), "@type": str(XSD.integer)},
-                "maxHeight": {"@id": str(CMS.imageMaxHeight), "@type": str(XSD.integer)},
-                "maxWidth": {"@id": str(CMS.imageMaxWidth), "@type": str(XSD.integer)},
-                "modified": {"@id": str(DCTERMS.modified), "@type": str(XSD.dateTime)},
-                "src": {"@id": str(CMS.imageSrc)},
-                "thumbnail": {"@id": str(FOAF.thumbnail), "@type": "@id"},
-                "thumbnailOf": {"@id": str(CMS.thumbnailOf), "@type": "@id"},
-                "title": {"@id": str(DCTERMS.title), "@type": "@id"},
-                "width": {"@id": str(EXIF.width), "@type": str(XSD.integer)},
-            }
-        ), Rights.json_ld_context())
+        return safe_dict_update(
+            safe_dict_update(
+                ResourceBackedNamedModel.json_ld_context(),
+                {
+                    "copyable": {
+                        "@id": str(CMS.imageCopyable),
+                        "@type": str(XSD.boolean),
+                    },
+                    "created": {
+                        "@id": str(DCTERMS.created),
+                        "@type": str(XSD.dateTime),
+                    },
+                    "depicts": {"@id": str(FOAF.depicts), "@type": "@id"},
+                    "format": {"@id": str(DCTERMS.format)},
+                    "height": {"@id": str(EXIF.height), "@type": str(XSD.integer)},
+                    "maxHeight": {
+                        "@id": str(CMS.imageMaxHeight),
+                        "@type": str(XSD.integer),
+                    },
+                    "maxWidth": {
+                        "@id": str(CMS.imageMaxWidth),
+                        "@type": str(XSD.integer),
+                    },
+                    "modified": {
+                        "@id": str(DCTERMS.modified),
+                        "@type": str(XSD.dateTime),
+                    },
+                    "src": {"@id": str(CMS.imageSrc)},
+                    "thumbnail": {"@id": str(FOAF.thumbnail), "@type": "@id"},
+                    "thumbnailOf": {"@id": str(CMS.thumbnailOf), "@type": "@id"},
+                    "title": {"@id": str(DCTERMS.title), "@type": "@id"},
+                    "width": {"@id": str(EXIF.width), "@type": str(XSD.integer)},
+                },
+            ),
+            Rights.json_ld_context(),
+        )
 
     @property
     def original_image_uri(self) -> Optional[URIRef]:

@@ -69,5 +69,5 @@ class WorkCreation(WorkEvent):
                 "latestDate": {"@id": str(VRA.latestDate)},
                 "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
                 "title": {"@id": str(DCTERMS.title)},
-            }
+            },
         )

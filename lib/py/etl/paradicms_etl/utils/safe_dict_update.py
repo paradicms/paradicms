@@ -13,6 +13,6 @@ def safe_dict_update(dict_: Dict[Any, Any], updates: Dict[Any, Any]) -> Dict[Any
     updated_dict = dict_.copy()
     for key, value in updates.items():
         if key in dict_:
-            raise KeyError(f'{key} already exists')
+            raise KeyError(f"{key} already exists")
         updated_dict[key] = value
     return updated_dict

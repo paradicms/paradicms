@@ -60,7 +60,7 @@ class RightsStatement(ResourceBackedNamedModel):
                 "note": {"@id": str(SKOS.note)},
                 "prefLabel": {"@id": str(SKOS.prefLabel)},
                 "scopeNote": {"@id": str(SKOS.scopeNote)},
-            }
+            },
         )
 
     @property

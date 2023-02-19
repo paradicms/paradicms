@@ -18,9 +18,7 @@ class Agent(ResourceBackedNamedModel):
     def json_ld_context(cls):
         return safe_dict_update(
             ResourceBackedNamedModel.json_ld_context(),
-            {
-                "name": {"@id": str(FOAF.name)}
-            }
+            {"name": {"@id": str(FOAF.name)}},
         )
 
     @property
