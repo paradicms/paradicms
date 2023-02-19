@@ -68,10 +68,10 @@ class Rights(ResourceBackedModel):
 
     @classmethod
     def json_ld_context(cls):
-        context = ResourceBackedModel.json_ld_context().copy()
+        context = {}  # Don't use the superclass, since Rights is often merged into other JSON-LD contexts
         for property_uri in cls.__PROPERTY_URIS:
             assert str(property_uri).startswith(str(DCTERMS))
-            context[str(property_uri)[len(str(DCTERMS))] :] = {
+            context[str(property_uri)[len(str(DCTERMS)):]] = {
                 "@id": str(property_uri),
                 "@type": "@id",
             }
