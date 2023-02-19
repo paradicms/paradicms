@@ -16,11 +16,11 @@ from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.license import License
 from paradicms_etl.models.markdown_directory import MarkdownDirectory
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
+from paradicms_etl.models.root_model import RootModel
 from paradicms_etl.models.root_model_classes import (
     ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME,
 )
@@ -110,11 +110,11 @@ class MarkdownDirectoryTransformer:
                 )
 
             self.__transformed_models_by_class: Dict[
-                Type, Dict[str, NamedModel]
+                Type, Dict[str, RootModel]
             ] = {}  # Then by id
-            self.__transformed_models_by_uri: Dict[str, NamedModel] = {}
+            self.__transformed_models_by_uri: Dict[str, RootModel] = {}
             self.__untransformed_image_file_entries_by_model_class: Dict[
-                Type[NamedModel],
+                Type[RootModel],
                 Dict[str, MarkdownDirectory.ImageFileEntry],
             ] = {}
             for image_file_entry in markdown_directory.image_file_entries:
@@ -123,7 +123,7 @@ class MarkdownDirectoryTransformer:
                     {},
                 )[image_file_entry.model_id] = image_file_entry
             self.__untransformed_metadata_file_entries_by_model_class: Dict[
-                Type[NamedModel],
+                Type[RootModel],
                 List[MarkdownDirectory.MetadataFileEntry],
             ] = {}
             for metadata_file_entry in markdown_directory.metadata_file_entries:
@@ -138,8 +138,9 @@ class MarkdownDirectoryTransformer:
             self,
             *,
             model_id: str,
-            transformed_model: NamedModel,
+            transformed_model: RootModel,
         ):
+            assert transformed_model.uri
             assert (
                 transformed_model.uri not in self.__transformed_models_by_uri
             ), transformed_model.uri
@@ -151,7 +152,7 @@ class MarkdownDirectoryTransformer:
             assert model_id not in transformed_models_by_type
             transformed_models_by_type[model_id] = transformed_model
 
-        def __call__(self) -> Tuple[NamedModel, ...]:
+        def __call__(self) -> Tuple[RootModel, ...]:
             # Order is important
             self.__transform_institution_metadata_file_entries()
             self.__transform_collection_metadata_file_entries()
@@ -227,7 +228,7 @@ class MarkdownDirectoryTransformer:
             self,
             *,
             model_id: str,
-            model_class: Type[NamedModel],
+            model_class: Type[RootModel],
             resource: Resource,
         ) -> None:
             label_property = getattr(model_class, "LABEL_PROPERTY", None)
@@ -379,6 +380,7 @@ class MarkdownDirectoryTransformer:
                         "synthesizing an Image model for the model %s",
                         transformed_model.uri,
                     )
+                    assert transformed_model.uri
                     self.__buffer_transformed_model(
                         model_id=image_file_entry.model_id,
                         transformed_model=Image.from_fields(
@@ -518,8 +520,8 @@ class MarkdownDirectoryTransformer:
                     )
 
         def __transform_resource_to_model(
-            self, *, model_class: Type[NamedModel], model_resource: Resource
-        ) -> NamedModel:
+            self, *, model_class: Type[RootModel], model_resource: Resource
+        ) -> RootModel:
             return model_class.from_rdf(model_resource)
 
         def __transform_work_metadata_file_entries(

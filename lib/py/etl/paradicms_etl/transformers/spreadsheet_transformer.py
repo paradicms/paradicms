@@ -1,12 +1,12 @@
 import logging
-from typing import Type, Dict, Any
+from typing import Type, Dict, Any, List, Union
 from urllib.parse import quote
 
 from rdflib import URIRef, RDF, Graph
 from rdflib.namespace import Namespace
 from stringcase import snakecase
 
-from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.root_model_classes import (
     ROOT_MODEL_CLASSES_BY_NAME,
     ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME,
@@ -54,7 +54,7 @@ class SpreadsheetTransformer:
                 assert len(header_row) == len(data_row)
 
                 # Convert each row to a multi-dict
-                row_dict = {}
+                row_dict: Dict[str, Union[str, List[str]]] = {}
                 for header_cell, data_cell in zip(header_row, data_row):
                     stripped_header_cell = header_cell.strip()
                     if not stripped_header_cell:
@@ -81,8 +81,8 @@ class SpreadsheetTransformer:
                 # Synthesize an @id key if there isn't one
                 if "@id" not in row_dict:
                     row_dict["@id"] = self.__model_uri(
+                        model_class=model_class,
                         model_id=str(row_i),
-                        model_type_name=snakecase(model_class.__name__),
                     )
 
                 json_ld_context = safe_dict_update(
@@ -90,7 +90,7 @@ class SpreadsheetTransformer:
                 )
 
                 graph = Graph()
-                graph.parse(data=row_dict, context=json_ld_context, format="json-ld")
+                graph.parse(data=row_dict, context=json_ld_context, format="json-ld")  # type: ignore
 
                 # The graph should have a single named subject
                 uri_subjects = {
@@ -109,12 +109,16 @@ class SpreadsheetTransformer:
 
                 yield model_class(resource)
 
-    def __model_type_namespace(self, *, model_class: Type[NamedModel]) -> Namespace:
+    def __model_type_namespace(
+        self, *, model_class: Type[ResourceBackedModel]
+    ) -> Namespace:
         return Namespace(
             f"{self.__pipeline_namespace}{snakecase(model_class.__name__)}:"
         )
 
-    def __model_uri(self, *, model_class: Type[NamedModel], model_id: str) -> URIRef:
+    def __model_uri(
+        self, *, model_class: Type[ResourceBackedModel], model_id: str
+    ) -> URIRef:
         return self.__model_type_namespace(model_class=model_class)[quote(model_id)]
 
     @property
