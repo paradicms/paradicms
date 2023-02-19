@@ -6,12 +6,10 @@ def test_extract(excel_2010_test_data_file_path):
         force=False
     )
     assert len(results) == 1
-    assert "Person" in results
-    people = results["Person"]
-    assert len(people) == 1
-    person = people[0]
-    assert person == {
-        "id": "minor-gordon",
-        "family_name": "Gordon",
-        "given_name": "Minor",
-    }
+    sheets = results["sheets"]
+    assert len(sheets) == 1
+    sheet = sheets["Person"]
+    rows = sheet["rows"]
+    assert len(rows) == 2
+    header_row = rows[0]
+    assert header_row == ("@id", "familyName", "givenName", "name")
