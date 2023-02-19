@@ -10,6 +10,7 @@ from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class Work(ResourceBackedNamedModel):
@@ -76,16 +77,16 @@ class Work(ResourceBackedNamedModel):
 
     @classmethod
     def json_ld_context(cls):
-        context = ResourceBackedNamedModel.json_ld_context().copy()
-        context.update({
-            "abstract": {"@id": str(DCTERMS.abstract)},
-            "collection": {"@id": str(CMS.collection), "@type": "@id"},
-            "institution": {"@id": str(CMS.institution), "@type": "@id"},
-            "page": {"@id": str(FOAF.page)},
-            "title": {"@id": str(DCTERMS.title)},
-        })
-        context.update(Rights.json_ld_context())
-        return context
+        return safe_dict_update(safe_dict_update(
+            ResourceBackedNamedModel.json_ld_context(),
+            {
+                "abstract": {"@id": str(DCTERMS.abstract)},
+                "collection": {"@id": str(CMS.collection), "@type": "@id"},
+                "institution": {"@id": str(CMS.institution), "@type": "@id"},
+                "page": {"@id": str(FOAF.page)},
+                "title": {"@id": str(DCTERMS.title)},
+            }
+        ), Rights.json_ld_context())
 
     @property
     def label(self) -> str:

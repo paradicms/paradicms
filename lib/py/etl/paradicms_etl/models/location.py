@@ -7,6 +7,7 @@ from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.namespaces.wgs import WGS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class Location(ResourceBackedModel):
@@ -35,12 +36,13 @@ class Location(ResourceBackedModel):
 
     @classmethod
     def json_ld_context(cls):
-        context = ResourceBackedModel.json_ld_context().copy()
-        context.update({
-            "lat": {"@id": str(WGS.lat), "@type": str(XSD.decimal)},
-            "long": {"@id": str(WGS.long), "@type": str(XSD.decimal)},
-        })
-        return context
+        return safe_dict_update(
+            ResourceBackedModel.json_ld_context(),
+            {
+                "lat": {"@id": str(WGS.lat), "@type": str(XSD.decimal)},
+                "long": {"@id": str(WGS.long), "@type": str(XSD.decimal)},
+            }
+        )
 
     @property
     def uri(self) -> Optional[URIRef]:

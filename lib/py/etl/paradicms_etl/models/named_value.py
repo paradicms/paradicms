@@ -9,6 +9,7 @@ from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamed
 from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class NamedValue(ResourceBackedNamedModel):
@@ -44,15 +45,16 @@ class NamedValue(ResourceBackedNamedModel):
 
     @classmethod
     def json_ld_context(cls):
-        context = ResourceBackedNamedModel.json_ld_context().copy()
-        context.update({
-            "abstract": {"@id": str(DCTERMS.abstract)},
-            "altLabel": {"@id": str(SKOS.altLabel)},
-            "property": {"@id": str(RDF.predicate), "@type": "@id"},
-            "title": {"@id": str(DCTERMS.title)},
-            "value": {"@id": str(RDF.value)},
-        })
-        return context
+        return safe_dict_update(
+            ResourceBackedNamedModel.json_ld_context(),
+            {
+                "abstract": {"@id": str(DCTERMS.abstract)},
+                "altLabel": {"@id": str(SKOS.altLabel)},
+                "property": {"@id": str(RDF.predicate), "@type": "@id"},
+                "title": {"@id": str(DCTERMS.title)},
+                "value": {"@id": str(RDF.value)},
+            }
+        )
 
     @property
     def property_uris(self) -> Tuple[URIRef, ...]:

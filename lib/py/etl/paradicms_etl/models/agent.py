@@ -3,6 +3,7 @@ from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.namespaces import CMS
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class Agent(ResourceBackedNamedModel):
@@ -15,11 +16,12 @@ class Agent(ResourceBackedNamedModel):
 
     @classmethod
     def json_ld_context(cls):
-        context = ResourceBackedNamedModel.json_ld_context().copy()
-        context.update({
-            "name": {"@id": str(FOAF.name)}
-        })
-        return context
+        return safe_dict_update(
+            ResourceBackedNamedModel.json_ld_context(),
+            {
+                "name": {"@id": str(FOAF.name)}
+            }
+        )
 
     @property
     def label(self) -> str:

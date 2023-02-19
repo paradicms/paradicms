@@ -9,6 +9,7 @@ from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamed
 from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class Collection(ResourceBackedNamedModel):
@@ -43,13 +44,14 @@ class Collection(ResourceBackedNamedModel):
 
     @classmethod
     def json_ld_context(cls):
-        context = ResourceBackedNamedModel.json_ld_context().copy()
-        context.update({
-          "abstract": {"@id": str(DCTERMS.abstract)},
-          "institution": {"@id": str(CMS.institution), "@type": "@id"},
-          "title": {"@id": str(DCTERMS.title)}
-        })
-        return context
+        return safe_dict_update(
+            ResourceBackedNamedModel.json_ld_context(),
+            {
+                "abstract": {"@id": str(DCTERMS.abstract)},
+                "institution": {"@id": str(CMS.institution), "@type": "@id"},
+                "title": {"@id": str(DCTERMS.title)}
+            }
+        )
 
     @property
     def label(self) -> str:

@@ -6,6 +6,7 @@ from rdflib.resource import Resource
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class License(ResourceBackedNamedModel):
@@ -41,13 +42,14 @@ class License(ResourceBackedNamedModel):
 
     @classmethod
     def json_ld_context(cls):
-        context = ResourceBackedNamedModel.json_ld_context().copy()
-        context.update({
-            "identifier": {"@id": str(DC.identifier)},
-            "title": {"@id": str(DC.title)},
-            "version": {"@id": str(DCTERMS.hasVersion)},
-        })
-        return context
+        return safe_dict_update(
+            ResourceBackedNamedModel.json_ld_context(),
+            {
+                "identifier": {"@id": str(DC.identifier)},
+                "title": {"@id": str(DC.title)},
+                "version": {"@id": str(DCTERMS.hasVersion)},
+            }
+        )
 
     @property
     def label(self) -> str:

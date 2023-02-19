@@ -6,6 +6,7 @@ from rdflib.resource import Resource
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class RightsStatement(ResourceBackedNamedModel):
@@ -50,16 +51,17 @@ class RightsStatement(ResourceBackedNamedModel):
 
     @classmethod
     def json_ld_context(cls):
-        context = ResourceBackedNamedModel.json_ld_context().copy()
-        context.update({
-            "definition": {"@id": str(SKOS.definition)},
-            "description": {"@id": str(DCTERMS.description)},
-            "identifier": {"@id": str(DCTERMS.identifier)},
-            "note": {"@id": str(SKOS.note)},
-            "prefLabel": {"@id": str(SKOS.prefLabel)},
-            "scopeNote": {"@id": str(SKOS.scopeNote)},
-        })
-        return context
+        return safe_dict_update(
+            ResourceBackedNamedModel.json_ld_context(),
+            {
+                "definition": {"@id": str(SKOS.definition)},
+                "description": {"@id": str(DCTERMS.description)},
+                "identifier": {"@id": str(DCTERMS.identifier)},
+                "note": {"@id": str(SKOS.note)},
+                "prefLabel": {"@id": str(SKOS.prefLabel)},
+                "scopeNote": {"@id": str(SKOS.scopeNote)},
+            }
+        )
 
     @property
     def label(self) -> str:
