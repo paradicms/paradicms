@@ -66,6 +66,19 @@ class Rights(ResourceBackedModel):
     def holders(self) -> Tuple[Union[str, URIRef], ...]:
         return self.__plural_values(DCTERMS.rightsHolder)
 
+    @classmethod
+    def json_ld_context(cls):
+        context = (
+            {}
+        )  # Don't use the superclass, since Rights is often merged into other JSON-LD contexts
+        for property_uri in cls.__PROPERTY_URIS:
+            assert str(property_uri).startswith(str(DCTERMS))
+            context[str(property_uri)[len(str(DCTERMS)) :]] = {
+                "@id": str(property_uri),
+                "@type": "@id",
+            }
+        return context
+
     @property
     def license(self) -> Union[str, URIRef, None]:
         return self.__singular_value(DCTERMS.license)

@@ -1,6 +1,6 @@
 from typing import TypeVar, Union
 
-from rdflib import DC, DCTERMS, FOAF, OWL, SKOS, Graph
+from rdflib import DC, DCTERMS, FOAF, OWL, SKOS, Graph, SDO
 from rdflib.namespace import NamespaceManager
 
 _NamespaceManagerT = TypeVar("_NamespaceManagerT", bound=Union[Graph, NamespaceManager])
@@ -12,7 +12,6 @@ def bind_namespaces(namespace_manager: _NamespaceManagerT) -> _NamespaceManagerT
         CONTACT,
         EXIF,
         PROV,
-        SCHEMA,
         TIME,
         VRA,
         WGS,
@@ -29,7 +28,7 @@ def bind_namespaces(namespace_manager: _NamespaceManagerT) -> _NamespaceManagerT
     namespace_manager.bind("foaf", FOAF)
     namespace_manager.bind("owl", OWL)
     namespace_manager.bind("prov", PROV)
-    namespace_manager.bind("schema", SCHEMA)
+    namespace_manager.bind("sdo", SDO)
     namespace_manager.bind("skos", SKOS)
     namespace_manager.bind("time", TIME)
     namespace_manager.bind("vra", VRA)

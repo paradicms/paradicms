@@ -19,7 +19,6 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 from paradicms_etl.models.work import Work
 
 ElementTextTree = Dict[str, Dict[str, List[str]]]
-logger = logging.getLogger(__name__)
 
 
 def is_uri(value: str):
@@ -46,6 +45,7 @@ class OmekaClassicTransformer:
         self.__institution_name = institution_name
         self.__institution_uri = institution_uri
         self.__institution_rights = institution_rights
+        self.__logger = logging.getLogger(__name__)
         self._metrics_registry = MetricsRegistry()
         self._square_thumbnail_height_px = square_thumbnail_height_px
         self._square_thumbnail_width_px = square_thumbnail_width_px
@@ -84,7 +84,7 @@ class OmekaClassicTransformer:
 
         for item in tqdm(items, desc="Omeka items"):
             if not item["public"]:
-                logger.debug("item %s private, skipping", item["id"])
+                self.__logger.debug("item %s private, skipping", item["id"])
                 continue
 
             with self.__transform_item_timer.time():
@@ -108,7 +108,7 @@ class OmekaClassicTransformer:
                 yield from transformed_files
 
         for key, value in self._metrics_registry.dump_metrics().items():
-            logger.info("%s: %s", key, value)
+            self.__logger.info("%s: %s", key, value)
 
     def _get_element_texts_as_tree(self, omeka_resource) -> ElementTextTree:
         result: ElementTextTree = {}
@@ -144,7 +144,7 @@ class OmekaClassicTransformer:
     def _log_unknown_element_texts(self, element_text_tree: ElementTextTree) -> None:
         for element_set_name in element_text_tree.keys():
             if element_text_tree[element_set_name]:
-                logger.warn(
+                self.__logger.warn(
                     "unknown %s element names: %s",
                     element_set_name,
                     tuple(element_text_tree[element_set_name]),
@@ -217,7 +217,7 @@ class OmekaClassicTransformer:
                     properties.add(Property(property_uri, value))
 
         if dc_element_text_tree:
-            logger.warn(
+            self.__logger.warn(
                 "unknown Dublin Core element names: %s",
                 tuple(dc_element_text_tree.keys()),
             )
@@ -244,9 +244,11 @@ class OmekaClassicTransformer:
                     width=file_metadata_video["resolution_x"],
                 )
             else:
-                logger.debug("file %s has no resolution in its metadata", file_["id"])
+                self.__logger.debug(
+                    "file %s has no resolution in its metadata", file_["id"]
+                )
         else:
-            logger.debug("file %s has no metadata", file_["id"])
+            self.__logger.debug("file %s has no metadata", file_["id"])
 
         file_added = datetime.fromisoformat(file_["added"])
         file_modified = datetime.fromisoformat(file_["modified"])

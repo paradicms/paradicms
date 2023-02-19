@@ -8,12 +8,11 @@ import boto3
 from paradicms_ssg.utils.get_image_file_mime_type import get_image_file_mime_type
 from paradicms_ssg.utils.sha256_hash_file import sha256_hash_file
 
-logger = logging.getLogger()
-
 
 class S3ImageArchiver:
     def __init__(self, *, s3_bucket_name: str, force_upload: bool = False):
         self.__force_upload = force_upload
+        self.__logger = logging.getLogger(__name__)
         self.__s3_bucket_name = s3_bucket_name
 
         s3 = boto3.resource("s3")  # type: ignore
@@ -36,25 +35,25 @@ class S3ImageArchiver:
         if not self.__force_upload:
             # Listing the bucket and caching the keys takes a few requests, vs. HEADing each object
             if self.__existing_s3_bucket_keys is None:
-                logger.info("listing S3 bucket %s", self.__s3_bucket_name)
+                self.__logger.info("listing S3 bucket %s", self.__s3_bucket_name)
                 self.__existing_s3_bucket_keys = set()
                 for object_summary in self.__s3_bucket.objects.all():
                     assert object_summary.key not in self.__existing_s3_bucket_keys
                     self.__existing_s3_bucket_keys.add(object_summary.key)
-                logger.info(
+                self.__logger.info(
                     "listed %d keys in S3 bucket %s",
                     len(self.__existing_s3_bucket_keys),
                     self.__s3_bucket_name,
                 )
             if key in self.__existing_s3_bucket_keys:
-                logger.debug(
+                self.__logger.debug(
                     "%s exists and force_upload not specified, skipping upload", key
                 )
                 return archived_image_url
             else:
-                logger.debug("%s does not exist, uploading", archived_image_url)
+                self.__logger.debug("%s does not exist, uploading", archived_image_url)
 
-        logger.debug("uploading %s to %s", image_file_path, archived_image_url)
+        self.__logger.debug("uploading %s to %s", image_file_path, archived_image_url)
         self.__s3_bucket.upload_file(
             str(image_file_path),
             key,
@@ -62,6 +61,6 @@ class S3ImageArchiver:
                 "ContentType": image_file_mime_type,
             },
         )
-        logger.debug("uploaded %s to %s", image_file_path, archived_image_url)
+        self.__logger.debug("uploaded %s to %s", image_file_path, archived_image_url)
 
         return archived_image_url

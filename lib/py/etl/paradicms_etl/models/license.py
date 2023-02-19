@@ -6,12 +6,17 @@ from rdflib.resource import Resource
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class License(ResourceBackedNamedModel):
     """
     A license. Adapted from the creativecommons.org license RDF (https://github.com/creativecommons/cc.licenserdf).
     """
+
+    DEFAULT_NAMESPACE = DC
+    JSON_LD_CONTEXT = {"@vocab": str(DC)}
+    LABEL_PROPERTY = DC.title
 
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
@@ -34,6 +39,17 @@ class License(ResourceBackedNamedModel):
     @property
     def identifier(self) -> str:
         return self._required_str_value(DC.identifier)
+
+    @classmethod
+    def json_ld_context(cls):
+        return safe_dict_update(
+            ResourceBackedNamedModel.json_ld_context(),
+            {
+                "identifier": {"@id": str(DC.identifier)},
+                "title": {"@id": str(DC.title)},
+                "version": {"@id": str(DCTERMS.hasVersion)},
+            },
+        )
 
     @property
     def label(self) -> str:

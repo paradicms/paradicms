@@ -529,7 +529,10 @@ class SyntheticDataPipeline(Pipeline):
         )
         if loader is None:
             loader = RdfFileLoader(
-                file_path=root_dir_path / "data" / "synthetic" / "synthetic_data.trig",
+                rdf_file_path=root_dir_path
+                / "data"
+                / "synthetic"
+                / "synthetic_data.trig",
                 pipeline_id=self.ID,
             )
 

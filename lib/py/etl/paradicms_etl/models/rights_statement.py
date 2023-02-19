@@ -6,12 +6,15 @@ from rdflib.resource import Resource
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class RightsStatement(ResourceBackedNamedModel):
     """
     A rights statement. Adapted from the rightsstatements.org data model (https://github.com/rightsstatements/data-model).
     """
+
+    LABEL_PROPERTY = SKOS.prefLabel
 
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
@@ -45,6 +48,20 @@ class RightsStatement(ResourceBackedNamedModel):
     @property
     def identifier(self) -> str:
         return self._required_str_value(DCTERMS.identifier)
+
+    @classmethod
+    def json_ld_context(cls):
+        return safe_dict_update(
+            ResourceBackedNamedModel.json_ld_context(),
+            {
+                "definition": {"@id": str(SKOS.definition)},
+                "description": {"@id": str(DCTERMS.description)},
+                "identifier": {"@id": str(DCTERMS.identifier)},
+                "note": {"@id": str(SKOS.note)},
+                "prefLabel": {"@id": str(SKOS.prefLabel)},
+                "scopeNote": {"@id": str(SKOS.scopeNote)},
+            },
+        )
 
     @property
     def label(self) -> str:

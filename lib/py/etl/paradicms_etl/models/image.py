@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
-from rdflib import Literal, URIRef, Graph, RDF
+from rdflib import Literal, URIRef, Graph, RDF, XSD
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
@@ -10,9 +10,14 @@ from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamed
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespaces import CMS, EXIF
 from paradicms_etl.utils.resource_builder import ResourceBuilder
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class Image(ResourceBackedNamedModel):
+    DEFAULT_NAMESPACE = DCTERMS
+    JSON_LD_CONTEXT = {"@vocab": str(DCTERMS)}
+    LABEL_PROPERTY = DCTERMS.title
+
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedNamedModel.__init__(self, resource)
@@ -76,6 +81,45 @@ class Image(ResourceBackedNamedModel):
     @property
     def depicts_uri(self) -> URIRef:
         return self._required_uri_value(FOAF.depicts)
+
+    @classmethod
+    def json_ld_context(cls):
+        return safe_dict_update(
+            safe_dict_update(
+                ResourceBackedNamedModel.json_ld_context(),
+                {
+                    "copyable": {
+                        "@id": str(CMS.imageCopyable),
+                        "@type": str(XSD.boolean),
+                    },
+                    "created": {
+                        "@id": str(DCTERMS.created),
+                        "@type": str(XSD.dateTime),
+                    },
+                    "depicts": {"@id": str(FOAF.depicts), "@type": "@id"},
+                    "format": {"@id": str(DCTERMS.format)},
+                    "height": {"@id": str(EXIF.height), "@type": str(XSD.integer)},
+                    "maxHeight": {
+                        "@id": str(CMS.imageMaxHeight),
+                        "@type": str(XSD.integer),
+                    },
+                    "maxWidth": {
+                        "@id": str(CMS.imageMaxWidth),
+                        "@type": str(XSD.integer),
+                    },
+                    "modified": {
+                        "@id": str(DCTERMS.modified),
+                        "@type": str(XSD.dateTime),
+                    },
+                    "src": {"@id": str(CMS.imageSrc)},
+                    "thumbnail": {"@id": str(FOAF.thumbnail), "@type": "@id"},
+                    "thumbnailOf": {"@id": str(CMS.thumbnailOf), "@type": "@id"},
+                    "title": {"@id": str(DCTERMS.title), "@type": "@id"},
+                    "width": {"@id": str(EXIF.width), "@type": str(XSD.integer)},
+                },
+            ),
+            Rights.json_ld_context(),
+        )
 
     @property
     def original_image_uri(self) -> Optional[URIRef]:

@@ -8,8 +8,6 @@ from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
 from paradicms_etl.utils.sanitize_method_name import sanitize_method_name
 
-logger = logging.getLogger(__name__)
-
 
 class _WikidataItemsTransformer:
     """
@@ -27,10 +25,13 @@ class _WikidataItemsTransformer:
     of _WikidataItemTransformer.
     """
 
+    def __init__(self):
+        self.__logger = logging.getLogger(__name__)
+
     def _log_missing_transform_method(
         self, *, item: WikidataItem, transform_method_name: str
     ):
-        logger.warning(
+        self.__logger.warning(
             "unable to find method %s to transform item %s",
             transform_method_name,
             item.uri,
@@ -38,7 +39,7 @@ class _WikidataItemsTransformer:
 
     def __call__(self, *, graph: Graph) -> Iterable[Model]:  # type: ignore
         yield from self._transform_items(
-            WikidataItem.from_wikidata_rdf(graph=graph, logger=logger)
+            WikidataItem.from_wikidata_rdf(graph=graph, logger=self.__logger)
         )
 
     def _transform_item(self, item: WikidataItem) -> Iterable[NamedModel]:
@@ -46,7 +47,7 @@ class _WikidataItemsTransformer:
             "instance of", None
         )
         if not instance_of_statements:
-            logger.debug("item %s has no instance of statements", item.uri)
+            self.__logger.debug("item %s has no instance of statements", item.uri)
             return
 
         assert isinstance(instance_of_statements[0].value, WikidataItem)
@@ -74,28 +75,30 @@ class _WikidataItemsTransformer:
                 if model.uri == item.uri:
                     assert model.uri not in authoritative_models_by_uri, model.uri
                     authoritative_models_by_uri[model.uri] = model
-                    logger.debug("authoritative model %s", model.uri)
+                    self.__logger.debug("authoritative model %s", model.uri)
                 else:
-                    logger.debug("non-authoritative model %s", model.uri)
+                    self.__logger.debug("non-authoritative model %s", model.uri)
                     existing_non_authoritative_model = (
                         non_authoritative_models_by_uri.get(model.uri)
                     )
                     if existing_non_authoritative_model is None:
                         non_authoritative_models_by_uri[model.uri] = model
                     elif existing_non_authoritative_model != model:
-                        logger.info(
+                        self.__logger.info(
                             "conflicting non-authoritative model %s: %s vs %s",
                             model.uri,
                             existing_non_authoritative_model,
                             model,
                         )
                     else:
-                        logger.debug("duplicate non-authoritative model %s", model.uri)
+                        self.__logger.debug(
+                            "duplicate non-authoritative model %s", model.uri
+                        )
 
         yield from authoritative_models_by_uri.values()
         for model in non_authoritative_models_by_uri.values():
             if model.uri in authoritative_models_by_uri:
-                logger.info(
+                self.__logger.info(
                     "ignoring non-authoritative model %s in favor of authoritative version",
                     model.uri,
                 )

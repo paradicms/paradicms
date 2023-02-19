@@ -7,6 +7,7 @@ from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class Text(ResourceBackedModel):
@@ -34,6 +35,18 @@ class Text(ResourceBackedModel):
     def from_fields(cls, value: str, *, rights: Optional[Rights] = None) -> "Text":
         return cls(
             ResourceBuilder(BNode()).add(RDF.value, value).add_rights(rights).build()
+        )
+
+    @classmethod
+    def json_ld_context(cls):
+        return safe_dict_update(
+            safe_dict_update(
+                ResourceBackedModel.json_ld_context(),
+                {
+                    "value": {"@id": str(RDF.value)},
+                },
+            ),
+            Rights.json_ld_context(),
         )
 
     @property

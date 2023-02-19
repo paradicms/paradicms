@@ -9,8 +9,6 @@ from tqdm import tqdm
 
 from paradicms_ssg.utils.get_generic_file_mime_type import get_generic_file_mime_type
 
-logger = logging.getLogger(__name__)
-
 
 class S3Deployer:
     def __init__(
@@ -22,6 +20,7 @@ class S3Deployer:
             else None
         )
         self.__cloudfront_distribution_id = cloudfront_distribution_id
+        self.__logger = logging.getLogger(__name__)
         self.__s3_bucket_name = s3_bucket_name
         self.__s3_client = boto3.client("s3")  # type: ignore
 
@@ -34,7 +33,7 @@ class S3Deployer:
                     continue
                 gui_out_file_paths.append(Path(dir_path) / file_name)
 
-        logger.info(
+        self.__logger.info(
             "uploading %d files from %s to %s",
             len(gui_out_file_paths),
             app_out_dir_path,
@@ -45,15 +44,15 @@ class S3Deployer:
 
             mime_type = get_generic_file_mime_type(file_path)
 
-            logger.debug("uploading %s to %s", file_path, key)
+            self.__logger.debug("uploading %s to %s", file_path, key)
             self.__s3_client.upload_file(
                 str(file_path),
                 self.__s3_bucket_name,
                 key,
                 ExtraArgs={"ContentType": mime_type},
             )
-            logger.debug("uploaded %s to %s", file_path, key)
-        logger.info(
+            self.__logger.debug("uploaded %s to %s", file_path, key)
+        self.__logger.info(
             "uploaded %d files from %s to %s",
             len(gui_out_file_paths),
             app_out_dir_path,
@@ -62,7 +61,7 @@ class S3Deployer:
 
         if self.__cloudfront_distribution_id is not None:
             assert self.__cloudfront_client is not None
-            logger.debug(
+            self.__logger.debug(
                 "invaliding CloudFront distribution %s",
                 self.__cloudfront_distribution_id,
             )
@@ -75,7 +74,7 @@ class S3Deployer:
                     "Paths": {"Quantity": 1, "Items": ["/*"]},
                 },
             )
-            logger.info(
+            self.__logger.info(
                 "invalidated CloudFront distribution %s",
                 self.__cloudfront_distribution_id,
             )

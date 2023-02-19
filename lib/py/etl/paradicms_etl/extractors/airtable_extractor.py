@@ -7,8 +7,6 @@ from urllib.request import urlopen
 
 from pathvalidate import sanitize_filename
 
-logger = logging.getLogger(__name__)
-
 
 class AirtableExtractor:
     """
@@ -31,6 +29,7 @@ class AirtableExtractor:
         self.__api_key = api_key
         self.__base_id = base_id
         self.__extracted_data_dir_path = extracted_data_dir_path
+        self.__logger = logging.getLogger(__name__)
         if isinstance(tables, (list, tuple)):
             self.__tables: Dict[str, Dict[str, str]] = {table: {} for table in tables}
         else:
@@ -70,7 +69,7 @@ class AirtableExtractor:
                 str(sanitize_filename(url)) + ".json"
             )
             if not file_path.is_file() or force:
-                logger.debug("downloading %s to %s", url, file_path)
+                self.__logger.debug("downloading %s to %s", url, file_path)
                 f = urlopen(url)
                 try:
                     response_str = f.read()
@@ -82,7 +81,7 @@ class AirtableExtractor:
             with open(file_path, "rb") as file_:
                 file_json = json.load(file_)
             file_records = file_json["records"]
-            logger.debug(
+            self.__logger.debug(
                 "extracted %d records from %s (%s)", len(file_records), url, file_path
             )
             records.extend(file_records)

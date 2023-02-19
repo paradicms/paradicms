@@ -15,8 +15,6 @@ from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import VRA
 
-logger = logging.getLogger(__name__)
-
 
 class LunaTransformer:
     # __OBJECT_FIELD_PROPERTY_DEFINITIONS = {
@@ -37,6 +35,9 @@ class LunaTransformer:
     # Size 8	up to 24576 pixels on long side
 
     __URL_SIZES = (96, 192, 384, 768, 1536, 3072, 6144, 12288, 24576)
+
+    def __init__(self):
+        self.__logger = logging.getLogger(__name__)
 
     @staticmethod
     def _pop_qualified_field_values(
@@ -151,7 +152,9 @@ class LunaTransformer:
             for field_name, field_values in field_value_pair.items():
                 assert field_name not in field_values_dict, field_name
                 field_values_dict[field_name] = field_values
-                logger.debug("object %s: field %s = %s", id_, field_name, field_values)
+                self.__logger.debug(
+                    "object %s: field %s = %s", id_, field_name, field_values
+                )
 
         properties = self._transform_object_field_values(field_values=field_values_dict)
 
@@ -172,7 +175,7 @@ class LunaTransformer:
         )
 
         for field_name, field_values in field_values_dict.items():
-            logger.warning(
+            self.__logger.warning(
                 "work %s: untransformed field %s = %s", id_, field_name, field_values
             )
 

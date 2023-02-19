@@ -13,8 +13,6 @@ from paradicms_etl.namespaces import bind_namespaces
 from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.utils.download_file import download_file
 
-logger = logging.getLogger(__name__)
-
 
 class CreativeCommonsPipeline(Pipeline):
     ID = "creative_commons"
@@ -28,14 +26,15 @@ class CreativeCommonsPipeline(Pipeline):
             transformer=self.__transform,
             **kwds,
         )
+        self.__logger = logging.getLogger(__name__)
 
     @staticmethod
     def __extract(*, force: bool, **kwds):
         with TemporaryDirectory() as temp_dir:
             zip_file_path = download_file(
-                downloaded_file_dir_path=Path(temp_dir),
-                from_url="https://github.com/creativecommons/cc.licenserdf/archive/refs/heads/main.zip",
                 force=force,
+                from_url="https://github.com/creativecommons/cc.licenserdf/archive/refs/heads/main.zip",
+                to_dir_path=Path(temp_dir),
             )
             rdf_file_contents = {}
             with ZipFile(zip_file_path) as zip_file:
@@ -104,21 +103,20 @@ class CreativeCommonsLicenses(ModelSingletons):
 """
             )
 
-    @staticmethod
-    def __transform(*, rdf_file_contents: Dict[str, bytes]):  # type: ignore
+    def __transform(self, *, rdf_file_contents: Dict[str, bytes]):  # type: ignore
         CC = Namespace("http://creativecommons.org/ns#")
         for rdf_file_name, rdf_file_bytes in rdf_file_contents.items():
             graph = Graph()
             graph.parse(BytesIO(rdf_file_bytes), format="xml")
             graph_subjects = tuple(set(graph.subjects()))
             if len(graph_subjects) > 1:
-                logger.debug(
+                self.__logger.debug(
                     "skipping .rdf with more than one subject %s", rdf_file_name
                 )
                 continue  # Only jurisdictional licenses
             uri = graph_subjects[0]
             if graph.value(uri, CC["jurisdiction"]) is not None:
-                logger.debug("skipping .rdf with jurisdiction %s", rdf_file_name)
+                self.__logger.debug("skipping .rdf with jurisdiction %s", rdf_file_name)
                 continue
             yield License.from_rdf(graph.resource(uri))
 

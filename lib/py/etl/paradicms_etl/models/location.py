@@ -1,15 +1,18 @@
 from typing import Optional
 
-from rdflib import URIRef, BNode, RDF
+from rdflib import URIRef, BNode, RDF, XSD
 from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.namespaces.wgs import WGS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class Location(ResourceBackedModel):
+    JSON_LD_CONTEXT = {"@vocab": str(WGS)}
+
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedModel.__init__(self, resource)
@@ -29,6 +32,16 @@ class Location(ResourceBackedModel):
             .add(WGS.lat, lat)
             .add(WGS.long, long)
             .build()
+        )
+
+    @classmethod
+    def json_ld_context(cls):
+        return safe_dict_update(
+            ResourceBackedModel.json_ld_context(),
+            {
+                "lat": {"@id": str(WGS.lat), "@type": str(XSD.decimal)},
+                "long": {"@id": str(WGS.long), "@type": str(XSD.decimal)},
+            },
         )
 
     @property

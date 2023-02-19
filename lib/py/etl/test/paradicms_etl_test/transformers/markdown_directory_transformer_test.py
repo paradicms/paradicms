@@ -51,7 +51,7 @@ def test_transform(data_dir_path: Path):
     assert isinstance(work1_abstract, Text)
     work1_abstract_rights = work1_abstract.rights
     assert work1_abstract_rights is not None
-    assert work1_abstract_rights.holders == ("Abstract rights holder",)
+    assert work1_abstract_rights.holders == (URIRef("urn:markdown:test:person:test_person"),)
 
     images = {model.uri: model for model in models if isinstance(model, Image)}
     assert len(images) == 2

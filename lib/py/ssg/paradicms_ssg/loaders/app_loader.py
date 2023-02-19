@@ -14,8 +14,6 @@ from paradicms_ssg.image_archiver import ImageArchiver
 from paradicms_ssg.image_archivers.fs_image_archiver import FsImageArchiver
 from paradicms_ssg.loaders.images_loader import ImagesLoader
 
-logger = logging.getLogger(__name__)
-
 
 class AppLoader(BufferingLoader):
     """
@@ -67,6 +65,7 @@ class AppLoader(BufferingLoader):
         self.__dev = dev
         self.__image_archiver = image_archiver
         self.__loaded_data_dir_path = loaded_data_dir_path
+        self.__logger = logging.getLogger(__name__)
         self.__pipeline_id = pipeline_id
         self.__sleep_s_after_image_download = sleep_s_after_image_download
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
@@ -102,11 +101,13 @@ class AppLoader(BufferingLoader):
         gui_images = []
 
         if non_copyable_images:
-            logger.info("using %d non-copyable images as-is", len(non_copyable_images))
+            self.__logger.info(
+                "using %d non-copyable images as-is", len(non_copyable_images)
+            )
             gui_images.extend(non_copyable_images)
 
         if copyable_original_images:
-            logger.info(
+            self.__logger.info(
                 "thumbnailing and archiving %d copyable original images",
                 len(copyable_original_images),
             )
@@ -129,7 +130,7 @@ class AppLoader(BufferingLoader):
             pipeline_id=self.__pipeline_id,
         )
         data_loader(flush=True, models=models)
-        logger.info("loaded data to %s", data_file_path)
+        self.__logger.info("loaded data to %s", data_file_path)
 
         app_package_build_kwds = {
             "configuration_file_path": self.__configuration_file_path,

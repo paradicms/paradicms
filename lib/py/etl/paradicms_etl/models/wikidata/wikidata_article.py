@@ -1,10 +1,8 @@
 from dataclasses import dataclass
 from logging import Logger
 
-from rdflib import URIRef, Literal
+from rdflib import URIRef, Literal, SDO
 from rdflib.resource import Resource
-
-from paradicms_etl.namespaces import SCHEMA
 
 
 @dataclass(frozen=True)
@@ -15,10 +13,10 @@ class WikidataArticle:
 
     @classmethod
     def from_rdf(cls, *, logger: Logger, resource: Resource) -> "WikidataArticle":
-        in_language = resource.value(SCHEMA.inLanguage)
+        in_language = resource.value(SDO.inLanguage)
         assert isinstance(in_language, Literal)
 
-        name = resource.value(SCHEMA.name)
+        name = resource.value(SDO.name)
         assert isinstance(name, Literal)
 
         assert isinstance(resource.identifier, URIRef)
