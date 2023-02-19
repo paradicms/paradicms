@@ -1,12 +1,11 @@
 import json
 import logging
 from logging import Logger
-from typing import Dict, Optional, Tuple, Type, Union, List
+from typing import Dict, Optional, Tuple, Type, List
 from urllib.parse import quote
 
 import yaml
 from rdflib import FOAF, Graph, Literal, URIRef, Namespace, RDF
-from rdflib.namespace import DefinedNamespace
 from rdflib.resource import Resource
 from stringcase import snakecase
 from yaml import FullLoader
@@ -28,9 +27,8 @@ from paradicms_etl.models.root_model_classes import (
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_creation import WorkCreation
 from paradicms_etl.namespaces import CMS
-from paradicms_etl.utils.dict_to_resource_transformer import DictToResourceTransformer
-from paradicms_etl.utils.markdown_to_resource_transformer import (
-    MarkdownToResourceTransformer,
+from paradicms_etl.utils.markdown_to_dict_transformer import (
+    MarkdownToDictTransformer,
 )
 
 
@@ -64,9 +62,6 @@ class MarkdownDirectoryTransformer:
         *,
         default_institution: Optional[Institution] = None,
         default_collection: Optional[Collection] = None,
-        namespaces_by_prefix: Optional[
-            Dict[str, Union[Type[DefinedNamespace], Namespace]]
-        ] = None,
         pipeline_id: str,
     ):
         if default_institution is None and default_collection is not None:
@@ -76,29 +71,6 @@ class MarkdownDirectoryTransformer:
         self.__default_collection = default_collection
         self.__default_institution = default_institution
         self.__logger = logging.getLogger(__name__)
-        if namespaces_by_prefix is None:
-            namespaces_by_prefix = (
-                DictToResourceTransformer.NAMESPACES_BY_PREFIX_DEFAULT
-            )
-        namespaces_by_prefix = namespaces_by_prefix.copy()
-        if "md" in namespaces_by_prefix:
-            raise ValueError("the namespace prefix 'md' is reserved")
-        namespaces_by_prefix["md"] = MarkdownDirectoryTransformer._pipeline_namespace(
-            pipeline_id=pipeline_id
-        )
-        for model_type_name in ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME.keys():
-            if model_type_name not in namespaces_by_prefix:
-                namespaces_by_prefix[
-                    model_type_name
-                ] = MarkdownDirectoryTransformer._model_type_namespace(
-                    model_type_name=model_type_name, pipeline_id=pipeline_id
-                )
-            else:
-                self.__logger.debug(
-                    "namespace prefix '%s' already mapped, can't use for internal model type reference",
-                    model_type_name,
-                )
-        self.__namespaces_by_prefix = namespaces_by_prefix
         self.__pipeline_id = pipeline_id
 
     @staticmethod
@@ -139,6 +111,16 @@ class MarkdownDirectoryTransformer:
     # create a class instance per transform invocation.
     # The state includes things like the default institution, which is synthesized if needed.
     class __TransformInvocation:
+        __METADATA_FILE_TO_JSON_LD_OBJECT_TRANSFORMERS = {
+            "json": lambda metadata_file_entry: json.loads(metadata_file_entry.source),
+            "md": lambda metadata_file_entry: MarkdownToDictTransformer.transform(
+                markdown=metadata_file_entry.source,
+            ),
+            "yaml": lambda metadata_file_entry: yaml.load(
+                metadata_file_entry.source, Loader=FullLoader
+            ),
+        }
+
         def __init__(
             self,
             *,
@@ -146,16 +128,12 @@ class MarkdownDirectoryTransformer:
             default_institution: Optional[Institution],
             logger: Logger,
             markdown_directory: MarkdownDirectory,
-            namespaces_by_prefix: Optional[
-                Dict[str, Union[Type[DefinedNamespace], Namespace]]
-            ],
             pipeline_id: str,
         ):
             self.__default_collection = default_collection
             self.__default_institution = default_institution
             self.__logger = logger
             self.__markdown_directory = markdown_directory
-            self.__namespaces_by_prefix = namespaces_by_prefix
             self.__pipeline_id = pipeline_id
             self.__transformed_models_by_class: Dict[
                 Type, Dict[str, NamedModel]
@@ -464,29 +442,38 @@ class MarkdownDirectoryTransformer:
                 pipeline_id=self.__pipeline_id,
             )
 
-            dict_to_resource_transformer = DictToResourceTransformer(
-                default_namespace=model_class.DEFAULT_NAMESPACE,
-                graph=graph,
-                namespaces_by_prefix=self.__namespaces_by_prefix,
-                resource_identifier_default=resource_identifier_default,
-            )
-
             try:
-                if metadata_file_entry.format == "json":
-                    resource = dict_to_resource_transformer.transform_dict_to_resource(
-                        json.loads(metadata_file_entry.source)
+                if (
+                    metadata_file_entry.format
+                    in self.__METADATA_FILE_TO_JSON_LD_OBJECT_TRANSFORMERS
+                ):
+                    json_ld_object = (
+                        self.__METADATA_FILE_TO_JSON_LD_OBJECT_TRANSFORMERS[
+                            metadata_file_entry.format
+                        ](metadata_file_entry)
                     )
-                elif metadata_file_entry.format == "md":
-                    resource = MarkdownToResourceTransformer.transform(
-                        default_namespace=model_class.DEFAULT_NAMESPACE,
-                        graph=graph,
-                        namespaces_by_prefix=self.__namespaces_by_prefix,
-                        markdown=metadata_file_entry.source,
-                        resource_identifier_default=resource_identifier_default,
-                    )
-                elif metadata_file_entry.format == "yaml":
-                    resource = dict_to_resource_transformer.transform_dict_to_resource(
-                        yaml.load(metadata_file_entry.source, Loader=FullLoader)
+
+                    if "@id" not in json_ld_object:
+                        json_ld_object["@id"] = resource_identifier_default
+
+                    json_ld_context_updates = {"md": str(MarkdownDirectoryTransformer._pipeline_namespace(pipeline_id=self.__pipeline_id))}
+                    for model_type_name in ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME.keys():
+                            json_ld_context_updates[
+                                model_type_name
+                            ] = str(MarkdownDirectoryTransformer._model_type_namespace(
+                                model_type_name=model_type_name, pipeline_id=self.__pipeline_id
+                            ))
+                    json_ld_context = model_class.json_ld_context()
+                    for key, value in json_ld_context_updates.items():
+                        if key not in json_ld_context:
+                            json_ld_context[key] = value
+                        else:
+                            self.__logger.warning("'%s' already in JSON-LD context for %s, skipping", key, model_class.__name__)
+
+                    graph.parse(
+                        data=json_ld_object,
+                        context=json_ld_context,
+                        format="json-ld"
                     )
                 else:
                     # Assume it's an RDF serialization
@@ -495,19 +482,20 @@ class MarkdownDirectoryTransformer:
                         format=metadata_file_entry.format,
                         publicID=resource_identifier_default,
                     )
-                    uri_subjects = [
-                        subject
-                        for subject in graph.subjects()
-                        if isinstance(subject, URIRef)
-                    ]
-                    if len(uri_subjects) == 1:
-                        resource = graph.resource(uri_subjects[0])
-                    else:
-                        raise ValueError(
-                            f"metadata file {metadata_file_entry.model_type}/{metadata_file_entry.model_id}.{metadata_file_entry.format} has {len(uri_subjects)} named subjects"
-                        )
             except Exception as e:
                 raise ValueError(f"error deserializing {metadata_file_entry}") from e
+
+            graph_str = graph.serialize(format="turtle")
+
+            uri_subjects = {
+                subject for subject in graph.subjects() if isinstance(subject, URIRef)
+            }
+            if len(uri_subjects) == 1:
+                resource = graph.resource(uri_subjects.pop())
+            else:
+                raise ValueError(
+                    f"metadata file {metadata_file_entry.model_type}/{metadata_file_entry.model_id}.{metadata_file_entry.format} has {len(uri_subjects)} named subjects"
+                )
 
             expected_rdf_type = getattr(CMS, model_class.__name__)
             actual_rdf_type = resource.value(RDF.type)
@@ -637,7 +625,6 @@ class MarkdownDirectoryTransformer:
             default_institution=self.__default_institution,
             logger=self.__logger,
             markdown_directory=markdown_directory,
-            namespaces_by_prefix=self.__namespaces_by_prefix,
             pipeline_id=self.__pipeline_id,
         )():
             yield model
