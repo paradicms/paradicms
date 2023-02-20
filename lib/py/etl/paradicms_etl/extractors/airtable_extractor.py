@@ -3,7 +3,7 @@ import logging
 from pathlib import Path
 from typing import Dict, List, Tuple, Union
 from urllib.parse import quote
-from urllib.request import urlopen
+from urllib.request import urlopen, Request
 
 from pathvalidate import sanitize_filename
 
@@ -16,17 +16,17 @@ class AirtableExtractor:
     def __init__(
         self,
         *,
-        api_key: str,
+        access_token: str,
         base_id: str,
         extracted_data_dir_path: Path,
         tables: Union[List[str], Tuple[str, ...], Dict[str, Dict[str, str]]],
     ):
         """
-        :param api_key: Airtable API key
+        :param access_token: Airtable API key
         :param base_id: Airtable base identifier
         :param tables: a list or a union of table [names] or a dict where the keys are table names and the values are API query parameters
         """
-        self.__api_key = api_key
+        self.__access_token = access_token
         self.__base_id = base_id
         self.__extracted_data_dir_path = extracted_data_dir_path
         self.__logger = logging.getLogger(__name__)
@@ -52,7 +52,6 @@ class AirtableExtractor:
         offset = None
         while True:
             request_query_parameters = query_parameters.copy()
-            request_query_parameters["api_key"] = self.__api_key
             if offset is not None:
                 request_query_parameters["offset"] = offset
 
@@ -70,7 +69,11 @@ class AirtableExtractor:
             )
             if not file_path.is_file() or force:
                 self.__logger.debug("downloading %s to %s", url, file_path)
-                f = urlopen(url)
+                f = urlopen(
+                    Request(
+                        url, headers={"Authorization": "Bearer " + self.__access_token}
+                    )
+                )
                 try:
                     response_str = f.read()
                 finally:
