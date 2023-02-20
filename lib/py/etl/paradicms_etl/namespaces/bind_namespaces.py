@@ -20,7 +20,7 @@ def bind_namespaces(namespace_manager: _NamespaceManagerT) -> _NamespaceManagerT
 
     namespace_manager.bind("cms", CMS)
     namespace_manager.bind("contact", CONTACT)
-    namespace_manager.bind("creativecommons", "http://creativecommons.org/ns#")
+    namespace_manager.bind("cc", "http://creativecommons.org/ns#")
     namespace_manager.bind("dc", DC)
     # namespace_manager.bind("dcmitype", DCMITYPE)
     namespace_manager.bind("dcterms", DCTERMS)

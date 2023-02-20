@@ -33,11 +33,11 @@ class OmekaClassicTransformer:
         fullsize_max_width_px: int,
         institution_name: str,
         institution_uri: URIRef,
-        institution_rights: Optional[str] = None,
         square_thumbnail_height_px: int,
         square_thumbnail_width_px: int,
         thumbnail_max_height_px: int,
         thumbnail_max_width_px: int,
+        institution_rights: Optional[str] = None,
     ):
         # Single _ so we can use getattr
         self._fullsize_max_height_px = fullsize_max_height_px
@@ -67,6 +67,7 @@ class OmekaClassicTransformer:
             else None,
             uri=self.__institution_uri,
         )
+        yield institution
 
         collection_uris_by_id = {}
         for collection in tqdm(collections, desc="Omeka collections"):
@@ -139,7 +140,7 @@ class OmekaClassicTransformer:
                     title = property_.value
                     assert isinstance(title, Literal)
                     return title.toPython(), remaining_properties
-        raise NotImplementedError("no title property")
+        raise KeyError("no title property")
 
     def _log_unknown_element_texts(self, element_text_tree: ElementTextTree) -> None:
         for element_set_name in element_text_tree.keys():
@@ -158,7 +159,13 @@ class OmekaClassicTransformer:
             element_text_tree=element_text_tree
         )
         self._log_unknown_element_texts(element_text_tree)
-        title, properties = self._get_title(properties)
+        try:
+            title, properties = self._get_title(properties)
+        except KeyError:
+            self.__logger.warning(
+                "collection %s has no title property", omeka_collection["url"]
+            )
+            return None
         return Collection.from_fields(
             institution_uri=institution_uri,
             properties=properties,
@@ -323,7 +330,11 @@ class OmekaClassicTransformer:
             unique_properties.add(property_)
         properties = tuple(unique_properties)
         self._log_unknown_element_texts(item_element_text_tree)
-        title, properties = self._get_title(properties)
+        try:
+            title, properties = self._get_title(properties)
+        except KeyError:
+            self.__logger.warning("work %s has no title property", item["url"])
+            return None
         return Work.from_fields(
             collection_uris=(collection_uri,),
             institution_uri=institution_uri,

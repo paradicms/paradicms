@@ -57,7 +57,7 @@ class AppLoader(BufferingLoader):
         :param thumbnail_max_dimensions: maximum dimensions of amage thumbnails to use
         """
 
-        BufferingLoader.__init__(self, **kwds)
+        BufferingLoader.__init__(self)
         self.__app = app
         self.__base_url_path = base_url_path
         self.__configuration_file_path = configuration_file_path
@@ -126,8 +126,8 @@ class AppLoader(BufferingLoader):
             self.__loaded_data_dir_path / "data" / (self.__pipeline_id + ".trig")
         )
         data_loader = RdfFileLoader(
-            file_path=data_file_path,
             pipeline_id=self.__pipeline_id,
+            rdf_file_path=data_file_path,
         )
         data_loader(flush=True, models=models)
         self.__logger.info("loaded data to %s", data_file_path)
