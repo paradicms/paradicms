@@ -67,6 +67,7 @@ class OmekaClassicTransformer:
             else None,
             uri=self.__institution_uri,
         )
+        yield institution
 
         collection_uris_by_id = {}
         for collection in tqdm(collections, desc="Omeka collections"):
