@@ -1,6 +1,6 @@
 from typing import Tuple, Union
 
-from rdflib import URIRef, RDF
+from rdflib import URIRef, RDF, FOAF
 from rdflib.namespace import DCTERMS
 from rdflib.resource import Resource
 
@@ -49,6 +49,7 @@ class Collection(ResourceBackedNamedModel):
             {
                 "abstract": {"@id": str(DCTERMS.abstract)},
                 "institution": {"@id": str(CMS.institution), "@type": "@id"},
+                "page": {"@id": str(FOAF.page), "@type": "@id"},
                 "title": {"@id": str(DCTERMS.title)},
             },
         )

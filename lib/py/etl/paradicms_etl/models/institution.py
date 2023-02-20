@@ -48,6 +48,7 @@ class Institution(ResourceBackedNamedModel):
                 {
                     "abstract": {"@id": str(DCTERMS.abstract)},
                     "name": {"@id": str(FOAF.name)},
+                    "page": {"@id": str(FOAF.page), "@type": "@id"},
                 },
             ),
             Rights.json_ld_context(),
