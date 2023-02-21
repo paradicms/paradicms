@@ -60,6 +60,8 @@ class SpreadsheetTransformer:
                     if not stripped_header_cell:
                         continue
 
+                    if data_cell is None:
+                        continue
                     stripped_data_cell = data_cell.strip()
                     if not stripped_data_cell:
                         continue
@@ -98,7 +100,15 @@ class SpreadsheetTransformer:
                     for subject in graph.subjects()
                     if isinstance(subject, URIRef)
                 }
-                if len(uri_subjects) == 1:
+                if len(uri_subjects) == 0:
+                    self.__logger.debug(
+                        "row %d in sheet %s has %d named subjects",
+                        row_i,
+                        sheet_name,
+                        len(uri_subjects),
+                    )
+                    break
+                elif len(uri_subjects) == 1:
                     resource = graph.resource(uri_subjects.pop())
                 else:
                     raise ValueError(
