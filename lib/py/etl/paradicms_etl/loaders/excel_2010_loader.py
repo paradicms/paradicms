@@ -44,10 +44,10 @@ class Excel2010Loader(BufferingLoader):
             models_by_class.setdefault(model.__class__, []).append(model)
 
         workbook = Workbook()
-        for model_class, models in models_by_class.items():
+        for model_class, model_class_models in models_by_class.items():
             sheet = workbook.create_sheet(model_class.__name__)
             sheet_header: Optional[List[str]] = None
-            for model in models:
+            for model in model_class_models:
                 graph = Graph()
                 bind_namespaces(graph.namespace_manager)
                 model.to_rdf(graph=graph)
