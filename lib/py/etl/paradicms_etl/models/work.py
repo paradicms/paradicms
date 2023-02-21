@@ -84,6 +84,7 @@ class Work(ResourceBackedNamedModel):
                     "abstract": {"@id": str(DCTERMS.abstract)},
                     "collection": {"@id": str(CMS.collection), "@type": "@id"},
                     "institution": {"@id": str(CMS.institution), "@type": "@id"},
+                    "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},
                     "page": {"@id": str(FOAF.page)},
                     "title": {"@id": str(DCTERMS.title)},
                 },

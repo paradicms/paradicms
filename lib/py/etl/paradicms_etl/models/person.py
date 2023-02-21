@@ -1,6 +1,6 @@
 from typing import Optional, Tuple
 
-from rdflib import URIRef, RDF
+from rdflib import URIRef, RDF, DCTERMS
 from rdflib.namespace import FOAF
 from rdflib.resource import Resource
 
@@ -47,6 +47,7 @@ class Person(Agent):
                 "familyName": {"@id": str(FOAF.familyName)},
                 "givenName": {"@id": str(FOAF.givenName)},
                 "page": {"@id": str(FOAF.page)},
+                "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},
                 "sortName": {"@id": str(CONTACT.sortName)},
             },
         )
