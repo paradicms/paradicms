@@ -26,8 +26,9 @@ EXCLUDE_RDFLIB_NAMESPACE_PREFIXES = {
 
 def bind_namespaces(namespace_manager: _NamespaceManagerT) -> _NamespaceManagerT:
     for namespace_prefix, namespace in module_namespaces(
-        rdflib.namespace, paradicms_etl.namespaces
+        rdflib.namespace, paradicms_etl.namespaces  # type: ignore
     ).items():
         if namespace_prefix in EXCLUDE_RDFLIB_NAMESPACE_PREFIXES:
             continue
         namespace_manager.bind(namespace_prefix, namespace)
+    return namespace_manager
