@@ -1,5 +1,6 @@
+import json
 import logging
-from typing import Type, Dict, Any, List, Union
+from typing import Set, Type, Dict, Any, List, Union
 from urllib.parse import quote
 
 from rdflib import URIRef, RDF, Graph
@@ -44,6 +45,7 @@ class SpreadsheetTransformer:
                 continue
 
             header_row = None
+            resource_identifiers: Set[URIRef] = set()
             for row_i, row in enumerate(rows):
                 if row_i == 0:
                     header_row = row
@@ -56,26 +58,31 @@ class SpreadsheetTransformer:
                 # Convert each row to a multi-dict
                 row_dict: Dict[str, Union[str, List[str]]] = {}
                 for header_cell, data_cell in zip(header_row, data_row):
-                    stripped_header_cell = header_cell.strip()
-                    if not stripped_header_cell:
+                    header_cell = header_cell.strip()
+                    if not header_cell:
                         continue
 
                     if data_cell is None:
                         continue
-                    stripped_data_cell = data_cell.strip()
-                    if not stripped_data_cell:
-                        continue
+                    if isinstance(data_cell, str):
+                        data_cell = data_cell.strip()
+                        if not data_cell:
+                            continue
+                        try:
+                            data_cell = json.loads(data_cell)
+                        except json.JSONDecodeError:
+                            pass
 
-                    existing_row_dict_value = row_dict.get(stripped_header_cell)
+                    existing_row_dict_value = row_dict.get(header_cell)
                     if existing_row_dict_value is None:
-                        row_dict[stripped_header_cell] = stripped_data_cell
+                        row_dict[header_cell] = data_cell
                     elif isinstance(existing_row_dict_value, list):
                         # Allow multiple columns with the same header
-                        existing_row_dict_value.append(stripped_data_cell)
+                        existing_row_dict_value.append(data_cell)
                     else:
-                        row_dict[stripped_header_cell] = [
+                        row_dict[header_cell] = [
                             existing_row_dict_value,
-                            stripped_data_cell,
+                            data_cell,
                         ]
 
                 # Parse the row multi-dict as a JSON-LD object
@@ -114,6 +121,12 @@ class SpreadsheetTransformer:
                     raise ValueError(
                         f"row {row_i} in sheet {sheet_name} has {len(uri_subjects)} named subjects"
                     )
+
+                if resource.identifier in resource_identifiers:
+                    raise ValueError(
+                        f"row {row_i} in sheet {sheet_name} has duplicate identifier: {resource.identifier}"
+                    )
+                resource_identifiers.add(resource.identifier)
 
                 resource.add(RDF.type, getattr(CMS, model_class.__name__))
 
