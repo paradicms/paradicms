@@ -5,7 +5,7 @@ from typing import Dict, Optional, Tuple, Type, List
 from urllib.parse import quote
 
 import yaml
-from rdflib import FOAF, Graph, Literal, URIRef, Namespace, RDF
+from rdflib import FOAF, Graph, Literal, URIRef, Namespace
 from rdflib.resource import Resource
 from stringcase import spinalcase
 from yaml import FullLoader
@@ -482,17 +482,17 @@ class MarkdownDirectoryTransformer:
                     f"metadata file {metadata_file_entry.model_type}/{metadata_file_entry.model_id}.{metadata_file_entry.format} has {len(uri_subjects)} named subjects"
                 )
 
-            expected_rdf_type = getattr(CMS, model_class.__name__)
-            actual_rdf_type = resource.value(RDF.type)
-            if actual_rdf_type is None:
-                resource.add(RDF.type, expected_rdf_type)
-            else:
-                if not isinstance(actual_rdf_type, Resource):
-                    raise ValueError(f"{metadata_file_entry} rdf:type is not a URI")
-                if actual_rdf_type.identifier != expected_rdf_type:
-                    raise ValueError(
-                        f"{metadata_file_entry} rdf_type is {actual_rdf_type.identifier}, expected {expected_rdf_type}"
-                    )
+            # expected_rdf_type = getattr(CMS, model_class.__name__)
+            # actual_rdf_type = resource.value(RDF.type)
+            # if actual_rdf_type is None:
+            #     resource.add(RDF.type, expected_rdf_type)
+            # else:
+            #     if not isinstance(actual_rdf_type, Resource):
+            #         raise ValueError(f"{metadata_file_entry} rdf:type is not a URI")
+            #     if actual_rdf_type.identifier != expected_rdf_type:
+            #         raise ValueError(
+            #             f"{metadata_file_entry} rdf_type is {actual_rdf_type.identifier}, expected {expected_rdf_type}"
+            #         )
 
             return resource
 

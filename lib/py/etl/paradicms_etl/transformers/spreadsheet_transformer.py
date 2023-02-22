@@ -3,7 +3,7 @@ import logging
 from typing import Set, Type, Dict, Any, List, Union
 from urllib.parse import quote
 
-from rdflib import URIRef, RDF, Graph
+from rdflib import URIRef, Graph
 from rdflib.namespace import Namespace
 from stringcase import spinalcase
 
@@ -12,7 +12,6 @@ from paradicms_etl.models.root_model_classes import (
     ROOT_MODEL_CLASSES_BY_NAME,
     ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME,
 )
-from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
@@ -127,8 +126,6 @@ class SpreadsheetTransformer:
                         f"row {row_i} in sheet {sheet_name} has duplicate identifier: {resource.identifier}"
                     )
                 resource_identifiers.add(resource.identifier)
-
-                resource.add(RDF.type, getattr(CMS, model_class.__name__))
 
                 yield model_class(resource)
 
