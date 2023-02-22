@@ -1,6 +1,6 @@
 from typing import Optional
 
-from rdflib import URIRef, BNode, RDF, XSD
+from rdflib import URIRef, BNode, RDF, XSD, RDFS
 from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
@@ -19,6 +19,7 @@ class Location(ResourceBackedModel):
     def from_fields(
         cls,
         *,
+        label: Optional[str] = None,
         lat: Optional[float] = None,
         long: Optional[float] = None,
         uri: Optional[URIRef] = None
@@ -27,6 +28,7 @@ class Location(ResourceBackedModel):
             raise NotImplementedError("no support in the GUI for named Locations")
         return cls(
             ResourceBuilder(uri if uri is not None else BNode())
+            .add(RDFS.label, label)
             .add(WGS.lat, lat)
             .add(WGS.long, long)
             .build()
@@ -37,6 +39,7 @@ class Location(ResourceBackedModel):
         return safe_dict_update(
             ResourceBackedModel.json_ld_context(),
             {
+                "label": {"@id": str(RDFS.label)},
                 "lat": {"@id": str(WGS.lat), "@type": str(XSD.decimal)},
                 "long": {"@id": str(WGS.long), "@type": str(XSD.decimal)},
             },
