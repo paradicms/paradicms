@@ -77,6 +77,9 @@ class Rights(ResourceBackedModel):
                 "@id": str(property_uri),
                 "@type": "@id",
             }
+            context[str(property_uri)[len(str(DCTERMS)) :] + "Literal"] = {
+                "@id": str(property_uri)
+            }
         return context
 
     @property

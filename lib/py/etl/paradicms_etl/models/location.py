@@ -1,53 +1,38 @@
-from typing import Optional
+from abc import ABC
+from typing import Optional, Any
 
-from rdflib import URIRef, BNode, RDF, XSD
-from rdflib.resource import Resource
+from rdflib import RDFS, XSD
 
-from paradicms_etl.models.resource_backed_model import ResourceBackedModel
-from paradicms_etl.namespaces import CMS
-from paradicms_etl.namespaces.wgs import WGS
+from paradicms_etl.model import Model
+from paradicms_etl.namespaces import WGS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
-from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class Location(ResourceBackedModel):
-    JSON_LD_CONTEXT = {"@vocab": str(WGS)}
+class Location(Model, ABC):
+    """
+    Abstract base class for spatial locations with a latitude and longitude.
+    """
 
-    def __init__(self, resource: Resource):
-        resource.add(RDF.type, CMS[self.__class__.__name__])
-        ResourceBackedModel.__init__(self, resource)
-
-    @classmethod
-    def from_fields(
-        cls,
+    @staticmethod
+    def _from_fields(
+        cls: Any,
         *,
+        resource_builder: ResourceBuilder,
+        label: Optional[str] = None,
         lat: Optional[float] = None,
-        long: Optional[float] = None,
-        uri: Optional[URIRef] = None
-    ):
-        if uri is not None:
-            raise NotImplementedError("no support in the GUI for named Locations")
+        long: Optional[float] = None
+    ) -> Any:
         return cls(
-            ResourceBuilder(uri if uri is not None else BNode())
+            resource_builder.add(RDFS.label, label)
             .add(WGS.lat, lat)
             .add(WGS.long, long)
             .build()
         )
 
-    @classmethod
-    def json_ld_context(cls):
-        return safe_dict_update(
-            ResourceBackedModel.json_ld_context(),
-            {
-                "lat": {"@id": str(WGS.lat), "@type": str(XSD.decimal)},
-                "long": {"@id": str(WGS.long), "@type": str(XSD.decimal)},
-            },
-        )
-
-    @property
-    def uri(self) -> Optional[URIRef]:
-        return (
-            self._resource.identifier
-            if isinstance(self._resource.identifier, URIRef)
-            else None
-        )
+    @staticmethod
+    def _json_ld_context():
+        return {
+            "label": {"@id": str(RDFS.label)},
+            "lat": {"@id": str(WGS.lat), "@type": str(XSD.decimal)},
+            "long": {"@id": str(WGS.long), "@type": str(XSD.decimal)},
+        }

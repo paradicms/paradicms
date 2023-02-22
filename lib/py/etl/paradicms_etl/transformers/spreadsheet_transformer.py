@@ -1,17 +1,17 @@
+import json
 import logging
-from typing import Type, Dict, Any, List, Union
+from typing import Set, Type, Dict, Any, List, Union
 from urllib.parse import quote
 
-from rdflib import URIRef, RDF, Graph
+from rdflib import URIRef, Graph
 from rdflib.namespace import Namespace
-from stringcase import snakecase
+from stringcase import spinalcase
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.root_model_classes import (
     ROOT_MODEL_CLASSES_BY_NAME,
     ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME,
 )
-from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
@@ -44,6 +44,7 @@ class SpreadsheetTransformer:
                 continue
 
             header_row = None
+            resource_identifiers: Set[URIRef] = set()
             for row_i, row in enumerate(rows):
                 if row_i == 0:
                     header_row = row
@@ -56,24 +57,31 @@ class SpreadsheetTransformer:
                 # Convert each row to a multi-dict
                 row_dict: Dict[str, Union[str, List[str]]] = {}
                 for header_cell, data_cell in zip(header_row, data_row):
-                    stripped_header_cell = header_cell.strip()
-                    if not stripped_header_cell:
+                    header_cell = header_cell.strip()
+                    if not header_cell:
                         continue
 
-                    stripped_data_cell = data_cell.strip()
-                    if not stripped_data_cell:
+                    if data_cell is None:
                         continue
+                    if isinstance(data_cell, str):
+                        data_cell = data_cell.strip()
+                        if not data_cell:
+                            continue
+                        try:
+                            data_cell = json.loads(data_cell)
+                        except json.JSONDecodeError:
+                            pass
 
-                    existing_row_dict_value = row_dict.get(stripped_header_cell)
+                    existing_row_dict_value = row_dict.get(header_cell)
                     if existing_row_dict_value is None:
-                        row_dict[stripped_header_cell] = stripped_data_cell
+                        row_dict[header_cell] = data_cell
                     elif isinstance(existing_row_dict_value, list):
                         # Allow multiple columns with the same header
-                        existing_row_dict_value.append(stripped_data_cell)
+                        existing_row_dict_value.append(data_cell)
                     else:
-                        row_dict[stripped_header_cell] = [
+                        row_dict[header_cell] = [
                             existing_row_dict_value,
-                            stripped_data_cell,
+                            data_cell,
                         ]
 
                 # Parse the row multi-dict as a JSON-LD object
@@ -98,14 +106,26 @@ class SpreadsheetTransformer:
                     for subject in graph.subjects()
                     if isinstance(subject, URIRef)
                 }
-                if len(uri_subjects) == 1:
+                if len(uri_subjects) == 0:
+                    self.__logger.debug(
+                        "row %d in sheet %s has %d named subjects",
+                        row_i,
+                        sheet_name,
+                        len(uri_subjects),
+                    )
+                    break
+                elif len(uri_subjects) == 1:
                     resource = graph.resource(uri_subjects.pop())
                 else:
                     raise ValueError(
                         f"row {row_i} in sheet {sheet_name} has {len(uri_subjects)} named subjects"
                     )
 
-                resource.add(RDF.type, getattr(CMS, model_class.__name__))
+                if resource.identifier in resource_identifiers:
+                    raise ValueError(
+                        f"row {row_i} in sheet {sheet_name} has duplicate identifier: {resource.identifier}"
+                    )
+                resource_identifiers.add(resource.identifier)
 
                 yield model_class(resource)
 
@@ -113,7 +133,7 @@ class SpreadsheetTransformer:
         self, *, model_class: Type[ResourceBackedModel]
     ) -> Namespace:
         return Namespace(
-            f"{self.__pipeline_namespace}{snakecase(model_class.__name__)}:"
+            f"{self.__pipeline_namespace}{spinalcase(model_class.__name__)}:"
         )
 
     def __model_uri(

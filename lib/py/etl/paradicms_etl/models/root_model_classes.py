@@ -6,7 +6,7 @@ from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.license import License
-from paradicms_etl.models.location import Location
+from paradicms_etl.models.named_location import NamedLocation
 from paradicms_etl.models.named_value import NamedValue
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
@@ -20,7 +20,7 @@ ROOT_MODEL_CLASSES: Tuple[Type[RootModel], ...] = (
     Image,
     Institution,
     License,
-    Location,
+    NamedLocation,
     NamedValue,
     Organization,
     Person,
@@ -32,7 +32,10 @@ ROOT_MODEL_CLASSES: Tuple[Type[RootModel], ...] = (
 ROOT_MODEL_CLASSES_BY_NAME: Dict[str, Type[RootModel]] = {
     __class.__name__: __class for __class in ROOT_MODEL_CLASSES
 }
+# Aliases
+ROOT_MODEL_CLASSES_BY_NAME["Location"] = NamedLocation
 
 ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME: Dict[str, Type[RootModel]] = {
-    snakecase(__class.__name__): __class for __class in ROOT_MODEL_CLASSES
+    snakecase(__model_class_name): __class
+    for __model_class_name, __class in ROOT_MODEL_CLASSES_BY_NAME.items()
 }

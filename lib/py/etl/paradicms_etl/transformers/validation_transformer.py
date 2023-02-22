@@ -204,7 +204,8 @@ class __Validator:
     def _validate_work(self, work: Work):
         for collection_uri in work.collection_uris:
             self.__referenced_collection_uris.add(collection_uri)
-        self.__referenced_institution_uris.add(work.institution_uri)
+        if work.institution_uri is not None:
+            self.__referenced_institution_uris.add(work.institution_uri)
         assert work.uri not in self.__work_uris
         self.__work_uris.add(work.uri)
         self.__validate_rights(work.rights)

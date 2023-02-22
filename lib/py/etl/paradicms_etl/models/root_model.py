@@ -4,7 +4,7 @@ from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.license import License
-from paradicms_etl.models.location import Location
+from paradicms_etl.models.named_location import NamedLocation
 from paradicms_etl.models.named_value import NamedValue
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
@@ -20,7 +20,7 @@ RootModel = Union[
     Image,
     Institution,
     License,
-    Location,
+    NamedLocation,
     NamedValue,
     Organization,
     Person,

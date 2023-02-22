@@ -8,7 +8,7 @@ from paradicms_etl.models.property import Property
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.text import Text
-from paradicms_etl.namespaces import CMS
+from paradicms_etl.namespaces import CMS, VRA
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
@@ -25,8 +25,6 @@ class Work(ResourceBackedNamedModel):
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedNamedModel.__init__(self, resource)
-        self.collection_uris
-        self.institution_uri
         self.title
 
     @classmethod
@@ -35,8 +33,6 @@ class Work(ResourceBackedNamedModel):
         *,
         # Linking up to the parent (relational style) and grandparent makes it easier to do
         # page generation and search indexing downstream.
-        collection_uris: Tuple[URIRef, ...],
-        institution_uri: URIRef,
         title: str,
         uri: URIRef,
         abstract: Union[str, Text, None] = None,
@@ -44,6 +40,8 @@ class Work(ResourceBackedNamedModel):
             str, URIRef, None
         ] = None,  # foaf:page, linking to a human-readable page; if not specified, defaults to URI
         properties: Tuple[Property, ...] = (),
+        collection_uris: Optional[Tuple[URIRef, ...]],
+        institution_uri: Optional[URIRef],
         rights: Optional[Rights] = None,
     ) -> "Work":
         return cls(
@@ -72,8 +70,8 @@ class Work(ResourceBackedNamedModel):
         )
 
     @property
-    def institution_uri(self):
-        return self._required_uri_value(CMS.institution)
+    def institution_uri(self) -> Optional[URIRef]:
+        return self._optional_uri_value(CMS.institution)
 
     @classmethod
     def json_ld_context(cls):
@@ -83,9 +81,14 @@ class Work(ResourceBackedNamedModel):
                 {
                     "abstract": {"@id": str(DCTERMS.abstract)},
                     "collection": {"@id": str(CMS.collection), "@type": "@id"},
+                    "earliestDate": {"@id": str(VRA.earliestDate)},
                     "institution": {"@id": str(CMS.institution), "@type": "@id"},
+                    "latestDate": {"@id": str(VRA.latestDate)},
+                    "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
+                    "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},
                     "page": {"@id": str(FOAF.page)},
                     "title": {"@id": str(DCTERMS.title)},
+                    "type": {"@id": str(DCTERMS.type), "@type": "@id"},
                 },
             ),
             Rights.json_ld_context(),

@@ -4,7 +4,7 @@ from rdflib import URIRef, DCTERMS, RDF
 from rdflib.resource import Resource
 
 from paradicms_etl.models.date_time_description import DateTimeDescription
-from paradicms_etl.models.location import Location
+from paradicms_etl.models.named_location import Location
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.namespaces import VRA, CMS

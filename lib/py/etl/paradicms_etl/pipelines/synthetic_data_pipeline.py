@@ -7,15 +7,17 @@ from rdflib import DCTERMS, Literal, URIRef
 
 from paradicms_etl.extractors.nop_extractor import nop_extractor
 from paradicms_etl.loader import Loader
+from paradicms_etl.loaders.composite_loader import CompositeLoader
+from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.agent import Agent
+from paradicms_etl.models.anonymous_location import AnonymousLocation
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
-from paradicms_etl.models.location import Location
 from paradicms_etl.models.named_value import NamedValue
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
@@ -97,7 +99,8 @@ class SyntheticDataPipeline(Pipeline):
 
         def __call__(self):
             yield from CreativeCommonsLicenses.as_tuple()
-            yield RightsStatementsDotOrgRightsStatements.InC_EDU
+            yield from RightsStatementsDotOrgRightsStatements.as_tuple()
+            # yield RightsStatementsDotOrgRightsStatements.InC_EDU
 
             named_values_by_value = {}
             for model in self.__generate_named_values():
@@ -497,7 +500,7 @@ class SyntheticDataPipeline(Pipeline):
                 contributor_uri=tuple(contributor_uris),
                 creator_uri=tuple(creator_uris),
                 date=creation_date_time_description,
-                location=Location.from_fields(lat=42.728104, long=-73.687576),
+                location=AnonymousLocation.from_fields(lat=42.728104, long=-73.687576),
                 title=f"{work.title} creation",
                 work_uri=work.uri,
                 uri=URIRef(str(uri) + "Creation"),
@@ -528,12 +531,22 @@ class SyntheticDataPipeline(Pipeline):
             Path(__file__).absolute().parent.parent.parent.parent.parent.parent
         )
         if loader is None:
-            loader = RdfFileLoader(
-                rdf_file_path=root_dir_path
-                / "data"
-                / "synthetic"
-                / "synthetic_data.trig",
-                pipeline_id=self.ID,
+            loader = CompositeLoader(
+                loaders=(
+                    Excel2010Loader(
+                        xlsx_file_path=root_dir_path
+                        / "data"
+                        / "synthetic"
+                        / "synthetic_data.xlsx"
+                    ),
+                    RdfFileLoader(
+                        rdf_file_path=root_dir_path
+                        / "data"
+                        / "synthetic"
+                        / "synthetic_data.trig",
+                        pipeline_id=self.ID,
+                    ),
+                )
             )
 
         Pipeline.__init__(

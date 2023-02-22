@@ -5,9 +5,9 @@ from typing import Dict, Optional, Tuple, Type, List
 from urllib.parse import quote
 
 import yaml
-from rdflib import FOAF, Graph, Literal, URIRef, Namespace, RDF
+from rdflib import FOAF, Graph, Literal, URIRef, Namespace
 from rdflib.resource import Resource
-from stringcase import snakecase
+from stringcase import spinalcase
 from yaml import FullLoader
 
 from paradicms_etl.models.collection import Collection
@@ -23,6 +23,7 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 from paradicms_etl.models.root_model import RootModel
 from paradicms_etl.models.root_model_classes import (
     ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME,
+    ROOT_MODEL_CLASSES,
 )
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_creation import WorkCreation
@@ -104,9 +105,9 @@ class MarkdownDirectoryTransformer:
             self.__pipeline_id = pipeline_id
 
             self.__json_ld_context = {"md": str(self.__pipeline_namespace)}
-            for model_type_name in ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME.keys():
-                self.__json_ld_context["md-" + model_type_name] = str(
-                    self.__model_type_namespace(model_type_name=model_type_name)
+            for model_class in ROOT_MODEL_CLASSES:
+                self.__json_ld_context["md-" + spinalcase(model_class.__name__)] = str(
+                    self.__model_type_namespace(model_class=model_class)
                 )
 
             self.__transformed_models_by_class: Dict[
@@ -165,14 +166,14 @@ class MarkdownDirectoryTransformer:
 
         def __default_collection_uri(self, *, markdown_directory_name: str) -> URIRef:
             return self.__model_uri(
-                model_type_name="collection",
+                model_class=Collection,
                 model_id=markdown_directory_name,
             )
 
         @property
         def __default_institution_uri(self) -> URIRef:
             return self.__model_uri(
-                model_type_name="institution",
+                model_class=Institution,
                 model_id=MarkdownDirectoryTransformer._DEFAULT_INSTITUTION_MODEL_ID,
             )
 
@@ -206,13 +207,13 @@ class MarkdownDirectoryTransformer:
                 )
             return self.__default_institution
 
-        def __model_type_namespace(self, *, model_type_name: str) -> Namespace:
-            return Namespace(f"{self.__pipeline_namespace}{quote(model_type_name)}:")
+        def __model_type_namespace(self, *, model_class: Type[RootModel]) -> Namespace:
+            return Namespace(
+                f"{self.__pipeline_namespace}{quote(spinalcase(model_class.__name__))}:"
+            )
 
-        def __model_uri(self, *, model_id: str, model_type_name: str) -> URIRef:
-            return self.__model_type_namespace(model_type_name=model_type_name)[
-                quote(model_id)
-            ]
+        def __model_uri(self, *, model_class: Type[RootModel], model_id: str) -> URIRef:
+            return self.__model_type_namespace(model_class=model_class)[quote(model_id)]
 
         @property
         def __pipeline_namespace(self) -> Namespace:
@@ -387,8 +388,8 @@ class MarkdownDirectoryTransformer:
                             depicts_uri=transformed_model.uri,
                             src=image_file_entry.path.as_uri(),
                             uri=self.__model_uri(
+                                model_class=Image,
                                 model_id=image_file_entry.model_id,
-                                model_type_name=snakecase(Image.__name__),
                             ),
                         ),
                     )
@@ -434,8 +435,8 @@ class MarkdownDirectoryTransformer:
             graph = Graph()
 
             model_uri = self.__model_uri(
+                model_class=model_class,
                 model_id=metadata_file_entry.model_id,
-                model_type_name=snakecase(model_class.__name__),
             )
 
             try:
@@ -481,17 +482,17 @@ class MarkdownDirectoryTransformer:
                     f"metadata file {metadata_file_entry.model_type}/{metadata_file_entry.model_id}.{metadata_file_entry.format} has {len(uri_subjects)} named subjects"
                 )
 
-            expected_rdf_type = getattr(CMS, model_class.__name__)
-            actual_rdf_type = resource.value(RDF.type)
-            if actual_rdf_type is None:
-                resource.add(RDF.type, expected_rdf_type)
-            else:
-                if not isinstance(actual_rdf_type, Resource):
-                    raise ValueError(f"{metadata_file_entry} rdf:type is not a URI")
-                if actual_rdf_type.identifier != expected_rdf_type:
-                    raise ValueError(
-                        f"{metadata_file_entry} rdf_type is {actual_rdf_type.identifier}, expected {expected_rdf_type}"
-                    )
+            # expected_rdf_type = getattr(CMS, model_class.__name__)
+            # actual_rdf_type = resource.value(RDF.type)
+            # if actual_rdf_type is None:
+            #     resource.add(RDF.type, expected_rdf_type)
+            # else:
+            #     if not isinstance(actual_rdf_type, Resource):
+            #         raise ValueError(f"{metadata_file_entry} rdf:type is not a URI")
+            #     if actual_rdf_type.identifier != expected_rdf_type:
+            #         raise ValueError(
+            #             f"{metadata_file_entry} rdf_type is {actual_rdf_type.identifier}, expected {expected_rdf_type}"
+            #         )
 
             return resource
 
