@@ -90,6 +90,7 @@ class Work(ResourceBackedNamedModel):
                     "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},
                     "page": {"@id": str(FOAF.page)},
                     "title": {"@id": str(DCTERMS.title)},
+                    "type": {"@id": str(DCTERMS.type), "@type": "@id"},
                 },
             ),
             Rights.json_ld_context(),
