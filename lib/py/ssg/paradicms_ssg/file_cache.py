@@ -3,12 +3,12 @@ import logging
 import mimetypes
 import os
 from pathlib import Path
-from time import sleep
 from typing import Optional
 from urllib.request import urlretrieve
 
 from pathvalidate import sanitize_filename
 from rdflib import URIRef
+from time import sleep
 
 
 class FileCache:
@@ -24,7 +24,7 @@ class FileCache:
         :param force_download: always download files, never use cached versions
         """
         self.__cache_dir_path = cache_dir_path
-        self.__cache_dir_path.mkdir(exist_ok=True)
+        self.__cache_dir_path.mkdir(exist_ok=True, parents=True)
         self.__force_download = force_download
         self.__logger = logging.getLogger(self.__class__.__name__)
         self.__sleep_s_after_download = sleep_s_after_download
@@ -72,7 +72,7 @@ class FileCache:
             )
             sleep(self.__sleep_s_after_download)
 
-        content_type = headers_dict["Content-Type"]
+        content_type = headers_dict.get("Content-Type")
         cached_file_ext = None
         if content_type:
             cached_file_ext = mimetypes.guess_extension(content_type, strict=False)
