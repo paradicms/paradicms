@@ -32,7 +32,10 @@ ROOT_MODEL_CLASSES: Tuple[Type[RootModel], ...] = (
 ROOT_MODEL_CLASSES_BY_NAME: Dict[str, Type[RootModel]] = {
     __class.__name__: __class for __class in ROOT_MODEL_CLASSES
 }
+# Aliases
+ROOT_MODEL_CLASSES_BY_NAME["Location"] = NamedLocation
 
 ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME: Dict[str, Type[RootModel]] = {
-    snakecase(__class.__name__): __class for __class in ROOT_MODEL_CLASSES
+    snakecase(__model_class_name): __class
+    for __model_class_name, __class in ROOT_MODEL_CLASSES_BY_NAME.items()
 }
