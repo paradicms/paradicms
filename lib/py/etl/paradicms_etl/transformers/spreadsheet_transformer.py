@@ -5,7 +5,7 @@ from urllib.parse import quote
 
 from rdflib import URIRef, RDF, Graph
 from rdflib.namespace import Namespace
-from stringcase import snakecase
+from stringcase import spinalcase
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.root_model_classes import (
@@ -136,7 +136,7 @@ class SpreadsheetTransformer:
         self, *, model_class: Type[ResourceBackedModel]
     ) -> Namespace:
         return Namespace(
-            f"{self.__pipeline_namespace}{snakecase(model_class.__name__)}:"
+            f"{self.__pipeline_namespace}{spinalcase(model_class.__name__)}:"
         )
 
     def __model_uri(
