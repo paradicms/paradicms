@@ -11,8 +11,6 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class Location(ResourceBackedModel):
-    JSON_LD_CONTEXT = {"@vocab": str(WGS)}
-
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedModel.__init__(self, resource)
