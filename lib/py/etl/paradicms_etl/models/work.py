@@ -25,8 +25,6 @@ class Work(ResourceBackedNamedModel):
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedNamedModel.__init__(self, resource)
-        self.collection_uris
-        self.institution_uri
         self.title
 
     @classmethod
@@ -35,8 +33,6 @@ class Work(ResourceBackedNamedModel):
         *,
         # Linking up to the parent (relational style) and grandparent makes it easier to do
         # page generation and search indexing downstream.
-        collection_uris: Tuple[URIRef, ...],
-        institution_uri: URIRef,
         title: str,
         uri: URIRef,
         abstract: Union[str, Text, None] = None,
@@ -44,6 +40,8 @@ class Work(ResourceBackedNamedModel):
             str, URIRef, None
         ] = None,  # foaf:page, linking to a human-readable page; if not specified, defaults to URI
         properties: Tuple[Property, ...] = (),
+        collection_uris: Optional[Tuple[URIRef, ...]],
+        institution_uri: Optional[URIRef],
         rights: Optional[Rights] = None,
     ) -> "Work":
         return cls(
@@ -72,8 +70,8 @@ class Work(ResourceBackedNamedModel):
         )
 
     @property
-    def institution_uri(self):
-        return self._required_uri_value(CMS.institution)
+    def institution_uri(self) -> Optional[URIRef]:
+        return self._optional_uri_value(CMS.institution)
 
     @classmethod
     def json_ld_context(cls):
