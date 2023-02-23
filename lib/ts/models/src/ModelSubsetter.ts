@@ -264,7 +264,7 @@ export class ModelSubsetter {
         }
       }
 
-      if (institutionUris) {
+      if (institutionUris && work.institutionUri) {
         institutionUris.add(work.institutionUri);
       }
 

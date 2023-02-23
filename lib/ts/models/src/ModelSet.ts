@@ -680,11 +680,14 @@ export class ModelSet {
         }
       }
 
-      const institutionWorks = worksByInstitutionUriIndex[work.institutionUri];
-      if (institutionWorks) {
-        institutionWorks.push(work);
-      } else {
-        worksByInstitutionUriIndex[work.institutionUri] = [work];
+      if (work.institutionUri) {
+        const institutionWorks =
+          worksByInstitutionUriIndex[work.institutionUri];
+        if (institutionWorks) {
+          institutionWorks.push(work);
+        } else {
+          worksByInstitutionUriIndex[work.institutionUri] = [work];
+        }
       }
 
       this._worksByUriIndex![work.uri] = work;

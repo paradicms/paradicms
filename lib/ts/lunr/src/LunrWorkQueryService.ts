@@ -163,6 +163,9 @@ export class LunrWorkQueryService implements WorkQueryService {
             [index: string]: MutableValueFacetValue<string>;
           } = {};
           for (const work of works) {
+            if (!work.institutionUri) {
+              continue;
+            }
             const value = values[work.institutionUri];
             if (value) {
               value.count++;
@@ -256,11 +259,13 @@ export class LunrWorkQueryService implements WorkQueryService {
           );
           break;
         case "InstitutionValue":
-          filteredWorks = filteredWorks.filter(work =>
-            LunrWorkQueryService.testValueFilter(
-              filter as InstitutionValueFilter,
-              [work.institutionUri]
-            )
+          filteredWorks = filteredWorks.filter(
+            work =>
+              work.institutionUri &&
+              LunrWorkQueryService.testValueFilter(
+                filter as InstitutionValueFilter,
+                [work.institutionUri]
+              )
           );
           break;
         case "StringPropertyValue": {

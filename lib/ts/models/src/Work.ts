@@ -12,7 +12,6 @@ import {DataFactory} from "@paradicms/rdf";
 import {
   HasAbstract,
   HasImages,
-  HasInstitution,
   HasPage,
   HasRelations,
   HasRights,
@@ -24,6 +23,8 @@ import {visitWorkEvent} from "./WorkEventVisitor";
 import {WorkCreation} from "./WorkCreation";
 import {Location} from "./Location";
 import {cms, dcterms, rdf} from "@paradicms/vocabularies";
+import {Institution} from "./Institution";
+import {requireNonNull} from "@paradicms/utilities";
 
 const getRightsWorkAgents = (
   rights: Rights | null,
@@ -63,7 +64,6 @@ export class Work extends Mixin(
   NamedModel,
   HasAbstract,
   HasImages,
-  HasInstitution,
   HasPage,
   HasTitle,
   HasRelations,
@@ -75,7 +75,7 @@ export class Work extends Mixin(
 
     result.push(
       ...getRightsWorkAgents(
-        this.rights ?? this.institution.rights ?? null,
+        this.rights ?? this.institution?.rights ?? null,
         "Work"
       )
     );
@@ -97,7 +97,7 @@ export class Work extends Mixin(
 
     if (this.rights) {
       result.push(...this.rights.agentUris);
-    } else if (this.institution.rights) {
+    } else if (this.institution && this.institution.rights) {
       result.push(...this.institution.rights.agentUris);
     }
 
@@ -151,6 +151,22 @@ export class Work extends Mixin(
 
   get events(): readonly WorkEvent[] {
     return this.modelSet.workEventsByWork(this.uri);
+  }
+
+  @Memoize()
+  get institution(): Institution | null {
+    return this.institutionUri
+      ? this.modelSet.institutionByUri(this.institutionUri)
+      : null;
+  }
+
+  @Memoize()
+  get institutionUri(): string | null {
+    return requireNonNull(
+      this.findAndMapObject(cms.institution, term =>
+        term.termType === "NamedNode" ? term.value : null
+      )
+    );
   }
 
   @Memoize()
