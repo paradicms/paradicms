@@ -215,8 +215,8 @@ class SyntheticDataPipeline(Pipeline):
                     collection_uris=(),
                     institution=None,
                     named_values_by_value=named_values_by_value,
-                    title_prefix=f"FreestandingWork",
-                    uri_prefix=f"http://example.com/freestandingwork",
+                    title_prefix="FreestandingWork",
+                    uri_prefix="http://example.com/freestandingwork",
                 )
 
         def __generate_images(
