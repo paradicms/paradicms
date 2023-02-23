@@ -100,7 +100,7 @@ class GitHubAction:
         ):
             if app_dir_path.is_dir():
                 self.__logger.debug("app_dir_path %s exists, using", app_dir_path)
-                app = app_dir_path
+                app = str(app_dir_path)
                 break
             else:
                 self.__logger.debug("app_dir_path %s does not exist", app_dir_path)
