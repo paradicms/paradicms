@@ -13,7 +13,7 @@ import {
   TabPane,
 } from "reactstrap";
 import * as React from "react";
-import {ComponentType, useMemo, useState} from "react";
+import {useMemo, useState} from "react";
 import {RightsParagraph} from "./RightsParagraph";
 import {WorkLocationSummary} from "@paradicms/services";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
@@ -28,10 +28,10 @@ const RIGHTS_STYLE: React.CSSProperties = {
 
 export const WorkContainer: React.FunctionComponent<{
   work: Work;
-  workLocationsMapComponent?: ComponentType<{
-    readonly workLocations: readonly WorkLocationSummary[];
-  }>;
-}> = ({work, workLocationsMapComponent}) => {
+  renderWorkLocationsMap?: (
+    workLocations: readonly WorkLocationSummary[]
+  ) => React.ReactElement;
+}> = ({renderWorkLocationsMap, work}) => {
   const workAbstract: string | Text | null = useMemo(
     () => work.abstract ?? work.description ?? null,
     [work]
@@ -42,8 +42,10 @@ export const WorkContainer: React.FunctionComponent<{
       return workAbstract.rights;
     } else if (work.rights) {
       return work.rights;
-    } else {
+    } else if (work.institution) {
       return work.institution.rights;
+    } else {
+      return null;
     }
   }, [work, workAbstract]);
 
@@ -117,11 +119,11 @@ export const WorkContainer: React.FunctionComponent<{
       ),
     });
   }
-  if (workLocationsMapComponent && work.locations.length > 0) {
+  if (renderWorkLocationsMap && work.locations.length > 0) {
     leftColTabs.push({
       title: "Map",
-      content: React.createElement(workLocationsMapComponent, {
-        workLocations: work.locations.map(workLocation => ({
+      content: renderWorkLocationsMap(
+        work.locations.map(workLocation => ({
           location: workLocation.location,
           role: workLocation.role,
           title: workLocation.title,
@@ -129,8 +131,8 @@ export const WorkContainer: React.FunctionComponent<{
             title: work.title,
             uri: work.uri,
           },
-        })),
-      }),
+        }))
+      ),
     });
   }
 

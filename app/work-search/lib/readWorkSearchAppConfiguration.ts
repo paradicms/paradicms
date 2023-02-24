@@ -1,4 +1,4 @@
-import {SearchAppConfiguration} from "./SearchAppConfiguration";
+import {WorkSearchAppConfiguration} from "./WorkSearchAppConfiguration";
 import {BlankNode, Dataset, NamedNode} from "@rdfjs/types";
 import {
   readAppConfiguration,
@@ -6,11 +6,11 @@ import {
 } from "@paradicms/configuration";
 import {configuration} from "@paradicms/vocabularies";
 
-export const readSearchAppConfiguration = (
+export const readWorkSearchAppConfiguration = (
   configurationDataset: Dataset | null,
   modelSetDataset: Dataset
-): SearchAppConfiguration | null => {
-  return readAppConfiguration<SearchAppConfiguration>(
+): WorkSearchAppConfiguration | null => {
+  return readAppConfiguration<WorkSearchAppConfiguration>(
     configurationDataset,
     modelSetDataset,
     ({graph, node, dataset, ...appConfigurationProps}) => {

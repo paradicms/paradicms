@@ -165,14 +165,6 @@ export class ModelSubsetter {
       }
     }
 
-    if (joinSelector.works) {
-      this.addWorkModelSets(
-        builder,
-        this.completeModelSet.institutionWorks(institution.uri),
-        joinSelector.works
-      );
-    }
-
     return builder;
   }
 
@@ -264,7 +256,7 @@ export class ModelSubsetter {
         }
       }
 
-      if (institutionUris) {
+      if (institutionUris && work.institutionUri) {
         institutionUris.add(work.institutionUri);
       }
 

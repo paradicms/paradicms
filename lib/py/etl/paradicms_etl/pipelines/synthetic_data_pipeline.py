@@ -123,6 +123,10 @@ class SyntheticDataPipeline(Pipeline):
                 agents=agents, named_values_by_value=named_values_by_value
             )
 
+            yield from self.__generate_freestanding_works(
+                agents=agents, named_values_by_value=named_values_by_value
+            )
+
         def __generate_agents(self):
             agents = []
             for organization_i in range(5):
@@ -197,6 +201,22 @@ class SyntheticDataPipeline(Pipeline):
                     named_values_by_value=named_values_by_value,
                     title_prefix=collection.title + "Work",
                     uri_prefix=str(collection.uri) + "/work",
+                )
+
+        def __generate_freestanding_works(
+            self,
+            *,
+            agents: Tuple[Agent, ...],
+            named_values_by_value: Dict[str, NamedValue],
+        ):
+            for work_i in range(self.__works_per_institution):  # Per institution
+                yield from self.__generate_work(
+                    agents=agents,
+                    collection_uris=(),
+                    institution=None,
+                    named_values_by_value=named_values_by_value,
+                    title_prefix="FreestandingWork",
+                    uri_prefix="http://example.com/freestandingwork",
                 )
 
         def __generate_images(
@@ -349,7 +369,7 @@ class SyntheticDataPipeline(Pipeline):
             *,
             agents: Tuple[Agent, ...],
             collection_uris: Tuple[URIRef, ...],
-            institution: Institution,
+            institution: Optional[Institution],
             named_values_by_value: Dict[str, NamedValue],
             title_prefix: str,
             uri_prefix: str,
@@ -474,7 +494,7 @@ class SyntheticDataPipeline(Pipeline):
             work = Work.from_fields(
                 abstract=abstract,
                 collection_uris=collection_uris,
-                institution_uri=institution.uri,
+                institution_uri=institution.uri if institution else None,
                 page=URIRef("http://example.com/work/" + str(work_i))
                 if work_i % 2 == 0
                 else None,

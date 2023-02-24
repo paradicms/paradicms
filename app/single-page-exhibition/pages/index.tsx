@@ -107,8 +107,10 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
           <Row>
             <Col xs={12}>
               <WorkContainer
+                renderWorkLocationsMap={workLocations => (
+                  <WorkLocationsMap workLocations={workLocations} />
+                )}
                 work={work}
-                workLocationsMapComponent={WorkLocationsMap}
               />
             </Col>
           </Row>

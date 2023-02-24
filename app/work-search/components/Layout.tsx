@@ -19,23 +19,21 @@ import {
 import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";
-import {SearchAppConfiguration} from "../lib/SearchAppConfiguration";
+import {WorkSearchAppConfiguration} from "../lib/WorkSearchAppConfiguration";
 import {getDefaultWorkQueryFilters} from "../lib/getDefaultWorkQueryFilters";
 
+const SITE_TITLE_DEFAULT = "Work search";
+
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
-  collection: {readonly title: string; readonly uri: string};
-  configuration: SearchAppConfiguration;
   cardHeaderLinks?: React.ReactElement[];
-  cardTitle?: React.ReactNode;
+  configuration: WorkSearchAppConfiguration;
   className?: string;
-  documentTitle?: string;
   onSearch?: (text: string) => void;
+  title?: string;
 }>> = ({
   cardHeaderLinks,
-  cardTitle,
-  collection,
   children,
-  documentTitle,
+  title,
   configuration,
   onSearch: onSearchUserDefined,
 }) => {
@@ -57,12 +55,16 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
     };
   }
 
+  const documentTitle: string[] = [];
+  documentTitle.push(configuration.siteTitle ?? SITE_TITLE_DEFAULT);
+  if (title) {
+    documentTitle.push(title);
+  }
+
   return (
     <>
       <Head>
-        <title>
-          {collection.title + (documentTitle ? " - " + documentTitle : "")}
-        </title>
+        <title>{documentTitle.join(" - ")}</title>
         <link
           rel="stylesheet"
           href={configuration.stylesheetHref ?? defaultBootstrapStylesheetHref}
@@ -73,7 +75,9 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
           <Col>
             <Navbar>
               <NavbarBrand className="me-auto" tag="div">
-                <Link href={Hrefs.home()}>{collection.title}</Link>
+                <Link href={Hrefs.home()}>
+                  {configuration.siteTitle ?? SITE_TITLE_DEFAULT}
+                </Link>
               </NavbarBrand>
               {onSearch ? (
                 <Nav navbar>
@@ -88,9 +92,9 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         <Row>
           <Col>
             <Card>
-              {cardTitle || documentTitle ? (
+              {title ? (
                 <CardHeader className="text-center" tag="h3">
-                  <div>{cardTitle ?? documentTitle}</div>
+                  <div>{title}</div>
                   {cardHeaderLinks && cardHeaderLinks.length > 0 ? (
                     <div className="mt-1" style={{fontSize: "x-small"}}>
                       {cardHeaderLinks}

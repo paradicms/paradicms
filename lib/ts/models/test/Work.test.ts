@@ -38,7 +38,7 @@ describe("Work", () => {
   });
 
   it("should get the work's's institution", () => {
-    expect(sut.institution.uri).to.eq(sut.institutionUri);
+    expect(sut.institution!.uri).to.eq(sut.institutionUri!);
   });
 
   it("should get the work's images", () => {

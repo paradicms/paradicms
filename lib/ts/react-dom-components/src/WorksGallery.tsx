@@ -12,11 +12,11 @@ export const WorksGallery: React.FunctionComponent<{
   renderInstitutionLink?: (
     institutionUri: string,
     children: React.ReactNode
-  ) => React.ReactNode;
+  ) => React.ReactElement;
   renderWorkLink: (
     workUri: string,
     children: React.ReactNode
-  ) => React.ReactNode;
+  ) => React.ReactElement;
 }> = ({works, renderInstitutionLink, renderWorkLink}) => (
   <>
     {works.map(work => (

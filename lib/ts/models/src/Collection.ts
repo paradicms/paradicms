@@ -4,15 +4,29 @@ import {selectThumbnail} from "./selectThumbnail";
 import {Image} from "./Image";
 import {Work} from "./Work";
 import {Mixin} from "ts-mixer";
-import {HasAbstract, HasImages, HasInstitution, HasTitle} from "./mixins";
+import {HasAbstract, HasImages, HasTitle} from "./mixins";
+import {Institution} from "./Institution";
+import {requireNonNull} from "@paradicms/utilities";
+import {cms} from "@paradicms/vocabularies";
 
 export class Collection extends Mixin(
   NamedModel,
   HasAbstract,
-  HasInstitution,
   HasImages,
   HasTitle
 ) {
+  get institution(): Institution {
+    return this.modelSet.institutionByUri(this.institutionUri);
+  }
+
+  get institutionUri(): string {
+    return requireNonNull(
+        this.findAndMapObject(cms.institution, term =>
+            term.termType === "NamedNode" ? term.value : null
+        )
+    );
+  }
+
   override thumbnail(selector: ThumbnailSelector): Image | null {
     const collectionImages: readonly Image[] = this.modelSet.imagesByDepictsUri(
       this.uri
