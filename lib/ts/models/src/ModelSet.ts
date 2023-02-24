@@ -100,7 +100,6 @@ export class ModelSet {
   private _works?: readonly Work[];
   private _worksByAgentUriIndex?: {[index: string]: readonly Work[]};
   private _worksByCollectionUriIndex?: {[index: string]: readonly Work[]};
-  private _worksByInstitutionUriIndex?: {[index: string]: readonly Work[]};
   private _worksByUriIndex?: {[index: string]: Work};
 
   constructor(readonly dataset: Dataset) {}
@@ -228,10 +227,6 @@ export class ModelSet {
 
   institutionCollections(institutionUri: string): readonly Collection[] {
     return this.collectionsByInstitutionUriIndex[institutionUri] ?? [];
-  }
-
-  institutionWorks(institutionUri: string): readonly Work[] {
-    return this.worksByInstitutionUriIndex[institutionUri] ?? [];
   }
 
   private get institutionsByUriIndex(): {[index: string]: Institution} {
@@ -655,7 +650,6 @@ export class ModelSet {
     const works: Work[] = [];
     const worksByAgentUriIndex: {[index: string]: Work[]} = {};
     const worksByCollectionUriIndex: {[index: string]: Work[]} = {};
-    const worksByInstitutionUriIndex: {[index: string]: Work[]} = {};
     this._worksByUriIndex = {};
     this.readModels(kwds => {
       const work = this.readWork(kwds);
@@ -680,25 +674,12 @@ export class ModelSet {
         }
       }
 
-      if (work.institutionUri) {
-        const institutionWorks =
-          worksByInstitutionUriIndex[work.institutionUri];
-        if (institutionWorks) {
-          institutionWorks.push(work);
-        } else {
-          worksByInstitutionUriIndex[work.institutionUri] = [work];
-        }
-      }
-
       this._worksByUriIndex![work.uri] = work;
     }, cms.Work);
     this._works = sortNamedModelsArray(works);
     this._worksByAgentUriIndex = sortNamedModelsMultimap(worksByAgentUriIndex);
     this._worksByCollectionUriIndex = sortNamedModelsMultimap(
       worksByCollectionUriIndex
-    );
-    this._worksByInstitutionUriIndex = sortNamedModelsMultimap(
-      worksByInstitutionUriIndex
     );
   }
 
@@ -818,15 +799,6 @@ export class ModelSet {
       this.readWorks();
     }
     return requireDefined(this._worksByCollectionUriIndex);
-  }
-
-  private get worksByInstitutionUriIndex(): {
-    [index: string]: readonly Work[];
-  } {
-    if (!this._worksByInstitutionUriIndex) {
-      this.readWorks();
-    }
-    return requireDefined(this._worksByInstitutionUriIndex);
   }
 
   private get worksByUriIndex(): {[index: string]: Work} {

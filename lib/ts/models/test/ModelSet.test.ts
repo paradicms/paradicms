@@ -34,9 +34,6 @@ describe("ModelSet", () => {
 
       const institutionImages = sut.imagesByDepictsUri(institution.uri);
       expect(institutionImages).to.have.length(6);
-
-      const institutionWorks = sut.institutionWorks(institution.uri);
-      expect(institutionWorks).to.have.length(8);
     }
 
     for (const namedValue of sut.namedValues) {
