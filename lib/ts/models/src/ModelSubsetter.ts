@@ -165,14 +165,6 @@ export class ModelSubsetter {
       }
     }
 
-    if (joinSelector.works) {
-      this.addWorkModelSets(
-        builder,
-        this.completeModelSet.institutionWorks(institution.uri),
-        joinSelector.works
-      );
-    }
-
     return builder;
   }
 

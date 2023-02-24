@@ -25,11 +25,11 @@ export const WorkCard: React.FunctionComponent<{
   renderInstitutionLink?: (
     institutionUri: string,
     children: React.ReactNode
-  ) => React.ReactNode;
+  ) => React.ReactElement;
   renderWorkLink: (
     workUri: string,
     children: React.ReactNode
-  ) => React.ReactNode;
+  ) => React.ReactElement;
   work: Work;
 }> = ({work, renderInstitutionLink, renderWorkLink}) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);

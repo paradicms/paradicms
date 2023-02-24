@@ -40,7 +40,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
 
   React.useEffect(() => {
     if (!collectionAbstract) {
-      router.push(Hrefs.work(firstWorkUri));
+      router.push(Hrefs.work({collectionUri, workUri: firstWorkUri}));
     }
   }, []);
 

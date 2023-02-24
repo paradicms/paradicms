@@ -17,8 +17,9 @@ const getWorkLocationIcon = (
 };
 
 export const WorkLocationsMap: React.FunctionComponent<{
+  readonly collectionUri: string;
   readonly workLocations: readonly WorkLocationSummary[];
-}> = ({workLocations}) => {
+}> = ({collectionUri, workLocations}) => {
   if (workLocations.length === 0) {
     return null;
   }
@@ -38,7 +39,10 @@ export const WorkLocationsMap: React.FunctionComponent<{
       {workLocations.map((workLocation, workLocationIndex) => (
         <Marker
           eventHandlers={{
-            click: () => router.push(Hrefs.work(workLocation.work.uri)),
+            click: () =>
+              router.push(
+                Hrefs.work({collectionUri, workUri: workLocation.work.uri})
+              ),
           }}
           key={workLocationIndex}
           position={[workLocation.location.lat, workLocation.location.long]}

@@ -1,4 +1,4 @@
-import {readSearchAppConfiguration} from "./readSearchAppConfiguration";
+import {readWorkSearchAppConfiguration} from "./readWorkSearchAppConfiguration";
 import {createDataset, parseIntoDataset} from "@paradicms/rdf";
 
 const ttl = `
@@ -47,7 +47,7 @@ const ttl = `
   .
 `;
 
-export const defaultSearchAppConfiguration = readSearchAppConfiguration(
+export const defaultSearchAppConfiguration = readWorkSearchAppConfiguration(
   parseIntoDataset(ttl),
   createDataset()
 )!;

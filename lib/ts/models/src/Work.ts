@@ -24,7 +24,6 @@ import {WorkCreation} from "./WorkCreation";
 import {Location} from "./Location";
 import {cms, dcterms, rdf} from "@paradicms/vocabularies";
 import {Institution} from "./Institution";
-import {requireNonNull} from "@paradicms/utilities";
 
 const getRightsWorkAgents = (
   rights: Rights | null,
@@ -162,10 +161,8 @@ export class Work extends Mixin(
 
   @Memoize()
   get institutionUri(): string | null {
-    return requireNonNull(
-      this.findAndMapObject(cms.institution, term =>
-        term.termType === "NamedNode" ? term.value : null
-      )
+    return this.findAndMapObject(cms.institution, term =>
+      term.termType === "NamedNode" ? term.value : null
     );
   }
 

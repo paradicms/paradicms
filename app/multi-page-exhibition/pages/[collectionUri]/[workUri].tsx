@@ -25,6 +25,7 @@ import {defaultMultiPageExhibitionAppConfiguration} from "../../lib/defaultMulti
 import {parseIntoDataset} from "@paradicms/rdf";
 
 const WorkLocationsMap = dynamic<{
+  readonly collectionUri: string;
   readonly workLocations: readonly WorkLocationSummary[];
 }>(
   () =>
@@ -64,13 +65,13 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 
   const onGoToNextWork = useCallback(() => {
     if (nextWorkUri) {
-      router.push(Hrefs.work(nextWorkUri));
+      router.push(Hrefs.work({collectionUri, workUri: nextWorkUri}));
     }
   }, [nextWorkUri, router]);
 
   const onGoToPreviousWork = useCallback(() => {
     if (previousWorkUri) {
-      router.push(Hrefs.work(previousWorkUri));
+      router.push(Hrefs.work({collectionUri, workUri: previousWorkUri}));
     }
   }, [previousWorkUri, router]);
 
@@ -104,8 +105,13 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
         <div>
           <div onKeyDown={onKeyDown} style={{outline: "none"}} tabIndex={0}>
             <WorkContainer
+              renderWorkLocationsMap={workLocations => (
+                <WorkLocationsMap
+                  collectionUri={collectionUri}
+                  workLocations={workLocations}
+                />
+              )}
               work={currentWork}
-              workLocationsMapComponent={WorkLocationsMap}
             />
           </div>
         </div>
@@ -117,14 +123,23 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 export default WorkPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths: {params: {workUri: string}}[] = [];
+  const paths: {params: {collectionUri: string; workUri: string}}[] = [];
 
-  for (const work of readModelSetFile(readFileSync).works) {
-    paths.push({
-      params: {
-        workUri: encodeFileName(work.uri),
-      },
-    });
+  const modelSet = readModelSetFile(readFileSync);
+
+  // Use first collection with works
+  for (const collection of modelSet.collections) {
+    for (const work of modelSet.collectionWorks(collection.uri)) {
+      paths.push({
+        params: {
+          collectionUri: encodeFileName(collection.uri),
+          workUri: encodeFileName(work.uri),
+        },
+      });
+    }
+    if (paths.length > 0) {
+      break;
+    }
   }
 
   return {
@@ -136,19 +151,21 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
+  const collectionUri = decodeFileName(params!.collectionUri as string);
   const workUri = decodeFileName(params!.workUri as string);
 
   const completeModelSet = readModelSetFile(readFileSync);
 
   const currentWork = completeModelSet.workByUri(workUri);
-  const collectionUri = currentWork.collectionUris[0];
   const collectionWorks = completeModelSet.collectionWorks(collectionUri);
 
   const currentWorkI = collectionWorks.findIndex(
     work => work.uri === currentWork.uri
   );
   if (currentWorkI === -1) {
-    throw new EvalError();
+    throw new EvalError(
+      `current work ${currentWork.uri} not found among collection ${collectionUri} works`
+    );
   }
   const nextWorkUri =
     currentWorkI + 1 < collectionWorks.length

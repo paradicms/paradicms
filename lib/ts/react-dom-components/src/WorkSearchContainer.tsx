@@ -9,7 +9,7 @@ import {
   TabPane,
 } from "reactstrap";
 import * as React from "react";
-import {ComponentType, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {FiltersBadges} from "./FiltersBadges";
 import {WorksGallery} from "./WorksGallery";
 import {Pagination} from "./Pagination";
@@ -40,20 +40,20 @@ export const WorkSearchContainer: React.FunctionComponent<{
   renderInstitutionLink?: (
     institutionUri: string,
     children: React.ReactNode
-  ) => React.ReactNode;
+  ) => React.ReactElement;
   renderWorkLink: (
     workUri: string,
     children: React.ReactNode
-  ) => React.ReactNode;
+  ) => React.ReactElement;
+  renderWorkLocationsMap?: (
+    workLocations: readonly WorkLocationSummary[]
+  ) => React.ReactElement;
   setWorkAgentsPage: (page: number | undefined) => void;
   setWorkEventsPage: (page: number | undefined) => void;
   setWorksPage: (page: number | undefined) => void;
   setWorkQuery: (workQuery: WorkQuery) => void;
   workAgentsPage: number;
   workEventsPage: number;
-  workLocationsMapComponent?: ComponentType<{
-    readonly workLocations: readonly WorkLocationSummary[];
-  }>;
   workQuery: WorkQuery;
   workQueryService: WorkQueryService;
   worksPage: number;
@@ -62,12 +62,12 @@ export const WorkSearchContainer: React.FunctionComponent<{
   onChangeFilters,
   renderInstitutionLink,
   renderWorkLink,
+  renderWorkLocationsMap,
   setWorkAgentsPage,
   setWorkEventsPage,
   setWorksPage,
   workAgentsPage,
   workEventsPage,
-  workLocationsMapComponent,
   workQuery,
   workQueryService,
   worksPage,
@@ -303,16 +303,14 @@ export const WorkSearchContainer: React.FunctionComponent<{
       />
     ) : null,
   });
-  if (workLocationsMapComponent) {
+  if (renderWorkLocationsMap) {
     tabs.push({
       key: "workLocations",
       title: "Map",
       content:
         getWorkLocationsResult &&
         getWorkLocationsResult.workLocations.length > 0
-          ? React.createElement(workLocationsMapComponent, {
-              workLocations: getWorkLocationsResult.workLocations,
-            })
+          ? renderWorkLocationsMap(getWorkLocationsResult.workLocations)
           : null,
     });
   }

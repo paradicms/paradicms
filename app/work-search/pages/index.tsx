@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useMemo} from "react";
-import {Collection, ModelSet, ModelSubsetter} from "@paradicms/models";
+import {ModelSet, ModelSubsetter} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {
@@ -16,8 +16,8 @@ import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
 import {useWorkSearchQueryParams} from "@paradicms/react-dom-hooks";
 import dynamic from "next/dynamic";
-import {SearchAppConfiguration} from "../lib/SearchAppConfiguration";
-import {readSearchAppConfiguration} from "../lib/readSearchAppConfiguration";
+import {WorkSearchAppConfiguration} from "../lib/WorkSearchAppConfiguration";
+import {readWorkSearchAppConfiguration} from "../lib/readWorkSearchAppConfiguration";
 import {defaultSearchAppConfiguration} from "../lib/defaultSearchAppConfiguration";
 import {parseIntoDataset} from "@paradicms/rdf";
 import {getDefaultWorkQueryFilters} from "../lib/getDefaultWorkQueryFilters";
@@ -35,24 +35,17 @@ const WorkLocationsMap = dynamic<{
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
-  readonly collectionUri: string;
-  readonly configuration: SearchAppConfiguration;
+  readonly configuration: WorkSearchAppConfiguration;
   readonly modelSetString: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
-  collectionUri,
   configuration,
   modelSetString,
 }) => {
   const modelSet = useMemo<ModelSet>(
     () => new ModelSet(parseIntoDataset(modelSetString)),
     [modelSetString]
-  );
-
-  const collection = useMemo<Collection>(
-    () => modelSet.collectionByUri(collectionUri),
-    [collectionUri, modelSetString]
   );
 
   const workQueryService = useMemo<WorkQueryService>(
@@ -74,11 +67,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   });
 
   return (
-    <Layout
-      collection={collection}
-      configuration={configuration}
-      onSearch={onSearch}
-    >
+    <Layout configuration={configuration} onSearch={onSearch}>
       <WorkSearchContainer
         objectsPerPage={configuration.objectsPerPage ?? 10}
         renderWorkLink={(workUri, children) => (
@@ -86,7 +75,9 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
             <a>{children}</a>
           </Link>
         )}
-        workLocationsMapComponent={WorkLocationsMap}
+        renderWorkLocationsMap={workLocations => (
+          <WorkLocationsMap workLocations={workLocations} />
+        )}
         workQueryService={workQueryService}
         {...workSearchQueryParams}
       />
@@ -101,16 +92,13 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 }> => {
   const completeModelSet = readModelSetFile(readFileSync);
   const configuration =
-    readSearchAppConfiguration(
+    readWorkSearchAppConfiguration(
       readConfigurationFile(readFileSync),
       completeModelSet.dataset
     ) ?? defaultSearchAppConfiguration;
 
-  const collection = completeModelSet.collections[0];
-
   return {
     props: {
-      collectionUri: collection.uri,
       configuration,
       modelSetString: new ModelSubsetter({
         completeModelSet,
@@ -118,10 +106,10 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
           workProperty => workProperty.uri
         ),
       })
-        .collectionModelSet(collection, {
-          institution: {},
-          works: workSearchWorkJoinSelector(smallThumbnailTargetDimensions),
-        })
+        .worksModelSet(
+          completeModelSet.works,
+          workSearchWorkJoinSelector(smallThumbnailTargetDimensions)
+        )
         .stringify(),
     },
   };

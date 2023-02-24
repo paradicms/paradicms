@@ -17,8 +17,8 @@ import {
 import * as fs from "fs";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
-import {SearchAppConfiguration} from "../../lib/SearchAppConfiguration";
-import {readSearchAppConfiguration} from "../../lib/readSearchAppConfiguration";
+import {WorkSearchAppConfiguration} from "../../lib/WorkSearchAppConfiguration";
+import {readWorkSearchAppConfiguration} from "../../lib/readWorkSearchAppConfiguration";
 import {defaultSearchAppConfiguration} from "../../lib/defaultSearchAppConfiguration";
 import {parseIntoDataset} from "@paradicms/rdf";
 
@@ -35,7 +35,7 @@ const WorkLocationsMap = dynamic<{
 );
 
 interface StaticProps {
-  readonly configuration: SearchAppConfiguration;
+  readonly configuration: WorkSearchAppConfiguration;
   readonly modelSetString: string;
   readonly workUri: string;
 }
@@ -50,23 +50,26 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     [modelSetString]
   );
   const work = modelSet.workByUri(workUri);
-  const collection = work.collections[0];
 
   return (
     <Layout
       cardHeaderLinks={getNamedModelLinks(work)}
-      collection={collection}
-      documentTitle={work.title}
+      title={work.title}
       configuration={configuration}
     >
-      <WorkContainer work={work} workLocationsMapComponent={WorkLocationsMap} />
+      <WorkContainer
+        renderWorkLocationsMap={workLocations => (
+          <WorkLocationsMap workLocations={workLocations} />
+        )}
+        work={work}
+      />
     </Layout>
   );
 };
 
 export default WorkPage;
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths: GetStaticPaths = () => {
   const paths: {params: {workUri: string}}[] = [];
   for (const work of readModelSetFile(readFileSync).works) {
     paths.push({
@@ -82,13 +85,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({
+export const getStaticProps: GetStaticProps = ({
   params,
-}): Promise<{props: StaticProps}> => {
+}): {props: StaticProps} => {
   const workUri = decodeFileName(params!.workUri as string);
   const completeModelSet = readModelSetFile(readFileSync);
   const configuration =
-    readSearchAppConfiguration(
+    readWorkSearchAppConfiguration(
       readConfigurationFile(readFileSync),
       completeModelSet.dataset
     ) ?? defaultSearchAppConfiguration;
