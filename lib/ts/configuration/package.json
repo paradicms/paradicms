@@ -2,7 +2,7 @@
   "author": "Minor Gordon",
   "name": "@paradicms/configuration",
   "dependencies": {
-    "@paradicms/filters": "1.0.5",
+    "@paradicms/rdf": "1.0.5",
     "@paradicms/vocabularies": "1.0.5"
   },
   "description": "Paradicms configuration library",
