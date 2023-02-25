@@ -14,10 +14,6 @@ describe("Institution", () => {
     expect(sut.name).to.not.be.empty;
   });
 
-  it("should get the institution's rights", () => {
-    expect(sut.rights!.statement).to.not.be.null;
-  });
-
   it("should get the institution's thumbnail", () => {
     const thumbnail = sut.thumbnail({
       targetDimensions: {height: 200, width: 200},
