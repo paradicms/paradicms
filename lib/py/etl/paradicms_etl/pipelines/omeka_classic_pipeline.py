@@ -65,7 +65,6 @@ class OmekaClassicPipeline(Pipeline):
         )
         arg_parser.add_argument("--institution-image-uri", type=uri_argument_type)
         arg_parser.add_argument("--institution-name", required=True)
-        arg_parser.add_argument("--institution-rights")
         arg_parser.add_argument(
             "--institution-uri", required=True, type=uri_argument_type
         )

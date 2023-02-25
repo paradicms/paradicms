@@ -72,12 +72,7 @@ export class Work extends Mixin(
   get agents(): readonly WorkAgent[] {
     const result: WorkAgent[] = [];
 
-    result.push(
-      ...getRightsWorkAgents(
-        this.rights ?? this.institution?.rights ?? null,
-        "Work"
-      )
-    );
+    result.push(...getRightsWorkAgents(this.rights, "Work"));
 
     if (this.abstract && this.abstract instanceof Text) {
       result.push(...getRightsWorkAgents(this.abstract.rights, "Text"));
@@ -96,8 +91,6 @@ export class Work extends Mixin(
 
     if (this.rights) {
       result.push(...this.rights.agentUris);
-    } else if (this.institution && this.institution.rights) {
-      result.push(...this.institution.rights.agentUris);
     }
 
     if (

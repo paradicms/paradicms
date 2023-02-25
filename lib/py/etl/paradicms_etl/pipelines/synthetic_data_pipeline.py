@@ -219,15 +219,18 @@ class SyntheticDataPipeline(Pipeline):
                     uri_prefix="http://example.com/freestandingwork",
                 )
 
-        def __generate_images(
-            self, *, depicts_uri: URIRef, rights: Optional[Rights], text_prefix: str
-        ):
+        def __generate_images(self, *, depicts_uri: URIRef, text_prefix: str):
             for image_i in range(self.__images_per_work):
+                title = f"{text_prefix} image {image_i}"
                 original = Image.from_fields(
                     depicts_uri=depicts_uri,
                     exact_dimensions=ImageDimensions(height=1000, width=1000),
-                    rights=rights,
-                    title=f"{text_prefix} image {image_i}",
+                    rights=Rights.from_fields(
+                        holder=f"{title} rights holder",
+                        license=CreativeCommonsLicenses.NC_1_0.uri,
+                        statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
+                    ),
+                    title=title,
                     uri=URIRef(
                         f"https://place-hold.it/1000x1000?text={quote(text_prefix)}Image{image_i}"
                     ),
@@ -242,7 +245,7 @@ class SyntheticDataPipeline(Pipeline):
                         depicts_uri=depicts_uri,
                         exact_dimensions=thumbnail_dimensions,
                         original_image_uri=original.uri,
-                        rights=rights,
+                        rights=original.rights,
                         title=f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}",
                         uri=URIRef(
                             f"https://place-hold.it/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}?text={quote(text_prefix)}Image{image_i}"
@@ -278,7 +281,6 @@ class SyntheticDataPipeline(Pipeline):
                 if collection_i > 0:
                     yield from self.__generate_images(
                         depicts_uri=collection.uri,
-                        rights=institution.rights,
                         text_prefix=collection.title,
                     )
                 # For collection 0, force the GUI to use an work image
@@ -299,18 +301,12 @@ class SyntheticDataPipeline(Pipeline):
                 institution_name = f"Institution{institution_i}"
                 institution = Institution.from_fields(
                     name=institution_name,
-                    rights=Rights.from_fields(
-                        holder=f"{institution_name} rights holder",
-                        license=CreativeCommonsLicenses.NC_1_0.uri,
-                        statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-                    ),
                     uri=URIRef(f"http://example.com/institution{institution_i}"),
                 )
                 yield institution
 
                 yield from self.__generate_images(
                     depicts_uri=institution.uri,
-                    rights=institution.rights,
                     text_prefix=institution.name,
                 )
 
@@ -332,12 +328,6 @@ class SyntheticDataPipeline(Pipeline):
                 )
 
         def __generate_named_values(self):
-            rights = Rights.from_fields(
-                holder="Property definition rights holder",
-                license=CreativeCommonsLicenses.NC_1_0.uri,
-                statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-            )
-
             named_value_urn_i = 0
             for (
                 property_uri,
@@ -358,7 +348,6 @@ class SyntheticDataPipeline(Pipeline):
 
                     yield from self.__generate_images(
                         depicts_uri=named_value.uri,
-                        rights=rights,
                         text_prefix=property_value,
                     )
 
@@ -511,7 +500,6 @@ class SyntheticDataPipeline(Pipeline):
 
             yield from self.__generate_images(
                 depicts_uri=work.uri,
-                rights=work.rights,
                 text_prefix=work.title,
             )
 

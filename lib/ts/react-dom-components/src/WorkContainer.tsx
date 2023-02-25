@@ -42,8 +42,6 @@ export const WorkContainer: React.FunctionComponent<{
       return workAbstract.rights;
     } else if (work.rights) {
       return work.rights;
-    } else if (work.institution) {
-      return work.institution.rights;
     } else {
       return null;
     }

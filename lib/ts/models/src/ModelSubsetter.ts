@@ -128,7 +128,6 @@ export class ModelSubsetter {
     joinSelector: InstitutionJoinSelector
   ): ModelSetBuilder {
     builder.addInstitution(institution);
-    this.addRightsModelSet({}, builder, institution.rights);
 
     if (joinSelector.thumbnail) {
       const thumbnailImage = this.completeModelSet

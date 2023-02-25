@@ -24,6 +24,7 @@ class __MarkdownDirectoryPipeline(Pipeline):
             transformer=MarkdownDirectoryTransformer(pipeline_id=self.ID),
             loader=RdfFileLoader(
                 rdf_file_path=data_dir_path
+                / "test"
                 / self.ID
                 / "loaded"
                 / "markdown_directory.trig",
@@ -36,6 +37,7 @@ class __MarkdownDirectoryPipeline(Pipeline):
 def test_extract_transform_load(data_dir_path: Path):
     data_file_path = (
         data_dir_path
+        / "test"
         / __MarkdownDirectoryPipeline.ID
         / "loaded"
         / "markdown_directory.trig"

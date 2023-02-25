@@ -12,7 +12,6 @@ from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.property import Property
-from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -37,14 +36,12 @@ class OmekaClassicTransformer:
         square_thumbnail_width_px: int,
         thumbnail_max_height_px: int,
         thumbnail_max_width_px: int,
-        institution_rights: Optional[str] = None,
     ):
         # Single _ so we can use getattr
         self._fullsize_max_height_px = fullsize_max_height_px
         self._fullsize_max_width_px = fullsize_max_width_px
         self.__institution_name = institution_name
         self.__institution_uri = institution_uri
-        self.__institution_rights = institution_rights
         self.__logger = logging.getLogger(__name__)
         self._metrics_registry = MetricsRegistry()
         self._square_thumbnail_height_px = square_thumbnail_height_px
@@ -60,11 +57,6 @@ class OmekaClassicTransformer:
 
         institution = Institution.from_fields(
             name=self.__institution_name,
-            rights=Rights.from_fields(
-                holder=self.__institution_name, statement=self.__institution_rights
-            )
-            if self.__institution_rights is not None
-            else None,
             uri=self.__institution_uri,
         )
         yield institution

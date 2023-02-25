@@ -6,7 +6,6 @@ from rdflib.resource import Resource
 
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
-from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
@@ -29,29 +28,24 @@ class Institution(ResourceBackedNamedModel):
         uri: URIRef,
         abstract: Optional[str] = None,
         properties: Tuple[Property, ...] = (),
-        rights: Optional[Rights] = None,
     ) -> "Institution":
         return cls(
             ResourceBuilder(uri)
             .add(DCTERMS.abstract, abstract)
             .add(FOAF.name, name)
             .add_properties(properties)
-            .add_rights(rights)
             .build()
         )
 
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            safe_dict_update(
-                ResourceBackedNamedModel.json_ld_context(),
-                {
-                    "abstract": {"@id": str(DCTERMS.abstract)},
-                    "name": {"@id": str(FOAF.name)},
-                    "page": {"@id": str(FOAF.page), "@type": "@id"},
-                },
-            ),
-            Rights.json_ld_context(),
+            ResourceBackedNamedModel.json_ld_context(),
+            {
+                "abstract": {"@id": str(DCTERMS.abstract)},
+                "name": {"@id": str(FOAF.name)},
+                "page": {"@id": str(FOAF.page), "@type": "@id"},
+            },
         )
 
     @property
@@ -61,7 +55,3 @@ class Institution(ResourceBackedNamedModel):
     @property
     def name(self) -> str:
         return self._required_str_value(FOAF.name)
-
-    @property
-    def rights(self) -> Optional[Rights]:
-        return Rights.from_rdf(resource=self._resource)

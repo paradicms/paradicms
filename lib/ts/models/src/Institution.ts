@@ -6,13 +6,11 @@ import {Image} from "./Image";
 import {HasImages} from "./mixins/HasImages";
 import {Mixin} from "ts-mixer";
 import {HasName} from "./mixins/HasName";
-import {HasRights} from "./mixins";
 
 export class Institution extends Mixin(
   NamedModel,
   HasImages,
   HasName,
-  HasRights
 ) {
   get collections(): readonly Collection[] {
     return this.modelSet.institutionCollections(this.uri);
