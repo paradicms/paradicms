@@ -1,7 +1,30 @@
 import logging
+import os
 from datetime import datetime
 from pathlib import Path
-from shutil import copytree, rmtree
+from shutil import rmtree, copyfile
+
+
+def _copytree(src, dst):
+    """
+    Custom copytree that ignores source permissions.
+    """
+
+    os.makedirs(dst, exist_ok=True)
+    for srcentry in os.scandir(src):
+        srcpath = os.path.join(src, srcentry.name)
+        dstpath = os.path.join(dst, srcentry.name)
+        if srcentry.is_symlink():
+            raise NotImplementedError
+        elif srcentry.is_dir():
+            _copytree(
+                srcpath,
+                dstpath,
+            )
+        else:
+            # Copy the file but not the mode
+            copyfile(srcpath, dstpath, follow_symlinks=False)
+    return dst
 
 
 class FsDeployer:
@@ -68,7 +91,7 @@ class FsDeployer:
             self.__logger.info(
                 "copying %s to %s", app_out_dir_path, current_deploy_dir_path
             )
-            copytree(app_out_dir_path, current_deploy_dir_path, dirs_exist_ok=True)
+            _copytree(app_out_dir_path, current_deploy_dir_path)
         else:
             self.__logger.info(
                 "renaming %s to %s", app_out_dir_path, current_deploy_dir_path
