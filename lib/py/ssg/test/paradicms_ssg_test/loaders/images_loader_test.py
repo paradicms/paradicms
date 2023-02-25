@@ -6,16 +6,18 @@ from paradicms_ssg.loaders.images_loader import ImagesLoader
 from .nop_image_archiver import NopImageArchiver
 
 
-def test_load(test_data_original_images: Tuple[Image, ...], tmp_path):
+def test_load(synthetic_data_original_images: Tuple[Image, ...], tmp_path):
     loader = ImagesLoader(
         image_archiver=NopImageArchiver(), loaded_data_dir_path=tmp_path
     )
     loaded_images = tuple(
         loader(
-            flush=True, loaded_data_dir_path=tmp_path, models=test_data_original_images
+            flush=True,
+            loaded_data_dir_path=tmp_path,
+            models=synthetic_data_original_images,
         )
     )
-    assert len(loaded_images) == len(test_data_original_images) * 3
+    assert len(loaded_images) == len(synthetic_data_original_images) * 3
     assert all(isinstance(loaded_image, Image) for loaded_image in loaded_images)
     assert len(set(loaded_image.uri for loaded_image in loaded_images)) == len(
         loaded_images

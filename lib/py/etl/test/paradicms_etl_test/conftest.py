@@ -20,5 +20,5 @@ def excel_2010_test_data_file_path(data_dir_path: Path) -> Path:
 
 
 @pytest.fixture
-def test_data_models() -> Tuple[Model, ...]:
+def synthetic_data_models() -> Tuple[Model, ...]:
     return tuple(SyntheticDataPipeline().extract_transform())

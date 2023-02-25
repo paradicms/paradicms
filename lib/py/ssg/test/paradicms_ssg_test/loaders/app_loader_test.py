@@ -3,10 +3,10 @@ from pathlib import Path
 from typing import Tuple
 
 import pytest
-from paradicms_etl.model import Model
-from paradicms_etl.models.image import Image
 from paradicms_etl.pipelines.test_data_pipeline import TestDataPipeline
 
+from paradicms_etl.model import Model
+from paradicms_etl.models.image import Image
 from paradicms_ssg.loaders.app_loader import AppLoader
 from .nop_image_archiver import NopImageArchiver
 
@@ -14,7 +14,7 @@ from .nop_image_archiver import NopImageArchiver
 @pytest.mark.parametrize(
     "app", ["multi-page-exhibition", "single-page-exhibition", "work-search"]
 )
-def test_load(app: str, test_data_models: Tuple[Model, ...], tmp_path):
+def test_load(app: str, synthetic_data_models: Tuple[Model, ...], tmp_path):
     app_dir_path = (
         Path(__file__).parent.parent.parent.parent.parent.parent.parent / "app" / app
     )
@@ -35,7 +35,7 @@ def test_load(app: str, test_data_models: Tuple[Model, ...], tmp_path):
 
     original_images = []
     other_models = []
-    for model in test_data_models:
+    for model in synthetic_data_models:
         if isinstance(model, Image):
             image = model
             if image.original_image_uri is None:
