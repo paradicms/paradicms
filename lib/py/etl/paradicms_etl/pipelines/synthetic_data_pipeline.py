@@ -245,7 +245,7 @@ class SyntheticDataPipeline(Pipeline):
                         depicts_uri=depicts_uri,
                         exact_dimensions=thumbnail_dimensions,
                         original_image_uri=original.uri,
-                        rights=rights,
+                        rights=original.rights,
                         title=f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}",
                         uri=URIRef(
                             f"https://place-hold.it/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}?text={quote(text_prefix)}Image{image_i}"
@@ -500,7 +500,6 @@ class SyntheticDataPipeline(Pipeline):
 
             yield from self.__generate_images(
                 depicts_uri=work.uri,
-                rights=work.rights,
                 text_prefix=work.title,
             )
 
