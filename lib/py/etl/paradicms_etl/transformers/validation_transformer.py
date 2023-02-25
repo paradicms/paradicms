@@ -111,7 +111,6 @@ class __Validator:
     def _validate_institution(self, institution: Institution):
         assert institution.uri not in self.__institution_uris
         self.__institution_uris.add(institution.uri)
-        self.__validate_rights(institution.rights)
 
     def _validate_institution_references(self):
         self.__validate_uri_references(

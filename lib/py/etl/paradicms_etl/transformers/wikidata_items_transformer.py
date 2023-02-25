@@ -117,7 +117,6 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
         if self.__institution_uri is None:
             institution = Institution.from_fields(
                 name="Wikidata",
-                rights=self._RIGHTS,
                 uri=URIRef("https://www.wikidata.org/"),
             )
             yield institution
