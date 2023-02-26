@@ -1,4 +1,4 @@
-export * from "./anyStringToDataset";
+export * from "./anyRdfStringToDataset";
 export * from "./copyDataset";
 export * from "./createDataset";
 export {DataFactory, Store} from "n3";

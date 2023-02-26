@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {anyStringToDataset} from "@paradicms/rdf";
+import {anyRdfStringToDataset} from "@paradicms/rdf";
 import {AppConfiguration, PropertyConfiguration} from "../src";
 import {testAppConfiguration} from "./testAppConfiguration";
 import {configuration} from "@paradicms/vocabularies";
@@ -36,7 +36,7 @@ describe("PropertyConfiguration", () => {
   let sut: PropertyConfiguration;
   before(async () => {
     const appConfiguration = WorkAppConfiguration.fromDataset(
-      await anyStringToDataset(testAppConfiguration, {
+      await anyRdfStringToDataset(testAppConfiguration, {
         contentType: "text/turtle",
       })
     )!;

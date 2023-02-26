@@ -21,7 +21,7 @@ class StreamifyString extends Readable {
   }
 }
 
-export const anyStringToDataset = async (
+export const anyRdfStringToDataset = async (
   input: string,
   options: ParseOptions
 ): Promise<Dataset> => {

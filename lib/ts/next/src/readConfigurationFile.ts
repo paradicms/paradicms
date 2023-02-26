@@ -1,5 +1,5 @@
 import {Dataset} from "@rdfjs/types";
-import {anyStringToDataset} from "@paradicms/rdf";
+import {anyRdfStringToDataset} from "@paradicms/rdf";
 
 let _configurationDataset: Dataset | null | undefined;
 
@@ -20,7 +20,7 @@ export const readConfigurationFile = (
   }
 
   return readFile(configurationFilePath).then(configurationString =>
-    anyStringToDataset(configurationString, {
+    anyRdfStringToDataset(configurationString, {
       path: configurationFilePath,
     }).then(dataset => {
       _configurationDataset = dataset;

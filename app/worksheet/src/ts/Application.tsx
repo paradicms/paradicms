@@ -23,7 +23,7 @@ import {WorksheetReviewPage} from "~/pages/WorksheetReviewPage";
 import {UserSettingsPage} from "~/pages/UserSettingsPage";
 import {useLocation} from "react-router";
 import {QueryParamProvider} from "use-query-params";
-import {anyStringToDataset} from "@paradicms/rdf";
+import {anyRdfStringToDataset} from "@paradicms/rdf";
 import {WorksheetDefinitionModelSet} from "~/models/WorksheetDefinitionModelSet";
 import React = require("react");
 
@@ -65,7 +65,7 @@ export const Application: React.FunctionComponent = () => {
     console.info("fetching worksheet definition");
     fetch("/data.ttl").then(response =>
       response.text().then(responseText => {
-        anyStringToDataset(responseText, {contentType: "text/turtle"}).then(
+        anyRdfStringToDataset(responseText, {contentType: "text/turtle"}).then(
           responseDataset => {
             let worksheetDefinitionModelSet: WorksheetDefinitionModelSet;
             try {

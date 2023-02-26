@@ -1,4 +1,4 @@
-import {anyStringToDataset} from "../src";
+import {anyRdfStringToDataset} from "../src";
 import {DataFactory} from "n3";
 import {getRdfList} from "../src/getRdfList";
 import {BlankNode, NamedNode} from "@rdfjs/types";
@@ -9,7 +9,9 @@ describe("getRdfList", () => {
   const predicate = DataFactory.namedNode("urn:example:predicate");
 
   const parseAndReadRdfList = async (ttl: string) => {
-    const dataset = await anyStringToDataset(ttl, {contentType: "text/turtle"});
+    const dataset = await anyRdfStringToDataset(ttl, {
+      contentType: "text/turtle",
+    });
     return getRdfList({
       dataset,
       node: dataset.match(subject, predicate, null, null).toArray()[0]

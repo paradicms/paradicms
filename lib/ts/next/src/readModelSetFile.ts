@@ -1,5 +1,5 @@
 import {ModelSet} from "@paradicms/models";
-import {anyStringToDataset, createDataset} from "@paradicms/rdf";
+import {anyRdfStringToDataset, createDataset} from "@paradicms/rdf";
 
 let _modelSet: ModelSet | undefined;
 
@@ -19,7 +19,7 @@ export const readModelSetFile = (
   }
 
   return readFile(dataFilePath).then(dataString =>
-    anyStringToDataset(dataString, {
+    anyRdfStringToDataset(dataString, {
       path: dataFilePath,
     }).then(dataset => {
       _modelSet = ModelSet.fromDataset(dataset);
