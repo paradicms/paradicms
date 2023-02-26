@@ -1,10 +1,9 @@
 import {expect} from "chai";
 import {ModelSet} from "../src";
-import {testDataTrig} from "@paradicms/test";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {testData} from "@paradicms/test";
 
 describe("Agent", () => {
-  const sut = new ModelSet(parseIntoDataset(testDataTrig)).personByUri(
+  const sut = ModelSet.fromDatasetCore(testData).personByUri(
     "http://example.com/person4"
   );
 

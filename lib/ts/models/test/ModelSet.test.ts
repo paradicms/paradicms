@@ -2,11 +2,10 @@ import {ModelSet} from "../src/ModelSet";
 import {License} from "../src/License";
 import {RightsStatement} from "../src/RightsStatement";
 import {expect} from "chai";
-import {testDataTrig} from "@paradicms/test";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {testData} from "@paradicms/test";
 
 describe("ModelSet", () => {
-  const sut = new ModelSet(parseIntoDataset(testDataTrig));
+  const sut = ModelSet.fromDatasetCore(testData);
 
   it("should exercise all indices", () => {
     const institutions = sut.institutions;

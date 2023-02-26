@@ -1,10 +1,9 @@
 import {expect} from "chai";
 import {ModelSet} from "../src";
-import {testDataTrig} from "@paradicms/test";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {testData} from "@paradicms/test";
 
 describe("RightsStatement", () => {
-  const sut = new ModelSet(parseIntoDataset(testDataTrig)).rightsStatements[0];
+  const sut = ModelSet.fromDatasetCore(testData).rightsStatements[0];
 
   it("should get the statement's definition", () => {
     expect(sut.definition).to.not.be.empty;

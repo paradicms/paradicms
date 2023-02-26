@@ -3,7 +3,7 @@ import * as renderer from "react-test-renderer";
 import {FormDataViewerScreen} from "../screens/FormDataViewerScreen";
 import {testFormDataFactory} from "../data/testFormDataFactory";
 
-test("renders correctly", () => {
+test("renders correctly", async () => {
   const tree = renderer
     .create(
       <FormDataViewerScreen

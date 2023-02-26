@@ -49,7 +49,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     [configurationString]
   );
   const modelSet = useMemo<ModelSet>(
-    () => new ModelSet(fastStringToDataset(modelSetString)),
+    () => ModelSet.fromDataset(fastStringToDataset(modelSetString)),
     [modelSetString]
   );
 

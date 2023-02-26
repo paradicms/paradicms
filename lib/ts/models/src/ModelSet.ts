@@ -3,7 +3,13 @@ import {Image} from "./Image";
 import {Institution} from "./Institution";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
-import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
+import {
+  BlankNode,
+  Dataset,
+  DatasetCore,
+  DefaultGraph,
+  NamedNode,
+} from "@rdfjs/types";
 import {Work} from "./Work";
 import {Person} from "./Person";
 import {NamedModel} from "./NamedModel";
@@ -15,7 +21,7 @@ import {WorkEvent} from "./WorkEvent";
 import {WorkCreation} from "./WorkCreation";
 import {Event} from "./Event";
 import {hasMixin} from "ts-mixer";
-import {datasetToFastString} from "@paradicms/rdf";
+import {datasetCoreToDataset, datasetToFastString} from "@paradicms/rdf";
 import TermSet from "@rdfjs/term-set";
 import {requireDefined} from "@paradicms/utilities";
 import {cms, rdf} from "@paradicms/vocabularies";
@@ -85,7 +91,7 @@ export class ModelSet {
   private _worksByCollectionUriIndex?: {[index: string]: readonly Work[]};
   private _worksByUriIndex?: {[index: string]: Work};
 
-  constructor(readonly dataset: Dataset) {}
+  private constructor(readonly dataset: Dataset) {}
 
   agentByUri(agentUri: string): Agent {
     for (const index of [this.organizationsByUriIndex, this.peopleByUriIndex]) {
@@ -140,6 +146,14 @@ export class ModelSet {
       this.readCollections();
     }
     return requireDefined(this._collectionsByUriIndex);
+  }
+
+  static fromDataset(dataset: Dataset): ModelSet {
+    return new ModelSet(dataset);
+  }
+
+  static fromDatasetCore(datasetCore: DatasetCore): ModelSet {
+    return ModelSet.fromDataset(datasetCoreToDataset(datasetCore));
   }
 
   imageByUri(imageUri: string): Image {

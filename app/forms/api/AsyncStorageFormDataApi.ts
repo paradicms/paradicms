@@ -2,7 +2,7 @@ import {FormDataApi} from "./FormDataApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as yup from "yup";
 import {InferType} from "yup";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {datasetToFastString, fastStringToDataset} from "@paradicms/rdf";
 import {FormData, FormDataSummary} from "@paradicms/shacl-forms";
 import {FormShapeApi} from "./FormShapeApi";
 
@@ -27,7 +27,7 @@ export class AsyncStorageFormDataApi implements FormDataApi {
       }
       const itemValue = JSON.parse(itemValueJson);
       formDataItemValueSchema.validateSync(itemValue);
-      const dataGraph = parseIntoDataset(itemValue.dataGraph);
+      const dataGraph = fastStringToDataset(itemValue.dataGraph);
       return this.formShapeApi.getFormShape(itemValue.shapeId).then(
         shape =>
           new FormData({
@@ -68,7 +68,7 @@ export class AsyncStorageFormDataApi implements FormDataApi {
   putFormData(formData: FormData): Promise<void> {
     return new Promise((resolve, reject) => {
       const itemValue: FormDataItemValueType = {
-        dataGraph: formData.dataGraph.toString(),
+        dataGraph: datasetToFastString(formData.dataGraph),
         id: formData.id,
         label: formData.label,
         shapeId: formData.shape.id,

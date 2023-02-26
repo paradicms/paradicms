@@ -1,4 +1,6 @@
-export const testShapesGraphTtl = `
+import {turtleStringToDatasetCore} from "./turtleStringToDatasetCore";
+
+export const testShapesGraph = turtleStringToDatasetCore(`
 @prefix dash: <http://datashapes.org/dash#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -44,4 +46,4 @@ schema:AddressShape
         sh:minInclusive 10000 ;
         sh:maxInclusive 99999 ;
     ] .
-`;
+`);

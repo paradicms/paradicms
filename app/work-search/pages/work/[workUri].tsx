@@ -51,7 +51,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     [configurationString]
   );
   const modelSet = useMemo(
-    () => new ModelSet(fastStringToDataset(modelSetString)),
+    () => ModelSet.fromDataset(fastStringToDataset(modelSetString)),
     [modelSetString]
   );
   const work = modelSet.workByUri(workUri);

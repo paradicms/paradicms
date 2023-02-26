@@ -1,13 +1,13 @@
 import {expect} from "chai";
 import {ShapesGraph} from "../src";
-import {DataFactory, parseIntoDataset} from "@paradicms/rdf";
-import {testShapesGraphTtl} from "@paradicms/test";
+import {DataFactory} from "@paradicms/rdf";
+import {testShapesGraph} from "@paradicms/test";
 
 describe("Shapes", () => {
   let shapes: ShapesGraph;
 
   before(() => {
-    shapes = new ShapesGraph(parseIntoDataset(testShapesGraphTtl));
+    shapes = ShapesGraph.fromDatasetCore(testShapesGraph);
   });
 
   it("should have properties", () => {

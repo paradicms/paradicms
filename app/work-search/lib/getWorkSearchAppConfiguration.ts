@@ -1,6 +1,5 @@
 import {WorkSearchAppConfiguration} from "./WorkSearchAppConfiguration";
 import {Dataset} from "@rdfjs/types";
-import {getAppConfiguration} from "@paradicms/configuration";
 import {fastStringToDataset} from "@paradicms/rdf";
 import {configuration, dcterms, rdf, xsd} from "@paradicms/vocabularies";
 
@@ -43,10 +42,7 @@ export const getWorkSearchAppConfiguration = (
     if (!dataset) {
       continue;
     }
-    const configuration = getAppConfiguration<WorkSearchAppConfiguration>(
-      dataset,
-      kwds => new WorkSearchAppConfiguration(kwds)
-    );
+    const configuration = WorkSearchAppConfiguration.fromDataset(dataset);
     if (configuration) {
       return configuration;
     }

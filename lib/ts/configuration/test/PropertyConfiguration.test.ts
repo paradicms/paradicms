@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {anyStringToDataset} from "@paradicms/rdf";
 import {
   AppConfiguration,
   getAppConfiguration,
@@ -24,9 +24,11 @@ class WorkAppConfiguration extends AppConfiguration {
 
 describe("PropertyConfiguration", () => {
   let sut: PropertyConfiguration;
-  before(() => {
+  before(async () => {
     const appConfiguration = getAppConfiguration(
-      parseIntoDataset(testAppConfiguration),
+      await anyStringToDataset(testAppConfiguration, {
+        contentType: "text/turtle",
+      }),
       kwds => new WorkAppConfiguration(kwds)
     )!;
     expect(appConfiguration).to.not.be.null;
@@ -40,6 +42,6 @@ describe("PropertyConfiguration", () => {
   });
 
   it("should have a predicate", () => {
-    expect(sut.predicate).to.match(/^http:\/\/example.com\/predicate/);
+    expect(sut.uri).to.match(/^http:\/\/example.com\/predicate/);
   });
 });

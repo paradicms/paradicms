@@ -1,10 +1,9 @@
 import {expect} from "chai";
 import {ModelSet, Text} from "../src";
-import {testDataTrig} from "@paradicms/test";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {testData} from "@paradicms/test";
 
 describe("Text", () => {
-  const modelSet = new ModelSet(parseIntoDataset(testDataTrig));
+  const modelSet = ModelSet.fromDatasetCore(testData);
   const work = modelSet.workByUri(
     "http://example.com/institution0/collection0/work2"
   );
