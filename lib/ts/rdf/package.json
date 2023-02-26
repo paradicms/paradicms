@@ -11,7 +11,8 @@
     "@types/n3": "1.10.4",
     "@types/rdfjs__term-map": "1.0.2",
     "@types/rdfjs__term-set": "1.0.3",
-    "n3": "1.16.3"
+    "n3": "1.16.3",
+    "rdf-parse": "2.3.0"
   },
   "devDependencies": {
     "@paradicms/test": "1.0.5",

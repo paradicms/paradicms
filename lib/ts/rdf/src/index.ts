@@ -6,5 +6,5 @@ export * from "./getRdfInstances";
 export * from "./getRdfNodeLabel";
 export * from "./getRdfList";
 export * from "./hasRdfSuperClass";
-export * from "./parseIntoDataset";
 export * from "./Resource";
+export * from "./stringToDataset";
