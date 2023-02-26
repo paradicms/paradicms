@@ -5,7 +5,7 @@ import fs from "fs";
 import {readConfigurationFile, readModelSetFile} from "@paradicms/next";
 import {ModelSet, Text} from "@paradicms/models";
 import {getSinglePageExhibitionAppConfiguration} from "../lib/getSinglePageExhibitionAppConfiguration";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {fastStringToDataset} from "@paradicms/rdf";
 import {Col, Container, Row} from "reactstrap";
 import {
   defaultBootstrapStylesheetHref,
@@ -16,7 +16,8 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
 
-const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
+const readFile = (filePath: string) =>
+  fs.promises.readFile(filePath).then(contents => contents.toString());
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -42,12 +43,12 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   const configuration = useMemo(
     () =>
       getSinglePageExhibitionAppConfiguration([
-        parseIntoDataset(configurationString),
+        fastStringToDataset(configurationString),
       ]),
     [configurationString]
   );
   const modelSet = useMemo(
-    () => new ModelSet(parseIntoDataset(modelSetString)),
+    () => new ModelSet(fastStringToDataset(modelSetString)),
     [modelSetString]
   );
 
@@ -153,16 +154,16 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const modelSet = readModelSetFile(readFileSync);
+  const modelSet = await readModelSetFile(readFile);
   const collection = modelSet.collections[0];
 
   return {
     props: {
       configurationString: getSinglePageExhibitionAppConfiguration([
-        readConfigurationFile(readFileSync),
+        await readConfigurationFile(readFile),
         modelSet.dataset,
-      ]).stringify(),
-      modelSetString: modelSet.stringify(),
+      ]).toFastString(),
+      modelSetString: modelSet.toFastString(),
       collectionUri: collection.uri,
     },
   };

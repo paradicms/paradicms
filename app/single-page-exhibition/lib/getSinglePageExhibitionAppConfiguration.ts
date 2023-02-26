@@ -1,12 +1,11 @@
 import {SinglePageExhibitionAppConfiguration} from "./SinglePageExhibitionAppConfiguration";
 import {Dataset} from "@rdfjs/types";
 import {getAppConfiguration} from "@paradicms/configuration";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {fastStringToDataset} from "@paradicms/rdf";
+import {configuration, rdf} from "@paradicms/vocabularies";
 
-const defaultSinglePageExhibitionAppConfigurationDataset = parseIntoDataset(`
-@prefix : <http://www.paradicms.org/ns/configuration#> .
-
-[] a :AppConfiguration .
+const defaultSinglePageExhibitionAppConfigurationDataset = fastStringToDataset(`
+_:ac <${rdf.type.value}> <${configuration.AppConfiguration.value}> .
 `);
 
 export const getSinglePageExhibitionAppConfiguration = (
