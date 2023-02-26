@@ -64,7 +64,6 @@ class GitHubAction:
     @dataclass(frozen=True)
     class OptionalInputs(RequiredInputs):
         app_configuration: str = ""
-        app_export_directory_path: str = ""
         debug: str = ""
         dev: bool = False
 
@@ -87,11 +86,7 @@ class GitHubAction:
     def _create_loader(self) -> Loader:
         app = self.__required_inputs.app
 
-        if self.__optional_inputs.app_export_directory_path is not None:
-            app_export_dir_path = Path(self.__optional_inputs.app_export_directory_path)
-        else:
-            app_export_dir_path = Path("_site")
-        app_export_dir_path = app_export_dir_path.absolute()
+        app_deploy_dir_path = Path("_site").absolute()
 
         for app_dir_path in (
             Path(app).absolute(),
@@ -119,7 +114,7 @@ class GitHubAction:
         self.__logger.info(
             "AppLoader: app=%s, export path=%s, configuration_file_path=%s",
             app,
-            app_export_dir_path,
+            app_deploy_dir_path,
             app_configuration_file_path,
         )
 
@@ -132,7 +127,7 @@ class GitHubAction:
                 # We're also running in Docker, which usually means that the GUI's out directory is on a different mount
                 # than the directory we're "deploying" to, and we need to use copy instead of rename.
                 copy=True,
-                deploy_dir_path=app_export_dir_path,
+                deploy_dir_path=app_deploy_dir_path,
             ),
             dev=self.__optional_inputs.dev,
             loaded_data_dir_path=self.__temp_dir_path / "loaded",
