@@ -1,6 +1,13 @@
-import {MultiPageExhibitionAppConfiguration} from "./MultiPageExhibitionAppConfiguration";
-import {defaultBootstrapStylesheetHref} from "@paradicms/react-dom-components";
+import {createDataset, parseIntoDataset} from "@paradicms/rdf";
+import {readMultiPageExhibitionAppConfiguration} from "./readMultiPageExhibitionAppConfiguration";
 
-export const defaultMultiPageExhibitionAppConfiguration: MultiPageExhibitionAppConfiguration = {
-  stylesheetHref: defaultBootstrapStylesheetHref,
-};
+const ttl = `
+@prefix : <http://www.paradicms.org/ns/configuration#> .
+
+[] a :AppConfiguration .
+`;
+
+export const defaultMultiPageExhibitionAppConfiguration = readMultiPageExhibitionAppConfiguration(
+  parseIntoDataset(ttl),
+  createDataset()
+)!;

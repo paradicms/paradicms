@@ -19,10 +19,9 @@ import Hammer from "react-hammerjs";
 import {useRouter} from "next/router";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
-import {MultiPageExhibitionAppConfiguration} from "../../lib/MultiPageExhibitionAppConfiguration";
+import {createDataset, parseIntoDataset} from "@paradicms/rdf";
 import {readMultiPageExhibitionAppConfiguration} from "../../lib/readMultiPageExhibitionAppConfiguration";
 import {defaultMultiPageExhibitionAppConfiguration} from "../../lib/defaultMultiPageExhibitionAppConfiguration";
-import {parseIntoDataset} from "@paradicms/rdf";
 
 const WorkLocationsMap = dynamic<{
   readonly collectionUri: string;
@@ -39,7 +38,7 @@ const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: MultiPageExhibitionAppConfiguration;
+  readonly configurationString: string;
   readonly currentWorkUri: string;
   readonly modelSetString: string;
   readonly nextWorkUri: string | null;
@@ -48,14 +47,21 @@ interface StaticProps {
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
-  configuration,
+  configurationString,
   currentWorkUri,
   modelSetString,
   nextWorkUri,
   previousWorkUri,
 }) => {
   const router = useRouter();
-
+  const configuration = useMemo(
+    () =>
+      readMultiPageExhibitionAppConfiguration(
+        parseIntoDataset(configurationString),
+        createDataset()
+      )!,
+    [configurationString]
+  );
   const modelSet = useMemo<ModelSet>(
     () => new ModelSet(parseIntoDataset(modelSetString)),
     [modelSetString]
@@ -186,11 +192,12 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       collectionUri,
-      configuration:
+      configurationString: (
         readMultiPageExhibitionAppConfiguration(
           readConfigurationFile(readFileSync),
           completeModelSet.dataset
-        ) ?? defaultMultiPageExhibitionAppConfiguration,
+        ) ?? defaultMultiPageExhibitionAppConfiguration
+      ).stringify(),
       currentWorkUri: workUri,
       modelSetString: new ModelSubsetter({
         completeModelSet,
