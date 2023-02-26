@@ -21,7 +21,8 @@ import {getWorkSearchAppConfiguration} from "../../lib/getWorkSearchAppConfigura
 import {parseIntoDataset} from "@paradicms/rdf";
 import {WorkSearchAppConfiguration} from "../../lib/WorkSearchAppConfiguration";
 
-const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
+const readFile = (filePath: string) =>
+  fs.promises.readFile(filePath).then(contents => contents.toString());
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -95,13 +96,13 @@ export const getStaticProps: GetStaticProps = ({
   const workUri = decodeFileName(params!.workUri as string);
   const completeModelSet = readModelSetFile(readFileSync);
   const configuration = getWorkSearchAppConfiguration([
-    readConfigurationFile(readFileSync),
+    readConfigurationFile(readFile),
     completeModelSet.dataset,
   ]);
 
   return {
     props: {
-      configurationString: configuration.stringify(),
+      configurationString: configuration.toFastString(),
       modelSetString: new ModelSubsetter({
         completeModelSet,
         workPropertyUris: configuration.workProperties.map(

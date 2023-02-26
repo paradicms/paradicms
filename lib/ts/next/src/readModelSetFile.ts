@@ -7,7 +7,7 @@ export const readModelSetFile = (
   // There are issues importing "fs" from a library, so pass in the function we need here
   // https://github.com/vercel/next.js/issues/7755
   readFile: (filePath: string) => Promise<string>
-): Promise<ModelSet | null> => {
+): Promise<ModelSet> => {
   if (typeof _modelSet !== "undefined") {
     return Promise.resolve(_modelSet);
   }

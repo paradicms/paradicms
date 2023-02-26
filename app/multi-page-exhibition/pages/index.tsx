@@ -10,9 +10,10 @@ import {Layout} from "../components/Layout";
 import {Col, Container, Row} from "reactstrap";
 import {RightsParagraph} from "@paradicms/react-dom-components";
 import {getMultiPageExhibitionAppConfiguration} from "../lib/getMultiPageExhibitionAppConfiguration";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {fastStringToDataset} from "@paradicms/rdf";
 
-const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
+const readFile = (filePath: string) =>
+  fs.promises.readFile(filePath).then(contents => contents.toString());
 
 interface StaticProps {
   readonly collectionUri: string;
@@ -31,12 +32,12 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   const configuration = useMemo(
     () =>
       getMultiPageExhibitionAppConfiguration([
-        parseIntoDataset(configurationString),
+        fastStringToDataset(configurationString),
       ]),
     [configurationString]
   );
   const modelSet = useMemo(
-    () => new ModelSet(parseIntoDataset(modelSetString)),
+    () => new ModelSet(fastStringToDataset(modelSetString)),
     [modelSetString]
   );
   const collection = modelSet.collectionByUri(collectionUri);
@@ -91,16 +92,16 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const modelSet = readModelSetFile(readFileSync);
+  const modelSet = await readModelSetFile(readFile);
   const collection = modelSet.collections[0];
 
   return {
     props: {
       configurationString: getMultiPageExhibitionAppConfiguration([
-        readConfigurationFile(readFileSync),
+        await readConfigurationFile(readFile),
         modelSet.dataset,
-      ]).stringify(),
-      modelSetString: modelSet.stringify(),
+      ]).toFastString(),
+      modelSetString: modelSet.toFastString(),
       collectionUri: collection.uri,
       firstWorkUri: collection.works[0].uri,
     },

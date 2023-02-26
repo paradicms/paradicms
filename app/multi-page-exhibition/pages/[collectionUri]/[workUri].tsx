@@ -19,7 +19,7 @@ import Hammer from "react-hammerjs";
 import {useRouter} from "next/router";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {fastStringToDataset} from "@paradicms/rdf";
 import {getMultiPageExhibitionAppConfiguration} from "../../lib/getMultiPageExhibitionAppConfiguration";
 
 const WorkLocationsMap = dynamic<{
@@ -57,12 +57,12 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   const configuration = useMemo(
     () =>
       getMultiPageExhibitionAppConfiguration([
-        parseIntoDataset(configurationString),
+        fastStringToDataset(configurationString),
       ]),
     [configurationString]
   );
   const modelSet = useMemo<ModelSet>(
-    () => new ModelSet(parseIntoDataset(modelSetString)),
+    () => new ModelSet(fastStringToDataset(modelSetString)),
     [modelSetString]
   );
   const collection = modelSet.collectionByUri(collectionUri);
@@ -159,7 +159,7 @@ export const getStaticProps: GetStaticProps = async ({
   const collectionUri = decodeFileName(params!.collectionUri as string);
   const workUri = decodeFileName(params!.workUri as string);
 
-  const completeModelSet = readModelSetFile(readFileSync);
+  const completeModelSet = await readModelSetFile(readFile);
 
   const currentWork = completeModelSet.workByUri(workUri);
   const collectionWorks = completeModelSet.collectionWorks(collectionUri);
@@ -192,9 +192,9 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       collectionUri,
       configurationString: getMultiPageExhibitionAppConfiguration([
-        readConfigurationFile(readFileSync),
+        await readConfigurationFile(readFile),
         completeModelSet.dataset,
-      ]).stringify(),
+      ]).toFastString(),
       currentWorkUri: workUri,
       modelSetString: new ModelSubsetter({
         completeModelSet,
@@ -212,7 +212,7 @@ export const getStaticProps: GetStaticProps = async ({
             events: {},
           }
         )
-        .stringify(),
+        .toFastString(),
       nextWorkUri,
       previousWorkUri,
     },

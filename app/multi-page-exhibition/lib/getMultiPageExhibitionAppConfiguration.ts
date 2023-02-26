@@ -1,12 +1,11 @@
 import {MultiPageExhibitionAppConfiguration} from "./MultiPageExhibitionAppConfiguration";
 import {Dataset} from "@rdfjs/types";
 import {getAppConfiguration} from "@paradicms/configuration";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {fastStringToDataset} from "@paradicms/rdf";
+import {configuration, rdf} from "@paradicms/vocabularies";
 
-const defaultMultiPageExhibitionAppConfigurationDataset = parseIntoDataset(`
-@prefix : <http://www.paradicms.org/ns/configuration#> .
-
-[] a :AppConfiguration .
+const defaultMultiPageExhibitionAppConfigurationDataset = fastStringToDataset(`
+_:ac <${rdf.type.value}> <${configuration.AppConfiguration.value}> .
 `);
 
 export const getMultiPageExhibitionAppConfiguration = (
