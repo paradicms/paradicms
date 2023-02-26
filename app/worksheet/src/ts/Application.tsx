@@ -69,7 +69,7 @@ export const Application: React.FunctionComponent = () => {
           responseDataset => {
             let worksheetDefinitionModelSet: WorksheetDefinitionModelSet;
             try {
-              worksheetDefinitionModelSet = new WorksheetDefinitionModelSet(
+              worksheetDefinitionModelSet = WorksheetDefinitionModelSet.fromDataset(
                 responseDataset
               );
             } catch (e) {

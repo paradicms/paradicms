@@ -81,6 +81,7 @@ module.exports = (env, argv) => {
       extensions: [".js", ".ts", ".tsx"],
       fallback: {
         buffer: require.resolve("buffer/"),
+        stream: require.resolve("stream-browserify"),
       },
       mainFields: ["module", "browser", "main"],
     },
