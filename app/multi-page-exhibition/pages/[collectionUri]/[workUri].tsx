@@ -56,9 +56,9 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   const router = useRouter();
   const configuration = useMemo(
     () =>
-      MultiPageExhibitionAppConfiguration.fromDatasets([
-        fastStringToDataset(configurationString),
-      ]),
+      MultiPageExhibitionAppConfiguration.fromDataset(
+        fastStringToDataset(configurationString)
+      )!,
     [configurationString]
   );
   const modelSet = useMemo<ModelSet>(
@@ -191,10 +191,12 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       collectionUri,
-      configurationString: getMultiPageExhibitionAppConfiguration([
-        await readConfigurationFile(readFile),
-        completeModelSet.dataset,
-      ]).toFastString(),
+      configurationString: (
+        MultiPageExhibitionAppConfiguration.fromDatasets([
+          await readConfigurationFile(readFile),
+          completeModelSet.dataset,
+        ]) ?? MultiPageExhibitionAppConfiguration.default
+      ).toFastString(),
       currentWorkUri: workUri,
       modelSetString: new ModelSubsetter({
         completeModelSet,
