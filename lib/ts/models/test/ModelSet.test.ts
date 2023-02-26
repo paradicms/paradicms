@@ -86,6 +86,6 @@ describe("ModelSet", () => {
   });
 
   it("should serialize itself", () => {
-    expect(sut.toFastString()).to.not.be.empty;
+    expect(sut.toFastRdfString()).to.not.be.empty;
   });
 });

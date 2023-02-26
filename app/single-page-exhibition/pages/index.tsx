@@ -4,7 +4,7 @@ import {GetStaticProps} from "next";
 import fs from "fs";
 import {readConfigurationFile, readModelSetFile} from "@paradicms/next";
 import {ModelSet, Text} from "@paradicms/models";
-import {fastStringToDataset} from "@paradicms/rdf";
+import {fastRdfStringToDataset} from "@paradicms/rdf";
 import {Col, Container, Row} from "reactstrap";
 import {
   defaultBootstrapStylesheetHref,
@@ -43,12 +43,12 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   const configuration = useMemo(
     () =>
       SinglePageExhibitionAppConfiguration.fromDataset(
-        fastStringToDataset(configurationString)
+        fastRdfStringToDataset(configurationString)
       )!,
     [configurationString]
   );
   const modelSet = useMemo(
-    () => ModelSet.fromDataset(fastStringToDataset(modelSetString)),
+    () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
     [modelSetString]
   );
 
@@ -164,8 +164,8 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
           await readConfigurationFile(readFile),
           modelSet.dataset,
         ]) ?? SinglePageExhibitionAppConfiguration.default
-      ).toFastString(),
-      modelSetString: modelSet.toFastString(),
+      ).toFastRdfString(),
+      modelSetString: modelSet.toFastRdfString(),
       collectionUri: collection.uri,
     },
   };

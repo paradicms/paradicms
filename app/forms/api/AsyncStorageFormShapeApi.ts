@@ -4,8 +4,8 @@ import * as yup from "yup";
 import {InferType} from "yup";
 import {
   DataFactory,
-  datasetToFastString,
-  fastStringToDataset,
+  datasetToFastRdfString,
+  fastRdfStringToDataset,
 } from "@paradicms/rdf";
 import {ShapesGraph} from "@paradicms/shacl";
 import {FormShape, FormShapeSummary} from "@paradicms/shacl-forms";
@@ -34,7 +34,7 @@ export class AsyncStorageFormShapeApi implements FormShapeApi {
         label: itemValue.label,
         nodeRdfTypes: itemValue.nodeRdfTypes.map(DataFactory.namedNode),
         shapesGraph: ShapesGraph.fromDataset(
-          fastStringToDataset(itemValue.shapesGraph)
+          fastRdfStringToDataset(itemValue.shapesGraph)
         ),
       });
     });
@@ -73,7 +73,7 @@ export class AsyncStorageFormShapeApi implements FormShapeApi {
         nodeRdfTypes: formShape.nodeRdfTypes.map(
           nodeRdfType => nodeRdfType.value
         ),
-        shapesGraph: datasetToFastString(formShape.shapesGraph.dataset),
+        shapesGraph: datasetToFastRdfString(formShape.shapesGraph.dataset),
       };
       formShapeItemValueSchema.validateSync(itemValue);
       return AsyncStorage.setItem(

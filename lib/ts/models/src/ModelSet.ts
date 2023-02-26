@@ -21,7 +21,7 @@ import {WorkEvent} from "./WorkEvent";
 import {WorkCreation} from "./WorkCreation";
 import {Event} from "./Event";
 import {hasMixin} from "ts-mixer";
-import {datasetCoreToDataset, datasetToFastString} from "@paradicms/rdf";
+import {datasetCoreToDataset, datasetToFastRdfString} from "@paradicms/rdf";
 import TermSet from "@rdfjs/term-set";
 import {requireDefined} from "@paradicms/utilities";
 import {cms, rdf} from "@paradicms/vocabularies";
@@ -91,7 +91,7 @@ export class ModelSet {
   private _worksByCollectionUriIndex?: {[index: string]: readonly Work[]};
   private _worksByUriIndex?: {[index: string]: Work};
 
-  private constructor(readonly dataset: Dataset) {}
+  protected constructor(readonly dataset: Dataset) {}
 
   agentByUri(agentUri: string): Agent {
     for (const index of [this.organizationsByUriIndex, this.peopleByUriIndex]) {
@@ -703,7 +703,7 @@ export class ModelSet {
     return this._rightsStatementsByUriIndex!;
   }
 
-  toFastString(): string {
+  toFastRdfString(): string {
     // return datasetToString(this.dataset, {
     //   prefixes: {
     //     cms: cms[""],
@@ -724,7 +724,7 @@ export class ModelSet {
     //     xsd: xsd[""],
     //   },
     // });
-    return datasetToFastString(this.dataset);
+    return datasetToFastRdfString(this.dataset);
   }
 
   workByUri(workUri: string): Work {

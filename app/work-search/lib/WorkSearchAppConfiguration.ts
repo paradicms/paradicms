@@ -1,9 +1,9 @@
 import {AppConfiguration, ConfigurationParameters, PropertyConfiguration,} from "@paradicms/configuration";
 import {configuration, dcterms, rdf, xsd} from "@paradicms/vocabularies";
 import {Dataset} from "@rdfjs/types";
-import {fastStringToDataset} from "@paradicms/rdf";
+import {fastRdfStringToDataset} from "@paradicms/rdf";
 
-const defaultWorkSearchAppConfigurationDataset = fastStringToDataset(`
+const defaultWorkSearchAppConfigurationDataset = fastRdfStringToDataset(`
 _:genid1 <${rdf.type.value}> <${configuration.AppConfiguration.value}> .
 _:genid1 <${configuration.workProperty.value}> _:genid2 .
 _:genid1 <${configuration.workProperty.value}> _:genid3 .

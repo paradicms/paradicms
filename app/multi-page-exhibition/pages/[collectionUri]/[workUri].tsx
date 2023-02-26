@@ -19,7 +19,7 @@ import Hammer from "react-hammerjs";
 import {useRouter} from "next/router";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
-import {fastStringToDataset} from "@paradicms/rdf";
+import {fastRdfStringToDataset} from "@paradicms/rdf";
 import {MultiPageExhibitionAppConfiguration} from "../../lib/MultiPageExhibitionAppConfiguration";
 
 const WorkLocationsMap = dynamic<{
@@ -57,12 +57,12 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   const configuration = useMemo(
     () =>
       MultiPageExhibitionAppConfiguration.fromDataset(
-        fastStringToDataset(configurationString)
+        fastRdfStringToDataset(configurationString)
       )!,
     [configurationString]
   );
   const modelSet = useMemo<ModelSet>(
-    () => ModelSet.fromDataset(fastStringToDataset(modelSetString)),
+    () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
     [modelSetString]
   );
   const collection = modelSet.collectionByUri(collectionUri);
@@ -196,7 +196,7 @@ export const getStaticProps: GetStaticProps = async ({
           await readConfigurationFile(readFile),
           completeModelSet.dataset,
         ]) ?? MultiPageExhibitionAppConfiguration.default
-      ).toFastString(),
+      ).toFastRdfString(),
       currentWorkUri: workUri,
       modelSetString: new ModelSubsetter({
         completeModelSet,
@@ -214,7 +214,7 @@ export const getStaticProps: GetStaticProps = async ({
             events: {},
           }
         )
-        .toFastString(),
+        .toFastRdfString(),
       nextWorkUri,
       previousWorkUri,
     },

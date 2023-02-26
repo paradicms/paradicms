@@ -17,7 +17,7 @@ import {
 import * as fs from "fs";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
-import {fastStringToDataset} from "@paradicms/rdf";
+import {fastRdfStringToDataset} from "@paradicms/rdf";
 import {WorkSearchAppConfiguration} from "../../lib/WorkSearchAppConfiguration";
 
 const readFile = (filePath: string) =>
@@ -47,12 +47,12 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   const configuration = useMemo<WorkSearchAppConfiguration>(
     () =>
       WorkSearchAppConfiguration.fromDataset(
-        fastStringToDataset(configurationString)
+        fastRdfStringToDataset(configurationString)
       )!,
     [configurationString]
   );
   const modelSet = useMemo(
-    () => ModelSet.fromDataset(fastStringToDataset(modelSetString)),
+    () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
     [modelSetString]
   );
   const work = modelSet.workByUri(workUri);
@@ -104,7 +104,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
-      configurationString: configuration.toFastString(),
+      configurationString: configuration.toFastRdfString(),
       modelSetString: new ModelSubsetter({
         completeModelSet,
         workPropertyUris: configuration.workProperties.map(
@@ -120,7 +120,7 @@ export const getStaticProps: GetStaticProps = async ({
           events: {},
           institution: {},
         })
-        .toFastString(),
+        .toFastRdfString(),
       workUri,
     },
   };

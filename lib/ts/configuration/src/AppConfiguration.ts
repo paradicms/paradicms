@@ -1,6 +1,6 @@
 import {configuration, rdf} from "@paradicms/vocabularies";
 import {Configuration} from "./Configuration";
-import {datasetToFastString} from "@paradicms/rdf";
+import {datasetToFastRdfString} from "@paradicms/rdf";
 import {ConfigurationParameters} from "./ConfigurationParameters";
 import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
 
@@ -48,7 +48,9 @@ export class AppConfiguration extends Configuration {
     });
   }
 
-  static fromDatasets(datasets: readonly (Dataset | null)[]): AppConfiguration | null {
+  static fromDatasets(
+    datasets: readonly (Dataset | null)[]
+  ): AppConfiguration | null {
     for (const dataset of datasets) {
       if (!dataset) {
         continue;
@@ -75,7 +77,7 @@ export class AppConfiguration extends Configuration {
     );
   }
 
-  toFastString(): string {
-    return datasetToFastString(this.dataset);
+  toFastRdfString(): string {
+    return datasetToFastRdfString(this.dataset);
   }
 }

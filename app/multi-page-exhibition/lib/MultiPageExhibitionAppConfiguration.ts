@@ -1,9 +1,9 @@
 import {AppConfiguration} from "@paradicms/configuration";
-import {fastStringToDataset} from "@paradicms/rdf";
+import {fastRdfStringToDataset} from "@paradicms/rdf";
 import {configuration, rdf} from "@paradicms/vocabularies";
 import {Dataset} from "@rdfjs/types";
 
-const defaultMultiPageExhibitionAppConfigurationDataset = fastStringToDataset(`
+const defaultMultiPageExhibitionAppConfigurationDataset = fastRdfStringToDataset(`
 _:ac <${rdf.type.value}> <${configuration.AppConfiguration.value}> .
 `);
 

@@ -16,7 +16,7 @@ import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
 import {useWorkSearchQueryParams} from "@paradicms/react-dom-hooks";
 import dynamic from "next/dynamic";
-import {fastStringToDataset} from "@paradicms/rdf";
+import {fastRdfStringToDataset} from "@paradicms/rdf";
 import {getDefaultWorkQueryFilters} from "../lib/getDefaultWorkQueryFilters";
 import {WorkSearchAppConfiguration} from "../lib/WorkSearchAppConfiguration";
 
@@ -45,12 +45,12 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   const configuration = useMemo<WorkSearchAppConfiguration>(
     () =>
       WorkSearchAppConfiguration.fromDataset(
-        fastStringToDataset(configurationString)
+        fastRdfStringToDataset(configurationString)
       )!,
     [configurationString]
   );
   const modelSet = useMemo<ModelSet>(
-    () => ModelSet.fromDataset(fastStringToDataset(modelSetString)),
+    () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
     [modelSetString]
   );
 
@@ -105,7 +105,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      configurationString: configuration.toFastString(),
+      configurationString: configuration.toFastRdfString(),
       modelSetString: new ModelSubsetter({
         completeModelSet,
         workPropertyUris: configuration.workProperties.map(
@@ -116,7 +116,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
           completeModelSet.works,
           workSearchWorkJoinSelector(smallThumbnailTargetDimensions)
         )
-        .toFastString(),
+        .toFastRdfString(),
     },
   };
 };
