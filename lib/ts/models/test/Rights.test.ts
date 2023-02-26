@@ -3,10 +3,10 @@ import {License} from "../src/License";
 import {RightsStatement} from "../src/RightsStatement";
 import {ModelSet} from "../src";
 import {Agent} from "../src/Agent";
-import {testData} from "@paradicms/test";
+import {syntheticData} from "@paradicms/test";
 
 describe("Rights", () => {
-  const sut = ModelSet.fromDatasetCore(testData).works[0].rights!;
+  const sut = ModelSet.fromDatasetCore(syntheticData).works[0].rights!;
 
   it("should have a joined contributor", () => {
     expect(sut.contributors).to.not.be.empty;

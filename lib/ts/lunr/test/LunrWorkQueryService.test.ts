@@ -4,10 +4,10 @@ import {ModelSet, visitWorkEvent, WorkCreation} from "@paradicms/models";
 import {CollectionValueFacet, InstitutionValueFacet, StringPropertyValueFacet} from "@paradicms/facets";
 import {dcterms, vra} from "@paradicms/vocabularies";
 import {StringPropertyValueFilter} from "@paradicms/filters";
-import {testData} from "@paradicms/test";
+import {syntheticData} from "@paradicms/test";
 
 describe("LunrWorkQueryService", () => {
-  const modelSet = ModelSet.fromDatasetCore(testData);
+  const modelSet = ModelSet.fromDatasetCore(syntheticData);
   const sut = new LunrWorkQueryService({
     modelSet,
     resultWorkPropertyUris: [dcterms.title.value],

@@ -1,14 +1,14 @@
 import {expect} from "chai";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {ModelSet, Text} from "../src";
-import {testData} from "@paradicms/test";
+import {syntheticData} from "@paradicms/test";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
 };
 
 describe("Collection", () => {
-  const sut = ModelSet.fromDatasetCore(testData).collections[0];
+  const sut = ModelSet.fromDatasetCore(syntheticData).collections[0];
 
   it("should get the collection's abstract", () => {
     expect(sut.abstract).to.be.instanceof(Text);

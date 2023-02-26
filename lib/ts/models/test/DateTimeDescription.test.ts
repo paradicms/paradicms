@@ -1,10 +1,10 @@
 import {expect} from "chai";
 import {ModelSet} from "../src";
-import {testData} from "@paradicms/test";
+import {syntheticData} from "@paradicms/test";
 import {DateTimeDescription} from "../src/DateTimeDescription";
 
 describe("DateTimeDescription", () => {
-  const modelSet = ModelSet.fromDatasetCore(testData);
+  const modelSet = ModelSet.fromDatasetCore(syntheticData);
   const sut: DateTimeDescription = modelSet.workEventsByWork(
     modelSet.works[0].uri
   )[0].date! as DateTimeDescription;

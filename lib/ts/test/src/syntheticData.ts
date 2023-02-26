@@ -1,7 +1,7 @@
 import {trigStringToDatasetCore} from "./trigStringToDatasetCore";
 import {DatasetCore} from "@rdfjs/types";
 
-export const testData: DatasetCore = trigStringToDatasetCore(`
+export const syntheticData: DatasetCore = trigStringToDatasetCore(`
 @prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
 @prefix creativecommons: <http://creativecommons.org/ns#> .

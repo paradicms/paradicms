@@ -1,4 +1,4 @@
 export * from "./invalidTestDataGraph";
-export * from "./testData";
+export * from "./syntheticData";
 export * from "./testShapesGraph";
 export * from "./validTestDataGraph";

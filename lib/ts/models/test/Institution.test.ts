@@ -1,9 +1,9 @@
 import {expect} from "chai";
 import {ModelSet} from "../src";
-import {testData} from "@paradicms/test";
+import {syntheticData} from "@paradicms/test";
 
 describe("Institution", () => {
-  const sut = ModelSet.fromDatasetCore(testData).institutions[0];
+  const sut = ModelSet.fromDatasetCore(syntheticData).institutions[0];
 
   it("should get the institution's collections", () => {
     expect(sut.collections).to.not.be.empty;

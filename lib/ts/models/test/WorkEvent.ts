@@ -1,9 +1,9 @@
 import {expect} from "chai";
 import {ModelSet, WorkEvent} from "../src";
-import {testData} from "@paradicms/test";
+import {syntheticData} from "@paradicms/test";
 
 describe("WorkEvent", () => {
-  const modelSet = ModelSet.fromDatasetCore(testData);
+  const modelSet = ModelSet.fromDatasetCore(syntheticData);
   const work = modelSet.works[0];
   const sut: WorkEvent = modelSet.workEventsByWork(work.uri)[0];
 

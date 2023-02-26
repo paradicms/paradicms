@@ -1,9 +1,9 @@
 import {expect} from "chai";
 import {ModelSet} from "../src";
-import {testData} from "@paradicms/test";
+import {syntheticData} from "@paradicms/test";
 
 describe("Organization", () => {
-  const sut = ModelSet.fromDatasetCore(testData).organizationByUri(
+  const sut = ModelSet.fromDatasetCore(syntheticData).organizationByUri(
     "http://example.com/organization4"
   );
 

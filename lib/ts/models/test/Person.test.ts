@@ -1,9 +1,9 @@
 import {expect} from "chai";
 import {ModelSet} from "../src";
-import {testData} from "@paradicms/test";
+import {syntheticData} from "@paradicms/test";
 
 describe("Person", () => {
-  const sut = ModelSet.fromDatasetCore(testData).personByUri(
+  const sut = ModelSet.fromDatasetCore(syntheticData).personByUri(
     "http://example.com/person4"
   );
 
