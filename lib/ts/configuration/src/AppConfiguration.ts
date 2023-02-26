@@ -3,10 +3,6 @@ import {Configuration} from "./Configuration";
 import {datasetToFastString} from "@paradicms/rdf";
 
 export class AppConfiguration extends Configuration {
-  stringify() {
-    return datasetToFastString(this.dataset);
-  }
-
   get stylesheet(): string | null {
     return this.findAndMapObject(configuration.stylesheet, term =>
       term.termType === "NamedNode" || term.termType === "Literal"
@@ -19,5 +15,9 @@ export class AppConfiguration extends Configuration {
     return this.findAndMapObject(configuration.title, term =>
       term.termType === "Literal" ? term.value : null
     );
+  }
+
+  toFastString(): string {
+    return datasetToFastString(this.dataset);
   }
 }

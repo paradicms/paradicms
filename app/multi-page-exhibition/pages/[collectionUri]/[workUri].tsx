@@ -33,7 +33,8 @@ const WorkLocationsMap = dynamic<{
   {ssr: false}
 );
 
-const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
+const readFile = (filePath: string) =>
+  fs.promises.readFile(filePath).then(contents => contents.toString());
 
 interface StaticProps {
   readonly collectionUri: string;
@@ -129,7 +130,7 @@ export default WorkPage;
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {collectionUri: string; workUri: string}}[] = [];
 
-  const modelSet = readModelSetFile(readFileSync);
+  const modelSet = await readModelSetFile(readFile);
 
   // Use first collection with works
   for (const collection of modelSet.collections) {

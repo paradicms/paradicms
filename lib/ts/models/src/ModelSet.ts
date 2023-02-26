@@ -15,27 +15,10 @@ import {WorkEvent} from "./WorkEvent";
 import {WorkCreation} from "./WorkCreation";
 import {Event} from "./Event";
 import {hasMixin} from "ts-mixer";
-import {datasetToString} from "@paradicms/rdf";
+import {datasetToFastString} from "@paradicms/rdf";
 import TermSet from "@rdfjs/term-set";
 import {requireDefined} from "@paradicms/utilities";
-import {
-  cms,
-  configuration,
-  contact,
-  dash,
-  dc11,
-  dcterms,
-  exif,
-  foaf,
-  rdf,
-  rdfs,
-  sh,
-  skos,
-  time,
-  vra,
-  wgs,
-  xsd,
-} from "@paradicms/vocabularies";
+import {cms, rdf} from "@paradicms/vocabularies";
 
 const eventClassesByRdfType = (() => {
   const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
@@ -706,27 +689,28 @@ export class ModelSet {
     return this._rightsStatementsByUriIndex!;
   }
 
-  stringify(): string {
-    return datasetToString(this.dataset, {
-      prefixes: {
-        cms: cms[""],
-        configuration: configuration[""],
-        contact: contact[""],
-        dash: dash[""],
-        dc11: dc11[""],
-        dcterms: dcterms[""],
-        exif: exif[""],
-        foaf: foaf[""],
-        rdf: rdf[""],
-        rdfs: rdfs[""],
-        sh: sh[""],
-        skos: skos[""],
-        time: time[""],
-        vra: vra[""],
-        wgs: wgs[""],
-        xsd: xsd[""],
-      },
-    });
+  toFastString(): string {
+    // return datasetToString(this.dataset, {
+    //   prefixes: {
+    //     cms: cms[""],
+    //     configuration: configuration[""],
+    //     contact: contact[""],
+    //     dash: dash[""],
+    //     dc11: dc11[""],
+    //     dcterms: dcterms[""],
+    //     exif: exif[""],
+    //     foaf: foaf[""],
+    //     rdf: rdf[""],
+    //     rdfs: rdfs[""],
+    //     sh: sh[""],
+    //     skos: skos[""],
+    //     time: time[""],
+    //     vra: vra[""],
+    //     wgs: wgs[""],
+    //     xsd: xsd[""],
+    //   },
+    // });
+    return datasetToFastString(this.dataset);
   }
 
   workByUri(workUri: string): Work {
