@@ -1,14 +1,24 @@
 import {expect} from "chai";
 import {anyStringToDataset} from "@paradicms/rdf";
-import {
-  AppConfiguration,
-  getAppConfiguration,
-  PropertyConfiguration,
-} from "../src";
+import {AppConfiguration, PropertyConfiguration} from "../src";
 import {testAppConfiguration} from "./testAppConfiguration";
 import {configuration} from "@paradicms/vocabularies";
+import {Dataset} from "@rdfjs/types";
 
 class WorkAppConfiguration extends AppConfiguration {
+  static override fromDataset(dataset: Dataset) {
+    const appConfiguration = AppConfiguration.fromDataset(dataset);
+    if (appConfiguration) {
+      return new WorkAppConfiguration({
+        dataset,
+        graphNode: appConfiguration.graphNode,
+        node: appConfiguration.node,
+      });
+    } else {
+      return null;
+    }
+  }
+
   get workProperties(): readonly PropertyConfiguration[] {
     return this.filterAndMapObjects(configuration.workProperty, term =>
       term.termType === "BlankNode"
@@ -25,11 +35,10 @@ class WorkAppConfiguration extends AppConfiguration {
 describe("PropertyConfiguration", () => {
   let sut: PropertyConfiguration;
   before(async () => {
-    const appConfiguration = getAppConfiguration(
+    const appConfiguration = WorkAppConfiguration.fromDataset(
       await anyStringToDataset(testAppConfiguration, {
         contentType: "text/turtle",
-      }),
-      kwds => new WorkAppConfiguration(kwds)
+      })
     )!;
     expect(appConfiguration).to.not.be.null;
     const propertyConfigurations = appConfiguration.workProperties;

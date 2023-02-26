@@ -9,7 +9,11 @@ import {
 import {ShaclProcessor} from "../src/ShaclProcessor";
 import {DataFactory, datasetCoreToDataset} from "@paradicms/rdf";
 import {schema} from "@paradicms/vocabularies";
-import {testShapesGraph, validTestDataGraph} from "@paradicms/test";
+import {
+  invalidTestDataGraph,
+  testShapesGraph,
+  validTestDataGraph,
+} from "@paradicms/test";
 
 describe("ShaclProcessor", () => {
   let invalidDataGraph: DataGraph;
@@ -17,7 +21,7 @@ describe("ShaclProcessor", () => {
   let shapesGraph: ShapesGraph;
 
   before(() => {
-    invalidDataGraph = datasetCoreToDataset(invalidDataGraph);
+    invalidDataGraph = datasetCoreToDataset(invalidTestDataGraph);
     validDataGraph = datasetCoreToDataset(validTestDataGraph);
     shapesGraph = ShapesGraph.fromDatasetCore(testShapesGraph);
   });

@@ -48,6 +48,19 @@ export class AppConfiguration extends Configuration {
     });
   }
 
+  static fromDatasets(datasets: readonly (Dataset | null)[]): AppConfiguration | null {
+    for (const dataset of datasets) {
+      if (!dataset) {
+        continue;
+      }
+      const result = AppConfiguration.fromDataset(dataset);
+      if (result) {
+        return result;
+      }
+    }
+    return null;
+  }
+
   get stylesheet(): string | null {
     return this.findAndMapObject(configuration.stylesheet, term =>
       term.termType === "NamedNode" || term.termType === "Literal"
