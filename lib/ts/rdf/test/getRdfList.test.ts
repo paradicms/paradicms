@@ -1,16 +1,16 @@
 import {parseIntoDataset} from "../src";
 import {DataFactory} from "n3";
-import {readRdfList} from "../src/readRdfList";
+import {getRdfList} from "../src/getRdfList";
 import {BlankNode, NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
 
-describe("readRdfList", () => {
+describe("getRdfList", () => {
   const subject = DataFactory.namedNode("urn:example:subject");
   const predicate = DataFactory.namedNode("urn:example:predicate");
 
   const parseAndReadRdfList = (ttl: string) => {
     const dataset = parseIntoDataset(ttl);
-    return readRdfList({
+    return getRdfList({
       dataset,
       node: dataset.match(subject, predicate, null, null).toArray()[0]
         .object as BlankNode | NamedNode,
