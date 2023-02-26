@@ -1,8 +1,8 @@
-import {stringToDataset} from "../src";
+import {anyStringToDataset} from "../src";
 import {DataFactory} from "n3";
 import {expect} from "chai";
 
-describe("stringToDataset", () => {
+describe("anyStringToDataset", () => {
   const subject = DataFactory.namedNode("urn:example:subject");
   const predicate = DataFactory.namedNode("urn:example:predicate");
   const object_ = DataFactory.namedNode("urn:example:object");
@@ -10,7 +10,7 @@ describe("stringToDataset", () => {
   it("should read rdf-parse example Turtle", async () => {
     expect(
       (
-        await stringToDataset(
+        await anyStringToDataset(
           `
 <http://ex.org/s> <http://ex.org/p> <http://ex.org/o1>, <http://ex.org/o2>.
 `,
@@ -23,8 +23,9 @@ describe("stringToDataset", () => {
   it("should read Turtle", async () => {
     expect(
       (
-        await stringToDataset(
-          `<${subject.value}> <${predicate.value}> <${object_.value}> .`
+        await anyStringToDataset(
+          `<${subject.value}> <${predicate.value}> <${object_.value}> .`,
+          {contentType: "text/turtle"}
         )
       ).size
     ).to.eq(1);
@@ -33,7 +34,7 @@ describe("stringToDataset", () => {
   it("should read JSON-LD", async () => {
     expect(
       (
-        await stringToDataset(
+        await anyStringToDataset(
           JSON.stringify({
             "@context": {"@vocab": "urn:example:"},
             "@id": "subject",

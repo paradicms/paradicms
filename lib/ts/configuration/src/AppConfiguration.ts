@@ -1,14 +1,10 @@
 import {configuration} from "@paradicms/vocabularies";
 import {Configuration} from "./Configuration";
-import {datasetToString} from "@paradicms/rdf";
+import {datasetToFastString} from "@paradicms/rdf";
 
 export class AppConfiguration extends Configuration {
   stringify() {
-    return datasetToString(this.dataset, {
-      prefixes: {
-        configuration: configuration[""],
-      },
-    });
+    return datasetToFastString(this.dataset);
   }
 
   get stylesheet(): string | null {

@@ -1,6 +1,6 @@
 import {Store} from "n3";
 import {Dataset, DatasetCore, Quad, Stream, Term} from "@rdfjs/types";
-import {datasetToString} from "./datasetToString";
+import {datasetToFastString} from "./datasetToFastString";
 
 export const datasetCoreToDataset = (datasetCore: DatasetCore): Dataset => {
   return {
@@ -131,7 +131,7 @@ export const datasetCoreToDataset = (datasetCore: DatasetCore): Dataset => {
       throw new EvalError("not implemented: toCanonical");
     },
     toString(): string {
-      return datasetToString(this, {format: "N-Quads"});
+      return datasetToFastString(this);
     },
     addAll(quads: Dataset<Quad> | Quad[]): Dataset<Quad, Quad> {
       for (const quad of quads) {
