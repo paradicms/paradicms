@@ -63,8 +63,7 @@ class GitHubAction:
 
     @dataclass(frozen=True)
     class OptionalInputs(RequiredInputs):
-        app_configuration_file_path: str = ""
-        app_base_url_path: str = ""
+        app_configuration: str = ""
         app_export_directory_path: str = ""
         debug: str = ""
         dev: bool = False
@@ -105,9 +104,9 @@ class GitHubAction:
             else:
                 self.__logger.debug("app_dir_path %s does not exist", app_dir_path)
 
-        if self.__optional_inputs.app_configuration_file_path:
+        if self.__optional_inputs.app_configuration:
             app_configuration_file_path = Path(
-                self.__optional_inputs.app_configuration_file_path
+                self.__optional_inputs.app_configuration
             ).absolute()
             if not app_configuration_file_path.is_file():
                 raise ValueError(
@@ -118,16 +117,14 @@ class GitHubAction:
             app_configuration_file_path = None
 
         self.__logger.info(
-            "AppLoader: app=%s, export path=%s, base URL path=%s, configuration_file_path=%s",
+            "AppLoader: app=%s, export path=%s, configuration_file_path=%s",
             app,
             app_export_dir_path,
-            self.__optional_inputs.app_base_url_path,
             app_configuration_file_path,
         )
 
         return AppLoader(
             app=app,
-            base_url_path=self.__optional_inputs.app_base_url_path,
             configuration_file_path=app_configuration_file_path,
             deployer=FsDeployer(
                 # We're running in an environment that's never been used before, so no need to archive
