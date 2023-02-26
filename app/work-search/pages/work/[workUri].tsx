@@ -18,7 +18,7 @@ import * as fs from "fs";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
 import {getWorkSearchAppConfiguration} from "../../lib/getWorkSearchAppConfiguration";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {fastStringToDataset} from "@paradicms/rdf";
 import {WorkSearchAppConfiguration} from "../../lib/WorkSearchAppConfiguration";
 
 const readFile = (filePath: string) =>
@@ -47,11 +47,11 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 }) => {
   const configuration = useMemo<WorkSearchAppConfiguration>(
     () =>
-      getWorkSearchAppConfiguration([parseIntoDataset(configurationString)]),
+      getWorkSearchAppConfiguration([fastStringToDataset(configurationString)]),
     [configurationString]
   );
   const modelSet = useMemo(
-    () => new ModelSet(parseIntoDataset(modelSetString)),
+    () => new ModelSet(fastStringToDataset(modelSetString)),
     [modelSetString]
   );
   const work = modelSet.workByUri(workUri);
@@ -74,9 +74,9 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 
 export default WorkPage;
 
-export const getStaticPaths: GetStaticPaths = () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {workUri: string}}[] = [];
-  for (const work of readModelSetFile(readFileSync).works) {
+  for (const work of (await readModelSetFile(readFile)).works) {
     paths.push({
       params: {
         workUri: encodeFileName(work.uri),
@@ -90,13 +90,13 @@ export const getStaticPaths: GetStaticPaths = () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = ({
+export const getStaticProps: GetStaticProps = async ({
   params,
-}): {props: StaticProps} => {
+}): Promise<{props: StaticProps}> => {
   const workUri = decodeFileName(params!.workUri as string);
-  const completeModelSet = readModelSetFile(readFileSync);
+  const completeModelSet = await readModelSetFile(readFile);
   const configuration = getWorkSearchAppConfiguration([
-    readConfigurationFile(readFile),
+    await readConfigurationFile(readFile),
     completeModelSet.dataset,
   ]);
 
@@ -118,7 +118,7 @@ export const getStaticProps: GetStaticProps = ({
           events: {},
           institution: {},
         })
-        .stringify(),
+        .toFastString(),
       workUri,
     },
   };

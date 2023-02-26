@@ -1,51 +1,37 @@
 import {WorkSearchAppConfiguration} from "./WorkSearchAppConfiguration";
 import {Dataset} from "@rdfjs/types";
 import {getAppConfiguration} from "@paradicms/configuration";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {fastStringToDataset} from "@paradicms/rdf";
+import {configuration, dcterms, rdf, xsd} from "@paradicms/vocabularies";
 
-const defaultWorkSearchAppConfigurationDataset = parseIntoDataset(`
-@prefix : <http://www.paradicms.org/ns/configuration#> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
-
-[] a :AppConfiguration;
-  :workProperty [
-    :filterable true ;
-    :label "Creator" ;
-    :predicate dcterms:creator
-  ]
-  ;
-  :workProperty [
-    :hidden true ;
-    :searchable true ;
-    :label "Description" ;
-    :predicate dcterms:description
-  ]
-  ;
-  :workProperty [
-    :filterable true ;
-    :label "Medium" ;
-    :predicate dcterms:medium
-  ]
-  ;
-  :workProperty [
-    :filterable true ;
-    :label "Subject" ;
-    :predicate dcterms:subject
-  ]
-  ;
-  :workProperty [
-    :hidden true ;
-    :searchable true ;
-    :label "Title" ;
-    :predicate :label
-  ]
-  ;
-  :workProperty [
-    :filterable true ;
-    :label "Type" ;
-    :predicate dcterms:type
-  ]
-  .
+const defaultWorkSearchAppConfigurationDataset = fastStringToDataset(`
+_:genid1 <${rdf.type.value}> <${configuration.AppConfiguration.value}> .
+_:genid1 <${configuration.workProperty.value}> _:genid2 .
+_:genid1 <${configuration.workProperty.value}> _:genid3 .
+_:genid1 <${configuration.workProperty.value}> _:genid4 .
+_:genid1 <${configuration.workProperty.value}> _:genid5 .
+_:genid1 <${configuration.workProperty.value}> _:genid6 .
+_:genid1 <${configuration.workProperty.value}> _:genid7 .
+_:genid2 <${configuration.filterable.value}> "true"^^<${xsd.boolean.value}> .
+_:genid2 <${configuration.label.value}> "Creator" .
+_:genid2 <${configuration.predicate.value}> <${dcterms.creator.value}> .
+_:genid3 <${configuration.hidden.value}> "true"^^<${xsd.boolean.value}> .
+_:genid3 <${configuration.searchable.value}> "true"^^<${xsd.boolean.value}> .
+_:genid3 <${configuration.label.value}> "Description" .
+_:genid3 <${configuration.predicate.value}> <${dcterms.description.value}> .
+_:genid4 <${configuration.filterable.value}> "true"^^<${xsd.boolean.value}> .
+_:genid4 <${configuration.label.value}> "Medium" .
+_:genid4 <${configuration.predicate.value}> <${dcterms.medium.value}> .
+_:genid5 <${configuration.filterable.value}> "true"^^<${xsd.boolean.value}> .
+_:genid5 <${configuration.label.value}> "Subject" .
+_:genid5 <${configuration.predicate.value}> <${dcterms.subject.value}> .
+_:genid6 <${configuration.hidden.value}> "true"^^<${xsd.boolean.value}> .
+_:genid6 <${configuration.searchable.value}> "true"^^<${xsd.boolean.value}> .
+_:genid6 <${configuration.label.value}> "Title" .
+_:genid6 <${configuration.predicate.value}> <${configuration.label.value}> .
+_:genid7 <${configuration.filterable.value}> "true"^^<${xsd.boolean.value}> .
+_:genid7 <${configuration.label.value}> "Type" .
+_:genid7 <${configuration.predicate.value}> <${dcterms.type.value}> .
 `);
 
 export const getWorkSearchAppConfiguration = (

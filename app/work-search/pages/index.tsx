@@ -17,7 +17,7 @@ import {LunrWorkQueryService} from "@paradicms/lunr";
 import {useWorkSearchQueryParams} from "@paradicms/react-dom-hooks";
 import dynamic from "next/dynamic";
 import {getWorkSearchAppConfiguration} from "../lib/getWorkSearchAppConfiguration";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {fastStringToDataset} from "@paradicms/rdf";
 import {getDefaultWorkQueryFilters} from "../lib/getDefaultWorkQueryFilters";
 import {WorkSearchAppConfiguration} from "../lib/WorkSearchAppConfiguration";
 
@@ -31,7 +31,8 @@ const WorkLocationsMap = dynamic<{
   {ssr: false}
 );
 
-const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
+const readFile = (filePath: string) =>
+  fs.promises.readFile(filePath).then(contents => contents.toString());
 
 interface StaticProps {
   readonly configurationString: string;
@@ -44,11 +45,11 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
 }) => {
   const configuration = useMemo<WorkSearchAppConfiguration>(
     () =>
-      getWorkSearchAppConfiguration([parseIntoDataset(configurationString)]),
+      getWorkSearchAppConfiguration([fastStringToDataset(configurationString)]),
     [configurationString]
   );
   const modelSet = useMemo<ModelSet>(
-    () => new ModelSet(parseIntoDataset(modelSetString)),
+    () => new ModelSet(fastStringToDataset(modelSetString)),
     [modelSetString]
   );
 
@@ -94,15 +95,15 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const completeModelSet = readModelSetFile(readFileSync);
+  const completeModelSet = await readModelSetFile(readFile);
   const configuration = getWorkSearchAppConfiguration([
-    readConfigurationFile(readFileSync),
+    await readConfigurationFile(readFile),
     completeModelSet.dataset,
   ]);
 
   return {
     props: {
-      configurationString: configuration.stringify(),
+      configurationString: configuration.toFastString(),
       modelSetString: new ModelSubsetter({
         completeModelSet,
         workPropertyUris: configuration.workProperties.map(
@@ -113,7 +114,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
           completeModelSet.works,
           workSearchWorkJoinSelector(smallThumbnailTargetDimensions)
         )
-        .stringify(),
+        .toFastString(),
     },
   };
 };
