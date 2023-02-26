@@ -16,7 +16,6 @@ import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
 import {useWorkSearchQueryParams} from "@paradicms/react-dom-hooks";
 import dynamic from "next/dynamic";
-import {getWorkSearchAppConfiguration} from "../lib/getWorkSearchAppConfiguration";
 import {fastStringToDataset} from "@paradicms/rdf";
 import {getDefaultWorkQueryFilters} from "../lib/getDefaultWorkQueryFilters";
 import {WorkSearchAppConfiguration} from "../lib/WorkSearchAppConfiguration";
@@ -45,7 +44,9 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
 }) => {
   const configuration = useMemo<WorkSearchAppConfiguration>(
     () =>
-      getWorkSearchAppConfiguration([fastStringToDataset(configurationString)]),
+      WorkSearchAppConfiguration.fromDataset(
+        fastStringToDataset(configurationString)
+      )!,
     [configurationString]
   );
   const modelSet = useMemo<ModelSet>(
@@ -96,10 +97,11 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
   const completeModelSet = await readModelSetFile(readFile);
-  const configuration = getWorkSearchAppConfiguration([
-    await readConfigurationFile(readFile),
-    completeModelSet.dataset,
-  ]);
+  const configuration =
+    WorkSearchAppConfiguration.fromDatasets([
+      await readConfigurationFile(readFile),
+      completeModelSet.dataset,
+    ]) ?? WorkSearchAppConfiguration.default;
 
   return {
     props: {
