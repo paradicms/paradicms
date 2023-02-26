@@ -1,18 +1,18 @@
 import {expect} from "chai";
 import {createDataset, parseIntoDataset} from "@paradicms/rdf";
-import {AppConfiguration, readAppConfiguration} from "../src";
+import {AppConfiguration, getAppConfiguration} from "../src";
 import {testAppConfiguration} from "./testAppConfiguration";
 
-describe("readAppConfiguration", () => {
+describe("getAppConfiguration", () => {
   it("should return null from an empty dataset", () => {
     expect(
-      readAppConfiguration(createDataset(), kwds => new AppConfiguration(kwds))
+      getAppConfiguration(createDataset(), kwds => new AppConfiguration(kwds))
     ).to.be.null;
   });
 
   it("should return a configuration from a .ttl", () => {
     expect(
-      readAppConfiguration(
+      getAppConfiguration(
         parseIntoDataset(testAppConfiguration),
         kwds => new AppConfiguration(kwds)
       )

@@ -9,7 +9,7 @@ const defaultMultiPageExhibitionAppConfigurationDataset = parseIntoDataset(`
 [] a :AppConfiguration .
 `);
 
-export const readMultiPageExhibitionAppConfiguration = (
+export const getMultiPageExhibitionAppConfiguration = (
   datasets: readonly (Dataset | null)[]
 ): MultiPageExhibitionAppConfiguration => {
   for (const dataset of datasets.concat(
@@ -18,7 +18,7 @@ export const readMultiPageExhibitionAppConfiguration = (
     if (!dataset) {
       continue;
     }
-    const configuration = readAppConfiguration<
+    const configuration = getAppConfiguration<
       MultiPageExhibitionAppConfiguration
     >(dataset, kwds => new MultiPageExhibitionAppConfiguration(kwds));
     if (configuration) {

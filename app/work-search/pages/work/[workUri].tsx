@@ -17,7 +17,7 @@ import {
 import * as fs from "fs";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
-import {readWorkSearchAppConfiguration} from "../../lib/readWorkSearchAppConfiguration";
+import {getWorkSearchAppConfiguration} from "../../lib/getWorkSearchAppConfiguration";
 import {parseIntoDataset} from "@paradicms/rdf";
 import {WorkSearchAppConfiguration} from "../../lib/WorkSearchAppConfiguration";
 
@@ -46,7 +46,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 }) => {
   const configuration = useMemo<WorkSearchAppConfiguration>(
     () =>
-      readWorkSearchAppConfiguration([parseIntoDataset(configurationString)]),
+      getWorkSearchAppConfiguration([parseIntoDataset(configurationString)]),
     [configurationString]
   );
   const modelSet = useMemo(
@@ -94,7 +94,7 @@ export const getStaticProps: GetStaticProps = ({
 }): {props: StaticProps} => {
   const workUri = decodeFileName(params!.workUri as string);
   const completeModelSet = readModelSetFile(readFileSync);
-  const configuration = readWorkSearchAppConfiguration([
+  const configuration = getWorkSearchAppConfiguration([
     readConfigurationFile(readFileSync),
     completeModelSet.dataset,
   ]);

@@ -1,6 +1,6 @@
 import {WorkSearchAppConfiguration} from "./WorkSearchAppConfiguration";
 import {Dataset} from "@rdfjs/types";
-import {readAppConfiguration} from "@paradicms/configuration";
+import {getAppConfiguration} from "@paradicms/configuration";
 import {parseIntoDataset} from "@paradicms/rdf";
 
 const defaultWorkSearchAppConfigurationDataset = parseIntoDataset(`
@@ -48,7 +48,7 @@ const defaultWorkSearchAppConfigurationDataset = parseIntoDataset(`
   .
 `);
 
-export const readWorkSearchAppConfiguration = (
+export const getWorkSearchAppConfiguration = (
   datasets: readonly (Dataset | null)[]
 ): WorkSearchAppConfiguration => {
   for (const dataset of datasets.concat(
@@ -57,7 +57,7 @@ export const readWorkSearchAppConfiguration = (
     if (!dataset) {
       continue;
     }
-    const configuration = readAppConfiguration<WorkSearchAppConfiguration>(
+    const configuration = getAppConfiguration<WorkSearchAppConfiguration>(
       dataset,
       kwds => new WorkSearchAppConfiguration(kwds)
     );

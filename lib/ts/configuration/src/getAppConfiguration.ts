@@ -3,9 +3,7 @@ import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
 import {configuration, rdf} from "@paradicms/vocabularies";
 import {ConfigurationParameters} from "./ConfigurationParameters";
 
-export const readAppConfiguration = <
-  AppConfigurationT extends AppConfiguration
->(
+export const getAppConfiguration = <AppConfigurationT extends AppConfiguration>(
   dataset: Dataset,
   factory: (kwds: ConfigurationParameters) => AppConfigurationT
 ): AppConfigurationT | null => {

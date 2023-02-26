@@ -6,7 +6,7 @@ export const readSinglePageExhibitionAppConfiguration = (
   configurationDataset: Dataset | null,
   modelSetDataset: Dataset
 ): SinglePageExhibitionAppConfiguration | null => {
-  return readAppConfiguration<SinglePageExhibitionAppConfiguration>(
+  return getAppConfiguration<SinglePageExhibitionAppConfiguration>(
     configurationDataset,
     modelSetDataset,
     ({graph, node, dataset, ...appConfigurationProps}) => {

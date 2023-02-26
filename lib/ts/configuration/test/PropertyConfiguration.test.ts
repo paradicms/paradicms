@@ -2,8 +2,8 @@ import {expect} from "chai";
 import {parseIntoDataset} from "@paradicms/rdf";
 import {
   AppConfiguration,
+  getAppConfiguration,
   PropertyConfiguration,
-  readAppConfiguration,
 } from "../src";
 import {testAppConfiguration} from "./testAppConfiguration";
 import {configuration} from "@paradicms/vocabularies";
@@ -25,7 +25,7 @@ class WorkAppConfiguration extends AppConfiguration {
 describe("PropertyConfiguration", () => {
   let sut: PropertyConfiguration;
   before(() => {
-    const appConfiguration = readAppConfiguration(
+    const appConfiguration = getAppConfiguration(
       parseIntoDataset(testAppConfiguration),
       kwds => new WorkAppConfiguration(kwds)
     )!;

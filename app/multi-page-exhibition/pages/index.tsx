@@ -9,7 +9,7 @@ import {ModelSet, Text} from "@paradicms/models";
 import {Layout} from "../components/Layout";
 import {Col, Container, Row} from "reactstrap";
 import {RightsParagraph} from "@paradicms/react-dom-components";
-import {readMultiPageExhibitionAppConfiguration} from "../lib/readMultiPageExhibitionAppConfiguration";
+import {getMultiPageExhibitionAppConfiguration} from "../lib/getMultiPageExhibitionAppConfiguration";
 import {parseIntoDataset} from "@paradicms/rdf";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
@@ -30,7 +30,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   const router = useRouter();
   const configuration = useMemo(
     () =>
-      readMultiPageExhibitionAppConfiguration([
+      getMultiPageExhibitionAppConfiguration([
         parseIntoDataset(configurationString),
       ]),
     [configurationString]
@@ -96,7 +96,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      configurationString: readMultiPageExhibitionAppConfiguration([
+      configurationString: getMultiPageExhibitionAppConfiguration([
         readConfigurationFile(readFileSync),
         modelSet.dataset,
       ]).stringify(),

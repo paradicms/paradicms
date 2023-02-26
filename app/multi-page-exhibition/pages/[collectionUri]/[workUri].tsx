@@ -20,7 +20,7 @@ import {useRouter} from "next/router";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
 import {parseIntoDataset} from "@paradicms/rdf";
-import {readMultiPageExhibitionAppConfiguration} from "../../lib/readMultiPageExhibitionAppConfiguration";
+import {getMultiPageExhibitionAppConfiguration} from "../../lib/getMultiPageExhibitionAppConfiguration";
 
 const WorkLocationsMap = dynamic<{
   readonly collectionUri: string;
@@ -55,7 +55,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   const router = useRouter();
   const configuration = useMemo(
     () =>
-      readMultiPageExhibitionAppConfiguration([
+      getMultiPageExhibitionAppConfiguration([
         parseIntoDataset(configurationString),
       ]),
     [configurationString]
@@ -190,7 +190,7 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       collectionUri,
-      configurationString: readMultiPageExhibitionAppConfiguration([
+      configurationString: getMultiPageExhibitionAppConfiguration([
         readConfigurationFile(readFileSync),
         completeModelSet.dataset,
       ]).stringify(),
