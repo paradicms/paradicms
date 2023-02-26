@@ -84,14 +84,14 @@ exports[`renders correctly 1`] = `
                 NodeShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-10",
+                    "value": "n3-76",
                   },
                   "shapesGraph": [Circular],
                 },
                 NodeShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-12",
+                    "value": "n3-78",
                   },
                   "shapesGraph": [Circular],
                 },
@@ -118,28 +118,28 @@ exports[`renders correctly 1`] = `
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-10" => {
+                  "_:n3-76" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-10",
+                      "value": "n3-76",
                     },
                     "value": NodeShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-10",
+                        "value": "n3-76",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-12" => {
+                  "_:n3-78" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-12",
+                      "value": "n3-78",
                     },
                     "value": NodeShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-12",
+                        "value": "n3-78",
                       },
                       "shapesGraph": [Circular],
                     },
@@ -154,122 +154,122 @@ exports[`renders correctly 1`] = `
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-1",
+                    "value": "n3-67",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-7",
+                    "value": "n3-73",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-2",
+                    "value": "n3-68",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-8",
+                    "value": "n3-74",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-6",
+                    "value": "n3-72",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-3",
+                    "value": "n3-69",
                   },
                   "shapesGraph": [Circular],
                 },
               ],
               "propertyShapesByNode": TermMap {
                 "index": Map {
-                  "_:n3-1" => {
+                  "_:n3-67" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-1",
+                      "value": "n3-67",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-1",
+                        "value": "n3-67",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-7" => {
+                  "_:n3-73" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-7",
+                      "value": "n3-73",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-7",
+                        "value": "n3-73",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-2" => {
+                  "_:n3-68" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-2",
+                      "value": "n3-68",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-2",
+                        "value": "n3-68",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-8" => {
+                  "_:n3-74" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-8",
+                      "value": "n3-74",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-8",
+                        "value": "n3-74",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-6" => {
+                  "_:n3-72" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-6",
+                      "value": "n3-72",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-6",
+                        "value": "n3-72",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-3" => {
+                  "_:n3-69" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-3",
+                      "value": "n3-69",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-3",
+                        "value": "n3-69",
                       },
                       "shapesGraph": [Circular],
                     },
@@ -282,7 +282,7 @@ exports[`renders correctly 1`] = `
         "shape": PropertyShape {
           "_node": {
             "termType": "BlankNode",
-            "value": "n3-6",
+            "value": "n3-72",
           },
           "shapesGraph": ShapesGraph {
             "dataset": {
@@ -333,14 +333,14 @@ exports[`renders correctly 1`] = `
               NodeShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-10",
+                  "value": "n3-76",
                 },
                 "shapesGraph": [Circular],
               },
               NodeShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-12",
+                  "value": "n3-78",
                 },
                 "shapesGraph": [Circular],
               },
@@ -373,28 +373,28 @@ exports[`renders correctly 1`] = `
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-10" => {
+                "_:n3-76" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-10",
+                    "value": "n3-76",
                   },
                   "value": NodeShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-10",
+                      "value": "n3-76",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-12" => {
+                "_:n3-78" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-12",
+                    "value": "n3-78",
                   },
                   "value": NodeShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-12",
+                      "value": "n3-78",
                     },
                     "shapesGraph": [Circular],
                   },
@@ -409,28 +409,28 @@ exports[`renders correctly 1`] = `
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-1",
+                  "value": "n3-67",
                 },
                 "shapesGraph": [Circular],
               },
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-7",
+                  "value": "n3-73",
                 },
                 "shapesGraph": [Circular],
               },
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-2",
+                  "value": "n3-68",
                 },
                 "shapesGraph": [Circular],
               },
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-8",
+                  "value": "n3-74",
                 },
                 "shapesGraph": [Circular],
               },
@@ -438,81 +438,81 @@ exports[`renders correctly 1`] = `
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-3",
+                  "value": "n3-69",
                 },
                 "shapesGraph": [Circular],
               },
             ],
             "propertyShapesByNode": TermMap {
               "index": Map {
-                "_:n3-1" => {
+                "_:n3-67" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-1",
+                    "value": "n3-67",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-1",
+                      "value": "n3-67",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-7" => {
+                "_:n3-73" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-7",
+                    "value": "n3-73",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-7",
+                      "value": "n3-73",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-2" => {
+                "_:n3-68" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-2",
+                    "value": "n3-68",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-2",
+                      "value": "n3-68",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-8" => {
+                "_:n3-74" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-8",
+                    "value": "n3-74",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-8",
+                      "value": "n3-74",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-6" => {
+                "_:n3-72" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-6",
+                    "value": "n3-72",
                   },
                   "value": [Circular],
                 },
-                "_:n3-3" => {
+                "_:n3-69" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-3",
+                    "value": "n3-69",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-3",
+                      "value": "n3-69",
                     },
                     "shapesGraph": [Circular],
                   },
@@ -602,14 +602,14 @@ exports[`renders correctly 1`] = `
                 NodeShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-10",
+                    "value": "n3-76",
                   },
                   "shapesGraph": [Circular],
                 },
                 NodeShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-12",
+                    "value": "n3-78",
                   },
                   "shapesGraph": [Circular],
                 },
@@ -636,28 +636,28 @@ exports[`renders correctly 1`] = `
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-10" => {
+                  "_:n3-76" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-10",
+                      "value": "n3-76",
                     },
                     "value": NodeShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-10",
+                        "value": "n3-76",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-12" => {
+                  "_:n3-78" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-12",
+                      "value": "n3-78",
                     },
                     "value": NodeShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-12",
+                        "value": "n3-78",
                       },
                       "shapesGraph": [Circular],
                     },
@@ -672,122 +672,122 @@ exports[`renders correctly 1`] = `
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-1",
+                    "value": "n3-67",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-7",
+                    "value": "n3-73",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-2",
+                    "value": "n3-68",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-8",
+                    "value": "n3-74",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-6",
+                    "value": "n3-72",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-3",
+                    "value": "n3-69",
                   },
                   "shapesGraph": [Circular],
                 },
               ],
               "propertyShapesByNode": TermMap {
                 "index": Map {
-                  "_:n3-1" => {
+                  "_:n3-67" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-1",
+                      "value": "n3-67",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-1",
+                        "value": "n3-67",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-7" => {
+                  "_:n3-73" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-7",
+                      "value": "n3-73",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-7",
+                        "value": "n3-73",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-2" => {
+                  "_:n3-68" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-2",
+                      "value": "n3-68",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-2",
+                        "value": "n3-68",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-8" => {
+                  "_:n3-74" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-8",
+                      "value": "n3-74",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-8",
+                        "value": "n3-74",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-6" => {
+                  "_:n3-72" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-6",
+                      "value": "n3-72",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-6",
+                        "value": "n3-72",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-3" => {
+                  "_:n3-69" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-3",
+                      "value": "n3-69",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-3",
+                        "value": "n3-69",
                       },
                       "shapesGraph": [Circular],
                     },
@@ -800,7 +800,7 @@ exports[`renders correctly 1`] = `
         "shape": PropertyShape {
           "_node": {
             "termType": "BlankNode",
-            "value": "n3-3",
+            "value": "n3-69",
           },
           "shapesGraph": ShapesGraph {
             "dataset": {
@@ -851,14 +851,14 @@ exports[`renders correctly 1`] = `
               NodeShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-10",
+                  "value": "n3-76",
                 },
                 "shapesGraph": [Circular],
               },
               NodeShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-12",
+                  "value": "n3-78",
                 },
                 "shapesGraph": [Circular],
               },
@@ -891,28 +891,28 @@ exports[`renders correctly 1`] = `
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-10" => {
+                "_:n3-76" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-10",
+                    "value": "n3-76",
                   },
                   "value": NodeShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-10",
+                      "value": "n3-76",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-12" => {
+                "_:n3-78" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-12",
+                    "value": "n3-78",
                   },
                   "value": NodeShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-12",
+                      "value": "n3-78",
                     },
                     "shapesGraph": [Circular],
                   },
@@ -927,35 +927,35 @@ exports[`renders correctly 1`] = `
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-1",
+                  "value": "n3-67",
                 },
                 "shapesGraph": [Circular],
               },
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-7",
+                  "value": "n3-73",
                 },
                 "shapesGraph": [Circular],
               },
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-2",
+                  "value": "n3-68",
                 },
                 "shapesGraph": [Circular],
               },
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-8",
+                  "value": "n3-74",
                 },
                 "shapesGraph": [Circular],
               },
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-6",
+                  "value": "n3-72",
                 },
                 "shapesGraph": [Circular],
               },
@@ -963,75 +963,75 @@ exports[`renders correctly 1`] = `
             ],
             "propertyShapesByNode": TermMap {
               "index": Map {
-                "_:n3-1" => {
+                "_:n3-67" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-1",
+                    "value": "n3-67",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-1",
+                      "value": "n3-67",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-7" => {
+                "_:n3-73" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-7",
+                    "value": "n3-73",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-7",
+                      "value": "n3-73",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-2" => {
+                "_:n3-68" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-2",
+                    "value": "n3-68",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-2",
+                      "value": "n3-68",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-8" => {
+                "_:n3-74" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-8",
+                    "value": "n3-74",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-8",
+                      "value": "n3-74",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-6" => {
+                "_:n3-72" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-6",
+                    "value": "n3-72",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-6",
+                      "value": "n3-72",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-3" => {
+                "_:n3-69" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-3",
+                    "value": "n3-69",
                   },
                   "value": [Circular],
                 },
@@ -1120,14 +1120,14 @@ exports[`renders correctly 1`] = `
                 NodeShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-10",
+                    "value": "n3-76",
                   },
                   "shapesGraph": [Circular],
                 },
                 NodeShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-12",
+                    "value": "n3-78",
                   },
                   "shapesGraph": [Circular],
                 },
@@ -1154,28 +1154,28 @@ exports[`renders correctly 1`] = `
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-10" => {
+                  "_:n3-76" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-10",
+                      "value": "n3-76",
                     },
                     "value": NodeShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-10",
+                        "value": "n3-76",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-12" => {
+                  "_:n3-78" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-12",
+                      "value": "n3-78",
                     },
                     "value": NodeShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-12",
+                        "value": "n3-78",
                       },
                       "shapesGraph": [Circular],
                     },
@@ -1190,122 +1190,122 @@ exports[`renders correctly 1`] = `
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-1",
+                    "value": "n3-67",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-7",
+                    "value": "n3-73",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-2",
+                    "value": "n3-68",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-8",
+                    "value": "n3-74",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-6",
+                    "value": "n3-72",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-3",
+                    "value": "n3-69",
                   },
                   "shapesGraph": [Circular],
                 },
               ],
               "propertyShapesByNode": TermMap {
                 "index": Map {
-                  "_:n3-1" => {
+                  "_:n3-67" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-1",
+                      "value": "n3-67",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-1",
+                        "value": "n3-67",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-7" => {
+                  "_:n3-73" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-7",
+                      "value": "n3-73",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-7",
+                        "value": "n3-73",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-2" => {
+                  "_:n3-68" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-2",
+                      "value": "n3-68",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-2",
+                        "value": "n3-68",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-8" => {
+                  "_:n3-74" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-8",
+                      "value": "n3-74",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-8",
+                        "value": "n3-74",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-6" => {
+                  "_:n3-72" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-6",
+                      "value": "n3-72",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-6",
+                        "value": "n3-72",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-3" => {
+                  "_:n3-69" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-3",
+                      "value": "n3-69",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-3",
+                        "value": "n3-69",
                       },
                       "shapesGraph": [Circular],
                     },
@@ -1318,7 +1318,7 @@ exports[`renders correctly 1`] = `
         "shape": PropertyShape {
           "_node": {
             "termType": "BlankNode",
-            "value": "n3-1",
+            "value": "n3-67",
           },
           "shapesGraph": ShapesGraph {
             "dataset": {
@@ -1369,14 +1369,14 @@ exports[`renders correctly 1`] = `
               NodeShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-10",
+                  "value": "n3-76",
                 },
                 "shapesGraph": [Circular],
               },
               NodeShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-12",
+                  "value": "n3-78",
                 },
                 "shapesGraph": [Circular],
               },
@@ -1409,28 +1409,28 @@ exports[`renders correctly 1`] = `
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-10" => {
+                "_:n3-76" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-10",
+                    "value": "n3-76",
                   },
                   "value": NodeShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-10",
+                      "value": "n3-76",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-12" => {
+                "_:n3-78" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-12",
+                    "value": "n3-78",
                   },
                   "value": NodeShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-12",
+                      "value": "n3-78",
                     },
                     "shapesGraph": [Circular],
                   },
@@ -1446,109 +1446,109 @@ exports[`renders correctly 1`] = `
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-7",
+                  "value": "n3-73",
                 },
                 "shapesGraph": [Circular],
               },
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-2",
+                  "value": "n3-68",
                 },
                 "shapesGraph": [Circular],
               },
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-8",
+                  "value": "n3-74",
                 },
                 "shapesGraph": [Circular],
               },
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-6",
+                  "value": "n3-72",
                 },
                 "shapesGraph": [Circular],
               },
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-3",
+                  "value": "n3-69",
                 },
                 "shapesGraph": [Circular],
               },
             ],
             "propertyShapesByNode": TermMap {
               "index": Map {
-                "_:n3-1" => {
+                "_:n3-67" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-1",
+                    "value": "n3-67",
                   },
                   "value": [Circular],
                 },
-                "_:n3-7" => {
+                "_:n3-73" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-7",
+                    "value": "n3-73",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-7",
+                      "value": "n3-73",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-2" => {
+                "_:n3-68" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-2",
+                    "value": "n3-68",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-2",
+                      "value": "n3-68",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-8" => {
+                "_:n3-74" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-8",
+                    "value": "n3-74",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-8",
+                      "value": "n3-74",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-6" => {
+                "_:n3-72" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-6",
+                    "value": "n3-72",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-6",
+                      "value": "n3-72",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-3" => {
+                "_:n3-69" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-3",
+                    "value": "n3-69",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-3",
+                      "value": "n3-69",
                     },
                     "shapesGraph": [Circular],
                   },
@@ -1638,14 +1638,14 @@ exports[`renders correctly 1`] = `
                 NodeShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-10",
+                    "value": "n3-76",
                   },
                   "shapesGraph": [Circular],
                 },
                 NodeShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-12",
+                    "value": "n3-78",
                   },
                   "shapesGraph": [Circular],
                 },
@@ -1672,28 +1672,28 @@ exports[`renders correctly 1`] = `
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-10" => {
+                  "_:n3-76" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-10",
+                      "value": "n3-76",
                     },
                     "value": NodeShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-10",
+                        "value": "n3-76",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-12" => {
+                  "_:n3-78" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-12",
+                      "value": "n3-78",
                     },
                     "value": NodeShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-12",
+                        "value": "n3-78",
                       },
                       "shapesGraph": [Circular],
                     },
@@ -1708,122 +1708,122 @@ exports[`renders correctly 1`] = `
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-1",
+                    "value": "n3-67",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-7",
+                    "value": "n3-73",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-2",
+                    "value": "n3-68",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-8",
+                    "value": "n3-74",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-6",
+                    "value": "n3-72",
                   },
                   "shapesGraph": [Circular],
                 },
                 PropertyShape {
                   "_node": {
                     "termType": "BlankNode",
-                    "value": "n3-3",
+                    "value": "n3-69",
                   },
                   "shapesGraph": [Circular],
                 },
               ],
               "propertyShapesByNode": TermMap {
                 "index": Map {
-                  "_:n3-1" => {
+                  "_:n3-67" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-1",
+                      "value": "n3-67",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-1",
+                        "value": "n3-67",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-7" => {
+                  "_:n3-73" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-7",
+                      "value": "n3-73",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-7",
+                        "value": "n3-73",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-2" => {
+                  "_:n3-68" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-2",
+                      "value": "n3-68",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-2",
+                        "value": "n3-68",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-8" => {
+                  "_:n3-74" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-8",
+                      "value": "n3-74",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-8",
+                        "value": "n3-74",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-6" => {
+                  "_:n3-72" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-6",
+                      "value": "n3-72",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-6",
+                        "value": "n3-72",
                       },
                       "shapesGraph": [Circular],
                     },
                   },
-                  "_:n3-3" => {
+                  "_:n3-69" => {
                     "term": {
                       "termType": "BlankNode",
-                      "value": "n3-3",
+                      "value": "n3-69",
                     },
                     "value": PropertyShape {
                       "_node": {
                         "termType": "BlankNode",
-                        "value": "n3-3",
+                        "value": "n3-69",
                       },
                       "shapesGraph": [Circular],
                     },
@@ -1836,7 +1836,7 @@ exports[`renders correctly 1`] = `
         "shape": PropertyShape {
           "_node": {
             "termType": "BlankNode",
-            "value": "n3-2",
+            "value": "n3-68",
           },
           "shapesGraph": ShapesGraph {
             "dataset": {
@@ -1887,14 +1887,14 @@ exports[`renders correctly 1`] = `
               NodeShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-10",
+                  "value": "n3-76",
                 },
                 "shapesGraph": [Circular],
               },
               NodeShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-12",
+                  "value": "n3-78",
                 },
                 "shapesGraph": [Circular],
               },
@@ -1927,28 +1927,28 @@ exports[`renders correctly 1`] = `
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-10" => {
+                "_:n3-76" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-10",
+                    "value": "n3-76",
                   },
                   "value": NodeShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-10",
+                      "value": "n3-76",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-12" => {
+                "_:n3-78" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-12",
+                    "value": "n3-78",
                   },
                   "value": NodeShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-12",
+                      "value": "n3-78",
                     },
                     "shapesGraph": [Circular],
                   },
@@ -1963,14 +1963,14 @@ exports[`renders correctly 1`] = `
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-1",
+                  "value": "n3-67",
                 },
                 "shapesGraph": [Circular],
               },
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-7",
+                  "value": "n3-73",
                 },
                 "shapesGraph": [Circular],
               },
@@ -1978,95 +1978,95 @@ exports[`renders correctly 1`] = `
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-8",
+                  "value": "n3-74",
                 },
                 "shapesGraph": [Circular],
               },
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-6",
+                  "value": "n3-72",
                 },
                 "shapesGraph": [Circular],
               },
               PropertyShape {
                 "_node": {
                   "termType": "BlankNode",
-                  "value": "n3-3",
+                  "value": "n3-69",
                 },
                 "shapesGraph": [Circular],
               },
             ],
             "propertyShapesByNode": TermMap {
               "index": Map {
-                "_:n3-1" => {
+                "_:n3-67" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-1",
+                    "value": "n3-67",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-1",
+                      "value": "n3-67",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-7" => {
+                "_:n3-73" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-7",
+                    "value": "n3-73",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-7",
+                      "value": "n3-73",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-2" => {
+                "_:n3-68" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-2",
+                    "value": "n3-68",
                   },
                   "value": [Circular],
                 },
-                "_:n3-8" => {
+                "_:n3-74" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-8",
+                    "value": "n3-74",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-8",
+                      "value": "n3-74",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-6" => {
+                "_:n3-72" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-6",
+                    "value": "n3-72",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-6",
+                      "value": "n3-72",
                     },
                     "shapesGraph": [Circular],
                   },
                 },
-                "_:n3-3" => {
+                "_:n3-69" => {
                   "term": {
                     "termType": "BlankNode",
-                    "value": "n3-3",
+                    "value": "n3-69",
                   },
                   "value": PropertyShape {
                     "_node": {
                       "termType": "BlankNode",
-                      "value": "n3-3",
+                      "value": "n3-69",
                     },
                     "shapesGraph": [Circular],
                   },

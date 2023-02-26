@@ -2,6 +2,8 @@ import {ModelParameters, ModelSet} from "@paradicms/models";
 import {WorksheetFeatureSetDefinition} from "~/models/WorksheetFeatureSetDefinition";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
 import {strict as worksheet} from "~/vocabularies/worksheet";
+import {Dataset, DatasetCore} from "@rdfjs/types";
+import {datasetCoreToDataset} from "@paradicms/rdf";
 
 export class WorksheetDefinitionModelSet extends ModelSet {
   private _worksheetFeatureDefinitions?: readonly WorksheetFeatureDefinition[];
@@ -13,6 +15,18 @@ export class WorksheetDefinitionModelSet extends ModelSet {
     [index: string]: WorksheetFeatureSetDefinition;
   };
 
+  private constructor(dataset: Dataset) {
+    super(dataset);
+  }
+
+  static override fromDataset(dataset: Dataset): WorksheetDefinitionModelSet {
+    return new WorksheetDefinitionModelSet(dataset);
+  }
+
+  static override fromDatasetCore(datasetCore: DatasetCore): WorksheetDefinitionModelSet {
+    return new WorksheetDefinitionModelSet(datasetCoreToDataset(datasetCore));
+  }
+
   private readWorksheetFeatureDefinition(
     kwds: ModelParameters
   ): WorksheetFeatureDefinition {
@@ -22,7 +36,7 @@ export class WorksheetDefinitionModelSet extends ModelSet {
   private readWorksheetFeatureDefinitions(): void {
     const worksheetFeatureDefinitions: WorksheetFeatureDefinition[] = [];
     this._worksheetFeatureDefinitionsByUriIndex = {};
-    this.readModels(kwds => {
+    this.getModels(kwds => {
       const worksheetFeatureDefinition = this.readWorksheetFeatureDefinition(
         kwds
       );
@@ -43,7 +57,7 @@ export class WorksheetDefinitionModelSet extends ModelSet {
   private readWorksheetFeatureSetDefinitions(): void {
     const worksheetFeatureSetDefinitions: WorksheetFeatureSetDefinition[] = [];
     this._worksheetFeatureSetDefinitionsByUriIndex = {};
-    this.readModels(kwds => {
+    this.getModels(kwds => {
       const worksheetFeatureSetDefinition = this.readWorksheetFeatureSetDefinition(
         kwds
       );

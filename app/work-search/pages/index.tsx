@@ -16,11 +16,9 @@ import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
 import {useWorkSearchQueryParams} from "@paradicms/react-dom-hooks";
 import dynamic from "next/dynamic";
-import {WorkSearchAppConfiguration} from "../lib/WorkSearchAppConfiguration";
-import {readWorkSearchAppConfiguration} from "../lib/readWorkSearchAppConfiguration";
-import {defaultSearchAppConfiguration} from "../lib/defaultSearchAppConfiguration";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {fastRdfStringToDataset} from "@paradicms/rdf";
 import {getDefaultWorkQueryFilters} from "../lib/getDefaultWorkQueryFilters";
+import {WorkSearchAppConfiguration} from "../lib/WorkSearchAppConfiguration";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -32,19 +30,27 @@ const WorkLocationsMap = dynamic<{
   {ssr: false}
 );
 
-const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
+const readFile = (filePath: string) =>
+  fs.promises.readFile(filePath).then(contents => contents.toString());
 
 interface StaticProps {
-  readonly configuration: WorkSearchAppConfiguration;
+  readonly configurationString: string;
   readonly modelSetString: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
-  configuration,
+  configurationString,
   modelSetString,
 }) => {
+  const configuration = useMemo<WorkSearchAppConfiguration>(
+    () =>
+      WorkSearchAppConfiguration.fromDataset(
+        fastRdfStringToDataset(configurationString)
+      )!,
+    [configurationString]
+  );
   const modelSet = useMemo<ModelSet>(
-    () => new ModelSet(parseIntoDataset(modelSetString)),
+    () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
     [modelSetString]
   );
 
@@ -90,16 +96,16 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const completeModelSet = readModelSetFile(readFileSync);
+  const completeModelSet = await readModelSetFile(readFile);
   const configuration =
-    readWorkSearchAppConfiguration(
-      readConfigurationFile(readFileSync),
-      completeModelSet.dataset
-    ) ?? defaultSearchAppConfiguration;
+    WorkSearchAppConfiguration.fromDatasets([
+      await readConfigurationFile(readFile),
+      completeModelSet.dataset,
+    ]) ?? WorkSearchAppConfiguration.default;
 
   return {
     props: {
-      configuration,
+      configurationString: configuration.toFastRdfString(),
       modelSetString: new ModelSubsetter({
         completeModelSet,
         workPropertyUris: configuration.workProperties.map(
@@ -110,7 +116,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
           completeModelSet.works,
           workSearchWorkJoinSelector(smallThumbnailTargetDimensions)
         )
-        .stringify(),
+        .toFastRdfString(),
     },
   };
 };

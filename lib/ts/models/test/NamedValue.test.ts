@@ -1,10 +1,9 @@
 import {expect} from "chai";
 import {ModelSet} from "../src";
-import {testDataTrig} from "@paradicms/test";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {syntheticData} from "@paradicms/test";
 
 describe("NamedValue", () => {
-  const modelSet = new ModelSet(parseIntoDataset(testDataTrig));
+  const modelSet = ModelSet.fromDatasetCore(syntheticData);
   const sut = modelSet.namedValuesByPropertyUri(
     modelSet.namedValues[0].propertyUris[0]
   )[0];

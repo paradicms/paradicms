@@ -4,10 +4,7 @@ import {GetStaticProps} from "next";
 import fs from "fs";
 import {readConfigurationFile, readModelSetFile} from "@paradicms/next";
 import {ModelSet, Text} from "@paradicms/models";
-import {defaultSinglePageExhibitionAppConfiguration} from "../lib/defaultSinglePageExhibitionAppConfiguration";
-import {readSinglePageExhibitionAppConfiguration} from "../lib/readSinglePageExhibitionAppConfiguration";
-import {SinglePageExhibitionAppConfiguration} from "../lib/SinglePageExhibitionAppConfiguration";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {fastRdfStringToDataset} from "@paradicms/rdf";
 import {Col, Container, Row} from "reactstrap";
 import {
   defaultBootstrapStylesheetHref,
@@ -17,8 +14,10 @@ import {
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
+import {SinglePageExhibitionAppConfiguration} from "../lib/SinglePageExhibitionAppConfiguration";
 
-const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
+const readFile = (filePath: string) =>
+  fs.promises.readFile(filePath).then(contents => contents.toString());
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -32,17 +31,24 @@ const WorkLocationsMap = dynamic<{
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: SinglePageExhibitionAppConfiguration;
+  readonly configurationString: string;
   readonly modelSetString: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
-  configuration,
+  configurationString,
   modelSetString,
 }) => {
+  const configuration = useMemo(
+    () =>
+      SinglePageExhibitionAppConfiguration.fromDataset(
+        fastRdfStringToDataset(configurationString)
+      )!,
+    [configurationString]
+  );
   const modelSet = useMemo(
-    () => new ModelSet(parseIntoDataset(modelSetString)),
+    () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
     [modelSetString]
   );
 
@@ -131,7 +137,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
         <title>{modelSet.collections[0].title}</title>
         <link
           rel="stylesheet"
-          href={configuration.stylesheetHref ?? defaultBootstrapStylesheetHref}
+          href={configuration.stylesheet ?? defaultBootstrapStylesheetHref}
         />
       </Head>
       {pages.map((page, pageI) => (
@@ -148,17 +154,18 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const modelSet = readModelSetFile(readFileSync);
+  const modelSet = await readModelSetFile(readFile);
   const collection = modelSet.collections[0];
 
   return {
     props: {
-      configuration:
-        readSinglePageExhibitionAppConfiguration(
-          readConfigurationFile(readFileSync),
-          modelSet.dataset
-        ) ?? defaultSinglePageExhibitionAppConfiguration,
-      modelSetString: modelSet.stringify(),
+      configurationString: (
+        SinglePageExhibitionAppConfiguration.fromDatasets([
+          await readConfigurationFile(readFile),
+          modelSet.dataset,
+        ]) ?? SinglePageExhibitionAppConfiguration.default
+      ).toFastRdfString(),
+      modelSetString: modelSet.toFastRdfString(),
       collectionUri: collection.uri,
     },
   };

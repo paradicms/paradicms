@@ -19,10 +19,8 @@ import Hammer from "react-hammerjs";
 import {useRouter} from "next/router";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
+import {fastRdfStringToDataset} from "@paradicms/rdf";
 import {MultiPageExhibitionAppConfiguration} from "../../lib/MultiPageExhibitionAppConfiguration";
-import {readMultiPageExhibitionAppConfiguration} from "../../lib/readMultiPageExhibitionAppConfiguration";
-import {defaultMultiPageExhibitionAppConfiguration} from "../../lib/defaultMultiPageExhibitionAppConfiguration";
-import {parseIntoDataset} from "@paradicms/rdf";
 
 const WorkLocationsMap = dynamic<{
   readonly collectionUri: string;
@@ -35,11 +33,12 @@ const WorkLocationsMap = dynamic<{
   {ssr: false}
 );
 
-const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
+const readFile = (filePath: string) =>
+  fs.promises.readFile(filePath).then(contents => contents.toString());
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: MultiPageExhibitionAppConfiguration;
+  readonly configurationString: string;
   readonly currentWorkUri: string;
   readonly modelSetString: string;
   readonly nextWorkUri: string | null;
@@ -48,16 +47,22 @@ interface StaticProps {
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
-  configuration,
+  configurationString,
   currentWorkUri,
   modelSetString,
   nextWorkUri,
   previousWorkUri,
 }) => {
   const router = useRouter();
-
+  const configuration = useMemo(
+    () =>
+      MultiPageExhibitionAppConfiguration.fromDataset(
+        fastRdfStringToDataset(configurationString)
+      )!,
+    [configurationString]
+  );
   const modelSet = useMemo<ModelSet>(
-    () => new ModelSet(parseIntoDataset(modelSetString)),
+    () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
     [modelSetString]
   );
   const collection = modelSet.collectionByUri(collectionUri);
@@ -125,7 +130,7 @@ export default WorkPage;
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {collectionUri: string; workUri: string}}[] = [];
 
-  const modelSet = readModelSetFile(readFileSync);
+  const modelSet = await readModelSetFile(readFile);
 
   // Use first collection with works
   for (const collection of modelSet.collections) {
@@ -154,7 +159,7 @@ export const getStaticProps: GetStaticProps = async ({
   const collectionUri = decodeFileName(params!.collectionUri as string);
   const workUri = decodeFileName(params!.workUri as string);
 
-  const completeModelSet = readModelSetFile(readFileSync);
+  const completeModelSet = await readModelSetFile(readFile);
 
   const currentWork = completeModelSet.workByUri(workUri);
   const collectionWorks = completeModelSet.collectionWorks(collectionUri);
@@ -186,11 +191,12 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       collectionUri,
-      configuration:
-        readMultiPageExhibitionAppConfiguration(
-          readConfigurationFile(readFileSync),
-          completeModelSet.dataset
-        ) ?? defaultMultiPageExhibitionAppConfiguration,
+      configurationString: (
+        MultiPageExhibitionAppConfiguration.fromDatasets([
+          await readConfigurationFile(readFile),
+          completeModelSet.dataset,
+        ]) ?? MultiPageExhibitionAppConfiguration.default
+      ).toFastRdfString(),
       currentWorkUri: workUri,
       modelSetString: new ModelSubsetter({
         completeModelSet,
@@ -208,7 +214,7 @@ export const getStaticProps: GetStaticProps = async ({
             events: {},
           }
         )
-        .stringify(),
+        .toFastRdfString(),
       nextWorkUri,
       previousWorkUri,
     },

@@ -1,14 +1,13 @@
 import {expect} from "chai";
 import {ModelSet} from "../src";
-import {testDataTrig} from "@paradicms/test";
+import {syntheticData} from "@paradicms/test";
 import {DateTimeDescription} from "../src/DateTimeDescription";
 import {Location} from "../src/Location";
 import {Text} from "../src/Text";
 import {Event} from "../src/Event";
-import {parseIntoDataset} from "@paradicms/rdf";
 
 describe("Event", () => {
-  const modelSet = new ModelSet(parseIntoDataset(testDataTrig));
+  const modelSet = ModelSet.fromDatasetCore(syntheticData);
   const sut: Event = modelSet.workEvents[0];
 
   before(() => {

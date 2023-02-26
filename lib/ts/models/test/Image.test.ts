@@ -1,11 +1,10 @@
 import {expect} from "chai";
 import {Image, ModelSet} from "../src";
-import {testDataTrig} from "@paradicms/test";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {syntheticData} from "@paradicms/test";
 
 describe("Image", () => {
   // sut should be an original image
-  const sut = new ModelSet(parseIntoDataset(testDataTrig)).works[0].images.find(
+  const sut = ModelSet.fromDatasetCore(syntheticData).works[0].images.find(
     image => image.isOriginal
   )!;
 

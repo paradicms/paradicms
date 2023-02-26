@@ -10,7 +10,7 @@ import {Person} from "./Person";
 import {Organization} from "./Organization";
 import {Agent} from "./Agent";
 import {Event} from "./Event";
-import {datasetCoreToDataset, Store} from "@paradicms/rdf";
+import {Store} from "@paradicms/rdf";
 
 export class ModelSetBuilder {
   private collectionsByUri: {[index: string]: Collection} | undefined;
@@ -212,6 +212,6 @@ export class ModelSetBuilder {
         }
       }
     }
-    return new ModelSet(datasetCoreToDataset(store));
+    return ModelSet.fromDatasetCore(store);
   }
 }

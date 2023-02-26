@@ -17,12 +17,11 @@ import {
 import * as fs from "fs";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
+import {fastRdfStringToDataset} from "@paradicms/rdf";
 import {WorkSearchAppConfiguration} from "../../lib/WorkSearchAppConfiguration";
-import {readWorkSearchAppConfiguration} from "../../lib/readWorkSearchAppConfiguration";
-import {defaultSearchAppConfiguration} from "../../lib/defaultSearchAppConfiguration";
-import {parseIntoDataset} from "@paradicms/rdf";
 
-const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
+const readFile = (filePath: string) =>
+  fs.promises.readFile(filePath).then(contents => contents.toString());
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -35,18 +34,25 @@ const WorkLocationsMap = dynamic<{
 );
 
 interface StaticProps {
-  readonly configuration: WorkSearchAppConfiguration;
+  readonly configurationString: string;
   readonly modelSetString: string;
   readonly workUri: string;
 }
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
-  configuration,
+  configurationString,
   modelSetString,
   workUri,
 }) => {
+  const configuration = useMemo<WorkSearchAppConfiguration>(
+    () =>
+      WorkSearchAppConfiguration.fromDataset(
+        fastRdfStringToDataset(configurationString)
+      )!,
+    [configurationString]
+  );
   const modelSet = useMemo(
-    () => new ModelSet(parseIntoDataset(modelSetString)),
+    () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
     [modelSetString]
   );
   const work = modelSet.workByUri(workUri);
@@ -69,9 +75,9 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 
 export default WorkPage;
 
-export const getStaticPaths: GetStaticPaths = () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {workUri: string}}[] = [];
-  for (const work of readModelSetFile(readFileSync).works) {
+  for (const work of (await readModelSetFile(readFile)).works) {
     paths.push({
       params: {
         workUri: encodeFileName(work.uri),
@@ -85,20 +91,20 @@ export const getStaticPaths: GetStaticPaths = () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = ({
+export const getStaticProps: GetStaticProps = async ({
   params,
-}): {props: StaticProps} => {
+}): Promise<{props: StaticProps}> => {
   const workUri = decodeFileName(params!.workUri as string);
-  const completeModelSet = readModelSetFile(readFileSync);
+  const completeModelSet = await readModelSetFile(readFile);
   const configuration =
-    readWorkSearchAppConfiguration(
-      readConfigurationFile(readFileSync),
-      completeModelSet.dataset
-    ) ?? defaultSearchAppConfiguration;
+    WorkSearchAppConfiguration.fromDatasets([
+      await readConfigurationFile(readFile),
+      completeModelSet.dataset,
+    ]) ?? WorkSearchAppConfiguration.default;
 
   return {
     props: {
-      configuration,
+      configurationString: configuration.toFastRdfString(),
       modelSetString: new ModelSubsetter({
         completeModelSet,
         workPropertyUris: configuration.workProperties.map(
@@ -114,7 +120,7 @@ export const getStaticProps: GetStaticProps = ({
           events: {},
           institution: {},
         })
-        .stringify(),
+        .toFastRdfString(),
       workUri,
     },
   };

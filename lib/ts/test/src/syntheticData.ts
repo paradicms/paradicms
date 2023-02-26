@@ -1,4 +1,7 @@
-export const testDataTrig = `
+import {trigStringToDatasetCore} from "./trigStringToDatasetCore";
+import {DatasetCore} from "@rdfjs/types";
+
+export const syntheticData: DatasetCore = trigStringToDatasetCore(`
 @prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
 @prefix creativecommons: <http://creativecommons.org/ns#> .
@@ -14415,4 +14418,4 @@ ns1:7675c5f0eb0651ab7d2bdb1806097a75d861f9cc9194e2bf4af9dd6a36521c2b {
         exif:width 75 ;
         foaf:depicts <urn:paradicms_etl:pipeline:test_data:named_value:11> .
 }
-`;
+`);

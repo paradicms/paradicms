@@ -3,7 +3,13 @@ import {Image} from "./Image";
 import {Institution} from "./Institution";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
-import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
+import {
+  BlankNode,
+  Dataset,
+  DatasetCore,
+  DefaultGraph,
+  NamedNode,
+} from "@rdfjs/types";
 import {Work} from "./Work";
 import {Person} from "./Person";
 import {NamedModel} from "./NamedModel";
@@ -15,27 +21,10 @@ import {WorkEvent} from "./WorkEvent";
 import {WorkCreation} from "./WorkCreation";
 import {Event} from "./Event";
 import {hasMixin} from "ts-mixer";
-import {datasetToString} from "@paradicms/rdf";
+import {datasetCoreToDataset, datasetToFastRdfString} from "@paradicms/rdf";
 import TermSet from "@rdfjs/term-set";
 import {requireDefined} from "@paradicms/utilities";
-import {
-  cms,
-  configuration,
-  contact,
-  dash,
-  dc11,
-  dcterms,
-  exif,
-  foaf,
-  rdf,
-  rdfs,
-  sh,
-  skos,
-  time,
-  vra,
-  wgs,
-  xsd,
-} from "@paradicms/vocabularies";
+import {cms, rdf} from "@paradicms/vocabularies";
 
 const eventClassesByRdfType = (() => {
   const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
@@ -102,7 +91,7 @@ export class ModelSet {
   private _worksByCollectionUriIndex?: {[index: string]: readonly Work[]};
   private _worksByUriIndex?: {[index: string]: Work};
 
-  constructor(readonly dataset: Dataset) {}
+  protected constructor(readonly dataset: Dataset) {}
 
   agentByUri(agentUri: string): Agent {
     for (const index of [this.organizationsByUriIndex, this.peopleByUriIndex]) {
@@ -157,6 +146,14 @@ export class ModelSet {
       this.readCollections();
     }
     return requireDefined(this._collectionsByUriIndex);
+  }
+
+  static fromDataset(dataset: Dataset): ModelSet {
+    return new ModelSet(dataset);
+  }
+
+  static fromDatasetCore(datasetCore: DatasetCore): ModelSet {
+    return ModelSet.fromDataset(datasetCoreToDataset(datasetCore));
   }
 
   imageByUri(imageUri: string): Image {
@@ -400,7 +397,7 @@ export class ModelSet {
     const workEventsByWorkUriIndex: {[index: string]: WorkEvent[]} = {};
     this._workEventsByUriIndex = {};
 
-    this.readModels(kwds => {
+    this.getModels(kwds => {
       const event = this.readEvent(kwds);
 
       if (hasMixin(event, WorkEvent)) {
@@ -433,7 +430,7 @@ export class ModelSet {
     const collectionsByInstitutionUriIndex: {
       [index: string]: Collection[];
     } = {};
-    this.readModels(kwds => {
+    this.getModels(kwds => {
       const collection = this.readCollection(kwds);
 
       collections.push(collection);
@@ -465,7 +462,7 @@ export class ModelSet {
     const imagesByDepictsUriIndex: {[index: string]: Image[]} = {};
     const imagesByOriginalImageUriIndex: {[index: string]: Image[]} = {};
     this._imagesByUriIndex = {};
-    this.readModels(kwds => {
+    this.getModels(kwds => {
       const image = this.readImage(kwds);
 
       images.push(image);
@@ -504,7 +501,7 @@ export class ModelSet {
   private readInstitutions() {
     const institutions: Institution[] = [];
     this._institutionsByUriIndex = {};
-    this.readModels(kwds => {
+    this.getModels(kwds => {
       const institution = this.readInstitution(kwds);
       institutions.push(institution);
       this._institutionsByUriIndex![institution.uri] = institution;
@@ -519,7 +516,7 @@ export class ModelSet {
   private readLicenses() {
     const licenses: License[] = [];
     this._licensesByUriIndex = {};
-    this.readModels(kwds => {
+    this.getModels(kwds => {
       const license = this.readLicense(kwds);
       licenses.push(license);
       this._licensesByUriIndex![license.uri] = license;
@@ -527,7 +524,7 @@ export class ModelSet {
     this._licenses = sortNamedModelsArray(licenses);
   }
 
-  protected readModels(
+  protected getModels(
     callback: (kwds: ModelParameters) => void,
     type: NamedNode
   ): void {
@@ -575,7 +572,7 @@ export class ModelSet {
       [index: string]: NamedValue[];
     } = {};
     this._namedValuesByUriIndex = {};
-    this.readModels(kwds => {
+    this.getModels(kwds => {
       const namedValue = this.readNamedValue(kwds);
 
       namedValues.push(namedValue);
@@ -604,7 +601,7 @@ export class ModelSet {
   private readOrganizations() {
     const organizations: Organization[] = [];
     this._organizationsByUriIndex = {};
-    this.readModels(kwds => {
+    this.getModels(kwds => {
       const organization = this.readOrganization(kwds);
       organizations.push(organization);
       this._organizationsByUriIndex![organization.uri] = organization;
@@ -615,7 +612,7 @@ export class ModelSet {
   private readPeople() {
     const people: Person[] = [];
     this._peopleByUriIndex = {};
-    this.readModels(kwds => {
+    this.getModels(kwds => {
       const person = this.readPerson(kwds);
       people.push(person);
       this._peopleByUriIndex![person.uri] = person;
@@ -634,7 +631,7 @@ export class ModelSet {
   private readRightsStatements() {
     const rightsStatements: RightsStatement[] = [];
     this._rightsStatementsByUriIndex = {};
-    this.readModels(kwds => {
+    this.getModels(kwds => {
       const rightsStatement = this.readRightsStatement(kwds);
       rightsStatements.push(rightsStatement);
       this._rightsStatementsByUriIndex![rightsStatement.uri] = rightsStatement;
@@ -651,7 +648,7 @@ export class ModelSet {
     const worksByAgentUriIndex: {[index: string]: Work[]} = {};
     const worksByCollectionUriIndex: {[index: string]: Work[]} = {};
     this._worksByUriIndex = {};
-    this.readModels(kwds => {
+    this.getModels(kwds => {
       const work = this.readWork(kwds);
 
       works.push(work);
@@ -706,27 +703,28 @@ export class ModelSet {
     return this._rightsStatementsByUriIndex!;
   }
 
-  stringify(): string {
-    return datasetToString(this.dataset, {
-      prefixes: {
-        cms: cms[""],
-        configuration: configuration[""],
-        contact: contact[""],
-        dash: dash[""],
-        dc11: dc11[""],
-        dcterms: dcterms[""],
-        exif: exif[""],
-        foaf: foaf[""],
-        rdf: rdf[""],
-        rdfs: rdfs[""],
-        sh: sh[""],
-        skos: skos[""],
-        time: time[""],
-        vra: vra[""],
-        wgs: wgs[""],
-        xsd: xsd[""],
-      },
-    });
+  toFastRdfString(): string {
+    // return datasetToString(this.dataset, {
+    //   prefixes: {
+    //     cms: cms[""],
+    //     configuration: configuration[""],
+    //     contact: contact[""],
+    //     dash: dash[""],
+    //     dc11: dc11[""],
+    //     dcterms: dcterms[""],
+    //     exif: exif[""],
+    //     foaf: foaf[""],
+    //     rdf: rdf[""],
+    //     rdfs: rdfs[""],
+    //     sh: sh[""],
+    //     skos: skos[""],
+    //     time: time[""],
+    //     vra: vra[""],
+    //     wgs: wgs[""],
+    //     xsd: xsd[""],
+    //   },
+    // });
+    return datasetToFastRdfString(this.dataset);
   }
 
   workByUri(workUri: string): Work {

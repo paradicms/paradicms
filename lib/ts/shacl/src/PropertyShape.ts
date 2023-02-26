@@ -7,7 +7,7 @@ import {
   parseIntOrNull,
   requireNonNull,
 } from "@paradicms/utilities";
-import {readRdfList} from "@paradicms/rdf";
+import {getRdfList} from "@paradicms/rdf";
 import {NodeShape} from "./NodeShape";
 
 type PropertyShapeValue = BlankNode | Literal | NamedNode;
@@ -67,7 +67,7 @@ export class PropertyShape extends Shape {
       switch (term.termType) {
         case "BlankNode":
         case "NamedNode":
-          return readRdfList({
+          return getRdfList({
             dataset: this.dataset,
             node: term,
           });
@@ -123,7 +123,7 @@ export class PropertyShape extends Shape {
           continue;
       }
 
-      for (const propertyShapeNode of readRdfList({
+      for (const propertyShapeNode of getRdfList({
         dataset: this.dataset,
         graph: this.shapesGraph.graphNode,
         node: orQuad.object,

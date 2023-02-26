@@ -7,12 +7,12 @@ import {
   ShapesGraph,
 } from "../src";
 import {ShaclProcessor} from "../src/ShaclProcessor";
-import {DataFactory, parseIntoDataset} from "@paradicms/rdf";
+import {DataFactory, datasetCoreToDataset} from "@paradicms/rdf";
 import {schema} from "@paradicms/vocabularies";
 import {
-  invalidTestDataGraphTtl,
-  testShapesGraphTtl,
-  validTestDataGraphTtl,
+  invalidTestDataGraph,
+  testShapesGraph,
+  validTestDataGraph,
 } from "@paradicms/test";
 
 describe("ShaclProcessor", () => {
@@ -21,9 +21,9 @@ describe("ShaclProcessor", () => {
   let shapesGraph: ShapesGraph;
 
   before(() => {
-    invalidDataGraph = parseIntoDataset(invalidTestDataGraphTtl);
-    validDataGraph = parseIntoDataset(validTestDataGraphTtl);
-    shapesGraph = new ShapesGraph(parseIntoDataset(testShapesGraphTtl));
+    invalidDataGraph = datasetCoreToDataset(invalidTestDataGraph);
+    validDataGraph = datasetCoreToDataset(validTestDataGraph);
+    shapesGraph = ShapesGraph.fromDatasetCore(testShapesGraph);
   });
 
   it("should get the node shapes for a given rdf:type", () => {

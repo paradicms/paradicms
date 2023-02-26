@@ -5,12 +5,19 @@ interface Configuration {
   "": NamedNode<"http://www.paradicms.org/ns/configuration#">;
 
   // Properties
+  basePath: NamedNode<"http://www.paradicms.org/ns/configuration#basePath">;
   filterable: NamedNode<"http://www.paradicms.org/ns/configuration#filterable">;
   hidden: NamedNode<"http://www.paradicms.org/ns/configuration#hidden">;
+  label: NamedNode<"http://www.paradicms.org/ns/configuration#label">;
+  objectsPerPage: NamedNode<
+    "http://www.paradicms.org/ns/configuration#objectsPerPage"
+  >;
+  predicate: NamedNode<"http://www.paradicms.org/ns/configuration#predicate">;
   searchable: NamedNode<"http://www.paradicms.org/ns/configuration#searchable">;
-  stylesheetHref: NamedNode<
+  stylesheet: NamedNode<
     "http://www.paradicms.org/ns/configuration#stylesheetHref"
   >;
+  title: NamedNode<"http://www.paradicms.org/ns/configuration#searchable">;
   workProperty: NamedNode<
     "http://www.paradicms.org/ns/configuration#workProperty"
   >;

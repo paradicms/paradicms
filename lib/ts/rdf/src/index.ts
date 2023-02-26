@@ -1,10 +1,12 @@
+export * from "./anyStringToDataset";
+export * from "./copyDataset";
 export * from "./createDataset";
 export {DataFactory, Store} from "n3";
 export * from "./datasetCoreToDataset";
-export * from "./datasetToString";
+export * from "./datasetToFastRdfString";
+export * from "./fastRdfStringToDataset";
 export * from "./getRdfInstances";
 export * from "./getRdfNodeLabel";
+export * from "./getRdfList";
 export * from "./hasRdfSuperClass";
-export * from "./parseIntoDataset";
-export * from "./readRdfList";
 export * from "./Resource";

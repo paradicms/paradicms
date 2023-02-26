@@ -1,4 +1,11 @@
-import {BlankNode, Dataset, DefaultGraph, NamedNode, Term} from "@rdfjs/types";
+import {
+  BlankNode,
+  Dataset,
+  DatasetCore,
+  DefaultGraph,
+  NamedNode,
+  Term,
+} from "@rdfjs/types";
 import {rdf, sh} from "@paradicms/vocabularies";
 import {NodeShape} from "./NodeShape";
 import {PropertyShape} from "./PropertyShape";
@@ -6,6 +13,7 @@ import {PropertyGroup} from "./PropertyGroup";
 import TermMap from "@rdfjs/term-map";
 import TermSet from "@rdfjs/term-set";
 import {requireDefined} from "@paradicms/utilities";
+import {datasetCoreToDataset} from "@paradicms/rdf";
 
 export class ShapesGraph {
   readonly graphNode: DefaultGraph | NamedNode;
@@ -22,7 +30,7 @@ export class ShapesGraph {
     PropertyShape
   >;
 
-  constructor(readonly dataset: Dataset) {
+  private constructor(readonly dataset: Dataset) {
     this.graphNode = ShapesGraph.readGraph(dataset);
 
     const {
@@ -44,23 +52,17 @@ export class ShapesGraph {
     this.propertyGroupsByNode = propertyGroupsByNode;
   }
 
+  static fromDataset(dataset: Dataset): ShapesGraph {
+    return new ShapesGraph(dataset);
+  }
+
+  static fromDatasetCore(datasetCore: DatasetCore): ShapesGraph {
+    return ShapesGraph.fromDataset(datasetCoreToDataset(datasetCore));
+  }
+
   nodeShapeByNode(nodeShapeNode: BlankNode | NamedNode): NodeShape {
     return requireDefined(this.nodeShapesByNode.get(nodeShapeNode));
   }
-
-  // static parse(input: string, options?: ParserOptions): ShapesGraph {
-  //   return new ShapesGraph(ShapesGraph.parseIntoDataset(input, options));
-  // }
-  //
-  // private static parseIntoDataset(
-  //   input: string,
-  //   options?: ParserOptions
-  // ): Dataset {
-  //   const parser = new Parser(options);
-  //   const dataset = new Dataset();
-  //   dataset.addQuads(parser.parse(input));
-  //   return dataset;
-  // }
 
   propertyGroupByNode(propertyGroupNode: NamedNode): PropertyGroup {
     return requireDefined(this.propertyGroupsByNode.get(propertyGroupNode));

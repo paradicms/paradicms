@@ -6,7 +6,6 @@ from paradicms_etl.loaders.buffering_loader import BufferingLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-
 from paradicms_ssg.app_package import AppPackage
 from paradicms_ssg.deployer import Deployer
 from paradicms_ssg.deployers.fs_deployer import FsDeployer
@@ -35,7 +34,6 @@ class AppLoader(BufferingLoader):
         app: Union[Path, str],
         loaded_data_dir_path: Path,
         pipeline_id: str,
-        base_url_path: str = "",
         configuration_file_path: Optional[Path] = None,
         deployer: Optional[Deployer] = None,
         dev: bool = False,
@@ -48,7 +46,6 @@ class AppLoader(BufferingLoader):
     ):
         """
         :param app: name of an app (in pp/ of this repository) or path to an app
-        :param base_url_path: Next.js basePath (https://nextjs.org/docs/api-reference/next.config.js/basepath)
         :param configuration_file_path: path to an app configuration file path
         :param deployer: optional deployer implementation; if not specified, defaults to a file system deployer that writes to the loaded data directory
         :param dev: transform the input data to RDF and archive and thumbnail but run the Next.js dev server instead of generating and deploying static files
@@ -59,7 +56,6 @@ class AppLoader(BufferingLoader):
 
         BufferingLoader.__init__(self)
         self.__app = app
-        self.__base_url_path = base_url_path
         self.__configuration_file_path = configuration_file_path
         self.__deployer = deployer
         self.__dev = dev
@@ -71,13 +67,14 @@ class AppLoader(BufferingLoader):
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
 
     def _flush(self, models):
-        app_package = AppPackage(base_url_path=self.__base_url_path, app=self.__app)
+        app_package = AppPackage(app=self.__app)
 
         image_archiver = self.__image_archiver
         if image_archiver is None:
             # If no image archiver specified, "archive" copies of images to the Next.js public/ directory, which contains static assets.
             image_archiver = FsImageArchiver(
-                base_url=f"{self.__base_url_path.rstrip('/')}/img/archive/",
+                # base_url=f"{self.__base_url_path.rstrip('/')}/img/archive/",
+                base_url="/img/archive/",
                 root_directory_path=app_package.app_dir_path
                 / "public"
                 / "img"

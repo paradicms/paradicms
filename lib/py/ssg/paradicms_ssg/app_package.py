@@ -2,9 +2,10 @@ import logging
 import os
 import shutil
 import subprocess
-import sys
 from pathlib import Path
 from typing import List, Optional, Union
+
+import sys
 
 
 class AppPackage:
@@ -13,15 +14,12 @@ class AppPackage:
     The gui/app package.json's have a standard set of scripts, which invoke Next.js command line commands such as "build" and "dev".
     """
 
-    def __init__(self, *, app: Union[str, Path], base_url_path: str = ""):
+    def __init__(self, *, app: Union[str, Path]):
         """
-        :param base_url_path: Next.js basePath (https://nextjs.org/docs/api-reference/next.config.js/basepath)
         :param app: name of an app (in app/ of this repository) or path to an app
         """
 
         self.__logger = logging.getLogger(self.__class__.__name__)
-
-        self.__base_url_path = base_url_path
 
         if isinstance(app, Path):
             app_dir_path = app
@@ -137,8 +135,6 @@ class AppPackage:
         **kwds,
     ):
         subprocess_env = os.environ.copy()
-        if self.__base_url_path:
-            subprocess_env["BASE_URL_PATH"] = self.__base_url_path
         if configuration_file_path is not None:
             subprocess_env["CONFIGURATION_FILE_PATH"] = str(configuration_file_path)
         if data_file_path is not None:

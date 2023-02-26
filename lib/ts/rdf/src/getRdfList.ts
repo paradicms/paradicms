@@ -7,7 +7,7 @@ import {
 } from "@rdfjs/types";
 import {rdf} from "@tpluscode/rdf-ns-builders";
 
-export const readRdfList = (kwds: {
+export const getRdfList = (kwds: {
   dataset: Dataset;
   graph?: DefaultGraph | NamedNode;
   node: BlankNode | NamedNode;
@@ -53,7 +53,7 @@ export const readRdfList = (kwds: {
   }
 
   return [firstTerm].concat(
-    readRdfList({
+    getRdfList({
       dataset,
       graph,
       node: restTerm,

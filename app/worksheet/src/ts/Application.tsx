@@ -3,9 +3,13 @@ import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {Exception} from "~/Exception";
 import {loadGapiClient} from "~/loadGapiClient";
 import {FatalErrorModal} from "~/components/FatalErrorModal";
-import {WorksheetDefinitionModelSet} from "~/models/WorksheetDefinitionModelSet";
 import {WorksheetDefinitionContext} from "~/contexts/WorksheetDefinitionContext";
-import {BrowserRouter as Router, Route, Routes, useNavigate,} from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import {Hrefs} from "~/Hrefs";
 import {LoginPage} from "~/pages/LoginPage";
 import {LoginCallbackPage} from "~/pages/LoginCallbackPage";
@@ -19,7 +23,8 @@ import {WorksheetReviewPage} from "~/pages/WorksheetReviewPage";
 import {UserSettingsPage} from "~/pages/UserSettingsPage";
 import {useLocation} from "react-router";
 import {QueryParamProvider} from "use-query-params";
-import {parseIntoDataset} from "@paradicms/rdf";
+import {anyStringToDataset} from "@paradicms/rdf";
+import {WorksheetDefinitionModelSet} from "~/models/WorksheetDefinitionModelSet";
 import React = require("react");
 
 const RouteAdapter: React.FunctionComponent<{children?: any}> = ({
@@ -58,23 +63,26 @@ export const Application: React.FunctionComponent = () => {
 
   useEffect(() => {
     console.info("fetching worksheet definition");
-    fetch("/data.ttl").then(
-      response =>
-        response.text().then(responseText => {
-          let worksheetDefinitionModelSet: WorksheetDefinitionModelSet;
-          try {
-            worksheetDefinitionModelSet = new WorksheetDefinitionModelSet(
-              parseIntoDataset(responseText)
+    fetch("/data.ttl").then(response =>
+      response.text().then(responseText => {
+        anyStringToDataset(responseText, {contentType: "text/turtle"}).then(
+          responseDataset => {
+            let worksheetDefinitionModelSet: WorksheetDefinitionModelSet;
+            try {
+              worksheetDefinitionModelSet = WorksheetDefinitionModelSet.fromDataset(
+                responseDataset
+              );
+            } catch (e) {
+              setError(e);
+              return;
+            }
+            setWorksheetDefinition(
+              new WorksheetDefinition(worksheetDefinitionModelSet)
             );
-          } catch (e) {
-            setError(e);
-            return;
-          }
-          setWorksheetDefinition(
-            new WorksheetDefinition(worksheetDefinitionModelSet)
-          );
-        }, setError),
-      setError
+          },
+          setError
+        );
+      }, setError)
     );
   }, []);
 

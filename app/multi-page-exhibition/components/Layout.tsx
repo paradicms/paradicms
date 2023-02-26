@@ -8,13 +8,13 @@ import {
   defaultBootstrapStylesheetHref,
   getNamedModelLinks,
 } from "@paradicms/react-dom-components";
-import {MultiPageExhibitionAppConfiguration} from "../lib/MultiPageExhibitionAppConfiguration";
+import {AppConfiguration} from "@paradicms/configuration";
 
 const textStyle: React.CSSProperties = {fontSize: "xx-large"};
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: Collection;
-  configuration: MultiPageExhibitionAppConfiguration;
+  configuration: AppConfiguration;
   currentWork?: Work;
   nextWork?: {readonly uri: string};
   previousWork?: {readonly uri: string};
@@ -38,7 +38,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         </title>
         <link
           rel="stylesheet"
-          href={configuration.stylesheetHref ?? defaultBootstrapStylesheetHref}
+          href={configuration.stylesheet ?? defaultBootstrapStylesheetHref}
         />
       </Head>
       <Navbar className="navbar-light py-0">

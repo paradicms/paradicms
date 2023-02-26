@@ -3,9 +3,8 @@ import {ModelSubsetter} from "../src/ModelSubsetter";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {License, ModelSet, RightsStatement} from "../src";
 import {NamedModel} from "../src/NamedModel";
-import {testDataTrig} from "@paradicms/test";
+import {syntheticData} from "@paradicms/test";
 import {WorkCreation} from "../src/WorkCreation";
-import {parseIntoDataset} from "@paradicms/rdf";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
@@ -28,7 +27,7 @@ const expectModelsDeepEq = <ModelT extends NamedModel>(
   );
 
 describe("ModelSubsetter", () => {
-  const testModelSet = new ModelSet(parseIntoDataset(testDataTrig));
+  const testModelSet = ModelSet.fromDatasetCore(syntheticData);
   const sut = new ModelSubsetter({
     completeModelSet: testModelSet,
     workPropertyUris: [],
