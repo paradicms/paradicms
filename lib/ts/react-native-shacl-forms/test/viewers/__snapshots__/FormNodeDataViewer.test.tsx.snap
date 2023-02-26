@@ -1,0 +1,2928 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<RCTScrollView
+  data={
+    [
+      FormPropertyData {
+        "formNode": FormNodeData {
+          "dataGraph": {
+            "add": [Function],
+            "addAll": [Function],
+            "contains": [Function],
+            "delete": [Function],
+            "deleteMatches": [Function],
+            "difference": [Function],
+            "equals": [Function],
+            "every": [Function],
+            "filter": [Function],
+            "forEach": [Function],
+            "has": [Function],
+            "import": [Function],
+            "intersection": [Function],
+            "map": [Function],
+            "match": [Function],
+            "reduce": [Function],
+            "size": 10,
+            "some": [Function],
+            "toArray": [Function],
+            "toCanonical": [Function],
+            "toStream": [Function],
+            "toString": [Function],
+            "union": [Function],
+            Symbol(Symbol.iterator): [Function],
+          },
+          "dataGraphNode": {
+            "termType": "NamedNode",
+            "value": "urn:example:MinorGordon",
+          },
+          "shape": NodeShape {
+            "_node": {
+              "termType": "NamedNode",
+              "value": "http://schema.org/PersonShape",
+            },
+            "shapesGraph": ShapesGraph {
+              "dataset": {
+                "add": [Function],
+                "addAll": [Function],
+                "contains": [Function],
+                "delete": [Function],
+                "deleteMatches": [Function],
+                "difference": [Function],
+                "equals": [Function],
+                "every": [Function],
+                "filter": [Function],
+                "forEach": [Function],
+                "has": [Function],
+                "import": [Function],
+                "intersection": [Function],
+                "map": [Function],
+                "match": [Function],
+                "reduce": [Function],
+                "size": 39,
+                "some": [Function],
+                "toArray": [Function],
+                "toCanonical": [Function],
+                "toStream": [Function],
+                "toString": [Function],
+                "union": [Function],
+                Symbol(Symbol.iterator): [Function],
+              },
+              "graphNode": {
+                "termType": "DefaultGraph",
+                "value": "",
+              },
+              "nodeShapes": [
+                [Circular],
+                NodeShape {
+                  "_node": {
+                    "termType": "NamedNode",
+                    "value": "http://schema.org/AddressShape",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                NodeShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-76",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                NodeShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-78",
+                  },
+                  "shapesGraph": [Circular],
+                },
+              ],
+              "nodeShapesByNode": TermMap {
+                "index": Map {
+                  "<http://schema.org/PersonShape>" => {
+                    "term": {
+                      "termType": "NamedNode",
+                      "value": "http://schema.org/PersonShape",
+                    },
+                    "value": [Circular],
+                  },
+                  "<http://schema.org/AddressShape>" => {
+                    "term": {
+                      "termType": "NamedNode",
+                      "value": "http://schema.org/AddressShape",
+                    },
+                    "value": NodeShape {
+                      "_node": {
+                        "termType": "NamedNode",
+                        "value": "http://schema.org/AddressShape",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-76" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-76",
+                    },
+                    "value": NodeShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-76",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-78" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-78",
+                    },
+                    "value": NodeShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-78",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                },
+              },
+              "propertyGroups": [],
+              "propertyGroupsByNode": TermMap {
+                "index": Map {},
+              },
+              "propertyShapes": [
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-67",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-73",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-68",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-74",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-72",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-69",
+                  },
+                  "shapesGraph": [Circular],
+                },
+              ],
+              "propertyShapesByNode": TermMap {
+                "index": Map {
+                  "_:n3-67" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-67",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-67",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-73" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-73",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-73",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-68" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-68",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-68",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-74" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-74",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-74",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-72" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-72",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-72",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-69" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-69",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-69",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        "shape": PropertyShape {
+          "_node": {
+            "termType": "BlankNode",
+            "value": "n3-72",
+          },
+          "shapesGraph": ShapesGraph {
+            "dataset": {
+              "add": [Function],
+              "addAll": [Function],
+              "contains": [Function],
+              "delete": [Function],
+              "deleteMatches": [Function],
+              "difference": [Function],
+              "equals": [Function],
+              "every": [Function],
+              "filter": [Function],
+              "forEach": [Function],
+              "has": [Function],
+              "import": [Function],
+              "intersection": [Function],
+              "map": [Function],
+              "match": [Function],
+              "reduce": [Function],
+              "size": 39,
+              "some": [Function],
+              "toArray": [Function],
+              "toCanonical": [Function],
+              "toStream": [Function],
+              "toString": [Function],
+              "union": [Function],
+              Symbol(Symbol.iterator): [Function],
+            },
+            "graphNode": {
+              "termType": "DefaultGraph",
+              "value": "",
+            },
+            "nodeShapes": [
+              NodeShape {
+                "_node": {
+                  "termType": "NamedNode",
+                  "value": "http://schema.org/PersonShape",
+                },
+                "shapesGraph": [Circular],
+              },
+              NodeShape {
+                "_node": {
+                  "termType": "NamedNode",
+                  "value": "http://schema.org/AddressShape",
+                },
+                "shapesGraph": [Circular],
+              },
+              NodeShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-76",
+                },
+                "shapesGraph": [Circular],
+              },
+              NodeShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-78",
+                },
+                "shapesGraph": [Circular],
+              },
+            ],
+            "nodeShapesByNode": TermMap {
+              "index": Map {
+                "<http://schema.org/PersonShape>" => {
+                  "term": {
+                    "termType": "NamedNode",
+                    "value": "http://schema.org/PersonShape",
+                  },
+                  "value": NodeShape {
+                    "_node": {
+                      "termType": "NamedNode",
+                      "value": "http://schema.org/PersonShape",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "<http://schema.org/AddressShape>" => {
+                  "term": {
+                    "termType": "NamedNode",
+                    "value": "http://schema.org/AddressShape",
+                  },
+                  "value": NodeShape {
+                    "_node": {
+                      "termType": "NamedNode",
+                      "value": "http://schema.org/AddressShape",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-76" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-76",
+                  },
+                  "value": NodeShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-76",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-78" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-78",
+                  },
+                  "value": NodeShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-78",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+              },
+            },
+            "propertyGroups": [],
+            "propertyGroupsByNode": TermMap {
+              "index": Map {},
+            },
+            "propertyShapes": [
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-67",
+                },
+                "shapesGraph": [Circular],
+              },
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-73",
+                },
+                "shapesGraph": [Circular],
+              },
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-68",
+                },
+                "shapesGraph": [Circular],
+              },
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-74",
+                },
+                "shapesGraph": [Circular],
+              },
+              [Circular],
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-69",
+                },
+                "shapesGraph": [Circular],
+              },
+            ],
+            "propertyShapesByNode": TermMap {
+              "index": Map {
+                "_:n3-67" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-67",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-67",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-73" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-73",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-73",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-68" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-68",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-68",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-74" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-74",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-74",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-72" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-72",
+                  },
+                  "value": [Circular],
+                },
+                "_:n3-69" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-69",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-69",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      FormPropertyData {
+        "formNode": FormNodeData {
+          "dataGraph": {
+            "add": [Function],
+            "addAll": [Function],
+            "contains": [Function],
+            "delete": [Function],
+            "deleteMatches": [Function],
+            "difference": [Function],
+            "equals": [Function],
+            "every": [Function],
+            "filter": [Function],
+            "forEach": [Function],
+            "has": [Function],
+            "import": [Function],
+            "intersection": [Function],
+            "map": [Function],
+            "match": [Function],
+            "reduce": [Function],
+            "size": 10,
+            "some": [Function],
+            "toArray": [Function],
+            "toCanonical": [Function],
+            "toStream": [Function],
+            "toString": [Function],
+            "union": [Function],
+            Symbol(Symbol.iterator): [Function],
+          },
+          "dataGraphNode": {
+            "termType": "NamedNode",
+            "value": "urn:example:MinorGordon",
+          },
+          "shape": NodeShape {
+            "_node": {
+              "termType": "NamedNode",
+              "value": "http://schema.org/PersonShape",
+            },
+            "shapesGraph": ShapesGraph {
+              "dataset": {
+                "add": [Function],
+                "addAll": [Function],
+                "contains": [Function],
+                "delete": [Function],
+                "deleteMatches": [Function],
+                "difference": [Function],
+                "equals": [Function],
+                "every": [Function],
+                "filter": [Function],
+                "forEach": [Function],
+                "has": [Function],
+                "import": [Function],
+                "intersection": [Function],
+                "map": [Function],
+                "match": [Function],
+                "reduce": [Function],
+                "size": 39,
+                "some": [Function],
+                "toArray": [Function],
+                "toCanonical": [Function],
+                "toStream": [Function],
+                "toString": [Function],
+                "union": [Function],
+                Symbol(Symbol.iterator): [Function],
+              },
+              "graphNode": {
+                "termType": "DefaultGraph",
+                "value": "",
+              },
+              "nodeShapes": [
+                [Circular],
+                NodeShape {
+                  "_node": {
+                    "termType": "NamedNode",
+                    "value": "http://schema.org/AddressShape",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                NodeShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-76",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                NodeShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-78",
+                  },
+                  "shapesGraph": [Circular],
+                },
+              ],
+              "nodeShapesByNode": TermMap {
+                "index": Map {
+                  "<http://schema.org/PersonShape>" => {
+                    "term": {
+                      "termType": "NamedNode",
+                      "value": "http://schema.org/PersonShape",
+                    },
+                    "value": [Circular],
+                  },
+                  "<http://schema.org/AddressShape>" => {
+                    "term": {
+                      "termType": "NamedNode",
+                      "value": "http://schema.org/AddressShape",
+                    },
+                    "value": NodeShape {
+                      "_node": {
+                        "termType": "NamedNode",
+                        "value": "http://schema.org/AddressShape",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-76" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-76",
+                    },
+                    "value": NodeShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-76",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-78" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-78",
+                    },
+                    "value": NodeShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-78",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                },
+              },
+              "propertyGroups": [],
+              "propertyGroupsByNode": TermMap {
+                "index": Map {},
+              },
+              "propertyShapes": [
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-67",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-73",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-68",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-74",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-72",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-69",
+                  },
+                  "shapesGraph": [Circular],
+                },
+              ],
+              "propertyShapesByNode": TermMap {
+                "index": Map {
+                  "_:n3-67" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-67",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-67",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-73" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-73",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-73",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-68" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-68",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-68",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-74" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-74",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-74",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-72" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-72",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-72",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-69" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-69",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-69",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        "shape": PropertyShape {
+          "_node": {
+            "termType": "BlankNode",
+            "value": "n3-69",
+          },
+          "shapesGraph": ShapesGraph {
+            "dataset": {
+              "add": [Function],
+              "addAll": [Function],
+              "contains": [Function],
+              "delete": [Function],
+              "deleteMatches": [Function],
+              "difference": [Function],
+              "equals": [Function],
+              "every": [Function],
+              "filter": [Function],
+              "forEach": [Function],
+              "has": [Function],
+              "import": [Function],
+              "intersection": [Function],
+              "map": [Function],
+              "match": [Function],
+              "reduce": [Function],
+              "size": 39,
+              "some": [Function],
+              "toArray": [Function],
+              "toCanonical": [Function],
+              "toStream": [Function],
+              "toString": [Function],
+              "union": [Function],
+              Symbol(Symbol.iterator): [Function],
+            },
+            "graphNode": {
+              "termType": "DefaultGraph",
+              "value": "",
+            },
+            "nodeShapes": [
+              NodeShape {
+                "_node": {
+                  "termType": "NamedNode",
+                  "value": "http://schema.org/PersonShape",
+                },
+                "shapesGraph": [Circular],
+              },
+              NodeShape {
+                "_node": {
+                  "termType": "NamedNode",
+                  "value": "http://schema.org/AddressShape",
+                },
+                "shapesGraph": [Circular],
+              },
+              NodeShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-76",
+                },
+                "shapesGraph": [Circular],
+              },
+              NodeShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-78",
+                },
+                "shapesGraph": [Circular],
+              },
+            ],
+            "nodeShapesByNode": TermMap {
+              "index": Map {
+                "<http://schema.org/PersonShape>" => {
+                  "term": {
+                    "termType": "NamedNode",
+                    "value": "http://schema.org/PersonShape",
+                  },
+                  "value": NodeShape {
+                    "_node": {
+                      "termType": "NamedNode",
+                      "value": "http://schema.org/PersonShape",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "<http://schema.org/AddressShape>" => {
+                  "term": {
+                    "termType": "NamedNode",
+                    "value": "http://schema.org/AddressShape",
+                  },
+                  "value": NodeShape {
+                    "_node": {
+                      "termType": "NamedNode",
+                      "value": "http://schema.org/AddressShape",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-76" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-76",
+                  },
+                  "value": NodeShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-76",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-78" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-78",
+                  },
+                  "value": NodeShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-78",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+              },
+            },
+            "propertyGroups": [],
+            "propertyGroupsByNode": TermMap {
+              "index": Map {},
+            },
+            "propertyShapes": [
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-67",
+                },
+                "shapesGraph": [Circular],
+              },
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-73",
+                },
+                "shapesGraph": [Circular],
+              },
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-68",
+                },
+                "shapesGraph": [Circular],
+              },
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-74",
+                },
+                "shapesGraph": [Circular],
+              },
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-72",
+                },
+                "shapesGraph": [Circular],
+              },
+              [Circular],
+            ],
+            "propertyShapesByNode": TermMap {
+              "index": Map {
+                "_:n3-67" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-67",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-67",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-73" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-73",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-73",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-68" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-68",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-68",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-74" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-74",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-74",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-72" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-72",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-72",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-69" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-69",
+                  },
+                  "value": [Circular],
+                },
+              },
+            },
+          },
+        },
+      },
+      FormPropertyData {
+        "formNode": FormNodeData {
+          "dataGraph": {
+            "add": [Function],
+            "addAll": [Function],
+            "contains": [Function],
+            "delete": [Function],
+            "deleteMatches": [Function],
+            "difference": [Function],
+            "equals": [Function],
+            "every": [Function],
+            "filter": [Function],
+            "forEach": [Function],
+            "has": [Function],
+            "import": [Function],
+            "intersection": [Function],
+            "map": [Function],
+            "match": [Function],
+            "reduce": [Function],
+            "size": 10,
+            "some": [Function],
+            "toArray": [Function],
+            "toCanonical": [Function],
+            "toStream": [Function],
+            "toString": [Function],
+            "union": [Function],
+            Symbol(Symbol.iterator): [Function],
+          },
+          "dataGraphNode": {
+            "termType": "NamedNode",
+            "value": "urn:example:MinorGordon",
+          },
+          "shape": NodeShape {
+            "_node": {
+              "termType": "NamedNode",
+              "value": "http://schema.org/PersonShape",
+            },
+            "shapesGraph": ShapesGraph {
+              "dataset": {
+                "add": [Function],
+                "addAll": [Function],
+                "contains": [Function],
+                "delete": [Function],
+                "deleteMatches": [Function],
+                "difference": [Function],
+                "equals": [Function],
+                "every": [Function],
+                "filter": [Function],
+                "forEach": [Function],
+                "has": [Function],
+                "import": [Function],
+                "intersection": [Function],
+                "map": [Function],
+                "match": [Function],
+                "reduce": [Function],
+                "size": 39,
+                "some": [Function],
+                "toArray": [Function],
+                "toCanonical": [Function],
+                "toStream": [Function],
+                "toString": [Function],
+                "union": [Function],
+                Symbol(Symbol.iterator): [Function],
+              },
+              "graphNode": {
+                "termType": "DefaultGraph",
+                "value": "",
+              },
+              "nodeShapes": [
+                [Circular],
+                NodeShape {
+                  "_node": {
+                    "termType": "NamedNode",
+                    "value": "http://schema.org/AddressShape",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                NodeShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-76",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                NodeShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-78",
+                  },
+                  "shapesGraph": [Circular],
+                },
+              ],
+              "nodeShapesByNode": TermMap {
+                "index": Map {
+                  "<http://schema.org/PersonShape>" => {
+                    "term": {
+                      "termType": "NamedNode",
+                      "value": "http://schema.org/PersonShape",
+                    },
+                    "value": [Circular],
+                  },
+                  "<http://schema.org/AddressShape>" => {
+                    "term": {
+                      "termType": "NamedNode",
+                      "value": "http://schema.org/AddressShape",
+                    },
+                    "value": NodeShape {
+                      "_node": {
+                        "termType": "NamedNode",
+                        "value": "http://schema.org/AddressShape",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-76" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-76",
+                    },
+                    "value": NodeShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-76",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-78" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-78",
+                    },
+                    "value": NodeShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-78",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                },
+              },
+              "propertyGroups": [],
+              "propertyGroupsByNode": TermMap {
+                "index": Map {},
+              },
+              "propertyShapes": [
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-67",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-73",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-68",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-74",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-72",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-69",
+                  },
+                  "shapesGraph": [Circular],
+                },
+              ],
+              "propertyShapesByNode": TermMap {
+                "index": Map {
+                  "_:n3-67" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-67",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-67",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-73" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-73",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-73",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-68" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-68",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-68",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-74" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-74",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-74",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-72" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-72",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-72",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-69" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-69",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-69",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        "shape": PropertyShape {
+          "_node": {
+            "termType": "BlankNode",
+            "value": "n3-67",
+          },
+          "shapesGraph": ShapesGraph {
+            "dataset": {
+              "add": [Function],
+              "addAll": [Function],
+              "contains": [Function],
+              "delete": [Function],
+              "deleteMatches": [Function],
+              "difference": [Function],
+              "equals": [Function],
+              "every": [Function],
+              "filter": [Function],
+              "forEach": [Function],
+              "has": [Function],
+              "import": [Function],
+              "intersection": [Function],
+              "map": [Function],
+              "match": [Function],
+              "reduce": [Function],
+              "size": 39,
+              "some": [Function],
+              "toArray": [Function],
+              "toCanonical": [Function],
+              "toStream": [Function],
+              "toString": [Function],
+              "union": [Function],
+              Symbol(Symbol.iterator): [Function],
+            },
+            "graphNode": {
+              "termType": "DefaultGraph",
+              "value": "",
+            },
+            "nodeShapes": [
+              NodeShape {
+                "_node": {
+                  "termType": "NamedNode",
+                  "value": "http://schema.org/PersonShape",
+                },
+                "shapesGraph": [Circular],
+              },
+              NodeShape {
+                "_node": {
+                  "termType": "NamedNode",
+                  "value": "http://schema.org/AddressShape",
+                },
+                "shapesGraph": [Circular],
+              },
+              NodeShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-76",
+                },
+                "shapesGraph": [Circular],
+              },
+              NodeShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-78",
+                },
+                "shapesGraph": [Circular],
+              },
+            ],
+            "nodeShapesByNode": TermMap {
+              "index": Map {
+                "<http://schema.org/PersonShape>" => {
+                  "term": {
+                    "termType": "NamedNode",
+                    "value": "http://schema.org/PersonShape",
+                  },
+                  "value": NodeShape {
+                    "_node": {
+                      "termType": "NamedNode",
+                      "value": "http://schema.org/PersonShape",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "<http://schema.org/AddressShape>" => {
+                  "term": {
+                    "termType": "NamedNode",
+                    "value": "http://schema.org/AddressShape",
+                  },
+                  "value": NodeShape {
+                    "_node": {
+                      "termType": "NamedNode",
+                      "value": "http://schema.org/AddressShape",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-76" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-76",
+                  },
+                  "value": NodeShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-76",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-78" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-78",
+                  },
+                  "value": NodeShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-78",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+              },
+            },
+            "propertyGroups": [],
+            "propertyGroupsByNode": TermMap {
+              "index": Map {},
+            },
+            "propertyShapes": [
+              [Circular],
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-73",
+                },
+                "shapesGraph": [Circular],
+              },
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-68",
+                },
+                "shapesGraph": [Circular],
+              },
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-74",
+                },
+                "shapesGraph": [Circular],
+              },
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-72",
+                },
+                "shapesGraph": [Circular],
+              },
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-69",
+                },
+                "shapesGraph": [Circular],
+              },
+            ],
+            "propertyShapesByNode": TermMap {
+              "index": Map {
+                "_:n3-67" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-67",
+                  },
+                  "value": [Circular],
+                },
+                "_:n3-73" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-73",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-73",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-68" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-68",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-68",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-74" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-74",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-74",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-72" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-72",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-72",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-69" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-69",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-69",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      FormPropertyData {
+        "formNode": FormNodeData {
+          "dataGraph": {
+            "add": [Function],
+            "addAll": [Function],
+            "contains": [Function],
+            "delete": [Function],
+            "deleteMatches": [Function],
+            "difference": [Function],
+            "equals": [Function],
+            "every": [Function],
+            "filter": [Function],
+            "forEach": [Function],
+            "has": [Function],
+            "import": [Function],
+            "intersection": [Function],
+            "map": [Function],
+            "match": [Function],
+            "reduce": [Function],
+            "size": 10,
+            "some": [Function],
+            "toArray": [Function],
+            "toCanonical": [Function],
+            "toStream": [Function],
+            "toString": [Function],
+            "union": [Function],
+            Symbol(Symbol.iterator): [Function],
+          },
+          "dataGraphNode": {
+            "termType": "NamedNode",
+            "value": "urn:example:MinorGordon",
+          },
+          "shape": NodeShape {
+            "_node": {
+              "termType": "NamedNode",
+              "value": "http://schema.org/PersonShape",
+            },
+            "shapesGraph": ShapesGraph {
+              "dataset": {
+                "add": [Function],
+                "addAll": [Function],
+                "contains": [Function],
+                "delete": [Function],
+                "deleteMatches": [Function],
+                "difference": [Function],
+                "equals": [Function],
+                "every": [Function],
+                "filter": [Function],
+                "forEach": [Function],
+                "has": [Function],
+                "import": [Function],
+                "intersection": [Function],
+                "map": [Function],
+                "match": [Function],
+                "reduce": [Function],
+                "size": 39,
+                "some": [Function],
+                "toArray": [Function],
+                "toCanonical": [Function],
+                "toStream": [Function],
+                "toString": [Function],
+                "union": [Function],
+                Symbol(Symbol.iterator): [Function],
+              },
+              "graphNode": {
+                "termType": "DefaultGraph",
+                "value": "",
+              },
+              "nodeShapes": [
+                [Circular],
+                NodeShape {
+                  "_node": {
+                    "termType": "NamedNode",
+                    "value": "http://schema.org/AddressShape",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                NodeShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-76",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                NodeShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-78",
+                  },
+                  "shapesGraph": [Circular],
+                },
+              ],
+              "nodeShapesByNode": TermMap {
+                "index": Map {
+                  "<http://schema.org/PersonShape>" => {
+                    "term": {
+                      "termType": "NamedNode",
+                      "value": "http://schema.org/PersonShape",
+                    },
+                    "value": [Circular],
+                  },
+                  "<http://schema.org/AddressShape>" => {
+                    "term": {
+                      "termType": "NamedNode",
+                      "value": "http://schema.org/AddressShape",
+                    },
+                    "value": NodeShape {
+                      "_node": {
+                        "termType": "NamedNode",
+                        "value": "http://schema.org/AddressShape",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-76" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-76",
+                    },
+                    "value": NodeShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-76",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-78" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-78",
+                    },
+                    "value": NodeShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-78",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                },
+              },
+              "propertyGroups": [],
+              "propertyGroupsByNode": TermMap {
+                "index": Map {},
+              },
+              "propertyShapes": [
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-67",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-73",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-68",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-74",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-72",
+                  },
+                  "shapesGraph": [Circular],
+                },
+                PropertyShape {
+                  "_node": {
+                    "termType": "BlankNode",
+                    "value": "n3-69",
+                  },
+                  "shapesGraph": [Circular],
+                },
+              ],
+              "propertyShapesByNode": TermMap {
+                "index": Map {
+                  "_:n3-67" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-67",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-67",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-73" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-73",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-73",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-68" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-68",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-68",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-74" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-74",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-74",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-72" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-72",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-72",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                  "_:n3-69" => {
+                    "term": {
+                      "termType": "BlankNode",
+                      "value": "n3-69",
+                    },
+                    "value": PropertyShape {
+                      "_node": {
+                        "termType": "BlankNode",
+                        "value": "n3-69",
+                      },
+                      "shapesGraph": [Circular],
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        "shape": PropertyShape {
+          "_node": {
+            "termType": "BlankNode",
+            "value": "n3-68",
+          },
+          "shapesGraph": ShapesGraph {
+            "dataset": {
+              "add": [Function],
+              "addAll": [Function],
+              "contains": [Function],
+              "delete": [Function],
+              "deleteMatches": [Function],
+              "difference": [Function],
+              "equals": [Function],
+              "every": [Function],
+              "filter": [Function],
+              "forEach": [Function],
+              "has": [Function],
+              "import": [Function],
+              "intersection": [Function],
+              "map": [Function],
+              "match": [Function],
+              "reduce": [Function],
+              "size": 39,
+              "some": [Function],
+              "toArray": [Function],
+              "toCanonical": [Function],
+              "toStream": [Function],
+              "toString": [Function],
+              "union": [Function],
+              Symbol(Symbol.iterator): [Function],
+            },
+            "graphNode": {
+              "termType": "DefaultGraph",
+              "value": "",
+            },
+            "nodeShapes": [
+              NodeShape {
+                "_node": {
+                  "termType": "NamedNode",
+                  "value": "http://schema.org/PersonShape",
+                },
+                "shapesGraph": [Circular],
+              },
+              NodeShape {
+                "_node": {
+                  "termType": "NamedNode",
+                  "value": "http://schema.org/AddressShape",
+                },
+                "shapesGraph": [Circular],
+              },
+              NodeShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-76",
+                },
+                "shapesGraph": [Circular],
+              },
+              NodeShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-78",
+                },
+                "shapesGraph": [Circular],
+              },
+            ],
+            "nodeShapesByNode": TermMap {
+              "index": Map {
+                "<http://schema.org/PersonShape>" => {
+                  "term": {
+                    "termType": "NamedNode",
+                    "value": "http://schema.org/PersonShape",
+                  },
+                  "value": NodeShape {
+                    "_node": {
+                      "termType": "NamedNode",
+                      "value": "http://schema.org/PersonShape",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "<http://schema.org/AddressShape>" => {
+                  "term": {
+                    "termType": "NamedNode",
+                    "value": "http://schema.org/AddressShape",
+                  },
+                  "value": NodeShape {
+                    "_node": {
+                      "termType": "NamedNode",
+                      "value": "http://schema.org/AddressShape",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-76" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-76",
+                  },
+                  "value": NodeShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-76",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-78" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-78",
+                  },
+                  "value": NodeShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-78",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+              },
+            },
+            "propertyGroups": [],
+            "propertyGroupsByNode": TermMap {
+              "index": Map {},
+            },
+            "propertyShapes": [
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-67",
+                },
+                "shapesGraph": [Circular],
+              },
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-73",
+                },
+                "shapesGraph": [Circular],
+              },
+              [Circular],
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-74",
+                },
+                "shapesGraph": [Circular],
+              },
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-72",
+                },
+                "shapesGraph": [Circular],
+              },
+              PropertyShape {
+                "_node": {
+                  "termType": "BlankNode",
+                  "value": "n3-69",
+                },
+                "shapesGraph": [Circular],
+              },
+            ],
+            "propertyShapesByNode": TermMap {
+              "index": Map {
+                "_:n3-67" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-67",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-67",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-73" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-73",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-73",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-68" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-68",
+                  },
+                  "value": [Circular],
+                },
+                "_:n3-74" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-74",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-74",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-72" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-72",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-72",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+                "_:n3-69" => {
+                  "term": {
+                    "termType": "BlankNode",
+                    "value": "n3-69",
+                  },
+                  "value": PropertyShape {
+                    "_node": {
+                      "termType": "BlankNode",
+                      "value": "n3-69",
+                    },
+                    "shapesGraph": [Circular],
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    ]
+  }
+  getItem={[Function]}
+  getItemCount={[Function]}
+  keyExtractor={[Function]}
+  onContentSizeChange={[Function]}
+  onLayout={[Function]}
+  onMomentumScrollBegin={[Function]}
+  onMomentumScrollEnd={[Function]}
+  onScroll={[Function]}
+  onScrollBeginDrag={[Function]}
+  onScrollEndDrag={[Function]}
+  removeClippedSubviews={false}
+  renderItem={[Function]}
+  scrollEventThrottle={50}
+  stickyHeaderIndices={[]}
+  viewabilityConfigCallbackPairs={[]}
+>
+  <View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        replaceTheme={[Function]}
+        updateTheme={[Function]}
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "#ffffff",
+              "borderBottomWidth": 0.5,
+              "borderColor": "#bcbbc1",
+              "flexDirection": "row",
+              "marginBottom": 2,
+              "padding": 14,
+            }
+          }
+          testID="RNE__LISTITEM__padView"
+        >
+          <Text
+            accessibilityRole="text"
+            style={
+              {
+                "color": "#242424",
+              }
+            }
+          >
+            Property: 
+            <Text
+              accessibilityRole="text"
+              style={
+                {
+                  "color": "#242424",
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              Address
+            </Text>
+          </Text>
+          <View
+            style={
+              {
+                "paddingLeft": 16,
+              }
+            }
+          />
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "rotate": "0deg",
+                  },
+                ],
+              }
+            }
+            testID="RNE__ListItem__Accordion__Icon"
+          >
+            <Text
+              accessibilityRole="text"
+              style={
+                {
+                  "color": "#242424",
+                }
+              }
+            >
+              chevron-up
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        collapsable={false}
+        style={
+          {
+            "opacity": 0,
+          }
+        }
+        testID="RNE__ListItem__Accordion__Children"
+      >
+        <View
+          style={
+            {
+              "marginBottom": 24,
+              "marginLeft": 8,
+            }
+          }
+        >
+          <View>
+            <View
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              replaceTheme={[Function]}
+              updateTheme={[Function]}
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "backgroundColor": "#ffffff",
+                    "borderColor": "#bcbbc1",
+                    "flexDirection": "row",
+                    "padding": 14,
+                  }
+                }
+                testID="RNE__LISTITEM__padView"
+              >
+                <Text
+                  accessibilityRole="text"
+                  style={
+                    {
+                      "color": "#242424",
+                    }
+                  }
+                >
+                  Address 1
+                </Text>
+                <View
+                  style={
+                    {
+                      "paddingLeft": 16,
+                    }
+                  }
+                />
+                <View
+                  collapsable={false}
+                  style={
+                    {
+                      "transform": [
+                        {
+                          "rotate": "0deg",
+                        },
+                      ],
+                    }
+                  }
+                  testID="RNE__ListItem__Accordion__Icon"
+                >
+                  <Text
+                    accessibilityRole="text"
+                    style={
+                      {
+                        "color": "#242424",
+                      }
+                    }
+                  >
+                    chevron-down
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        replaceTheme={[Function]}
+        updateTheme={[Function]}
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "#ffffff",
+              "borderBottomWidth": 0.5,
+              "borderColor": "#bcbbc1",
+              "flexDirection": "row",
+              "marginBottom": 2,
+              "padding": 14,
+            }
+          }
+          testID="RNE__LISTITEM__padView"
+        >
+          <Text
+            accessibilityRole="text"
+            style={
+              {
+                "color": "#242424",
+              }
+            }
+          >
+            Property: 
+            <Text
+              accessibilityRole="text"
+              style={
+                {
+                  "color": "#242424",
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              http://schema.org/gender
+            </Text>
+          </Text>
+          <View
+            style={
+              {
+                "paddingLeft": 16,
+              }
+            }
+          />
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "rotate": "0deg",
+                  },
+                ],
+              }
+            }
+            testID="RNE__ListItem__Accordion__Icon"
+          >
+            <Text
+              accessibilityRole="text"
+              style={
+                {
+                  "color": "#242424",
+                }
+              }
+            >
+              chevron-up
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        collapsable={false}
+        style={
+          {
+            "opacity": 0,
+          }
+        }
+        testID="RNE__ListItem__Accordion__Children"
+      >
+        <View
+          style={
+            {
+              "marginBottom": 24,
+              "marginLeft": 8,
+            }
+          }
+        >
+          <View>
+            <View
+              replaceTheme={[Function]}
+              updateTheme={[Function]}
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "backgroundColor": "#ffffff",
+                    "borderColor": "#bcbbc1",
+                    "flexDirection": "row",
+                    "padding": 14,
+                  }
+                }
+                testID="RNE__LISTITEM__padView"
+              >
+                <View
+                  replaceTheme={[Function]}
+                  style={
+                    [
+                      {
+                        "alignItems": "flex-start",
+                        "flex": 1,
+                        "justifyContent": "center",
+                      },
+                      undefined,
+                    ]
+                  }
+                  theme={
+                    {
+                      "colors": {
+                        "background": "#ffffff",
+                        "black": "#242424",
+                        "disabled": "hsl(208, 8%, 90%)",
+                        "divider": "#bcbbc1",
+                        "error": "#ff190c",
+                        "grey0": "#393e42",
+                        "grey1": "#43484d",
+                        "grey2": "#5e6977",
+                        "grey3": "#86939e",
+                        "grey4": "#bdc6cf",
+                        "grey5": "#e1e8ee",
+                        "greyOutline": "#bbb",
+                        "platform": {
+                          "android": {
+                            "error": "#f44336",
+                            "grey": "rgba(0, 0, 0, 0.54)",
+                            "primary": "#2196f3",
+                            "searchBg": "#dcdce1",
+                            "secondary": "#9C27B0",
+                            "success": "#4caf50",
+                            "warning": "#ffeb3b",
+                          },
+                          "default": {
+                            "error": "#ff3b30",
+                            "grey": "#7d7d7d",
+                            "primary": "#007aff",
+                            "searchBg": "#dcdce1",
+                            "secondary": "#5856d6",
+                            "success": "#4cd964",
+                            "warning": "#ffcc00",
+                          },
+                          "ios": {
+                            "error": "#ff3b30",
+                            "grey": "#7d7d7d",
+                            "primary": "#007aff",
+                            "searchBg": "#dcdce1",
+                            "secondary": "#5856d6",
+                            "success": "#4cd964",
+                            "warning": "#ffcc00",
+                          },
+                          "web": {
+                            "error": "#ff190c",
+                            "grey": "#393e42",
+                            "primary": "#2089dc",
+                            "searchBg": "#303337",
+                            "secondary": "#ca71eb",
+                            "success": "#52c41a",
+                            "warning": "#faad14",
+                          },
+                        },
+                        "primary": "#2089dc",
+                        "searchBg": "#303337",
+                        "secondary": "#ad1457",
+                        "success": "#52c41a",
+                        "warning": "#faad14",
+                        "white": "#ffffff",
+                      },
+                      "mode": undefined,
+                      "spacing": {
+                        "lg": 12,
+                        "md": 8,
+                        "sm": 4,
+                        "xl": 24,
+                        "xs": 2,
+                      },
+                    }
+                  }
+                  updateTheme={[Function]}
+                >
+                  <Text>
+                    male
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        replaceTheme={[Function]}
+        updateTheme={[Function]}
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "#ffffff",
+              "borderBottomWidth": 0.5,
+              "borderColor": "#bcbbc1",
+              "flexDirection": "row",
+              "marginBottom": 2,
+              "padding": 14,
+            }
+          }
+          testID="RNE__LISTITEM__padView"
+        >
+          <Text
+            accessibilityRole="text"
+            style={
+              {
+                "color": "#242424",
+              }
+            }
+          >
+            Property: 
+            <Text
+              accessibilityRole="text"
+              style={
+                {
+                  "color": "#242424",
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              given name
+            </Text>
+          </Text>
+          <View
+            style={
+              {
+                "paddingLeft": 16,
+              }
+            }
+          />
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "rotate": "0deg",
+                  },
+                ],
+              }
+            }
+            testID="RNE__ListItem__Accordion__Icon"
+          >
+            <Text
+              accessibilityRole="text"
+              style={
+                {
+                  "color": "#242424",
+                }
+              }
+            >
+              chevron-up
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        collapsable={false}
+        style={
+          {
+            "opacity": 0,
+          }
+        }
+        testID="RNE__ListItem__Accordion__Children"
+      >
+        <View
+          style={
+            {
+              "marginBottom": 24,
+              "marginLeft": 8,
+            }
+          }
+        >
+          <View>
+            <View
+              replaceTheme={[Function]}
+              updateTheme={[Function]}
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "backgroundColor": "#ffffff",
+                    "borderColor": "#bcbbc1",
+                    "flexDirection": "row",
+                    "padding": 14,
+                  }
+                }
+                testID="RNE__LISTITEM__padView"
+              >
+                <View
+                  replaceTheme={[Function]}
+                  style={
+                    [
+                      {
+                        "alignItems": "flex-start",
+                        "flex": 1,
+                        "justifyContent": "center",
+                      },
+                      undefined,
+                    ]
+                  }
+                  theme={
+                    {
+                      "colors": {
+                        "background": "#ffffff",
+                        "black": "#242424",
+                        "disabled": "hsl(208, 8%, 90%)",
+                        "divider": "#bcbbc1",
+                        "error": "#ff190c",
+                        "grey0": "#393e42",
+                        "grey1": "#43484d",
+                        "grey2": "#5e6977",
+                        "grey3": "#86939e",
+                        "grey4": "#bdc6cf",
+                        "grey5": "#e1e8ee",
+                        "greyOutline": "#bbb",
+                        "platform": {
+                          "android": {
+                            "error": "#f44336",
+                            "grey": "rgba(0, 0, 0, 0.54)",
+                            "primary": "#2196f3",
+                            "searchBg": "#dcdce1",
+                            "secondary": "#9C27B0",
+                            "success": "#4caf50",
+                            "warning": "#ffeb3b",
+                          },
+                          "default": {
+                            "error": "#ff3b30",
+                            "grey": "#7d7d7d",
+                            "primary": "#007aff",
+                            "searchBg": "#dcdce1",
+                            "secondary": "#5856d6",
+                            "success": "#4cd964",
+                            "warning": "#ffcc00",
+                          },
+                          "ios": {
+                            "error": "#ff3b30",
+                            "grey": "#7d7d7d",
+                            "primary": "#007aff",
+                            "searchBg": "#dcdce1",
+                            "secondary": "#5856d6",
+                            "success": "#4cd964",
+                            "warning": "#ffcc00",
+                          },
+                          "web": {
+                            "error": "#ff190c",
+                            "grey": "#393e42",
+                            "primary": "#2089dc",
+                            "searchBg": "#303337",
+                            "secondary": "#ca71eb",
+                            "success": "#52c41a",
+                            "warning": "#faad14",
+                          },
+                        },
+                        "primary": "#2089dc",
+                        "searchBg": "#303337",
+                        "secondary": "#ad1457",
+                        "success": "#52c41a",
+                        "warning": "#faad14",
+                        "white": "#ffffff",
+                      },
+                      "mode": undefined,
+                      "spacing": {
+                        "lg": 12,
+                        "md": 8,
+                        "sm": 4,
+                        "xl": 24,
+                        "xs": 2,
+                      },
+                    }
+                  }
+                  updateTheme={[Function]}
+                >
+                  <Text>
+                    Minor
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        replaceTheme={[Function]}
+        updateTheme={[Function]}
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "#ffffff",
+              "borderColor": "#bcbbc1",
+              "flexDirection": "row",
+              "marginBottom": 2,
+              "padding": 14,
+            }
+          }
+          testID="RNE__LISTITEM__padView"
+        >
+          <Text
+            accessibilityRole="text"
+            style={
+              {
+                "color": "#242424",
+              }
+            }
+          >
+            Property: 
+            <Text
+              accessibilityRole="text"
+              style={
+                {
+                  "color": "#242424",
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              http://schema.org/birthDate
+            </Text>
+          </Text>
+          <View
+            style={
+              {
+                "paddingLeft": 16,
+              }
+            }
+          />
+          <View
+            collapsable={false}
+            style={
+              {
+                "transform": [
+                  {
+                    "rotate": "0deg",
+                  },
+                ],
+              }
+            }
+            testID="RNE__ListItem__Accordion__Icon"
+          >
+            <Text
+              accessibilityRole="text"
+              style={
+                {
+                  "color": "#242424",
+                }
+              }
+            >
+              chevron-up
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        collapsable={false}
+        style={
+          {
+            "opacity": 0,
+          }
+        }
+        testID="RNE__ListItem__Accordion__Children"
+      >
+        <View
+          style={
+            {
+              "marginBottom": undefined,
+              "marginLeft": 8,
+            }
+          }
+        >
+          <View>
+            <View
+              replaceTheme={[Function]}
+              updateTheme={[Function]}
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "backgroundColor": "#ffffff",
+                    "borderColor": "#bcbbc1",
+                    "flexDirection": "row",
+                    "padding": 14,
+                  }
+                }
+                testID="RNE__LISTITEM__padView"
+              >
+                <View
+                  replaceTheme={[Function]}
+                  style={
+                    [
+                      {
+                        "alignItems": "flex-start",
+                        "flex": 1,
+                        "justifyContent": "center",
+                      },
+                      undefined,
+                    ]
+                  }
+                  theme={
+                    {
+                      "colors": {
+                        "background": "#ffffff",
+                        "black": "#242424",
+                        "disabled": "hsl(208, 8%, 90%)",
+                        "divider": "#bcbbc1",
+                        "error": "#ff190c",
+                        "grey0": "#393e42",
+                        "grey1": "#43484d",
+                        "grey2": "#5e6977",
+                        "grey3": "#86939e",
+                        "grey4": "#bdc6cf",
+                        "grey5": "#e1e8ee",
+                        "greyOutline": "#bbb",
+                        "platform": {
+                          "android": {
+                            "error": "#f44336",
+                            "grey": "rgba(0, 0, 0, 0.54)",
+                            "primary": "#2196f3",
+                            "searchBg": "#dcdce1",
+                            "secondary": "#9C27B0",
+                            "success": "#4caf50",
+                            "warning": "#ffeb3b",
+                          },
+                          "default": {
+                            "error": "#ff3b30",
+                            "grey": "#7d7d7d",
+                            "primary": "#007aff",
+                            "searchBg": "#dcdce1",
+                            "secondary": "#5856d6",
+                            "success": "#4cd964",
+                            "warning": "#ffcc00",
+                          },
+                          "ios": {
+                            "error": "#ff3b30",
+                            "grey": "#7d7d7d",
+                            "primary": "#007aff",
+                            "searchBg": "#dcdce1",
+                            "secondary": "#5856d6",
+                            "success": "#4cd964",
+                            "warning": "#ffcc00",
+                          },
+                          "web": {
+                            "error": "#ff190c",
+                            "grey": "#393e42",
+                            "primary": "#2089dc",
+                            "searchBg": "#303337",
+                            "secondary": "#ca71eb",
+                            "success": "#52c41a",
+                            "warning": "#faad14",
+                          },
+                        },
+                        "primary": "#2089dc",
+                        "searchBg": "#303337",
+                        "secondary": "#ad1457",
+                        "success": "#52c41a",
+                        "warning": "#faad14",
+                        "white": "#ffffff",
+                      },
+                      "mode": undefined,
+                      "spacing": {
+                        "lg": 12,
+                        "md": 8,
+                        "sm": 4,
+                        "xl": 24,
+                        "xs": 2,
+                      },
+                    }
+                  }
+                  updateTheme={[Function]}
+                >
+                  <Text>
+                    2022-11-19
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;
