@@ -1,4 +1,3 @@
 import {AppConfiguration} from "@paradicms/configuration";
 
-export interface SinglePageExhibitionAppConfiguration
-  extends AppConfiguration {}
+export class SinglePageExhibitionAppConfiguration extends AppConfiguration {}

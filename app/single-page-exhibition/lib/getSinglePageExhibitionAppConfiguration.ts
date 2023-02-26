@@ -1,26 +1,26 @@
-import {MultiPageExhibitionAppConfiguration} from "./MultiPageExhibitionAppConfiguration";
+import {SinglePageExhibitionAppConfiguration} from "./SinglePageExhibitionAppConfiguration";
 import {Dataset} from "@rdfjs/types";
 import {getAppConfiguration} from "@paradicms/configuration";
 import {parseIntoDataset} from "@paradicms/rdf";
 
-const defaultMultiPageExhibitionAppConfigurationDataset = parseIntoDataset(`
+const defaultSinglePageExhibitionAppConfigurationDataset = parseIntoDataset(`
 @prefix : <http://www.paradicms.org/ns/configuration#> .
 
 [] a :AppConfiguration .
 `);
 
-export const getMultiPageExhibitionAppConfiguration = (
+export const getSinglePageExhibitionAppConfiguration = (
   datasets: readonly (Dataset | null)[]
-): MultiPageExhibitionAppConfiguration => {
+): SinglePageExhibitionAppConfiguration => {
   for (const dataset of datasets.concat(
-    defaultMultiPageExhibitionAppConfigurationDataset
+    defaultSinglePageExhibitionAppConfigurationDataset
   )) {
     if (!dataset) {
       continue;
     }
     const configuration = getAppConfiguration<
-      MultiPageExhibitionAppConfiguration
-    >(dataset, kwds => new MultiPageExhibitionAppConfiguration(kwds));
+      SinglePageExhibitionAppConfiguration
+    >(dataset, kwds => new SinglePageExhibitionAppConfiguration(kwds));
     if (configuration) {
       return configuration;
     }

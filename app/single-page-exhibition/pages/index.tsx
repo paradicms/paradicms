@@ -4,9 +4,7 @@ import {GetStaticProps} from "next";
 import fs from "fs";
 import {readConfigurationFile, readModelSetFile} from "@paradicms/next";
 import {ModelSet, Text} from "@paradicms/models";
-import {defaultSinglePageExhibitionAppConfiguration} from "../lib/defaultSinglePageExhibitionAppConfiguration";
-import {readSinglePageExhibitionAppConfiguration} from "../lib/readSinglePageExhibitionAppConfiguration";
-import {SinglePageExhibitionAppConfiguration} from "../lib/SinglePageExhibitionAppConfiguration";
+import {getSinglePageExhibitionAppConfiguration} from "../lib/getSinglePageExhibitionAppConfiguration";
 import {parseIntoDataset} from "@paradicms/rdf";
 import {Col, Container, Row} from "reactstrap";
 import {
@@ -32,15 +30,22 @@ const WorkLocationsMap = dynamic<{
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configuration: SinglePageExhibitionAppConfiguration;
+  readonly configurationString: string;
   readonly modelSetString: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
-  configuration,
+  configurationString,
   modelSetString,
 }) => {
+  const configuration = useMemo(
+    () =>
+      getSinglePageExhibitionAppConfiguration([
+        parseIntoDataset(configurationString),
+      ]),
+    [configurationString]
+  );
   const modelSet = useMemo(
     () => new ModelSet(parseIntoDataset(modelSetString)),
     [modelSetString]
@@ -131,7 +136,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
         <title>{modelSet.collections[0].title}</title>
         <link
           rel="stylesheet"
-          href={configuration.stylesheetHref ?? defaultBootstrapStylesheetHref}
+          href={configuration.stylesheet ?? defaultBootstrapStylesheetHref}
         />
       </Head>
       {pages.map((page, pageI) => (
@@ -153,11 +158,10 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      configuration:
-        readSinglePageExhibitionAppConfiguration(
-          readConfigurationFile(readFileSync),
-          modelSet.dataset
-        ) ?? defaultSinglePageExhibitionAppConfiguration,
+      configurationString: getSinglePageExhibitionAppConfiguration([
+        readConfigurationFile(readFileSync),
+        modelSet.dataset,
+      ]).stringify(),
       modelSetString: modelSet.stringify(),
       collectionUri: collection.uri,
     },
