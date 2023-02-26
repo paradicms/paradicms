@@ -8,6 +8,9 @@ interface Configuration {
   filterable: NamedNode<"http://www.paradicms.org/ns/configuration#filterable">;
   hidden: NamedNode<"http://www.paradicms.org/ns/configuration#hidden">;
   label: NamedNode<"http://www.paradicms.org/ns/configuration#label">;
+  objectsPerPage: NamedNode<
+    "http://www.paradicms.org/ns/configuration#objectsPerPage"
+  >;
   predicate: NamedNode<"http://www.paradicms.org/ns/configuration#predicate">;
   searchable: NamedNode<"http://www.paradicms.org/ns/configuration#searchable">;
   stylesheet: NamedNode<
@@ -16,9 +19,6 @@ interface Configuration {
   title: NamedNode<"http://www.paradicms.org/ns/configuration#searchable">;
   workProperty: NamedNode<
     "http://www.paradicms.org/ns/configuration#workProperty"
-  >;
-  worksPerPage: NamedNode<
-    "http://www.paradicms.org/ns/configuration#worksPerPage"
   >;
 
   // Resources

@@ -56,7 +56,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   }
 
   const documentTitle: string[] = [];
-  documentTitle.push(configuration.siteTitle ?? SITE_TITLE_DEFAULT);
+  documentTitle.push(configuration.title ?? SITE_TITLE_DEFAULT);
   if (title) {
     documentTitle.push(title);
   }
@@ -67,7 +67,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         <title>{documentTitle.join(" - ")}</title>
         <link
           rel="stylesheet"
-          href={configuration.stylesheetHref ?? defaultBootstrapStylesheetHref}
+          href={configuration.stylesheet ?? defaultBootstrapStylesheetHref}
         />
       </Head>
       <Container fluid>
@@ -76,7 +76,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
             <Navbar>
               <NavbarBrand className="me-auto" tag="div">
                 <Link href={Hrefs.home()}>
-                  {configuration.siteTitle ?? SITE_TITLE_DEFAULT}
+                  {configuration.title ?? SITE_TITLE_DEFAULT}
                 </Link>
               </NavbarBrand>
               {onSearch ? (

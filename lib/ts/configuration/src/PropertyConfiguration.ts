@@ -30,15 +30,15 @@ export class PropertyConfiguration extends Configuration {
     );
   }
 
-  get predicate(): string {
+  get searchable(): boolean {
+    return this.booleanProperty(configuration.searchable);
+  }
+
+  get uri(): string {
     return requireNonNull(
       this.findAndMapObject(configuration.predicate, term =>
         term.termType === "NamedNode" ? term.value : null
       )
     );
-  }
-
-  get searchable(): boolean {
-    return this.booleanProperty(configuration.searchable);
   }
 }

@@ -1,37 +1,21 @@
 import {WorkSearchAppConfiguration} from "./WorkSearchAppConfiguration";
-import {BlankNode, Dataset, NamedNode} from "@rdfjs/types";
-import {
-  readAppConfiguration,
-  readPropertyConfiguration,
-} from "@paradicms/configuration";
-import {configuration} from "@paradicms/vocabularies";
+import {Dataset} from "@rdfjs/types";
+import {readAppConfiguration} from "@paradicms/configuration";
 
 export const readWorkSearchAppConfiguration = (
-  configurationDataset: Dataset | null,
-  modelSetDataset: Dataset
+  datasets: readonly (Dataset | null)[]
 ): WorkSearchAppConfiguration | null => {
-  return readAppConfiguration<WorkSearchAppConfiguration>(
-    configurationDataset,
-    modelSetDataset,
-    ({graph, node, dataset, ...appConfigurationProps}) => {
-      return {
-        workProperties: dataset
-          .match(node, configuration.workProperty, null, graph)
-          .toArray()
-          .map(quad => quad.object)
-          .filter(
-            term =>
-              term.termType === "BlankNode" || term.termType === "NamedNode"
-          )
-          .map(node =>
-            readPropertyConfiguration({
-              node: node as BlankNode | NamedNode,
-              graph,
-              dataset,
-            })
-          ),
-        ...appConfigurationProps,
-      };
+  for (const dataset of datasets) {
+    if (!dataset) {
+      continue;
     }
-  );
+    const configuration = readAppConfiguration<WorkSearchAppConfiguration>(
+      dataset,
+      kwds => new WorkSearchAppConfiguration(kwds)
+    );
+    if (configuration) {
+      return configuration;
+    }
+  }
+  return null;
 };

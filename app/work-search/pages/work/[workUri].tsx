@@ -17,10 +17,10 @@ import {
 import * as fs from "fs";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
-import {WorkSearchAppConfiguration} from "../../lib/WorkSearchAppConfiguration";
 import {readWorkSearchAppConfiguration} from "../../lib/readWorkSearchAppConfiguration";
-import {defaultSearchAppConfiguration} from "../../lib/defaultSearchAppConfiguration";
+import {defaultWorkSearchAppConfiguration} from "../../lib/defaultWorkSearchAppConfiguration";
 import {parseIntoDataset} from "@paradicms/rdf";
+import {WorkSearchAppConfiguration} from "../../lib/WorkSearchAppConfiguration";
 
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
@@ -35,16 +35,21 @@ const WorkLocationsMap = dynamic<{
 );
 
 interface StaticProps {
-  readonly configuration: WorkSearchAppConfiguration;
+  readonly configurationString: string;
   readonly modelSetString: string;
   readonly workUri: string;
 }
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
-  configuration,
+  configurationString,
   modelSetString,
   workUri,
 }) => {
+  const configuration = useMemo<WorkSearchAppConfiguration>(
+    () =>
+      readWorkSearchAppConfiguration([parseIntoDataset(configurationString)])!,
+    [configurationString]
+  );
   const modelSet = useMemo(
     () => new ModelSet(parseIntoDataset(modelSetString)),
     [modelSetString]
@@ -91,14 +96,14 @@ export const getStaticProps: GetStaticProps = ({
   const workUri = decodeFileName(params!.workUri as string);
   const completeModelSet = readModelSetFile(readFileSync);
   const configuration =
-    readWorkSearchAppConfiguration(
+    readWorkSearchAppConfiguration([
       readConfigurationFile(readFileSync),
-      completeModelSet.dataset
-    ) ?? defaultSearchAppConfiguration;
+      completeModelSet.dataset,
+    ]) ?? defaultWorkSearchAppConfiguration;
 
   return {
     props: {
-      configuration,
+      configurationString: configuration.stringify(),
       modelSetString: new ModelSubsetter({
         completeModelSet,
         workPropertyUris: configuration.workProperties.map(

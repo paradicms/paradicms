@@ -16,11 +16,11 @@ import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
 import {useWorkSearchQueryParams} from "@paradicms/react-dom-hooks";
 import dynamic from "next/dynamic";
-import {WorkSearchAppConfiguration} from "../lib/WorkSearchAppConfiguration";
 import {readWorkSearchAppConfiguration} from "../lib/readWorkSearchAppConfiguration";
-import {defaultSearchAppConfiguration} from "../lib/defaultSearchAppConfiguration";
+import {defaultWorkSearchAppConfiguration} from "../lib/defaultWorkSearchAppConfiguration";
 import {parseIntoDataset} from "@paradicms/rdf";
 import {getDefaultWorkQueryFilters} from "../lib/getDefaultWorkQueryFilters";
+import {WorkSearchAppConfiguration} from "../lib/WorkSearchAppConfiguration";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -35,14 +35,19 @@ const WorkLocationsMap = dynamic<{
 const readFileSync = (filePath: string) => fs.readFileSync(filePath).toString();
 
 interface StaticProps {
-  readonly configuration: WorkSearchAppConfiguration;
+  readonly configurationString: string;
   readonly modelSetString: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
-  configuration,
+  configurationString,
   modelSetString,
 }) => {
+  const configuration = useMemo<WorkSearchAppConfiguration>(
+    () =>
+      readWorkSearchAppConfiguration([parseIntoDataset(configurationString)])!,
+    [configurationString]
+  );
   const modelSet = useMemo<ModelSet>(
     () => new ModelSet(parseIntoDataset(modelSetString)),
     [modelSetString]
@@ -92,14 +97,14 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 }> => {
   const completeModelSet = readModelSetFile(readFileSync);
   const configuration =
-    readWorkSearchAppConfiguration(
+    readWorkSearchAppConfiguration([
       readConfigurationFile(readFileSync),
-      completeModelSet.dataset
-    ) ?? defaultSearchAppConfiguration;
+      completeModelSet.dataset,
+    ]) ?? defaultWorkSearchAppConfiguration;
 
   return {
     props: {
-      configuration,
+      configurationString: configuration.stringify(),
       modelSetString: new ModelSubsetter({
         completeModelSet,
         workPropertyUris: configuration.workProperties.map(
