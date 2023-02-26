@@ -13,6 +13,6 @@ export const testFormDataFactory = () =>
       id: "test",
       label: "Test form shape",
       nodeRdfTypes: [schema.Person],
-      shapesGraph: new ShapesGraph(datasetCoreToDataset(testShapesGraph)),
+      shapesGraph: ShapesGraph.fromDatasetCore(testShapesGraph),
     }),
   });

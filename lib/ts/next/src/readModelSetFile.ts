@@ -14,7 +14,7 @@ export const readModelSetFile = (
 
   const dataFilePath: string | undefined = process.env.DATA_FILE_PATH;
   if (!dataFilePath) {
-    _modelSet = new ModelSet(createDataset());
+    _modelSet = ModelSet.fromDataset(createDataset());
     return Promise.resolve(_modelSet!);
   }
 
@@ -22,7 +22,7 @@ export const readModelSetFile = (
     anyStringToDataset(dataString, {
       path: dataFilePath,
     }).then(dataset => {
-      _modelSet = new ModelSet(dataset);
+      _modelSet = ModelSet.fromDataset(dataset);
       return _modelSet!;
     })
   );

@@ -33,7 +33,7 @@ export class AsyncStorageFormShapeApi implements FormShapeApi {
         id: itemValue.id,
         label: itemValue.label,
         nodeRdfTypes: itemValue.nodeRdfTypes.map(DataFactory.namedNode),
-        shapesGraph: new ShapesGraph(
+        shapesGraph: ShapesGraph.fromDataset(
           fastStringToDataset(itemValue.shapesGraph)
         ),
       });
