@@ -19,9 +19,8 @@ import Hammer from "react-hammerjs";
 import {useRouter} from "next/router";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
-import {createDataset, parseIntoDataset} from "@paradicms/rdf";
+import {parseIntoDataset} from "@paradicms/rdf";
 import {readMultiPageExhibitionAppConfiguration} from "../../lib/readMultiPageExhibitionAppConfiguration";
-import {defaultMultiPageExhibitionAppConfiguration} from "../../lib/defaultMultiPageExhibitionAppConfiguration";
 
 const WorkLocationsMap = dynamic<{
   readonly collectionUri: string;
@@ -56,10 +55,9 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   const router = useRouter();
   const configuration = useMemo(
     () =>
-      readMultiPageExhibitionAppConfiguration(
+      readMultiPageExhibitionAppConfiguration([
         parseIntoDataset(configurationString),
-        createDataset()
-      )!,
+      ]),
     [configurationString]
   );
   const modelSet = useMemo<ModelSet>(
@@ -192,12 +190,10 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       collectionUri,
-      configurationString: (
-        readMultiPageExhibitionAppConfiguration(
-          readConfigurationFile(readFileSync),
-          completeModelSet.dataset
-        ) ?? defaultMultiPageExhibitionAppConfiguration
-      ).stringify(),
+      configurationString: readMultiPageExhibitionAppConfiguration([
+        readConfigurationFile(readFileSync),
+        completeModelSet.dataset,
+      ]).stringify(),
       currentWorkUri: workUri,
       modelSetString: new ModelSubsetter({
         completeModelSet,

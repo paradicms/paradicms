@@ -1,12 +1,20 @@
 import {MultiPageExhibitionAppConfiguration} from "./MultiPageExhibitionAppConfiguration";
 import {Dataset} from "@rdfjs/types";
 import {readAppConfiguration} from "@paradicms/configuration";
+import {parseIntoDataset} from "@paradicms/rdf";
+
+const defaultMultiPageExhibitionAppConfigurationDataset = parseIntoDataset(`
+@prefix : <http://www.paradicms.org/ns/configuration#> .
+
+[] a :AppConfiguration .
+`);
 
 export const readMultiPageExhibitionAppConfiguration = (
-  configurationDataset: Dataset | null,
-  modelSetDataset: Dataset
-): MultiPageExhibitionAppConfiguration | null => {
-  for (const dataset of [configurationDataset, modelSetDataset]) {
+  datasets: readonly (Dataset | null)[]
+): MultiPageExhibitionAppConfiguration => {
+  for (const dataset of datasets.concat(
+    defaultMultiPageExhibitionAppConfigurationDataset
+  )) {
     if (!dataset) {
       continue;
     }
@@ -17,5 +25,5 @@ export const readMultiPageExhibitionAppConfiguration = (
       return configuration;
     }
   }
-  return null;
+  throw new EvalError();
 };
