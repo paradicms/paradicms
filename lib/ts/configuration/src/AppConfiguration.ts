@@ -9,6 +9,10 @@ export class AppConfiguration extends Configuration {
     super(kwds);
   }
 
+  get basePath(): string | null {
+    return this.findAndMapObject(configuration.basePath, term => term.termType === "Literal" ? term.value : null);
+  }
+
   static fromDataset(dataset: Dataset): AppConfiguration | null {
     const typeQuads = dataset
       .match(null, rdf.type, configuration.AppConfiguration, null)

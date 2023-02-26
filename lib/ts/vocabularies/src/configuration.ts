@@ -5,6 +5,7 @@ interface Configuration {
   "": NamedNode<"http://www.paradicms.org/ns/configuration#">;
 
   // Properties
+  basePath: NamedNode<"http://www.paradicms.org/ns/configuration#basePath">;
   filterable: NamedNode<"http://www.paradicms.org/ns/configuration#filterable">;
   hidden: NamedNode<"http://www.paradicms.org/ns/configuration#hidden">;
   label: NamedNode<"http://www.paradicms.org/ns/configuration#label">;
