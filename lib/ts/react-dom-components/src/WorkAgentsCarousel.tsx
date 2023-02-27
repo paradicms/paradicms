@@ -6,14 +6,16 @@ import {Carousel, CarouselItem} from "reactstrap";
 import {FontAwesomeCarouselControl} from "./FontAwesomeCarouselControl";
 
 export const WorkAgentsCarousel: React.FunctionComponent<{
+  getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   thumbnailTargetDimensions?: ImageDimensions;
   workAgents: readonly WorkAgent[];
-}> = ({thumbnailTargetDimensions, workAgents}) => {
+}> = ({getAbsoluteImageSrc, thumbnailTargetDimensions, workAgents}) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const renderWorkAgent = (workAgent: WorkAgent) => (
     <AgentCard
       agent={workAgent.agent}
+      getAbsoluteImageSrc={getAbsoluteImageSrc}
       role={workAgent.role}
       thumbnailTargetDimensions={thumbnailTargetDimensions}
     />

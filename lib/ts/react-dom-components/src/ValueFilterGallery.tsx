@@ -1,6 +1,5 @@
 import * as React from "react";
 import {useCallback, useMemo, useState} from "react";
-import {Image} from "@paradicms/models";
 import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
 import classNames from "classnames";
 import {
@@ -22,9 +21,11 @@ import {
   ValueFilterState,
 } from "@paradicms/filters";
 import {ValueFacet, ValueFacetValue} from "@paradicms/facets";
+import {Image} from "@paradicms/models";
 
 interface ValueFacetValueCardProps<T extends JsonPrimitiveType> {
   filterState: ValueFilterState<T, ValueFilter<T>>;
+  getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   onChange: (newFilter: ValueFilter<T>) => void;
   value: ValueFacetValue<T>;
 }
@@ -32,11 +33,7 @@ interface ValueFacetValueCardProps<T extends JsonPrimitiveType> {
 const ValueFacetValueCard = <T extends JsonPrimitiveType>(
   props: ValueFacetValueCardProps<T>
 ) => {
-  const {filterState, onChange, value} = props;
-
-  const thumbnailSrc = value.thumbnail
-    ? value.thumbnail.src
-    : Image.placeholderSrc(smallThumbnailTargetDimensions);
+  const {filterState, getAbsoluteImageSrc, onChange, value} = props;
 
   const onToggle = useCallback(() => {
     if (filterState.includesValue(value.value)) {
@@ -86,7 +83,11 @@ const ValueFacetValueCard = <T extends JsonPrimitiveType>(
       </CardHeader>
       <a onClick={onToggle}>
         <CardImg
-          src={thumbnailSrc}
+          src={
+            value.thumbnail?.src
+              ? getAbsoluteImageSrc(value.thumbnail.src)
+              : Image.placeholderSrc(smallThumbnailTargetDimensions)
+          }
           style={{
             height: smallThumbnailTargetDimensions.height,
             marginBottom: "20px",
@@ -138,13 +139,14 @@ const ValueFacetValueCard = <T extends JsonPrimitiveType>(
 interface ValueFilterGalleryProps<T extends JsonPrimitiveType> {
   facet: ValueFacet<T>;
   filter: ValueFilter<T>;
+  getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   onChange: (newFilter: ValueFilter<T>) => void;
 }
 
 export const ValueFilterGallery = <T extends JsonPrimitiveType>(
   props: ValueFilterGalleryProps<T>
 ) => {
-  const {facet, filter, onChange} = props;
+  const {facet, filter, getAbsoluteImageSrc, onChange} = props;
 
   const filterState = useMemo(
     () =>
@@ -167,6 +169,7 @@ export const ValueFilterGallery = <T extends JsonPrimitiveType>(
           }}
         >
           <ValueFacetValueCard
+            getAbsoluteImageSrc={getAbsoluteImageSrc}
             filterState={filterState}
             onChange={onChange}
             value={value}

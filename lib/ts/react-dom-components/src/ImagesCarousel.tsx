@@ -8,6 +8,7 @@ import {RightsParagraph} from "./RightsParagraph";
 import {FontAwesomeCarouselControl} from "./FontAwesomeCarouselControl";
 
 export interface ImagesCarouselProps {
+  getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   hideImageRights?: boolean;
   images: readonly Image[];
   onShowImage?: (newImage: Image) => void;
@@ -15,6 +16,7 @@ export interface ImagesCarouselProps {
 }
 
 export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
+  getAbsoluteImageSrc,
   hideImageRights,
   images,
   onShowImage,
@@ -26,19 +28,21 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
     thumbnailTargetDimensionsInput ?? smallThumbnailTargetDimensions;
 
   const renderOriginalImage = (originalImage: Image) => {
-    const originalImageSrc = originalImage.src;
-    if (!originalImageSrc) {
+    if (!originalImage.src) {
       return null;
     }
     const thumbnail = originalImage.thumbnail({
       targetDimensions: thumbnailTargetDimensions,
     });
-    const thumbnailSrc = thumbnail?.src;
-    if (!thumbnail || !thumbnailSrc) {
+    if (!thumbnail || !thumbnail.src) {
       return (
         <img
           className="img"
-          src={originalImageSrc}
+          src={
+            originalImage.src
+              ? getAbsoluteImageSrc(originalImage.src)
+              : Image.placeholderSrc(thumbnailTargetDimensions)
+          }
           style={{
             maxHeight: thumbnailTargetDimensions.height,
             maxWidth: thumbnailTargetDimensions.width,
@@ -53,7 +57,7 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
           <ImageZoom
             image={{
               className: "img",
-              src: thumbnailSrc,
+              src: getAbsoluteImageSrc(thumbnail.src),
               style: {
                 maxHeight: thumbnailTargetDimensions.height,
                 maxWidth: thumbnailTargetDimensions.width,
@@ -61,7 +65,7 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
             }}
             zoomImage={{
               className: "img--zoomed",
-              src: originalImageSrc,
+              src: getAbsoluteImageSrc(originalImage.src),
               style: originalImage?.exactDimensions ?? undefined,
             }}
           />

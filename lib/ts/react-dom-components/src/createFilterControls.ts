@@ -6,9 +6,10 @@ import {createFilterControl} from "./createFilterControl";
 export const createFilterControls = (kwds: {
   facets: readonly Facet[];
   filters: readonly Filter[];
+  getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   onChangeFilters: (filters: readonly Filter[]) => void;
 }): readonly {control: React.ReactElement; filter: Filter}[] => {
-  const {facets, filters, onChangeFilters} = kwds;
+  const {facets, filters, getAbsoluteImageSrc, onChangeFilters} = kwds;
 
   const filterControls: {
     control: React.ReactElement;
@@ -25,6 +26,7 @@ export const createFilterControls = (kwds: {
     const control = createFilterControl({
       facets,
       filter,
+      getAbsoluteImageSrc,
       onChangeFilter,
     });
 

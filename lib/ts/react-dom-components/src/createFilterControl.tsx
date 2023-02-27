@@ -20,9 +20,10 @@ import {ValueFilterControl} from "./ValueFilterControl";
 export const createFilterControl = (kwds: {
   facets: readonly Facet[];
   filter: Filter;
+  getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   onChangeFilter: (newFilter: Filter) => void;
 }): React.ReactElement | null => {
-  const {facets, filter, onChangeFilter} = kwds;
+  const {facets, filter, getAbsoluteImageSrc, onChangeFilter} = kwds;
 
   return visitFilter(
     filter,
@@ -42,6 +43,7 @@ export const createFilterControl = (kwds: {
           <ValueFilterControl
             facet={facet}
             filter={filter}
+            getAbsoluteImageSrc={getAbsoluteImageSrc}
             onChange={onChangeFilter}
           />
         );
@@ -61,6 +63,7 @@ export const createFilterControl = (kwds: {
           <ValueFilterControl
             facet={facet}
             filter={filter}
+            getAbsoluteImageSrc={getAbsoluteImageSrc}
             onChange={onChangeFilter}
           />
         );
@@ -85,6 +88,7 @@ export const createFilterControl = (kwds: {
           <ValueFilterControl
             facet={facet}
             filter={filter}
+            getAbsoluteImageSrc={getAbsoluteImageSrc}
             onChange={onChangeFilter}
           />
         );
