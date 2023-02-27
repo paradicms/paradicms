@@ -5,6 +5,7 @@ import {ModelSet, ModelSubsetter} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
+  getAbsoluteImageSrc,
   readConfigurationFile,
   readModelSetFile,
 } from "@paradicms/next";
@@ -19,6 +20,7 @@ import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
 import {fastRdfStringToDataset} from "@paradicms/rdf";
 import {WorkSearchAppConfiguration} from "../../lib/WorkSearchAppConfiguration";
+import {useRouter} from "next/router";
 
 const readFile = (filePath: string) =>
   fs.promises.readFile(filePath).then(contents => contents.toString());
@@ -55,6 +57,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
     [modelSetString]
   );
+  const router = useRouter();
   const work = modelSet.workByUri(workUri);
 
   return (
@@ -64,6 +67,9 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
       configuration={configuration}
     >
       <WorkContainer
+        getAbsoluteImageSrc={relativeImageSrc =>
+          getAbsoluteImageSrc(relativeImageSrc, router)
+        }
         renderWorkLocationsMap={workLocations => (
           <WorkLocationsMap workLocations={workLocations} />
         )}

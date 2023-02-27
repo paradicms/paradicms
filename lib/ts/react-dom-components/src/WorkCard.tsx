@@ -22,23 +22,18 @@ const RIGHTS_STYLE: React.CSSProperties = {
 };
 
 export const WorkCard: React.FunctionComponent<{
-  renderInstitutionLink?: (
-    institutionUri: string,
-    children: React.ReactNode
-  ) => React.ReactElement;
+  getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   renderWorkLink: (
     workUri: string,
     children: React.ReactNode
   ) => React.ReactElement;
   work: Work;
-}> = ({work, renderInstitutionLink, renderWorkLink}) => {
+}> = ({getAbsoluteImageSrc, renderWorkLink, work}) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const workLinks = getNamedModelLinks(work);
   const thumbnail = work.thumbnail({
     targetDimensions: smallThumbnailTargetDimensions,
   });
-  const thumbnailSrc =
-    thumbnail?.src ?? Image.placeholderSrc(smallThumbnailTargetDimensions);
 
   const tabs: {content: React.ReactNode; title: string}[] = [];
   tabs.push({
@@ -47,7 +42,11 @@ export const WorkCard: React.FunctionComponent<{
       <Card className="border-0 text-center">
         <CardBody>
           <img
-            src={thumbnailSrc}
+            src={
+              thumbnail?.src
+                ? getAbsoluteImageSrc(thumbnail.src)
+                : Image.placeholderSrc(smallThumbnailTargetDimensions)
+            }
             style={{
               maxHeight: smallThumbnailTargetDimensions.height,
               maxWidth: smallThumbnailTargetDimensions.width,

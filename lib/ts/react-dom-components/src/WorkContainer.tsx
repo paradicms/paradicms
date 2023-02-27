@@ -27,11 +27,12 @@ const RIGHTS_STYLE: React.CSSProperties = {
 };
 
 export const WorkContainer: React.FunctionComponent<{
-  work: Work;
+  getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   renderWorkLocationsMap?: (
     workLocations: readonly WorkLocationSummary[]
   ) => React.ReactElement;
-}> = ({renderWorkLocationsMap, work}) => {
+  work: Work;
+}> = ({getAbsoluteImageSrc, renderWorkLocationsMap, work}) => {
   const workAbstract: string | Text | null = useMemo(
     () => work.abstract ?? work.description ?? null,
     [work]
@@ -73,6 +74,7 @@ export const WorkContainer: React.FunctionComponent<{
         <Card className="border-0">
           <CardBody className="text-center">
             <ImagesCarousel
+              getAbsoluteImageSrc={getAbsoluteImageSrc}
               hideImageRights={true}
               images={work.images}
               key={leftColTabs.length}
@@ -98,6 +100,7 @@ export const WorkContainer: React.FunctionComponent<{
       title: "People",
       content: (
         <WorkAgentsCarousel
+          getAbsoluteImageSrc={getAbsoluteImageSrc}
           thumbnailTargetDimensions={largeThumbnailTargetDimensions}
           workAgents={work.agents}
         />

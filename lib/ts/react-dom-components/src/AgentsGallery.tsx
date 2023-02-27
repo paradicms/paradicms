@@ -4,7 +4,8 @@ import {AgentCard} from "./AgentCard";
 
 export const AgentsGallery: React.FunctionComponent<{
   agents: readonly Agent[];
-}> = ({agents}) => (
+  getAbsoluteImageSrc: (relativeImageSrc: string) => string;
+}> = ({agents, getAbsoluteImageSrc}) => (
   <>
     {agents.map(agent => (
       <div
@@ -15,7 +16,7 @@ export const AgentsGallery: React.FunctionComponent<{
           width: "400px",
         }}
       >
-        <AgentCard agent={agent} />
+        <AgentCard agent={agent} getAbsoluteImageSrc={getAbsoluteImageSrc} />
       </div>
     ))}
   </>

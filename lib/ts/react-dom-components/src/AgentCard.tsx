@@ -7,11 +7,12 @@ import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
 
 export const AgentCard: React.FunctionComponent<{
   agent: Agent;
+  getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   role?: string;
   thumbnailTargetDimensions?: ImageDimensions;
 }> = ({
   agent,
-  role,
+  getAbsoluteImageSrc,
   thumbnailTargetDimensions: optionalThumbnailTargetDimensions,
 }) => {
   const agentLinks = getNamedModelLinks(agent);
@@ -34,7 +35,9 @@ export const AgentCard: React.FunctionComponent<{
       <CardBody>
         <img
           src={
-            thumbnail?.src ?? Image.placeholderSrc(thumbnailTargetDimensions)
+            thumbnail?.src
+              ? getAbsoluteImageSrc(thumbnail.src)
+              : Image.placeholderSrc(thumbnailTargetDimensions)
           }
           style={{
             maxHeight: thumbnailTargetDimensions.height,

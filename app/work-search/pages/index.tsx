@@ -10,7 +10,11 @@ import {
 } from "@paradicms/react-dom-components";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
-import {readConfigurationFile, readModelSetFile} from "@paradicms/next";
+import {
+  getAbsoluteImageSrc,
+  readConfigurationFile,
+  readModelSetFile,
+} from "@paradicms/next";
 import fs from "fs";
 import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
@@ -19,6 +23,7 @@ import dynamic from "next/dynamic";
 import {fastRdfStringToDataset} from "@paradicms/rdf";
 import {getDefaultWorkQueryFilters} from "../lib/getDefaultWorkQueryFilters";
 import {WorkSearchAppConfiguration} from "../lib/WorkSearchAppConfiguration";
+import {useRouter} from "next/router";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -53,7 +58,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
     [modelSetString]
   );
-
+  const router = useRouter();
   const workQueryService = useMemo<WorkQueryService>(
     () =>
       new LunrWorkQueryService({
@@ -75,6 +80,9 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   return (
     <Layout configuration={configuration} onSearch={onSearch}>
       <WorkSearchContainer
+        getAbsoluteImageSrc={relativeImageSrc =>
+          getAbsoluteImageSrc(relativeImageSrc, router)
+        }
         objectsPerPage={configuration.objectsPerPage ?? 10}
         renderWorkLink={(workUri, children) => (
           <Link href={Hrefs.work(workUri)}>

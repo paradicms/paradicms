@@ -35,12 +35,9 @@ import {calculatePageMax} from "@paradicms/utilities";
 type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
 
 export const WorkSearchContainer: React.FunctionComponent<{
+  getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   objectsPerPage: number;
   onChangeFilters: (filters: readonly Filter[]) => void;
-  renderInstitutionLink?: (
-    institutionUri: string,
-    children: React.ReactNode
-  ) => React.ReactElement;
   renderWorkLink: (
     workUri: string,
     children: React.ReactNode
@@ -58,9 +55,9 @@ export const WorkSearchContainer: React.FunctionComponent<{
   workQueryService: WorkQueryService;
   worksPage: number;
 }> = ({
+  getAbsoluteImageSrc,
   objectsPerPage,
   onChangeFilters,
-  renderInstitutionLink,
   renderWorkLink,
   renderWorkLocationsMap,
   setWorkAgentsPage,
@@ -224,6 +221,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
   const filtersControls = createFilterControls({
     facets: getWorksResult.facets,
     filters: workQuery.filters,
+    getAbsoluteImageSrc,
     onChangeFilters,
   });
 
@@ -235,9 +233,9 @@ export const WorkSearchContainer: React.FunctionComponent<{
       <Container fluid>
         <Row>
           <WorksGallery
-            works={getWorksResult.modelSet.works}
-            renderInstitutionLink={renderInstitutionLink}
+            getAbsoluteImageSrc={getAbsoluteImageSrc}
             renderWorkLink={renderWorkLink}
+            works={getWorksResult.modelSet.works}
           />
         </Row>
         <Row className="mt-4">
@@ -267,6 +265,7 @@ export const WorkSearchContainer: React.FunctionComponent<{
             agents={getWorkAgentsResult.workAgentUris.map(workAgentUri =>
               getWorkAgentsResult.modelSet.agentByUri(workAgentUri)
             )}
+            getAbsoluteImageSrc={getAbsoluteImageSrc}
           />
         </Row>
         <Row className="mt-4">

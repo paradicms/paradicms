@@ -11,13 +11,14 @@ import {ValueFacet} from "@paradicms/facets";
 interface ValueFilterControlProps<T extends JsonPrimitiveType> {
   facet: ValueFacet<T>;
   filter: ValueFilter<T>;
+  getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   onChange: (newFilter: ValueFilter<T>) => void;
 }
 
 export const ValueFilterControl = <T extends JsonPrimitiveType>(
   props: ValueFilterControlProps<T>
 ) => {
-  const {facet, filter, onChange} = props;
+  const {facet, filter, getAbsoluteImageSrc, onChange} = props;
 
   const [galleryModalOpen, setGalleryModalOpen] = useState(false);
   const toggleGalleryModal = useCallback(
@@ -63,6 +64,7 @@ export const ValueFilterControl = <T extends JsonPrimitiveType>(
         <ModalBody>
           <ValueFilterGallery
             facet={facet}
+            getAbsoluteImageSrc={getAbsoluteImageSrc}
             filter={filter}
             onChange={onChange}
           />

@@ -8,16 +8,13 @@ import {Work} from "@paradicms/models";
  * @param works current page of works to render in the gallery
  */
 export const WorksGallery: React.FunctionComponent<{
-  works: readonly Work[];
-  renderInstitutionLink?: (
-    institutionUri: string,
-    children: React.ReactNode
-  ) => React.ReactElement;
+  getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   renderWorkLink: (
     workUri: string,
     children: React.ReactNode
   ) => React.ReactElement;
-}> = ({works, renderInstitutionLink, renderWorkLink}) => (
+  works: readonly Work[];
+}> = ({getAbsoluteImageSrc, renderWorkLink, works}) => (
   <>
     {works.map(work => (
       <div
@@ -29,9 +26,9 @@ export const WorksGallery: React.FunctionComponent<{
         }}
       >
         <WorkCard
-          work={work}
-          renderInstitutionLink={renderInstitutionLink}
+          getAbsoluteImageSrc={getAbsoluteImageSrc}
           renderWorkLink={renderWorkLink}
+          work={work}
         />
       </div>
     ))}
