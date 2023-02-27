@@ -5,6 +5,7 @@ import {ModelSet, ModelSubsetter} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
+  getAbsoluteImageSrc,
   readConfigurationFile,
   readModelSetFile,
 } from "@paradicms/next";
@@ -53,7 +54,6 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   nextWorkUri,
   previousWorkUri,
 }) => {
-  const router = useRouter();
   const configuration = useMemo(
     () =>
       MultiPageExhibitionAppConfiguration.fromDataset(
@@ -67,6 +67,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   );
   const collection = modelSet.collectionByUri(collectionUri);
   const currentWork = modelSet.workByUri(currentWorkUri);
+  const router = useRouter();
 
   const onGoToNextWork = useCallback(() => {
     if (nextWorkUri) {
@@ -110,6 +111,9 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
         <div>
           <div onKeyDown={onKeyDown} style={{outline: "none"}} tabIndex={0}>
             <WorkContainer
+              getAbsoluteImageSrc={relativeImageSrc =>
+                getAbsoluteImageSrc(relativeImageSrc, router)
+              }
               renderWorkLocationsMap={workLocations => (
                 <WorkLocationsMap
                   collectionUri={collectionUri}

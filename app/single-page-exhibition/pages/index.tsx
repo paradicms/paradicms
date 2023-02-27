@@ -2,7 +2,11 @@ import * as React from "react";
 import {useMemo} from "react";
 import {GetStaticProps} from "next";
 import fs from "fs";
-import {readConfigurationFile, readModelSetFile} from "@paradicms/next";
+import {
+  getAbsoluteImageSrc,
+  readConfigurationFile,
+  readModelSetFile,
+} from "@paradicms/next";
 import {ModelSet, Text} from "@paradicms/models";
 import {fastRdfStringToDataset} from "@paradicms/rdf";
 import {Col, Container, Row} from "reactstrap";
@@ -15,6 +19,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
 import {SinglePageExhibitionAppConfiguration} from "../lib/SinglePageExhibitionAppConfiguration";
+import {useRouter} from "next/router";
 
 const readFile = (filePath: string) =>
   fs.promises.readFile(filePath).then(contents => contents.toString());
@@ -51,7 +56,6 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
     [modelSetString]
   );
-
   const pages: React.ReactElement[] = useMemo(() => {
     const collection = modelSet.collectionByUri(collectionUri);
     const pages: React.ReactElement[] = [];
@@ -113,6 +117,9 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
           <Row>
             <Col xs={12}>
               <WorkContainer
+                getAbsoluteImageSrc={relativeImageSrc =>
+                  getAbsoluteImageSrc(relativeImageSrc, router)
+                }
                 renderWorkLocationsMap={workLocations => (
                   <WorkLocationsMap workLocations={workLocations} />
                 )}
@@ -126,6 +133,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
 
     return pages;
   }, [modelSet]);
+  const router = useRouter();
 
   if (pages.length === 0) {
     return null;
