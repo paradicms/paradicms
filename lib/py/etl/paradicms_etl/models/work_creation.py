@@ -3,7 +3,7 @@ from typing import Union, Tuple, Optional
 from rdflib import URIRef, DCTERMS, RDF
 from rdflib.resource import Resource
 
-from paradicms_etl.models.date_time_description import DateTimeDescription
+from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.named_location import Location
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work_event import WorkEvent
@@ -33,14 +33,14 @@ class WorkCreation(WorkEvent):
         creator_uri: Union[URIRef, Tuple[URIRef, ...]],
         abstract: Union[str, Text, None] = None,
         contributor_uri: Union[URIRef, Tuple[URIRef, ...], None],
-        date: Union[DateTimeDescription, str, None] = None,
-        earliest_date: Union[DateTimeDescription, str, None] = None,
-        latest_date: Union[DateTimeDescription, str, None] = None,
+        date: Optional[DateTimeUnion] = None,
+        earliest_date: Optional[DateTimeUnion] = None,
+        latest_date: Optional[DateTimeUnion] = None,
         location: Union[Location, str, None] = None,
         title: Optional[str] = None
     ):
         if date is None and earliest_date is None and latest_date is None:
-            raise ValueError("must specify at least onedate")
+            raise ValueError("must specify at least one date")
 
         return cls(
             ResourceBuilder(uri)
