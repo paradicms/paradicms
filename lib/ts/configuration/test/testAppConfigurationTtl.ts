@@ -1,4 +1,4 @@
-export const testAppConfiguration = `
+export const testAppConfigurationTtl = `
 @prefix : <http://www.paradicms.org/ns/configuration#> .
 
 [] a :AppConfiguration;

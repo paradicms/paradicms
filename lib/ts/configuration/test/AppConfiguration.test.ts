@@ -1,27 +1,27 @@
 import {expect} from "chai";
 import {anyRdfStringToDataset, createDataset} from "@paradicms/rdf";
-import {AppConfiguration} from "../src";
-import {testAppConfiguration} from "./testAppConfiguration";
+import {testAppConfigurationTtl} from "./testAppConfigurationTtl";
+import {TestAppConfiguration} from "./TestAppConfiguration";
 
 describe("AppConfiguration", () => {
-  let sut: AppConfiguration;
+  let jsonLdAppConfiguration: TestAppConfiguration;
   before(async () => {
-    sut = AppConfiguration.fromDataset(
-      await anyRdfStringToDataset(testAppConfiguration, {
+    jsonLdAppConfiguration = TestAppConfiguration.fromDataset(
+      await anyRdfStringToDataset(testAppConfigurationTtl, {
         contentType: "text/turtle",
       })
     )!;
-    expect(sut).to.not.be.null;
+    expect(jsonLdAppConfiguration).to.not.be.null;
   });
 
   it("from should return null from an empty dataset", () => {
-    expect(AppConfiguration.fromDataset(createDataset())).to.be.null;
+    expect(TestAppConfiguration.fromDataset(createDataset())).to.be.null;
   });
 
   it("from should return a configuration from a .ttl", async () => {
     expect(
-      AppConfiguration.fromDataset(
-        await anyRdfStringToDataset(testAppConfiguration, {
+      TestAppConfiguration.fromDataset(
+        await anyRdfStringToDataset(testAppConfigurationTtl, {
           contentType: "text/turtle",
         })
       )
@@ -29,10 +29,55 @@ describe("AppConfiguration", () => {
   });
 
   it("should get the stylesheet", () => {
-    expect(sut.stylesheet).to.eq("https://minorgordon.net/minorgordon.net.css");
+    expect(jsonLdAppConfiguration.stylesheet).to.eq(
+      "https://minorgordon.net/minorgordon.net.css"
+    );
   });
 
   it("should get the title", () => {
-    expect(sut.title).to.eq("Test title");
+    expect(jsonLdAppConfiguration.title).to.eq("Test title");
+  });
+
+  it("should have a JSON-LD equivalent", async () => {
+    const json = {
+      "@context": {
+        "@vocab": "http://www.paradicms.org/ns/configuration#",
+      },
+      "@type": "AppConfiguration",
+      stylesheet: "https://minorgordon.net/minorgordon.net.css",
+      title: "Test title",
+      workProperty: [
+        {
+          label: "Property label 1",
+          predicate: {"@id": "http://example.com/predicate1"},
+        },
+        {
+          label: "Property label 2",
+          predicate: {"@id": "http://example.com/predicate2"},
+        },
+      ],
+    };
+
+    jsonLdAppConfiguration = TestAppConfiguration.fromDataset(
+      await anyRdfStringToDataset(JSON.stringify(json), {
+        contentType: "application/ld+json",
+      })
+    )!;
+
+    expect(jsonLdAppConfiguration.title).to.eq("Test title");
+    expect(jsonLdAppConfiguration.stylesheet).to.eq(
+      "https://minorgordon.net/minorgordon.net.css"
+    );
+    expect(jsonLdAppConfiguration.workProperties.length).to.eq(2);
+    expect(
+      jsonLdAppConfiguration.workProperties[0].label.startsWith(
+        "Property label "
+      )
+    ).to.be.true;
+    expect(
+      jsonLdAppConfiguration.workProperties[0].uri.startsWith(
+        "http://example.com/predicate"
+      )
+    ).to.be.true;
   });
 });

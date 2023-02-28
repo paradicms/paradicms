@@ -1,42 +1,14 @@
 import {expect} from "chai";
 import {anyRdfStringToDataset} from "@paradicms/rdf";
-import {AppConfiguration, PropertyConfiguration} from "../src";
-import {testAppConfiguration} from "./testAppConfiguration";
-import {configuration} from "@paradicms/vocabularies";
-import {Dataset} from "@rdfjs/types";
-
-class WorkAppConfiguration extends AppConfiguration {
-  static override fromDataset(dataset: Dataset) {
-    const appConfiguration = AppConfiguration.fromDataset(dataset);
-    if (appConfiguration) {
-      return new WorkAppConfiguration({
-        dataset,
-        graphNode: appConfiguration.graphNode,
-        node: appConfiguration.node,
-      });
-    } else {
-      return null;
-    }
-  }
-
-  get workProperties(): readonly PropertyConfiguration[] {
-    return this.filterAndMapObjects(configuration.workProperty, term =>
-      term.termType === "BlankNode"
-        ? new PropertyConfiguration({
-            dataset: this.dataset,
-            graphNode: this.graphNode,
-            node: term,
-          })
-        : null
-    );
-  }
-}
+import {PropertyConfiguration} from "../src";
+import {testAppConfigurationTtl} from "./testAppConfigurationTtl";
+import {TestAppConfiguration} from "./TestAppConfiguration";
 
 describe("PropertyConfiguration", () => {
   let sut: PropertyConfiguration;
   before(async () => {
-    const appConfiguration = WorkAppConfiguration.fromDataset(
-      await anyRdfStringToDataset(testAppConfiguration, {
+    const appConfiguration = TestAppConfiguration.fromDataset(
+      await anyRdfStringToDataset(testAppConfigurationTtl, {
         contentType: "text/turtle",
       })
     )!;
