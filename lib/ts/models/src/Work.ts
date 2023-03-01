@@ -128,20 +128,7 @@ export class Work extends Mixin(
 
   @Memoize()
   get events(): readonly WorkEvent[] {
-    const events = this.modelSet.workEventsByWork(this.uri);
-    if (events.length > 0) {
-      return events;
-    }
-
-    // No events in the dataset. See if we can synthesize some from properties.
-    const synthesizedEvents: WorkEvent[] = [];
-
-    // const created = this.findAndMapObject(
-    //   dcterms.created,
-    //   term => term.termType === "Literal"
-    // );
-
-    return synthesizedEvents;
+    return this.modelSet.workEventsByWork(this.uri);
   }
 
   @Memoize()
