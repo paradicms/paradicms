@@ -8,6 +8,7 @@ export * from "./FiltersControlsAccordion";
 export * from "./FilterVisitor";
 export * from "./getNamedModelLinks";
 export * from "./getWorkEventIcon";
+export * from "./getWorkLocationIcon";
 export * from "./ImagesCarousel";
 export * from "./largeThumbnailTargetDimensions";
 export * from "./LicenseLink";
