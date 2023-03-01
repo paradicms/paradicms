@@ -6,6 +6,7 @@ import {DateTimeUnion} from "./DateTimeUnion";
 import {DateTimeDescription} from "./DateTimeDescription";
 import {xsd} from "@paradicms/vocabularies";
 import {Location} from "./Location";
+import {Text} from "./Text";
 
 export class Model extends Resource {
   readonly modelSet: ModelSet;
@@ -44,6 +45,21 @@ export class Model extends Resource {
     switch (term.termType) {
       case "BlankNode":
         return new Location({
+          modelSet: this.modelSet,
+          graphNode: this.graphNode,
+          node: term,
+        });
+      case "Literal":
+        return term.value;
+      default:
+        return null;
+    }
+  }
+
+  protected mapTextObject(term: Term): Text | string | null {
+    switch (term.termType) {
+      case "BlankNode":
+        return new Text({
           modelSet: this.modelSet,
           graphNode: this.graphNode,
           node: term,

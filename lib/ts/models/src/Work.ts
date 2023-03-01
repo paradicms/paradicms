@@ -123,20 +123,7 @@ export class Work extends Mixin(
 
   @Memoize()
   get description(): string | Text | null {
-    return this.findAndMapObject(dcterms.abstract, term => {
-      switch (term.termType) {
-        case "BlankNode":
-          return new Text({
-            modelSet: this.modelSet,
-            graphNode: this.graphNode,
-            node: term,
-          });
-        case "Literal":
-          return term.value;
-        default:
-          return null;
-      }
-    });
+    return this.findAndMapObject(dcterms.abstract, this.mapTextObject);
   }
 
   @Memoize()

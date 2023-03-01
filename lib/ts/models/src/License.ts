@@ -5,7 +5,7 @@ import {requireNonNull} from "@paradicms/utilities";
 export class License extends NamedModel {
   get identifier(): string {
     return requireNonNull(
-      this.findAndMapObject(dc11.identifier, this.mapStringObject
+      this.findAndMapObject(dc11.identifier, this.mapStringObject)
     );
   }
 
