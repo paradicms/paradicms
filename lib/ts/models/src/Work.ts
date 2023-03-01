@@ -24,6 +24,7 @@ import {WorkCreation} from "./WorkCreation";
 import {Location} from "./Location";
 import {cms, dcterms, rdf} from "@paradicms/vocabularies";
 import {Institution} from "./Institution";
+import {mapTextObject} from "./mapTextObject";
 
 const getRightsWorkAgents = (
   rights: Rights | null,
@@ -123,7 +124,9 @@ export class Work extends Mixin(
 
   @Memoize()
   get description(): string | Text | null {
-    return this.findAndMapObject(dcterms.abstract, this.mapTextObject);
+    return this.findAndMapObject(dcterms.abstract, term =>
+      mapTextObject(this, term)
+    );
   }
 
   @Memoize()

@@ -6,6 +6,8 @@ import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {dcterms, vra} from "@paradicms/vocabularies";
 import {DateTimeUnion} from "./DateTimeUnion";
+import {mapDateTimeUnionObject} from "./mapDateTimeUnionObject";
+import {mapLocationObject} from "./mapLocationObject";
 
 export class Event extends Mixin(NamedModel, HasAbstract) {
   @Memoize()
@@ -69,17 +71,23 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
 
   @Memoize()
   get date(): DateTimeUnion | null {
-    return this.findAndMapObject(dcterms.date, this.mapDateTimeUnionObject);
+    return this.findAndMapObject(dcterms.date, term =>
+      mapDateTimeUnionObject(this, term)
+    );
   }
 
   @Memoize()
   get endDate(): DateTimeUnion | null {
-    return this.findAndMapObject(vra.endDate, this.mapDateTimeUnionObject);
+    return this.findAndMapObject(vra.endDate, term =>
+      mapDateTimeUnionObject(this, term)
+    );
   }
 
   @Memoize()
   get location(): Location | string | null {
-    return this.findAndMapObject(dcterms.spatial, this.mapLocationObject);
+    return this.findAndMapObject(dcterms.spatial, term =>
+      mapLocationObject(this, term)
+    );
   }
 
   /**
@@ -113,7 +121,9 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
 
   @Memoize()
   get startDate(): DateTimeUnion | null {
-    return this.findAndMapObject(vra.startDate, this.mapDateTimeUnionObject);
+    return this.findAndMapObject(vra.startDate, term =>
+      mapDateTimeUnionObject(this, term)
+    );
   }
 
   get title(): string | null {
