@@ -19,16 +19,33 @@ class WorkEvent(Event):
         self.work_uri
 
     @classmethod
-    def json_ld_context(cls):
-        return safe_dict_update(
-            Event.json_ld_context(),
-            {
-                "work": {"@id": str(CMS.work), "@type": "@id"},
-            },
+    def from_fields(
+        cls,
+        *,
+        uri: URIRef,
+        work_uri: URIRef,
+        abstract: Union[str, Text, None] = None,
+        date: Optional[DateTimeUnion] = None,
+        end_date: Optional[DateTimeUnion] = None,
+        location: Union[Location, str, None] = None,
+        start_date: Optional[DateTimeUnion] = None,
+        title: Optional[str] = None,
+    ):
+        return cls(
+            WorkEvent._from_fields(
+                abstract=abstract,
+                date=date,
+                end_date=end_date,
+                location=location,
+                resource_builder=ResourceBuilder(uri),
+                start_date=start_date,
+                title=title,
+                work_uri=work_uri,
+            ).build()
         )
 
     @staticmethod
-    def _work_event_from_fields(
+    def _from_fields(  # type: ignore[override]
         *,
         abstract: Union[str, Text, None],
         date: Optional[DateTimeUnion],
@@ -39,7 +56,7 @@ class WorkEvent(Event):
         title: Optional[str],
         work_uri: URIRef,
     ) -> ResourceBuilder:
-        return Event._event_from_fields(
+        return Event._from_fields(
             abstract=abstract,
             date=date,
             end_date=end_date,
@@ -47,6 +64,15 @@ class WorkEvent(Event):
             resource_builder=resource_builder.add(CMS.work, work_uri),
             start_date=start_date,
             title=title,
+        )
+
+    @classmethod
+    def json_ld_context(cls):
+        return safe_dict_update(
+            Event.json_ld_context(),
+            {
+                "work": {"@id": str(CMS.work), "@type": "@id"},
+            },
         )
 
     @property

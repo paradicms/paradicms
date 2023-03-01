@@ -13,7 +13,9 @@ from paradicms_etl.models.person import Person
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.root_model import RootModel
 from paradicms_etl.models.work import Work
+from paradicms_etl.models.work_closing import WorkClosing
 from paradicms_etl.models.work_creation import WorkCreation
+from paradicms_etl.models.work_opening import WorkOpening
 
 ROOT_MODEL_CLASSES: Tuple[Type[RootModel], ...] = (
     Collection,
@@ -26,7 +28,9 @@ ROOT_MODEL_CLASSES: Tuple[Type[RootModel], ...] = (
     Person,
     RightsStatement,
     Work,
+    WorkClosing,
     WorkCreation,
+    WorkOpening,
 )
 
 ROOT_MODEL_CLASSES_BY_NAME: Dict[str, Type[RootModel]] = {

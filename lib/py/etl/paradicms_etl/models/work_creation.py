@@ -21,7 +21,7 @@ class WorkCreation(WorkEvent):
         return self._required_uri_values(DCTERMS.creator)
 
     @classmethod
-    def from_fields(
+    def from_fields(  # type: ignore[override]
         cls,
         *,
         contributor_uri: Union[URIRef, Tuple[URIRef, ...], None],
@@ -35,8 +35,9 @@ class WorkCreation(WorkEvent):
         start_date: Optional[DateTimeUnion] = None,
         title: Optional[str] = None
     ):
+
         return cls(
-            WorkEvent._work_event_from_fields(
+            WorkEvent._from_fields(
                 abstract=abstract,
                 date=date,
                 end_date=end_date,
