@@ -28,8 +28,10 @@ interface Cms {
   RightsStatement: NamedNode<"http://www.paradicms.org/ns/cms#RightsStatement">;
   Text: NamedNode<"http://www.paradicms.org/ns/cms#Text">;
   Work: NamedNode<"http://www.paradicms.org/ns/cms#Work">;
+  WorkClosing: NamedNode<"http://www.paradicms.org/ns/cms#WorkClosing">;
   WorkCreation: NamedNode<"http://www.paradicms.org/ns/cms#WorkCreation">;
   WorkEvent: NamedNode<"http://www.paradicms.org/ns/cms#WorkEvent">;
+  WorkOpening: NamedNode<"http://www.paradicms.org/ns/cms#WorkOpening">;
 }
 
 const builder = namespace("http://www.paradicms.org/ns/cms#") as any;

@@ -18,6 +18,8 @@ import {WorkCreation} from "./WorkCreation";
 import {WorkEvent} from "./WorkEvent";
 import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
 import {visitWorkEvent} from "./WorkEventVisitor";
+import {WorkOpening} from "./WorkOpening";
+import {WorkClosing} from "./WorkClosing";
 
 /**
  * Subset a ModelSet to reduce the amount of data passed between getStaticProps and the component.
@@ -327,36 +329,31 @@ export class ModelSubsetter {
     return builder;
   }
 
-  private addWorkCreationModelSet(
-    builder: ModelSetBuilder,
-    joinSelector: WorkEventJoinSelector,
-    workCreation: WorkCreation
-  ): ModelSetBuilder {
-    builder.addEvent(workCreation);
-    if (joinSelector.agents) {
-      for (const creatorAgent of workCreation.creatorAgents) {
-        this.addAgentModelSet(creatorAgent, builder, joinSelector.agents);
-      }
-    }
-    if (joinSelector.work) {
-      this.addWorkModelSet(builder, workCreation.work, joinSelector.work);
-    }
-    return builder;
-  }
-
   private addWorkEventModelSet(
     builder: ModelSetBuilder,
     joinSelector: WorkEventJoinSelector,
     workEvent: WorkEvent
   ): ModelSetBuilder {
+    builder.addEvent(workEvent);
+    if (joinSelector.work) {
+      this.addWorkModelSet(builder, workEvent.work, joinSelector.work);
+    }
+
     const self = this;
     return visitWorkEvent(workEvent, {
+      visitWorkClosing(workClosing: WorkClosing): ModelSetBuilder {
+        return builder;
+      },
       visitWorkCreation(workCreation: WorkCreation): ModelSetBuilder {
-        return self.addWorkCreationModelSet(
-          builder,
-          joinSelector,
-          workCreation
-        );
+        if (joinSelector.agents) {
+          for (const agent of workCreation.agents) {
+            self.addAgentModelSet(agent, builder, joinSelector.agents);
+          }
+        }
+        return builder;
+      },
+      visitWorkOpening(workOpening: WorkOpening): ModelSetBuilder {
+        return builder;
       },
     });
   }

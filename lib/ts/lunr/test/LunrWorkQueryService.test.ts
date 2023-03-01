@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import {LunrWorkQueryService} from "../src/LunrWorkQueryService";
-import {ModelSet, visitWorkEvent, WorkCreation} from "@paradicms/models";
+import {ModelSet, visitWorkEvent, WorkClosing, WorkCreation, WorkOpening} from "@paradicms/models";
 import {CollectionValueFacet, InstitutionValueFacet, StringPropertyValueFacet} from "@paradicms/facets";
 import {dcterms, vra} from "@paradicms/vocabularies";
 import {StringPropertyValueFilter} from "@paradicms/filters";
@@ -90,9 +90,13 @@ describe("LunrWorkQueryService", () => {
     for (const workEvent of result.modelSet.workEvents) {
       expect(workEvent.work).to.not.be.null;
       visitWorkEvent(workEvent, {
+        visitWorkClosing(workClosing: WorkClosing): void {
+        },
         visitWorkCreation(workCreation: WorkCreation): void {
           expect(workCreation.creatorAgents).to.not.be.empty;
-        }
+        },
+        visitWorkOpening(workOpening: WorkOpening): void {
+        },
       });
     }
   });

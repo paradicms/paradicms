@@ -25,10 +25,14 @@ import {datasetCoreToDataset, datasetToFastRdfString} from "@paradicms/rdf";
 import TermSet from "@rdfjs/term-set";
 import {requireDefined} from "@paradicms/utilities";
 import {cms, rdf} from "@paradicms/vocabularies";
+import {WorkClosing} from "./WorkClosing";
+import {WorkOpening} from "./WorkOpening";
 
 const eventClassesByRdfType = (() => {
   const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
+  result[cms.WorkClosing.value] = WorkClosing;
   result[cms.WorkCreation.value] = WorkCreation;
+  result[cms.WorkOpening.value] = WorkOpening;
   return result;
 })();
 

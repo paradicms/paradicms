@@ -1,18 +1,8 @@
 import * as React from "react";
 import {WorkLocationSummary} from "@paradicms/services";
 import {MapContainer, Marker, TileLayer, Tooltip} from "react-leaflet";
-import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
-import {faLightbulb} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-
-const getWorkLocationIcon = (
-  workLocation: WorkLocationSummary
-): IconDefinition => {
-  switch (workLocation.role) {
-    case "Creation":
-      return faLightbulb;
-  }
-};
+import {getWorkLocationIcon} from "@paradicms/react-dom-components";
 
 export const WorkLocationsMap: React.FunctionComponent<{
   readonly workLocations: readonly WorkLocationSummary[];

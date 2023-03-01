@@ -1,21 +1,16 @@
 from typing import Optional, Tuple
 
-from rdflib import URIRef, RDF, DCTERMS
+from rdflib import URIRef, DCTERMS
 from rdflib.namespace import FOAF
-from rdflib.resource import Resource
 
 from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.property import Property
-from paradicms_etl.namespaces import CONTACT, CMS
+from paradicms_etl.namespaces import CONTACT
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class Person(Agent):
-    def __init__(self, resource: Resource):
-        resource.add(RDF.type, CMS[self.__class__.__name__])
-        Agent.__init__(self, resource)
-
     @classmethod
     def from_fields(
         cls,

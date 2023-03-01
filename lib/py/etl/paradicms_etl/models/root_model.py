@@ -10,7 +10,9 @@ from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.work import Work
+from paradicms_etl.models.work_closing import WorkClosing
 from paradicms_etl.models.work_creation import WorkCreation
+from paradicms_etl.models.work_opening import WorkOpening
 
 """
 Typedef for root model classes such as Institution, Person, and Work.
@@ -26,5 +28,7 @@ RootModel = Union[
     Person,
     RightsStatement,
     Work,
+    WorkClosing,
     WorkCreation,
+    WorkOpening,
 ]

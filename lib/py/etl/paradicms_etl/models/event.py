@@ -20,7 +20,7 @@ class Event(ResourceBackedNamedModel):
         ResourceBackedNamedModel.__init__(self, resource)
 
     @staticmethod
-    def _event_from_fields(
+    def _from_fields(
         *,
         resource_builder: ResourceBuilder,
         abstract: Union[str, Text, None] = None,

@@ -16,7 +16,7 @@ export const WorkEventsTimeline: React.FunctionComponent<{
   readonly workEvents: readonly (WorkEvent & {readonly work: Work})[];
 }> = ({page, pageMax, setPage, workEvents}) => {
   return (
-    <VerticalTimeline>
+    <VerticalTimeline layout="1-column">
       {workEvents.map(workEvent => (
         <VerticalTimelineElement
           date={workEvent.displayDate ?? undefined}
