@@ -45,7 +45,7 @@ class Event(ResourceBackedNamedModel):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            ResourceBackedNamedModel.json_ld_context(cls),
+            ResourceBackedNamedModel.json_ld_context(),
             {
                 "abstract": {"@id": str(DCTERMS.abstract)},
                 "date": {"@id": str(DCTERMS.creator)},
