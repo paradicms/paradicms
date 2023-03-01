@@ -21,9 +21,7 @@ export class Collection extends Mixin(
 
   get institutionUri(): string {
     return requireNonNull(
-        this.findAndMapObject(cms.institution, term =>
-            term.termType === "NamedNode" ? term.value : null
-        )
+        this.findAndMapObject(cms.institution, this.mapUriObject)
     );
   }
 

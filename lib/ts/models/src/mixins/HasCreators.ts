@@ -26,8 +26,6 @@ export abstract class HasCreators extends ModelMixin {
 
   @Memoize()
   get creatorAgentUris(): readonly string[] {
-    return this.filterAndMapObjects(dcterms.creator, term =>
-      term.termType === "NamedNode" ? term.value : null
-    );
+    return this.filterAndMapObjects(dcterms.creator, this.mapUriObject);
   }
 }

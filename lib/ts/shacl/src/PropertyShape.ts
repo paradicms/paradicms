@@ -2,11 +2,7 @@ import {Shape} from "./Shape";
 import {BlankNode, Literal, NamedNode, Term} from "@rdfjs/types";
 import {dash, sh, xsd} from "@paradicms/vocabularies";
 import {PropertyGroup} from "./PropertyGroup";
-import {
-  parseFloatOrNull,
-  parseIntOrNull,
-  requireNonNull,
-} from "@paradicms/utilities";
+import {requireNonNull} from "@paradicms/utilities";
 import {getRdfList} from "@paradicms/rdf";
 import {NodeShape} from "./NodeShape";
 
@@ -78,21 +74,11 @@ export class PropertyShape extends Shape {
   }
 
   get maxCount(): number | null {
-    return this.findAndMapObject(sh.maxCount, term =>
-      term.termType == "Literal" &&
-      (!term.datatype || term.datatype.equals(xsd.integer))
-        ? parseIntOrNull(term.value)
-        : null
-    );
+    return this.findAndMapObject(sh.maxCount, this.mapIntObject);
   }
 
   get minCount(): number | null {
-    return this.findAndMapObject(sh.minCount, term =>
-      term.termType == "Literal" &&
-      (!term.datatype || term.datatype.equals(xsd.integer))
-        ? parseIntOrNull(term.value)
-        : null
-    );
+    return this.findAndMapObject(sh.minCount, this.mapIntObject);
   }
 
   get nodeShapes(): readonly NodeShape[] {
@@ -142,9 +128,7 @@ export class PropertyShape extends Shape {
   }
 
   get order(): number | null {
-    return this.findAndMapObject(sh.maxCount, term =>
-      term.termType == "Literal" ? parseFloatOrNull(term.value) : null
-    );
+    return this.findAndMapObject(sh.maxCount, this.mapFloatObject);
   }
 
   get path(): NamedNode {

@@ -62,11 +62,7 @@ export class WorkSearchAppConfiguration extends AppConfiguration {
   }
 
   get objectsPerPage(): number | null {
-    return this.findAndMapObject(configuration.objectsPerPage, term =>
-      term.termType === "Literal" && term.datatype.value === xsd.integer.value
-        ? parseInt(term.value)
-        : null
-    );
+    return this.findAndMapObject(configuration.objectsPerPage, this.mapIntObject);
   }
 
   get workProperties(): readonly PropertyConfiguration[] {

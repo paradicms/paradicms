@@ -118,9 +118,7 @@ export class Work extends Mixin(
 
   @Memoize()
   get collectionUris(): readonly string[] {
-    return this.filterAndMapObjects(cms.collection, term =>
-      term.termType === "NamedNode" ? term.value : null
-    );
+    return this.filterAndMapObjects(cms.collection, this.mapUriObject);
   }
 
   @Memoize()
@@ -141,8 +139,22 @@ export class Work extends Mixin(
     });
   }
 
+  @Memoize()
   get events(): readonly WorkEvent[] {
-    return this.modelSet.workEventsByWork(this.uri);
+    const events = this.modelSet.workEventsByWork(this.uri);
+    if (events.length > 0) {
+      return events;
+    }
+
+    // No events in the dataset. See if we can synthesize some from properties.
+    const synthesizedEvents: WorkEvent[] = [];
+
+    // const created = this.findAndMapObject(
+    //   dcterms.created,
+    //   term => term.termType === "Literal"
+    // );
+
+    return synthesizedEvents;
   }
 
   @Memoize()
@@ -154,9 +166,7 @@ export class Work extends Mixin(
 
   @Memoize()
   get institutionUri(): string | null {
-    return this.findAndMapObject(cms.institution, term =>
-      term.termType === "NamedNode" ? term.value : null
-    );
+    return this.findAndMapObject(cms.institution, this.mapUriObject);
   }
 
   @Memoize()

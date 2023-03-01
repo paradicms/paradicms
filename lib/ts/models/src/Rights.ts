@@ -43,9 +43,7 @@ export class Rights extends Mixin(Model, HasContributors, HasCreators) {
 
   @Memoize()
   get holderAgentUris(): readonly string[] {
-    return this.filterAndMapObjects(dcterms.rightsHolder, term =>
-      term.termType === "NamedNode" ? term.value : null
-    );
+    return this.filterAndMapObjects(dcterms.rightsHolder, this.mapUriObject);
   }
 
   @Memoize()

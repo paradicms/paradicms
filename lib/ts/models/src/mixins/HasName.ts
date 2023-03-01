@@ -5,9 +5,7 @@ import {requireNonNull} from "@paradicms/utilities";
 export abstract class HasName extends ModelMixin {
   get name(): string {
     return requireNonNull(
-      this.findAndMapObject(foaf.name, term =>
-        term.termType === "Literal" ? term.value : null
-      )
+      this.findAndMapObject(foaf.name, this.mapStringObject)
     );
   }
 }

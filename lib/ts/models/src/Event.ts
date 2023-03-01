@@ -1,11 +1,11 @@
 import {NamedModel} from "./NamedModel";
 import {DateTimeDescription} from "./DateTimeDescription";
-import {NamedNode} from "@rdfjs/types";
 import {Location} from "./Location";
 import {HasAbstract} from "./mixins";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
-import {dcterms, vra, xsd} from "@paradicms/vocabularies";
+import {dcterms, vra} from "@paradicms/vocabularies";
+import {DateTimeUnion} from "./DateTimeUnion";
 
 export class Event extends Mixin(NamedModel, HasAbstract) {
   @Memoize()
@@ -68,59 +68,23 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
   }
 
   @Memoize()
-  get date(): DateTimeDescription | number | string | null {
-    return this.datePropertyValue(dcterms.date);
-  }
-
-  private datePropertyValue(
-    property: NamedNode
-  ): DateTimeDescription | number | string | null {
-    return this.findAndMapObject(property, term => {
-      switch (term.termType) {
-        case "BlankNode":
-          return new DateTimeDescription({
-            modelSet: this.modelSet,
-            graphNode: this.graphNode,
-            node: term,
-          });
-        case "Literal":
-          if (term.datatype.value === xsd.integer.value) {
-            return parseInt(term.value);
-          } else {
-            return term.value;
-          }
-        default:
-          return null;
-      }
-    });
+  get date(): DateTimeUnion | null {
+    return this.findAndMapObject(dcterms.date, this.mapDateTimeUnionObject);
   }
 
   @Memoize()
-  get earliestDate(): DateTimeDescription | number | string | null {
-    return this.datePropertyValue(vra.earliestDate);
+  get earliestDate(): DateTimeUnion | null {
+    return this.findAndMapObject(vra.earliestDate, this.mapDateTimeUnionObject);
   }
 
   @Memoize()
-  get latestDate(): DateTimeDescription | number | string | null {
-    return this.datePropertyValue(vra.latestDate);
+  get latestDate(): DateTimeUnion | null {
+    return this.findAndMapObject(vra.latestDate, this.mapDateTimeUnionObject);
   }
 
   @Memoize()
   get location(): Location | string | null {
-    return this.findAndMapObject(dcterms.spatial, term => {
-      switch (term.termType) {
-        case "BlankNode":
-          return new Location({
-            modelSet: this.modelSet,
-            graphNode: this.graphNode,
-            node: term,
-          });
-        case "Literal":
-          return term.value;
-        default:
-          return null;
-      }
-    });
+    return this.findAndMapObject(dcterms.spatial, this.mapLocationObject);
   }
 
   /**
@@ -153,8 +117,6 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
   }
 
   get title(): string | null {
-    return this.findAndMapObject(dcterms.title, term =>
-      term.termType === "Literal" ? term.value : null
-    );
+    return this.findAndMapObject(dcterms.title, this.mapStringObject);
   }
 }

@@ -10,7 +10,7 @@ export class AppConfiguration extends Configuration {
   }
 
   get basePath(): string | null {
-    return this.findAndMapObject(configuration.basePath, term => term.termType === "Literal" ? term.value : null);
+    return this.findAndMapObject(configuration.basePath, this.mapStringObject);
   }
 
   static fromDataset(dataset: Dataset): AppConfiguration | null {
@@ -76,9 +76,7 @@ export class AppConfiguration extends Configuration {
   }
 
   get title(): string | null {
-    return this.findAndMapObject(configuration.title, term =>
-      term.termType === "Literal" ? term.value : null
-    );
+    return this.findAndMapObject(configuration.title, this.mapStringObject);
   }
 
   toFastRdfString(): string {

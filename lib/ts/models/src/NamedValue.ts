@@ -16,15 +16,13 @@ export class NamedValue extends Mixin(NamedModel, HasAbstract, HasImages) {
 
   @Memoize()
   get prefLabel(): string | null {
-    return this.findAndMapObject(skos.prefLabel, term =>
-      term.termType === "Literal" ? term.value : null
-    );
+    return this.findAndMapObject(skos.prefLabel, this.mapStringObject);
   }
 
   get propertyUris(): readonly string[] {
     const propertyUris: readonly string[] = this.filterAndMapObjects(
       rdf.predicate,
-      term => (term.termType === "NamedNode" ? term.value : null)
+      this.mapUriObject
     );
     if (propertyUris.length === 0) {
       throw new RangeError("named value must link to one or more properties");
@@ -34,9 +32,7 @@ export class NamedValue extends Mixin(NamedModel, HasAbstract, HasImages) {
 
   @Memoize()
   get title(): string | null {
-    return this.findAndMapObject(dcterms.title, term =>
-      term.termType === "Literal" ? term.value : null
-    );
+    return this.findAndMapObject(dcterms.title, this.mapStringObject);
   }
 
   get value(): BlankNode | Literal | NamedNode {

@@ -6,9 +6,7 @@ import {hasRdfSuperClass} from "@paradicms/rdf";
 
 export class Shape extends ShaclModel {
   get description(): string | null {
-    return this.findAndMapObject(sh.description, term =>
-      term.termType === "Literal" ? term.value : null
-    );
+    return this.findAndMapObject(sh.description, this.mapStringObject);
   }
 
   /**
@@ -29,9 +27,7 @@ export class Shape extends ShaclModel {
   }
 
   get name(): string | null {
-    return this.findAndMapObject(sh.name, term =>
-      term.termType === "Literal" ? term.value : null
-    );
+    return this.findAndMapObject(sh.name, this.mapStringObject);
   }
 
   get nodeKind(): NodeKind | null {

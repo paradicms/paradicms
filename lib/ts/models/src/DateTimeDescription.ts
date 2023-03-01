@@ -1,5 +1,5 @@
 import {Model} from "./Model";
-import {Literal, NamedNode} from "@rdfjs/types";
+import {Literal} from "@rdfjs/types";
 import dayjs from "dayjs";
 import {time, xsd} from "@paradicms/vocabularies";
 
@@ -29,11 +29,11 @@ export class DateTimeDescription extends Model {
   }
 
   get hour(): number | null {
-    return this.optionalInt(time.hour);
+    return this.findAndMapObject(time.hour, this.mapIntObject);
   }
 
   get minute(): number | null {
-    return this.optionalInt(time.minute);
+    return this.findAndMapObject(time.minute, this.mapIntObject);
   }
 
   get month(): number | null {
@@ -57,19 +57,6 @@ export class DateTimeDescription extends Model {
       } else {
         return null;
       }
-    });
-  }
-
-  private optionalInt(property: NamedNode): number | null {
-    return this.findAndMapObject(property, term => {
-      if (term.termType !== "Literal") {
-        return null;
-      }
-      const literal: Literal = term;
-      if (literal.datatype.value === xsd.integer.value) {
-        return parseInt(literal.value);
-      }
-      return null;
     });
   }
 

@@ -11,9 +11,7 @@ export class Text extends Mixin(Model, HasRights) {
 
   get value(): string {
     return requireNonNull(
-      this.findAndMapObject(rdf.value, term =>
-        term.termType == "Literal" ? term.value : null
-      )
+      this.findAndMapObject(rdf.value, this.mapStringObject)
     );
   }
 }
