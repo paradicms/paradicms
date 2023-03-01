@@ -9,6 +9,7 @@ from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamed
 from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import CMS, VRA
 from paradicms_etl.utils.resource_builder import ResourceBuilder
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class Event(ResourceBackedNamedModel):
@@ -39,4 +40,18 @@ class Event(ResourceBackedNamedModel):
             .add(VRA.endDate, end_date)
             .add(DCTERMS.spatial, location)
             .add(DCTERMS.title, title)
+        )
+
+    @classmethod
+    def json_ld_context(cls):
+        return safe_dict_update(
+            ResourceBackedNamedModel.json_ld_context(cls),
+            {
+                "abstract": {"@id": str(DCTERMS.abstract)},
+                "date": {"@id": str(DCTERMS.creator)},
+                "startDate": {"@id": str(VRA.startDate)},
+                "endDate": {"@id": str(VRA.endDate)},
+                "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
+                "title": {"@id": str(DCTERMS.title)},
+            },
         )

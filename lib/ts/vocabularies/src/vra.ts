@@ -5,8 +5,8 @@ interface Vra {
   "": NamedNode<"http://purl.org/vra/">;
 
   // Properties
-  earliestDate: NamedNode<"http://purl.org/vra/earliestDate">;
-  latestDate: NamedNode<"http://purl.org/vra/latestDate">;
+  endDate: NamedNode<"http://purl.org/vra/endDate">;
+  startDate: NamedNode<"http://purl.org/vra/startDate">;
   technique: NamedNode<"http://purl.org/vra/technique">;
 }
 

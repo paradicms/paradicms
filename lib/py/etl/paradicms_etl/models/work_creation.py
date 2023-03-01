@@ -7,7 +7,7 @@ from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work_event import WorkEvent
-from paradicms_etl.namespaces import VRA, CMS
+from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
@@ -59,13 +59,7 @@ class WorkCreation(WorkEvent):
         return safe_dict_update(
             WorkEvent.json_ld_context(),
             {
-                "abstract": {"@id": str(DCTERMS.abstract)},
                 "contributor": {"@id": str(DCTERMS.contributor), "@type": "@id"},
                 "creator": {"@id": str(DCTERMS.creator), "@type": "@id"},
-                "date": {"@id": str(DCTERMS.creator)},
-                "earliestDate": {"@id": str(VRA.earliestDate)},
-                "latestDate": {"@id": str(VRA.latestDate)},
-                "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
-                "title": {"@id": str(DCTERMS.title)},
             },
         )

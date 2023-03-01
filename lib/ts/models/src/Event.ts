@@ -15,19 +15,19 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
       return date.toString();
     }
 
-    const earliestDate = this.earliestDate;
-    const latestDate = this.latestDate;
+    const startDate = this.startDate;
+    const endDate = this.endDate;
 
-    if (earliestDate === null && latestDate === null) {
+    if (startDate === null && endDate === null) {
       return null;
     }
 
     const result: string[] = [];
-    if (earliestDate !== null) {
-      result.push(earliestDate.toString() + " (earliest)");
+    if (startDate !== null) {
+      result.push(startDate.toString() + " (earliest)");
     }
-    if (latestDate !== null) {
-      result.push(latestDate.toString() + " (latest)");
+    if (endDate !== null) {
+      result.push(endDate.toString() + " (latest)");
     }
 
     return result.join(" - ");
@@ -73,13 +73,8 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
   }
 
   @Memoize()
-  get earliestDate(): DateTimeUnion | null {
-    return this.findAndMapObject(vra.earliestDate, this.mapDateTimeUnionObject);
-  }
-
-  @Memoize()
-  get latestDate(): DateTimeUnion | null {
-    return this.findAndMapObject(vra.latestDate, this.mapDateTimeUnionObject);
+  get endDate(): DateTimeUnion | null {
+    return this.findAndMapObject(vra.endDate, this.mapDateTimeUnionObject);
   }
 
   @Memoize()
@@ -98,8 +93,8 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
   } | null {
     for (const dateTimeDescription of [
       this.date,
-      this.earliestDate,
-      this.latestDate,
+      this.startDate,
+      this.endDate,
     ]) {
       if (!(dateTimeDescription instanceof DateTimeDescription)) {
         continue;
@@ -114,6 +109,11 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
       };
     }
     return null;
+  }
+
+  @Memoize()
+  get startDate(): DateTimeUnion | null {
+    return this.findAndMapObject(vra.startDate, this.mapDateTimeUnionObject);
   }
 
   get title(): string | null {
