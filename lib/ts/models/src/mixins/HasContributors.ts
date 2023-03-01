@@ -26,8 +26,6 @@ export abstract class HasContributors extends ModelMixin {
 
   @Memoize()
   get contributorAgentUris(): readonly string[] {
-    return this.filterAndMapObjects(dcterms.contributor, term =>
-      term.termType === "NamedNode" ? term.value : null
-    );
+    return this.filterAndMapObjects(dcterms.contributor, this.mapUriObject);
   }
 }

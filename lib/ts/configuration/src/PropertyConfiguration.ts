@@ -1,44 +1,38 @@
 import {Configuration} from "./Configuration";
-import {NamedNode} from "@rdfjs/types";
-import {configuration, xsd} from "@paradicms/vocabularies";
+import {configuration} from "@paradicms/vocabularies";
 import {requireNonNull} from "@paradicms/utilities";
 
 export class PropertyConfiguration extends Configuration {
-  private booleanProperty(propertyUri: NamedNode): boolean {
+  get filterable(): boolean {
     return (
-      this.findAndMapObject(propertyUri, term =>
-        term.termType === "Literal" && term.datatype.value === xsd.boolean.value
-          ? term.value === "true" || term.value === "1"
-          : null
-      ) ?? false
+      this.findAndMapObject(configuration.filterable, this.mapBooleanObject) ??
+      false
     );
   }
 
-  get filterable(): boolean {
-    return this.booleanProperty(configuration.filterable);
-  }
-
   get hidden(): boolean {
-    return this.booleanProperty(configuration.hidden);
+    return (
+      this.findAndMapObject(configuration.hidden, this.mapBooleanObject) ??
+      false
+    );
   }
 
   get label(): string {
     return requireNonNull(
-      this.findAndMapObject(configuration.label, term =>
-        term.termType === "Literal" ? term.value : null
-      )
+      this.findAndMapObject(configuration.label, this.mapStringObject)
     );
   }
 
   get searchable(): boolean {
-    return this.booleanProperty(configuration.searchable);
+    return (
+      this.findAndMapObject(configuration.searchable, this.mapBooleanObject) ??
+      false
+    );
   }
 
   get uri(): string {
     return requireNonNull(
-      this.findAndMapObject(configuration.predicate, term =>
-        term.termType === "NamedNode" ? term.value : null
-      )
+      this.findAndMapObject(configuration.predicate, this.mapUriObject)
     );
   }
 }

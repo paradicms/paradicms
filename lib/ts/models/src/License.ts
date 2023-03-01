@@ -5,9 +5,7 @@ import {requireNonNull} from "@paradicms/utilities";
 export class License extends NamedModel {
   get identifier(): string {
     return requireNonNull(
-      this.findAndMapObject(dc11.identifier, term =>
-        term.termType === "Literal" ? term.value : null
-      )
+      this.findAndMapObject(dc11.identifier, this.mapStringObject)
     );
   }
 
@@ -23,9 +21,7 @@ export class License extends NamedModel {
 
   get title(): string {
     return requireNonNull(
-      this.findAndMapObject(dc11.title, term =>
-        term.termType === "Literal" ? term.value : null
-      )
+      this.findAndMapObject(dc11.title, this.mapStringObject)
     );
   }
 

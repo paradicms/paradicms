@@ -9,10 +9,6 @@ export class WorkEvent extends Event {
   }
 
   get workUri(): string {
-    return requireNonNull(
-      this.findAndMapObject(cms.work, term =>
-        term.termType === "NamedNode" ? term.value : null
-      )
-    );
+    return requireNonNull(this.findAndMapObject(cms.work, this.mapUriObject));
   }
 }

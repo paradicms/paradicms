@@ -1,8 +1,14 @@
+from typing import Union, Optional
+
 from rdflib import RDF, URIRef
 from rdflib.resource import Resource
 
+from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.event import Event
+from paradicms_etl.models.location import Location
+from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import CMS
+from paradicms_etl.utils.resource_builder import ResourceBuilder
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
@@ -19,6 +25,28 @@ class WorkEvent(Event):
             {
                 "work": {"@id": str(CMS.work), "@type": "@id"},
             },
+        )
+
+    @staticmethod
+    def _work_event_from_fields(
+        *,
+        abstract: Union[str, Text, None],
+        date: Optional[DateTimeUnion],
+        end_date: Optional[DateTimeUnion],
+        location: Union[Location, str, None],
+        resource_builder: ResourceBuilder,
+        start_date: Optional[DateTimeUnion],
+        title: Optional[str],
+        work_uri: URIRef,
+    ) -> ResourceBuilder:
+        return Event._event_from_fields(
+            abstract=abstract,
+            date=date,
+            end_date=end_date,
+            location=location,
+            resource_builder=resource_builder.add(CMS.work, work_uri),
+            start_date=start_date,
+            title=title,
         )
 
     @property

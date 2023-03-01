@@ -24,6 +24,7 @@ import {WorkCreation} from "./WorkCreation";
 import {Location} from "./Location";
 import {cms, dcterms, rdf} from "@paradicms/vocabularies";
 import {Institution} from "./Institution";
+import {mapTextObject} from "./mapTextObject";
 
 const getRightsWorkAgents = (
   rights: Rights | null,
@@ -118,29 +119,17 @@ export class Work extends Mixin(
 
   @Memoize()
   get collectionUris(): readonly string[] {
-    return this.filterAndMapObjects(cms.collection, term =>
-      term.termType === "NamedNode" ? term.value : null
-    );
+    return this.filterAndMapObjects(cms.collection, this.mapUriObject);
   }
 
   @Memoize()
   get description(): string | Text | null {
-    return this.findAndMapObject(dcterms.abstract, term => {
-      switch (term.termType) {
-        case "BlankNode":
-          return new Text({
-            modelSet: this.modelSet,
-            graphNode: this.graphNode,
-            node: term,
-          });
-        case "Literal":
-          return term.value;
-        default:
-          return null;
-      }
-    });
+    return this.findAndMapObject(dcterms.abstract, term =>
+      mapTextObject(this, term)
+    );
   }
 
+  @Memoize()
   get events(): readonly WorkEvent[] {
     return this.modelSet.workEventsByWork(this.uri);
   }
@@ -154,9 +143,7 @@ export class Work extends Mixin(
 
   @Memoize()
   get institutionUri(): string | null {
-    return this.findAndMapObject(cms.institution, term =>
-      term.termType === "NamedNode" ? term.value : null
-    );
+    return this.findAndMapObject(cms.institution, this.mapUriObject);
   }
 
   @Memoize()

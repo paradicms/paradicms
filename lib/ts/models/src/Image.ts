@@ -6,16 +6,14 @@ import {selectThumbnail} from "./selectThumbnail";
 import {Memoize} from "typescript-memoize";
 import {Mixin} from "ts-mixer";
 import {HasRights} from "./mixins";
-import {cms, dcterms, exif, foaf, xsd} from "@paradicms/vocabularies";
-import {parseIntOrNull, requireNonNull} from "@paradicms/utilities";
+import {cms, dcterms, exif, foaf} from "@paradicms/vocabularies";
+import {requireNonNull} from "@paradicms/utilities";
 
 export class Image extends Mixin(NamedModel, HasRights) {
   @Memoize()
   get depictsUri(): string {
     return requireNonNull(
-      this.findAndMapObject(foaf.depicts, term =>
-        term.termType === "NamedNode" ? term.value : null
-      )
+      this.findAndMapObject(foaf.depicts, this.mapUriObject)
     );
   }
 
@@ -36,16 +34,8 @@ export class Image extends Mixin(NamedModel, HasRights) {
     heightProperty: NamedNode,
     widthProperty: NamedNode
   ): ImageDimensions | null {
-    const integerPropertyValue = (property: NamedNode) =>
-      this.findAndMapObject(property, term =>
-        term.termType == "Literal" &&
-        (!term.datatype || term.datatype.equals(xsd.integer))
-          ? parseIntOrNull(term.value)
-          : null
-      );
-
-    const height = integerPropertyValue(heightProperty);
-    const width = integerPropertyValue(widthProperty);
+    const height = this.findAndMapObject(heightProperty, this.mapIntObject);
+    const width = this.findAndMapObject(widthProperty, this.mapIntObject);
 
     if (height !== null && width !== null) {
       return {height, width};
@@ -69,9 +59,7 @@ export class Image extends Mixin(NamedModel, HasRights) {
 
   @Memoize()
   get originalImageUri(): string | null {
-    return this.findAndMapObject(cms.thumbnailOf, term =>
-      term.termType === "NamedNode" ? term.value : null
-    );
+    return this.findAndMapObject(cms.thumbnailOf, this.mapUriObject);
   }
 
   get originalImage(): Image {
@@ -112,8 +100,6 @@ export class Image extends Mixin(NamedModel, HasRights) {
 
   @Memoize()
   get title(): string | null {
-    return this.findAndMapObject(dcterms.title, term =>
-      term.termType === "Literal" ? term.value : null
-    );
+    return this.findAndMapObject(dcterms.title, this.mapStringObject);
   }
 }

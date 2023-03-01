@@ -3,11 +3,11 @@ from typing import Union, Tuple, Optional
 from rdflib import URIRef, DCTERMS, RDF
 from rdflib.resource import Resource
 
-from paradicms_etl.models.date_time_description import DateTimeDescription
-from paradicms_etl.models.named_location import Location
+from paradicms_etl.models.date_time_union import DateTimeUnion
+from paradicms_etl.models.location import Location
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work_event import WorkEvent
-from paradicms_etl.namespaces import VRA, CMS
+from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
@@ -28,32 +28,30 @@ class WorkCreation(WorkEvent):
     def from_fields(
         cls,
         *,
+        contributor_uri: Union[URIRef, Tuple[URIRef, ...], None],
+        creator_uri: Union[URIRef, Tuple[URIRef, ...]],
         uri: URIRef,
         work_uri: URIRef,
-        creator_uri: Union[URIRef, Tuple[URIRef, ...]],
         abstract: Union[str, Text, None] = None,
-        contributor_uri: Union[URIRef, Tuple[URIRef, ...], None],
-        date: Union[DateTimeDescription, str, None] = None,
-        earliest_date: Union[DateTimeDescription, str, None] = None,
-        latest_date: Union[DateTimeDescription, str, None] = None,
+        date: Optional[DateTimeUnion] = None,
+        end_date: Optional[DateTimeUnion] = None,
         location: Union[Location, str, None] = None,
+        start_date: Optional[DateTimeUnion] = None,
         title: Optional[str] = None
     ):
-        if date is None and earliest_date is None and latest_date is None:
-            raise ValueError("must specify at least onedate")
-
         return cls(
-            ResourceBuilder(uri)
-            .add(DCTERMS.abstract, abstract)
-            .add(DCTERMS.contributor, contributor_uri)
-            .add(DCTERMS.creator, creator_uri)
-            .add(DCTERMS.date, date)
-            .add(VRA.earliestDate, earliest_date)
-            .add(VRA.latestDate, latest_date)
-            .add(DCTERMS.spatial, location)
-            .add(DCTERMS.title, title)
-            .add(CMS.work, work_uri)
-            .build()
+            WorkEvent._work_event_from_fields(
+                abstract=abstract,
+                date=date,
+                end_date=end_date,
+                location=location,
+                resource_builder=ResourceBuilder(uri)
+                .add(DCTERMS.contributor, contributor_uri)
+                .add(DCTERMS.creator, creator_uri),
+                start_date=start_date,
+                title=title,
+                work_uri=work_uri,
+            ).build()
         )
 
     @classmethod
@@ -61,13 +59,7 @@ class WorkCreation(WorkEvent):
         return safe_dict_update(
             WorkEvent.json_ld_context(),
             {
-                "abstract": {"@id": str(DCTERMS.abstract)},
                 "contributor": {"@id": str(DCTERMS.contributor), "@type": "@id"},
                 "creator": {"@id": str(DCTERMS.creator), "@type": "@id"},
-                "date": {"@id": str(DCTERMS.creator)},
-                "earliestDate": {"@id": str(VRA.earliestDate)},
-                "latestDate": {"@id": str(VRA.latestDate)},
-                "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
-                "title": {"@id": str(DCTERMS.title)},
             },
         )

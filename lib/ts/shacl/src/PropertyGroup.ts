@@ -9,8 +9,6 @@ export class PropertyGroup extends ShaclModel {
   }
 
   get label(): string | null {
-    return this.findAndMapObject(rdfs.label, term =>
-      term.termType === "Literal" ? term.value : null
-    );
+    return this.findAndMapObject(rdfs.label, this.mapStringObject);
   }
 }
