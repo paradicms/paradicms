@@ -8,7 +8,7 @@ from paradicms_etl.models.property import Property
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.text import Text
-from paradicms_etl.namespaces import CMS, VRA
+from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
@@ -81,9 +81,7 @@ class Work(ResourceBackedNamedModel):
                 {
                     "abstract": {"@id": str(DCTERMS.abstract)},
                     "collection": {"@id": str(CMS.collection), "@type": "@id"},
-                    "earliestDate": {"@id": str(VRA.earliestDate)},
                     "institution": {"@id": str(CMS.institution), "@type": "@id"},
-                    "latestDate": {"@id": str(VRA.latestDate)},
                     "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
                     "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},
                     "page": {"@id": str(FOAF.page)},
