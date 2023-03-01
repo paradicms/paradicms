@@ -28,7 +28,9 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 )
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
+from paradicms_etl.models.work_closing import WorkClosing
 from paradicms_etl.models.work_creation import WorkCreation
+from paradicms_etl.models.work_opening import WorkOpening
 from paradicms_etl.namespaces import VRA
 from paradicms_etl.pipeline import Pipeline
 
@@ -403,22 +405,10 @@ class SyntheticDataPipeline(Pipeline):
                 for i in range(2)
             )
 
-            # Properties that depend on the date
-            # dcterms:created
+            destruction_date = date(day=1, month=1, year=2022)
+            creation_date = destruction_date - timedelta(days=work_i)
             creation_date_time_description = DateTimeDescription.from_date(
-                date(day=1, month=1, year=2022) + timedelta(days=work_i)
-            )
-            properties.append(Property(DCTERMS.created, creation_date_time_description))
-            # dcterms:date
-            properties.extend(
-                Property(
-                    DCTERMS.date,
-                    (
-                        date(year=2020, month=8, day=9)
-                        - timedelta(minutes=(60 * 24 * (work_i + date_i)))
-                    ).isoformat(),
-                )
-                for date_i in range(2)
+                creation_date
             )
 
             # Faceted literal properties, which are the same across works
@@ -480,6 +470,8 @@ class SyntheticDataPipeline(Pipeline):
                 else None
             )
 
+            location = AnonymousLocation.from_fields(lat=42.728104, long=-73.687576)
+
             work = Work.from_fields(
                 abstract=abstract,
                 collection_uris=collection_uris,
@@ -503,15 +495,33 @@ class SyntheticDataPipeline(Pipeline):
                 text_prefix=work.title,
             )
 
+            yield WorkClosing.from_fields(
+                abstract=abstract,
+                date=destruction_date,
+                location=location,
+                title=f"{work.title} closing",
+                uri=URIRef(str(uri) + "Closing"),
+                work_uri=work.uri,
+            )
+
             yield WorkCreation.from_fields(
                 abstract=abstract,
                 contributor_uri=tuple(contributor_uris),
                 creator_uri=tuple(creator_uris),
                 date=creation_date_time_description,
-                location=AnonymousLocation.from_fields(lat=42.728104, long=-73.687576),
+                location=location,
                 title=f"{work.title} creation",
-                work_uri=work.uri,
                 uri=URIRef(str(uri) + "Creation"),
+                work_uri=work.uri,
+            )
+
+            yield WorkOpening.from_fields(
+                abstract=abstract,
+                date=creation_date,
+                location=location,
+                title=f"{work.title} opening",
+                uri=URIRef(str(uri) + "Opening"),
+                work_uri=work.uri,
             )
 
         def __generate_shared_works(
