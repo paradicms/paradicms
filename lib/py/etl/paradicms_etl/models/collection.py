@@ -1,6 +1,6 @@
 from typing import Tuple, Union
 
-from rdflib import URIRef, RDF, FOAF
+from rdflib import URIRef, FOAF
 from rdflib.namespace import DCTERMS
 from rdflib.resource import Resource
 
@@ -16,7 +16,6 @@ class Collection(ResourceBackedNamedModel):
     LABEL_PROPERTY = DCTERMS.title
 
     def __init__(self, resource: Resource):
-        resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedNamedModel.__init__(self, resource)
         self.institution_uri
         self.title

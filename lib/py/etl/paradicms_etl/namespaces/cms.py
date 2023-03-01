@@ -33,5 +33,7 @@ class CMS(DefinedNamespace):
     Text: URIRef
     WikidataItem: URIRef
     Work: URIRef
+    WorkClosing: URIRef
     WorkCreation: URIRef
     WorkEvent: URIRef
+    WorkOpening: URIRef

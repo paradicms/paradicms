@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
-from rdflib import Literal, URIRef, Graph, RDF, XSD
+from rdflib import Literal, URIRef, Graph, XSD
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
@@ -17,7 +17,6 @@ class Image(ResourceBackedNamedModel):
     LABEL_PROPERTY = DCTERMS.title
 
     def __init__(self, resource: Resource):
-        resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedNamedModel.__init__(self, resource)
         self.depicts_uri
 

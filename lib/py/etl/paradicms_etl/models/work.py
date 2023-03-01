@@ -1,6 +1,6 @@
 from typing import Optional, Tuple, Union
 
-from rdflib import URIRef, RDF
+from rdflib import URIRef
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
@@ -23,7 +23,6 @@ class Work(ResourceBackedNamedModel):
     LABEL_PROPERTY = DCTERMS.title
 
     def __init__(self, resource: Resource):
-        resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedNamedModel.__init__(self, resource)
         self.title
 

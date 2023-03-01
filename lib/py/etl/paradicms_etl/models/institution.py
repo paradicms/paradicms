@@ -1,12 +1,11 @@
 from typing import Optional, Tuple
 
-from rdflib import URIRef, RDF
+from rdflib import URIRef
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
-from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
@@ -15,7 +14,6 @@ class Institution(ResourceBackedNamedModel):
     LABEL_PROPERTY = FOAF.name
 
     def __init__(self, resource: Resource):
-        resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedNamedModel.__init__(self, resource)
         self.name
 

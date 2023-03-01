@@ -1,22 +1,18 @@
 from typing import Union, Tuple, Optional
 
-from rdflib import URIRef, DCTERMS, RDF
+from rdflib import URIRef, DCTERMS
 from rdflib.resource import Resource
 
 from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work_event import WorkEvent
-from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.resource_builder import ResourceBuilder
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class WorkCreation(WorkEvent):
-    LABEL_PROPERTY = DCTERMS.title
-
     def __init__(self, resource: Resource):
-        resource.add(RDF.type, CMS[self.__class__.__name__])
         WorkEvent.__init__(self, resource)
         self.creator_uris
 
