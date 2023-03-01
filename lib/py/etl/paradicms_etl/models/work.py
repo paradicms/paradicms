@@ -4,7 +4,6 @@ from rdflib import URIRef, RDF
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
-from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.rights import Rights
@@ -42,19 +41,13 @@ class Work(ResourceBackedNamedModel):
         ] = None,  # foaf:page, linking to a human-readable page; if not specified, defaults to URI
         properties: Tuple[Property, ...] = (),
         collection_uris: Optional[Tuple[URIRef, ...]] = None,
-        date: Optional[DateTimeUnion] = None,
-        earliest_date: Optional[DateTimeUnion] = None,
         institution_uri: Optional[URIRef] = None,
-        latest_date: Optional[DateTimeUnion] = None,
         rights: Optional[Rights] = None,
     ) -> "Work":
         return cls(
             ResourceBuilder(uri)
             .add(DCTERMS.abstract, abstract)
-            .add(DCTERMS.date, date)
             .add(CMS.collection, collection_uris)
-            .add(VRA.earliestDate, earliest_date)
-            .add(VRA.latestDate, latest_date)
             .add(CMS.institution, institution_uri)
             .add(FOAF.page, page)
             .add_properties(properties)
