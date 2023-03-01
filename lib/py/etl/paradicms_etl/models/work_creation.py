@@ -4,7 +4,7 @@ from rdflib import URIRef, DCTERMS, RDF
 from rdflib.resource import Resource
 
 from paradicms_etl.models.date_time_union import DateTimeUnion
-from paradicms_etl.models.named_location import Location
+from paradicms_etl.models.location import Location
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.namespaces import VRA, CMS
@@ -28,32 +28,30 @@ class WorkCreation(WorkEvent):
     def from_fields(
         cls,
         *,
+        contributor_uri: Union[URIRef, Tuple[URIRef, ...], None],
+        creator_uri: Union[URIRef, Tuple[URIRef, ...]],
         uri: URIRef,
         work_uri: URIRef,
-        creator_uri: Union[URIRef, Tuple[URIRef, ...]],
         abstract: Union[str, Text, None] = None,
-        contributor_uri: Union[URIRef, Tuple[URIRef, ...], None],
         date: Optional[DateTimeUnion] = None,
-        earliest_date: Optional[DateTimeUnion] = None,
-        latest_date: Optional[DateTimeUnion] = None,
+        end_date: Optional[DateTimeUnion] = None,
         location: Union[Location, str, None] = None,
+        start_date: Optional[DateTimeUnion] = None,
         title: Optional[str] = None
     ):
-        if date is None and earliest_date is None and latest_date is None:
-            raise ValueError("must specify at least one date")
-
         return cls(
-            ResourceBuilder(uri)
-            .add(DCTERMS.abstract, abstract)
-            .add(DCTERMS.contributor, contributor_uri)
-            .add(DCTERMS.creator, creator_uri)
-            .add(DCTERMS.date, date)
-            .add(VRA.earliestDate, earliest_date)
-            .add(VRA.latestDate, latest_date)
-            .add(DCTERMS.spatial, location)
-            .add(DCTERMS.title, title)
-            .add(CMS.work, work_uri)
-            .build()
+            WorkEvent._work_event_from_fields(
+                abstract=abstract,
+                date=date,
+                end_date=end_date,
+                location=location,
+                resource_builder=ResourceBuilder(uri)
+                .add(DCTERMS.contributor, contributor_uri)
+                .add(DCTERMS.creator, creator_uri),
+                start_date=start_date,
+                title=title,
+                work_uri=work_uri,
+            ).build()
         )
 
     @classmethod

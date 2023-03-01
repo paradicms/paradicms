@@ -7,9 +7,9 @@ class VRA(DefinedNamespace):
     _NS = Namespace("http://purl.org/vra/")
 
     culturalContext: URIRef
-    earliestDate: URIRef
+    endDate: URIRef
     inscription: URIRef
-    latestDate: URIRef
     material: URIRef
+    startDate: URIRef
     stylePeriod: URIRef
     technique: URIRef
