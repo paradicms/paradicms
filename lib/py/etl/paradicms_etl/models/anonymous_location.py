@@ -10,8 +10,8 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 class AnonymousLocation(ResourceBackedModel, Location):
     def __init__(self, resource: Resource):
-        resource.add(RDF.type, CMS[Location.__name__])
         ResourceBackedModel.__init__(self, resource)
+        resource.add(RDF.type, CMS.Location)
 
     @classmethod
     def from_fields(cls, **kwds):

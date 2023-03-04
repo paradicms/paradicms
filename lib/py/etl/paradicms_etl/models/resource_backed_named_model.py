@@ -8,7 +8,9 @@ from paradicms_etl.namespaces import CMS
 class ResourceBackedNamedModel(ResourceBackedModel, NamedModel):
     def __init__(self, *args, **kwds):
         ResourceBackedModel.__init__(self, *args, **kwds)
-        self._resource.add(RDF.type, CMS[self.__class__.__name__])
+        cms_class_uri = getattr(CMS, self.__class__.__name__, None)
+        if cms_class_uri is not None:
+            self._resource.add(RDF.type, cms_class_uri)
         if not isinstance(self.uri, URIRef):
             raise TypeError(type(self.uri))
 

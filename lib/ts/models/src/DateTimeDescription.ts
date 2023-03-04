@@ -1,9 +1,12 @@
 import {Model} from "./Model";
 import {Literal} from "@rdfjs/types";
-import dayjs from "dayjs";
 import {time, xsd} from "@paradicms/vocabularies";
+import dayjs from "dayjs";
 
 export class DateTimeDescription extends Model {
+  /**
+   * Day of the month, 1..31 inclusive.
+   */
   get day(): number | null {
     return this.findAndMapObject(time.day, term => {
       if (term.termType !== "Literal") {
@@ -28,14 +31,23 @@ export class DateTimeDescription extends Model {
     });
   }
 
+  /**
+   * Hour of the day, 0..23 inclusive
+   */
   get hour(): number | null {
     return this.findAndMapObject(time.hour, this.mapIntObject);
   }
 
+  /**
+   * Minute of the day, 0..59 inclusive
+   */
   get minute(): number | null {
     return this.findAndMapObject(time.minute, this.mapIntObject);
   }
 
+  /**
+   * Month of the year, 1..12 inclusive
+   */
   get month(): number | null {
     return this.findAndMapObject(time.month, term => {
       if (term.termType !== "Literal") {
@@ -60,6 +72,9 @@ export class DateTimeDescription extends Model {
     });
   }
 
+  /**
+   * Second of the minute, 0..59 inclusive
+   */
   get second(): number | null {
     return this.findAndMapObject(time.second, term => {
       if (term.termType !== "Literal") {
@@ -83,7 +98,7 @@ export class DateTimeDescription extends Model {
       return "(unknown)";
     }
 
-    let dayjs_ = (dayjs as any)();
+    let dayjs_ = dayjs();
 
     // https://day.js.org/docs/en/display/format
     let dateFormat = "";
@@ -127,6 +142,9 @@ export class DateTimeDescription extends Model {
     );
   }
 
+  /**
+   * Gregorian year e.g., 1960
+   */
   get year(): number | null {
     return this.findAndMapObject(time.year, term => {
       if (term.termType !== "Literal") {

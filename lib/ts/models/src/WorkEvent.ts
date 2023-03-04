@@ -34,6 +34,15 @@ export class WorkEvent extends Event {
     throw new EvalError("not implemented");
   }
 
+  @Memoize()
+  override get title(): string {
+    if (super.title) {
+      return super.title;
+    } else {
+      return `${this.workLocationRole}: "${this.work.title}"`;
+    }
+  }
+
   get workUri(): string {
     return requireNonNull(this.findAndMapObject(cms.work, this.mapUriObject));
   }

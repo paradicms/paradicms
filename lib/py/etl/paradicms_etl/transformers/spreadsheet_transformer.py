@@ -57,6 +57,8 @@ class SpreadsheetTransformer:
                 # Convert each row to a multi-dict
                 row_dict: Dict[str, Union[str, List[str]]] = {}
                 for header_cell, data_cell in zip(header_row, data_row):
+                    if header_cell is None:
+                        continue
                     header_cell = header_cell.strip()
                     if not header_cell:
                         continue

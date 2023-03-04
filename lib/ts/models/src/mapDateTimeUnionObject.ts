@@ -3,6 +3,7 @@ import {ModelParameters} from "./ModelParameters";
 import {DateTimeUnion} from "./DateTimeUnion";
 import {DateTimeDescription} from "./DateTimeDescription";
 import {xsd} from "@paradicms/vocabularies";
+import dayjs from "dayjs";
 
 /**
  * Map a term in a modelSet to a DateTimeUnion.
@@ -18,7 +19,10 @@ export const mapDateTimeUnionObject = (
         node: term,
       });
     case "Literal":
-      if (term.datatype.value === xsd.integer.value) {
+      if (term.datatype.value === xsd.dateTime.value) {
+        const dayjs_ = dayjs(term.value);
+        return dayjs_.toDate();
+      } else if (term.datatype.value === xsd.integer.value) {
         return parseInt(term.value);
       } else {
         return term.value;
