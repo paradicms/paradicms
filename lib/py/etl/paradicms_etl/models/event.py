@@ -48,7 +48,7 @@ class Event(ResourceBackedNamedModel):
             ResourceBackedNamedModel.json_ld_context(),
             {
                 "abstract": {"@id": str(DCTERMS.abstract)},
-                "date": {"@id": str(DCTERMS.creator)},
+                "date": {"@id": str(DCTERMS.date)},
                 "startDate": {"@id": str(VRA.startDate)},
                 "endDate": {"@id": str(VRA.endDate)},
                 "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
