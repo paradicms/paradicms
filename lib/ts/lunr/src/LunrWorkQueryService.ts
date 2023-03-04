@@ -379,15 +379,15 @@ export class LunrWorkQueryService implements WorkQueryService {
         workPropertyUris: this.resultWorkPropertyUris,
       }).worksModelSet(slicedWorks, workJoinSelector);
 
-      console.debug(
-        "Search results modelSet:",
-        Object.keys(slicedWorksModelSet)
-          .map(
-            key =>
-              `${key}: ${((slicedWorksModelSet as any)[key] as any[]).length}`
-          )
-          .join(", ")
-      );
+      // console.debug(
+      //   "Search results modelSet:",
+      //   Object.keys(slicedWorksModelSet)
+      //     .map(
+      //       key =>
+      //         `${key}: ${((slicedWorksModelSet as any)[key] as any[]).length}`
+      //     )
+      //     .join(", ")
+      // );
 
       resolve({
         modelSet: slicedWorksModelSet,
