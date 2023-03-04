@@ -9,12 +9,18 @@ import {DateTimeUnion} from "./DateTimeUnion";
 import {mapDateTimeUnionObject} from "./mapDateTimeUnionObject";
 import {mapLocationObject} from "./mapLocationObject";
 
+const dateTimeUnionToString = (
+  dateTimeUnion: Date | DateTimeDescription | number | string
+): string => {
+  return dateTimeUnion.toString();
+};
+
 export class Event extends Mixin(NamedModel, HasAbstract) {
   @Memoize()
   get displayDate(): string | null {
     const date = this.date;
     if (date !== null) {
-      return date.toString();
+      return dateTimeUnionToString(date);
     }
 
     const startDate = this.startDate;
@@ -26,10 +32,10 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
 
     const result: string[] = [];
     if (startDate !== null) {
-      result.push(startDate.toString() + " (earliest)");
+      result.push(dateTimeUnionToString(startDate) + " (start)");
     }
     if (endDate !== null) {
-      result.push(endDate.toString() + " (latest)");
+      result.push(dateTimeUnionToString(endDate) + " (end)");
     }
 
     return result.join(" - ");
@@ -92,6 +98,8 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
 
   /**
    * Synthesize a date that can be used for sorting this event.
+   *
+   * The returned properties have the same semantics as DateTimeDescription.
    */
   @Memoize()
   get sortDate(): {
@@ -99,23 +107,33 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
     month: number | null;
     year: number;
   } | null {
-    for (const dateTimeDescription of [
-      this.date,
-      this.startDate,
-      this.endDate,
-    ]) {
-      if (!(dateTimeDescription instanceof DateTimeDescription)) {
+    for (const date of [this.date, this.startDate, this.endDate]) {
+      if (date === null) {
         continue;
+      } else if (date instanceof Date) {
+        return {
+          day: date.getDate(),
+          month: date.getMonth() + 1,
+          year: date.getFullYear(),
+        };
+      } else if (date instanceof DateTimeDescription) {
+        if (date.year === null) {
+          return null;
+        }
+        return {
+          day: date.day,
+          month: date.month,
+          year: date.year!,
+        };
+      } else {
+        console.debug(
+          `event ${
+            this.uri
+          }: has a non-null date (${date}) of type (${typeof date}) that isn't handled in sortDate`
+        );
       }
-      if (dateTimeDescription.year === null) {
-        return null;
-      }
-      return {
-        day: dateTimeDescription.day,
-        month: dateTimeDescription.month,
-        year: dateTimeDescription.year!,
-      };
     }
+    console.debug("event", this.uri, "has no sort date");
     return null;
   }
 
