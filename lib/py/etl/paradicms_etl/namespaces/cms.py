@@ -22,7 +22,6 @@ class CMS(DefinedNamespace):
     DateTimeDescription: URIRef
     Event: URIRef
     Image: URIRef
-    Institution: URIRef
     License: URIRef
     Location: URIRef
     NamedValue: URIRef
