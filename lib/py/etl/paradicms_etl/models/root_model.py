@@ -14,7 +14,7 @@ from paradicms_etl.models.work_creation import WorkCreation
 from paradicms_etl.models.work_opening import WorkOpening
 
 """
-Typedef for root model classes such as Institution, Person, and Work.
+Typedef for root model classes such as Collection, Image, and Work.
 """
 RootModel = Union[
     Collection,
