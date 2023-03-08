@@ -1,6 +1,6 @@
 from typing import Optional, Tuple
 
-from rdflib import URIRef, DCTERMS
+from rdflib import URIRef
 from rdflib.namespace import FOAF
 
 from paradicms_etl.models.agent import Agent
@@ -41,8 +41,6 @@ class Person(Agent):
             {
                 "familyName": {"@id": str(FOAF.familyName)},
                 "givenName": {"@id": str(FOAF.givenName)},
-                "page": {"@id": str(FOAF.page)},
-                "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},
                 "sortName": {"@id": str(CONTACT.sortName)},
             },
         )

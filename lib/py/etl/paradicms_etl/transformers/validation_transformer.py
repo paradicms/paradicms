@@ -6,9 +6,11 @@ from stringcase import snakecase
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.event import Event
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.license import License
+from paradicms_etl.models.named_location import NamedLocation
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.named_value import NamedValue
 from paradicms_etl.models.organization import Organization
@@ -16,6 +18,9 @@ from paradicms_etl.models.person import Person
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.work import Work
+from paradicms_etl.models.work_closing import WorkClosing
+from paradicms_etl.models.work_creation import WorkCreation
+from paradicms_etl.models.work_event import WorkEvent
 
 
 class __Validator:
@@ -24,6 +29,7 @@ class __Validator:
         self.__image_depicts_uris = set()
         self.__institution_uris = set()
         self.__license_uris = set()
+        self.__location_uris = set()
         self.__logger = logging.getLogger(__name__)
         self.__model_uris = set()
         self.__organization_uris = set()
@@ -33,6 +39,7 @@ class __Validator:
         self.__referenced_institution_uris = set()
         self.__referenced_license_uris = set()
         self.__referenced_rights_statement_uris = set()
+        self.__referenced_work_uris = set()
         self.__rights_statement_uris = set()
         self.__work_uris = set()
 
@@ -45,9 +52,6 @@ class __Validator:
             model_class_names_snake_case.add(model_class_name_snake_case)
 
             # self._validate_model(model)
-
-            if isinstance(model, NamedModel):
-                self._validate_named_model(model)
 
             validate_method_name = "_validate_" + model_class_name_snake_case
             try:
@@ -90,6 +94,7 @@ class __Validator:
         )
 
     def _validate_collection(self, collection: Collection):
+        self.__validate_named_model(collection)
         assert collection.uri not in self.__collection_uris
         self.__collection_uris.add(collection.uri)
         self.__referenced_institution_uris.add(collection.institution_uri)
@@ -101,7 +106,11 @@ class __Validator:
             uri_type="collection",
         )
 
+    def __validate_event(self, event: Event):
+        pass
+
     def _validate_image(self, image: Image):
+        self.__validate_named_model(image)
         self.__image_depicts_uris.add(image.depicts_uri)
         self.__validate_rights(image.rights)
 
@@ -109,6 +118,7 @@ class __Validator:
         pass
 
     def _validate_institution(self, institution: Institution):
+        self.__validate_named_model(institution)
         assert institution.uri not in self.__institution_uris
         self.__institution_uris.add(institution.uri)
 
@@ -120,6 +130,7 @@ class __Validator:
         )
 
     def _validate_license(self, license: License):
+        self.__validate_named_model(license)
         assert license.uri not in self.__license_uris
         self.__license_uris.add(license.uri)
 
@@ -131,19 +142,27 @@ class __Validator:
             warn=False,
         )
 
-    def _validate_named_model(self, model: NamedModel):
+    def _validate_named_location(self, location: NamedLocation):
+        self.__validate_named_model(location)
+        self.__location_uris.add(location.uri)
+
+    def _validate_named_location_references(self):
+        pass
+
+    def __validate_named_model(self, model: NamedModel):
         if model.uri not in self.__model_uris:
             self.__model_uris.add(model.uri)
         else:
             raise ValueError(f"duplicate model URI: {model.uri}")
 
     def _validate_named_value(self, named_value: NamedValue):
-        pass
+        self.__validate_named_model(named_value)
 
     def _validate_named_value_references(self):
         pass
 
     def _validate_organization(self, organization: Organization):
+        self.__validate_named_model(organization)
         assert organization.uri not in self.__organization_uris
         self.__organization_uris.add(organization.uri)
 
@@ -151,6 +170,7 @@ class __Validator:
         pass
 
     def _validate_person(self, person: Person):
+        self.__validate_named_model(person)
         assert person.uri not in self.__person_uris
         self.__person_uris.add(person.uri)
 
@@ -170,6 +190,7 @@ class __Validator:
             self.__referenced_rights_statement_uris.add(rights.statement)
 
     def _validate_rights_statement(self, rights_statement: RightsStatement):
+        self.__validate_named_model(rights_statement)
         assert rights_statement.uri not in self.__rights_statement_uris
         self.__rights_statement_uris.add(rights_statement.uri)
 
@@ -178,6 +199,7 @@ class __Validator:
             referenced_uris=self.__referenced_rights_statement_uris,
             universe_uris=self.__rights_statement_uris,
             uri_type="rights statement",
+            warn=False,
         )
 
     def __validate_uri_references(
@@ -201,6 +223,7 @@ class __Validator:
                     )
 
     def _validate_work(self, work: Work):
+        self.__validate_named_model(work)
         for collection_uri in work.collection_uris:
             self.__referenced_collection_uris.add(collection_uri)
         if work.institution_uri is not None:
@@ -209,8 +232,34 @@ class __Validator:
         self.__work_uris.add(work.uri)
         self.__validate_rights(work.rights)
 
-    def _validate_work_references(self):
+    def _validate_work_closing(self, work_closing: WorkClosing):
+        self.__validate_work_event(work_closing)
+
+    def _validate_work_closing_references(self):
         pass
+
+    def _validate_work_creation(self, work_creation: WorkCreation):
+        self.__validate_work_event(work_creation)
+
+    def _validate_work_creation_references(self):
+        pass
+
+    def __validate_work_event(self, work_event: WorkEvent):
+        self.__validate_event(work_event)
+        self.__referenced_work_uris.add(work_event.work_uri)
+
+    def _validate_work_opening(self, work_opening: WorkClosing):
+        self.__validate_work_event(work_opening)
+
+    def _validate_work_opening_references(self):
+        pass
+
+    def _validate_work_references(self):
+        self.__validate_uri_references(
+            referenced_uris=self.__referenced_work_uris,
+            universe_uris=self.__work_uris,
+            uri_type="work",
+        )
 
 
 def validation_transformer(models: Iterable[Model]) -> Iterable[Model]:  # type: ignore

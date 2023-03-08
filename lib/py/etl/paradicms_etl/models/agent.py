@@ -1,4 +1,4 @@
-from rdflib import FOAF, RDF
+from rdflib import FOAF, RDF, DCTERMS
 from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
@@ -18,7 +18,11 @@ class Agent(ResourceBackedNamedModel):
     def json_ld_context(cls):
         return safe_dict_update(
             ResourceBackedNamedModel.json_ld_context(),
-            {"name": {"@id": str(FOAF.name)}},
+            {
+                "name": {"@id": str(FOAF.name)},
+                "page": {"@id": str(FOAF.page)},
+                "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},
+            },
         )
 
     @property
