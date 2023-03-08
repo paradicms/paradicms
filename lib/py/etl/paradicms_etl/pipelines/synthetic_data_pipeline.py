@@ -17,7 +17,6 @@ from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicens
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.named_value import NamedValue
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
@@ -88,16 +87,16 @@ class SyntheticDataPipeline(Pipeline):
         def __init__(
             self,
             *,
-            collections_per_institution=1,
+            collections=2,
+            freestanding_works=4,
             images_per_work=2,
-            institutions=2,
-            works_per_institution=4,  # Works per page is 20
+            works_per_collection=4,  # Works per page is 20
         ):
-            self.__institutions = institutions
-            self.__collections_per_institution = collections_per_institution
+            self.__collections = collections
             self.__images_per_work = images_per_work
             self.__next_work_i = 0
-            self.__works_per_institution = works_per_institution
+            self.__freestanding_works = freestanding_works
+            self.__works_per_collection = works_per_collection
 
         def __call__(self):
             yield from CreativeCommonsLicenses.as_tuple()
@@ -121,7 +120,7 @@ class SyntheticDataPipeline(Pipeline):
                     agents.append(model)
             agents = tuple(agents)
 
-            yield from self.__generate_institutions(
+            yield from self.__generate_collections(
                 agents=agents, named_values_by_value=named_values_by_value
             )
 
@@ -192,14 +191,12 @@ class SyntheticDataPipeline(Pipeline):
             *,
             agents: Tuple[Agent, ...],
             collection: Collection,
-            institution: Institution,
             named_values_by_value: Dict[str, NamedValue],
         ):
-            for work_i in range(self.__works_per_institution):
+            for work_i in range(self.__works_per_collection):
                 yield from self.__generate_work(
                     agents=agents,
                     collection_uris=(collection.uri,),
-                    institution=institution,
                     named_values_by_value=named_values_by_value,
                     title_prefix=collection.title + "Work",
                     uri_prefix=str(collection.uri) + "/work",
@@ -211,11 +208,10 @@ class SyntheticDataPipeline(Pipeline):
             agents: Tuple[Agent, ...],
             named_values_by_value: Dict[str, NamedValue],
         ):
-            for work_i in range(self.__works_per_institution):  # Per institution
+            for work_i in range(self.__freestanding_works):
                 yield from self.__generate_work(
                     agents=agents,
                     collection_uris=(),
-                    institution=None,
                     named_values_by_value=named_values_by_value,
                     title_prefix="FreestandingWork",
                     uri_prefix="http://example.com/freestandingwork",
@@ -254,15 +250,14 @@ class SyntheticDataPipeline(Pipeline):
                         ),
                     )
 
-        def __generate_institution_collections(
+        def __generate_collections(
             self,
             *,
             agents: Tuple[Agent, ...],
-            institution: Institution,
             named_values_by_value: Dict[str, NamedValue],
         ):
-            for collection_i in range(self.__collections_per_institution):
-                collection_title = f"{institution.name}Collection{collection_i}"
+            for collection_i in range(self.__collections):
+                collection_title = f"Collection{collection_i}"
                 collection = Collection.from_fields(
                     abstract=Text.from_fields(
                         self.__LOREM_IPSUM,
@@ -274,9 +269,8 @@ class SyntheticDataPipeline(Pipeline):
                     )
                     if collection_i % 2 == 0
                     else None,
-                    institution_uri=institution.uri,
                     title=collection_title,
-                    uri=URIRef(f"{institution.uri}/collection{collection_i}"),
+                    uri=URIRef(f"http://example.com/collection{collection_i}"),
                 )
                 yield collection
 
@@ -290,42 +284,6 @@ class SyntheticDataPipeline(Pipeline):
                 yield from self.__generate_collection_works(
                     agents=agents,
                     collection=collection,
-                    institution=institution,
-                    named_values_by_value=named_values_by_value,
-                )
-
-        def __generate_institutions(
-            self,
-            agents: Tuple[Agent, ...],
-            named_values_by_value: Dict[str, NamedValue],
-        ):
-            for institution_i in range(self.__institutions):
-                institution_name = f"Institution{institution_i}"
-                institution = Institution.from_fields(
-                    name=institution_name,
-                    uri=URIRef(f"http://example.com/institution{institution_i}"),
-                )
-                yield institution
-
-                yield from self.__generate_images(
-                    depicts_uri=institution.uri,
-                    text_prefix=institution.name,
-                )
-
-                collections = []
-                for model in self.__generate_institution_collections(
-                    agents=agents,
-                    institution=institution,
-                    named_values_by_value=named_values_by_value,
-                ):
-                    if isinstance(model, Collection):
-                        collections.append(model)
-                    yield model
-
-                yield from self.__generate_shared_works(
-                    agents=agents,
-                    collections=tuple(collections),
-                    institution=institution,
                     named_values_by_value=named_values_by_value,
                 )
 
@@ -360,7 +318,6 @@ class SyntheticDataPipeline(Pipeline):
             *,
             agents: Tuple[Agent, ...],
             collection_uris: Tuple[URIRef, ...],
-            institution: Optional[Institution],
             named_values_by_value: Dict[str, NamedValue],
             title_prefix: str,
             uri_prefix: str,
@@ -475,7 +432,6 @@ class SyntheticDataPipeline(Pipeline):
             work = Work.from_fields(
                 abstract=abstract,
                 collection_uris=collection_uris,
-                institution_uri=institution.uri if institution else None,
                 page=URIRef("http://example.com/work/" + str(work_i))
                 if work_i % 2 == 0
                 else None,
@@ -523,26 +479,6 @@ class SyntheticDataPipeline(Pipeline):
                 uri=URIRef(str(uri) + "Opening"),
                 work_uri=work.uri,
             )
-
-        def __generate_shared_works(
-            self,
-            *,
-            agents: Tuple[Agent, ...],
-            collections: Tuple[Collection, ...],
-            institution: Institution,
-            named_values_by_value: Dict[str, NamedValue],
-        ):
-            for work_i in range(self.__works_per_institution):  # Per institution
-                yield from self.__generate_work(
-                    agents=agents,
-                    collection_uris=tuple(
-                        map(lambda collection: collection.uri, collections)
-                    ),
-                    institution=institution,
-                    named_values_by_value=named_values_by_value,
-                    title_prefix=f"{institution.name}SharedWork",
-                    uri_prefix=f"{institution.uri}/shared/work",
-                )
 
     def __init__(self, loader: Optional[Loader] = None):
         root_dir_path = (
