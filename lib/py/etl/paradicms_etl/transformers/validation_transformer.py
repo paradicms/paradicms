@@ -8,7 +8,6 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.event import Event
 from paradicms_etl.models.image import Image
-from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.license import License
 from paradicms_etl.models.named_location import NamedLocation
 from paradicms_etl.models.named_model import NamedModel
@@ -27,7 +26,6 @@ class __Validator:
     def __init__(self):
         self.__collection_uris = set()
         self.__image_depicts_uris = set()
-        self.__institution_uris = set()
         self.__license_uris = set()
         self.__location_uris = set()
         self.__logger = logging.getLogger(__name__)
@@ -36,7 +34,6 @@ class __Validator:
         self.__person_uris = set()
         self.__referenced_agent_uris = set()
         self.__referenced_collection_uris = set()
-        self.__referenced_institution_uris = set()
         self.__referenced_license_uris = set()
         self.__referenced_rights_statement_uris = set()
         self.__referenced_work_uris = set()
@@ -97,7 +94,6 @@ class __Validator:
         self.__validate_named_model(collection)
         assert collection.uri not in self.__collection_uris
         self.__collection_uris.add(collection.uri)
-        self.__referenced_institution_uris.add(collection.institution_uri)
 
     def _validate_collection_references(self):
         self.__validate_uri_references(
@@ -116,18 +112,6 @@ class __Validator:
 
     def _validate_image_references(self):
         pass
-
-    def _validate_institution(self, institution: Institution):
-        self.__validate_named_model(institution)
-        assert institution.uri not in self.__institution_uris
-        self.__institution_uris.add(institution.uri)
-
-    def _validate_institution_references(self):
-        self.__validate_uri_references(
-            referenced_uris=self.__referenced_institution_uris,
-            universe_uris=self.__institution_uris,
-            uri_type="institution",
-        )
 
     def _validate_license(self, license: License):
         self.__validate_named_model(license)
@@ -226,8 +210,6 @@ class __Validator:
         self.__validate_named_model(work)
         for collection_uri in work.collection_uris:
             self.__referenced_collection_uris.add(collection_uri)
-        if work.institution_uri is not None:
-            self.__referenced_institution_uris.add(work.institution_uri)
         assert work.uri not in self.__work_uris
         self.__work_uris.add(work.uri)
         self.__validate_rights(work.rights)
