@@ -481,21 +481,20 @@ class SyntheticDataPipeline(Pipeline):
             )
 
     def __init__(self, loader: Optional[Loader] = None):
-        root_dir_path = (
-            Path(__file__).absolute().parent.parent.parent.parent.parent.parent
-        )
         if loader is None:
+            data_dir_path = (
+                Path(__file__).absolute().parent.parent.parent.parent.parent.parent
+                / "data"
+            )
             loader = CompositeLoader(
                 loaders=(
                     Excel2010Loader(
-                        xlsx_file_path=root_dir_path
-                        / "data"
+                        xlsx_file_path=data_dir_path
                         / "synthetic"
                         / "synthetic_data.xlsx"
                     ),
                     RdfFileLoader(
-                        rdf_file_path=root_dir_path
-                        / "data"
+                        rdf_file_path=data_dir_path
                         / "synthetic"
                         / "synthetic_data.trig",
                         pipeline_id=self.ID,
