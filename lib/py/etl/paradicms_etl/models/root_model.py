@@ -2,7 +2,6 @@ from typing import Union
 
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
-from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.license import License
 from paradicms_etl.models.named_location import NamedLocation
 from paradicms_etl.models.named_value import NamedValue
@@ -20,7 +19,6 @@ Typedef for root model classes such as Institution, Person, and Work.
 RootModel = Union[
     Collection,
     Image,
-    Institution,
     License,
     NamedLocation,
     NamedValue,
