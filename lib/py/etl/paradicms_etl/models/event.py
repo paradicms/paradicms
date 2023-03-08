@@ -49,9 +49,9 @@ class Event(ResourceBackedNamedModel):
             {
                 "abstract": {"@id": str(DCTERMS.abstract)},
                 "date": {"@id": str(DCTERMS.date)},
-                "startDate": {"@id": str(VRA.startDate)},
                 "endDate": {"@id": str(VRA.endDate)},
                 "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
+                "startDate": {"@id": str(VRA.startDate)},
                 "title": {"@id": str(DCTERMS.title)},
             },
         )
