@@ -10,12 +10,12 @@ export class PropertyConfiguration extends Configuration {
     );
   }
 
-  get hidden(): boolean {
-    return (
-      this.findAndMapObject(configuration.hidden, this.mapBooleanObject) ??
-      false
-    );
-  }
+  // get hidden(): boolean {
+  //   return (
+  //     this.findAndMapObject(configuration.hidden, this.mapBooleanObject) ??
+  //     false
+  //   );
+  // }
 
   get label(): string {
     return requireNonNull(
