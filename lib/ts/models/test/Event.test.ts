@@ -1,7 +1,6 @@
 import {expect} from "chai";
 import {ModelSet} from "../src";
 import {syntheticData} from "@paradicms/test";
-import {DateTimeDescription} from "../src/DateTimeDescription";
 import {Location} from "../src/Location";
 import {Text} from "../src/Text";
 import {Event} from "../src/Event";
@@ -28,8 +27,9 @@ describe("Event", () => {
 
   it("should get the date", () => {
     const date = sut.date;
-    expect(date).to.be.instanceof(DateTimeDescription);
-    expect((date as DateTimeDescription).year).to.eq(2022);
+    // expect(date).to.be.instanceof(DateTimeDescription);
+    // expect((date as DateTimeDescription).year).to.eq(2022);
+    expect(date).to.eq("2022-01-01");
   });
 
   it("should get the location", () => {

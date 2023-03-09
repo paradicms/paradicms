@@ -19,7 +19,13 @@ export const mapDateTimeUnionObject = (
         node: term,
       });
     case "Literal":
-      if (term.datatype.value === xsd.dateTime.value) {
+      if (term.datatype.value === xsd.date.value) {
+        return term.value;
+        // return new DateTimeDescription({
+        //   ...modelParameters,
+        //   node: DataFactory.blankNode(),
+        // });
+      } else if (term.datatype.value === xsd.dateTime.value) {
         const dayjs_ = dayjs(term.value);
         return dayjs_.toDate();
       } else if (term.datatype.value === xsd.integer.value) {

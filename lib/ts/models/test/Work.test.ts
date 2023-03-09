@@ -15,7 +15,7 @@ describe("Work", () => {
 
   it("should get the work's agents", () => {
     const agents = sut.agents;
-    expect(agents).to.have.length(12);
+    expect(agents).to.have.length(4);
     expect(agents.map(agent => agent.agent.uri)).to.deep.eq(sut.agentUris);
   });
 

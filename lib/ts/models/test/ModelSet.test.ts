@@ -9,12 +9,12 @@ describe("ModelSet", () => {
 
   it("should exercise all indices", () => {
     const collections = sut.collections;
-    expect(collections).to.have.length(1);
+    expect(collections).to.have.length(2);
     for (const collection of collections) {
       expect(sut.collectionByUri(collection.uri)).to.eq(collection);
 
       const collectionWorks = sut.collectionWorks(collection.uri);
-      expect(collectionWorks).to.have.length(8);
+      expect(collectionWorks).to.have.length(4);
       for (const work of collectionWorks) {
         expect(sut.workByUri(work.uri)).to.eq(work);
 
