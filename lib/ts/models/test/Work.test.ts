@@ -5,9 +5,7 @@ import {dcterms} from "@paradicms/vocabularies";
 
 describe("Work", () => {
   const modelSet = ModelSet.fromDatasetCore(syntheticData);
-  const sut = modelSet.workByUri(
-    "http://example.com/institution0/collection0/work2"
-  );
+  const sut = modelSet.workByUri("http://example.com/collection0/work2");
 
   it("should get the work's abstract", () => {
     expect(sut.abstract).to.be.instanceof(Text);

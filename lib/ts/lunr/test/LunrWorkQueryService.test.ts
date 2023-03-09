@@ -195,7 +195,7 @@ describe("LunrWorkQueryService", () => {
       },
       {
         filters: []!,
-        text: "Institution0Collection0Work2",
+        text: "Collection0Work2",
       }
     );
 
