@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import {LunrWorkQueryService} from "../src/LunrWorkQueryService";
 import {ModelSet, visitWorkEvent, WorkClosing, WorkCreation, WorkOpening} from "@paradicms/models";
-import {CollectionValueFacet, InstitutionValueFacet, StringPropertyValueFacet} from "@paradicms/facets";
+import {CollectionValueFacet, StringPropertyValueFacet} from "@paradicms/facets";
 import {dcterms, vra} from "@paradicms/vocabularies";
 import {StringPropertyValueFilter} from "@paradicms/filters";
 import {syntheticData} from "@paradicms/test";
@@ -133,9 +133,6 @@ describe("LunrWorkQueryService", () => {
           label: "Collection",
           type: "CollectionValue",
         }, {
-          label: "Institution",
-          type: "InstitutionValue"
-        }, {
           label: "Publisher",
           propertyUri: vra.technique.value,
           type: "StringPropertyValue"
@@ -147,11 +144,6 @@ describe("LunrWorkQueryService", () => {
       facet => facet.type === "CollectionValue"
     ) as CollectionValueFacet | undefined;
     expect(collectionValueFacet).to.not.be.undefined;
-
-    const institutionValueFacet = result.facets.find(
-      facet => facet.type === "InstitutionValue"
-    ) as InstitutionValueFacet | undefined;
-    expect(institutionValueFacet).to.not.be.undefined;
 
     expect(
       result.facets.some(facet => {

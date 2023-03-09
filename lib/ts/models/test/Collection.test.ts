@@ -16,10 +16,6 @@ describe("Collection", () => {
     expect(abstract.value).to.not.be.empty;
   });
 
-  it("should get the collection's institution", () => {
-    expect(sut.institution.uri).to.eq(sut.institutionUri);
-  });
-
   it("should get the collection's title", () => {
     expect(sut.title).to.eq(sut.title);
   });

@@ -23,7 +23,6 @@ import {
 import {
   CollectionValueFilter,
   Filter,
-  InstitutionValueFilter,
   JsonPrimitiveType,
   StringPropertyValueFilter,
   ValueFilter,
@@ -31,7 +30,6 @@ import {
 import {
   CollectionValueFacet,
   Facet,
-  InstitutionValueFacet,
   StringPropertyValueFacet,
   ValueFacetValue,
   ValueFacetValueThumbnail,
@@ -158,41 +156,6 @@ export class LunrWorkQueryService implements WorkQueryService {
           facets.push(facet);
           break;
         }
-        case "InstitutionValue": {
-          const values: {
-            [index: string]: MutableValueFacetValue<string>;
-          } = {};
-          for (const work of works) {
-            if (!work.institutionUri) {
-              continue;
-            }
-            const value = values[work.institutionUri];
-            if (value) {
-              value.count++;
-            } else {
-              const institution = this.modelSet.institutionByUri(
-                work.institutionUri
-              );
-              values[work.institutionUri] = {
-                count: 1,
-                label: institution.name,
-                thumbnail: valueFacetValueThumbnailSelector
-                  ? LunrWorkQueryService.toValueFacetValueThumbnail(
-                      institution.thumbnail(valueFacetValueThumbnailSelector)
-                    )
-                  : null,
-                value: work.institutionUri,
-              };
-            }
-          }
-          const facet: InstitutionValueFacet = {
-            type: "InstitutionValue",
-            unknownCount: 0,
-            values: Object.keys(values).map(value => values[value]),
-          };
-          facets.push(facet);
-          break;
-        }
         case "StringPropertyValue": {
           const concreteFilter: StringPropertyValueFilter = filter as StringPropertyValueFilter;
           let unknownCount: number = 0;
@@ -256,16 +219,6 @@ export class LunrWorkQueryService implements WorkQueryService {
               filter as CollectionValueFilter,
               work.collectionUris
             )
-          );
-          break;
-        case "InstitutionValue":
-          filteredWorks = filteredWorks.filter(
-            work =>
-              work.institutionUri &&
-              LunrWorkQueryService.testValueFilter(
-                filter as InstitutionValueFilter,
-                [work.institutionUri]
-              )
           );
           break;
         case "StringPropertyValue": {

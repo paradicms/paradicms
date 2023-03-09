@@ -33,41 +33,6 @@ describe("ModelSubsetter", () => {
     workPropertyUris: [],
   });
 
-  it("should get institutions with thumbnails (institutions page)", () => {
-    const modelSet = sut.institutionsModelSet(testModelSet.institutions, {
-      thumbnail: THUMBNAIL_SELECTOR,
-    });
-    expectModelsDeepEq(
-      modelSet.images,
-      testModelSet.institutions.map(
-        institution => institution.thumbnail(THUMBNAIL_SELECTOR)!
-      )
-    );
-    expectModelsDeepEq(modelSet.institutions, testModelSet.institutions);
-  });
-
-  it("should get an institution with its collections and their thumbnails (institution page)", () => {
-    const institution = testModelSet.institutions[0];
-    const modelSet = sut.institutionModelSet(institution, {
-      collections: {thumbnail: THUMBNAIL_SELECTOR},
-    });
-    expectModelsDeepEq(
-      modelSet.collections,
-      testModelSet.collections.filter(
-        collection => collection.institutionUri === institution.uri
-      )
-    );
-    // One thumbnail per collection
-    expect(modelSet.images).to.have.length(modelSet.collections.length);
-    // The collections themselves don't have Images that depict the collection. A thumbnail is picked up from an work.
-    // That work must be included in the modelSet for the thumbnail selection to work after subsetting.
-    expect(modelSet.works).to.have.length(modelSet.works.length);
-    // One work per collection
-    expect(modelSet.works.map(work => work.collectionUris[0])).to.deep.eq(
-      modelSet.collections.map(collection => collection.uri)
-    );
-  });
-
   it("should get a collection with its works and their thumbnails (collection page)", () => {
     const collection = testModelSet.collections[0];
     const modelSet = sut.collectionModelSet(collection, {
@@ -107,7 +72,7 @@ describe("ModelSubsetter", () => {
     ]);
   });
 
-  it("should get a work with its institution, collections, all images, agents, and agents' thumbnails (work page)", () => {
+  it("should get a work with its collections, all images, agents, and agents' thumbnails (work page)", () => {
     const work = testModelSet.works[0];
     const modelSet = sut.workModelSet(work, {
       agents: {
@@ -116,7 +81,6 @@ describe("ModelSubsetter", () => {
       allImages: true,
       collections: {},
       events: {},
-      institution: {},
     });
     expectModelsDeepEq(
       modelSet.collections,
@@ -138,11 +102,6 @@ describe("ModelSubsetter", () => {
     for (const agent of modelSet.agents) {
       expect(agent.thumbnail(THUMBNAIL_SELECTOR)).to.not.be.null;
     }
-    expectModelsDeepEq(modelSet.institutions, [
-      testModelSet.institutions.find(
-        institution => institution.uri === work.institutionUri
-      )!,
-    ]);
     expectModelsDeepEq(modelSet.licenses, [
       testModelSet.licenses.find(
         license => license.uri === (work.rights!.license! as License).uri

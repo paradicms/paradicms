@@ -5,7 +5,7 @@ import {JsonPrimitiveType} from "./JsonPrimitiveType";
 /**
  * Facet that creates a histogram of distinct values (model, property, value).
  *
- * Examples on Work include institution, collections, or subject terms.
+ * Examples on Work include collections or subject terms.
  *
  * The naming follows that of Lucene/ElasticSearch (value and range facets).
  */

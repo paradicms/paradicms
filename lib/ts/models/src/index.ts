@@ -8,8 +8,6 @@ export * from "./ModelSubsetter";
 export * from "./Event";
 export * from "./Image";
 export * from "./ImageDimensions";
-export * from "./Institution";
-export * from "./InstitutionJoinSelector";
 export * from "./License";
 export * from "./Location";
 export * from "./mixins";

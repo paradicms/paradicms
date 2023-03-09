@@ -6,7 +6,6 @@ interface Cms {
 
   // Properties
   collection: NamedNode<"http://www.paradicms.org/ns/cms#collection">;
-  institution: NamedNode<"http://www.paradicms.org/ns/cms#institution">;
   imageMaxHeight: NamedNode<"http://www.paradicms.org/ns/cms#imageMaxHeight">;
   imageMaxWidth: NamedNode<"http://www.paradicms.org/ns/cms#imageMaxWidth">;
   imageSrc: NamedNode<"http://www.paradicms.org/ns/cms#imageSrc">;
@@ -20,7 +19,6 @@ interface Cms {
   >;
   Event: NamedNode<"http://www.paradicms.org/ns/cms#Event">;
   Image: NamedNode<"http://www.paradicms.org/ns/cms#Image">;
-  Institution: NamedNode<"http://www.paradicms.org/ns/cms#Institution">;
   License: NamedNode<"http://www.paradicms.org/ns/cms#License">;
   NamedValue: NamedNode<"http://www.paradicms.org/ns/cms#NamedValue">;
   Organization: NamedNode<"http://www.paradicms.org/ns/cms#Organization">;

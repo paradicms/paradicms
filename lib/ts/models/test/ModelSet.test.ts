@@ -8,31 +8,22 @@ describe("ModelSet", () => {
   const sut = ModelSet.fromDatasetCore(syntheticData);
 
   it("should exercise all indices", () => {
-    const institutions = sut.institutions;
-    expect(institutions).to.have.length(2);
-    for (const institution of institutions) {
-      expect(sut.institutionByUri(institution.uri)).to.eq(institution);
+    const collections = sut.collections;
+    expect(collections).to.have.length(1);
+    for (const collection of collections) {
+      expect(sut.collectionByUri(collection.uri)).to.eq(collection);
 
-      const collections = sut.institutionCollections(institution.uri);
-      expect(collections).to.have.length(1);
-      for (const collection of collections) {
-        expect(sut.collectionByUri(collection.uri)).to.eq(collection);
+      const collectionWorks = sut.collectionWorks(collection.uri);
+      expect(collectionWorks).to.have.length(8);
+      for (const work of collectionWorks) {
+        expect(sut.workByUri(work.uri)).to.eq(work);
 
-        const collectionWorks = sut.collectionWorks(collection.uri);
-        expect(collectionWorks).to.have.length(8);
-        for (const work of collectionWorks) {
-          expect(sut.workByUri(work.uri)).to.eq(work);
-
-          const workImages = sut.imagesByDepictsUri(work.uri);
-          expect(workImages).to.have.length(6);
-          for (const image of workImages) {
-            expect(sut.imageByUri(image.uri)).to.eq(image);
-          }
+        const workImages = sut.imagesByDepictsUri(work.uri);
+        expect(workImages).to.have.length(6);
+        for (const image of workImages) {
+          expect(sut.imageByUri(image.uri)).to.eq(image);
         }
       }
-
-      const institutionImages = sut.imagesByDepictsUri(institution.uri);
-      expect(institutionImages).to.have.length(6);
     }
 
     for (const namedValue of sut.namedValues) {
