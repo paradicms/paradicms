@@ -9,7 +9,7 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.institution import Institution
+from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.work import Work
@@ -83,7 +83,6 @@ class LunaTransformer:
                 collection = self._transform_collection(
                     base_url=base_url,
                     id_=collection_id,
-                    institution=institution,
                     luna_collection=luna_collection,
                 )
                 yield collection
@@ -102,13 +101,11 @@ class LunaTransformer:
         *,
         base_url: str,
         id_: str,
-        institution: Institution,
         luna_collection: Dict[str, str],
     ) -> Collection:
         description = luna_collection.get("description", "").strip()
         return Collection.from_fields(
             abstract=description if description else None,
-            institution_uri=institution.uri,
             title=luna_collection["name"],
             uri=URIRef(
                 LunaExtractor.create_search_url(base_url=base_url, query={"lc": id_})
@@ -117,14 +114,14 @@ class LunaTransformer:
 
     def _transform_institution(
         self, *, base_url: str, institution_name: str
-    ) -> Institution:
-        return Institution.from_fields(name=institution_name, uri=URIRef(base_url))
+    ) -> Organization:
+        return Organization.from_fields(name=institution_name, uri=URIRef(base_url))
 
     def _transform_object(
         self,
         *,
         collections_by_id: Dict[str, Collection],
-        institution: Institution,
+        institution: Organization,
         luna_object,
     ) -> Iterable[Model]:
         id_ = luna_object["id"].strip()
@@ -158,10 +155,11 @@ class LunaTransformer:
 
         properties = self._transform_object_field_values(field_values=field_values_dict)
 
+        raise NotImplementedError("TODO: incorporate institution into rights")
+
         work = Work.from_fields(
             abstract=description,
             collection_uris=collection_uris,
-            institution_uri=institution.uri,
             properties=properties,
             title=display_name,
             uri=URIRef(luna_object["iiifManifest"]),

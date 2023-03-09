@@ -1,4 +1,3 @@
-import {Institution} from "./Institution";
 import {Image} from "./Image";
 import {ModelSet} from "./ModelSet";
 import {Collection} from "./Collection";
@@ -14,7 +13,6 @@ import {Store} from "@paradicms/rdf";
 
 export class ModelSetBuilder {
   private collectionsByUri: {[index: string]: Collection} | undefined;
-  private institutionsByUri: {[index: string]: Institution} | undefined;
   private eventsByUri: {[index: string]: Event} | undefined;
   private imagesByUri: {[index: string]: Image} | undefined;
   private licensesByUri: {[index: string]: License} | undefined;
@@ -52,22 +50,6 @@ export class ModelSetBuilder {
 
   addEvent(event: Event) {
     this.eventsByUri = ModelSetBuilder.addNamedModel(this.eventsByUri, event);
-    return this;
-  }
-
-  addInstitution(institution: Institution) {
-    this.institutionsByUri = ModelSetBuilder.addNamedModel(
-      this.institutionsByUri,
-      institution
-    );
-    return this;
-  }
-
-  addInstitutions(institutions: readonly Institution[]) {
-    this.institutionsByUri = ModelSetBuilder.addNamedModels(
-      this.institutionsByUri,
-      institutions
-    );
     return this;
   }
 
@@ -188,7 +170,6 @@ export class ModelSetBuilder {
       this.collectionsByUri,
       this.eventsByUri,
       this.imagesByUri,
-      this.institutionsByUri,
       this.licensesByUri,
       this.namedValuesByUri,
       this.organizationsByUri,

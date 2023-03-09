@@ -13,7 +13,6 @@ from yaml import FullLoader
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
-from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.license import License
 from paradicms_etl.models.markdown_directory import MarkdownDirectory
 from paradicms_etl.models.rights_statement import RightsStatement
@@ -57,27 +56,19 @@ class MarkdownDirectoryTransformer:
     3. Transform the RDF graph to a model.
     """
 
-    _DEFAULT_INSTITUTION_MODEL_ID = "default"
-
     def __init__(
         self,
         *,
-        default_institution: Optional[Institution] = None,
-        default_collection: Optional[Collection] = None,
         pipeline_id: str,
+        default_collection: Optional[Collection] = None,
     ):
-        if default_institution is None and default_collection is not None:
-            raise ValueError(
-                "default institution must be supplied if default collection is"
-            )
         self.__default_collection = default_collection
-        self.__default_institution = default_institution
         self.__logger = logging.getLogger(__name__)
         self.__pipeline_id = pipeline_id
 
     # Rather than managing the state of the transform as variable assignments in a particular order,
     # create a class instance per transform invocation.
-    # The state includes things like the default institution, which is synthesized if needed.
+    # The state includes things like the default collection, which is synthesized if needed.
     class __TransformInvocation:
         __METADATA_FILE_TO_JSON_LD_OBJECT_TRANSFORMERS = {
             "json": lambda metadata_file_entry: json.loads(metadata_file_entry.source),
@@ -93,13 +84,11 @@ class MarkdownDirectoryTransformer:
             self,
             *,
             default_collection: Optional[Collection],
-            default_institution: Optional[Institution],
             logger: Logger,
             markdown_directory: MarkdownDirectory,
             pipeline_id: str,
         ):
             self.__default_collection = default_collection
-            self.__default_institution = default_institution
             self.__logger = logger
             self.__markdown_directory = markdown_directory
             self.__pipeline_id = pipeline_id
@@ -155,7 +144,6 @@ class MarkdownDirectoryTransformer:
 
         def __call__(self) -> Tuple[RootModel, ...]:
             # Order is important
-            self.__transform_institution_metadata_file_entries()
             self.__transform_collection_metadata_file_entries()
             self.__transform_work_metadata_file_entries()
             self.__transform_work_event_metadata_file_entries()
@@ -170,18 +158,10 @@ class MarkdownDirectoryTransformer:
                 model_id=markdown_directory_name,
             )
 
-        @property
-        def __default_institution_uri(self) -> URIRef:
-            return self.__model_uri(
-                model_class=Institution,
-                model_id=MarkdownDirectoryTransformer._DEFAULT_INSTITUTION_MODEL_ID,
-            )
-
         def __get_or_synthesize_default_collection(self) -> Collection:
             if self.__default_collection is None:
                 model_id = self.__markdown_directory.name
                 self.__default_collection = Collection.from_fields(
-                    institution_uri=self.__get_or_synthesize_default_institution().uri,
                     title=self.__markdown_directory.name,
                     uri=self.__default_collection_uri(
                         markdown_directory_name=self.__markdown_directory.name
@@ -194,19 +174,6 @@ class MarkdownDirectoryTransformer:
                 self.__logger.info("synthesized default collection %s", model_id)
             return self.__default_collection
 
-        def __get_or_synthesize_default_institution(self) -> Institution:
-            if self.__default_institution is None:
-                model_id = MarkdownDirectoryTransformer._DEFAULT_INSTITUTION_MODEL_ID
-                self.__default_institution = Institution.from_fields(
-                    name="Default institution",
-                    uri=self.__default_institution_uri,
-                )
-                self.__buffer_transformed_model(
-                    model_id=model_id,
-                    transformed_model=self.__default_institution,
-                )
-            return self.__default_institution
-
         def __model_type_namespace(self, *, model_class: Type[RootModel]) -> Namespace:
             return Namespace(
                 f"{self.__pipeline_namespace}{quote(spinalcase(model_class.__name__))}:"
@@ -218,12 +185,6 @@ class MarkdownDirectoryTransformer:
         @property
         def __pipeline_namespace(self) -> Namespace:
             return Namespace(f"urn:markdown:{self.__pipeline_id}:")
-
-        def __set_resource_institution_uri(self, resource: Resource) -> None:
-            if resource.value(CMS.institution) is None:
-                resource.add(
-                    CMS.institution, self.__get_or_synthesize_default_institution().uri
-                )
 
         def __set_resource_label(
             self,
@@ -252,7 +213,6 @@ class MarkdownDirectoryTransformer:
                     metadata_file_entry=metadata_file_entry
                 )
 
-                self.__set_resource_institution_uri(collection_resource)
                 self.__set_resource_label(
                     model_class=model_class,
                     model_id=metadata_file_entry.model_id,
@@ -264,22 +224,11 @@ class MarkdownDirectoryTransformer:
                     model_resource=collection_resource,
                 )  # type: ignore
                 if self.__default_collection is None:
-                    if self.__default_institution is not None:
-                        collection_institution_uri = collection_resource.value(
-                            CMS.institution
-                        )
-                        if collection_institution_uri is not None:
-                            assert isinstance(collection_institution_uri, Resource)
-                            collection_institution_uri = (
-                                collection_institution_uri.identifier
-                            )
-                        if collection_institution_uri == self.__default_institution.uri:
-                            self.__default_collection = collection
-                            self.__logger.debug(
-                                "using first collection %s that belongs to the default institution %s as the default collection",
-                                self.__default_collection.uri,
-                                self.__default_institution.uri,
-                            )
+                    self.__default_collection = collection
+                    self.__logger.debug(
+                        "using first collection %s as the default collection",
+                        self.__default_collection.uri,
+                    )
 
                 self.__buffer_transformed_model(
                     model_id=metadata_file_entry.model_id,
@@ -394,37 +343,6 @@ class MarkdownDirectoryTransformer:
                         ),
                     )
 
-        def __transform_institution_metadata_file_entries(self) -> None:
-            model_class = Institution
-            for (
-                metadata_file_entry
-            ) in self.__untransformed_metadata_file_entries_by_model_class.pop(
-                model_class, tuple()
-            ):
-                institution_resource = self.__transform_metadata_file_entry_to_resource(
-                    metadata_file_entry=metadata_file_entry
-                )
-                self.__set_resource_label(
-                    model_id=metadata_file_entry.model_id,
-                    model_class=model_class,
-                    resource=institution_resource,
-                )
-
-                institution: Institution = self.__transform_resource_to_model(
-                    model_resource=institution_resource,
-                    model_class=model_class,
-                )  # type: ignore
-                if self.__default_institution is None:
-                    self.__default_institution = institution
-                    self.__logger.debug(
-                        "using first institution %s as the default institution",
-                        self.__default_institution.uri,
-                    )
-                self.__buffer_transformed_model(
-                    model_id=metadata_file_entry.model_id,
-                    transformed_model=institution,
-                )
-
         def __transform_metadata_file_entry_to_resource(
             self, metadata_file_entry: MarkdownDirectory.MetadataFileEntry
         ) -> Resource:
@@ -537,7 +455,6 @@ class MarkdownDirectoryTransformer:
                 work_resource = self.__transform_metadata_file_entry_to_resource(
                     metadata_file_entry
                 )
-                self.__set_resource_institution_uri(work_resource)
                 self.__set_resource_label(
                     model_id=metadata_file_entry.model_id,
                     model_class=model_class,
@@ -607,7 +524,6 @@ class MarkdownDirectoryTransformer:
 
         for model in self.__TransformInvocation(
             default_collection=self.__default_collection,
-            default_institution=self.__default_institution,
             logger=self.__logger,
             markdown_directory=markdown_directory,
             pipeline_id=self.__pipeline_id,

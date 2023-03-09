@@ -40,14 +40,12 @@ class Work(ResourceBackedNamedModel):
         ] = None,  # foaf:page, linking to a human-readable page; if not specified, defaults to URI
         properties: Tuple[Property, ...] = (),
         collection_uris: Optional[Tuple[URIRef, ...]] = None,
-        institution_uri: Optional[URIRef] = None,
         rights: Optional[Rights] = None,
     ) -> "Work":
         return cls(
             ResourceBuilder(uri)
             .add(DCTERMS.abstract, abstract)
             .add(CMS.collection, collection_uris)
-            .add(CMS.institution, institution_uri)
             .add(FOAF.page, page)
             .add_properties(properties)
             .add_rights(rights)
@@ -68,10 +66,6 @@ class Work(ResourceBackedNamedModel):
             and isinstance(resource.identifier, URIRef)
         )
 
-    @property
-    def institution_uri(self) -> Optional[URIRef]:
-        return self._optional_uri_value(CMS.institution)
-
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
@@ -80,7 +74,6 @@ class Work(ResourceBackedNamedModel):
                 {
                     "abstract": {"@id": str(DCTERMS.abstract)},
                     "collection": {"@id": str(CMS.collection), "@type": "@id"},
-                    "institution": {"@id": str(CMS.institution), "@type": "@id"},
                     "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
                     "page": {"@id": str(FOAF.page)},
                     "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},

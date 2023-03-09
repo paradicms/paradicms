@@ -10,7 +10,6 @@ from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -30,8 +29,6 @@ class OmekaClassicTransformer:
         *,
         fullsize_max_height_px: int,
         fullsize_max_width_px: int,
-        institution_name: str,
-        institution_uri: URIRef,
         square_thumbnail_height_px: int,
         square_thumbnail_width_px: int,
         thumbnail_max_height_px: int,
@@ -40,8 +37,6 @@ class OmekaClassicTransformer:
         # Single _ so we can use getattr
         self._fullsize_max_height_px = fullsize_max_height_px
         self._fullsize_max_width_px = fullsize_max_width_px
-        self.__institution_name = institution_name
-        self.__institution_uri = institution_uri
         self.__logger = logging.getLogger(__name__)
         self._metrics_registry = MetricsRegistry()
         self._square_thumbnail_height_px = square_thumbnail_height_px
@@ -55,16 +50,10 @@ class OmekaClassicTransformer:
         yield from CreativeCommonsLicenses.as_tuple()
         yield from RightsStatementsDotOrgRightsStatements.as_tuple()
 
-        institution = Institution.from_fields(
-            name=self.__institution_name,
-            uri=self.__institution_uri,
-        )
-        yield institution
-
         collection_uris_by_id = {}
         for collection in tqdm(collections, desc="Omeka collections"):
             transformed_collection = self._transform_collection(
-                institution_uri=institution.uri, omeka_collection=collection
+                omeka_collection=collection
             )
             if transformed_collection is None:
                 continue
@@ -84,7 +73,6 @@ class OmekaClassicTransformer:
                 transformed_item = self._transform_item(
                     collection_uris_by_id=collection_uris_by_id,
                     endpoint_url=endpoint_url,
-                    institution_uri=institution.uri,
                     item=item,
                 )
             if transformed_item is None:
@@ -143,9 +131,7 @@ class OmekaClassicTransformer:
                     tuple(element_text_tree[element_set_name]),
                 )
 
-    def _transform_collection(
-        self, *, institution_uri: URIRef, omeka_collection
-    ) -> Optional[Collection]:
+    def _transform_collection(self, *, omeka_collection) -> Optional[Collection]:
         element_text_tree = self._get_element_texts_as_tree(omeka_collection)
         properties = self._transform_dublin_core_elements(
             element_text_tree=element_text_tree
@@ -159,7 +145,6 @@ class OmekaClassicTransformer:
             )
             return None
         return Collection.from_fields(
-            institution_uri=institution_uri,
             properties=properties,
             title=title,
             uri=URIRef(omeka_collection["url"]),
@@ -295,7 +280,6 @@ class OmekaClassicTransformer:
         *,
         collection_uris_by_id: Dict[int, URIRef],
         endpoint_url: str,
-        institution_uri: URIRef,
         item,
     ) -> Optional[Work]:
         if item["collection"] is None:
@@ -329,7 +313,6 @@ class OmekaClassicTransformer:
             return None
         return Work.from_fields(
             collection_uris=(collection_uri,),
-            institution_uri=institution_uri,
             page=URIRef(endpoint_url + "items/show/" + str(item["id"])),
             properties=properties,
             # rights=Rights.from_properties(properties),

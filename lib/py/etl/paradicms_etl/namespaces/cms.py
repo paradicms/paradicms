@@ -8,7 +8,6 @@ class CMS(DefinedNamespace):
 
     # Properties
     collection: URIRef
-    institution: URIRef
     imageCopyable: URIRef
     imageMaxHeight: URIRef
     imageMaxWidth: URIRef
@@ -23,7 +22,6 @@ class CMS(DefinedNamespace):
     DateTimeDescription: URIRef
     Event: URIRef
     Image: URIRef
-    Institution: URIRef
     License: URIRef
     Location: URIRef
     NamedValue: URIRef

@@ -1,13 +1,11 @@
 import {
   CollectionValueFacet,
   Facet,
-  InstitutionValueFacet,
   StringPropertyValueFacet,
 } from "@paradicms/facets";
 import {
   CollectionValueFilter,
   Filter,
-  InstitutionValueFilter,
   StringPropertyValueFilter,
 } from "@paradicms/filters";
 
@@ -18,11 +16,6 @@ export interface FilterVisitor<T> {
   visitCollectionValueFilter(
     filter: CollectionValueFilter,
     facet?: CollectionValueFacet
-  ): T;
-
-  visitInstitutionValueFilter(
-    filter: InstitutionValueFilter,
-    facet?: InstitutionValueFacet
   ): T;
 
   visitStringPropertyValueFilter(
@@ -46,17 +39,6 @@ export const visitFilter = <T>(
         console.warn("no matching facet for filter on collections");
       }
       return visitor.visitCollectionValueFilter(concreteFilter, facet);
-    }
-
-    case "InstitutionValue": {
-      const concreteFilter: InstitutionValueFilter = filter as InstitutionValueFilter;
-      const facet: InstitutionValueFacet | undefined = facets?.find(
-        facet => facet.type === "InstitutionValue"
-      ) as InstitutionValueFacet | undefined;
-      if (!facet && facets) {
-        console.warn("no matching facet for filter on institutions");
-      }
-      return visitor.visitInstitutionValueFilter(concreteFilter, facet);
     }
 
     case "StringPropertyValue": {

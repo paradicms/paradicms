@@ -5,9 +5,7 @@ import {dcterms} from "@paradicms/vocabularies";
 
 describe("Work", () => {
   const modelSet = ModelSet.fromDatasetCore(syntheticData);
-  const sut = modelSet.workByUri(
-    "http://example.com/institution0/collection0/work2"
-  );
+  const sut = modelSet.workByUri("http://example.com/collection0/work2");
 
   it("should get the work's abstract", () => {
     expect(sut.abstract).to.be.instanceof(Text);
@@ -17,7 +15,7 @@ describe("Work", () => {
 
   it("should get the work's agents", () => {
     const agents = sut.agents;
-    expect(agents).to.have.length(12);
+    expect(agents).to.have.length(4);
     expect(agents.map(agent => agent.agent.uri)).to.deep.eq(sut.agentUris);
   });
 
@@ -34,10 +32,6 @@ describe("Work", () => {
         .map(image => image.uri)
         .sort()
     );
-  });
-
-  it("should get the work's's institution", () => {
-    expect(sut.institution!.uri).to.eq(sut.institutionUri!);
   });
 
   it("should get the work's images", () => {

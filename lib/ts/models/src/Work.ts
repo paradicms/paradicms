@@ -20,7 +20,6 @@ import {
 import {WorkEvent} from "./WorkEvent";
 import {WorkLocation} from "./WorkLocation";
 import {cms, dcterms, rdf} from "@paradicms/vocabularies";
-import {Institution} from "./Institution";
 import {mapTextObject} from "./mapTextObject";
 
 const getRightsWorkAgents = (
@@ -129,18 +128,6 @@ export class Work extends Mixin(
   @Memoize()
   get events(): readonly WorkEvent[] {
     return this.modelSet.workEventsByWork(this.uri);
-  }
-
-  @Memoize()
-  get institution(): Institution | null {
-    return this.institutionUri
-      ? this.modelSet.institutionByUri(this.institutionUri)
-      : null;
-  }
-
-  @Memoize()
-  get institutionUri(): string | null {
-    return this.findAndMapObject(cms.institution, this.mapUriObject);
   }
 
   @Memoize()

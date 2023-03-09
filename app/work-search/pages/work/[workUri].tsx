@@ -124,7 +124,6 @@ export const getStaticProps: GetStaticProps = async ({
           allImages: true,
           collections: {},
           events: {},
-          institution: {},
         })
         .toFastRdfString(),
       workUri,

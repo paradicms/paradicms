@@ -1,13 +1,11 @@
 import {
   CollectionValueFilter,
   Filter,
-  InstitutionValueFilter,
   StringPropertyValueFilter,
 } from "@paradicms/filters";
 import {
   CollectionValueFacet,
   Facet,
-  InstitutionValueFacet,
   StringPropertyValueFacet,
 } from "@paradicms/facets";
 import {visitFilter} from "./FilterVisitor";
@@ -37,26 +35,6 @@ export const createFilterControl = (kwds: {
         }
         if (facet.values.length + (facet.unknownCount ? 1 : 0) <= 1) {
           // console.info("collection values facet has <= 1 values, eliding");
-          return null;
-        }
-        return (
-          <ValueFilterControl
-            facet={facet}
-            filter={filter}
-            getAbsoluteImageSrc={getAbsoluteImageSrc}
-            onChange={onChangeFilter}
-          />
-        );
-      },
-
-      visitInstitutionValueFilter(
-        filter: InstitutionValueFilter,
-        facet?: InstitutionValueFacet
-      ): React.ReactElement | null {
-        if (!facet) {
-          return null;
-        }
-        if (facet.values.length + (facet.unknownCount ? 1 : 0) <= 1) {
           return null;
         }
         return (

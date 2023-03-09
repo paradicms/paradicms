@@ -1,7 +1,6 @@
 export * from "./CollectionValueFacet";
 export * from "./Facet";
 export * from "./FacetType";
-export * from "./InstitutionValueFacet";
 export * from "./PropertyValueFacet";
 export * from "./StringPropertyValueFacet";
 export * from "./ValueFacet";

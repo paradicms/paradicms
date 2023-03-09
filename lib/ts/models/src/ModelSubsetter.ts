@@ -1,10 +1,8 @@
 import {ModelSet} from "./ModelSet";
 import {Rights} from "./Rights";
 import {CollectionJoinSelector} from "./CollectionJoinSelector";
-import {InstitutionJoinSelector} from "./InstitutionJoinSelector";
 import {Collection} from "./Collection";
 import {ModelSetBuilder} from "./ModelSetBuilder";
-import {Institution} from "./Institution";
 import {WorkJoinSelector} from "./WorkJoinSelector";
 import {Work} from "./Work";
 import {Image} from "Image";
@@ -25,11 +23,11 @@ import {WorkClosing} from "./WorkClosing";
  * Subset a ModelSet to reduce the amount of data passed between getStaticProps and the component.
  *
  * Re: join selectors. A caller can select which connected models to include in a ModelSet.
- * For example, return a collection's institution along with the collection.
+ * For example, return a collection's thumbnail along with the collection.
  * An undefined joinSelector means don't return any connected models.
  * An empty joinSelector ({}) means return the connected models themselves but none of their connected models (i.e., no recursion).
- * For example, a joinSelector on Institution with collections: {} will return all of the Collection instances associated with that Institution,
- * but no models connected to the Collections (i.e., their Works).
+ * For example, a joinSelector on Collection with works: {} will return all of the Work instances associated with that collection,
+ * but no models connected to the Works (i.e., their Agents).
  */
 export class ModelSubsetter {
   private readonly completeModelSet: ModelSet;
@@ -95,14 +93,6 @@ export class ModelSubsetter {
       }
     }
 
-    if (joinSelector.institution) {
-      this.addInstitutionModelSet(
-        builder,
-        this.completeModelSet.institutionByUri(collection.institutionUri),
-        joinSelector.institution
-      );
-    }
-
     if (joinSelector.works) {
       this.addWorkModelSets(
         builder,
@@ -121,51 +111,6 @@ export class ModelSubsetter {
   ): ModelSetBuilder {
     builder.addImage(image);
     this.addRightsModelSet(agentJoinSelector, builder, image.rights);
-    return builder;
-  }
-
-  private addInstitutionModelSet(
-    builder: ModelSetBuilder,
-    institution: Institution,
-    joinSelector: InstitutionJoinSelector
-  ): ModelSetBuilder {
-    builder.addInstitution(institution);
-
-    if (joinSelector.thumbnail) {
-      const thumbnailImage = this.completeModelSet
-        .institutionByUri(institution.uri)
-        .thumbnail(joinSelector.thumbnail);
-      if (thumbnailImage) {
-        this.addImageModelSet({}, builder, thumbnailImage);
-        if (thumbnailImage.depictsUri !== institution.uri) {
-          // The thumbnail either depicts the institution, one of the institution's collections, or one of the institution's works.
-          // In the latter cases we need to include the depicted collection or work
-          // TODO: this should call an IndexedModelSet.modelByUri(depictsUri), then use the NamedModel discriminated union to include the model in the right array
-          try {
-            builder.addWork(
-              this.completeModelSet.workByUri(thumbnailImage.depictsUri)
-            );
-          } catch (e) {
-            builder.addCollection(
-              this.completeModelSet.collectionByUri(thumbnailImage.depictsUri)
-            );
-          }
-        }
-      }
-    }
-
-    if (joinSelector.collections) {
-      for (const collection of this.completeModelSet.institutionCollections(
-        institution.uri
-      )) {
-        this.addCollectionModelSet(
-          builder,
-          collection,
-          joinSelector.collections
-        );
-      }
-    }
-
     return builder;
   }
 
@@ -202,9 +147,6 @@ export class ModelSubsetter {
     joinSelector: WorkJoinSelector
   ): ModelSetBuilder {
     const collectionUris = joinSelector.collections
-      ? new Set<string>()
-      : undefined;
-    const institutionUris = joinSelector.institution
       ? new Set<string>()
       : undefined;
     const namedValuesByUri: {[index: string]: NamedValue} = {};
@@ -257,10 +199,6 @@ export class ModelSubsetter {
         }
       }
 
-      if (institutionUris && work.institutionUri) {
-        institutionUris.add(work.institutionUri);
-      }
-
       if (joinSelector.propertyNamedValues && this.workPropertyUris) {
         for (const workPropertyUri of this.workPropertyUris) {
           for (const namedValue of work.propertyNamedValues(workPropertyUri)) {
@@ -278,16 +216,6 @@ export class ModelSubsetter {
           builder,
           this.completeModelSet.collectionByUri(collectionUri),
           joinSelector.collections ?? {}
-        );
-      }
-    }
-
-    if (institutionUris) {
-      for (const institutionUri of institutionUris) {
-        this.addInstitutionModelSet(
-          builder,
-          this.completeModelSet.institutionByUri(institutionUri),
-          joinSelector.institution ?? {}
         );
       }
     }
@@ -378,28 +306,6 @@ export class ModelSubsetter {
       collection,
       joinSelector ?? {}
     ).build();
-  }
-
-  institutionModelSet(
-    institution: Institution,
-    joinSelector?: InstitutionJoinSelector
-  ): ModelSet {
-    return this.addInstitutionModelSet(
-      new ModelSetBuilder(),
-      institution,
-      joinSelector ?? {}
-    ).build();
-  }
-
-  institutionsModelSet(
-    institutions: readonly Institution[],
-    joinSelector?: InstitutionJoinSelector
-  ): ModelSet {
-    const builder = new ModelSetBuilder();
-    for (const institution of institutions) {
-      this.addInstitutionModelSet(builder, institution, joinSelector ?? {});
-    }
-    return builder.build();
   }
 
   workModelSet(work: Work, joinSelector?: WorkJoinSelector): ModelSet {

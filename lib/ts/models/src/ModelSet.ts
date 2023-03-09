@@ -1,6 +1,5 @@
 import {Collection} from "./Collection";
 import {Image} from "./Image";
-import {Institution} from "./Institution";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
 import {
@@ -64,16 +63,11 @@ const sortNamedModelsMultimap = <NamedModelT extends NamedModel>(namedModels: {
  */
 export class ModelSet {
   private _collections?: readonly Collection[];
-  private _collectionsByInstitutionUriIndex?: {
-    [index: string]: readonly Collection[];
-  };
   private _collectionsByUriIndex?: {[index: string]: Collection};
   private _images?: readonly Image[];
   private _imagesByDepictsUriIndex?: {[index: string]: readonly Image[]};
   private _imagesByOriginalImageUriIndex?: {[index: string]: readonly Image[]};
   private _imagesByUriIndex?: {[index: string]: Image};
-  private _institutions?: readonly Institution[];
-  private _institutionsByUriIndex?: {[index: string]: Institution};
   private _licenses?: readonly License[];
   private _licensesByUriIndex?: {[index: string]: License};
   private _namedValues?: readonly NamedValue[];
@@ -125,15 +119,6 @@ export class ModelSet {
       this.readCollections();
     }
     return this._collections!;
-  }
-
-  private get collectionsByInstitutionUriIndex(): {
-    [index: string]: readonly Collection[];
-  } {
-    if (!this._collectionsByInstitutionUriIndex) {
-      this.readCollections();
-    }
-    return requireDefined(this._collectionsByInstitutionUriIndex);
   }
 
   collectionByUri(collectionUri: string): Collection {
@@ -210,33 +195,6 @@ export class ModelSet {
     return requireDefined(this._imagesByUriIndex);
   }
 
-  institutionByUri(institutionUri: string): Institution {
-    const institution = this.institutionsByUriIndex[institutionUri];
-    if (!institution) {
-      // this.logContents();
-      throw new RangeError("no such institution " + institutionUri);
-    }
-    return institution;
-  }
-
-  get institutions(): readonly Institution[] {
-    if (!this._institutions) {
-      this.readInstitutions();
-    }
-    return this._institutions!;
-  }
-
-  institutionCollections(institutionUri: string): readonly Collection[] {
-    return this.collectionsByInstitutionUriIndex[institutionUri] ?? [];
-  }
-
-  private get institutionsByUriIndex(): {[index: string]: Institution} {
-    if (!this._institutionsByUriIndex) {
-      this.readInstitutions();
-    }
-    return this._institutionsByUriIndex!;
-  }
-
   licenseByUri(licenseUri: string): License {
     const license = this.licensesByUriIndex[licenseUri];
     if (!license) {
@@ -263,7 +221,6 @@ export class ModelSet {
   logContents(): void {
     const models: {[index: string]: readonly NamedModel[]} = {
       collections: this.collections,
-      institutions: this.institutions,
       images: this.images,
       licenses: this.licenses,
       namedValues: this.namedValues,
@@ -431,30 +388,14 @@ export class ModelSet {
   private readCollections(): void {
     const collections: Collection[] = [];
     this._collectionsByUriIndex = {};
-    const collectionsByInstitutionUriIndex: {
-      [index: string]: Collection[];
-    } = {};
     this.getModels(kwds => {
       const collection = this.readCollection(kwds);
 
       collections.push(collection);
 
       this._collectionsByUriIndex![collection.uri] = collection;
-
-      const institutionCollections =
-        collectionsByInstitutionUriIndex[collection.institutionUri];
-      if (institutionCollections) {
-        institutionCollections.push(collection);
-      } else {
-        collectionsByInstitutionUriIndex[collection.institutionUri] = [
-          collection,
-        ];
-      }
     }, cms.Collection);
     this._collections = sortNamedModelsArray(collections);
-    this._collectionsByInstitutionUriIndex = sortNamedModelsMultimap(
-      collectionsByInstitutionUriIndex
-    );
   }
 
   protected readImage(kwds: ModelParameters): Image {
@@ -496,21 +437,6 @@ export class ModelSet {
     this._imagesByOriginalImageUriIndex = sortNamedModelsMultimap(
       imagesByOriginalImageUriIndex
     );
-  }
-
-  protected readInstitution(kwds: ModelParameters): Institution {
-    return new Institution(kwds);
-  }
-
-  private readInstitutions() {
-    const institutions: Institution[] = [];
-    this._institutionsByUriIndex = {};
-    this.getModels(kwds => {
-      const institution = this.readInstitution(kwds);
-      institutions.push(institution);
-      this._institutionsByUriIndex![institution.uri] = institution;
-    }, cms.Institution);
-    this._institutions = sortNamedModelsArray(institutions);
   }
 
   protected readLicense(kwds: ModelParameters): License {
