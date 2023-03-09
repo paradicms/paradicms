@@ -1,6 +1,8 @@
 import logging
+from io import BytesIO
 from pathlib import Path
 
+from PIL import Image
 from openpyxl import load_workbook
 
 
@@ -33,12 +35,30 @@ class Excel2010Extractor:
         self.__xlsx_file_path = xlsx_file_path
 
     def __call__(self, **kwds):
-        workbook = load_workbook(str(self.__xlsx_file_path), data_only=True)
-        workbook.iso_dates = True
-        sheets = {}
-        for sheet_name in workbook.sheetnames:
-            sheet = workbook[sheet_name]
-            sheets[sheet_name] = {
-                "rows": tuple(tuple(cell.value for cell in row) for row in sheet.rows)
-            }
-        return {"sheets": sheets}
+        openpyxl_workbook = load_workbook(str(self.__xlsx_file_path), data_only=True)
+        try:
+            openpyxl_workbook.iso_dates = True
+            sheets = {}
+            for openpyxl_sheet_name in openpyxl_workbook.sheetnames:
+                openpyxl_sheet = openpyxl_workbook[openpyxl_sheet_name]
+
+                images_by_row_col = {}
+                for openpyxl_image in openpyxl_sheet._images:
+                    image = Image.open(BytesIO(openpyxl_image._data())).copy()
+                    images_by_row_col.setdefault(openpyxl_image.anchor._from.row, {})[
+                        openpyxl_image.anchor._from.col
+                    ] = image
+
+                rows = []
+                for row_i, openpyxl_row in enumerate(openpyxl_sheet.rows):
+                    row = []
+                    for column_i, openpyxl_cell in enumerate(openpyxl_row):
+                        try:
+                            row.append(images_by_row_col[row_i][column_i])
+                        except KeyError:
+                            row.append(openpyxl_cell.value)
+                    rows.append(tuple(row))
+                sheets[openpyxl_sheet_name] = {"rows": tuple(rows)}
+            return {"sheets": sheets}
+        finally:
+            openpyxl_workbook.close()
