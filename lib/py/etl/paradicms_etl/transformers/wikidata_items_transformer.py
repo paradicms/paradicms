@@ -5,7 +5,6 @@ from rdflib import URIRef, DCTERMS
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
-from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
@@ -66,15 +65,13 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
             )
 
     class __WorkWikidataItemTransformer(__WikidataItemTransformer):
-        def __init__(self, *, collection_uri: URIRef, institution_uri: URIRef, **kwds):
+        def __init__(self, *, collection_uri: URIRef, **kwds):
             super().__init__(**kwds)
             self.__collection_uri = collection_uri
-            self.__institution_uri = institution_uri
 
         def _transform_item(self, item: WikidataItem):
             return Work.from_fields(
                 collection_uris=(self.__collection_uri,),
-                institution_uri=self.__institution_uri,
                 properties=tuple(self._get_properties(item)),
                 rights=WikidataItemsTransformer._RIGHTS,
                 title=item.label,
@@ -85,11 +82,9 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
         self,
         *,
         collection_uri: Optional[URIRef] = None,
-        institution_uri: Optional[URIRef] = None,
     ):
         _WikidataItemsTransformer.__init__(self)
         self.__collection_uri = collection_uri
-        self.__institution_uri = institution_uri
 
     def _log_missing_transform_method(
         self, *, item: WikidataItem, transform_method_name: str
@@ -105,26 +100,14 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
         yield from _WikidataItemsTransformer.__call__(self, **kwds)
 
     def _transform_human_item(self, item: WikidataItem):
-        yield from self.__PersonWikidataItemTransformer(
-            # collection_uri=self.__collection_uri,
-            # institution_uri=self.__institution_uri,
-        )(item=item)
+        yield from self.__PersonWikidataItemTransformer()(item=item)
 
     def _transform_painting_item(self, item: WikidataItem):
         yield from self.__transform_work_item(item=item)
 
     def __transform_work_item(self, item: WikidataItem):
-        if self.__institution_uri is None:
-            institution = Institution.from_fields(
-                name="Wikidata",
-                uri=URIRef("https://www.wikidata.org/"),
-            )
-            yield institution
-            self.__institution_uri = institution.uri
-
         if self.__collection_uri is None:
             collection = Collection.from_fields(
-                institution_uri=self.__institution_uri,
                 title="Wikidata",
                 uri=URIRef("https://www.wikidata.org/entity/"),
             )
@@ -133,5 +116,4 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
 
         yield from self.__WorkWikidataItemTransformer(
             collection_uri=self.__collection_uri,
-            institution_uri=self.__institution_uri,
         )(item=item)
