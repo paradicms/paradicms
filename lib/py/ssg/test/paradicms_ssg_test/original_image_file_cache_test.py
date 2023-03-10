@@ -1,11 +1,38 @@
+from pathlib import Path
 from urllib.request import urlretrieve
 
-from paradicms_etl.models.image import Image
+import PIL
 from rdflib import URIRef
 
+from paradicms_etl.models.image import Image
+from paradicms_etl.models.image_data import ImageData
 from paradicms_ssg.original_image_file_cache import (
     OriginalImageFileCache,
 )
+
+
+def test_cache_original_image_data(data_dir_path: Path, tmp_path: Path):
+    image_file_path = (
+        data_dir_path
+        / "test"
+        / "markdown_directory"
+        / "extracted"
+        / "image"
+        / "test_work2.gif"
+    )
+    image = PIL.Image.open(str(image_file_path), formats=("GIF",)).convert("RGB").copy()
+
+    original_image_file_path = OriginalImageFileCache(
+        cache_dir_path=tmp_path
+    ).cache_original_image(
+        Image.from_fields(
+            depicts_uri=URIRef("http://example.com"),
+            src=ImageData.from_pil_image(image),
+            uri=URIRef("http://example.com/image"),
+        )
+    )
+    assert original_image_file_path.is_file()
+    assert str(original_image_file_path).endswith(".jpg")
 
 
 def test_cache_original_image_file_absent(tmp_path):

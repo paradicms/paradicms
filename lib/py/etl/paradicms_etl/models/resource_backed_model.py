@@ -35,7 +35,9 @@ class ResourceBackedModel(Model):
             if expected_type is not None and not isinstance(
                 python_value, expected_type
             ):
-                raise TypeError(f"expected {p} to have a {expected_type} value")
+                raise TypeError(
+                    f"expected {p} to have a {expected_type} value, was {type(python_value)}"
+                )
             yield python_value
 
     def _optional_bool_value(
@@ -88,6 +90,9 @@ class ResourceBackedModel(Model):
 
     def _required_bool_value(self, p: Union[URIRef, Tuple[URIRef, ...]]) -> bool:
         return self.__required_value(self.__literal_values(p, bool))
+
+    def _required_bytes_value(self, p: Union[URIRef, Tuple[URIRef, ...]]) -> bytes:
+        return self.__required_value(self.__literal_values(p, bytes))
 
     def _required_str_value(self, p: Union[URIRef, Tuple[URIRef, ...]]) -> str:
         return self.__required_value(self.__literal_values(p, str))
