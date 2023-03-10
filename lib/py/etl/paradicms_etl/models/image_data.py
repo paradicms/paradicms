@@ -2,7 +2,7 @@ from base64 import b64encode
 from io import BytesIO
 from typing import Dict, Any
 
-from PIL.Image import Image
+from PIL import Image
 from rdflib import DCTERMS, RDF, BNode, Literal, XSD
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
