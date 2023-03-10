@@ -1,18 +1,44 @@
 import json
 import logging
-from typing import Set, Type, Dict, Any, List, Union
+from typing import Set, Type, Dict, Any, List, Union, TypeVar
 from urllib.parse import quote
 
+from PIL.Image import Image
 from rdflib import URIRef, Graph
 from rdflib.namespace import Namespace
 from stringcase import spinalcase
 
+from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.root_model_classes import (
     ROOT_MODEL_CLASSES_BY_NAME,
     ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME,
 )
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
+
+_MultidictKeyT = TypeVar("_MultidictKeyT")
+_MultidictValueT = TypeVar("_MultidictValueT")
+
+
+def _multidict_add(
+    multidict: Dict[_MultidictKeyT, Union[_MultidictValueT, List[_MultidictValueT]]],
+    key: _MultidictKeyT,
+    value: _MultidictValueT,
+):
+    """
+    Helper function to add a value to a multidict
+    """
+
+    existing_value = multidict.get(key)
+    if existing_value is None:
+        multidict[key] = value
+    elif isinstance(existing_value, list):
+        existing_value.append(value)
+    else:
+        multidict[key] = [
+            existing_value,
+            value,
+        ]
 
 
 class SpreadsheetTransformer:
@@ -55,7 +81,7 @@ class SpreadsheetTransformer:
                 assert len(header_row) == len(data_row)
 
                 # Convert each row to a multi-dict
-                row_dict: Dict[str, Union[str, List[str]]] = {}
+                row_dict: Dict[str, Union[Any, List[Any]]] = {}
                 for header_cell, data_cell in zip(header_row, data_row):
                     if header_cell is None:
                         continue
@@ -65,26 +91,23 @@ class SpreadsheetTransformer:
 
                     if data_cell is None:
                         continue
+
                     if isinstance(data_cell, str):
-                        data_cell = data_cell.strip()
-                        if not data_cell:
+                        stripped_data_cell = data_cell.strip()
+                        if not stripped_data_cell:
                             continue
                         try:
-                            data_cell = json.loads(data_cell)
+                            json_ready_data_cell = json.loads(stripped_data_cell)
                         except json.JSONDecodeError:
-                            pass
-
-                    existing_row_dict_value = row_dict.get(header_cell)
-                    if existing_row_dict_value is None:
-                        row_dict[header_cell] = data_cell
-                    elif isinstance(existing_row_dict_value, list):
-                        # Allow multiple columns with the same header
-                        existing_row_dict_value.append(data_cell)
+                            json_ready_data_cell = stripped_data_cell
+                    elif isinstance(data_cell, Image):
+                        json_ready_data_cell = ImageData.from_pil_image(
+                            data_cell
+                        ).to_json_ld()
                     else:
-                        row_dict[header_cell] = [
-                            existing_row_dict_value,
-                            data_cell,
-                        ]
+                        json_ready_data_cell = data_cell
+
+                    _multidict_add(row_dict, header_cell, json_ready_data_cell)
 
                 # Parse the row multi-dict as a JSON-LD object
 
@@ -128,6 +151,8 @@ class SpreadsheetTransformer:
                         f"row {row_i} in sheet {sheet_name} has duplicate identifier: {resource.identifier}"
                     )
                 resource_identifiers.add(resource.identifier)
+
+                # Add back the images once we know the format
 
                 yield model_class(resource)
 

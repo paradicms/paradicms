@@ -1,10 +1,11 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Union
 
 from rdflib import Literal, URIRef, Graph, XSD
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
+from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.rights import Rights
@@ -35,8 +36,8 @@ class Image(ResourceBackedNamedModel):
         modified: Optional[datetime] = None,
         original_image_uri: Optional[URIRef] = None,
         rights: Optional[Rights] = None,
-        src: Optional[
-            str
+        src: Union[
+            Literal, str, URIRef, None
         ] = None,  # src that can be used in an <img> tag; if not specified, defaults to URI
         title: Optional[str] = None,
     ) -> "Image":
@@ -147,8 +148,21 @@ class Image(ResourceBackedNamedModel):
         return Rights.from_rdf(resource=self._resource)
 
     @property
-    def src(self) -> Optional[str]:
-        return self._optional_str_value(CMS.imageSrc)
+    def src(self) -> Union[ImageData, str, None]:
+        for o in self._resource.objects(CMS.imageSrc):
+            if isinstance(o, Literal):
+                o_python = o.toPython()
+                if isinstance(o_python, str):
+                    return o_python
+                else:
+                    raise TypeError(
+                        f"expected {CMS.imageSrc} literal to be a bytes or string, not a {type(o_python)}"
+                    )
+            elif isinstance(o, Resource):
+                return ImageData(o)
+            else:
+                continue
+        return None
 
     @property
     def title(self):
