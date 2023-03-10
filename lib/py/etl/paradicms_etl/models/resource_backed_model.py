@@ -91,7 +91,7 @@ class ResourceBackedModel(Model):
     def _required_bool_value(self, p: Union[URIRef, Tuple[URIRef, ...]]) -> bool:
         return self.__required_value(self.__literal_values(p, bool))
 
-    def _required_bytes_value(self, p: Union[URIRef, Tuple[URIRef, ...]]) -> bool:
+    def _required_bytes_value(self, p: Union[URIRef, Tuple[URIRef, ...]]) -> bytes:
         return self.__required_value(self.__literal_values(p, bytes))
 
     def _required_str_value(self, p: Union[URIRef, Tuple[URIRef, ...]]) -> str:
