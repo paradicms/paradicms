@@ -16,6 +16,11 @@ def data_dir_path() -> Path:
 
 
 @pytest.fixture
+def excel_2010_test_data_file_path(data_dir_path: Path) -> Path:
+    return data_dir_path / "test" / "excel_2010" / "excel_2010_test_data.xlsx"
+
+
+@pytest.fixture
 def synthetic_data_models() -> Tuple[Model, ...]:
     return tuple(SyntheticDataPipeline().extract_transform())
 
