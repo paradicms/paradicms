@@ -9,10 +9,6 @@ export class AppConfiguration extends Configuration {
     super(kwds);
   }
 
-  get basePath(): string | null {
-    return this.findAndMapObject(configuration.basePath, this.mapStringObject);
-  }
-
   static fromDataset(dataset: Dataset): AppConfiguration | null {
     const typeQuads = dataset
       .match(null, rdf.type, configuration.AppConfiguration, null)
