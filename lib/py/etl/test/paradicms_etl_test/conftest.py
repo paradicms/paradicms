@@ -27,3 +27,15 @@ def google_sheets_spreadsheet_id() -> str:
 @pytest.fixture
 def synthetic_data_models() -> Tuple[Model, ...]:
     return tuple(SyntheticDataPipeline().extract_transform())
+
+
+@pytest.fixture
+def test_image_file_path(data_dir_path: Path) -> Path:
+    return (
+        data_dir_path
+        / "test"
+        / "markdown_directory"
+        / "extracted"
+        / "image"
+        / "test_work2.gif"
+    )

@@ -11,16 +11,12 @@ from paradicms_ssg.original_image_file_cache import (
 )
 
 
-def test_cache_original_image_data(data_dir_path: Path, tmp_path: Path):
-    image_file_path = (
-        data_dir_path
-        / "test"
-        / "markdown_directory"
-        / "extracted"
-        / "image"
-        / "test_work2.gif"
+def test_cache_original_image_data(test_image_file_path: Path, tmp_path: Path):
+    image = (
+        PIL.Image.open(str(test_image_file_path), formats=("GIF",))
+        .convert("RGB")
+        .copy()
     )
-    image = PIL.Image.open(str(image_file_path), formats=("GIF",)).convert("RGB").copy()
 
     original_image_file_path = OriginalImageFileCache(
         cache_dir_path=tmp_path
