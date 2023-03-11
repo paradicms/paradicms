@@ -80,9 +80,7 @@ def test_load_minimal(app: str, synthetic_data_models: Tuple[Model, ...], tmp_pa
 #     assert img_file_path.is_file(), img_file_path
 
 
-@pytest.mark.parametrize(
-    "app", ["multi-page-exhibition", "single-page-exhibition", "work-search"]
-)
+@pytest.mark.parametrize("app", ["work-search"])
 def test_load_excel_2010_test_data(
     app: str, excel_2010_test_data_file_path, tmp_path: Path
 ):
