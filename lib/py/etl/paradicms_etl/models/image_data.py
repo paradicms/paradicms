@@ -36,7 +36,7 @@ class ImageData(ResourceBackedModel):
             str(DCTERMS.format): self.__format,
             str(RDF.value): {
                 "@type": str(XSD.base64Binary),
-                "@value": self.__value,
+                "@value": b64encode(self.__value).decode("ascii"),
             },
         }
 
