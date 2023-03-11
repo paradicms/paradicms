@@ -1,13 +1,17 @@
+import os
 from pathlib import Path
 
+import pytest
+
 from paradicms_etl.extractors.excel_2010_extractor import Excel2010Extractor
+from paradicms_etl.extractors.google_sheets_extractor import GoogleSheetsExtractor
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.person import Person
 from paradicms_etl.transformers.spreadsheet_transformer import SpreadsheetTransformer
 
 
-def test_transform(excel_2010_test_data_file_path: Path):
+def test_transform_excel_2010(excel_2010_test_data_file_path: Path):
     models = tuple(
         SpreadsheetTransformer(pipeline_id="test")(
             **Excel2010Extractor(xlsx_file_path=excel_2010_test_data_file_path)(
@@ -20,3 +24,33 @@ def test_transform(excel_2010_test_data_file_path: Path):
     image = next(image for image in models if isinstance(image, Image))
     assert person.name == "Minor Gordon"
     assert isinstance(image.src, ImageData)
+
+
+@pytest.mark.skipif("CI" in os.environ, reason="don't connect to Google Sheets in CI")
+def test_transform_google_sheets(google_sheets_spreadsheet_id: str, tmp_path: Path):
+    models = tuple(
+        SpreadsheetTransformer(pipeline_id="test")(
+            **GoogleSheetsExtractor(
+                extracted_data_dir_path=tmp_path,
+                spreadsheet_id=google_sheets_spreadsheet_id,
+            )(force=False)
+        )
+    )
+    assert len(models) == 2
+    person = next(person for person in models if isinstance(person, Person))
+    image = next(image for image in models if isinstance(image, Image))
+    assert person.name == "Minor Gordon"
+    assert isinstance(image.src, ImageData)
+
+
+@pytest.mark.skipif("CI" in os.environ, reason="don't connect to Google Sheets in CI")
+def test_transform_google_sheets_dressdiscover_exhibitions(tmp_path: Path):
+    models = tuple(
+        SpreadsheetTransformer(pipeline_id="test")(
+            **GoogleSheetsExtractor(
+                extracted_data_dir_path=tmp_path,
+                spreadsheet_id="1j2oaMvMxY4pnXO-sEH_fky2R2gm6TQeIev_Q8rVOD4M",
+            )(force=False)
+        )
+    )
+    assert models

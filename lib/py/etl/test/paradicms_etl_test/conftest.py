@@ -20,5 +20,10 @@ def excel_2010_test_data_file_path(data_dir_path: Path) -> Path:
 
 
 @pytest.fixture
+def google_sheets_spreadsheet_id() -> str:
+    return "1SZND0zvmtxJEMhTkcMTAUzHiTicYY9wPloDZLWDtXZw"
+
+
+@pytest.fixture
 def synthetic_data_models() -> Tuple[Model, ...]:
     return tuple(SyntheticDataPipeline().extract_transform())
