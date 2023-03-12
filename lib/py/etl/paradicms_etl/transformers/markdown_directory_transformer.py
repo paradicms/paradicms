@@ -15,6 +15,7 @@ from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicens
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.license import License
 from paradicms_etl.models.markdown_directory import MarkdownDirectory
+from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -118,6 +119,7 @@ class MarkdownDirectoryTransformer:
                             model_class_name_variation
                         ] = model_class
 
+            self.__transformed_models: List[RootModel] = []
             self.__transformed_models_by_class: Dict[
                 Type, Dict[str, RootModel]
             ] = {}  # Then by id
@@ -147,17 +149,21 @@ class MarkdownDirectoryTransformer:
             model_id: str,
             transformed_model: RootModel,
         ):
-            assert transformed_model.uri
-            assert (
-                transformed_model.uri not in self.__transformed_models_by_uri
-            ), transformed_model.uri
-            self.__transformed_models_by_uri[transformed_model.uri] = transformed_model
+            if isinstance(transformed_model, ResourceBackedNamedModel):
+                assert (
+                    transformed_model.uri not in self.__transformed_models_by_uri
+                ), transformed_model.uri
+                self.__transformed_models_by_uri[
+                    transformed_model.uri
+                ] = transformed_model
 
             transformed_models_by_type = self.__transformed_models_by_class.setdefault(
                 transformed_model.__class__, {}
             )
             assert model_id not in transformed_models_by_type
             transformed_models_by_type[model_id] = transformed_model
+
+            self.__transformed_models.append(transformed_model)
 
         def __call__(self) -> Tuple[RootModel, ...]:
             # Order is important
@@ -167,7 +173,7 @@ class MarkdownDirectoryTransformer:
             self.__transform_other_metadata_file_entries()
             self.__transform_image_metadata_file_entries()
             self.__transform_image_file_entries()
-            return tuple(self.__transformed_models_by_uri.values())
+            return tuple(self.__transformed_models)
 
         def __default_collection_uri(self, *, markdown_directory_name: str) -> URIRef:
             return self.__model_uri(
@@ -266,6 +272,7 @@ class MarkdownDirectoryTransformer:
                 if image_resource.value(FOAF.depicts) is None:
                     # If the .md image metadata has no depicts but its model_id corresponds with a model_id of another type,
                     # synthesize a depicts.
+                    added_depicts = False
                     for (
                         model_class,
                         transformed_models_by_id,
@@ -275,19 +282,26 @@ class MarkdownDirectoryTransformer:
                         transformed_model = transformed_models_by_id.get(
                             metadata_file_entry.model_id
                         )
-                        if transformed_model is None:
-                            self.__logger.warning(
-                                "image markdown %s has no depicts statement and does not correspond to another model",
-                                metadata_file_entry.model_id,
-                            )
+
+                        if transformed_model is None or not isinstance(
+                            transformed_model, ResourceBackedNamedModel
+                        ):
                             continue
+
                         image_resource.add(FOAF.depicts, transformed_model.uri)
                         self.__logger.debug(
                             "image markdown %s has no depicts statement but corresponds to the model %s, adding depicts statement",
                             metadata_file_entry.model_id,
                             transformed_model.uri,
                         )
+                        added_depicts = True
                         break
+
+                    if not added_depicts:
+                        self.__logger.warning(
+                            "image markdown %s has no depicts statement and does not correspond to another model",
+                            metadata_file_entry.model_id,
+                        )
 
                 image = Image.from_rdf(resource=image_resource)
 
@@ -334,7 +348,9 @@ class MarkdownDirectoryTransformer:
                     image_file_entry,
                 ) in image_file_entries_by_model_id.items():
                     transformed_model = transformed_models_of_class.get(model_id)
-                    if transformed_model is None:
+                    if transformed_model is None or not isinstance(
+                        transformed_model, ResourceBackedNamedModel
+                    ):
                         self.__logger.warning(
                             "image file %s does not have a sibling .md file",
                             image_file_entry.path,
@@ -405,8 +421,8 @@ class MarkdownDirectoryTransformer:
             except Exception as e:
                 raise ValueError(f"error deserializing {metadata_file_entry}") from e
 
-            graph_str = graph.serialize(format="turtle")
-            print(graph_str)
+            # graph_str = graph.serialize(format="turtle")
+            # print(graph_str)
 
             uri_subjects = {
                 subject for subject in graph.subjects() if isinstance(subject, URIRef)
