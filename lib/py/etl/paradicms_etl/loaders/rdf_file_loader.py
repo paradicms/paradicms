@@ -28,6 +28,8 @@ class RdfFileLoader(BufferingLoader):
         self.__rdf_file_path = rdf_file_path
         if format is None:
             format = guess_format(str(rdf_file_path))
+            if format is None:
+                raise ValueError("unable to guess format from file path")
         self.__format = format
         self.__pipeline_id = pipeline_id
 
