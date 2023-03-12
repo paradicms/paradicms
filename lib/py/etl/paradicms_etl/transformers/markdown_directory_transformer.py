@@ -7,7 +7,7 @@ from urllib.parse import quote
 import yaml
 from rdflib import FOAF, Graph, Literal, URIRef, Namespace
 from rdflib.resource import Resource
-from stringcase import spinalcase
+from stringcase import spinalcase, snakecase
 from yaml import FullLoader
 
 from paradicms_etl.models.collection import Collection
@@ -20,9 +20,8 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.root_model import RootModel
-from paradicms_etl.models.root_model_classes import (
-    ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME,
-    ROOT_MODEL_CLASSES,
+from paradicms_etl.models.root_model_classes_by_name import (
+    ROOT_MODEL_CLASSES_BY_NAME,
 )
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_creation import WorkCreation
@@ -61,10 +60,14 @@ class MarkdownDirectoryTransformer:
         *,
         pipeline_id: str,
         default_collection: Optional[Collection] = None,
+        root_model_classes_by_name: Optional[Dict[str, Type[RootModel]]] = None,
     ):
         self.__default_collection = default_collection
         self.__logger = logging.getLogger(__name__)
         self.__pipeline_id = pipeline_id
+        if root_model_classes_by_name is None:
+            root_model_classes_by_name = ROOT_MODEL_CLASSES_BY_NAME
+        self.__root_model_classes_by_name = root_model_classes_by_name
 
     # Rather than managing the state of the transform as variable assignments in a particular order,
     # create a class instance per transform invocation.
@@ -87,15 +90,20 @@ class MarkdownDirectoryTransformer:
             logger: Logger,
             markdown_directory: MarkdownDirectory,
             pipeline_id: str,
+            root_model_classes_by_name: Dict[str, Type[RootModel]],
         ):
             self.__default_collection = default_collection
             self.__logger = logger
             self.__markdown_directory = markdown_directory
             self.__pipeline_id = pipeline_id
+            self.__root_model_classes_by_snake_case_name = {
+                snakecase(model_class_name): model_class
+                for model_class_name, model_class in root_model_classes_by_name.items()
+            }
 
             self.__json_ld_context = {"md": str(self.__pipeline_namespace)}
-            for model_class in ROOT_MODEL_CLASSES:
-                self.__json_ld_context["md-" + spinalcase(model_class.__name__)] = str(
+            for model_class_name, model_class in root_model_classes_by_name.items():
+                self.__json_ld_context["md-" + spinalcase(model_class_name)] = str(
                     self.__model_type_namespace(model_class=model_class)
                 )
 
@@ -109,7 +117,9 @@ class MarkdownDirectoryTransformer:
             ] = {}
             for image_file_entry in markdown_directory.image_file_entries:
                 self.__untransformed_image_file_entries_by_model_class.setdefault(
-                    ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME[image_file_entry.model_type],
+                    self.__root_model_classes_by_snake_case_name[
+                        image_file_entry.model_type
+                    ],
                     {},
                 )[image_file_entry.model_id] = image_file_entry
             self.__untransformed_metadata_file_entries_by_model_class: Dict[
@@ -118,7 +128,7 @@ class MarkdownDirectoryTransformer:
             ] = {}
             for metadata_file_entry in markdown_directory.metadata_file_entries:
                 self.__untransformed_metadata_file_entries_by_model_class.setdefault(
-                    ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME[
+                    self.__root_model_classes_by_snake_case_name[
                         metadata_file_entry.model_type
                     ],
                     [],
@@ -279,7 +289,7 @@ class MarkdownDirectoryTransformer:
                 if image.src is None:
                     image_file_entry = (
                         self.__untransformed_image_file_entries_by_model_class.get(
-                            ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME[
+                            self.__root_model_classes_by_snake_case_name[
                                 metadata_file_entry.model_type
                             ],
                             {},
@@ -346,7 +356,7 @@ class MarkdownDirectoryTransformer:
         def __transform_metadata_file_entry_to_resource(
             self, metadata_file_entry: MarkdownDirectory.MetadataFileEntry
         ) -> Resource:
-            model_class = ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME[
+            model_class = self.__root_model_classes_by_snake_case_name[
                 metadata_file_entry.model_type
             ]
 
@@ -527,6 +537,7 @@ class MarkdownDirectoryTransformer:
             logger=self.__logger,
             markdown_directory=markdown_directory,
             pipeline_id=self.__pipeline_id,
+            root_model_classes_by_name=self.__root_model_classes_by_name,
         )():
             yield model
 

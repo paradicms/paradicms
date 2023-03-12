@@ -1,6 +1,6 @@
 import json
 import logging
-from typing import Set, Type, Dict, Any, List, Union, TypeVar
+from typing import Set, Type, Dict, Any, List, Union, TypeVar, Optional
 from urllib.parse import quote
 
 from PIL.Image import Image
@@ -10,10 +10,8 @@ from stringcase import spinalcase
 
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
-from paradicms_etl.models.root_model_classes import (
-    ROOT_MODEL_CLASSES_BY_NAME,
-    ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME,
-)
+from paradicms_etl.models.root_model import RootModel
+from paradicms_etl.models.root_model_classes_by_name import ROOT_MODEL_CLASSES_BY_NAME
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 _MultidictKeyT = TypeVar("_MultidictKeyT")
@@ -46,23 +44,27 @@ class SpreadsheetTransformer:
         self,
         *,
         pipeline_id: str,
+        root_model_classes_by_name: Optional[Dict[str, Type[RootModel]]] = None,
     ):
         self.__logger = logging.getLogger(__name__)
         self.__pipeline_id = pipeline_id
+        if root_model_classes_by_name is None:
+            root_model_classes_by_name = ROOT_MODEL_CLASSES_BY_NAME
+        self.__root_model_classes_by_name = root_model_classes_by_name
 
         self.__json_ld_context = {"ss": str(self.__pipeline_namespace)}
         for (
-            model_type_name,
+            model_class_name,
             model_class,
-        ) in ROOT_MODEL_CLASSES_BY_SNAKE_CASE_NAME.items():
-            self.__json_ld_context["ss-" + model_type_name] = str(
+        ) in self.__root_model_classes_by_name.items():
+            self.__json_ld_context["ss-" + spinalcase(model_class_name)] = str(
                 self.__model_type_namespace(model_class=model_class)
             )
 
     def __call__(self, sheets: Dict[str, Any]):
         for sheet_name, sheet in sheets.items():
             rows = sheet["rows"]
-            model_class = ROOT_MODEL_CLASSES_BY_NAME.get(sheet_name)
+            model_class = self.__root_model_classes_by_name.get(sheet_name)
             if model_class is None:
                 self.__logger.warning(
                     "sheet %s does not correspond to a model class", sheet_name
