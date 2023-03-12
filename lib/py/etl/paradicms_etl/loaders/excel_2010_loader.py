@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from types import ModuleType
 from typing import Tuple, Type, Dict, List, Optional, Any
 
 from openpyxl import Workbook
@@ -34,8 +35,14 @@ def _get_excel_2010_compatible_json_ld_object_value(
 
 
 class Excel2010Loader(BufferingLoader):
-    def __init__(self, *, xlsx_file_path: Path):
+    def __init__(
+        self,
+        *,
+        xlsx_file_path: Path,
+        additional_namespace_modules: Tuple[ModuleType, ...] = ()
+    ):
         BufferingLoader.__init__(self)
+        self.__additional_namespace_modules = additional_namespace_modules
         self.__xlsx_file_path = xlsx_file_path
 
     def _flush(self, *, models: Tuple[Model, ...]):
@@ -49,7 +56,10 @@ class Excel2010Loader(BufferingLoader):
             sheet_header: Optional[List[str]] = None
             for model in model_class_models:
                 graph = Graph()
-                bind_namespaces(graph.namespace_manager)
+                bind_namespaces(
+                    graph.namespace_manager,
+                    additional_namespace_modules=self.__additional_namespace_modules,
+                )
                 model.to_rdf(graph=graph)
                 json_ld_object = json.loads(
                     graph.serialize(
