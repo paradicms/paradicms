@@ -18,7 +18,6 @@ class GitHubAction:
 
     @dataclass(frozen=True)
     class RequiredInputs:
-        app: str
         pipeline_id: str
 
         @classmethod
@@ -84,43 +83,12 @@ class GitHubAction:
         self.__temp_dir_path = temp_dir_path
 
     def _create_loader(self) -> Loader:
-        app = self.__required_inputs.app
-
         app_deploy_dir_path = Path("_site").absolute()
 
-        for app_dir_path in (
-            Path(app).absolute(),
-            Path("/paradicms") / "app" / app,
-        ):
-            if app_dir_path.is_dir():
-                self.__logger.debug("app_dir_path %s exists, using", app_dir_path)
-                app = str(app_dir_path)
-                break
-            else:
-                self.__logger.debug("app_dir_path %s does not exist", app_dir_path)
-
-        if self.__optional_inputs.app_configuration:
-            app_configuration_file_path = Path(
-                self.__optional_inputs.app_configuration
-            ).absolute()
-            if not app_configuration_file_path.is_file():
-                raise ValueError(
-                    "configuration file %s does not exist or is not a file"
-                    % app_configuration_file_path
-                )
-        else:
-            app_configuration_file_path = None
-
-        self.__logger.info(
-            "AppLoader: app=%s, export path=%s, configuration_file_path=%s",
-            app,
-            app_deploy_dir_path,
-            app_configuration_file_path,
-        )
-
         return AppLoader(
-            app=app,
-            configuration_file_path=app_configuration_file_path,
+            app_configuration=Path(self.__optional_inputs.app_configuration)
+            if self.__optional_inputs.app_configuration is not None
+            else None,
             deployer=FsDeployer(
                 # We're running in an environment that's never been used before, so no need to archive
                 archive=False,
@@ -137,58 +105,6 @@ class GitHubAction:
     @property
     def _extracted_data_dir_path(self) -> Path:
         return self.__temp_dir_path / "extracted"
-
-    # def __create_markdown_directory_pipeline(self, *, loader: Loader) -> Pipeline:
-    #     extracted_data_dir_path = Path(self.__inputs.input_data)
-    #     if not extracted_data_dir_path.is_dir():
-    #         raise ValueError(
-    #             f"Markdown directory {extracted_data_dir_path} does not exist"
-    #         )
-    #
-    #     return Pipeline(
-    #         extractor=MarkdownDirectoryExtractor(
-    #             extracted_data_dir_path=extracted_data_dir_path,
-    #             pipeline_id=self.__pipeline_id,
-    #         ),
-    #         id=self.__pipeline_id,
-    #         loader=loader,
-    #         transformer=MarkdownDirectoryTransformer(
-    #             pipeline_id=self.__pipeline_id,
-    #         ),
-    #     )
-    #
-    # def __create_pipeline(self) -> Pipeline:
-    #     loader = self.__create_loader()
-    #
-    #     input_format = self.__inputs.input_format.lower()
-    #     if self.__inputs.input_format in ("markdown", "markdown_directory"):
-    #         return self.__create_markdown_directory_pipeline(loader=loader)
-    #     else:
-    #         raise NotImplementedError(self.__inputs.input_format)
-    #
-    # def __create_rdf_file_loader(self, *, output_format: str) -> RdfFileLoader:
-    #     if output_format == "rdf":
-    #         rdf_format = RdfFileLoader.FORMAT_DEFAULT
-    #     elif output_format.endswith("-rdf"):
-    #         rdf_format = output_format[: -len("-rdf")]
-    #     else:
-    #         raise NotImplementedError
-    #
-    #     output_data_path = Path(self.__inputs.output_data).absolute()
-    #     if output_data_path.is_dir():
-    #         rdf_file_path = output_data_path / ("data." + rdf_format)
-    #     else:
-    #         rdf_file_path = output_data_path
-    #         self.__mkdir(rdf_file_path.parent)
-    #
-    #     self.__logger.info(
-    #         "RDF file loader: format=%s, file path=%s", rdf_format, rdf_file_path
-    #     )
-    #     return RdfFileLoader(
-    #         file_path=rdf_file_path,
-    #         format=rdf_format,
-    #         pipeline_id=self.__pipeline_id,
-    #     )
 
     # def __mkdir(self, dir_path: Path) -> None:
     #     if dir_path.is_dir():
