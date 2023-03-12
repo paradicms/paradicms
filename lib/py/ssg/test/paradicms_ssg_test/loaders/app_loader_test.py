@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Tuple
 
 import pytest
+from rdflib import Graph, BNode, RDF, Literal
 
 from paradicms_etl.extractors.excel_2010_extractor import Excel2010Extractor
 from paradicms_etl.model import Model
@@ -10,36 +11,44 @@ from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.pipelines.synthetic_data_pipeline import SyntheticDataPipeline
 from paradicms_etl.transformers.spreadsheet_transformer import SpreadsheetTransformer
 from paradicms_ssg.loaders.app_loader import AppLoader
+from paradicms_ssg.models.app_configuration import AppConfiguration
+from paradicms_ssg.namespaces import CONFIGURATION
 from .nop_image_archiver import NopImageArchiver
 
 
-def _app_ready(app: str) -> bool:
+def _app_configuration(app: str) -> AppConfiguration:
     app_dir_path = (
         Path(__file__).parent.parent.parent.parent.parent.parent.parent / "app" / app
     )
     assert app_dir_path.is_dir(), app_dir_path
+    if not (app_dir_path / "node_modules").is_dir():
+        return None
 
-    return (app_dir_path / "node_modules").is_dir()
+    graph = Graph()
+    resource = graph.resource(BNode())
+    resource.add(RDF.type, CONFIGURATION.AppConfiguration)
+    resource.add(CONFIGURATION.app, Literal(app))
+    return AppConfiguration.from_rdf(resource)
 
 
 @pytest.mark.parametrize(
     "app", ["multi-page-exhibition", "single-page-exhibition", "work-search"]
 )
 def test_load_minimal(app: str, synthetic_data_models: Tuple[Model, ...], tmp_path):
-    if not _app_ready(app):
+    app_configuration = _app_configuration(app)
+    if app_configuration is None:
         return
 
     loaded_data_dir_path = tmp_path
 
     app_loader = AppLoader(
-        app=app,
         image_archiver=NopImageArchiver(),
         loaded_data_dir_path=loaded_data_dir_path,
         pipeline_id=SyntheticDataPipeline.ID,
     )
 
     original_images = []
-    other_models = []
+    other_models = [app_configuration]
     for model in synthetic_data_models:
         if isinstance(model, Image):
             image = model
@@ -84,8 +93,9 @@ def test_load_minimal(app: str, synthetic_data_models: Tuple[Model, ...], tmp_pa
 def test_load_excel_2010_test_data(
     app: str, excel_2010_test_data_file_path, tmp_path: Path
 ):
-    if not _app_ready(app):
-        pass
+    app_configuration = _app_configuration(app)
+    if app_configuration is None:
+        return
 
     loaded_data_dir_path = tmp_path
 
@@ -96,7 +106,7 @@ def test_load_excel_2010_test_data(
         ),
         id=pipeline_id,
         loader=AppLoader(
-            app=app,
+            app_configuration=app_configuration,
             image_archiver=NopImageArchiver(),
             loaded_data_dir_path=loaded_data_dir_path,
             pipeline_id=SyntheticDataPipeline.ID,

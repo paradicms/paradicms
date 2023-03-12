@@ -12,6 +12,7 @@ from paradicms_ssg.deployers.fs_deployer import FsDeployer
 from paradicms_ssg.image_archiver import ImageArchiver
 from paradicms_ssg.image_archivers.fs_image_archiver import FsImageArchiver
 from paradicms_ssg.loaders.images_loader import ImagesLoader
+from paradicms_ssg.models.app_configuration import AppConfiguration
 
 
 class AppLoader(BufferingLoader):
@@ -22,19 +23,20 @@ class AppLoader(BufferingLoader):
     - Writes the input data to an rdf/turtle file
     - Archives original images (via an ImageArchiver)
     - Thumbnails images and archives them (via ImagesLoader)
-    - Calls npm to generate the site (via AppPackage)
+    - Calls npm/yarn to generate the site (via AppPackage)
     - Optionally deploys the generated site (via a Deployer)
 
     As noted, this class delegate most of its work to auxiliary classes such as AppPackage.
     """
 
+    _APP_DEFAULT = "work-search"
+
     def __init__(
         self,
         *,
-        app: Union[Path, str],
         loaded_data_dir_path: Path,
         pipeline_id: str,
-        configuration_file_path: Optional[Path] = None,
+        app_configuration: Union[AppConfiguration, Path, None] = None,
         deployer: Optional[Deployer] = None,
         dev: bool = False,
         image_archiver: Optional[ImageArchiver] = None,
@@ -42,11 +44,9 @@ class AppLoader(BufferingLoader):
         thumbnail_max_dimensions: Tuple[
             ImageDimensions, ...
         ] = ImagesLoader.THUMBNAIL_MAX_DIMENSIONS_DEFAULT,
-        **kwds,
     ):
         """
-        :param app: name of an app (in pp/ of this repository) or path to an app
-        :param configuration_file_path: path to an app configuration file path
+        :param app_configuration: path to an app configuration file
         :param deployer: optional deployer implementation; if not specified, defaults to a file system deployer that writes to the loaded data directory
         :param dev: transform the input data to RDF and archive and thumbnail but run the Next.js dev server instead of generating and deploying static files
         :param image_archiver: optional image archiver implementation; if not specified, defaults to a file system archiver that writes to Next's public/ directory
@@ -55,8 +55,14 @@ class AppLoader(BufferingLoader):
         """
 
         BufferingLoader.__init__(self)
-        self.__app = app
-        self.__configuration_file_path = configuration_file_path
+        if app_configuration is None:
+            self.__app_configuration = None
+        elif isinstance(app_configuration, AppConfiguration):
+            self.__app_configuration = app_configuration
+        elif isinstance(app_configuration, Path):
+            self.__app_configuration = AppConfiguration.from_rdf_file(app_configuration)
+        else:
+            raise TypeError(type(app_configuration))
         self.__deployer = deployer
         self.__dev = dev
         self.__image_archiver = image_archiver
@@ -67,7 +73,21 @@ class AppLoader(BufferingLoader):
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
 
     def _flush(self, models):
-        app_package = AppPackage(app=self.__app)
+        if self.__app_configuration is not None:
+            app_configuration = self.__app_configuration
+        else:
+            app_configuration: Optional[AppConfiguration] = None
+            for model in models:
+                if isinstance(model, AppConfiguration):
+                    app_configuration = model
+                    break
+            if app_configuration is None:
+                raise ValueError(f"no {AppConfiguration.__name__} in models")
+
+        app = app_configuration.app
+        if app is None:
+            app = self._APP_DEFAULT
+        app_package = AppPackage(app=app)
 
         image_archiver = self.__image_archiver
         if image_archiver is None:
@@ -130,7 +150,7 @@ class AppLoader(BufferingLoader):
         self.__logger.info("loaded data to %s", data_file_path)
 
         app_package_build_kwds = {
-            "configuration_file_path": self.__configuration_file_path,
+            "configuration_file_path": self.__app_configuration,
             "data_file_path": data_file_path,
         }
 
