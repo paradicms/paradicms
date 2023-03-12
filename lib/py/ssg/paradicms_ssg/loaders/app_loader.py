@@ -2,6 +2,7 @@ import logging
 from pathlib import Path
 from typing import Optional, Tuple, Union
 
+import paradicms_ssg.namespaces
 from paradicms_etl.loaders.buffering_loader import BufferingLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.image import Image
@@ -147,6 +148,7 @@ class AppLoader(BufferingLoader):
             self.__loaded_data_dir_path / "data" / (self.__pipeline_id + ".trig")
         )
         data_loader = RdfFileLoader(
+            additional_namespace_modules=(paradicms_ssg.namespaces,),
             pipeline_id=self.__pipeline_id,
             rdf_file_path=data_file_path,
         )

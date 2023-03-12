@@ -31,7 +31,7 @@ def bind_namespaces(
     additional_namespace_modules: Tuple[ModuleType, ...] = ()
 ) -> _NamespaceManagerT:
     for namespace_prefix, namespace in module_namespaces(
-        tuple([rdflib.namespace, paradicms_etl.namespaces] + list(additional_namespace_modules))  # type: ignore
+        *tuple([rdflib.namespace, paradicms_etl.namespaces] + list(additional_namespace_modules))  # type: ignore
     ).items():
         if namespace_prefix in EXCLUDE_RDFLIB_NAMESPACE_PREFIXES:
             continue
