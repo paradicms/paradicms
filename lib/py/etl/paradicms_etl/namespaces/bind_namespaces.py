@@ -1,4 +1,5 @@
-from typing import TypeVar, Union
+from types import ModuleType
+from typing import TypeVar, Union, Tuple
 
 import rdflib
 from rdflib import Graph
@@ -24,9 +25,13 @@ EXCLUDE_RDFLIB_NAMESPACE_PREFIXES = {
 }
 
 
-def bind_namespaces(namespace_manager: _NamespaceManagerT) -> _NamespaceManagerT:
+def bind_namespaces(
+    namespace_manager: _NamespaceManagerT,
+    *,
+    additional_namespace_modules: Tuple[ModuleType, ...] = ()
+) -> _NamespaceManagerT:
     for namespace_prefix, namespace in module_namespaces(
-        rdflib.namespace, paradicms_etl.namespaces  # type: ignore
+        tuple([rdflib.namespace, paradicms_etl.namespaces] + list(additional_namespace_modules))  # type: ignore
     ).items():
         if namespace_prefix in EXCLUDE_RDFLIB_NAMESPACE_PREFIXES:
             continue
