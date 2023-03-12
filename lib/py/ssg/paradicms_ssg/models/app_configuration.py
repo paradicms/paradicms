@@ -4,6 +4,7 @@ from typing import Optional
 from rdflib import Graph, RDF
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 from paradicms_ssg.namespaces import CONFIGURATION
 
 
@@ -22,3 +23,9 @@ class AppConfiguration(ResourceBackedModel):
         elif len(subjects) > 1:
             raise ValueError(f"multiple AppConfiguration resources in {rdf_file_path}")
         return cls.from_rdf(graph.resource(subjects[0]))
+
+    @classmethod
+    def json_ld_context(cls):
+        return safe_dict_update(
+            ResourceBackedModel.json_ld_context(), {"@vocab": str(CONFIGURATION)}
+        )
