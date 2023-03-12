@@ -87,6 +87,10 @@ class AppLoader(BufferingLoader):
         app = app_configuration.app
         if app is None:
             app = self._APP_DEFAULT
+            self.__logger.info(
+                "app configuration does not specify an app, using the default %s",
+                app,
+            )
         app_package = AppPackage(app=app)
 
         image_archiver = self.__image_archiver
