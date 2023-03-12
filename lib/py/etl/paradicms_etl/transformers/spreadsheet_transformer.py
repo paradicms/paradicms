@@ -123,9 +123,11 @@ class SpreadsheetTransformer:
 
                 # Synthesize an @id key if there isn't one
                 if "@id" not in row_dict:
-                    row_dict["@id"] = self.__model_uri(
-                        model_class=model_class,
-                        model_id=str(row_i),
+                    row_dict["@id"] = str(
+                        self.__model_uri(
+                            model_class=model_class,
+                            model_id=str(row_i),
+                        )
                     )
 
                 json_ld_context = safe_dict_update(

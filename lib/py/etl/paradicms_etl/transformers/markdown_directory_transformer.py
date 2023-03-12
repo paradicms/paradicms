@@ -386,7 +386,7 @@ class MarkdownDirectoryTransformer:
                     )
 
                     if "@id" not in json_ld_object:
-                        json_ld_object["@id"] = model_uri
+                        json_ld_object["@id"] = str(model_uri)
 
                     json_ld_context = safe_dict_update(
                         model_class.json_ld_context(), self.__json_ld_context
@@ -405,7 +405,8 @@ class MarkdownDirectoryTransformer:
             except Exception as e:
                 raise ValueError(f"error deserializing {metadata_file_entry}") from e
 
-            # graph_str = graph.serialize(format="turtle")
+            graph_str = graph.serialize(format="turtle")
+            print(graph_str)
 
             uri_subjects = {
                 subject for subject in graph.subjects() if isinstance(subject, URIRef)
