@@ -7,7 +7,7 @@ from urllib.parse import quote
 import yaml
 from rdflib import FOAF, Graph, Literal, URIRef, Namespace
 from rdflib.resource import Resource
-from stringcase import spinalcase
+from stringcase import spinalcase, snakecase
 from yaml import FullLoader
 
 from paradicms_etl.models.collection import Collection
@@ -96,19 +96,27 @@ class MarkdownDirectoryTransformer:
             self.__logger = logger
             self.__markdown_directory = markdown_directory
             self.__pipeline_id = pipeline_id
-            self.__root_model_classes_by_spinalcase_name = {
-                spinalcase(model_class_name): model_class
-                for model_class_name, model_class in root_model_classes_by_name.items()
-            }
+            self.__root_model_classes_by_alias = root_model_classes_by_name.copy()
 
             self.__json_ld_context = {"md": str(self.__pipeline_namespace)}
             for (
-                model_class_spinalcase_name,
+                model_class_name,
                 model_class,
             ) in root_model_classes_by_name.items():
-                self.__json_ld_context["md-" + model_class_spinalcase_name] = str(
+                self.__json_ld_context["md-" + spinalcase(model_class_name)] = str(
                     self.__model_type_namespace(model_class=model_class)
                 )
+                for model_class_name_variation in (
+                    snakecase(model_class_name),
+                    spinalcase(model_class_name),
+                ):
+                    if (
+                        model_class_name_variation
+                        not in self.__root_model_classes_by_alias
+                    ):
+                        self.__root_model_classes_by_alias[
+                            model_class_name_variation
+                        ] = model_class
 
             self.__transformed_models_by_class: Dict[
                 Type, Dict[str, RootModel]
@@ -120,9 +128,7 @@ class MarkdownDirectoryTransformer:
             ] = {}
             for image_file_entry in markdown_directory.image_file_entries:
                 self.__untransformed_image_file_entries_by_model_class.setdefault(
-                    self.__root_model_classes_by_spinalcase_name[
-                        image_file_entry.model_type
-                    ],
+                    self.__root_model_classes_by_alias[image_file_entry.model_type],
                     {},
                 )[image_file_entry.model_id] = image_file_entry
             self.__untransformed_metadata_file_entries_by_model_class: Dict[
@@ -131,9 +137,7 @@ class MarkdownDirectoryTransformer:
             ] = {}
             for metadata_file_entry in markdown_directory.metadata_file_entries:
                 self.__untransformed_metadata_file_entries_by_model_class.setdefault(
-                    self.__root_model_classes_by_spinalcase_name[
-                        metadata_file_entry.model_type
-                    ],
+                    self.__root_model_classes_by_alias[metadata_file_entry.model_type],
                     [],
                 ).append(metadata_file_entry)
 
@@ -292,7 +296,7 @@ class MarkdownDirectoryTransformer:
                 if image.src is None:
                     image_file_entry = (
                         self.__untransformed_image_file_entries_by_model_class.get(
-                            self.__root_model_classes_by_spinalcase_name[
+                            self.__root_model_classes_by_alias[
                                 metadata_file_entry.model_type
                             ],
                             {},
@@ -359,7 +363,7 @@ class MarkdownDirectoryTransformer:
         def __transform_metadata_file_entry_to_resource(
             self, metadata_file_entry: MarkdownDirectory.MetadataFileEntry
         ) -> Resource:
-            model_class = self.__root_model_classes_by_spinalcase_name[
+            model_class = self.__root_model_classes_by_alias[
                 metadata_file_entry.model_type
             ]
 
