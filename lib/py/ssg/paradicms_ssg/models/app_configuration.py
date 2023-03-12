@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Optional
 
 from rdflib import Graph, RDF
+from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
@@ -9,6 +10,10 @@ from paradicms_ssg.namespaces import CONFIGURATION
 
 
 class AppConfiguration(ResourceBackedModel):
+    def __init__(self, resource: Resource):
+        resource.add(RDF.type, CONFIGURATION[self.__class__.__name__])
+        ResourceBackedModel.__init__(self, resource)
+
     @property
     def app(self) -> Optional[str]:
         return self._optional_str_value(CONFIGURATION.app)
