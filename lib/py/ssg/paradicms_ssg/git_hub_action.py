@@ -62,7 +62,7 @@ class GitHubAction:
 
     @dataclass(frozen=True)
     class OptionalInputs(RequiredInputs):
-        app_configuration: str = ""
+        app_configuration_file_path: str = ""
         debug: str = ""
         dev: bool = False
 
@@ -86,8 +86,8 @@ class GitHubAction:
         app_deploy_dir_path = Path("_site").absolute()
 
         return AppLoader(
-            app_configuration=Path(self.__optional_inputs.app_configuration)
-            if self.__optional_inputs.app_configuration is not None
+            app_configuration=Path(self.__optional_inputs.app_configuration_file_path)
+            if self.__optional_inputs.app_configuration_file_path
             else None,
             deployer=FsDeployer(
                 # We're running in an environment that's never been used before, so no need to archive
