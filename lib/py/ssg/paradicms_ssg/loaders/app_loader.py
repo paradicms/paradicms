@@ -83,9 +83,9 @@ class AppLoader(BufferingLoader):
                     app_configuration = model
                     break
             if app_configuration is None:
-                raise ValueError(f"no {AppConfiguration.__name__} in models")
+                self.__logger.warning("no %s in models", AppConfiguration.__name__)
 
-        app = app_configuration.app
+        app = app_configuration.app if app_configuration is not None else None
         if app is None:
             app = self._APP_DEFAULT
             self.__logger.info(
@@ -156,9 +156,12 @@ class AppLoader(BufferingLoader):
         self.__logger.info("loaded data to %s", data_file_path)
 
         app_package_build_kwds = {
-            "configuration_file_path": self.__app_configuration,
             "data_file_path": data_file_path,
         }
+        if isinstance(self.__app_configuration, Path):
+            app_package_build_kwds["configuration_file_path"] = str(
+                self.__app_configuration
+            )
 
         if self.__dev:
             app_package.dev(**app_package_build_kwds)
