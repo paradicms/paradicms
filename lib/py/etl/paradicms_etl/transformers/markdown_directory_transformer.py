@@ -39,21 +39,7 @@ class MarkdownDirectoryTransformer:
 
     See MarkdownDirectoryExtractor for the expected directory structure.
 
-    The transformation process works in three passes:
-    1. Transform the Markdown AST to an RDF graph, where keys are strings and values can be any builtin type (scalars like str or int, sequences, and dicts).
-       a. Front matter in YAML is trivially converted to key-value pairs.
-       b. Paragraphs without a heading have an implied key of "label". The paragraph is converted to an HTML string value.
-       c. Paragraphs with a heading must have a link in the heading of the form [](#key). The paragraph is converted to an HTML string value.
-    2. Transform key-value pairs to an RDF graph.
-       a. The root subject is the document. The key-value pairs are (document, key, value) triples.
-       b. Keys are translated to property URIs: "ns_property" or simply "property". In the former case, the namespace prefix "ns" is looked up to form the URI. In the latter case, a default namespace (typically Dublin Core terms) is used.
-       c. Scalar values are converted to RDF literals.
-       d. Paragraphs are always considered string RDF literals.
-       e. Some front matter values are handled differently:
-           i. String values that are surrounded by < and >, which are treated as URI references.
-           ii. Sequence values create multiple RDF statements with the same subject and predicate.
-           iii. Map values create blank nodes, and the conversion is applied recursively.
-    3. Transform the RDF graph to a model.
+    See the user documentation for information about the transformation process.
     """
 
     def __init__(
