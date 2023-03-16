@@ -11,15 +11,9 @@ from stringcase import spinalcase, snakecase
 from yaml import FullLoader
 
 from paradicms_etl.models.collection import Collection
-from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
-from paradicms_etl.models.license import License
 from paradicms_etl.models.markdown_directory import MarkdownDirectory
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
-from paradicms_etl.models.rights_statement import RightsStatement
-from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
-    RightsStatementsDotOrgRightsStatements,
-)
 from paradicms_etl.models.root_model import RootModel
 from paradicms_etl.models.root_model_classes_by_name import (
     ROOT_MODEL_CLASSES_BY_NAME,
@@ -539,27 +533,10 @@ class MarkdownDirectoryTransformer:
                     )
 
     def __call__(self, *, markdown_directory: MarkdownDirectory):  # type: ignore
-        yield_known_licenses = True
-        yield_known_rights_statements = True
-
-        for model in self.__TransformInvocation(
+        yield from self.__TransformInvocation(
             default_collection=self.__default_collection,
             logger=self.__logger,
             markdown_directory=markdown_directory,
             pipeline_id=self.__pipeline_id,
             root_model_classes_by_name=self.__root_model_classes_by_name,
-        )():
-            yield model
-
-            if isinstance(model, License):
-                yield_known_licenses = False
-            elif isinstance(model, RightsStatement):
-                yield_known_rights_statements = False
-
-        if yield_known_licenses:
-            # If no licenses came from the Markdown directory, yield known licenses
-            yield from CreativeCommonsLicenses.as_tuple()
-
-        if yield_known_rights_statements:
-            # If no rights statements came from the Markdown directory, yield known rights statements
-            yield from RightsStatementsDotOrgRightsStatements.as_tuple()
+        )()

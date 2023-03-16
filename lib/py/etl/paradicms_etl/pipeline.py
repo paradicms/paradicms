@@ -9,6 +9,9 @@ from paradicms_etl.extractor import Extractor
 from paradicms_etl.loader import Loader
 from paradicms_etl.model import Model
 from paradicms_etl.transformer import Transformer
+from paradicms_etl.transformers.ambient_reference_transformer import (
+    ambient_reference_transformer,
+)
 from paradicms_etl.transformers.validation_transformer import validation_transformer
 from paradicms_etl.utils.existing_directory_argument_type import (
     existing_directory_argument_type,
@@ -23,8 +26,6 @@ class Pipeline(ABC):
         id: str,
         loader: Loader,
         transformer: Transformer,
-        validate_transform: bool = True,
-        **kwds,
     ):
         """
         Construct an extract-transform-load pipeline.
@@ -39,7 +40,6 @@ class Pipeline(ABC):
         self.__loader = loader
         self.__logger = logging.getLogger(self.__class__.__name__)
         self.__transformer = transformer
-        self.__validate_transform = validate_transform
 
     @classmethod
     def add_arguments(cls, arg_parser: ArgParser) -> None:
@@ -147,11 +147,10 @@ class Pipeline(ABC):
     def __transform(self, extract_kwds: Optional[Dict[str, Any]]) -> Iterable[Model]:
         if extract_kwds is None:
             extract_kwds = {}
-        transform_result = self.transformer(**extract_kwds)
-        if self.__validate_transform:
-            return validation_transformer(transform_result)
-        else:
-            return transform_result
+        models = self.transformer(**extract_kwds)
+        models_with_ambient_referees = ambient_reference_transformer(models)
+        validated_models = validation_transformer(models_with_ambient_referees)
+        return validated_models
 
     @property
     def transformer(self):

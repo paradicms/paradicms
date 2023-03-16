@@ -99,10 +99,6 @@ class SyntheticDataPipeline(Pipeline):
             self.__works_per_collection = works_per_collection
 
         def __call__(self):
-            yield from CreativeCommonsLicenses.as_tuple()
-            yield from RightsStatementsDotOrgRightsStatements.as_tuple()
-            # yield RightsStatementsDotOrgRightsStatements.InC_EDU
-
             named_values_by_value = {}
             for model in self.__generate_named_values():
                 yield model

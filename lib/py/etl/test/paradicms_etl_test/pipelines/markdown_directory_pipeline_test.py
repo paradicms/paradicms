@@ -16,7 +16,6 @@ class __MarkdownDirectoryPipeline(Pipeline):
     def __init__(self, data_dir_path: Path):
         Pipeline.__init__(
             self,
-            data_dir_path=data_dir_path,
             extractor=MarkdownDirectoryExtractor(
                 markdown_directory_path=data_dir_path / self.ID / "extracted"
             ),
@@ -30,7 +29,6 @@ class __MarkdownDirectoryPipeline(Pipeline):
                 / "markdown_directory.trig",
                 pipeline_id=self.ID,
             ),
-            validate_transform=False,
         )
 
 
