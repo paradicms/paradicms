@@ -30,7 +30,6 @@ class __MarkdownDirectoryPipeline(Pipeline):
                 / "markdown_directory.trig",
                 pipeline_id=self.ID,
             ),
-            validate_transform=False,
         )
 
 

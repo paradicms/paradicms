@@ -22,8 +22,6 @@ class CompositePipeline(Pipeline):
         pipelines: Tuple[Pipeline, ...],
         exclude_pipeline_id: Optional[List[str]] = None,
         include_pipeline_id: Optional[List[str]] = None,
-        validate_transform: bool = True,
-        **kwds,
     ):
         Pipeline.__init__(
             self,
@@ -31,7 +29,6 @@ class CompositePipeline(Pipeline):
             id=id,
             loader=loader,
             transformer=nop_transformer,
-            **kwds,
         )
 
         exclude_pipeline_ids = (exclude_pipeline_id,) if exclude_pipeline_id else ()
@@ -58,8 +55,6 @@ class CompositePipeline(Pipeline):
             pipeline for pipeline in pipelines if pipeline.id in filtered_pipeline_ids
         )
 
-        self.__validate_transform = validate_transform
-
     @classmethod
     def add_arguments(cls, arg_parser: ArgParser) -> None:
         Pipeline.add_arguments(arg_parser)
@@ -72,10 +67,9 @@ class CompositePipeline(Pipeline):
                 yield from pipeline.extract_transform(**kwds)
 
         models = extract_transform()
-        if self.__validate_transform:
-            models = validation_transformer(models)
+        validated_models = validation_transformer(models)
 
-        self.loader(flush=True, models=models)
+        self.loader(flush=True, models=validated_models)
 
     @property
     def _pipelines(self) -> Tuple[Pipeline, ...]:

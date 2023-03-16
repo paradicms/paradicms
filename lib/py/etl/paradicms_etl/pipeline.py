@@ -23,8 +23,6 @@ class Pipeline(ABC):
         id: str,
         loader: Loader,
         transformer: Transformer,
-        validate_transform: bool = True,
-        **kwds,
     ):
         """
         Construct an extract-transform-load pipeline.
@@ -39,7 +37,6 @@ class Pipeline(ABC):
         self.__loader = loader
         self.__logger = logging.getLogger(self.__class__.__name__)
         self.__transformer = transformer
-        self.__validate_transform = validate_transform
 
     @classmethod
     def add_arguments(cls, arg_parser: ArgParser) -> None:
@@ -148,10 +145,7 @@ class Pipeline(ABC):
         if extract_kwds is None:
             extract_kwds = {}
         transform_result = self.transformer(**extract_kwds)
-        if self.__validate_transform:
-            return validation_transformer(transform_result)
-        else:
-            return transform_result
+        return validation_transformer(transform_result)
 
     @property
     def transformer(self):
