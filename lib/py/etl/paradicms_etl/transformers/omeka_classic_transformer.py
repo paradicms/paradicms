@@ -7,13 +7,9 @@ from rdflib import URIRef, DCTERMS, Literal
 from tqdm import tqdm
 
 from paradicms_etl.models.collection import Collection
-from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.property import Property
-from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
-    RightsStatementsDotOrgRightsStatements,
-)
 from paradicms_etl.models.work import Work
 
 ElementTextTree = Dict[str, Dict[str, List[str]]]
@@ -47,9 +43,6 @@ class OmekaClassicTransformer:
         self.__transform_file_timer = self._metrics_registry.timer("transform_file")
 
     def __call__(self, *, collections, endpoint_url, files, items):
-        yield from CreativeCommonsLicenses.as_tuple()
-        yield from RightsStatementsDotOrgRightsStatements.as_tuple()
-
         collection_uris_by_id = {}
         for collection in tqdm(collections, desc="Omeka collections"):
             transformed_collection = self._transform_collection(
