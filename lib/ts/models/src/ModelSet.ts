@@ -70,11 +70,11 @@ export class ModelSet {
   private _imagesByUriIndex?: {[index: string]: Image};
   private _licenses?: readonly License[];
   private _licensesByUriIndex?: {[index: string]: License};
-  private _namedValues?: readonly Concept[];
-  private _namedValuesByPropertyUriIndex?: {
+  private _concepts?: readonly Concept[];
+  private _conceptsByPropertyUriIndex?: {
     [index: string]: readonly Concept[];
   };
-  private _namedValuesByUriIndex?: {[index: string]: Concept};
+  private _conceptsByUriIndex?: {[index: string]: Concept};
   private _organizations?: readonly Organization[];
   private _organizationsByUriIndex?: {[index: string]: Organization};
   private _people?: readonly Person[];
@@ -223,7 +223,7 @@ export class ModelSet {
       collections: this.collections,
       images: this.images,
       licenses: this.licenses,
-      namedValues: this.namedValues,
+      concepts: this.concepts,
       organizations: this.organizations,
       people: this.people,
       rightsStatements: this.rightsStatements,
@@ -244,44 +244,44 @@ export class ModelSet {
     }
   }
 
-  get namedValues(): readonly Concept[] {
-    if (!this._namedValues) {
-      this.readNamedValues();
+  get concepts(): readonly Concept[] {
+    if (!this._concepts) {
+      this.readConcepts();
     }
-    return this._namedValues!;
+    return this._concepts!;
   }
 
-  namedValuesByPropertyUri(propertyUri: string): readonly Concept[] {
-    return this.namedValuesByPropertyUriIndex[propertyUri] ?? [];
+  conceptsByPropertyUri(propertyUri: string): readonly Concept[] {
+    return this.conceptsByPropertyUriIndex[propertyUri] ?? [];
   }
 
-  namedValueByUri(namedValueUri: string): Concept {
-    const namedValue = this.namedValuesByUriIndex[namedValueUri];
-    if (!namedValue) {
+  conceptByUri(conceptUri: string): Concept {
+    const concept = this.conceptsByUriIndex[conceptUri];
+    if (!concept) {
       // this.logContents();
-      throw new RangeError("no such named value " + namedValueUri);
+      throw new RangeError("no such named value " + conceptUri);
     }
-    return namedValue;
+    return concept;
   }
 
-  namedValueByUriOptional(namedValueUri: string): Concept | null {
-    return this.namedValuesByUriIndex[namedValueUri] ?? null;
+  conceptByUriOptional(conceptUri: string): Concept | null {
+    return this.conceptsByUriIndex[conceptUri] ?? null;
   }
 
-  private get namedValuesByPropertyUriIndex(): {
+  private get conceptsByPropertyUriIndex(): {
     [index: string]: readonly Concept[];
   } {
-    if (!this._namedValuesByPropertyUriIndex) {
-      this.readNamedValues();
+    if (!this._conceptsByPropertyUriIndex) {
+      this.readConcepts();
     }
-    return this._namedValuesByPropertyUriIndex!;
+    return this._conceptsByPropertyUriIndex!;
   }
 
-  private get namedValuesByUriIndex(): {[index: string]: Concept} {
-    if (!this._namedValuesByUriIndex) {
-      this.readNamedValues();
+  private get conceptsByUriIndex(): {[index: string]: Concept} {
+    if (!this._conceptsByUriIndex) {
+      this.readConcepts();
     }
-    return this._namedValuesByUriIndex!;
+    return this._conceptsByUriIndex!;
   }
 
   organizationByUri(organizationUri: string): Organization {
@@ -492,35 +492,35 @@ export class ModelSet {
     });
   }
 
-  protected readNamedValue(kwds: ModelParameters): Concept {
+  protected readConcept(kwds: ModelParameters): Concept {
     return new Concept(kwds);
   }
 
-  private readNamedValues() {
-    const namedValues: Concept[] = [];
-    const namedValuesByPropertyUriIndex: {
+  private readConcepts() {
+    const concepts: Concept[] = [];
+    const conceptsByPropertyUriIndex: {
       [index: string]: Concept[];
     } = {};
-    this._namedValuesByUriIndex = {};
+    this._conceptsByUriIndex = {};
     this.getModels(kwds => {
-      const namedValue = this.readNamedValue(kwds);
+      const concept = this.readConcept(kwds);
 
-      namedValues.push(namedValue);
+      concepts.push(concept);
 
-      for (const propertyUri of namedValue.propertyUris) {
-        const existingNamedValues = namedValuesByPropertyUriIndex[propertyUri];
-        if (existingNamedValues) {
-          existingNamedValues.push(namedValue);
+      for (const propertyUri of concept.propertyUris) {
+        const existingConcepts = conceptsByPropertyUriIndex[propertyUri];
+        if (existingConcepts) {
+          existingConcepts.push(concept);
         } else {
-          namedValuesByPropertyUriIndex[propertyUri] = [namedValue];
+          conceptsByPropertyUriIndex[propertyUri] = [concept];
         }
       }
 
-      this._namedValuesByUriIndex![namedValue.uri] = namedValue;
-    }, cms.NamedValue);
-    this._namedValues = sortNamedModelsArray(namedValues);
-    this._namedValuesByPropertyUriIndex = sortNamedModelsMultimap(
-      namedValuesByPropertyUriIndex
+      this._conceptsByUriIndex![concept.uri] = concept;
+    }, cms.Concept);
+    this._concepts = sortNamedModelsArray(concepts);
+    this._conceptsByPropertyUriIndex = sortNamedModelsMultimap(
+      conceptsByPropertyUriIndex
     );
   }
 

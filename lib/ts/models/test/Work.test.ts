@@ -58,7 +58,7 @@ describe("Work", () => {
   });
 
   it("should get the work's property values (named)", () => {
-    const propertyValues = sut.propertyNamedValues(dcterms.subject.value);
+    const propertyValues = sut.propertyConcepts(dcterms.subject.value);
     expect(propertyValues).to.have.length(2);
     const propertyValue = propertyValues[0];
     expect(propertyValue.value.value).to.satisfy((text: string) =>

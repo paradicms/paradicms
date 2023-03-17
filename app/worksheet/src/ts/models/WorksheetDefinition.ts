@@ -21,10 +21,10 @@ export class WorksheetDefinition {
   featureValueByUriOptional(
     uri: string
   ): WorksheetFeatureValueDefinition | null {
-    return this.modelSet.namedValueByUriOptional(uri);
+    return this.modelSet.conceptByUriOptional(uri);
   }
 
   get featureValues(): readonly WorksheetFeatureValueDefinition[] {
-    return this.modelSet.namedValues;
+    return this.modelSet.concepts;
   }
 }

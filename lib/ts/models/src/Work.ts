@@ -145,7 +145,7 @@ export class Work extends Mixin(
   }
 
   @Memoize()
-  propertyNamedValues(propertyUri: string): readonly Concept[] {
+  propertyConcepts(propertyUri: string): readonly Concept[] {
     return this.filterAndMapObjects(
       DataFactory.namedNode(propertyUri),
       term => {
@@ -155,7 +155,7 @@ export class Work extends Mixin(
         for (const rdfTypeQuad of this.dataset.match(
           term,
           rdf.type,
-          cms.NamedValue,
+          cms.Concept,
           null
         )) {
           return new Concept({

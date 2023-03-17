@@ -11,7 +11,7 @@ export const workSearchWorkJoinSelector = (
     agents: {},
     work: {},
   },
-  propertyNamedValues: {
+  propertyConcepts: {
     thumbnail: {targetDimensions: thumbnailTargetDimensions},
   },
   thumbnail: {targetDimensions: thumbnailTargetDimensions},

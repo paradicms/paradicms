@@ -10,7 +10,7 @@ import {Agent} from "./Agent";
 import {Text} from "./Text";
 import {AgentJoinSelector} from "./AgentJoinSelector";
 import {selectThumbnail} from "./selectThumbnail";
-import {NamedValueJoinSelector} from "./NamedValueJoinSelector";
+import {ConceptJoinSelector} from "./ConceptJoinSelector";
 import {Concept} from "./Concept";
 import {WorkCreation} from "./WorkCreation";
 import {WorkEvent} from "./WorkEvent";
@@ -114,16 +114,16 @@ export class ModelSubsetter {
     return builder;
   }
 
-  private addNamedValuesModelSet(
+  private addConceptsModelSet(
     builder: ModelSetBuilder,
-    namedValues: readonly Concept[],
-    joinSelector: NamedValueJoinSelector
+    concepts: readonly Concept[],
+    joinSelector: ConceptJoinSelector
   ) {
-    builder.addNamedValues(namedValues);
+    builder.addConcepts(concepts);
     if (joinSelector.thumbnail) {
-      for (const namedValue of namedValues) {
+      for (const concept of concepts) {
         const thumbnail = selectThumbnail(
-          this.completeModelSet.imagesByDepictsUri(namedValue.uri),
+          this.completeModelSet.imagesByDepictsUri(concept.uri),
           joinSelector.thumbnail
         );
         if (thumbnail) {
@@ -149,7 +149,7 @@ export class ModelSubsetter {
     const collectionUris = joinSelector.collections
       ? new Set<string>()
       : undefined;
-    const namedValuesByUri: {[index: string]: Concept} = {};
+    const conceptsByUri: {[index: string]: Concept} = {};
 
     for (const work of works) {
       builder.addWork(work);
@@ -199,11 +199,11 @@ export class ModelSubsetter {
         }
       }
 
-      if (joinSelector.propertyNamedValues && this.workPropertyUris) {
+      if (joinSelector.propertyConcepts && this.workPropertyUris) {
         for (const workPropertyUri of this.workPropertyUris) {
-          for (const namedValue of work.propertyNamedValues(workPropertyUri)) {
-            if (!namedValuesByUri[namedValue.uri]) {
-              namedValuesByUri[namedValue.uri] = namedValue;
+          for (const concept of work.propertyConcepts(workPropertyUri)) {
+            if (!conceptsByUri[concept.uri]) {
+              conceptsByUri[concept.uri] = concept;
             }
           }
         }
@@ -220,11 +220,11 @@ export class ModelSubsetter {
       }
     }
 
-    if (joinSelector.propertyNamedValues) {
-      this.addNamedValuesModelSet(
+    if (joinSelector.propertyConcepts) {
+      this.addConceptsModelSet(
         builder,
-        Object.keys(namedValuesByUri).map(uri => namedValuesByUri[uri]),
-        joinSelector.propertyNamedValues
+        Object.keys(conceptsByUri).map(uri => conceptsByUri[uri]),
+        joinSelector.propertyConcepts
       );
     }
 

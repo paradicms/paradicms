@@ -15,7 +15,7 @@ export * from "./mixins";
 export * from "./Model";
 export * from "./ModelParameters";
 export * from "./NamedModel";
-export * from "./NamedValueJoinSelector";
+export * from "./ConceptJoinSelector";
 export * from "./Organization";
 export * from "./Person";
 export * from "./PropertyValue";
