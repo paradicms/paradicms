@@ -13,7 +13,7 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 class Concept(ResourceBackedNamedModel):
     def __init__(self, resource: Resource):
-        resource.add(RDF.type, SKOS.concept)
+        resource.add(RDF.type, SKOS.Concept)
         ResourceBackedNamedModel.__init__(self, resource)
         self.label
         self.property_uris

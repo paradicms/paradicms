@@ -294,7 +294,7 @@ class SyntheticDataPipeline(Pipeline):
                 for property_value in property_values:
                     concept = Concept.from_fields(
                         property_uris=(property_uri,),
-                        title=f"Named value {concept_urn_i}",
+                        pref_label=f"Concept {concept_urn_i}",
                         uri=URIRef(
                             f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
                         ),
