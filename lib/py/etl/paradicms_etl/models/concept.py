@@ -46,10 +46,10 @@ class Concept(ResourceBackedNamedModel):
         return safe_dict_update(
             ResourceBackedNamedModel.json_ld_context(),
             {
-                "abstract": {"@id": str(DCTERMS.abstract)},
                 "altLabel": {"@id": str(SKOS.altLabel)},
+                "definition": {"@id": str(SKOS.definition)},
+                "prefLabel": {"@id": str(SKOS.prefLabel)},
                 "property": {"@id": str(RDF.predicate), "@type": "@id"},
-                "title": {"@id": str(DCTERMS.title)},
                 "value": {"@id": str(RDF.value)},
             },
         )
