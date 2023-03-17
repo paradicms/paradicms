@@ -139,10 +139,10 @@ class __Validator:
         else:
             raise ValueError(f"duplicate model URI: {model.uri}")
 
-    def _validate_named_value(self, named_value: Concept):
-        self.__validate_named_model(named_value)
+    def _validate_concept(self, concept: Concept):
+        self.__validate_named_model(concept)
 
-    def _validate_named_value_references(self):
+    def _validate_concept_references(self):
         pass
 
     def _validate_organization(self, organization: Organization):
