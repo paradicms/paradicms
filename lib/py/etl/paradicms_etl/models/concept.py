@@ -11,8 +11,9 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class NamedValue(ResourceBackedNamedModel):
+class Concept(ResourceBackedNamedModel):
     def __init__(self, resource: Resource):
+        resource.add(RDF.type, SKOS.concept)
         ResourceBackedNamedModel.__init__(self, resource)
         self.label
         self.property_uris
@@ -24,20 +25,19 @@ class NamedValue(ResourceBackedNamedModel):
         property_uris: Tuple[URIRef, ...],  # Child -> parent references
         uri: URIRef,
         value: Node,  # A property value
-        abstract: Union[str, Text, None] = None,
+        definition: Union[str, Text, None] = None,
         alt_labels: Tuple[Union[str, Literal], ...] = None,
-        title: Optional[str] = None,
-    ) -> "NamedValue":
+        pref_label: Optional[str] = None,
+    ) -> "Concept":
         if not property_uris:
             raise ValueError("must specify at least one property URI")
         return cls(
             ResourceBuilder(uri)
-            .add(DCTERMS.abstract, abstract)
-            .add(DCTERMS.title, title)
+            .add(SKOS.definition, definition)
             .add(RDF.predicate, property_uris)
             .add(RDF.value, value)
             .add(SKOS.altLabel, alt_labels)
-            .add(SKOS.prefLabel, title)
+            .add(SKOS.prefLabel, pref_label)
             .build()
         )
 

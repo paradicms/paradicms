@@ -19,12 +19,12 @@ class CMS(DefinedNamespace):
     Agent: URIRef
     Collection: URIRef
     Configuration: URIRef
+    Concept: URIRef
     DateTimeDescription: URIRef
     Event: URIRef
     Image: URIRef
     License: URIRef
     Location: URIRef
-    NamedValue: URIRef
     Organization: URIRef
     Person: URIRef
     RightsStatement: URIRef

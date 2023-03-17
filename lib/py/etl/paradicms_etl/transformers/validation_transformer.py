@@ -6,12 +6,12 @@ from stringcase import snakecase
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.event import Event
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.license import License
 from paradicms_etl.models.named_location import NamedLocation
 from paradicms_etl.models.named_model import NamedModel
-from paradicms_etl.models.named_value import NamedValue
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.rights import Rights
@@ -139,7 +139,7 @@ class __Validator:
         else:
             raise ValueError(f"duplicate model URI: {model.uri}")
 
-    def _validate_named_value(self, named_value: NamedValue):
+    def _validate_named_value(self, named_value: Concept):
         self.__validate_named_model(named_value)
 
     def _validate_named_value_references(self):
