@@ -1,6 +1,6 @@
 from typing import Optional, Tuple, Union
 
-from rdflib import DCTERMS, SKOS
+from rdflib import SKOS
 from rdflib.namespace import RDF
 from rdflib.resource import Resource
 from rdflib.term import Node, URIRef, Literal
@@ -57,10 +57,6 @@ class Concept(ResourceBackedNamedModel):
     @property
     def property_uris(self) -> Tuple[URIRef, ...]:
         return self._required_uri_values(RDF.predicate)
-
-    @property
-    def title(self) -> Optional[str]:
-        return self._optional_str_value(DCTERMS.title)
 
     @property
     def value(self) -> Node:
