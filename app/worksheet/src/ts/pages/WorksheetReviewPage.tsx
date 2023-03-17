@@ -1,4 +1,5 @@
 import * as React from "react";
+import {useCallback, useMemo, useState} from "react";
 import {useWorksheet} from "~/hooks/useWorksheet";
 import {Spinner} from "~/components/Spinner";
 import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
@@ -8,11 +9,10 @@ import {TextWorksheetStateExporter} from "~/exporters/TextWorksheetStateExporter
 import {CsvStringWorksheetStateExporter} from "~/exporters/CsvStringWorksheetStateExporter";
 import {JsonStringWorksheetStateExporter} from "~/exporters/JsonStringWorksheetStateExporter";
 import {JsonLdStringWorksheetStateExporter} from "~/exporters/JsonLdStringWorksheetStateExporter";
-import {useCallback, useMemo, useState} from "react";
-import CopyToClipboard = require("react-copy-to-clipboard");
 import {Link} from "react-router-dom";
 import {Hrefs} from "~/Hrefs";
 import {GenericErrorHandler} from "~/components/GenericErrorHandler";
+import CopyToClipboard = require("react-copy-to-clipboard");
 
 const STRING_EXPORTERS: StringWorksheetStateExporter[] = [
   new TextWorksheetStateExporter(),
@@ -28,18 +28,19 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
     worksheet,
   } = useWorksheet();
 
-  const [selectedStringExporterIndex, setSelectedStringExporterIndex] =
-    useState<number>(0);
+  const [
+    selectedStringExporterIndex,
+    setSelectedStringExporterIndex,
+  ] = useState<number>(0);
 
   const [exportMessage, setExportMessage] = useState<string>("");
 
   const exportedString = useMemo(
     () =>
       worksheet
-        ? STRING_EXPORTERS[selectedStringExporterIndex].export(
-            worksheet.definition,
-            [worksheet.state]
-          )
+        ? STRING_EXPORTERS[
+            selectedStringExporterIndex
+          ].export(worksheet.definition, [worksheet.state])
         : "",
     [selectedStringExporterIndex, worksheet]
   );
@@ -144,7 +145,7 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
                 </Button>
                 &nbsp;
                 <Input
-                  onChange={(event) =>
+                  onChange={event =>
                     setSelectedStringExporterIndex(
                       parseInt(event.target.value, 10)
                     )
@@ -184,7 +185,7 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
         </Row>
         <Row>
           <Col className="p-0" xs="12">
-            {worksheet.featureSets.map((featureSet) => {
+            {worksheet.featureSets.map(featureSet => {
               const featureSetState = featureSet.state;
               if (!featureSetState) {
                 return null;
@@ -200,7 +201,7 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {featureSet.features.map((feature) => {
+                      {featureSet.features.map(feature => {
                         return (
                           <tr key={feature.uri}>
                             <td className="align-middle text-center w-25">
@@ -219,14 +220,14 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
                             </td>
                             <td className="align-middle">
                               {feature.values
-                                .filter((value) => value.selected)
-                                .map((value) => (
+                                .filter(value => value.selected)
+                                .map(value => (
                                   <span
                                     className="border border-info d-inline-block h4 m-2 p-2"
                                     key={value.uri}
                                     style={{borderWidth: "4px !important"}}
                                   >
-                                    {value.definition.title}
+                                    {value.definition.prefLabel}
                                   </span>
                                 ))}
                             </td>

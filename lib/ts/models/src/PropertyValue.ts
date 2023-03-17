@@ -144,7 +144,7 @@ class NamedPropertyValue extends PropertyValue {
   }
 
   get label() {
-    return this.concept.title ?? this.value;
+    return this.concept.prefLabel ?? this.value;
   }
 
   override thumbnail(selector: ThumbnailSelector) {
