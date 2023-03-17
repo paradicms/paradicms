@@ -1,4 +1,4 @@
-import {NamedValue} from "./NamedValue";
+import {Concept} from "./Concept";
 import {Literal, NamedNode, Quad} from "@rdfjs/types";
 import {Text} from "./Text";
 import {ThumbnailSelector} from "./ThumbnailSelector";
@@ -12,6 +12,10 @@ export abstract class PropertyValue {
     return new AgentPropertyValue(agent);
   }
 
+  static fromConcept(concept: Concept) {
+    return new ConceptPropertyValue(concept);
+  }
+
   /**
    * Abstract base class with factories for adapting other classes to a common interface.
    *
@@ -19,10 +23,6 @@ export abstract class PropertyValue {
    */
   static fromLiteral(literal: Literal) {
     return new LiteralPropertyValue(literal);
-  }
-
-  static fromNamedValue(namedValue: NamedValue) {
-    return new NamedPropertyValue(namedValue);
   }
 
   private static fromQuad(
@@ -49,11 +49,11 @@ export abstract class PropertyValue {
         // #78 index lookups take half as much time (amortized over multiple works)
         // as getting the rdf:type of the NamedNode and branching on its value.
         {
-          const namedValue = modelSet.namedValueByUriOptional(
+          const concept = modelSet.conceptByUriOptional(
             quad.object.value
           );
-          if (namedValue) {
-            return PropertyValue.fromNamedValue(namedValue);
+          if (concept) {
+            return PropertyValue.fromConcept(concept);
           }
         }
         {
@@ -124,6 +124,24 @@ class AgentPropertyValue extends PropertyValue {
   }
 }
 
+class ConceptPropertyValue extends PropertyValue {
+  constructor(readonly concept: Concept) {
+    super();
+  }
+
+  get label() {
+    return this.concept.prefLabel ?? this.value;
+  }
+
+  override thumbnail(selector: ThumbnailSelector) {
+    return this.concept.thumbnail(selector);
+  }
+
+  get value() {
+    return this.concept.value.value;
+  }
+}
+
 class LiteralPropertyValue extends PropertyValue {
   constructor(readonly literal: Literal) {
     super();
@@ -135,24 +153,6 @@ class LiteralPropertyValue extends PropertyValue {
 
   get value() {
     return this.literal.value;
-  }
-}
-
-class NamedPropertyValue extends PropertyValue {
-  constructor(readonly namedValue: NamedValue) {
-    super();
-  }
-
-  get label() {
-    return this.namedValue.title ?? this.value;
-  }
-
-  override thumbnail(selector: ThumbnailSelector) {
-    return this.namedValue.thumbnail(selector);
-  }
-
-  get value() {
-    return this.namedValue.value.value;
   }
 }
 

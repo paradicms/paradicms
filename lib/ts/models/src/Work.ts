@@ -4,7 +4,7 @@ import {Rights} from "./Rights";
 import {Text} from "./Text";
 import {Memoize} from "typescript-memoize";
 import {PropertyValue} from "./PropertyValue";
-import {NamedValue} from "./NamedValue";
+import {Concept} from "./Concept";
 import {NamedNode} from "@rdfjs/types";
 import {WorkAgent} from "./WorkAgent";
 import {Mixin} from "ts-mixer";
@@ -145,7 +145,7 @@ export class Work extends Mixin(
   }
 
   @Memoize()
-  propertyNamedValues(propertyUri: string): readonly NamedValue[] {
+  propertyConcepts(propertyUri: string): readonly Concept[] {
     return this.filterAndMapObjects(
       DataFactory.namedNode(propertyUri),
       term => {
@@ -155,10 +155,10 @@ export class Work extends Mixin(
         for (const rdfTypeQuad of this.dataset.match(
           term,
           rdf.type,
-          cms.NamedValue,
+          cms.Concept,
           null
         )) {
-          return new NamedValue({
+          return new Concept({
             modelSet: this.modelSet,
             graphNode: rdfTypeQuad.graph as NamedNode,
             node: term,

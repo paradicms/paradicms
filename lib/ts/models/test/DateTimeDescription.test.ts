@@ -1,15 +1,23 @@
 import {expect} from "chai";
-import {ModelSet} from "../src";
+import {ModelSet, WorkCreation} from "../src";
 import {syntheticData} from "@paradicms/test";
 import {DateTimeDescription} from "../src/DateTimeDescription";
 
 describe("DateTimeDescription", () => {
   const modelSet = ModelSet.fromDatasetCore(syntheticData);
-  const sut: DateTimeDescription = modelSet.workEventsByWork(
-    modelSet.works[0].uri
-  )[0].date! as DateTimeDescription;
+  let sut: DateTimeDescription;
 
   before(() => {
+    for (const work of modelSet.works) {
+      for (const workEvent of work.events) {
+        if (workEvent instanceof WorkCreation) {
+          sut = workEvent.date! as DateTimeDescription;
+          expect(sut).to.be.instanceof(DateTimeDescription);
+          return;
+        }
+      }
+    }
+
     expect(sut).to.not.be.null;
     expect(sut).to.be.instanceof(DateTimeDescription);
   });

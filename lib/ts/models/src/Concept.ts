@@ -3,10 +3,10 @@ import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
 import {Memoize} from "typescript-memoize";
 import {HasAbstract, HasImages} from "./mixins";
 import {Mixin} from "ts-mixer";
-import {dcterms, rdf, skos} from "@paradicms/vocabularies";
+import {rdf, skos} from "@paradicms/vocabularies";
 import {requireNonNull} from "@paradicms/utilities";
 
-export class NamedValue extends Mixin(NamedModel, HasAbstract, HasImages) {
+export class Concept extends Mixin(NamedModel, HasAbstract, HasImages) {
   @Memoize()
   get altLabels(): readonly Literal[] {
     return this.filterAndMapObjects(skos.altLabel, term =>
@@ -28,11 +28,6 @@ export class NamedValue extends Mixin(NamedModel, HasAbstract, HasImages) {
       throw new RangeError("named value must link to one or more properties");
     }
     return propertyUris;
-  }
-
-  @Memoize()
-  get title(): string | null {
-    return this.findAndMapObject(dcterms.title, this.mapStringObject);
   }
 
   get value(): BlankNode | Literal | NamedNode {

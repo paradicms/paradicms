@@ -16,17 +16,16 @@ export class WorksheetFeature {
     this.definition = kwds.definition;
     this.values = this.definition.values
       .map(
-        (valueDefinition) =>
+        valueDefinition =>
           new WorksheetFeatureValue({
             definition: valueDefinition,
             initialState: initialState?.values?.find(
-              (featureValueState) =>
-                featureValueState.uri === valueDefinition.uri
+              featureValueState => featureValueState.uri === valueDefinition.uri
             ),
           })
       )
       .sort((left, right) =>
-        left.definition.title!.localeCompare(right.definition.title!)
+        left.definition.prefLabel!.localeCompare(right.definition.prefLabel!)
       );
   }
 

@@ -1,3 +1,3 @@
-import {NamedValue} from "@paradicms/models";
+import {Concept} from "@paradicms/models";
 
-export type WorksheetFeatureValueDefinition = NamedValue;
+export type WorksheetFeatureValueDefinition = Concept;

@@ -16,6 +16,6 @@ export class WorksheetFeatureDefinition extends Mixin(
 
   @Memoize()
   get values(): readonly WorksheetFeatureValueDefinition[] {
-    return this.modelSet.namedValuesByPropertyUri(this.uri);
+    return this.modelSet.conceptsByPropertyUri(this.uri);
   }
 }

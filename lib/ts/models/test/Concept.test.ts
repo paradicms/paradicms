@@ -2,14 +2,14 @@ import {expect} from "chai";
 import {ModelSet} from "../src";
 import {syntheticData} from "@paradicms/test";
 
-describe("NamedValue", () => {
+describe("Concept", () => {
   const modelSet = ModelSet.fromDatasetCore(syntheticData);
-  const sut = modelSet.namedValuesByPropertyUri(
-    modelSet.namedValues[0].propertyUris[0]
+  const sut = modelSet.conceptsByPropertyUri(
+    modelSet.concepts[0].propertyUris[0]
   )[0];
 
-  it("should get the title", () => {
-    expect(sut.title).to.not.be.empty;
+  it("should get the prefLabel", () => {
+    expect(sut.prefLabel).to.not.be.empty;
   });
 
   it("should get the value", () => {

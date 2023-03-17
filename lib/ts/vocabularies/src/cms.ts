@@ -14,13 +14,13 @@ interface Cms {
 
   // Resources
   Collection: NamedNode<"http://www.paradicms.org/ns/cms#Collection">;
+  Concept: NamedNode<"http://www.paradicms.org/ns/cms#Concept">;
   DateTimeDescription: NamedNode<
     "http://www.paradicms.org/ns/cms#DateTimeDescription"
   >;
   Event: NamedNode<"http://www.paradicms.org/ns/cms#Event">;
   Image: NamedNode<"http://www.paradicms.org/ns/cms#Image">;
   License: NamedNode<"http://www.paradicms.org/ns/cms#License">;
-  NamedValue: NamedNode<"http://www.paradicms.org/ns/cms#NamedValue">;
   Organization: NamedNode<"http://www.paradicms.org/ns/cms#Organization">;
   Person: NamedNode<"http://www.paradicms.org/ns/cms#Person">;
   RightsStatement: NamedNode<"http://www.paradicms.org/ns/cms#RightsStatement">;

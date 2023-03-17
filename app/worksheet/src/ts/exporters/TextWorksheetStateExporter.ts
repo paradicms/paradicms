@@ -3,8 +3,7 @@ import {WorksheetState} from "~/models/WorksheetState";
 import {StringWorksheetStateExporter} from "~/exporters/StringWorksheetStateExporter";
 
 export class TextWorksheetStateExporter
-  implements StringWorksheetStateExporter
-{
+  implements StringWorksheetStateExporter {
   export(
     worksheetDefinition: WorksheetDefinition,
     worksheetStates: WorksheetState[]
@@ -15,24 +14,24 @@ export class TextWorksheetStateExporter
         paragraphs.push(worksheetState.text);
       }
       for (const featureSetState of worksheetState.featureSets ?? []) {
-        const featureSetDefinition =
-          worksheetDefinition.featureSetByUriOptional(featureSetState.uri);
+        const featureSetDefinition = worksheetDefinition.featureSetByUriOptional(
+          featureSetState.uri
+        );
         if (!featureSetDefinition) {
           continue;
         }
         const clauses: string[] = [];
         for (const featureState of featureSetState.features ?? []) {
           const clause = (featureState.values ?? [])
-            .filter((value) => value.selected)
-            .map((value) => value.uri)
-            .flatMap((selectedFeatureValueUri) => {
-              const featureValueDefinition =
-                worksheetDefinition.featureValueByUriOptional(
-                  selectedFeatureValueUri
-                );
+            .filter(value => value.selected)
+            .map(value => value.uri)
+            .flatMap(selectedFeatureValueUri => {
+              const featureValueDefinition = worksheetDefinition.featureValueByUriOptional(
+                selectedFeatureValueUri
+              );
               if (featureValueDefinition) {
                 return [
-                  featureValueDefinition.title ??
+                  featureValueDefinition.prefLabel ??
                     featureValueDefinition.value.value,
                 ];
               } else {

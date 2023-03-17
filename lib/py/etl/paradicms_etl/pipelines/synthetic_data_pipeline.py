@@ -13,11 +13,11 @@ from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.anonymous_location import AnonymousLocation
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.named_value import NamedValue
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
@@ -99,15 +99,15 @@ class SyntheticDataPipeline(Pipeline):
             self.__works_per_collection = works_per_collection
 
         def __call__(self):
-            named_values_by_value = {}
-            for model in self.__generate_named_values():
+            concepts_by_value = {}
+            for model in self.__generate_concepts():
                 yield model
-                if isinstance(model, NamedValue):
-                    named_value = model
-                    named_value_str = named_value.value.toPython()
-                    assert isinstance(named_value_str, str)
-                    assert named_value_str not in named_values_by_value
-                    named_values_by_value[named_value_str] = named_value
+                if isinstance(model, Concept):
+                    concept = model
+                    concept_str = concept.value.toPython()
+                    assert isinstance(concept_str, str)
+                    assert concept_str not in concepts_by_value
+                    concepts_by_value[concept_str] = concept
 
             agents = []
             for model in self.__generate_agents():
@@ -117,11 +117,11 @@ class SyntheticDataPipeline(Pipeline):
             agents = tuple(agents)
 
             yield from self.__generate_collections(
-                agents=agents, named_values_by_value=named_values_by_value
+                agents=agents, concepts_by_value=concepts_by_value
             )
 
             yield from self.__generate_freestanding_works(
-                agents=agents, named_values_by_value=named_values_by_value
+                agents=agents, concepts_by_value=concepts_by_value
             )
 
         def __generate_agents(self):
@@ -187,13 +187,13 @@ class SyntheticDataPipeline(Pipeline):
             *,
             agents: Tuple[Agent, ...],
             collection: Collection,
-            named_values_by_value: Dict[str, NamedValue],
+            concepts_by_value: Dict[str, Concept],
         ):
             for work_i in range(self.__works_per_collection):
                 yield from self.__generate_work(
                     agents=agents,
                     collection_uris=(collection.uri,),
-                    named_values_by_value=named_values_by_value,
+                    concepts_by_value=concepts_by_value,
                     title_prefix=collection.title + "Work",
                     uri_prefix=str(collection.uri) + "/work",
                 )
@@ -202,13 +202,13 @@ class SyntheticDataPipeline(Pipeline):
             self,
             *,
             agents: Tuple[Agent, ...],
-            named_values_by_value: Dict[str, NamedValue],
+            concepts_by_value: Dict[str, Concept],
         ):
             for work_i in range(self.__freestanding_works):
                 yield from self.__generate_work(
                     agents=agents,
                     collection_uris=(),
-                    named_values_by_value=named_values_by_value,
+                    concepts_by_value=concepts_by_value,
                     title_prefix="FreestandingWork",
                     uri_prefix="http://example.com/freestandingwork",
                 )
@@ -250,7 +250,7 @@ class SyntheticDataPipeline(Pipeline):
             self,
             *,
             agents: Tuple[Agent, ...],
-            named_values_by_value: Dict[str, NamedValue],
+            concepts_by_value: Dict[str, Concept],
         ):
             for collection_i in range(self.__collections):
                 collection_title = f"Collection{collection_i}"
@@ -280,11 +280,11 @@ class SyntheticDataPipeline(Pipeline):
                 yield from self.__generate_collection_works(
                     agents=agents,
                     collection=collection,
-                    named_values_by_value=named_values_by_value,
+                    concepts_by_value=concepts_by_value,
                 )
 
-        def __generate_named_values(self):
-            named_value_urn_i = 0
+        def __generate_concepts(self):
+            concept_urn_i = 0
             for (
                 property_uri,
                 property_values,
@@ -292,29 +292,29 @@ class SyntheticDataPipeline(Pipeline):
                 if property_uri == DCTERMS.creator:
                     continue
                 for property_value in property_values:
-                    named_value = NamedValue.from_fields(
+                    concept = Concept.from_fields(
                         property_uris=(property_uri,),
-                        title=f"Named value {named_value_urn_i}",
+                        pref_label=f"Concept {concept_urn_i}",
                         uri=URIRef(
-                            f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:named_value:{named_value_urn_i}"
+                            f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
                         ),
                         value=Literal(property_value),
                     )
-                    yield named_value
+                    yield concept
 
                     yield from self.__generate_images(
-                        depicts_uri=named_value.uri,
+                        depicts_uri=concept.uri,
                         text_prefix=property_value,
                     )
 
-                    named_value_urn_i += 1
+                    concept_urn_i += 1
 
         def __generate_work(
             self,
             *,
             agents: Tuple[Agent, ...],
             collection_uris: Tuple[URIRef, ...],
-            named_values_by_value: Dict[str, NamedValue],
+            concepts_by_value: Dict[str, Concept],
             title_prefix: str,
             uri_prefix: str,
         ):
@@ -372,7 +372,7 @@ class SyntheticDataPipeline(Pipeline):
                 properties.extend(
                     Property(
                         property_uri,
-                        named_values_by_value[
+                        concepts_by_value[
                             property_values[(work_i + i) % len(property_values)]
                         ].uri,
                     )

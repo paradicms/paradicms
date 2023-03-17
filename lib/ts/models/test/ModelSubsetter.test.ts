@@ -37,7 +37,7 @@ describe("ModelSubsetter", () => {
     const collection = testModelSet.collections[0];
     const modelSet = sut.collectionModelSet(collection, {
       works: {
-        propertyNamedValues: {thumbnail: THUMBNAIL_SELECTOR},
+        propertyConcepts: {thumbnail: THUMBNAIL_SELECTOR},
         thumbnail: THUMBNAIL_SELECTOR,
       },
     });
@@ -45,8 +45,8 @@ describe("ModelSubsetter", () => {
     const images = testModelSet
       .collectionWorks(collection.uri)
       .map(work => work.thumbnail(THUMBNAIL_SELECTOR)!);
-    // for (const namedValue of testModelSet.namedValues) {
-    //   images.push(namedValue.thumbnail(THUMBNAIL_SELECTOR)!);
+    // for (const concept of testModelSet.concepts) {
+    //   images.push(concept.thumbnail(THUMBNAIL_SELECTOR)!);
     // }
     expectModelsDeepEq(modelSet.images, images);
     expectModelsDeepEq(modelSet.licenses, [
@@ -62,7 +62,7 @@ describe("ModelSubsetter", () => {
         )
       )
     );
-    // expect(modelSet.namedValues).to.not.be.empty;
+    // expect(modelSet.concepts).to.not.be.empty;
     expectModelsDeepEq(modelSet.rightsStatements, [
       testModelSet.rightsStatements.find(
         rightsStatement =>
@@ -116,7 +116,7 @@ describe("ModelSubsetter", () => {
       )
     );
     expectModelsDeepEq(modelSet.works, [work]);
-    expect(modelSet.namedValues).to.be.empty;
+    expect(modelSet.concepts).to.be.empty;
     expectModelsDeepEq(modelSet.rightsStatements, [
       testModelSet.rightsStatements.find(
         rightsStatement =>

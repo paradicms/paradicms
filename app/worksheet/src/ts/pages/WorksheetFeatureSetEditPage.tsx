@@ -27,26 +27,26 @@ const WorksheetFeatureSelectsTable: React.FunctionComponent<{
               <td className="w-90">
                 <Select
                   isMulti={true}
-                  onChange={(options) => {
+                  onChange={options => {
                     for (const featureValue of feature.values) {
                       featureValue.unselect();
                     }
                     for (const option of options) {
                       const featureValue = feature.values.find(
-                        (value) => value.uri === option.value
+                        value => value.uri === option.value
                       )!;
                       featureValue.select();
                     }
                     dispatchFeatureSet();
                   }}
-                  options={feature.values.map((value) => ({
-                    label: value.definition.title,
+                  options={feature.values.map(value => ({
+                    label: value.definition.prefLabel,
                     value: value.uri,
                   }))}
                   value={feature.values
-                    .filter((value) => value.selected)
-                    .map((value) => ({
-                      label: value.definition.title,
+                    .filter(value => value.selected)
+                    .map(value => ({
+                      label: value.definition.prefLabel,
                       value: value.uri,
                     }))}
                 />
@@ -105,7 +105,7 @@ export const WorksheetFeatureSetEditPage: React.FunctionComponent = () => {
             </p>
           </div>
           <MasterDetailContainer
-            items={featureSet.features.map((feature) => ({
+            items={featureSet.features.map(feature => ({
               altLabels: null,
               description: feature.definition.abstract,
               images: feature.definition.images,

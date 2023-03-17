@@ -27,6 +27,7 @@ module.exports = (env, argv) => {
     entry: {
       app: "./ts/main.tsx",
     },
+    ignoreWarnings: [/Failed to parse source map/],
     mode,
     module: {
       rules: [

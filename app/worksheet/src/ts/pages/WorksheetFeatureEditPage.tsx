@@ -57,7 +57,7 @@ export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
         </p>
       </div>
       <MasterDetailContainer
-        items={feature.values.map((featureValue) => ({
+        items={feature.values.map(featureValue => ({
           altLabels: featureValue.definition.altLabels,
           description: featureValue.definition.abstract,
           images: featureValue.definition.images,
@@ -66,7 +66,7 @@ export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
             dispatchWorksheet({payload: worksheet});
           },
           selected: featureValue.selected,
-          title: featureValue.definition.title!,
+          title: featureValue.definition.prefLabel!,
         }))}
         mode={worksheet.currentMark.mode}
       />

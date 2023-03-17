@@ -26,12 +26,12 @@ describe("ModelSet", () => {
       }
     }
 
-    for (const namedValue of sut.namedValues) {
-      expect(namedValue.value.value).to.eq(
-        sut.namedValueByUri(namedValue.uri).value.value
+    for (const concept of sut.concepts) {
+      expect(concept.value.value).to.eq(
+        sut.conceptByUri(concept.uri).value.value
       );
-      expect(namedValue.value.value).to.eq(
-        sut.namedValueByUriOptional(namedValue.uri)!.value.value
+      expect(concept.value.value).to.eq(
+        sut.conceptByUriOptional(concept.uri)!.value.value
       );
     }
 
