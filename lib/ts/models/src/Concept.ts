@@ -6,7 +6,7 @@ import {Mixin} from "ts-mixer";
 import {dcterms, rdf, skos} from "@paradicms/vocabularies";
 import {requireNonNull} from "@paradicms/utilities";
 
-export class NamedValue extends Mixin(NamedModel, HasAbstract, HasImages) {
+export class Concept extends Mixin(NamedModel, HasAbstract, HasImages) {
   @Memoize()
   get altLabels(): readonly Literal[] {
     return this.filterAndMapObjects(skos.altLabel, term =>

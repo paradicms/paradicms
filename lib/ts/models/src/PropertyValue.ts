@@ -1,4 +1,4 @@
-import {NamedValue} from "./NamedValue";
+import {Concept} from "./Concept";
 import {Literal, NamedNode, Quad} from "@rdfjs/types";
 import {Text} from "./Text";
 import {ThumbnailSelector} from "./ThumbnailSelector";
@@ -21,7 +21,7 @@ export abstract class PropertyValue {
     return new LiteralPropertyValue(literal);
   }
 
-  static fromNamedValue(namedValue: NamedValue) {
+  static fromNamedValue(namedValue: Concept) {
     return new NamedPropertyValue(namedValue);
   }
 
@@ -139,7 +139,7 @@ class LiteralPropertyValue extends PropertyValue {
 }
 
 class NamedPropertyValue extends PropertyValue {
-  constructor(readonly namedValue: NamedValue) {
+  constructor(readonly namedValue: Concept) {
     super();
   }
 

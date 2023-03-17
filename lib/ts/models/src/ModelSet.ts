@@ -12,7 +12,7 @@ import {
 import {Work} from "./Work";
 import {Person} from "./Person";
 import {NamedModel} from "./NamedModel";
-import {NamedValue} from "./NamedValue";
+import {Concept} from "./Concept";
 import {Organization} from "./Organization";
 import {Agent} from "./Agent";
 import {ModelParameters} from "./ModelParameters";
@@ -70,11 +70,11 @@ export class ModelSet {
   private _imagesByUriIndex?: {[index: string]: Image};
   private _licenses?: readonly License[];
   private _licensesByUriIndex?: {[index: string]: License};
-  private _namedValues?: readonly NamedValue[];
+  private _namedValues?: readonly Concept[];
   private _namedValuesByPropertyUriIndex?: {
-    [index: string]: readonly NamedValue[];
+    [index: string]: readonly Concept[];
   };
-  private _namedValuesByUriIndex?: {[index: string]: NamedValue};
+  private _namedValuesByUriIndex?: {[index: string]: Concept};
   private _organizations?: readonly Organization[];
   private _organizationsByUriIndex?: {[index: string]: Organization};
   private _people?: readonly Person[];
@@ -244,18 +244,18 @@ export class ModelSet {
     }
   }
 
-  get namedValues(): readonly NamedValue[] {
+  get namedValues(): readonly Concept[] {
     if (!this._namedValues) {
       this.readNamedValues();
     }
     return this._namedValues!;
   }
 
-  namedValuesByPropertyUri(propertyUri: string): readonly NamedValue[] {
+  namedValuesByPropertyUri(propertyUri: string): readonly Concept[] {
     return this.namedValuesByPropertyUriIndex[propertyUri] ?? [];
   }
 
-  namedValueByUri(namedValueUri: string): NamedValue {
+  namedValueByUri(namedValueUri: string): Concept {
     const namedValue = this.namedValuesByUriIndex[namedValueUri];
     if (!namedValue) {
       // this.logContents();
@@ -264,12 +264,12 @@ export class ModelSet {
     return namedValue;
   }
 
-  namedValueByUriOptional(namedValueUri: string): NamedValue | null {
+  namedValueByUriOptional(namedValueUri: string): Concept | null {
     return this.namedValuesByUriIndex[namedValueUri] ?? null;
   }
 
   private get namedValuesByPropertyUriIndex(): {
-    [index: string]: readonly NamedValue[];
+    [index: string]: readonly Concept[];
   } {
     if (!this._namedValuesByPropertyUriIndex) {
       this.readNamedValues();
@@ -277,7 +277,7 @@ export class ModelSet {
     return this._namedValuesByPropertyUriIndex!;
   }
 
-  private get namedValuesByUriIndex(): {[index: string]: NamedValue} {
+  private get namedValuesByUriIndex(): {[index: string]: Concept} {
     if (!this._namedValuesByUriIndex) {
       this.readNamedValues();
     }
@@ -492,14 +492,14 @@ export class ModelSet {
     });
   }
 
-  protected readNamedValue(kwds: ModelParameters): NamedValue {
-    return new NamedValue(kwds);
+  protected readNamedValue(kwds: ModelParameters): Concept {
+    return new Concept(kwds);
   }
 
   private readNamedValues() {
-    const namedValues: NamedValue[] = [];
+    const namedValues: Concept[] = [];
     const namedValuesByPropertyUriIndex: {
-      [index: string]: NamedValue[];
+      [index: string]: Concept[];
     } = {};
     this._namedValuesByUriIndex = {};
     this.getModels(kwds => {

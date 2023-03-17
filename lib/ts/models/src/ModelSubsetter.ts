@@ -11,7 +11,7 @@ import {Text} from "./Text";
 import {AgentJoinSelector} from "./AgentJoinSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {NamedValueJoinSelector} from "./NamedValueJoinSelector";
-import {NamedValue} from "./NamedValue";
+import {Concept} from "./Concept";
 import {WorkCreation} from "./WorkCreation";
 import {WorkEvent} from "./WorkEvent";
 import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
@@ -116,7 +116,7 @@ export class ModelSubsetter {
 
   private addNamedValuesModelSet(
     builder: ModelSetBuilder,
-    namedValues: readonly NamedValue[],
+    namedValues: readonly Concept[],
     joinSelector: NamedValueJoinSelector
   ) {
     builder.addNamedValues(namedValues);
@@ -149,7 +149,7 @@ export class ModelSubsetter {
     const collectionUris = joinSelector.collections
       ? new Set<string>()
       : undefined;
-    const namedValuesByUri: {[index: string]: NamedValue} = {};
+    const namedValuesByUri: {[index: string]: Concept} = {};
 
     for (const work of works) {
       builder.addWork(work);

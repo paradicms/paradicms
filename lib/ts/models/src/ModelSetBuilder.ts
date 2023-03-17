@@ -3,7 +3,7 @@ import {ModelSet} from "./ModelSet";
 import {Collection} from "./Collection";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
-import {NamedValue} from "./NamedValue";
+import {Concept} from "./Concept";
 import {Work} from "./Work";
 import {Person} from "./Person";
 import {Organization} from "./Organization";
@@ -16,7 +16,7 @@ export class ModelSetBuilder {
   private eventsByUri: {[index: string]: Event} | undefined;
   private imagesByUri: {[index: string]: Image} | undefined;
   private licensesByUri: {[index: string]: License} | undefined;
-  private namedValuesByUri: {[index: string]: NamedValue} | undefined;
+  private namedValuesByUri: {[index: string]: Concept} | undefined;
   private organizationsByUri: {[index: string]: Organization} | undefined;
   private peopleByUri: {[index: string]: Person} | undefined;
   private rightsStatementsByUri: {[index: string]: RightsStatement} | undefined;
@@ -132,7 +132,7 @@ export class ModelSetBuilder {
     return this;
   }
 
-  addNamedValue(namedValue: NamedValue) {
+  addNamedValue(namedValue: Concept) {
     this.namedValuesByUri = ModelSetBuilder.addNamedModel(
       this.namedValuesByUri,
       namedValue
@@ -140,7 +140,7 @@ export class ModelSetBuilder {
     return this;
   }
 
-  addNamedValues(namedValues: readonly NamedValue[]) {
+  addNamedValues(namedValues: readonly Concept[]) {
     this.namedValuesByUri = ModelSetBuilder.addNamedModels(
       this.namedValuesByUri,
       namedValues
