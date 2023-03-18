@@ -1,6 +1,7 @@
 from .bind_namespaces import bind_namespaces  # noqa: F401
 from .cc import CC  # noqa: F401
 from .cms import CMS  # noqa: F401
+from .coco import COCO  # noqa: F401
 from .contact import CONTACT  # noqa: F401
 from .exif import EXIF  # noqa: F401
 from .prov import PROV  # noqa: F401
