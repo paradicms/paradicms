@@ -3,7 +3,10 @@ build/
 /data/costume_core_ontology/loaded/data/
 /data/costume_core_ontology/loaded/original_image_cache/
 /data/costume_core_ontology/loaded/thumbnail_cache/
+/data/costume_core_template/loaded/
 /data/test/markdown_directory/loaded/
+/data/vccc/loaded/
+/data/vccc_high_quality/loaded/
 dist/
 *.iml
 /lib/ts/lunr/@paradicms/
