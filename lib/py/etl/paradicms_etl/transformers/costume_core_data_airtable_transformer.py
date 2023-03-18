@@ -1,12 +1,11 @@
 import logging
 from typing import Optional
 
-from paradicms_etl.costume_core import CostumeCore
-from paradicms_etl.models.institution import Institution
 from rdflib import URIRef
 
 from paradicms_etl.extractors.airtable_extractor import AirtableExtractor
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.costume_core.costume_core import CostumeCore
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.property import Property
@@ -45,7 +44,6 @@ class CostumeCoreDataAirtableTransformer:
         *,
         base_id: str,
         collection: Collection,
-        institution: Institution,
         costume_core: Optional[CostumeCore] = None,
     ):
         self.__base_id = base_id
@@ -53,13 +51,10 @@ class CostumeCoreDataAirtableTransformer:
         self.__costume_core = (
             costume_core if costume_core is not None else CostumeCore()
         )
-        self.__institution = institution
         self.__logger = logging.getLogger(__name__)
 
     def __call__(self, *, records_by_table, **kwds):
-        yield from self.__costume_core.named_values
-
-        yield self.__institution
+        yield from self.__costume_core.concepts
 
         yield self.__collection
 
@@ -72,7 +67,6 @@ class CostumeCoreDataAirtableTransformer:
 
         yield from self.__transform_object_records(
             collection_uri=self.__collection.uri,
-            institution_uri=self.__institution.uri,
             name_records=records_by_table["Names"],
             object_records=records_by_table["Objects"],
             term_records=records_by_table["Terms"],
@@ -131,7 +125,6 @@ class CostumeCoreDataAirtableTransformer:
         self,
         *,
         collection_uri: URIRef,
-        institution_uri: URIRef,
         name_records,
         object_records,
         term_records,
@@ -208,7 +201,6 @@ class CostumeCoreDataAirtableTransformer:
                         properties.append(Property(URIRef(predicate.uri), field_value))
 
             yield Work.from_fields(
-                institution_uri=institution_uri,
                 collection_uris=(collection_uri,),
                 properties=tuple(properties),
                 # rights=Rights.from_properties(properties),

@@ -1,11 +1,10 @@
 import logging
 from typing import Set, FrozenSet, Union
 
-from paradicms_etl.costume_core import CostumeCore
-from paradicms_etl.models.institution import Institution
 from rdflib import URIRef, DCTERMS
 
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.costume_core.costume_core import CostumeCore
 from paradicms_etl.models.costume_core.costume_core_rights import CostumeCoreRights
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
@@ -25,18 +24,6 @@ class CostumeCoreModelsToParadicmsModelsTransformer:
         self.__logger = logging.getLogger(__name__)
 
     def __call__(self):
-        institution = Institution.from_fields(
-            name="Costume Core Ontology",
-            uri=URIRef("http://www.ardenkirkland.com/costumecore/"),
-        )
-        yield institution
-
-        yield Image.from_fields(
-            depicts_uri=institution.uri,
-            exact_dimensions=ImageDimensions(height=446, width=808),
-            uri=URIRef("http://www.ardenkirkland.com/costumecore/costumeCoreLogo.jpg"),
-        )
-
         predicates_by_id = {
             predicate.id: predicate for predicate in self.__costume_core.predicates
         }
@@ -146,7 +133,6 @@ class CostumeCoreModelsToParadicmsModelsTransformer:
 
                 # feature_record = feature_records_by_id[predicate.id]
                 collection = Collection.from_fields(
-                    institution_uri=institution.uri,
                     title=predicate.label,
                     uri=collection_uri,
                 )
@@ -173,7 +159,6 @@ class CostumeCoreModelsToParadicmsModelsTransformer:
                 collection_uris=tuple(
                     URIRef(term_predicate.uri) for term_predicate in term_predicates
                 ),
-                institution_uri=institution.uri,
                 rights=transform_to_paradicms_rights(term.description.rights)
                 if term.description
                 else None,

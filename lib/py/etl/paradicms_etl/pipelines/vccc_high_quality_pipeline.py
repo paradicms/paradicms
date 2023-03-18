@@ -1,9 +1,6 @@
 from pathlib import Path
 from typing import Optional
 
-from paradicms_ssg.deployers.s3_deployer import S3Deployer  # type: ignore
-from paradicms_ssg.image_archivers.s3_image_archiver import S3ImageArchiver  # type: ignore
-from paradicms_ssg.loaders.app_loader import AppLoader  # type: ignore
 from rdflib import DCTERMS
 
 from paradicms_etl.extractors.omeka_classic_extractor import OmekaClassicExtractor
@@ -116,21 +113,22 @@ class VcccHighQualityPipeline(Pipeline):
         **kwds
     ):
         if loader is None:
-            loader = AppLoader(
-                app="work-search",
-                configuration_file_path=(
-                    data_dir_path / self.__ID / "configuration.json"
-                ).absolute(),
-                deployer=S3Deployer(
-                    s3_bucket_name="vccc.dressdiscover.org",
-                    **kwds,
-                ),
-                image_archiver=S3ImageArchiver(
-                    s3_bucket_name="dressdiscover-images", **kwds
-                ),
-                loaded_data_dir_path=data_dir_path / self.__ID / "loaded",
-                pipeline_id=self.__ID,
-            )
+            # loader = AppLoader(
+            #     app="work-search",
+            #     configuration_file_path=(
+            #         data_dir_path / self.__ID / "configuration.json"
+            #     ).absolute(),
+            #     deployer=S3Deployer(
+            #         s3_bucket_name="vccc.dressdiscover.org",
+            #         **kwds,
+            #     ),
+            #     image_archiver=S3ImageArchiver(
+            #         s3_bucket_name="dressdiscover-images", **kwds
+            #     ),
+            #     loaded_data_dir_path=data_dir_path / self.__ID / "loaded",
+            #     pipeline_id=self.__ID,
+            # )
+            raise NotImplementedError
 
         Pipeline.__init__(
             self,

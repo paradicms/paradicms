@@ -9,7 +9,7 @@ from paradicms_etl.transformers.vccc_transformer import VcccTransformer
 class VcccPipeline(Pipeline):
     __ID = "vccc"
 
-    def __init__(self, *, data_dir_path: Path, omeka_api_key: str, **kwds):
+    def __init__(self, *, data_dir_path: Path, omeka_api_key: str):
         Pipeline.__init__(
             self,
             extractor=OmekaClassicExtractor(

@@ -1,10 +1,10 @@
 import logging
 from typing import Tuple, Set, Dict
 
-from paradicms_etl.costume_core import CostumeCore
 from rdflib import URIRef, DCTERMS
 
 from paradicms_etl.models import costume_core_predicates
+from paradicms_etl.models.costume_core.costume_core import CostumeCore
 from paradicms_etl.models.property import Property
 from paradicms_etl.namespaces import VRA
 from paradicms_etl.transformers.omeka_classic_transformer import OmekaClassicTransformer
@@ -21,7 +21,7 @@ class CostumeCoreOmekaClassicTransformer(OmekaClassicTransformer):
 
     def __call__(self, **kwds):
         yield from self.__costume_core.images
-        yield from self.__costume_core.named_values
+        yield from self.__costume_core.concepts
         yield from OmekaClassicTransformer.__call__(self, **kwds)
         for (
             costume_core_predicate_id,

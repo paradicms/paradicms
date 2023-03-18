@@ -4,10 +4,10 @@ from typing import Dict, Tuple, Iterable, Union, List, Set, FrozenSet, Optional,
 from urllib.parse import quote_plus
 
 from inflector import Inflector
-from paradicms_etl.models.named_value import NamedValue
 from rdflib import Graph, URIRef, Literal
 
 from paradicms_etl.model import Model
+from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.costume_core.costume_core_term import CostumeCoreTerm
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
@@ -313,7 +313,7 @@ class CostumeCoreOntologyAirtableToWorksheetModelsTransformer:
                 )
 
             feature_value_uri = COCO[feature_value_id]
-            feature_value = NamedValue.from_fields(
+            feature_value = Concept.from_fields(
                 abstract=self.__transform_description_fields(
                     record_fields=feature_value_record_fields
                 ),

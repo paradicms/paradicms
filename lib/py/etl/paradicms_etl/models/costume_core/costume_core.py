@@ -1,8 +1,8 @@
 from typing import Dict, Optional, Tuple, List
 
-from paradicms_etl.models.named_value import NamedValue
 from rdflib import Literal, URIRef
 
+from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.costume_core.costume_core_predicate import (
     CostumeCorePredicate,
 )
@@ -51,11 +51,11 @@ class CostumeCore:
         }
 
         images = []
-        named_values = []
+        concepts = []
         for term in self.__terms:
             if not term.features:
                 continue
-            named_value = NamedValue.from_fields(
+            concept = Concept.from_fields(
                 property_uris=tuple(
                     URIRef(self.__predicates_by_id[predicate_id].uri)
                     for predicate_id in term.features
@@ -63,13 +63,13 @@ class CostumeCore:
                 uri=URIRef(term.uri),
                 value=Literal(term.display_name_en),
             )
-            named_values.append(named_value)
+            concepts.append(concept)
 
             full_size_image_url = term.full_size_image_url
             if full_size_image_url is None:
                 continue
             full_size_image = Image.from_fields(
-                depicts_uri=named_value.uri,
+                depicts_uri=concept.uri,
                 uri=URIRef(full_size_image_url),
             )
             images.append(full_size_image)
@@ -79,7 +79,7 @@ class CostumeCore:
                 continue
             images.append(
                 Image.from_fields(
-                    depicts_uri=named_value.uri,
+                    depicts_uri=concept.uri,
                     exact_dimensions=ImageDimensions(height=200, width=200),
                     original_image_uri=full_size_image.uri,
                     uri=URIRef(thumbnail_url),
@@ -87,15 +87,15 @@ class CostumeCore:
             )
 
         self.__images = tuple(images)
-        self.__named_values = tuple(named_values)
+        self.__concepts = tuple(concepts)
 
     @property
     def images(self) -> Tuple[Image, ...]:
         return self.__images
 
     @property
-    def named_values(self) -> Tuple[NamedValue, ...]:
-        return self.__named_values
+    def concepts(self) -> Tuple[Concept, ...]:
+        return self.__concepts
 
     @property
     def predicates(self) -> Tuple[CostumeCorePredicate, ...]:

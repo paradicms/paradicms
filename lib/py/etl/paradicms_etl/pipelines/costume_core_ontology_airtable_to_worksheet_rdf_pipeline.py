@@ -1,13 +1,11 @@
 from pathlib import Path
 
 from configargparse import ArgParser
-from paradicms_etl.loaders.dressdiscover_rdf_file_loader import (
-    DressdiscoverRdfFileLoader,
-)
 
 from paradicms_etl.extractors.costume_core_ontology_airtable_extractor import (
     CostumeCoreOntologyAirtableExtractor,
 )
+from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.transformers.costume_core_ontology_airtable_to_worksheet_models_transformer import (
     CostumeCoreOntologyAirtableToWorksheetModelsTransformer,
@@ -25,7 +23,7 @@ class CostumeCoreOntologyAirtableToWorksheetRdfPipeline(Pipeline):
                 extracted_data_dir_path=data_dir_path / self.ID / "extracted",
             ),
             id=self.ID,
-            loader=DressdiscoverRdfFileLoader(
+            loader=RdfFileLoader(
                 rdf_file_path=data_dir_path
                 / self.ID
                 / "loaded"
