@@ -15,7 +15,11 @@ from paradicms_etl.transformers.costume_core_ontology_airtable_to_worksheet_mode
 class CostumeCoreOntologyAirtableToWorksheetRdfPipeline(Pipeline):
     ID = "costume_core_ontology"
 
-    def __init__(self, *, airtable_access_token: str, data_dir_path: Path):
+    def __init__(self, *, airtable_access_token: str):
+        data_dir_path = (
+            Path(__file__).parent.parent.parent.parent.parent.parent / "data"
+        )
+        assert data_dir_path.is_dir()
         Pipeline.__init__(
             self,
             extractor=CostumeCoreOntologyAirtableExtractor(
@@ -37,7 +41,6 @@ class CostumeCoreOntologyAirtableToWorksheetRdfPipeline(Pipeline):
     @classmethod
     def add_arguments(cls, arg_parser: ArgParser):
         Pipeline.add_arguments(arg_parser)
-        cls._add_data_dir_path_argument(arg_parser)
         arg_parser.add_argument("--airtable-access-token", required=True)
 
 
