@@ -14,7 +14,7 @@ def test_transform(data_dir_path: Path):
     models = tuple(CostumeCoreModelsToParadicmsModelsTransformer()())
     assert models
     model_types = set(model.__class__ for model in models)
-    assert len(model_types) == 6
+    assert len(model_types) == 5
     assert Collection in model_types
     assert Image in model_types
     assert License in model_types

@@ -46,8 +46,8 @@ class CostumeCoreOmekaClassicTransformer(OmekaClassicTransformer):
         for key, property_uri in (
             ("Category", DCTERMS.subject),
             ("Culture", VRA.culturalContext),
-            ("Date Earliest", VRA.earliestDate),
-            ("Date Latest", VRA.latestDate),
+            ("Date Earliest", VRA.startDate),
+            ("Date Latest", VRA.endDate),
             ("Description Main", DCTERMS.description),
             ("Source Identifier", DCTERMS.identifier),
             ("Technique", VRA.technique),

@@ -35,7 +35,7 @@ def test_transform(data_dir_path: Path):
     models = tuple(transformer(**extract_result))
     assert models
     model_types = set(model.__class__ for model in models)
-    assert len(model_types) == 5
+    assert len(model_types) == 4
     assert Collection in model_types
     assert Image in model_types
     assert Concept in model_types

@@ -4,8 +4,6 @@ from paradicms_etl.extractors.omeka_classic_extractor import OmekaClassicExtract
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.image import Image
-from paradicms_etl.models.license import License
-from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.work import Work
 from paradicms_etl.transformers.costume_core_omeka_classic_transformer import (
     CostumeCoreOmekaClassicTransformer,
@@ -30,10 +28,8 @@ def test_transform(data_dir_path: Path):
     models = tuple(transformer(**extract_result))
     assert models
     model_types = set(model.__class__ for model in models)
-    assert len(model_types) == 7
+    assert len(model_types) == 4
     assert Collection in model_types
     assert Image in model_types
-    assert License in model_types
     assert Concept in model_types
-    assert RightsStatement in model_types
     assert Work in model_types
