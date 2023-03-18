@@ -1,4 +1,5 @@
 build/
+/config/
 /data/test/markdown_directory/loaded/
 dist/
 *.iml
