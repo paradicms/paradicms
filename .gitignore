@@ -1,5 +1,8 @@
 build/
 /config/
+/data/costume_core_ontology/loaded/data/
+/data/costume_core_ontology/loaded/original_image_cache/
+/data/costume_core_ontology/loaded/thumbnail_cache/
 /data/test/markdown_directory/loaded/
 dist/
 *.iml
