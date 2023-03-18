@@ -25,9 +25,12 @@ class CostumeCoreOntologyAirtableToOntologyRdfPipeline(Pipeline):
         self,
         *,
         airtable_access_token: str,
-        data_dir_path: Path,
         ontology_version: str,
     ):
+        data_dir_path = (
+            Path(__file__).parent.parent.parent.parent.parent.parent / "data"
+        )
+        assert data_dir_path.is_dir()
         Pipeline.__init__(
             self,
             extractor=CostumeCoreOntologyAirtableExtractor(
@@ -64,7 +67,6 @@ class CostumeCoreOntologyAirtableToOntologyRdfPipeline(Pipeline):
     @classmethod
     def add_arguments(cls, arg_parser: ArgParser):
         Pipeline.add_arguments(arg_parser)
-        cls._add_data_dir_path_argument(arg_parser)
         arg_parser.add_argument("--airtable-access-token", required=True)
         arg_parser.add_argument("--ontology-version", required=True)
 

@@ -10,7 +10,7 @@ from paradicms_etl.models.costume_core.costume_core_term import CostumeCoreTerm
 
 class CostumeCoreOntologyPyLoader(BufferingLoader):
     def _flush(self, models):
-        models_dir_path = Path(__file__).parent.parent / "models"
+        models_dir_path = Path(__file__).parent.parent / "models" / "costume_core"
         assert models_dir_path.is_dir(), models_dir_path
 
         with open(
