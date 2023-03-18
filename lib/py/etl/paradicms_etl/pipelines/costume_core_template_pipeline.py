@@ -7,6 +7,7 @@ from paradicms_etl.extractors.costume_core_data_airtable_extractor import (
     CostumeCoreDataAirtableExtractor,
 )
 from paradicms_etl.loader import Loader
+from paradicms_etl.loaders.nop_loader import nop_loader
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.transformers.costume_core_data_airtable_transformer import (
@@ -23,7 +24,6 @@ class CostumeCoreTemplatePipeline(Pipeline):
         airtable_access_token: str,
         data_dir_path: Path,
         loader: Optional[Loader] = None,
-        **kwds
     ):
         if loader is None:
             # loader = AppLoader(
@@ -39,7 +39,7 @@ class CostumeCoreTemplatePipeline(Pipeline):
             #     loaded_data_dir_path=data_dir_path / self.__ID / "loaded",
             #     pipeline_id=self.__ID,
             # )
-            raise NotImplementedError
+            loader = nop_loader
 
         Pipeline.__init__(
             self,
