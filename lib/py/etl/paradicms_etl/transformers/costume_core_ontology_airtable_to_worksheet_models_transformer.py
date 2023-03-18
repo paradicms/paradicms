@@ -4,12 +4,15 @@ from typing import Dict, Tuple, Iterable, Union, List, Set, FrozenSet, Optional,
 from urllib.parse import quote_plus
 
 from inflector import Inflector
+from paradicms_etl.models.named_value import NamedValue
+from rdflib import Graph, URIRef, Literal
+
 from paradicms_etl.model import Model
+from paradicms_etl.models.costume_core.costume_core_term import CostumeCoreTerm
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.license import License
-from paradicms_etl.models.named_value import NamedValue
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -17,10 +20,7 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.worksheet_feature import WorksheetFeature
 from paradicms_etl.models.worksheet_feature_set import WorksheetFeatureSet
-from rdflib import Graph, URIRef, Literal
-
-from dressdiscover_etl.models.costume_core_term import CostumeCoreTerm
-from dressdiscover_etl.namespaces import COCO
+from paradicms_etl.namespaces import COCO
 
 
 class CostumeCoreOntologyAirtableToWorksheetModelsTransformer:

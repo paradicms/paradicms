@@ -1,15 +1,15 @@
 from pathlib import Path
 from typing import Optional
 
-from paradicms_etl.extractors.omeka_classic_extractor import OmekaClassicExtractor
-from paradicms_etl.loader import Loader
-from paradicms_etl.pipeline import Pipeline
 from paradicms_ssg.deployers.s3_deployer import S3Deployer  # type: ignore
 from paradicms_ssg.image_archivers.s3_image_archiver import S3ImageArchiver  # type: ignore
 from paradicms_ssg.loaders.app_loader import AppLoader  # type: ignore
 from rdflib import DCTERMS
 
-from dressdiscover_etl.transformers.vccc_transformer import VcccTransformer
+from paradicms_etl.extractors.omeka_classic_extractor import OmekaClassicExtractor
+from paradicms_etl.loader import Loader
+from paradicms_etl.pipeline import Pipeline
+from paradicms_etl.transformers.vccc_transformer import VcccTransformer
 
 HIGH_QUALITY_OBJECT_DC_IDENTIFIERS = frozenset(
     """\

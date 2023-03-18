@@ -3,12 +3,16 @@ from typing import Dict, List, Tuple, Union
 
 from rdflib import Graph, URIRef
 
-from dressdiscover_etl.models.costume_core_description import CostumeCoreDescription
-from dressdiscover_etl.models.costume_core_ontology import CostumeCoreOntology
-from dressdiscover_etl.models.costume_core_predicate import CostumeCorePredicate
-from dressdiscover_etl.models.costume_core_rights import CostumeCoreRights
-from dressdiscover_etl.models.costume_core_term import CostumeCoreTerm
-from dressdiscover_etl.namespaces import COCO
+from paradicms_etl.models.costume_core.costume_core_description import (
+    CostumeCoreDescription,
+)
+from paradicms_etl.models.costume_core.costume_core_ontology import CostumeCoreOntology
+from paradicms_etl.models.costume_core.costume_core_predicate import (
+    CostumeCorePredicate,
+)
+from paradicms_etl.models.costume_core.costume_core_rights import CostumeCoreRights
+from paradicms_etl.models.costume_core.costume_core_term import CostumeCoreTerm
+from paradicms_etl.namespaces import COCO
 
 
 class CostumeCoreOntologyAirtableToCostumeCoreModelsTransformer:

@@ -1,9 +1,9 @@
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
-from paradicms_etl.utils.resource_builder import ResourceBuilder
 from rdflib import Literal, OWL, URIRef
 from rdflib.namespace import DCTERMS, RDF, RDFS
 
-from dressdiscover_etl.namespaces import COCO
+from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.namespaces import COCO
+from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class CostumeCoreOntology(ResourceBackedNamedModel):

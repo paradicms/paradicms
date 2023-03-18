@@ -1,16 +1,16 @@
 import logging
 from typing import Optional
 
+from paradicms_etl.costume_core import CostumeCore
+from paradicms_etl.models.institution import Institution
+from rdflib import URIRef
+
 from paradicms_etl.extractors.airtable_extractor import AirtableExtractor
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.work import Work
-from rdflib import URIRef
-
-from dressdiscover_etl.costume_core import CostumeCore
 
 
 class CostumeCoreDataAirtableTransformer:

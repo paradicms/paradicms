@@ -1,16 +1,16 @@
 from pathlib import Path
 
+from paradicms_etl.models.named_value import NamedValue
+
+from paradicms_etl.extractors.costume_core_ontology_airtable_extractor import (
+    CostumeCoreOntologyAirtableExtractor,
+)
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.license import License
-from paradicms_etl.models.named_value import NamedValue
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.worksheet_feature import WorksheetFeature
 from paradicms_etl.models.worksheet_feature_set import WorksheetFeatureSet
-
-from dressdiscover_etl.extractors.costume_core_ontology_airtable_extractor import (
-    CostumeCoreOntologyAirtableExtractor,
-)
-from dressdiscover_etl.transformers.costume_core_ontology_airtable_to_worksheet_models_transformer import (
+from paradicms_etl.transformers.costume_core_ontology_airtable_to_worksheet_models_transformer import (
     CostumeCoreOntologyAirtableToWorksheetModelsTransformer,
 )
 

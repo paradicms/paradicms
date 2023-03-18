@@ -1,15 +1,15 @@
 from pathlib import Path
 
 from configargparse import ArgParser
-from paradicms_etl.pipeline import Pipeline
-
-from dressdiscover_etl.extractors.costume_core_ontology_airtable_extractor import (
-    CostumeCoreOntologyAirtableExtractor,
-)
-from dressdiscover_etl.loaders.dressdiscover_rdf_file_loader import (
+from paradicms_etl.loaders.dressdiscover_rdf_file_loader import (
     DressdiscoverRdfFileLoader,
 )
-from dressdiscover_etl.transformers.costume_core_ontology_airtable_to_worksheet_models_transformer import (
+
+from paradicms_etl.extractors.costume_core_ontology_airtable_extractor import (
+    CostumeCoreOntologyAirtableExtractor,
+)
+from paradicms_etl.pipeline import Pipeline
+from paradicms_etl.transformers.costume_core_ontology_airtable_to_worksheet_models_transformer import (
     CostumeCoreOntologyAirtableToWorksheetModelsTransformer,
 )
 

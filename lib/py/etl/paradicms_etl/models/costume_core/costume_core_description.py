@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from dressdiscover_etl.models.costume_core_rights import CostumeCoreRights
+from paradicms_etl.models.costume_core.costume_core_rights import CostumeCoreRights
 
 
 @dataclass(frozen=True)

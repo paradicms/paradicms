@@ -1,13 +1,13 @@
 import logging
 from typing import Tuple, Set, Dict
 
+from paradicms_etl.costume_core import CostumeCore
+from rdflib import URIRef, DCTERMS
+
+from paradicms_etl.models import costume_core_predicates
 from paradicms_etl.models.property import Property
 from paradicms_etl.namespaces import VRA
 from paradicms_etl.transformers.omeka_classic_transformer import OmekaClassicTransformer
-from rdflib import URIRef, DCTERMS
-
-from dressdiscover_etl.costume_core import CostumeCore
-from dressdiscover_etl.models import costume_core_predicates
 
 
 class CostumeCoreOmekaClassicTransformer(OmekaClassicTransformer):

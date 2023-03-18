@@ -1,11 +1,15 @@
 import logging
 from typing import Set, FrozenSet, Union
 
+from paradicms_etl.costume_core import CostumeCore
+from paradicms_etl.models.institution import Institution
+from rdflib import URIRef, DCTERMS
+
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.costume_core.costume_core_rights import CostumeCoreRights
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.license import License
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
@@ -13,10 +17,6 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.work import Work
-from rdflib import URIRef, DCTERMS
-
-from dressdiscover_etl.costume_core import CostumeCore
-from dressdiscover_etl.models.costume_core_rights import CostumeCoreRights
 
 
 class CostumeCoreModelsToParadicmsModelsTransformer:

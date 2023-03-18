@@ -1,12 +1,14 @@
 from pathlib import Path
 
-from dressdiscover_etl.extractors.costume_core_ontology_airtable_extractor import (
+from paradicms_etl.extractors.costume_core_ontology_airtable_extractor import (
     CostumeCoreOntologyAirtableExtractor,
 )
-from dressdiscover_etl.models.costume_core_ontology import CostumeCoreOntology
-from dressdiscover_etl.models.costume_core_predicate import CostumeCorePredicate
-from dressdiscover_etl.models.costume_core_term import CostumeCoreTerm
-from dressdiscover_etl.transformers.costume_core_ontology_airtable_to_costume_core_models_transformer import (
+from paradicms_etl.models.costume_core.costume_core_ontology import CostumeCoreOntology
+from paradicms_etl.models.costume_core.costume_core_predicate import (
+    CostumeCorePredicate,
+)
+from paradicms_etl.models.costume_core.costume_core_term import CostumeCoreTerm
+from paradicms_etl.transformers.costume_core_ontology_airtable_to_costume_core_models_transformer import (
     CostumeCoreOntologyAirtableToCostumeCoreModelsTransformer,
 )
 

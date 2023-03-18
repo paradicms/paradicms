@@ -1,13 +1,13 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
-from paradicms_etl.models.named_model import NamedModel
 from rdflib import BNode, Graph, Literal, OWL, RDF, RDFS, URIRef
 from rdflib.collection import Collection
 from rdflib.namespace import DCTERMS
 from rdflib.resource import Resource
 
-from dressdiscover_etl.models.costume_core_term import CostumeCoreTerm
+from paradicms_etl.models.costume_core.costume_core_term import CostumeCoreTerm
+from paradicms_etl.models.named_model import NamedModel
 
 
 @dataclass(frozen=True)

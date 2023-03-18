@@ -1,19 +1,19 @@
 from pathlib import Path
 
 from configargparse import ArgParser
-from paradicms_etl.loaders.composite_loader import CompositeLoader
-from paradicms_etl.pipeline import Pipeline
 
-from dressdiscover_etl.extractors.costume_core_ontology_airtable_extractor import (
+from paradicms_etl.extractors.costume_core_ontology_airtable_extractor import (
     CostumeCoreOntologyAirtableExtractor,
 )
-from dressdiscover_etl.loaders.costume_core_ontology_py_loader import (
+from paradicms_etl.loaders.composite_loader import CompositeLoader
+from paradicms_etl.loaders.costume_core_ontology_py_loader import (
     CostumeCoreOntologyPyLoader,
 )
-from dressdiscover_etl.loaders.costume_core_ontology_rdf_file_loader import (
+from paradicms_etl.loaders.costume_core_ontology_rdf_file_loader import (
     CostumeCoreOntologyRdfFileLoader,
 )
-from dressdiscover_etl.transformers.costume_core_ontology_airtable_to_costume_core_models_transformer import (
+from paradicms_etl.pipeline import Pipeline
+from paradicms_etl.transformers.costume_core_ontology_airtable_to_costume_core_models_transformer import (
     CostumeCoreOntologyAirtableToCostumeCoreModelsTransformer,
 )
 

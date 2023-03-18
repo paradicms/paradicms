@@ -2,9 +2,10 @@ import dataclasses
 from pathlib import Path
 
 from paradicms_etl.loaders.buffering_loader import BufferingLoader
-
-from dressdiscover_etl.models.costume_core_predicate import CostumeCorePredicate
-from dressdiscover_etl.models.costume_core_term import CostumeCoreTerm
+from paradicms_etl.models.costume_core.costume_core_predicate import (
+    CostumeCorePredicate,
+)
+from paradicms_etl.models.costume_core.costume_core_term import CostumeCoreTerm
 
 
 class CostumeCoreOntologyPyLoader(BufferingLoader):

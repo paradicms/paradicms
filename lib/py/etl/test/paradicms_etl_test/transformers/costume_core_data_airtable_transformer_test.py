@@ -1,17 +1,17 @@
 from pathlib import Path
 
-from paradicms_etl.models.collection import Collection
-from paradicms_etl.models.image import Image
 from paradicms_etl.models.institution import Institution
 from paradicms_etl.models.named_value import NamedValue
-from paradicms_etl.models.rights import Rights
-from paradicms_etl.models.work import Work
 from rdflib import URIRef
 
-from dressdiscover_etl.extractors.costume_core_data_airtable_extractor import (
+from paradicms_etl.extractors.costume_core_data_airtable_extractor import (
     CostumeCoreDataAirtableExtractor,
 )
-from dressdiscover_etl.transformers.costume_core_data_airtable_transformer import (
+from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.image import Image
+from paradicms_etl.models.rights import Rights
+from paradicms_etl.models.work import Work
+from paradicms_etl.transformers.costume_core_data_airtable_transformer import (
     CostumeCoreDataAirtableTransformer,
 )
 

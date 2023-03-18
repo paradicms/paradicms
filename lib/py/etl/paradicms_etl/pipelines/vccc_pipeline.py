@@ -3,8 +3,7 @@ from pathlib import Path
 from paradicms_etl.extractors.omeka_classic_extractor import OmekaClassicExtractor
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.pipeline import Pipeline
-
-from dressdiscover_etl.transformers.vccc_transformer import VcccTransformer
+from paradicms_etl.transformers.vccc_transformer import VcccTransformer
 
 
 class VcccPipeline(Pipeline):
