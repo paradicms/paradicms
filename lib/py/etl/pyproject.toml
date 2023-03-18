@@ -17,6 +17,7 @@ rdflib = "^6.1.1"
 stringcase = "^1.2.0"
 tqdm = "^4.62.3"
 openpyxl = "^3.1.1"
+inflector = "^3.1.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"
