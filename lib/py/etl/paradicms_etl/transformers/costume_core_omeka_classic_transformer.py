@@ -3,7 +3,7 @@ from typing import Tuple, Set, Dict
 
 from rdflib import URIRef, DCTERMS
 
-from paradicms_etl.models import costume_core_predicates
+from paradicms_etl.models.costume_core import costume_core_predicates
 from paradicms_etl.models.costume_core.costume_core import CostumeCore
 from paradicms_etl.models.property import Property
 from paradicms_etl.namespaces import VRA

@@ -314,12 +314,12 @@ class CostumeCoreOntologyAirtableToWorksheetModelsTransformer:
 
             feature_value_uri = COCO[feature_value_id]
             feature_value = Concept.from_fields(
-                abstract=self.__transform_description_fields(
+                definition=self.__transform_description_fields(
                     record_fields=feature_value_record_fields
                 ),
                 alt_labels=tuple(alt_labels),
+                pref_label=pref_label,
                 property_uris=tuple(feature_uris),
-                title=pref_label,
                 value=feature_value_uri,
                 uri=feature_value_uri,
             )
