@@ -37,6 +37,28 @@ from paradicms_etl.pipeline import Pipeline
 class SyntheticDataPipeline(Pipeline):
     ID = "synthetic_data"
 
+    class __SyntheticDataTsLoader:
+        def __init__(self, *, rdf_file_path: Path, ts_file_path: Path):
+            self.__rdf_file_path = rdf_file_path
+            self.__ts_file_path = ts_file_path
+
+        def __call__(self, *args, **kwds):
+            with open(self.__rdf_file_path) as rdf_file:
+                rdf = rdf_file.read().rstrip()
+
+            with open(self.__ts_file_path, "w+") as ts_file:
+                ts_file.write(
+                    """\
+import {trigStringToDatasetCore} from "./trigStringToDatasetCore";
+import {DatasetCore} from "@rdfjs/types";
+
+export const syntheticData: DatasetCore = trigStringToDatasetCore(`
+%s
+`);
+"""
+                    % rdf
+                )
+
     class __SyntheticDataTransformer:
         __FACETED_PROPERTY_VALUES = (
             (
@@ -478,10 +500,12 @@ class SyntheticDataPipeline(Pipeline):
 
     def __init__(self, loader: Optional[Loader] = None):
         if loader is None:
-            data_dir_path = (
+            root_dir_path = (
                 Path(__file__).absolute().parent.parent.parent.parent.parent.parent
-                / "data"
             )
+            data_dir_path = root_dir_path / "data"
+            rdf_file_path = data_dir_path / "synthetic" / "synthetic_data.trig"
+
             loader = CompositeLoader(
                 loaders=(
                     Excel2010Loader(
@@ -490,10 +514,17 @@ class SyntheticDataPipeline(Pipeline):
                         / "synthetic_data.xlsx"
                     ),
                     RdfFileLoader(
-                        rdf_file_path=data_dir_path
-                        / "synthetic"
-                        / "synthetic_data.trig",
+                        rdf_file_path=rdf_file_path,
                         pipeline_id=self.ID,
+                    ),
+                    self.__SyntheticDataTsLoader(
+                        rdf_file_path=rdf_file_path,
+                        ts_file_path=root_dir_path
+                        / "lib"
+                        / "ts"
+                        / "test"
+                        / "src"
+                        / "syntheticData.ts",
                     ),
                 )
             )

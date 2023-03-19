@@ -57,4 +57,4 @@ class RdfFileLoader(BufferingLoader):
         self.__rdf_file_path.parent.mkdir(parents=True, exist_ok=True)
         with open(self.__rdf_file_path, "w+b") as file_:
             conjunctive_graph.serialize(destination=file_, format=self.__format)
-        self.__logger.info("wrote %d models to %s", len(models), self.__rdf_file_path)
+        self.__logger.debug("wrote %d models to %s", len(models), self.__rdf_file_path)
