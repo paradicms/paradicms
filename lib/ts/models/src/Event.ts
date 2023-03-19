@@ -5,22 +5,17 @@ import {HasAbstract} from "./mixins";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {dcterms, vra} from "@paradicms/vocabularies";
-import {DateTimeUnion} from "./DateTimeUnion";
-import {mapDateTimeUnionObject} from "./mapDateTimeUnionObject";
+import {PartialDateTime} from "./PartialDateTime";
+import {mapPartialDateTimeObject} from "./mapPartialDateTimeObject";
 import {mapLocationObject} from "./mapLocationObject";
-
-const dateTimeUnionToString = (
-  dateTimeUnion: Date | DateTimeDescription | number | string
-): string => {
-  return dateTimeUnion.toString();
-};
+import {partialDateTimeToString} from "./partialDateTimeToString";
 
 export class Event extends Mixin(NamedModel, HasAbstract) {
   @Memoize()
   get displayDate(): string | null {
     const date = this.date;
     if (date !== null) {
-      return dateTimeUnionToString(date);
+      return partialDateTimeToString(date);
     }
 
     const startDate = this.startDate;
@@ -32,10 +27,10 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
 
     const result: string[] = [];
     if (startDate !== null) {
-      result.push(dateTimeUnionToString(startDate) + " (start)");
+      result.push(partialDateTimeToString(startDate) + " (start)");
     }
     if (endDate !== null) {
-      result.push(dateTimeUnionToString(endDate) + " (end)");
+      result.push(partialDateTimeToString(endDate) + " (end)");
     }
 
     return result.join(" - ");
@@ -76,16 +71,16 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
   }
 
   @Memoize()
-  get date(): DateTimeUnion | null {
+  get date(): PartialDateTime | null {
     return this.findAndMapObject(dcterms.date, term =>
-      mapDateTimeUnionObject(this, term)
+      mapPartialDateTimeObject(this, term)
     );
   }
 
   @Memoize()
-  get endDate(): DateTimeUnion | null {
+  get endDate(): PartialDateTime | null {
     return this.findAndMapObject(vra.endDate, term =>
-      mapDateTimeUnionObject(this, term)
+      mapPartialDateTimeObject(this, term)
     );
   }
 
@@ -138,9 +133,9 @@ export class Event extends Mixin(NamedModel, HasAbstract) {
   }
 
   @Memoize()
-  get startDate(): DateTimeUnion | null {
+  get startDate(): PartialDateTime | null {
     return this.findAndMapObject(vra.startDate, term =>
-      mapDateTimeUnionObject(this, term)
+      mapPartialDateTimeObject(this, term)
     );
   }
 
