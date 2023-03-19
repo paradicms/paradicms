@@ -10,6 +10,8 @@ For developer documentation, read on.
 
 ## Repository organization
 
+### Code
+
 The code in this repository is organized into three areas:
 
 * `app/`: [Paradicms app](https://paradicms.org/docs/introduction/apps) implementations
@@ -116,9 +118,10 @@ Merges to the default branch trigger a GitHub Actions workflow that:
 * builds a single Docker image from the `Dockerfile` in the root of the repository and
 * pushes the image to the GitHub Container registry for the organization
 
-[This Docker image](https://github.com/paradicms/paradicms/pkgs/container/paradicms) is the basis for the [Paradicms GitHub Actions](https://paradicms.org/docs/reference/github-actions). It contains:
-* Installed versions of the Python libraries
-* Built versions of the Paradicms apps
+[This Docker image](https://github.com/paradicms/paradicms/pkgs/container/paradicms) is the working environment for the [Paradicms GitHub Actions](https://paradicms.org/docs/reference/github-actions). It contains:
+* Python libraries and their dependencies installed in the image's system Python interpreter
+* TypeScript libraries and their dependencies
+* Ready-to-build Paradicms apps
 
 
 ## Coding conventions and tools
