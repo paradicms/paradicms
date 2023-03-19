@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+poetry run black --check paradicms_ssg
+poetry run flake8 paradicms_ssg
+poetry run mypy paradicms_ssg
+
+mkdir -p test-results
+poetry run pytest --junitxml=test-results/junit.xml
