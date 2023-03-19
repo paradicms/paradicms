@@ -9,7 +9,7 @@ import {rdf} from "@tpluscode/rdf-ns-builders";
 
 export const getRdfList = (kwds: {
   dataset: Dataset;
-  graph?: DefaultGraph | NamedNode;
+  graph?: BlankNode | DefaultGraph | NamedNode;
   node: BlankNode | NamedNode;
 }): (BlankNode | NamedNode | Literal)[] => {
   const {dataset, graph, node} = kwds;

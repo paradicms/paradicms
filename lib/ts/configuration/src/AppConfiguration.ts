@@ -43,7 +43,7 @@ export class AppConfiguration extends Configuration {
 
     return new AppConfiguration({
       dataset,
-      graphNode: typeQuad.graph as DefaultGraph | NamedNode,
+      graphNode: typeQuad.graph as BlankNode | DefaultGraph | NamedNode,
       node: typeQuad.subject as BlankNode | NamedNode,
     });
   }

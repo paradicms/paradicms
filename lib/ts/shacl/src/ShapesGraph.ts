@@ -16,7 +16,7 @@ import {requireDefined} from "@paradicms/utilities";
 import {datasetCoreToDataset} from "@paradicms/rdf";
 
 export class ShapesGraph {
-  readonly graphNode: DefaultGraph | NamedNode;
+  readonly graphNode: BlankNode | DefaultGraph | NamedNode;
   readonly nodeShapes: readonly NodeShape[];
   // @ts-ignore
   private readonly nodeShapesByNode: TermMap<BlankNode | NamedNode, NodeShape>;
@@ -72,7 +72,9 @@ export class ShapesGraph {
     return requireDefined(this.propertyShapesByNode.get(propertyShapeNode));
   }
 
-  private static readGraph(dataset: Dataset): DefaultGraph | NamedNode {
+  private static readGraph(
+    dataset: Dataset
+  ): BlankNode | DefaultGraph | NamedNode {
     const graphs = [
       ...dataset.reduce((termSet, quad) => {
         termSet.add(quad.graph);
@@ -83,6 +85,7 @@ export class ShapesGraph {
       throw new RangeError("expected a single graph");
     }
     switch (graphs[0].termType) {
+      case "BlankNode":
       case "DefaultGraph":
       case "NamedNode":
         return graphs[0];
@@ -95,7 +98,7 @@ export class ShapesGraph {
 
   private static readPropertyGroups(
     dataset: Dataset,
-    graph: DefaultGraph | NamedNode,
+    graph: BlankNode | DefaultGraph | NamedNode,
     shapesGraph: ShapesGraph
   ): {
     propertyGroups: PropertyGroup[];
@@ -122,7 +125,7 @@ export class ShapesGraph {
 
   private static readShapes(
     dataset: Dataset,
-    graph: DefaultGraph | NamedNode,
+    graph: BlankNode | DefaultGraph | NamedNode,
     shapesGraph: ShapesGraph
   ): {
     nodeShapes: NodeShape[];
