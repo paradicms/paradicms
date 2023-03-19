@@ -8,4 +8,4 @@ RUN cd /paradicms/lib/py/etl && pip3 install -qqq .
 RUN cd /paradicms/lib/py/ssg && pip3 install -qqq .
 RUN cd /paradicms && yarn install && yarn build-lib
 
-RUN cd /paradicms && rm -fr lib/py /root/.cache
+RUN cd /paradicms && rm -fr lib/py /root/.cache && yarn cache clean
