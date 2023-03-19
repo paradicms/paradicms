@@ -20,26 +20,8 @@
       "forms/@expo/vector-icons"
     ],
     "packages": [
-      "app/multi-page-exhibition",
-      "app/single-page-exhibition",
-      "app/work-search",
-      "app/worksheet",
-      "lib/ts/configuration",
-      "lib/ts/facets",
-      "lib/ts/filters",
-      "lib/ts/lunr",
-      "lib/ts/models",
-      "lib/ts/next",
-      "lib/ts/rdf",
-      "lib/ts/react-dom",
-      "lib/ts/react-dom-components",
-      "lib/ts/react-dom-hooks",
-      "lib/ts/services",
-      "lib/ts/shacl",
-      "lib/ts/shacl-forms",
-      "lib/ts/test",
-      "lib/ts/utilities",
-      "lib/ts/vocabularies"
+      "app/*",
+      "lib/ts/*"
     ]
   },
   "version": "0.0.0"
