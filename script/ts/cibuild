@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+cd "$(dirname "$0")/../.."
+
+export PATH=$PATH:$PWD/node_modules/.bin
+
+yarn build
+
+script/ts/test

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+cd "$(dirname "$0")/../.."
+
+export DATA_FILE_PATH=`realpath $PWD/data/synthetic/synthetic_data.trig`
+yarn test
