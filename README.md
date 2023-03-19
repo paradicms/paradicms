@@ -10,13 +10,17 @@ For developer documentation, read on.
 
 ## Repository organization
 
-This repository is organized into three main sections:
+The code in this repository is organized into three areas:
 
 * `app/`: [Paradicms app](https://paradicms.org/docs/introduction/apps) implementations
 * `lib/py/`: Python libraries, which are primarily used by [Paradicms GitHub Actions](https://paradicms.org/docs/reference/github-actions)
   * `lib/py/etl`: code for transforming data from various sources (Airtable, Omeka, spreadsheets, et al.) into the [Paradicms data model](https://paradicms.org/docs/introduction/data-model/)
-  * `lib/py/ssg`: code for statically generating websites (apps) from data in the Paradicms data model
+  * `lib/py/ssg`: code for statically generating websites (apps) from data adhering to the Paradicms data model
 * `lib/ts`: TypeScript libraries used by app implementations
+
+### Data
+
+The `data/` directory contains synthetic data used in development and test data used in unit tests. It also contains generated [Costume Core](http://www.ardenkirkland.com/costumecore/) ontologies.
 
 ### Scripts
 
@@ -24,7 +28,6 @@ There are standardized scripts for building and testing different parts of the c
 
 
 ## First-time setup
-
 
 ### Python libraries
 
@@ -101,17 +104,24 @@ script/ts/test
 ```
 
 
-## Continuous Integration and Deployment
+## Continuous Integration
 
 This repository uses [GitHub Actions](https://github.com/features/actions) for Continuous Integration and Deployment (CI/CD). See the `.github/workflows` directory for GitHub Actions workflow specifications.
 
-Merges to the default branch build a single Docker image from the `Dockerfile` in the root of the repository and push it to the GitHub Container registry. This Docker image is the basis for the [Paradicms GitHub Actions](https://paradicms.org/docs/reference/github-actions). It contains:
 
+## Continuous Deployment
+
+Merges to the default branch trigger a GitHub Actions workflow that:
+
+* builds a single Docker image from the `Dockerfile` in the root of the repository and
+* pushes the image to the GitHub Container registry for the organization
+
+[This Docker image](https://github.com/paradicms/paradicms/pkgs/container/paradicms) is the basis for the [Paradicms GitHub Actions](https://paradicms.org/docs/reference/github-actions). It contains:
 * Installed versions of the Python libraries
 * Built versions of the Paradicms apps
 
 
-## Coding conventions
+## Coding conventions and tools
 
 ### Python
 
@@ -124,3 +134,8 @@ Python code is formatted with the [Black code formatter](https://black.readthedo
 ### TypeScript
 
 TypeScript code is formatted with [Prettier](https://prettier.io/).
+
+
+## License
+
+[GNU General Public License version 3 (GPLv3)](https://www.gnu.org/licenses/gpl-3.0.en.html)
