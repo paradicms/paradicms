@@ -17,5 +17,6 @@
 **/__pycache__/
 **/.pytest_cache/
 **/test/
+!/lib/ts/test
 **/tests/
 **/*.pyc
