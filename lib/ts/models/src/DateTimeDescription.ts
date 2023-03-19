@@ -1,9 +1,10 @@
 import {Model} from "./Model";
 import {Literal} from "@rdfjs/types";
 import {time, xsd} from "@paradicms/vocabularies";
-import dayjs from "dayjs";
+import {PartialDateTime} from "./PartialDateTime";
+import {partialDateTimeToString} from "./partialDateTimeToString";
 
-export class DateTimeDescription extends Model {
+export class DateTimeDescription extends Model implements PartialDateTime {
   /**
    * Day of the month, 1..31 inclusive.
    */
@@ -92,54 +93,7 @@ export class DateTimeDescription extends Model {
   }
 
   override toString() {
-    const year = this.year;
-
-    if (year === null) {
-      return "(unknown)";
-    }
-
-    let dayjs_ = dayjs();
-
-    // https://day.js.org/docs/en/display/format
-    let dateFormat = "";
-    const month = this.month;
-    if (month !== null) {
-      dateFormat += "MMM";
-      dayjs_ = dayjs_.month(month - 1);
-
-      const day = this.day;
-      if (day !== null) {
-        dateFormat += " D";
-        dayjs_ = dayjs_.date(day);
-      }
-    }
-    dateFormat += " YYYY";
-    dayjs_ = dayjs_.year(year);
-
-    let timeFormat: string = "";
-    const hour = this.hour;
-    if (hour !== null) {
-      dayjs_ = dayjs_.hour(hour);
-      timeFormat += "h";
-
-      const minute = this.minute;
-      if (minute !== null) {
-        dayjs_ = dayjs_.minute(minute);
-        timeFormat += ":m";
-
-        const second = this.second;
-        if (second !== null) {
-          dayjs_ = dayjs_.second(second);
-          timeFormat += ":s";
-        }
-
-        timeFormat += " A";
-      }
-    }
-
-    return dayjs_.format(
-      timeFormat.length > 0 ? timeFormat + " " + dateFormat : dateFormat
-    );
+    return partialDateTimeToString(this);
   }
 
   /**

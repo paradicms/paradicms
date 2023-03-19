@@ -27,9 +27,10 @@ describe("Event", () => {
 
   it("should get the date", () => {
     const date = sut.date;
-    // expect(date).to.be.instanceof(DateTimeDescription);
-    // expect((date as DateTimeDescription).year).to.eq(2022);
-    expect(date).to.eq("2022-01-01");
+    expect(date).to.not.be.null;
+    expect(date!.year!).to.eq(2022);
+    expect(date!.month!).to.eq(1);
+    expect(date!.day!).to.eq(1);
   });
 
   it("should get the location", () => {
