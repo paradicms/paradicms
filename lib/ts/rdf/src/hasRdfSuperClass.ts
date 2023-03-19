@@ -1,10 +1,10 @@
-import {Dataset, DefaultGraph, NamedNode, Term} from "@rdfjs/types";
+import {BlankNode, Dataset, DefaultGraph, NamedNode, Term} from "@rdfjs/types";
 import {rdfs} from "@tpluscode/rdf-ns-builders";
 import TermSet from "@rdfjs/term-set";
 
 export const hasRdfSuperClass = (kwds: {
   dataset: Dataset;
-  graph?: DefaultGraph | NamedNode;
+  graph?: BlankNode | DefaultGraph | NamedNode;
   subClass: NamedNode;
   superClass: NamedNode;
 }): boolean => {
@@ -13,7 +13,7 @@ export const hasRdfSuperClass = (kwds: {
 
 const hasRdfSuperClassRecursive = (kwds: {
   dataset: Dataset;
-  graph?: DefaultGraph | NamedNode;
+  graph?: BlankNode | DefaultGraph | NamedNode;
   subClass: NamedNode;
   superClass: NamedNode;
   visited: TermSet<Term>;

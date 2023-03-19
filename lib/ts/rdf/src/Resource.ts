@@ -3,7 +3,7 @@ import {xsd} from "@tpluscode/rdf-ns-builders";
 
 export abstract class Resource {
   abstract readonly dataset: Dataset;
-  abstract readonly graphNode: DefaultGraph | NamedNode;
+  abstract readonly graphNode: BlankNode | DefaultGraph | NamedNode;
   protected readonly _node: BlankNode | NamedNode;
 
   constructor(kwds: {node: BlankNode | NamedNode}) {

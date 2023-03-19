@@ -4,7 +4,7 @@ from pathlib import Path
 from types import ModuleType
 from typing import Optional, Tuple
 
-from rdflib import ConjunctiveGraph, URIRef
+from rdflib import ConjunctiveGraph, URIRef, BNode
 from rdflib.util import guess_format
 
 from paradicms_etl.loaders.buffering_loader import BufferingLoader
@@ -46,9 +46,11 @@ class RdfFileLoader(BufferingLoader):
                     f"urn:paradicms_etl:pipeline:{self.__pipeline_id}:model:{hashlib.sha256(str(model.uri).encode('utf-8')).hexdigest()}"
                 )
                 model_graph = conjunctive_graph.get_context(model_graph_uri)
-                model.to_rdf(graph=model_graph)
             else:
-                model.to_rdf(graph=conjunctive_graph.default_context)
+                model_graph = conjunctive_graph.get_context(BNode())
+
+            model.to_rdf(graph=model_graph)
+
         self.__logger.debug(
             "writing %d models to %s", len(models), self.__rdf_file_path
         )

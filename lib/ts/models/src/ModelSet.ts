@@ -461,6 +461,7 @@ export class ModelSet {
     const uniqueModelSubjects = new TermSet();
     this.dataset.match(null, rdf.type, type, null).forEach(quad => {
       switch (quad.graph.termType) {
+        case "BlankNode":
         case "DefaultGraph":
         case "NamedNode":
           break;
@@ -486,7 +487,7 @@ export class ModelSet {
 
       callback({
         modelSet: this,
-        graphNode: quad.graph as DefaultGraph | NamedNode,
+        graphNode: quad.graph as BlankNode | DefaultGraph | NamedNode,
         node: quad.subject as BlankNode | NamedNode,
       });
     });
