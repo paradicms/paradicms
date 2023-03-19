@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+# Python libraries
+lib/py/etl/script/bootstrap
+lib/py/ssg/script/bootstrap
+
+# TypeScript apps and libraries
+yarn install
