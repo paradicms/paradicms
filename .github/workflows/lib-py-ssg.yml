@@ -26,7 +26,5 @@ jobs:
           key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('lib/py/ssg/poetry.lock') }}
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: cd lib/py/ssg && poetry install --no-interaction --no-root
-      - run: cd lib/py/ssg && poetry run black --check paradicms_ssg
-      - run: cd lib/py/ssg && poetry run flake8 paradicms_ssg
-      - run: cd lib/py/ssg && poetry run mypy paradicms_ssg
+        run: lib/py/ssg/script/bootstrap
+      - run: lib/py/ssg/script/cibuild

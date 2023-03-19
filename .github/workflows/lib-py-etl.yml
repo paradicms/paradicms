@@ -26,15 +26,8 @@ jobs:
           key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('lib/py/etl/poetry.lock') }}-v2
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: cd lib/py/etl && poetry install --no-interaction --no-root
-      - run: cd lib/py/etl && poetry run black --check paradicms_etl
-      - run: cd lib/py/etl && poetry run flake8 paradicms_etl
-      - run: cd lib/py/etl && poetry run mypy paradicms_etl
-      - name: Run Python unit tests
-        run: |
-          cd lib/py/etl
-          mkdir test-results
-          poetry run pytest --junitxml=test-results/junit.xml
+        run: lib/py/etl/script/bootstrap
+      - run: lib/py/etl/script/cibuild
       - name: Publish unit test results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()

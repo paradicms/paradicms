@@ -30,7 +30,7 @@
     "build": "tsc -b",
     "clean": "rimraf dist",
     "rebuild": "rimraf dist && tsc -b",
-    "test": "jest",
+    "test": "jest $JEST_CLI_OPTIONS",
     "watch": "tsc -w --preserveWatchOutput"
   },
   "types": "dist/index.d.ts",

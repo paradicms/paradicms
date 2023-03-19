@@ -29,10 +29,7 @@ jobs:
         with:
           path: app/*/.next/cache
           key: ${{ runner.OS }}-next
+      - name: Install dependencies
+        run: script/ts/bootstrap
       - name: Build and test TypeScript
-        run: |
-          export PATH=$PATH:$PWD/node_modules/.bin
-          yarn install
-          export DATA_FILE_PATH=`realpath $PWD/data/synthetic/synthetic_data.trig`
-          yarn build
-          yarn test
+        run: script/ts/cibuild
