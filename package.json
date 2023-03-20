@@ -1,6 +1,7 @@
 {
   "private": true,
   "dependencies": {
+    "ts-node": "^10.9.1",
     "wsrun": "5.2.4"
   },
   "scripts": {
