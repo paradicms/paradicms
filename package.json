@@ -1,6 +1,7 @@
 {
   "private": true,
   "dependencies": {
+    "ts-node": "^10.9.1",
     "wsrun": "5.2.4"
   },
   "scripts": {
@@ -15,31 +16,9 @@
     "test-lib": "wsrun --exclude-missing  -p '@paradicms/*' --prefix test"
   },
   "workspaces": {
-    "nohoist": [
-      "forms/expo",
-      "forms/@expo/vector-icons"
-    ],
     "packages": [
-      "app/multi-page-exhibition",
-      "app/single-page-exhibition",
-      "app/work-search",
-      "app/worksheet",
-      "lib/ts/configuration",
-      "lib/ts/facets",
-      "lib/ts/filters",
-      "lib/ts/lunr",
-      "lib/ts/models",
-      "lib/ts/next",
-      "lib/ts/rdf",
-      "lib/ts/react-dom",
-      "lib/ts/react-dom-components",
-      "lib/ts/react-dom-hooks",
-      "lib/ts/services",
-      "lib/ts/shacl",
-      "lib/ts/shacl-forms",
-      "lib/ts/test",
-      "lib/ts/utilities",
-      "lib/ts/vocabularies"
+      "app/*",
+      "lib/ts/*"
     ]
   },
   "version": "0.0.0"
