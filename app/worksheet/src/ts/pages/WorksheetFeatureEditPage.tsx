@@ -59,7 +59,7 @@ export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
       <MasterDetailContainer
         items={feature.values.map(featureValue => ({
           altLabels: featureValue.definition.altLabels,
-          description: featureValue.definition.abstract,
+          description: featureValue.definition.description,
           images: featureValue.definition.images,
           onToggleSelected: () => {
             featureValue.selected = !featureValue.selected;

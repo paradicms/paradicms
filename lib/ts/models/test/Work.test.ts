@@ -7,10 +7,10 @@ describe("Work", () => {
   const modelSet = ModelSet.fromDatasetCore(syntheticData);
   const sut = modelSet.workByUri("http://example.com/collection0/work2");
 
-  it("should get the work's abstract", () => {
-    expect(sut.abstract).to.be.instanceof(Text);
-    const abstract: Text = sut.abstract as Text;
-    expect(abstract.value).to.not.be.empty;
+  it("should get the work's description", () => {
+    expect(sut.description).to.be.instanceof(Text);
+    const description: Text = sut.description as Text;
+    expect(description.value).to.not.be.empty;
   });
 
   it("should get the work's agents", () => {
@@ -67,10 +67,10 @@ describe("Work", () => {
   });
 
   it("should get the work's property values (Text)", () => {
-    const propertyValues = sut.propertyValues(dcterms.abstract.value);
+    const propertyValues = sut.propertyValues(dcterms.description.value);
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];
-    expect(propertyValue.value).to.eq((sut.abstract as Text).value);
+    expect(propertyValue.value).to.eq((sut.description as Text).value);
   });
 
   it("should get the work's rights", () => {

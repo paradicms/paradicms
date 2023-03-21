@@ -1,4 +1,9 @@
-import {HasAbstract, HasImages, HasTitle, NamedModel} from "@paradicms/models";
+import {
+  HasDescription,
+  HasImages,
+  HasTitle,
+  NamedModel,
+} from "@paradicms/models";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
 import {worksheet} from "~/vocabularies";
 import {Memoize} from "typescript-memoize";
@@ -7,7 +12,7 @@ import {Mixin} from "ts-mixer";
 
 export class WorksheetFeatureSetDefinition extends Mixin(
   NamedModel,
-  HasAbstract,
+  HasDescription,
   HasImages,
   HasTitle
 ) {

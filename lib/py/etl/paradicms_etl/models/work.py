@@ -34,7 +34,7 @@ class Work(ResourceBackedNamedModel):
         # page generation and search indexing downstream.
         title: str,
         uri: URIRef,
-        abstract: Union[str, Text, None] = None,
+        description: Union[str, Text, None] = None,
         page: Union[
             str, URIRef, None
         ] = None,  # foaf:page, linking to a human-readable page; if not specified, defaults to URI
@@ -44,7 +44,7 @@ class Work(ResourceBackedNamedModel):
     ) -> "Work":
         return cls(
             ResourceBuilder(uri)
-            .add(DCTERMS.abstract, abstract)
+            .add(DCTERMS.description, description)
             .add(CMS.collection, collection_uris)
             .add(FOAF.page, page)
             .add_properties(properties)
@@ -54,8 +54,8 @@ class Work(ResourceBackedNamedModel):
         )
 
     @property
-    def abstract(self) -> Union[str, Text, None]:
-        return self._optional_str_or_text_value(DCTERMS.abstract)
+    def description(self) -> Union[str, Text, None]:
+        return self._optional_str_or_text_value(DCTERMS.description)
 
     @property
     def collection_uris(self) -> Tuple[URIRef, ...]:
@@ -72,7 +72,7 @@ class Work(ResourceBackedNamedModel):
             safe_dict_update(
                 ResourceBackedNamedModel.json_ld_context(),
                 {
-                    "abstract": {"@id": str(DCTERMS.abstract)},
+                    "description": {"@id": str(DCTERMS.description)},
                     "collection": {"@id": str(CMS.collection), "@type": "@id"},
                     "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
                     "page": {"@id": str(FOAF.page)},

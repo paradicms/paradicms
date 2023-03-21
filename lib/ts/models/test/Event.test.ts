@@ -13,16 +13,17 @@ describe("Event", () => {
     expect(sut).is.not.undefined;
   });
 
-  it("should get the abstract", () => {
+  it("should get the description", () => {
     expect(
       modelSet.workEvents.some(workEvent => {
-        const abstract = workEvent.abstract;
-        return abstract instanceof Text;
+        const description = workEvent.description;
+        return description instanceof Text;
       })
     ).to.be.true;
 
-    expect(modelSet.workEvents.some(workEvent => workEvent.abstract === null))
-      .to.be.true;
+    expect(
+      modelSet.workEvents.some(workEvent => workEvent.description === null)
+    ).to.be.true;
   });
 
   it("should get the date", () => {

@@ -158,12 +158,12 @@ export class ModelSubsetter {
       this.addRightsModelSet(joinSelector.agents ?? {}, builder, work.rights);
 
       {
-        const abstract = work.abstract;
-        if (abstract && abstract instanceof Text) {
+        const description = work.description;
+        if (description && description instanceof Text) {
           this.addRightsModelSet(
             joinSelector.agents ?? {},
             builder,
-            abstract.rights
+            description.rights
           );
         }
       }

@@ -23,12 +23,12 @@ class WorksheetFeature(ResourceBackedNamedModel):
         feature_set_uris: Tuple[URIRef, ...],
         title: str,
         uri: URIRef,
-        abstract: Union[str, Text, None] = None,
+        description: Union[str, Text, None] = None,
         order: Optional[int] = None
     ) -> "WorksheetFeature":
         return cls(
             ResourceBuilder(uri)
-            .add(DCTERMS.abstract, abstract)
+            .add(DCTERMS.description, description)
             .add(DCTERMS.title, title)
             .add(WORKSHEET.featureSet, feature_set_uris)
             .add(SH.order, order)
@@ -36,8 +36,8 @@ class WorksheetFeature(ResourceBackedNamedModel):
         )
 
     @property
-    def abstract(self) -> Union[str, Text, None]:
-        return self._optional_str_or_text_value(DCTERMS.abstract)
+    def description(self) -> Union[str, Text, None]:
+        return self._optional_str_or_text_value(DCTERMS.description)
 
     @property
     def label(self) -> str:

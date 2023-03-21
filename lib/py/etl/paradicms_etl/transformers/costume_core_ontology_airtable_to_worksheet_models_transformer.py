@@ -188,7 +188,7 @@ class CostumeCoreOntologyAirtableToWorksheetModelsTransformer:
             feature_uri = URIRef(feature_record_fields["URI"])
 
             yield WorksheetFeature.from_fields(
-                abstract=self.__transform_description_fields(
+                description=self.__transform_description_fields(
                     record_fields=feature_record_fields,
                 ),
                 feature_set_uris=tuple(feature_set_uris),
@@ -213,7 +213,7 @@ class CostumeCoreOntologyAirtableToWorksheetModelsTransformer:
             feature_set_uri = self.__feature_set_uri(feature_set_record)
 
             yield WorksheetFeatureSet.from_fields(
-                abstract=self.__transform_description_fields(
+                description=self.__transform_description_fields(
                     record_fields=feature_set_record["fields"],
                 ),
                 title=feature_set_record["fields"]["display_name_en"],

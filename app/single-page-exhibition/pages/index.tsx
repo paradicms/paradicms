@@ -60,7 +60,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     const collection = modelSet.collectionByUri(collectionUri);
     const pages: React.ReactElement[] = [];
 
-    const collectionAbstract = collection.abstract;
+    const collectionDescription = collection.description;
     pages.push(
       <div
         className="d-flex align-items-center justify-content-center"
@@ -72,25 +72,25 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
               <h1>{collection.title}</h1>
             </Col>
           </Row>
-          {collectionAbstract ? (
+          {collectionDescription ? (
             <Row>
               <Col
                 className="offset-lg-4 text-wrap"
                 lg={4}
                 xs={12}
                 dangerouslySetInnerHTML={{
-                  __html: collectionAbstract.toString(),
+                  __html: collectionDescription.toString(),
                 }}
               ></Col>
             </Row>
           ) : null}
-          {collectionAbstract instanceof Text &&
-          collectionAbstract.rights?.requiresAttribution ? (
+          {collectionDescription instanceof Text &&
+          collectionDescription.rights?.requiresAttribution ? (
             <Row className="mt-2">
               <Col className="text-center" xs={12}>
                 <RightsParagraph
                   material="Text"
-                  rights={collectionAbstract.rights}
+                  rights={collectionDescription.rights}
                   style={{fontSize: "xx-small"}}
                 />
               </Col>

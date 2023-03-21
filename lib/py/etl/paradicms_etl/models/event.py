@@ -23,7 +23,7 @@ class Event(ResourceBackedNamedModel):
     def _from_fields(
         *,
         resource_builder: ResourceBuilder,
-        abstract: Union[str, Text, None] = None,
+        description: Union[str, Text, None] = None,
         date: Optional[DateTimeUnion] = None,
         end_date: Optional[DateTimeUnion] = None,
         location: Union[Location, str, None] = None,
@@ -34,7 +34,7 @@ class Event(ResourceBackedNamedModel):
             raise ValueError("must specify at least one date")
 
         return (
-            resource_builder.add(DCTERMS.abstract, abstract)
+            resource_builder.add(DCTERMS.description, description)
             .add(DCTERMS.date, date)
             .add(VRA.startDate, start_date)
             .add(VRA.endDate, end_date)
@@ -47,7 +47,7 @@ class Event(ResourceBackedNamedModel):
         return safe_dict_update(
             ResourceBackedNamedModel.json_ld_context(),
             {
-                "abstract": {"@id": str(DCTERMS.abstract)},
+                "description": {"@id": str(DCTERMS.description)},
                 "date": {"@id": str(DCTERMS.date)},
                 "endDate": {"@id": str(VRA.endDate)},
                 "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},

@@ -4,11 +4,11 @@ import {selectThumbnail} from "./selectThumbnail";
 import {Image} from "./Image";
 import {Work} from "./Work";
 import {Mixin} from "ts-mixer";
-import {HasAbstract, HasImages, HasTitle} from "./mixins";
+import {HasDescription, HasImages, HasTitle} from "./mixins";
 
 export class Collection extends Mixin(
   NamedModel,
-  HasAbstract,
+  HasDescription,
   HasImages,
   HasTitle
 ) {

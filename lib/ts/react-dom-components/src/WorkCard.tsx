@@ -66,20 +66,20 @@ export const WorkCard: React.FunctionComponent<{
       </Card>
     ),
   });
-  if (work.abstract) {
+  if (work.description) {
     tabs.push({
       title: "Summary",
       content: (
         <Card className="border-0">
           <CardBody style={{fontSize: "small"}}>
-            {work.abstract.toString()}
+            {work.description.toString()}
           </CardBody>
-          {work.abstract instanceof Text &&
-          work.abstract.rights?.requiresAttribution ? (
+          {work.description instanceof Text &&
+          work.description.rights?.requiresAttribution ? (
             <CardFooter className="text-center">
               <RightsParagraph
                 material="Text"
-                rights={(work.abstract as Text).rights!}
+                rights={(work.description as Text).rights!}
                 style={RIGHTS_STYLE}
               />
             </CardFooter>

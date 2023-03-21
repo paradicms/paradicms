@@ -41,9 +41,9 @@ export const WorksheetEditPage: React.FunctionComponent = () => {
         <Row className="mt-2">
           <Col xs={12}>
             <MasterDetailContainer
-              items={worksheet.featureSets.map((featureSet) => ({
+              items={worksheet.featureSets.map(featureSet => ({
                 altLabels: null,
-                description: featureSet.definition.abstract,
+                description: featureSet.definition.description,
                 images: featureSet.definition.images,
                 onToggleSelected: () => {
                   featureSet.selected = !featureSet.selected;
@@ -60,7 +60,7 @@ export const WorksheetEditPage: React.FunctionComponent = () => {
           <Col xs={12}>
             <h4>Freetext description</h4>
             <Input
-              onChange={(event) => {
+              onChange={event => {
                 worksheet.text = event.target.value;
                 dispatchWorksheet({payload: worksheet});
               }}

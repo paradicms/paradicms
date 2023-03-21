@@ -24,7 +24,7 @@ class WorkEvent(Event):
         *,
         uri: URIRef,
         work_uri: URIRef,
-        abstract: Union[str, Text, None] = None,
+        description: Union[str, Text, None] = None,
         date: Optional[DateTimeUnion] = None,
         end_date: Optional[DateTimeUnion] = None,
         location: Union[Location, str, None] = None,
@@ -33,7 +33,7 @@ class WorkEvent(Event):
     ):
         return cls(
             WorkEvent._from_fields(
-                abstract=abstract,
+                description=description,
                 date=date,
                 end_date=end_date,
                 location=location,
@@ -47,7 +47,7 @@ class WorkEvent(Event):
     @staticmethod
     def _from_fields(  # type: ignore[override]
         *,
-        abstract: Union[str, Text, None],
+        description: Union[str, Text, None],
         date: Optional[DateTimeUnion],
         end_date: Optional[DateTimeUnion],
         location: Union[Location, str, None],
@@ -57,7 +57,7 @@ class WorkEvent(Event):
         work_uri: URIRef,
     ) -> ResourceBuilder:
         return Event._from_fields(
-            abstract=abstract,
+            description=description,
             date=date,
             end_date=end_date,
             location=location,
