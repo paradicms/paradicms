@@ -18,11 +18,11 @@ class WorksheetFeatureSet(ResourceBackedNamedModel):
 
     @classmethod
     def from_fields(
-        cls, *, title: str, uri: URIRef, abstract: Union[str, Text, None] = None
+        cls, *, title: str, uri: URIRef, description: Union[str, Text, None] = None
     ) -> "WorksheetFeatureSet":
         return cls(
             ResourceBuilder(uri)
-            .add(DCTERMS.abstract, abstract)
+            .add(DCTERMS.description, description)
             .add(DCTERMS.title, title)
             .build()
         )

@@ -66,7 +66,7 @@ class MarkdownToDictTransformer:
 
         key = self.__current_heading_id
         if key is None:
-            key = "abstract"
+            key = "description"
 
         existing_value = self.__result.get(key)
         if existing_value is None:

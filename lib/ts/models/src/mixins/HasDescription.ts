@@ -4,10 +4,10 @@ import {dcterms} from "@paradicms/vocabularies";
 import {NamedModelMixin} from "./NamedModelMixin";
 import {mapTextObject} from "../mapTextObject";
 
-export abstract class HasAbstract extends NamedModelMixin {
+export abstract class HasDescription extends NamedModelMixin {
   @Memoize()
-  get abstract(): string | Text | null {
-    return this.findAndMapObject(dcterms.abstract, term =>
+  get description(): string | Text | null {
+    return this.findAndMapObject(dcterms.description, term =>
       mapTextObject(this, term)
     );
   }

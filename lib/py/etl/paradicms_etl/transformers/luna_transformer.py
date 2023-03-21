@@ -105,7 +105,7 @@ class LunaTransformer:
     ) -> Collection:
         description = luna_collection.get("description", "").strip()
         return Collection.from_fields(
-            abstract=description if description else None,
+            description=description if description else None,
             title=luna_collection["name"],
             uri=URIRef(
                 LunaExtractor.create_search_url(base_url=base_url, query={"lc": id_})
@@ -158,7 +158,7 @@ class LunaTransformer:
         raise NotImplementedError("TODO: incorporate institution into rights")
 
         work = Work.from_fields(
-            abstract=description,
+            description=description,
             collection_uris=collection_uris,
             properties=properties,
             title=display_name,

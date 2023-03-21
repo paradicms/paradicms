@@ -44,12 +44,12 @@ def test_transform(data_dir_path: Path):
     work1 = works[URIRef("urn:markdown:test:work:test_work1")]
     work2 = works[URIRef("urn:markdown:test:work:test_work2")]
 
-    work1_abstract = work1.abstract
-    assert work1_abstract is not None
-    assert isinstance(work1_abstract, Text)
-    work1_abstract_rights = work1_abstract.rights
-    assert work1_abstract_rights is not None
-    assert work1_abstract_rights.holders == (
+    work1_description = work1.description
+    assert work1_description is not None
+    assert isinstance(work1_description, Text)
+    work1_description_rights = work1_description.rights
+    assert work1_description_rights is not None
+    assert work1_description_rights.holders == (
         URIRef("urn:markdown:test:person:test_person"),
     )
 

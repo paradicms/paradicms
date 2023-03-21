@@ -1,6 +1,6 @@
-export {HasAbstract} from "./HasAbstract";
 export {HasContributors} from "./HasContributors";
 export {HasCreators} from "./HasCreators";
+export {HasDescription} from "./HasDescription";
 export {HasImages} from "./HasImages";
 export {HasName} from "./HasName";
 export {HasPage} from "./HasPage";

@@ -155,7 +155,7 @@ class CostumeCoreModelsToParadicmsModelsTransformer:
                 )
 
             work = Work.from_fields(
-                abstract=term.description.text_en if term.description else None,
+                description=term.description.text_en if term.description else None,
                 collection_uris=tuple(
                     URIRef(term_predicate.uri) for term_predicate in term_predicates
                 ),

@@ -107,7 +107,7 @@ export const WorksheetFeatureSetEditPage: React.FunctionComponent = () => {
           <MasterDetailContainer
             items={featureSet.features.map(feature => ({
               altLabels: null,
-              description: feature.definition.abstract,
+              description: feature.definition.description,
               images: feature.definition.images,
               onToggleSelected: () => {
                 navigate(

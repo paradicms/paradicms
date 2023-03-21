@@ -72,7 +72,7 @@ export class LunrWorkQueryService implements WorkQueryService {
     const searchWorkPropertyUris = kwds.searchWorkPropertyUris;
 
     this.index = lunr(function() {
-      this.field("abstract");
+      this.field("description");
       this.field("title");
       const propertyFieldNamesByUri: {[index: string]: string} = {};
       if (searchWorkPropertyUris) {
@@ -88,8 +88,8 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       for (const work of kwds.modelSet.works) {
         const doc: any = {title: work.title, uri: work.uri};
-        if (work.abstract) {
-          doc.abstract = work.abstract.toString();
+        if (work.description) {
+          doc.description = work.description.toString();
         }
         if (searchWorkPropertyUris) {
           for (const workPropertyUri of searchWorkPropertyUris) {

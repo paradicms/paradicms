@@ -33,20 +33,24 @@ export const WorkContainer: React.FunctionComponent<{
   ) => React.ReactElement;
   work: Work;
 }> = ({getAbsoluteImageSrc, renderWorkLocationsMap, work}) => {
-  const workAbstract: string | Text | null = useMemo(
-    () => work.abstract ?? work.description ?? null,
+  const workDescription: string | Text | null = useMemo(
+    () => work.description ?? work.description ?? null,
     [work]
   );
 
-  const workAbstractRights: Rights | null = useMemo(() => {
-    if (workAbstract && workAbstract instanceof Text && workAbstract.rights) {
-      return workAbstract.rights;
+  const workDescriptionRights: Rights | null = useMemo(() => {
+    if (
+      workDescription &&
+      workDescription instanceof Text &&
+      workDescription.rights
+    ) {
+      return workDescription.rights;
     } else if (work.rights) {
       return work.rights;
     } else {
       return null;
     }
-  }, [work, workAbstract]);
+  }, [work, workDescription]);
 
   const workAgents: WorkAgent[] = [];
   for (const workAgent of work.agents) {
@@ -168,7 +172,7 @@ export const WorkContainer: React.FunctionComponent<{
     );
   }
 
-  const rightCol = workAbstract ? (
+  const rightCol = workDescription ? (
     <Container fluid>
       <Row>&nbsp;</Row>
       <Row className="mt-4">
@@ -176,7 +180,7 @@ export const WorkContainer: React.FunctionComponent<{
           className="text-wrap"
           xs={12}
           dangerouslySetInnerHTML={{
-            __html: workAbstract.toString(),
+            __html: workDescription.toString(),
           }}
         ></Col>
       </Row>
@@ -201,12 +205,12 @@ export const WorkContainer: React.FunctionComponent<{
           {rightCol}
         </Col>
       </Row>
-      {workAbstract && workAbstractRights?.requiresAttribution ? (
+      {workDescription && workDescriptionRights?.requiresAttribution ? (
         <Row className="mt-2">
           <Col style={{textAlign: "center"}} xs={12}>
             <RightsParagraph
               material="Text"
-              rights={workAbstractRights}
+              rights={workDescriptionRights}
               style={RIGHTS_STYLE}
             />
           </Col>

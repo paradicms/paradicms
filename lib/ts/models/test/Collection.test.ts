@@ -10,10 +10,10 @@ const THUMBNAIL_SELECTOR: ThumbnailSelector = {
 describe("Collection", () => {
   const sut = ModelSet.fromDatasetCore(syntheticData).collections[0];
 
-  it("should get the collection's abstract", () => {
-    expect(sut.abstract).to.be.instanceof(Text);
-    const abstract: Text = sut.abstract as Text;
-    expect(abstract.value).to.not.be.empty;
+  it("should get the collection's description", () => {
+    expect(sut.description).to.be.instanceof(Text);
+    const description: Text = sut.description as Text;
+    expect(description.value).to.not.be.empty;
   });
 
   it("should get the collection's title", () => {

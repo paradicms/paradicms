@@ -9,14 +9,7 @@ import {NamedNode} from "@rdfjs/types";
 import {WorkAgent} from "./WorkAgent";
 import {Mixin} from "ts-mixer";
 import {DataFactory} from "@paradicms/rdf";
-import {
-  HasAbstract,
-  HasImages,
-  HasPage,
-  HasRelations,
-  HasRights,
-  HasTitle,
-} from "./mixins";
+import {HasDescription, HasImages, HasPage, HasRelations, HasRights, HasTitle,} from "./mixins";
 import {WorkEvent} from "./WorkEvent";
 import {WorkLocation} from "./WorkLocation";
 import {cms, dcterms, rdf} from "@paradicms/vocabularies";
@@ -58,7 +51,7 @@ const getRightsWorkAgents = (
 
 export class Work extends Mixin(
   NamedModel,
-  HasAbstract,
+  HasDescription,
   HasImages,
   HasPage,
   HasTitle,
@@ -71,8 +64,8 @@ export class Work extends Mixin(
 
     result.push(...getRightsWorkAgents(this.rights, "Work"));
 
-    if (this.abstract && this.abstract instanceof Text) {
-      result.push(...getRightsWorkAgents(this.abstract.rights, "Text"));
+    if (this.description && this.description instanceof Text) {
+      result.push(...getRightsWorkAgents(this.description.rights, "Text"));
     }
 
     for (const image of this.originalImages) {
@@ -91,11 +84,11 @@ export class Work extends Mixin(
     }
 
     if (
-      this.abstract &&
-      this.abstract instanceof Text &&
-      this.abstract.rights
+      this.description &&
+      this.description instanceof Text &&
+      this.description.rights
     ) {
-      result.push(...this.abstract.rights.agentUris);
+      result.push(...this.description.rights.agentUris);
     }
 
     for (const image of this.originalImages) {
@@ -119,8 +112,8 @@ export class Work extends Mixin(
   }
 
   @Memoize()
-  get description(): string | Text | null {
-    return this.findAndMapObject(dcterms.abstract, term =>
+  override get description(): string | Text | null {
+    return this.findAndMapObject(dcterms.description, term =>
       mapTextObject(this, term)
     );
   }

@@ -5,7 +5,7 @@ import {syntheticData} from "@paradicms/test";
 describe("Text", () => {
   const modelSet = ModelSet.fromDatasetCore(syntheticData);
   const work = modelSet.workByUri("http://example.com/collection0/work2");
-  const sut: Text = work.abstract! as Text;
+  const sut: Text = work.description! as Text;
 
   it("should provide the value", () => {
     expect(sut.value).to.not.be.empty;

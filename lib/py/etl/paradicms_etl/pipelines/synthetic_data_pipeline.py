@@ -277,10 +277,10 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             for collection_i in range(self.__collections):
                 collection_title = f"Collection{collection_i}"
                 collection = Collection.from_fields(
-                    abstract=Text.from_fields(
+                    description=Text.from_fields(
                         self.__LOREM_IPSUM,
                         rights=Rights.from_fields(
-                            holder=f"{collection_title} abstract rights holder",
+                            holder=f"{collection_title} description rights holder",
                             license=CreativeCommonsLicenses.NC_1_0.uri,
                             statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
                         ),
@@ -348,7 +348,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             title = title_prefix + str(work_i)
             uri = URIRef(uri_prefix + str(work_i))
 
-            include_abstract_and_description = work_i % 2 == 0
+            include_description = work_i % 2 == 0
 
             # Properties that depend on the work title
             properties.extend(
@@ -358,20 +358,6 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 )
                 for i in range(2)
             )
-            if include_abstract_and_description:
-                properties.append(
-                    Property(
-                        DCTERMS.description,
-                        self.__LOREM_IPSUM,
-                    )
-                )
-                properties.extend(
-                    Property(
-                        DCTERMS.description,
-                        f"{title} description {i}",
-                    )
-                    for i in range(2)
-                )
             properties.extend(
                 Property(DCTERMS.identifier, f"{title}Id{i}") for i in range(2)
             )
@@ -432,23 +418,23 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 )
             )
 
-            abstract = (
+            description = (
                 Text.from_fields(
                     self.__LOREM_IPSUM,
                     rights=Rights.from_fields(
-                        holder=f"{title} abstract rights holder",
+                        holder=f"{title} description rights holder",
                         license=CreativeCommonsLicenses.NC_1_0.uri,
                         statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
                     ),
                 )
-                if include_abstract_and_description
+                if include_description
                 else None
             )
 
             location = AnonymousLocation.from_fields(lat=42.728104, long=-73.687576)
 
             work = Work.from_fields(
-                abstract=abstract,
+                description=description,
                 collection_uris=collection_uris,
                 page=URIRef("http://example.com/work/" + str(work_i))
                 if work_i % 2 == 0
@@ -470,7 +456,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             )
 
             yield WorkClosing.from_fields(
-                abstract=abstract,
+                description=description,
                 date=destruction_date,
                 location=location,
                 title=f"{work.title} closing",
@@ -479,7 +465,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             )
 
             yield WorkCreation.from_fields(
-                abstract=abstract,
+                description=description,
                 contributor_uri=tuple(contributor_uris),
                 creator_uri=tuple(creator_uris),
                 date=creation_date_time_description,
@@ -490,7 +476,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             )
 
             yield WorkOpening.from_fields(
-                abstract=abstract,
+                description=description,
                 date=creation_date,
                 location=location,
                 title=f"{work.title} opening",

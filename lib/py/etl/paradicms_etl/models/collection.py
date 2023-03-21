@@ -24,12 +24,12 @@ class Collection(ResourceBackedNamedModel):
         *,
         title: str,
         uri: URIRef,
-        abstract: Union[str, Text, None] = None,
+        description: Union[str, Text, None] = None,
         properties: Tuple[Property, ...] = ()
     ) -> "Collection":
         return cls(
             ResourceBuilder(uri)
-            .add(DCTERMS.abstract, abstract)
+            .add(DCTERMS.description, description)
             .add(DCTERMS.title, title)
             .add_properties(properties)
             .build()
@@ -40,7 +40,7 @@ class Collection(ResourceBackedNamedModel):
         return safe_dict_update(
             ResourceBackedNamedModel.json_ld_context(),
             {
-                "abstract": {"@id": str(DCTERMS.abstract)},
+                "description": {"@id": str(DCTERMS.description)},
                 "page": {"@id": str(FOAF.page), "@type": "@id"},
                 "title": {"@id": str(DCTERMS.title)},
             },

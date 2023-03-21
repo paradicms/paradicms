@@ -28,7 +28,7 @@ class WorkCreation(WorkEvent):
         creator_uri: Union[URIRef, Tuple[URIRef, ...]],
         uri: URIRef,
         work_uri: URIRef,
-        abstract: Union[str, Text, None] = None,
+        description: Union[str, Text, None] = None,
         date: Optional[DateTimeUnion] = None,
         end_date: Optional[DateTimeUnion] = None,
         location: Union[Location, str, None] = None,
@@ -38,7 +38,7 @@ class WorkCreation(WorkEvent):
 
         return cls(
             WorkEvent._from_fields(
-                abstract=abstract,
+                description=description,
                 date=date,
                 end_date=end_date,
                 location=location,

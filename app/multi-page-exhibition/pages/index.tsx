@@ -41,15 +41,15 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     [modelSetString]
   );
   const collection = modelSet.collectionByUri(collectionUri);
-  const collectionAbstract = collection.abstract;
+  const collectionDescription = collection.description;
 
   React.useEffect(() => {
-    if (!collectionAbstract) {
+    if (!collectionDescription) {
       router.push(Hrefs.work({collectionUri, workUri: firstWorkUri}));
     }
   }, []);
 
-  if (!collectionAbstract) {
+  if (!collectionDescription) {
     // Will redirect in the useEffect, so this render will never be seen
     return <div></div>;
   }
@@ -66,17 +66,17 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
             className="text-wrap"
             xs={12}
             dangerouslySetInnerHTML={{
-              __html: collectionAbstract.toString(),
+              __html: collectionDescription.toString(),
             }}
           ></Col>
         </Row>
-        {collectionAbstract instanceof Text &&
-        collectionAbstract.rights?.requiresAttribution ? (
+        {collectionDescription instanceof Text &&
+        collectionDescription.rights?.requiresAttribution ? (
           <Row className="mt-2">
             <Col className="text-center" xs={12}>
               <RightsParagraph
                 material="Text"
-                rights={collectionAbstract.rights}
+                rights={collectionDescription.rights}
                 style={{fontSize: "xx-small"}}
               />
             </Col>

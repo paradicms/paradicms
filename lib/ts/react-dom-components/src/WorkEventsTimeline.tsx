@@ -24,18 +24,18 @@ export const WorkEventsTimeline: React.FunctionComponent<{
           icon={<FontAwesomeIcon icon={getWorkEventIcon(workEvent)} />}
         >
           <h3>{workEvent.title}</h3>
-          {workEvent.abstract ? (
+          {workEvent.description ? (
             <>
               <div
                 dangerouslySetInnerHTML={{
-                  __html: workEvent.abstract.toString(),
+                  __html: workEvent.description.toString(),
                 }}
               ></div>
-              {workEvent.abstract instanceof Text &&
-              workEvent.abstract.rights?.requiresAttribution ? (
+              {workEvent.description instanceof Text &&
+              workEvent.description.rights?.requiresAttribution ? (
                 <RightsParagraph
                   material="Text"
-                  rights={workEvent.abstract.rights}
+                  rights={workEvent.description.rights}
                   style={{fontSize: "x-small", marginBottom: 0}}
                 />
               ) : null}
