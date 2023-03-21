@@ -358,13 +358,6 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 )
                 for i in range(2)
             )
-            if include_description:
-                properties.append(
-                    Property(
-                        DCTERMS.description,
-                        self.__LOREM_IPSUM,
-                    )
-                )
             properties.extend(
                 Property(DCTERMS.identifier, f"{title}Id{i}") for i in range(2)
             )
