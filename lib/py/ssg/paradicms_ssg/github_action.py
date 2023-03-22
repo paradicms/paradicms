@@ -9,7 +9,7 @@ import yaml
 
 from paradicms_etl.loader import Loader
 from paradicms_ssg.deployers.fs_deployer import FsDeployer
-from paradicms_ssg.github_actions_inputs import GitHubActionInputs
+from paradicms_ssg.github_action_inputs import GitHubActionInputs
 from paradicms_ssg.loaders.app_loader import AppLoader
 
 InputsT = TypeVar("InputsT", bound=GitHubActionInputs)
