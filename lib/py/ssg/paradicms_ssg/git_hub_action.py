@@ -4,6 +4,9 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import TypeVar, Generic, Type
 
+import sys
+import yaml
+
 from paradicms_etl.loader import Loader
 from paradicms_ssg.deployers.fs_deployer import FsDeployer
 from paradicms_ssg.github_actions_inputs import GitHubActionInputs
@@ -49,7 +52,38 @@ class GitHubAction(ABC, Generic[InputsT]):
         return self.__temp_dir_path / "extracted"
 
     @classmethod
+    def __generate_action_yml(cls):
+        action_yaml = {
+            "author": "Minor Gordon",
+            "branding": {
+                "icon": "loader",
+            },
+            "description": cls.__doc__.strip(),
+            "inputs": cls._inputs_class.fields_yaml,
+            "name": cls.__doc__.strip(),
+            "runs": {"image": "Dockerfile", "using": "docker"},
+        }
+
+        action_yml_file_path = (
+            Path(sys.modules[cls.__module__].__file__).parent / "action.yml"
+        ).absolute()
+        with open(action_yml_file_path, "w+") as action_yml_file:
+            yaml.dump(
+                {key: action_yaml[key] for key in sorted(action_yaml.keys())},
+                action_yml_file,
+            )
+
+    @classmethod
     def main(cls):
+        if len(sys.argv) > 1:
+            # ArgParse/ArgumentParser has no notion of a "default subparser"
+            # https://stackoverflow.com/questions/46963172/how-do-you-get-argparse-to-choose-a-default-subparser
+            # Hack it here instead of forcing actions to require a subparser command like "run".
+            command = sys.argv[1].lower()
+            if command == "generate-action-yml":
+                cls.__generate_action_yml()
+                return
+
         with TemporaryDirectory() as temp_dir:
             cls(
                 inputs=cls._inputs_class.from_args(), temp_dir_path=Path(temp_dir)
