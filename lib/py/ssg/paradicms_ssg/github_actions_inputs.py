@@ -1,7 +1,7 @@
 import dataclasses
 import os
 from dataclasses import dataclass
-from typing import Dict
+from typing import Dict, Any
 
 from configargparse import ArgParser
 
@@ -42,12 +42,12 @@ class GitHubActionInputs:
 
     @classmethod
     @property
-    def fields_yaml(cls) -> Dict[str, Dict[str, str]]:
-        fields_yaml = {}
+    def fields_yaml(cls) -> Dict[str, Dict[str, Any]]:
+        fields_yaml: Dict[str, Dict[str, Any]] = {}
         for field in dataclasses.fields(cls):
             if not issubclass(field.type, str):
                 continue
-            field_yaml = {}
+            field_yaml: Dict[str, Any] = {}
             if field.default:
                 field_yaml["default"] = str(field.default)
             if field.metadata:
