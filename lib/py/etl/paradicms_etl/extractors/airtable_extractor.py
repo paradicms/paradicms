@@ -62,7 +62,9 @@ class AirtableExtractor:
         while True:
             json_ = self.__get_airtable_api_json(
                 force=force,
-                query_parameters={"offset": offset} if offset is not None else None,
+                query_parameters={"offset": str(offset)}
+                if offset is not None
+                else None,
                 url_path="/meta/bases",
             )
 
@@ -87,7 +89,9 @@ class AirtableExtractor:
         while True:
             json_ = self.__get_airtable_api_json(
                 force=force,
-                query_parameters={"offset": offset} if offset is not None else None,
+                query_parameters={"offset": str(offset)}
+                if offset is not None
+                else None,
                 url_path=self._table_url_path(base_id=self.__base_id, table=table),
             )
 
