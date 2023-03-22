@@ -57,6 +57,7 @@ class AirtableExtractor:
         }
 
     def __extract_base_metadata(self, *, base_id: str, force: bool) -> Dict[str, Any]:
+        base_ids = []
         offset = None
         while True:
             json_ = self.__get_airtable_api_json(
@@ -70,10 +71,13 @@ class AirtableExtractor:
             for base in bases_json:
                 if base["id"] == base_id:
                     return base
+                base_ids.append(base["id"])
             offset = json_.get("offset")
             if offset is None:
                 break
-        raise ValueError(f"base {base_id} not found in base metadata")
+        raise ValueError(
+            f"base {base_id} not found in base metadata {' '.join(base_ids)}"
+        )
 
     def __extract_table_records(
         self, *, force: bool, table: str, query_parameters: Dict[str, str]
@@ -131,6 +135,7 @@ class AirtableExtractor:
             response_str = f.read()
         finally:
             f.close()
+        file_path.parent.mkdir(parents=True, exist_ok=True)
         with open(file_path, "w+b") as file_:
             file_.write(response_str)
         return json.loads(response_str)
