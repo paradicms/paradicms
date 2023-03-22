@@ -55,6 +55,7 @@ class CostumeCoreDataAirtableTransformer:
         collection = Collection.from_fields(
             title=base["name"], uri=AirtableExtractor.base_url(base_id=base["id"])
         )
+        yield collection
 
         # features = self.__transform_feature_records(
         #     feature_records=records_by_table["Features"], term_records=term_records
