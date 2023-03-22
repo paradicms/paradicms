@@ -1,7 +1,5 @@
 from pathlib import Path
 
-from rdflib import URIRef
-
 from paradicms_etl.extractors.costume_core_data_airtable_extractor import (
     CostumeCoreDataAirtableExtractor,
 )
@@ -24,13 +22,7 @@ def test_transform(data_dir_path: Path):
     )
     extract_result = extractor(force=False)
 
-    transformer = CostumeCoreDataAirtableTransformer(
-        base_id=base_id,
-        collection=Collection.from_fields(
-            title="Costume Core Template Airtable",
-            uri=URIRef("https://airtable.com/" + base_id),
-        ),
-    )
+    transformer = CostumeCoreDataAirtableTransformer()
 
     models = tuple(transformer(**extract_result))
     assert models

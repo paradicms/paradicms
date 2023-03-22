@@ -9084,7 +9084,7 @@ coco:CC00630 a cms:Concept,
     skos:prefLabel "flax" .
 
 coco:sleeveLength a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Each term that describes the length of the sleeves of the garment." ] ;
@@ -9096,7 +9096,7 @@ coco:sleeveLength a worksheet:Feature ;
     sh:order 22 .
 
 coco:closurePlacement a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Each placement of closures on the item." ] ;
@@ -9143,7 +9143,7 @@ coco:closurePlacement a worksheet:Feature ;
         <http://i.creativecommons.org/l/by/2.0/88x31.png> .
 
 coco:length a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Each length of the object, where the hem lands on the body." ] ;
@@ -9157,7 +9157,7 @@ coco:length a worksheet:Feature ;
     sh:order 24 .
 
 coco:waistline a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Each term that describes the level and shape of the waist of the garment." ] ;
@@ -9171,7 +9171,7 @@ coco:waistline a worksheet:Feature ;
     sh:order 23 .
 
 coco:collar a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
@@ -9218,7 +9218,7 @@ coco:collar a worksheet:Feature ;
         <http://i.creativecommons.org/l/by/3.0/88x31.png> .
 
 coco:closure a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
@@ -9233,7 +9233,7 @@ coco:closure a worksheet:Feature ;
     sh:order 17 .
 
 coco:pantsType a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Each term that describes the length and shape of pants." ] ;
@@ -9242,7 +9242,7 @@ coco:pantsType a worksheet:Feature ;
     sh:order 14 .
 
 coco:trimming a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
@@ -9257,7 +9257,7 @@ coco:trimming a worksheet:Feature ;
     sh:order 9 .
 
 coco:neckline a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Each type of neckline of the garment." ] ;
@@ -9269,21 +9269,21 @@ coco:neckline a worksheet:Feature ;
     sh:order 19 .
 
 <urn:costumeCore:ontology:featureSet:pants> a worksheet:FeatureSet ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
             rdf:value "A set of features appropriate for bifurcated garments (covering the legs separately) such as pants, shorts, leggings, etc. " ] ;
     dcterms:title "Pants" .
 
 <urn:costumeCore:ontology:featureSet:skirt> a worksheet:FeatureSet ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
             rdf:value "A set of features appropriate for garments covering the lower body, mainly below the waist, but not separating the legs. " ] ;
     dcterms:title "Skirt" .
 
 coco:sleeveType a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Each term that describes the shape of the sleeves of the garment." ] ;
@@ -9295,7 +9295,7 @@ coco:sleeveType a worksheet:Feature ;
     sh:order 21 .
 
 coco:costumeComponents a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
@@ -9310,7 +9310,7 @@ coco:costumeComponents a worksheet:Feature ;
     sh:order 25 .
 
 coco:skirtType a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Each term that describes the skirt of the garment." ] ;
@@ -9320,28 +9320,28 @@ coco:skirtType a worksheet:Feature ;
     sh:order 15 .
 
 <urn:costumeCore:ontology:featureSet:coat> a worksheet:FeatureSet ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
             rdf:value "A set of features appropriate for garments that cover both the upper and lower body (above and below the waist, past the hips), commonly with an opening at the front, such as coats." ] ;
     dcterms:title "Coat" .
 
 <urn:costumeCore:ontology:featureSet:jacket> a worksheet:FeatureSet ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
             rdf:value "A set of features appropriate for garments mainly worn on the upper body, but possibly extending to the hips, commonly with an opening at the front, such as jackets." ] ;
     dcterms:title "Jacket" .
 
 <urn:costumeCore:ontology:featureSet:top> a worksheet:FeatureSet ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
             rdf:value "A set of features appropriate for garments worn on the upper part of the body, mainly between the neckline and waist, such as tops, shirts, bodices, etc. " ] ;
     dcterms:title "Top" .
 
 coco:dressType a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
@@ -9351,7 +9351,7 @@ coco:dressType a worksheet:Feature ;
     sh:order 13 .
 
 coco:pattern a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
@@ -9366,14 +9366,14 @@ coco:pattern a worksheet:Feature ;
     sh:order 6 .
 
 <urn:costumeCore:ontology:featureSet:dress> a worksheet:FeatureSet ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
             rdf:value "A set of features appropriate for garments that cover both the upper and lower body (above and below the waist, past the hips), and are continuous, with closures instead any of significant openings along the entire length." ] ;
     dcterms:title "Dress" .
 
 coco:otherMaterials a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Any other material terms that do not describe fibers, textiles, or trimmings." ] ;
@@ -9387,7 +9387,7 @@ coco:otherMaterials a worksheet:Feature ;
     sh:order 10 .
 
 coco:colorMain a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/licenses/by-sa/4.0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
@@ -9402,7 +9402,7 @@ coco:colorMain a worksheet:Feature ;
     sh:order 4 .
 
 coco:colorSecondary a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/licenses/by-sa/4.0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
@@ -9417,7 +9417,7 @@ coco:colorSecondary a worksheet:Feature ;
     sh:order 5 .
 
 coco:fiber a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
@@ -9432,7 +9432,7 @@ coco:fiber a worksheet:Feature ;
     sh:order 7 .
 
 coco:hasTechnique a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
@@ -9449,7 +9449,7 @@ Do not include a description of where the technique is in evidence on the garmen
     sh:order 12 .
 
 coco:textileMaterials a worksheet:Feature ;
-    dcterms:abstract [ a cms:Text ;
+    dcterms:description [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;

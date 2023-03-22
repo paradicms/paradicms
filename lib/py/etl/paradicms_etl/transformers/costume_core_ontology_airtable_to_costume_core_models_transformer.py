@@ -1,5 +1,5 @@
 import logging
-from typing import Dict, List, Tuple, Union
+from typing import Any, Dict, List, Tuple, Union
 
 from rdflib import Graph, URIRef
 
@@ -154,7 +154,7 @@ class CostumeCoreOntologyAirtableToCostumeCoreModelsTransformer:
             terms.append(term)
         return tuple(sorted(terms, key=lambda term: term.id))
 
-    def __call__(self, *, records_by_table: Dict[str, Tuple]) -> Graph:  # type: ignore
+    def __call__(self, *, base: Dict[str, Any], records_by_table: Dict[str, Tuple]) -> Graph:  # type: ignore
         yield CostumeCoreOntology.from_fields(version=self.__ontology_version)
 
         feature_records = tuple(

@@ -102,7 +102,7 @@ class CostumeCoreOntologyAirtableToWorksheetModelsTransformer:
             )
         )
 
-    def __call__(self, *, records_by_table: Dict[str, Tuple]) -> Graph:  # type: ignore
+    def __call__(self, *, base: Dict[str, Any], records_by_table: Dict[str, Tuple]) -> Graph:  # type: ignore
         feature_records = tuple(records_by_table["features"])
         feature_set_records = tuple(records_by_table["feature_sets"])
         feature_value_records = tuple(records_by_table["feature_values"])
