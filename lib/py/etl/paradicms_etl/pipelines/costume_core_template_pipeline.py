@@ -1,14 +1,11 @@
 from pathlib import Path
 from typing import Optional
 
-from rdflib import URIRef
-
 from paradicms_etl.extractors.costume_core_data_airtable_extractor import (
     CostumeCoreDataAirtableExtractor,
 )
 from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.nop_loader import nop_loader
-from paradicms_etl.models.collection import Collection
 from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.transformers.costume_core_data_airtable_transformer import (
     CostumeCoreDataAirtableTransformer,
@@ -50,13 +47,7 @@ class CostumeCoreTemplatePipeline(Pipeline):
             ),
             id=self.__ID,
             loader=loader,
-            transformer=CostumeCoreDataAirtableTransformer(
-                base_id=self.__BASE_ID,
-                collection=Collection.from_fields(
-                    title="Costume Core Template Airtable",
-                    uri=URIRef("https://airtable.com/" + self.__BASE_ID),
-                ),
-            ),
+            transformer=CostumeCoreDataAirtableTransformer(),
         )
 
     @classmethod
