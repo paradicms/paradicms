@@ -1,82 +1,28 @@
-import dataclasses
 import logging
-import os
-from dataclasses import dataclass
+from abc import ABC, abstractmethod
 from pathlib import Path
+from tempfile import TemporaryDirectory
+from typing import TypeVar, Generic, Type
 
-from configargparse import ArgParser
+import sys
+import yaml
 
 from paradicms_etl.loader import Loader
 from paradicms_ssg.deployers.fs_deployer import FsDeployer
+from paradicms_ssg.github_actions_inputs import GitHubActionInputs
 from paradicms_ssg.loaders.app_loader import AppLoader
 
+InputsT = TypeVar("InputsT", bound=GitHubActionInputs)
 
-class GitHubAction:
+
+class GitHubAction(ABC, Generic[InputsT]):
     """
     Abstract base class for static site-generating GitHub Actions.
     """
 
-    @dataclass(frozen=True)
-    class RequiredInputs:
-        pipeline_id: str
-
-        @classmethod
-        def from_args(cls):
-            argument_parser = ArgParser()
-            argument_parser.add_argument(
-                "-c", is_config_file=True, help="path to a file to read arguments from"
-            )
-            for field in dataclasses.fields(cls):
-                if field.name == "dev":
-                    continue
-                argument_parser.add_argument(
-                    "--" + field.name.replace("_", "-"),
-                    env_var="INPUT_" + field.name.upper(),
-                    required=field.default == dataclasses.MISSING,
-                )
-                field.default
-            # The dev argument can only be supplied manually from the command line.
-            # It makes no sense to run the Next.js dev server ("next dev") in the GitHub Action.
-            argument_parser.add_argument("--dev", action="store_true")
-            args = argument_parser.parse_args()
-            kwds = {
-                key: value
-                for key, value in vars(args).items()
-                if isinstance(value, str) and value.strip()
-            }
-            if args.dev:
-                kwds["dev"] = True
-            for ignore_key in ("c",):
-                kwds.pop(ignore_key, None)
-            if "pipeline_id" not in kwds:
-                kwds["pipeline_id"] = os.environ["GITHUB_REPOSITORY"].rsplit("/", 1)[-1]
-            return cls(**kwds)
-
-        def __post_init__(self):
-            for field in dataclasses.fields(self):
-                if field.default != dataclasses.MISSING:
-                    continue
-                value = getattr(self, field.name)
-                if not value.strip():
-                    raise ValueError("empty/blank " + field.name)
-
-    @dataclass(frozen=True)
-    class OptionalInputs(RequiredInputs):
-        app_configuration_file_path: str = ""
-        debug: str = ""
-        dev: bool = False
-        build_directory_path: str = "_site"
-
-    def __init__(
-        self,
-        *,
-        optional_inputs: OptionalInputs,
-        required_inputs: RequiredInputs,
-        temp_dir_path: Path
-    ):
-        self.__optional_inputs = optional_inputs
-        self.__required_inputs = required_inputs
-        if self.__optional_inputs.debug:
+    def __init__(self, *, inputs: InputsT, temp_dir_path: Path):
+        self._inputs = inputs
+        if self._inputs.debug:
             logging.basicConfig(level=logging.DEBUG)
         else:
             logging.basicConfig(level=logging.INFO)
@@ -85,8 +31,8 @@ class GitHubAction:
 
     def _create_loader(self) -> Loader:
         return AppLoader(
-            app_configuration=Path(self.__optional_inputs.app_configuration_file_path)
-            if self.__optional_inputs.app_configuration_file_path
+            app_configuration=Path(self._inputs.app_configuration_file_path)
+            if self._inputs.app_configuration_file_path
             else None,
             deployer=FsDeployer(
                 # We're running in an environment that's never been used before, so no need to archive
@@ -94,18 +40,63 @@ class GitHubAction:
                 # We're also running in Docker, which usually means that the GUI's out directory is on a different mount
                 # than the directory we're "deploying" to, and we need to use copy instead of rename.
                 copy=True,
-                deploy_dir_path=Path(
-                    self.__optional_inputs.build_directory_path
-                ).absolute(),
+                deploy_dir_path=Path(self._inputs.build_directory_path).absolute(),
             ),
-            dev=self.__optional_inputs.dev,
+            dev=self._inputs.dev,
             loaded_data_dir_path=self.__temp_dir_path / "loaded",
-            pipeline_id=self.__required_inputs.pipeline_id,
+            pipeline_id=self._inputs.pipeline_id,
         )
 
     @property
     def _extracted_data_dir_path(self) -> Path:
         return self.__temp_dir_path / "extracted"
+
+    @classmethod
+    def __generate_action_yml(cls):
+        action_yaml = {
+            "author": "Minor Gordon",
+            "branding": {
+                "icon": "loader",
+            },
+            "description": cls.__doc__.strip(),
+            "inputs": cls._inputs_class.fields_yaml,
+            "name": cls.__doc__.strip(),
+            "runs": {"image": "Dockerfile", "using": "docker"},
+        }
+
+        action_yml_file_path = (
+            Path(sys.modules[cls.__module__].__file__).parent / "action.yml"
+        ).absolute()
+        with open(action_yml_file_path, "w+") as action_yml_file:
+            yaml.dump(
+                {key: action_yaml[key] for key in sorted(action_yaml.keys())},
+                action_yml_file,
+            )
+
+    @classmethod
+    def main(cls):
+        if len(sys.argv) > 1:
+            # ArgParse/ArgumentParser has no notion of a "default subparser"
+            # https://stackoverflow.com/questions/46963172/how-do-you-get-argparse-to-choose-a-default-subparser
+            # Hack it here instead of forcing actions to require a subparser command like "run".
+            command = sys.argv[1].lower()
+            if command == "generate-action-yml":
+                cls.__generate_action_yml()
+                return
+
+        with TemporaryDirectory() as temp_dir:
+            cls(
+                inputs=cls._inputs_class.from_args(), temp_dir_path=Path(temp_dir)
+            )._run()
+
+    @classmethod
+    @property
+    def _inputs_class(cls) -> Type[InputsT]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def _run(self):
+        raise NotImplementedError
 
     # def __mkdir(self, dir_path: Path) -> None:
     #     if dir_path.is_dir():
