@@ -24,7 +24,9 @@ class CostumeCoreOntologyAirtableToWorksheetRdfPipeline(Pipeline):
             self,
             extractor=CostumeCoreOntologyAirtableExtractor(
                 access_token=airtable_access_token,
-                extracted_data_dir_path=data_dir_path / self.ID / "extracted",
+                extracted_data_dir_path=self._extracted_data_dir_path(
+                    data_dir_path=data_dir_path, pipeline_id=self.ID
+                ),
             ),
             id=self.ID,
             loader=RdfFileLoader(

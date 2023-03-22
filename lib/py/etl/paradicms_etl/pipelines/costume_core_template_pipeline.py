@@ -1,10 +1,8 @@
 from pathlib import Path
-from typing import Optional
 
 from paradicms_etl.extractors.costume_core_data_airtable_extractor import (
     CostumeCoreDataAirtableExtractor,
 )
-from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.nop_loader import nop_loader
 from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.transformers.costume_core_data_airtable_transformer import (
@@ -16,37 +14,18 @@ class CostumeCoreTemplatePipeline(Pipeline):
     __BASE_ID = "appgU92SdGTwPIVNg"
     __ID = "costume_core_template"
 
-    def __init__(
-        self,
-        airtable_access_token: str,
-        data_dir_path: Path,
-        loader: Optional[Loader] = None,
-    ):
-        if loader is None:
-            # loader = AppLoader(
-            #     app="work-search",
-            #     deployer=S3Deployer(
-            #         cloudfront_distribution_id="E3SAJHD3NNDLWD",
-            #         s3_bucket_name="costumecoretemplate.dressdiscover.org",
-            #         **kwds,
-            #     ),
-            #     image_archiver=S3ImageArchiver(
-            #         s3_bucket_name="dressdiscover-images", **kwds
-            #     ),
-            #     loaded_data_dir_path=data_dir_path / self.__ID / "loaded",
-            #     pipeline_id=self.__ID,
-            # )
-            loader = nop_loader
-
+    def __init__(self, airtable_access_token: str, data_dir_path: Path):
         Pipeline.__init__(
             self,
             extractor=CostumeCoreDataAirtableExtractor(
                 access_token=airtable_access_token,
                 base_id=self.__BASE_ID,
-                extracted_data_dir_path=data_dir_path / self.__ID / "extracted",
+                extracted_data_dir_path=self._extracted_data_dir_path(
+                    data_dir_path=data_dir_path, pipeline_id=self.__ID
+                ),
             ),
             id=self.__ID,
-            loader=loader,
+            loader=nop_loader,
             transformer=CostumeCoreDataAirtableTransformer(),
         )
 
