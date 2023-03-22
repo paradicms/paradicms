@@ -39,11 +39,13 @@ const readFile = (filePath: string) =>
   fs.promises.readFile(filePath).then(contents => contents.toString());
 
 interface StaticProps {
+  readonly collectionTitle: string | null;
   readonly configurationString: string;
   readonly modelSetString: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
+  collectionTitle,
   configurationString,
   modelSetString,
 }) => {
@@ -78,7 +80,11 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   });
 
   return (
-    <Layout configuration={configuration} onSearch={onSearch}>
+    <Layout
+      collectionTitle={collectionTitle ?? undefined}
+      configuration={configuration}
+      onSearch={onSearch}
+    >
       <WorkSearchContainer
         getAbsoluteImageSrc={relativeImageSrc =>
           getAbsoluteImageSrc(relativeImageSrc, router)
@@ -113,6 +119,10 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
+      collectionTitle:
+        completeModelSet.collections.length === 1
+          ? completeModelSet.collections[0].title
+          : null,
       configurationString: configuration.toFastRdfString(),
       modelSetString: new ModelSubsetter({
         completeModelSet,

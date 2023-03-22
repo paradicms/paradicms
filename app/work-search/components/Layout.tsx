@@ -22,17 +22,17 @@ import Head from "next/head";
 import {WorkSearchAppConfiguration} from "../lib/WorkSearchAppConfiguration";
 import {getDefaultWorkQueryFilters} from "../lib/getDefaultWorkQueryFilters";
 
-const SITE_TITLE_DEFAULT = "Work search";
-
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   cardHeaderLinks?: React.ReactElement[];
-  configuration: WorkSearchAppConfiguration;
+  collectionTitle?: string;
   className?: string;
+  configuration: WorkSearchAppConfiguration;
   onSearch?: (text: string) => void;
   title?: string;
 }>> = ({
   cardHeaderLinks,
   children,
+  collectionTitle,
   title,
   configuration,
   onSearch: onSearchUserDefined,
@@ -55,8 +55,17 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
     };
   }
 
+  let siteTitle: string | undefined;
+  if (configuration.title) {
+    siteTitle = configuration.title;
+  } else if (collectionTitle) {
+    siteTitle = collectionTitle;
+  }
+
   const documentTitle: string[] = [];
-  documentTitle.push(configuration.title ?? SITE_TITLE_DEFAULT);
+  if (siteTitle) {
+    documentTitle.push(siteTitle);
+  }
   if (title) {
     documentTitle.push(title);
   }
@@ -75,9 +84,9 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
           <Col>
             <Navbar>
               <NavbarBrand className="me-auto" tag="div">
-                <Link href={Hrefs.home()}>
-                  {configuration.title ?? SITE_TITLE_DEFAULT}
-                </Link>
+                {siteTitle ? (
+                  <Link href={Hrefs.home()}>{siteTitle}</Link>
+                ) : null}
               </NavbarBrand>
               {onSearch ? (
                 <Nav navbar>

@@ -36,12 +36,14 @@ const WorkLocationsMap = dynamic<{
 );
 
 interface StaticProps {
+  readonly collectionTitle: string | null;
   readonly configurationString: string;
   readonly modelSetString: string;
   readonly workUri: string;
 }
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
+  collectionTitle,
   configurationString,
   modelSetString,
   workUri,
@@ -63,8 +65,9 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   return (
     <Layout
       cardHeaderLinks={getNamedModelLinks(work)}
-      title={work.title}
+      collectionTitle={collectionTitle ?? undefined}
       configuration={configuration}
+      title={work.title}
     >
       <WorkContainer
         getAbsoluteImageSrc={relativeImageSrc =>
@@ -110,6 +113,10 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
+      collectionTitle:
+        completeModelSet.collections.length === 1
+          ? completeModelSet.collections[0].title
+          : null,
       configurationString: configuration.toFastRdfString(),
       modelSetString: new ModelSubsetter({
         completeModelSet,
