@@ -45,11 +45,16 @@ class CostumeCoreOntologyAirtableToWorksheetModelsTransformer:
         self.__available_licenses_by_uri = {
             license.uri: license for license in CreativeCommonsLicenses.as_tuple()
         }
-        odc_by_license = License.from_fields(
-            identifier="ODC-By",
-            title="Open Data Commons Attribution License (ODC-By) v1.0",
-            uri=URIRef("http://opendatacommons.org/licenses/by/1-0/"),
-            version="1.0",
+        odc_by_license = (
+            License.builder(
+                identifier="ODC-By",
+                title="Open Data Commons Attribution License (ODC-By) v1.0",
+                uri=URIRef("http://opendatacommons.org/licenses/by/1-0/"),
+            )
+            .set_version(
+                version="1.0",
+            )
+            .build()
         )
         self.__available_licenses_by_uri[odc_by_license.uri] = odc_by_license
         self.__available_license_uris = frozenset(
@@ -151,12 +156,15 @@ class CostumeCoreOntologyAirtableToWorksheetModelsTransformer:
         if not description_text_en:
             return None
         assert isinstance(description_text_en, str)
-        return Text.from_fields(
-            rights=self.__transform_rights_fields(
-                key_prefix="description",
-                record_fields=record_fields,
-            ),
-            value=description_text_en,
+        return (
+            Text.builder(description_text_en)
+            .add_rights(
+                self.__transform_rights_fields(
+                    key_prefix="description",
+                    record_fields=record_fields,
+                )
+            )
+            .build()
         )
 
     def __transform_feature_records(
@@ -187,15 +195,17 @@ class CostumeCoreOntologyAirtableToWorksheetModelsTransformer:
 
             feature_uri = URIRef(feature_record_fields["URI"])
 
-            yield WorksheetFeature.from_fields(
-                description=self.__transform_description_fields(
-                    record_fields=feature_record_fields,
-                ),
-                feature_set_uris=tuple(feature_set_uris),
-                order=int(feature_record_fields["sort_order"]),
-                title=feature_record_fields["display_name_en"],
-                uri=feature_uri,
+            feature_builder = WorksheetFeature.builder(
+                title=feature_record_fields["display_name_en"], uri=feature_uri
+            ).set_order(int(feature_record_fields["sort_order"]))
+            feature_description = self.__transform_description_fields(
+                record_fields=feature_record_fields,
             )
+            if feature_description:
+                feature_builder.set_description(feature_description)
+            for feature_set_uri in feature_set_uris:
+                feature_builder.add_feature_set_uri(feature_set_uri)
+            yield feature_builder.build()
 
             yield from self.__transform_image_records(
                 depicts_type=self.__ImageDepictsType.FEATURE,
@@ -212,13 +222,16 @@ class CostumeCoreOntologyAirtableToWorksheetModelsTransformer:
         for feature_set_record in feature_set_records:
             feature_set_uri = self.__feature_set_uri(feature_set_record)
 
-            yield WorksheetFeatureSet.from_fields(
-                description=self.__transform_description_fields(
-                    record_fields=feature_set_record["fields"],
-                ),
+            feature_set_builder = WorksheetFeatureSet.builder(
                 title=feature_set_record["fields"]["display_name_en"],
                 uri=feature_set_uri,
             )
+            feature_set_description = self.__transform_description_fields(
+                record_fields=feature_set_record["fields"],
+            )
+            if feature_set_description:
+                feature_set_builder.set_description(feature_set_description)
+            yield feature_set_builder.build()
 
             yield from self.__transform_image_records(
                 depicts_type=self.__ImageDepictsType.FEATURE_SET,
@@ -275,7 +288,15 @@ class CostumeCoreOntologyAirtableToWorksheetModelsTransformer:
             # aat_id=fields.get("AATID"),
             #     wikidata_id=fields.get("WikidataID"),
 
+            feature_value_uri = COCO[feature_value_id]
+            feature_value_builder = Concept.builder(
+                property_uris=tuple(feature_uris),
+                value=feature_value_uri,
+                uri=feature_value_uri,
+            )
+
             pref_label = feature_value_record_fields["display_name_en"]
+            feature_value_builder.set_pref_label(pref_label)
 
             alt_labels = set()
             for variant_term_record in variant_term_records_by_feature_value_id.get(
@@ -311,18 +332,16 @@ class CostumeCoreOntologyAirtableToWorksheetModelsTransformer:
                         variant_term, lang=variant_term_record["fields"]["xml-lang"]
                     )
                 )
+            for alt_label in alt_labels:
+                feature_value_builder.add_alt_label(alt_label)
 
-            feature_value_uri = COCO[feature_value_id]
-            feature_value = Concept.from_fields(
-                definition=self.__transform_description_fields(
-                    record_fields=feature_value_record_fields
-                ),
-                alt_labels=tuple(alt_labels),
-                pref_label=pref_label,
-                property_uris=tuple(feature_uris),
-                value=feature_value_uri,
-                uri=feature_value_uri,
+            feature_value_description = self.__transform_description_fields(
+                record_fields=feature_value_record_fields
             )
+            if feature_value_description:
+                feature_value_builder.set_definition(feature_value_description)
+
+            feature_value = feature_value_builder.build()
             yield feature_value
 
             image_filename = feature_value_record_fields.get("image_filename")
@@ -338,32 +357,41 @@ class CostumeCoreOntologyAirtableToWorksheetModelsTransformer:
 
                 # See note in transform_image_records re: image URIs.
 
-                full_size_image = Image.from_fields(
-                    depicts_uri=feature_value.uri,
-                    rights=image_rights,
-                    src=CostumeCoreTerm.FULL_SIZE_IMAGE_BASE_URL + image_filename,
-                    uri=self.__image_uri(
+                full_size_image = (
+                    Image.builder(
                         depicts_uri=feature_value.uri,
-                        depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
-                        filename=image_filename,
-                        type=self.__ImageType.FULL_SIZE,
-                    ),
+                        uri=self.__image_uri(
+                            depicts_uri=feature_value.uri,
+                            depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
+                            filename=image_filename,
+                            type=self.__ImageType.FULL_SIZE,
+                        ),
+                    )
+                    .add_rights(image_rights)
+                    .set_src(
+                        CostumeCoreTerm.FULL_SIZE_IMAGE_BASE_URL + image_filename,
+                    )
+                    .build()
                 )
                 yield full_size_image
 
-                yield Image.from_fields(
+                yield Image.builder(
                     depicts_uri=feature_value.uri,
-                    exact_dimensions=ImageDimensions(height=200, width=200),
-                    original_image_uri=full_size_image.uri,
-                    rights=image_rights,
-                    src=CostumeCoreTerm.THUMBNAIL_BASE_URL + image_filename,
                     uri=self.__image_uri(
                         depicts_uri=feature_value.uri,
                         depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
                         filename=image_filename,
                         type=self.__ImageType.THUMBNAIL,
                     ),
-                )
+                ).set_exact_dimensions(
+                    ImageDimensions(height=200, width=200)
+                ).set_original_image_uri(
+                    full_size_image.uri
+                ).add_rights(
+                    image_rights
+                ).set_src(
+                    CostumeCoreTerm.THUMBNAIL_BASE_URL + image_filename
+                ).build()
 
     def __transform_image_records(
         self, *, depicts_type: __ImageDepictsType, depicts_uri: URIRef, image_records
@@ -389,32 +417,40 @@ class CostumeCoreOntologyAirtableToWorksheetModelsTransformer:
             # The same image may be used to depict multiple objects e.g., a feature value, a feature, and a feature set.
             # Allow the src to be duplicated but make the URIs unique.
 
-            full_size_image = Image.from_fields(
-                depicts_uri=depicts_uri,
-                rights=image_rights,
-                src=CostumeCoreTerm.FULL_SIZE_IMAGE_BASE_URL + image_filename,
-                uri=self.__image_uri(
+            full_size_image = (
+                Image.builder(
                     depicts_uri=depicts_uri,
-                    depicts_type=depicts_type,
-                    filename=image_filename,
-                    type=self.__ImageType.FULL_SIZE,
-                ),
+                    uri=self.__image_uri(
+                        depicts_uri=depicts_uri,
+                        depicts_type=depicts_type,
+                        filename=image_filename,
+                        type=self.__ImageType.FULL_SIZE,
+                    ),
+                )
+                .add_rights(image_rights)
+                .set_src(CostumeCoreTerm.FULL_SIZE_IMAGE_BASE_URL + image_filename)
+                .build()
             )
+
             yield full_size_image
 
-            yield Image.from_fields(
+            yield Image.builder(
                 depicts_uri=depicts_uri,
-                exact_dimensions=ImageDimensions(height=200, width=200),
-                original_image_uri=full_size_image.uri,
-                rights=image_rights,
-                src=CostumeCoreTerm.THUMBNAIL_BASE_URL + image_filename,
                 uri=self.__image_uri(
                     depicts_uri=depicts_uri,
                     depicts_type=depicts_type,
                     filename=image_filename,
                     type=self.__ImageType.THUMBNAIL,
                 ),
-            )
+            ).set_exact_dimensions(
+                ImageDimensions(height=200, width=200)
+            ).set_original_image_uri(
+                full_size_image.uri
+            ).add_rights(
+                image_rights
+            ).set_src(
+                CostumeCoreTerm.THUMBNAIL_BASE_URL + image_filename
+            ).build()
 
     def __transform_rights_fields(
         self, *, key_prefix: str, record_fields: Dict[str, Union[str, List[str], None]]
@@ -460,28 +496,34 @@ class CostumeCoreOntologyAirtableToWorksheetModelsTransformer:
 
             return None
 
-        return Rights.from_fields(
-            creator=get_first_list_element(
-                record_fields.get(f"{key_prefix}_rights_author")
-            ),
-            license=transform_rights_uri(
-                available_rights_uris=self.__available_license_uris,
-                rights_uri_str=get_first_list_element(
-                    record_fields.get(f"{key_prefix}_rights_license")
-                ),
-                referenced_rights_uris=self.__referenced_license_uris,
-            ),
-            statement=transform_rights_uri(
-                available_rights_uris=self.__available_rights_statement_uris,
-                rights_uri_str=get_first_list_element(
-                    record_fields.get(f"{key_prefix}_rights_statement")
-                ),
-                referenced_rights_uris=self.__referenced_rights_statement_uris,
-            ),
-            # source_name=get_first_list_element(
-            #     fields[f"{key_prefix}_rights_source_name"]
-            # ),
-            # source_url=get_first_list_element(
-            #     fields[f"{key_prefix}_rights_source_url"]
-            # ),
+        return (
+            Rights.builder()
+            .add_creator(
+                get_first_list_element(record_fields.get(f"{key_prefix}_rights_author"))
+            )
+            .add_license(
+                transform_rights_uri(
+                    available_rights_uris=self.__available_license_uris,
+                    rights_uri_str=get_first_list_element(
+                        record_fields.get(f"{key_prefix}_rights_license")
+                    ),
+                    referenced_rights_uris=self.__referenced_license_uris,
+                )
+            )
+            .add_statement(
+                transform_rights_uri(
+                    available_rights_uris=self.__available_rights_statement_uris,
+                    rights_uri_str=get_first_list_element(
+                        record_fields.get(f"{key_prefix}_rights_statement")
+                    ),
+                    referenced_rights_uris=self.__referenced_rights_statement_uris,
+                )
+            )
+            .build()
         )
+        # source_name=get_first_list_element(
+        #     fields[f"{key_prefix}_rights_source_name"]
+        # ),
+        # source_url=get_first_list_element(
+        #     fields[f"{key_prefix}_rights_source_url"]
+        # ),

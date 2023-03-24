@@ -1,5 +1,4 @@
 import datetime
-from typing import Optional, Union
 
 from rdflib import BNode, Literal, XSD, RDF
 from rdflib.resource import Resource
@@ -25,6 +24,59 @@ class DateTimeDescription(ResourceBackedModel):
         def build(self) -> "DateTimeDescription":
             return DateTimeDescription(self._resource)
 
+        def set_day(self, day: int) -> "Builder":
+            self.add(
+                # https://www.w3.org/TR/owl-time/#time:DateTimeDescription
+                # .add(RDF.type, TIME.DateTimeDescription)
+                # https://www.w3.org/TR/owl-time/#time:day
+                # https://www.w3.org/TR/xmlschema11-2/#gDay
+                TIME.day,
+                Literal("---" + str(day).zfill(2), datatype=XSD.gDay),
+            )
+            return self
+
+        def set_hour(self, hour: int) -> "Builder":
+            self.add(
+                # https://www.w3.org/TR/owl-time/#time:hour
+                TIME.hour,
+                hour,
+            )
+            return self
+
+        def set_minute(self, minute: int) -> "Builder":
+            self.add(
+                # https://www.w3.org/TR/owl-time/#time:minute
+                TIME.minute,
+                minute,
+            )
+            return self
+
+        def set_month(self, month: int) -> "Builder":
+            self.add(
+                # https://www.w3.org/TR/owl-time/#time:month
+                # https://www.w3.org/TR/xmlschema11-2/#gMonth
+                TIME.month,
+                Literal("--" + str(month).zfill(2), datatype=XSD.gMonth),
+            )
+            return self
+
+        def set_second(self, second: int) -> "Builder":
+            self.add(
+                # https://www.w3.org/TR/owl-time/#time:second
+                TIME.second,
+                Literal(second, datatype=XSD.decimal),
+            )
+            return self
+
+        def set_year(self, year: int) -> "Builder":
+            self.add(
+                # https://www.w3.org/TR/owl-time/#time:year
+                # https://www.w3.org/TR/xmlschema11-2/#gYear
+                TIME.year,
+                Literal(str(year), datatype=XSD.gYear),
+            )
+            return self
+
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedModel.__init__(self, resource)
@@ -35,59 +87,10 @@ class DateTimeDescription(ResourceBackedModel):
 
     @classmethod
     def from_date(cls, date: datetime.date) -> "DateTimeDescription":
-        return cls.from_fields(day=date.day, month=date.month, year=date.year)
-
-    @classmethod
-    def from_fields(
-        cls,
-        *,
-        day: Optional[int] = None,
-        hour: Optional[int] = None,
-        minute: Optional[int] = None,
-        second: Union[int, float, None] = None,
-        month: Optional[int] = None,
-        year: Optional[int] = None,
-    ) -> "DateTimeDescription":
         return (
             cls.builder()
-            .add(
-                # https://www.w3.org/TR/owl-time/#time:DateTimeDescription
-                # .add(RDF.type, TIME.DateTimeDescription)
-                # https://www.w3.org/TR/owl-time/#time:day
-                # https://www.w3.org/TR/xmlschema11-2/#gDay
-                TIME.day,
-                Literal("---" + str(day).zfill(2), datatype=XSD.gDay)
-                if day is not None
-                else None,
-            )
-            .add(
-                # https://www.w3.org/TR/owl-time/#time:hour
-                TIME.hour,
-                hour,
-            )
-            .add(
-                # https://www.w3.org/TR/owl-time/#time:minute
-                TIME.minute,
-                minute,
-            )
-            .add(
-                # https://www.w3.org/TR/owl-time/#time:month
-                # https://www.w3.org/TR/xmlschema11-2/#gMonth
-                TIME.month,
-                Literal("--" + str(month).zfill(2), datatype=XSD.gMonth)
-                if month is not None
-                else None,
-            )
-            .add(
-                # https://www.w3.org/TR/owl-time/#time:second
-                TIME.second,
-                Literal(second, datatype=XSD.decimal) if second is not None else None,
-            )
-            .add(
-                # https://www.w3.org/TR/owl-time/#time:year
-                # https://www.w3.org/TR/xmlschema11-2/#gYear
-                TIME.year,
-                Literal(str(year), datatype=XSD.gYear) if year is not None else None,
-            )
+            .set_day(date.day)
+            .set_month(date.month)
+            .set_year(date.year)
             .build()
         )

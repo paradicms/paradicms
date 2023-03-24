@@ -1,13 +1,13 @@
 from typing import Optional, Tuple
 
 from rdflib import URIRef, DCTERMS
+from rdflib.term import Node
 
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.person import Person
-from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -40,12 +40,14 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
     )
 
     class __WikidataItemTransformer(WikidataItemTransformer):
-        def _get_properties(self, item: WikidataItem) -> Tuple[Property, ...]:
+        def _get_properties(
+            self, item: WikidataItem
+        ) -> Tuple[Tuple[URIRef, Node], ...]:
             properties = []
-            properties.append(Property(DCTERMS.relation, item.uri))
+            properties.append((DCTERMS.relation, item.uri))
             for article in item.articles:
                 if str(article.uri).startswith("https://en.wikipedia.org/wiki/"):
-                    properties.append(Property(DCTERMS.relation, article.uri))
+                    properties.append((DCTERMS.relation, article.uri))
             return tuple(properties)
 
         def _transform_image_statement(
@@ -56,17 +58,19 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
             statement: WikidataStatement,
         ):
             assert isinstance(statement.value, URIRef)
-            yield Image.from_fields(
-                depicts_uri=item_model.uri, title=item_model.label, uri=statement.value
-            )
+            yield Image.builder(
+                depicts_uri=item_model.uri, uri=statement.value
+            ).set_title(item_model.label).build()
 
     class __PersonWikidataItemTransformer(__WikidataItemTransformer):
         def _transform_item(self, item: WikidataItem) -> NamedModel:
-            return Person.from_fields(
+            person_builder = Person.builder(
                 name=item.label,
-                properties=tuple(self._get_properties(item)),
                 uri=item.uri,
             )
+            for p, o in self._get_properties(item):
+                person_builder.add(p, o)
+            return person_builder.build()
 
     class __WorkWikidataItemTransformer(__WikidataItemTransformer):
         def __init__(self, *, collection_uri: URIRef, **kwds):
@@ -74,13 +78,17 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
             self.__collection_uri = collection_uri
 
         def _transform_item(self, item: WikidataItem):
-            return Work.from_fields(
-                collection_uris=(self.__collection_uri,),
-                properties=tuple(self._get_properties(item)),
-                rights=WikidataItemsTransformer._RIGHTS,
-                title=item.label,
-                uri=item.uri,
+            work_builder = (
+                Work.builder(
+                    title=item.label,
+                    uri=item.uri,
+                )
+                .add_collection_uri(self.__collection_uri)
+                .add_rights(WikidataItemsTransformer._RIGHTS)
             )
+            for p, o in self._get_properties(item):
+                work_builder.add(p, o)
+            return work_builder.build()
 
     def __init__(
         self,
@@ -111,10 +119,10 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
 
     def __transform_work_item(self, item: WikidataItem):
         if self.__collection_uri is None:
-            collection = Collection.from_fields(
+            collection = Collection.builder(
                 title="Wikidata",
                 uri=URIRef("https://www.wikidata.org/entity/"),
-            )
+            ).build()
             yield collection
             self.__collection_uri = collection.uri
 

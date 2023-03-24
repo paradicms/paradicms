@@ -35,6 +35,10 @@ class WorksheetFeature(ResourceBackedNamedModel):
         ResourceBackedNamedModel.__init__(self, resource)
         self.title
 
+    @classmethod
+    def builder(cls, *, title: str, uri: URIRef):
+        return cls.Builder(title=title, uri=uri)
+
     @property
     def description(self) -> Union[str, Text, None]:
         return self._optional_str_or_text_value(DCTERMS.description)

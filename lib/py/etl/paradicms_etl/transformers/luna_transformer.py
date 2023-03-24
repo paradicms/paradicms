@@ -2,7 +2,8 @@ import logging
 from datetime import datetime
 from typing import Dict, Generator, List, Tuple, Iterable, Any
 
-from rdflib import URIRef, DCTERMS
+from rdflib import URIRef, DCTERMS, Literal
+from rdflib.term import Node
 
 from paradicms_etl.extractors.luna_extractor import LunaExtractor
 from paradicms_etl.model import Model
@@ -10,7 +11,6 @@ from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.organization import Organization
-from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import VRA
@@ -104,18 +104,20 @@ class LunaTransformer:
         luna_collection: Dict[str, str],
     ) -> Collection:
         description = luna_collection.get("description", "").strip()
-        return Collection.from_fields(
-            description=description if description else None,
+        collection_builder = Collection.builder(
             title=luna_collection["name"],
             uri=URIRef(
                 LunaExtractor.create_search_url(base_url=base_url, query={"lc": id_})
             ),
         )
+        if description:
+            collection_builder.set_description(description)
+        return collection_builder.build()
 
     def _transform_institution(
         self, *, base_url: str, institution_name: str
     ) -> Organization:
-        return Organization.from_fields(name=institution_name, uri=URIRef(base_url))
+        return Organization.builder(name=institution_name, uri=URIRef(base_url)).build()
 
     def _transform_object(
         self,
@@ -157,13 +159,21 @@ class LunaTransformer:
 
         raise NotImplementedError("TODO: incorporate institution into rights")
 
-        work = Work.from_fields(
-            description=description,
-            collection_uris=collection_uris,
-            properties=properties,
+        work_builder = Work.builder(
             title=display_name,
             uri=URIRef(luna_object["iiifManifest"]),
         )
+        if description:
+            work_builder.set_description(description)
+        for collection_uri in collection_uris:
+            work_builder.add_collection_uri(collection_uri)
+        for (
+            p,
+            o,
+        ) in properties:
+            work_builder.add(p, o)
+        work = work_builder.build()
+
         yield work
 
         yield from self._transform_object_images(
@@ -179,7 +189,7 @@ class LunaTransformer:
 
     def _transform_object_field_values(
         self, *, field_values: Dict[str, List[str]]
-    ) -> Tuple[Property, ...]:
+    ) -> Tuple[Tuple[URIRef, Node], ...]:
         """
         Transform LUNA object fieldValues into zero or more object Property's
         Should mutate field_values to indicate that those fields have been consumed.
@@ -194,7 +204,7 @@ class LunaTransformer:
             ("Work Type", DCTERMS.type),
         ):
             for field_value in field_values.pop(field_name, []):
-                properties.append(Property(property_uri, field_value))
+                properties.append((property_uri, Literal(field_value)))
 
         def pop_qualified_field_values(*args):
             return self._pop_qualified_field_values(field_values, *args)
@@ -207,7 +217,7 @@ class LunaTransformer:
         ) in pop_qualified_field_values(
             "Creator", "Creator Dates", "Creator Type", "Creator Role"
         ):
-            properties.append(Property(DCTERMS.creator, creator))
+            properties.append((DCTERMS.creator, Literal(creator)))
 
         for date, date_type in pop_qualified_field_values("Date", "Date Type"):
             if date_type == "completion date":
@@ -216,7 +226,7 @@ class LunaTransformer:
                 property_uri = DCTERMS.created
             else:
                 raise ValueError(date_type)
-            properties.append(Property(property_uri, date))
+            properties.append((property_uri, Literal(date)))
 
         for location, location_type in pop_qualified_field_values(
             "Location", "Location Type"
@@ -226,10 +236,10 @@ class LunaTransformer:
         for material, material_type in pop_qualified_field_values(
             "Material", "Material Type"
         ):
-            properties.append(Property(VRA.material, material))
+            properties.append((VRA.material, Literal(material)))
 
         for title, title_type in pop_qualified_field_values("Title", "Title Type"):
-            properties.append(Property(DCTERMS.title, title))
+            properties.append((DCTERMS.title, Literal(title)))
 
         for ignore_key in (
             "Repository",
@@ -292,16 +302,22 @@ class LunaTransformer:
         for url_size_i, image_url in enumerate(image_urls):
             image_dimension_max = self.__URL_SIZES[url_size_i]
             image_uri = URIRef(image_url)
-            yield Image.from_fields(
-                created=image_created,
-                depicts_uri=work.uri,
-                max_dimensions=ImageDimensions(
-                    height=image_dimension_max,
-                    width=image_dimension_max,
-                ),
-                original_image_uri=original_image_uri
-                if image_uri != original_image_uri
-                else None,
-                rights=Rights.from_fields(statement=reproduction_rights_statement[0]),
-                uri=image_uri,
+            image_builder = (
+                Image.builder(
+                    depicts_uri=work.uri,
+                    uri=image_uri,
+                )
+                .set_created(image_created)
+                .set_max_dimensions(
+                    ImageDimensions(
+                        height=image_dimension_max,
+                        width=image_dimension_max,
+                    )
+                )
+                .add_rights(
+                    Rights.builder().add_statement(reproduction_rights_statement[0])
+                )
             )
+            if image_uri != original_image_uri:
+                image_builder.set_original_image_uri(original_image_uri)
+            yield image_builder.build()

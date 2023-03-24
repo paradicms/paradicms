@@ -4,11 +4,11 @@ from paradicms_etl.models.license import License
 
 
 def test_init():
-    License.from_fields(
+    License.builder(
         identifier="testidentifier",
         title="Test title",
         uri=URIRef("http://example.com"),
-    )
+    ).build()
 
     # graph = Graph()
     # expected.to_rdf(graph=graph)

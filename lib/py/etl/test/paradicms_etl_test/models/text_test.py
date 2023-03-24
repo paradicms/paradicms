@@ -5,18 +5,20 @@ from paradicms_etl.models.text import Text
 
 
 def test_init():
-    Text.from_fields(value="Test")
+    Text.builder(value="Test").build()
 
 
 def test_rights():
-    Text.from_fields(
-        value="Test", rights=Rights.from_fields(creator="Test creator")
-    ).rights.creators == ("Test creator",)
+    Text.builder(value="Test").add_rights(
+        Rights.builder().add_creator(creator="Test creator").build()
+    ).build().rights.creators == ("Test creator",)
 
 
 def test_to_rdf():
-    expected = Text.from_fields(
-        value="Test", rights=Rights.from_fields(creator="Test creator")
+    expected = (
+        Text.builder(value="Test")
+        .add_rights(Rights.builder().add_creator("Test creator").build())
+        .build()
     )
     graph = Graph()
     expected.to_rdf(graph=graph)
@@ -26,4 +28,4 @@ def test_to_rdf():
 
 
 def test_value():
-    assert Text.from_fields(value="Test").value == "Test"
+    assert Text.builder(value="Test").build().value == "Test"

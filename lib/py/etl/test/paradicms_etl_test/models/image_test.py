@@ -13,40 +13,44 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 
 
 @pytest.fixture
-def test_image() -> Image:
-    return Image.from_fields(
-        created=datetime.now(),
-        depicts_uri=URIRef("http://example.com/work"),
-        exact_dimensions=ImageDimensions(height=300, width=300),
-        format="image/gif",
-        modified=datetime.now(),
-        original_image_uri=URIRef("http://example.com/originalImage"),
-        # max_dimensions=ImageDimensions(height=600, width=600),
-        rights=Rights.from_fields(
-            creator="Test creator",
-            holder="Test holder",
-            license=CreativeCommonsLicenses.BY_1_0.uri,
-            statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-        ),
-        src="http://example.com/imagesrc",
-        uri=URIRef("http://example.com/image"),
+def test_builder() -> Image:
+    return (
+        Image.builder(
+            depicts_uri=URIRef("http://example.com/work"),
+            uri=URIRef("http://example.com/image"),
+        )
+        .set_created(datetime.now())
+        .set_exact_dimensions(ImageDimensions(height=300, width=300))
+        .set_format("image/gif")
+        .set_modified(datetime.now())
+        .set_original_image_uri(URIRef("http://example.com/originalImage"))
+        .add_rights(
+            Rights.builder()
+            .add_creator("Test creator")
+            .add_holder("Test holder")
+            .add_license(CreativeCommonsLicenses.BY_1_0.uri)
+            .add_statement(RightsStatementsDotOrgRightsStatements.InC_EDU.uri)
+            .build()
+        )
+        .set_src("http://example.com/imagesrc")
+        .build()
     )
 
 
-def test_replace_copyable(test_image: Image):
-    assert test_image.copyable
-    actual = test_image.replace(copyable=False)
+def test_replace_copyable(test_builder):
+    assert test_builder.copyable
+    actual = test_builder.replace(copyable=False)
     assert not actual.copyable
 
 
-def test_replace_src(test_image: Image):
-    assert test_image.src == "http://example.com/imagesrc"
-    actual = test_image.replace(src="http://example.com/newsrc")
+def test_replace_src(test_builder):
+    assert test_builder.src == "http://example.com/imagesrc"
+    actual = test_builder.replace(src="http://example.com/newsrc")
     assert actual.src == "http://example.com/newsrc"
 
 
-def test_to_rdf(test_image: Image):
-    expected = test_image
+def test_to_rdf(test_builder):
+    expected = test_builder
 
     actual = Image.from_rdf(resource=expected.to_rdf(Graph()))
 

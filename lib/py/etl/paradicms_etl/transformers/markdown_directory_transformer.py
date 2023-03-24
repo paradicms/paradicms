@@ -164,12 +164,12 @@ class MarkdownDirectoryTransformer:
         def __get_or_synthesize_default_collection(self) -> Collection:
             if self.__default_collection is None:
                 model_id = self.__markdown_directory.name
-                self.__default_collection = Collection.from_fields(
+                self.__default_collection = Collection.builder(
                     title=self.__markdown_directory.name,
                     uri=self.__default_collection_uri(
                         markdown_directory_name=self.__markdown_directory.name
                     ),
-                )
+                ).build()
                 self.__buffer_transformed_model(
                     model_id=model_id,
                     transformed_model=self.__default_collection,
@@ -346,14 +346,17 @@ class MarkdownDirectoryTransformer:
                     assert transformed_model.uri
                     self.__buffer_transformed_model(
                         model_id=image_file_entry.model_id,
-                        transformed_model=Image.from_fields(
+                        transformed_model=Image.builder(
                             depicts_uri=transformed_model.uri,
-                            src=image_file_entry.path.as_uri(),
                             uri=self.__model_uri(
                                 model_class=Image,
                                 model_id=image_file_entry.model_id,
                             ),
-                        ),
+                        )
+                        .set_src(
+                            image_file_entry.path.as_uri(),
+                        )
+                        .build(),
                     )
 
         def __transform_metadata_file_entry_to_resource(

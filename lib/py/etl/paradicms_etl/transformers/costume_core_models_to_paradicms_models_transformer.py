@@ -10,7 +10,6 @@ from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicens
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.license import License
-from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -31,11 +30,16 @@ class CostumeCoreModelsToParadicmsModelsTransformer:
         available_licenses_by_uri = {
             license.uri: license for license in CreativeCommonsLicenses.as_tuple()
         }
-        odc_by_license = License.from_fields(
-            identifier="ODC-By",
-            title="Open Data Commons Attribution License (ODC-By) v1.0",
-            uri=URIRef("http://opendatacommons.org/licenses/by/1-0/"),
-            version="1.0",
+        odc_by_license = (
+            License.builder(
+                identifier="ODC-By",
+                title="Open Data Commons Attribution License (ODC-By) v1.0",
+                uri=URIRef("http://opendatacommons.org/licenses/by/1-0/"),
+            )
+            .set_version(
+                "1.0",
+            )
+            .build()
         )
         available_licenses_by_uri[odc_by_license.uri] = odc_by_license
         available_license_uris = frozenset(available_licenses_by_uri.keys())
@@ -87,31 +91,25 @@ class CostumeCoreModelsToParadicmsModelsTransformer:
                 # return URIRef(rights_uri)
                 return None
 
-            return Rights.from_fields(
-                creator=rights.author,
-                # holder=RightsValue(text=rights.source_name, uri=rights.source_url),
-                holder=rights.source_name,
-                # license=RightsValue(
-                #     text=uri_text(rights.license_uri), uri=rights.license_uri
-                # )
-                # if rights.license_uri
-                # else None,
-                license=transform_rights_field(
-                    available_license_uris,
-                    rights.license_uri,
-                    yielded_license_uris,
-                ),
-                # statement=RightsValue(
-                #     text=uri_text(rights.rights_statement_uri),
-                #     uri=rights.rights_statement_uri,
-                # )
-                # if rights.rights_statement_uri
-                # else None,
-                statement=transform_rights_field(
-                    available_rights_statement_uris,
-                    rights.rights_statement_uri,
-                    yielded_rights_statement_uris,
-                ),
+            return (
+                Rights.builder()
+                .add_creator(rights.author)
+                .add_holder(rights.source_name)
+                .add_license(
+                    transform_rights_field(
+                        available_license_uris,
+                        rights.license_uri,
+                        yielded_license_uris,
+                    )
+                )
+                .add_statement(
+                    transform_rights_field(
+                        available_rights_statement_uris,
+                        rights.rights_statement_uri,
+                        yielded_rights_statement_uris,
+                    )
+                )
+                .build()
             )
 
         for term in self.__costume_core.terms:
@@ -132,39 +130,33 @@ class CostumeCoreModelsToParadicmsModelsTransformer:
                     continue
 
                 # feature_record = feature_records_by_id[predicate.id]
-                collection = Collection.from_fields(
+                collection = Collection.builder(
                     title=predicate.label,
                     uri=collection_uri,
-                )
+                ).build()
                 yield collection
                 yielded_collection_uris.add(collection_uri)
 
-            work_properties = []
+            work_builder = Work.builder(title=term.label, uri=URIRef(term.uri))
+
             if term.description:
-                work_properties.append(
-                    Property(
-                        DCTERMS.description,
-                        term.description.text_en,
-                    )
+                work_builder.add(
+                    DCTERMS.description,
+                    term.description.text_en,
                 )
-                work_properties.append(
-                    Property(
-                        DCTERMS.creator,
-                        term.description.rights.author,
-                    )
+                work_builder.add(
+                    DCTERMS.creator,
+                    term.description.rights.author,
+                )
+                work_builder.set_description(term.description.text_en)
+                work_builder.add_rights(
+                    transform_to_paradicms_rights(term.description.rights)
                 )
 
-            work = Work.from_fields(
-                description=term.description.text_en if term.description else None,
-                collection_uris=tuple(
-                    URIRef(term_predicate.uri) for term_predicate in term_predicates
-                ),
-                rights=transform_to_paradicms_rights(term.description.rights)
-                if term.description
-                else None,
-                title=term.label,
-                uri=URIRef(term.uri),
-            )
+            for term_predicate in term_predicates:
+                work_builder.add_collection_uri(URIRef(term_predicate.uri))
+
+            work = work_builder.build()
             yield work
 
             if term.image_filename is None:
@@ -173,20 +165,26 @@ class CostumeCoreModelsToParadicmsModelsTransformer:
 
             image_rights = transform_to_paradicms_rights(term.image_rights)
 
-            original_image = Image.from_fields(
-                depicts_uri=work.uri,
-                rights=image_rights,
-                uri=URIRef(str(term.full_size_image_url)),
+            original_image = (
+                Image.builder(
+                    depicts_uri=work.uri,
+                    uri=URIRef(str(term.full_size_image_url)),
+                )
+                .add_rights(image_rights)
+                .build(0)
             )
             yield original_image
 
-            yield Image.from_fields(
+            yield Image.builder(
                 depicts_uri=work.uri,
-                exact_dimensions=ImageDimensions(height=200, width=200),
-                original_image_uri=original_image.uri,
-                rights=image_rights,
                 uri=URIRef(str(term.thumbnail_url)),
-            )
+            ).set_exact_dimensions(
+                ImageDimensions(height=200, width=200)
+            ).set_original_image_uri(
+                original_image.uri
+            ).add_rights(
+                image_rights
+            ).build()
 
         # Yield only the licenses and rights statements we use
         for yielded_license_uri in yielded_license_uris:

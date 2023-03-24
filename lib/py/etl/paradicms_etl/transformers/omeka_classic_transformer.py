@@ -4,6 +4,7 @@ from typing import Dict, Optional, Tuple, List
 
 from pyformance import MetricsRegistry
 from rdflib import URIRef, DCTERMS, Literal
+from rdflib.term import Node
 from tqdm import tqdm
 
 from paradicms_etl.models.collection import Collection
@@ -137,15 +138,16 @@ class OmekaClassicTransformer:
                 "collection %s has no title property", omeka_collection["url"]
             )
             return None
-        return Collection.from_fields(
-            properties=properties,
-            title=title,
-            uri=URIRef(omeka_collection["url"]),
+        collection_builder = Collection.builder(
+            title=title, uri=URIRef(omeka_collection["url"])
         )
+        for p, o in properties:
+            collection_builder.add(p, o)
+        return collection_builder.build()
 
     def _transform_dublin_core_elements(
         self, *, element_text_tree: ElementTextTree
-    ) -> Tuple[Property, ...]:
+    ) -> Tuple[Tuple[URIRef, Node], ...]:
         dc_element_text_tree = element_text_tree.pop("Dublin Core", None)
         if not dc_element_text_tree:
             return ()
@@ -181,7 +183,7 @@ class OmekaClassicTransformer:
             ("Type", DCTERMS.type),
         ):
             for value in dc_element_text_tree.pop(key, []):
-                properties.add(Property(property_uri, value))
+                properties.add(property_uri, Literal(value))
 
         for (key, property_uri) in (
             ("License", DCTERMS.license),
@@ -189,9 +191,9 @@ class OmekaClassicTransformer:
         ):
             for value in dc_element_text_tree.pop(key, []):
                 if is_uri(value):
-                    properties.add(Property(property_uri, URIRef(value)))
+                    properties.add((property_uri, URIRef(value)))
                 else:
-                    properties.add(Property(property_uri, value))
+                    properties.add((property_uri, Literal(value)))
 
         if dc_element_text_tree:
             self.__logger.warn(
@@ -251,16 +253,20 @@ class OmekaClassicTransformer:
                     )
                 original_image_uri = URIRef(file_["file_urls"]["original"])
 
-            image = Image.from_fields(
-                created=file_added,
-                depicts_uri=work_uri,
-                exact_dimensions=exact_dimensions,
-                format=file_["mime_type"],
-                max_dimensions=max_dimensions,
-                modified=file_modified,
-                original_image_uri=original_image_uri,
-                uri=URIRef(url),
+            image = (
+                Image.builder(
+                    depicts_uri=work_uri,
+                    uri=URIRef(url),
+                )
+                .set_created(file_added)
+                .set_exact_dimensions(exact_dimensions)
+                .set_format(file_["mime_type"])
+                .set_max_dimensions(max_dimensions)
+                .set_modified(file_modified)
+                .set_original_image_uri(original_image_uri)
+                .build()
             )
+
             if key == "original":
                 images.insert(0, image)
             else:
@@ -304,16 +310,21 @@ class OmekaClassicTransformer:
         except KeyError:
             self.__logger.warning("work %s has no title property", item["url"])
             return None
-        return Work.from_fields(
-            collection_uris=(collection_uri,),
-            page=URIRef(endpoint_url + "items/show/" + str(item["id"])),
-            properties=properties,
-            # rights=Rights.from_properties(properties),
-            title=title,
-            uri=URIRef(item["url"]),
+        work_builder = (
+            Work.builder(
+                title=title,
+                uri=URIRef(item["url"]),
+            )
+            .add_collection_uri(collection_uri)
+            .add_page(URIRef(endpoint_url + "items/show/" + str(item["id"])))
         )
+        for p, o in properties:
+            work_builder.add(p, o)
+        return work_builder.build()
 
-    def _transform_item_type_metadata(self, element_text_tree) -> Tuple[Property, ...]:
+    def _transform_item_type_metadata(
+        self, element_text_tree
+    ) -> Tuple[Tuple[URIRef, Node], ...]:
         # "Item Type Metadata" is a catch-all element set for all user-defined elements.
         element_text_tree.pop("Item Type Metadata", None)
         return ()
