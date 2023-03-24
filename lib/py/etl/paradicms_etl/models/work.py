@@ -1,16 +1,13 @@
 from typing import Optional, Tuple, Union
 
-from rdflib import URIRef
-from rdflib.namespace import DCTERMS, FOAF
-from rdflib.resource import Resource
-
-from paradicms_etl.models.property import Property
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import CMS
-from paradicms_etl.utils.resource_builder import ResourceBuilder
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
+from rdflib import URIRef
+from rdflib.namespace import DCTERMS, FOAF
+from rdflib.resource import Resource
 
 
 class Work(ResourceBackedNamedModel):
@@ -22,36 +19,33 @@ class Work(ResourceBackedNamedModel):
 
     LABEL_PROPERTY = DCTERMS.title
 
+    class Builder(ResourceBackedNamedModel.Builder):
+        def __init__(self, *, title: str, uri: URIRef):
+            ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
+            self.set(DCTERMS.title, title)
+
+        def add_collection_uri(self, collection_uri: URIRef) -> "Builder":
+            self.add(CMS.collection, collection_uri)
+            return self
+
+        def add_page(self, page: Union[str, URIRef]) -> "Builder":
+            self.add(FOAF.page, page)
+            return self
+
+        def build(self) -> "Work":
+            return Work(self._resource)
+
+        def set_description(self, description: str) -> "Builder":
+            self.set(DCTERMS.description, description)
+            return self
+
     def __init__(self, resource: Resource):
         ResourceBackedNamedModel.__init__(self, resource)
         self.title
 
     @classmethod
-    def from_fields(
-        cls,
-        *,
-        # Linking up to the parent (relational style) and grandparent makes it easier to do
-        # page generation and search indexing downstream.
-        title: str,
-        uri: URIRef,
-        description: Union[str, Text, None] = None,
-        page: Union[
-            str, URIRef, None
-        ] = None,  # foaf:page, linking to a human-readable page; if not specified, defaults to URI
-        properties: Tuple[Property, ...] = (),
-        collection_uris: Optional[Tuple[URIRef, ...]] = None,
-        rights: Optional[Rights] = None,
-    ) -> "Work":
-        return cls(
-            ResourceBuilder(uri)
-            .add(DCTERMS.description, description)
-            .add(CMS.collection, collection_uris)
-            .add(FOAF.page, page)
-            .add_properties(properties)
-            .add_rights(rights)
-            .add(DCTERMS.title, title)
-            .build()
-        )
+    def builder(cls, *, title: str, uri: URIRef) -> Builder:
+        return cls.Builder(title=title, uri=uri)
 
     @property
     def description(self) -> Union[str, Text, None]:

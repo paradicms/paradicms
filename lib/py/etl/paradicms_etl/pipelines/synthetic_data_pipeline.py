@@ -277,14 +277,12 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             for collection_i in range(self.__collections):
                 collection_title = f"Collection{collection_i}"
                 collection = Collection.from_fields(
-                    description=Text.from_fields(
-                        self.__LOREM_IPSUM,
-                        rights=Rights.from_fields(
-                            holder=f"{collection_title} description rights holder",
-                            license=CreativeCommonsLicenses.NC_1_0.uri,
-                            statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-                        ),
-                    )
+                    description=Text.builder(
+                        self.__LOREM_IPSUM).add_rights(Rights.builder().add_holder(
+                            f"{collection_title} description rights holder").add_license(
+                            CreativeCommonsLicenses.NC_1_0.uri).add_statement(
+                            RightsStatementsDotOrgRightsStatements.InC_EDU.uri).build()
+                        ).build(),
                     if collection_i % 2 == 0
                     else None,
                     title=collection_title,

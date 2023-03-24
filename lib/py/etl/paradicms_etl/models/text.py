@@ -1,13 +1,11 @@
 from typing import Optional
 
-from rdflib import BNode, RDF
-from rdflib.resource import Resource
-
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespaces import CMS
-from paradicms_etl.utils.resource_builder import ResourceBuilder
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
+from rdflib import BNode, RDF
+from rdflib.resource import Resource
 
 
 class Text(ResourceBackedModel):
@@ -26,16 +24,22 @@ class Text(ResourceBackedModel):
     <text bnode> dcterms:license <license URI> .
     """
 
+    class Builder(ResourceBackedModel.Builder):
+        def __init__(self, *, value: str):
+            ResourceBackedModel.Builder.__init__(self, BNode())
+            self.add(RDF.value, value)
+
+        def build(self) -> "Text":
+            return Text(self._resource)
+
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedModel.__init__(self, resource)
         self.value
 
     @classmethod
-    def from_fields(cls, value: str, *, rights: Optional[Rights] = None) -> "Text":
-        return cls(
-            ResourceBuilder(BNode()).add(RDF.value, value).add_rights(rights).build()
-        )
+    def builder(cls, *, value: str) -> Builder:
+        return cls.Builder(value=value)
 
     @classmethod
     def json_ld_context(cls):

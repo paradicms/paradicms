@@ -7,25 +7,29 @@ from rdflib.resource import Resource
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import WORKSHEET
-from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class WorksheetFeatureSet(ResourceBackedNamedModel):
+    class Builder(ResourceBackedNamedModel.Builder):
+        def __init__(self, *, title: str, uri: URIRef):
+            ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
+            self.add(DCTERMS.title, title)
+
+        def add_description(self, description: Union[str, Text]) -> "Builder":
+            self.add(DCTERMS.description, description)
+            return self
+
+        def build(self):
+            return WorksheetFeatureSet(self._resource)
+
     def __init__(self, resource: Resource):
         resource.add(RDF.type, WORKSHEET.FeatureSet)
         ResourceBackedNamedModel.__init__(self, resource)
         self.title
 
     @classmethod
-    def from_fields(
-        cls, *, title: str, uri: URIRef, description: Union[str, Text, None] = None
-    ) -> "WorksheetFeatureSet":
-        return cls(
-            ResourceBuilder(uri)
-            .add(DCTERMS.description, description)
-            .add(DCTERMS.title, title)
-            .build()
-        )
+    def builder(cls, *, title: str, uri: URIRef) -> Builder:
+        return cls.Builder(title=title, uri=uri)
 
     @property
     def label(self) -> str:

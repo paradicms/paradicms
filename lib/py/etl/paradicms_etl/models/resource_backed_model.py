@@ -1,15 +1,40 @@
 from typing import Generator, Optional, Tuple, Union, TypeVar, Any
 
-from rdflib import ConjunctiveGraph, Graph, Literal, RDF, URIRef
-from rdflib.resource import Resource
-
 from paradicms_etl.model import Model
 from paradicms_etl.namespaces import CMS
+from rdflib import ConjunctiveGraph, Graph, Literal, RDF, URIRef
+from rdflib.resource import Resource
 
 _ValueT = TypeVar("_ValueT")
 
 
 class ResourceBackedModel(Model):
+    class Builder:
+        def __init__(self, identifier: Identifier):
+            graph = Graph()
+            self._resource = graph.resource(identifier)
+
+        def add(self, p: URIRef, o: Any) -> "Builder":
+            if o is None:
+                pass
+            elif isinstance(o, Model):
+                self._resource.add(p, o.to_rdf(graph=self._resource.graph))
+            elif isinstance(o, Node):
+                self._resource.add(p, o)
+            elif isinstance(o, (list, tuple)):
+                for sub_o in o:
+                    self.add(p, sub_o)
+            else:
+                self._resource.add(p, Literal(o))
+            return self
+
+        def set(self, p: URIRef, o: Any) -> "Builder":
+            if o is None:
+                return self
+            # May orphan BNode/Model objects
+            self._resource.remove(p)
+            return self.add(p, o)
+
     def __init__(self, resource: Resource):
         self.__resource = resource
 
