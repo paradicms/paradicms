@@ -1,3 +1,5 @@
+from rdflib import URIRef
+
 from paradicms_etl.models.work_event import WorkEvent
 
 

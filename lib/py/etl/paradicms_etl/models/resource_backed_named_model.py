@@ -1,7 +1,8 @@
+from rdflib import URIRef, RDF
+
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.namespaces import CMS
-from rdflib import URIRef, RDF
 
 
 class ResourceBackedNamedModel(ResourceBackedModel, NamedModel):
@@ -11,14 +12,6 @@ class ResourceBackedNamedModel(ResourceBackedModel, NamedModel):
 
         def add(self, *args, **kwds) -> "Builder":
             ResourceBackedModel.Builder.add(self, *args, **kwds)
-            return self
-
-        def add_rights(self, rights: Optional[Rights]) -> "Builder":
-            if rights is not None:
-                temp_graph = Graph()
-                rights_resource = rights.to_rdf(graph=temp_graph)
-                for p, o in rights_resource.predicate_objects():
-                    self.__resource.add(p.identifier, o)
             return self
 
     def __init__(self, *args, **kwds):

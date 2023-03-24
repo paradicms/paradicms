@@ -1,4 +1,4 @@
-from typing import Optional, Tuple, Union
+from typing import Tuple, Union
 
 from rdflib import SKOS
 from rdflib.namespace import RDF
@@ -7,7 +7,6 @@ from rdflib.term import Node, URIRef, Literal
 
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.text import Text
-from paradicms_etl.utils.resource_builder import ResourceBuilder
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
@@ -44,27 +43,8 @@ class Concept(ResourceBackedNamedModel):
         self.property_uris
 
     @classmethod
-    def from_fields(
-        cls,
-        *,
-        property_uris: Tuple[URIRef, ...],  # Child -> parent references
-        uri: URIRef,
-        value: Node,  # A property value
-        definition: Union[str, Text, None] = None,
-        alt_labels: Tuple[Union[str, Literal], ...] = None,
-        pref_label: Optional[str] = None,
-    ) -> "Concept":
-        if not property_uris:
-            raise ValueError("must specify at least one property URI")
-        return cls(
-            ResourceBuilder(uri)
-            .add(SKOS.definition, definition)
-            .add(RDF.predicate, property_uris)
-            .add(RDF.value, value)
-            .add(SKOS.altLabel, alt_labels)
-            .add(SKOS.prefLabel, pref_label)
-            .build()
-        )
+    def builder(cls, *, property_uris: Tuple[URIRef, ...], uri: URIRef, value: Node):
+        return cls.Builder(property_uris=property_uris, uri=uri, value=value)
 
     @classmethod
     def json_ld_context(cls):

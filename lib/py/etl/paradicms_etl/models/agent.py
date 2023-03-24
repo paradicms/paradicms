@@ -1,9 +1,8 @@
 from rdflib import FOAF, RDF, DCTERMS, URIRef
 from rdflib.resource import Resource
 
-from namespaces import CONTACT
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
-from paradicms_etl.namespaces import CMS
+from paradicms_etl.namespaces import CMS, CONTACT
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
@@ -12,7 +11,7 @@ class Agent(ResourceBackedNamedModel):
 
     class Builder(ResourceBackedNamedModel.Builder):
         def __init__(self, *, name: str, uri: URIRef):
-            ResourceBackedNamedModel.__init__(self, uri)
+            ResourceBackedNamedModel.Builder.__init__(self, uri)
             self.set(FOAF.name, name)
 
         def add_page(self, page: URIRef) -> "Builder":

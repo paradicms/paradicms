@@ -1,9 +1,11 @@
 from typing import Generator, Optional, Tuple, Union, TypeVar, Any
 
-from paradicms_etl.model import Model
-from paradicms_etl.namespaces import CMS
 from rdflib import ConjunctiveGraph, Graph, Literal, RDF, URIRef
 from rdflib.resource import Resource
+from rdflib.term import Identifier, Node
+
+from paradicms_etl.model import Model
+from paradicms_etl.namespaces import CMS
 
 _ValueT = TypeVar("_ValueT")
 

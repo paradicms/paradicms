@@ -1,13 +1,14 @@
 from typing import Optional, Tuple, Union
 
+from rdflib import Graph, URIRef
+from rdflib.namespace import DCTERMS, FOAF
+from rdflib.resource import Resource
+
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
-from rdflib import URIRef
-from rdflib.namespace import DCTERMS, FOAF
-from rdflib.resource import Resource
 
 
 class Work(ResourceBackedNamedModel):
@@ -30,6 +31,11 @@ class Work(ResourceBackedNamedModel):
 
         def add_page(self, page: Union[str, URIRef]) -> "Builder":
             self.add(FOAF.page, page)
+            return self
+
+        def add_rights(self, rights: Rights) -> "Builder":
+            for p, o in rights.to_rdf(graph=Graph()).predicate_objects():
+                self._resource.add(p.identifier, o)
             return self
 
         def build(self) -> "Work":

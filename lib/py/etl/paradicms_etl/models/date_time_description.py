@@ -1,10 +1,11 @@
 import datetime
 from typing import Optional, Union
 
-from paradicms_etl.models.resource_backed_model import ResourceBackedModel
-from paradicms_etl.namespaces import TIME, CMS
 from rdflib import BNode, Literal, XSD, RDF
 from rdflib.resource import Resource
+
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
+from paradicms_etl.namespaces import TIME, CMS
 
 
 class DateTimeDescription(ResourceBackedModel):
@@ -27,6 +28,10 @@ class DateTimeDescription(ResourceBackedModel):
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS[self.__class__.__name__])
         ResourceBackedModel.__init__(self, resource)
+
+    @classmethod
+    def builder(cls):
+        return cls.Builder()
 
     @classmethod
     def from_date(cls, date: datetime.date) -> "DateTimeDescription":

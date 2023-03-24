@@ -1,11 +1,12 @@
 from typing import Optional
 
+from rdflib import BNode, RDF, Graph
+from rdflib.resource import Resource
+
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
-from rdflib import BNode, RDF
-from rdflib.resource import Resource
 
 
 class Text(ResourceBackedModel):
@@ -29,6 +30,11 @@ class Text(ResourceBackedModel):
             ResourceBackedModel.Builder.__init__(self, BNode())
             self.add(RDF.value, value)
 
+        def add_rights(self, rights: Rights) -> "Builder":
+            for p, o in rights.to_rdf(graph=Graph()).predicate_objects():
+                self._resource.add(p.identifier, o)
+            return self
+
         def build(self) -> "Text":
             return Text(self._resource)
 
@@ -38,7 +44,7 @@ class Text(ResourceBackedModel):
         self.value
 
     @classmethod
-    def builder(cls, *, value: str) -> Builder:
+    def builder(cls, value: str) -> Builder:
         return cls.Builder(value=value)
 
     @classmethod

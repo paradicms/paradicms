@@ -1,15 +1,16 @@
 from datetime import datetime
 from typing import Optional, Union
 
+from rdflib import Literal, URIRef, Graph, XSD
+from rdflib.namespace import DCTERMS, FOAF
+from rdflib.resource import Resource
+
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespaces import CMS, EXIF
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
-from rdflib import Literal, URIRef, Graph, XSD
-from rdflib.namespace import DCTERMS, FOAF
-from rdflib.resource import Resource
 
 
 class Image(ResourceBackedNamedModel):
@@ -19,6 +20,11 @@ class Image(ResourceBackedNamedModel):
         def __init__(self, *, depicts_uri: URIRef, uri: URIRef):
             ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
             self.set(FOAF.depicts, depicts_uri)
+
+        def add_rights(self, rights: Rights) -> "Builder":
+            for p, o in rights.to_rdf(graph=Graph()).predicate_objects():
+                self._resource.add(p.identifier, o)
+            return self
 
         def build(self) -> "Image":
             return Image(self._resource)
@@ -54,7 +60,9 @@ class Image(ResourceBackedNamedModel):
 
         def set_original_image_uri(self, original_image_uri: URIRef) -> "Builder":
             # (original, foaf:thumbnail, derived)
-            self._resource.graph.add((original_image_uri, FOAF.thumbnail, uri))
+            self._resource.graph.add(
+                (original_image_uri, FOAF.thumbnail, self._resource.identifier)
+            )
             # (derived, cms:thumbnailOf, original)
             # These quads are faster to query than the foaf:thumbnail ones.
             self.add(CMS.thumbnailOf, original_image_uri)
@@ -67,7 +75,7 @@ class Image(ResourceBackedNamedModel):
             self.set(CMS.imageSrc, src)
             return self
 
-        def title(self, title: str) -> "Builder":
+        def set_title(self, title: str) -> "Builder":
             self.set(DCTERMS.title, title)
             return self
 

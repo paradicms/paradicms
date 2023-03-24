@@ -1,10 +1,9 @@
 from rdflib import RDF, BNode, RDFS
 from rdflib.resource import Resource
 
-from namespaces import WGS
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
-from paradicms_etl.namespaces import CMS
+from paradicms_etl.namespaces import CMS, WGS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 

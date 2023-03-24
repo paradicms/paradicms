@@ -1,11 +1,12 @@
 from typing import Union
 
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
-from paradicms_etl.models.text import Text
-from paradicms_etl.utils.safe_dict_update import safe_dict_update
 from rdflib import URIRef, FOAF
 from rdflib.namespace import DCTERMS
 from rdflib.resource import Resource
+
+from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.models.text import Text
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class Collection(ResourceBackedNamedModel):
@@ -13,8 +14,11 @@ class Collection(ResourceBackedNamedModel):
 
     class Builder(ResourceBackedNamedModel.Builder):
         def __init__(self, *, title: str, uri: URIRef):
-            ResourceBackedNamedModel.__init__(self, uri=uri)
+            ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
             self.set(DCTERMS.title, title)
+
+        def build(self) -> "Collection":
+            return Collection(self._resource)
 
         def set_description(self, description: Union[str, Text]) -> "Builder":
             self.set(DCTERMS.description, description)

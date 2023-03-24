@@ -30,9 +30,13 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
     Transforms each item to a paradicms Model, ignoring statements.
     """
 
-    _RIGHTS = Rights.from_fields(
-        license=CreativeCommonsLicenses.BY_SA_3_0.uri,
-        statement=RightsStatementsDotOrgRightsStatements.InC.uri,
+    _RIGHTS = (
+        Rights.builder()
+        .add_license(license=CreativeCommonsLicenses.BY_SA_3_0.uri)
+        .add_statement(
+            statement=RightsStatementsDotOrgRightsStatements.InC.uri,
+        )
+        .build()
     )
 
     class __WikidataItemTransformer(WikidataItemTransformer):

@@ -1,8 +1,9 @@
+from rdflib import RDF, URIRef, RDFS
+
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
-from paradicms_etl.namespaces import CMS
+from paradicms_etl.namespaces import CMS, WGS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
-from rdflib import RDF
 
 
 class NamedLocation(ResourceBackedNamedModel, Location):
@@ -11,7 +12,7 @@ class NamedLocation(ResourceBackedNamedModel, Location):
             ResourceBackedNamedModel.Builder.__init__(self, uri)
 
         def build(self):
-            return AnonymousLocation(self._resource)
+            return NamedLocation(self._resource)
 
         def set_label(self, label: str) -> "Builder":
             self.set(RDFS.label, label)
