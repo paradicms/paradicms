@@ -20,7 +20,9 @@ class Collection(ResourceBackedNamedModel):
         def build(self) -> "Collection":
             return Collection(self._resource)
 
-        def set_description(self, description: Union[str, Text]) -> "Builder":
+        def set_description(
+            self, description: Union[str, Text]
+        ) -> "Collection.Builder":
             self.set(DCTERMS.description, description)
             return self
 

@@ -1,18 +1,19 @@
 from typing import Tuple
 
-from paradicms_etl.models.work_event import WorkEvent
-from paradicms_etl.utils.safe_dict_update import safe_dict_update
 from rdflib import URIRef, DCTERMS
 from rdflib.resource import Resource
+
+from paradicms_etl.models.work_event import WorkEvent
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class WorkCreation(WorkEvent):
     class Builder(WorkEvent.Builder):
-        def add_contributor_uri(self, contributor: URIRef) -> "Builder":
+        def add_contributor_uri(self, contributor: URIRef) -> "WorkCreation.Builder":
             self.add(DCTERMS.contributor, contributor)
             return self
 
-        def add_creator_uri(self, creator: URIRef) -> "Builder":
+        def add_creator_uri(self, creator: URIRef) -> "WorkCreation.Builder":
             self.add(DCTERMS.creator, creator)
             return self
 

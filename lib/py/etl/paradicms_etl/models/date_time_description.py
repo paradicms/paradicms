@@ -24,7 +24,7 @@ class DateTimeDescription(ResourceBackedModel):
         def build(self) -> "DateTimeDescription":
             return DateTimeDescription(self._resource)
 
-        def set_day(self, day: int) -> "Builder":
+        def set_day(self, day: int) -> "DateTimeDescription.Builder":
             self.add(
                 # https://www.w3.org/TR/owl-time/#time:DateTimeDescription
                 # .add(RDF.type, TIME.DateTimeDescription)
@@ -35,7 +35,7 @@ class DateTimeDescription(ResourceBackedModel):
             )
             return self
 
-        def set_hour(self, hour: int) -> "Builder":
+        def set_hour(self, hour: int) -> "DateTimeDescription.Builder":
             self.add(
                 # https://www.w3.org/TR/owl-time/#time:hour
                 TIME.hour,
@@ -43,7 +43,7 @@ class DateTimeDescription(ResourceBackedModel):
             )
             return self
 
-        def set_minute(self, minute: int) -> "Builder":
+        def set_minute(self, minute: int) -> "DateTimeDescription.Builder":
             self.add(
                 # https://www.w3.org/TR/owl-time/#time:minute
                 TIME.minute,
@@ -51,7 +51,7 @@ class DateTimeDescription(ResourceBackedModel):
             )
             return self
 
-        def set_month(self, month: int) -> "Builder":
+        def set_month(self, month: int) -> "DateTimeDescription.Builder":
             self.add(
                 # https://www.w3.org/TR/owl-time/#time:month
                 # https://www.w3.org/TR/xmlschema11-2/#gMonth
@@ -60,7 +60,7 @@ class DateTimeDescription(ResourceBackedModel):
             )
             return self
 
-        def set_second(self, second: int) -> "Builder":
+        def set_second(self, second: int) -> "DateTimeDescription.Builder":
             self.add(
                 # https://www.w3.org/TR/owl-time/#time:second
                 TIME.second,
@@ -68,7 +68,7 @@ class DateTimeDescription(ResourceBackedModel):
             )
             return self
 
-        def set_year(self, year: int) -> "Builder":
+        def set_year(self, year: int) -> "DateTimeDescription.Builder":
             self.add(
                 # https://www.w3.org/TR/owl-time/#time:year
                 # https://www.w3.org/TR/xmlschema11-2/#gYear

@@ -15,15 +15,15 @@ class AnonymousLocation(ResourceBackedModel, Location):
         def build(self):
             return AnonymousLocation(self._resource)
 
-        def set_label(self, label: str) -> "Builder":
+        def set_label(self, label: str) -> "AnonymousLocation.Builder":
             self.set(RDFS.label, label)
             return self
 
-        def set_lat(self, lat: float) -> "Builder":
+        def set_lat(self, lat: float) -> "AnonymousLocation.Builder":
             self.set(WGS.lat, lat)
             return self
 
-        def set_long(self, long: float) -> "Builder":
+        def set_long(self, long: float) -> "AnonymousLocation.Builder":
             self.set(WGS.long, long)
             return self
 

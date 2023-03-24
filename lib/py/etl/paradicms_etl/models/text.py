@@ -30,7 +30,7 @@ class Text(ResourceBackedModel):
             ResourceBackedModel.Builder.__init__(self, BNode())
             self.add(RDF.value, value)
 
-        def add_rights(self, rights: Rights) -> "Builder":
+        def add_rights(self, rights: Rights) -> "Text.Builder":
             for p, o in rights.to_rdf(graph=Graph()).predicate_objects():
                 self._resource.add(p.identifier, o)
             return self

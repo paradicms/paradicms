@@ -16,7 +16,7 @@ class ResourceBackedModel(Model):
             graph = Graph()
             self._resource = graph.resource(identifier)
 
-        def add(self, p: URIRef, o: Any) -> "Builder":
+        def add(self, p: URIRef, o: Any) -> "ResourceBackedModel.Builder":
             if o is None:
                 pass
             elif isinstance(o, Model):
@@ -30,7 +30,7 @@ class ResourceBackedModel(Model):
                 self._resource.add(p, Literal(o))
             return self
 
-        def set(self, p: URIRef, o: Any) -> "Builder":
+        def set(self, p: URIRef, o: Any) -> "ResourceBackedModel.Builder":
             if o is None:
                 return self
             # May orphan BNode/Model objects

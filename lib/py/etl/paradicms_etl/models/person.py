@@ -1,7 +1,8 @@
-from paradicms_etl.models.agent import Agent
-from paradicms_etl.utils.safe_dict_update import safe_dict_update
 from rdflib import URIRef
 from rdflib.namespace import FOAF
+
+from paradicms_etl.models.agent import Agent
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class Person(Agent):
@@ -9,11 +10,11 @@ class Person(Agent):
         def build(self):
             return Person(self._resource)
 
-        def set_family_name(self, family_name: str) -> "Builder":
+        def set_family_name(self, family_name: str) -> "Person.Builder":
             self.set(FOAF.familyName, family_name)
             return self
 
-        def set_given_name(self, given_name: str) -> "Builder":
+        def set_given_name(self, given_name: str) -> "Person.Builder":
             self.set(FOAF.givenName, given_name)
             return self
 

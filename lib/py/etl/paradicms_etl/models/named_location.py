@@ -14,15 +14,15 @@ class NamedLocation(ResourceBackedNamedModel, Location):
         def build(self):
             return NamedLocation(self._resource)
 
-        def set_label(self, label: str) -> "Builder":
+        def set_label(self, label: str) -> "NamedLocation.Builder":
             self.set(RDFS.label, label)
             return self
 
-        def set_lat(self, lat: float) -> "Builder":
+        def set_lat(self, lat: float) -> "NamedLocation.Builder":
             self.set(WGS.lat, lat)
             return self
 
-        def set_long(self, long: float) -> "Builder":
+        def set_long(self, long: float) -> "NamedLocation.Builder":
             self.set(WGS.long, long)
             return self
 

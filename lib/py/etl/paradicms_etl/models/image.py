@@ -21,7 +21,7 @@ class Image(ResourceBackedNamedModel):
             ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
             self.set(FOAF.depicts, depicts_uri)
 
-        def add_rights(self, rights: Rights) -> "Builder":
+        def add_rights(self, rights: Rights) -> "Image.Builder":
             for p, o in rights.to_rdf(graph=Graph()).predicate_objects():
                 self._resource.add(p.identifier, o)
             return self
@@ -29,36 +29,40 @@ class Image(ResourceBackedNamedModel):
         def build(self) -> "Image":
             return Image(self._resource)
 
-        def set_copyable(self, copyable: bool) -> "Builder":
+        def set_copyable(self, copyable: bool) -> "Image.Builder":
             """
             Can this image be copied from its source (for GUI building), or does it have to be hot linked in order to use it?
             """
             self.set(CMS.imageCopyable, copyable)
             return self
 
-        def set_created(self, created: datetime) -> "Builder":
+        def set_created(self, created: datetime) -> "Image.Builder":
             self.set(DCTERMS.created, created)
             return self
 
-        def set_exact_dimensions(self, exact_dimensions: ImageDimensions) -> "Builder":
+        def set_exact_dimensions(
+            self, exact_dimensions: ImageDimensions
+        ) -> "Image.Builder":
             self.set(EXIF.height, exact_dimensions.height)
             self.set(EXIF.width, exact_dimensions.width)
             return self
 
-        def set_format(self, format_: str) -> "Builder":
+        def set_format(self, format_: str) -> "Image.Builder":
             self.set(DCTERMS["format"], format_)
             return self
 
-        def set_max_dimensions(self, max_dimensions: ImageDimensions) -> "Builder":
+        def set_max_dimensions(
+            self, max_dimensions: ImageDimensions
+        ) -> "Image.Builder":
             self.set(CMS.imageMaxHeight, max_dimensions.height)
             self.set(CMS.imageMaxWidth, max_dimensions.width)
             return self
 
-        def set_modified(self, modified: datetime) -> "Builder":
+        def set_modified(self, modified: datetime) -> "Image.Builder":
             self.set(DCTERMS.modified, modified)
             return self
 
-        def set_original_image_uri(self, original_image_uri: URIRef) -> "Builder":
+        def set_original_image_uri(self, original_image_uri: URIRef) -> "Image.Builder":
             # (original, foaf:thumbnail, derived)
             self._resource.graph.add(
                 (original_image_uri, FOAF.thumbnail, self._resource.identifier)
@@ -68,14 +72,14 @@ class Image(ResourceBackedNamedModel):
             self.add(CMS.thumbnailOf, original_image_uri)
             return self
 
-        def set_src(self, src: Union[str, Literal, URIRef]) -> "Builder":
+        def set_src(self, src: Union[str, Literal, URIRef]) -> "Image.Builder":
             """
             src that can be used in an <img> tag; if not specified, defaults to URI
             """
             self.set(CMS.imageSrc, src)
             return self
 
-        def set_title(self, title: str) -> "Builder":
+        def set_title(self, title: str) -> "Image.Builder":
             self.set(DCTERMS.title, title)
             return self
 

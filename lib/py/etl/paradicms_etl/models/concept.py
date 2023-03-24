@@ -21,18 +21,18 @@ class Concept(ResourceBackedNamedModel):
             self.add(RDF.predicate, property_uris)
             self.add(RDF.value, value)
 
-        def add_alt_label(self, alt_label: Union[str, Literal]) -> "Builder":
+        def add_alt_label(self, alt_label: Union[str, Literal]) -> "Concept.Builder":
             self.add(SKOS.altLabel, alt_label)
             return self
 
         def build(self) -> "Concept":
             return Concept(self._resource)
 
-        def set_definition(self, definition: Union[str, Text]) -> "Builder":
+        def set_definition(self, definition: Union[str, Text]) -> "Concept.Builder":
             self.set(SKOS.definition, definition)
             return self
 
-        def set_pref_label(self, pref_label: Union[str, Literal]) -> "Builder":
+        def set_pref_label(self, pref_label: Union[str, Literal]) -> "Concept.Builder":
             self.set(SKOS.prefLabel, pref_label)
             return self
 

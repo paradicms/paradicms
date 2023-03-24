@@ -15,18 +15,22 @@ class WorksheetFeature(ResourceBackedNamedModel):
             ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
             self.set(DCTERMS.title, title)
 
-        def add_feature_set_uri(self, feature_set_uri: URIRef) -> "Builder":
+        def add_feature_set_uri(
+            self, feature_set_uri: URIRef
+        ) -> "WorksheetFeature.Builder":
             self.add(WORKSHEET.featureSet, feature_set_uri)
             return self
 
         def build(self) -> "WorksheetFeature":
             return WorksheetFeature(self._resource)
 
-        def set_description(self, description: Union[str, Text]) -> "Builder":
+        def set_description(
+            self, description: Union[str, Text]
+        ) -> "WorksheetFeature.Builder":
             self.set(DCTERMS.description, description)
             return self
 
-        def set_order(self, order: int) -> "Builder":
+        def set_order(self, order: int) -> "WorksheetFeature.Builder":
             self.set(SH.order, order)
             return self
 

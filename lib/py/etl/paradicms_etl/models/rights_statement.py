@@ -1,7 +1,8 @@
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
-from paradicms_etl.utils.safe_dict_update import safe_dict_update
 from rdflib import DCTERMS, SKOS, URIRef
 from rdflib.resource import Resource
+
+from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class RightsStatement(ResourceBackedNamedModel):
@@ -17,22 +18,22 @@ class RightsStatement(ResourceBackedNamedModel):
             self.set(DCTERMS.identifier, identifier)
             self.set(SKOS.prefLabel, pref_label)
 
-        def add_note(self, note: str) -> "Builder":
+        def add_note(self, note: str) -> "RightsStatement.Builder":
             self.add(SKOS.note, note)
             return self
 
-        def add_scope_note(self, scope_note: str) -> "Builder":
+        def add_scope_note(self, scope_note: str) -> "RightsStatement.Builder":
             self.add(SKOS.scopeNote, scope_note)
             return self
 
         def build(self) -> "RightsStatement":
             return RightsStatement(self._resource)
 
-        def set_definition(self, definition: str) -> "Builder":
+        def set_definition(self, definition: str) -> "RightsStatement.Builder":
             self.add(SKOS.definition, definition)
             return self
 
-        def set_description(self, description: str) -> "Builder":
+        def set_description(self, description: str) -> "RightsStatement.Builder":
             self.add(DCTERMS.description, description)
             return self
 

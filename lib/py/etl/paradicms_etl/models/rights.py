@@ -21,23 +21,23 @@ class Rights(ResourceBackedModel):
     }
 
     class Builder(ResourceBackedModel.Builder):
-        def add_contributor(self, contributor: Union[str, URIRef]) -> "Builder":
+        def add_contributor(self, contributor: Union[str, URIRef]) -> "Rights.Builder":
             self.add(DCTERMS.contributor, contributor)
             return self
 
-        def add_creator(self, creator: Union[str, URIRef]) -> "Builder":
+        def add_creator(self, creator: Union[str, URIRef]) -> "Rights.Builder":
             self.add(DCTERMS.creator, creator)
             return self
 
-        def add_holder(self, holder: Union[str, URIRef]) -> "Builder":
+        def add_holder(self, holder: Union[str, URIRef]) -> "Rights.Builder":
             self.add(DCTERMS.rightsHolder, holder)
             return self
 
-        def add_license(self, license: Union[str, URIRef]) -> "Builder":
+        def add_license(self, license: Union[str, URIRef]) -> "Rights.Builder":
             self.add(DCTERMS.license, license)
             return self
 
-        def add_statement(self, statement: Union[str, URIRef]) -> "Builder":
+        def add_statement(self, statement: Union[str, URIRef]) -> "Rights.Builder":
             self.add(DCTERMS.rights, statement)
             return self
 

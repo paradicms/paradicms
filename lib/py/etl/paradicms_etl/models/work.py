@@ -25,15 +25,15 @@ class Work(ResourceBackedNamedModel):
             ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
             self.set(DCTERMS.title, title)
 
-        def add_collection_uri(self, collection_uri: URIRef) -> "Builder":
+        def add_collection_uri(self, collection_uri: URIRef) -> "Work.Builder":
             self.add(CMS.collection, collection_uri)
             return self
 
-        def add_page(self, page: Union[str, URIRef]) -> "Builder":
+        def add_page(self, page: Union[str, URIRef]) -> "Work.Builder":
             self.add(FOAF.page, page)
             return self
 
-        def add_rights(self, rights: Rights) -> "Builder":
+        def add_rights(self, rights: Rights) -> "Work.Builder":
             for p, o in rights.to_rdf(graph=Graph()).predicate_objects():
                 self._resource.add(p.identifier, o)
             return self
@@ -41,7 +41,7 @@ class Work(ResourceBackedNamedModel):
         def build(self) -> "Work":
             return Work(self._resource)
 
-        def set_description(self, description: str) -> "Builder":
+        def set_description(self, description: str) -> "Work.Builder":
             self.set(DCTERMS.description, description)
             return self
 

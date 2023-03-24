@@ -14,15 +14,15 @@ class Agent(ResourceBackedNamedModel):
             ResourceBackedNamedModel.Builder.__init__(self, uri)
             self.set(FOAF.name, name)
 
-        def add_page(self, page: URIRef) -> "Builder":
+        def add_page(self, page: URIRef) -> "Agent.Builder":
             self.add(FOAF.page, page)
             return self
 
-        def add_relation(self, relation: URIRef) -> "Builder":
+        def add_relation(self, relation: URIRef) -> "Agent.Builder":
             self.add(DCTERMS.relation, relation)
             return self
 
-        def set_sort_name(self, sort_name: str) -> "Builder":
+        def set_sort_name(self, sort_name: str) -> "Agent.Builder":
             self.set(CONTACT.sortName, sort_name)
             return self
 

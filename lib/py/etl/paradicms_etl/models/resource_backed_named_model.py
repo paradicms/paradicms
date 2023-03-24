@@ -10,7 +10,7 @@ class ResourceBackedNamedModel(ResourceBackedModel, NamedModel):
         def __init__(self, uri: URIRef):
             ResourceBackedModel.Builder.__init__(self, uri)
 
-        def add(self, *args, **kwds) -> "Builder":
+        def add(self, *args, **kwds) -> "ResourceBackedNamedModel.Builder":
             ResourceBackedModel.Builder.add(self, *args, **kwds)
             return self
 
