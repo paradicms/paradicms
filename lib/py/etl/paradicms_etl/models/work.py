@@ -41,7 +41,7 @@ class Work(ResourceBackedNamedModel):
         def build(self) -> "Work":
             return Work(self._resource)
 
-        def set_description(self, description: str) -> "Work.Builder":
+        def set_description(self, description: Union[str, Text]) -> "Work.Builder":
             self.set(DCTERMS.description, description)
             return self
 

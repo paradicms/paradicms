@@ -496,31 +496,31 @@ class CostumeCoreOntologyAirtableToWorksheetModelsTransformer:
 
             return None
 
-        return (
-            Rights.builder()
-            .add_creator(
-                get_first_list_element(record_fields.get(f"{key_prefix}_rights_author"))
-            )
-            .add_license(
-                transform_rights_uri(
-                    available_rights_uris=self.__available_license_uris,
-                    rights_uri_str=get_first_list_element(
-                        record_fields.get(f"{key_prefix}_rights_license")
-                    ),
-                    referenced_rights_uris=self.__referenced_license_uris,
-                )
-            )
-            .add_statement(
-                transform_rights_uri(
-                    available_rights_uris=self.__available_rights_statement_uris,
-                    rights_uri_str=get_first_list_element(
-                        record_fields.get(f"{key_prefix}_rights_statement")
-                    ),
-                    referenced_rights_uris=self.__referenced_rights_statement_uris,
-                )
-            )
-            .build()
+        rights_builder = Rights.builder().add_creator(
+            get_first_list_element(record_fields.get(f"{key_prefix}_rights_author"))
         )
+
+        license = transform_rights_uri(
+            available_rights_uris=self.__available_license_uris,
+            rights_uri_str=get_first_list_element(
+                record_fields.get(f"{key_prefix}_rights_license")
+            ),
+            referenced_rights_uris=self.__referenced_license_uris,
+        )
+        if license:
+            rights_builder.add_license(license)
+
+        rights_statement = transform_rights_uri(
+            available_rights_uris=self.__available_rights_statement_uris,
+            rights_uri_str=get_first_list_element(
+                record_fields.get(f"{key_prefix}_rights_statement")
+            ),
+            referenced_rights_uris=self.__referenced_rights_statement_uris,
+        )
+        if rights_statement:
+            rights_builder.add_statement(rights_statement)
+
+        return rights_builder.build()
         # source_name=get_first_list_element(
         #     fields[f"{key_prefix}_rights_source_name"]
         # ),

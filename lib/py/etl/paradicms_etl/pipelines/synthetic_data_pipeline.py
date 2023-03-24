@@ -259,6 +259,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     .build()
                 )
                 yield original
+                assert original.rights is not None
 
                 for thumbnail_dimensions in (
                     ImageDimensions(75, 75),
@@ -432,17 +433,22 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             )
 
             description = (
-                Text.builder(self.__LOREM_IPSUM,).add_rights(
+                Text.builder(
+                    self.__LOREM_IPSUM,
+                )
+                .add_rights(
                     Rights.builder()
                     .add_holder(f"{title} description rights holder")
                     .add_license(CreativeCommonsLicenses.NC_1_0.uri)
                     .add_statement(RightsStatementsDotOrgRightsStatements.InC_EDU.uri)
                     .build()
                 )
+                .build()
                 if include_description
                 else None
             )
-            work_builder.set_description(description)
+            if description:
+                work_builder.set_description(description)
 
             location = (
                 AnonymousLocation.builder()

@@ -1,9 +1,10 @@
 from typing import Optional
 
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
-from paradicms_etl.utils.safe_dict_update import safe_dict_update
 from rdflib import DC, DCTERMS, URIRef
 from rdflib.resource import Resource
+
+from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class License(ResourceBackedNamedModel):
@@ -22,7 +23,7 @@ class License(ResourceBackedNamedModel):
         def build(self) -> "License":
             return License(self._resource)
 
-        def set_version(self, version: str) -> "Builder":
+        def set_version(self, version: str) -> "License.Builder":
             self.set(DCTERMS.hasVersion, version)
             return self
 

@@ -307,7 +307,6 @@ class LunaTransformer:
                     depicts_uri=work.uri,
                     uri=image_uri,
                 )
-                .set_created(image_created)
                 .set_max_dimensions(
                     ImageDimensions(
                         height=image_dimension_max,
@@ -315,9 +314,13 @@ class LunaTransformer:
                     )
                 )
                 .add_rights(
-                    Rights.builder().add_statement(reproduction_rights_statement[0])
+                    Rights.builder()
+                    .add_statement(reproduction_rights_statement[0])
+                    .build()
                 )
             )
+            if image_created is not None:
+                image_builder.set_created(image_created)
             if image_uri != original_image_uri:
                 image_builder.set_original_image_uri(original_image_uri)
             yield image_builder.build()

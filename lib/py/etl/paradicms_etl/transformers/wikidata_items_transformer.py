@@ -58,9 +58,12 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
             statement: WikidataStatement,
         ):
             assert isinstance(statement.value, URIRef)
-            yield Image.builder(
+            image_builder = Image.builder(
                 depicts_uri=item_model.uri, uri=statement.value
-            ).set_title(item_model.label).build()
+            )
+            if item_model.label is not None:
+                image_builder.set_title(item_model.label)
+            return image_builder.build()
 
     class __PersonWikidataItemTransformer(__WikidataItemTransformer):
         def _transform_item(self, item: WikidataItem) -> NamedModel:

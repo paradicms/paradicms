@@ -15,14 +15,14 @@ class WorksheetFeatureSet(ResourceBackedNamedModel):
             ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
             self.add(DCTERMS.title, title)
 
-        def add_description(
-            self, description: Union[str, Text]
-        ) -> "WorksheetFeatureSet.Builder":
-            self.add(DCTERMS.description, description)
-            return self
-
         def build(self):
             return WorksheetFeatureSet(self._resource)
+
+        def set_description(
+            self, description: Union[str, Text]
+        ) -> "WorksheetFeatureSet.Builder":
+            self.set(DCTERMS.description, description)
+            return self
 
     def __init__(self, resource: Resource):
         resource.add(RDF.type, WORKSHEET.FeatureSet)

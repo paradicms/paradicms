@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime
-from typing import Dict, Optional, Tuple, List
+from typing import Dict, Optional, Tuple, List, Set
 
 from pyformance import MetricsRegistry
 from rdflib import URIRef, DCTERMS, Literal
@@ -10,7 +10,6 @@ from tqdm import tqdm
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.property import Property
 from paradicms_etl.models.work import Work
 
 ElementTextTree = Dict[str, Dict[str, List[str]]]
@@ -98,20 +97,20 @@ class OmekaClassicTransformer:
         return result
 
     def _get_title(
-        self, properties: Tuple[Property, ...]
-    ) -> Tuple[str, Tuple[Property, ...]]:
+        self, properties: Tuple[Tuple[URIRef, Node], ...]
+    ) -> Tuple[str, Tuple[Tuple[URIRef, Node], ...]]:
         for title_property_uri in (
             DCTERMS.title,
             DCTERMS.alternative,
         ):
             for property_i, property_ in enumerate(properties):
-                if property_.uri == title_property_uri:
+                if property_[0] == title_property_uri:
                     remaining_properties = tuple(
                         list(properties[:property_i])
                         + list(properties[property_i + 1 :])
                     )
                     assert len(remaining_properties) == len(properties) - 1
-                    title = property_.value
+                    title = property_[1]
                     assert isinstance(title, Literal)
                     return title.toPython(), remaining_properties
         raise KeyError("no title property")
@@ -154,7 +153,7 @@ class OmekaClassicTransformer:
 
         # The items JSON from the API has display name element identifiers instead of the Dublin Core URIs,
         # so we have to map back here.
-        properties = set()
+        properties: Set[Tuple[URIRef, Node]] = set()
         for key, property_uri in (
             ("Alternative Title", DCTERMS.alternative),
             ("Contributor", DCTERMS.contributor),
@@ -183,7 +182,7 @@ class OmekaClassicTransformer:
             ("Type", DCTERMS.type),
         ):
             for value in dc_element_text_tree.pop(key, []):
-                properties.add(property_uri, Literal(value))
+                properties.add((property_uri, Literal(value)))
 
         for (key, property_uri) in (
             ("License", DCTERMS.license),
@@ -236,36 +235,40 @@ class OmekaClassicTransformer:
         for key, url in file_["file_urls"].items():
             if url is None:
                 continue
-            exact_dimensions = max_dimensions = None
-            if key == "original":
-                exact_dimensions = file_exact_dimensions
-                original_image_uri = None
-            else:
-                if key == "square_thumbnail":
-                    exact_dimensions = ImageDimensions(
-                        height=self._square_thumbnail_height_px,
-                        width=self._square_thumbnail_width_px,
-                    )
-                else:
-                    max_dimensions = ImageDimensions(
-                        height=getattr(self, "_" + key + "_max_height_px"),
-                        width=getattr(self, "_" + key + "_max_width_px"),
-                    )
-                original_image_uri = URIRef(file_["file_urls"]["original"])
 
-            image = (
+            image_builder = (
                 Image.builder(
                     depicts_uri=work_uri,
                     uri=URIRef(url),
                 )
                 .set_created(file_added)
-                .set_exact_dimensions(exact_dimensions)
                 .set_format(file_["mime_type"])
-                .set_max_dimensions(max_dimensions)
                 .set_modified(file_modified)
-                .set_original_image_uri(original_image_uri)
-                .build()
             )
+
+            if key == "original":
+                if file_exact_dimensions:
+                    image_builder.set_exact_dimensions(file_exact_dimensions)
+            else:
+                if key == "square_thumbnail":
+                    image_builder.set_exact_dimensions(
+                        ImageDimensions(
+                            height=self._square_thumbnail_height_px,
+                            width=self._square_thumbnail_width_px,
+                        )
+                    )
+                else:
+                    image_builder.set_max_dimensions(
+                        ImageDimensions(
+                            height=getattr(self, "_" + key + "_max_height_px"),
+                            width=getattr(self, "_" + key + "_max_width_px"),
+                        )
+                    )
+                image_builder.set_original_image_uri(
+                    URIRef(file_["file_urls"]["original"])
+                )
+
+            image = image_builder.build()
 
             if key == "original":
                 images.insert(0, image)

@@ -2,10 +2,10 @@ import logging
 from typing import Tuple, Set, Dict
 
 from rdflib import URIRef, DCTERMS
+from rdflib.term import Node, Literal
 
 from paradicms_etl.models.costume_core import costume_core_predicates
 from paradicms_etl.models.costume_core.costume_core import CostumeCore
-from paradicms_etl.models.property import Property
 from paradicms_etl.namespaces import VRA
 from paradicms_etl.transformers.omeka_classic_transformer import OmekaClassicTransformer
 
@@ -35,13 +35,15 @@ class CostumeCoreOmekaClassicTransformer(OmekaClassicTransformer):
         for key in self.__UNKNOWN_ITM_KEYS:
             self.__logger.warn("unknown Item Type Metadata element name: %s", key)
 
-    def _transform_item_type_metadata(self, element_text_tree) -> Tuple[Property, ...]:
+    def _transform_item_type_metadata(
+        self, element_text_tree
+    ) -> Tuple[Tuple[URIRef, Node], ...]:
         # "Item Type Metadata" is a catch-all element set for all user-defined elements.
         itm_element_text_tree = element_text_tree.pop("Item Type Metadata", None)
         if not itm_element_text_tree:
             return ()
 
-        properties = set()
+        properties: Set[Tuple[URIRef, Node]] = set()
 
         for key, property_uri in (
             ("Category", DCTERMS.subject),
@@ -53,7 +55,7 @@ class CostumeCoreOmekaClassicTransformer(OmekaClassicTransformer):
             ("Technique", VRA.technique),
         ):
             for value in itm_element_text_tree.pop(key, []):
-                properties.add(Property(property_uri, value))
+                properties.add((property_uri, Literal(value)))
 
         for key, predicate in (
             ("Classification", costume_core_predicates.classification),
@@ -94,7 +96,7 @@ class CostumeCoreOmekaClassicTransformer(OmekaClassicTransformer):
                     if value not in unknown_predicate_terms:
                         # print(predicate.id + ',' + value)
                         unknown_predicate_terms.add(value)
-                properties.add(Property(URIRef(predicate.uri), value))
+                properties.add((URIRef(predicate.uri), Literal(value)))
 
         for key in (
             "CSV File",

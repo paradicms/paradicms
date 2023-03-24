@@ -91,26 +91,29 @@ class CostumeCoreModelsToParadicmsModelsTransformer:
                 # return URIRef(rights_uri)
                 return None
 
-            return (
+            rights_builder = (
                 Rights.builder()
                 .add_creator(rights.author)
                 .add_holder(rights.source_name)
-                .add_license(
-                    transform_rights_field(
-                        available_license_uris,
-                        rights.license_uri,
-                        yielded_license_uris,
-                    )
-                )
-                .add_statement(
-                    transform_rights_field(
-                        available_rights_statement_uris,
-                        rights.rights_statement_uri,
-                        yielded_rights_statement_uris,
-                    )
-                )
-                .build()
             )
+
+            license = transform_rights_field(
+                available_license_uris,
+                rights.license_uri,
+                yielded_license_uris,
+            )
+            if license:
+                rights_builder.add_license(license)
+
+            statement = transform_rights_field(
+                available_rights_statement_uris,
+                rights.rights_statement_uri,
+                yielded_rights_statement_uris,
+            )
+            if statement:
+                rights_builder.add_statement(statement)
+
+            return rights_builder.build()
 
         for term in self.__costume_core.terms:
             # A term can belong to multiple predicates/collections, so yield them separately
