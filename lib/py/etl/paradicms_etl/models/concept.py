@@ -1,13 +1,14 @@
 from typing import Optional, Tuple, Union
 
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
-from paradicms_etl.models.text import Text
-from paradicms_etl.utils.resource_builder import ResourceBuilder
-from paradicms_etl.utils.safe_dict_update import safe_dict_update
 from rdflib import SKOS
 from rdflib.namespace import RDF
 from rdflib.resource import Resource
 from rdflib.term import Node, URIRef, Literal
+
+from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.models.text import Text
+from paradicms_etl.utils.resource_builder import ResourceBuilder
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class Concept(ResourceBackedNamedModel):
@@ -33,7 +34,7 @@ class Concept(ResourceBackedNamedModel):
             return self
 
         def set_pref_label(self, pref_label: Union[str, Literal]) -> "Builder":
-            self.set(SKOS.prefLabel, alt_label)
+            self.set(SKOS.prefLabel, pref_label)
             return self
 
     def __init__(self, resource: Resource):

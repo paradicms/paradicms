@@ -1,8 +1,10 @@
+from rdflib import FOAF, RDF, DCTERMS, URIRef
+from rdflib.resource import Resource
+
+from namespaces import CONTACT
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
-from rdflib import FOAF, RDF, DCTERMS
-from rdflib.resource import Resource
 
 
 class Agent(ResourceBackedNamedModel):

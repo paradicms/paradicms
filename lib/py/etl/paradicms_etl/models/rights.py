@@ -1,8 +1,9 @@
 from typing import Union, Tuple
 
-from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from rdflib import URIRef, DCTERMS, BNode, Literal, Graph
 from rdflib.resource import Resource
+
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 
 
 class Rights(ResourceBackedModel):
@@ -40,8 +41,7 @@ class Rights(ResourceBackedModel):
             self._resource.add(DCTERMS.rights, statement)
             return self
 
-        @classmethod
-        def build(cls):
+        def build(self):
             return Rights(self._resource)
 
     @classmethod
