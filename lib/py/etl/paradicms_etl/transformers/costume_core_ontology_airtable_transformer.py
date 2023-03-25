@@ -347,9 +347,6 @@ class CostumeCoreOntologyAirtableTransformer:
     def __transform_feature_value_record_to_images(
         self, *, depicts_uri: URIRef, feature_value_record, image_records_by_id
     ) -> Iterable:
-        if str(depicts_uri).startswith(str(COCO) + "rec"):
-            assert False
-
         fields = feature_value_record["fields"]
         image_filename = fields.get("image_filename")
         if not image_filename:
