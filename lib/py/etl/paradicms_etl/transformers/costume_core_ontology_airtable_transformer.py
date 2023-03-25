@@ -221,7 +221,7 @@ class CostumeCoreOntologyAirtableTransformer:
             display_name_en=fields["display_name_en"],
             id=id_,
             sub_property_of_uri=fields.get("sub_property_of"),
-            terms=tuple(costume_core_terms_by_features.pop(id_), tuple()),
+            terms=tuple(costume_core_terms_by_features.pop(id_, tuple())),
             _uri=URIRef(fields["URI"]),
         )
 
@@ -282,7 +282,7 @@ class CostumeCoreOntologyAirtableTransformer:
                 feature_record=feature_record, feature_set_records=feature_set_records
             )
             if not worksheet_feature:
-                return
+                continue
 
             yield worksheet_feature
 
