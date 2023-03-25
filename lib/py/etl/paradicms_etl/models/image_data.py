@@ -10,6 +10,10 @@ from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 
 class ImageData(ResourceBackedModel):
     class __Builder(ResourceBackedModel.Builder):
+        def add(self, *args, **kwds):
+            ResourceBackedModel.Builder.add(self, *args, **kwds)
+            return self
+
         def build(self) -> "ImageData":
             return ImageData(self._resource)
 
