@@ -4,7 +4,7 @@ from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.model import Model
 from paradicms_ssg.app_package import AppPackage
 
-APP = "collection"
+APP = "work-search"
 
 
 # def test_clean():
@@ -23,7 +23,7 @@ def test_build(synthetic_data_models: Tuple[Model, ...], tmp_path):
 
     pipeline_id = "test"
     gui_data_loader = RdfFileLoader(
-        loaded_data_dir_path=tmp_path, pipeline_id=pipeline_id
+        rdf_file_path=tmp_path / (pipeline_id + ".trig"), pipeline_id=pipeline_id
     )
     gui_data_loader(flush=True, models=synthetic_data_models)
 
