@@ -6,13 +6,18 @@ from paradicms_etl.extractors.costume_core_ontology_airtable_extractor import (
     CostumeCoreOntologyAirtableExtractor,
 )
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
+from paradicms_etl.models.costume_core.costume_core_ontology import CostumeCoreOntology
+from paradicms_etl.models.costume_core.costume_core_predicate import (
+    CostumeCorePredicate,
+)
+from paradicms_etl.models.costume_core.costume_core_term import CostumeCoreTerm
 from paradicms_etl.pipeline import Pipeline
-from paradicms_etl.transformers.costume_core_ontology_airtable_to_worksheet_models_transformer import (
-    CostumeCoreOntologyAirtableToWorksheetModelsTransformer,
+from paradicms_etl.transformers.costume_core_ontology_airtable_transformer import (
+    CostumeCoreOntologyAirtableTransformer,
 )
 
 
-class CostumeCoreOntologyAirtableToWorksheetRdfPipeline(Pipeline):
+class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
     ID = "costume_core_ontology"
 
     def __init__(self, *, airtable_access_token: str):
@@ -29,15 +34,27 @@ class CostumeCoreOntologyAirtableToWorksheetRdfPipeline(Pipeline):
                 ),
             ),
             id=self.ID,
-            loader=RdfFileLoader(
+            loader=lambda *, models, **kwds: RdfFileLoader(
                 rdf_file_path=data_dir_path
                 / self.ID
                 / "loaded"
-                / "costume_core_ontology_worksheet.ttl",
+                / "costume_core_ontology_paradicms.ttl",
                 format="ttl",
                 pipeline_id=self.ID,
+            )(
+                models=(
+                    model
+                    for model in models
+                    if not isinstance(
+                        model,
+                        (CostumeCoreOntology, CostumeCorePredicate, CostumeCoreTerm),
+                    )
+                ),
+                **kwds
             ),
-            transformer=CostumeCoreOntologyAirtableToWorksheetModelsTransformer(),  # type: ignore
+            transformer=CostumeCoreOntologyAirtableTransformer(
+                ontology_version="ignored"
+            ),
         )
 
     @classmethod
@@ -47,4 +64,4 @@ class CostumeCoreOntologyAirtableToWorksheetRdfPipeline(Pipeline):
 
 
 if __name__ == "__main__":
-    CostumeCoreOntologyAirtableToWorksheetRdfPipeline.main()
+    CostumeCoreOntologyAirtableToParadicmsRdfPipeline.main()
