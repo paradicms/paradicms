@@ -1,17 +1,12 @@
-from typing import Optional
-
-from rdflib import URIRef
-from rdflib.namespace import FOAF
-
 from paradicms_etl.models.agent import Agent
-from paradicms_etl.utils.resource_builder import ResourceBuilder
+from rdflib import URIRef
 
 
 class Organization(Agent):
+    class Builder(Agent.Builder):
+        def build(self):
+            return Organization(self._resource)
+
     @classmethod
-    def from_fields(
-        cls, *, name: str, uri: URIRef, page: Optional[URIRef] = None
-    ) -> "Organization":
-        return cls(
-            ResourceBuilder(uri).add(FOAF.name, name).add(FOAF.page, page).build()
-        )
+    def builder(cls, *, name: str, uri: URIRef) -> Builder:
+        return cls.Builder(name=name, uri=uri)

@@ -55,35 +55,36 @@ class CostumeCore:
         for term in self.__terms:
             if not term.features:
                 continue
-            concept = Concept.from_fields(
+            concept = Concept.builder(
                 property_uris=tuple(
                     URIRef(self.__predicates_by_id[predicate_id].uri)
                     for predicate_id in term.features
                 ),
                 uri=URIRef(term.uri),
                 value=Literal(term.display_name_en),
-            )
+            ).build()
             concepts.append(concept)
 
             full_size_image_url = term.full_size_image_url
             if full_size_image_url is None:
                 continue
-            full_size_image = Image.from_fields(
+            full_size_image = Image.builder(
                 depicts_uri=concept.uri,
                 uri=URIRef(full_size_image_url),
-            )
+            ).build()
             images.append(full_size_image)
 
             thumbnail_url = term.thumbnail_url
             if thumbnail_url is None:
                 continue
             images.append(
-                Image.from_fields(
+                Image.builder(
                     depicts_uri=concept.uri,
-                    exact_dimensions=ImageDimensions(height=200, width=200),
-                    original_image_uri=full_size_image.uri,
                     uri=URIRef(thumbnail_url),
                 )
+                .set_exact_dimensions(ImageDimensions(height=200, width=200))
+                .set_original_image_uri(full_size_image.uri)
+                .build()
             )
 
         self.__images = tuple(images)

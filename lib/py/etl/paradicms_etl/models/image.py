@@ -10,66 +10,86 @@ from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespaces import CMS, EXIF
-from paradicms_etl.utils.resource_builder import ResourceBuilder
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class Image(ResourceBackedNamedModel):
     LABEL_PROPERTY = DCTERMS.title
 
+    class Builder(ResourceBackedNamedModel.Builder):
+        def __init__(self, *, depicts_uri: URIRef, uri: URIRef):
+            ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
+            self.set(FOAF.depicts, depicts_uri)
+
+        def add_rights(self, rights: Rights) -> "Image.Builder":
+            for p, o in rights.to_rdf(graph=Graph()).predicate_objects():
+                self._resource.add(p.identifier, o)
+            return self
+
+        def build(self) -> "Image":
+            return Image(self._resource)
+
+        def set_copyable(self, copyable: bool) -> "Image.Builder":
+            """
+            Can this image be copied from its source (for GUI building), or does it have to be hot linked in order to use it?
+            """
+            self.set(CMS.imageCopyable, copyable)
+            return self
+
+        def set_created(self, created: datetime) -> "Image.Builder":
+            self.set(DCTERMS.created, created)
+            return self
+
+        def set_exact_dimensions(
+            self, exact_dimensions: ImageDimensions
+        ) -> "Image.Builder":
+            self.set(EXIF.height, exact_dimensions.height)
+            self.set(EXIF.width, exact_dimensions.width)
+            return self
+
+        def set_format(self, format_: str) -> "Image.Builder":
+            self.set(DCTERMS["format"], format_)
+            return self
+
+        def set_max_dimensions(
+            self, max_dimensions: ImageDimensions
+        ) -> "Image.Builder":
+            self.set(CMS.imageMaxHeight, max_dimensions.height)
+            self.set(CMS.imageMaxWidth, max_dimensions.width)
+            return self
+
+        def set_modified(self, modified: datetime) -> "Image.Builder":
+            self.set(DCTERMS.modified, modified)
+            return self
+
+        def set_original_image_uri(self, original_image_uri: URIRef) -> "Image.Builder":
+            # (original, foaf:thumbnail, derived)
+            self._resource.graph.add(
+                (original_image_uri, FOAF.thumbnail, self._resource.identifier)
+            )
+            # (derived, cms:thumbnailOf, original)
+            # These quads are faster to query than the foaf:thumbnail ones.
+            self.add(CMS.thumbnailOf, original_image_uri)
+            return self
+
+        def set_src(self, src: Union[str, Literal, URIRef]) -> "Image.Builder":
+            """
+            src that can be used in an <img> tag; if not specified, defaults to URI
+            """
+            self.set(CMS.imageSrc, src)
+            return self
+
+        def set_title(self, title: str) -> "Image.Builder":
+            self.set(DCTERMS.title, title)
+            return self
+
     def __init__(self, resource: Resource):
         ResourceBackedNamedModel.__init__(self, resource)
         self.depicts_uri
 
     @classmethod
-    def from_fields(
-        cls,
-        *,
-        depicts_uri: URIRef,
-        uri: URIRef,
-        # Can this image be copied from its source (for GUI building), or does it have to be hot linked in order to use it?
-        copyable: bool = True,
-        created: Optional[datetime] = None,
-        exact_dimensions: Optional[ImageDimensions] = None,
-        format: Optional[str] = None,
-        max_dimensions: Optional[ImageDimensions] = None,
-        modified: Optional[datetime] = None,
-        original_image_uri: Optional[URIRef] = None,
-        rights: Optional[Rights] = None,
-        src: Union[
-            Literal, str, URIRef, None
-        ] = None,  # src that can be used in an <img> tag; if not specified, defaults to URI
-        title: Optional[str] = None,
-    ) -> "Image":
-        resource_builder = (
-            ResourceBuilder(uri)
-            .add(CMS.imageCopyable, copyable)
-            .add(DCTERMS.created, created)
-            .add(FOAF.depicts, depicts_uri)
-            .add(DCTERMS["format"], format)
-            .add(DCTERMS.modified, modified)
-            .add(DCTERMS.title, title)
-            .add_rights(rights)
-            .add(CMS.imageSrc, src)
-        )
-
-        if exact_dimensions is not None:
-            resource_builder.add(EXIF.height, exact_dimensions.height)
-            resource_builder.add(EXIF.width, exact_dimensions.width)
-        elif max_dimensions is not None:
-            resource_builder.add(CMS.imageMaxHeight, max_dimensions.height)
-            resource_builder.add(CMS.imageMaxWidth, max_dimensions.width)
-
-        resource = resource_builder.build()
-
-        if original_image_uri is not None:
-            # (original, foaf:thumbnail, derived)
-            resource.graph.add((original_image_uri, FOAF.thumbnail, uri))
-            # (derived, cms:thumbnailOf, original)
-            # These quads are faster to query than the foaf:thumbnail ones.
-            resource_builder.add(CMS.thumbnailOf, original_image_uri)
-
-        return cls(resource)
+    def builder(cls, *, depicts_uri: URIRef, uri: URIRef) -> Builder:
+        return cls.Builder(depicts_uri=depicts_uri, uri=uri)
 
     @property
     def copyable(self) -> bool:

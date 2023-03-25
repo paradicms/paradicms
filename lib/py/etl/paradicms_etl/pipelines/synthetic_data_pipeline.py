@@ -1,6 +1,6 @@
 from datetime import date, timedelta
 from pathlib import Path
-from typing import Optional, Tuple, Dict, List
+from typing import Optional, Tuple, Dict
 from urllib.parse import quote
 
 from rdflib import DCTERMS, Literal, URIRef
@@ -20,7 +20,6 @@ from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
-from paradicms_etl.models.property import Property
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -29,7 +28,6 @@ from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_closing import WorkClosing
 from paradicms_etl.models.work_creation import WorkCreation
-from paradicms_etl.models.work_opening import WorkOpening
 from paradicms_etl.namespaces import VRA
 from paradicms_etl.pipeline import Pipeline
 
@@ -150,59 +148,61 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             agents = []
             for organization_i in range(5):
                 agents.append(
-                    Organization.from_fields(
+                    Organization.builder(
                         name=f"Organization {organization_i}",
-                        page=URIRef(
-                            f"http://example.com/organization{organization_i}page"
-                        ),
                         uri=URIRef(f"http://example.com/organization{organization_i}"),
                     )
+                    .add_page(
+                        URIRef(f"http://example.com/organization{organization_i}page"),
+                    )
+                    .build()
                 )
 
             for person_i in range(5):
-                agents.append(
-                    Person.from_fields(
-                        family_name=str(person_i),
-                        given_name="Person",
+                person_builder = (
+                    Person.builder(
                         name=f"Person {person_i}",
-                        page=URIRef(f"http://example.com/person{person_i}page")
-                        if person_i % 2 == 0
-                        else None,
-                        properties=(
-                            # dcterms:relation
-                            # Wikidata concept for Alan Turing
-                            Property(
-                                DCTERMS.relation,
-                                URIRef("http://www.wikidata.org/entity/Q7251"),
-                            ),
-                            # Wikipedia
-                            Property(
-                                DCTERMS.relation,
-                                URIRef("http://en.wikipedia.org/wiki/Alan_Turing"),
-                            ),
-                        ),
-                        sort_name=f"{person_i}, Person",
                         uri=URIRef(f"http://example.com/person{person_i}"),
                     )
+                    .set_family_name(str(person_i))
+                    .set_given_name("Person")
+                    .set_sort_name(f"{person_i}, Person")
                 )
+                if person_i % 2 == 0:
+                    person_builder.add_page(
+                        URIRef(f"http://example.com/person{person_i}page")
+                    )
+                person_builder.add(
+                    # dcterms:relation
+                    # Wikidata concept for Alan Turing
+                    DCTERMS.relation,
+                    URIRef("http://www.wikidata.org/entity/Q7251"),
+                ).add(
+                    DCTERMS.relation,
+                    URIRef("http://en.wikipedia.org/wiki/Alan_Turing"),
+                )
+                agents.append(person_builder.build())
 
             for agent in agents:
                 yield agent
 
-                yield Image.from_fields(
+                yield Image.builder(
                     depicts_uri=agent.uri,
-                    exact_dimensions=ImageDimensions(height=600, width=600),
-                    rights=Rights.from_fields(
-                        creator=f"{agent.name} image creator",
-                        holder=f"{agent.name} image rights holder",
-                        license=CreativeCommonsLicenses.NC_1_0.uri,
-                        statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-                    ),
-                    title=f"{agent.name} image",
                     uri=URIRef(
                         f"https://place-hold.it/1000x1000?text={quote(agent.name)}"
                     ),
-                )
+                ).set_exact_dimensions(
+                    ImageDimensions(height=600, width=600)
+                ).add_rights(
+                    Rights.builder()
+                    .add_creator(f"{agent.name} image creator")
+                    .add_holder(f"{agent.name} image rights holder")
+                    .add_license(CreativeCommonsLicenses.NC_1_0.uri)
+                    .add_statement(RightsStatementsDotOrgRightsStatements.InC_EDU.uri)
+                    .build()
+                ).set_title(
+                    f"{agent.name} image"
+                ).build()
 
         def __generate_collection_works(
             self,
@@ -238,35 +238,45 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
         def __generate_images(self, *, depicts_uri: URIRef, text_prefix: str):
             for image_i in range(self.__images_per_work):
                 title = f"{text_prefix} image {image_i}"
-                original = Image.from_fields(
-                    depicts_uri=depicts_uri,
-                    exact_dimensions=ImageDimensions(height=1000, width=1000),
-                    rights=Rights.from_fields(
-                        holder=f"{title} rights holder",
-                        license=CreativeCommonsLicenses.NC_1_0.uri,
-                        statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-                    ),
-                    title=title,
-                    uri=URIRef(
-                        f"https://place-hold.it/1000x1000?text={quote(text_prefix)}Image{image_i}"
-                    ),
+                original = (
+                    Image.builder(
+                        depicts_uri=depicts_uri,
+                        uri=URIRef(
+                            f"https://place-hold.it/1000x1000?text={quote(text_prefix)}Image{image_i}"
+                        ),
+                    )
+                    .set_exact_dimensions(ImageDimensions(height=1000, width=1000))
+                    .add_rights(
+                        Rights.builder()
+                        .add_holder(f"{title} rights holder")
+                        .add_license(CreativeCommonsLicenses.NC_1_0.uri)
+                        .add_statement(
+                            RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
+                        )
+                        .build()
+                    )
+                    .set_title(title)
+                    .build()
                 )
                 yield original
+                assert original.rights is not None
 
                 for thumbnail_dimensions in (
                     ImageDimensions(75, 75),
                     ImageDimensions(600, 600),
                 ):
-                    yield Image.from_fields(
+                    yield Image.builder(
                         depicts_uri=depicts_uri,
-                        exact_dimensions=thumbnail_dimensions,
-                        original_image_uri=original.uri,
-                        rights=original.rights,
-                        title=f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}",
                         uri=URIRef(
                             f"https://place-hold.it/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}?text={quote(text_prefix)}Image{image_i}"
                         ),
-                    )
+                    ).set_exact_dimensions(thumbnail_dimensions).set_original_image_uri(
+                        original.uri
+                    ).add_rights(
+                        original.rights
+                    ).set_title(
+                        f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
+                    ).build()
 
         def __generate_collections(
             self,
@@ -276,20 +286,25 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
         ):
             for collection_i in range(self.__collections):
                 collection_title = f"Collection{collection_i}"
-                collection = Collection.from_fields(
-                    description=Text.from_fields(
-                        self.__LOREM_IPSUM,
-                        rights=Rights.from_fields(
-                            holder=f"{collection_title} description rights holder",
-                            license=CreativeCommonsLicenses.NC_1_0.uri,
-                            statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-                        ),
-                    )
-                    if collection_i % 2 == 0
-                    else None,
+                collection_builder = Collection.builder(
                     title=collection_title,
                     uri=URIRef(f"http://example.com/collection{collection_i}"),
                 )
+                if collection_i % 2 == 0:
+                    collection_builder.set_description(
+                        Text.builder(self.__LOREM_IPSUM)
+                        .add_rights(
+                            Rights.builder()
+                            .add_holder(f"{collection_title} description rights holder")
+                            .add_license(CreativeCommonsLicenses.NC_1_0.uri)
+                            .add_statement(
+                                RightsStatementsDotOrgRightsStatements.InC_EDU.uri
+                            )
+                            .build()
+                        )
+                        .build()
+                    )
+                collection = collection_builder.build()
                 yield collection
 
                 if collection_i > 0:
@@ -314,13 +329,16 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 if property_uri == DCTERMS.creator:
                     continue
                 for property_value in property_values:
-                    concept = Concept.from_fields(
-                        property_uris=(property_uri,),
-                        pref_label=f"Concept {concept_urn_i}",
-                        uri=URIRef(
-                            f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
-                        ),
-                        value=Literal(property_value),
+                    concept = (
+                        Concept.builder(
+                            property_uris=(property_uri,),
+                            uri=URIRef(
+                                f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
+                            ),
+                            value=Literal(property_value),
+                        )
+                        .set_pref_label(f"Concept {concept_urn_i}")
+                        .build()
                     )
                     yield concept
 
@@ -340,31 +358,35 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             title_prefix: str,
             uri_prefix: str,
         ):
-            properties: List[Property] = []
-
             work_i = self.__next_work_i
             self.__next_work_i += 1
 
             title = title_prefix + str(work_i)
-            uri = URIRef(uri_prefix + str(work_i))
+            work_builder = Work.builder(
+                title=title, uri=URIRef(uri_prefix + str(work_i))
+            )
+
+            for collection_uri in collection_uris:
+                work_builder.add_collection_uri(collection_uri)
 
             include_description = work_i % 2 == 0
 
             # Properties that depend on the work title
-            properties.extend(
-                Property(
+            for i in range(2):
+                work_builder.add(
                     DCTERMS.alternative,
                     f"{title} alternative title {i}",
                 )
-                for i in range(2)
-            )
-            properties.extend(
-                Property(DCTERMS.identifier, f"{title}Id{i}") for i in range(2)
-            )
-            properties.extend(
-                Property(DCTERMS.provenance, f"{title} provenance {i}")
-                for i in range(2)
-            )
+                work_builder.add(DCTERMS.identifier, f"{title}Id{i}")
+                work_builder.add(DCTERMS.provenance, f"{title} provenance {i}")
+
+                work_builder.add_rights(
+                    Rights.builder()
+                    .add_holder(f"{title} rights holder")
+                    .add_license(CreativeCommonsLicenses.NC_1_0.uri)
+                    .add_statement(RightsStatementsDotOrgRightsStatements.InC_EDU.uri)
+                    .build()
+                )
 
             destruction_date = date(day=1, month=1, year=2022)
             creation_date = destruction_date - timedelta(days=work_i)
@@ -377,77 +399,68 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 property_uri,
                 property_values,
             ) in self.__FACETED_PROPERTY_VALUES:
-                properties.extend(
-                    Property(
+                for i in range(2):
+                    work_builder.add(
                         property_uri,
                         concepts_by_value[
                             property_values[(work_i + i) % len(property_values)]
                         ].uri,
                     )
-                    for i in range(2)
-                )
 
             # dcterms:contributor
             contributor_uris = [
                 agents[(work_i + i) % len(agents)].uri for i in range(2)
             ]
-            properties.extend(
-                Property(DCTERMS.contributor, contributor_uri)
-                for contributor_uri in contributor_uris
-            )
+            for contributor_uri in contributor_uris:
+                work_builder.add(DCTERMS.contributor, contributor_uri)
 
             # dcterms:creator
             creator_uris = [agents[(work_i + i) % len(agents)].uri for i in range(2, 4)]
-            properties.extend(
-                Property(DCTERMS.creator, creator_uri) for creator_uri in creator_uris
-            )
+            for creator_uri in creator_uris:
+                work_builder.add(DCTERMS.creator, creator_uri)
 
             # dcterms:relation
             # Wikidata concept for the Pilot ACE
-            properties.append(
-                Property(
-                    DCTERMS.relation,
-                    URIRef("http://www.wikidata.org/entity/Q937690"),
-                )
+            work_builder.add(
+                DCTERMS.relation,
+                URIRef("http://www.wikidata.org/entity/Q937690"),
             )
+
             # Wikipedia
-            properties.append(
-                Property(
-                    DCTERMS.relation,
-                    URIRef("http://en.wikipedia.org/wiki/Pilot-ACE"),
-                )
+            work_builder.add(
+                DCTERMS.relation,
+                URIRef("http://en.wikipedia.org/wiki/Pilot-ACE"),
             )
 
             description = (
-                Text.from_fields(
+                Text.builder(
                     self.__LOREM_IPSUM,
-                    rights=Rights.from_fields(
-                        holder=f"{title} description rights holder",
-                        license=CreativeCommonsLicenses.NC_1_0.uri,
-                        statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-                    ),
                 )
+                .add_rights(
+                    Rights.builder()
+                    .add_holder(f"{title} description rights holder")
+                    .add_license(CreativeCommonsLicenses.NC_1_0.uri)
+                    .add_statement(RightsStatementsDotOrgRightsStatements.InC_EDU.uri)
+                    .build()
+                )
+                .build()
                 if include_description
                 else None
             )
+            if description:
+                work_builder.set_description(description)
 
-            location = AnonymousLocation.from_fields(lat=42.728104, long=-73.687576)
-
-            work = Work.from_fields(
-                description=description,
-                collection_uris=collection_uris,
-                page=URIRef("http://example.com/work/" + str(work_i))
-                if work_i % 2 == 0
-                else None,
-                properties=tuple(properties),
-                rights=Rights.from_fields(
-                    holder=f"{title} rights holder",
-                    license=CreativeCommonsLicenses.NC_1_0.uri,
-                    statement=RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-                ),
-                title=title,
-                uri=uri,
+            location = (
+                AnonymousLocation.builder()
+                .set_lat(42.728104)
+                .set_long(-73.687576)
+                .build()
             )
+
+            if work_i % 2 == 0:
+                work_builder.add_page(URIRef("http://example.com/work/" + str(work_i)))
+
+            work = work_builder.build()
             yield work
 
             yield from self.__generate_images(
@@ -455,34 +468,36 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 text_prefix=work.title,
             )
 
-            yield WorkClosing.from_fields(
-                description=description,
-                date=destruction_date,
-                location=location,
-                title=f"{work.title} closing",
-                uri=URIRef(str(uri) + "Closing"),
-                work_uri=work.uri,
-            )
+            yield WorkClosing.builder(
+                uri=URIRef(str(work.uri) + "Closing"), work_uri=work.uri
+            ).set_description(description).set_date(destruction_date).set_location(
+                location
+            ).set_title(
+                f"{work.title} closing"
+            ).build()
 
-            yield WorkCreation.from_fields(
-                description=description,
-                contributor_uri=tuple(contributor_uris),
-                creator_uri=tuple(creator_uris),
-                date=creation_date_time_description,
-                location=location,
-                title=f"{work.title} creation",
-                uri=URIRef(str(uri) + "Creation"),
-                work_uri=work.uri,
+            work_creation_builder: WorkCreation.Builder = (
+                WorkCreation.builder(
+                    uri=URIRef(str(work.uri) + "Creation"), work_uri=work.uri
+                )
+                .set_date(creation_date_time_description)
+                .set_description(description)
+                .set_location(location)
+                .set_title(f"{work.title} creation")
             )
+            for contributor_uri in contributor_uris:
+                work_creation_builder.add_contributor_uri(contributor_uri)
+            for creator_uri in creator_uris:
+                work_creation_builder.add_creator_uri(creator_uri)
+            yield work_creation_builder.build()
 
-            yield WorkOpening.from_fields(
-                description=description,
-                date=creation_date,
-                location=location,
-                title=f"{work.title} opening",
-                uri=URIRef(str(uri) + "Opening"),
-                work_uri=work.uri,
-            )
+            yield WorkClosing.builder(
+                uri=URIRef(str(work.uri) + "Opening"), work_uri=work.uri
+            ).set_description(description).set_date(creation_date).set_location(
+                location
+            ).set_title(
+                f"{work.title} opening"
+            ).build()
 
     def __init__(self, loader: Optional[Loader] = None):
         if loader is None:

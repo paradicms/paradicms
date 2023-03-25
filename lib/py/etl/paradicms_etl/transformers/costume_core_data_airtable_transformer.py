@@ -8,7 +8,6 @@ from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.costume_core.costume_core import CostumeCore
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.property import Property
 from paradicms_etl.models.work import Work
 
 
@@ -52,9 +51,9 @@ class CostumeCoreDataAirtableTransformer:
     def __call__(self, *, base: Dict[str, Any], records_by_table, **kwds):
         yield from self.__costume_core.concepts
 
-        collection = Collection.from_fields(
+        collection = Collection.builder(
             title=base["name"], uri=AirtableExtractor.base_url(base_id=base["id"])
-        )
+        ).build()
         yield collection
 
         # features = self.__transform_feature_records(
@@ -147,7 +146,12 @@ class CostumeCoreDataAirtableTransformer:
                 )
             )
 
-            properties = []
+            work_builder = Work.builder(
+                # rights=Rights.from_properties(properties),
+                title=object_record["fields"]["Title"],
+                uri=work_uri,
+            ).add_collection_uri(collection_uri)
+
             for field_key, field_value in object_record["fields"].items():
                 try:
                     predicate = self.__costume_core.predicates_by_label[field_key]
@@ -184,46 +188,38 @@ class CostumeCoreDataAirtableTransformer:
                             term_record = term_records_by_id[field_value]
 
                         if name_record is not None:
-                            properties.append(
-                                Property(
-                                    URIRef(predicate.uri),
-                                    name_record["fields"]["Full Name"],
-                                )
+                            work_builder.add(
+                                URIRef(predicate.uri),
+                                name_record["fields"]["Full Name"],
                             )
                         elif term_record is not None:
                             term_id = term_record["fields"]["id"]
                             term = self.__costume_core.terms_by_id[term_id]
-                            properties.append(
-                                Property(URIRef(predicate.uri), term.label)
-                            )
+                            work_builder.add(URIRef(predicate.uri), term.label)
                         else:
                             raise NotImplementedError
                     else:
-                        properties.append(Property(URIRef(predicate.uri), field_value))
+                        work_builder.add(URIRef(predicate.uri), field_value)
 
-            yield Work.from_fields(
-                collection_uris=(collection_uri,),
-                properties=tuple(properties),
-                # rights=Rights.from_properties(properties),
-                title=object_record["fields"]["Title"],
-                uri=work_uri,
-            )
+            yield work_builder.build()
 
     def __transform_object_images(self, *, object_images, work_uri: URIRef):
         for object_image in object_images:
-            original_image = Image.from_fields(
+            original_image = Image.builder(
                 depicts_uri=work_uri,
                 uri=URIRef(object_image["url"]),
-            )
+            ).build()
             yield original_image
 
             for thumbnail in object_image["thumbnails"].values():
-                yield Image.from_fields(
+                yield Image.builder(
                     depicts_uri=work_uri,
-                    exact_dimensions=ImageDimensions(
+                    uri=URIRef(thumbnail["url"]),
+                ).set_exact_dimensions(
+                    ImageDimensions(
                         height=thumbnail["height"],
                         width=thumbnail["width"],
-                    ),
-                    original_image_uri=original_image.uri,
-                    uri=URIRef(thumbnail["url"]),
-                )
+                    )
+                ).set_original_image_uri(
+                    original_image.uri
+                ).build()

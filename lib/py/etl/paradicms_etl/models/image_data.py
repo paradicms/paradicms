@@ -3,13 +3,20 @@ from io import BytesIO
 from typing import Dict, Any
 
 from PIL import Image
-from rdflib import DCTERMS, RDF, BNode, Literal, XSD
+from rdflib import DCTERMS, RDF, Literal, XSD, BNode
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
-from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class ImageData(ResourceBackedModel):
+    class __Builder(ResourceBackedModel.Builder):
+        def add(self, *args, **kwds):
+            ResourceBackedModel.Builder.add(self, *args, **kwds)
+            return self
+
+        def build(self) -> "ImageData":
+            return ImageData(self._resource)
+
     @property
     def __format(self) -> str:
         return self._required_str_value(DCTERMS.format)
@@ -18,8 +25,8 @@ class ImageData(ResourceBackedModel):
     def from_pil_image(cls, pil_image: Image):
         buffer = BytesIO()
         pil_image.save(buffer, format="JPEG")
-        return cls(
-            ResourceBuilder(BNode())
+        return (
+            cls.__Builder(BNode())
             .add(DCTERMS.format, Literal("image/jpeg"))
             .add(
                 RDF.value,

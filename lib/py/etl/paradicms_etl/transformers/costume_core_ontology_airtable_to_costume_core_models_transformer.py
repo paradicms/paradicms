@@ -155,7 +155,7 @@ class CostumeCoreOntologyAirtableToCostumeCoreModelsTransformer:
         return tuple(sorted(terms, key=lambda term: term.id))
 
     def __call__(self, *, base: Dict[str, Any], records_by_table: Dict[str, Tuple]) -> Graph:  # type: ignore
-        yield CostumeCoreOntology.from_fields(version=self.__ontology_version)
+        yield CostumeCoreOntology.builder(version=self.__ontology_version).build()
 
         feature_records = tuple(
             record

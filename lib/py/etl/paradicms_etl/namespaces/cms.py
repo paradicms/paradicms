@@ -27,6 +27,7 @@ class CMS(DefinedNamespace):
     Location: URIRef
     Organization: URIRef
     Person: URIRef
+    Property: URIRef
     RightsStatement: URIRef
     Text: URIRef
     WikidataItem: URIRef

@@ -1,15 +1,15 @@
 import logging
 from datetime import datetime
-from typing import Dict, Optional, Tuple, List
+from typing import Dict, Optional, Tuple, List, Set
 
 from pyformance import MetricsRegistry
 from rdflib import URIRef, DCTERMS, Literal
+from rdflib.term import Node
 from tqdm import tqdm
 
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.property import Property
 from paradicms_etl.models.work import Work
 
 ElementTextTree = Dict[str, Dict[str, List[str]]]
@@ -97,20 +97,20 @@ class OmekaClassicTransformer:
         return result
 
     def _get_title(
-        self, properties: Tuple[Property, ...]
-    ) -> Tuple[str, Tuple[Property, ...]]:
+        self, properties: Tuple[Tuple[URIRef, Node], ...]
+    ) -> Tuple[str, Tuple[Tuple[URIRef, Node], ...]]:
         for title_property_uri in (
             DCTERMS.title,
             DCTERMS.alternative,
         ):
             for property_i, property_ in enumerate(properties):
-                if property_.uri == title_property_uri:
+                if property_[0] == title_property_uri:
                     remaining_properties = tuple(
                         list(properties[:property_i])
                         + list(properties[property_i + 1 :])
                     )
                     assert len(remaining_properties) == len(properties) - 1
-                    title = property_.value
+                    title = property_[1]
                     assert isinstance(title, Literal)
                     return title.toPython(), remaining_properties
         raise KeyError("no title property")
@@ -137,22 +137,23 @@ class OmekaClassicTransformer:
                 "collection %s has no title property", omeka_collection["url"]
             )
             return None
-        return Collection.from_fields(
-            properties=properties,
-            title=title,
-            uri=URIRef(omeka_collection["url"]),
+        collection_builder = Collection.builder(
+            title=title, uri=URIRef(omeka_collection["url"])
         )
+        for p, o in properties:
+            collection_builder.add(p, o)
+        return collection_builder.build()
 
     def _transform_dublin_core_elements(
         self, *, element_text_tree: ElementTextTree
-    ) -> Tuple[Property, ...]:
+    ) -> Tuple[Tuple[URIRef, Node], ...]:
         dc_element_text_tree = element_text_tree.pop("Dublin Core", None)
         if not dc_element_text_tree:
             return ()
 
         # The items JSON from the API has display name element identifiers instead of the Dublin Core URIs,
         # so we have to map back here.
-        properties = set()
+        properties: Set[Tuple[URIRef, Node]] = set()
         for key, property_uri in (
             ("Alternative Title", DCTERMS.alternative),
             ("Contributor", DCTERMS.contributor),
@@ -181,7 +182,7 @@ class OmekaClassicTransformer:
             ("Type", DCTERMS.type),
         ):
             for value in dc_element_text_tree.pop(key, []):
-                properties.add(Property(property_uri, value))
+                properties.add((property_uri, Literal(value)))
 
         for (key, property_uri) in (
             ("License", DCTERMS.license),
@@ -189,9 +190,9 @@ class OmekaClassicTransformer:
         ):
             for value in dc_element_text_tree.pop(key, []):
                 if is_uri(value):
-                    properties.add(Property(property_uri, URIRef(value)))
+                    properties.add((property_uri, URIRef(value)))
                 else:
-                    properties.add(Property(property_uri, value))
+                    properties.add((property_uri, Literal(value)))
 
         if dc_element_text_tree:
             self.__logger.warn(
@@ -234,33 +235,41 @@ class OmekaClassicTransformer:
         for key, url in file_["file_urls"].items():
             if url is None:
                 continue
-            exact_dimensions = max_dimensions = None
+
+            image_builder = (
+                Image.builder(
+                    depicts_uri=work_uri,
+                    uri=URIRef(url),
+                )
+                .set_created(file_added)
+                .set_format(file_["mime_type"])
+                .set_modified(file_modified)
+            )
+
             if key == "original":
-                exact_dimensions = file_exact_dimensions
-                original_image_uri = None
+                if file_exact_dimensions:
+                    image_builder.set_exact_dimensions(file_exact_dimensions)
             else:
                 if key == "square_thumbnail":
-                    exact_dimensions = ImageDimensions(
-                        height=self._square_thumbnail_height_px,
-                        width=self._square_thumbnail_width_px,
+                    image_builder.set_exact_dimensions(
+                        ImageDimensions(
+                            height=self._square_thumbnail_height_px,
+                            width=self._square_thumbnail_width_px,
+                        )
                     )
                 else:
-                    max_dimensions = ImageDimensions(
-                        height=getattr(self, "_" + key + "_max_height_px"),
-                        width=getattr(self, "_" + key + "_max_width_px"),
+                    image_builder.set_max_dimensions(
+                        ImageDimensions(
+                            height=getattr(self, "_" + key + "_max_height_px"),
+                            width=getattr(self, "_" + key + "_max_width_px"),
+                        )
                     )
-                original_image_uri = URIRef(file_["file_urls"]["original"])
+                image_builder.set_original_image_uri(
+                    URIRef(file_["file_urls"]["original"])
+                )
 
-            image = Image.from_fields(
-                created=file_added,
-                depicts_uri=work_uri,
-                exact_dimensions=exact_dimensions,
-                format=file_["mime_type"],
-                max_dimensions=max_dimensions,
-                modified=file_modified,
-                original_image_uri=original_image_uri,
-                uri=URIRef(url),
-            )
+            image = image_builder.build()
+
             if key == "original":
                 images.insert(0, image)
             else:
@@ -304,16 +313,21 @@ class OmekaClassicTransformer:
         except KeyError:
             self.__logger.warning("work %s has no title property", item["url"])
             return None
-        return Work.from_fields(
-            collection_uris=(collection_uri,),
-            page=URIRef(endpoint_url + "items/show/" + str(item["id"])),
-            properties=properties,
-            # rights=Rights.from_properties(properties),
-            title=title,
-            uri=URIRef(item["url"]),
+        work_builder = (
+            Work.builder(
+                title=title,
+                uri=URIRef(item["url"]),
+            )
+            .add_collection_uri(collection_uri)
+            .add_page(URIRef(endpoint_url + "items/show/" + str(item["id"])))
         )
+        for p, o in properties:
+            work_builder.add(p, o)
+        return work_builder.build()
 
-    def _transform_item_type_metadata(self, element_text_tree) -> Tuple[Property, ...]:
+    def _transform_item_type_metadata(
+        self, element_text_tree
+    ) -> Tuple[Tuple[URIRef, Node], ...]:
         # "Item Type Metadata" is a catch-all element set for all user-defined elements.
         element_text_tree.pop("Item Type Metadata", None)
         return ()

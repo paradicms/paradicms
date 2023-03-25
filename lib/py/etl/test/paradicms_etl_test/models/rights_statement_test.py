@@ -4,14 +4,12 @@ from paradicms_etl.models.rights_statement import RightsStatement
 
 
 def test_init():
-    RightsStatement.from_fields(
-        definition="Test definition",
-        description="Test description",
+    RightsStatement.builder(
         identifier="testidentifier",
-        notes=(
-            "Test note 1",
-        ),  # Deserialization does not preserve order, so only use one
         pref_label="Test pref label",
-        scope_note="Test scope note",
         uri=URIRef("http://example.com"),
-    )
+    ).set_description("Test description").set_definition("Test definition").add_note(
+        "Test note 1",
+    ).add_scope_note(
+        "Test scope note"
+    ).build()

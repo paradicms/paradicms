@@ -1,20 +1,38 @@
-from rdflib import URIRef, RDF
+from rdflib import RDF, URIRef, RDFS
 
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
-from paradicms_etl.namespaces import CMS
-from paradicms_etl.utils.resource_builder import ResourceBuilder
+from paradicms_etl.namespaces import CMS, WGS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class NamedLocation(ResourceBackedNamedModel, Location):
+    class Builder(ResourceBackedNamedModel.Builder):
+        def __init__(self, *, uri: URIRef):
+            ResourceBackedNamedModel.Builder.__init__(self, uri)
+
+        def build(self):
+            return NamedLocation(self._resource)
+
+        def set_label(self, label: str) -> "NamedLocation.Builder":
+            self.set(RDFS.label, label)
+            return self
+
+        def set_lat(self, lat: float) -> "NamedLocation.Builder":
+            self.set(WGS.lat, lat)
+            return self
+
+        def set_long(self, long: float) -> "NamedLocation.Builder":
+            self.set(WGS.long, long)
+            return self
+
     def __init__(self, *args, **kwds):
         ResourceBackedNamedModel.__init__(self, *args, **kwds)
         self._resource.add(RDF.type, CMS.Location)
 
     @classmethod
-    def from_fields(cls, *, uri: URIRef, **kwds) -> "NamedLocation":
-        return Location._from_fields(cls, resource_builder=ResourceBuilder(uri), **kwds)
+    def builder(cls, *, uri: URIRef) -> Builder:
+        return cls.Builder(uri=uri)
 
     @classmethod
     def json_ld_context(cls):

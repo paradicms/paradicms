@@ -191,8 +191,15 @@ class WikidataFullStatement(WikidataStatement):
             if time_precision >= 14:
                 second = time_value.second
 
-            parsed_value = DateTimeDescription.from_fields(
-                year=year, month=month, day=day, hour=hour, minute=minute, second=second
+            parsed_value = (
+                DateTimeDescription.builder()
+                .set_year(year)
+                .set_month(month)
+                .set_day(day)
+                .set_hour(hour)
+                .set_minute(minute)
+                .set_second(second)
+                .build()
             )
             logger.debug(
                 "parsed %s from %s with precision=%d",

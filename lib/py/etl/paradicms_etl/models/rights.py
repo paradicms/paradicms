@@ -1,4 +1,4 @@
-from typing import Optional, Union, Tuple
+from typing import Union, Tuple
 
 from rdflib import URIRef, DCTERMS, BNode, Literal, Graph
 from rdflib.resource import Resource
@@ -20,6 +20,34 @@ class Rights(ResourceBackedModel):
         DCTERMS.rightsHolder,
     }
 
+    class Builder(ResourceBackedModel.Builder):
+        def add_contributor(self, contributor: Union[str, URIRef]) -> "Rights.Builder":
+            self.add(DCTERMS.contributor, contributor)
+            return self
+
+        def add_creator(self, creator: Union[str, URIRef]) -> "Rights.Builder":
+            self.add(DCTERMS.creator, creator)
+            return self
+
+        def add_holder(self, holder: Union[str, URIRef]) -> "Rights.Builder":
+            self.add(DCTERMS.rightsHolder, holder)
+            return self
+
+        def add_license(self, license: Union[str, URIRef]) -> "Rights.Builder":
+            self.add(DCTERMS.license, license)
+            return self
+
+        def add_statement(self, statement: Union[str, URIRef]) -> "Rights.Builder":
+            self.add(DCTERMS.rights, statement)
+            return self
+
+        def build(self):
+            return Rights(self._resource)
+
+    @classmethod
+    def builder(cls) -> Builder:
+        return cls.Builder(BNode())
+
     @property
     def contributors(self) -> Tuple[Union[str, URIRef], ...]:
         return self.__plural_values(DCTERMS.contributor)
@@ -27,40 +55,6 @@ class Rights(ResourceBackedModel):
     @property
     def creators(self) -> Tuple[Union[str, URIRef], ...]:
         return self.__plural_values(DCTERMS.creator)
-
-    @classmethod
-    def from_fields(
-        cls,
-        *,
-        contributor: Union[str, URIRef, None] = None,
-        contributors: Optional[Tuple[Union[str, URIRef], ...]] = None,
-        creator: Union[str, URIRef, None] = None,
-        creators: Optional[Tuple[Union[str, URIRef], ...]] = None,
-        holder: Union[str, URIRef, None] = None,
-        holders: Optional[Tuple[Union[str, URIRef], ...]] = None,
-        license: Union[str, URIRef, None] = None,
-        statement: Union[str, URIRef, None] = None,
-    ):
-        from paradicms_etl.utils.resource_builder import ResourceBuilder
-
-        resource_builder = ResourceBuilder(BNode())
-
-        fields = (
-            (contributor, contributors, DCTERMS.contributor),
-            (creator, creators, DCTERMS.creator),
-            (holder, holders, DCTERMS.rightsHolder),
-            (license, None, DCTERMS.license),
-            (statement, None, DCTERMS.rights),
-        )
-        assert len(fields) == len(cls.__PROPERTY_URIS)
-        for singular, plural, property_uri in fields:
-            assert property_uri in cls.__PROPERTY_URIS
-            if singular is not None:
-                resource_builder.add(property_uri, singular)
-            if plural is not None:
-                for value in plural:
-                    resource_builder.add(property_uri, value)
-        return cls(resource_builder.build())
 
     @property
     def holders(self) -> Tuple[Union[str, URIRef], ...]:

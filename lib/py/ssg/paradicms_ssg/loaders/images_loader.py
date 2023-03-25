@@ -4,12 +4,12 @@ import os.path
 from pathlib import Path
 from typing import Generator, Optional, Tuple
 
-from paradicms_etl.models.image import Image
-from paradicms_etl.models.image_dimensions import ImageDimensions
 from pathvalidate import sanitize_filename
 from rdflib import URIRef
 from tqdm import tqdm
 
+from paradicms_etl.models.image import Image
+from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_ssg.image_archiver import ImageArchiver
 from paradicms_ssg.original_image_file_cache import (
     OriginalImageFileCache,
@@ -124,17 +124,19 @@ class ImagesLoader:
                 "urn:paradicms_etl:thumbnail:" + archived_thumbnail_hash.hexdigest()
             )
 
-            archived_thumbnail_images.append(
-                Image.from_fields(
+            archived_thumbnail_image_builder = (
+                Image.builder(
                     depicts_uri=original_image.depicts_uri,
-                    exact_dimensions=thumbnail_exact_dimensions,
-                    max_dimensions=thumbnail_max_dimensions,
-                    original_image_uri=original_image.uri,
-                    rights=original_image.rights,
-                    src=archived_thumbnail_src,
                     uri=archived_thumbnail_uri,
                 )
+                .set_exact_dimensions(thumbnail_exact_dimensions)
+                .set_max_dimensions(thumbnail_max_dimensions)
+                .set_original_image_uri(original_image.uri)
+                .set_src(archived_thumbnail_src)
             )
+            if original_image.rights:
+                archived_thumbnail_image_builder.add_rights(original_image.rights)
+            archived_thumbnail_images.append(archived_thumbnail_image_builder.build())
         assert len(archived_thumbnail_images) == len(self.__thumbnail_max_dimensions)
         return tuple(archived_thumbnail_images)
 

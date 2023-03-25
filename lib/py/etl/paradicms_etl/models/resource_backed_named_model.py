@@ -6,6 +6,14 @@ from paradicms_etl.namespaces import CMS
 
 
 class ResourceBackedNamedModel(ResourceBackedModel, NamedModel):
+    class Builder(ResourceBackedModel.Builder):
+        def __init__(self, uri: URIRef):
+            ResourceBackedModel.Builder.__init__(self, uri)
+
+        def add(self, *args, **kwds) -> "ResourceBackedNamedModel.Builder":
+            ResourceBackedModel.Builder.add(self, *args, **kwds)
+            return self
+
     def __init__(self, *args, **kwds):
         ResourceBackedModel.__init__(self, *args, **kwds)
         cms_class_uri = getattr(CMS, self.__class__.__name__, None)
