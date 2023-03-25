@@ -3,10 +3,9 @@ from io import BytesIO
 from typing import Dict, Any
 
 from PIL import Image
-from rdflib import DCTERMS, RDF, BNode, Literal, XSD
+from rdflib import DCTERMS, RDF, Literal, XSD
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
-from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class ImageData(ResourceBackedModel):
