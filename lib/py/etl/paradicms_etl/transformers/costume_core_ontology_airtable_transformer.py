@@ -228,7 +228,7 @@ class CostumeCoreOntologyAirtableTransformer:
 
     def __transform_feature_record_to_collection(
         self, feature_record
-    ) -> Collection | None:
+    ) -> Optional[Collection]:
         fields = feature_record["fields"]
         if not fields.get("feature_values_labels", []):
             # Don't yield Collections that won't have any associated Works
@@ -257,7 +257,7 @@ class CostumeCoreOntologyAirtableTransformer:
 
     def __transform_feature_record_to_worksheet_feature(
         self, *, feature_record, feature_set_records
-    ) -> WorksheetFeature | None:
+    ) -> Optional[WorksheetFeature]:
         fields = feature_record["fields"]
 
         feature_set_uris = set()
@@ -421,7 +421,7 @@ class CostumeCoreOntologyAirtableTransformer:
         feature_records,
         feature_value_record,
         variant_term_records_by_feature_value_id,
-    ) -> Concept | None:
+    ) -> Optional[Concept]:
         fields = feature_value_record["fields"]
         id_ = feature_value_record["id"]
 
@@ -498,7 +498,7 @@ class CostumeCoreOntologyAirtableTransformer:
 
     def __transform_feature_value_record_to_costume_core_term(
         self, *, feature_records, feature_value_record, image_records_by_id
-    ) -> CostumeCoreTerm | None:
+    ) -> Optional[CostumeCoreTerm]:
         fields = feature_value_record["fields"]
 
         description_text_en = fields.get("description_text_en")
@@ -562,7 +562,7 @@ class CostumeCoreOntologyAirtableTransformer:
 
     def __transform_feature_value_record_to_work(
         self, *, feature_records, feature_value_record
-    ) -> Work | None:
+    ) -> Optional[Work]:
         fields = feature_value_record["fields"]
 
         work_builder = Work.builder(
