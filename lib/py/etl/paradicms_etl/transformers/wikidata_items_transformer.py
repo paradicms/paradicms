@@ -63,7 +63,7 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
             )
             if item_model.label is not None:
                 image_builder.set_title(item_model.label)
-            return image_builder.build()
+            return (image_builder.build(),)
 
     class __PersonWikidataItemTransformer(__WikidataItemTransformer):
         def _transform_item(self, item: WikidataItem) -> NamedModel:

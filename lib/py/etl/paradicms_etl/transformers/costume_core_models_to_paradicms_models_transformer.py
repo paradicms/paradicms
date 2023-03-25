@@ -174,7 +174,7 @@ class CostumeCoreModelsToParadicmsModelsTransformer:
                     uri=URIRef(str(term.full_size_image_url)),
                 )
                 .add_rights(image_rights)
-                .build(0)
+                .build()
             )
             yield original_image
 
