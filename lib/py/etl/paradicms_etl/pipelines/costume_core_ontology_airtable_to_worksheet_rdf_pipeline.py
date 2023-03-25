@@ -7,8 +7,8 @@ from paradicms_etl.extractors.costume_core_ontology_airtable_extractor import (
 )
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.pipeline import Pipeline
-from paradicms_etl.transformers.costume_core_ontology_airtable_to_worksheet_models_transformer import (
-    CostumeCoreOntologyAirtableToWorksheetModelsTransformer,
+from paradicms_etl.transformers.costume_core_ontology_airtable_to_paradicms_models_transformer import (
+    CostumeCoreOntologyAirtableToParadicmsModelsTransformer,
 )
 
 
@@ -37,7 +37,7 @@ class CostumeCoreOntologyAirtableToWorksheetRdfPipeline(Pipeline):
                 format="ttl",
                 pipeline_id=self.ID,
             ),
-            transformer=CostumeCoreOntologyAirtableToWorksheetModelsTransformer(),  # type: ignore
+            transformer=CostumeCoreOntologyAirtableToParadicmsModelsTransformer(),  # type: ignore
         )
 
     @classmethod

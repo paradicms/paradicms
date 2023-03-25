@@ -9,8 +9,8 @@ from paradicms_etl.models.license import License
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.worksheet_feature import WorksheetFeature
 from paradicms_etl.models.worksheet_feature_set import WorksheetFeatureSet
-from paradicms_etl.transformers.costume_core_ontology_airtable_to_worksheet_models_transformer import (
-    CostumeCoreOntologyAirtableToWorksheetModelsTransformer,
+from paradicms_etl.transformers.costume_core_ontology_airtable_to_paradicms_models_transformer import (
+    CostumeCoreOntologyAirtableToParadicmsModelsTransformer,
 )
 
 
@@ -21,7 +21,7 @@ def test_transform(data_dir_path: Path):
     )
     extract_result = extractor(force=False)
 
-    transformer = CostumeCoreOntologyAirtableToWorksheetModelsTransformer()
+    transformer = CostumeCoreOntologyAirtableToParadicmsModelsTransformer()
 
     models = tuple(transformer(**extract_result))
     assert models
