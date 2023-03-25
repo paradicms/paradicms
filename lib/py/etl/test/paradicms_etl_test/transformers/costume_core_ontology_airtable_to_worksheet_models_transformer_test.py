@@ -9,7 +9,7 @@ from paradicms_etl.models.license import License
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.worksheet_feature import WorksheetFeature
 from paradicms_etl.models.worksheet_feature_set import WorksheetFeatureSet
-from paradicms_etl.transformers.costume_core_ontology_airtable_to_paradicms_models_transformer import (
+from paradicms_etl.transformers.costume_core_ontology_airtable_transformer import (
     CostumeCoreOntologyAirtableToParadicmsModelsTransformer,
 )
 

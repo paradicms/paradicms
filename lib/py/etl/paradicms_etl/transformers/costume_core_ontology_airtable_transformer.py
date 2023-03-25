@@ -23,7 +23,7 @@ from paradicms_etl.models.worksheet_feature_set import WorksheetFeatureSet
 from paradicms_etl.namespaces import COCO
 
 
-class CostumeCoreOntologyAirtableToParadicmsModelsTransformer:
+class CostumeCoreOntologyAirtableTransformer:
     class __ImageDepictsType(Enum):
         FEATURE = "feature"
         FEATURE_SET = "featureSet"

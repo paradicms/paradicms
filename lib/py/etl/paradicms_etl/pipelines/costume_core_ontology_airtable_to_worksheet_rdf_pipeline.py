@@ -7,7 +7,7 @@ from paradicms_etl.extractors.costume_core_ontology_airtable_extractor import (
 )
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.pipeline import Pipeline
-from paradicms_etl.transformers.costume_core_ontology_airtable_to_paradicms_models_transformer import (
+from paradicms_etl.transformers.costume_core_ontology_airtable_transformer import (
     CostumeCoreOntologyAirtableToParadicmsModelsTransformer,
 )
 
