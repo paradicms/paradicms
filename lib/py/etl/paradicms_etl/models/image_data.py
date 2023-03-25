@@ -3,13 +3,13 @@ from io import BytesIO
 from typing import Dict, Any
 
 from PIL import Image
-from rdflib import DCTERMS, RDF, Literal, XSD
+from rdflib import DCTERMS, RDF, Literal, XSD, BNode
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 
 
 class ImageData(ResourceBackedModel):
-    class Builder(ResourceBackedModel.Builder):
+    class __Builder(ResourceBackedModel.Builder):
         def build(self) -> "ImageData":
             return ImageData(self._resource)
 
@@ -22,7 +22,7 @@ class ImageData(ResourceBackedModel):
         buffer = BytesIO()
         pil_image.save(buffer, format="JPEG")
         return (
-            cls.Builder()
+            cls.__Builder(BNode())
             .add(DCTERMS.format, Literal("image/jpeg"))
             .add(
                 RDF.value,
