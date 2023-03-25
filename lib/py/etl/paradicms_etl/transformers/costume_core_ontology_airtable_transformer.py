@@ -108,12 +108,28 @@ class CostumeCoreOntologyAirtableTransformer:
         )
 
     def __call__(self, *, base: Dict[str, Any], records_by_table: Dict[str, Tuple]) -> Graph:  # type: ignore
-        feature_records = tuple(records_by_table["features"])
-        feature_set_records = tuple(records_by_table["feature_sets"])
-        feature_value_records = tuple(records_by_table["feature_values"])
+        feature_records = tuple(
+            record
+            for record in records_by_table["features"]
+            if "id" in record["fields"]
+        )
+        feature_set_records = tuple(
+            record
+            for record in records_by_table["feature_sets"]
+            if "id" in record["fields"]
+        )
+        feature_value_records = tuple(
+            record
+            for record in records_by_table["feature_values"]
+            if "id" in record["fields"]
+        )
+        image_records = tuple(
+            record
+            for record in records_by_table["images"]
+            if "filename" in record["fields"]
+        )
         image_records_by_id = {
-            image_record["id"]: image_record
-            for image_record in records_by_table["images"]
+            image_record["id"]: image_record for image_record in image_records
         }
         # rights_licenses_records = tuple(
         #     record
