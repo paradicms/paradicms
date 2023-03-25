@@ -124,7 +124,7 @@ class ImagesLoader:
                 "urn:paradicms_etl:thumbnail:" + archived_thumbnail_hash.hexdigest()
             )
 
-            archived_thumbnail_images.append(
+            archived_thumbnail_image_builder = (
                 Image.builder(
                     depicts_uri=original_image.depicts_uri,
                     uri=archived_thumbnail_uri,
@@ -132,10 +132,11 @@ class ImagesLoader:
                 .set_exact_dimensions(thumbnail_exact_dimensions)
                 .set_max_dimensions(thumbnail_max_dimensions)
                 .set_original_image_uri(original_image.uri)
-                .add_rights(original_image.rights)
                 .set_src(archived_thumbnail_src)
-                .build()
             )
+            if original_image.rights:
+                archived_thumbnail_image_builder.add_rights(original_image.rights)
+            archived_thumbnail_images.append(archived_thumbnail_image_builder.build())
         assert len(archived_thumbnail_images) == len(self.__thumbnail_max_dimensions)
         return tuple(archived_thumbnail_images)
 
