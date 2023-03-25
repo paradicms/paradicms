@@ -137,7 +137,7 @@ class __Validator:
         if model.uri not in self.__model_uris:
             self.__model_uris.add(model.uri)
         else:
-            raise ValueError(f"duplicate model URI: {model.uri}")
+            self.__logger.warning(f"duplicate model URI: {model.uri}")
 
     def _validate_concept(self, concept: Concept):
         self.__validate_named_model(concept)
@@ -241,6 +241,7 @@ class __Validator:
             referenced_uris=self.__referenced_work_uris,
             universe_uris=self.__work_uris,
             uri_type="work",
+            warn=False,
         )
 
 

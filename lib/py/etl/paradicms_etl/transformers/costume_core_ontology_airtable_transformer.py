@@ -210,8 +210,13 @@ class CostumeCoreOntologyAirtableTransformer:
             .build()
         )
 
-    def __transform_feature_record_to_collection(self, feature_record) -> Collection:
+    def __transform_feature_record_to_collection(
+        self, feature_record
+    ) -> Collection | None:
         fields = feature_record["fields"]
+        if not fields.get("feature_values_labels", []):
+            # Don't yield Collections that won't have any associated Works
+            return None
         return Collection.builder(
             title=fields["display_name_en"],
             uri=URIRef(fields["URI"]),
@@ -285,9 +290,11 @@ class CostumeCoreOntologyAirtableTransformer:
             if not fields["URI"].startswith(str(COCO)):
                 continue
 
-            yield self.__transform_feature_record_to_collection(
+            collection = self.__transform_feature_record_to_collection(
                 feature_record=feature_record
             )
+            if collection:
+                yield collection
 
             yield self.__transform_feature_record_to_costume_core_predicate(
                 costume_core_terms_by_features=costume_core_terms_by_features,
@@ -340,6 +347,9 @@ class CostumeCoreOntologyAirtableTransformer:
     def __transform_feature_value_record_to_images(
         self, *, depicts_uri: URIRef, feature_value_record, image_records_by_id
     ) -> Iterable:
+        if str(depicts_uri).startswith(str(COCO) + "rec"):
+            assert False
+
         fields = feature_value_record["fields"]
         image_filename = fields.get("image_filename")
         if not image_filename:
@@ -419,7 +429,7 @@ class CostumeCoreOntologyAirtableTransformer:
         # aat_id=fields.get("AATID"),
         #     wikidata_id=fields.get("WikidataID"),
 
-        concept_uri = COCO[id_]
+        concept_uri = COCO[fields["id"]]
         concept_builder = Concept.builder(
             property_uris=tuple(feature_uris),
             value=concept_uri,
@@ -541,7 +551,6 @@ class CostumeCoreOntologyAirtableTransformer:
         self, *, feature_records, feature_value_record
     ) -> Work | None:
         fields = feature_value_record["fields"]
-        id_ = feature_value_record["id"]
 
         work_builder = Work.builder(
             title=fields["display_name_en"], uri=URIRef(str(COCO[fields["id"]]))
@@ -616,11 +625,14 @@ class CostumeCoreOntologyAirtableTransformer:
             if work is not None:
                 yield work
 
-                yield from self.__transform_feature_value_record_to_images(
-                    depicts_uri=work.uri,
-                    feature_value_record=feature_value_record,
-                    image_records_by_id=image_records_by_id,
-                )
+                if concept is not None:
+                    assert concept.uri == work.uri
+                else:
+                    yield from self.__transform_feature_value_record_to_images(
+                        depicts_uri=work.uri,
+                        feature_value_record=feature_value_record,
+                        image_records_by_id=image_records_by_id,
+                    )
 
     def __transform_image_records_to_images(
         self, *, depicts_type: __ImageDepictsType, depicts_uri: URIRef, image_records
