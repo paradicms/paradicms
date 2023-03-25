@@ -4,7 +4,7 @@ from typing import Dict, Tuple, Iterable, Union, List, Set, FrozenSet, Optional,
 from urllib.parse import quote_plus
 
 from inflector import Inflector
-from rdflib import Graph, URIRef, Literal
+from rdflib import URIRef, Literal
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.concept import Concept
@@ -116,7 +116,7 @@ class CostumeCoreOntologyAirtableTransformer:
             )
         )
 
-    def __call__(self, *, base: Dict[str, Any], records_by_table: Dict[str, Tuple]) -> Graph:  # type: ignore
+    def __call__(self, *, base: Dict[str, Any], records_by_table: Dict[str, Tuple]) -> Iterable[Model]:  # type: ignore
         yield CostumeCoreOntology.builder(version=self.__ontology_version).build()
 
         feature_records = tuple(

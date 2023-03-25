@@ -170,42 +170,42 @@ coco:closure a owl:ObjectProperty ;
     dcterms:identifier "closure" ;
     rdfs:comment "Each closure used on the garment."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00001 coco:CC00002 coco:CC00003 coco:CC00004 coco:CC00005 coco:CC00006 coco:CC00008 coco:CC00009 coco:CC00010 coco:CC00011 coco:CC00012 coco:CC00013 coco:CC00515 ) ] .
+            owl:oneOf ( coco:CC00001 coco:CC00012 coco:CC00006 coco:CC00009 coco:CC00010 coco:CC00005 coco:CC00515 coco:CC00003 coco:CC00004 coco:CC00008 coco:CC00002 coco:CC00011 coco:CC00013 ) ] .
 
 coco:closurePlacement a owl:ObjectProperty ;
     rdfs:label "Closure Placement"@en ;
     dcterms:identifier "closurePlacement" ;
     rdfs:comment "Each placement of closures on the item."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00348 coco:CC00349 coco:CC00350 coco:CC00351 coco:CC00352 coco:CC00353 coco:CC00354 ) ] .
+            owl:oneOf ( coco:CC00354 coco:CC00348 coco:CC00352 coco:CC00351 coco:CC00349 coco:CC00353 coco:CC00350 ) ] .
 
 coco:collar a owl:ObjectProperty ;
     rdfs:label "Collar"@en ;
     dcterms:identifier "collar" ;
     rdfs:comment "Each term that describes the collar of the garment."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00029 coco:CC00037 coco:CC00039 coco:CC00040 coco:CC00045 coco:CC00047 coco:CC00048 coco:CC00258 coco:CC00629 ) ] .
+            owl:oneOf ( coco:CC00037 coco:CC00039 coco:CC00047 coco:CC00258 coco:CC00629 coco:CC00045 coco:CC00048 coco:CC00040 coco:CC00029 ) ] .
 
 coco:colorMain a owl:ObjectProperty ;
     rdfs:label "Color Main"@en ;
     dcterms:identifier "colorMain" ;
     rdfs:comment "The most dominant color in the garment."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00049 coco:CC00050 coco:CC00051 coco:CC00052 coco:CC00053 coco:CC00054 coco:CC00055 coco:CC00056 coco:CC00057 coco:CC00058 coco:CC00059 coco:CC00060 coco:CC00061 coco:CC00062 coco:CC00063 coco:CC00064 coco:CC00065 coco:CC00066 coco:CC00067 coco:CC00068 coco:CC00069 coco:CC00070 coco:CC00071 coco:CC00072 coco:CC00073 coco:CC00290 ) ] .
+            owl:oneOf ( coco:CC00051 coco:CC00065 coco:CC00068 coco:CC00071 coco:CC00072 coco:CC00060 coco:CC00059 coco:CC00066 coco:CC00062 coco:CC00050 coco:CC00073 coco:CC00067 coco:CC00053 coco:CC00064 coco:CC00061 coco:CC00290 coco:CC00070 coco:CC00049 coco:CC00057 coco:CC00063 coco:CC00054 coco:CC00058 coco:CC00056 coco:CC00069 coco:CC00052 coco:CC00055 ) ] .
 
 coco:colorSecondary a owl:ObjectProperty ;
     rdfs:label "Color Secondary"@en ;
     dcterms:identifier "colorSecondary" ;
     rdfs:comment "Any additional colors in the garment."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00049 coco:CC00050 coco:CC00051 coco:CC00052 coco:CC00053 coco:CC00054 coco:CC00055 coco:CC00056 coco:CC00057 coco:CC00058 coco:CC00059 coco:CC00060 coco:CC00061 coco:CC00062 coco:CC00063 coco:CC00064 coco:CC00065 coco:CC00066 coco:CC00067 coco:CC00068 coco:CC00069 coco:CC00070 coco:CC00071 coco:CC00072 coco:CC00073 coco:CC00290 ) ] .
+            owl:oneOf ( coco:CC00051 coco:CC00065 coco:CC00068 coco:CC00071 coco:CC00072 coco:CC00060 coco:CC00059 coco:CC00066 coco:CC00062 coco:CC00050 coco:CC00073 coco:CC00067 coco:CC00053 coco:CC00064 coco:CC00061 coco:CC00290 coco:CC00070 coco:CC00049 coco:CC00057 coco:CC00063 coco:CC00054 coco:CC00058 coco:CC00056 coco:CC00069 coco:CC00052 coco:CC00055 ) ] .
 
 coco:condition a owl:ObjectProperty ;
     rdfs:label "Condition Term"@en ;
     dcterms:identifier "condition" ;
     rdfs:comment "A single term to indicate a rating of the overall condition of the object."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00415 coco:CC00416 coco:CC00417 coco:CC00418 coco:CC00419 ) ] .
+            owl:oneOf ( coco:CC00419 coco:CC00417 coco:CC00416 coco:CC00418 coco:CC00415 ) ] .
 
 coco:conditionDescription a owl:ObjectProperty ;
     rdfs:label "Condition Description"@en ;
@@ -224,7 +224,7 @@ coco:costumeComponents a owl:ObjectProperty ;
     dcterms:identifier "costumeComponents" ;
     rdfs:comment "Each additional component of the garment not included elsewhere."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00018 coco:CC00142 coco:CC00176 coco:CC00184 coco:CC00287 coco:CC00327 coco:CC00394 coco:CC00395 coco:CC00396 coco:CC00397 coco:CC00398 coco:CC00399 coco:CC00400 coco:CC00492 coco:CC00493 coco:CC00580 coco:CC00581 coco:CC00598 coco:CC00599 ) ] .
+            owl:oneOf ( coco:CC00598 coco:CC00395 coco:CC00327 coco:CC00184 coco:CC00396 coco:CC00176 coco:CC00287 coco:CC00018 coco:CC00399 coco:CC00580 coco:CC00493 coco:CC00394 coco:CC00398 coco:CC00492 coco:CC00599 coco:CC00400 coco:CC00397 coco:CC00142 coco:CC00581 ) ] .
 
 coco:dimensionsOther a owl:ObjectProperty ;
     rdfs:label "Measurements Other"@en ;
@@ -236,7 +236,7 @@ coco:dressType a owl:ObjectProperty ;
     dcterms:identifier "dressType" ;
     rdfs:comment "Each term that describes the type of dress."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00007 coco:CC00108 coco:CC00109 coco:CC00110 coco:CC00112 coco:CC00114 coco:CC00121 coco:CC00122 coco:CC00123 coco:CC00124 coco:CC00125 coco:CC00126 coco:CC00323 coco:CC00379 coco:CC00494 coco:CC00496 coco:CC00501 coco:CC00502 coco:CC00520 coco:CC00522 ) ] .
+            owl:oneOf ( coco:CC00379 coco:CC00007 coco:CC00520 coco:CC00109 coco:CC00114 coco:CC00125 coco:CC00123 coco:CC00522 coco:CC00496 coco:CC00502 coco:CC00323 coco:CC00122 coco:CC00124 coco:CC00108 coco:CC00494 coco:CC00126 coco:CC00501 coco:CC00110 coco:CC00112 coco:CC00121 ) ] .
 
 coco:exhibitions a owl:ObjectProperty ;
     rdfs:label "Exhibitions"@en ;
@@ -248,21 +248,21 @@ coco:fiber a owl:ObjectProperty ;
     dcterms:identifier "fiber" ;
     rdfs:comment "Each term for the type of fiber used in the materials of the object, distinguished from the textile type, trimmings, or other materials."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00160 coco:CC00195 coco:CC00196 coco:CC00197 coco:CC00201 coco:CC00202 coco:CC00205 coco:CC00213 coco:CC00216 coco:CC00225 coco:CC00226 coco:CC00230 coco:CC00233 coco:CC00234 coco:CC00235 coco:CC00242 coco:CC00243 coco:CC00244 coco:CC00250 coco:CC00273 coco:CC00274 coco:CC00282 coco:CC00288 coco:CC00299 coco:CC00303 coco:CC00630 ) ] .
+            owl:oneOf ( coco:CC00299 coco:CC00273 coco:CC00226 coco:CC00244 coco:CC00230 coco:CC00250 coco:CC00202 coco:CC00630 coco:CC00234 coco:CC00201 coco:CC00205 coco:CC00274 coco:CC00243 coco:CC00303 coco:CC00216 coco:CC00288 coco:CC00233 coco:CC00235 coco:CC00196 coco:CC00160 coco:CC00242 coco:CC00282 coco:CC00195 coco:CC00213 coco:CC00197 coco:CC00225 ) ] .
 
 coco:function a owl:ObjectProperty ;
     rdfs:label "Function"@en ;
     dcterms:identifier "function" ;
     rdfs:comment "Each function for which the object was worn. "@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00345 coco:CC00368 coco:CC00370 coco:CC00371 coco:CC00372 coco:CC00374 coco:CC00376 coco:CC00378 coco:CC00380 coco:CC00458 coco:CC00478 coco:CC00507 coco:CC00509 coco:CC00519 coco:CC00582 coco:CC00583 ) ] .
+            owl:oneOf ( coco:CC00345 coco:CC00376 coco:CC00583 coco:CC00478 coco:CC00368 coco:CC00458 coco:CC00372 coco:CC00374 coco:CC00507 coco:CC00519 coco:CC00509 coco:CC00370 coco:CC00371 coco:CC00380 coco:CC00582 coco:CC00378 ) ] .
 
 coco:gender a owl:ObjectProperty ;
     rdfs:label "Gender"@en ;
     dcterms:identifier "gender" ;
     rdfs:comment "The gender for which the object was originally intended."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00364 coco:CC00365 coco:CC00366 coco:CC00479 coco:CC00480 ) ] .
+            owl:oneOf ( coco:CC00479 coco:CC00480 coco:CC00364 coco:CC00366 coco:CC00365 ) ] .
 
 coco:hasTechnique a owl:ObjectProperty ;
     rdfs:label "Technique"@en ;
@@ -271,7 +271,7 @@ coco:hasTechnique a owl:ObjectProperty ;
 
 Do not include a description of where the technique is in evidence on the garment: that should be a part of the narrative description."""@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00074 coco:CC00075 coco:CC00076 coco:CC00077 coco:CC00078 coco:CC00080 coco:CC00082 coco:CC00083 coco:CC00084 coco:CC00085 coco:CC00086 coco:CC00087 coco:CC00088 coco:CC00089 coco:CC00090 coco:CC00092 coco:CC00093 coco:CC00094 coco:CC00095 coco:CC00096 coco:CC00097 coco:CC00098 coco:CC00100 coco:CC00101 coco:CC00103 coco:CC00116 coco:CC00127 coco:CC00170 coco:CC00173 coco:CC00254 coco:CC00257 coco:CC00325 coco:CC00393 coco:CC00514 coco:CC00597 ) ] ;
+            owl:oneOf ( coco:CC00094 coco:CC00089 coco:CC00103 coco:CC00088 coco:CC00127 coco:CC00098 coco:CC00170 coco:CC00084 coco:CC00085 coco:CC00077 coco:CC00325 coco:CC00086 coco:CC00080 coco:CC00075 coco:CC00101 coco:CC00097 coco:CC00393 coco:CC00095 coco:CC00254 coco:CC00093 coco:CC00083 coco:CC00597 coco:CC00092 coco:CC00116 coco:CC00082 coco:CC00096 coco:CC00087 coco:CC00078 coco:CC00100 coco:CC00257 coco:CC00090 coco:CC00173 coco:CC00514 coco:CC00076 coco:CC00074 ) ] ;
     rdfs:subPropertyOf vra:hasTechnique .
 
 coco:hemCircumferenceIn a owl:ObjectProperty ;
@@ -289,28 +289,28 @@ coco:icomType a owl:ObjectProperty ;
     dcterms:identifier "icomType" ;
     rdfs:comment "The second and third level classes from the ICOM Vocabulary."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00345 coco:CC00457 coco:CC00458 coco:CC00459 coco:CC00461 coco:CC00462 coco:CC00463 coco:CC00464 coco:CC00465 coco:CC00466 coco:CC00467 coco:CC00468 coco:CC00469 coco:CC00470 coco:CC00471 coco:CC00472 coco:CC00473 coco:CC00474 coco:CC00475 coco:CC00476 coco:CC00477 ) ] .
+            owl:oneOf ( coco:CC00345 coco:CC00472 coco:CC00468 coco:CC00466 coco:CC00467 coco:CC00470 coco:CC00477 coco:CC00473 coco:CC00469 coco:CC00465 coco:CC00459 coco:CC00476 coco:CC00461 coco:CC00458 coco:CC00464 coco:CC00463 coco:CC00474 coco:CC00457 coco:CC00462 coco:CC00471 coco:CC00475 ) ] .
 
 coco:length a owl:ObjectProperty ;
     rdfs:label "Length"@en ;
     dcterms:identifier "length" ;
     rdfs:comment "Each length of the object, where the hem lands on the body."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00185 coco:CC00186 coco:CC00187 coco:CC00188 coco:CC00189 coco:CC00191 coco:CC00192 coco:CC00194 coco:CC00626 coco:CC00627 ) ] .
+            owl:oneOf ( coco:CC00627 coco:CC00626 coco:CC00194 coco:CC00189 coco:CC00188 coco:CC00186 coco:CC00187 coco:CC00191 coco:CC00185 coco:CC00192 ) ] .
 
 coco:lifeStages a owl:ObjectProperty ;
     rdfs:label "Life Stages"@en ;
     dcterms:identifier "lifeStages" ;
     rdfs:comment "Each age of the wearer for which the object was intended."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00382 coco:CC00383 coco:CC00384 coco:CC00385 coco:CC00386 coco:CC00387 ) ] .
+            owl:oneOf ( coco:CC00386 coco:CC00387 coco:CC00384 coco:CC00385 coco:CC00382 coco:CC00383 ) ] .
 
 coco:liturgicalType a owl:ObjectProperty ;
     rdfs:label "Liturgical Type"@en ;
     dcterms:identifier "liturgicalType" ;
     rdfs:comment "Each type of liturgical garment or accessory."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00441 coco:CC00442 coco:CC00443 coco:CC00444 coco:CC00445 coco:CC00446 coco:CC00447 coco:CC00448 coco:CC00449 coco:CC00450 coco:CC00451 coco:CC00452 ) ] .
+            owl:oneOf ( coco:CC00451 coco:CC00442 coco:CC00443 coco:CC00446 coco:CC00444 coco:CC00447 coco:CC00452 coco:CC00450 coco:CC00449 coco:CC00448 coco:CC00445 coco:CC00441 ) ] .
 
 coco:mannequin a owl:ObjectProperty ;
     rdfs:label "Mannequin"@en ;
@@ -322,7 +322,7 @@ coco:material a owl:ObjectProperty ;
     dcterms:identifier "material" ;
     rdfs:comment "Each material in the object."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00160 coco:CC00195 coco:CC00196 coco:CC00197 coco:CC00199 coco:CC00200 coco:CC00201 coco:CC00202 coco:CC00203 coco:CC00204 coco:CC00205 coco:CC00206 coco:CC00208 coco:CC00211 coco:CC00212 coco:CC00213 coco:CC00214 coco:CC00215 coco:CC00216 coco:CC00217 coco:CC00218 coco:CC00219 coco:CC00220 coco:CC00221 coco:CC00222 coco:CC00224 coco:CC00225 coco:CC00226 coco:CC00227 coco:CC00229 coco:CC00230 coco:CC00232 coco:CC00233 coco:CC00234 coco:CC00235 coco:CC00236 coco:CC00238 coco:CC00239 coco:CC00241 coco:CC00242 coco:CC00243 coco:CC00244 coco:CC00245 coco:CC00247 coco:CC00248 coco:CC00249 coco:CC00250 coco:CC00259 coco:CC00260 coco:CC00261 coco:CC00262 coco:CC00264 coco:CC00266 coco:CC00267 coco:CC00268 coco:CC00269 coco:CC00270 coco:CC00272 coco:CC00273 coco:CC00274 coco:CC00275 coco:CC00276 coco:CC00278 coco:CC00279 coco:CC00280 coco:CC00281 coco:CC00282 coco:CC00283 coco:CC00284 coco:CC00285 coco:CC00286 coco:CC00288 coco:CC00289 coco:CC00292 coco:CC00293 coco:CC00294 coco:CC00295 coco:CC00296 coco:CC00297 coco:CC00298 coco:CC00299 coco:CC00302 coco:CC00303 coco:CC00304 coco:CC00305 coco:CC00306 coco:CC00307 coco:CC00308 coco:CC00311 coco:CC00312 coco:CC00313 coco:CC00314 coco:CC00315 coco:CC00316 coco:CC00317 coco:CC00318 coco:CC00319 coco:CC00321 coco:CC00322 coco:CC00594 coco:CC00628 coco:CC00630 ) ] ;
+            owl:oneOf ( coco:CC00222 coco:CC00299 coco:CC00268 coco:CC00272 coco:CC00273 coco:CC00289 coco:CC00212 coco:CC00317 coco:CC00292 coco:CC00276 coco:CC00316 coco:CC00226 coco:CC00204 coco:CC00294 coco:CC00229 coco:CC00244 coco:CC00230 coco:CC00304 coco:CC00250 coco:CC00239 coco:CC00293 coco:CC00202 coco:CC00214 coco:CC00217 coco:CC00278 coco:CC00630 coco:CC00218 coco:CC00318 coco:CC00238 coco:CC00219 coco:CC00306 coco:CC00234 coco:CC00201 coco:CC00220 coco:CC00284 coco:CC00205 coco:CC00227 coco:CC00283 coco:CC00285 coco:CC00297 coco:CC00594 coco:CC00262 coco:CC00270 coco:CC00260 coco:CC00215 coco:CC00302 coco:CC00200 coco:CC00305 coco:CC00259 coco:CC00274 coco:CC00315 coco:CC00247 coco:CC00281 coco:CC00311 coco:CC00208 coco:CC00261 coco:CC00267 coco:CC00243 coco:CC00303 coco:CC00232 coco:CC00216 coco:CC00280 coco:CC00248 coco:CC00288 coco:CC00298 coco:CC00269 coco:CC00241 coco:CC00233 coco:CC00279 coco:CC00235 coco:CC00199 coco:CC00245 coco:CC00266 coco:CC00321 coco:CC00249 coco:CC00196 coco:CC00319 coco:CC00221 coco:CC00160 coco:CC00211 coco:CC00296 coco:CC00203 coco:CC00236 coco:CC00224 coco:CC00313 coco:CC00308 coco:CC00628 coco:CC00242 coco:CC00282 coco:CC00195 coco:CC00213 coco:CC00197 coco:CC00307 coco:CC00314 coco:CC00295 coco:CC00275 coco:CC00264 coco:CC00206 coco:CC00322 coco:CC00312 coco:CC00225 coco:CC00286 ) ] ;
     rdfs:subPropertyOf vra:material .
 
 coco:neckline a owl:ObjectProperty ;
@@ -330,28 +330,28 @@ coco:neckline a owl:ObjectProperty ;
     dcterms:identifier "neckline" ;
     rdfs:comment "Each type of neckline of the garment."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00014 coco:CC00015 coco:CC00016 coco:CC00017 coco:CC00020 coco:CC00021 coco:CC00024 coco:CC00025 coco:CC00026 coco:CC00027 coco:CC00034 coco:CC00035 coco:CC00119 coco:CC00489 coco:CC00490 coco:CC00491 ) ] .
+            owl:oneOf ( coco:CC00021 coco:CC00017 coco:CC00035 coco:CC00489 coco:CC00119 coco:CC00490 coco:CC00015 coco:CC00027 coco:CC00025 coco:CC00491 coco:CC00034 coco:CC00026 coco:CC00016 coco:CC00014 coco:CC00020 coco:CC00024 ) ] .
 
 coco:otherMaterials a owl:ObjectProperty ;
     rdfs:label "Other Materials"@en ;
     dcterms:identifier "otherMaterials" ;
     rdfs:comment "Any other material terms that do not describe fibers, textiles, or trimmings."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00199 coco:CC00211 coco:CC00215 coco:CC00220 coco:CC00224 coco:CC00232 coco:CC00241 coco:CC00248 coco:CC00249 coco:CC00259 coco:CC00261 coco:CC00267 coco:CC00279 coco:CC00284 coco:CC00292 coco:CC00295 coco:CC00296 coco:CC00297 coco:CC00302 coco:CC00305 coco:CC00306 coco:CC00308 coco:CC00311 coco:CC00313 coco:CC00318 coco:CC00322 ) ] .
+            owl:oneOf ( coco:CC00292 coco:CC00318 coco:CC00306 coco:CC00220 coco:CC00284 coco:CC00297 coco:CC00215 coco:CC00302 coco:CC00305 coco:CC00259 coco:CC00311 coco:CC00261 coco:CC00267 coco:CC00232 coco:CC00248 coco:CC00241 coco:CC00279 coco:CC00199 coco:CC00249 coco:CC00211 coco:CC00296 coco:CC00224 coco:CC00313 coco:CC00308 coco:CC00295 coco:CC00322 ) ] .
 
 coco:pantsType a owl:ObjectProperty ;
     rdfs:label "Pants Type"@en ;
     dcterms:identifier "pantsType" ;
     rdfs:comment "Each term that describes the length and shape of pants."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00420 coco:CC00422 coco:CC00423 coco:CC00424 coco:CC00425 coco:CC00426 coco:CC00427 coco:CC00429 coco:CC00432 coco:CC00433 coco:CC00434 coco:CC00435 coco:CC00436 coco:CC00517 coco:CC00524 ) ] .
+            owl:oneOf ( coco:CC00434 coco:CC00420 coco:CC00426 coco:CC00433 coco:CC00424 coco:CC00423 coco:CC00427 coco:CC00435 coco:CC00432 coco:CC00436 coco:CC00425 coco:CC00517 coco:CC00429 coco:CC00422 coco:CC00524 ) ] .
 
 coco:pattern a owl:ObjectProperty ;
     rdfs:label "Pattern"@en ;
     dcterms:identifier "pattern" ;
     rdfs:comment "Each design motif appearing on the object."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00277 coco:CC00300 coco:CC00453 coco:CC00454 coco:CC00455 coco:CC00456 coco:CC00584 coco:CC00585 coco:CC00586 coco:CC00587 coco:CC00588 coco:CC00589 coco:CC00590 coco:CC00591 coco:CC00592 coco:CC00593 coco:CC00595 coco:CC00596 ) ] .
+            owl:oneOf ( coco:CC00596 coco:CC00591 coco:CC00595 coco:CC00593 coco:CC00589 coco:CC00586 coco:CC00587 coco:CC00584 coco:CC00277 coco:CC00454 coco:CC00453 coco:CC00588 coco:CC00585 coco:CC00455 coco:CC00592 coco:CC00300 coco:CC00590 coco:CC00456 ) ] .
 
 coco:privateInformation a owl:ObjectProperty ;
     rdfs:label "Private Information"@en ;
@@ -370,7 +370,7 @@ coco:rights a owl:ObjectProperty ;
     dcterms:identifier "rights" ;
     rdfs:comment "A standardized rights statement. In most cases, clothing artifacts are not protected by copyright, but may be represented in images that are under copyright."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00613 coco:CC00614 coco:CC00615 coco:CC00616 coco:CC00617 coco:CC00618 coco:CC00619 coco:CC00620 coco:CC00621 coco:CC00622 coco:CC00623 coco:CC00624 coco:CC00625 ) ] ;
+            owl:oneOf ( coco:CC00623 coco:CC00624 coco:CC00620 coco:CC00617 coco:CC00615 coco:CC00621 coco:CC00618 coco:CC00619 coco:CC00616 coco:CC00625 coco:CC00613 coco:CC00622 coco:CC00614 ) ] ;
     rdfs:subPropertyOf dcterms:rights .
 
 coco:size a owl:ObjectProperty ;
@@ -383,28 +383,28 @@ coco:skirtType a owl:ObjectProperty ;
     dcterms:identifier "skirtType" ;
     rdfs:comment "Each term that describes the skirt of the garment."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00102 coco:CC00129 coco:CC00164 coco:CC00166 coco:CC00167 coco:CC00168 coco:CC00171 coco:CC00175 coco:CC00177 coco:CC00179 coco:CC00180 coco:CC00182 coco:CC00183 coco:CC00251 coco:CC00255 coco:CC00510 coco:CC00511 coco:CC00512 coco:CC00513 ) ] .
+            owl:oneOf ( coco:CC00513 coco:CC00183 coco:CC00251 coco:CC00182 coco:CC00171 coco:CC00129 coco:CC00177 coco:CC00511 coco:CC00167 coco:CC00166 coco:CC00512 coco:CC00175 coco:CC00164 coco:CC00255 coco:CC00510 coco:CC00168 coco:CC00180 coco:CC00102 coco:CC00179 ) ] .
 
 coco:sleeveLength a owl:ObjectProperty ;
     rdfs:label "Sleeve Length"@en ;
     dcterms:identifier "sleeveLength" ;
     rdfs:comment "Each term that describes the length of the sleeves of the garment."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00144 coco:CC00145 coco:CC00146 coco:CC00147 coco:CC00148 coco:CC00149 ) ] .
+            owl:oneOf ( coco:CC00146 coco:CC00145 coco:CC00144 coco:CC00148 coco:CC00149 coco:CC00147 ) ] .
 
 coco:sleeveType a owl:ObjectProperty ;
     rdfs:label "Sleeve Type"@en ;
     dcterms:identifier "sleeveType" ;
     rdfs:comment "Each term that describes the shape of the sleeves of the garment."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00128 coco:CC00130 coco:CC00131 coco:CC00135 coco:CC00136 coco:CC00137 coco:CC00138 coco:CC00139 coco:CC00141 coco:CC00150 coco:CC00256 coco:CC00326 coco:CC00355 coco:CC00356 coco:CC00357 coco:CC00362 coco:CC00367 coco:CC00401 ) ] .
+            owl:oneOf ( coco:CC00150 coco:CC00367 coco:CC00135 coco:CC00139 coco:CC00357 coco:CC00401 coco:CC00136 coco:CC00131 coco:CC00362 coco:CC00356 coco:CC00355 coco:CC00141 coco:CC00256 coco:CC00138 coco:CC00130 coco:CC00326 coco:CC00137 coco:CC00128 ) ] .
 
 coco:socioEconomicClass a owl:ObjectProperty ;
     rdfs:label "Socio Economic Class"@en ;
     dcterms:identifier "socioEconomicClass" ;
     rdfs:comment "Each term that indicates the socioeconomic class of the person(s) who wore the object. This can have multiple values to show that the object was passed up or down through different classes."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00389 coco:CC00390 coco:CC00391 ) ] .
+            owl:oneOf ( coco:CC00391 coco:CC00390 coco:CC00389 ) ] .
 
 coco:storageLocation a owl:ObjectProperty ;
     rdfs:label "Storage Location"@en ;
@@ -418,7 +418,7 @@ coco:temporal a owl:ObjectProperty ;
 
 Do not include an apostrophe in a decade name; just add an "s," like "1950s.\""""@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00527 coco:CC00528 coco:CC00529 coco:CC00530 coco:CC00531 coco:CC00532 coco:CC00533 coco:CC00534 coco:CC00535 coco:CC00536 coco:CC00537 coco:CC00538 coco:CC00539 coco:CC00540 coco:CC00541 coco:CC00542 coco:CC00543 coco:CC00544 coco:CC00545 coco:CC00546 coco:CC00547 coco:CC00548 coco:CC00549 coco:CC00550 coco:CC00551 coco:CC00552 coco:CC00553 coco:CC00554 coco:CC00555 coco:CC00556 coco:CC00557 coco:CC00558 coco:CC00559 coco:CC00560 coco:CC00561 coco:CC00562 coco:CC00563 coco:CC00564 coco:CC00565 coco:CC00566 coco:CC00567 coco:CC00568 coco:CC00569 coco:CC00570 coco:CC00571 coco:CC00572 coco:CC00573 coco:CC00574 coco:CC00575 coco:CC00576 coco:CC00577 coco:CC00578 coco:CC00579 ) ] ;
+            owl:oneOf ( coco:CC00573 coco:CC00560 coco:CC00557 coco:CC00567 coco:CC00544 coco:CC00530 coco:CC00539 coco:CC00554 coco:CC00555 coco:CC00538 coco:CC00547 coco:CC00556 coco:CC00552 coco:CC00537 coco:CC00551 coco:CC00541 coco:CC00548 coco:CC00575 coco:CC00532 coco:CC00535 coco:CC00561 coco:CC00572 coco:CC00527 coco:CC00576 coco:CC00570 coco:CC00577 coco:CC00553 coco:CC00579 coco:CC00568 coco:CC00533 coco:CC00578 coco:CC00531 coco:CC00563 coco:CC00529 coco:CC00574 coco:CC00559 coco:CC00566 coco:CC00550 coco:CC00540 coco:CC00564 coco:CC00534 coco:CC00569 coco:CC00565 coco:CC00562 coco:CC00543 coco:CC00549 coco:CC00546 coco:CC00528 coco:CC00542 coco:CC00545 coco:CC00558 coco:CC00571 coco:CC00536 ) ] ;
     rdfs:subPropertyOf dcterms:temporal .
 
 coco:textileMaterials a owl:ObjectProperty ;
@@ -426,7 +426,7 @@ coco:textileMaterials a owl:ObjectProperty ;
     dcterms:identifier "textileMaterials" ;
     rdfs:comment "Each term for materials produced from component fibers, distinguished from the fibers, trimmings, or other materials."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00200 coco:CC00203 coco:CC00204 coco:CC00206 coco:CC00208 coco:CC00212 coco:CC00214 coco:CC00217 coco:CC00218 coco:CC00219 coco:CC00221 coco:CC00222 coco:CC00227 coco:CC00229 coco:CC00236 coco:CC00239 coco:CC00245 coco:CC00247 coco:CC00260 coco:CC00266 coco:CC00268 coco:CC00269 coco:CC00270 coco:CC00275 coco:CC00280 coco:CC00281 coco:CC00283 coco:CC00285 coco:CC00289 coco:CC00293 coco:CC00294 coco:CC00298 coco:CC00315 coco:CC00316 coco:CC00319 coco:CC00594 ) ] .
+            owl:oneOf ( coco:CC00222 coco:CC00268 coco:CC00289 coco:CC00212 coco:CC00316 coco:CC00204 coco:CC00294 coco:CC00229 coco:CC00239 coco:CC00293 coco:CC00214 coco:CC00217 coco:CC00218 coco:CC00219 coco:CC00227 coco:CC00283 coco:CC00285 coco:CC00594 coco:CC00270 coco:CC00260 coco:CC00200 coco:CC00315 coco:CC00247 coco:CC00281 coco:CC00208 coco:CC00280 coco:CC00298 coco:CC00269 coco:CC00245 coco:CC00266 coco:CC00319 coco:CC00221 coco:CC00203 coco:CC00236 coco:CC00275 coco:CC00206 ) ] .
 
 coco:treatment a owl:ObjectProperty ;
     rdfs:label "Treatment"@en ;
@@ -438,14 +438,14 @@ coco:trimming a owl:ObjectProperty ;
     dcterms:identifier "trimming" ;
     rdfs:comment "Each term for decorative material added to an object, distinguished from the fibers, textile type,  or other materials."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00238 coco:CC00262 coco:CC00264 coco:CC00272 coco:CC00276 coco:CC00278 coco:CC00286 coco:CC00304 coco:CC00307 coco:CC00312 coco:CC00317 coco:CC00321 coco:CC00628 ) ] .
+            owl:oneOf ( coco:CC00272 coco:CC00317 coco:CC00276 coco:CC00304 coco:CC00278 coco:CC00238 coco:CC00262 coco:CC00321 coco:CC00628 coco:CC00307 coco:CC00264 coco:CC00312 coco:CC00286 ) ] .
 
 coco:type a owl:ObjectProperty ;
     rdfs:label "Type"@en ;
     dcterms:identifier "type" ;
     rdfs:comment "All clothing objects will have DCMI type \"Physical Object.\" "@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00403 coco:CC00404 coco:CC00405 coco:CC00406 coco:CC00407 coco:CC00408 coco:CC00409 coco:CC00410 coco:CC00411 coco:CC00412 coco:CC00413 coco:CC00414 ) ] ;
+            owl:oneOf ( coco:CC00407 coco:CC00413 coco:CC00412 coco:CC00404 coco:CC00414 coco:CC00411 coco:CC00408 coco:CC00405 coco:CC00403 coco:CC00410 coco:CC00409 coco:CC00406 ) ] ;
     rdfs:subPropertyOf dcterms:type .
 
 coco:underarmToWaistIn a owl:ObjectProperty ;
@@ -463,14 +463,14 @@ coco:waistline a owl:ObjectProperty ;
     dcterms:identifier "waistline" ;
     rdfs:comment "Each term that describes the level and shape of the waist of the garment."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00151 coco:CC00152 coco:CC00153 coco:CC00156 coco:CC00157 coco:CC00158 coco:CC00159 coco:CC00161 coco:CC00162 coco:CC00228 ) ] .
+            owl:oneOf ( coco:CC00158 coco:CC00153 coco:CC00159 coco:CC00157 coco:CC00161 coco:CC00228 coco:CC00162 coco:CC00156 coco:CC00151 coco:CC00152 ) ] .
 
 coco:workType a owl:ObjectProperty ;
     rdfs:label "Work Type"@en ;
     dcterms:identifier "workType" ;
     rdfs:comment "Each top-level work type of the object. More specific terms are possible as sub-categories, in other fields, or can be included in the description."@en ;
     rdfs:range [ a owl:Class ;
-            owl:oneOf ( coco:CC00046 coco:CC00106 coco:CC00335 coco:CC00339 coco:CC00341 coco:CC00342 coco:CC00343 coco:CC00344 coco:CC00345 coco:CC00346 coco:CC00428 coco:CC00525 coco:CC00600 coco:CC00601 coco:CC00602 coco:CC00603 coco:CC00604 coco:CC00605 coco:CC00606 coco:CC00607 coco:CC00608 coco:CC00610 coco:CC00611 ) ] .
+            owl:oneOf ( coco:CC00343 coco:CC00345 coco:CC00607 coco:CC00608 coco:CC00335 coco:CC00344 coco:CC00603 coco:CC00525 coco:CC00606 coco:CC00342 coco:CC00346 coco:CC00604 coco:CC00106 coco:CC00600 coco:CC00339 coco:CC00601 coco:CC00610 coco:CC00341 coco:CC00046 coco:CC00605 coco:CC00428 coco:CC00602 coco:CC00611 ) ] .
 
 coco:wornBy a owl:ObjectProperty ;
     rdfs:label "Worn by"@en ;
