@@ -8,7 +8,6 @@ from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.costume_core.costume_core import CostumeCore
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.property import Property
 from paradicms_etl.models.work import Work
 
 
