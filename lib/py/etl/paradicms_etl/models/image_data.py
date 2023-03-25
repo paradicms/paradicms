@@ -10,6 +10,10 @@ from paradicms_etl.utils.resource_builder import ResourceBuilder
 
 
 class ImageData(ResourceBackedModel):
+    class Builder(ResourceBackedModel.Builder):
+        def build(self) -> "ImageData":
+            return ImageData(self._resource)
+
     @property
     def __format(self) -> str:
         return self._required_str_value(DCTERMS.format)
@@ -18,8 +22,8 @@ class ImageData(ResourceBackedModel):
     def from_pil_image(cls, pil_image: Image):
         buffer = BytesIO()
         pil_image.save(buffer, format="JPEG")
-        return cls(
-            ResourceBuilder(BNode())
+        return (
+            cls.Builder()
             .add(DCTERMS.format, Literal("image/jpeg"))
             .add(
                 RDF.value,
