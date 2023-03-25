@@ -34,6 +34,22 @@ from paradicms_etl.namespaces import COCO
 
 
 class CostumeCoreOntologyAirtableTransformer:
+    """
+    A transformer that accepts records from the Costume Core ontology reference Airtable (base appS5bN4hk1aWEzE0) and
+    transforms the feature sets, features/predicates, and feature values/terms into Paradicms models.
+
+    The code in this class used to be in several transformer implementations. Each implementation transformed the source
+    data into different models. The implementations were merged on the assumption that the models should be filtered
+    coming out of this transformer.
+
+    The different types of yielded models are:
+    - Collection, Image, and Work to build a faceted browser for the Costume Core ontology itself
+    - CostumeCoreOntology, CostumeCorePredicate, and CostumeCoreTerm to build an RDF/OWL version of the Costume Core
+        ontology
+    - Concept (formerly WorksheetFeatureValue), Image, WorksheetFeatureSet, and WorksheetFeature to build a Costume Core
+        worksheet app
+    """
+
     class __ImageDepictsType(Enum):
         FEATURE = "feature"
         FEATURE_SET = "featureSet"
