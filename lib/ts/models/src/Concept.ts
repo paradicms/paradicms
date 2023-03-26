@@ -4,7 +4,6 @@ import {Memoize} from "typescript-memoize";
 import {HasDescription, HasImages} from "./mixins";
 import {Mixin} from "ts-mixer";
 import {rdf, skos} from "@paradicms/vocabularies";
-import {requireNonNull} from "@paradicms/utilities";
 
 export class Concept extends Mixin(NamedModel, HasDescription, HasImages) {
   @Memoize()
@@ -19,19 +18,8 @@ export class Concept extends Mixin(NamedModel, HasDescription, HasImages) {
     return this.findAndMapObject(skos.prefLabel, this.mapStringObject);
   }
 
-  get propertyUris(): readonly string[] {
-    const propertyUris: readonly string[] = this.filterAndMapObjects(
-      rdf.predicate,
-      this.mapUriObject
-    );
-    if (propertyUris.length === 0) {
-      throw new RangeError("named value must link to one or more properties");
-    }
-    return propertyUris;
-  }
-
   get value(): BlankNode | Literal | NamedNode {
-    return requireNonNull(
+    return (
       this.findAndMapObject(rdf.value, term => {
         switch (term.termType) {
           case "BlankNode":
@@ -41,7 +29,7 @@ export class Concept extends Mixin(NamedModel, HasDescription, HasImages) {
           default:
             return null;
         }
-      })
+      }) ?? this.node
     );
   }
 }

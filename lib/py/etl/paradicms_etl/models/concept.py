@@ -35,14 +35,18 @@ class Concept(ResourceBackedNamedModel):
             self.set(SKOS.prefLabel, pref_label)
             return self
 
+        def set_value(self, value: Node) -> "Concept.Builder":
+            self.set(RDF.value, value)
+            return self
+
     def __init__(self, resource: Resource):
         resource.add(RDF.type, SKOS.Concept)
         ResourceBackedNamedModel.__init__(self, resource)
         self.label
 
     @classmethod
-    def builder(cls, *, uri: URIRef, value: Node):
-        return cls.Builder(uri=uri, value=value)
+    def builder(cls, *, uri: URIRef):
+        return cls.Builder(uri=uri)
 
     @classmethod
     def json_ld_context(cls):
@@ -60,8 +64,8 @@ class Concept(ResourceBackedNamedModel):
     def value(self) -> Node:
         value = self._resource.value(RDF.value)
         if value is None:
-            raise KeyError
-        if isinstance(value, Resource):
+            return self.uri
+        elif isinstance(value, Resource):
             return value.identifier
         else:
             assert isinstance(value, Node)
