@@ -1,4 +1,4 @@
-from typing import Union, Text
+from typing import Union, Text, Optional
 
 from rdflib import URIRef, RDFS, SH
 
@@ -48,13 +48,19 @@ class Property(ResourceBackedNamedModel):
     def json_ld_context(cls):
         return safe_dict_update(
             ResourceBackedNamedModel.json_ld_context(),
-            {"comment": {"@id": str(RDFS.comment)}},
-            {"group": {"@id": str(CMS.propertyGroup), "@type": "@id"}},
-            {"label": {"@id": str(RDFS.label)}},
-            {"order": {"@id": str(SH.order)}},
-            {"range": {"@id": str(RDFS.range), "@type": "@id"}},
+            {
+                "comment": {"@id": str(RDFS.comment)},
+                "group": {"@id": str(CMS.propertyGroup), "@type": "@id"},
+                "label": {"@id": str(RDFS.label)},
+                "order": {"@id": str(SH.order)},
+                "range": {"@id": str(RDFS.range), "@type": "@id"},
+            },
         )
 
     @property
     def label(self) -> str:
         return self._required_str_value(RDFS.label)
+
+    @property
+    def range(self) -> Optional[URIRef]:
+        return self._optional_uri_value(RDFS.range)

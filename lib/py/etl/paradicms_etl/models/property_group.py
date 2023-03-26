@@ -33,8 +33,7 @@ class PropertyGroup(ResourceBackedNamedModel):
     def json_ld_context(cls):
         return safe_dict_update(
             ResourceBackedNamedModel.json_ld_context(),
-            {"comment": {"@id": str(RDFS.comment)}},
-            {"label": {"@id": str(RDFS.label)}},
+            {"comment": {"@id": str(RDFS.comment)}, "label": {"@id": str(RDFS.label)}},
         )
 
     @property

@@ -20,6 +20,10 @@ class Concept(ResourceBackedNamedModel):
             self.add(SKOS.altLabel, alt_label)
             return self
 
+        def add_type_uri(self, type_uri: URIRef):
+            self.add(RDF.type, type_uri)
+            return self
+
         def build(self) -> "Concept":
             return Concept(self._resource)
 
