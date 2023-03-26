@@ -71,9 +71,6 @@ export class ModelSet {
   private _licenses?: readonly License[];
   private _licensesByUriIndex?: {[index: string]: License};
   private _concepts?: readonly Concept[];
-  private _conceptsByPropertyUriIndex?: {
-    [index: string]: readonly Concept[];
-  };
   private _conceptsByUriIndex?: {[index: string]: Concept};
   private _organizations?: readonly Organization[];
   private _organizationsByUriIndex?: {[index: string]: Organization};
@@ -251,10 +248,6 @@ export class ModelSet {
     return this._concepts!;
   }
 
-  conceptsByPropertyUri(propertyUri: string): readonly Concept[] {
-    return this.conceptsByPropertyUriIndex[propertyUri] ?? [];
-  }
-
   conceptByUri(conceptUri: string): Concept {
     const concept = this.conceptsByUriIndex[conceptUri];
     if (!concept) {
@@ -266,15 +259,6 @@ export class ModelSet {
 
   conceptByUriOptional(conceptUri: string): Concept | null {
     return this.conceptsByUriIndex[conceptUri] ?? null;
-  }
-
-  private get conceptsByPropertyUriIndex(): {
-    [index: string]: readonly Concept[];
-  } {
-    if (!this._conceptsByPropertyUriIndex) {
-      this.readConcepts();
-    }
-    return this._conceptsByPropertyUriIndex!;
   }
 
   private get conceptsByUriIndex(): {[index: string]: Concept} {
@@ -499,30 +483,15 @@ export class ModelSet {
 
   private readConcepts() {
     const concepts: Concept[] = [];
-    const conceptsByPropertyUriIndex: {
-      [index: string]: Concept[];
-    } = {};
     this._conceptsByUriIndex = {};
     this.getModels(kwds => {
       const concept = this.readConcept(kwds);
 
       concepts.push(concept);
 
-      for (const propertyUri of concept.propertyUris) {
-        const existingConcepts = conceptsByPropertyUriIndex[propertyUri];
-        if (existingConcepts) {
-          existingConcepts.push(concept);
-        } else {
-          conceptsByPropertyUriIndex[propertyUri] = [concept];
-        }
-      }
-
       this._conceptsByUriIndex![concept.uri] = concept;
     }, cms.Concept);
     this._concepts = sortNamedModelsArray(concepts);
-    this._conceptsByPropertyUriIndex = sortNamedModelsMultimap(
-      conceptsByPropertyUriIndex
-    );
   }
 
   protected readOrganization(kwds: ModelParameters): Organization {
