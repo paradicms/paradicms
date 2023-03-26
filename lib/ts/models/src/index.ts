@@ -19,6 +19,8 @@ export * from "./NamedModel";
 export * from "./Organization";
 export * from "./PartialDateTime";
 export * from "./Person";
+export * from "./Property";
+export * from "./PropertyGroup";
 export * from "./PropertyValue";
 export * from "./Rights";
 export * from "./RightsStatement";

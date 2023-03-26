@@ -2,6 +2,7 @@ export {HasContributors} from "./HasContributors";
 export {HasCreators} from "./HasCreators";
 export {HasDescription} from "./HasDescription";
 export {HasImages} from "./HasImages";
+export {HasLabel} from "./HasLabel";
 export {HasName} from "./HasName";
 export {HasPage} from "./HasPage";
 export {HasRelations} from "./HasRelations";
