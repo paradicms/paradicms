@@ -25,7 +25,7 @@ export abstract class PropertyValue {
     return new LiteralPropertyValue(literal);
   }
 
-  private static fromQuad(
+  static fromQuad(
     modelSet: ModelSet,
     quad: Quad
   ): PropertyValue | null {
