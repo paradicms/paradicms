@@ -27,6 +27,7 @@ import {cms, rdf} from "@paradicms/vocabularies";
 import {WorkClosing} from "./WorkClosing";
 import {WorkOpening} from "./WorkOpening";
 import {Property} from "./Property";
+import {PropertyGroup} from "./PropertyGroup";
 
 const eventClassesByRdfType = (() => {
   const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
@@ -78,6 +79,8 @@ export class ModelSet {
   private _people?: readonly Person[];
   private _peopleByUriIndex?: {[index: string]: Person};
   private _properties?: readonly Property[];
+  private _propertiesByGroupUriIndex?: {[index: string]: readonly Property[]};
+  private _propertyGroups?: readonly PropertyGroup[];
   private _rightsStatements?: readonly RightsStatement[];
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
   private _workEvents?: readonly WorkEvent[];
@@ -325,10 +328,30 @@ export class ModelSet {
   }
 
   get properties(): readonly Property[] {
-    if (!this._images) {
+    if (!this._properties) {
       this.readProperties();
     }
     return this._properties!;
+  }
+
+  propertiesByGroupUri(propertyGroupUri: string): readonly Property[] {
+    return this.propertiesByGroupUriIndex[propertyGroupUri] ?? [];
+  }
+
+  private get propertiesByGroupUriIndex(): {
+    [index: string]: readonly Property[];
+  } {
+    if (!this._propertiesByGroupUriIndex) {
+      this.readProperties();
+    }
+    return this._propertiesByGroupUriIndex!;
+  }
+
+  get propertyGroups(): readonly PropertyGroup[] {
+    if (!this._propertyGroups) {
+      this.readPropertyGroups();
+    }
+    return this._propertyGroups!;
   }
 
   protected readEvent(kwds: ModelParameters): Event {
@@ -535,15 +558,43 @@ export class ModelSet {
 
   private readProperties(): void {
     const properties: Property[] = [];
+    const propertiesByGroupUriIndex: {[index: string]: Property[]} = {};
     this.readModels(kwds => {
       const property = this.readProperty(kwds);
+
       properties.push(property);
+
+      for (const propertyGroupUri of property.groupUris) {
+        const propertiesByGroupUri =
+          propertiesByGroupUriIndex[propertyGroupUri];
+        if (propertiesByGroupUri) {
+          propertiesByGroupUri.push(property);
+        } else {
+          propertiesByGroupUriIndex[propertyGroupUri] = [property];
+        }
+      }
     }, cms.Property);
     this._properties = sortNamedModelsArray(properties);
+    this._propertiesByGroupUriIndex = sortNamedModelsMultimap(
+      propertiesByGroupUriIndex
+    );
   }
 
   private readProperty(kwds: ModelParameters): Property {
     return new Property(kwds);
+  }
+
+  private readPropertyGroups(): void {
+    const propertyGroups: PropertyGroup[] = [];
+    this.readModels(kwds => {
+      const propertyGroup = this.readPropertyGroup(kwds);
+      propertyGroups.push(propertyGroup);
+    }, cms.PropertyGroup);
+    this._propertyGroups = sortNamedModelsArray(propertyGroups);
+  }
+
+  private readPropertyGroup(kwds: ModelParameters): PropertyGroup {
+    return new PropertyGroup(kwds);
   }
 
   protected readRightsStatement(kwds: ModelParameters): RightsStatement {

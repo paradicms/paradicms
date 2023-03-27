@@ -2,12 +2,18 @@ import {NamedModel} from "./NamedModel";
 import {HasLabel} from "./mixins";
 import {Mixin} from "ts-mixer";
 import {NamedNode} from "@rdfjs/types";
-import {rdfs} from "@paradicms/vocabularies";
+import {cms, rdfs} from "@paradicms/vocabularies";
 import {PropertyValue} from "./PropertyValue";
 import {Memoize} from "typescript-memoize";
 import {getRdfInstanceQuads} from "@paradicms/rdf";
 
 export class Property extends Mixin(NamedModel, HasLabel) {
+  get groupUris(): readonly string[] {
+    return this.filterAndMapObjects(cms.propertyGroup, term =>
+      term.termType === "NamedNode" ? term.value : null
+    );
+  }
+
   @Memoize()
   get range(): NamedNode | null {
     return this.findAndMapObject(rdfs.range, term =>
