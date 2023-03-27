@@ -3,12 +3,11 @@ import {Hrefs} from "lib/Hrefs";
 import {Nav, Navbar, NavItem, NavLink} from "reactstrap";
 import Link from "next/link";
 import Head from "next/head";
-import {Collection, Work} from "@paradicms/models";
+import {AppConfiguration, Collection, Work} from "@paradicms/models";
 import {
   defaultBootstrapStylesheetHref,
   getNamedModelLinks,
 } from "@paradicms/react-dom-components";
-import {AppConfiguration} from "@paradicms/configuration";
 
 const textStyle: React.CSSProperties = {fontSize: "xx-large"};
 
