@@ -164,7 +164,7 @@ export class Work extends Mixin(
 
   @Memoize()
   propertyValues(propertyUri: string): readonly PropertyValue[] {
-    return PropertyValue.fromQuads(
+    return PropertyValue.fromQuadObjects(
       this.modelSet,
       this.dataset
         .match(

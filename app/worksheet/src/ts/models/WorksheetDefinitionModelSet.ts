@@ -36,7 +36,7 @@ export class WorksheetDefinitionModelSet extends ModelSet {
   private readWorksheetFeatureDefinitions(): void {
     const worksheetFeatureDefinitions: WorksheetFeatureDefinition[] = [];
     this._worksheetFeatureDefinitionsByUriIndex = {};
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const worksheetFeatureDefinition = this.readWorksheetFeatureDefinition(
         kwds
       );
@@ -57,7 +57,7 @@ export class WorksheetDefinitionModelSet extends ModelSet {
   private readWorksheetFeatureSetDefinitions(): void {
     const worksheetFeatureSetDefinitions: WorksheetFeatureSetDefinition[] = [];
     this._worksheetFeatureSetDefinitionsByUriIndex = {};
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const worksheetFeatureSetDefinition = this.readWorksheetFeatureSetDefinition(
         kwds
       );

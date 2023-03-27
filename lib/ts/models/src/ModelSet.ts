@@ -26,6 +26,7 @@ import {requireDefined} from "@paradicms/utilities";
 import {cms, rdf} from "@paradicms/vocabularies";
 import {WorkClosing} from "./WorkClosing";
 import {WorkOpening} from "./WorkOpening";
+import {Property} from "./Property";
 
 const eventClassesByRdfType = (() => {
   const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
@@ -76,6 +77,7 @@ export class ModelSet {
   private _organizationsByUriIndex?: {[index: string]: Organization};
   private _people?: readonly Person[];
   private _peopleByUriIndex?: {[index: string]: Person};
+  private _properties?: readonly Property[];
   private _rightsStatements?: readonly RightsStatement[];
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
   private _workEvents?: readonly WorkEvent[];
@@ -132,6 +134,33 @@ export class ModelSet {
       this.readCollections();
     }
     return requireDefined(this._collectionsByUriIndex);
+  }
+
+  get concepts(): readonly Concept[] {
+    if (!this._concepts) {
+      this.readConcepts();
+    }
+    return this._concepts!;
+  }
+
+  conceptByUri(conceptUri: string): Concept {
+    const concept = this.conceptsByUriIndex[conceptUri];
+    if (!concept) {
+      // this.logContents();
+      throw new RangeError("no such named value " + conceptUri);
+    }
+    return concept;
+  }
+
+  conceptByUriOptional(conceptUri: string): Concept | null {
+    return this.conceptsByUriIndex[conceptUri] ?? null;
+  }
+
+  private get conceptsByUriIndex(): {[index: string]: Concept} {
+    if (!this._conceptsByUriIndex) {
+      this.readConcepts();
+    }
+    return this._conceptsByUriIndex!;
   }
 
   static fromDataset(dataset: Dataset): ModelSet {
@@ -241,33 +270,6 @@ export class ModelSet {
     }
   }
 
-  get concepts(): readonly Concept[] {
-    if (!this._concepts) {
-      this.readConcepts();
-    }
-    return this._concepts!;
-  }
-
-  conceptByUri(conceptUri: string): Concept {
-    const concept = this.conceptsByUriIndex[conceptUri];
-    if (!concept) {
-      // this.logContents();
-      throw new RangeError("no such named value " + conceptUri);
-    }
-    return concept;
-  }
-
-  conceptByUriOptional(conceptUri: string): Concept | null {
-    return this.conceptsByUriIndex[conceptUri] ?? null;
-  }
-
-  private get conceptsByUriIndex(): {[index: string]: Concept} {
-    if (!this._conceptsByUriIndex) {
-      this.readConcepts();
-    }
-    return this._conceptsByUriIndex!;
-  }
-
   organizationByUri(organizationUri: string): Organization {
     const organization = this.organizationsByUriIndex[organizationUri];
     if (!organization) {
@@ -322,6 +324,13 @@ export class ModelSet {
     return this.peopleByUriIndex[personUri] ?? null;
   }
 
+  get properties(): readonly Property[] {
+    if (!this._images) {
+      this.readProperties();
+    }
+    return this._properties!;
+  }
+
   protected readEvent(kwds: ModelParameters): Event {
     for (const quad of this.dataset.match(
       kwds.node,
@@ -342,7 +351,7 @@ export class ModelSet {
     const workEventsByWorkUriIndex: {[index: string]: WorkEvent[]} = {};
     this._workEventsByUriIndex = {};
 
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const event = this.readEvent(kwds);
 
       if (hasMixin(event, WorkEvent)) {
@@ -372,7 +381,7 @@ export class ModelSet {
   private readCollections(): void {
     const collections: Collection[] = [];
     this._collectionsByUriIndex = {};
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const collection = this.readCollection(kwds);
 
       collections.push(collection);
@@ -380,6 +389,23 @@ export class ModelSet {
       this._collectionsByUriIndex![collection.uri] = collection;
     }, cms.Collection);
     this._collections = sortNamedModelsArray(collections);
+  }
+
+  protected readConcept(kwds: ModelParameters): Concept {
+    return new Concept(kwds);
+  }
+
+  private readConcepts() {
+    const concepts: Concept[] = [];
+    this._conceptsByUriIndex = {};
+    this.readModels(kwds => {
+      const concept = this.readConcept(kwds);
+
+      concepts.push(concept);
+
+      this._conceptsByUriIndex![concept.uri] = concept;
+    }, cms.Concept);
+    this._concepts = sortNamedModelsArray(concepts);
   }
 
   protected readImage(kwds: ModelParameters): Image {
@@ -391,7 +417,7 @@ export class ModelSet {
     const imagesByDepictsUriIndex: {[index: string]: Image[]} = {};
     const imagesByOriginalImageUriIndex: {[index: string]: Image[]} = {};
     this._imagesByUriIndex = {};
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const image = this.readImage(kwds);
 
       images.push(image);
@@ -430,7 +456,7 @@ export class ModelSet {
   private readLicenses() {
     const licenses: License[] = [];
     this._licensesByUriIndex = {};
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const license = this.readLicense(kwds);
       licenses.push(license);
       this._licensesByUriIndex![license.uri] = license;
@@ -438,7 +464,7 @@ export class ModelSet {
     this._licenses = sortNamedModelsArray(licenses);
   }
 
-  protected getModels(
+  protected readModels(
     callback: (kwds: ModelParameters) => void,
     type: NamedNode
   ): void {
@@ -477,23 +503,6 @@ export class ModelSet {
     });
   }
 
-  protected readConcept(kwds: ModelParameters): Concept {
-    return new Concept(kwds);
-  }
-
-  private readConcepts() {
-    const concepts: Concept[] = [];
-    this._conceptsByUriIndex = {};
-    this.getModels(kwds => {
-      const concept = this.readConcept(kwds);
-
-      concepts.push(concept);
-
-      this._conceptsByUriIndex![concept.uri] = concept;
-    }, cms.Concept);
-    this._concepts = sortNamedModelsArray(concepts);
-  }
-
   protected readOrganization(kwds: ModelParameters): Organization {
     return new Organization(kwds);
   }
@@ -501,7 +510,7 @@ export class ModelSet {
   private readOrganizations() {
     const organizations: Organization[] = [];
     this._organizationsByUriIndex = {};
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const organization = this.readOrganization(kwds);
       organizations.push(organization);
       this._organizationsByUriIndex![organization.uri] = organization;
@@ -512,7 +521,7 @@ export class ModelSet {
   private readPeople() {
     const people: Person[] = [];
     this._peopleByUriIndex = {};
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const person = this.readPerson(kwds);
       people.push(person);
       this._peopleByUriIndex![person.uri] = person;
@@ -524,6 +533,19 @@ export class ModelSet {
     return new Person(kwds);
   }
 
+  private readProperties(): void {
+    const properties: Property[] = [];
+    this.readModels(kwds => {
+      const property = this.readProperty(kwds);
+      properties.push(property);
+    }, cms.Property);
+    this._properties = sortNamedModelsArray(properties);
+  }
+
+  private readProperty(kwds: ModelParameters): Property {
+    return new Property(kwds);
+  }
+
   protected readRightsStatement(kwds: ModelParameters): RightsStatement {
     return new RightsStatement(kwds);
   }
@@ -531,7 +553,7 @@ export class ModelSet {
   private readRightsStatements() {
     const rightsStatements: RightsStatement[] = [];
     this._rightsStatementsByUriIndex = {};
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const rightsStatement = this.readRightsStatement(kwds);
       rightsStatements.push(rightsStatement);
       this._rightsStatementsByUriIndex![rightsStatement.uri] = rightsStatement;
@@ -548,7 +570,7 @@ export class ModelSet {
     const worksByAgentUriIndex: {[index: string]: Work[]} = {};
     const worksByCollectionUriIndex: {[index: string]: Work[]} = {};
     this._worksByUriIndex = {};
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const work = this.readWork(kwds);
 
       works.push(work);

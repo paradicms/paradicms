@@ -22,7 +22,7 @@ export class Property extends Mixin(NamedModel, HasLabel) {
       return [];
     }
 
-    return PropertyValue.fromQuads(this.modelSet, [
+    return PropertyValue.fromQuadSubjects(this.modelSet, [
       ...getRdfInstanceQuads({
         class_: range,
         dataset: this.dataset,

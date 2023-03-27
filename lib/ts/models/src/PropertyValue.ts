@@ -1,5 +1,5 @@
 import {Concept} from "./Concept";
-import {Literal, NamedNode, Quad} from "@rdfjs/types";
+import {BlankNode, DefaultGraph, Literal, NamedNode, Quad, Quad_Graph, Term} from "@rdfjs/types";
 import {Text} from "./Text";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {Image} from "./Image";
@@ -25,24 +25,53 @@ export abstract class PropertyValue {
     return new LiteralPropertyValue(literal);
   }
 
-  static fromQuad(
+  static fromQuadObjects(
     modelSet: ModelSet,
-    quad: Quad
+    quads: readonly Quad[]
+  ): readonly PropertyValue[] {
+    const propertyValues: PropertyValue[] = [];
+    for (const quad of quads) {
+      const propertyValue = PropertyValue.fromTerm(modelSet, quad.object, quad.graph);
+      if (propertyValue) {
+        propertyValues.push(propertyValue);
+      }
+    }
+    return propertyValues;
+  }
+
+  static fromQuadSubjects(
+      modelSet: ModelSet,
+      quads: readonly Quad[]
+  ): readonly PropertyValue[] {
+    const propertyValues: PropertyValue[] = [];
+    for (const quad of quads) {
+      const propertyValue = PropertyValue.fromTerm(modelSet, quad.subject, quad.graph);
+      if (propertyValue) {
+        propertyValues.push(propertyValue);
+      }
+    }
+    return propertyValues;
+  }
+
+  private static fromTerm(
+      modelSet: ModelSet,
+      term: Term,
+      termGraph: Quad_Graph,
   ): PropertyValue | null {
-    switch (quad.object.termType) {
+    switch (term.termType) {
       case "BlankNode": {
         if (
-          modelSet.dataset.match(quad.object, rdf.type, cms.Text, quad.graph)
-            .size === 0
+            modelSet.dataset.match(term, rdf.type, cms.Text, termGraph)
+                .size === 0
         ) {
           return null;
         }
         return PropertyValue.fromText(
-          new Text({
-            modelSet,
-            graphNode: quad.graph as NamedNode, // Blank node must be in the same graph as the current node
-            node: quad.object,
-          })
+            new Text({
+              modelSet,
+              graphNode: termGraph as BlankNode | DefaultGraph | NamedNode, // Blank node must be in the same graph as the current node
+              node: term,
+            })
         );
       }
       case "NamedNode": {
@@ -50,7 +79,7 @@ export abstract class PropertyValue {
         // as getting the rdf:type of the NamedNode and branching on its value.
         {
           const concept = modelSet.conceptByUriOptional(
-            quad.object.value
+              term.value
           );
           if (concept) {
             return PropertyValue.fromConcept(concept);
@@ -58,14 +87,14 @@ export abstract class PropertyValue {
         }
         {
           const organization = modelSet.organizationByUriOptional(
-            quad.object.value
+              term.value
           );
           if (organization) {
             return PropertyValue.fromAgent(organization);
           }
         }
         {
-          const person = modelSet.personByUriOptional(quad.object.value);
+          const person = modelSet.personByUriOptional(term.value);
           if (person) {
             return PropertyValue.fromAgent(person);
           }
@@ -73,24 +102,10 @@ export abstract class PropertyValue {
         return null;
       }
       case "Literal":
-        return PropertyValue.fromLiteral(quad.object as Literal);
+        return PropertyValue.fromLiteral(term);
       default:
         return null;
     }
-  }
-
-  static fromQuads(
-    modelSet: ModelSet,
-    quads: readonly Quad[]
-  ): readonly PropertyValue[] {
-    const propertyValues: PropertyValue[] = [];
-    for (const quad of quads) {
-      const propertyValue = PropertyValue.fromQuad(modelSet, quad);
-      if (propertyValue) {
-        propertyValues.push(propertyValue);
-      }
-    }
-    return propertyValues;
   }
 
   static fromText(text: Text) {
