@@ -1,5 +1,6 @@
 export * from "./Agent";
 export * from "./AgentJoinSelector";
+export * from "./AppConfiguration";
 export * from "./Collection";
 export * from "./CollectionJoinSelector";
 export * from "./Concept";

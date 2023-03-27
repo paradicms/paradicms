@@ -23,11 +23,12 @@ import {hasMixin} from "ts-mixer";
 import {datasetCoreToDataset, datasetToFastRdfString} from "@paradicms/rdf";
 import TermSet from "@rdfjs/term-set";
 import {requireDefined} from "@paradicms/utilities";
-import {cms, rdf} from "@paradicms/vocabularies";
+import {cms, configuration, rdf} from "@paradicms/vocabularies";
 import {WorkClosing} from "./WorkClosing";
 import {WorkOpening} from "./WorkOpening";
 import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
+import {AppConfiguration} from "./AppConfiguration";
 
 const eventClassesByRdfType = (() => {
   const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
@@ -64,6 +65,7 @@ const sortNamedModelsMultimap = <NamedModelT extends NamedModel>(namedModels: {
  * (JoinedModelSet does the latter, because it is only used on the component side.)
  */
 export class ModelSet {
+  private _appConfiguration?: AppConfiguration | null;
   private _collections?: readonly Collection[];
   private _collectionsByUriIndex?: {[index: string]: Collection};
   private _images?: readonly Image[];
@@ -110,6 +112,13 @@ export class ModelSet {
 
   agentWorks(agentUri: string): readonly Work[] {
     return this.worksByAgentUriIndex[agentUri] ?? [];
+  }
+
+  get appConfiguration(): AppConfiguration | null {
+    if (typeof this._appConfiguration === "undefined") {
+      this._appConfiguration = this.readAppConfiguration();
+    }
+    return this._appConfiguration;
   }
 
   collectionWorks(collectionUri: string): readonly Work[] {
@@ -352,6 +361,16 @@ export class ModelSet {
       this.readPropertyGroups();
     }
     return this._propertyGroups!;
+  }
+
+  protected readAppConfiguration(): AppConfiguration | null {
+    let appConfiguration: AppConfiguration | null = null;
+    this.readModels(kwds => {
+      if (!appConfiguration) {
+        appConfiguration = new AppConfiguration(kwds);
+      }
+    }, configuration.AppConfiguration);
+    return appConfiguration;
   }
 
   protected readEvent(kwds: ModelParameters): Event {
