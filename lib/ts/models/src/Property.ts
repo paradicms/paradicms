@@ -2,16 +2,27 @@ import {NamedModel} from "./NamedModel";
 import {HasLabel} from "./mixins";
 import {Mixin} from "ts-mixer";
 import {NamedNode} from "@rdfjs/types";
-import {cms, rdfs} from "@paradicms/vocabularies";
+import {cms, rdfs, sh} from "@paradicms/vocabularies";
 import {PropertyValue} from "./PropertyValue";
 import {Memoize} from "typescript-memoize";
 import {getRdfInstanceQuads} from "@paradicms/rdf";
 
 export class Property extends Mixin(NamedModel, HasLabel) {
+  get filterable(): boolean {
+    return (
+      this.findAndMapObject(cms.propertyFilterable, this.mapBooleanObject) ??
+      false
+    );
+  }
+
   get groupUris(): readonly string[] {
     return this.filterAndMapObjects(cms.propertyGroup, term =>
       term.termType === "NamedNode" ? term.value : null
     );
+  }
+
+  get order(): number {
+    return this.findAndMapObject(sh.order, this.mapIntObject) ?? 0;
   }
 
   @Memoize()
@@ -34,5 +45,12 @@ export class Property extends Mixin(NamedModel, HasLabel) {
         dataset: this.dataset,
       }),
     ]);
+  }
+
+  get searchable(): boolean {
+    return (
+      this.findAndMapObject(cms.propertySearchable, this.mapBooleanObject) ??
+      false
+    );
   }
 }

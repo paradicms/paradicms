@@ -12,7 +12,9 @@ class CMS(DefinedNamespace):
     imageMaxHeight: URIRef
     imageMaxWidth: URIRef
     imageSrc: URIRef
+    propertyFilterable: URIRef
     propertyGroup: URIRef
+    propertySearchable: URIRef
     thumbnailOf: URIRef
     work: URIRef
 

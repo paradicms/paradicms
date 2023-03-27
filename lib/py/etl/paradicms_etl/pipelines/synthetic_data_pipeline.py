@@ -68,6 +68,8 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             label: str
             uri: URIRef
             values: Tuple[str, ...]
+            searchable: bool = True
+            filterable: bool = True
 
             @property
             def range(self) -> URIRef:
@@ -361,11 +363,11 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                         Concept.builder(
                             uri=URIRef(
                                 f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
-                            ),
-                            value=Literal(property_value),
+                            )
                         )
                         .add_type_uri(property_.range)
                         .set_pref_label(f"Concept {concept_urn_i}")
+                        .set_value(Literal(property_value))
                         .build()
                     )
                     yield concept
@@ -389,7 +391,13 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             for property_ in self.__PROPERTIES:
                 yield Property.builder(
                     label=property_.label, uri=property_.uri
-                ).add_group_uri(property_group.uri).set_range(property_.range).build()
+                ).add_group_uri(property_group.uri).set_filterable(
+                    property_.filterable
+                ).set_range(
+                    property_.range
+                ).set_searchable(
+                    property_.searchable
+                ).build()
 
         def __generate_work(
             self,

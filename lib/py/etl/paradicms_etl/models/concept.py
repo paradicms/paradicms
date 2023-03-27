@@ -12,10 +12,6 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 class Concept(ResourceBackedNamedModel):
     class Builder(ResourceBackedNamedModel.Builder):
-        def __init__(self, *, uri: URIRef, value: Node):
-            ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
-            self.add(RDF.value, value)
-
         def add_alt_label(self, alt_label: Union[str, Literal]) -> "Concept.Builder":
             self.add(SKOS.altLabel, alt_label)
             return self

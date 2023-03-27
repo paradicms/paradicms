@@ -1,6 +1,6 @@
 from typing import Union, Text, Optional
 
-from rdflib import URIRef, RDFS, SH
+from rdflib import URIRef, RDFS, SH, XSD
 
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.namespaces import CMS
@@ -13,27 +13,31 @@ class Property(ResourceBackedNamedModel):
             ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
             self.add(RDFS.label, label)
 
-        def build(self) -> "Property":
-            return Property(self._resource)
-
-        def add_group_uri(
-            self, group_uri: URIRef
-        ) -> "ResourceBackedNamedModel.Builder":
+        def add_group_uri(self, group_uri: URIRef) -> "Property.Builder":
             self.add(CMS.propertyGroup, group_uri)
             return self
 
-        def set_comment(
-            self, comment: Union[str, Text]
-        ) -> "ResourceBackedNamedModel.Builder":
+        def build(self) -> "Property":
+            return Property(self._resource)
+
+        def set_comment(self, comment: Union[str, Text]) -> "Property.Builder":
             self.set(RDFS.comment, comment)
             return self
 
-        def set_order(self, order: int) -> "ResourceBackedNamedModel.Builder":
+        def set_filterable(self, filterable: bool) -> "Property.Builder":
+            self.set(CMS.propertyFilterable, filter)
+            return self
+
+        def set_order(self, order: int) -> "Property.Builder":
             self.set(SH.order, order)
             return self
 
-        def set_range(self, range_: URIRef) -> "ResourceBackedNamedModel.Builder":
+        def set_range(self, range_: URIRef) -> "Property.Builder":
             self.set(RDFS.range, range_)
+            return self
+
+        def set_searchable(self, searchable: bool) -> "Property.Builder":
+            self.set(CMS.propertySearchable, searchable)
             return self
 
     def __init__(self, *args, **kwds):
@@ -50,10 +54,18 @@ class Property(ResourceBackedNamedModel):
             ResourceBackedNamedModel.json_ld_context(),
             {
                 "comment": {"@id": str(RDFS.comment)},
+                "filterable": {
+                    "@id": str(CMS.propertyFilterable),
+                    "@type": str(XSD.boolean),
+                },
                 "group": {"@id": str(CMS.propertyGroup), "@type": "@id"},
                 "label": {"@id": str(RDFS.label)},
                 "order": {"@id": str(SH.order)},
                 "range": {"@id": str(RDFS.range), "@type": "@id"},
+                "searchable": {
+                    "@id": str(CMS.propertySearchable),
+                    "@type": str(XSD.boolean),
+                },
             },
         )
 
