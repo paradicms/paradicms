@@ -1,5 +1,5 @@
 import {NamedModel} from "./NamedModel";
-import {HasLabel} from "./mixins";
+import {HasComment, HasImages, HasLabel} from "./mixins";
 import {Mixin} from "ts-mixer";
 import {NamedNode} from "@rdfjs/types";
 import {cms, rdfs, sh} from "@paradicms/vocabularies";
@@ -8,7 +8,12 @@ import {Memoize} from "typescript-memoize";
 import {getRdfInstanceQuads} from "@paradicms/rdf";
 import {createPropertyValuesFromQuadSubjects} from "./createPropertyValuesFromQuadSubjects";
 
-export class Property extends Mixin(NamedModel, HasLabel) {
+export class Property extends Mixin(
+  NamedModel,
+  HasComment,
+  HasImages,
+  HasLabel
+) {
   get filterable(): boolean {
     return (
       this.findAndMapObject(cms.propertyFilterable, this.mapBooleanObject) ??

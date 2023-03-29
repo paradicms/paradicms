@@ -1,3 +1,4 @@
+export {HasComment} from "./HasComment";
 export {HasContributors} from "./HasContributors";
 export {HasCreators} from "./HasCreators";
 export {HasDescription} from "./HasDescription";
