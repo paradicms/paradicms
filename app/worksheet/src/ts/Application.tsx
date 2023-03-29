@@ -63,25 +63,22 @@ export const Application: React.FunctionComponent = () => {
 
   useEffect(() => {
     console.info("fetching worksheet definition");
-    fetch("/data.ttl").then(response =>
+    fetch("/data.trig").then(response =>
       response.text().then(responseText => {
-        anyRdfStringToDataset(responseText, {contentType: "text/turtle"}).then(
-          responseDataset => {
-            let worksheetDefinitionModelSet: ModelSet;
-            try {
-              worksheetDefinitionModelSet = ModelSet.fromDataset(
-                responseDataset
-              );
-            } catch (e) {
-              setError(e);
-              return;
-            }
-            setWorksheetDefinition(
-              new WorksheetDefinition(worksheetDefinitionModelSet)
-            );
-          },
-          setError
-        );
+        anyRdfStringToDataset(responseText, {
+          contentType: "application/trig",
+        }).then(responseDataset => {
+          let worksheetDefinitionModelSet: ModelSet;
+          try {
+            worksheetDefinitionModelSet = ModelSet.fromDataset(responseDataset);
+          } catch (e) {
+            setError(e);
+            return;
+          }
+          setWorksheetDefinition(
+            new WorksheetDefinition(worksheetDefinitionModelSet)
+          );
+        }, setError);
       }, setError)
     );
   }, []);
