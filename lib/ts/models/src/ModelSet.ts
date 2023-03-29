@@ -83,6 +83,7 @@ export class ModelSet {
   private _properties?: readonly Property[];
   private _propertiesByGroupUriIndex?: {[index: string]: readonly Property[]};
   private _propertyGroups?: readonly PropertyGroup[];
+  private _propertyGroupsByUriIndex?: {[index: string]: PropertyGroup};
   private _rightsStatements?: readonly RightsStatement[];
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
   private _workEvents?: readonly WorkEvent[];
@@ -363,6 +364,17 @@ export class ModelSet {
     return this._propertyGroups!;
   }
 
+  propertyGroupByUriOptional(propertyGroupUri: string): PropertyGroup | null {
+    return this.propertyGroupsByUriIndex[propertyGroupUri] ?? null;
+  }
+
+  private get propertyGroupsByUriIndex(): {[index: string]: PropertyGroup} {
+    if (!this._propertyGroupsByUriIndex) {
+      this.readPropertyGroups();
+    }
+    return this._propertyGroupsByUriIndex!;
+  }
+
   protected readAppConfiguration(): AppConfiguration | null {
     let appConfiguration: AppConfiguration | null = null;
     this.readModels(kwds => {
@@ -605,9 +617,11 @@ export class ModelSet {
 
   private readPropertyGroups(): void {
     const propertyGroups: PropertyGroup[] = [];
+    this._propertyGroupsByUriIndex = {};
     this.readModels(kwds => {
       const propertyGroup = this.readPropertyGroup(kwds);
       propertyGroups.push(propertyGroup);
+      this._propertyGroupsByUriIndex![propertyGroup.uri] = propertyGroup;
     }, cms.PropertyGroup);
     this._propertyGroups = sortNamedModelsArray(propertyGroups);
   }
