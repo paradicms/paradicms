@@ -6,7 +6,6 @@ import {
   decodeFileName,
   encodeFileName,
   getAbsoluteImageSrc,
-  readConfigurationFile,
   readModelSetFile,
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
@@ -21,7 +20,6 @@ import {useRouter} from "next/router";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
 import {fastRdfStringToDataset} from "@paradicms/rdf";
-import {MultiPageExhibitionAppConfiguration} from "../../lib/MultiPageExhibitionAppConfiguration";
 
 const WorkLocationsMap = dynamic<{
   readonly collectionUri: string;
@@ -39,7 +37,6 @@ const readFile = (filePath: string) =>
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configurationString: string;
   readonly currentWorkUri: string;
   readonly modelSetString: string;
   readonly nextWorkUri: string | null;
@@ -48,24 +45,17 @@ interface StaticProps {
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
-  configurationString,
   currentWorkUri,
   modelSetString,
   nextWorkUri,
   previousWorkUri,
 }) => {
-  const configuration = useMemo(
-    () =>
-      MultiPageExhibitionAppConfiguration.fromDataset(
-        fastRdfStringToDataset(configurationString)
-      )!,
-    [configurationString]
-  );
   const modelSet = useMemo<ModelSet>(
     () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
     [modelSetString]
   );
   const collection = modelSet.collectionByUri(collectionUri);
+  const configuration = modelSet.appConfiguration;
   const currentWork = modelSet.workByUri(currentWorkUri);
   const router = useRouter();
 
@@ -195,12 +185,6 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       collectionUri,
-      configurationString: (
-        MultiPageExhibitionAppConfiguration.fromDatasets([
-          await readConfigurationFile(readFile),
-          completeModelSet.dataset,
-        ]) ?? MultiPageExhibitionAppConfiguration.default
-      ).toFastRdfString(),
       currentWorkUri: workUri,
       modelSetString: new ModelSubsetter({
         completeModelSet,

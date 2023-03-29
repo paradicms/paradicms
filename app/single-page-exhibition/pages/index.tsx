@@ -42,7 +42,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
     [modelSetString]
   );
-  const configuration = useMemo(() => modelSet.appConfiguration, [modelSet]);
+  const configuration = modelSet.appConfiguration;
 
   const pages: React.ReactElement[] = useMemo(() => {
     const collection = modelSet.collectionByUri(collectionUri);

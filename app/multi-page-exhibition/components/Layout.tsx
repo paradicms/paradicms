@@ -13,7 +13,7 @@ const textStyle: React.CSSProperties = {fontSize: "xx-large"};
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: Collection;
-  configuration: AppConfiguration;
+  configuration: AppConfiguration | null;
   currentWork?: Work;
   nextWork?: {readonly uri: string};
   previousWork?: {readonly uri: string};
@@ -37,7 +37,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         </title>
         <link
           rel="stylesheet"
-          href={configuration.stylesheet ?? defaultBootstrapStylesheetHref}
+          href={configuration?.stylesheet ?? defaultBootstrapStylesheetHref}
         />
       </Head>
       <Navbar className="navbar-light py-0">
