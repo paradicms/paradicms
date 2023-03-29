@@ -37,7 +37,7 @@ describe("ModelSubsetter", () => {
     const collection = testModelSet.collections[0];
     const modelSet = sut.collectionModelSet(collection, {
       works: {
-        propertyConcepts: {thumbnail: THUMBNAIL_SELECTOR},
+        propertyValues: {thumbnail: THUMBNAIL_SELECTOR},
         thumbnail: THUMBNAIL_SELECTOR,
       },
     });

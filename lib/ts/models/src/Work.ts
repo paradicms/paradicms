@@ -4,16 +4,15 @@ import {Rights} from "./Rights";
 import {Text} from "./Text";
 import {Memoize} from "typescript-memoize";
 import {PropertyValue} from "./PropertyValue";
-import {Concept} from "./Concept";
-import {NamedNode} from "@rdfjs/types";
 import {WorkAgent} from "./WorkAgent";
 import {Mixin} from "ts-mixer";
 import {DataFactory} from "@paradicms/rdf";
 import {HasDescription, HasImages, HasPage, HasRelations, HasRights, HasTitle,} from "./mixins";
 import {WorkEvent} from "./WorkEvent";
 import {WorkLocation} from "./WorkLocation";
-import {cms, dcterms, rdf} from "@paradicms/vocabularies";
+import {cms, dcterms} from "@paradicms/vocabularies";
 import {mapTextObject} from "./mapTextObject";
+import {createPropertyValuesFromQuadObjects} from "./createPropertyValuesFromQuadObjects";
 
 const getRightsWorkAgents = (
   rights: Rights | null,
@@ -138,33 +137,8 @@ export class Work extends Mixin(
   }
 
   @Memoize()
-  propertyConcepts(propertyUri: string): readonly Concept[] {
-    return this.filterAndMapObjects(
-      DataFactory.namedNode(propertyUri),
-      term => {
-        if (term.termType !== "NamedNode") {
-          return null;
-        }
-        for (const rdfTypeQuad of this.dataset.match(
-          term,
-          rdf.type,
-          cms.Concept,
-          null
-        )) {
-          return new Concept({
-            modelSet: this.modelSet,
-            graphNode: rdfTypeQuad.graph as NamedNode,
-            node: term,
-          });
-        }
-        return null;
-      }
-    );
-  }
-
-  @Memoize()
   propertyValues(propertyUri: string): readonly PropertyValue[] {
-    return PropertyValue.fromQuadObjects(
+    return createPropertyValuesFromQuadObjects(
       this.modelSet,
       this.dataset
         .match(

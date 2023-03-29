@@ -18,6 +18,7 @@ import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
 import {visitWorkEvent} from "./WorkEventVisitor";
 import {WorkOpening} from "./WorkOpening";
 import {WorkClosing} from "./WorkClosing";
+import {ConceptPropertyValue} from "./ConceptPropertyValue";
 
 /**
  * Subset a ModelSet to reduce the amount of data passed between getStaticProps and the component.
@@ -31,14 +32,12 @@ import {WorkClosing} from "./WorkClosing";
  */
 export class ModelSubsetter {
   private readonly completeModelSet: ModelSet;
-  private readonly workPropertyUris?: readonly string[];
 
   constructor(kwds: {
     completeModelSet: ModelSet;
     workPropertyUris?: readonly string[];
   }) {
     this.completeModelSet = kwds.completeModelSet;
-    this.workPropertyUris = kwds.workPropertyUris;
   }
 
   // Use the builder pattern internally rather than a more functional algorithm, such as merging modelSets,
@@ -199,11 +198,14 @@ export class ModelSubsetter {
         }
       }
 
-      if (joinSelector.propertyConcepts && this.workPropertyUris) {
-        for (const workPropertyUri of this.workPropertyUris) {
-          for (const concept of work.propertyConcepts(workPropertyUri)) {
-            if (!conceptsByUri[concept.uri]) {
-              conceptsByUri[concept.uri] = concept;
+      if (joinSelector.propertyValues) {
+        for (const property of this.completeModelSet.properties) {
+          for (const propertyValue of work.propertyValues(property.uri)) {
+            if (propertyValue instanceof ConceptPropertyValue) {
+              if (!conceptsByUri[propertyValue.concept.uri]) {
+                conceptsByUri[propertyValue.concept.uri] =
+                  propertyValue.concept;
+              }
             }
           }
         }
@@ -220,11 +222,11 @@ export class ModelSubsetter {
       }
     }
 
-    if (joinSelector.propertyConcepts) {
+    if (joinSelector.propertyValues) {
       this.addConceptsModelSet(
         builder,
         Object.keys(conceptsByUri).map(uri => conceptsByUri[uri]),
-        joinSelector.propertyConcepts
+        joinSelector.propertyValues
       );
     }
 

@@ -6,6 +6,7 @@ import {cms, rdfs, sh} from "@paradicms/vocabularies";
 import {PropertyValue} from "./PropertyValue";
 import {Memoize} from "typescript-memoize";
 import {getRdfInstanceQuads} from "@paradicms/rdf";
+import {createPropertyValuesFromQuadSubjects} from "./createPropertyValuesFromQuadSubjects";
 
 export class Property extends Mixin(NamedModel, HasLabel) {
   get filterable(): boolean {
@@ -39,7 +40,7 @@ export class Property extends Mixin(NamedModel, HasLabel) {
       return [];
     }
 
-    return PropertyValue.fromQuadSubjects(this.modelSet, [
+    return createPropertyValuesFromQuadSubjects(this.modelSet, [
       ...getRdfInstanceQuads({
         class_: range,
         dataset: this.dataset,
