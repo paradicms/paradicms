@@ -25,7 +25,7 @@ class Property(ResourceBackedNamedModel):
             return self
 
         def set_filterable(self, filterable: bool) -> "Property.Builder":
-            self.set(CMS.propertyFilterable, filter)
+            self.set(CMS.propertyFilterable, filterable)
             return self
 
         def set_order(self, order: int) -> "Property.Builder":
