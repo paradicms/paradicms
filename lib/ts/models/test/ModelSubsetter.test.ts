@@ -30,7 +30,6 @@ describe("ModelSubsetter", () => {
   const testModelSet = ModelSet.fromDatasetCore(syntheticData);
   const sut = new ModelSubsetter({
     completeModelSet: testModelSet,
-    workPropertyUris: [],
   });
 
   it("should get a collection with its works and their thumbnails (collection page)", () => {

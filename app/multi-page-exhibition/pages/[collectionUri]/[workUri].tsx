@@ -188,7 +188,6 @@ export const getStaticProps: GetStaticProps = async ({
       currentWorkUri: workUri,
       modelSetString: new ModelSubsetter({
         completeModelSet,
-        workPropertyUris: [],
       })
         .worksModelSet(
           workUris.map(workUri => completeModelSet.workByUri(workUri)),
