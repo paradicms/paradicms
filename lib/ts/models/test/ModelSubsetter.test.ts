@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import {ModelSubsetter} from "../src/ModelSubsetter";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
-import {License, ModelSet, RightsStatement} from "../src";
+import {Image, License, ModelSet, RightsStatement} from "../src";
 import {NamedModel} from "../src/NamedModel";
 import {syntheticData} from "@paradicms/test";
 import {WorkCreation} from "../src/WorkCreation";
@@ -42,13 +42,38 @@ describe("ModelSubsetter", () => {
       },
     });
     expectModelsDeepEq(modelSet.collections, [collection]);
-    const images = testModelSet
-      .collectionWorks(collection.uri)
-      .map(work => work.thumbnail(THUMBNAIL_SELECTOR)!);
-    // for (const concept of testModelSet.concepts) {
-    //   images.push(concept.thumbnail(THUMBNAIL_SELECTOR)!);
-    // }
+
+    const images: Image[] = [];
+    for (const work of testModelSet.collectionWorks(collection.uri)) {
+      // for (const image of work.images) {
+      //   if (!images.some(otherImage => otherImage.uri === image.uri)) {
+      //     images.push(image);
+      //   }
+      // }
+      {
+        const thumbnail = work.thumbnail(THUMBNAIL_SELECTOR);
+        if (
+          thumbnail &&
+          !images.some(otherImage => otherImage.uri === thumbnail.uri)
+        ) {
+          images.push(thumbnail);
+        }
+      }
+
+      for (const property of testModelSet.properties) {
+        for (const propertyValue of work.propertyValues(property.uri)) {
+          const thumbnail = propertyValue.thumbnail(THUMBNAIL_SELECTOR);
+          if (
+            thumbnail &&
+            !images.some(otherImage => otherImage.uri === thumbnail.uri)
+          ) {
+            images.push(thumbnail);
+          }
+        }
+      }
+    }
     expectModelsDeepEq(modelSet.images, images);
+
     expectModelsDeepEq(modelSet.licenses, [
       testModelSet.licenses.find(
         license => license.uri === "http://creativecommons.org/licenses/nc/1.0/"
