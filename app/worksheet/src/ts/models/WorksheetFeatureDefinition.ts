@@ -1,26 +1,33 @@
-import {
-  HasDescription,
-  HasImages,
-  HasTitle,
-  NamedModel,
-} from "@paradicms/models";
+import {ConceptPropertyValue, Property} from "@paradicms/models";
 import {Memoize} from "typescript-memoize";
-import {WorksheetFeatureValueDefinition} from "~/models/WorksheetFeatureValueDefinition";
-import {Mixin} from "ts-mixer";
-import {sh} from "@paradicms/vocabularies";
 
-export class WorksheetFeatureDefinition extends Mixin(
-  NamedModel,
-  HasDescription,
-  HasImages,
-  HasTitle
-) {
-  get order(): number {
-    return this.findAndMapObject(sh.order, this.mapIntObject) ?? 0;
+export class WorksheetFeatureDefinition {
+  constructor(private readonly property: Property) {}
+
+  get description() {
+    return this.property.comment;
+  }
+
+  get images() {
+    return this.property.images;
+  }
+
+  get order() {
+    return this.property.order;
+  }
+
+  get title() {
+    return this.property.label;
+  }
+
+  get uri() {
+    return this.property.uri;
   }
 
   @Memoize()
-  get values(): readonly WorksheetFeatureValueDefinition[] {
-    return this.modelSet.conceptsByPropertyUri(this.uri);
+  get values() {
+    return this.property.rangeValues
+      .filter(propertyValue => propertyValue instanceof ConceptPropertyValue)
+      .map(propertyValue => (propertyValue as ConceptPropertyValue).concept);
   }
 }

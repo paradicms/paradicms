@@ -1,21 +1,32 @@
 import {WorksheetFeatureSetDefinition} from "~/models/WorksheetFeatureSetDefinition";
-import {WorksheetDefinitionModelSet} from "~/models/WorksheetDefinitionModelSet";
 import {WorksheetFeatureValueDefinition} from "~/models/WorksheetFeatureValueDefinition";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
+import {ModelSet} from "@paradicms/models";
+import {Memoize} from "typescript-memoize";
 
 export class WorksheetDefinition {
-  constructor(private readonly modelSet: WorksheetDefinitionModelSet) {}
+  constructor(private readonly modelSet: ModelSet) {}
 
+  @Memoize()
   get features(): readonly WorksheetFeatureDefinition[] {
-    return this.modelSet.worksheetFeatureDefinitions;
+    return this.modelSet.properties.map(
+      property => new WorksheetFeatureDefinition(property)
+    );
   }
 
+  @Memoize()
   featureSetByUriOptional(uri: string): WorksheetFeatureSetDefinition | null {
-    return this.modelSet.worksheetFeatureSetDefinitionByUriOptional(uri);
+    const propertyGroup = this.modelSet.propertyGroupByUriOptional(uri);
+    return propertyGroup
+      ? new WorksheetFeatureSetDefinition(propertyGroup)
+      : null;
   }
 
+  @Memoize()
   get featureSets(): readonly WorksheetFeatureSetDefinition[] {
-    return this.modelSet.worksheetFeatureSetDefinitions;
+    return this.modelSet.propertyGroups.map(
+      propertyGroup => new WorksheetFeatureSetDefinition(propertyGroup)
+    );
   }
 
   featureValueByUriOptional(

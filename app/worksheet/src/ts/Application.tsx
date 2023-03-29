@@ -24,7 +24,7 @@ import {UserSettingsPage} from "~/pages/UserSettingsPage";
 import {useLocation} from "react-router";
 import {QueryParamProvider} from "use-query-params";
 import {anyRdfStringToDataset} from "@paradicms/rdf";
-import {WorksheetDefinitionModelSet} from "~/models/WorksheetDefinitionModelSet";
+import {ModelSet} from "@paradicms/models";
 import React = require("react");
 
 const RouteAdapter: React.FunctionComponent<{children?: any}> = ({
@@ -67,9 +67,9 @@ export const Application: React.FunctionComponent = () => {
       response.text().then(responseText => {
         anyRdfStringToDataset(responseText, {contentType: "text/turtle"}).then(
           responseDataset => {
-            let worksheetDefinitionModelSet: WorksheetDefinitionModelSet;
+            let worksheetDefinitionModelSet: ModelSet;
             try {
-              worksheetDefinitionModelSet = WorksheetDefinitionModelSet.fromDataset(
+              worksheetDefinitionModelSet = ModelSet.fromDataset(
                 responseDataset
               );
             } catch (e) {
