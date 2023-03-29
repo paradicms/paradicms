@@ -12,12 +12,10 @@ class PropertyGroup(ResourceBackedNamedModel):
             ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
             self.add(RDFS.label, label)
 
-        def build(self) -> "Property":
+        def build(self) -> "PropertyGroup":
             return PropertyGroup(self._resource)
 
-        def set_comment(
-            self, comment: Union[str, Text]
-        ) -> "ResourceBackedNamedModel.Builder":
+        def set_comment(self, comment: Union[str, Text]) -> "PropertyGroup.Builder":
             self.set(RDFS.comment, comment)
             return self
 
