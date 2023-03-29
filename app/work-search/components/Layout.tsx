@@ -19,23 +19,25 @@ import {
 import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";
-import {WorkSearchAppConfiguration} from "../lib/WorkSearchAppConfiguration";
 import {getDefaultWorkQueryFilters} from "../lib/getDefaultWorkQueryFilters";
+import {AppConfiguration, Property} from "@paradicms/models";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   cardHeaderLinks?: React.ReactElement[];
   collectionTitle?: string;
   className?: string;
-  configuration: WorkSearchAppConfiguration;
+  configuration: AppConfiguration | null;
   onSearch?: (text: string) => void;
+  properties: readonly Property[];
   title?: string;
 }>> = ({
   cardHeaderLinks,
   children,
   collectionTitle,
-  title,
   configuration,
+  title,
   onSearch: onSearchUserDefined,
+  properties,
 }) => {
   const router = useRouter();
 
@@ -46,7 +48,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   } else {
     onSearch = (text: string) => {
       const href = Hrefs.home({
-        filters: getDefaultWorkQueryFilters(configuration.workProperties),
+        filters: getDefaultWorkQueryFilters(properties),
         text,
       });
       // console.info("redirecting to search href", href);
@@ -56,7 +58,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   }
 
   let siteTitle: string | undefined;
-  if (configuration.title) {
+  if (configuration?.title) {
     siteTitle = configuration.title;
   } else if (collectionTitle) {
     siteTitle = collectionTitle;
@@ -76,7 +78,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         <title>{documentTitle.join(" - ")}</title>
         <link
           rel="stylesheet"
-          href={configuration.stylesheet ?? defaultBootstrapStylesheetHref}
+          href={configuration?.stylesheet ?? defaultBootstrapStylesheetHref}
         />
       </Head>
       <Container fluid>
