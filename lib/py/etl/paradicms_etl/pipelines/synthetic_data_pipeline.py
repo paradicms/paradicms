@@ -67,9 +67,9 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
         class __Property:
             label: str
             uri: URIRef
-            values: Tuple[str, ...]
             searchable: bool = True
             filterable: bool = True
+            values: Tuple[str, ...] = ()
 
             @property
             def range(self) -> URIRef:
@@ -82,6 +82,11 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 label="Cultural context",
                 uri=VRA.culturalContext,
                 values=tuple(f"Cultural context {i}" for i in range(10)),
+            ),
+            __Property(
+                filterable=False,
+                label="Description",
+                uri=DCTERMS.description,
             ),
             __Property(
                 label="Extent",
@@ -127,6 +132,11 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 label="Technique",
                 uri=VRA.technique,
                 values=tuple(f"Technique {i}" for i in range(10)),
+            ),
+            __Property(
+                filterable=False,
+                label="Title",
+                uri=DCTERMS.title,
             ),
             __Property(
                 label="Type",
@@ -446,6 +456,8 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
 
             # Faceted literal properties, which are the same across works
             for property_ in self.__PROPERTIES:
+                if not property_.values:
+                    continue
                 for i in range(2):
                     work_builder.add(
                         property_.uri,
