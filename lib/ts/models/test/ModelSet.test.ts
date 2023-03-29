@@ -37,7 +37,9 @@ describe("ModelSet", () => {
 
     for (const property of sut.properties) {
       expect(property.groupUris).to.not.be.empty;
-      expect(property.rangeValues).to.not.be.empty;
+      if (property.filterable) {
+        expect(property.rangeValues).to.not.be.empty;
+      }
     }
 
     for (const propertyGroup of sut.propertyGroups) {

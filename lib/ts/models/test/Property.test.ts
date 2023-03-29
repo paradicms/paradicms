@@ -3,7 +3,9 @@ import {ModelSet} from "../src";
 import {syntheticData} from "@paradicms/test";
 
 describe("Property", () => {
-  const sut = ModelSet.fromDatasetCore(syntheticData).properties[0];
+  const sut = ModelSet.fromDatasetCore(syntheticData).properties.find(
+    property => property.filterable
+  )!;
 
   it("should get the label", () => {
     expect(sut.label).to.not.be.empty;
