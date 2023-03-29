@@ -33,10 +33,7 @@ import {ConceptPropertyValue} from "./ConceptPropertyValue";
 export class ModelSubsetter {
   private readonly completeModelSet: ModelSet;
 
-  constructor(kwds: {
-    completeModelSet: ModelSet;
-    workPropertyUris?: readonly string[];
-  }) {
+  constructor(kwds: {completeModelSet: ModelSet}) {
     this.completeModelSet = kwds.completeModelSet;
   }
 
