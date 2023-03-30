@@ -4,7 +4,7 @@ from typing import Dict, Tuple, Iterable, Union, List, Set, FrozenSet, Optional,
 from urllib.parse import quote_plus
 
 from inflector import Inflector
-from rdflib import URIRef, Literal
+from rdflib import URIRef, Literal, DCTERMS
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.collection import Collection
@@ -22,7 +22,7 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 )
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
-from paradicms_etl.namespaces import COCO
+from paradicms_etl.namespaces import COCO, VRA
 
 
 class CostumeCoreOntologyAirtableTransformer:
@@ -41,6 +41,25 @@ class CostumeCoreOntologyAirtableTransformer:
     - Concept (formerly WorksheetFeatureValue), Image, Property (formerly WorksheetFeature), and PropertyGroup (formerly WorksheetFeatureSet) to build a Costume Core
         worksheet app
     """
+
+    __FILTERABLE_FEATURE_URIS = {
+        DCTERMS.creator,
+        DCTERMS.subject,
+    }
+
+    __SEARCHABLE_FEATURE_URIS = {
+        COCO.conditionDescription,
+        COCO.publicInformation,
+        COCO.treatment,
+        COCO.wornBy,
+        DCTERMS.alternative,
+        DCTERMS.date,
+        DCTERMS.description,
+        DCTERMS.identifier,
+        DCTERMS.spatial,
+        DCTERMS.title,
+        VRA.culturalContext,
+    }
 
     class __ImageDepictsType(Enum):
         FEATURE = "feature"
@@ -292,13 +311,24 @@ class CostumeCoreOntologyAirtableTransformer:
             .set_order(int(fields["sort_order"]))
             .set_range(self.__feature_range_uri(feature_record))
         )
+
+        for feature_set_uri in feature_set_uris:
+            property_builder.add_group_uri(feature_set_uri)
+
         feature_description = self.__transform_description_fields_to_text(
             record_fields=fields,
         )
         if feature_description:
             property_builder.set_comment(feature_description)
-        for feature_set_uri in feature_set_uris:
-            property_builder.add_group_uri(feature_set_uri)
+
+        if fields.get("feature_values_ids", []):
+            property_builder.set_filterable(True)
+        elif feature_uri in self.__FILTERABLE_FEATURE_URIS:
+            property_builder.set_filterable(True)
+
+        if feature_uri in self.__SEARCHABLE_FEATURE_URIS:
+            property_builder.set_searchable(True)
+
         return property_builder.build()
 
     def __transform_feature_records(
