@@ -4,7 +4,7 @@ on:
     paths:
       - ".github/workflows/ts.yml"
       - "app/**"
-      - "data/**"
+      - "data/synthetic/**"
       - "lib/ts/**"
       - "package.json"
       - "tsconfig.base.json"
