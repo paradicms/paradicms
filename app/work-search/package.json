@@ -7,7 +7,6 @@
   "license": "GPL-3.0-only",
   "main": "n/a",
   "dependencies": {
-    "@paradicms/configuration": "1.0.5",
     "@paradicms/lunr": "1.0.5",
     "@paradicms/next": "1.0.5",
     "@paradicms/react-dom-components": "1.0.5",

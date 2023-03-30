@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from datetime import date, timedelta
 from pathlib import Path
 from typing import Optional, Tuple, Dict
@@ -20,6 +21,8 @@ from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
+from paradicms_etl.models.property import Property
+from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -58,51 +61,89 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 )
 
     class __SyntheticDataTransformer:
-        __FACETED_PROPERTY_VALUES = (
-            (
-                VRA.culturalContext,
-                tuple(f"Cultural context {i}" for i in range(10)),
-            ),
-            (
-                DCTERMS.extent,
-                tuple(f"Extent {i}" for i in range(10)),
-            ),
-            (
-                DCTERMS.language,
-                tuple(f"Language {i}" for i in range(10)),
-            ),
-            (
-                VRA.material,
-                tuple(f"Material {i}" for i in range(10)),
-            ),
-            (
-                DCTERMS.medium,
-                tuple(f"Medium {i}" for i in range(10)),
-            ),
-            (
-                DCTERMS.publisher,
-                tuple(f"Publisher {i}" for i in range(10)),
-            ),
-            (
-                DCTERMS.source,
-                tuple(f"Source {i}" for i in range(10)),
-            ),
-            (
-                DCTERMS.spatial,
-                tuple(f"Spatial {i}" for i in range(10)),
-            ),
-            (
-                DCTERMS.subject,
-                tuple(f"Subject {i}" for i in range(10)),
-            ),
-            (
-                VRA.technique,
-                tuple(f"Technique {i}" for i in range(10)),
-            ),
-            (DCTERMS.type, tuple(f"Type {i}" for i in range(10))),
-        )
-
         __LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae."
+
+        @dataclass(frozen=True)
+        class __Property:
+            label: str
+            uri: URIRef
+            searchable: bool = True
+            filterable: bool = True
+            values: Tuple[str, ...] = ()
+
+            @property
+            def range(self) -> URIRef:
+                return URIRef(
+                    f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:property_range:{quote(self.label)}"
+                )
+
+        __PROPERTIES = (
+            __Property(
+                label="Cultural context",
+                uri=VRA.culturalContext,
+                values=tuple(f"Cultural context {i}" for i in range(10)),
+            ),
+            __Property(
+                filterable=False,
+                label="Description",
+                uri=DCTERMS.description,
+            ),
+            __Property(
+                label="Extent",
+                uri=DCTERMS.extent,
+                values=tuple(f"Extent {i}" for i in range(10)),
+            ),
+            __Property(
+                label="Language",
+                uri=DCTERMS.language,
+                values=tuple(f"Language {i}" for i in range(10)),
+            ),
+            __Property(
+                label="Material",
+                uri=VRA.material,
+                values=tuple(f"Material {i}" for i in range(10)),
+            ),
+            __Property(
+                label="Medium",
+                uri=DCTERMS.medium,
+                values=tuple(f"Medium {i}" for i in range(10)),
+            ),
+            __Property(
+                label="Publisher",
+                uri=DCTERMS.publisher,
+                values=tuple(f"Publisher {i}" for i in range(10)),
+            ),
+            __Property(
+                label="Source",
+                uri=DCTERMS.source,
+                values=tuple(f"Source {i}" for i in range(10)),
+            ),
+            __Property(
+                label="Spatial",
+                uri=DCTERMS.spatial,
+                values=tuple(f"Spatial {i}" for i in range(10)),
+            ),
+            __Property(
+                label="Subject",
+                uri=DCTERMS.subject,
+                values=tuple(f"Subject {i}" for i in range(10)),
+            ),
+            __Property(
+                label="Technique",
+                uri=VRA.technique,
+                values=tuple(f"Technique {i}" for i in range(10)),
+            ),
+            __Property(
+                filterable=False,
+                label="Title",
+                uri=DCTERMS.title,
+            ),
+            __Property(
+                label="Type",
+                uri=DCTERMS.type,
+                values=tuple(f"Type {i}" for i in range(10)),
+            ),
+        )
 
         def __init__(
             self,
@@ -119,6 +160,8 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             self.__works_per_collection = works_per_collection
 
         def __call__(self):
+            yield from self.__generate_properties()
+
             concepts_by_value = {}
             for model in self.__generate_concepts():
                 yield model
@@ -322,22 +365,19 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
 
         def __generate_concepts(self):
             concept_urn_i = 0
-            for (
-                property_uri,
-                property_values,
-            ) in self.__FACETED_PROPERTY_VALUES:
-                if property_uri == DCTERMS.creator:
+            for property_ in self.__PROPERTIES:
+                if property_.uri == DCTERMS.creator:
                     continue
-                for property_value in property_values:
+                for property_value in property_.values:
                     concept = (
                         Concept.builder(
-                            property_uris=(property_uri,),
                             uri=URIRef(
                                 f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
-                            ),
-                            value=Literal(property_value),
+                            )
                         )
+                        .add_type_uri(property_.range)
                         .set_pref_label(f"Concept {concept_urn_i}")
+                        .set_value(Literal(property_value))
                         .build()
                     )
                     yield concept
@@ -348,6 +388,26 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     )
 
                     concept_urn_i += 1
+
+        def __generate_properties(self):
+            property_group = PropertyGroup.builder(
+                label="Synthetic data properties",
+                uri=URIRef(
+                    f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:property_group"
+                ),
+            ).build()
+            yield property_group
+
+            for property_ in self.__PROPERTIES:
+                yield Property.builder(
+                    label=property_.label, uri=property_.uri
+                ).add_group_uri(property_group.uri).set_filterable(
+                    property_.filterable
+                ).set_range(
+                    property_.range
+                ).set_searchable(
+                    property_.searchable
+                ).build()
 
         def __generate_work(
             self,
@@ -395,15 +455,14 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             )
 
             # Faceted literal properties, which are the same across works
-            for (
-                property_uri,
-                property_values,
-            ) in self.__FACETED_PROPERTY_VALUES:
+            for property_ in self.__PROPERTIES:
+                if not property_.values:
+                    continue
                 for i in range(2):
                     work_builder.add(
-                        property_uri,
+                        property_.uri,
                         concepts_by_value[
-                            property_values[(work_i + i) % len(property_values)]
+                            property_.values[(work_i + i) % len(property_.values)]
                         ].uri,
                     )
 

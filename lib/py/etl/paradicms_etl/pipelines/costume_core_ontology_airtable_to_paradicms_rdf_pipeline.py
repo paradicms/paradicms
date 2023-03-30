@@ -52,9 +52,7 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
                 ),
                 **kwds
             ),
-            transformer=CostumeCoreOntologyAirtableTransformer(
-                ontology_version="ignored"
-            ),
+            transformer=CostumeCoreOntologyAirtableTransformer(),
         )
 
     @classmethod

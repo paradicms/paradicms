@@ -10,11 +10,7 @@ import {
 } from "@paradicms/react-dom-components";
 import {Hrefs} from "lib/Hrefs";
 import Link from "next/link";
-import {
-  getAbsoluteImageSrc,
-  readConfigurationFile,
-  readModelSetFile,
-} from "@paradicms/next";
+import {getAbsoluteImageSrc, readModelSetFile} from "@paradicms/next";
 import fs from "fs";
 import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
 import {LunrWorkQueryService} from "@paradicms/lunr";
@@ -22,7 +18,6 @@ import {useWorkSearchQueryParams} from "@paradicms/react-dom-hooks";
 import dynamic from "next/dynamic";
 import {fastRdfStringToDataset} from "@paradicms/rdf";
 import {getDefaultWorkQueryFilters} from "../lib/getDefaultWorkQueryFilters";
-import {WorkSearchAppConfiguration} from "../lib/WorkSearchAppConfiguration";
 import {useRouter} from "next/router";
 
 const WorkLocationsMap = dynamic<{
@@ -40,43 +35,29 @@ const readFile = (filePath: string) =>
 
 interface StaticProps {
   readonly collectionTitle: string | null;
-  readonly configurationString: string;
   readonly modelSetString: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   collectionTitle,
-  configurationString,
   modelSetString,
 }) => {
-  const configuration = useMemo<WorkSearchAppConfiguration>(
-    () =>
-      WorkSearchAppConfiguration.fromDataset(
-        fastRdfStringToDataset(configurationString)
-      )!,
-    [configurationString]
-  );
   const modelSet = useMemo<ModelSet>(
     () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
     [modelSetString]
   );
+  const configuration = modelSet.appConfiguration;
   const router = useRouter();
   const workQueryService = useMemo<WorkQueryService>(
     () =>
       new LunrWorkQueryService({
         modelSet,
-        resultWorkPropertyUris: configuration.workProperties.map(
-          workProperty => workProperty.uri
-        ),
-        searchWorkPropertyUris: configuration.workProperties
-          .filter(workProperty => workProperty.searchable)
-          .map(workProperty => workProperty.uri),
       }),
     [configuration, modelSet]
   );
 
   const {onSearch, ...workSearchQueryParams} = useWorkSearchQueryParams({
-    filters: getDefaultWorkQueryFilters(configuration.workProperties),
+    filters: getDefaultWorkQueryFilters(modelSet.properties),
   });
 
   return (
@@ -84,12 +65,13 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
       collectionTitle={collectionTitle ?? undefined}
       configuration={configuration}
       onSearch={onSearch}
+      properties={modelSet.properties}
     >
       <WorkSearchContainer
         getAbsoluteImageSrc={relativeImageSrc =>
           getAbsoluteImageSrc(relativeImageSrc, router)
         }
-        objectsPerPage={configuration.objectsPerPage ?? 10}
+        objectsPerPage={configuration?.objectsPerPage ?? 10}
         renderWorkLink={(workUri, children) => (
           <Link href={Hrefs.work(workUri)}>
             <a>{children}</a>
@@ -111,11 +93,6 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
   const completeModelSet = await readModelSetFile(readFile);
-  const configuration =
-    WorkSearchAppConfiguration.fromDatasets([
-      await readConfigurationFile(readFile),
-      completeModelSet.dataset,
-    ]) ?? WorkSearchAppConfiguration.default;
 
   return {
     props: {
@@ -123,12 +100,8 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
         completeModelSet.collections.length === 1
           ? completeModelSet.collections[0].title
           : null,
-      configurationString: configuration.toFastRdfString(),
       modelSetString: new ModelSubsetter({
         completeModelSet,
-        workPropertyUris: configuration.workProperties.map(
-          workProperty => workProperty.uri
-        ),
       })
         .worksModelSet(
           completeModelSet.works,

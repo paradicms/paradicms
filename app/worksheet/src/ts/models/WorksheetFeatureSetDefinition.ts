@@ -1,43 +1,34 @@
-import {
-  HasDescription,
-  HasImages,
-  HasTitle,
-  NamedModel,
-} from "@paradicms/models";
+import {PropertyGroup} from "@paradicms/models";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
-import {worksheet} from "~/vocabularies";
 import {Memoize} from "typescript-memoize";
-import {WorksheetDefinitionModelSet} from "~/models/WorksheetDefinitionModelSet";
-import {Mixin} from "ts-mixer";
 
-export class WorksheetFeatureSetDefinition extends Mixin(
-  NamedModel,
-  HasDescription,
-  HasImages,
-  HasTitle
-) {
+export class WorksheetFeatureSetDefinition {
+  constructor(private readonly propertyGroup: PropertyGroup) {}
+
+  get description() {
+    return this.propertyGroup.comment;
+  }
+
   @Memoize()
   get features(): readonly WorksheetFeatureDefinition[] {
-    const features: WorksheetFeatureDefinition[] = [];
-    for (const quad of this.dataset.match(
-      null,
-      worksheet.featureSet,
-      this.node,
-      null
-    )) {
-      if (quad.subject.termType === "NamedNode") {
-        features.push(
-          (this
-            .modelSet as WorksheetDefinitionModelSet).worksheetFeatureDefinitionByUri(
-            quad.subject.value
-          )
-        );
-      }
-    }
-    return features;
+    return this.propertyGroup.properties.map(
+      property => new WorksheetFeatureDefinition(property)
+    );
   }
 
   get featureUris(): readonly string[] {
     return this.features.map(feature => feature.uri);
+  }
+
+  get images() {
+    return this.propertyGroup.images;
+  }
+
+  get title() {
+    return this.propertyGroup.label;
+  }
+
+  get uri() {
+    return this.propertyGroup.uri;
   }
 }

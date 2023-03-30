@@ -58,10 +58,10 @@ describe("Work", () => {
   });
 
   it("should get the work's property values (named)", () => {
-    const propertyValues = sut.propertyConcepts(dcterms.subject.value);
+    const propertyValues = sut.propertyValues(dcterms.subject.value);
     expect(propertyValues).to.have.length(2);
     const propertyValue = propertyValues[0];
-    expect(propertyValue.value.value).to.satisfy((text: string) =>
+    expect(propertyValue.value).to.satisfy((text: string) =>
       text.startsWith("Subject")
     );
   });

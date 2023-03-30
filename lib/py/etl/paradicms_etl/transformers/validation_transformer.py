@@ -14,6 +14,8 @@ from paradicms_etl.models.named_location import NamedLocation
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
+from paradicms_etl.models.property import Property
+from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.work import Work
@@ -159,6 +161,18 @@ class __Validator:
         self.__person_uris.add(person.uri)
 
     def _validate_person_references(self):
+        pass
+
+    def _validate_property(self, property_: Property):
+        pass
+
+    def _validate_property_group(self, property_group: PropertyGroup):
+        pass
+
+    def _validate_property_references(self):
+        pass
+
+    def _validate_property_group_references(self):
         pass
 
     def __validate_rights(self, rights: Optional[Rights]):

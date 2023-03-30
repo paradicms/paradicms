@@ -3,18 +3,17 @@ import {Hrefs} from "lib/Hrefs";
 import {Nav, Navbar, NavItem, NavLink} from "reactstrap";
 import Link from "next/link";
 import Head from "next/head";
-import {Collection, Work} from "@paradicms/models";
+import {AppConfiguration, Collection, Work} from "@paradicms/models";
 import {
   defaultBootstrapStylesheetHref,
   getNamedModelLinks,
 } from "@paradicms/react-dom-components";
-import {AppConfiguration} from "@paradicms/configuration";
 
 const textStyle: React.CSSProperties = {fontSize: "xx-large"};
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: Collection;
-  configuration: AppConfiguration;
+  configuration: AppConfiguration | null;
   currentWork?: Work;
   nextWork?: {readonly uri: string};
   previousWork?: {readonly uri: string};
@@ -38,7 +37,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         </title>
         <link
           rel="stylesheet"
-          href={configuration.stylesheet ?? defaultBootstrapStylesheetHref}
+          href={configuration?.stylesheet ?? defaultBootstrapStylesheetHref}
         />
       </Head>
       <Navbar className="navbar-light py-0">

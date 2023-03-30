@@ -20,7 +20,7 @@ module.exports = (env, argv) => {
       host: "localhost",
       hot: true,
       open: true,
-      port: 9000,
+      port: 3000,
       // public: "tunnel.minorgordon.net"
     },
     devtool: mode === "production" ? "hidden-source-map" : "eval-source-map",
@@ -52,7 +52,7 @@ module.exports = (env, argv) => {
     plugins: [
       new CopyWebpackPlugin({
         patterns: [
-          {from: dataFilePath, to: "data.ttl"},
+          {from: dataFilePath, to: "data.trig"},
           {from: "img", to: "img"},
           "google*.html",
           "*.pdf",

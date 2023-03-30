@@ -12,6 +12,9 @@ class CMS(DefinedNamespace):
     imageMaxHeight: URIRef
     imageMaxWidth: URIRef
     imageSrc: URIRef
+    propertyFilterable: URIRef
+    propertyGroup: URIRef
+    propertySearchable: URIRef
     thumbnailOf: URIRef
     work: URIRef
 
@@ -28,6 +31,7 @@ class CMS(DefinedNamespace):
     Organization: URIRef
     Person: URIRef
     Property: URIRef
+    PropertyGroup: URIRef
     RightsStatement: URIRef
     Text: URIRef
     WikidataItem: URIRef

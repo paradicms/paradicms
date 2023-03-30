@@ -8,4 +8,3 @@ from .prov import PROV  # noqa: F401
 from .time import TIME  # noqa: F401
 from .vra import VRA  # noqa: F401
 from .wgs import WGS  # noqa: F401
-from .worksheet import WORKSHEET  # noqa: F401

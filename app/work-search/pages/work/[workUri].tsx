@@ -6,7 +6,6 @@ import {
   decodeFileName,
   encodeFileName,
   getAbsoluteImageSrc,
-  readConfigurationFile,
   readModelSetFile,
 } from "@paradicms/next";
 import {GetStaticPaths, GetStaticProps} from "next";
@@ -19,7 +18,6 @@ import * as fs from "fs";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
 import {fastRdfStringToDataset} from "@paradicms/rdf";
-import {WorkSearchAppConfiguration} from "../../lib/WorkSearchAppConfiguration";
 import {useRouter} from "next/router";
 
 const readFile = (filePath: string) =>
@@ -37,24 +35,15 @@ const WorkLocationsMap = dynamic<{
 
 interface StaticProps {
   readonly collectionTitle: string | null;
-  readonly configurationString: string;
   readonly modelSetString: string;
   readonly workUri: string;
 }
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
   collectionTitle,
-  configurationString,
   modelSetString,
   workUri,
 }) => {
-  const configuration = useMemo<WorkSearchAppConfiguration>(
-    () =>
-      WorkSearchAppConfiguration.fromDataset(
-        fastRdfStringToDataset(configurationString)
-      )!,
-    [configurationString]
-  );
   const modelSet = useMemo(
     () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
     [modelSetString]
@@ -66,7 +55,8 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     <Layout
       cardHeaderLinks={getNamedModelLinks(work)}
       collectionTitle={collectionTitle ?? undefined}
-      configuration={configuration}
+      configuration={modelSet.appConfiguration}
+      properties={modelSet.properties}
       title={work.title}
     >
       <WorkContainer
@@ -105,11 +95,6 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const workUri = decodeFileName(params!.workUri as string);
   const completeModelSet = await readModelSetFile(readFile);
-  const configuration =
-    WorkSearchAppConfiguration.fromDatasets([
-      await readConfigurationFile(readFile),
-      completeModelSet.dataset,
-    ]) ?? WorkSearchAppConfiguration.default;
 
   return {
     props: {
@@ -117,12 +102,8 @@ export const getStaticProps: GetStaticProps = async ({
         completeModelSet.collections.length === 1
           ? completeModelSet.collections[0].title
           : null,
-      configurationString: configuration.toFastRdfString(),
       modelSetString: new ModelSubsetter({
         completeModelSet,
-        workPropertyUris: configuration.workProperties.map(
-          workProperty => workProperty.uri
-        ),
       })
         .workModelSet(completeModelSet.workByUri(workUri), {
           agents: {

@@ -2,11 +2,7 @@ import * as React from "react";
 import {useMemo} from "react";
 import {GetStaticProps} from "next";
 import fs from "fs";
-import {
-  getAbsoluteImageSrc,
-  readConfigurationFile,
-  readModelSetFile,
-} from "@paradicms/next";
+import {getAbsoluteImageSrc, readModelSetFile} from "@paradicms/next";
 import {ModelSet, Text} from "@paradicms/models";
 import {fastRdfStringToDataset} from "@paradicms/rdf";
 import {Col, Container, Row} from "reactstrap";
@@ -18,7 +14,6 @@ import {
 import Head from "next/head";
 import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
-import {SinglePageExhibitionAppConfiguration} from "../lib/SinglePageExhibitionAppConfiguration";
 import {useRouter} from "next/router";
 
 const readFile = (filePath: string) =>
@@ -36,26 +31,19 @@ const WorkLocationsMap = dynamic<{
 
 interface StaticProps {
   readonly collectionUri: string;
-  readonly configurationString: string;
   readonly modelSetString: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   collectionUri,
-  configurationString,
   modelSetString,
 }) => {
-  const configuration = useMemo(
-    () =>
-      SinglePageExhibitionAppConfiguration.fromDataset(
-        fastRdfStringToDataset(configurationString)
-      )!,
-    [configurationString]
-  );
   const modelSet = useMemo(
     () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
     [modelSetString]
   );
+  const configuration = modelSet.appConfiguration;
+
   const pages: React.ReactElement[] = useMemo(() => {
     const collection = modelSet.collectionByUri(collectionUri);
     const pages: React.ReactElement[] = [];
@@ -145,7 +133,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
         <title>{modelSet.collections[0].title}</title>
         <link
           rel="stylesheet"
-          href={configuration.stylesheet ?? defaultBootstrapStylesheetHref}
+          href={configuration?.stylesheet ?? defaultBootstrapStylesheetHref}
         />
       </Head>
       {pages.map((page, pageI) => (
@@ -167,12 +155,6 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      configurationString: (
-        SinglePageExhibitionAppConfiguration.fromDatasets([
-          await readConfigurationFile(readFile),
-          modelSet.dataset,
-        ]) ?? SinglePageExhibitionAppConfiguration.default
-      ).toFastRdfString(),
       modelSetString: modelSet.toFastRdfString(),
       collectionUri: collection.uri,
     },

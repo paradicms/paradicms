@@ -4,9 +4,7 @@ import {syntheticData} from "@paradicms/test";
 
 describe("Concept", () => {
   const modelSet = ModelSet.fromDatasetCore(syntheticData);
-  const sut = modelSet.conceptsByPropertyUri(
-    modelSet.concepts[0].propertyUris[0]
-  )[0];
+  const sut = modelSet.concepts[0];
 
   it("should get the prefLabel", () => {
     expect(sut.prefLabel).to.not.be.empty;

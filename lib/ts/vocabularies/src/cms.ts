@@ -10,6 +10,13 @@ interface Cms {
   imageMaxWidth: NamedNode<"http://www.paradicms.org/ns/cms#imageMaxWidth">;
   imageSrc: NamedNode<"http://www.paradicms.org/ns/cms#imageSrc">;
   thumbnailOf: NamedNode<"http://www.paradicms.org/ns/cms#thumbnailOf">;
+  propertyFilterable: NamedNode<
+    "http://www.paradicms.org/ns/cms#propertyFilterable"
+  >;
+  propertyGroup: NamedNode<"http://www.paradicms.org/ns/cms#propertyGroup">;
+  propertySearchable: NamedNode<
+    "http://www.paradicms.org/ns/cms#propertySearchable"
+  >;
   work: NamedNode<"http://www.paradicms.org/ns/cms#work">;
 
   // Resources
@@ -23,6 +30,8 @@ interface Cms {
   License: NamedNode<"http://www.paradicms.org/ns/cms#License">;
   Organization: NamedNode<"http://www.paradicms.org/ns/cms#Organization">;
   Person: NamedNode<"http://www.paradicms.org/ns/cms#Person">;
+  Property: NamedNode<"http://www.paradicms.org/ns/cms#Property">;
+  PropertyGroup: NamedNode<"http://www.paradicms.org/ns/cms#PropertyGroup">;
   RightsStatement: NamedNode<"http://www.paradicms.org/ns/cms#RightsStatement">;
   Text: NamedNode<"http://www.paradicms.org/ns/cms#Text">;
   Work: NamedNode<"http://www.paradicms.org/ns/cms#Work">;

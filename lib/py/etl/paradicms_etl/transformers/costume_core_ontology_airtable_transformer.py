@@ -22,14 +22,14 @@ from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicens
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.license import License
+from paradicms_etl.models.property import Property
+from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
-from paradicms_etl.models.worksheet_feature import WorksheetFeature
-from paradicms_etl.models.worksheet_feature_set import WorksheetFeatureSet
 from paradicms_etl.namespaces import COCO
 
 
@@ -46,7 +46,7 @@ class CostumeCoreOntologyAirtableTransformer:
     - Collection, Image, and Work to build a faceted browser for the Costume Core ontology itself
     - CostumeCoreOntology, CostumeCorePredicate, and CostumeCoreTerm to build an RDF/OWL version of the Costume Core
         ontology
-    - Concept (formerly WorksheetFeatureValue), Image, WorksheetFeatureSet, and WorksheetFeature to build a Costume Core
+    - Concept (formerly WorksheetFeatureValue), Image, Property (formerly WorksheetFeature), and PropertyGroup (formerly WorksheetFeatureSet) to build a Costume Core
         worksheet app
     """
 
@@ -65,7 +65,7 @@ class CostumeCoreOntologyAirtableTransformer:
         def __str__(self):
             return self.value
 
-    def __init__(self, *, ontology_version: str):
+    def __init__(self, *, ontology_version: str = "1.0.0"):
         self.__logger = logging.getLogger(__name__)
         self.__ontology_version = ontology_version
 
@@ -97,6 +97,20 @@ class CostumeCoreOntologyAirtableTransformer:
         )
         self.__referenced_license_uris: Set[URIRef] = set()
         self.__referenced_rights_statement_uris: Set[URIRef] = set()
+
+    @staticmethod
+    def __feature_range_uri(feature_record) -> URIRef:
+        return URIRef(
+            ":".join(
+                (
+                    "urn",
+                    "costumeCore",
+                    "ontology",
+                    "featureRange",
+                    quote_plus(feature_record["fields"]["id"]),
+                )
+            )
+        )
 
     @staticmethod
     def __feature_set_uri(feature_set_record) -> URIRef:
@@ -255,9 +269,9 @@ class CostumeCoreOntologyAirtableTransformer:
             _uri=URIRef(fields["URI"]),
         )
 
-    def __transform_feature_record_to_worksheet_feature(
+    def __transform_feature_record_to_property(
         self, *, feature_record, feature_set_records
-    ) -> Optional[WorksheetFeature]:
+    ) -> Optional[Property]:
         fields = feature_record["fields"]
 
         feature_set_uris = set()
@@ -276,17 +290,19 @@ class CostumeCoreOntologyAirtableTransformer:
 
         feature_uri = URIRef(fields["URI"])
 
-        feature_builder = WorksheetFeature.builder(
-            title=fields["display_name_en"], uri=feature_uri
-        ).set_order(int(fields["sort_order"]))
+        property_builder = (
+            Property.builder(label=fields["display_name_en"], uri=feature_uri)
+            .set_order(int(fields["sort_order"]))
+            .set_range(self.__feature_range_uri(feature_record))
+        )
         feature_description = self.__transform_description_fields_to_text(
             record_fields=fields,
         )
         if feature_description:
-            feature_builder.set_description(feature_description)
+            property_builder.set_comment(feature_description)
         for feature_set_uri in feature_set_uris:
-            feature_builder.add_feature_set_uri(feature_set_uri)
-        return feature_builder.build()
+            property_builder.add_group_uri(feature_set_uri)
+        return property_builder.build()
 
     def __transform_feature_records(
         self,
@@ -317,15 +333,15 @@ class CostumeCoreOntologyAirtableTransformer:
                 feature_record=feature_record,
             )
 
-            worksheet_feature = self.__transform_feature_record_to_worksheet_feature(
+            property_ = self.__transform_feature_record_to_property(
                 feature_record=feature_record, feature_set_records=feature_set_records
             )
-            if worksheet_feature:
-                yield worksheet_feature
+            if property_:
+                yield property_
 
                 yield from self.__transform_image_records_to_images(
                     depicts_type=self.__ImageDepictsType.FEATURE,
-                    depicts_uri=worksheet_feature.uri,
+                    depicts_uri=property_.uri,
                     image_records=tuple(
                         image_records_by_id[image_record_id]
                         for image_record_id in fields.get("images", [])
@@ -338,16 +354,16 @@ class CostumeCoreOntologyAirtableTransformer:
         for feature_set_record in feature_set_records:
             feature_set_uri = self.__feature_set_uri(feature_set_record)
 
-            feature_set_builder = WorksheetFeatureSet.builder(
-                title=feature_set_record["fields"]["display_name_en"],
+            property_group_builder = PropertyGroup.builder(
+                label=feature_set_record["fields"]["display_name_en"],
                 uri=feature_set_uri,
             )
             feature_set_description = self.__transform_description_fields_to_text(
                 record_fields=feature_set_record["fields"],
             )
             if feature_set_description:
-                feature_set_builder.set_description(feature_set_description)
-            yield feature_set_builder.build()
+                property_group_builder.set_comment(feature_set_description)
+            yield property_group_builder.build()
 
             yield from self.__transform_image_records_to_images(
                 depicts_type=self.__ImageDepictsType.FEATURE_SET,
@@ -425,29 +441,29 @@ class CostumeCoreOntologyAirtableTransformer:
         fields = feature_value_record["fields"]
         id_ = feature_value_record["id"]
 
-        feature_uris = []
-        for feature_record_id in fields.get("features", []):
-            for feature_record in feature_records:
-                if feature_record["id"] == feature_record_id:
-                    feature_uris.append(URIRef(feature_record["fields"]["URI"]))
-                    break
-
-        if not feature_uris:
-            self.__logger.debug(
-                "feature value %s does not belong to any features",
-                id_,
-            )
-            return None
-
         # aat_id=fields.get("AATID"),
         #     wikidata_id=fields.get("WikidataID"),
 
         concept_uri = COCO[fields["id"]]
         concept_builder = Concept.builder(
-            property_uris=tuple(feature_uris),
-            value=concept_uri,
             uri=concept_uri,
         )
+
+        added_features = False
+        for feature_record_id in fields.get("features", []):
+            for feature_record in feature_records:
+                if feature_record["id"] == feature_record_id:
+                    concept_builder.add_type_uri(
+                        self.__feature_range_uri(feature_record)
+                    )
+                    added_features = True
+                    break
+        if not added_features:
+            self.__logger.debug(
+                "feature value %s does not belong to any features",
+                id_,
+            )
+            return None
 
         pref_label = fields["display_name_en"]
         concept_builder.set_pref_label(pref_label)

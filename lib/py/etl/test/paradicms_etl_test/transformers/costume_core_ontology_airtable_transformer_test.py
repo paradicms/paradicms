@@ -12,10 +12,10 @@ from paradicms_etl.models.costume_core.costume_core_predicate import (
 from paradicms_etl.models.costume_core.costume_core_term import CostumeCoreTerm
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.license import License
+from paradicms_etl.models.property import Property
+from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.work import Work
-from paradicms_etl.models.worksheet_feature import WorksheetFeature
-from paradicms_etl.models.worksheet_feature_set import WorksheetFeatureSet
 from paradicms_etl.transformers.costume_core_ontology_airtable_transformer import (
     CostumeCoreOntologyAirtableTransformer,
 )
@@ -28,7 +28,7 @@ def test_transform(data_dir_path: Path):
     )
     extract_result = extractor(force=False)
 
-    transformer = CostumeCoreOntologyAirtableTransformer(ontology_version="1.0.0")
+    transformer = CostumeCoreOntologyAirtableTransformer()
 
     models = tuple(transformer(**extract_result))
     assert models
@@ -41,7 +41,7 @@ def test_transform(data_dir_path: Path):
     assert CostumeCorePredicate in model_types
     assert CostumeCoreTerm in model_types
     assert License in model_types
+    assert Property in model_types
+    assert PropertyGroup in model_types
     assert RightsStatement in model_types
     assert Work in model_types
-    assert WorksheetFeature in model_types
-    assert WorksheetFeatureSet in model_types

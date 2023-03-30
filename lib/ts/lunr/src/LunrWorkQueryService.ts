@@ -1,5 +1,6 @@
 import {
   Agent,
+  defaultProperties,
   Image,
   ModelSet,
   ModelSubsetter,
@@ -58,48 +59,41 @@ interface MutableValueFacetValue<ValueT extends JsonPrimitiveType>
 }
 
 export class LunrWorkQueryService implements WorkQueryService {
-  private readonly modelSet: ModelSet;
   private readonly index: Index;
-  private readonly resultWorkPropertyUris: readonly string[];
+  private readonly modelSet: ModelSet;
 
-  constructor(kwds: {
-    readonly modelSet: ModelSet;
-    readonly resultWorkPropertyUris: readonly string[];
-    readonly searchWorkPropertyUris: readonly string[];
-  }) {
+  constructor(kwds: {readonly modelSet: ModelSet}) {
     this.modelSet = kwds.modelSet;
-    this.resultWorkPropertyUris = kwds.resultWorkPropertyUris;
-    const searchWorkPropertyUris = kwds.searchWorkPropertyUris;
+
+    let searchablePropertyUris: string[];
+    if (kwds.modelSet.properties.length > 0) {
+      searchablePropertyUris = kwds.modelSet.properties
+        .filter(property => property.searchable)
+        .map(property => property.uri);
+    } else {
+      searchablePropertyUris = defaultProperties
+        .filter(property => property.searchable)
+        .map(property => property.uri);
+    }
 
     this.index = lunr(function() {
-      this.field("description");
-      this.field("title");
       const propertyFieldNamesByUri: {[index: string]: string} = {};
-      if (searchWorkPropertyUris) {
-        for (const workPropertyUri of searchWorkPropertyUris) {
-          const fieldName = LunrWorkQueryService.encodeFieldName(
-            workPropertyUri
-          );
-          propertyFieldNamesByUri[workPropertyUri] = fieldName;
-          this.field(fieldName);
-        }
+      for (const propertyUri of searchablePropertyUris) {
+        const fieldName = LunrWorkQueryService.encodeFieldName(propertyUri);
+        propertyFieldNamesByUri[propertyUri] = fieldName;
+        this.field(fieldName);
       }
       this.ref("uri");
 
       for (const work of kwds.modelSet.works) {
-        const doc: any = {title: work.title, uri: work.uri};
-        if (work.description) {
-          doc.description = work.description.toString();
-        }
-        if (searchWorkPropertyUris) {
-          for (const workPropertyUri of searchWorkPropertyUris) {
-            const fieldName = propertyFieldNamesByUri[workPropertyUri];
-            if (!fieldName) {
-              continue;
-            }
-            for (const propertyValue of work.propertyValues(workPropertyUri)) {
-              doc[fieldName] = propertyValue.value;
-            }
+        const doc: any = {uri: work.uri};
+        for (const propertyUri of searchablePropertyUris) {
+          const fieldName = propertyFieldNamesByUri[propertyUri];
+          if (!fieldName) {
+            continue;
+          }
+          for (const propertyValue of work.propertyValues(propertyUri)) {
+            doc[fieldName] = propertyValue.value;
           }
         }
         this.add(doc);
@@ -270,7 +264,6 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       const slicedAgentsModelSet = new ModelSubsetter({
         completeModelSet: this.modelSet,
-        workPropertyUris: this.resultWorkPropertyUris,
       }).agentsModelSet(slicedAgents, agentJoinSelector);
 
       resolve({
@@ -329,7 +322,6 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       const slicedWorksModelSet = new ModelSubsetter({
         completeModelSet: this.modelSet,
-        workPropertyUris: this.resultWorkPropertyUris,
       }).worksModelSet(slicedWorks, workJoinSelector);
 
       // console.debug(
@@ -468,7 +460,6 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       const slicedWorkEventsModelSet = new ModelSubsetter({
         completeModelSet: this.modelSet,
-        workPropertyUris: this.resultWorkPropertyUris,
       }).workEventsModelSet(workEvents, workEventJoinSelector);
 
       resolve({

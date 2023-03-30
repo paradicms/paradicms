@@ -23,9 +23,12 @@ import {hasMixin} from "ts-mixer";
 import {datasetCoreToDataset, datasetToFastRdfString} from "@paradicms/rdf";
 import TermSet from "@rdfjs/term-set";
 import {requireDefined} from "@paradicms/utilities";
-import {cms, rdf} from "@paradicms/vocabularies";
+import {cms, configuration, rdf} from "@paradicms/vocabularies";
 import {WorkClosing} from "./WorkClosing";
 import {WorkOpening} from "./WorkOpening";
+import {Property} from "./Property";
+import {PropertyGroup} from "./PropertyGroup";
+import {AppConfiguration} from "./AppConfiguration";
 
 const eventClassesByRdfType = (() => {
   const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
@@ -62,6 +65,7 @@ const sortNamedModelsMultimap = <NamedModelT extends NamedModel>(namedModels: {
  * (JoinedModelSet does the latter, because it is only used on the component side.)
  */
 export class ModelSet {
+  private _appConfiguration?: AppConfiguration | null;
   private _collections?: readonly Collection[];
   private _collectionsByUriIndex?: {[index: string]: Collection};
   private _images?: readonly Image[];
@@ -71,14 +75,15 @@ export class ModelSet {
   private _licenses?: readonly License[];
   private _licensesByUriIndex?: {[index: string]: License};
   private _concepts?: readonly Concept[];
-  private _conceptsByPropertyUriIndex?: {
-    [index: string]: readonly Concept[];
-  };
   private _conceptsByUriIndex?: {[index: string]: Concept};
   private _organizations?: readonly Organization[];
   private _organizationsByUriIndex?: {[index: string]: Organization};
   private _people?: readonly Person[];
   private _peopleByUriIndex?: {[index: string]: Person};
+  private _properties?: readonly Property[];
+  private _propertiesByGroupUriIndex?: {[index: string]: readonly Property[]};
+  private _propertyGroups?: readonly PropertyGroup[];
+  private _propertyGroupsByUriIndex?: {[index: string]: PropertyGroup};
   private _rightsStatements?: readonly RightsStatement[];
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
   private _workEvents?: readonly WorkEvent[];
@@ -110,6 +115,13 @@ export class ModelSet {
     return this.worksByAgentUriIndex[agentUri] ?? [];
   }
 
+  get appConfiguration(): AppConfiguration | null {
+    if (typeof this._appConfiguration === "undefined") {
+      this._appConfiguration = this.readAppConfiguration();
+    }
+    return this._appConfiguration;
+  }
+
   collectionWorks(collectionUri: string): readonly Work[] {
     return this.worksByCollectionUriIndex[collectionUri] ?? [];
   }
@@ -135,6 +147,33 @@ export class ModelSet {
       this.readCollections();
     }
     return requireDefined(this._collectionsByUriIndex);
+  }
+
+  get concepts(): readonly Concept[] {
+    if (!this._concepts) {
+      this.readConcepts();
+    }
+    return this._concepts!;
+  }
+
+  conceptByUri(conceptUri: string): Concept {
+    const concept = this.conceptsByUriIndex[conceptUri];
+    if (!concept) {
+      // this.logContents();
+      throw new RangeError("no such named value " + conceptUri);
+    }
+    return concept;
+  }
+
+  conceptByUriOptional(conceptUri: string): Concept | null {
+    return this.conceptsByUriIndex[conceptUri] ?? null;
+  }
+
+  private get conceptsByUriIndex(): {[index: string]: Concept} {
+    if (!this._conceptsByUriIndex) {
+      this.readConcepts();
+    }
+    return this._conceptsByUriIndex!;
   }
 
   static fromDataset(dataset: Dataset): ModelSet {
@@ -244,46 +283,6 @@ export class ModelSet {
     }
   }
 
-  get concepts(): readonly Concept[] {
-    if (!this._concepts) {
-      this.readConcepts();
-    }
-    return this._concepts!;
-  }
-
-  conceptsByPropertyUri(propertyUri: string): readonly Concept[] {
-    return this.conceptsByPropertyUriIndex[propertyUri] ?? [];
-  }
-
-  conceptByUri(conceptUri: string): Concept {
-    const concept = this.conceptsByUriIndex[conceptUri];
-    if (!concept) {
-      // this.logContents();
-      throw new RangeError("no such named value " + conceptUri);
-    }
-    return concept;
-  }
-
-  conceptByUriOptional(conceptUri: string): Concept | null {
-    return this.conceptsByUriIndex[conceptUri] ?? null;
-  }
-
-  private get conceptsByPropertyUriIndex(): {
-    [index: string]: readonly Concept[];
-  } {
-    if (!this._conceptsByPropertyUriIndex) {
-      this.readConcepts();
-    }
-    return this._conceptsByPropertyUriIndex!;
-  }
-
-  private get conceptsByUriIndex(): {[index: string]: Concept} {
-    if (!this._conceptsByUriIndex) {
-      this.readConcepts();
-    }
-    return this._conceptsByUriIndex!;
-  }
-
   organizationByUri(organizationUri: string): Organization {
     const organization = this.organizationsByUriIndex[organizationUri];
     if (!organization) {
@@ -338,6 +337,54 @@ export class ModelSet {
     return this.peopleByUriIndex[personUri] ?? null;
   }
 
+  get properties(): readonly Property[] {
+    if (!this._properties) {
+      this.readProperties();
+    }
+    return this._properties!;
+  }
+
+  propertiesByGroupUri(propertyGroupUri: string): readonly Property[] {
+    return this.propertiesByGroupUriIndex[propertyGroupUri] ?? [];
+  }
+
+  private get propertiesByGroupUriIndex(): {
+    [index: string]: readonly Property[];
+  } {
+    if (!this._propertiesByGroupUriIndex) {
+      this.readProperties();
+    }
+    return this._propertiesByGroupUriIndex!;
+  }
+
+  get propertyGroups(): readonly PropertyGroup[] {
+    if (!this._propertyGroups) {
+      this.readPropertyGroups();
+    }
+    return this._propertyGroups!;
+  }
+
+  propertyGroupByUriOptional(propertyGroupUri: string): PropertyGroup | null {
+    return this.propertyGroupsByUriIndex[propertyGroupUri] ?? null;
+  }
+
+  private get propertyGroupsByUriIndex(): {[index: string]: PropertyGroup} {
+    if (!this._propertyGroupsByUriIndex) {
+      this.readPropertyGroups();
+    }
+    return this._propertyGroupsByUriIndex!;
+  }
+
+  protected readAppConfiguration(): AppConfiguration | null {
+    let appConfiguration: AppConfiguration | null = null;
+    this.readModels(kwds => {
+      if (!appConfiguration) {
+        appConfiguration = new AppConfiguration(kwds);
+      }
+    }, configuration.AppConfiguration);
+    return appConfiguration;
+  }
+
   protected readEvent(kwds: ModelParameters): Event {
     for (const quad of this.dataset.match(
       kwds.node,
@@ -358,7 +405,7 @@ export class ModelSet {
     const workEventsByWorkUriIndex: {[index: string]: WorkEvent[]} = {};
     this._workEventsByUriIndex = {};
 
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const event = this.readEvent(kwds);
 
       if (hasMixin(event, WorkEvent)) {
@@ -388,7 +435,7 @@ export class ModelSet {
   private readCollections(): void {
     const collections: Collection[] = [];
     this._collectionsByUriIndex = {};
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const collection = this.readCollection(kwds);
 
       collections.push(collection);
@@ -396,6 +443,23 @@ export class ModelSet {
       this._collectionsByUriIndex![collection.uri] = collection;
     }, cms.Collection);
     this._collections = sortNamedModelsArray(collections);
+  }
+
+  protected readConcept(kwds: ModelParameters): Concept {
+    return new Concept(kwds);
+  }
+
+  private readConcepts() {
+    const concepts: Concept[] = [];
+    this._conceptsByUriIndex = {};
+    this.readModels(kwds => {
+      const concept = this.readConcept(kwds);
+
+      concepts.push(concept);
+
+      this._conceptsByUriIndex![concept.uri] = concept;
+    }, cms.Concept);
+    this._concepts = sortNamedModelsArray(concepts);
   }
 
   protected readImage(kwds: ModelParameters): Image {
@@ -407,7 +471,7 @@ export class ModelSet {
     const imagesByDepictsUriIndex: {[index: string]: Image[]} = {};
     const imagesByOriginalImageUriIndex: {[index: string]: Image[]} = {};
     this._imagesByUriIndex = {};
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const image = this.readImage(kwds);
 
       images.push(image);
@@ -446,7 +510,7 @@ export class ModelSet {
   private readLicenses() {
     const licenses: License[] = [];
     this._licensesByUriIndex = {};
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const license = this.readLicense(kwds);
       licenses.push(license);
       this._licensesByUriIndex![license.uri] = license;
@@ -454,7 +518,7 @@ export class ModelSet {
     this._licenses = sortNamedModelsArray(licenses);
   }
 
-  protected getModels(
+  protected readModels(
     callback: (kwds: ModelParameters) => void,
     type: NamedNode
   ): void {
@@ -493,38 +557,6 @@ export class ModelSet {
     });
   }
 
-  protected readConcept(kwds: ModelParameters): Concept {
-    return new Concept(kwds);
-  }
-
-  private readConcepts() {
-    const concepts: Concept[] = [];
-    const conceptsByPropertyUriIndex: {
-      [index: string]: Concept[];
-    } = {};
-    this._conceptsByUriIndex = {};
-    this.getModels(kwds => {
-      const concept = this.readConcept(kwds);
-
-      concepts.push(concept);
-
-      for (const propertyUri of concept.propertyUris) {
-        const existingConcepts = conceptsByPropertyUriIndex[propertyUri];
-        if (existingConcepts) {
-          existingConcepts.push(concept);
-        } else {
-          conceptsByPropertyUriIndex[propertyUri] = [concept];
-        }
-      }
-
-      this._conceptsByUriIndex![concept.uri] = concept;
-    }, cms.Concept);
-    this._concepts = sortNamedModelsArray(concepts);
-    this._conceptsByPropertyUriIndex = sortNamedModelsMultimap(
-      conceptsByPropertyUriIndex
-    );
-  }
-
   protected readOrganization(kwds: ModelParameters): Organization {
     return new Organization(kwds);
   }
@@ -532,7 +564,7 @@ export class ModelSet {
   private readOrganizations() {
     const organizations: Organization[] = [];
     this._organizationsByUriIndex = {};
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const organization = this.readOrganization(kwds);
       organizations.push(organization);
       this._organizationsByUriIndex![organization.uri] = organization;
@@ -543,7 +575,7 @@ export class ModelSet {
   private readPeople() {
     const people: Person[] = [];
     this._peopleByUriIndex = {};
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const person = this.readPerson(kwds);
       people.push(person);
       this._peopleByUriIndex![person.uri] = person;
@@ -555,6 +587,49 @@ export class ModelSet {
     return new Person(kwds);
   }
 
+  private readProperties(): void {
+    const properties: Property[] = [];
+    const propertiesByGroupUriIndex: {[index: string]: Property[]} = {};
+    this.readModels(kwds => {
+      const property = this.readProperty(kwds);
+
+      properties.push(property);
+
+      for (const propertyGroupUri of property.groupUris) {
+        const propertiesByGroupUri =
+          propertiesByGroupUriIndex[propertyGroupUri];
+        if (propertiesByGroupUri) {
+          propertiesByGroupUri.push(property);
+        } else {
+          propertiesByGroupUriIndex[propertyGroupUri] = [property];
+        }
+      }
+    }, cms.Property);
+    this._properties = sortNamedModelsArray(properties);
+    this._propertiesByGroupUriIndex = sortNamedModelsMultimap(
+      propertiesByGroupUriIndex
+    );
+  }
+
+  private readProperty(kwds: ModelParameters): Property {
+    return new Property(kwds);
+  }
+
+  private readPropertyGroups(): void {
+    const propertyGroups: PropertyGroup[] = [];
+    this._propertyGroupsByUriIndex = {};
+    this.readModels(kwds => {
+      const propertyGroup = this.readPropertyGroup(kwds);
+      propertyGroups.push(propertyGroup);
+      this._propertyGroupsByUriIndex![propertyGroup.uri] = propertyGroup;
+    }, cms.PropertyGroup);
+    this._propertyGroups = sortNamedModelsArray(propertyGroups);
+  }
+
+  private readPropertyGroup(kwds: ModelParameters): PropertyGroup {
+    return new PropertyGroup(kwds);
+  }
+
   protected readRightsStatement(kwds: ModelParameters): RightsStatement {
     return new RightsStatement(kwds);
   }
@@ -562,7 +637,7 @@ export class ModelSet {
   private readRightsStatements() {
     const rightsStatements: RightsStatement[] = [];
     this._rightsStatementsByUriIndex = {};
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const rightsStatement = this.readRightsStatement(kwds);
       rightsStatements.push(rightsStatement);
       this._rightsStatementsByUriIndex![rightsStatement.uri] = rightsStatement;
@@ -579,7 +654,7 @@ export class ModelSet {
     const worksByAgentUriIndex: {[index: string]: Work[]} = {};
     const worksByCollectionUriIndex: {[index: string]: Work[]} = {};
     this._worksByUriIndex = {};
-    this.getModels(kwds => {
+    this.readModels(kwds => {
       const work = this.readWork(kwds);
 
       works.push(work);
