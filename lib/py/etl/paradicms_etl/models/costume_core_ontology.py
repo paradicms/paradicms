@@ -23,7 +23,7 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
 
     @dataclass(frozen=True)
     class Description:
-        rights: "Rights"
+        rights: "CostumeCoreOntology.Rights"
         text_en: str
 
     @dataclass(frozen=True)
@@ -39,10 +39,10 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
         id: str
         _uri: URIRef
         aat_id: Optional[str] = None
-        description: Optional["CostumeCoreDescription"] = None
+        description: Optional["CostumeCoreOntology.Description"] = None
         features: Optional[Tuple[str, ...]] = None
         image_filename: Optional[str] = None
-        image_rights: Optional["CostumeCoreRights"] = None
+        image_rights: Optional["CostumeCoreOntology.Rights"] = None
         wikidata_id: Optional[str] = None
 
         @classmethod
@@ -124,7 +124,7 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
         id: str
         _uri: URIRef
         sub_property_of_uri: Optional[str] = None
-        terms: Optional[Tuple["Term", ...]] = None
+        terms: Optional[Tuple["CostumeCoreOntology.Term", ...]] = None
 
         @classmethod
         def from_rdf(cls, resource: Resource):
