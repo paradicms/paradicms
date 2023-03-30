@@ -285,13 +285,6 @@ class CostumeCoreOntologyAirtableTransformer:
                     feature_set_uris.add(self.__feature_set_uri(feature_set_record))
                     break
 
-        if not feature_set_uris:
-            self.__logger.debug(
-                "feature %s does not belong to any feature sets",
-                feature_record["fields"]["id"],
-            )
-            return None
-
         feature_uri = URIRef(fields["URI"])
 
         property_builder = (
@@ -325,19 +318,18 @@ class CostumeCoreOntologyAirtableTransformer:
                 continue
             if "URI" not in fields:
                 continue
-            if not fields["URI"].startswith(str(COCO)):
-                continue
 
-            collection = self.__transform_feature_record_to_collection(
-                feature_record=feature_record
-            )
-            if collection:
-                yield collection
+            if fields["URI"].startswith(str(COCO)):
+                collection = self.__transform_feature_record_to_collection(
+                    feature_record=feature_record
+                )
+                if collection:
+                    yield collection
 
-            yield self.__transform_feature_record_to_costume_core_ontology_predicate(
-                costume_core_ontology_terms_by_features=costume_core_ontology_terms_by_features,
-                feature_record=feature_record,
-            )
+                yield self.__transform_feature_record_to_costume_core_ontology_predicate(
+                    costume_core_ontology_terms_by_features=costume_core_ontology_terms_by_features,
+                    feature_record=feature_record,
+                )
 
             property_ = self.__transform_feature_record_to_property(
                 feature_record=feature_record, feature_set_records=feature_set_records
