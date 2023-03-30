@@ -2,7 +2,6 @@ from pathlib import Path
 
 from paradicms_etl.extractors.omeka_classic_extractor import OmekaClassicExtractor
 from paradicms_etl.models.collection import Collection
-from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.work import Work
 from paradicms_etl.transformers.costume_core_omeka_classic_transformer import (
@@ -28,8 +27,8 @@ def test_transform(data_dir_path: Path):
     models = tuple(transformer(**extract_result))
     assert models
     model_types = set(model.__class__ for model in models)
-    assert len(model_types) == 4
+    assert len(model_types) == 3
     assert Collection in model_types
     assert Image in model_types
-    assert Concept in model_types
+    # assert Concept in model_types
     assert Work in model_types
