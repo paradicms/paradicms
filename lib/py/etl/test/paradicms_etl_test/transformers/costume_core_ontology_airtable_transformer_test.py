@@ -28,7 +28,7 @@ def test_transform(data_dir_path: Path):
     )
     extract_result = extractor(force=False)
 
-    transformer = CostumeCoreOntologyAirtableTransformer(ontology_version="1.0.0")
+    transformer = CostumeCoreOntologyAirtableTransformer()
 
     models = tuple(transformer(**extract_result))
     assert models

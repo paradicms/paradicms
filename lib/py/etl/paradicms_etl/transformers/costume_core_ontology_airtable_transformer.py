@@ -65,7 +65,7 @@ class CostumeCoreOntologyAirtableTransformer:
         def __str__(self):
             return self.value
 
-    def __init__(self, *, ontology_version: str):
+    def __init__(self, *, ontology_version: str = "1.0.0"):
         self.__logger = logging.getLogger(__name__)
         self.__ontology_version = ontology_version
 
