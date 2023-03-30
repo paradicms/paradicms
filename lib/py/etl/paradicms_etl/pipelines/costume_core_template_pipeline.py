@@ -3,7 +3,7 @@ from pathlib import Path
 from paradicms_etl.extractors.costume_core_data_airtable_extractor import (
     CostumeCoreDataAirtableExtractor,
 )
-from paradicms_etl.loaders.nop_loader import nop_loader
+from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.transformers.costume_core_data_airtable_transformer import (
     CostumeCoreDataAirtableTransformer,
@@ -25,7 +25,13 @@ class CostumeCoreTemplatePipeline(Pipeline):
                 ),
             ),
             id=self.__ID,
-            loader=nop_loader,
+            loader=RdfFileLoader(
+                rdf_file_path=data_dir_path
+                / self.__ID
+                / "loaded"
+                / (self.__ID + ".trig"),
+                pipeline_id=self.__ID,
+            ),
             transformer=CostumeCoreDataAirtableTransformer(),
         )
 
