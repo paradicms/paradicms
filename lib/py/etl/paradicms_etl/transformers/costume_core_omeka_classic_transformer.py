@@ -1,37 +1,48 @@
 import logging
-from typing import Tuple, Set, Dict
+from typing import Tuple, Set, List, Dict
 
 from rdflib import URIRef, DCTERMS
 from rdflib.term import Node, Literal
 
-# from paradicms_etl.models.costume_core import costume_core_predicates
-# from paradicms_etl.models.costume_core.costume_core import CostumeCore
+from paradicms_etl.models.concept import Concept
+from paradicms_etl.models.image import Image
+from paradicms_etl.models.property import Property
 from paradicms_etl.namespaces import VRA
+from paradicms_etl.pipelines.costume_core_ontology_airtable_to_paradicms_rdf_pipeline import (
+    CostumeCoreOntologyAirtableToParadicmsRdfPipeline,
+)
 from paradicms_etl.transformers.omeka_classic_transformer import OmekaClassicTransformer
 
 
 class CostumeCoreOmekaClassicTransformer(OmekaClassicTransformer):
-    __UNKNOWN_CC_TERMS: Dict[str, Set[str]] = {}
     __UNKNOWN_ITM_KEYS: Set[str] = set()
 
     def __init__(self, **kwds):
         OmekaClassicTransformer.__init__(self, **kwds)
-        # self.__costume_core = CostumeCore()
+        self.__costume_core_concepts: Dict[
+            URIRef, Dict[str, Concept]
+        ] = {}  # Type -> label -> Concept
         self.__logger = logging.getLogger(__name__)
+        self.__costume_core_properties: List[Property] = []
 
     def __call__(self, **kwds):
-        # yield from self.__costume_core.images
-        # yield from self.__costume_core.concepts
+        for ontology_model in CostumeCoreOntologyAirtableToParadicmsRdfPipeline(
+            airtable_access_token="neverused"
+        ).extract_transform(force_extract=False):
+            if isinstance(ontology_model, Concept):
+                for type_uri in ontology_model.type_uris:
+                    self.__costume_core_concepts.setdefault(type_uri, {})[
+                        ontology_model.label
+                    ] = ontology_model
+                yield ontology_model
+            elif isinstance(ontology_model, Image):
+                yield ontology_model
+            elif isinstance(ontology_model, Property):
+                self.__costume_core_properties.append(ontology_model)
+                yield ontology_model
+
         yield from OmekaClassicTransformer.__call__(self, **kwds)
-        for (
-            costume_core_predicate_id,
-            costume_core_terms,
-        ) in self.__UNKNOWN_CC_TERMS.items():
-            self.__logger.warn(
-                "unknown Costume Core terms for predicate %s: %s",
-                costume_core_predicate_id,
-                costume_core_terms,
-            )
+
         for key in self.__UNKNOWN_ITM_KEYS:
             self.__logger.warn("unknown Item Type Metadata element name: %s", key)
 
@@ -57,46 +68,23 @@ class CostumeCoreOmekaClassicTransformer(OmekaClassicTransformer):
             for value in itm_element_text_tree.pop(key, []):
                 properties.add((property_uri, Literal(value)))
 
-        # for key, predicate in (
-        #     ("Classification", costume_core_predicates.classification),
-        #     ("Closure Placement", costume_core_predicates.closurePlacement),
-        #     ("Closure Type", costume_core_predicates.closure),
-        #     ("Collar", costume_core_predicates.collar),
-        #     ("Color Main", costume_core_predicates.colorMain),
-        #     ("Color Secondary", costume_core_predicates.colorSecondary),
-        #     ("Condition Term", costume_core_predicates.condition),
-        #     ("Costume Component", costume_core_predicates.costumeComponents),
-        #     ("Function", costume_core_predicates.function),
-        #     ("Gender", costume_core_predicates.gender),
-        #     ("Pattern", costume_core_predicates.pattern),
-        #     ("Sleeve Length", costume_core_predicates.sleeveLength),
-        #     ("Socio-Economic Class", costume_core_predicates.socioEconomicClass),
-        #     ("Structure Neckline", costume_core_predicates.neckline),
-        #     # ("Structure Silhouette", costume_core_predicates.silhouette),
-        #     ("Structure Skirt", costume_core_predicates.skirtType),
-        #     ("Structure Sleeves", costume_core_predicates.sleeveType),
-        #     ("Structure Pants", costume_core_predicates.pantsType),
-        #     ("Structure Waist", costume_core_predicates.waistline),
-        #     ("Work Type", costume_core_predicates.workType),
-        # ):
-        #     terms = self.__costume_core.terms_by_predicate_id.get(predicate.id, [])
-        #     # if not terms:
-        #     #     self.__logger.warning("no terms for Costume Core predicate %s", predicate.id)
-        #     for value in itm_element_text_tree.pop(key, []):
-        #         term = next(
-        #             (term for term in terms if term.display_name_en == value), None
-        #         )
-        #         if term is not None:
-        #             pass
-        #             # model.resource.add(URIRef(predicate.uri), URIRef(term.uri))
-        #         elif terms:
-        #             unknown_predicate_terms = self.__UNKNOWN_CC_TERMS.setdefault(
-        #                 predicate.id, set()
-        #             )
-        #             if value not in unknown_predicate_terms:
-        #                 # print(predicate.id + ',' + value)
-        #                 unknown_predicate_terms.add(value)
-        #         properties.add((URIRef(predicate.uri), Literal(value)))
+        for property_ in self.__costume_core_properties:
+            values = itm_element_text_tree.pop(property_.label, [])
+            if not values:
+                continue
+
+            property_range = property_.range
+            if property_range is not None:
+                concepts_in_property_range = self.__costume_core_concepts.get(
+                    property_range, {}
+                )
+                for value in values:
+                    concept = concepts_in_property_range.get(value)
+                    if concept is not None:
+                        properties.add((property_uri, concept.uri))
+            else:
+                for value in values:
+                    properties.add((property_uri, Literal(value)))
 
         for key in (
             "CSV File",

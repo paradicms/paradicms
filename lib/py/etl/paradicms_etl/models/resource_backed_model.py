@@ -107,7 +107,7 @@ class ResourceBackedModel(Model):
     def _optional_uri_value(
         self, p: Union[URIRef, Tuple[URIRef, ...]]
     ) -> Optional[URIRef]:
-        return self.__optional_value(self.__uri_values(p))
+        return self.__optional_value(self._uri_values(p))
 
     @staticmethod
     def __optional_value(values: Generator[_ValueT, None, None]) -> Optional[_ValueT]:
@@ -125,12 +125,12 @@ class ResourceBackedModel(Model):
         return self.__required_value(self.__literal_values(p, str))
 
     def _required_uri_value(self, p: Union[URIRef, Tuple[URIRef, ...]]) -> URIRef:
-        return self.__required_value(self.__uri_values(p))
+        return self.__required_value(self._uri_values(p))
 
     def _required_uri_values(
         self, p: Union[URIRef, Tuple[URIRef, ...]]
     ) -> Tuple[URIRef, ...]:
-        return self.__required_values(self.__uri_values(p))
+        return self.__required_values(self._uri_values(p))
 
     @staticmethod
     def __required_value(values: Generator[_ValueT, None, None]) -> _ValueT:
@@ -160,7 +160,7 @@ class ResourceBackedModel(Model):
             graph += self._resource.graph
             return graph.resource(self._resource.identifier)
 
-    def __uri_values(
+    def _uri_values(
         self, p: Union[URIRef, Tuple[URIRef, ...]]
     ) -> Generator[URIRef, None, None]:
         value: Any
