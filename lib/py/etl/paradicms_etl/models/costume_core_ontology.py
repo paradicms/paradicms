@@ -14,7 +14,7 @@ from paradicms_etl.namespaces import COCO
 
 class CostumeCoreOntology(ResourceBackedNamedModel):
     @dataclass(frozen=True)
-    class CostumeCoreRights:
+    class Rights:
         author: str
         license_uri: Optional[str]
         rights_statement_uri: Optional[str]
@@ -22,12 +22,12 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
         source_url: str
 
     @dataclass(frozen=True)
-    class CostumeCoreDescription:
-        rights: "CostumeCoreRights"
+    class Description:
+        rights: "Rights"
         text_en: str
 
     @dataclass(frozen=True)
-    class CostumeCoreTerm(NamedModel):
+    class Term(NamedModel):
         FULL_SIZE_IMAGE_BASE_URL = (
             "https://worksheet.dressdiscover.org/img/worksheet/full_size/"
         )
@@ -118,13 +118,13 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
             return self._uri
 
     @dataclass(frozen=True)
-    class CostumeCorePredicate(NamedModel):
+    class Predicate(NamedModel):
         description_text_en: str
         display_name_en: str
         id: str
         _uri: URIRef
         sub_property_of_uri: Optional[str] = None
-        terms: Optional[Tuple["CostumeCoreTerm", ...]] = None
+        terms: Optional[Tuple["Term", ...]] = None
 
         @classmethod
         def from_rdf(cls, resource: Resource):
@@ -153,16 +153,14 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
                 resource.add(RDFS.range, range_class_resource)
             return resource
 
-    @property
-    def uri(self):
-        return self._uri
+        @property
+        def uri(self):
+            return self._uri
 
     class Builder(ResourceBackedNamedModel.Builder):
-        def __init__(self, *, version: str):
+        def __init__(self):
             ResourceBackedNamedModel.Builder.__init__(self, uri=URIRef(str(COCO)[:-1]))
             self.add(RDF.type, OWL.Ontology)
-            self.add(OWL.versionIRI, COCO[version])
-            self.add(OWL.versionInfo, Literal(version))
             self.add(DCTERMS.title, Literal("Costume Core Ontology"))
             self.add(DCTERMS.creator, Literal("Arden Kirkland"))
             self.add(DCTERMS.contributor, Literal("Minor Gordon"))
@@ -199,6 +197,11 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
         def build(self) -> "CostumeCoreOntology":
             return CostumeCoreOntology(self._resource)
 
+        def set_version(self, version: str) -> "CostumeCoreOntology.Builder":
+            self.add(OWL.versionIRI, COCO[version])
+            self.add(OWL.versionInfo, Literal(version))
+            return self
+
     @classmethod
-    def builder(cls, *, version: str):
-        return cls.Builder(version=version)
+    def builder(cls):
+        return cls.Builder()

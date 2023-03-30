@@ -8,11 +8,7 @@ from paradicms_etl.extractors.costume_core_ontology_airtable_extractor import (
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.model import Model
-from paradicms_etl.models.costume_core.costume_core_ontology import CostumeCoreOntology
-from paradicms_etl.models.costume_core.costume_core_predicate import (
-    CostumeCorePredicate,
-)
-from paradicms_etl.models.costume_core.costume_core_term import CostumeCoreTerm
+from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
 from paradicms_etl.namespaces import COCO
 from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.transformers.costume_core_ontology_airtable_transformer import (
@@ -22,7 +18,8 @@ from paradicms_etl.transformers.costume_core_ontology_airtable_transformer impor
 
 def is_costume_core_ontology_model(model: Model):
     return isinstance(
-        model, (CostumeCoreOntology, CostumeCorePredicate, CostumeCoreTerm)
+        model,
+        (CostumeCoreOntology, CostumeCoreOntology.Predicate, CostumeCoreOntology.Term),
     ) and str(model.uri).startswith(str(COCO)[:-1])
 
 

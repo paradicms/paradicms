@@ -5,11 +5,7 @@ from paradicms_etl.extractors.costume_core_ontology_airtable_extractor import (
 )
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
-from paradicms_etl.models.costume_core.costume_core_ontology import CostumeCoreOntology
-from paradicms_etl.models.costume_core.costume_core_predicate import (
-    CostumeCorePredicate,
-)
-from paradicms_etl.models.costume_core.costume_core_term import CostumeCoreTerm
+from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.license import License
 from paradicms_etl.models.property import Property
@@ -38,8 +34,8 @@ def test_transform(data_dir_path: Path):
     assert Collection in model_types
     assert Concept in model_types
     assert CostumeCoreOntology in model_types
-    assert CostumeCorePredicate in model_types
-    assert CostumeCoreTerm in model_types
+    assert CostumeCoreOntology.Predicate in model_types
+    assert CostumeCoreOntology.Term in model_types
     assert License in model_types
     assert Property in model_types
     assert PropertyGroup in model_types
