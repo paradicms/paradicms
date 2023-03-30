@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Optional
 
 from configargparse import ArgParser
 
@@ -6,11 +7,7 @@ from paradicms_etl.extractors.costume_core_ontology_airtable_extractor import (
     CostumeCoreOntologyAirtableExtractor,
 )
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
-from paradicms_etl.models.costume_core.costume_core_ontology import CostumeCoreOntology
-from paradicms_etl.models.costume_core.costume_core_predicate import (
-    CostumeCorePredicate,
-)
-from paradicms_etl.models.costume_core.costume_core_term import CostumeCoreTerm
+from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
 from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.transformers.costume_core_ontology_airtable_transformer import (
     CostumeCoreOntologyAirtableTransformer,
@@ -20,11 +17,12 @@ from paradicms_etl.transformers.costume_core_ontology_airtable_transformer impor
 class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
     ID = "costume_core_ontology"
 
-    def __init__(self, *, airtable_access_token: str):
-        data_dir_path = (
-            Path(__file__).parent.parent.parent.parent.parent.parent / "data"
-        )
-        assert data_dir_path.is_dir()
+    def __init__(
+        self, *, airtable_access_token: str, data_dir_path: Optional[Path] = None
+    ):
+        if data_dir_path is None:
+            data_dir_path = self.__find_data_dir_path()
+
         Pipeline.__init__(
             self,
             extractor=CostumeCoreOntologyAirtableExtractor(
@@ -47,7 +45,11 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
                     for model in models
                     if not isinstance(
                         model,
-                        (CostumeCoreOntology, CostumeCorePredicate, CostumeCoreTerm),
+                        (
+                            CostumeCoreOntology,
+                            CostumeCoreOntology.Predicate,
+                            CostumeCoreOntology.Term,
+                        ),
                     )
                 ),
                 **kwds
@@ -59,6 +61,16 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
     def add_arguments(cls, arg_parser: ArgParser):
         Pipeline.add_arguments(arg_parser)
         arg_parser.add_argument("--airtable-access-token", required=True)
+
+    @staticmethod
+    def __find_data_dir_path() -> Path:
+        for data_dir_path in (
+            Path(__file__).parent.parent.parent.parent.parent.parent / "data",
+            Path("/paradicms/data"),
+        ):
+            if data_dir_path.is_dir():
+                return data_dir_path
+        raise NotImplementedError("unable to find data dir path")
 
 
 if __name__ == "__main__":

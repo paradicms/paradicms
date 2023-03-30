@@ -11,8 +11,8 @@ from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import COCO
-from paradicms_etl.transformers.costume_core_ontology_airtable_transformer import (
-    CostumeCoreOntologyAirtableTransformer,
+from paradicms_etl.pipelines.costume_core_ontology_airtable_to_paradicms_rdf_pipeline import (
+    CostumeCoreOntologyAirtableToParadicmsRdfPipeline,
 )
 
 
@@ -34,10 +34,12 @@ class CostumeCoreDataAirtableTransformer:
     ):
         self.__logger = logging.getLogger(__name__)
 
-    def __call__(self, *, data: Any, ontology: Any, **kwds):
+    def __call__(self, *, base: Dict[str, Any], records_by_table, **kwds):
         concepts_by_uri: Dict[URIRef, Concept] = {}
         properties_by_label: Dict[str, Property] = {}
-        for ontology_model in CostumeCoreOntologyAirtableTransformer()(**ontology):
+        for ontology_model in CostumeCoreOntologyAirtableToParadicmsRdfPipeline(
+            airtable_access_token="neverused"
+        ).extract_transform(force_extract=False):
             if isinstance(ontology_model, Concept):
                 concept = ontology_model
                 concepts_by_uri[concept.uri] = concept
@@ -46,9 +48,6 @@ class CostumeCoreDataAirtableTransformer:
                 property_ = ontology_model
                 properties_by_label[property_.label] = property_
                 yield property_
-
-        base: Dict[str, Any] = data["base"]
-        records_by_table = data["records_by_table"]
 
         collection = Collection.builder(
             title=base["name"], uri=AirtableExtractor.base_url(base_id=base["id"])
