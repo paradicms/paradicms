@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, Tuple
 
 from rdflib import SKOS
 from rdflib.namespace import RDF
@@ -38,7 +38,7 @@ class Concept(ResourceBackedNamedModel):
     def __init__(self, resource: Resource):
         resource.add(RDF.type, SKOS.Concept)
         ResourceBackedNamedModel.__init__(self, resource)
-        self.label
+        self.pref_label
 
     @classmethod
     def builder(cls, *, uri: URIRef):
@@ -55,6 +55,18 @@ class Concept(ResourceBackedNamedModel):
                 "value": {"@id": str(RDF.value)},
             },
         )
+
+    @property
+    def label(self):
+        return self.pref_label
+
+    @property
+    def pref_label(self) -> str:
+        return self._required_str_value(SKOS.prefLabel)
+
+    @property
+    def type_uris(self) -> Tuple[URIRef, ...]:
+        return tuple(self._uri_values(RDF.type))
 
     @property
     def value(self) -> Node:

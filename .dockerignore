@@ -1,5 +1,7 @@
 **/build/
 /data/
+!/data/costume_core_ontology/extracted/
+!/data/synthetic/
 **/dist/
 /.git/
 /.github/

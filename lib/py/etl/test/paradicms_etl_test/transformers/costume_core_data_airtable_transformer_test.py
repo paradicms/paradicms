@@ -28,7 +28,7 @@ def test_transform(data_dir_path: Path):
     model_types = set(model.__class__ for model in models)
     assert len(model_types) == 5
     assert Collection in model_types
-    assert Image in model_types
     assert Concept in model_types
+    assert Image in model_types
     assert Property in model_types
     assert Work in model_types
