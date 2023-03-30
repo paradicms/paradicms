@@ -65,8 +65,8 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
     @staticmethod
     def __find_data_dir_path() -> Path:
         for data_dir_path in (
-            Path(__file__).parent.parent.parent.parent.parent.parent / "data",
             Path("/paradicms/data"),
+            Path(__file__).parent.parent.parent.parent.parent.parent / "data",
         ):
             if data_dir_path.is_dir():
                 return data_dir_path
