@@ -6,13 +6,14 @@ import {
   Quad_Graph,
   Term,
 } from "@rdfjs/types";
-import {cms, rdf} from "@paradicms/vocabularies";
+import {cms, dcmitype, rdf} from "@paradicms/vocabularies";
 import {Text} from "./Text";
 import {PropertyValue} from "./PropertyValue";
 import {TextPropertyValue} from "./TextPropertyValue";
 import {ConceptPropertyValue} from "./ConceptPropertyValue";
 import {AgentPropertyValue} from "./AgentPropertyValue";
 import {LiteralPropertyValue} from "./LiteralPropertyValue";
+import {DcmiTypePropertyValue} from "./DcmiTypePropertyValue";
 
 export const createPropertyValueFromTerm = (
   modelSet: ModelSet,
@@ -53,6 +54,11 @@ export const createPropertyValueFromTerm = (
         const person = modelSet.personByUriOptional(term.value);
         if (person) {
           return new AgentPropertyValue(person);
+        }
+      }
+      {
+        if (term.value.startsWith(dcmitype[""].value)) {
+          return new DcmiTypePropertyValue(term);
         }
       }
       return null;
