@@ -168,7 +168,7 @@ class GitHubAction(ABC, Generic[InputsT]):
             inputs_kwds["pipeline_id"] = os.environ["GITHUB_REPOSITORY"].rsplit("/", 1)[
                 -1
             ]
-        return cls._inputs_class(**inputs_kwds)
+        return cls._inputs_class(**inputs_kwds)  # type: ignore
 
     @abstractmethod
     def _run(self):
