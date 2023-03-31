@@ -14,9 +14,7 @@
     "react-copy-to-clipboard": "5.1.0",
     "react-hammerjs": "1.0.1",
     "react-router-dom": "6.4.2",
-    "react-select": "5.5.4",
-    "reactstrap": "9.1.4",
-    "yup": "0.32.11"
+    "react-select": "5.5.4"
   },
   "devDependencies": {
     "@types/classnames": "2.3.1",
@@ -25,7 +23,6 @@
     "@types/gapi.client.oauth2": "2.0.1",
     "@types/gapi.client.sheets": "4.0.1",
     "@types/papaparse": "4.1.33",
-    "@types/query-string": "5.1.0",
     "@types/react-copy-to-clipboard": "5.0.2",
     "@welldone-software/why-did-you-render": "7.0.1",
     "buffer": "6.0.3",
