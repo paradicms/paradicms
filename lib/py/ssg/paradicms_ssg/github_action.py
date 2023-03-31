@@ -20,14 +20,14 @@ class GitHubAction(ABC, Generic[InputsT]):
     Abstract base class for static site-generating GitHub Actions.
     """
 
-    def __init__(self, *, inputs: InputsT, temp_dir_path: Path):
+    def __init__(self, *, data_dir_path: Path, inputs: InputsT):
+        self.__data_dir_path = data_dir_path
         self._inputs = inputs
         if self._inputs.debug:
             logging.basicConfig(level=logging.DEBUG)
         else:
             logging.basicConfig(level=logging.INFO)
         self.__logger = logging.getLogger(__name__)
-        self.__temp_dir_path = temp_dir_path
 
     def _create_loader(self) -> Loader:
         return AppLoader(
@@ -43,13 +43,13 @@ class GitHubAction(ABC, Generic[InputsT]):
                 deploy_dir_path=Path(self._inputs.build_directory_path).absolute(),
             ),
             dev=self._inputs.dev,
-            loaded_data_dir_path=self.__temp_dir_path / "loaded",
+            loaded_data_dir_path=self.__data_dir_path / "loaded",
             pipeline_id=self._inputs.pipeline_id,
         )
 
     @property
     def _extracted_data_dir_path(self) -> Path:
-        return self.__temp_dir_path / "extracted"
+        return self.__data_dir_path / "extracted"
 
     @classmethod
     def __generate_action_yml(cls):
