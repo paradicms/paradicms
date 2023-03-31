@@ -72,7 +72,10 @@ class SpreadsheetTransformer:
     def __call__(self, sheets: Dict[str, Any]):
         for sheet_name, sheet in sheets.items():
             rows = sheet["rows"]
-            model_class = self.__root_model_classes_by_alias.get(sheet_name)
+            for sheet_name_variant in (sheet_name, sheet_name.split()[0]):
+                model_class = self.__root_model_classes_by_alias.get(sheet_name_variant)
+                if model_class is not None:
+                    break
             if model_class is None:
                 self.__logger.warning(
                     "sheet %s does not correspond to a model class", sheet_name
