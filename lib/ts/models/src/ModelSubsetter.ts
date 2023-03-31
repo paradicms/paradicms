@@ -296,17 +296,6 @@ export class ModelSubsetter {
     return builder.build();
   }
 
-  collectionModelSet(
-    collection: Collection,
-    joinSelector?: CollectionJoinSelector
-  ): ModelSet {
-    return this.addCollectionModelSet(
-      new ModelSetBuilder(),
-      collection,
-      joinSelector ?? {}
-    ).build();
-  }
-
   workModelSet(work: Work, joinSelector?: WorkJoinSelector): ModelSet {
     return this.addWorkModelSet(
       new ModelSetBuilder(),
