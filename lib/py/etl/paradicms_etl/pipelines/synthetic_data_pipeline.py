@@ -31,6 +31,7 @@ from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_closing import WorkClosing
 from paradicms_etl.models.work_creation import WorkCreation
+from paradicms_etl.models.work_opening import WorkOpening
 from paradicms_etl.namespaces import VRA
 from paradicms_etl.pipeline import Pipeline
 
@@ -550,7 +551,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 work_creation_builder.add_creator_uri(creator_uri)
             yield work_creation_builder.build()
 
-            yield WorkClosing.builder(
+            yield WorkOpening.builder(
                 uri=URIRef(str(work.uri) + "Opening"), work_uri=work.uri
             ).set_description(description).set_date(creation_date).set_location(
                 location
