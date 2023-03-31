@@ -10,8 +10,11 @@ import {Organization} from "./Organization";
 import {Agent} from "./Agent";
 import {Event} from "./Event";
 import {Store} from "@paradicms/rdf";
+import {AppConfiguration} from "./AppConfiguration";
+import {Model} from "./Model";
 
 export class ModelSetBuilder {
+  private appConfiguration: AppConfiguration | null | undefined;
   private collectionsByUri: {[index: string]: Collection} | undefined;
   private eventsByUri: {[index: string]: Event} | undefined;
   private imagesByUri: {[index: string]: Image} | undefined;
@@ -30,6 +33,14 @@ export class ModelSetBuilder {
     } else {
       throw new EvalError();
     }
+  }
+
+  addAppConfiguration(appConfiguration: AppConfiguration | null) {
+    if (typeof this.appConfiguration !== "undefined") {
+      throw new RangeError("tried to add AppConfiguration twice");
+    }
+    this.appConfiguration = appConfiguration;
+    return this;
   }
 
   addCollection(collection: Collection) {
@@ -166,6 +177,23 @@ export class ModelSetBuilder {
 
   build(): ModelSet {
     const store = new Store();
+
+    const addModelToStore = (model: Model) => {
+      // Add all quads that belong to the model's graph
+      for (const quad of model.modelSet.dataset.match(
+        null,
+        null,
+        null,
+        model.graphNode
+      )) {
+        store.add(quad);
+      }
+    };
+
+    if (this.appConfiguration) {
+      addModelToStore(this.appConfiguration);
+    }
+
     for (const modelsByUri of [
       this.collectionsByUri,
       this.eventsByUri,
@@ -181,16 +209,7 @@ export class ModelSetBuilder {
         continue;
       }
       for (const modelUri of Object.keys(modelsByUri)) {
-        const model = modelsByUri[modelUri];
-        // Add all quads that belong to the model's graph
-        for (const quad of model.modelSet.dataset.match(
-          null,
-          null,
-          null,
-          model.graphNode
-        )) {
-          store.add(quad);
-        }
+        addModelToStore(modelsByUri[modelUri]);
       }
     }
     return ModelSet.fromDatasetCore(store);

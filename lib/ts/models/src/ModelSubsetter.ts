@@ -249,11 +249,11 @@ export class ModelSubsetter {
   agentsModelSet(
     agents: readonly Agent[],
     joinSelector?: AgentJoinSelector
-  ): ModelSet {
+  ): ModelSetBuilder {
     for (const agent of agents) {
       this.addAgentModelSet(agent, joinSelector ?? {});
     }
-    return this.modelSetBuilder.build();
+    return this.modelSetBuilder;
   }
 
   workModelSet(work: Work, joinSelector?: WorkJoinSelector): ModelSetBuilder {
