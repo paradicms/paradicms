@@ -129,6 +129,7 @@ class Image(ResourceBackedNamedModel):
                         "@id": str(DCTERMS.modified),
                         "@type": str(XSD.dateTime),
                     },
+                    "source": {"@id": str(DCTERMS.source), "@type": "@id"},
                     "src": {"@id": str(CMS.imageSrc)},
                     "thumbnail": {"@id": str(FOAF.thumbnail), "@type": "@id"},
                     "thumbnailOf": {"@id": str(CMS.thumbnailOf), "@type": "@id"},

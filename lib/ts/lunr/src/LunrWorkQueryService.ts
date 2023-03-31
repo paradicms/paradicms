@@ -264,7 +264,9 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       const slicedAgentsModelSet = new ModelSubsetter({
         completeModelSet: this.modelSet,
-      }).agentsModelSet(slicedAgents, agentJoinSelector);
+      })
+        .agentsModelSet(slicedAgents, agentJoinSelector)
+        .build();
 
       resolve({
         modelSet: slicedAgentsModelSet,
@@ -322,7 +324,9 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       const slicedWorksModelSet = new ModelSubsetter({
         completeModelSet: this.modelSet,
-      }).worksModelSet(slicedWorks, workJoinSelector);
+      })
+        .worksModelSet(slicedWorks, workJoinSelector)
+        .build();
 
       // console.debug(
       //   "Search results modelSet:",
@@ -460,7 +464,9 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       const slicedWorkEventsModelSet = new ModelSubsetter({
         completeModelSet: this.modelSet,
-      }).workEventsModelSet(workEvents, workEventJoinSelector);
+      })
+        .workEventsModelSet(workEvents, workEventJoinSelector)
+        .build();
 
       resolve({
         modelSet: slicedWorkEventsModelSet,

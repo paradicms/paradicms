@@ -113,6 +113,8 @@ export const getStaticProps: GetStaticProps = async ({
           collections: {},
           events: {},
         })
+        .addAppConfiguration(completeModelSet.appConfiguration)
+        .build()
         .toFastRdfString(),
       workUri,
     },

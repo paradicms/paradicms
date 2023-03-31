@@ -136,7 +136,7 @@ class AppLoader(BufferingLoader):
             gui_images.extend(
                 ImagesLoader(
                     image_archiver=image_archiver,
-                    loaded_data_dir_path=self.__loaded_data_dir_path,
+                    loaded_data_dir_path=self.__loaded_data_dir_path / "images",
                     sleep_s_after_image_download=self.__sleep_s_after_image_download,
                     thumbnail_max_dimensions=self.__thumbnail_max_dimensions,
                 )(flush=True, models=copyable_original_images)
@@ -144,9 +144,7 @@ class AppLoader(BufferingLoader):
 
             models = tuple(gui_images + other_models)
 
-        data_file_path = (
-            self.__loaded_data_dir_path / "data" / (self.__pipeline_id + ".trig")
-        )
+        data_file_path = app_package.app_dir_path / "public" / "data.trig"
         data_loader = RdfFileLoader(
             additional_namespace_modules=(paradicms_ssg.namespaces,),
             pipeline_id=self.__pipeline_id,

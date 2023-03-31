@@ -10,8 +10,12 @@ import {Organization} from "./Organization";
 import {Agent} from "./Agent";
 import {Event} from "./Event";
 import {Store} from "@paradicms/rdf";
+import {AppConfiguration} from "./AppConfiguration";
+import {Model} from "./Model";
+import {Property} from "./Property";
 
 export class ModelSetBuilder {
+  private appConfiguration: AppConfiguration | null | undefined;
   private collectionsByUri: {[index: string]: Collection} | undefined;
   private eventsByUri: {[index: string]: Event} | undefined;
   private imagesByUri: {[index: string]: Image} | undefined;
@@ -19,6 +23,7 @@ export class ModelSetBuilder {
   private conceptsByUri: {[index: string]: Concept} | undefined;
   private organizationsByUri: {[index: string]: Organization} | undefined;
   private peopleByUri: {[index: string]: Person} | undefined;
+  private propertiesByUri: {[index: string]: Property} | undefined;
   private rightsStatementsByUri: {[index: string]: RightsStatement} | undefined;
   private worksByUri: {[index: string]: Work} | undefined;
 
@@ -30,6 +35,14 @@ export class ModelSetBuilder {
     } else {
       throw new EvalError();
     }
+  }
+
+  addAppConfiguration(appConfiguration: AppConfiguration | null) {
+    if (typeof this.appConfiguration !== "undefined") {
+      throw new RangeError("tried to add AppConfiguration twice");
+    }
+    this.appConfiguration = appConfiguration;
+    return this;
   }
 
   addCollection(collection: Collection) {
@@ -122,6 +135,22 @@ export class ModelSetBuilder {
     return this;
   }
 
+  addProperties(properties: readonly Property[]) {
+    this.propertiesByUri = ModelSetBuilder.addNamedModels(
+      this.propertiesByUri,
+      properties
+    );
+    return this;
+  }
+
+  addProperty(property: Property) {
+    this.propertiesByUri = ModelSetBuilder.addNamedModel(
+      this.propertiesByUri,
+      property
+    );
+    return this;
+  }
+
   addWork(work: Work) {
     this.worksByUri = ModelSetBuilder.addNamedModel(this.worksByUri, work);
     return this;
@@ -166,6 +195,23 @@ export class ModelSetBuilder {
 
   build(): ModelSet {
     const store = new Store();
+
+    const addModelToStore = (model: Model) => {
+      // Add all quads that belong to the model's graph
+      for (const quad of model.modelSet.dataset.match(
+        null,
+        null,
+        null,
+        model.graphNode
+      )) {
+        store.add(quad);
+      }
+    };
+
+    if (this.appConfiguration) {
+      addModelToStore(this.appConfiguration);
+    }
+
     for (const modelsByUri of [
       this.collectionsByUri,
       this.eventsByUri,
@@ -174,6 +220,7 @@ export class ModelSetBuilder {
       this.conceptsByUri,
       this.organizationsByUri,
       this.peopleByUri,
+      this.propertiesByUri,
       this.worksByUri,
       this.rightsStatementsByUri,
     ]) {
@@ -181,16 +228,7 @@ export class ModelSetBuilder {
         continue;
       }
       for (const modelUri of Object.keys(modelsByUri)) {
-        const model = modelsByUri[modelUri];
-        // Add all quads that belong to the model's graph
-        for (const quad of model.modelSet.dataset.match(
-          null,
-          null,
-          null,
-          model.graphNode
-        )) {
-          store.add(quad);
-        }
+        addModelToStore(modelsByUri[modelUri]);
       }
     }
     return ModelSet.fromDatasetCore(store);

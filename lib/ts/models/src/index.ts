@@ -10,6 +10,7 @@ export * from "./ConceptPropertyValue";
 export * from "./createPropertyValuesFromQuadObjects";
 export * from "./createPropertyValuesFromQuadSubjects";
 export * from "./defaultProperties";
+export * from "./DcmiTypePropertyValue";
 export * from "./Event";
 export * from "./Image";
 export * from "./ImageDimensions";

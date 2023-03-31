@@ -107,6 +107,8 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
           completeModelSet.works,
           workSearchWorkJoinSelector(smallThumbnailTargetDimensions)
         )
+        .addAppConfiguration(completeModelSet.appConfiguration)
+        .build()
         .toFastRdfString(),
     },
   };
