@@ -169,6 +169,11 @@ export class ModelSubsetter {
         }
       }
 
+      if (joinSelector.properties) {
+        // Add all properties
+        this.modelSetBuilder.addProperties(this.completeModelSet.properties);
+      }
+
       if (joinSelector.propertyValues) {
         for (const property of this.completeModelSet.properties) {
           for (const propertyValue of work.propertyValues(property.uri)) {
