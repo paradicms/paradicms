@@ -18,6 +18,7 @@ node_modules/
 null/
 .nyc_output/
 out/
+**/public/data.trig
 **/public/img/archive/
 *.pyc
 .pytest_cache/
