@@ -1,9 +1,6 @@
 import dataclasses
-import os
 from dataclasses import dataclass
 from typing import Dict, Any
-
-from configargparse import ArgParser
 
 
 @dataclass(frozen=True)
@@ -30,8 +27,6 @@ class GitHubActionInputs:
     debug: str = dataclasses.field(
         default="", metadata={"description": "Debug the action"}
     )
-
-    dev: bool = False
 
     pipeline_id: str = dataclasses.field(
         default="",
@@ -62,50 +57,6 @@ class GitHubActionInputs:
                 key: field_yaml[key] for key in sorted(field_yaml.keys())
             }
         return fields_yaml
-
-    @classmethod
-    def from_args(cls):
-        argument_parser = ArgParser()
-        argument_parser.add_argument(
-            "-c", is_config_file=True, help="path to a file to read arguments from"
-        )
-        for field in dataclasses.fields(cls):
-            arg_name = "--" + field.name.replace("_", "-")
-            if field.type == bool:
-                # The dev argument can only be supplied manually from the command line.
-                # It makes no sense to run the Next.js dev server ("next dev") in the GitHub Action.
-                argument_parser.add_argument(arg_name, action="store_true")
-            elif issubclass(field.type, str):
-                argument_parser.add_argument(
-                    arg_name,
-                    env_var="INPUT_" + field.name.upper(),
-                    required=id(field.default) == id(GitHubActionInputs.REQUIRED),
-                )
-            else:
-                raise TypeError(field.type)
-
-        args = argument_parser.parse_args()
-
-        kwds = {}
-        for key, value in vars(args).items():
-            if value is None:
-                continue
-            elif key in {"c"}:
-                continue
-            elif isinstance(value, bool):
-                kwds[key] = value
-            elif isinstance(value, str):
-                stripped_value = value.strip()
-                if stripped_value:
-                    kwds[key] = stripped_value
-            else:
-                raise TypeError(type(value))
-        if "pipeline_id" not in kwds:
-            kwds["pipeline_id"] = os.environ["GITHUB_REPOSITORY"].rsplit("/", 1)[-1]
-
-        print(kwds)
-
-        return cls(**kwds)
 
     def __post_init__(self):
         for field in dataclasses.fields(self):
