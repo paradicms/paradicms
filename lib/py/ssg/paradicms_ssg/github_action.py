@@ -23,9 +23,12 @@ class GitHubAction(ABC, Generic[InputsT]):
     Abstract base class for static site-generating GitHub Actions.
     """
 
-    def __init__(self, *, data_dir_path: Path, dev: bool, inputs: InputsT):
+    def __init__(
+        self, *, data_dir_path: Path, dev: bool, force_extract: bool, inputs: InputsT
+    ):
         self.__data_dir_path = data_dir_path
         self.__dev = dev
+        self._force_extract = force_extract
         self._inputs = inputs
         self.__logger = logging.getLogger(__name__)
 
@@ -94,7 +97,11 @@ class GitHubAction(ABC, Generic[InputsT]):
         inputs = cls.__parse_inputs(args)
 
         # Instantiate this class and call its _run()
-        cls_kwds = {"dev": bool(args.dev), "inputs": inputs}
+        cls_kwds = {
+            "dev": bool(args.dev),
+            "force_extract": bool(args.force_extract),
+            "inputs": inputs,
+        }
         if args.data_dir_path:
             cls_kwds["data_dir_path"] = args.data_dir_path
             cls(**cls_kwds)._run()
@@ -125,6 +132,11 @@ class GitHubAction(ABC, Generic[InputsT]):
             action="store_true",
             help="start the app in dev mode rather than building it",
         )
+        arg_parser.add_argument(
+            "--force-extract",
+            action="store_true",
+            help="force extraction, ignoring any cached files",
+        )
 
         for field in dataclasses.fields(cls._inputs_class):
             arg_name = "--" + field.name.replace("_", "-")
@@ -144,7 +156,7 @@ class GitHubAction(ABC, Generic[InputsT]):
         for key, value in vars(args).items():
             if value is None:
                 continue
-            elif key in {"c", "data_dir_path", "dev"}:
+            elif key in {"c", "data_dir_path", "dev", "force_extract"}:
                 continue
             elif isinstance(value, str):
                 stripped_value = value.strip()
