@@ -7,21 +7,14 @@ import {
   CollectionValueFilter,
   Filter,
   StringPropertyValueFilter,
+  ValueFilter,
 } from "@paradicms/filters";
 
 /**
  * Filter visitor interface. Optionally includes the search results facet corresponding to the query filter.
  */
 export interface FilterVisitor<T> {
-  visitCollectionValueFilter(
-    filter: CollectionValueFilter,
-    facet?: CollectionValueFacet
-  ): T;
-
-  visitStringPropertyValueFilter(
-    filter: StringPropertyValueFilter,
-    facet?: StringPropertyValueFacet
-  ): T;
+  visitValueFilter(filter: ValueFilter, facet?: CollectionValueFacet): T;
 }
 
 export const visitFilter = <T>(
