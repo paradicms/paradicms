@@ -1,7 +1,7 @@
 import {z} from "zod";
-import {filterSchema} from "@paradicms/filters/dist/filterSchema";
+import {filterDiscriminatedUnionSchema} from "@paradicms/filters";
 
 export const workQuerySchema = z.object({
-  filters: z.array(filterSchema),
+  filters: z.array(filterDiscriminatedUnionSchema),
   text: z.string().optional(),
 });
