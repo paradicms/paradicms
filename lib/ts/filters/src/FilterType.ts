@@ -1,1 +1,1 @@
-export type FilterType = "CollectionValue" | "StringPropertyValue";
+export type FilterType = "StringPropertyValue";

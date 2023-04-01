@@ -9,8 +9,12 @@ export const workSearchWorkJoinSelector = (
   collections: {},
   events: {
     agents: {},
-    work: {},
+    location: true,
+    work: {
+      location: true,
+    },
   },
+  location: true,
   properties: true,
   propertyValues: {
     thumbnail: {targetDimensions: thumbnailTargetDimensions},

@@ -1,1 +1,1 @@
-export type FacetType = "CollectionValue" | "StringPropertyValue";
+export type FacetType = "StringPropertyValue";

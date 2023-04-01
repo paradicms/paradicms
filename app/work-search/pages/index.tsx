@@ -5,7 +5,7 @@ import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {
   smallThumbnailTargetDimensions,
-  WorkSearchContainer,
+  WorkSearchPage,
   workSearchWorkJoinSelector,
 } from "@paradicms/react-dom-components";
 import {Hrefs} from "lib/Hrefs";
@@ -67,7 +67,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
       onSearch={onSearch}
       properties={modelSet.properties}
     >
-      <WorkSearchContainer
+      <WorkSearchPage
         getAbsoluteImageSrc={relativeImageSrc =>
           getAbsoluteImageSrc(relativeImageSrc, router)
         }

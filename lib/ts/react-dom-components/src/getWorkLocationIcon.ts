@@ -4,6 +4,7 @@ import {
   faDoorClosed,
   faDoorOpen,
   faLightbulb,
+  faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const getWorkLocationIcon = (
@@ -14,6 +15,8 @@ export const getWorkLocationIcon = (
       return faDoorClosed;
     case "Creation":
       return faLightbulb;
+    case "Current":
+      return faLocationDot;
     case "Opening":
       return faDoorOpen;
   }

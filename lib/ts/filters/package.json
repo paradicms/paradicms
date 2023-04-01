@@ -2,6 +2,9 @@
   "author": "Minor Gordon",
   "name": "@paradicms/filters",
   "description": "Paradicms filters library",
+  "dependencies": {
+    "zod": "^3.21.4"
+  },
   "devDependencies": {
     "@paradicms/test": "1.0.5",
     "mocha": "^8.2.1",

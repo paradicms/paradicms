@@ -3,7 +3,7 @@ on:
   push:
     paths:
       - ".github/workflows/lib-py-ssg.yml"
-      - "lib/py/ssg/**"
+      - "lib/py/**"
   workflow_dispatch:
 jobs:
   build:

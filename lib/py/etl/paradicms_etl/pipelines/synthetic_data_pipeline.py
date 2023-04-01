@@ -19,6 +19,7 @@ from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicens
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
+from paradicms_etl.models.named_location import NamedLocation
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
@@ -422,10 +423,10 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             work_i = self.__next_work_i
             self.__next_work_i += 1
 
+            work_uri = URIRef(uri_prefix + str(work_i))
+
             title = title_prefix + str(work_i)
-            work_builder = Work.builder(
-                title=title, uri=URIRef(uri_prefix + str(work_i))
-            )
+            work_builder = Work.builder(title=title, uri=work_uri)
 
             for collection_uri in collection_uris:
                 work_builder.add_collection_uri(collection_uri)
@@ -510,12 +511,20 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             if description:
                 work_builder.set_description(description)
 
-            location = (
+            anonymous_location = (
                 AnonymousLocation.builder()
                 .set_lat(42.728104)
                 .set_long(-73.687576)
                 .build()
             )
+            named_location = (
+                NamedLocation.builder(uri=URIRef(str(work_uri) + "Location"))
+                .set_lat(42.728104)
+                .set_long(-73.687576)
+                .build()
+            )
+            yield named_location
+            work_builder.set_location(named_location)
 
             if work_i % 2 == 0:
                 work_builder.add_page(URIRef("http://example.com/work/" + str(work_i)))
@@ -531,7 +540,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             yield WorkClosing.builder(
                 uri=URIRef(str(work.uri) + "Closing"), work_uri=work.uri
             ).set_description(description).set_date(destruction_date).set_location(
-                location
+                anonymous_location
             ).set_title(
                 f"{work.title} closing"
             ).build()
@@ -542,7 +551,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 )
                 .set_date(creation_date_time_description)
                 .set_description(description)
-                .set_location(location)
+                .set_location(named_location)
                 .set_title(f"{work.title} creation")
             )
             for contributor_uri in contributor_uris:
@@ -554,7 +563,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             yield WorkOpening.builder(
                 uri=URIRef(str(work.uri) + "Opening"), work_uri=work.uri
             ).set_description(description).set_date(creation_date).set_location(
-                location
+                anonymous_location
             ).set_title(
                 f"{work.title} opening"
             ).build()

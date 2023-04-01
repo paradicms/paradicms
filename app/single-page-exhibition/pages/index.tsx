@@ -9,7 +9,7 @@ import {Col, Container, Row} from "reactstrap";
 import {
   defaultBootstrapStylesheetHref,
   RightsParagraph,
-  WorkContainer,
+  WorkPage,
 } from "@paradicms/react-dom-components";
 import Head from "next/head";
 import dynamic from "next/dynamic";
@@ -104,7 +104,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
           </Row>
           <Row>
             <Col xs={12}>
-              <WorkContainer
+              <WorkPage
                 getAbsoluteImageSrc={relativeImageSrc =>
                   getAbsoluteImageSrc(relativeImageSrc, router)
                 }

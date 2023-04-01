@@ -1,7 +1,7 @@
 import {expect} from "chai";
 import {LunrWorkQueryService} from "../src/LunrWorkQueryService";
 import {ModelSet, visitWorkEvent, WorkClosing, WorkCreation, WorkOpening} from "@paradicms/models";
-import {CollectionValueFacet, StringPropertyValueFacet} from "@paradicms/facets";
+import {StringPropertyValueFacet} from "@paradicms/facets";
 import {vra} from "@paradicms/vocabularies";
 import {StringPropertyValueFilter} from "@paradicms/filters";
 import {syntheticData} from "@paradicms/test";
@@ -76,6 +76,7 @@ describe("LunrWorkQueryService", () => {
         offset: 0,
         workEventJoinSelector: {
           agents: {},
+          location: true,
           work: {}
         }
       },
@@ -86,6 +87,7 @@ describe("LunrWorkQueryService", () => {
 
     expect(result.modelSet.works).to.not.be.empty;
     for (const workEvent of result.modelSet.workEvents) {
+      expect(workEvent.location).to.not.be.null;
       expect(workEvent.work).to.not.be.null;
       visitWorkEvent(workEvent, {
         visitWorkClosing(workClosing: WorkClosing): void {
@@ -100,14 +102,27 @@ describe("LunrWorkQueryService", () => {
   });
 
   it("getWorkLocations should return all work locations", async () => {
+    // All locations should be represented
+    const expectedWorkLocations = [];
+    for (const work of modelSet.works) {
+      if (work.location) {
+        expectedWorkLocations.push(work.location);
+      }
+      for (const event of work.events) {
+        if (event.workLocation) {
+          expectedWorkLocations.push(event.workLocation);
+        }
+      }
+    }
+
     const result = await sut.getWorkLocations({}, {
       filters: [],
     });
-    // All locations should be represented
-    expect(result.workLocations).to.have.length(modelSet.works.flatMap(work => work.locations).length);
+
+    expect(result.workLocations).to.have.length(expectedWorkLocations.length);
     for (const work of modelSet.works) {
-      for (const workLocation of work.locations) {
-        const resultWorkLocation = result.workLocations.find(resultWorkLocation => resultWorkLocation.work.uri === work.uri && resultWorkLocation.location.lat === workLocation.location.lat && resultWorkLocation.location.long === workLocation.location.long);
+      for (const expectedWorkLocation of expectedWorkLocations) {
+        const resultWorkLocation = result.workLocations.find(resultWorkLocation => resultWorkLocation.work.uri === work.uri && resultWorkLocation.location.lat === expectedWorkLocation.location.lat && resultWorkLocation.location.long === expectedWorkLocation.location.long);
         expect(resultWorkLocation).to.not.be.undefined;
         expect(resultWorkLocation!.work.title).to.eq(work.title);
       }
@@ -128,20 +143,12 @@ describe("LunrWorkQueryService", () => {
       },
       {
         filters: [{
-          label: "Collection",
-          type: "CollectionValue",
-        }, {
           label: "Publisher",
           propertyUri: vra.technique.value,
           type: "StringPropertyValue"
         } as StringPropertyValueFilter],
       }
     );
-
-    const collectionValueFacet = result.facets.find(
-      facet => facet.type === "CollectionValue"
-    ) as CollectionValueFacet | undefined;
-    expect(collectionValueFacet).to.not.be.undefined;
 
     expect(
       result.facets.some(facet => {

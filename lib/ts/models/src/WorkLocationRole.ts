@@ -1,1 +1,1 @@
-export type WorkLocationRole = "Closing" | "Creation" | "Opening";
+export type WorkLocationRole = "Closing" | "Current" | "Creation" | "Opening";

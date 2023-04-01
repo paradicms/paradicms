@@ -1,13 +1,5 @@
-import {
-  CollectionValueFilter,
-  Filter,
-  StringPropertyValueFilter,
-} from "@paradicms/filters";
-import {
-  CollectionValueFacet,
-  Facet,
-  StringPropertyValueFacet,
-} from "@paradicms/facets";
+import {Filter, StringPropertyValueFilter} from "@paradicms/filters";
+import {Facet, StringPropertyValueFacet} from "@paradicms/facets";
 import {visitFilter} from "./FilterVisitor";
 import React from "react";
 import {ValueFilterControl} from "./ValueFilterControl";
@@ -26,27 +18,6 @@ export const createFilterControl = (kwds: {
   return visitFilter(
     filter,
     {
-      visitCollectionValueFilter(
-        filter: CollectionValueFilter,
-        facet?: CollectionValueFacet
-      ): React.ReactElement | null {
-        if (!facet) {
-          return null;
-        }
-        if (facet.values.length + (facet.unknownCount ? 1 : 0) <= 1) {
-          // console.info("collection values facet has <= 1 values, eliding");
-          return null;
-        }
-        return (
-          <ValueFilterControl
-            facet={facet}
-            filter={filter}
-            getAbsoluteImageSrc={getAbsoluteImageSrc}
-            onChange={onChangeFilter}
-          />
-        );
-      },
-
       visitStringPropertyValueFilter(
         filter: StringPropertyValueFilter,
         facet?: StringPropertyValueFacet

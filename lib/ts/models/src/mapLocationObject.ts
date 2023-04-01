@@ -15,6 +15,8 @@ export const mapLocationObject = (
         ...modelParameters,
         node: term,
       });
+    case "NamedNode":
+      return modelParameters.modelSet.namedLocationByUri(term.value);
     case "Literal":
       return term.value;
     default:

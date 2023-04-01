@@ -6,5 +6,6 @@ import {WorkJoinSelector} from "./WorkJoinSelector";
  */
 export interface WorkEventJoinSelector {
   agents?: AgentJoinSelector;
+  location?: boolean;
   work?: WorkJoinSelector;
 }

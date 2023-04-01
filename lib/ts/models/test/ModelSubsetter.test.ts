@@ -3,6 +3,7 @@ import {ModelSubsetter} from "../src/ModelSubsetter";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {
   License,
+  Location,
   ModelSet,
   RightsStatement,
   WorkClosing,
@@ -11,6 +12,7 @@ import {
 import {NamedModel} from "../src/NamedModel";
 import {syntheticData} from "@paradicms/test";
 import {WorkCreation} from "../src/WorkCreation";
+import invariant from "ts-invariant";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
@@ -38,7 +40,7 @@ describe("ModelSubsetter", () => {
     completeModelSet: testModelSet,
   });
 
-  it("should get a work with its collections, all images, agents, and agents' thumbnails (work page)", () => {
+  it("should get a work subset (work page)", () => {
     const work = testModelSet.works[0];
     const modelSet = sut
       .workModelSet(work, {
@@ -47,6 +49,7 @@ describe("ModelSubsetter", () => {
         },
         allImages: true,
         collections: {},
+        location: true,
         events: {},
       })
       .build();
@@ -83,7 +86,6 @@ describe("ModelSubsetter", () => {
         )
       )
     );
-    expectModelsDeepEq(modelSet.works, [work]);
     expect(modelSet.concepts).to.be.empty;
     expectModelsDeepEq(modelSet.rightsStatements, [
       testModelSet.rightsStatements.find(
@@ -92,6 +94,13 @@ describe("ModelSubsetter", () => {
           (work.rights!.statement! as RightsStatement).uri
       )!,
     ]);
+    expectModelsDeepEq(modelSet.works, [work]);
+    for (const work of modelSet.works) {
+      expect(work.location).not.to.be.null;
+      expect(work.location!.location.node.termType).to.eq("NamedNode");
+      expect(work.location!.location.lat).not.to.be.undefined;
+    }
+    expectModelsDeepEq(modelSet.workEvents, work.events);
   });
 
   it("should get a work event subset", () => {
@@ -109,15 +118,22 @@ describe("ModelSubsetter", () => {
     const modelSet = sut
       .workEventsModelSet([workCreation], {
         agents: {},
+        location: true,
         work: {},
       })
       .build();
     expectModelsDeepEq(modelSet.works, [work]);
     expectModelsDeepEq(modelSet.agents, workCreation.agents);
-    expectModelsDeepEq(modelSet.workEventsByWork(work.uri), [
+    expectModelsDeepEq(modelSet.works[0].events, [
       workClosing,
       workCreation,
       workOpening,
     ]);
+    for (const event of modelSet.works[0].events) {
+      expect(event.location).not.to.be.null;
+      invariant(event.location instanceof Location);
+      const location: Location = event.location!;
+      expect(location.lat).not.to.be.undefined;
+    }
   });
 });

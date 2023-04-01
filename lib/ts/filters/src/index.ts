@@ -1,5 +1,5 @@
-export * from "./CollectionValueFilter";
 export * from "./Filter";
+export * from "./filterDiscriminatedUnionSchema";
 export * from "./FilterType";
 export * from "./JsonPrimitiveType";
 export * from "./PropertyValueFilter";

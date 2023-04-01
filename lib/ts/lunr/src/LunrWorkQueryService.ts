@@ -18,18 +18,18 @@ import {
   GetWorkLocationsResult,
   GetWorksOptions,
   GetWorksResult,
+  summarizeWorkLocation,
+  WorkLocationSummary,
   WorkQuery,
   WorkQueryService,
 } from "@paradicms/services";
 import {
-  CollectionValueFilter,
   Filter,
   JsonPrimitiveType,
   StringPropertyValueFilter,
   ValueFilter,
 } from "@paradicms/filters";
 import {
-  CollectionValueFacet,
   Facet,
   StringPropertyValueFacet,
   ValueFacetValue,
@@ -114,42 +114,6 @@ export class LunrWorkQueryService implements WorkQueryService {
     const facets: Facet[] = [];
     for (const filter of filters) {
       switch (filter.type) {
-        case "CollectionValue": {
-          const values: {
-            [index: string]: MutableValueFacetValue<string>;
-          } = {};
-          let unknownCount: number = 0;
-          for (const work of works) {
-            if (!work.collectionUris || work.collectionUris.length === 0) {
-              unknownCount++;
-            }
-            for (const collectionUri of work.collectionUris) {
-              const value = values[collectionUri];
-              if (value) {
-                value.count++;
-              } else {
-                const collection = this.modelSet.collectionByUri(collectionUri);
-                values[collectionUri] = {
-                  count: 1,
-                  label: collection.title,
-                  thumbnail: valueFacetValueThumbnailSelector
-                    ? LunrWorkQueryService.toValueFacetValueThumbnail(
-                        collection.thumbnail(valueFacetValueThumbnailSelector)
-                      )
-                    : null,
-                  value: collectionUri,
-                };
-              }
-            }
-          }
-          const facet: CollectionValueFacet = {
-            type: "CollectionValue",
-            unknownCount,
-            values: Object.keys(values).map(value => values[value]),
-          };
-          facets.push(facet);
-          break;
-        }
         case "StringPropertyValue": {
           const concreteFilter: StringPropertyValueFilter = filter as StringPropertyValueFilter;
           let unknownCount: number = 0;
@@ -207,14 +171,6 @@ export class LunrWorkQueryService implements WorkQueryService {
     let filteredWorks = works;
     for (const filter of filters) {
       switch (filter.type) {
-        case "CollectionValue":
-          filteredWorks = filteredWorks.filter(work =>
-            LunrWorkQueryService.testValueFilter(
-              filter as CollectionValueFilter,
-              work.collectionUris
-            )
-          );
-          break;
         case "StringPropertyValue": {
           filteredWorks = filteredWorks.filter(work =>
             LunrWorkQueryService.testValueFilter(
@@ -488,20 +444,20 @@ export class LunrWorkQueryService implements WorkQueryService {
         works: this.searchWorks(query),
       });
 
-      const workLocations = works.flatMap(work =>
-        work.locations.map(workLocation => ({
-          location: {
-            lat: workLocation.location.lat,
-            long: workLocation.location.long,
-          },
-          role: workLocation.role,
-          title: workLocation.title,
-          work: {
-            title: work.title,
-            uri: work.uri,
-          },
-        }))
-      );
+      const workLocations = works.flatMap(work => {
+        const workWorkLocations: WorkLocationSummary[] = [];
+        if (work.location) {
+          workWorkLocations.push(summarizeWorkLocation(work, work.location));
+        }
+        for (const event of work.events) {
+          if (event.workLocation) {
+            workWorkLocations.push(
+              summarizeWorkLocation(work, event.workLocation)
+            );
+          }
+        }
+        return workWorkLocations;
+      });
 
       resolve({
         workLocations,

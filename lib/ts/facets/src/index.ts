@@ -1,4 +1,3 @@
-export * from "./CollectionValueFacet";
 export * from "./Facet";
 export * from "./FacetType";
 export * from "./PropertyValueFacet";

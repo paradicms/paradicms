@@ -1,23 +1,10 @@
-import {
-  CollectionValueFacet,
-  Facet,
-  StringPropertyValueFacet,
-} from "@paradicms/facets";
-import {
-  CollectionValueFilter,
-  Filter,
-  StringPropertyValueFilter,
-} from "@paradicms/filters";
+import {Facet, StringPropertyValueFacet} from "@paradicms/facets";
+import {Filter, StringPropertyValueFilter} from "@paradicms/filters";
 
 /**
  * Filter visitor interface. Optionally includes the search results facet corresponding to the query filter.
  */
 export interface FilterVisitor<T> {
-  visitCollectionValueFilter(
-    filter: CollectionValueFilter,
-    facet?: CollectionValueFacet
-  ): T;
-
   visitStringPropertyValueFilter(
     filter: StringPropertyValueFilter,
     facet?: StringPropertyValueFacet
@@ -30,17 +17,6 @@ export const visitFilter = <T>(
   facets?: readonly Facet[]
 ): T => {
   switch (filter.type) {
-    case "CollectionValue": {
-      const concreteFilter: CollectionValueFilter = filter as CollectionValueFilter;
-      const facet: CollectionValueFacet | undefined = facets?.find(
-        facet => facet.type === "CollectionValue"
-      ) as CollectionValueFacet | undefined;
-      if (!facet && facets) {
-        console.warn("no matching facet for filter on collections");
-      }
-      return visitor.visitCollectionValueFilter(concreteFilter, facet);
-    }
-
     case "StringPropertyValue": {
       const concreteFilter: StringPropertyValueFilter = filter as StringPropertyValueFilter;
 

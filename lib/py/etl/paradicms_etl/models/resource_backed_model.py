@@ -5,6 +5,7 @@ from rdflib.resource import Resource
 from rdflib.term import Identifier, Node
 
 from paradicms_etl.model import Model
+from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.namespaces import CMS
 
 _ValueT = TypeVar("_ValueT")
@@ -19,6 +20,9 @@ class ResourceBackedModel(Model):
         def add(self, p: URIRef, o: Any) -> "ResourceBackedModel.Builder":
             if o is None:
                 pass
+            elif isinstance(o, NamedModel):
+                # Assume that NamedModel's are yielded separately
+                self._resource.add(p, o.uri)
             elif isinstance(o, Model):
                 self._resource.add(p, o.to_rdf(graph=self._resource.graph))
             elif isinstance(o, Node):
