@@ -523,6 +523,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 .set_long(-73.687576)
                 .build()
             )
+            yield named_location
             work_builder.set_location(named_location)
 
             if work_i % 2 == 0:
