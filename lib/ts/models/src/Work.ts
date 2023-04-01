@@ -13,6 +13,8 @@ import {WorkLocation} from "./WorkLocation";
 import {cms, dcterms} from "@paradicms/vocabularies";
 import {mapTextObject} from "./mapTextObject";
 import {createPropertyValuesFromQuadObjects} from "./createPropertyValuesFromQuadObjects";
+import {mapLocationObject} from "./mapLocationObject";
+import {Location} from "./Location";
 
 const getRightsWorkAgents = (
   rights: Rights | null,
@@ -125,6 +127,17 @@ export class Work extends Mixin(
   @Memoize()
   get locations(): readonly WorkLocation[] {
     const locations: WorkLocation[] = [];
+
+    {
+      const location = this.findAndMapObject(dcterms.spatial, term => mapLocationObject(this, term));
+      if (location && location instanceof Location) {
+        locations.push({
+          location,
+          role: "Owner",
+          title: this.title
+        })
+      }
+    }
 
     for (const event of this.events) {
       const location = event.workLocation;
