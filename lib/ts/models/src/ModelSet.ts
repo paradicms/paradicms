@@ -29,6 +29,8 @@ import {WorkOpening} from "./WorkOpening";
 import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
 import {AppConfiguration} from "./AppConfiguration";
+import {Location} from "./Location";
+import invariant from "ts-invariant";
 
 const eventClassesByRdfType = (() => {
   const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
@@ -68,14 +70,15 @@ export class ModelSet {
   private _appConfiguration?: AppConfiguration | null;
   private _collections?: readonly Collection[];
   private _collectionsByUriIndex?: {[index: string]: Collection};
+  private _concepts?: readonly Concept[];
+  private _conceptsByUriIndex?: {[index: string]: Concept};
   private _images?: readonly Image[];
   private _imagesByDepictsUriIndex?: {[index: string]: readonly Image[]};
   private _imagesByOriginalImageUriIndex?: {[index: string]: readonly Image[]};
   private _imagesByUriIndex?: {[index: string]: Image};
   private _licenses?: readonly License[];
   private _licensesByUriIndex?: {[index: string]: License};
-  private _concepts?: readonly Concept[];
-  private _conceptsByUriIndex?: {[index: string]: Concept};
+  private _namedLocationsByUriIndex?: {[index: string]: Location};
   private _organizations?: readonly Organization[];
   private _organizationsByUriIndex?: {[index: string]: Organization};
   private _people?: readonly Person[];
@@ -130,16 +133,11 @@ export class ModelSet {
     if (!this._collections) {
       this.readCollections();
     }
-    return this._collections!;
+    return requireDefined(this._collections);
   }
 
   collectionByUri(collectionUri: string): Collection {
-    const collection = this.collectionsByUriIndex[collectionUri];
-    if (!collection) {
-      // this.logContents();
-      throw new RangeError("no such collection " + collectionUri);
-    }
-    return collection;
+    return this.modelByUri(this.collectionsByUriIndex, collectionUri);
   }
 
   private get collectionsByUriIndex(): {[index: string]: Collection} {
@@ -153,27 +151,22 @@ export class ModelSet {
     if (!this._concepts) {
       this.readConcepts();
     }
-    return this._concepts!;
+    return requireDefined(this._concepts);
   }
 
   conceptByUri(conceptUri: string): Concept {
-    const concept = this.conceptsByUriIndex[conceptUri];
-    if (!concept) {
-      // this.logContents();
-      throw new RangeError("no such named value " + conceptUri);
-    }
-    return concept;
+    return this.modelByUri(this.conceptsByUriIndex, conceptUri);
   }
 
   conceptByUriOptional(conceptUri: string): Concept | null {
-    return this.conceptsByUriIndex[conceptUri] ?? null;
+    return this.modelByUriOptional(this.conceptsByUriIndex, conceptUri);
   }
 
   private get conceptsByUriIndex(): {[index: string]: Concept} {
     if (!this._conceptsByUriIndex) {
       this.readConcepts();
     }
-    return this._conceptsByUriIndex!;
+    return requireDefined(this._conceptsByUriIndex);
   }
 
   static fromDataset(dataset: Dataset): ModelSet {
@@ -185,12 +178,7 @@ export class ModelSet {
   }
 
   imageByUri(imageUri: string): Image {
-    const image = this.imagesByUriIndex[imageUri];
-    if (!image) {
-      // this.logContents();
-      throw new RangeError("no such image " + imageUri);
-    }
-    return image;
+    return this.modelByUri(this.imagesByUriIndex, imageUri);
   }
 
   get images(): readonly Image[] {
@@ -235,26 +223,21 @@ export class ModelSet {
   }
 
   licenseByUri(licenseUri: string): License {
-    const license = this.licensesByUriIndex[licenseUri];
-    if (!license) {
-      // this.logContents();
-      throw new RangeError("no such license " + licenseUri);
-    }
-    return license;
+    return this.modelByUri(this.licensesByUriIndex, licenseUri);
   }
 
   get licenses(): readonly License[] {
     if (!this._licenses) {
       this.readLicenses();
     }
-    return this._licenses!;
+    return requireDefined(this._licenses);
   }
 
   private get licensesByUriIndex(): {[index: string]: License} {
     if (!this._licensesByUriIndex) {
       this.readLicenses();
     }
-    return this._licensesByUriIndex!;
+    return requireDefined(this._licensesByUriIndex);
   }
 
   logContents(): void {
@@ -283,65 +266,88 @@ export class ModelSet {
     }
   }
 
-  organizationByUri(organizationUri: string): Organization {
-    const organization = this.organizationsByUriIndex[organizationUri];
-    if (!organization) {
+  private modelByUri<ModelT>(
+    index: {[index: string]: ModelT},
+    uri: string
+  ): ModelT {
+    const model = this.modelByUriOptional(index, uri);
+    if (!model) {
       // this.logContents();
-      throw new RangeError("no such organization " + organizationUri);
+      throw new RangeError("no such model " + uri);
     }
-    return organization;
+    return model;
+  }
+
+  private modelByUriOptional<ModelT>(
+    index: {[index: string]: ModelT},
+    uri: string
+  ): ModelT | null {
+    return index[uri] ?? null;
+  }
+
+  namedLocationByUri(locationUri: string): Location {
+    return this.modelByUri(this.namedLocationsByUriIndex, locationUri);
+  }
+
+  private get namedLocationsByUriIndex(): {[index: string]: Location} {
+    if (!this._namedLocationsByUriIndex) {
+      this.readNamedLocations();
+    }
+    return requireDefined(this._namedLocationsByUriIndex);
+  }
+
+  organizationByUri(organizationUri: string): Organization {
+    return this.modelByUri(this.organizationsByUriIndex, organizationUri);
   }
 
   organizationByUriOptional(organizationUri: string): Organization | null {
-    return this.organizationsByUriIndex[organizationUri] ?? null;
+    return this.modelByUriOptional(
+      this.organizationsByUriIndex,
+      organizationUri
+    );
   }
 
   get organizations(): readonly Organization[] {
     if (!this._organizations) {
       this.readOrganizations();
     }
-    return this._organizations!;
+    return requireDefined(this._organizations);
   }
 
   private get organizationsByUriIndex(): {[index: string]: Organization} {
     if (!this._organizationsByUriIndex) {
       this.readOrganizations();
     }
-    return this._organizationsByUriIndex!;
+    return requireDefined(this._organizationsByUriIndex);
   }
 
   get people(): readonly Person[] {
     if (!this._people) {
       this.readPeople();
     }
-    return this._people!;
+    return requireDefined(this._people);
   }
 
   private get peopleByUriIndex(): {[index: string]: Person} {
     if (!this._peopleByUriIndex) {
       this.readPeople();
     }
-    return this._peopleByUriIndex!;
+    return requireDefined(this._peopleByUriIndex);
   }
 
   personByUri(personUri: string): Person {
-    const person = this.peopleByUriIndex[personUri];
-    if (!person) {
-      // this.logContents();
-      throw new RangeError("no such person " + personUri);
-    }
-    return person;
+    return this.modelByUri(this.peopleByUriIndex, personUri);
   }
 
   personByUriOptional(personUri: string): Person | null {
-    return this.peopleByUriIndex[personUri] ?? null;
+    return this.modelByUriOptional(this.peopleByUriIndex, personUri);
   }
 
   get properties(): readonly Property[] {
     if (!this._properties) {
       this.readProperties();
     }
-    return this._properties!;
+    return requireDefined(this._properties);
   }
 
   propertiesByGroupUri(propertyGroupUri: string): readonly Property[] {
@@ -361,28 +367,56 @@ export class ModelSet {
     if (!this._propertyGroups) {
       this.readPropertyGroups();
     }
-    return this._propertyGroups!;
+    return requireDefined(this._propertyGroups);
   }
 
   propertyGroupByUriOptional(propertyGroupUri: string): PropertyGroup | null {
-    return this.propertyGroupsByUriIndex[propertyGroupUri] ?? null;
+    return this.modelByUriOptional(
+      this.propertyGroupsByUriIndex,
+      propertyGroupUri
+    );
   }
 
   private get propertyGroupsByUriIndex(): {[index: string]: PropertyGroup} {
     if (!this._propertyGroupsByUriIndex) {
       this.readPropertyGroups();
     }
-    return this._propertyGroupsByUriIndex!;
+    return requireDefined(this._propertyGroupsByUriIndex);
   }
 
   protected readAppConfiguration(): AppConfiguration | null {
-    let appConfiguration: AppConfiguration | null = null;
-    this.readModels(kwds => {
-      if (!appConfiguration) {
-        appConfiguration = new AppConfiguration(kwds);
+    for (const quad of this.dataset.match(
+      null,
+      rdf.type,
+      configuration.AppConfiguration,
+      null
+    )) {
+      switch (quad.graph.termType) {
+        case "BlankNode":
+        case "DefaultGraph":
+        case "NamedNode":
+          break;
+        default:
+          throw new RangeError(
+            `expected NamedNode or default graph, actual ${quad.graph.termType}`
+          );
       }
-    }, configuration.AppConfiguration);
-    return appConfiguration;
+
+      switch (quad.subject.termType) {
+        case "BlankNode":
+        case "NamedNode":
+          return new AppConfiguration({
+            graphNode: quad.graph as BlankNode | DefaultGraph | NamedNode,
+            modelSet: this,
+            node: quad.subject as BlankNode | NamedNode,
+          });
+        default:
+          throw new RangeError(
+            `expected BlankNode or NamedNode subject, actual ${quad.subject.termType}`
+          );
+      }
+    }
+    return null;
   }
 
   protected readEvent(kwds: ModelParameters): Event {
@@ -405,7 +439,7 @@ export class ModelSet {
     const workEventsByWorkUriIndex: {[index: string]: WorkEvent[]} = {};
     this._workEventsByUriIndex = {};
 
-    this.readModels(kwds => {
+    this.readNamedModels(kwds => {
       const event = this.readEvent(kwds);
 
       if (hasMixin(event, WorkEvent)) {
@@ -435,7 +469,7 @@ export class ModelSet {
   private readCollections(): void {
     const collections: Collection[] = [];
     this._collectionsByUriIndex = {};
-    this.readModels(kwds => {
+    this.readNamedModels(kwds => {
       const collection = this.readCollection(kwds);
 
       collections.push(collection);
@@ -452,7 +486,7 @@ export class ModelSet {
   private readConcepts() {
     const concepts: Concept[] = [];
     this._conceptsByUriIndex = {};
-    this.readModels(kwds => {
+    this.readNamedModels(kwds => {
       const concept = this.readConcept(kwds);
 
       concepts.push(concept);
@@ -471,7 +505,7 @@ export class ModelSet {
     const imagesByDepictsUriIndex: {[index: string]: Image[]} = {};
     const imagesByOriginalImageUriIndex: {[index: string]: Image[]} = {};
     this._imagesByUriIndex = {};
-    this.readModels(kwds => {
+    this.readNamedModels(kwds => {
       const image = this.readImage(kwds);
 
       images.push(image);
@@ -510,7 +544,7 @@ export class ModelSet {
   private readLicenses() {
     const licenses: License[] = [];
     this._licensesByUriIndex = {};
-    this.readModels(kwds => {
+    this.readNamedModels(kwds => {
       const license = this.readLicense(kwds);
       licenses.push(license);
       this._licensesByUriIndex![license.uri] = license;
@@ -518,7 +552,7 @@ export class ModelSet {
     this._licenses = sortNamedModelsArray(licenses);
   }
 
-  protected readModels(
+  protected readNamedModels(
     callback: (kwds: ModelParameters) => void,
     type: NamedNode
   ): void {
@@ -537,11 +571,12 @@ export class ModelSet {
 
       switch (quad.subject.termType) {
         case "BlankNode":
+          return;
         case "NamedNode":
           break;
         default:
           throw new RangeError(
-            `expected BlankNode or NamedNode subject, actual ${quad.subject.termType}`
+            `expected NamedNode subject, actual ${quad.subject.termType}`
           );
       }
 
@@ -552,9 +587,22 @@ export class ModelSet {
       callback({
         modelSet: this,
         graphNode: quad.graph as BlankNode | DefaultGraph | NamedNode,
-        node: quad.subject as BlankNode | NamedNode,
+        node: quad.subject as NamedNode,
       });
     });
+  }
+
+  protected readNamedLocation(kwds: ModelParameters): Location {
+    return new Location(kwds);
+  }
+
+  private readNamedLocations(): void {
+    this._namedLocationsByUriIndex = {};
+    this.readNamedModels(kwds => {
+      const location = this.readNamedLocation(kwds);
+      invariant(location.node.termType === "NamedNode");
+      this.namedLocationsByUriIndex![location.node.value] = location;
+    }, cms.Location);
   }
 
   protected readOrganization(kwds: ModelParameters): Organization {
@@ -564,7 +612,7 @@ export class ModelSet {
   private readOrganizations() {
     const organizations: Organization[] = [];
     this._organizationsByUriIndex = {};
-    this.readModels(kwds => {
+    this.readNamedModels(kwds => {
       const organization = this.readOrganization(kwds);
       organizations.push(organization);
       this._organizationsByUriIndex![organization.uri] = organization;
@@ -575,7 +623,7 @@ export class ModelSet {
   private readPeople() {
     const people: Person[] = [];
     this._peopleByUriIndex = {};
-    this.readModels(kwds => {
+    this.readNamedModels(kwds => {
       const person = this.readPerson(kwds);
       people.push(person);
       this._peopleByUriIndex![person.uri] = person;
@@ -590,7 +638,7 @@ export class ModelSet {
   private readProperties(): void {
     const properties: Property[] = [];
     const propertiesByGroupUriIndex: {[index: string]: Property[]} = {};
-    this.readModels(kwds => {
+    this.readNamedModels(kwds => {
       const property = this.readProperty(kwds);
 
       properties.push(property);
@@ -618,7 +666,7 @@ export class ModelSet {
   private readPropertyGroups(): void {
     const propertyGroups: PropertyGroup[] = [];
     this._propertyGroupsByUriIndex = {};
-    this.readModels(kwds => {
+    this.readNamedModels(kwds => {
       const propertyGroup = this.readPropertyGroup(kwds);
       propertyGroups.push(propertyGroup);
       this._propertyGroupsByUriIndex![propertyGroup.uri] = propertyGroup;
@@ -637,7 +685,7 @@ export class ModelSet {
   private readRightsStatements() {
     const rightsStatements: RightsStatement[] = [];
     this._rightsStatementsByUriIndex = {};
-    this.readModels(kwds => {
+    this.readNamedModels(kwds => {
       const rightsStatement = this.readRightsStatement(kwds);
       rightsStatements.push(rightsStatement);
       this._rightsStatementsByUriIndex![rightsStatement.uri] = rightsStatement;
@@ -654,7 +702,7 @@ export class ModelSet {
     const worksByAgentUriIndex: {[index: string]: Work[]} = {};
     const worksByCollectionUriIndex: {[index: string]: Work[]} = {};
     this._worksByUriIndex = {};
-    this.readModels(kwds => {
+    this.readNamedModels(kwds => {
       const work = this.readWork(kwds);
 
       works.push(work);
@@ -690,23 +738,18 @@ export class ModelSet {
     if (!this._rightsStatements) {
       this.readRightsStatements();
     }
-    return this._rightsStatements!;
+    return requireDefined(this._rightsStatements);
   }
 
   rightsStatementByUri(rightsStatementUri: string): RightsStatement {
-    const rightsStatement = this.rightsStatementsByUriIndex[rightsStatementUri];
-    if (!rightsStatement) {
-      // this.logContents();
-      throw new RangeError("no such rights statement " + rightsStatementUri);
-    }
-    return rightsStatement;
+    return this.modelByUri(this.rightsStatementsByUriIndex, rightsStatementUri);
   }
 
   private get rightsStatementsByUriIndex(): {[index: string]: RightsStatement} {
     if (!this._rightsStatementsByUriIndex) {
       this.readRightsStatements();
     }
-    return this._rightsStatementsByUriIndex!;
+    return requireDefined(this._rightsStatementsByUriIndex);
   }
 
   toFastRdfString(): string {
@@ -734,12 +777,7 @@ export class ModelSet {
   }
 
   workByUri(workUri: string): Work {
-    const work = this.worksByUriIndex[workUri];
-    if (!work) {
-      // this.logContents();
-      throw new RangeError("no such work " + workUri);
-    }
-    return work;
+    return this.modelByUri(this.worksByUriIndex, workUri);
   }
 
   get workEvents(): readonly WorkEvent[] {
@@ -754,12 +792,7 @@ export class ModelSet {
   }
 
   workEventByUri(workEventUri: string): WorkEvent {
-    const workEvent = this.workEventsByUriIndex[workEventUri];
-    if (!workEvent) {
-      // this.logContents();
-      throw new RangeError("no such work event " + workEventUri);
-    }
-    return workEvent;
+    return this.modelByUri(this.workEventsByUriIndex, workEventUri);
   }
 
   private get workEventsByUriIndex(): {
@@ -784,7 +817,7 @@ export class ModelSet {
     if (!this._works) {
       this.readWorks();
     }
-    return this._works!;
+    return requireDefined(this._works);
   }
 
   private get worksByAgentUriIndex(): {
