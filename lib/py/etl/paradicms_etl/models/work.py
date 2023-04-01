@@ -4,6 +4,7 @@ from rdflib import Graph, URIRef
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
+from paradicms_etl.models.location import Location
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.text import Text
@@ -43,6 +44,10 @@ class Work(ResourceBackedNamedModel):
 
         def set_description(self, description: Union[str, Text]) -> "Work.Builder":
             self.set(DCTERMS.description, description)
+            return self
+
+        def set_location(self, location: Union[str, Location]) -> "Event.Builder":
+            self.set(DCTERMS.spatial, location)
             return self
 
     def __init__(self, resource: Resource):
