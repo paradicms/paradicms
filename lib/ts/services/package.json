@@ -3,11 +3,12 @@
   "name": "@paradicms/services",
   "description": "Paradicms services library",
   "dependencies": {
-    "@paradicms/facets": "1.0.5",
-    "@paradicms/filters": "1.0.5",
-    "@paradicms/models": "1.0.5"
+    "@paradicms/models": "1.0.5",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@paradicms/test": "1.0.5",
+    "mocha": "^8.2.1",
     "rimraf": "3.0.2",
     "typescript": "^4.5.4"
   },
@@ -20,6 +21,8 @@
     "build": "tsc -b",
     "clean": "rimraf dist",
     "rebuild": "rimraf dist && tsc -b",
+    "test": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' mocha -r ts-node/register 'test/**/*.ts'",
+    "test-watch": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' mocha -r ts-node/register -w 'test/**/*.ts'",
     "watch": "tsc -w --preserveWatchOutput"
   },
   "types": "dist/index.d.ts",

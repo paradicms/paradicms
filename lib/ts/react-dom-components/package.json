@@ -6,8 +6,6 @@
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@paradicms/facets": "1.0.5",
-    "@paradicms/filters": "1.0.5",
     "@paradicms/models": "1.0.5",
     "@paradicms/react-dom": "1.0.5",
     "@paradicms/services": "1.0.5",
