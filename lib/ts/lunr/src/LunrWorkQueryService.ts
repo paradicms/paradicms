@@ -18,6 +18,8 @@ import {
   GetWorkLocationsResult,
   GetWorksOptions,
   GetWorksResult,
+  summarizeWorkLocation,
+  WorkLocationSummary,
   WorkQuery,
   WorkQueryService,
 } from "@paradicms/services";
@@ -442,20 +444,20 @@ export class LunrWorkQueryService implements WorkQueryService {
         works: this.searchWorks(query),
       });
 
-      const workLocations = works.flatMap(work =>
-        work.locations.map(workLocation => ({
-          location: {
-            lat: workLocation.location.lat,
-            long: workLocation.location.long,
-          },
-          role: workLocation.role,
-          title: workLocation.title,
-          work: {
-            title: work.title,
-            uri: work.uri,
-          },
-        }))
-      );
+      const workLocations = works.flatMap(work => {
+        const workWorkLocations: WorkLocationSummary[] = [];
+        if (work.location) {
+          workWorkLocations.push(summarizeWorkLocation(work, work.location));
+        }
+        for (const event of work.events) {
+          if (event.workLocation) {
+            workWorkLocations.push(
+              summarizeWorkLocation(work, event.workLocation)
+            );
+          }
+        }
+        return workWorkLocations;
+      });
 
       resolve({
         workLocations,

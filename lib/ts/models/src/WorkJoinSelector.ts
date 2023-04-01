@@ -15,6 +15,8 @@ export interface WorkJoinSelector {
   collections?: CollectionJoinSelector;
   // Return all events that refer to this work.
   events?: WorkEventJoinSelector;
+  // Return all locations referred to by this Work
+  location?: boolean;
   // Return any Property's that apply to this Work.
   properties?: boolean;
   // Return any Concepts referred to by this Work.

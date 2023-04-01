@@ -19,6 +19,7 @@ import {visitWorkEvent} from "./WorkEventVisitor";
 import {WorkOpening} from "./WorkOpening";
 import {WorkClosing} from "./WorkClosing";
 import {ConceptPropertyValue} from "./ConceptPropertyValue";
+import {Location} from "./Location";
 
 /**
  * Subset a ModelSet to reduce the amount of data passed between getStaticProps and the component.
@@ -94,14 +95,6 @@ export class ModelSubsetter {
     }
   }
 
-  private addImageModelSet(
-    agentJoinSelector: AgentJoinSelector,
-    image: Image
-  ): void {
-    this.modelSetBuilder.addImage(image);
-    this.addRightsModelSet(agentJoinSelector, image.rights);
-  }
-
   private addConceptsModelSet(
     concepts: readonly Concept[],
     joinSelector: ConceptJoinSelector
@@ -117,6 +110,44 @@ export class ModelSubsetter {
           this.addImageModelSet({}, thumbnail);
         }
       }
+    }
+  }
+
+  private addImageModelSet(
+    agentJoinSelector: AgentJoinSelector,
+    image: Image
+  ): void {
+    this.modelSetBuilder.addImage(image);
+    this.addRightsModelSet(agentJoinSelector, image.rights);
+  }
+
+  private addLocationModelSet(location: Location): void {
+    if (location.node.termType === "BlankNode") {
+      return;
+    }
+    this.modelSetBuilder.addLocation(location);
+  }
+
+  private addRightsModelSet(
+    agentJoinSelector: AgentJoinSelector,
+    rights: Rights | null
+  ): void {
+    if (!rights) {
+      return;
+    }
+
+    for (const agent of rights.agents) {
+      this.addAgentModelSet(agent, agentJoinSelector);
+    }
+
+    const license = rights.license;
+    if (license && typeof license !== "string") {
+      this.modelSetBuilder.addLicense(license);
+    }
+
+    const rightsStatement = rights.statement;
+    if (rightsStatement && typeof rightsStatement !== "string") {
+      this.modelSetBuilder.addRightsStatement(rightsStatement);
     }
   }
 
@@ -157,16 +188,30 @@ export class ModelSubsetter {
         }
       }
 
+      if (collectionUris) {
+        for (const collectionUri of work.collectionUris) {
+          collectionUris.add(collectionUri);
+        }
+      }
+
       if (joinSelector.events) {
         for (const event of work.events) {
           this.addWorkEventModelSet(joinSelector.events, event);
         }
       }
 
-      if (collectionUris) {
-        for (const collectionUri of work.collectionUris) {
-          collectionUris.add(collectionUri);
+      if (joinSelector.location) {
+        if (work.location) {
+          this.addLocationModelSet(work.location.location);
+          console.info(
+            "Added location model set",
+            work.location.location.node.value
+          );
+        } else {
+          console.info("Work has no location");
         }
+      } else {
+        console.info("Not joining location");
       }
 
       if (joinSelector.properties) {
@@ -205,34 +250,15 @@ export class ModelSubsetter {
     }
   }
 
-  private addRightsModelSet(
-    agentJoinSelector: AgentJoinSelector,
-    rights: Rights | null
-  ): void {
-    if (!rights) {
-      return;
-    }
-
-    for (const agent of rights.agents) {
-      this.addAgentModelSet(agent, agentJoinSelector);
-    }
-
-    const license = rights.license;
-    if (license && typeof license !== "string") {
-      this.modelSetBuilder.addLicense(license);
-    }
-
-    const rightsStatement = rights.statement;
-    if (rightsStatement && typeof rightsStatement !== "string") {
-      this.modelSetBuilder.addRightsStatement(rightsStatement);
-    }
-  }
-
   private addWorkEventModelSet(
     joinSelector: WorkEventJoinSelector,
     workEvent: WorkEvent
   ): void {
     this.modelSetBuilder.addEvent(workEvent);
+
+    if (joinSelector.location && workEvent.location instanceof Location) {
+      this.addLocationModelSet(workEvent.location);
+    }
     if (joinSelector.work) {
       this.addWorkModelSets([workEvent.work], joinSelector.work);
     }

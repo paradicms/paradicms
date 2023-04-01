@@ -13,6 +13,8 @@ import {Store} from "@paradicms/rdf";
 import {AppConfiguration} from "./AppConfiguration";
 import {Model} from "./Model";
 import {Property} from "./Property";
+import {Location} from "./Location";
+import invariant from "ts-invariant";
 
 export class ModelSetBuilder {
   private appConfiguration: AppConfiguration | null | undefined;
@@ -21,6 +23,7 @@ export class ModelSetBuilder {
   private imagesByUri: {[index: string]: Image} | undefined;
   private licensesByUri: {[index: string]: License} | undefined;
   private conceptsByUri: {[index: string]: Concept} | undefined;
+  private locationsByUri: {[index: string]: Location} | undefined;
   private organizationsByUri: {[index: string]: Organization} | undefined;
   private peopleByUri: {[index: string]: Person} | undefined;
   private propertiesByUri: {[index: string]: Property} | undefined;
@@ -89,6 +92,18 @@ export class ModelSetBuilder {
       this.licensesByUri,
       licenses
     );
+    return this;
+  }
+
+  addLocation(location: Location) {
+    invariant(
+      location.node.termType === "NamedNode",
+      "only named locations can be added"
+    );
+    if (!this.locationsByUri) {
+      this.locationsByUri = {};
+    }
+    this.locationsByUri[location.node.value] = location;
     return this;
   }
 
@@ -214,10 +229,11 @@ export class ModelSetBuilder {
 
     for (const modelsByUri of [
       this.collectionsByUri,
+      this.conceptsByUri,
       this.eventsByUri,
       this.imagesByUri,
       this.licensesByUri,
-      this.conceptsByUri,
+      this.locationsByUri,
       this.organizationsByUri,
       this.peopleByUri,
       this.propertiesByUri,
