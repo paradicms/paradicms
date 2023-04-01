@@ -46,7 +46,7 @@ class Work(ResourceBackedNamedModel):
             self.set(DCTERMS.description, description)
             return self
 
-        def set_location(self, location: Union[str, Location]) -> "Event.Builder":
+        def set_location(self, location: Union[str, Location]) -> "Work.Builder":
             self.set(DCTERMS.spatial, location)
             return self
 
