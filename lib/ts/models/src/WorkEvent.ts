@@ -19,13 +19,13 @@ export class WorkEvent extends Event {
     }
 
     return {
-      location: this.location,
       role: this.workLocationRole,
-      title: this.title
+      label: this.title
         ? this.displayDate
           ? `${this.displayDate}: ${this.title}`
           : this.title
         : null,
+      location: this.location,
     };
   }
 

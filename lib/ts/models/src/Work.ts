@@ -129,9 +129,9 @@ export class Work extends Mixin(
     const location = this.findAndMapObject(dcterms.spatial, term => mapLocationObject(this, term));
     if (location && location instanceof Location) {
       return {
+        label: this.title,
         location,
         role: "Current",
-        title: this.title
       };
     } else {
       return null;
