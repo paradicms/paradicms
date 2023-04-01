@@ -1,5 +1,4 @@
 import {NamedModel} from "./NamedModel";
-import {DateTimeDescription} from "./DateTimeDescription";
 import {Location} from "./Location";
 import {HasDescription} from "./mixins";
 import {Mixin} from "ts-mixer";
@@ -94,7 +93,7 @@ export class Event extends Mixin(NamedModel, HasDescription) {
   /**
    * Synthesize a date that can be used for sorting this event.
    *
-   * The returned properties have the same semantics as DateTimeDescription.
+   * The returned properties have the same semantics as PartialDateTime.
    */
   @Memoize()
   get sortDate(): {
@@ -103,29 +102,12 @@ export class Event extends Mixin(NamedModel, HasDescription) {
     year: number;
   } | null {
     for (const date of [this.date, this.startDate, this.endDate]) {
-      if (date === null) {
-        continue;
-      } else if (date instanceof Date) {
-        return {
-          day: date.getDate(),
-          month: date.getMonth() + 1,
-          year: date.getFullYear(),
-        };
-      } else if (date instanceof DateTimeDescription) {
-        if (date.year === null) {
-          return null;
-        }
+      if (date !== null && date.year !== null) {
         return {
           day: date.day,
           month: date.month,
           year: date.year!,
         };
-      } else {
-        console.debug(
-          `event ${
-            this.uri
-          }: has a non-null date (${date}) of type (${typeof date}) that isn't handled in sortDate`
-        );
       }
     }
     console.debug("event", this.uri, "has no sort date");
