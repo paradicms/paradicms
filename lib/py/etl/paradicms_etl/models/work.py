@@ -74,9 +74,9 @@ class Work(ResourceBackedNamedModel):
                 {
                     "description": {"@id": str(DCTERMS.description)},
                     "collection": {"@id": str(CMS.collection), "@type": "@id"},
-                    "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
                     "page": {"@id": str(FOAF.page)},
                     "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},
+                    "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
                     "title": {"@id": str(DCTERMS.title)},
                     "type": {"@id": str(DCTERMS.type), "@type": "@id"},
                 },
