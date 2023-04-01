@@ -203,15 +203,7 @@ export class ModelSubsetter {
       if (joinSelector.location) {
         if (work.location) {
           this.addLocationModelSet(work.location.location);
-          console.info(
-            "Added location model set",
-            work.location.location.node.value
-          );
-        } else {
-          console.info("Work has no location");
         }
-      } else {
-        console.info("Not joining location");
       }
 
       if (joinSelector.properties) {
