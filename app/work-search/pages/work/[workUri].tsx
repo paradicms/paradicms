@@ -12,7 +12,8 @@ import {GetStaticPaths, GetStaticProps} from "next";
 import {
   getNamedModelLinks,
   smallThumbnailTargetDimensions,
-  WorkContainer,
+  WorkPage as DelegateWorkPage,
+  workPageWorkJoinSelector,
 } from "@paradicms/react-dom-components";
 import * as fs from "fs";
 import dynamic from "next/dynamic";
@@ -59,7 +60,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
       properties={modelSet.properties}
       title={work.title}
     >
-      <WorkContainer
+      <DelegateWorkPage
         getAbsoluteImageSrc={relativeImageSrc =>
           getAbsoluteImageSrc(relativeImageSrc, router)
         }
@@ -105,14 +106,10 @@ export const getStaticProps: GetStaticProps = async ({
       modelSetString: new ModelSubsetter({
         completeModelSet,
       })
-        .workModelSet(completeModelSet.workByUri(workUri), {
-          agents: {
-            thumbnail: {targetDimensions: smallThumbnailTargetDimensions},
-          },
-          allImages: true,
-          collections: {},
-          events: {},
-        })
+        .workModelSet(
+          completeModelSet.workByUri(workUri),
+          workPageWorkJoinSelector(smallThumbnailTargetDimensions)
+        )
         .addAppConfiguration(completeModelSet.appConfiguration)
         .build()
         .toFastRdfString(),

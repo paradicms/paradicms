@@ -13,7 +13,8 @@ import {Hrefs} from "lib/Hrefs";
 import fs from "fs";
 import {
   smallThumbnailTargetDimensions,
-  WorkContainer,
+  WorkPage as DelegateWorkPage,
+  workPageWorkJoinSelector,
 } from "@paradicms/react-dom-components";
 import Hammer from "react-hammerjs";
 import {useRouter} from "next/router";
@@ -100,7 +101,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
       <Hammer onSwipeLeft={onGoToPreviousWork} onSwipeRight={onGoToNextWork}>
         <div>
           <div onKeyDown={onKeyDown} style={{outline: "none"}} tabIndex={0}>
-            <WorkContainer
+            <DelegateWorkPage
               getAbsoluteImageSrc={relativeImageSrc =>
                 getAbsoluteImageSrc(relativeImageSrc, router)
               }
@@ -191,14 +192,7 @@ export const getStaticProps: GetStaticProps = async ({
       })
         .worksModelSet(
           workUris.map(workUri => completeModelSet.workByUri(workUri)),
-          {
-            agents: {
-              thumbnail: {targetDimensions: smallThumbnailTargetDimensions},
-            },
-            allImages: true,
-            collections: {},
-            events: {},
-          }
+          workPageWorkJoinSelector(smallThumbnailTargetDimensions)
         )
         .addAppConfiguration(completeModelSet.appConfiguration)
         .build()

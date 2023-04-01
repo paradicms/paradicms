@@ -26,7 +26,7 @@ const RIGHTS_STYLE: React.CSSProperties = {
   marginBottom: 0,
 };
 
-export const WorkContainer: React.FunctionComponent<{
+export const WorkPage: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   renderWorkLocationsMap?: (
     workLocations: readonly WorkLocationSummary[]

@@ -34,7 +34,7 @@ import {calculatePageMax} from "@paradicms/utilities";
 
 type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
 
-export const WorkSearchContainer: React.FunctionComponent<{
+export const WorkSearchPage: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   objectsPerPage: number;
   onChangeFilters: (filters: readonly Filter[]) => void;
