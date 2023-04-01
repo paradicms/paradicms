@@ -15,7 +15,7 @@ import {
 import * as React from "react";
 import {useMemo, useState} from "react";
 import {RightsParagraph} from "./RightsParagraph";
-import {WorkLocationSummary} from "@paradicms/services";
+import {summarizeWorkLocation, WorkLocationSummary} from "@paradicms/services";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
 import {ImagesCarousel} from "./ImagesCarousel";
 import {WorkAgentsCarousel} from "./WorkAgentsCarousel";
@@ -124,21 +124,22 @@ export const WorkContainer: React.FunctionComponent<{
       ),
     });
   }
-  if (renderWorkLocationsMap && work.locations.length > 0) {
-    leftColTabs.push({
-      title: "Map",
-      content: renderWorkLocationsMap(
-        work.locations.map(workLocation => ({
-          location: workLocation.location,
-          role: workLocation.role,
-          title: workLocation.title,
-          work: {
-            title: work.title,
-            uri: work.uri,
-          },
-        }))
-      ),
-    });
+  if (renderWorkLocationsMap) {
+    const workLocations = [];
+    if (work.location) {
+      workLocations.push(summarizeWorkLocation(work, work.location));
+    }
+    for (const event of work.events) {
+      if (event.workLocation) {
+        workLocations.push(summarizeWorkLocation(work, event.workLocation));
+      }
+    }
+    if (workLocations.length > 0) {
+      leftColTabs.push({
+        title: "Map",
+        content: renderWorkLocationsMap(workLocations),
+      });
+    }
   }
 
   let leftCol: React.ReactNode;
