@@ -11,6 +11,7 @@ export const mapLocationObject = (
 ): Location | string | null => {
   switch (term.termType) {
     case "BlankNode":
+    case "NamedNode":
       return new Location({
         ...modelParameters,
         node: term,
