@@ -5,7 +5,6 @@ export * from "./createFilterControls";
 export * from "./defaultBootstrapStylesheetHref";
 export * from "./FiltersBadges";
 export * from "./FiltersControlsAccordion";
-export * from "./FilterVisitor";
 export * from "./getNamedModelLinks";
 export * from "./getWorkEventIcon";
 export * from "./getWorkLocationIcon";

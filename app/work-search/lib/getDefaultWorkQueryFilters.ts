@@ -1,4 +1,4 @@
-import {Filter, StringPropertyValueFilter} from "@paradicms/filters";
+import {Filter, StringPropertyValueFilter} from "@paradicms/services";
 import {defaultProperties} from "@paradicms/models";
 
 export const getDefaultWorkQueryFilters = (

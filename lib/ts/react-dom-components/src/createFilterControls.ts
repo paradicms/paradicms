@@ -1,6 +1,5 @@
 import * as React from "react";
-import {Facet} from "@paradicms/facets";
-import {Filter} from "@paradicms/filters";
+import {Facet, Filter} from "@paradicms/services";
 import {createFilterControl} from "./createFilterControl";
 
 export const createFilterControls = (kwds: {

@@ -1,10 +1,9 @@
 import {expect} from "chai";
 import {LunrWorkQueryService} from "../src/LunrWorkQueryService";
 import {ModelSet, visitWorkEvent, WorkClosing, WorkCreation, WorkOpening} from "@paradicms/models";
-import {StringPropertyValueFacet} from "@paradicms/facets";
 import {vra} from "@paradicms/vocabularies";
-import {StringPropertyValueFilter} from "@paradicms/filters";
 import {syntheticData} from "@paradicms/test";
+import {StringPropertyValueFacet, StringPropertyValueFilter} from "@paradicms/services";
 
 describe("LunrWorkQueryService", () => {
   const modelSet = ModelSet.fromDatasetCore(syntheticData);

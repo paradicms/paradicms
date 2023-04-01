@@ -14,6 +14,7 @@ import {FiltersBadges} from "./FiltersBadges";
 import {WorksGallery} from "./WorksGallery";
 import {Pagination} from "./Pagination";
 import {
+  Filter,
   GetWorkAgentsResult,
   GetWorkEventsResult,
   GetWorkLocationsResult,
@@ -23,7 +24,6 @@ import {
   WorkQueryService,
 } from "@paradicms/services";
 import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
-import {Filter} from "@paradicms/filters";
 import {useQueryParam} from "use-query-params";
 import {AgentsGallery} from "./AgentsGallery";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";

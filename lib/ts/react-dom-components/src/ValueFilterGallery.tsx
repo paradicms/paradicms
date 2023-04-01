@@ -17,10 +17,11 @@ import {
 } from "reactstrap";
 import {
   JsonPrimitiveType,
+  ValueFacet,
+  ValueFacetValue,
   ValueFilter,
   ValueFilterState,
-} from "@paradicms/filters";
-import {ValueFacet, ValueFacetValue} from "@paradicms/facets";
+} from "@paradicms/services";
 import {Image} from "@paradicms/models";
 
 interface ValueFacetValueCardProps<T extends JsonPrimitiveType> {

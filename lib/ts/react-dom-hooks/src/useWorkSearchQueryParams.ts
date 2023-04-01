@@ -1,7 +1,6 @@
 import {useWorkQueryParam} from "./useWorkQueryParam";
-import {WorkQuery} from "@paradicms/services";
+import {Filter, WorkQuery} from "@paradicms/services";
 import {usePageQueryParam} from "./usePageQueryParam";
-import {Filter} from "@paradicms/filters";
 
 export const useWorkSearchQueryParams = (defaultWorkQuery: {
   filters: readonly Filter[];

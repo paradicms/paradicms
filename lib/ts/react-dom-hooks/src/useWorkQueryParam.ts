@@ -1,8 +1,6 @@
 import {useQueryParam} from "use-query-params";
 import {JsonQueryParamConfig} from "@paradicms/react-dom";
-import {WorkQuery} from "@paradicms/services";
-import {Filter} from "@paradicms/filters";
-import {workQuerySchema} from "@paradicms/services/dist/workQuerySchema";
+import {Filter, WorkQuery, workQuerySchema} from "@paradicms/services";
 
 export const useWorkQueryParam = (
   defaultWorkQuery: {
