@@ -22,14 +22,12 @@ import {
   WorkQueryService,
 } from "@paradicms/services";
 import {
-  CollectionValueFilter,
   Filter,
   JsonPrimitiveType,
   StringPropertyValueFilter,
   ValueFilter,
 } from "@paradicms/filters";
 import {
-  CollectionValueFacet,
   Facet,
   StringPropertyValueFacet,
   ValueFacetValue,
@@ -114,42 +112,6 @@ export class LunrWorkQueryService implements WorkQueryService {
     const facets: Facet[] = [];
     for (const filter of filters) {
       switch (filter.type) {
-        case "CollectionValue": {
-          const values: {
-            [index: string]: MutableValueFacetValue<string>;
-          } = {};
-          let unknownCount: number = 0;
-          for (const work of works) {
-            if (!work.collectionUris || work.collectionUris.length === 0) {
-              unknownCount++;
-            }
-            for (const collectionUri of work.collectionUris) {
-              const value = values[collectionUri];
-              if (value) {
-                value.count++;
-              } else {
-                const collection = this.modelSet.collectionByUri(collectionUri);
-                values[collectionUri] = {
-                  count: 1,
-                  label: collection.title,
-                  thumbnail: valueFacetValueThumbnailSelector
-                    ? LunrWorkQueryService.toValueFacetValueThumbnail(
-                        collection.thumbnail(valueFacetValueThumbnailSelector)
-                      )
-                    : null,
-                  value: collectionUri,
-                };
-              }
-            }
-          }
-          const facet: CollectionValueFacet = {
-            type: "CollectionValue",
-            unknownCount,
-            values: Object.keys(values).map(value => values[value]),
-          };
-          facets.push(facet);
-          break;
-        }
         case "StringPropertyValue": {
           const concreteFilter: StringPropertyValueFilter = filter as StringPropertyValueFilter;
           let unknownCount: number = 0;
@@ -207,14 +169,6 @@ export class LunrWorkQueryService implements WorkQueryService {
     let filteredWorks = works;
     for (const filter of filters) {
       switch (filter.type) {
-        case "CollectionValue":
-          filteredWorks = filteredWorks.filter(work =>
-            LunrWorkQueryService.testValueFilter(
-              filter as CollectionValueFilter,
-              work.collectionUris
-            )
-          );
-          break;
         case "StringPropertyValue": {
           filteredWorks = filteredWorks.filter(work =>
             LunrWorkQueryService.testValueFilter(
