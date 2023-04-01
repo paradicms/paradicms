@@ -1,6 +1,10 @@
-import {Filter, StringPropertyValueFilter} from "@paradicms/filters";
-import {Facet, StringPropertyValueFacet} from "@paradicms/facets";
-import {visitFilter} from "./FilterVisitor";
+import {
+  Facet,
+  Filter,
+  StringPropertyValueFacet,
+  StringPropertyValueFilter,
+  visitFilter,
+} from "@paradicms/services";
 import React from "react";
 import {ValueFilterControl} from "./ValueFilterControl";
 

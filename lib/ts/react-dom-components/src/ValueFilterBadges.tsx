@@ -1,7 +1,6 @@
 import * as React from "react";
 import {Badge} from "reactstrap";
-import {JsonPrimitiveType, ValueFilter} from "@paradicms/filters";
-import {ValueFacet} from "@paradicms/facets";
+import {JsonPrimitiveType, ValueFacet, ValueFilter} from "@paradicms/services";
 
 interface ValueFilterBadgesProps<T extends JsonPrimitiveType> {
   facet?: ValueFacet<T>;

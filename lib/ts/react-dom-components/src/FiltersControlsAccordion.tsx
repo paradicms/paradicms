@@ -6,7 +6,7 @@ import {
   AccordionHeader,
   AccordionItem,
 } from "reactstrap";
-import {Filter} from "@paradicms/filters";
+import {Filter} from "@paradicms/services";
 
 export const FiltersControlsAccordion: React.FunctionComponent<{
   filtersControls: readonly {control: React.ReactElement; filter: Filter}[];

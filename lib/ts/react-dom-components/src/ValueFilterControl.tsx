@@ -5,8 +5,7 @@ import {Col, Container, Modal, ModalBody, ModalHeader, Row} from "reactstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faImages} from "@fortawesome/free-solid-svg-icons";
 import {ValueFilterGallery} from "./ValueFilterGallery";
-import {JsonPrimitiveType, ValueFilter} from "@paradicms/filters";
-import {ValueFacet} from "@paradicms/facets";
+import {JsonPrimitiveType, ValueFacet, ValueFilter} from "@paradicms/services";
 
 interface ValueFilterControlProps<T extends JsonPrimitiveType> {
   facet: ValueFacet<T>;

@@ -10,6 +10,8 @@ import {
 import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
 import {
+  Facet,
+  Filter,
   GetWorkAgentsOptions,
   GetWorkAgentsResult,
   GetWorkEventsOptions,
@@ -18,23 +20,17 @@ import {
   GetWorkLocationsResult,
   GetWorksOptions,
   GetWorksResult,
+  JsonPrimitiveType,
+  StringPropertyValueFacet,
+  StringPropertyValueFilter,
   summarizeWorkLocation,
+  ValueFacetValue,
+  ValueFacetValueThumbnail,
+  ValueFilter,
   WorkLocationSummary,
   WorkQuery,
   WorkQueryService,
 } from "@paradicms/services";
-import {
-  Filter,
-  JsonPrimitiveType,
-  StringPropertyValueFilter,
-  ValueFilter,
-} from "@paradicms/filters";
-import {
-  Facet,
-  StringPropertyValueFacet,
-  ValueFacetValue,
-  ValueFacetValueThumbnail,
-} from "@paradicms/facets";
 
 const basex = require("base-x");
 const base58 = basex(

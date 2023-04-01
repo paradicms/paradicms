@@ -1,5 +1,5 @@
 import {z} from "zod";
-import {filterDiscriminatedUnionSchema} from "@paradicms/filters";
+import {filterDiscriminatedUnionSchema} from "./filterDiscriminatedUnionSchema";
 
 export const workQuerySchema = z.object({
   filters: z.array(filterDiscriminatedUnionSchema),

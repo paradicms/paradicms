@@ -1,5 +1,7 @@
-import {Facet, StringPropertyValueFacet} from "@paradicms/facets";
-import {Filter, StringPropertyValueFilter} from "@paradicms/filters";
+import {StringPropertyValueFilter} from "./StringPropertyValueFilter";
+import {StringPropertyValueFacet} from "./StringPropertyValueFacet";
+import {Filter} from "./Filter";
+import {Facet} from "./Facet";
 
 /**
  * Filter visitor interface. Optionally includes the search results facet corresponding to the query filter.

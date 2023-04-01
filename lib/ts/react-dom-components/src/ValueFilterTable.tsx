@@ -1,12 +1,12 @@
 import * as React from "react";
 import {useCallback, useMemo} from "react";
 import DataTable, {TableColumn} from "react-data-table-component";
-import {ValueFacet} from "@paradicms/facets";
 import {
   JsonPrimitiveType,
+  ValueFacet,
   ValueFilter,
   ValueFilterState,
-} from "@paradicms/filters";
+} from "@paradicms/services";
 
 type DataTableRow<T extends JsonPrimitiveType> = {
   count: number;
