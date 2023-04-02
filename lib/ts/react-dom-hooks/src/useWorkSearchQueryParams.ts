@@ -11,10 +11,13 @@ export const useWorkSearchQueryParams = (defaultWorkQuery: {
   setWorkAgentsPage: (page: number | undefined) => void;
   setWorkEventsPage: (page: number | undefined) => void;
   setWorksPage: (page: number | undefined) => void;
+  // setWorksSort: (sort: WorksSort | undefined) => void;
   workAgentsPage: number;
   workEventsPage: number;
+  // workEventsSortProperty: string;
   workQuery: WorkQuery;
   worksPage: number;
+  // worksSortProperty: string;
 } => {
   const [workAgentsPage, setWorkAgentsPage] = usePageQueryParam(
     "workAgentsPage"
