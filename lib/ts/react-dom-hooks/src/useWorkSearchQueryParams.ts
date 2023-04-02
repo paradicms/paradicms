@@ -1,5 +1,11 @@
 import {useWorkQueryParam} from "./useWorkQueryParam";
-import {Filter, WorkQuery} from "@paradicms/services";
+import {
+  Filter,
+  WorkAgentsSort,
+  WorkEventsSort,
+  WorksQuery,
+  WorksSort,
+} from "@paradicms/services";
 import {usePageQueryParam} from "./usePageQueryParam";
 
 export const useWorkSearchQueryParams = (defaultWorkQuery: {
@@ -7,17 +13,19 @@ export const useWorkSearchQueryParams = (defaultWorkQuery: {
 }): {
   onChangeFilters: (filters: readonly Filter[]) => void;
   onSearch: (text: string) => void;
-  setWorkQuery: (workQuery: WorkQuery) => void;
+  setWorkQuery: (workQuery: WorksQuery) => void;
   setWorkAgentsPage: (page: number | undefined) => void;
+  setWorkAgentsSort: (sort: WorkAgentsSort | undefined) => void;
   setWorkEventsPage: (page: number | undefined) => void;
+  setWorkEventsSort: (sort: WorkEventsSort | undefined) => void;
   setWorksPage: (page: number | undefined) => void;
-  // setWorksSort: (sort: WorksSort | undefined) => void;
+  setWorksSort: (sort: WorksSort | undefined) => void;
   workAgentsPage: number;
   workEventsPage: number;
   // workEventsSortProperty: string;
-  workQuery: WorkQuery;
+  workQuery: WorksQuery;
   worksPage: number;
-  // worksSortProperty: string;
+  worksSort: WorksSort;
 } => {
   const [workAgentsPage, setWorkAgentsPage] = usePageQueryParam(
     "workAgentsPage"

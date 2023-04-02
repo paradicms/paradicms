@@ -28,8 +28,8 @@ import {
   ValueFacetValueThumbnail,
   ValueFilter,
   WorkLocationSummary,
-  WorkQuery,
   WorkQueryService,
+  WorksQuery,
 } from "@paradicms/services";
 
 const basex = require("base-x");
@@ -186,7 +186,7 @@ export class LunrWorkQueryService implements WorkQueryService {
 
   getWorkAgents(
     options: GetWorkAgentsOptions,
-    query: WorkQuery
+    query: WorksQuery
   ): Promise<GetWorkAgentsResult> {
     const {agentJoinSelector, limit, offset} = options;
 
@@ -230,7 +230,7 @@ export class LunrWorkQueryService implements WorkQueryService {
 
   getWorks(
     options: GetWorksOptions,
-    query: WorkQuery
+    query: WorksQuery
   ): Promise<GetWorksResult> {
     const {
       limit,
@@ -298,7 +298,7 @@ export class LunrWorkQueryService implements WorkQueryService {
     });
   }
 
-  private searchWorks(query: WorkQuery): readonly Work[] {
+  private searchWorks(query: WorksQuery): readonly Work[] {
     if (query.text) {
       // Anything matching the fulltext search
       return this.index
@@ -384,7 +384,7 @@ export class LunrWorkQueryService implements WorkQueryService {
 
   getWorkEvents(
     options: GetWorkEventsOptions,
-    query: WorkQuery
+    query: WorksQuery
   ): Promise<GetWorkEventsResult> {
     const {limit, offset, requireDate, workEventJoinSelector} = options;
 
@@ -430,7 +430,7 @@ export class LunrWorkQueryService implements WorkQueryService {
 
   getWorkLocations(
     options: GetWorkLocationsOptions,
-    query: WorkQuery
+    query: WorksQuery
   ): Promise<GetWorkLocationsResult> {
     invariant(!!query, "query must be defined");
 

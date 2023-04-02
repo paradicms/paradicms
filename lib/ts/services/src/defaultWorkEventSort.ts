@@ -1,7 +1,7 @@
 import {WorkEventSortProperty} from "./WorkEventSortProperty";
-import {WorkEventSort} from "./WorkEventSort";
+import {WorkEventsSort} from "./WorkEventsSort";
 
-export const defaultWorkEventSort: WorkEventSort = {
+export const defaultWorkEventSort: WorkEventsSort = {
   ascending: true,
   property: WorkEventSortProperty.DATE,
 };

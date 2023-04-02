@@ -20,8 +20,8 @@ import {
   GetWorkLocationsResult,
   GetWorksResult,
   WorkLocationSummary,
-  WorkQuery,
   WorkQueryService,
+  WorksQuery,
 } from "@paradicms/services";
 import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
 import {useQueryParam} from "use-query-params";
@@ -48,10 +48,10 @@ export const WorkSearchPage: React.FunctionComponent<{
   setWorkAgentsPage: (page: number | undefined) => void;
   setWorkEventsPage: (page: number | undefined) => void;
   setWorksPage: (page: number | undefined) => void;
-  setWorkQuery: (workQuery: WorkQuery) => void;
+  setWorkQuery: (workQuery: WorksQuery) => void;
   workAgentsPage: number;
   workEventsPage: number;
-  workQuery: WorkQuery;
+  workQuery: WorksQuery;
   workQueryService: WorkQueryService;
   worksPage: number;
 }> = ({

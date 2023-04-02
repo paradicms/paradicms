@@ -1,9 +1,9 @@
 import {encodeFileName} from "@paradicms/next";
-import {WorkQuery} from "@paradicms/services";
+import {WorksQuery} from "@paradicms/services";
 import * as qs from "qs";
 
 export class Hrefs {
-  static home(workQuery?: WorkQuery): string {
+  static home(workQuery?: WorksQuery): string {
     return (
       "/" +
       qs.stringify(
