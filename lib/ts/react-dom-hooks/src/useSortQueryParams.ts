@@ -2,7 +2,7 @@ import {BooleanParam, StringParam, useQueryParam} from "use-query-params";
 import {Sort} from "@paradicms/services/dist/Sort";
 import {useCallback} from "react";
 
-export const useSortQueryParam = <PropertyT>(
+export const useSortQueryParams = <PropertyT>(
   defaultSort: Sort<PropertyT>,
   namePrefix: string
 ): [Sort<PropertyT>, (sort: Sort<PropertyT> | undefined) => void] => {

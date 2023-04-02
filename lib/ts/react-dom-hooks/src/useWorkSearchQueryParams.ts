@@ -13,7 +13,7 @@ import {
   WorksSortProperty,
 } from "@paradicms/services";
 import {usePageQueryParam} from "./usePageQueryParam";
-import {useSortQueryParam} from "./useSortQueryParam";
+import {useSortQueryParams} from "./useSortQueryParams";
 
 export const useWorkSearchQueryParams = (defaultWorksQuery: {
   filters: readonly Filter[];
@@ -38,14 +38,14 @@ export const useWorkSearchQueryParams = (defaultWorksQuery: {
   const [workAgentsPage, setWorkAgentsPage] = usePageQueryParam(
     "workAgentsPage"
   );
-  const [workAgentsSort, setWorkAgentsSort] = useSortQueryParam<
+  const [workAgentsSort, setWorkAgentsSort] = useSortQueryParams<
     WorkAgentsSortProperty
   >(defaultWorkAgentsSort, "workAgentsSort");
 
   const [workEventsPage, setWorkEventsPage] = usePageQueryParam(
     "workEventsPage"
   );
-  const [workEventsSort, setWorkEventsSort] = useSortQueryParam<
+  const [workEventsSort, setWorkEventsSort] = useSortQueryParams<
     WorkEventsSortProperty
   >(defaultWorkEventsSort, "workEventsSort");
 
@@ -54,7 +54,7 @@ export const useWorkSearchQueryParams = (defaultWorksQuery: {
     defaultWorksQuery,
     "query"
   );
-  const [worksSort, setWorksSort] = useSortQueryParam<WorksSortProperty>(
+  const [worksSort, setWorksSort] = useSortQueryParams<WorksSortProperty>(
     defaultWorksSort,
     "worksSort"
   );
