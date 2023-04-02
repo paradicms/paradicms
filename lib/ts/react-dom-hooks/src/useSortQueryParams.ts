@@ -1,5 +1,5 @@
 import {BooleanParam, StringParam, useQueryParam} from "use-query-params";
-import {Sort} from "@paradicms/services/dist/Sort";
+import {Sort} from "@paradicms/services";
 import {useCallback} from "react";
 
 export const useSortQueryParams = <PropertyT>(
