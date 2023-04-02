@@ -1,7 +1,7 @@
-import {WorkAgentSortProperty} from "./WorkAgentSortProperty";
+import {WorkAgentsSortProperty} from "./WorkAgentsSortProperty";
 import {WorkAgentsSort} from "./WorkAgentsSort";
 
 export const defaultWorkAgentSort: WorkAgentsSort = {
   ascending: true,
-  property: WorkAgentSortProperty.NAME,
+  property: WorkAgentsSortProperty.NAME,
 };

@@ -1,7 +1,7 @@
-import {WorkSortProperty} from "./WorkSortProperty";
+import {WorksSortProperty} from "./WorksSortProperty";
 import {WorksSort} from "./WorksSort";
 
 export const defaultWorkSort: WorksSort = {
   ascending: false,
-  property: WorkSortProperty.RELEVANCE,
+  property: WorksSortProperty.RELEVANCE,
 };

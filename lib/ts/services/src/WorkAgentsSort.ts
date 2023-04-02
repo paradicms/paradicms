@@ -1,4 +1,4 @@
 import {Sort} from "./Sort";
-import {WorkAgentSortProperty} from "./WorkAgentSortProperty";
+import {WorkAgentsSortProperty} from "./WorkAgentsSortProperty";
 
-export type WorkAgentsSort = Sort<WorkAgentSortProperty>;
+export type WorkAgentsSort = Sort<WorkAgentsSortProperty>;

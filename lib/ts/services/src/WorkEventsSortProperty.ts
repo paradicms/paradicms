@@ -1,4 +1,4 @@
-export enum WorkEventSortProperty {
+export enum WorkEventsSortProperty {
   DATE = "date",
   TITLE = "title",
 }

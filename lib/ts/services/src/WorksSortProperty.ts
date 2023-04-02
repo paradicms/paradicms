@@ -1,4 +1,4 @@
-export enum WorkSortProperty {
+export enum WorksSortProperty {
   RELEVANCE = "relevance",
   TITLE = "title",
 }
