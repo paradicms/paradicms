@@ -1,6 +1,6 @@
-export * from "./defaultWorkAgentSort";
-export * from "./defaultWorkEventSort";
-export * from "./defaultWorkSort";
+export * from "./defaultWorkAgentsSort";
+export * from "./defaultWorkEventsSort";
+export * from "./defaultWorksSort";
 export * from "./Facet";
 export * from "./FacetType";
 export * from "./Filter";
@@ -18,6 +18,7 @@ export * from "./GetWorksResult";
 export * from "./JsonPrimitiveType";
 export * from "./PropertyValueFacet";
 export * from "./PropertyValueFilter";
+export * from "./Sort";
 export * from "./StringPropertyValueFacet";
 export * from "./StringPropertyValueFilter";
 export * from "./summarizeWorkLocation";

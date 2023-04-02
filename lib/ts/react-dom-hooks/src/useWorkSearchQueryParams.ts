@@ -1,12 +1,19 @@
 import {useWorksQueryParam} from "./useWorksQueryParam";
 import {
+  defaultWorkAgentsSort,
+  defaultWorkEventsSort,
+  defaultWorksSort,
   Filter,
   WorkAgentsSort,
+  WorkAgentsSortProperty,
   WorkEventsSort,
+  WorkEventsSortProperty,
   WorksQuery,
   WorksSort,
+  WorksSortProperty,
 } from "@paradicms/services";
 import {usePageQueryParam} from "./usePageQueryParam";
+import {useSortQueryParam} from "./useSortQueryParam";
 
 export const useWorkSearchQueryParams = (defaultWorksQuery: {
   filters: readonly Filter[];
@@ -21,8 +28,9 @@ export const useWorkSearchQueryParams = (defaultWorksQuery: {
   setWorksPage: (page: number | undefined) => void;
   setWorksSort: (sort: WorksSort | undefined) => void;
   workAgentsPage: number;
+  workAgentsSort: WorkAgentsSort;
   workEventsPage: number;
-  // workEventsSortProperty: string;
+  workEventsSort: WorkEventsSort;
   worksQuery: WorksQuery;
   worksPage: number;
   worksSort: WorksSort;
@@ -30,36 +38,59 @@ export const useWorkSearchQueryParams = (defaultWorksQuery: {
   const [workAgentsPage, setWorkAgentsPage] = usePageQueryParam(
     "workAgentsPage"
   );
+  const [workAgentsSort, setWorkAgentsSort] = useSortQueryParam<
+    WorkAgentsSortProperty
+  >(defaultWorkAgentsSort, "workAgentsSort");
+
   const [workEventsPage, setWorkEventsPage] = usePageQueryParam(
     "workEventsPage"
   );
-  const [worksPage, setWorksPage] = usePageQueryParam("worksPage");
+  const [workEventsSort, setWorkEventsSort] = useSortQueryParam<
+    WorkEventsSortProperty
+  >(defaultWorkEventsSort, "workEventsSort");
 
+  const [worksPage, setWorksPage] = usePageQueryParam("worksPage");
   const [worksQuery, setWorksQuery] = useWorksQueryParam(
     defaultWorksQuery,
     "query"
+  );
+  const [worksSort, setWorksSort] = useSortQueryParam<WorksSortProperty>(
+    defaultWorksSort,
+    "worksSort"
   );
 
   return {
     onChangeFilters: filters => {
       setWorkAgentsPage(undefined);
+      setWorkAgentsSort(undefined);
       setWorkEventsPage(undefined);
+      setWorkEventsSort(undefined);
       setWorksPage(undefined);
       setWorksQuery({...worksQuery, filters});
+      setWorksSort(undefined);
     },
     onSearch: text => {
       setWorkAgentsPage(undefined);
+      setWorkAgentsSort(undefined);
       setWorkEventsPage(undefined);
+      setWorkEventsSort(undefined);
       setWorksPage(undefined);
       setWorksQuery({filters: [], text});
+      setWorksSort(undefined);
     },
     setWorkAgentsPage,
+    setWorkAgentsSort,
     setWorkEventsPage,
+    setWorkEventsSort,
     setWorksQuery,
     setWorksPage,
+    setWorksSort,
     workAgentsPage,
+    workAgentsSort,
     workEventsPage,
+    workEventsSort,
     worksQuery,
     worksPage,
+    worksSort,
   };
 };
