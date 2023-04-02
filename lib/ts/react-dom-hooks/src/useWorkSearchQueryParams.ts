@@ -1,4 +1,4 @@
-import {useWorkQueryParam} from "./useWorkQueryParam";
+import {useWorksQueryParam} from "./useWorksQueryParam";
 import {
   Filter,
   WorkAgentsSort,
@@ -8,12 +8,12 @@ import {
 } from "@paradicms/services";
 import {usePageQueryParam} from "./usePageQueryParam";
 
-export const useWorkSearchQueryParams = (defaultWorkQuery: {
+export const useWorkSearchQueryParams = (defaultWorksQuery: {
   filters: readonly Filter[];
 }): {
   onChangeFilters: (filters: readonly Filter[]) => void;
   onSearch: (text: string) => void;
-  setWorkQuery: (workQuery: WorksQuery) => void;
+  setWorksQuery: (worksQuery: WorksQuery) => void;
   setWorkAgentsPage: (page: number | undefined) => void;
   setWorkAgentsSort: (sort: WorkAgentsSort | undefined) => void;
   setWorkEventsPage: (page: number | undefined) => void;
@@ -23,7 +23,7 @@ export const useWorkSearchQueryParams = (defaultWorkQuery: {
   workAgentsPage: number;
   workEventsPage: number;
   // workEventsSortProperty: string;
-  workQuery: WorksQuery;
+  worksQuery: WorksQuery;
   worksPage: number;
   worksSort: WorksSort;
 } => {
@@ -35,8 +35,8 @@ export const useWorkSearchQueryParams = (defaultWorkQuery: {
   );
   const [worksPage, setWorksPage] = usePageQueryParam("worksPage");
 
-  const [workQuery, setWorkQuery] = useWorkQueryParam(
-    defaultWorkQuery,
+  const [worksQuery, setWorksQuery] = useWorksQueryParam(
+    defaultWorksQuery,
     "query"
   );
 
@@ -45,21 +45,21 @@ export const useWorkSearchQueryParams = (defaultWorkQuery: {
       setWorkAgentsPage(undefined);
       setWorkEventsPage(undefined);
       setWorksPage(undefined);
-      setWorkQuery({...workQuery, filters});
+      setWorksQuery({...worksQuery, filters});
     },
     onSearch: text => {
       setWorkAgentsPage(undefined);
       setWorkEventsPage(undefined);
       setWorksPage(undefined);
-      setWorkQuery({filters: [], text});
+      setWorksQuery({filters: [], text});
     },
     setWorkAgentsPage,
     setWorkEventsPage,
-    setWorkQuery,
+    setWorksQuery,
     setWorksPage,
     workAgentsPage,
     workEventsPage,
-    workQuery,
+    worksQuery,
     worksPage,
   };
 };

@@ -1,7 +1,7 @@
 import {Filter, StringPropertyValueFilter} from "@paradicms/services";
 import {defaultProperties} from "@paradicms/models";
 
-export const getDefaultWorkQueryFilters = (
+export const getDefaultWorksQueryFilters = (
   properties: readonly {
     readonly filterable: boolean;
     readonly label: string;

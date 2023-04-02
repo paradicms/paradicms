@@ -48,10 +48,10 @@ export const WorkSearchPage: React.FunctionComponent<{
   setWorkAgentsPage: (page: number | undefined) => void;
   setWorkEventsPage: (page: number | undefined) => void;
   setWorksPage: (page: number | undefined) => void;
-  setWorkQuery: (workQuery: WorksQuery) => void;
+  setWorksQuery: (worksQuery: WorksQuery) => void;
   workAgentsPage: number;
   workEventsPage: number;
-  workQuery: WorksQuery;
+  worksQuery: WorksQuery;
   workQueryService: WorkQueryService;
   worksPage: number;
 }> = ({
@@ -65,7 +65,7 @@ export const WorkSearchPage: React.FunctionComponent<{
   setWorksPage,
   workAgentsPage,
   workEventsPage,
-  workQuery,
+  worksQuery,
   workQueryService,
   worksPage,
 }) => {
@@ -101,7 +101,7 @@ export const WorkSearchPage: React.FunctionComponent<{
   );
   const [loadingWorks, setLoadingWorks] = useState<boolean>(false);
 
-  // console.debug("Work query:", JSON.stringify(workQuery));
+  // console.debug("Work query:", JSON.stringify(worksQuery));
   // console.debug("Works page:", worksPage);
   // console.debug("Work agents page:", workAgentsPage);
 
@@ -125,7 +125,7 @@ export const WorkSearchPage: React.FunctionComponent<{
               smallThumbnailTargetDimensions
             ),
           },
-          workQuery
+          worksQuery
         )
         .then(getWorksResult => {
           // console.debug("getWorks result:", getWorksResult.totalWorksCount);
@@ -133,7 +133,7 @@ export const WorkSearchPage: React.FunctionComponent<{
           setLoadingWorks(false);
         });
     }
-  }, [activeTabKeyQueryParam, workQuery, workQueryService, worksPage]);
+  }, [activeTabKeyQueryParam, worksQuery, workQueryService, worksPage]);
 
   // Effect that responds to switching to the work agents tab
   useEffect(() => {
@@ -150,7 +150,7 @@ export const WorkSearchPage: React.FunctionComponent<{
             limit: objectsPerPage,
             offset: workAgentsPage * objectsPerPage,
           },
-          workQuery
+          worksQuery
         )
         .then(getWorkAgentsResult => {
           // console.debug(
@@ -161,7 +161,7 @@ export const WorkSearchPage: React.FunctionComponent<{
           setLoadingWorkAgents(false);
         });
     }
-  }, [activeTabKeyQueryParam, workQuery, workQueryService, workAgentsPage]);
+  }, [activeTabKeyQueryParam, worksQuery, workQueryService, workAgentsPage]);
 
   // Effect that responds to switching to the work events tab
   useEffect(() => {
@@ -179,7 +179,7 @@ export const WorkSearchPage: React.FunctionComponent<{
               work: {},
             },
           },
-          workQuery
+          worksQuery
         )
         .then(getWorkEventsResult => {
           // console.info(
@@ -190,7 +190,7 @@ export const WorkSearchPage: React.FunctionComponent<{
           setLoadingWorkEvents(false);
         });
     }
-  }, [activeTabKeyQueryParam, workQuery, workQueryService, workEventsPage]);
+  }, [activeTabKeyQueryParam, worksQuery, workQueryService, workEventsPage]);
 
   // Effect that responds to switching to the work locations tab
   useEffect(() => {
@@ -198,7 +198,7 @@ export const WorkSearchPage: React.FunctionComponent<{
       // console.debug("getWorkLocations");
       setLoadingWorkLocations(true);
       workQueryService
-        .getWorkLocations({}, workQuery)
+        .getWorkLocations({}, worksQuery)
         .then(getWorkLocationsResult => {
           // console.debug(
           //   "getWorkLocations result:",
@@ -208,7 +208,7 @@ export const WorkSearchPage: React.FunctionComponent<{
           setLoadingWorkLocations(false);
         });
     }
-  }, [activeTabKeyQueryParam, workQuery, workQueryService, workAgentsPage]);
+  }, [activeTabKeyQueryParam, worksQuery, workQueryService, workAgentsPage]);
 
   if (getWorksResult === null) {
     return null;
@@ -220,7 +220,7 @@ export const WorkSearchPage: React.FunctionComponent<{
 
   const filtersControls = createFilterControls({
     facets: getWorksResult.facets,
-    filters: workQuery.filters,
+    filters: worksQuery.filters,
     getAbsoluteImageSrc,
     onChangeFilters,
   });
@@ -325,19 +325,19 @@ export const WorkSearchPage: React.FunctionComponent<{
                 {getWorksResult.totalWorksCount === 1 ? "work" : "works"}
               </span>
               &nbsp;
-              {workQuery.text ? (
+              {worksQuery.text ? (
                 <span>
-                  matching <i>{workQuery.text}</i>
+                  matching <i>{worksQuery.text}</i>
                 </span>
               ) : (
                 <span>matched</span>
               )}
             </h6>
-            {workQuery.filters.length > 0 ? (
+            {worksQuery.filters.length > 0 ? (
               <div>
                 <FiltersBadges
                   facets={getWorksResult.facets}
-                  filters={workQuery.filters}
+                  filters={worksQuery.filters}
                   onChangeFilters={onChangeFilters}
                 />
               </div>

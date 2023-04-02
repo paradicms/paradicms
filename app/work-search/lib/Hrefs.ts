@@ -3,11 +3,11 @@ import {WorksQuery} from "@paradicms/services";
 import * as qs from "qs";
 
 export class Hrefs {
-  static home(workQuery?: WorksQuery): string {
+  static home(worksQuery?: WorksQuery): string {
     return (
       "/" +
       qs.stringify(
-        {query: JSON.stringify(workQuery)},
+        {query: JSON.stringify(worksQuery)},
         {
           addQueryPrefix: true,
         }

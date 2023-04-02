@@ -17,7 +17,7 @@ import {LunrWorkQueryService} from "@paradicms/lunr";
 import {useWorkSearchQueryParams} from "@paradicms/react-dom-hooks";
 import dynamic from "next/dynamic";
 import {fastRdfStringToDataset} from "@paradicms/rdf";
-import {getDefaultWorkQueryFilters} from "../lib/getDefaultWorkQueryFilters";
+import {getDefaultWorksQueryFilters} from "../lib/getDefaultWorksQueryFilters";
 import {useRouter} from "next/router";
 
 const WorkLocationsMap = dynamic<{
@@ -57,7 +57,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   );
 
   const {onSearch, ...workSearchQueryParams} = useWorkSearchQueryParams({
-    filters: getDefaultWorkQueryFilters(modelSet.properties),
+    filters: getDefaultWorksQueryFilters(modelSet.properties),
   });
 
   return (
