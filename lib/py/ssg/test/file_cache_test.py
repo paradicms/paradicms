@@ -4,6 +4,8 @@ from rdflib import URIRef
 
 from paradicms_ssg.file_cache import FileCache
 
+PLACEHOLDER_IMAGE_URL = "https://paradicms.org/img/placeholder/1000x1000.png"
+
 
 def test_get_file_404(tmp_path):
     sut = FileCache(cache_dir_path=tmp_path)
@@ -17,7 +19,7 @@ def test_get_file_404(tmp_path):
 
 def test_get_file_200(tmp_path):
     sut = FileCache(cache_dir_path=tmp_path)
-    url = URIRef("https://place-hold.it/100x100")
+    url = URIRef(PLACEHOLDER_IMAGE_URL)
 
     for i in range(2):  # Initial miss, then hit
         cached_file_path = sut.get_file(url)
@@ -35,7 +37,7 @@ def test_put_file(tmp_path):
     cached_file_path = sut.put_file(
         file_data=file_data,
         file_mime_type="text/plain",
-        file_url=URIRef("https://place-hold.it/100x100"),
+        file_url=URIRef(PLACEHOLDER_IMAGE_URL),
     )
     assert str(cached_file_path).endswith(".txt")
     assert cached_file_path.is_file()
