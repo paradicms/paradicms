@@ -19,9 +19,11 @@ import {
   GetWorkEventsResult,
   GetWorkLocationsResult,
   GetWorksResult,
+  WorkAgentsSort,
   WorkLocationSummary,
   WorkQueryService,
   WorksQuery,
+  WorksSort,
 } from "@paradicms/services";
 import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
 import {useQueryParam} from "use-query-params";
@@ -31,8 +33,28 @@ import {FiltersControlsAccordion} from "./FiltersControlsAccordion";
 import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 import {createFilterControls} from "./createFilterControls";
 import {calculatePageMax} from "@paradicms/utilities";
+import {WorkAgentsSortDropdown} from "./WorkAgentsSortDropdown";
+import {WorksSortDropdown} from "./WorksSortDropdown";
 
 type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
+
+const workAgentsPageMax = (kwds: {
+  getWorkAgentsResult: GetWorkAgentsResult;
+  objectsPerPage: number;
+}) =>
+  calculatePageMax({
+    objectsPerPage: kwds.objectsPerPage,
+    totalObjects: kwds.getWorkAgentsResult.totalWorkAgentsCount,
+  });
+
+const worksPageMax = (kwds: {
+  getWorksResult: GetWorksResult;
+  objectsPerPage: number;
+}) =>
+  calculatePageMax({
+    objectsPerPage: kwds.objectsPerPage,
+    totalObjects: kwds.getWorksResult.totalWorksCount,
+  });
 
 export const WorkSearchPage: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
@@ -46,14 +68,18 @@ export const WorkSearchPage: React.FunctionComponent<{
     workLocations: readonly WorkLocationSummary[]
   ) => React.ReactElement;
   setWorkAgentsPage: (page: number | undefined) => void;
+  setWorkAgentsSort: (sort: WorkAgentsSort | undefined) => void;
   setWorkEventsPage: (page: number | undefined) => void;
   setWorksPage: (page: number | undefined) => void;
   setWorksQuery: (worksQuery: WorksQuery) => void;
+  setWorksSort: (sort: WorksSort | undefined) => void;
   workAgentsPage: number;
+  workAgentsSort: WorkAgentsSort;
   workEventsPage: number;
   worksQuery: WorksQuery;
   workQueryService: WorkQueryService;
   worksPage: number;
+  worksSort: WorksSort;
 }> = ({
   getAbsoluteImageSrc,
   objectsPerPage,
@@ -61,13 +87,17 @@ export const WorkSearchPage: React.FunctionComponent<{
   renderWorkLink,
   renderWorkLocationsMap,
   setWorkAgentsPage,
+  setWorkAgentsSort,
   setWorkEventsPage,
   setWorksPage,
+  setWorksSort,
   workAgentsPage,
+  workAgentsSort,
   workEventsPage,
   worksQuery,
   workQueryService,
   worksPage,
+  worksSort,
 }) => {
   const [activeTabKeyQueryParam, setActiveTabKey] = useQueryParam<TabKey>(
     "tab"
@@ -118,6 +148,7 @@ export const WorkSearchPage: React.FunctionComponent<{
           {
             limit: objectsPerPage,
             offset: worksPage * objectsPerPage,
+            sort: worksSort,
             valueFacetValueThumbnailSelector: {
               targetDimensions: smallThumbnailTargetDimensions,
             },
@@ -133,7 +164,13 @@ export const WorkSearchPage: React.FunctionComponent<{
           setLoadingWorks(false);
         });
     }
-  }, [activeTabKeyQueryParam, worksQuery, workQueryService, worksPage]);
+  }, [
+    activeTabKeyQueryParam,
+    worksQuery,
+    workQueryService,
+    worksPage,
+    worksSort,
+  ]);
 
   // Effect that responds to switching to the work agents tab
   useEffect(() => {
@@ -149,6 +186,7 @@ export const WorkSearchPage: React.FunctionComponent<{
             },
             limit: objectsPerPage,
             offset: workAgentsPage * objectsPerPage,
+            sort: workAgentsSort,
           },
           worksQuery
         )
@@ -161,7 +199,13 @@ export const WorkSearchPage: React.FunctionComponent<{
           setLoadingWorkAgents(false);
         });
     }
-  }, [activeTabKeyQueryParam, worksQuery, workQueryService, workAgentsPage]);
+  }, [
+    activeTabKeyQueryParam,
+    worksQuery,
+    workQueryService,
+    workAgentsPage,
+    workAgentsSort,
+  ]);
 
   // Effect that responds to switching to the work events tab
   useEffect(() => {
@@ -231,6 +275,11 @@ export const WorkSearchPage: React.FunctionComponent<{
     title: "Works",
     content: (
       <Container fluid>
+        <Row className="mb-4">
+          <Col className="d-flex justify-content-end">
+            <WorksSortDropdown onChange={setWorksSort} value={worksSort} />
+          </Col>
+        </Row>
         <Row>
           <WorksGallery
             getAbsoluteImageSrc={getAbsoluteImageSrc}
@@ -238,20 +287,17 @@ export const WorkSearchPage: React.FunctionComponent<{
             works={getWorksResult.modelSet.works}
           />
         </Row>
-        <Row className="mt-4">
-          <Col className="d-flex justify-content-center" xs={12}>
-            <Pagination
-              count={
-                calculatePageMax({
-                  objectsPerPage,
-                  totalObjects: getWorksResult.totalWorksCount,
-                }) + 1
-              }
-              page={worksPage + 1}
-              onChange={(_, newPage) => setWorksPage(newPage - 1)}
-            />
-          </Col>
-        </Row>
+        {worksPageMax({getWorksResult, objectsPerPage}) > 0 ? (
+          <Row className="mt-4">
+            <Col className="d-flex justify-content-center" xs={12}>
+              <Pagination
+                count={worksPageMax({getWorksResult, objectsPerPage}) + 1}
+                page={worksPage + 1}
+                onChange={(_, newPage) => setWorksPage(newPage - 1)}
+              />
+            </Col>
+          </Row>
+        ) : null}
       </Container>
     ),
   });
@@ -260,6 +306,14 @@ export const WorkSearchPage: React.FunctionComponent<{
     title: "People",
     content: getWorkAgentsResult ? (
       <Container fluid>
+        <Row className="mb-4">
+          <Col className="d-flex justify-content-end">
+            <WorkAgentsSortDropdown
+              onChange={setWorkAgentsSort}
+              value={workAgentsSort}
+            />
+          </Col>
+        </Row>
         <Row>
           <AgentsGallery
             agents={getWorkAgentsResult.workAgentUris.map(workAgentUri =>
@@ -268,20 +322,19 @@ export const WorkSearchPage: React.FunctionComponent<{
             getAbsoluteImageSrc={getAbsoluteImageSrc}
           />
         </Row>
-        <Row className="mt-4">
-          <Col className="d-flex justify-content-center" xs={12}>
-            <Pagination
-              count={
-                calculatePageMax({
-                  objectsPerPage,
-                  totalObjects: getWorkAgentsResult.totalWorkAgentsCount,
-                }) + 1
-              }
-              page={workAgentsPage + 1}
-              onChange={(_, newPage) => setWorkAgentsPage(newPage - 1)}
-            />
-          </Col>
-        </Row>
+        {workAgentsPageMax({getWorkAgentsResult, objectsPerPage}) > 0 ? (
+          <Row className="mt-4">
+            <Col className="d-flex justify-content-center" xs={12}>
+              <Pagination
+                count={
+                  workAgentsPageMax({getWorkAgentsResult, objectsPerPage}) + 1
+                }
+                page={workAgentsPage + 1}
+                onChange={(_, newPage) => setWorkAgentsPage(newPage - 1)}
+              />
+            </Col>
+          </Row>
+        ) : null}
       </Container>
     ) : null,
   });

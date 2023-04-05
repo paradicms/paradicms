@@ -6,30 +6,36 @@ export const useSortQueryParams = <PropertyT>(
   defaultSort: Sort<PropertyT>,
   namePrefix: string
 ): [Sort<PropertyT>, (sort: Sort<PropertyT> | undefined) => void] => {
-  const [descending, setDescending] = useQueryParam<boolean | null | undefined>(
-    namePrefix + "Descending",
+  const [ascending, setAscending] = useQueryParam<boolean | null | undefined>(
+    namePrefix + "Ascending",
     BooleanParam
   );
   const [property, setProperty] = useQueryParam<string | null | undefined>(
     namePrefix + "Property",
     StringParam
   );
+
+  console.info(namePrefix, "ascending", ascending);
+  console.info(namePrefix, "property", property);
+
   const setSort = useCallback(
     (sort: Sort<PropertyT> | undefined) => {
       if (sort) {
-        setDescending(!sort.ascending ? true : undefined);
+        console.info("set", namePrefix, "sort:", JSON.stringify(sort));
+        setAscending(sort.ascending);
         setProperty(sort.property as string);
       } else {
-        setDescending(undefined);
+        console.info("unset", namePrefix, "sort");
+        setAscending(undefined);
         setProperty(undefined);
       }
     },
-    [setDescending, setProperty]
+    [setAscending, setProperty]
   );
 
   return [
     {
-      ascending: descending != null ? !descending : defaultSort.ascending,
+      ascending: ascending != null ? ascending : defaultSort.ascending,
       property:
         property != null ? (property as PropertyT) : defaultSort.property,
     },
