@@ -6,7 +6,7 @@
  */
 import {Filter} from "./Filter";
 
-export interface WorkQuery {
+export interface WorksQuery {
   readonly filters: readonly Filter[];
   readonly text?: string;
 }

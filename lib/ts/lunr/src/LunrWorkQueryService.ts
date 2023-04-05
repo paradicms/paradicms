@@ -6,10 +6,14 @@ import {
   ModelSubsetter,
   ThumbnailSelector,
   Work,
+  WorkEvent,
 } from "@paradicms/models";
 import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
 import {
+  defaultWorkAgentsSort,
+  defaultWorkEventsSort,
+  defaultWorksSort,
   Facet,
   Filter,
   GetWorkAgentsOptions,
@@ -27,9 +31,15 @@ import {
   ValueFacetValue,
   ValueFacetValueThumbnail,
   ValueFilter,
+  WorkAgentsSort,
+  WorkAgentsSortProperty,
+  WorkEventsSort,
+  WorkEventsSortProperty,
   WorkLocationSummary,
-  WorkQuery,
   WorkQueryService,
+  WorksQuery,
+  WorksSort,
+  WorksSortProperty,
 } from "@paradicms/services";
 
 const basex = require("base-x");
@@ -186,7 +196,7 @@ export class LunrWorkQueryService implements WorkQueryService {
 
   getWorkAgents(
     options: GetWorkAgentsOptions,
-    query: WorkQuery
+    query: WorksQuery
   ): Promise<GetWorkAgentsResult> {
     const {agentJoinSelector, limit, offset} = options;
 
@@ -209,10 +219,17 @@ export class LunrWorkQueryService implements WorkQueryService {
           agentsByUri[agent.agent.uri] = agent.agent;
         }
       }
-      const agents = Object.keys(agentsByUri)
-        .map(agentUri => agentsByUri[agentUri])
-        .sort((left, right) => left.name.localeCompare(right.name));
-      const slicedAgents = agents.slice(offset, offset + limit);
+      const agents = Object.keys(agentsByUri).map(
+        agentUri => agentsByUri[agentUri]
+      );
+
+      const sortedAgents = agents;
+      LunrWorkQueryService.sortWorkAgentsInPlace(
+        options.sort ?? defaultWorkAgentsSort,
+        sortedAgents
+      );
+
+      const slicedAgents = sortedAgents.slice(offset, offset + limit);
 
       const slicedAgentsModelSet = new ModelSubsetter({
         completeModelSet: this.modelSet,
@@ -230,7 +247,7 @@ export class LunrWorkQueryService implements WorkQueryService {
 
   getWorks(
     options: GetWorksOptions,
-    query: WorkQuery
+    query: WorksQuery
   ): Promise<GetWorksResult> {
     const {
       limit,
@@ -264,11 +281,11 @@ export class LunrWorkQueryService implements WorkQueryService {
 
       // # 95: if search text specified, leave the works in the order they came out of Lunr (sorted by score/relevance).
       // If not, sort the works by title
-      const sortedWorks = query.text
-        ? filteredWorks
-        : filteredWorks
-            .concat()
-            .sort((left, right) => left.title.localeCompare(right.title));
+      const sortedWorks = filteredWorks.concat();
+      LunrWorkQueryService.sortWorksInPlace(
+        options.sort ?? defaultWorksSort,
+        sortedWorks
+      );
 
       const slicedWorks = sortedWorks.slice(offset, offset + limit);
 
@@ -298,7 +315,7 @@ export class LunrWorkQueryService implements WorkQueryService {
     });
   }
 
-  private searchWorks(query: WorkQuery): readonly Work[] {
+  private searchWorks(query: WorksQuery): readonly Work[] {
     if (query.text) {
       // Anything matching the fulltext search
       return this.index
@@ -307,6 +324,71 @@ export class LunrWorkQueryService implements WorkQueryService {
     } else {
       // All works
       return this.modelSet.works;
+    }
+  }
+
+  private static sortWorkAgentsInPlace(
+    sort: WorkAgentsSort,
+    workAgents: Agent[]
+  ): void {
+    const compareMultiplier = sort.ascending ? 1 : -1;
+    switch (sort.property) {
+      case WorkAgentsSortProperty.NAME:
+        workAgents.sort(
+          (left, right) =>
+            compareMultiplier * left.name.localeCompare(right.name)
+        );
+        return;
+      default:
+        LunrWorkQueryService.sortWorkAgentsInPlace(
+          defaultWorkAgentsSort,
+          workAgents
+        );
+        return;
+    }
+  }
+
+  private static sortWorkEventsInPlace(
+    sort: WorkEventsSort,
+    workEvents: WorkEvent[]
+  ): void {
+    const compareMultiplier = sort.ascending ? 1 : -1;
+    switch (sort.property) {
+      case WorkEventsSortProperty.DATE:
+        workEvents.sort(
+          (left, right) => compareMultiplier * left.compareByDate(right)
+        );
+        return;
+      case WorkEventsSortProperty.TITLE:
+        workEvents.sort(
+          (left, right) =>
+            compareMultiplier * left.title.localeCompare(right.title)
+        );
+        return;
+      default:
+        LunrWorkQueryService.sortWorkEventsInPlace(
+          defaultWorkEventsSort,
+          workEvents
+        );
+        return;
+    }
+  }
+
+  private static sortWorksInPlace(sort: WorksSort, works: Work[]): void {
+    const compareMultiplier = sort.ascending ? 1 : -1;
+    switch (sort.property) {
+      case WorksSortProperty.RELEVANCE:
+        // Works are already sorted by relevance
+        return;
+      case WorksSortProperty.TITLE:
+        works.sort(
+          (left, right) =>
+            compareMultiplier * left.title.localeCompare(right.title)
+        );
+        return;
+      default:
+        LunrWorkQueryService.sortWorksInPlace(defaultWorksSort, works);
+        return;
     }
   }
 
@@ -384,7 +466,7 @@ export class LunrWorkQueryService implements WorkQueryService {
 
   getWorkEvents(
     options: GetWorkEventsOptions,
-    query: WorkQuery
+    query: WorksQuery
   ): Promise<GetWorkEventsResult> {
     const {limit, offset, requireDate, workEventJoinSelector} = options;
 
@@ -398,26 +480,30 @@ export class LunrWorkQueryService implements WorkQueryService {
         works: this.searchWorks(query),
       });
 
-      const workEvents = works
-        .flatMap(work =>
-          work.events.filter(workEvent => {
-            if (requireDate && workEvent.sortDate === null) {
-              return false;
-            }
-            // if (requireLocation && !(workEvent.location instanceof Location)) {
-            //   return false;
-            // }
-            return true;
-          })
-        )
-        .sort((left, right) => left.compareByDate(right));
+      const workEvents = works.flatMap(work =>
+        work.events.filter(workEvent => {
+          if (requireDate && workEvent.sortDate === null) {
+            return false;
+          }
+          // if (requireLocation && !(workEvent.location instanceof Location)) {
+          //   return false;
+          // }
+          return true;
+        })
+      );
 
-      const slicedWorkEvents = workEvents.slice(offset, offset + limit);
+      const sortedWorkEvents = workEvents;
+      LunrWorkQueryService.sortWorkEventsInPlace(
+        options.sort ?? defaultWorkEventsSort,
+        sortedWorkEvents
+      );
+
+      const slicedWorkEvents = sortedWorkEvents.slice(offset, offset + limit);
 
       const slicedWorkEventsModelSet = new ModelSubsetter({
         completeModelSet: this.modelSet,
       })
-        .workEventsModelSet(workEvents, workEventJoinSelector)
+        .workEventsModelSet(slicedWorkEvents, workEventJoinSelector)
         .build();
 
       resolve({
@@ -430,7 +516,7 @@ export class LunrWorkQueryService implements WorkQueryService {
 
   getWorkLocations(
     options: GetWorkLocationsOptions,
-    query: WorkQuery
+    query: WorksQuery
   ): Promise<GetWorkLocationsResult> {
     invariant(!!query, "query must be defined");
 

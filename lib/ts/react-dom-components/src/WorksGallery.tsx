@@ -1,6 +1,7 @@
 import * as React from "react";
 import {WorkCard} from "./WorkCard";
 import {Work} from "@paradicms/models";
+import {Gallery} from "./Gallery";
 
 /**
  * Works gallery component.
@@ -15,22 +16,16 @@ export const WorksGallery: React.FunctionComponent<{
   ) => React.ReactElement;
   works: readonly Work[];
 }> = ({getAbsoluteImageSrc, renderWorkLink, works}) => (
-  <>
-    {works.map(work => (
-      <div
-        key={work.uri}
-        style={{
-          marginLeft: "20px",
-          marginBottom: "20px",
-          width: "400px",
-        }}
-      >
+  <Gallery
+    cards={works.map(work => ({
+      element: (
         <WorkCard
           getAbsoluteImageSrc={getAbsoluteImageSrc}
           renderWorkLink={renderWorkLink}
           work={work}
         />
-      </div>
-    ))}
-  </>
+      ),
+      key: work.uri,
+    }))}
+  />
 );

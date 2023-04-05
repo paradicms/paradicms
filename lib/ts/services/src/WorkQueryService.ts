@@ -1,4 +1,4 @@
-import {WorkQuery} from "./WorkQuery";
+import {WorksQuery} from "./WorksQuery";
 import {GetWorksResult} from "./GetWorksResult";
 import {GetWorksOptions} from "./GetWorksOptions";
 import {GetWorkAgentsOptions} from "./GetWorkAgentsOptions";
@@ -14,7 +14,7 @@ export interface WorkQueryService {
    */
   getWorkAgents(
     options: GetWorkAgentsOptions,
-    query: WorkQuery
+    query: WorksQuery
   ): Promise<GetWorkAgentsResult>;
 
   /**
@@ -22,7 +22,7 @@ export interface WorkQueryService {
    */
   getWorkEvents(
     options: GetWorkEventsOptions,
-    query: WorkQuery
+    query: WorksQuery
   ): Promise<GetWorkEventsResult>;
 
   /**
@@ -30,11 +30,14 @@ export interface WorkQueryService {
    */
   getWorkLocations(
     options: GetWorkLocationsOptions,
-    query: WorkQuery
+    query: WorksQuery
   ): Promise<GetWorkLocationsResult>;
 
   /**
    * Get works matched by the query.
    */
-  getWorks(options: GetWorksOptions, query: WorkQuery): Promise<GetWorksResult>;
+  getWorks(
+    options: GetWorksOptions,
+    query: WorksQuery
+  ): Promise<GetWorksResult>;
 }

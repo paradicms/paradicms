@@ -19,7 +19,7 @@ import {
 import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";
-import {getDefaultWorkQueryFilters} from "../lib/getDefaultWorkQueryFilters";
+import {getDefaultWorksQueryFilters} from "../lib/getDefaultWorksQueryFilters";
 import {AppConfiguration, Property} from "@paradicms/models";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
@@ -48,7 +48,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   } else {
     onSearch = (text: string) => {
       const href = Hrefs.home({
-        filters: getDefaultWorkQueryFilters(properties),
+        filters: getDefaultWorksQueryFilters(properties),
         text,
       });
       // console.info("redirecting to search href", href);

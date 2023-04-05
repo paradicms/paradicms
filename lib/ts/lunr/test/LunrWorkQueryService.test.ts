@@ -3,7 +3,12 @@ import {LunrWorkQueryService} from "../src/LunrWorkQueryService";
 import {ModelSet, visitWorkEvent, WorkClosing, WorkCreation, WorkOpening} from "@paradicms/models";
 import {vra} from "@paradicms/vocabularies";
 import {syntheticData} from "@paradicms/test";
-import {StringPropertyValueFacet, StringPropertyValueFilter} from "@paradicms/services";
+import {
+  StringPropertyValueFacet,
+  StringPropertyValueFilter,
+  WorkEventsSortProperty,
+  WorksSortProperty
+} from "@paradicms/services";
 
 describe("LunrWorkQueryService", () => {
   const modelSet = ModelSet.fromDatasetCore(syntheticData);
@@ -11,7 +16,7 @@ describe("LunrWorkQueryService", () => {
     modelSet
   });
 
-  it("getWorkAgents return at least one agent from an empty query", async () => {
+  it("getWorkAgents returns at least one agent from an empty query", async () => {
     const result = await sut.getWorkAgents(
       {
         limit: Number.MAX_SAFE_INTEGER,
@@ -26,7 +31,7 @@ describe("LunrWorkQueryService", () => {
     expect(result.modelSet.works).to.be.empty;
   });
 
-  it("getWorkAgents return the works associated with an agent", async () => {
+  it("getWorkAgents returns the works associated with an agent", async () => {
     const result = await sut.getWorkAgents(
       {
         agentJoinSelector: {
@@ -52,7 +57,7 @@ describe("LunrWorkQueryService", () => {
     expect(haveAgentWorks).to.be.true;
   });
 
-  it("getWorkEvents return at least one event from an empty query", async () => {
+  it("getWorkEvents returns at least one event from an empty query", async () => {
     const result = await sut.getWorkEvents(
       {
         limit: Number.MAX_SAFE_INTEGER,
@@ -68,7 +73,7 @@ describe("LunrWorkQueryService", () => {
     expect(result.workEventUris).to.have.length(result.totalWorkEventsCount);
   });
 
-  it("getWorkEvents return the other models associated with an event", async () => {
+  it("getWorkEvents returns the other models associated with an event", async () => {
     const result = await sut.getWorkEvents(
       {
         limit: Number.MAX_SAFE_INTEGER,
@@ -100,7 +105,47 @@ describe("LunrWorkQueryService", () => {
     }
   });
 
-  it("getWorkLocations should return all work locations", async () => {
+  it("getWorkEvents sorts by date", async () => {
+    const result = await sut.getWorkEvents(
+        {
+          limit: 2,
+          offset: 0,
+          sort: {
+            ascending: false,
+            property: WorkEventsSortProperty.DATE
+          }
+        },
+        {
+          filters: [],
+        }
+    );
+
+    const workEvents = result.modelSet.workEvents;
+    expect(workEvents).to.have.length(2);
+    expect(workEvents[0].compareByDate(workEvents[1]) > 0);
+  });
+
+  it("getWorkEvents sorts by title", async () => {
+    const result = await sut.getWorkEvents(
+        {
+          limit: 2,
+          offset: 0,
+          sort: {
+            ascending: false,
+            property: WorkEventsSortProperty.TITLE
+          }
+        },
+        {
+          filters: [],
+        }
+    );
+
+    const workEvents = result.modelSet.workEvents;
+    expect(workEvents).to.have.length(2);
+    expect(workEvents[0].title.localeCompare(workEvents[1].title) > 0);
+  });
+
+  it("getWorkLocations returns all work locations", async () => {
     // All locations should be represented
     const expectedWorkLocations = [];
     for (const work of modelSet.works) {
@@ -128,7 +173,7 @@ describe("LunrWorkQueryService", () => {
     }
   });
 
-  it("getWorks return facets", async () => {
+  it("getWorks returns facets", async () => {
     const result = await sut.getWorks(
       {
         limit: Number.MAX_SAFE_INTEGER,
@@ -161,7 +206,7 @@ describe("LunrWorkQueryService", () => {
     ).to.be.true;
   });
 
-  it("getWorks return at least one work from an empty query", async () => {
+  it("getWorks returns at least one work from an empty query", async () => {
     const result = await sut.getWorks(
       {
         limit: Number.MAX_SAFE_INTEGER,
@@ -181,7 +226,7 @@ describe("LunrWorkQueryService", () => {
     expect(result.modelSet.works).to.not.be.empty;
   });
 
-  it("getWorks return fewer works from a freetext query", async () => {
+  it("getWorks returns fewer works from a freetext query", async () => {
     const allResult = await sut.getWorks(
       {
         offset: 0,
@@ -208,5 +253,33 @@ describe("LunrWorkQueryService", () => {
     expect(fewerResult.modelSet.works.length).to.be.lessThan(
       allResult.modelSet.works.length
     );
+  });
+
+  it("getWorks sorts by title", async () => {
+    const allWorkUris = (await sut.getWorks(
+        {
+          offset: 0,
+          limit: 4,
+        },
+        {
+          filters: [],
+        }
+    )).modelSet.works.map(work => work.uri);
+
+    const sortedWorkUris = (await sut.getWorks(
+        {
+          offset: 0,
+          limit: 4,
+          sort: {
+            ascending: false,
+            property: WorksSortProperty.TITLE
+          }
+        },
+        {
+          filters: [],
+        }
+    )).modelSet.works.map(work => work.uri);
+
+    expect(sortedWorkUris).not.to.deep.eq(allWorkUris);
   });
 });

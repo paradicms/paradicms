@@ -99,7 +99,10 @@ export const Application: React.FunctionComponent = () => {
   return (
     <WorksheetDefinitionContext.Provider value={worksheetDefinition}>
       <Router>
-        <QueryParamProvider adapter={RouteAdapter}>
+        <QueryParamProvider
+          adapter={RouteAdapter}
+          options={{enableBatching: true}}
+        >
           <Routes>
             <Route path={Hrefs.login} element={<LoginPage />} />
             <Route path={Hrefs.loginCallback} element={<LoginCallbackPage />} />

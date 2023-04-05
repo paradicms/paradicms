@@ -1,3 +1,4 @@
 export * from "./usePageQueryParam";
-export * from "./useWorkQueryParam";
+export * from "./useSortQueryParams";
 export * from "./useWorkSearchQueryParams";
+export * from "./useWorksQueryParam";
