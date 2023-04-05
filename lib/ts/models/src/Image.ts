@@ -68,9 +68,7 @@ export class Image extends Mixin(NamedModel, HasRights) {
   }
 
   static placeholderSrc(dimensions: ImageDimensions) {
-    return `https://place-hold.it/${dimensions.width}x${
-      dimensions.height
-    }?text=${encodeURIComponent("Missing image")}`;
+    return `https://paradicms.org/img/placeholder/${dimensions.width}x${dimensions.height}.png`;
   }
 
   @Memoize()

@@ -233,9 +233,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
 
                 yield Image.builder(
                     depicts_uri=agent.uri,
-                    uri=URIRef(
-                        f"https://place-hold.it/1000x1000?text={quote(agent.name)}"
-                    ),
+                    uri=URIRef(str(agent.uri) + ":Image"),
                 ).set_exact_dimensions(
                     ImageDimensions(height=600, width=600)
                 ).add_rights(
@@ -245,6 +243,8 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     .add_license(CreativeCommonsLicenses.NC_1_0.uri)
                     .add_statement(RightsStatementsDotOrgRightsStatements.InC_EDU.uri)
                     .build()
+                ).set_src(
+                    "https://paradicms.org/img/placeholder/1000x1000.png"
                 ).set_title(
                     f"{agent.name} image"
                 ).build()
@@ -286,9 +286,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 original = (
                     Image.builder(
                         depicts_uri=depicts_uri,
-                        uri=URIRef(
-                            f"https://place-hold.it/1000x1000?text={quote(text_prefix)}Image{image_i}"
-                        ),
+                        uri=URIRef(str(depicts_uri) + f":Image{image_i}"),
                     )
                     .set_exact_dimensions(ImageDimensions(height=1000, width=1000))
                     .add_rights(
@@ -300,6 +298,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                         )
                         .build()
                     )
+                    .set_src("https://paradicms.org/img/placeholder/1000x1000.png")
                     .set_title(title)
                     .build()
                 )
@@ -313,12 +312,15 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     yield Image.builder(
                         depicts_uri=depicts_uri,
                         uri=URIRef(
-                            f"https://place-hold.it/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}?text={quote(text_prefix)}Image{image_i}"
+                            str(original.uri)
+                            + f":Thumbnail{thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
                         ),
                     ).set_exact_dimensions(thumbnail_dimensions).set_original_image_uri(
                         original.uri
                     ).add_rights(
                         original.rights
+                    ).set_src(
+                        f"https://paradicms.org/img/placeholder/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}.png"
                     ).set_title(
                         f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
                     ).build()

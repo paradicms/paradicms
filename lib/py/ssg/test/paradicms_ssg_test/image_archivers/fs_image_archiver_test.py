@@ -15,7 +15,9 @@ def test_archive_image(tmp_path):
     )
 
     archived_url = sut(
-        image_file_path=image_cache.get_file(URIRef("https://place-hold.it/1000x1000"))
+        image_file_path=image_cache.get_file(
+            URIRef("https://paradicms.org/img/placeholder/1000x1000.png")
+        )
     )
     assert archived_url
     assert archived_url.startswith("/img/archive/")
