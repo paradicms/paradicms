@@ -25,7 +25,7 @@ import {
   WorksQuery,
   WorksSort,
 } from "@paradicms/services";
-import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
+import {galleryThumbnailTargetDimensions} from "./galleryThumbnailTargetDimensions";
 import {useQueryParam} from "use-query-params";
 import {AgentsGallery} from "./AgentsGallery";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
@@ -150,10 +150,10 @@ export const WorkSearchPage: React.FunctionComponent<{
             offset: worksPage * objectsPerPage,
             sort: worksSort,
             valueFacetValueThumbnailSelector: {
-              targetDimensions: smallThumbnailTargetDimensions,
+              targetDimensions: galleryThumbnailTargetDimensions,
             },
             workJoinSelector: workSearchWorkJoinSelector(
-              smallThumbnailTargetDimensions
+              galleryThumbnailTargetDimensions
             ),
           },
           worksQuery
@@ -181,7 +181,7 @@ export const WorkSearchPage: React.FunctionComponent<{
         .getWorkAgents(
           {
             agentJoinSelector: {
-              thumbnail: {targetDimensions: smallThumbnailTargetDimensions},
+              thumbnail: {targetDimensions: galleryThumbnailTargetDimensions},
               works: {},
             },
             limit: objectsPerPage,

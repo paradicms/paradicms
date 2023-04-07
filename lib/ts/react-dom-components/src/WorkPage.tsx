@@ -19,7 +19,6 @@ import {summarizeWorkLocation, WorkLocationSummary} from "@paradicms/services";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
 import {ImagesCarousel} from "./ImagesCarousel";
 import {WorkAgentsCarousel} from "./WorkAgentsCarousel";
-import {largeThumbnailTargetDimensions} from "./largeThumbnailTargetDimensions";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "x-small",
@@ -83,7 +82,6 @@ export const WorkPage: React.FunctionComponent<{
               images={work.images}
               key={leftColTabs.length}
               onShowImage={setCurrentWorkImagesCarouselImage}
-              thumbnailTargetDimensions={largeThumbnailTargetDimensions}
             />
           </CardBody>
           {workImagesCarouselImage?.rights?.requiresAttribution ? (
@@ -105,7 +103,6 @@ export const WorkPage: React.FunctionComponent<{
       content: (
         <WorkAgentsCarousel
           getAbsoluteImageSrc={getAbsoluteImageSrc}
-          thumbnailTargetDimensions={largeThumbnailTargetDimensions}
           workAgents={work.agents}
         />
       ),

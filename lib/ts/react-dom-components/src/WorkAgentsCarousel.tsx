@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useCallback, useState} from "react";
-import {Image, ImageDimensions, WorkAgent} from "@paradicms/models";
+import {Image, WorkAgent} from "@paradicms/models";
 import {
   Card,
   CardBody,
@@ -12,23 +12,16 @@ import {
 import {FontAwesomeCarouselControl} from "./FontAwesomeCarouselControl";
 import {RightsParagraph} from "./RightsParagraph";
 import {getNamedModelLinks} from "./getNamedModelLinks";
-import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
+import {imagesCarouselThumbnailTargetDimensions} from "./imagesCarouselThumbnailTargetDimensions";
 
 const WorkAgentCard: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   role?: string;
-  thumbnailTargetDimensions?: ImageDimensions;
   workAgent: WorkAgent;
-}> = ({
-  workAgent,
-  getAbsoluteImageSrc,
-  thumbnailTargetDimensions: optionalThumbnailTargetDimensions,
-}) => {
+}> = ({workAgent, getAbsoluteImageSrc}) => {
   const agentLinks = getNamedModelLinks(workAgent.agent);
-  const thumbnailTargetDimensions =
-    optionalThumbnailTargetDimensions ?? smallThumbnailTargetDimensions;
   const thumbnail = workAgent.agent.thumbnail({
-    targetDimensions: thumbnailTargetDimensions,
+    targetDimensions: imagesCarouselThumbnailTargetDimensions,
   });
 
   return (
@@ -46,11 +39,11 @@ const WorkAgentCard: React.FunctionComponent<{
           src={
             thumbnail?.src
               ? getAbsoluteImageSrc(thumbnail.src)
-              : Image.placeholderSrc(thumbnailTargetDimensions)
+              : Image.placeholderSrc(imagesCarouselThumbnailTargetDimensions)
           }
           style={{
-            maxHeight: thumbnailTargetDimensions.height,
-            maxWidth: thumbnailTargetDimensions.width,
+            maxHeight: imagesCarouselThumbnailTargetDimensions.height,
+            maxWidth: imagesCarouselThumbnailTargetDimensions.width,
           }}
           title={workAgent.agent.name}
         />
@@ -70,17 +63,15 @@ const WorkAgentCard: React.FunctionComponent<{
 
 export const WorkAgentsCarousel: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
-  thumbnailTargetDimensions?: ImageDimensions;
   workAgents: readonly WorkAgent[];
-}> = ({getAbsoluteImageSrc, thumbnailTargetDimensions, workAgents}) => {
+}> = ({getAbsoluteImageSrc, workAgents}) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const renderWorkAgent = (workAgent: WorkAgent) => (
     <WorkAgentCard
-      workAgent={workAgent}
       getAbsoluteImageSrc={getAbsoluteImageSrc}
       role={workAgent.role}
-      thumbnailTargetDimensions={thumbnailTargetDimensions}
+      workAgent={workAgent}
     />
   );
 

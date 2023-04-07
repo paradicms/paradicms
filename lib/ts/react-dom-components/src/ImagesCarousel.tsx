@@ -1,18 +1,17 @@
 import * as React from "react";
 import {useCallback, useEffect, useState} from "react";
-import {Image, ImageDimensions} from "@paradicms/models";
+import {Image} from "@paradicms/models";
 import {Carousel, CarouselItem} from "reactstrap";
 import ImageZoom from "react-medium-image-zoom";
-import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
 import {RightsParagraph} from "./RightsParagraph";
 import {FontAwesomeCarouselControl} from "./FontAwesomeCarouselControl";
+import {imagesCarouselThumbnailTargetDimensions} from "./imagesCarouselThumbnailTargetDimensions";
 
 export interface ImagesCarouselProps {
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   hideImageRights?: boolean;
   images: readonly Image[];
   onShowImage?: (newImage: Image) => void;
-  thumbnailTargetDimensions?: ImageDimensions;
 }
 
 export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
@@ -20,19 +19,15 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
   hideImageRights,
   images,
   onShowImage,
-  thumbnailTargetDimensions: thumbnailTargetDimensionsInput,
 }) => {
   const originalImages = images.filter(image => image.isOriginal);
-
-  const thumbnailTargetDimensions =
-    thumbnailTargetDimensionsInput ?? smallThumbnailTargetDimensions;
 
   const renderOriginalImage = (originalImage: Image) => {
     if (!originalImage.src) {
       return null;
     }
     const thumbnail = originalImage.thumbnail({
-      targetDimensions: thumbnailTargetDimensions,
+      targetDimensions: imagesCarouselThumbnailTargetDimensions,
     });
     if (!thumbnail || !thumbnail.src) {
       return (
@@ -41,11 +36,11 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
           src={
             originalImage.src
               ? getAbsoluteImageSrc(originalImage.src)
-              : Image.placeholderSrc(thumbnailTargetDimensions)
+              : Image.placeholderSrc(imagesCarouselThumbnailTargetDimensions)
           }
           style={{
-            maxHeight: thumbnailTargetDimensions.height,
-            maxWidth: thumbnailTargetDimensions.width,
+            maxHeight: imagesCarouselThumbnailTargetDimensions.height,
+            maxWidth: imagesCarouselThumbnailTargetDimensions.width,
           }}
         />
       );
@@ -59,8 +54,8 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
               className: "img",
               src: getAbsoluteImageSrc(thumbnail.src),
               style: {
-                maxHeight: thumbnailTargetDimensions.height,
-                maxWidth: thumbnailTargetDimensions.width,
+                maxHeight: imagesCarouselThumbnailTargetDimensions.height,
+                maxWidth: imagesCarouselThumbnailTargetDimensions.width,
               },
             }}
             zoomImage={{

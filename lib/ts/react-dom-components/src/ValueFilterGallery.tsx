@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useCallback, useMemo, useState} from "react";
-import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
+import {galleryThumbnailTargetDimensions} from "./galleryThumbnailTargetDimensions";
 import classNames from "classnames";
 import {
   Accordion,
@@ -87,13 +87,13 @@ const ValueFacetValueCard = <T extends JsonPrimitiveType>(
           src={
             value.thumbnail?.src
               ? getAbsoluteImageSrc(value.thumbnail.src)
-              : Image.placeholderSrc(smallThumbnailTargetDimensions)
+              : Image.placeholderSrc(galleryThumbnailTargetDimensions)
           }
           style={{
-            height: smallThumbnailTargetDimensions.height,
+            height: galleryThumbnailTargetDimensions.height,
             marginBottom: "20px",
             marginTop: "20px",
-            width: smallThumbnailTargetDimensions.width,
+            width: galleryThumbnailTargetDimensions.width,
           }}
           title={value.label ?? value.value.toString()}
         />

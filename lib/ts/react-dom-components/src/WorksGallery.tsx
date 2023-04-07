@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useState} from "react";
-import {Image, Text, Work} from "@paradicms/models";
+import {Text, Work} from "@paradicms/models";
 import {Gallery} from "./Gallery";
 import {
   Card,
@@ -13,9 +13,10 @@ import {
   TabContent,
   TabPane,
 } from "reactstrap";
-import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
+import {galleryThumbnailTargetDimensions} from "./galleryThumbnailTargetDimensions";
 import {RightsParagraph} from "./RightsParagraph";
 import {getNamedModelLinks} from "./getNamedModelLinks";
+import {GalleryCard} from "./GalleryCard";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "xx-small",
@@ -32,39 +33,18 @@ const WorksGalleryCard: React.FunctionComponent<{
 }> = ({getAbsoluteImageSrc, renderWorkLink, work}) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const workLinks = getNamedModelLinks(work);
-  const thumbnail = work.thumbnail({
-    targetDimensions: smallThumbnailTargetDimensions,
-  });
 
   const tabs: {content: React.ReactNode; title: string}[] = [];
   tabs.push({
     title: "Image",
     content: (
-      <Card className="border-0 text-center">
-        <CardBody>
-          <img
-            src={
-              thumbnail?.src
-                ? getAbsoluteImageSrc(thumbnail.src)
-                : Image.placeholderSrc(smallThumbnailTargetDimensions)
-            }
-            style={{
-              maxHeight: smallThumbnailTargetDimensions.height,
-              maxWidth: smallThumbnailTargetDimensions.width,
-            }}
-            title={work.title}
-          />
-        </CardBody>
-        {thumbnail && thumbnail.rights?.requiresAttribution ? (
-          <CardFooter>
-            <RightsParagraph
-              material="Image"
-              rights={thumbnail.rights}
-              style={RIGHTS_STYLE}
-            />
-          </CardFooter>
-        ) : null}
-      </Card>
+      <GalleryCard
+        getAbsoluteImageSrc={getAbsoluteImageSrc}
+        thumbnail={work.thumbnail({
+          targetDimensions: galleryThumbnailTargetDimensions,
+        })}
+        title={work.title}
+      />
     ),
   });
   if (work.description) {
