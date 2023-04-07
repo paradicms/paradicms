@@ -15,6 +15,10 @@ import {mapTextObject} from "./mapTextObject";
 import {createPropertyValuesFromQuadObjects} from "./createPropertyValuesFromQuadObjects";
 import {mapLocationObject} from "./mapLocationObject";
 import {Location} from "./Location";
+import {visitWorkEvent} from "./WorkEventVisitor";
+import {WorkClosing} from "./WorkClosing";
+import {WorkOpening} from "./WorkOpening";
+import {WorkCreation} from "./WorkCreation";
 
 const getRightsWorkAgents = (
   rights: Rights | null,
@@ -118,6 +122,40 @@ export class Work extends Mixin(
       mapTextObject(this, term)
     );
   }
+
+  @Memoize()
+  get displayDate(): string | null {
+    let startDisplayDate: string | undefined;
+    let endDisplayDate: string | undefined;
+    for (const event of this.events) {
+      visitWorkEvent(event, {
+        visitWorkClosing(workClosing: WorkClosing): void {
+          if (!endDisplayDate && workClosing.displayDate) {
+            endDisplayDate = workClosing.displayDate;
+          }
+        },
+        visitWorkCreation(workCreation: WorkCreation): void {
+          if (!startDisplayDate && workCreation.displayDate) {
+            startDisplayDate = workCreation.displayDate;
+          }
+        },
+        visitWorkOpening(workOpening: WorkOpening): void {
+          if (!startDisplayDate && workOpening.displayDate) {
+            startDisplayDate = workOpening.displayDate;
+          }
+        }
+      });
+    }
+
+    if (startDisplayDate && endDisplayDate) {
+      return `${startDisplayDate} to ${endDisplayDate}`;
+    } else if (startDisplayDate) {
+      return startDisplayDate;
+    } else {
+      return null;
+    }
+  }
+
 
   @Memoize()
   get events(): readonly WorkEvent[] {
