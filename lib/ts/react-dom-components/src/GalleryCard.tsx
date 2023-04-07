@@ -2,7 +2,7 @@ import {Image} from "@paradicms/models";
 import {galleryThumbnailTargetDimensions} from "./galleryThumbnailTargetDimensions";
 import {RightsParagraph} from "./RightsParagraph";
 import * as React from "react";
-import {Card, CardBody, CardFooter} from "reactstrap";
+import {Card, CardBody, CardFooter, CardHeader} from "reactstrap";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "xx-small",
@@ -13,9 +13,13 @@ const RIGHTS_STYLE: React.CSSProperties = {
 export const GalleryCard: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   thumbnail: Image | null;
-  title: string;
+  title: React.ReactElement | string;
 }> = ({getAbsoluteImageSrc, thumbnail, title}) => (
   <Card className="border-0 text-center">
+    <CardHeader tag="h4">
+      {title}
+      {/*<CardTitle>{title}</CardTitle>*/}
+    </CardHeader>
     <CardBody>
       <img
         src={
@@ -27,7 +31,6 @@ export const GalleryCard: React.FunctionComponent<{
           maxHeight: galleryThumbnailTargetDimensions.height,
           maxWidth: galleryThumbnailTargetDimensions.width,
         }}
-        title={title}
       />
     </CardBody>
     {thumbnail && thumbnail.rights?.requiresAttribution ? (
