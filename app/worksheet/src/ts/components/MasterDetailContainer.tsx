@@ -12,9 +12,9 @@ import {
 } from "reactstrap";
 import {Image, selectThumbnail, Text} from "@paradicms/models";
 import {
+  galleryThumbnailSelector,
   ImagesCarousel,
   RightsParagraph,
-  smallThumbnailTargetDimensions,
 } from "@paradicms/react-dom-components";
 import classnames from "classnames";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -56,7 +56,7 @@ export const MasterDetailContainer: React.FunctionComponent<{
         <div
           className="ms-2"
           style={{
-            maxWidth: smallThumbnailTargetDimensions.width + 100,
+            maxWidth: galleryThumbnailSelector.targetDimensions.width + 100,
           }}
         >
           <ItemDetailCard
@@ -195,14 +195,17 @@ const ItemsGallery: React.FunctionComponent<{
       {items.map((item, itemI) => {
         const {onToggleSelected, images, selected, title} = item;
 
-        let thumbnail: Image | null = selectThumbnail(images, {
-          targetDimensions: smallThumbnailTargetDimensions,
-        });
+        let thumbnail: Image | null = selectThumbnail(
+          images,
+          galleryThumbnailSelector
+        );
         let thumbnailSrc: string;
         if (thumbnail) {
           thumbnailSrc = thumbnail.src ?? thumbnail.uri;
         } else {
-          thumbnailSrc = Image.placeholderSrc(smallThumbnailTargetDimensions);
+          thumbnailSrc = Image.placeholderSrc(
+            galleryThumbnailSelector.targetDimensions
+          );
         }
 
         return (
@@ -234,8 +237,8 @@ const ItemsGallery: React.FunctionComponent<{
                   className="figure-img rounded"
                   src={thumbnailSrc}
                   style={{
-                    height: smallThumbnailTargetDimensions.height,
-                    width: smallThumbnailTargetDimensions.width,
+                    height: galleryThumbnailSelector.targetDimensions.height,
+                    width: galleryThumbnailSelector.targetDimensions.width,
                   }}
                 />
               </a>

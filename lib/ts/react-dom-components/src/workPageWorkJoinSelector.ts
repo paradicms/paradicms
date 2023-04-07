@@ -1,11 +1,9 @@
-import {ImageDimensions, WorkJoinSelector} from "@paradicms/models";
-import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
+import {WorkJoinSelector} from "@paradicms/models";
+import {imagesCarouselThumbnailSelector} from "./imagesCarouselThumbnailSelector";
 
-export const workPageWorkJoinSelector = (
-  thumbnailTargetDimensions: ImageDimensions
-): WorkJoinSelector => ({
+export const workPageWorkJoinSelector: WorkJoinSelector = {
   agents: {
-    thumbnail: {targetDimensions: smallThumbnailTargetDimensions},
+    thumbnail: imagesCarouselThumbnailSelector,
   },
   allImages: true,
   collections: {},
@@ -13,4 +11,4 @@ export const workPageWorkJoinSelector = (
   events: {
     location: true,
   },
-});
+};

@@ -70,7 +70,7 @@ export const RightsParagraph: React.FunctionComponent<{
 
   return (
     <p style={style}>
-      {material} rights: {rightsElements}
+      {material}: {rightsElements}
     </p>
   );
 };

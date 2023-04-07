@@ -28,28 +28,35 @@ export const partialDateTimeToString = (
   dateFormat += " YYYY";
   dayjs_ = dayjs_.year(year);
 
-  let timeFormat: string = "";
   const hour = partialDateTime.hour;
-  if (hour !== null) {
-    dayjs_ = dayjs_.hour(hour);
-    timeFormat += "h";
+  const minute = partialDateTime.minute;
+  const second = partialDateTime.second;
 
-    const minute = partialDateTime.minute;
-    if (minute !== null) {
-      dayjs_ = dayjs_.minute(minute);
-      timeFormat += ":m";
+  let timeFormat: string = "";
+  if (hour !== null || minute !== null || second !== null) {
+    // Data that travels through Excel doesn't support dates without times.
+    // Don't include bogus times (midnight) by default.
+    if (hour !== 0 || minute !== 0 || second !== 0) {
+      if (hour !== null) {
+        dayjs_ = dayjs_.hour(hour);
+        timeFormat += "h";
 
-      const second = partialDateTime.second;
-      if (second !== null) {
-        dayjs_ = dayjs_.second(second);
-        timeFormat += ":s";
+        if (minute !== null) {
+          dayjs_ = dayjs_.minute(minute);
+          timeFormat += ":m";
+
+          if (second !== null) {
+            dayjs_ = dayjs_.second(second);
+            timeFormat += ":s";
+          }
+
+          timeFormat += " A";
+        }
       }
-
-      timeFormat += " A";
     }
   }
 
   return dayjs_.format(
-    timeFormat.length > 0 ? timeFormat + " " + dateFormat : dateFormat
+    dateFormat + (timeFormat.length > 0 ? " " + timeFormat : "")
   );
 };

@@ -1,6 +1,5 @@
 import * as React from "react";
 import {useCallback, useMemo, useState} from "react";
-import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
 import classNames from "classnames";
 import {
   Accordion,
@@ -23,6 +22,7 @@ import {
   ValueFilterState,
 } from "@paradicms/services";
 import {Image} from "@paradicms/models";
+import {valueThumbnailSelector} from "./valueThumbnailSelector";
 
 interface ValueFacetValueCardProps<T extends JsonPrimitiveType> {
   filterState: ValueFilterState<T, ValueFilter<T>>;
@@ -87,13 +87,13 @@ const ValueFacetValueCard = <T extends JsonPrimitiveType>(
           src={
             value.thumbnail?.src
               ? getAbsoluteImageSrc(value.thumbnail.src)
-              : Image.placeholderSrc(smallThumbnailTargetDimensions)
+              : Image.placeholderSrc(valueThumbnailSelector.targetDimensions)
           }
           style={{
-            height: smallThumbnailTargetDimensions.height,
+            height: valueThumbnailSelector.targetDimensions.height,
             marginBottom: "20px",
             marginTop: "20px",
-            width: smallThumbnailTargetDimensions.width,
+            width: valueThumbnailSelector.targetDimensions.width,
           }}
           title={value.label ?? value.value.toString()}
         />

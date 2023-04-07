@@ -1,7 +1,24 @@
 import * as React from "react";
-import {WorkCard} from "./WorkCard";
 import {Work} from "@paradicms/models";
 import {Gallery} from "./Gallery";
+import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
+import {GalleryCard} from "./GalleryCard";
+
+const WorksGalleryCard: React.FunctionComponent<{
+  getAbsoluteImageSrc: (relativeImageSrc: string) => string;
+  renderWorkLink: (
+    workUri: string,
+    children: React.ReactNode
+  ) => React.ReactElement;
+  work: Work;
+}> = ({getAbsoluteImageSrc, renderWorkLink, work}) => (
+  <GalleryCard
+    getAbsoluteImageSrc={getAbsoluteImageSrc}
+    thumbnail={work.thumbnail(galleryThumbnailSelector)}
+    subtitle={work.displayDate}
+    title={renderWorkLink(work.uri, <>{work.title}</>)}
+  />
+);
 
 /**
  * Works gallery component.
@@ -19,7 +36,7 @@ export const WorksGallery: React.FunctionComponent<{
   <Gallery
     cards={works.map(work => ({
       element: (
-        <WorkCard
+        <WorksGalleryCard
           getAbsoluteImageSrc={getAbsoluteImageSrc}
           renderWorkLink={renderWorkLink}
           work={work}

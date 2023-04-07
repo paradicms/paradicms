@@ -11,7 +11,6 @@ import {
 import {GetStaticPaths, GetStaticProps} from "next";
 import {
   getNamedModelLinks,
-  smallThumbnailTargetDimensions,
   WorkPage as DelegateWorkPage,
   workPageWorkJoinSelector,
 } from "@paradicms/react-dom-components";
@@ -108,7 +107,7 @@ export const getStaticProps: GetStaticProps = async ({
       })
         .workModelSet(
           completeModelSet.workByUri(workUri),
-          workPageWorkJoinSelector(smallThumbnailTargetDimensions)
+          workPageWorkJoinSelector
         )
         .addAppConfiguration(completeModelSet.appConfiguration)
         .build()

@@ -9,7 +9,7 @@ def test_extract(excel_2010_test_data_file_path):
     )
     assert len(results) == 1
     sheets = results["sheets"]
-    assert len(sheets) == 2
+    assert len(sheets) == 4
 
     person_sheet = sheets["Person"]
     person_rows = person_sheet["rows"]
@@ -31,3 +31,19 @@ def test_extract(excel_2010_test_data_file_path):
     }
     assert image_data_dict
     assert isinstance(image_data_dict["src"], Image)
+
+    work_sheet = sheets["Work"]
+    work_rows = work_sheet["rows"]
+    assert len(work_rows) == 2
+    work_header_row = work_rows[0]
+    assert work_header_row == ("@id", "title")
+    work_data_row = work_rows[1]
+    assert len(work_data_row) == 2
+
+    work_creation_sheet = sheets["WorkCreation"]
+    work_creation_rows = work_creation_sheet["rows"]
+    assert len(work_creation_rows) == 2
+    work_creation_header_row = work_creation_rows[0]
+    assert work_creation_header_row == (None, "creator", "date", "work")
+    work_creation_data_row = work_creation_rows[1]
+    assert len(work_creation_data_row) == 4
