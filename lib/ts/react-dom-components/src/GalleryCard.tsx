@@ -16,7 +16,7 @@ export const GalleryCard: React.FunctionComponent<{
   subtitle?: React.ReactElement | string | null;
   title: React.ReactElement | string;
 }> = ({getAbsoluteImageSrc, thumbnail, subtitle, title}) => (
-  <Card className="border-0 text-center">
+  <Card className="text-center">
     <CardHeader tag="h4">
       {title}
       {/*<CardTitle>{title}</CardTitle>*/}
