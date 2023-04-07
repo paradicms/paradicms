@@ -1,9 +1,72 @@
 import * as React from "react";
 import {useCallback, useState} from "react";
-import {ImageDimensions, WorkAgent} from "@paradicms/models";
-import {AgentCard} from "./AgentCard";
-import {Carousel, CarouselItem} from "reactstrap";
+import {Image, ImageDimensions, WorkAgent} from "@paradicms/models";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Carousel,
+  CarouselItem,
+} from "reactstrap";
 import {FontAwesomeCarouselControl} from "./FontAwesomeCarouselControl";
+import {RightsParagraph} from "./RightsParagraph";
+import {getNamedModelLinks} from "./getNamedModelLinks";
+import {smallThumbnailTargetDimensions} from "./smallThumbnailTargetDimensions";
+
+const WorkAgentCard: React.FunctionComponent<{
+  getAbsoluteImageSrc: (relativeImageSrc: string) => string;
+  role?: string;
+  thumbnailTargetDimensions?: ImageDimensions;
+  workAgent: WorkAgent;
+}> = ({
+  workAgent,
+  getAbsoluteImageSrc,
+  thumbnailTargetDimensions: optionalThumbnailTargetDimensions,
+}) => {
+  const agentLinks = getNamedModelLinks(workAgent.agent);
+  const thumbnailTargetDimensions =
+    optionalThumbnailTargetDimensions ?? smallThumbnailTargetDimensions;
+  const thumbnail = workAgent.agent.thumbnail({
+    targetDimensions: thumbnailTargetDimensions,
+  });
+
+  return (
+    <Card className="text-center">
+      <CardHeader tag="h6">
+        <div>{workAgent.agent.name}</div>
+        {agentLinks.length > 0 ? (
+          <div className="mt-1" style={{fontSize: "x-small"}}>
+            {agentLinks}
+          </div>
+        ) : null}
+      </CardHeader>
+      <CardBody>
+        <img
+          src={
+            thumbnail?.src
+              ? getAbsoluteImageSrc(thumbnail.src)
+              : Image.placeholderSrc(thumbnailTargetDimensions)
+          }
+          style={{
+            maxHeight: thumbnailTargetDimensions.height,
+            maxWidth: thumbnailTargetDimensions.width,
+          }}
+          title={workAgent.agent.name}
+        />
+      </CardBody>
+      {thumbnail?.rights?.requiresAttribution ? (
+        <CardFooter>
+          <RightsParagraph
+            material="Image"
+            rights={thumbnail.rights}
+            style={{fontSize: "x-small", marginBottom: 0}}
+          />
+        </CardFooter>
+      ) : null}
+    </Card>
+  );
+};
 
 export const WorkAgentsCarousel: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
@@ -13,8 +76,8 @@ export const WorkAgentsCarousel: React.FunctionComponent<{
   const [activeIndex, setActiveIndex] = useState(0);
 
   const renderWorkAgent = (workAgent: WorkAgent) => (
-    <AgentCard
-      agent={workAgent.agent}
+    <WorkAgentCard
+      workAgent={workAgent}
       getAbsoluteImageSrc={getAbsoluteImageSrc}
       role={workAgent.role}
       thumbnailTargetDimensions={thumbnailTargetDimensions}
