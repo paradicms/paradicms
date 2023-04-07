@@ -1,4 +1,3 @@
-export * from "./AgentCard";
 export * from "./AgentsGallery";
 export * from "./createFilterControl";
 export * from "./createFilterControls";
@@ -25,7 +24,6 @@ export * from "./ValueFilterGallery";
 export * from "./ValueFilterTable";
 export * from "./WorkAgentsCarousel";
 export * from "./WorkAgentsSortDropdown";
-export * from "./WorkCard";
 export * from "./WorkEventsTimeline";
 export * from "./WorkPage";
 export * from "./workPageWorkJoinSelector";
