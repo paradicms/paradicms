@@ -1,13 +1,17 @@
 import os
+from datetime import date
 from pathlib import Path
 
 import pytest
+from rdflib import Graph, DCTERMS
 
 from paradicms_etl.extractors.excel_2010_extractor import Excel2010Extractor
 from paradicms_etl.extractors.google_sheets_extractor import GoogleSheetsExtractor
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.person import Person
+from paradicms_etl.models.work import Work
+from paradicms_etl.models.work_creation import WorkCreation
 from paradicms_etl.transformers.spreadsheet_transformer import SpreadsheetTransformer
 
 
@@ -19,11 +23,22 @@ def test_transform_excel_2010(excel_2010_test_data_file_path: Path):
             )
         )
     )
-    assert len(models) == 2
+    assert len(models) == 4
     person = next(person for person in models if isinstance(person, Person))
     image = next(image for image in models if isinstance(image, Image))
+    work = next(work for work in models if isinstance(work, Work))
+    work_creation = next(
+        work_creation
+        for work_creation in models
+        if isinstance(work_creation, WorkCreation)
+    )
     assert person.name == "Minor Gordon"
     assert isinstance(image.src, ImageData)
+    assert work_creation.work_uri == work.uri
+    work_creation_date = (
+        work_creation.to_rdf(graph=Graph()).value(DCTERMS.date).toPython()
+    )
+    assert isinstance(work_creation_date, date)
 
 
 @pytest.mark.skipif("CI" in os.environ, reason="don't connect to Google Sheets in CI")
