@@ -15,6 +15,7 @@ const WorksGalleryCard: React.FunctionComponent<{
   <GalleryCard
     getAbsoluteImageSrc={getAbsoluteImageSrc}
     thumbnail={work.thumbnail(galleryThumbnailSelector)}
+    subtitle={work.displayDate}
     title={renderWorkLink(work.uri, <>{work.title}</>)}
   />
 );

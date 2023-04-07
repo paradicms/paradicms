@@ -13,8 +13,9 @@ const RIGHTS_STYLE: React.CSSProperties = {
 export const GalleryCard: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   thumbnail: Image | null;
+  subtitle?: React.ReactElement | string | null;
   title: React.ReactElement | string;
-}> = ({getAbsoluteImageSrc, thumbnail, title}) => (
+}> = ({getAbsoluteImageSrc, thumbnail, subtitle, title}) => (
   <Card className="border-0 text-center">
     <CardHeader tag="h4">
       {title}
@@ -33,13 +34,20 @@ export const GalleryCard: React.FunctionComponent<{
         }}
       />
     </CardBody>
-    {thumbnail && thumbnail.rights?.requiresAttribution ? (
+    {subtitle || (thumbnail && thumbnail.rights?.requiresAttribution) ? (
       <CardFooter>
-        <RightsParagraph
-          material="Image"
-          rights={thumbnail.rights}
-          style={RIGHTS_STYLE}
-        />
+        {thumbnail && thumbnail.rights?.requiresAttribution ? (
+          <div className="mb-2">
+            <RightsParagraph
+              material="Image"
+              rights={thumbnail.rights}
+              style={RIGHTS_STYLE}
+            />
+          </div>
+        ) : null}
+        {subtitle ? (
+          <p style={{fontSize: "small", marginBottom: 0}}>{subtitle}</p>
+        ) : null}
       </CardFooter>
     ) : null}
   </Card>
