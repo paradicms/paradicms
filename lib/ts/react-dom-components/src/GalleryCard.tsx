@@ -1,5 +1,5 @@
 import {Image} from "@paradicms/models";
-import {galleryThumbnailTargetDimensions} from "./galleryThumbnailTargetDimensions";
+import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 import {RightsParagraph} from "./RightsParagraph";
 import * as React from "react";
 import {Card, CardBody, CardFooter, CardHeader} from "reactstrap";
@@ -25,11 +25,11 @@ export const GalleryCard: React.FunctionComponent<{
         src={
           thumbnail?.src
             ? getAbsoluteImageSrc(thumbnail.src)
-            : Image.placeholderSrc(galleryThumbnailTargetDimensions)
+            : Image.placeholderSrc(galleryThumbnailSelector.targetDimensions)
         }
         style={{
-          maxHeight: galleryThumbnailTargetDimensions.height,
-          maxWidth: galleryThumbnailTargetDimensions.width,
+          maxHeight: galleryThumbnailSelector.targetDimensions.height,
+          maxWidth: galleryThumbnailSelector.targetDimensions.width,
         }}
       />
     </CardBody>

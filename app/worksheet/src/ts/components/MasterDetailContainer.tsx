@@ -12,7 +12,7 @@ import {
 } from "reactstrap";
 import {Image, selectThumbnail, Text} from "@paradicms/models";
 import {
-  galleryThumbnailTargetDimensions,
+  galleryThumbnailSelector,
   ImagesCarousel,
   RightsParagraph,
 } from "@paradicms/react-dom-components";
@@ -56,7 +56,7 @@ export const MasterDetailContainer: React.FunctionComponent<{
         <div
           className="ms-2"
           style={{
-            maxWidth: galleryThumbnailTargetDimensions.width + 100,
+            maxWidth: galleryThumbnailSelector.width + 100,
           }}
         >
           <ItemDetailCard
@@ -196,13 +196,13 @@ const ItemsGallery: React.FunctionComponent<{
         const {onToggleSelected, images, selected, title} = item;
 
         let thumbnail: Image | null = selectThumbnail(images, {
-          targetDimensions: galleryThumbnailTargetDimensions,
+          targetDimensions: galleryThumbnailSelector,
         });
         let thumbnailSrc: string;
         if (thumbnail) {
           thumbnailSrc = thumbnail.src ?? thumbnail.uri;
         } else {
-          thumbnailSrc = Image.placeholderSrc(galleryThumbnailTargetDimensions);
+          thumbnailSrc = Image.placeholderSrc(galleryThumbnailSelector);
         }
 
         return (
@@ -234,8 +234,8 @@ const ItemsGallery: React.FunctionComponent<{
                   className="figure-img rounded"
                   src={thumbnailSrc}
                   style={{
-                    height: galleryThumbnailTargetDimensions.height,
-                    width: galleryThumbnailTargetDimensions.width,
+                    height: galleryThumbnailSelector.height,
+                    width: galleryThumbnailSelector.width,
                   }}
                 />
               </a>

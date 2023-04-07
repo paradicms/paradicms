@@ -1,10 +1,10 @@
 import {WorkJoinSelector} from "@paradicms/models";
-import {galleryThumbnailTargetDimensions} from "./galleryThumbnailTargetDimensions";
-import {valueThumbnailTargetDimensions} from "./valueThumbnailTargetDimensions";
+import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
+import {valueThumbnailSelector} from "./valueThumbnailSelector";
 
 export const workSearchWorkJoinSelector: WorkJoinSelector = {
   agents: {
-    thumbnail: {targetDimensions: galleryThumbnailTargetDimensions},
+    thumbnail: galleryThumbnailSelector,
   },
   collections: {},
   events: {
@@ -17,7 +17,7 @@ export const workSearchWorkJoinSelector: WorkJoinSelector = {
   location: true,
   properties: true,
   propertyValues: {
-    thumbnail: {targetDimensions: valueThumbnailTargetDimensions},
+    thumbnail: valueThumbnailSelector,
   },
-  thumbnail: {targetDimensions: galleryThumbnailTargetDimensions},
+  thumbnail: galleryThumbnailSelector,
 };

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Work} from "@paradicms/models";
 import {Gallery} from "./Gallery";
-import {galleryThumbnailTargetDimensions} from "./galleryThumbnailTargetDimensions";
+import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 import {GalleryCard} from "./GalleryCard";
 
 const WorksGalleryCard: React.FunctionComponent<{
@@ -14,9 +14,7 @@ const WorksGalleryCard: React.FunctionComponent<{
 }> = ({getAbsoluteImageSrc, renderWorkLink, work}) => (
   <GalleryCard
     getAbsoluteImageSrc={getAbsoluteImageSrc}
-    thumbnail={work.thumbnail({
-      targetDimensions: galleryThumbnailTargetDimensions,
-    })}
+    thumbnail={work.thumbnail(galleryThumbnailSelector)}
     title={renderWorkLink(work.uri, <>{work.title}</>)}
   />
 );

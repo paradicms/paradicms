@@ -5,7 +5,7 @@ import {Carousel, CarouselItem} from "reactstrap";
 import ImageZoom from "react-medium-image-zoom";
 import {RightsParagraph} from "./RightsParagraph";
 import {FontAwesomeCarouselControl} from "./FontAwesomeCarouselControl";
-import {imagesCarouselThumbnailTargetDimensions} from "./imagesCarouselThumbnailTargetDimensions";
+import {imagesCarouselThumbnailSelector} from "./imagesCarouselThumbnailSelector";
 
 export interface ImagesCarouselProps {
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
@@ -26,9 +26,7 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
     if (!originalImage.src) {
       return null;
     }
-    const thumbnail = originalImage.thumbnail({
-      targetDimensions: imagesCarouselThumbnailTargetDimensions,
-    });
+    const thumbnail = originalImage.thumbnail(imagesCarouselThumbnailSelector);
     if (!thumbnail || !thumbnail.src) {
       return (
         <img
@@ -36,11 +34,13 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
           src={
             originalImage.src
               ? getAbsoluteImageSrc(originalImage.src)
-              : Image.placeholderSrc(imagesCarouselThumbnailTargetDimensions)
+              : Image.placeholderSrc(
+                  imagesCarouselThumbnailSelector.targetDimensions
+                )
           }
           style={{
-            maxHeight: imagesCarouselThumbnailTargetDimensions.height,
-            maxWidth: imagesCarouselThumbnailTargetDimensions.width,
+            maxHeight: imagesCarouselThumbnailSelector.targetDimensions.height,
+            maxWidth: imagesCarouselThumbnailSelector.targetDimensions.width,
           }}
         />
       );
@@ -54,8 +54,10 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
               className: "img",
               src: getAbsoluteImageSrc(thumbnail.src),
               style: {
-                maxHeight: imagesCarouselThumbnailTargetDimensions.height,
-                maxWidth: imagesCarouselThumbnailTargetDimensions.width,
+                maxHeight:
+                  imagesCarouselThumbnailSelector.targetDimensions.height,
+                maxWidth:
+                  imagesCarouselThumbnailSelector.targetDimensions.width,
               },
             }}
             zoomImage={{

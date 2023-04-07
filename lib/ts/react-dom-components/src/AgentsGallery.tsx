@@ -2,7 +2,7 @@ import * as React from "react";
 import {Agent} from "@paradicms/models";
 import {Gallery} from "./Gallery";
 import {GalleryCard} from "./GalleryCard";
-import {galleryThumbnailTargetDimensions} from "./galleryThumbnailTargetDimensions";
+import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 
 const AgentsGalleryCard: React.FunctionComponent<{
   agent: Agent;
@@ -12,9 +12,7 @@ const AgentsGalleryCard: React.FunctionComponent<{
   return (
     <GalleryCard
       getAbsoluteImageSrc={getAbsoluteImageSrc}
-      thumbnail={agent.thumbnail({
-        targetDimensions: galleryThumbnailTargetDimensions,
-      })}
+      thumbnail={agent.thumbnail(galleryThumbnailSelector)}
       title={agent.name}
     />
   );

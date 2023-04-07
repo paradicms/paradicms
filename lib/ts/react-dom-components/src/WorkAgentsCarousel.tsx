@@ -12,7 +12,7 @@ import {
 import {FontAwesomeCarouselControl} from "./FontAwesomeCarouselControl";
 import {RightsParagraph} from "./RightsParagraph";
 import {getNamedModelLinks} from "./getNamedModelLinks";
-import {imagesCarouselThumbnailTargetDimensions} from "./imagesCarouselThumbnailTargetDimensions";
+import {imagesCarouselThumbnailSelector} from "./imagesCarouselThumbnailSelector";
 
 const WorkAgentCard: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
@@ -20,9 +20,7 @@ const WorkAgentCard: React.FunctionComponent<{
   workAgent: WorkAgent;
 }> = ({workAgent, getAbsoluteImageSrc}) => {
   const agentLinks = getNamedModelLinks(workAgent.agent);
-  const thumbnail = workAgent.agent.thumbnail({
-    targetDimensions: imagesCarouselThumbnailTargetDimensions,
-  });
+  const thumbnail = workAgent.agent.thumbnail(imagesCarouselThumbnailSelector);
 
   return (
     <Card className="text-center">
@@ -39,11 +37,13 @@ const WorkAgentCard: React.FunctionComponent<{
           src={
             thumbnail?.src
               ? getAbsoluteImageSrc(thumbnail.src)
-              : Image.placeholderSrc(imagesCarouselThumbnailTargetDimensions)
+              : Image.placeholderSrc(
+                  imagesCarouselThumbnailSelector.targetDimensions
+                )
           }
           style={{
-            maxHeight: imagesCarouselThumbnailTargetDimensions.height,
-            maxWidth: imagesCarouselThumbnailTargetDimensions.width,
+            maxHeight: imagesCarouselThumbnailSelector.targetDimensions.height,
+            maxWidth: imagesCarouselThumbnailSelector.targetDimensions.width,
           }}
           title={workAgent.agent.name}
         />

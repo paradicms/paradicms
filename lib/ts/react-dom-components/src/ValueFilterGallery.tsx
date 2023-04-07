@@ -22,7 +22,7 @@ import {
   ValueFilterState,
 } from "@paradicms/services";
 import {Image} from "@paradicms/models";
-import {valueThumbnailTargetDimensions} from "./valueThumbnailTargetDimensions";
+import {valueThumbnailSelector} from "./valueThumbnailSelector";
 
 interface ValueFacetValueCardProps<T extends JsonPrimitiveType> {
   filterState: ValueFilterState<T, ValueFilter<T>>;
@@ -87,13 +87,13 @@ const ValueFacetValueCard = <T extends JsonPrimitiveType>(
           src={
             value.thumbnail?.src
               ? getAbsoluteImageSrc(value.thumbnail.src)
-              : Image.placeholderSrc(valueThumbnailTargetDimensions)
+              : Image.placeholderSrc(valueThumbnailSelector.targetDimensions)
           }
           style={{
-            height: valueThumbnailTargetDimensions.height,
+            height: valueThumbnailSelector.targetDimensions.height,
             marginBottom: "20px",
             marginTop: "20px",
-            width: valueThumbnailTargetDimensions.width,
+            width: valueThumbnailSelector.targetDimensions.width,
           }}
           title={value.label ?? value.value.toString()}
         />
