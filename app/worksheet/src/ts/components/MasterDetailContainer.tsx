@@ -56,7 +56,7 @@ export const MasterDetailContainer: React.FunctionComponent<{
         <div
           className="ms-2"
           style={{
-            maxWidth: galleryThumbnailSelector.width + 100,
+            maxWidth: galleryThumbnailSelector.targetDimensions.width + 100,
           }}
         >
           <ItemDetailCard
@@ -195,14 +195,17 @@ const ItemsGallery: React.FunctionComponent<{
       {items.map((item, itemI) => {
         const {onToggleSelected, images, selected, title} = item;
 
-        let thumbnail: Image | null = selectThumbnail(images, {
-          targetDimensions: galleryThumbnailSelector,
-        });
+        let thumbnail: Image | null = selectThumbnail(
+          images,
+          galleryThumbnailSelector
+        );
         let thumbnailSrc: string;
         if (thumbnail) {
           thumbnailSrc = thumbnail.src ?? thumbnail.uri;
         } else {
-          thumbnailSrc = Image.placeholderSrc(galleryThumbnailSelector);
+          thumbnailSrc = Image.placeholderSrc(
+            galleryThumbnailSelector.targetDimensions
+          );
         }
 
         return (
@@ -234,8 +237,8 @@ const ItemsGallery: React.FunctionComponent<{
                   className="figure-img rounded"
                   src={thumbnailSrc}
                   style={{
-                    height: galleryThumbnailSelector.height,
-                    width: galleryThumbnailSelector.width,
+                    height: galleryThumbnailSelector.targetDimensions.height,
+                    width: galleryThumbnailSelector.targetDimensions.width,
                   }}
                 />
               </a>
