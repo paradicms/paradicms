@@ -30,7 +30,7 @@ class WorkCreation(WorkEvent):
 
     @property
     def creator_uris(self) -> Tuple[URIRef, ...]:
-        return self._required_uri_values(DCTERMS.creator)
+        return tuple(self._uri_values(DCTERMS.creator))
 
     @classmethod
     def json_ld_context(cls):
