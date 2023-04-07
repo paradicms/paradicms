@@ -35,6 +35,7 @@ import {createFilterControls} from "./createFilterControls";
 import {calculatePageMax} from "@paradicms/utilities";
 import {WorkAgentsSortDropdown} from "./WorkAgentsSortDropdown";
 import {WorksSortDropdown} from "./WorksSortDropdown";
+import {valueThumbnailTargetDimensions} from "./valueThumbnailTargetDimensions";
 
 type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
 
@@ -150,11 +151,9 @@ export const WorkSearchPage: React.FunctionComponent<{
             offset: worksPage * objectsPerPage,
             sort: worksSort,
             valueFacetValueThumbnailSelector: {
-              targetDimensions: galleryThumbnailTargetDimensions,
+              targetDimensions: valueThumbnailTargetDimensions,
             },
-            workJoinSelector: workSearchWorkJoinSelector(
-              galleryThumbnailTargetDimensions
-            ),
+            workJoinSelector: workSearchWorkJoinSelector,
           },
           worksQuery
         )

@@ -4,7 +4,6 @@ import {ModelSet, ModelSubsetter} from "@paradicms/models";
 import {Layout} from "components/Layout";
 import {GetStaticProps} from "next";
 import {
-  galleryThumbnailTargetDimensions,
   WorkSearchPage,
   workSearchWorkJoinSelector,
 } from "@paradicms/react-dom-components";
@@ -103,10 +102,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
       modelSetString: new ModelSubsetter({
         completeModelSet,
       })
-        .worksModelSet(
-          completeModelSet.works,
-          workSearchWorkJoinSelector(galleryThumbnailTargetDimensions)
-        )
+        .worksModelSet(completeModelSet.works, workSearchWorkJoinSelector)
         .addAppConfiguration(completeModelSet.appConfiguration)
         .build()
         .toFastRdfString(),
