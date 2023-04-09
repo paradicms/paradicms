@@ -31,7 +31,9 @@ class ImagesLoader:
 
     THUMBNAIL_MAX_DIMENSIONS_DEFAULT = (
         ImageDimensions(height=200, width=200),
+        ImageDimensions(height=400, width=400),
         ImageDimensions(height=600, width=600),
+        ImageDimensions(height=800, width=800),
     )
 
     def __init__(
