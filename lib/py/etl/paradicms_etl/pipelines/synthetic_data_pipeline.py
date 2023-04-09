@@ -231,23 +231,9 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             for agent in agents:
                 yield agent
 
-                yield Image.builder(
-                    depicts_uri=agent.uri,
-                    uri=URIRef(str(agent.uri) + ":Image"),
-                ).set_exact_dimensions(
-                    ImageDimensions(height=600, width=600)
-                ).add_rights(
-                    Rights.builder()
-                    .add_creator(f"{agent.name} image creator")
-                    .add_holder(f"{agent.name} image rights holder")
-                    .add_license(CreativeCommonsLicenses.NC_1_0.uri)
-                    .add_statement(RightsStatementsDotOrgRightsStatements.InC_EDU.uri)
-                    .build()
-                ).set_src(
-                    "https://paradicms.org/img/placeholder/1000x1000.png"
-                ).set_title(
-                    f"{agent.name} image"
-                ).build()
+                yield from self.__generate_images(
+                    depicts_uri=agent.uri, text_prefix=agent.name
+                )
 
         def __generate_collection_works(
             self,
@@ -306,8 +292,10 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 assert original.rights is not None
 
                 for thumbnail_dimensions in (
-                    ImageDimensions(75, 75),
+                    ImageDimensions(200, 200),
+                    ImageDimensions(400, 400),
                     ImageDimensions(600, 600),
+                    ImageDimensions(800, 800),
                 ):
                     yield Image.builder(
                         depicts_uri=depicts_uri,
