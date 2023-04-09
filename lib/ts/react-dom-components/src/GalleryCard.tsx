@@ -2,11 +2,12 @@ import {Image} from "@paradicms/models";
 import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 import {RightsParagraph} from "./RightsParagraph";
 import * as React from "react";
-import {Card, CardBody, CardFooter, CardHeader} from "reactstrap";
+import {Card, CardBody, CardText, CardTitle} from "reactstrap";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "xx-small",
   marginBottom: 0,
+  marginTop: 0,
 };
 
 // @ts-ignore
@@ -16,12 +17,18 @@ export const GalleryCard: React.FunctionComponent<{
   subtitle?: React.ReactElement | string | null;
   title: React.ReactElement | string;
 }> = ({getAbsoluteImageSrc, thumbnail, subtitle, title}) => (
-  <Card className="text-center">
-    <CardHeader tag="h4">
-      {title}
-      {/*<CardTitle>{title}</CardTitle>*/}
-    </CardHeader>
-    <CardBody>
+  <Card
+    className="border-0"
+    style={{
+      maxWidth: galleryThumbnailSelector.targetDimensions.width,
+    }}
+  >
+    <div
+      className="d-flex justify-content-center"
+      style={{
+        minHeight: galleryThumbnailSelector.targetDimensions.height,
+      }}
+    >
       <img
         src={
           thumbnail?.src
@@ -29,26 +36,32 @@ export const GalleryCard: React.FunctionComponent<{
             : Image.placeholderSrc(galleryThumbnailSelector.targetDimensions)
         }
         style={{
+          alignSelf: "center",
           maxHeight: galleryThumbnailSelector.targetDimensions.height,
           maxWidth: galleryThumbnailSelector.targetDimensions.width,
         }}
       />
-    </CardBody>
-    {subtitle || (thumbnail && thumbnail.rights?.requiresAttribution) ? (
-      <CardFooter>
-        {thumbnail && thumbnail.rights?.requiresAttribution ? (
-          <div className="mb-2">
+    </div>
+    <CardBody className="text-center">
+      <CardTitle className="mb-1" tag="h5">
+        {title}
+      </CardTitle>
+      {subtitle || (thumbnail && thumbnail.rights?.requiresAttribution) ? (
+        <CardText>
+          {subtitle ? (
+            <p className="mb-1" style={{fontSize: "small"}}>
+              {subtitle}
+            </p>
+          ) : null}
+          {thumbnail && thumbnail.rights?.requiresAttribution ? (
             <RightsParagraph
               material="Image"
               rights={thumbnail.rights}
               style={RIGHTS_STYLE}
             />
-          </div>
-        ) : null}
-        {subtitle ? (
-          <p style={{fontSize: "small", marginBottom: 0}}>{subtitle}</p>
-        ) : null}
-      </CardFooter>
-    ) : null}
+          ) : null}
+        </CardText>
+      ) : null}
+    </CardBody>
   </Card>
 );
