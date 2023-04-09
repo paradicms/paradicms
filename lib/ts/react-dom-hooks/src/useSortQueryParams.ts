@@ -15,17 +15,12 @@ export const useSortQueryParams = <PropertyT>(
     StringParam
   );
 
-  console.info(namePrefix, "ascending", ascending);
-  console.info(namePrefix, "property", property);
-
   const setSort = useCallback(
     (sort: Sort<PropertyT> | undefined) => {
       if (sort) {
-        console.info("set", namePrefix, "sort:", JSON.stringify(sort));
         setAscending(sort.ascending);
         setProperty(sort.property as string);
       } else {
-        console.info("unset", namePrefix, "sort");
         setAscending(undefined);
         setProperty(undefined);
       }
