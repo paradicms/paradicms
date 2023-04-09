@@ -395,15 +395,15 @@ export const WorkSearchPage: React.FunctionComponent<{
           </Col>
         </Row>
       </>
-      {getWorksResult.totalWorksCount > 0 ? (
-        <Row>
-          {filtersControls.length > 0 ? (
-            <Col xs={3}>
-              <FiltersControlsAccordion filtersControls={filtersControls} />
-            </Col>
-          ) : null}
-          <Col xs={filtersControls.length > 0 ? 9 : 12}>
-            {tabs.length === 1 ? (
+      <Row>
+        {filtersControls.length > 0 ? (
+          <Col xs={3}>
+            <FiltersControlsAccordion filtersControls={filtersControls} />
+          </Col>
+        ) : null}
+        <Col xs={filtersControls.length > 0 ? 9 : 12}>
+          {getWorksResult.totalWorksCount > 0 ? (
+            tabs.length === 1 ? (
               tabs[0].content
             ) : (
               <>
@@ -430,10 +430,10 @@ export const WorkSearchPage: React.FunctionComponent<{
                   ))}
                 </TabContent>
               </>
-            )}
-          </Col>
-        </Row>
-      ) : null}
+            )
+          ) : null}
+        </Col>
+      </Row>
     </Container>
   );
 };
