@@ -32,7 +32,7 @@ describe("ValueFilterState", () => {
   });
 
   it("should exclude unknown values", () => {
-    sut.excludeUnknown = true;
+    sut.excludeUnknown();
     const expected: ValueFilter<string> = {
       ...emptyFilter(),
       excludeUnknown: true,
