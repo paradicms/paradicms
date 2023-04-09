@@ -48,18 +48,6 @@ export const ValueFilterSelect = <T extends JsonPrimitiveType>(props: {
 }) => {
   const {facet, filter, onChange} = props;
 
-  const getOptionLabel = <T extends JsonPrimitiveType>(
-    option: ValueFilterSelectOption<T>
-  ): string => {
-    switch (option.type) {
-      case "Known":
-      case "Unknown":
-        return `${filter.label}: ${option.type}`;
-      case "Value":
-        return `${filter.label}: ${option.label}`;
-    }
-  };
-
   const options: ValueFilterSelectOption<T>[] = useMemo(
     () =>
       [
@@ -79,7 +67,9 @@ export const ValueFilterSelect = <T extends JsonPrimitiveType>(props: {
               } as ValueFilterSelectOption<T>)
           )
           .sort((left, right) =>
-            getOptionLabel(left).localeCompare(getOptionLabel(right))
+            (left as ValueValueFilterSelectOption<T>).label.localeCompare(
+              (right as ValueValueFilterSelectOption<T>).label
+            )
           )
       ),
     [facet]
@@ -96,7 +86,26 @@ export const ValueFilterSelect = <T extends JsonPrimitiveType>(props: {
   return (
     <Select<ValueFilterSelectOption<T>, true>
       backspaceRemovesValue={true}
-      getOptionLabel={getOptionLabel}
+      formatOptionLabel={(option, formatOptionLabelMeta) => {
+        switch (formatOptionLabelMeta.context) {
+          case "menu":
+            switch (option.type) {
+              case "Known":
+              case "Unknown":
+                return option.type;
+              case "Value":
+                return option.label;
+            }
+          case "value":
+            switch (option.type) {
+              case "Known":
+              case "Unknown":
+                return `${filter.label}: ${option.type}`;
+              case "Value":
+                return `${filter.label}: ${option.label}`;
+            }
+        }
+      }}
       getOptionValue={getOptionValue}
       isClearable={true}
       isMulti={true}
