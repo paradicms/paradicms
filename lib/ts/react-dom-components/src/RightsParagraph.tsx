@@ -8,7 +8,8 @@ export const RightsParagraph: React.FunctionComponent<{
   material: string;
   rights: Rights;
   style?: React.CSSProperties;
-}> = ({material, rights, style}) => {
+  tag?: React.ElementType;
+}> = ({material, rights, style, tag}) => {
   if (!rights.requiresAttribution) {
     return null;
   }
@@ -68,9 +69,11 @@ export const RightsParagraph: React.FunctionComponent<{
     return null;
   }
 
+  const Tag = tag || "p";
+
   return (
-    <p style={style}>
+    <Tag style={style}>
       {material}: {rightsElements}
-    </p>
+    </Tag>
   );
 };

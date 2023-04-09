@@ -47,14 +47,15 @@ export const GalleryCard: React.FunctionComponent<{
         {title}
       </CardTitle>
       {subtitle || (thumbnail && thumbnail.rights?.requiresAttribution) ? (
-        <CardText>
+        <CardText tag="div">
           {subtitle ? (
-            <p className="mb-1" style={{fontSize: "small"}}>
+            <div className="mb-1" style={{fontSize: "small"}}>
               {subtitle}
-            </p>
+            </div>
           ) : null}
           {thumbnail && thumbnail.rights?.requiresAttribution ? (
             <RightsParagraph
+              tag="div"
               material="Image"
               rights={thumbnail.rights}
               style={RIGHTS_STYLE}
