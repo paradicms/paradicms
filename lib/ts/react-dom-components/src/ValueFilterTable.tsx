@@ -59,7 +59,7 @@ export const ValueFilterTable = <T extends JsonPrimitiveType>(
       count: facet.unknownCount,
       id: "unknown",
       label: "Unknown",
-      selected: state.includeUnknown,
+      selected: state.includesUnknown,
     });
     for (const value of facet.values) {
       rows.push({
@@ -91,7 +91,7 @@ export const ValueFilterTable = <T extends JsonPrimitiveType>(
           if (typeof selectedRow.value !== "undefined") {
             state.includeValue(selectedRow.value);
           } else {
-            state.includeUnknown = true;
+            state.includeUnknown();
           }
         }
       }
