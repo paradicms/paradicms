@@ -28,18 +28,6 @@ type ValueFilterSelectOption<T extends JsonPrimitiveType> =
   | UnknownValueFilterSelectOption
   | ValueValueFilterSelectOption<T>;
 
-const getOptionLabel = <T extends JsonPrimitiveType>(
-  option: ValueFilterSelectOption<T>
-): string => {
-  switch (option.type) {
-    case "Known":
-    case "Unknown":
-      return option.type;
-    case "Value":
-      return option.label;
-  }
-};
-
 const getOptionValue = <T extends JsonPrimitiveType>(
   option: ValueFilterSelectOption<T>
 ): string => {
@@ -59,6 +47,18 @@ export const ValueFilterSelect = <T extends JsonPrimitiveType>(props: {
   onChange: (newFilter: ValueFilter<T>) => void;
 }) => {
   const {facet, filter, onChange} = props;
+
+  const getOptionLabel = <T extends JsonPrimitiveType>(
+    option: ValueFilterSelectOption<T>
+  ): string => {
+    switch (option.type) {
+      case "Known":
+      case "Unknown":
+        return `${filter.label}: ${option.type}`;
+      case "Value":
+        return `${filter.label}: ${option.label}`;
+    }
+  };
 
   const options: ValueFilterSelectOption<T>[] = useMemo(
     () =>
