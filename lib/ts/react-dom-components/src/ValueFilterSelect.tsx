@@ -101,10 +101,20 @@ export const ValueFilterSelect = <T extends JsonPrimitiveType>(props: {
       isClearable={true}
       isMulti={true}
       onChange={(options, actionMeta) => {
-        console.debug("onChange options:", JSON.stringify(options));
-        console.debug("onChange actionMeta:", JSON.stringify(actionMeta));
+        console.debug(
+          "ValueFilterSelect onChange options:",
+          JSON.stringify(options)
+        );
+        console.debug(
+          "ValueFilterSelect onChange actionMeta:",
+          JSON.stringify(actionMeta)
+        );
 
         const oldStateSnapshot = state.snapshot;
+        console.debug(
+          "ValueFilterSelect: old snapshot:",
+          JSON.stringify(oldStateSnapshot)
+        );
 
         if (options.length === 0) {
           state.includeAll();
@@ -114,12 +124,15 @@ export const ValueFilterSelect = <T extends JsonPrimitiveType>(props: {
             switch (option.type) {
               case "Known":
                 state.includeKnown();
+                console.debug("ValueFilterSelect: include known");
                 break;
               case "Unknown":
                 state.includeUnknown();
+                console.debug("ValueFilterSelect: include unknown");
                 break;
               case "Value":
                 state.includeValue(option.value);
+                console.debug("ValueFilterSelect: include value", option.value);
                 break;
             }
           }
@@ -129,6 +142,10 @@ export const ValueFilterSelect = <T extends JsonPrimitiveType>(props: {
         if (
           JSON.stringify(oldStateSnapshot) !== JSON.stringify(newStateSnapshot)
         ) {
+          console.debug(
+            "ValueFilterSelect: change to new snapshot:",
+            JSON.stringify(newStateSnapshot)
+          );
           onChange(newStateSnapshot);
         }
       }}

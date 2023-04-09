@@ -89,4 +89,16 @@ describe("ValueFilterState", () => {
     };
     expect(sut.snapshot).to.deep.eq(expected);
   });
+
+  it("should include a single value and all unknowns", () => {
+    sut.excludeAll();
+    sut.includeUnknown();
+    sut.includeValue("test1");
+    const expected: ValueFilter<string> = {
+      ...emptyFilter(),
+      // excludeUnknown: false,
+      includeValues: ["test1"],
+    };
+    expect(sut.snapshot).to.deep.eq(expected);
+  });
 });

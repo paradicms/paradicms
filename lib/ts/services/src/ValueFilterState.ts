@@ -118,7 +118,7 @@ export class ValueFilterState<
   }
 
   get includesKnown() {
-    return this.valueUniverse.every(value => this.includesValue(value));
+    return this.includeValueSet.size === this.valueUniverse.length;
   }
 
   get includesUnknown() {
