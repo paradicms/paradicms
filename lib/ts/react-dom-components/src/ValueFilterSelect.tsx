@@ -11,10 +11,12 @@ import Select from "react-select";
 import {valueThumbnailSelector} from "./valueThumbnailSelector";
 
 interface KnownValueFilterSelectOption {
+  count: number;
   type: "Known";
 }
 
 interface UnknownValueFilterSelectOption {
+  count: number;
   type: "Unknown";
 }
 
@@ -55,8 +57,19 @@ export const ValueFilterSelect = <T extends JsonPrimitiveType>(props: {
 
   const options: ValueFilterSelectOption<T>[] = useMemo(() => {
     const options: ValueFilterSelectOption<T>[] = [];
-    options.push({type: "Known"});
-    options.push({type: "Unknown"});
+    if (facet.unknownCount > 0) {
+      const knownCount = facet.values.reduce(
+        (sum, value) => value.count + sum,
+        0
+      );
+      if (knownCount > 0) {
+        options.push({
+          count: knownCount,
+          type: "Known",
+        });
+      }
+      options.push({count: facet.unknownCount, type: "Unknown"});
+    }
     for (const value of facet.values) {
       options.push({
         count: value.count,
@@ -86,10 +99,11 @@ export const ValueFilterSelect = <T extends JsonPrimitiveType>(props: {
             switch (option.type) {
               case "Known":
               case "Unknown":
-                return option.type;
+                return `${option.type} (${option.count})`;
               case "Value": {
+                const label = `${option.label} (${option.count})`;
                 if (!option.thumbnail) {
-                  return option.label;
+                  return label;
                 }
                 return (
                   <figure
@@ -98,7 +112,7 @@ export const ValueFilterSelect = <T extends JsonPrimitiveType>(props: {
                       width: valueThumbnailSelector.targetDimensions.width,
                     }}
                   >
-                    <figcaption className="mb-1">{option.label}</figcaption>
+                    <figcaption className="mb-1">{label}</figcaption>
                     <img src={getAbsoluteImageSrc(option.thumbnail.src)} />
                   </figure>
                 );
