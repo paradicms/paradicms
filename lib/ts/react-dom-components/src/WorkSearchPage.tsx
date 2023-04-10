@@ -10,7 +10,6 @@ import {
 } from "reactstrap";
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {FiltersBadges} from "./FiltersBadges";
 import {WorksGallery} from "./WorksGallery";
 import {Pagination} from "./Pagination";
 import {
@@ -382,15 +381,6 @@ export const WorkSearchPage: React.FunctionComponent<{
                 <span>matched</span>
               )}
             </h6>
-            {worksQuery.filters.length > 0 ? (
-              <div>
-                <FiltersBadges
-                  facets={getWorksResult.facets}
-                  filters={worksQuery.filters}
-                  onChangeFilters={onChangeFilters}
-                />
-              </div>
-            ) : null}
           </Col>
         </Row>
       </>
