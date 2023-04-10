@@ -3,10 +3,12 @@ import {useMemo} from "react";
 import {
   JsonPrimitiveType,
   ValueFacet,
+  ValueFacetValueThumbnail,
   ValueFilter,
   ValueFilterState,
 } from "@paradicms/services";
 import Select from "react-select";
+import {valueThumbnailSelector} from "./valueThumbnailSelector";
 
 interface KnownValueFilterSelectOption {
   type: "Known";
@@ -19,6 +21,7 @@ interface UnknownValueFilterSelectOption {
 interface ValueValueFilterSelectOption<T extends JsonPrimitiveType> {
   count: number;
   label: string;
+  thumbnail: ValueFacetValueThumbnail | null;
   type: "Value";
   value: T;
 }
@@ -46,34 +49,25 @@ export const ValueFilterSelect = <T extends JsonPrimitiveType>(props: {
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   onChange: (newFilter: ValueFilter<T>) => void;
 }) => {
-  const {facet, filter, onChange} = props;
+  const {facet, filter, getAbsoluteImageSrc, onChange} = props;
 
-  const options: ValueFilterSelectOption<T>[] = useMemo(
-    () =>
-      [
-        {type: "Known"} as ValueFilterSelectOption<T>,
-        {
-          type: "Unknown",
-        } as ValueFilterSelectOption<T>,
-      ].concat(
-        facet.values
-          .map(
-            value =>
-              ({
-                count: value.count,
-                label: value.label ?? value.value.toString(),
-                type: "Value",
-                value: value.value,
-              } as ValueFilterSelectOption<T>)
-          )
-          .sort((left, right) =>
-            (left as ValueValueFilterSelectOption<T>).label.localeCompare(
-              (right as ValueValueFilterSelectOption<T>).label
-            )
-          )
-      ),
-    [facet]
-  );
+  const useThumbnails = facet.values.every(value => !!value.thumbnail);
+
+  const options: ValueFilterSelectOption<T>[] = useMemo(() => {
+    const options: ValueFilterSelectOption<T>[] = [];
+    options.push({type: "Known"});
+    options.push({type: "Unknown"});
+    for (const value of facet.values) {
+      options.push({
+        count: value.count,
+        label: value.label ?? value.value.toString(),
+        thumbnail: useThumbnails ? value.thumbnail! : null,
+        type: "Value",
+        value: value.value,
+      });
+    }
+    return options;
+  }, [facet]);
 
   // @ts-ignore
   const state = useMemo(() => {
@@ -93,8 +87,22 @@ export const ValueFilterSelect = <T extends JsonPrimitiveType>(props: {
               case "Known":
               case "Unknown":
                 return option.type;
-              case "Value":
-                return option.label;
+              case "Value": {
+                if (!option.thumbnail) {
+                  return option.label;
+                }
+                return (
+                  <figure
+                    className="text-center w-100"
+                    style={{
+                      width: valueThumbnailSelector.targetDimensions.width,
+                    }}
+                  >
+                    <figcaption className="mb-1">{option.label}</figcaption>
+                    <img src={getAbsoluteImageSrc(option.thumbnail.src)} />
+                  </figure>
+                );
+              }
             }
           case "value":
             switch (option.type) {
