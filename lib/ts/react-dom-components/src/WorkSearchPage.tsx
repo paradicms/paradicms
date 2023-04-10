@@ -29,7 +29,6 @@ import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 import {useQueryParam} from "use-query-params";
 import {AgentsGallery} from "./AgentsGallery";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
-import {FiltersControlsAccordion} from "./FiltersControlsAccordion";
 import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 import {createFilterControls} from "./createFilterControls";
 import {calculatePageMax} from "@paradicms/utilities";
@@ -259,7 +258,7 @@ export const WorkSearchPage: React.FunctionComponent<{
   //   return <h3>No matching works found.</h3>;
   // }
 
-  const filtersControls = createFilterControls({
+  const filterControls = createFilterControls({
     facets: getWorksResult.facets,
     filters: worksQuery.filters,
     getAbsoluteImageSrc,
@@ -396,12 +395,29 @@ export const WorkSearchPage: React.FunctionComponent<{
         </Row>
       </>
       <Row>
-        {filtersControls.length > 0 ? (
+        {filterControls.length > 0 ? (
           <Col xs={3}>
-            <FiltersControlsAccordion filtersControls={filtersControls} />
+            <Container className="mx-0 px-0" fluid>
+              {filterControls.map(
+                ({control: filterControl, filter}, filterControlI) => (
+                  <Row
+                    className={
+                      filterControlI + 1 < filterControls.length
+                        ? "mb-4"
+                        : undefined
+                    }
+                    key={filterControlI}
+                  >
+                    <Col className="px-0" xs={12}>
+                      {filterControl}
+                    </Col>
+                  </Row>
+                )
+              )}
+            </Container>
           </Col>
         ) : null}
-        <Col xs={filtersControls.length > 0 ? 9 : 12}>
+        <Col xs={filterControls.length > 0 ? 9 : 12}>
           {getWorksResult.totalWorksCount > 0 ? (
             tabs.length === 1 ? (
               tabs[0].content

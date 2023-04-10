@@ -3,7 +3,6 @@ export * from "./createFilterControl";
 export * from "./createFilterControls";
 export * from "./defaultBootstrapStylesheetHref";
 export * from "./FiltersBadges";
-export * from "./FiltersControlsAccordion";
 export * from "./FontAwesomeCarouselControl";
 export * from "./Gallery";
 export * from "./getNamedModelLinks";
