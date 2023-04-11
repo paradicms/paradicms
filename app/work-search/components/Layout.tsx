@@ -81,9 +81,9 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
           href={configuration?.stylesheet ?? defaultBootstrapStylesheetHref}
         />
       </Head>
-      <Container fluid>
+      <Container className="px-0" fluid>
         <Row>
-          <Col>
+          <Col className="px-0">
             <Navbar>
               <NavbarBrand className="me-auto" tag="div">
                 {siteTitle ? (
@@ -101,8 +101,8 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
           </Col>
         </Row>
         <Row>
-          <Col>
-            <Card>
+          <Col className="px-0">
+            <Card className="border-0">
               {title ? (
                 <CardHeader className="text-center" tag="h3">
                   <div>{title}</div>

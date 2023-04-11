@@ -1,9 +1,13 @@
 import {
+  Button,
   Col,
   Container,
   Nav,
   NavItem,
   NavLink,
+  Offcanvas,
+  OffcanvasBody,
+  OffcanvasHeader,
   Row,
   TabContent,
   TabPane,
@@ -34,6 +38,9 @@ import {calculatePageMax} from "@paradicms/utilities";
 import {WorkAgentsSortDropdown} from "./WorkAgentsSortDropdown";
 import {WorksSortDropdown} from "./WorksSortDropdown";
 import {valueThumbnailSelector} from "./valueThumbnailSelector";
+import {FilterControlsContainer} from "./FilterControlsContainer";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faFilter} from "@fortawesome/free-solid-svg-icons";
 
 type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
 
@@ -249,6 +256,8 @@ export const WorkSearchPage: React.FunctionComponent<{
     }
   }, [activeTabKeyQueryParam, worksQuery, workQueryService, workAgentsPage]);
 
+  const [showFilters, setShowFilters] = useState<boolean>(false);
+
   if (getWorksResult === null) {
     return null;
   }
@@ -271,8 +280,48 @@ export const WorkSearchPage: React.FunctionComponent<{
     content: (
       <Container fluid>
         <Row className="mb-4">
-          <Col className="d-flex justify-content-end">
-            <WorksSortDropdown onChange={setWorksSort} value={worksSort} />
+          <Col className="d-flex justify-content-end px-0">
+            <div className="d-flex flex-column justify-content-center pe-4">
+              <div>
+                <span>{getWorksResult.totalWorksCount}</span>&nbsp;
+                <span>
+                  {getWorksResult.totalWorksCount === 1 ? "work" : "works"}
+                </span>
+                &nbsp;
+                {worksQuery.text ? (
+                  <span>
+                    matching <i>{worksQuery.text}</i>
+                  </span>
+                ) : (
+                  <span>matched</span>
+                )}
+              </div>
+            </div>
+            <span className="d-inline-block pe-4">
+              <WorksSortDropdown onChange={setWorksSort} value={worksSort} />
+            </span>
+            {filterControls.length > 0 ? (
+              <>
+                <Button onClick={() => setShowFilters(true)} variant="primary">
+                  <span>
+                    <span className="d-inline-block pe-2">Filter</span>
+                    <FontAwesomeIcon icon={faFilter} style={{width: "1rem"}} />
+                  </span>
+                </Button>
+                <Offcanvas
+                  direction="end"
+                  isOpen={showFilters}
+                  toggle={() => setShowFilters(!showFilters)}
+                >
+                  <OffcanvasHeader toggle={() => setShowFilters(!showFilters)}>
+                    <strong>Filter works</strong>
+                  </OffcanvasHeader>
+                  <OffcanvasBody className="p-4">
+                    <FilterControlsContainer filterControls={filterControls} />
+                  </OffcanvasBody>
+                </Offcanvas>
+              </>
+            ) : null}
           </Col>
         </Row>
         <Row>
@@ -283,7 +332,7 @@ export const WorkSearchPage: React.FunctionComponent<{
           />
         </Row>
         {worksPageMax({getWorksResult, objectsPerPage}) > 0 ? (
-          <Row className="mt-4">
+          <Row style={{marginTop: "-25px"}}>
             <Col className="d-flex justify-content-center" xs={12}>
               <Pagination
                 count={worksPageMax({getWorksResult, objectsPerPage}) + 1}
@@ -363,83 +412,35 @@ export const WorkSearchPage: React.FunctionComponent<{
   }
 
   return (
-    <Container className="px-0" fluid>
-      <>
-        <Row>
-          <Col className="d-flex justify-content-between" xs={12}>
-            <h6 className="mb-0">
-              <span>{getWorksResult.totalWorksCount}</span>&nbsp;
-              <span>
-                {getWorksResult.totalWorksCount === 1 ? "work" : "works"}
-              </span>
-              &nbsp;
-              {worksQuery.text ? (
-                <span>
-                  matching <i>{worksQuery.text}</i>
-                </span>
-              ) : (
-                <span>matched</span>
-              )}
-            </h6>
-          </Col>
-        </Row>
-      </>
-      <Row>
-        {filterControls.length > 0 ? (
-          <Col xs={3}>
-            <Container className="mx-0 px-0" fluid>
-              {filterControls.map(
-                ({control: filterControl, filter}, filterControlI) => (
-                  <Row
-                    className={
-                      filterControlI + 1 < filterControls.length
-                        ? "mb-4"
-                        : undefined
-                    }
-                    key={filterControlI}
+    <>
+      {getWorksResult.totalWorksCount > 0 ? (
+        tabs.length === 1 ? (
+          tabs[0].content
+        ) : (
+          <>
+            <Nav tabs>
+              {tabs.map(tab => (
+                <NavItem key={tab.key}>
+                  <NavLink
+                    className={activeTabKey === tab.key ? "active" : undefined}
+                    onClick={() => setActiveTabKey(tab.key)}
+                    style={{cursor: "pointer", fontSize: "small"}}
                   >
-                    <Col className="px-0" xs={12}>
-                      {filterControl}
-                    </Col>
-                  </Row>
-                )
-              )}
-            </Container>
-          </Col>
-        ) : null}
-        <Col xs={filterControls.length > 0 ? 9 : 12}>
-          {getWorksResult.totalWorksCount > 0 ? (
-            tabs.length === 1 ? (
-              tabs[0].content
-            ) : (
-              <>
-                <Nav tabs>
-                  {tabs.map(tab => (
-                    <NavItem key={tab.key}>
-                      <NavLink
-                        className={
-                          activeTabKey === tab.key ? "active" : undefined
-                        }
-                        onClick={() => setActiveTabKey(tab.key)}
-                        style={{cursor: "pointer", fontSize: "small"}}
-                      >
-                        {tab.title}
-                      </NavLink>
-                    </NavItem>
-                  ))}
-                </Nav>
-                <TabContent activeTab={activeTabKey}>
-                  {tabs.map(tab => (
-                    <TabPane key={tab.key} tabId={tab.key}>
-                      <div className="mt-2">{tab.content}</div>
-                    </TabPane>
-                  ))}
-                </TabContent>
-              </>
-            )
-          ) : null}
-        </Col>
-      </Row>
-    </Container>
+                    {tab.title}
+                  </NavLink>
+                </NavItem>
+              ))}
+            </Nav>
+            <TabContent activeTab={activeTabKey}>
+              {tabs.map(tab => (
+                <TabPane key={tab.key} tabId={tab.key}>
+                  <div className="mt-2">{tab.content}</div>
+                </TabPane>
+              ))}
+            </TabContent>
+          </>
+        )
+      ) : null}
+    </>
   );
 };
