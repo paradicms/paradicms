@@ -19,7 +19,7 @@ describe("ModelSet", () => {
         expect(sut.workByUri(work.uri)).to.eq(work);
 
         const workImages = sut.imagesByDepictsUri(work.uri);
-        expect(workImages).to.have.length(6);
+        expect(workImages).to.have.length(10);
         for (const image of workImages) {
           expect(sut.imageByUri(image.uri)).to.eq(image);
         }
