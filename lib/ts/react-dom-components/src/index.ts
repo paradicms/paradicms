@@ -2,6 +2,7 @@ export * from "./AgentsGallery";
 export * from "./createFilterControl";
 export * from "./createFilterControls";
 export * from "./defaultBootstrapStylesheetHref";
+export * from "./FilterControlsContainer";
 export * from "./FontAwesomeCarouselControl";
 export * from "./Gallery";
 export * from "./getNamedModelLinks";
