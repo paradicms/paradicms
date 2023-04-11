@@ -83,7 +83,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
       </Head>
       <Container className="px-0" fluid>
         <Row>
-          <Col className="px-0">
+          <Col className="pe-0">
             <Navbar>
               <NavbarBrand className="me-auto" tag="div">
                 {siteTitle ? (
