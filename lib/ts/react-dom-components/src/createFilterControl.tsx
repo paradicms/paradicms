@@ -6,7 +6,7 @@ import {
   visitFilter,
 } from "@paradicms/services";
 import React from "react";
-import {ValueFilterControl} from "./ValueFilterControl";
+import {ValueFilterSelect} from "./ValueFilterSelect";
 
 /**
  * Create a control React element for a filter. Delegates to the factory for UI-framework specific elements.
@@ -38,13 +38,21 @@ export const createFilterControl = (kwds: {
           return null;
         }
         return (
-          <ValueFilterControl
+          <ValueFilterSelect
             facet={facet}
             filter={filter}
             getAbsoluteImageSrc={getAbsoluteImageSrc}
             onChange={onChangeFilter}
           />
         );
+        // return (
+        //   <ValueFilterControl
+        //     facet={facet}
+        //     filter={filter}
+        //     getAbsoluteImageSrc={getAbsoluteImageSrc}
+        //     onChange={onChangeFilter}
+        //   />
+        // );
       },
     },
     facets

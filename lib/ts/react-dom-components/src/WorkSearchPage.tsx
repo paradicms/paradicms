@@ -10,7 +10,6 @@ import {
 } from "reactstrap";
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {FiltersBadges} from "./FiltersBadges";
 import {WorksGallery} from "./WorksGallery";
 import {Pagination} from "./Pagination";
 import {
@@ -29,7 +28,6 @@ import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 import {useQueryParam} from "use-query-params";
 import {AgentsGallery} from "./AgentsGallery";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
-import {FiltersControlsAccordion} from "./FiltersControlsAccordion";
 import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 import {createFilterControls} from "./createFilterControls";
 import {calculatePageMax} from "@paradicms/utilities";
@@ -259,7 +257,7 @@ export const WorkSearchPage: React.FunctionComponent<{
   //   return <h3>No matching works found.</h3>;
   // }
 
-  const filtersControls = createFilterControls({
+  const filterControls = createFilterControls({
     facets: getWorksResult.facets,
     filters: worksQuery.filters,
     getAbsoluteImageSrc,
@@ -383,27 +381,35 @@ export const WorkSearchPage: React.FunctionComponent<{
                 <span>matched</span>
               )}
             </h6>
-            {worksQuery.filters.length > 0 ? (
-              <div>
-                <FiltersBadges
-                  facets={getWorksResult.facets}
-                  filters={worksQuery.filters}
-                  onChangeFilters={onChangeFilters}
-                />
-              </div>
-            ) : null}
           </Col>
         </Row>
       </>
-      {getWorksResult.totalWorksCount > 0 ? (
-        <Row>
-          {filtersControls.length > 0 ? (
-            <Col xs={3}>
-              <FiltersControlsAccordion filtersControls={filtersControls} />
-            </Col>
-          ) : null}
-          <Col xs={filtersControls.length > 0 ? 9 : 12}>
-            {tabs.length === 1 ? (
+      <Row>
+        {filterControls.length > 0 ? (
+          <Col xs={3}>
+            <Container className="mx-0 px-0" fluid>
+              {filterControls.map(
+                ({control: filterControl, filter}, filterControlI) => (
+                  <Row
+                    className={
+                      filterControlI + 1 < filterControls.length
+                        ? "mb-4"
+                        : undefined
+                    }
+                    key={filterControlI}
+                  >
+                    <Col className="px-0" xs={12}>
+                      {filterControl}
+                    </Col>
+                  </Row>
+                )
+              )}
+            </Container>
+          </Col>
+        ) : null}
+        <Col xs={filterControls.length > 0 ? 9 : 12}>
+          {getWorksResult.totalWorksCount > 0 ? (
+            tabs.length === 1 ? (
               tabs[0].content
             ) : (
               <>
@@ -430,10 +436,10 @@ export const WorkSearchPage: React.FunctionComponent<{
                   ))}
                 </TabContent>
               </>
-            )}
-          </Col>
-        </Row>
-      ) : null}
+            )
+          ) : null}
+        </Col>
+      </Row>
     </Container>
   );
 };
