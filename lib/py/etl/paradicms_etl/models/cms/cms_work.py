@@ -1,9 +1,10 @@
-from typing import Optional, Tuple, Union
+from typing import Tuple, Union
 
-from rdflib import Graph, URIRef
+from rdflib import URIRef
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
+from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.rights import Rights
@@ -12,7 +13,7 @@ from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class Work(ResourceBackedNamedModel):
+class Work(ResourceBackedNamedModel, CmsRightsMixin):
     """
     Model of a work such as a painting or a garment.
 
@@ -21,7 +22,7 @@ class Work(ResourceBackedNamedModel):
 
     LABEL_PROPERTY = DCTERMS.title
 
-    class Builder(ResourceBackedNamedModel.Builder):
+    class Builder(ResourceBackedNamedModel.Builder, CmsRightsMixin.Builder):
         def __init__(self, *, title: str, uri: URIRef):
             ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
             self.set(DCTERMS.title, title)
@@ -32,11 +33,6 @@ class Work(ResourceBackedNamedModel):
 
         def add_page(self, page: Union[str, URIRef]) -> "Work.Builder":
             self.add(FOAF.page, page)
-            return self
-
-        def add_rights(self, rights: Rights) -> "Work.Builder":
-            for p, o in rights.to_rdf(graph=Graph()).predicate_objects():
-                self._resource.add(p.identifier, o)
             return self
 
         def build(self) -> "Work":
@@ -92,10 +88,6 @@ class Work(ResourceBackedNamedModel):
     @property
     def label(self) -> str:
         return self.title
-
-    @property
-    def rights(self) -> Optional[Rights]:
-        return Rights.from_rdf(resource=self._resource)
 
     @property
     def title(self) -> str:

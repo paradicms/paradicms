@@ -5,26 +5,21 @@ from rdflib import Literal, URIRef, Graph, XSD
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
+from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
-from paradicms_etl.models.rights import Rights
 from paradicms_etl.namespaces import CMS, EXIF
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class Image(ResourceBackedNamedModel):
+class Image(ResourceBackedNamedModel, CmsRightsMixin):
     LABEL_PROPERTY = DCTERMS.title
 
-    class Builder(ResourceBackedNamedModel.Builder):
+    class Builder(ResourceBackedNamedModel.Builder, CmsRightsMixin.Builder):
         def __init__(self, *, depicts_uri: URIRef, uri: URIRef):
             ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
             self.set(FOAF.depicts, depicts_uri)
-
-        def add_rights(self, rights: Rights) -> "Image.Builder":
-            for p, o in rights.to_rdf(graph=Graph()).predicate_objects():
-                self._resource.add(p.identifier, o)
-            return self
 
         def build(self) -> "Image":
             return Image(self._resource)
@@ -137,7 +132,7 @@ class Image(ResourceBackedNamedModel):
                     "width": {"@id": str(EXIF.width), "@type": str(XSD.integer)},
                 },
             ),
-            Rights.json_ld_context(),
+            CmsRightsMixin.json_ld_context(),
         )
 
     @property
@@ -163,10 +158,6 @@ class Image(ResourceBackedNamedModel):
             resource.remove(CMS.imageSrc)
             resource.add(CMS.imageSrc, Literal(src))
         return self.__class__(resource)
-
-    @property
-    def rights(self) -> Optional[Rights]:
-        return Rights.from_rdf(resource=self._resource)
 
     @property
     def src(self) -> Union[ImageData, str, None]:

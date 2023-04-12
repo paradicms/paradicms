@@ -1,12 +1,10 @@
 from typing import Union, Tuple
 
-from rdflib import URIRef, DCTERMS, BNode, Literal, Graph
+from rdflib import URIRef, DCTERMS, Literal
 from rdflib.resource import Resource
 
-from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 
-
-class Rights(ResourceBackedModel):
+class CmsRightsMixin:
     """
     Captures a group of properties that specify the rights of another model,
     such as the license and the rights statement.
@@ -20,7 +18,7 @@ class Rights(ResourceBackedModel):
         DCTERMS.rightsHolder,
     }
 
-    class Builder(ResourceBackedModel.Builder):
+    class Builder:
         def add_contributor(self, contributor: Union[str, URIRef]) -> "Rights.Builder":
             self.add(DCTERMS.contributor, contributor)
             return self
@@ -40,13 +38,6 @@ class Rights(ResourceBackedModel):
         def add_statement(self, statement: Union[str, URIRef]) -> "Rights.Builder":
             self.add(DCTERMS.rights, statement)
             return self
-
-        def build(self):
-            return Rights(self._resource)
-
-    @classmethod
-    def builder(cls) -> Builder:
-        return cls.Builder(BNode())
 
     @property
     def contributors(self) -> Tuple[Union[str, URIRef], ...]:
@@ -98,18 +89,3 @@ class Rights(ResourceBackedModel):
     @property
     def statement(self) -> Union[str, URIRef, None]:
         return self.__singular_value(DCTERMS.rights)
-
-    def to_rdf(self, graph: Graph) -> Resource:
-        resource = graph.resource(BNode())
-        for p, o in self._resource.predicate_objects():
-            if p.identifier not in self.__PROPERTY_URIS:
-                # Since the resource may belong to another model, carefully filter the properties
-                continue
-
-            if isinstance(o, Resource):
-                o_value = o.identifier
-            else:
-                assert isinstance(o, Literal)
-                o_value = o
-            resource.add(p.identifier, o_value)
-        return resource
