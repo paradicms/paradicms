@@ -1,5 +1,3 @@
-import logging
-
 from rdflib import RDF
 from rdflib.resource import Resource
 
