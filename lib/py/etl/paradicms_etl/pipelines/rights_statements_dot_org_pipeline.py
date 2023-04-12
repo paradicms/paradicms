@@ -7,6 +7,7 @@ from zipfile import ZipFile
 from rdflib import DCTERMS, Graph, Literal
 
 from paradicms_etl.model import Model
+from paradicms_etl.models.cms.cms_rights_statement import CmsRightsStatement
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.namespaces import bind_namespaces
 from paradicms_etl.pipeline import Pipeline
@@ -49,7 +50,7 @@ class RightsStatementsDotOrgPipeline(Pipeline):
             / "rights_statements_dot_org_rights_statements.py"
         )
         rights_statement_reprs = "\n\n".join(
-            f"    {rights_statement.identifier.replace('-', '_')} = RightsStatement.from_rdf(Graph().parse(data=r'''{rights_statement.to_rdf(bind_namespaces(Graph())).graph.serialize(format='ttl')}''', format='ttl').resource(URIRef('{rights_statement.uri}')))"
+            f"    {rights_statement.identifier.replace('-', '_')} = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''{rights_statement.to_rdf(bind_namespaces(Graph())).graph.serialize(format='ttl')}''', format='ttl').resource(URIRef('{rights_statement.uri}')))"
             for rights_statement in models
             if isinstance(rights_statement, RightsStatement)
         )
@@ -61,12 +62,12 @@ class RightsStatementsDotOrgPipeline(Pipeline):
 # -*- coding: utf-8 -*-
 
 from rdflib import Graph, URIRef
-from paradicms_etl.models.rights_statement import RightsStatement
+from paradicms_etl.models.cms.cms_rights_statement import CmsRightsStatement
 from paradicms_etl.models.model_singletons import ModelSingletons
 
 
 class RightsStatementsDotOrgRightsStatements(ModelSingletons):
-    _MODEL_CLASS = RightsStatement
+    _MODEL_CLASS = CmsRightsStatement
 
 {rights_statement_reprs}
 """
@@ -81,7 +82,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
             assert len(graph_subjects) == 1, graph_subjects
             uri = graph_subjects[0]
             graph.add((uri, DCTERMS.identifier, Literal(entry_id)))
-            yield RightsStatement.from_rdf(graph.resource(uri))
+            yield CmsRightsStatement.from_rdf(graph.resource(uri))
 
     def __init__(self, **kwds):
         Pipeline.__init__(
