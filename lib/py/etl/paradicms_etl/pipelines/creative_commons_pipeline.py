@@ -8,6 +8,7 @@ from zipfile import ZipFile
 from rdflib import Graph, Literal, Namespace
 
 from paradicms_etl.model import Model
+from paradicms_etl.models.cms.cms_license import CmsLicense
 from paradicms_etl.models.license import License
 from paradicms_etl.namespaces import bind_namespaces
 from paradicms_etl.pipeline import Pipeline
@@ -80,7 +81,7 @@ class CreativeCommonsPipeline(Pipeline):
                 en_license_graph.add((s, p, o))
 
             py_license_reprs.append(
-                f"    {py_license_identifier} = License.from_rdf(Graph().parse(data=r'''{en_license_graph.serialize(format='ttl')}''', format='ttl').resource(URIRef('{license.uri}')))"  # type: ignore
+                f"    {py_license_identifier} = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''{en_license_graph.serialize(format='ttl')}''', format='ttl').resource(URIRef('{license.uri}')))"  # type: ignore
             )
         py_license_reprs_joined = "\n".join(py_license_reprs)
 
@@ -92,12 +93,12 @@ class CreativeCommonsPipeline(Pipeline):
 # -*- coding: utf-8 -*-
 
 from rdflib import Graph, URIRef
-from paradicms_etl.models.license import License
+from paradicms_etl.models.cms.cms_license import CmsLicense
 from paradicms_etl.models.model_singletons import ModelSingletons
 
 
 class CreativeCommonsLicenses(ModelSingletons):
-    _MODEL_CLASS = License
+    _MODEL_CLASS = CmsLicense
 
 {py_license_reprs_joined}
 """
@@ -118,7 +119,7 @@ class CreativeCommonsLicenses(ModelSingletons):
             if graph.value(uri, CC["jurisdiction"]) is not None:
                 self.__logger.debug("skipping .rdf with jurisdiction %s", rdf_file_name)
                 continue
-            yield License.from_rdf(graph.resource(uri))
+            yield CmsLicense.from_rdf(graph.resource(uri))
 
 
 if __name__ == "__main__":
