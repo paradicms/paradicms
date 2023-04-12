@@ -2,21 +2,21 @@
 
 from rdflib import Graph, URIRef
 
+from paradicms_etl.models.cms.cms_rights_statement import CmsRightsStatement
 from paradicms_etl.models.model_singletons import ModelSingletons
-from paradicms_etl.models.rights_statement import RightsStatement
 
 
 class RightsStatementsDotOrgRightsStatements(ModelSingletons):
     _MODEL_CLASS = CmsRightsStatement
 
-    CNE = RightsStatement.from_rdf(
+    CNE = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-<http://rightsstatements.org/vocab/CNE/1.0/> a cms:RightsStatement ;
+<http://rightsstatements.org/vocab/CNE/1.0/> a cms:_MODEL_CLASS ;
     dcterms:description "This Rights Statement indicates that the organization that has published the Item has not evaluated the copyright and related rights status of the Item."@en ;
     dcterms:identifier "CNE" ;
     skos:definition """The copyright and related rights status of this Item has not been evaluated.
@@ -36,14 +36,14 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/CNE/1.0/"))
     )
 
-    InC_EDU = RightsStatement.from_rdf(
+    InC_EDU = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-<http://rightsstatements.org/vocab/InC-EDU/1.0/> a cms:RightsStatement ;
+<http://rightsstatements.org/vocab/InC-EDU/1.0/> a cms:_MODEL_CLASS ;
     dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright but that educational use is allowed without the need to obtain additional permission."@en ;
     dcterms:identifier "InC-EDU" ;
     skos:definition """This Item is protected by copyright and/or related rights.
@@ -63,14 +63,14 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/InC-EDU/1.0/"))
     )
 
-    InC_NC = RightsStatement.from_rdf(
+    InC_NC = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-<http://rightsstatements.org/vocab/InC-NC/1.0/> a cms:RightsStatement ;
+<http://rightsstatements.org/vocab/InC-NC/1.0/> a cms:_MODEL_CLASS ;
     dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright but that non-commercial use is allowed without the need to obtain additional permission."@en ;
     dcterms:identifier "InC-NC" ;
     skos:definition """This Item is protected by copyright and/or related rights.
@@ -90,14 +90,14 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/InC-NC/1.0/"))
     )
 
-    InC_OW_EU = RightsStatement.from_rdf(
+    InC_OW_EU = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-<http://rightsstatements.org/vocab/InC-OW-EU/1.0/> a cms:RightsStatement ;
+<http://rightsstatements.org/vocab/InC-OW-EU/1.0/> a cms:_MODEL_CLASS ;
     dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement has been identified as an ‘Orphan Work’ under the terms of the EU Orphan Works Directive."@en ;
     dcterms:identifier "InC-OW-EU" ;
     skos:definition """This Item has been identified as an orphan work in the country of first publication and in line with Directive 2012/28/EU of the European Parliament and of the Council of 25 October 2012 on certain permitted uses of orphan works.
@@ -118,14 +118,14 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/InC-OW-EU/1.0/"))
     )
 
-    InC_RUU = RightsStatement.from_rdf(
+    InC_RUU = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-<http://rightsstatements.org/vocab/InC-RUU/1.0/> a cms:RightsStatement ;
+<http://rightsstatements.org/vocab/InC-RUU/1.0/> a cms:_MODEL_CLASS ;
     dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement has been identified as in copyright, but its rights-holder(s) either cannot be identified or cannot be located."@en ;
     dcterms:identifier "InC-RUU" ;
     skos:definition """This Item is protected by copyright and/or related rights. However, for this Item, either (a) no rights-holder(s) have been identified or (b) one or more rights-holder(s) have been identified but none have been located.
@@ -144,14 +144,14 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/InC-RUU/1.0/"))
     )
 
-    InC = RightsStatement.from_rdf(
+    InC = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-<http://rightsstatements.org/vocab/InC/1.0/> a cms:RightsStatement ;
+<http://rightsstatements.org/vocab/InC/1.0/> a cms:_MODEL_CLASS ;
     dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright."@en ;
     dcterms:identifier "InC" ;
     skos:definition """This Item is protected by copyright and/or related rights.
@@ -171,14 +171,14 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/InC/1.0/"))
     )
 
-    NKC = RightsStatement.from_rdf(
+    NKC = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-<http://rightsstatements.org/vocab/NKC/1.0/> a cms:RightsStatement ;
+<http://rightsstatements.org/vocab/NKC/1.0/> a cms:_MODEL_CLASS ;
     dcterms:description "This Rights Statement indicates that the organization that has published the Item believes that no copyright or related rights are known to exist for the Item, but that a conclusive determination could not be made."@en ;
     dcterms:identifier "NKC" ;
     skos:definition """The organization that has made the Item available reasonably believes that the Item is not restricted by copyright or related rights, but a conclusive determination could not be made.
@@ -198,14 +198,14 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/NKC/1.0/"))
     )
 
-    NoC_CR = RightsStatement.from_rdf(
+    NoC_CR = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-<http://rightsstatements.org/vocab/NoC-CR/1.0/> a cms:RightsStatement ;
+<http://rightsstatements.org/vocab/NoC-CR/1.0/> a cms:_MODEL_CLASS ;
     dcterms:description "This Rights Statement indicates that the underlying Work is in the Public Domain, but the organization that has published the Item is contractually required to restrict certain forms of use by third parties."@en ;
     dcterms:identifier "NoC-CR" ;
     skos:definition """Use of this Item is not restricted by copyright and/or related rights.
@@ -225,14 +225,14 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/NoC-CR/1.0/"))
     )
 
-    NoC_NC = RightsStatement.from_rdf(
+    NoC_NC = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-<http://rightsstatements.org/vocab/NoC-NC/1.0/> a cms:RightsStatement ;
+<http://rightsstatements.org/vocab/NoC-NC/1.0/> a cms:_MODEL_CLASS ;
     dcterms:description "This Rights Statement indicates that the underlying Work is in the Public Domain, but the organization that has published the Item is contractually required to allow only non-commercial use by third parties."@en ;
     dcterms:identifier "NoC-NC" ;
     skos:definition """This Work has been digitized in a public-private partnership. As part of this partnership, the partners have agreed to limit commercial uses of this digital representation of the Work by third parties.
@@ -250,14 +250,14 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/NoC-NC/1.0/"))
     )
 
-    NoC_OKLR = RightsStatement.from_rdf(
+    NoC_OKLR = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-<http://rightsstatements.org/vocab/NoC-OKLR/1.0/> a cms:RightsStatement ;
+<http://rightsstatements.org/vocab/NoC-OKLR/1.0/> a cms:_MODEL_CLASS ;
     dcterms:description "This Rights Statement indicates that the underlying Work is in the Public Domain, but that there are known restrictions imposed by laws other than copyright and/or related rights on the use of the Item by third parties."@en ;
     dcterms:identifier "NoC-OKLR" ;
     skos:definition """Use of this Item is not restricted by copyright and/or related rights.
@@ -277,14 +277,14 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/NoC-OKLR/1.0/"))
     )
 
-    NoC_US = RightsStatement.from_rdf(
+    NoC_US = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-<http://rightsstatements.org/vocab/NoC-US/1.0/> a cms:RightsStatement ;
+<http://rightsstatements.org/vocab/NoC-US/1.0/> a cms:_MODEL_CLASS ;
     dcterms:description "This Rights Statement indicates that the Item is in the Public Domain under the laws of the United States, but that a determination was not made as to its copyright status under the copyright laws of other countries."@en ;
     dcterms:identifier "NoC-US" ;
     skos:definition """The organization that has made the Item available believes that the Item is in the Public Domain under the laws of the United States, but a determination was not made as to its copyright status under the copyright laws of other countries. The Item may not be in the Public Domain under the laws of other countries.
@@ -302,14 +302,14 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/NoC-US/1.0/"))
     )
 
-    UND = RightsStatement.from_rdf(
+    UND = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-<http://rightsstatements.org/vocab/UND/1.0/> a cms:RightsStatement ;
+<http://rightsstatements.org/vocab/UND/1.0/> a cms:_MODEL_CLASS ;
     dcterms:description "This Rights Statement indicates that the organization that has made the Item available has reviewed the copyright and related rights status of the Item, but was unable to determine the copyright status of the Item."@en ;
     dcterms:identifier "UND" ;
     skos:definition """The copyright and related rights status of this Item has been reviewed by the organization that has made the Item available, but the organization was unable to make a conclusive determination as to the copyright status of the Item.
@@ -329,14 +329,14 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/UND/1.0/"))
     )
 
-    collection_ic = RightsStatement.from_rdf(
+    collection_ic = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r"""@prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-<http://rightsstatements.org/vocab/collection-ic/1.0/> a cms:RightsStatement ;
+<http://rightsstatements.org/vocab/collection-ic/1.0/> a cms:_MODEL_CLASS ;
     dcterms:identifier "collection-ic" ;
     skos:prefLabel "Statements for works that are in copyright"@en .
 
@@ -346,14 +346,14 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/collection-ic/1.0/"))
     )
 
-    collection_nc = RightsStatement.from_rdf(
+    collection_nc = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r"""@prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-<http://rightsstatements.org/vocab/collection-nc/1.0/> a cms:RightsStatement ;
+<http://rightsstatements.org/vocab/collection-nc/1.0/> a cms:_MODEL_CLASS ;
     dcterms:identifier "collection-nc" ;
     skos:prefLabel "Statements for works that are not in copyright"@en .
 
@@ -363,14 +363,14 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/collection-nc/1.0/"))
     )
 
-    collection_other = RightsStatement.from_rdf(
+    collection_other = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r"""@prefix cms: <http://www.paradicms.org/ns/cms#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-<http://rightsstatements.org/vocab/collection-other/1.0/> a cms:RightsStatement ;
+<http://rightsstatements.org/vocab/collection-other/1.0/> a cms:_MODEL_CLASS ;
     dcterms:identifier "collection-other" ;
     skos:prefLabel "Statements for works where the copyright status is unclear"@en .
 

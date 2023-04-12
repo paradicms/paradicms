@@ -3,10 +3,10 @@ from typing import Union
 from rdflib import RDF, DCTERMS
 from rdflib.resource import Resource
 
+from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.event import Event
 from paradicms_etl.models.location import Location
-from paradicms_etl.models.resource_backed_named_model import CmsNamedModel
 from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import CMS, VRA
 from paradicms_etl.utils.safe_dict_update import safe_dict_update

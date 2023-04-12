@@ -1,14 +1,13 @@
 from rdflib import URIRef
 from rdflib.namespace import FOAF
 
-from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.cms.cms_agent import CmsAgent
 from paradicms_etl.models.person import Person
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class CmsPerson(CmsAgent, Person):
-    class Builder(Agent.Builder):
+    class Builder(CmsAgent.Builder):
         def build(self):
             return CmsPerson(self._resource)
 
@@ -27,7 +26,7 @@ class CmsPerson(CmsAgent, Person):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            Agent.json_ld_context(),
+            CmsAgent.json_ld_context(),
             {
                 "familyName": {"@id": str(FOAF.familyName)},
                 "givenName": {"@id": str(FOAF.givenName)},

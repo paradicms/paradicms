@@ -1,7 +1,7 @@
 from rdflib import DCTERMS, SKOS, URIRef
 from rdflib.resource import Resource
 
-from paradicms_etl.models.resource_backed_named_model import CmsNamedModel
+from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 

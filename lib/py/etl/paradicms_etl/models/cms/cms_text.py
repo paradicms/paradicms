@@ -1,8 +1,8 @@
 from rdflib import BNode, RDF
 from rdflib.resource import Resource
 
+from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
-from paradicms_etl.models.resource_backed_model import CmsModel
 from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update

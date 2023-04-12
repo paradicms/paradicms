@@ -1,3 +1,4 @@
+from abc import abstractmethod
 from typing import Tuple
 
 from rdflib import URIRef

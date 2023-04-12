@@ -1,7 +1,7 @@
 from rdflib import RDF, URIRef
 from rdflib.resource import Resource
 
-from paradicms_etl.models.event import CmsEvent
+from paradicms_etl.models.cms.cms_event import CmsEvent
 from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update

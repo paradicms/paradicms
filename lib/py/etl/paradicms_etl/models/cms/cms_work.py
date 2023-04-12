@@ -4,10 +4,9 @@ from rdflib import URIRef
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
+from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
 from paradicms_etl.models.location import Location
-from paradicms_etl.models.resource_backed_named_model import CmsNamedModel
-from paradicms_etl.models.rights_mixin import Rights
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import CMS

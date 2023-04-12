@@ -15,15 +15,15 @@ class CmsAgent(CmsNamedModel, Agent):
             CmsNamedModel.Builder.__init__(self, uri)
             self.set(FOAF.name, name)
 
-        def add_page(self, page: URIRef) -> "Agent.Builder":
+        def add_page(self, page: URIRef) -> "CmsAgent.Builder":
             self.add(FOAF.page, page)
             return self
 
-        def add_relation(self, relation: URIRef) -> "Agent.Builder":
+        def add_relation(self, relation: URIRef) -> "CmsAgent.Builder":
             self.add(DCTERMS.relation, relation)
             return self
 
-        def set_sort_name(self, sort_name: str) -> "Agent.Builder":
+        def set_sort_name(self, sort_name: str) -> "CmsAgent.Builder":
             self.set(CONTACT.sortName, sort_name)
             return self
 

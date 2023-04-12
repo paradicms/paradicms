@@ -2,8 +2,8 @@ from typing import Union, Text
 
 from rdflib import URIRef, RDFS
 
+from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.property_group import PropertyGroup
-from paradicms_etl.models.resource_backed_named_model import CmsNamedModel
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 

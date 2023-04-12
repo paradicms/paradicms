@@ -71,10 +71,6 @@ class ResourceBackedModel(Model):
             context[namespace_prefix] = str(namespace)
         return context
 
-    @property
-    def label(self) -> Optional[str]:
-        pass
-
     def __literal_values(
         self, p: Union[URIRef, Tuple[URIRef, ...]], expected_type=None
     ) -> Generator[_ValueT, None, None]:

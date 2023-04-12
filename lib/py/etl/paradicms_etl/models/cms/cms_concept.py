@@ -5,8 +5,8 @@ from rdflib.namespace import RDF
 from rdflib.resource import Resource
 from rdflib.term import Node, URIRef, Literal
 
+from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.concept import Concept
-from paradicms_etl.models.resource_backed_named_model import CmsNamedModel
 from paradicms_etl.models.text import Text
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 

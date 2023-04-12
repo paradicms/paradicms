@@ -1,9 +1,10 @@
-from typing import Union, Collection
+from typing import Union
 
 from rdflib import URIRef, FOAF
 from rdflib.namespace import DCTERMS
 
-from paradicms_etl.models.resource_backed_named_model import CmsNamedModel
+from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
+from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.text import Text
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
@@ -16,12 +17,12 @@ class CmsCollection(CmsNamedModel, Collection):
             CmsNamedModel.Builder.__init__(self, uri=uri)
             self.set(DCTERMS.title, title)
 
-        def build(self) -> "Collection":
-            return Collection(self._resource)
+        def build(self) -> "CmsCollection":
+            return CmsCollection(self._resource)
 
         def set_description(
             self, description: Union[str, Text]
-        ) -> "Collection.Builder":
+        ) -> "CmsCollection.Builder":
             self.set(DCTERMS.description, description)
             return self
 

@@ -5,6 +5,7 @@ from typing import Dict, Any
 from PIL import Image
 from rdflib import DCTERMS, RDF, Literal, XSD, BNode
 
+from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.models.image_data import ImageData
 
 

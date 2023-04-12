@@ -5,11 +5,12 @@ from rdflib import Literal, URIRef, Graph, XSD
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
+from paradicms_etl.models.cms.cms_image_data import CmsImageData
+from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.resource_backed_named_model import CmsNamedModel
 from paradicms_etl.namespaces import CMS, EXIF
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
@@ -174,7 +175,7 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
                         f"expected {CMS.imageSrc} literal to be a bytes or string, not a {type(o_python)}"
                     )
             elif isinstance(o, Resource):
-                return ImageData(o)
+                return CmsImageData(o)
             else:
                 continue
         return None

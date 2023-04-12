@@ -7,4 +7,4 @@ class Agent(NamedModel):
     @property
     @abstractmethod
     def label(self) -> str:
-        return self.name
+        pass

@@ -1,4 +1,5 @@
-from typing import Union, Tuple
+from abc import abstractmethod
+from typing import Union, Tuple, Any
 
 from rdflib import URIRef, DCTERMS, Literal
 from rdflib.resource import Resource
@@ -21,23 +22,31 @@ class CmsRightsMixin(RightsMixin):
     }
 
     class Builder:
-        def add_contributor(self, contributor: Union[str, URIRef]) -> "Rights.Builder":
+        @abstractmethod
+        def add(self, p: URIRef, o: Any):
+            pass
+
+        def add_contributor(
+            self, contributor: Union[str, URIRef]
+        ) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.contributor, contributor)
             return self
 
-        def add_creator(self, creator: Union[str, URIRef]) -> "Rights.Builder":
+        def add_creator(self, creator: Union[str, URIRef]) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.creator, creator)
             return self
 
-        def add_holder(self, holder: Union[str, URIRef]) -> "Rights.Builder":
+        def add_holder(self, holder: Union[str, URIRef]) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.rightsHolder, holder)
             return self
 
-        def add_license(self, license: Union[str, URIRef]) -> "Rights.Builder":
+        def add_license(self, license: Union[str, URIRef]) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.license, license)
             return self
 
-        def add_statement(self, statement: Union[str, URIRef]) -> "Rights.Builder":
+        def add_statement(
+            self, statement: Union[str, URIRef]
+        ) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.rights, statement)
             return self
 
@@ -83,6 +92,11 @@ class CmsRightsMixin(RightsMixin):
             elif isinstance(o, Resource):
                 values.append(o.identifier)
         return tuple(values)
+
+    @property
+    @abstractmethod
+    def _resource(self) -> Resource:
+        pass
 
     def __singular_value(self, p: URIRef) -> Union[str, URIRef, None]:
         values = self.__plural_values(p)

@@ -1,7 +1,10 @@
+from abc import abstractmethod
 from typing import Tuple, Union
 
 from rdflib import URIRef
 
+from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.text import Text
 
 
