@@ -4,8 +4,8 @@ from urllib.request import urlretrieve
 import PIL
 from rdflib import URIRef
 
-from paradicms_etl.models.image import Image
-from paradicms_etl.models.image_data import ImageData
+from paradicms_etl.models.cms.cms_image import CmsImage
+from paradicms_etl.models.cms.cms_image_data import CmsImageData
 from paradicms_ssg.original_image_file_cache import (
     OriginalImageFileCache,
 )
@@ -23,12 +23,12 @@ def test_cache_original_image_data(test_image_file_path: Path, tmp_path: Path):
     original_image_file_path = OriginalImageFileCache(
         cache_dir_path=tmp_path
     ).cache_original_image(
-        Image.builder(
+        CmsImage.builder(
             depicts_uri=URIRef("http://example.com"),
             uri=URIRef("http://example.com/image"),
         )
         .set_src(
-            ImageData.from_pil_image(image),
+            CmsImageData.from_pil_image(image),
         )
         .build()
     )
@@ -41,7 +41,7 @@ def test_cache_original_image_file_absent(tmp_path):
     assert not downloaded_image_file_path.is_file()
     try:
         OriginalImageFileCache(cache_dir_path=tmp_path).cache_original_image(
-            Image.builder(
+            CmsImage.builder(
                 depicts_uri=URIRef("http://example.com"),
                 uri=URIRef(downloaded_image_file_path.as_uri()),
             ).build()
@@ -61,7 +61,7 @@ def test_cache_original_image_file_present(tmp_path):
     original_image_file_path = OriginalImageFileCache(
         cache_dir_path=tmp_path
     ).cache_original_image(
-        Image.builder(
+        CmsImage.builder(
             depicts_uri=URIRef("http://example.com"),
             uri=URIRef(downloaded_image_file_path.as_uri()),
         ).build()
@@ -74,7 +74,7 @@ def test_cache_original_image_http_present(tmp_path):
     original_image_file_path = OriginalImageFileCache(
         cache_dir_path=tmp_path
     ).cache_original_image(
-        Image.builder(
+        CmsImage.builder(
             depicts_uri=URIRef("http://example.com"),
             uri=URIRef(PLACEHOLDER_IMAGE_URL),
         ).build()
@@ -85,7 +85,7 @@ def test_cache_original_image_http_present(tmp_path):
 def test_cache_original_image_http_absent(tmp_path):
     try:
         OriginalImageFileCache(cache_dir_path=tmp_path).cache_original_image(
-            Image.builder(
+            CmsImage.builder(
                 depicts_uri=URIRef("http://example.com"),
                 uri=URIRef("https://minorgordon.net/nonextant"),
             ).build()
@@ -99,7 +99,7 @@ def test_cache_original_image_with_url_src(tmp_path):
     original_image_file_path = OriginalImageFileCache(
         cache_dir_path=tmp_path
     ).cache_original_image(
-        Image.builder(
+        CmsImage.builder(
             depicts_uri=URIRef("http://example.com"),
             uri=URIRef("urn:example:nonextant"),
         )
@@ -113,7 +113,7 @@ def test_cache_original_image_with_relative_src(tmp_path):
     original_image_file_path = OriginalImageFileCache(
         cache_dir_path=tmp_path
     ).cache_original_image(
-        Image.builder(
+        CmsImage.builder(
             depicts_uri=URIRef("http://example.com"),
             uri=URIRef(PLACEHOLDER_IMAGE_URL),
         )
