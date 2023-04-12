@@ -1,12 +1,18 @@
-from typing import Generator, Optional, Tuple, Union, TypeVar, Any
+from typing import Generator, Tuple, Union, TypeVar, Any
+from typing import Optional
 
-from rdflib import ConjunctiveGraph, Graph, Literal, RDF, URIRef
+import rdflib
+from rdflib import ConjunctiveGraph, Literal, RDF, URIRef
+from rdflib import Graph
 from rdflib.resource import Resource
 from rdflib.term import Identifier, Node
 
+import paradicms_etl
 from paradicms_etl.model import Model
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.namespaces import CMS
+from paradicms_etl.namespaces.bind_namespaces import EXCLUDE_RDFLIB_NAMESPACE_PREFIXES
+from paradicms_etl.utils.module_namespaces import module_namespaces
 
 _ValueT = TypeVar("_ValueT")
 
@@ -42,6 +48,7 @@ class ResourceBackedModel(Model):
             return self.add(p, o)
 
     def __init__(self, resource: Resource):
+        Model.__init__(self)
         self.__resource = resource
 
     @classmethod
@@ -50,9 +57,20 @@ class ResourceBackedModel(Model):
         graph += resource.graph
         return cls(graph.resource(resource.identifier))
 
-    @property
-    def label(self) -> Optional[str]:
-        pass
+    @classmethod
+    def json_ld_context(cls):
+        """
+        Return a JSON-LD context that can be used to parse/serialize a JSON version of this model.
+        """
+
+        context = {"@version": 1.1}
+        for namespace_prefix, namespace in module_namespaces(
+            rdflib.namespace, paradicms_etl.namespaces
+        ).items():
+            if namespace_prefix in EXCLUDE_RDFLIB_NAMESPACE_PREFIXES:
+                continue
+            context[namespace_prefix] = str(namespace)
+        return context
 
     def __literal_values(
         self, p: Union[URIRef, Tuple[URIRef, ...]], expected_type=None
@@ -103,9 +121,9 @@ class ResourceBackedModel(Model):
                     raise TypeError(
                         f"expected {p} node to be a Text, not a {value_type}"
                     )
-                from paradicms_etl.models.text import Text
+                from paradicms_etl.models.cms.cms_text import CmsText
 
-                return Text(value)
+                return CmsText(value)
         return None
 
     def _optional_uri_value(

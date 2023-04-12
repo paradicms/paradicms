@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from rdflib import Graph, URIRef
-from paradicms_etl.models.rights_statement import RightsStatement
+from paradicms_etl.models.cms.cms_rights_statement import CmsRightsStatement
 from paradicms_etl.models.model_singletons import ModelSingletons
 
 
 class RightsStatementsDotOrgRightsStatements(ModelSingletons):
-    _MODEL_CLASS = RightsStatement
+    _MODEL_CLASS = CmsRightsStatement
 
-    CNE = RightsStatement.from_rdf(
+    CNE = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
@@ -35,7 +35,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/CNE/1.0/"))
     )
 
-    InC_EDU = RightsStatement.from_rdf(
+    InC_EDU = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
@@ -62,7 +62,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/InC-EDU/1.0/"))
     )
 
-    InC_NC = RightsStatement.from_rdf(
+    InC_NC = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
@@ -89,7 +89,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/InC-NC/1.0/"))
     )
 
-    InC_OW_EU = RightsStatement.from_rdf(
+    InC_OW_EU = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
@@ -117,7 +117,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/InC-OW-EU/1.0/"))
     )
 
-    InC_RUU = RightsStatement.from_rdf(
+    InC_RUU = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
@@ -143,7 +143,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/InC-RUU/1.0/"))
     )
 
-    InC = RightsStatement.from_rdf(
+    InC = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
@@ -170,7 +170,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/InC/1.0/"))
     )
 
-    NKC = RightsStatement.from_rdf(
+    NKC = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
@@ -197,7 +197,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/NKC/1.0/"))
     )
 
-    NoC_CR = RightsStatement.from_rdf(
+    NoC_CR = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
@@ -224,7 +224,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/NoC-CR/1.0/"))
     )
 
-    NoC_NC = RightsStatement.from_rdf(
+    NoC_NC = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
@@ -249,7 +249,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/NoC-NC/1.0/"))
     )
 
-    NoC_OKLR = RightsStatement.from_rdf(
+    NoC_OKLR = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
@@ -276,7 +276,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/NoC-OKLR/1.0/"))
     )
 
-    NoC_US = RightsStatement.from_rdf(
+    NoC_US = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
@@ -301,7 +301,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/NoC-US/1.0/"))
     )
 
-    UND = RightsStatement.from_rdf(
+    UND = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r'''@prefix cms: <http://www.paradicms.org/ns/cms#> .
@@ -328,7 +328,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/UND/1.0/"))
     )
 
-    collection_ic = RightsStatement.from_rdf(
+    collection_ic = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r"""@prefix cms: <http://www.paradicms.org/ns/cms#> .
@@ -345,7 +345,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/collection-ic/1.0/"))
     )
 
-    collection_nc = RightsStatement.from_rdf(
+    collection_nc = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r"""@prefix cms: <http://www.paradicms.org/ns/cms#> .
@@ -362,7 +362,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
         .resource(URIRef("http://rightsstatements.org/vocab/collection-nc/1.0/"))
     )
 
-    collection_other = RightsStatement.from_rdf(
+    collection_other = _MODEL_CLASS.from_rdf(
         Graph()
         .parse(
             data=r"""@prefix cms: <http://www.paradicms.org/ns/cms#> .

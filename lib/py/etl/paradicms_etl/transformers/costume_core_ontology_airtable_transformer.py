@@ -1,28 +1,41 @@
 import logging
 from enum import Enum
-from typing import Dict, Tuple, Iterable, Union, List, Set, FrozenSet, Optional, Any
+from typing import (
+    Dict,
+    Tuple,
+    Iterable,
+    Union,
+    List,
+    Set,
+    FrozenSet,
+    Optional,
+    Any,
+    TypeVar,
+)
 from urllib.parse import quote_plus
 
 from inflector import Inflector
 from rdflib import URIRef, Literal, DCTERMS
 
 from paradicms_etl.model import Model
-from paradicms_etl.models.collection import Collection
-from paradicms_etl.models.concept import Concept
+from paradicms_etl.models.cms.cms_collection import CmsCollection
+from paradicms_etl.models.cms.cms_concept import CmsConcept
+from paradicms_etl.models.cms.cms_image import CmsImage
+from paradicms_etl.models.cms.cms_license import CmsLicense
+from paradicms_etl.models.cms.cms_property import CmsProperty
+from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
+from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
+from paradicms_etl.models.cms.cms_text import CmsText
+from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
-from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.license import License
-from paradicms_etl.models.property import Property
-from paradicms_etl.models.property_group import PropertyGroup
-from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
-from paradicms_etl.models.text import Text
-from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import COCO, VRA
+
+_RightsMixinBuilderT = TypeVar("_RightsMixinBuilderT", bound=CmsRightsMixin.Builder)
 
 
 class CostumeCoreOntologyAirtableTransformer:
@@ -35,10 +48,10 @@ class CostumeCoreOntologyAirtableTransformer:
     coming out of this transformer.
 
     The different types of yielded models are:
-    - Collection, Image, and Work to build a faceted browser for the Costume Core ontology itself
+    - CmsCollection, CmsImage, and CmsWork to build a faceted browser for the Costume Core ontology itself
     - CostumeCoreOntology, CostumeCoreOntology.Predicate, and CostumeCoreOntology.Term to build an RDF/OWL version of the Costume Core
         ontology
-    - Concept (formerly WorksheetFeatureValue), Image, Property (formerly WorksheetFeature), and PropertyGroup (formerly WorksheetFeatureSet) to build a Costume Core
+    - CmsConcept (formerly WorksheetFeatureValue), CmsImage, CmsProperty (formerly WorksheetFeature), and CmsPropertyGroup (formerly WorksheetFeatureSet) to build a Costume Core
         worksheet app
     """
 
@@ -84,9 +97,9 @@ class CostumeCoreOntologyAirtableTransformer:
             license.uri: license for license in CreativeCommonsLicenses.as_tuple()
         }
         odc_by_license = (
-            License.builder(
+            CmsLicense.builder(
                 identifier="ODC-By",
-                title="Open Data Commons Attribution License (ODC-By) v1.0",
+                title="Open Data Commons Attribution CmsLicense (ODC-By) v1.0",
                 uri=URIRef("http://opendatacommons.org/licenses/by/1-0/"),
             )
             .set_version(
@@ -245,30 +258,25 @@ class CostumeCoreOntologyAirtableTransformer:
 
     def __transform_description_fields_to_text(
         self, *, record_fields: Dict[str, Union[str, List[str], None]]
-    ) -> Optional[Text]:
+    ) -> Optional[CmsText]:
         description_text_en = record_fields.get("description_text_en")
         if not description_text_en:
             return None
         assert isinstance(description_text_en, str)
-        return (
-            Text.builder(description_text_en)
-            .add_rights(
-                self.__transform_rights_fields_to_rights(
-                    key_prefix="description",
-                    record_fields=record_fields,
-                )
-            )
-            .build()
-        )
+        return self.__transform_rights_fields_to_rights(
+            key_prefix="description",
+            record_fields=record_fields,
+            model_builder=CmsText.builder(description_text_en),
+        ).build()
 
     def __transform_feature_record_to_collection(
         self, feature_record
-    ) -> Optional[Collection]:
+    ) -> Optional[CmsCollection]:
         fields = feature_record["fields"]
         if not fields.get("feature_values_labels", []):
             # Don't yield Collections that won't have any associated Works
             return None
-        return Collection.builder(
+        return CmsCollection.builder(
             title=fields["display_name_en"],
             uri=URIRef(fields["URI"]),
         ).build()
@@ -294,7 +302,7 @@ class CostumeCoreOntologyAirtableTransformer:
 
     def __transform_feature_record_to_property(
         self, *, feature_record, feature_set_records
-    ) -> Optional[Property]:
+    ) -> Optional[CmsProperty]:
         fields = feature_record["fields"]
 
         feature_set_uris = set()
@@ -307,7 +315,7 @@ class CostumeCoreOntologyAirtableTransformer:
         feature_uri = URIRef(fields["URI"])
 
         property_builder = (
-            Property.builder(label=fields["display_name_en"], uri=feature_uri)
+            CmsProperty.builder(label=fields["display_name_en"], uri=feature_uri)
             .set_order(int(fields["sort_order"]))
             .set_range(self.__feature_range_uri(feature_record))
         )
@@ -382,7 +390,7 @@ class CostumeCoreOntologyAirtableTransformer:
         for feature_set_record in feature_set_records:
             feature_set_uri = self.__feature_set_uri(feature_set_record)
 
-            property_group_builder = PropertyGroup.builder(
+            property_group_builder = CmsPropertyGroup.builder(
                 label=feature_set_record["fields"]["display_name_en"],
                 uri=feature_set_uri,
             )
@@ -417,14 +425,13 @@ class CostumeCoreOntologyAirtableTransformer:
 
         image_record = image_records_by_id[image_filename]
         image_filename = image_record["fields"]["filename"]
-        image_rights = self.__transform_rights_fields_to_rights(
-            key_prefix="image", record_fields=fields
-        )
 
         # See note in transform_image_records re: image URIs.
 
-        full_size_image = (
-            Image.builder(
+        full_size_image = self.__transform_rights_fields_to_rights(
+            key_prefix="image",
+            record_fields=fields,
+            model_builder=CmsImage.builder(
                 depicts_uri=depicts_uri,
                 uri=self.__image_uri(
                     depicts_uri=depicts_uri,
@@ -432,31 +439,27 @@ class CostumeCoreOntologyAirtableTransformer:
                     filename=image_filename,
                     type=self.__ImageType.FULL_SIZE,
                 ),
-            )
-            .add_rights(image_rights)
-            .set_src(
+            ).set_src(
                 CostumeCoreOntology.Term.FULL_SIZE_IMAGE_BASE_URL + image_filename,
-            )
-            .build()
-        )
+            ),
+        ).build()
         yield full_size_image
 
-        yield Image.builder(
-            depicts_uri=depicts_uri,
-            uri=self.__image_uri(
+        yield self.__transform_rights_fields_to_rights(
+            key_prefix="image",
+            record_fields=fields,
+            model_builder=CmsImage.builder(
                 depicts_uri=depicts_uri,
-                depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
-                filename=image_filename,
-                type=self.__ImageType.THUMBNAIL,
-            ),
-        ).set_exact_dimensions(
-            ImageDimensions(height=200, width=200)
-        ).set_original_image_uri(
-            full_size_image.uri
-        ).add_rights(
-            image_rights
-        ).set_src(
-            CostumeCoreOntology.Term.THUMBNAIL_BASE_URL + image_filename
+                uri=self.__image_uri(
+                    depicts_uri=depicts_uri,
+                    depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
+                    filename=image_filename,
+                    type=self.__ImageType.THUMBNAIL,
+                ),
+            )
+            .set_exact_dimensions(ImageDimensions(height=200, width=200))
+            .set_original_image_uri(full_size_image.uri)
+            .set_src(CostumeCoreOntology.Term.THUMBNAIL_BASE_URL + image_filename),
         ).build()
 
     def __transform_feature_value_record_to_concept(
@@ -465,7 +468,7 @@ class CostumeCoreOntologyAirtableTransformer:
         feature_records,
         feature_value_record,
         variant_term_records_by_feature_value_id,
-    ) -> Optional[Concept]:
+    ) -> Optional[CmsConcept]:
         fields = feature_value_record["fields"]
         id_ = feature_value_record["id"]
 
@@ -473,7 +476,7 @@ class CostumeCoreOntologyAirtableTransformer:
         #     wikidata_id=fields.get("WikidataID"),
 
         concept_uri = COCO[fields["id"]]
-        concept_builder = Concept.builder(
+        concept_builder = CmsConcept.builder(
             uri=concept_uri,
         )
 
@@ -606,10 +609,10 @@ class CostumeCoreOntologyAirtableTransformer:
 
     def __transform_feature_value_record_to_work(
         self, *, feature_records, feature_value_record
-    ) -> Optional[Work]:
+    ) -> Optional[CmsWork]:
         fields = feature_value_record["fields"]
 
-        work_builder = Work.builder(
+        work_builder = CmsWork.builder(
             title=fields["display_name_en"], uri=URIRef(str(COCO[fields["id"]]))
         )
 
@@ -693,7 +696,7 @@ class CostumeCoreOntologyAirtableTransformer:
 
     def __transform_image_records_to_images(
         self, *, depicts_type: __ImageDepictsType, depicts_uri: URIRef, image_records
-    ) -> Iterable[Image]:
+    ) -> Iterable[CmsImage]:
         # yield from self.__transform_image_records(
         #     depicts_uri=feature_set_uri,
         #     image_records=tuple(
@@ -708,15 +711,14 @@ class CostumeCoreOntologyAirtableTransformer:
 
         for image_record in image_records:
             image_filename = image_record["fields"]["filename"]
-            image_rights = self.__transform_rights_fields_to_rights(
-                key_prefix="image", record_fields=image_record["fields"]
-            )
 
             # The same image may be used to depict multiple objects e.g., a feature value, a feature, and a feature set.
             # Allow the src to be duplicated but make the URIs unique.
 
-            full_size_image = (
-                Image.builder(
+            full_size_image = self.__transform_rights_fields_to_rights(
+                key_prefix="image",
+                record_fields=image_record["fields"],
+                model_builder=CmsImage.builder(
                     depicts_uri=depicts_uri,
                     uri=self.__image_uri(
                         depicts_uri=depicts_uri,
@@ -724,32 +726,28 @@ class CostumeCoreOntologyAirtableTransformer:
                         filename=image_filename,
                         type=self.__ImageType.FULL_SIZE,
                     ),
-                )
-                .add_rights(image_rights)
-                .set_src(
+                ).set_src(
                     CostumeCoreOntology.Term.FULL_SIZE_IMAGE_BASE_URL + image_filename
-                )
-                .build()
-            )
+                ),
+            ).build()
 
             yield full_size_image
 
-            yield Image.builder(
-                depicts_uri=depicts_uri,
-                uri=self.__image_uri(
+            yield self.__transform_rights_fields_to_rights(
+                key_prefix="image",
+                record_fields=image_record["fields"],
+                model_builder=CmsImage.builder(
                     depicts_uri=depicts_uri,
-                    depicts_type=depicts_type,
-                    filename=image_filename,
-                    type=self.__ImageType.THUMBNAIL,
-                ),
-            ).set_exact_dimensions(
-                ImageDimensions(height=200, width=200)
-            ).set_original_image_uri(
-                full_size_image.uri
-            ).add_rights(
-                image_rights
-            ).set_src(
-                CostumeCoreOntology.Term.THUMBNAIL_BASE_URL + image_filename
+                    uri=self.__image_uri(
+                        depicts_uri=depicts_uri,
+                        depicts_type=depicts_type,
+                        filename=image_filename,
+                        type=self.__ImageType.THUMBNAIL,
+                    ),
+                )
+                .set_exact_dimensions(ImageDimensions(height=200, width=200))
+                .set_original_image_uri(full_size_image.uri)
+                .set_src(CostumeCoreOntology.Term.THUMBNAIL_BASE_URL + image_filename),
             ).build()
 
     def __transform_rights_fields_to_costume_core_rights(
@@ -780,8 +778,12 @@ class CostumeCoreOntologyAirtableTransformer:
         )
 
     def __transform_rights_fields_to_rights(
-        self, *, key_prefix: str, record_fields: Dict[str, Union[str, List[str], None]]
-    ) -> Rights:
+        self,
+        *,
+        key_prefix: str,
+        model_builder: _RightsMixinBuilderT,
+        record_fields: Dict[str, Union[str, List[str], None]],
+    ) -> _RightsMixinBuilderT:
         """
         Utility function to transform a prefixed subset of fields into a Rights model.
         """
@@ -823,7 +825,7 @@ class CostumeCoreOntologyAirtableTransformer:
 
             return None
 
-        rights_builder = Rights.builder().add_creator(
+        model_builder.add_creator(
             get_first_list_element(record_fields.get(f"{key_prefix}_rights_author"))
         )
 
@@ -835,7 +837,7 @@ class CostumeCoreOntologyAirtableTransformer:
             referenced_rights_uris=self.__referenced_license_uris,
         )
         if license:
-            rights_builder.add_license(license)
+            model_builder.add_license(license)
 
         rights_statement = transform_rights_uri(
             available_rights_uris=self.__available_rights_statement_uris,
@@ -845,12 +847,13 @@ class CostumeCoreOntologyAirtableTransformer:
             referenced_rights_uris=self.__referenced_rights_statement_uris,
         )
         if rights_statement:
-            rights_builder.add_statement(rights_statement)
+            model_builder.add_rights_statement(rights_statement)
 
-        return rights_builder.build()
         # source_name=get_first_list_element(
         #     fields[f"{key_prefix}_rights_source_name"]
         # ),
         # source_url=get_first_list_element(
         #     fields[f"{key_prefix}_rights_source_url"]
         # ),
+
+        return model_builder

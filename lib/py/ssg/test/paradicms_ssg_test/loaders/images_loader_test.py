@@ -1,7 +1,6 @@
 from typing import Tuple
 
 from paradicms_etl.models.image import Image
-
 from paradicms_ssg.loaders.images_loader import ImagesLoader
 from .nop_image_archiver import NopImageArchiver
 
@@ -17,7 +16,7 @@ def test_load(synthetic_data_original_images: Tuple[Image, ...], tmp_path):
             models=synthetic_data_original_images,
         )
     )
-    assert len(loaded_images) == len(synthetic_data_original_images) * 3
+    assert len(loaded_images) == len(synthetic_data_original_images) * 5
     assert all(isinstance(loaded_image, Image) for loaded_image in loaded_images)
     assert len(set(loaded_image.uri for loaded_image in loaded_images)) == len(
         loaded_images

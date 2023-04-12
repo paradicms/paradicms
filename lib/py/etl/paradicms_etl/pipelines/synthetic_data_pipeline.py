@@ -11,28 +11,27 @@ from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
-from paradicms_etl.models.agent import Agent
-from paradicms_etl.models.anonymous_location import AnonymousLocation
-from paradicms_etl.models.collection import Collection
-from paradicms_etl.models.concept import Concept
+from paradicms_etl.models.cms.cms_agent import CmsAgent
+from paradicms_etl.models.cms.cms_anonymous_location import CmsAnonymousLocation
+from paradicms_etl.models.cms.cms_collection import CmsCollection
+from paradicms_etl.models.cms.cms_concept import CmsConcept
+from paradicms_etl.models.cms.cms_date_time_description import CmsDateTimeDescription
+from paradicms_etl.models.cms.cms_image import CmsImage
+from paradicms_etl.models.cms.cms_named_location import CmsNamedLocation
+from paradicms_etl.models.cms.cms_organization import CmsOrganization
+from paradicms_etl.models.cms.cms_person import CmsPerson
+from paradicms_etl.models.cms.cms_property import CmsProperty
+from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
+from paradicms_etl.models.cms.cms_text import CmsText
+from paradicms_etl.models.cms.cms_work import CmsWork
+from paradicms_etl.models.cms.cms_work_closing import CmsWorkClosing
+from paradicms_etl.models.cms.cms_work_creation import CmsWorkCreation
+from paradicms_etl.models.cms.cms_work_opening import CmsWorkOpening
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
-from paradicms_etl.models.date_time_description import DateTimeDescription
-from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.named_location import NamedLocation
-from paradicms_etl.models.organization import Organization
-from paradicms_etl.models.person import Person
-from paradicms_etl.models.property import Property
-from paradicms_etl.models.property_group import PropertyGroup
-from paradicms_etl.models.rights import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
-from paradicms_etl.models.text import Text
-from paradicms_etl.models.work import Work
-from paradicms_etl.models.work_closing import WorkClosing
-from paradicms_etl.models.work_creation import WorkCreation
-from paradicms_etl.models.work_opening import WorkOpening
 from paradicms_etl.namespaces import VRA
 from paradicms_etl.pipeline import Pipeline
 
@@ -167,7 +166,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             concepts_by_value = {}
             for model in self.__generate_concepts():
                 yield model
-                if isinstance(model, Concept):
+                if isinstance(model, CmsConcept):
                     concept = model
                     concept_str = concept.value.toPython()
                     assert isinstance(concept_str, str)
@@ -177,7 +176,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             agents = []
             for model in self.__generate_agents():
                 yield model
-                if isinstance(model, Agent):
+                if isinstance(model, CmsAgent):
                     agents.append(model)
             agents = tuple(agents)
 
@@ -193,8 +192,8 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             agents = []
             for organization_i in range(5):
                 agents.append(
-                    Organization.builder(
-                        name=f"Organization {organization_i}",
+                    CmsOrganization.builder(
+                        name=f"CmsOrganization {organization_i}",
                         uri=URIRef(f"http://example.com/organization{organization_i}"),
                     )
                     .add_page(
@@ -205,13 +204,13 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
 
             for person_i in range(5):
                 person_builder = (
-                    Person.builder(
-                        name=f"Person {person_i}",
+                    CmsPerson.builder(
+                        name=f"CmsPerson {person_i}",
                         uri=URIRef(f"http://example.com/person{person_i}"),
                     )
                     .set_family_name(str(person_i))
-                    .set_given_name("Person")
-                    .set_sort_name(f"{person_i}, Person")
+                    .set_given_name("CmsPerson")
+                    .set_sort_name(f"{person_i}, CmsPerson")
                 )
                 if person_i % 2 == 0:
                     person_builder.add_page(
@@ -238,24 +237,24 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
         def __generate_collection_works(
             self,
             *,
-            agents: Tuple[Agent, ...],
-            collection: Collection,
-            concepts_by_value: Dict[str, Concept],
+            agents: Tuple[CmsAgent, ...],
+            collection: CmsCollection,
+            concepts_by_value: Dict[str, CmsConcept],
         ):
             for work_i in range(self.__works_per_collection):
                 yield from self.__generate_work(
                     agents=agents,
                     collection_uris=(collection.uri,),
                     concepts_by_value=concepts_by_value,
-                    title_prefix=collection.title + "Work",
+                    title_prefix=collection.title + "CmsWork",
                     uri_prefix=str(collection.uri) + "/work",
                 )
 
         def __generate_freestanding_works(
             self,
             *,
-            agents: Tuple[Agent, ...],
-            concepts_by_value: Dict[str, Concept],
+            agents: Tuple[CmsAgent, ...],
+            concepts_by_value: Dict[str, CmsConcept],
         ):
             for work_i in range(self.__freestanding_works):
                 yield from self.__generate_work(
@@ -269,27 +268,22 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
         def __generate_images(self, *, depicts_uri: URIRef, text_prefix: str):
             for image_i in range(self.__images_per_work):
                 title = f"{text_prefix} image {image_i}"
-                original = (
-                    Image.builder(
+                original_image_builder = (
+                    CmsImage.builder(
                         depicts_uri=depicts_uri,
-                        uri=URIRef(str(depicts_uri) + f":Image{image_i}"),
+                        uri=URIRef(str(depicts_uri) + f":CmsImage{image_i}"),
                     )
                     .set_exact_dimensions(ImageDimensions(height=1000, width=1000))
-                    .add_rights(
-                        Rights.builder()
-                        .add_holder(f"{title} rights holder")
-                        .add_license(CreativeCommonsLicenses.NC_1_0.uri)
-                        .add_statement(
-                            RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-                        )
-                        .build()
-                    )
                     .set_src("https://paradicms.org/img/placeholder/1000x1000.png")
                     .set_title(title)
-                    .build()
                 )
-                yield original
-                assert original.rights is not None
+                original_image_builder.add_rights_holder(
+                    f"{title} rights holder"
+                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
+                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
+                )
+                original_image = original_image_builder.build()
+                yield original_image
 
                 for thumbnail_dimensions in (
                     ImageDimensions(200, 200),
@@ -297,48 +291,48 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     ImageDimensions(600, 600),
                     ImageDimensions(800, 800),
                 ):
-                    yield Image.builder(
-                        depicts_uri=depicts_uri,
-                        uri=URIRef(
-                            str(original.uri)
-                            + f":Thumbnail{thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
-                        ),
-                    ).set_exact_dimensions(thumbnail_dimensions).set_original_image_uri(
-                        original.uri
-                    ).add_rights(
-                        original.rights
-                    ).set_src(
-                        f"https://paradicms.org/img/placeholder/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}.png"
-                    ).set_title(
-                        f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
-                    ).build()
+                    yield (
+                        CmsImage.builder(
+                            depicts_uri=depicts_uri,
+                            uri=URIRef(
+                                str(original_image.uri)
+                                + f":Thumbnail{thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
+                            ),
+                        )
+                        .copy_rights(original_image)
+                        .set_exact_dimensions(thumbnail_dimensions)
+                        .set_original_image_uri(original_image.uri)
+                        .set_src(
+                            f"https://paradicms.org/img/placeholder/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}.png"
+                        )
+                        .set_title(
+                            f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
+                        )
+                        .build()
+                    )
 
         def __generate_collections(
             self,
             *,
-            agents: Tuple[Agent, ...],
-            concepts_by_value: Dict[str, Concept],
+            agents: Tuple[CmsAgent, ...],
+            concepts_by_value: Dict[str, CmsConcept],
         ):
             for collection_i in range(self.__collections):
-                collection_title = f"Collection{collection_i}"
-                collection_builder = Collection.builder(
+                collection_title = f"CmsCollection{collection_i}"
+                collection_builder = CmsCollection.builder(
                     title=collection_title,
                     uri=URIRef(f"http://example.com/collection{collection_i}"),
                 )
                 if collection_i % 2 == 0:
-                    collection_builder.set_description(
-                        Text.builder(self.__LOREM_IPSUM)
-                        .add_rights(
-                            Rights.builder()
-                            .add_holder(f"{collection_title} description rights holder")
-                            .add_license(CreativeCommonsLicenses.NC_1_0.uri)
-                            .add_statement(
-                                RightsStatementsDotOrgRightsStatements.InC_EDU.uri
-                            )
-                            .build()
-                        )
-                        .build()
+                    description_builder = CmsText.builder(self.__LOREM_IPSUM)
+                    description_builder.add_rights_holder(
+                        f"{collection_title} description rights holder"
+                    ).add_license(
+                        CreativeCommonsLicenses.NC_1_0.uri
+                    ).add_rights_statement(
+                        RightsStatementsDotOrgRightsStatements.InC_EDU.uri
                     )
+                    collection_builder.set_description(description_builder.build())
                 collection = collection_builder.build()
                 yield collection
 
@@ -362,13 +356,13 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     continue
                 for property_value in property_.values:
                     concept = (
-                        Concept.builder(
+                        CmsConcept.builder(
                             uri=URIRef(
                                 f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
                             )
                         )
                         .add_type_uri(property_.range)
-                        .set_pref_label(f"Concept {concept_urn_i}")
+                        .set_pref_label(f"CmsConcept {concept_urn_i}")
                         .set_value(Literal(property_value))
                         .build()
                     )
@@ -382,7 +376,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     concept_urn_i += 1
 
         def __generate_properties(self):
-            property_group = PropertyGroup.builder(
+            property_group = CmsPropertyGroup.builder(
                 label="Synthetic data properties",
                 uri=URIRef(
                     f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:property_group"
@@ -391,7 +385,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             yield property_group
 
             for property_ in self.__PROPERTIES:
-                yield Property.builder(
+                yield CmsProperty.builder(
                     label=property_.label, uri=property_.uri
                 ).add_group_uri(property_group.uri).set_filterable(
                     property_.filterable
@@ -404,9 +398,9 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
         def __generate_work(
             self,
             *,
-            agents: Tuple[Agent, ...],
+            agents: Tuple[CmsAgent, ...],
             collection_uris: Tuple[URIRef, ...],
-            concepts_by_value: Dict[str, Concept],
+            concepts_by_value: Dict[str, CmsConcept],
             title_prefix: str,
             uri_prefix: str,
         ):
@@ -416,7 +410,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             work_uri = URIRef(uri_prefix + str(work_i))
 
             title = title_prefix + str(work_i)
-            work_builder = Work.builder(title=title, uri=work_uri)
+            work_builder = CmsWork.builder(title=title, uri=work_uri)
 
             for collection_uri in collection_uris:
                 work_builder.add_collection_uri(collection_uri)
@@ -432,17 +426,15 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 work_builder.add(DCTERMS.identifier, f"{title}Id{i}")
                 work_builder.add(DCTERMS.provenance, f"{title} provenance {i}")
 
-                work_builder.add_rights(
-                    Rights.builder()
-                    .add_holder(f"{title} rights holder")
-                    .add_license(CreativeCommonsLicenses.NC_1_0.uri)
-                    .add_statement(RightsStatementsDotOrgRightsStatements.InC_EDU.uri)
-                    .build()
+                work_builder.add_rights_holder(f"{title} rights holder").add_license(
+                    CreativeCommonsLicenses.NC_1_0.uri
+                ).add_rights_statement(
+                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri
                 )
 
             destruction_date = date(day=1, month=1, year=2022)
             creation_date = destruction_date - timedelta(days=work_i)
-            creation_date_time_description = DateTimeDescription.from_date(
+            creation_date_time_description = CmsDateTimeDescription.from_date(
                 creation_date
             )
 
@@ -483,32 +475,29 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 URIRef("http://en.wikipedia.org/wiki/Pilot-ACE"),
             )
 
-            description = (
-                Text.builder(
+            if include_description:
+                description_builder = CmsText.builder(
                     self.__LOREM_IPSUM,
                 )
-                .add_rights(
-                    Rights.builder()
-                    .add_holder(f"{title} description rights holder")
-                    .add_license(CreativeCommonsLicenses.NC_1_0.uri)
-                    .add_statement(RightsStatementsDotOrgRightsStatements.InC_EDU.uri)
-                    .build()
+                description_builder.add_rights_holder(
+                    f"{title} description rights holder"
+                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
+                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri
                 )
-                .build()
-                if include_description
-                else None
-            )
-            if description:
+                description = description_builder.build()
+
                 work_builder.set_description(description)
+            else:
+                description = None
 
             anonymous_location = (
-                AnonymousLocation.builder()
+                CmsAnonymousLocation.builder()
                 .set_lat(42.728104)
                 .set_long(-73.687576)
                 .build()
             )
             named_location = (
-                NamedLocation.builder(uri=URIRef(str(work_uri) + "Location"))
+                CmsNamedLocation.builder(uri=URIRef(str(work_uri) + "Location"))
                 .set_lat(42.728104)
                 .set_long(-73.687576)
                 .build()
@@ -527,7 +516,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 text_prefix=work.title,
             )
 
-            yield WorkClosing.builder(
+            yield CmsWorkClosing.builder(
                 uri=URIRef(str(work.uri) + "Closing"), work_uri=work.uri
             ).set_description(description).set_date(destruction_date).set_location(
                 anonymous_location
@@ -535,8 +524,8 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 f"{work.title} closing"
             ).build()
 
-            work_creation_builder: WorkCreation.Builder = (
-                WorkCreation.builder(
+            work_creation_builder: CmsWorkCreation.Builder = (
+                CmsWorkCreation.builder(
                     uri=URIRef(str(work.uri) + "Creation"), work_uri=work.uri
                 )
                 .set_date(creation_date_time_description)
@@ -550,7 +539,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 work_creation_builder.add_creator_uri(creator_uri)
             yield work_creation_builder.build()
 
-            yield WorkOpening.builder(
+            yield CmsWorkOpening.builder(
                 uri=URIRef(str(work.uri) + "Opening"), work_uri=work.uri
             ).set_description(description).set_date(creation_date).set_location(
                 anonymous_location

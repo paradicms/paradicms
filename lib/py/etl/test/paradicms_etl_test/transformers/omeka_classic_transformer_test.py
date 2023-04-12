@@ -1,9 +1,9 @@
 from pathlib import Path
 
 from paradicms_etl.extractors.omeka_classic_extractor import OmekaClassicExtractor
-from paradicms_etl.models.collection import Collection
-from paradicms_etl.models.image import Image
-from paradicms_etl.models.work import Work
+from paradicms_etl.models.cms.cms_collection import CmsCollection
+from paradicms_etl.models.cms.cms_image import CmsImage
+from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.transformers.omeka_classic_transformer import OmekaClassicTransformer
 
 
@@ -26,6 +26,6 @@ def test_transform(data_dir_path: Path):
     assert models
     model_types = set(model.__class__ for model in models)
     assert len(model_types) == 3
-    assert Collection in model_types
-    assert Image in model_types
-    assert Work in model_types
+    assert CmsCollection in model_types
+    assert CmsImage in model_types
+    assert CmsWork in model_types

@@ -1,5 +1,5 @@
 import logging
-from typing import Optional, Set, Iterable
+from typing import Set, Iterable
 
 from rdflib import URIRef
 from stringcase import snakecase
@@ -10,13 +10,13 @@ from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.event import Event
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.license import License
-from paradicms_etl.models.named_location import NamedLocation
+from paradicms_etl.models.location import Location
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
-from paradicms_etl.models.rights import Rights
+from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_closing import WorkClosing
@@ -47,7 +47,9 @@ class __Validator:
         missing_method_names = set()
 
         for model in models:
-            model_class_name_snake_case = snakecase(model.__class__.__name__)
+            model_class_name_snake_case = snakecase(model.__class__.__name__).split(
+                "_", 1
+            )[-1]
             model_class_names_snake_case.add(model_class_name_snake_case)
 
             # self._validate_model(model)
@@ -110,7 +112,7 @@ class __Validator:
     def _validate_image(self, image: Image):
         self.__validate_named_model(image)
         self.__image_depicts_uris.add(image.depicts_uri)
-        self.__validate_rights(image.rights)
+        self.__validate_rights(image)
 
     def _validate_image_references(self):
         pass
@@ -128,7 +130,8 @@ class __Validator:
             warn=False,
         )
 
-    def _validate_named_location(self, location: NamedLocation):
+    def _validate_named_location(self, location: Location):
+        assert isinstance(location, NamedModel)
         self.__validate_named_model(location)
         self.__location_uris.add(location.uri)
 
@@ -175,10 +178,8 @@ class __Validator:
     def _validate_property_group_references(self):
         pass
 
-    def __validate_rights(self, rights: Optional[Rights]):
-        if rights is None:
-            return
-        for agents in (rights.contributors, rights.creators, rights.holders):
+    def __validate_rights(self, rights: RightsMixin):
+        for agents in (rights.contributors, rights.creators, rights.rights_holders):
             for agent in agents:
                 if isinstance(agent, URIRef):
                     self.__referenced_agent_uris.add(agent)
@@ -226,7 +227,7 @@ class __Validator:
             self.__referenced_collection_uris.add(collection_uri)
         assert work.uri not in self.__work_uris
         self.__work_uris.add(work.uri)
-        self.__validate_rights(work.rights)
+        self.__validate_rights(work)
 
     def _validate_work_closing(self, work_closing: WorkClosing):
         self.__validate_work_event(work_closing)

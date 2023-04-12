@@ -53,6 +53,7 @@ class WikidataItemTransformer:
         """
         Transform the item to a Model.
         """
+        raise NotImplementedError
 
     def _transform_statement(
         self,

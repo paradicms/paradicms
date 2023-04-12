@@ -1,59 +1,30 @@
-from base64 import b64encode
+from abc import abstractmethod
 from io import BytesIO
-from typing import Dict, Any
 
 from PIL import Image
-from rdflib import DCTERMS, RDF, Literal, XSD, BNode
 
-from paradicms_etl.models.resource_backed_model import ResourceBackedModel
+from paradicms_etl.model import Model
 
 
-class ImageData(ResourceBackedModel):
-    class __Builder(ResourceBackedModel.Builder):
-        def add(self, *args, **kwds):
-            ResourceBackedModel.Builder.add(self, *args, **kwds)
-            return self
-
-        def build(self) -> "ImageData":
-            return ImageData(self._resource)
-
+class ImageData(Model):
     @property
-    def __format(self) -> str:
-        return self._required_str_value(DCTERMS.format)
+    @abstractmethod
+    def _format(self) -> str:
+        raise NotImplementedError
 
     @classmethod
+    @abstractmethod
     def from_pil_image(cls, pil_image: Image):
-        buffer = BytesIO()
-        pil_image.save(buffer, format="JPEG")
-        return (
-            cls.__Builder(BNode())
-            .add(DCTERMS.format, Literal("image/jpeg"))
-            .add(
-                RDF.value,
-                Literal(
-                    b64encode(buffer.getvalue()).decode("ascii"),
-                    datatype=XSD.base64Binary,
-                ),
-            )
-            .build()
-        )
-
-    def to_json_ld(self) -> Dict[str, Any]:
-        return {
-            str(DCTERMS.format): self.__format,
-            str(RDF.value): {
-                "@type": str(XSD.base64Binary),
-                "@value": b64encode(self.__value).decode("ascii"),
-            },
-        }
+        raise NotImplementedError
 
     def to_pil_image(self) -> Image:
-        format_ = self.__format
+        format_ = self._format
         for pil_format, mime_type in Image.MIME.items():
             if mime_type == format_:
-                return Image.open(BytesIO(self.__value), formats=(pil_format,)).copy()
+                return Image.open(BytesIO(self._value), formats=(pil_format,)).copy()
         raise ValueError(f"unable to convert MIME type {format_} to PIL format")
 
     @property
-    def __value(self) -> bytes:
-        return self._required_bytes_value(RDF.value)
+    @abstractmethod
+    def _value(self) -> bytes:
+        raise NotImplementedError

@@ -1,12 +1,13 @@
-from typing import Union, Tuple
+from abc import abstractmethod
+from typing import Union, Tuple, Any
 
-from rdflib import URIRef, DCTERMS, BNode, Literal, Graph
+from rdflib import URIRef, DCTERMS, Literal
 from rdflib.resource import Resource
 
-from paradicms_etl.models.resource_backed_model import ResourceBackedModel
+from paradicms_etl.models.rights_mixin import RightsMixin
 
 
-class Rights(ResourceBackedModel):
+class CmsRightsMixin(RightsMixin):
     """
     Captures a group of properties that specify the rights of another model,
     such as the license and the rights statement.
@@ -20,33 +21,49 @@ class Rights(ResourceBackedModel):
         DCTERMS.rightsHolder,
     }
 
-    class Builder(ResourceBackedModel.Builder):
-        def add_contributor(self, contributor: Union[str, URIRef]) -> "Rights.Builder":
+    class Builder:
+        @abstractmethod
+        def add(self, p: URIRef, o: Any):
+            raise NotImplementedError
+
+        def add_contributor(
+            self, contributor: Union[str, URIRef]
+        ) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.contributor, contributor)
             return self
 
-        def add_creator(self, creator: Union[str, URIRef]) -> "Rights.Builder":
+        def add_creator(self, creator: Union[str, URIRef]) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.creator, creator)
             return self
 
-        def add_holder(self, holder: Union[str, URIRef]) -> "Rights.Builder":
-            self.add(DCTERMS.rightsHolder, holder)
-            return self
-
-        def add_license(self, license: Union[str, URIRef]) -> "Rights.Builder":
+        def add_license(self, license: Union[str, URIRef]) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.license, license)
             return self
 
-        def add_statement(self, statement: Union[str, URIRef]) -> "Rights.Builder":
+        def add_rights_holder(
+            self, holder: Union[str, URIRef]
+        ) -> "CmsRightsMixin.Builder":
+            self.add(DCTERMS.rightsHolder, holder)
+            return self
+
+        def add_rights_statement(
+            self, statement: Union[str, URIRef]
+        ) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.rights, statement)
             return self
 
-        def build(self):
-            return Rights(self._resource)
-
-    @classmethod
-    def builder(cls) -> Builder:
-        return cls.Builder(BNode())
+        def copy_rights(self, other: RightsMixin) -> "CmsRightsMixin.Builder":
+            for contributor in other.contributors:
+                self.add_contributor(contributor)
+            for creator in other.creators:
+                self.add_creator(creator)
+            for holder in other.rights_holders:
+                self.add_rights_holder(holder)
+            if other.license:
+                self.add_license(other.license)
+            if other.statement:
+                self.add_rights_statement(other.statement)
+            return self
 
     @property
     def contributors(self) -> Tuple[Union[str, URIRef], ...]:
@@ -57,7 +74,7 @@ class Rights(ResourceBackedModel):
         return self.__plural_values(DCTERMS.creator)
 
     @property
-    def holders(self) -> Tuple[Union[str, URIRef], ...]:
+    def rights_holders(self) -> Tuple[Union[str, URIRef], ...]:
         return self.__plural_values(DCTERMS.rightsHolder)
 
     @classmethod
@@ -91,6 +108,11 @@ class Rights(ResourceBackedModel):
                 values.append(o.identifier)
         return tuple(values)
 
+    @property
+    @abstractmethod
+    def _resource(self) -> Resource:
+        raise NotImplementedError
+
     def __singular_value(self, p: URIRef) -> Union[str, URIRef, None]:
         values = self.__plural_values(p)
         return values[0] if values else None
@@ -98,18 +120,3 @@ class Rights(ResourceBackedModel):
     @property
     def statement(self) -> Union[str, URIRef, None]:
         return self.__singular_value(DCTERMS.rights)
-
-    def to_rdf(self, graph: Graph) -> Resource:
-        resource = graph.resource(BNode())
-        for p, o in self._resource.predicate_objects():
-            if p.identifier not in self.__PROPERTY_URIS:
-                # Since the resource may belong to another model, carefully filter the properties
-                continue
-
-            if isinstance(o, Resource):
-                o_value = o.identifier
-            else:
-                assert isinstance(o, Literal)
-                o_value = o
-            resource.add(p.identifier, o_value)
-        return resource
