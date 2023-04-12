@@ -6,7 +6,6 @@ from rdflib import Graph, URIRef
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.rights_mixin import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -24,14 +23,10 @@ def test_builder() -> CmsImage:
         .set_format("image/gif")
         .set_modified(datetime.now())
         .set_original_image_uri(URIRef("http://example.com/originalImage"))
-        .add_rights(
-            Rights.builder()
-            .add_creator("Test creator")
-            .add_holder("Test holder")
-            .add_license(CreativeCommonsLicenses.BY_1_0.uri)
-            .add_statement(RightsStatementsDotOrgRightsStatements.InC_EDU.uri)
-            .build()
-        )
+        .add_creator("Test creator")
+        .add_holder("Test holder")
+        .add_license(CreativeCommonsLicenses.BY_1_0.uri)
+        .add_statement(RightsStatementsDotOrgRightsStatements.InC_EDU.uri)
         .set_src("http://example.com/imagesrc")
         .build()
     )

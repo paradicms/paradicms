@@ -1,6 +1,6 @@
 from rdflib import URIRef
 
-from paradicms_etl.models.rights_statement import CmsRightsStatement
+from paradicms_etl.models.cms.cms_rights_statement import CmsRightsStatement
 
 
 def test_init():

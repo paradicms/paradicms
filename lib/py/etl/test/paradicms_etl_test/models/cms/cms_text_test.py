@@ -14,16 +14,12 @@ def test_creators():
 
 
 def test_to_rdf():
-    expected = (
-        CmsText.builder(value="Test")
-        .add_rights(Rights.builder().add_creator("Test creator").build())
-        .build()
-    )
+    expected = CmsText.builder(value="Test").add_creator("Test creator").build()
     graph = Graph()
     expected.to_rdf(graph=graph)
     actual = CmsText.from_rdf(graph.resource(tuple(graph.subjects())[0]))
     assert actual.value == expected.value
-    assert actual.rights.creators == expected.rights.creators
+    assert actual.creators == expected.creators
 
 
 def test_value():
