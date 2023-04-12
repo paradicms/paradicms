@@ -4,7 +4,6 @@ from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_concept import CmsConcept
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_license import CmsLicense
-from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.models.cms.cms_named_location import CmsNamedLocation
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.cms.cms_organization import CmsOrganization
@@ -14,6 +13,7 @@ from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.cms.cms_work_closing import CmsWorkClosing
 from paradicms_etl.models.cms.cms_work_creation import CmsWorkCreation
 from paradicms_etl.models.cms.cms_work_opening import CmsWorkOpening
+from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 
 __CMS_ROOT_MODEL_CLASSES: Tuple[Type[CmsNamedModel], ...] = (
     CmsCollection,
@@ -30,7 +30,7 @@ __CMS_ROOT_MODEL_CLASSES: Tuple[Type[CmsNamedModel], ...] = (
     CmsWorkOpening,
 )
 
-CMS_ROOT_MODEL_CLASSES_BY_NAME: Dict[str, Type[CmsModel]] = {}
+CMS_ROOT_MODEL_CLASSES_BY_NAME: Dict[str, Type[ResourceBackedNamedModel]] = {}
 for __class in __CMS_ROOT_MODEL_CLASSES:
     CMS_ROOT_MODEL_CLASSES_BY_NAME[__class.__name__] = __class
     CMS_ROOT_MODEL_CLASSES_BY_NAME[__class.__name__.lstrip("Cms")] = __class

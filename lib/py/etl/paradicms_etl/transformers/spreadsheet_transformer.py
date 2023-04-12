@@ -8,10 +8,13 @@ from rdflib import URIRef, Graph
 from rdflib.namespace import Namespace
 from stringcase import spinalcase, snakecase
 
+from paradicms_etl.models.cms.cms_image_data import CmsImageData
+from paradicms_etl.models.cms.cms_root_model_classes_by_name import (
+    CMS_ROOT_MODEL_CLASSES_BY_NAME,
+)
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
-from paradicms_etl.models.root_model import RootModel
-from paradicms_etl.models.root_model_classes_by_name import ROOT_MODEL_CLASSES_BY_NAME
+from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 _MultidictKeyT = TypeVar("_MultidictKeyT")
@@ -44,12 +47,18 @@ class SpreadsheetTransformer:
         self,
         *,
         pipeline_id: str,
-        root_model_classes_by_name: Optional[Dict[str, Type[RootModel]]] = None,
+        image_data_class: Optional[Type[ImageData]] = None,
+        root_model_classes_by_name: Optional[
+            Dict[str, Type[ResourceBackedNamedModel]]
+        ] = None,
     ):
         self.__logger = logging.getLogger(__name__)
         self.__pipeline_id = pipeline_id
+        if image_data_class is None:
+            image_data_class = CmsImageData
+        self.__image_data_class = image_data_class
         if root_model_classes_by_name is None:
-            root_model_classes_by_name = ROOT_MODEL_CLASSES_BY_NAME
+            root_model_classes_by_name = CMS_ROOT_MODEL_CLASSES_BY_NAME
         self.__root_model_classes_by_alias = root_model_classes_by_name.copy()
 
         self.__json_ld_context = {"ss": str(self.__pipeline_namespace)}
@@ -114,7 +123,7 @@ class SpreadsheetTransformer:
                         except json.JSONDecodeError:
                             json_ready_data_cell = stripped_data_cell
                     elif isinstance(data_cell, Image):
-                        json_ready_data_cell = ImageData.from_pil_image(
+                        json_ready_data_cell = self.__image_data_class.from_pil_image(
                             data_cell
                         ).to_json_ld()
                     else:

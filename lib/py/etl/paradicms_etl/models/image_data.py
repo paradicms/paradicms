@@ -15,7 +15,7 @@ class ImageData(Model):
     @classmethod
     @abstractmethod
     def from_pil_image(cls, pil_image: Image):
-        pass
+        raise NotImplementedError
 
     def to_pil_image(self) -> Image:
         format_ = self._format
