@@ -7,10 +7,10 @@ from rdflib import URIRef, DCTERMS, Literal
 from rdflib.term import Node
 from tqdm import tqdm
 
-from paradicms_etl.models.collection import Collection
-from paradicms_etl.models.image import Image
+from paradicms_etl.models.cms.cms_collection import CmsCollection
+from paradicms_etl.models.cms.cms_image import CmsImage
+from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.work import Work
 
 ElementTextTree = Dict[str, Dict[str, List[str]]]
 
@@ -124,7 +124,7 @@ class OmekaClassicTransformer:
                     tuple(element_text_tree[element_set_name]),
                 )
 
-    def _transform_collection(self, *, omeka_collection) -> Optional[Collection]:
+    def _transform_collection(self, *, omeka_collection) -> Optional[CmsCollection]:
         element_text_tree = self._get_element_texts_as_tree(omeka_collection)
         properties = self._transform_dublin_core_elements(
             element_text_tree=element_text_tree
@@ -137,7 +137,7 @@ class OmekaClassicTransformer:
                 "collection %s has no title property", omeka_collection["url"]
             )
             return None
-        collection_builder = Collection.builder(
+        collection_builder = CmsCollection.builder(
             title=title, uri=URIRef(omeka_collection["url"])
         )
         for p, o in properties:
@@ -202,7 +202,7 @@ class OmekaClassicTransformer:
 
         return tuple(properties)
 
-    def _transform_file(self, *, file_, work_uri: URIRef) -> Tuple[Image, ...]:
+    def _transform_file(self, *, file_, work_uri: URIRef) -> Tuple[CmsImage, ...]:
         """
         Transform a file JSON object into a sequence of images.
 
@@ -231,13 +231,13 @@ class OmekaClassicTransformer:
         file_added = datetime.fromisoformat(file_["added"])
         file_modified = datetime.fromisoformat(file_["modified"])
 
-        images: List[Image] = []
+        images: List[CmsImage] = []
         for key, url in file_["file_urls"].items():
             if url is None:
                 continue
 
             image_builder = (
-                Image.builder(
+                CmsImage.builder(
                     depicts_uri=work_uri,
                     uri=URIRef(url),
                 )
@@ -283,7 +283,7 @@ class OmekaClassicTransformer:
         collection_uris_by_id: Dict[int, URIRef],
         endpoint_url: str,
         item,
-    ) -> Optional[Work]:
+    ) -> Optional[CmsWork]:
         if item["collection"] is None:
             return None
 
@@ -314,7 +314,7 @@ class OmekaClassicTransformer:
             self.__logger.warning("work %s has no title property", item["url"])
             return None
         work_builder = (
-            Work.builder(
+            CmsWork.builder(
                 title=title,
                 uri=URIRef(item["url"]),
             )
