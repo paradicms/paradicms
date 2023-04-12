@@ -33,7 +33,8 @@ __CMS_ROOT_MODEL_CLASSES: Tuple[Type[CmsNamedModel], ...] = (
 CMS_ROOT_MODEL_CLASSES_BY_NAME: Dict[str, Type[ResourceBackedNamedModel]] = {}
 for __class in __CMS_ROOT_MODEL_CLASSES:
     CMS_ROOT_MODEL_CLASSES_BY_NAME[__class.__name__] = __class
-    CMS_ROOT_MODEL_CLASSES_BY_NAME[__class.__name__.lstrip("Cms")] = __class
+    assert __class.__name__.startswith("Cms")
+    CMS_ROOT_MODEL_CLASSES_BY_NAME[__class.__name__[len("Cms") :]] = __class
 
 # Aliases
 CMS_ROOT_MODEL_CLASSES_BY_NAME["Location"] = CmsNamedLocation

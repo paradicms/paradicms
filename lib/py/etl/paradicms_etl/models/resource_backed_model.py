@@ -48,6 +48,7 @@ class ResourceBackedModel(Model):
             return self.add(p, o)
 
     def __init__(self, resource: Resource):
+        Model.__init__(self)
         self.__resource = resource
 
     @classmethod
@@ -120,9 +121,9 @@ class ResourceBackedModel(Model):
                     raise TypeError(
                         f"expected {p} node to be a Text, not a {value_type}"
                     )
-                from paradicms_etl.models.text import Text
+                from paradicms_etl.models.cms.cms_text import CmsText
 
-                return Text(value)
+                return CmsText(value)
         return None
 
     def _optional_uri_value(

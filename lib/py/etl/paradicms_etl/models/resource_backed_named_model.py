@@ -15,6 +15,7 @@ class ResourceBackedNamedModel(ResourceBackedModel, NamedModel):
 
     def __init__(self, *args, **kwds):
         ResourceBackedModel.__init__(self, *args, **kwds)
+        NamedModel.__init__(self)
         if not isinstance(self.uri, URIRef):
             raise TypeError(type(self.uri))
 
