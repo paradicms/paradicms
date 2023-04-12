@@ -268,22 +268,22 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
         def __generate_images(self, *, depicts_uri: URIRef, text_prefix: str):
             for image_i in range(self.__images_per_work):
                 title = f"{text_prefix} image {image_i}"
-                original = (
+                original_image_builder = (
                     CmsImage.builder(
                         depicts_uri=depicts_uri,
                         uri=URIRef(str(depicts_uri) + f":CmsImage{image_i}"),
                     )
-                    .add_holder(f"{title} rights holder")
-                    .add_license(CreativeCommonsLicenses.NC_1_0.uri)
-                    .add_statement(
-                        RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-                    )
                     .set_exact_dimensions(ImageDimensions(height=1000, width=1000))
                     .set_src("https://paradicms.org/img/placeholder/1000x1000.png")
                     .set_title(title)
-                    .build()
                 )
-                yield original
+                original_image_builder.add_holder(f"{title} rights holder").add_license(
+                    CreativeCommonsLicenses.NC_1_0.uri
+                ).add_statement(
+                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
+                )
+                original_image = original_image_builder.build()
+                yield original_image
 
                 for thumbnail_dimensions in (
                     ImageDimensions(200, 200),
@@ -291,25 +291,31 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     ImageDimensions(600, 600),
                     ImageDimensions(800, 800),
                 ):
-                    yield CmsImage.builder(
-                        depicts_uri=depicts_uri,
-                        uri=URIRef(
-                            str(original.uri)
-                            + f":Thumbnail{thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
-                        ),
-                    ).add_holder(f"{title} rights holder").add_license(
+                    thumbnail_builder = (
+                        CmsImage.builder(
+                            depicts_uri=depicts_uri,
+                            uri=URIRef(
+                                str(original_image.uri)
+                                + f":Thumbnail{thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
+                            ),
+                        )
+                        .set_exact_dimensions(thumbnail_dimensions)
+                        .set_original_image_uri(original_image.uri)
+                        .set_src(
+                            f"https://paradicms.org/img/placeholder/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}.png"
+                        )
+                        .set_title(
+                            f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
+                        )
+                    )
+
+                    thumbnail_builder.add_holder(f"{title} rights holder").add_license(
                         CreativeCommonsLicenses.NC_1_0.uri
                     ).add_statement(
                         RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-                    ).set_exact_dimensions(
-                        thumbnail_dimensions
-                    ).set_original_image_uri(
-                        original.uri
-                    ).set_src(
-                        f"https://paradicms.org/img/placeholder/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}.png"
-                    ).set_title(
-                        f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
-                    ).build()
+                    )
+
+                    yield thumbnail_builder.build()
 
         def __generate_collections(
             self,
