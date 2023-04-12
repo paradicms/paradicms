@@ -4,12 +4,12 @@ from typing import Dict, Any
 from rdflib import URIRef
 
 from paradicms_etl.extractors.airtable_extractor import AirtableExtractor
-from paradicms_etl.models.collection import Collection
-from paradicms_etl.models.concept import Concept
-from paradicms_etl.models.image import Image
+from paradicms_etl.models.cms.cms_collection import CmsCollection
+from paradicms_etl.models.cms.cms_concept import CmsConcept
+from paradicms_etl.models.cms.cms_image import CmsImage
+from paradicms_etl.models.cms.cms_property import CmsProperty
+from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.property import Property
-from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import COCO
 from paradicms_etl.pipelines.costume_core_ontology_airtable_to_paradicms_rdf_pipeline import (
     CostumeCoreOntologyAirtableToParadicmsRdfPipeline,
@@ -35,21 +35,21 @@ class CostumeCoreDataAirtableTransformer:
         self.__logger = logging.getLogger(__name__)
 
     def __call__(self, *, base: Dict[str, Any], records_by_table, **kwds):
-        concepts_by_uri: Dict[URIRef, Concept] = {}
-        properties_by_label: Dict[str, Property] = {}
+        concepts_by_uri: Dict[URIRef, CmsConcept] = {}
+        properties_by_label: Dict[str, CmsProperty] = {}
         for ontology_model in CostumeCoreOntologyAirtableToParadicmsRdfPipeline(
             airtable_access_token="neverused"
         ).extract_transform(force_extract=False):
-            if isinstance(ontology_model, Concept):
+            if isinstance(ontology_model, CmsConcept):
                 concept = ontology_model
                 concepts_by_uri[concept.uri] = concept
                 yield concept
-            elif isinstance(ontology_model, Property):
+            elif isinstance(ontology_model, CmsProperty):
                 property_ = ontology_model
                 properties_by_label[property_.label] = property_
                 yield property_
 
-        collection = Collection.builder(
+        collection = CmsCollection.builder(
             title=base["name"], uri=AirtableExtractor.base_url(base_id=base["id"])
         ).build()
         yield collection
@@ -69,10 +69,10 @@ class CostumeCoreDataAirtableTransformer:
         *,
         base_id: str,
         collection_uri: URIRef,
-        concepts_by_uri: Dict[URIRef, Concept],
+        concepts_by_uri: Dict[URIRef, CmsConcept],
         name_records,
         object_records,
-        properties_by_label: Dict[str, Property],
+        properties_by_label: Dict[str, CmsProperty],
         term_records,
     ):
         name_records_by_id = {
@@ -92,7 +92,7 @@ class CostumeCoreDataAirtableTransformer:
                 )
             )
 
-            work_builder = Work.builder(
+            work_builder = CmsWork.builder(
                 # rights=Rights.from_properties(properties),
                 title=object_record["fields"]["Title"],
                 uri=work_uri,
@@ -152,14 +152,14 @@ class CostumeCoreDataAirtableTransformer:
 
     def __transform_object_images(self, *, object_images, work_uri: URIRef):
         for object_image in object_images:
-            original_image = Image.builder(
+            original_image = CmsImage.builder(
                 depicts_uri=work_uri,
                 uri=URIRef(object_image["url"]),
             ).build()
             yield original_image
 
             for thumbnail in object_image["thumbnails"].values():
-                yield Image.builder(
+                yield CmsImage.builder(
                     depicts_uri=work_uri,
                     uri=URIRef(thumbnail["url"]),
                 ).set_exact_dimensions(
