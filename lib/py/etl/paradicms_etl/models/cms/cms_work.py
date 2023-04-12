@@ -6,48 +6,43 @@ from rdflib.resource import Resource
 
 from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
 from paradicms_etl.models.location import Location
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.models.resource_backed_named_model import CmsNamedModel
 from paradicms_etl.models.rights_mixin import Rights
 from paradicms_etl.models.text import Text
+from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class Work(ResourceBackedNamedModel, CmsRightsMixin):
-    """
-    Model of a work such as a painting or a garment.
-
-    This is the same concept as Work in VRA Core.
-    """
-
+class CmsWork(CmsNamedModel, CmsRightsMixin, Work):
     LABEL_PROPERTY = DCTERMS.title
 
-    class Builder(ResourceBackedNamedModel.Builder, CmsRightsMixin.Builder):
+    class Builder(CmsNamedModel.Builder, CmsRightsMixin.Builder):
         def __init__(self, *, title: str, uri: URIRef):
-            ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
+            CmsNamedModel.Builder.__init__(self, uri=uri)
             self.set(DCTERMS.title, title)
 
-        def add_collection_uri(self, collection_uri: URIRef) -> "Work.Builder":
+        def add_collection_uri(self, collection_uri: URIRef) -> "CmsWork.Builder":
             self.add(CMS.collection, collection_uri)
             return self
 
-        def add_page(self, page: Union[str, URIRef]) -> "Work.Builder":
+        def add_page(self, page: Union[str, URIRef]) -> "CmsWork.Builder":
             self.add(FOAF.page, page)
             return self
 
-        def build(self) -> "Work":
-            return Work(self._resource)
+        def build(self) -> "CmsWork":
+            return CmsWork(self._resource)
 
-        def set_description(self, description: Union[str, Text]) -> "Work.Builder":
+        def set_description(self, description: Union[str, Text]) -> "CmsWork.Builder":
             self.set(DCTERMS.description, description)
             return self
 
-        def set_location(self, location: Union[str, Location]) -> "Work.Builder":
+        def set_location(self, location: Union[str, Location]) -> "CmsWork.Builder":
             self.set(DCTERMS.spatial, location)
             return self
 
     def __init__(self, resource: Resource):
-        ResourceBackedNamedModel.__init__(self, resource)
+        CmsNamedModel.__init__(self, resource)
         self.title
 
     @classmethod
@@ -71,7 +66,7 @@ class Work(ResourceBackedNamedModel, CmsRightsMixin):
     def json_ld_context(cls):
         return safe_dict_update(
             safe_dict_update(
-                ResourceBackedNamedModel.json_ld_context(),
+                CmsNamedModel.json_ld_context(),
                 {
                     "description": {"@id": str(DCTERMS.description)},
                     "collection": {"@id": str(CMS.collection), "@type": "@id"},

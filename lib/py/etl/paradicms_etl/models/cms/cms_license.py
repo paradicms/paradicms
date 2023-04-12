@@ -3,32 +3,29 @@ from typing import Optional
 from rdflib import DC, DCTERMS, URIRef
 from rdflib.resource import Resource
 
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
+from paradicms_etl.models.license import License
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class License(ResourceBackedNamedModel):
-    """
-    A license. Adapted from the creativecommons.org license RDF (https://github.com/creativecommons/cc.licenserdf).
-    """
-
+class CmsLicense(CmsNamedModel, License):
     LABEL_PROPERTY = DC.title
 
-    class Builder(ResourceBackedNamedModel.Builder):
+    class Builder(CmsNamedModel.Builder):
         def __init__(self, *, identifier: str, title: str, uri: URIRef):
-            ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
+            CmsNamedModel.Builder.__init__(self, uri=uri)
             self.set(DC.identifier, identifier)
             self.set(DC.title, title)
 
-        def build(self) -> "License":
-            return License(self._resource)
+        def build(self) -> "CmsLicense":
+            return CmsLicense(self._resource)
 
-        def set_version(self, version: str) -> "License.Builder":
+        def set_version(self, version: str) -> "CmsLicense.Builder":
             self.set(DCTERMS.hasVersion, version)
             return self
 
     def __init__(self, resource: Resource):
-        ResourceBackedNamedModel.__init__(self, resource)
+        CmsNamedModel.__init__(self, resource)
         self.identifier
         self.title
 
@@ -43,7 +40,7 @@ class License(ResourceBackedNamedModel):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            ResourceBackedNamedModel.json_ld_context(),
+            CmsNamedModel.json_ld_context(),
             {
                 "identifier": {"@id": str(DC.identifier)},
                 "title": {"@id": str(DC.title)},

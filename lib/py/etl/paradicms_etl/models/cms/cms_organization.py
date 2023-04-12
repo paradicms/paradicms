@@ -1,11 +1,14 @@
-from paradicms_etl.models.agent import Agent
 from rdflib import URIRef
 
+from paradicms_etl.models.agent import Agent
+from paradicms_etl.models.cms.cms_agent import CmsAgent
+from paradicms_etl.models.organization import Organization
 
-class Organization(Agent):
+
+class CmsOrganization(CmsAgent, Organization):
     class Builder(Agent.Builder):
         def build(self):
-            return Organization(self._resource)
+            return CmsOrganization(self._resource)
 
     @classmethod
     def builder(cls, *, name: str, uri: URIRef) -> Builder:

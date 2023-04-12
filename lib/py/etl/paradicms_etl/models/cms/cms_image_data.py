@@ -5,20 +5,20 @@ from typing import Dict, Any
 from PIL import Image
 from rdflib import DCTERMS, RDF, Literal, XSD, BNode
 
-from paradicms_etl.models.resource_backed_model import ResourceBackedModel
+from paradicms_etl.models.image_data import ImageData
 
 
-class ImageData(ResourceBackedModel):
-    class __Builder(ResourceBackedModel.Builder):
+class CmsImageData(CmsModel, ImageData):
+    class __Builder(CmsModel.Builder):
         def add(self, *args, **kwds):
-            ResourceBackedModel.Builder.add(self, *args, **kwds)
+            CmsModel.Builder.add(self, *args, **kwds)
             return self
 
-        def build(self) -> "ImageData":
-            return ImageData(self._resource)
+        def build(self) -> "CmsImageData":
+            return CmsImageData(self._resource)
 
     @property
-    def __format(self) -> str:
+    def _format(self) -> str:
         return self._required_str_value(DCTERMS.format)
 
     @classmethod
@@ -40,20 +40,13 @@ class ImageData(ResourceBackedModel):
 
     def to_json_ld(self) -> Dict[str, Any]:
         return {
-            str(DCTERMS.format): self.__format,
+            str(DCTERMS.format): self._format,
             str(RDF.value): {
                 "@type": str(XSD.base64Binary),
-                "@value": b64encode(self.__value).decode("ascii"),
+                "@value": b64encode(self._value).decode("ascii"),
             },
         }
 
-    def to_pil_image(self) -> Image:
-        format_ = self.__format
-        for pil_format, mime_type in Image.MIME.items():
-            if mime_type == format_:
-                return Image.open(BytesIO(self.__value), formats=(pil_format,)).copy()
-        raise ValueError(f"unable to convert MIME type {format_} to PIL format")
-
     @property
-    def __value(self) -> bytes:
+    def _value(self) -> bytes:
         return self._required_bytes_value(RDF.value)

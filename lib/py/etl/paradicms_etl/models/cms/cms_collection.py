@@ -1,20 +1,19 @@
-from typing import Union
+from typing import Union, Collection
 
 from rdflib import URIRef, FOAF
 from rdflib.namespace import DCTERMS
-from rdflib.resource import Resource
 
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.models.resource_backed_named_model import CmsNamedModel
 from paradicms_etl.models.text import Text
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class Collection(ResourceBackedNamedModel):
+class CmsCollection(CmsNamedModel, Collection):
     LABEL_PROPERTY = DCTERMS.title
 
-    class Builder(ResourceBackedNamedModel.Builder):
+    class Builder(CmsNamedModel.Builder):
         def __init__(self, *, title: str, uri: URIRef):
-            ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
+            CmsNamedModel.Builder.__init__(self, uri=uri)
             self.set(DCTERMS.title, title)
 
         def build(self) -> "Collection":
@@ -26,8 +25,8 @@ class Collection(ResourceBackedNamedModel):
             self.set(DCTERMS.description, description)
             return self
 
-    def __init__(self, resource: Resource):
-        ResourceBackedNamedModel.__init__(self, resource)
+    def __init__(self, *args, **kwds):
+        CmsNamedModel.__init__(self, *args, **kwds)
         self.title
 
     @classmethod
@@ -37,7 +36,7 @@ class Collection(ResourceBackedNamedModel):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            ResourceBackedNamedModel.json_ld_context(),
+            CmsNamedModel.json_ld_context(),
             {
                 "description": {"@id": str(DCTERMS.description)},
                 "page": {"@id": str(FOAF.page), "@type": "@id"},

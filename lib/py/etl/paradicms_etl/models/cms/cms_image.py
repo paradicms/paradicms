@@ -6,58 +6,61 @@ from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
 from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
+from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.models.resource_backed_named_model import CmsNamedModel
 from paradicms_etl.namespaces import CMS, EXIF
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class Image(ResourceBackedNamedModel, CmsRightsMixin):
+class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
     LABEL_PROPERTY = DCTERMS.title
 
-    class Builder(ResourceBackedNamedModel.Builder, CmsRightsMixin.Builder):
+    class Builder(CmsNamedModel.Builder, CmsRightsMixin.Builder):
         def __init__(self, *, depicts_uri: URIRef, uri: URIRef):
-            ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
+            CmsNamedModel.Builder.__init__(self, uri=uri)
             self.set(FOAF.depicts, depicts_uri)
 
-        def build(self) -> "Image":
-            return Image(self._resource)
+        def build(self) -> "CmsImage":
+            return CmsImage(self._resource)
 
-        def set_copyable(self, copyable: bool) -> "Image.Builder":
+        def set_copyable(self, copyable: bool) -> "CmsImage.Builder":
             """
             Can this image be copied from its source (for GUI building), or does it have to be hot linked in order to use it?
             """
             self.set(CMS.imageCopyable, copyable)
             return self
 
-        def set_created(self, created: datetime) -> "Image.Builder":
+        def set_created(self, created: datetime) -> "CmsImage.Builder":
             self.set(DCTERMS.created, created)
             return self
 
         def set_exact_dimensions(
             self, exact_dimensions: ImageDimensions
-        ) -> "Image.Builder":
+        ) -> "CmsImage.Builder":
             self.set(EXIF.height, exact_dimensions.height)
             self.set(EXIF.width, exact_dimensions.width)
             return self
 
-        def set_format(self, format_: str) -> "Image.Builder":
+        def set_format(self, format_: str) -> "CmsImage.Builder":
             self.set(DCTERMS["format"], format_)
             return self
 
         def set_max_dimensions(
             self, max_dimensions: ImageDimensions
-        ) -> "Image.Builder":
+        ) -> "CmsImage.Builder":
             self.set(CMS.imageMaxHeight, max_dimensions.height)
             self.set(CMS.imageMaxWidth, max_dimensions.width)
             return self
 
-        def set_modified(self, modified: datetime) -> "Image.Builder":
+        def set_modified(self, modified: datetime) -> "CmsImage.Builder":
             self.set(DCTERMS.modified, modified)
             return self
 
-        def set_original_image_uri(self, original_image_uri: URIRef) -> "Image.Builder":
+        def set_original_image_uri(
+            self, original_image_uri: URIRef
+        ) -> "CmsImage.Builder":
             # (original, foaf:thumbnail, derived)
             self._resource.graph.add(
                 (original_image_uri, FOAF.thumbnail, self._resource.identifier)
@@ -67,19 +70,19 @@ class Image(ResourceBackedNamedModel, CmsRightsMixin):
             self.add(CMS.thumbnailOf, original_image_uri)
             return self
 
-        def set_src(self, src: Union[str, Literal, URIRef]) -> "Image.Builder":
+        def set_src(self, src: Union[str, Literal, URIRef]) -> "CmsImage.Builder":
             """
             src that can be used in an <img> tag; if not specified, defaults to URI
             """
             self.set(CMS.imageSrc, src)
             return self
 
-        def set_title(self, title: str) -> "Image.Builder":
+        def set_title(self, title: str) -> "CmsImage.Builder":
             self.set(DCTERMS.title, title)
             return self
 
     def __init__(self, resource: Resource):
-        ResourceBackedNamedModel.__init__(self, resource)
+        CmsNamedModel.__init__(self, resource)
         self.depicts_uri
 
     @classmethod
@@ -99,7 +102,7 @@ class Image(ResourceBackedNamedModel, CmsRightsMixin):
     def json_ld_context(cls):
         return safe_dict_update(
             safe_dict_update(
-                ResourceBackedNamedModel.json_ld_context(),
+                CmsNamedModel.json_ld_context(),
                 {
                     "copyable": {
                         "@id": str(CMS.imageCopyable),

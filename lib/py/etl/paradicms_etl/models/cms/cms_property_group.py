@@ -2,25 +2,26 @@ from typing import Union, Text
 
 from rdflib import URIRef, RDFS
 
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.models.property_group import PropertyGroup
+from paradicms_etl.models.resource_backed_named_model import CmsNamedModel
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class PropertyGroup(ResourceBackedNamedModel):
-    class Builder(ResourceBackedNamedModel.Builder):
+class CmsPropertyGroup(CmsNamedModel, PropertyGroup):
+    class Builder(CmsNamedModel.Builder):
         def __init__(self, *, label: str, uri: URIRef):
-            ResourceBackedNamedModel.Builder.__init__(self, uri=uri)
+            CmsNamedModel.Builder.__init__(self, uri=uri)
             self.add(RDFS.label, label)
 
-        def build(self) -> "PropertyGroup":
-            return PropertyGroup(self._resource)
+        def build(self) -> "CmsPropertyGroup":
+            return CmsPropertyGroup(self._resource)
 
-        def set_comment(self, comment: Union[str, Text]) -> "PropertyGroup.Builder":
+        def set_comment(self, comment: Union[str, Text]) -> "CmsPropertyGroup.Builder":
             self.set(RDFS.comment, comment)
             return self
 
     def __init__(self, *args, **kwds):
-        ResourceBackedNamedModel.__init__(self, *args, **kwds)
+        CmsNamedModel.__init__(self, *args, **kwds)
         self.label
 
     @classmethod
@@ -30,7 +31,7 @@ class PropertyGroup(ResourceBackedNamedModel):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            ResourceBackedNamedModel.json_ld_context(),
+            CmsNamedModel.json_ld_context(),
             {"comment": {"@id": str(RDFS.comment)}, "label": {"@id": str(RDFS.label)}},
         )
 

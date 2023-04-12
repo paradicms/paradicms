@@ -5,14 +5,15 @@ from rdflib.namespace import RDF
 from rdflib.resource import Resource
 from rdflib.term import Node, URIRef, Literal
 
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.models.concept import Concept
+from paradicms_etl.models.resource_backed_named_model import CmsNamedModel
 from paradicms_etl.models.text import Text
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class Concept(ResourceBackedNamedModel):
-    class Builder(ResourceBackedNamedModel.Builder):
-        def add_alt_label(self, alt_label: Union[str, Literal]) -> "Concept.Builder":
+class CmsConcept(CmsNamedModel, Concept):
+    class Builder(CmsNamedModel.Builder):
+        def add_alt_label(self, alt_label: Union[str, Literal]) -> "CmsConcept.Builder":
             self.add(SKOS.altLabel, alt_label)
             return self
 
@@ -20,25 +21,28 @@ class Concept(ResourceBackedNamedModel):
             self.add(RDF.type, type_uri)
             return self
 
-        def build(self) -> "Concept":
-            return Concept(self._resource)
+        def build(self) -> "CmsConcept":
+            return CmsConcept(self._resource)
 
-        def set_definition(self, definition: Union[str, Text]) -> "Concept.Builder":
+        def set_definition(self, definition: Union[str, Text]) -> "CmsConcept.Builder":
             self.set(SKOS.definition, definition)
             return self
 
-        def set_pref_label(self, pref_label: Union[str, Literal]) -> "Concept.Builder":
+        def set_pref_label(
+            self, pref_label: Union[str, Literal]
+        ) -> "CmsConcept.Builder":
             self.set(SKOS.prefLabel, pref_label)
             return self
 
-        def set_value(self, value: Node) -> "Concept.Builder":
+        def set_value(self, value: Node) -> "CmsConcept.Builder":
             self.set(RDF.value, value)
             return self
 
     def __init__(self, resource: Resource):
         resource.add(RDF.type, SKOS.Concept)
-        ResourceBackedNamedModel.__init__(self, resource)
+        CmsNamedModel.__init__(self, resource)
         self.pref_label
+        self.value
 
     @classmethod
     def builder(cls, *, uri: URIRef):
@@ -47,7 +51,7 @@ class Concept(ResourceBackedNamedModel):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            ResourceBackedNamedModel.json_ld_context(),
+            CmsNamedModel.json_ld_context(),
             {
                 "altLabel": {"@id": str(SKOS.altLabel)},
                 "definition": {"@id": str(SKOS.definition)},

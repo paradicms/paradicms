@@ -1,12 +1,13 @@
 from rdflib import URIRef
 
-from paradicms_etl.models.work_event import WorkEvent
+from paradicms_etl.models.cms.cms_work_event import CmsWorkEvent
+from paradicms_etl.models.work_closing import WorkClosing
 
 
-class WorkClosing(WorkEvent):
-    class Builder(WorkEvent.Builder):
-        def build(self) -> "WorkClosing":
-            return WorkClosing(self._resource)
+class CmsWorkClosing(CmsWorkEvent, WorkClosing):
+    class Builder(CmsWorkEvent.Builder):
+        def build(self) -> "CmsWorkClosing":
+            return CmsWorkClosing(self._resource)
 
     @classmethod
     def builder(cls, *, uri: URIRef, work_uri: URIRef):

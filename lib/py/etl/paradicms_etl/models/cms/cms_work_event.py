@@ -1,25 +1,27 @@
-from paradicms_etl.models.event import Event
-from paradicms_etl.namespaces import CMS
-from paradicms_etl.utils.safe_dict_update import safe_dict_update
 from rdflib import RDF, URIRef
 from rdflib.resource import Resource
 
+from paradicms_etl.models.event import CmsEvent
+from paradicms_etl.models.work_event import WorkEvent
+from paradicms_etl.namespaces import CMS
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
-class WorkEvent(Event):
-    class Builder(Event.Builder):
+
+class CmsWorkEvent(CmsEvent, WorkEvent):
+    class Builder(CmsEvent.Builder):
         def __init__(self, *, uri: URIRef, work_uri: URIRef):
-            Event.Builder.__init__(self, uri=uri)
+            CmsEvent.Builder.__init__(self, uri=uri)
             self.set(CMS.work, work_uri)
 
     def __init__(self, resource: Resource):
-        resource.add(RDF.type, CMS.WorkEvent)
-        Event.__init__(self, resource)
+        resource.add(RDF.type, CMS.CmsWorkEvent)
+        CmsEvent.__init__(self, resource)
         self.work_uri
 
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            Event.json_ld_context(),
+            CmsEvent.json_ld_context(),
             {
                 "work": {"@id": str(CMS.work), "@type": "@id"},
             },

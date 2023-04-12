@@ -1,17 +1,18 @@
 from rdflib import FOAF, RDF, DCTERMS, URIRef
 from rdflib.resource import Resource
 
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.models.agent import Agent
+from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.namespaces import CMS, CONTACT
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class Agent(ResourceBackedNamedModel):
+class CmsAgent(CmsNamedModel, Agent):
     LABEL_PROPERTY = FOAF.name
 
-    class Builder(ResourceBackedNamedModel.Builder):
+    class Builder(CmsNamedModel.Builder):
         def __init__(self, *, name: str, uri: URIRef):
-            ResourceBackedNamedModel.Builder.__init__(self, uri)
+            CmsNamedModel.Builder.__init__(self, uri)
             self.set(FOAF.name, name)
 
         def add_page(self, page: URIRef) -> "Agent.Builder":
@@ -28,13 +29,13 @@ class Agent(ResourceBackedNamedModel):
 
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS.Agent)
-        ResourceBackedNamedModel.__init__(self, resource)
+        CmsNamedModel.__init__(self, resource)
         self.name
 
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            ResourceBackedNamedModel.json_ld_context(),
+            CmsNamedModel.json_ld_context(),
             {
                 "name": {"@id": str(FOAF.name)},
                 "page": {"@id": str(FOAF.page)},
