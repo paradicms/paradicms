@@ -277,9 +277,9 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     .set_src("https://paradicms.org/img/placeholder/1000x1000.png")
                     .set_title(title)
                 )
-                original_image_builder.add_holder(f"{title} rights holder").add_license(
-                    CreativeCommonsLicenses.NC_1_0.uri
-                ).add_statement(
+                original_image_builder.add_rights_holder(
+                    f"{title} rights holder"
+                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
                     RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
                 )
                 original_image = original_image_builder.build()
@@ -291,7 +291,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     ImageDimensions(600, 600),
                     ImageDimensions(800, 800),
                 ):
-                    thumbnail_builder = (
+                    yield (
                         CmsImage.builder(
                             depicts_uri=depicts_uri,
                             uri=URIRef(
@@ -299,6 +299,7 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                                 + f":Thumbnail{thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
                             ),
                         )
+                        .copy_rights(original_image)
                         .set_exact_dimensions(thumbnail_dimensions)
                         .set_original_image_uri(original_image.uri)
                         .set_src(
@@ -307,15 +308,8 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                         .set_title(
                             f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
                         )
+                        .build()
                     )
-
-                    thumbnail_builder.add_holder(f"{title} rights holder").add_license(
-                        CreativeCommonsLicenses.NC_1_0.uri
-                    ).add_statement(
-                        RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-                    )
-
-                    yield thumbnail_builder.build()
 
         def __generate_collections(
             self,
@@ -331,9 +325,11 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 )
                 if collection_i % 2 == 0:
                     description_builder = CmsText.builder(self.__LOREM_IPSUM)
-                    description_builder.add_holder(
+                    description_builder.add_rights_holder(
                         f"{collection_title} description rights holder"
-                    ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_statement(
+                    ).add_license(
+                        CreativeCommonsLicenses.NC_1_0.uri
+                    ).add_rights_statement(
                         RightsStatementsDotOrgRightsStatements.InC_EDU.uri
                     )
                     collection_builder.set_description(description_builder.build())
@@ -430,9 +426,11 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 work_builder.add(DCTERMS.identifier, f"{title}Id{i}")
                 work_builder.add(DCTERMS.provenance, f"{title} provenance {i}")
 
-                work_builder.add_holder(f"{title} rights holder").add_license(
+                work_builder.add_rights_holder(f"{title} rights holder").add_license(
                     CreativeCommonsLicenses.NC_1_0.uri
-                ).add_statement(RightsStatementsDotOrgRightsStatements.InC_EDU.uri)
+                ).add_rights_statement(
+                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri
+                )
 
             destruction_date = date(day=1, month=1, year=2022)
             creation_date = destruction_date - timedelta(days=work_i)
@@ -481,9 +479,9 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 description_builder = CmsText.builder(
                     self.__LOREM_IPSUM,
                 )
-                description_builder.add_holder(
+                description_builder.add_rights_holder(
                     f"{title} description rights holder"
-                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_statement(
+                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
                     RightsStatementsDotOrgRightsStatements.InC_EDU.uri
                 )
                 description = description_builder.build()

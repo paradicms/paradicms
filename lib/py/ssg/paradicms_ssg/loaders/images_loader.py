@@ -132,11 +132,7 @@ class ImagesLoader:
                     depicts_uri=original_image.depicts_uri,
                     uri=archived_thumbnail_uri,
                 )
-                .add_contributor(original_image.contributors)
-                .add_creator(original_image.creators)
-                .add_holder(original_image.holders)
-                .add_license(original_image.license)
-                .add_statement(original_image.statement)
+                .copy_rights(original_image)
                 .set_exact_dimensions(thumbnail_exact_dimensions)
                 .set_max_dimensions(thumbnail_max_dimensions)
                 .set_original_image_uri(original_image.uri)

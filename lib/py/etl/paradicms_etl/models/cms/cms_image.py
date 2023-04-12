@@ -11,6 +11,7 @@ from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
+from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.namespaces import CMS, EXIF
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
@@ -25,6 +26,10 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
 
         def build(self) -> "CmsImage":
             return CmsImage(self._resource)
+
+        def copy_rights(self, other: RightsMixin) -> "CmsImage.Builder":
+            CmsRightsMixin.Builder.copy_rights(self, other)
+            return self
 
         def set_copyable(self, copyable: bool) -> "CmsImage.Builder":
             """

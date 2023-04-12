@@ -38,7 +38,7 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
         ) -> _RightsMixinBuilderT:
             model_builder.add_license(
                 license=CreativeCommonsLicenses.BY_SA_3_0.uri
-            ).add_statement(
+            ).add_rights_statement(
                 statement=RightsStatementsDotOrgRightsStatements.InC.uri,
             )
             return model_builder

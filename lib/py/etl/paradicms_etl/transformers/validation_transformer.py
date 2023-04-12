@@ -179,7 +179,7 @@ class __Validator:
         pass
 
     def __validate_rights(self, rights: RightsMixin):
-        for agents in (rights.contributors, rights.creators, rights.holders):
+        for agents in (rights.contributors, rights.creators, rights.rights_holders):
             for agent in agents:
                 if isinstance(agent, URIRef):
                     self.__referenced_agent_uris.add(agent)

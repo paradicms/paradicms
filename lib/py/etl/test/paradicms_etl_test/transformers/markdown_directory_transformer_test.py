@@ -47,7 +47,7 @@ def test_transform(data_dir_path: Path):
     work1_description = work1.description
     assert work1_description is not None
     assert isinstance(work1_description, Text)
-    assert work1_description.holders == (
+    assert work1_description.rights_holders == (
         URIRef("urn:markdown:test:cms-person:test_person"),
     )
 

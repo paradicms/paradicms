@@ -847,7 +847,7 @@ class CostumeCoreOntologyAirtableTransformer:
             referenced_rights_uris=self.__referenced_rights_statement_uris,
         )
         if rights_statement:
-            model_builder.add_statement(rights_statement)
+            model_builder.add_rights_statement(rights_statement)
 
         # source_name=get_first_list_element(
         #     fields[f"{key_prefix}_rights_source_name"]

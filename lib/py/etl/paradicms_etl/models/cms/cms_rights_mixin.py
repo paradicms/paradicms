@@ -36,18 +36,33 @@ class CmsRightsMixin(RightsMixin):
             self.add(DCTERMS.creator, creator)
             return self
 
-        def add_holder(self, holder: Union[str, URIRef]) -> "CmsRightsMixin.Builder":
-            self.add(DCTERMS.rightsHolder, holder)
-            return self
-
         def add_license(self, license: Union[str, URIRef]) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.license, license)
             return self
 
-        def add_statement(
+        def add_rights_holder(
+            self, holder: Union[str, URIRef]
+        ) -> "CmsRightsMixin.Builder":
+            self.add(DCTERMS.rightsHolder, holder)
+            return self
+
+        def add_rights_statement(
             self, statement: Union[str, URIRef]
         ) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.rights, statement)
+            return self
+
+        def copy_rights(self, other: RightsMixin) -> "CmsRightsMixin.Builder":
+            for contributor in other.contributors:
+                self.add_contributor(contributor)
+            for creator in other.creators:
+                self.add_creator(creator)
+            for holder in other.rights_holders:
+                self.add_rights_holder(holder)
+            if other.license:
+                self.add_license(other.license)
+            if other.statement:
+                self.add_rights_statement(other.statement)
             return self
 
     @property
@@ -59,7 +74,7 @@ class CmsRightsMixin(RightsMixin):
         return self.__plural_values(DCTERMS.creator)
 
     @property
-    def holders(self) -> Tuple[Union[str, URIRef], ...]:
+    def rights_holders(self) -> Tuple[Union[str, URIRef], ...]:
         return self.__plural_values(DCTERMS.rightsHolder)
 
     @classmethod

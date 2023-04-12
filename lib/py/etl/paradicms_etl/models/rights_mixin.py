@@ -22,12 +22,12 @@ class RightsMixin(ABC):
 
     @property
     @abstractmethod
-    def holders(self) -> Tuple[Union[str, URIRef], ...]:
+    def license(self) -> Union[str, URIRef, None]:
         pass
 
     @property
     @abstractmethod
-    def license(self) -> Union[str, URIRef, None]:
+    def rights_holders(self) -> Tuple[Union[str, URIRef], ...]:
         pass
 
     @property
