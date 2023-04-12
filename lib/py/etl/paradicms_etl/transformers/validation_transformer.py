@@ -131,6 +131,7 @@ class __Validator:
         )
 
     def _validate_named_location(self, location: Location):
+        assert isinstance(location, NamedModel)
         self.__validate_named_model(location)
         self.__location_uris.add(location.uri)
 

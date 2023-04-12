@@ -36,11 +36,12 @@ class WikidataItemsTransformer(_WikidataItemsTransformer):
         def _add_rights(
             self, model_builder: _RightsMixinBuilderT
         ) -> _RightsMixinBuilderT:
-            return model_builder.add_license(
+            model_builder.add_license(
                 license=CreativeCommonsLicenses.BY_SA_3_0.uri
             ).add_statement(
                 statement=RightsStatementsDotOrgRightsStatements.InC.uri,
             )
+            return model_builder
 
         def _get_properties(
             self, item: WikidataItem

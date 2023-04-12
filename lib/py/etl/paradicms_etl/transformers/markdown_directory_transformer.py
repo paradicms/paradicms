@@ -154,7 +154,7 @@ class MarkdownDirectoryTransformer:
 
             self.__transformed_models.append(transformed_model)
 
-        def __call__(self) -> Tuple[ResourceBackedNamedModel, ...]:
+        def __call__(self) -> Tuple[Model, ...]:
             # Order is important
             self.__transform_collection_metadata_file_entries()
             self.__transform_work_metadata_file_entries()
@@ -166,7 +166,7 @@ class MarkdownDirectoryTransformer:
 
         def __default_collection_uri(self, *, markdown_directory_name: str) -> URIRef:
             return self.__model_uri(
-                model_class=Collection,
+                model_class=CmsCollection,
                 model_id=markdown_directory_name,
             )
 
@@ -362,7 +362,7 @@ class MarkdownDirectoryTransformer:
                         transformed_model=CmsImage.builder(
                             depicts_uri=transformed_model.uri,
                             uri=self.__model_uri(
-                                model_class=Image,
+                                model_class=CmsImage,
                                 model_id=image_file_entry.model_id,
                             ),
                         )

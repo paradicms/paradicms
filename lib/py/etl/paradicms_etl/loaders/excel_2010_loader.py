@@ -8,6 +8,7 @@ from rdflib import Graph
 
 from paradicms_etl.loaders.buffering_loader import BufferingLoader
 from paradicms_etl.model import Model
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.namespaces import bind_namespaces
 
 
@@ -61,6 +62,7 @@ class Excel2010Loader(BufferingLoader):
                     additional_namespace_modules=self.__additional_namespace_modules,
                 )
                 model.to_rdf(graph=graph)
+                assert issubclass(model_class, ResourceBackedModel)
                 json_ld_object = json.loads(
                     graph.serialize(
                         context=model_class.json_ld_context(), format="json-ld"
