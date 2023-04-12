@@ -13,7 +13,7 @@ from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.cms.cms_work_closing import CmsWorkClosing
 from paradicms_etl.models.cms.cms_work_creation import CmsWorkCreation
 from paradicms_etl.models.cms.cms_work_opening import CmsWorkOpening
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 
 __CMS_ROOT_MODEL_CLASSES: Tuple[Type[CmsNamedModel], ...] = (
     CmsCollection,
@@ -30,7 +30,7 @@ __CMS_ROOT_MODEL_CLASSES: Tuple[Type[CmsNamedModel], ...] = (
     CmsWorkOpening,
 )
 
-CMS_ROOT_MODEL_CLASSES_BY_NAME: Dict[str, Type[ResourceBackedNamedModel]] = {}
+CMS_ROOT_MODEL_CLASSES_BY_NAME: Dict[str, Type[ResourceBackedModel]] = {}
 for __class in __CMS_ROOT_MODEL_CLASSES:
     CMS_ROOT_MODEL_CLASSES_BY_NAME[__class.__name__] = __class
     assert __class.__name__.startswith("Cms")

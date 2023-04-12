@@ -1,6 +1,6 @@
 from typing import Optional
 
-from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.transformers.costume_core_omeka_classic_transformer import (
     CostumeCoreOmekaClassicTransformer,
 )
@@ -21,7 +21,7 @@ class VcccTransformer(CostumeCoreOmekaClassicTransformer):
 
     def _transform_collection(
         self, *, omeka_collection, **kwds
-    ) -> Optional[Collection]:
+    ) -> Optional[CmsCollection]:
         if not omeka_collection["url"].endswith("/collections/1"):
             return None  # Ignore all but  the "Costumes and Textiles" collection
         return CostumeCoreOmekaClassicTransformer._transform_collection(

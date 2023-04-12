@@ -20,7 +20,7 @@ from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.markdown_directory import MarkdownDirectory
 from paradicms_etl.models.named_model import NamedModel
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_closing import WorkClosing
 from paradicms_etl.models.work_creation import WorkCreation
@@ -47,7 +47,7 @@ class MarkdownDirectoryTransformer:
         pipeline_id: str,
         default_collection: Optional[Collection] = None,
         root_model_classes_by_name: Optional[
-            Dict[str, Type[ResourceBackedNamedModel]]
+            Dict[str, Type[ResourceBackedModel]]
         ] = None,
     ):
         self.__default_collection = default_collection
@@ -78,7 +78,7 @@ class MarkdownDirectoryTransformer:
             logger: Logger,
             markdown_directory: MarkdownDirectory,
             pipeline_id: str,
-            root_model_classes_by_name: Dict[str, Type[ResourceBackedNamedModel]],
+            root_model_classes_by_name: Dict[str, Type[ResourceBackedModel]],
         ):
             self.__default_collection = default_collection
             self.__logger = logger

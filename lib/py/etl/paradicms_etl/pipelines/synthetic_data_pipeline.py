@@ -330,15 +330,13 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     uri=URIRef(f"http://example.com/collection{collection_i}"),
                 )
                 if collection_i % 2 == 0:
-                    collection_builder.set_description(
-                        CmsText.builder(self.__LOREM_IPSUM)
-                        .add_holder(f"{collection_title} description rights holder")
-                        .add_license(CreativeCommonsLicenses.NC_1_0.uri)
-                        .add_statement(
-                            RightsStatementsDotOrgRightsStatements.InC_EDU.uri
-                        )
-                        .build()
+                    description_builder = CmsText.builder(self.__LOREM_IPSUM)
+                    description_builder.add_holder(
+                        f"{collection_title} description rights holder"
+                    ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_statement(
+                        RightsStatementsDotOrgRightsStatements.InC_EDU.uri
                     )
+                    collection_builder.set_description(description_builder.build())
                 collection = collection_builder.build()
                 yield collection
 
@@ -479,19 +477,20 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 URIRef("http://en.wikipedia.org/wiki/Pilot-ACE"),
             )
 
-            description = (
-                CmsText.builder(
+            if include_description:
+                description_builder = CmsText.builder(
                     self.__LOREM_IPSUM,
                 )
-                .add_holder(f"{title} description rights holder")
-                .add_license(CreativeCommonsLicenses.NC_1_0.uri)
-                .add_statement(RightsStatementsDotOrgRightsStatements.InC_EDU.uri)
-                .build()
-                if include_description
-                else None
-            )
-            if description:
+                description_builder.add_holder(
+                    f"{title} description rights holder"
+                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_statement(
+                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri
+                )
+                description = description_builder.build()
+
                 work_builder.set_description(description)
+            else:
+                description = None
 
             anonymous_location = (
                 CmsAnonymousLocation.builder()

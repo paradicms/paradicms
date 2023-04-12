@@ -14,7 +14,6 @@ from paradicms_etl.models.cms.cms_root_model_classes_by_name import (
 )
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 _MultidictKeyT = TypeVar("_MultidictKeyT")
@@ -49,7 +48,7 @@ class SpreadsheetTransformer:
         pipeline_id: str,
         image_data_class: Optional[Type[ImageData]] = None,
         root_model_classes_by_name: Optional[
-            Dict[str, Type[ResourceBackedNamedModel]]
+            Dict[str, Type[ResourceBackedModel]]
         ] = None,
     ):
         self.__logger = logging.getLogger(__name__)
