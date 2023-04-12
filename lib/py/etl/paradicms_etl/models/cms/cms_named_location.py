@@ -1,8 +1,8 @@
 from rdflib import RDF, URIRef, RDFS
+from rdflib.resource import Resource
 
 from paradicms_etl.models.cms.cms_location import CmsLocation
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
-from paradicms_etl.models.location import Location
 from paradicms_etl.namespaces import CMS, WGS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
@@ -27,9 +27,9 @@ class CmsNamedLocation(CmsNamedModel, CmsLocation):
             self.set(WGS.long, long)
             return self
 
-    def __init__(self, *args, **kwds):
-        CmsNamedModel.__init__(self, *args, **kwds)
-        self._resource.add(RDF.type, CMS.Location)
+    def __init__(self, resource: Resource):
+        resource.add(RDF.type, CMS.Location)
+        CmsNamedModel.__init__(self, resource)
 
     @classmethod
     def builder(cls, *, uri: URIRef) -> Builder:
@@ -38,5 +38,5 @@ class CmsNamedLocation(CmsNamedModel, CmsLocation):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            CmsNamedModel.json_ld_context(), Location._json_ld_context()
+            CmsNamedModel.json_ld_context(), CmsLocation._json_ld_context()
         )

@@ -76,7 +76,7 @@ class CmsWork(CmsNamedModel, CmsRightsMixin, Work):
                     "type": {"@id": str(DCTERMS.type), "@type": "@id"},
                 },
             ),
-            Rights.json_ld_context(),
+            CmsRightsMixin.json_ld_context(),
         )
 
     @property

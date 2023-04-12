@@ -1,11 +1,10 @@
 import datetime
 
-from rdflib import BNode, Literal, XSD, RDF
-from rdflib.resource import Resource
+from rdflib import BNode, Literal, XSD
 
 from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.models.date_time_description import DateTimeDescription
-from paradicms_etl.namespaces import TIME, CMS
+from paradicms_etl.namespaces import TIME
 
 
 class CmsDateTimeDescription(CmsModel, DateTimeDescription):
@@ -68,10 +67,6 @@ class CmsDateTimeDescription(CmsModel, DateTimeDescription):
                 Literal(str(year), datatype=XSD.gYear),
             )
             return self
-
-    def __init__(self, resource: Resource):
-        resource.add(RDF.type, CMS[self.__class__.__name__])
-        CmsModel.__init__(self, resource)
 
     @classmethod
     def builder(cls):

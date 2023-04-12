@@ -14,7 +14,7 @@ class CmsWorkEvent(CmsEvent, WorkEvent):
             self.set(CMS.work, work_uri)
 
     def __init__(self, resource: Resource):
-        resource.add(RDF.type, CMS.CmsWorkEvent)
+        resource.add(RDF.type, CMS.WorkEvent)
         CmsEvent.__init__(self, resource)
         self.work_uri
 
