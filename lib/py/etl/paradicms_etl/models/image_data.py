@@ -10,7 +10,7 @@ class ImageData(Model):
     @property
     @abstractmethod
     def _format(self) -> str:
-        pass
+        raise NotImplementedError
 
     @classmethod
     @abstractmethod
@@ -27,4 +27,4 @@ class ImageData(Model):
     @property
     @abstractmethod
     def _value(self) -> bytes:
-        pass
+        raise NotImplementedError

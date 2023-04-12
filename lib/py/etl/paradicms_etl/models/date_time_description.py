@@ -17,4 +17,4 @@ class DateTimeDescription(Model):
     @classmethod
     @abstractmethod
     def from_date(cls, date: datetime.date) -> "DateTimeDescription":
-        pass
+        raise NotImplementedError

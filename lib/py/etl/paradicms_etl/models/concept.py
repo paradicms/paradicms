@@ -10,14 +10,14 @@ class Concept(NamedModel):
     @property
     @abstractmethod
     def label(self) -> str:
-        pass
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def type_uris(self) -> Tuple[URIRef, ...]:
-        pass
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def value(self) -> Node:
-        pass
+        raise NotImplementedError

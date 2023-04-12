@@ -9,4 +9,4 @@ class WorkEvent(Event):
     @property
     @abstractmethod
     def work_uri(self) -> URIRef:
-        pass
+        raise NotImplementedError

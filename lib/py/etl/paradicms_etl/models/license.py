@@ -12,14 +12,14 @@ class License(NamedModel):
     @property
     @abstractmethod
     def identifier(self) -> str:
-        pass
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def label(self) -> str:
-        pass
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def version(self) -> Optional[str]:
-        pass
+        raise NotImplementedError

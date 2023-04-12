@@ -23,4 +23,4 @@ class Text(Model, RightsMixin):
     @property
     @abstractmethod
     def value(self) -> str:
-        pass
+        raise NotImplementedError

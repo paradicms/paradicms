@@ -10,9 +10,9 @@ class Property(NamedModel):
     @property
     @abstractmethod
     def label(self) -> str:
-        pass
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def range(self) -> Optional[URIRef]:
-        pass
+        raise NotImplementedError

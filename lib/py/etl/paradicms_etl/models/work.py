@@ -18,14 +18,14 @@ class Work(NamedModel, RightsMixin):
     @property
     @abstractmethod
     def description(self) -> Union[str, Text, None]:
-        pass
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def collection_uris(self) -> Tuple[URIRef, ...]:
-        pass
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def label(self) -> str:
-        pass
+        raise NotImplementedError

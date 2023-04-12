@@ -24,7 +24,7 @@ class CmsRightsMixin(RightsMixin):
     class Builder:
         @abstractmethod
         def add(self, p: URIRef, o: Any):
-            pass
+            raise NotImplementedError
 
         def add_contributor(
             self, contributor: Union[str, URIRef]
@@ -111,7 +111,7 @@ class CmsRightsMixin(RightsMixin):
     @property
     @abstractmethod
     def _resource(self) -> Resource:
-        pass
+        raise NotImplementedError
 
     def __singular_value(self, p: URIRef) -> Union[str, URIRef, None]:
         values = self.__plural_values(p)

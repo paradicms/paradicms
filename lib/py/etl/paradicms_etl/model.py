@@ -9,12 +9,12 @@ class Model(ABC):
     @classmethod
     @abstractmethod
     def from_rdf(cls, resource: Resource):
-        pass
+        raise NotImplementedError
 
     @property
     def label(self) -> Optional[str]:
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def to_rdf(self, graph: Graph) -> Resource:
-        pass
+        raise NotImplementedError

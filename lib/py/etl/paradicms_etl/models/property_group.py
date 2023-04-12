@@ -7,4 +7,4 @@ class PropertyGroup(NamedModel):
     @property
     @abstractmethod
     def label(self) -> str:
-        pass
+        raise NotImplementedError

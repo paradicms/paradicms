@@ -10,4 +10,4 @@ class WorkCreation(WorkEvent):
     @property
     @abstractmethod
     def creator_uris(self) -> Tuple[URIRef, ...]:
-        pass
+        raise NotImplementedError

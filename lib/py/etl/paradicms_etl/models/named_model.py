@@ -9,4 +9,4 @@ class NamedModel(Model):
     @property
     @abstractmethod
     def uri(self) -> URIRef:
-        pass
+        raise NotImplementedError

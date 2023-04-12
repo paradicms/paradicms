@@ -13,24 +13,24 @@ class RightsMixin(ABC):
     @property
     @abstractmethod
     def contributors(self) -> Tuple[Union[str, URIRef], ...]:
-        pass
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def creators(self) -> Tuple[Union[str, URIRef], ...]:
-        pass
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def license(self) -> Union[str, URIRef, None]:
-        pass
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def rights_holders(self) -> Tuple[Union[str, URIRef], ...]:
-        pass
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def statement(self) -> Union[str, URIRef, None]:
-        pass
+        raise NotImplementedError
