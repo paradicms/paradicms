@@ -16,7 +16,7 @@ from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.license import License
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
-from paradicms_etl.models.rights import Rights
+from paradicms_etl.models.rights_mixin import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )

@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from rdflib import Graph, URIRef
-from paradicms_etl.models.rights_statement import RightsStatement
+
 from paradicms_etl.models.model_singletons import ModelSingletons
+from paradicms_etl.models.rights_statement import RightsStatement
 
 
 class RightsStatementsDotOrgRightsStatements(ModelSingletons):
-    _MODEL_CLASS = RightsStatement
+    _MODEL_CLASS = CmsRightsStatement
 
     CNE = RightsStatement.from_rdf(
         Graph()

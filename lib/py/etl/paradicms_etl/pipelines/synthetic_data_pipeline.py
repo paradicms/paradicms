@@ -4,6 +4,8 @@ from pathlib import Path
 from typing import Optional, Tuple, Dict
 from urllib.parse import quote
 
+from paradicms_etl.models.anonymous_location import AnonymousLocation
+from paradicms_etl.models.named_location import NamedLocation
 from rdflib import DCTERMS, Literal, URIRef
 
 from paradicms_etl.extractors.nop_extractor import nop_extractor
@@ -12,19 +14,17 @@ from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.agent import Agent
-from paradicms_etl.models.anonymous_location import AnonymousLocation
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.named_location import NamedLocation
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
-from paradicms_etl.models.rights import Rights
+from paradicms_etl.models.rights_mixin import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )

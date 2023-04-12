@@ -6,7 +6,7 @@ from rdflib import Graph, URIRef
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.rights import Rights
+from paradicms_etl.models.rights_mixin import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )

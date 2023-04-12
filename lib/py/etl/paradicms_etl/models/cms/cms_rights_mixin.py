@@ -3,8 +3,10 @@ from typing import Union, Tuple
 from rdflib import URIRef, DCTERMS, Literal
 from rdflib.resource import Resource
 
+from paradicms_etl.models.rights_mixin import RightsMixin
 
-class CmsRightsMixin:
+
+class CmsRightsMixin(RightsMixin):
     """
     Captures a group of properties that specify the rights of another model,
     such as the license and the rights statement.

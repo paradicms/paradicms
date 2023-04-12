@@ -1,6 +1,6 @@
 from rdflib import Graph
 
-from paradicms_etl.models.rights import Rights
+from paradicms_etl.models.rights_mixin import Rights
 from paradicms_etl.models.text import Text
 
 

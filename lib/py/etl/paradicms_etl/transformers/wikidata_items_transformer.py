@@ -8,7 +8,7 @@ from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicens
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.person import Person
-from paradicms_etl.models.rights import Rights
+from paradicms_etl.models.rights_mixin import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )

@@ -1,6 +1,7 @@
 import logging
 from typing import Optional, Set, Iterable
 
+from paradicms_etl.models.named_location import NamedLocation
 from rdflib import URIRef
 from stringcase import snakecase
 
@@ -10,13 +11,12 @@ from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.event import Event
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.license import License
-from paradicms_etl.models.named_location import NamedLocation
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
-from paradicms_etl.models.rights import Rights
+from paradicms_etl.models.rights_mixin import Rights
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_closing import WorkClosing
