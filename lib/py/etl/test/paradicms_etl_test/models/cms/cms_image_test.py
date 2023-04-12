@@ -3,8 +3,8 @@ from datetime import datetime
 import pytest
 from rdflib import Graph, URIRef
 
+from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
-from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.rights_mixin import Rights
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
@@ -13,9 +13,9 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 
 
 @pytest.fixture
-def test_builder() -> Image:
+def test_builder() -> CmsImage:
     return (
-        Image.builder(
+        CmsImage.builder(
             depicts_uri=URIRef("http://example.com/work"),
             uri=URIRef("http://example.com/image"),
         )
@@ -52,6 +52,6 @@ def test_replace_src(test_builder):
 def test_to_rdf(test_builder):
     expected = test_builder
 
-    actual = Image.from_rdf(resource=expected.to_rdf(Graph()))
+    actual = CmsImage.from_rdf(resource=expected.to_rdf(Graph()))
 
     assert actual.uri == expected.uri

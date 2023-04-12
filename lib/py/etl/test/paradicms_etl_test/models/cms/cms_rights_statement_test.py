@@ -1,10 +1,10 @@
 from rdflib import URIRef
 
-from paradicms_etl.models.rights_statement import RightsStatement
+from paradicms_etl.models.rights_statement import CmsRightsStatement
 
 
 def test_init():
-    RightsStatement.builder(
+    CmsRightsStatement.builder(
         identifier="testidentifier",
         pref_label="Test pref label",
         uri=URIRef("http://example.com"),
