@@ -25,7 +25,7 @@ export * from "./ModelSetBuilder";
 export * from "./ModelSubsetter";
 export * from "./NamedModel";
 export * from "./Organization";
-export * from "./PartialDateTime";
+export * from "./DateTimeDescription";
 export * from "./Person";
 export * from "./Property";
 export * from "./PropertyGroup";

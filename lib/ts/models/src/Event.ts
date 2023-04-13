@@ -3,10 +3,10 @@ import {Location} from "./Location";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {dcterms, vra} from "@paradicms/vocabularies";
-import {PartialDateTime} from "./PartialDateTime";
-import {mapPartialDateTimeObject} from "./mapPartialDateTimeObject";
+import {DateTimeDescription} from "./DateTimeDescription";
+import {mapDateTimeDescriptionObject} from "./mapDateTimeDescriptionObject";
 import {mapLocationObject} from "./mapLocationObject";
-import {partialDateTimeToString} from "./partialDateTimeToString";
+import {dateTimeDescriptionToString} from "./dateTimeDescriptionToString";
 import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
 
 export class Event extends Mixin(NamedModel, CmsDescriptionMixin) {
@@ -14,7 +14,7 @@ export class Event extends Mixin(NamedModel, CmsDescriptionMixin) {
   get displayDate(): string | null {
     const date = this.date;
     if (date !== null) {
-      return partialDateTimeToString(date);
+      return dateTimeDescriptionToString(date);
     }
 
     const startDate = this.startDate;
@@ -26,10 +26,10 @@ export class Event extends Mixin(NamedModel, CmsDescriptionMixin) {
 
     const result: string[] = [];
     if (startDate !== null) {
-      result.push(partialDateTimeToString(startDate) + " (start)");
+      result.push(dateTimeDescriptionToString(startDate) + " (start)");
     }
     if (endDate !== null) {
-      result.push(partialDateTimeToString(endDate) + " (end)");
+      result.push(dateTimeDescriptionToString(endDate) + " (end)");
     }
 
     return result.join(" - ");
@@ -70,16 +70,16 @@ export class Event extends Mixin(NamedModel, CmsDescriptionMixin) {
   }
 
   @Memoize()
-  get date(): PartialDateTime | null {
+  get date(): DateTimeDescription | null {
     return this.findAndMapObject(dcterms.date, term =>
-      mapPartialDateTimeObject(this, term)
+      mapDateTimeDescriptionObject(this, term)
     );
   }
 
   @Memoize()
-  get endDate(): PartialDateTime | null {
+  get endDate(): DateTimeDescription | null {
     return this.findAndMapObject(vra.endDate, term =>
-      mapPartialDateTimeObject(this, term)
+      mapDateTimeDescriptionObject(this, term)
     );
   }
 
@@ -115,9 +115,9 @@ export class Event extends Mixin(NamedModel, CmsDescriptionMixin) {
   }
 
   @Memoize()
-  get startDate(): PartialDateTime | null {
+  get startDate(): DateTimeDescription | null {
     return this.findAndMapObject(vra.startDate, term =>
-      mapPartialDateTimeObject(this, term)
+      mapDateTimeDescriptionObject(this, term)
     );
   }
 

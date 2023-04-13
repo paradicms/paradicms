@@ -1,16 +1,15 @@
 import {Term} from "@rdfjs/types";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {PartialDateTime} from "./PartialDateTime";
 import {DateTimeDescription} from "./DateTimeDescription";
 import anyDateParser from "any-date-parser";
 
 /**
  * Map a term in a modelSet to a PartialDateTime.
  */
-export const mapPartialDateTimeObject = (
+export const mapDateTimeDescriptionObject = (
   modelParameters: Omit<ResourceBackedModelParameters, "node">,
   term: Term
-): PartialDateTime | null => {
+): DateTimeDescription | null => {
   switch (term.termType) {
     case "BlankNode":
     case "NamedNode":

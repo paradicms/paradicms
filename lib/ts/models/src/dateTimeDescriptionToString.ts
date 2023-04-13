@@ -1,8 +1,8 @@
-import {PartialDateTime} from "./PartialDateTime";
+import {DateTimeDescription} from "./DateTimeDescription";
 import dayjs from "dayjs";
 
-export const partialDateTimeToString = (
-  partialDateTime: PartialDateTime
+export const dateTimeDescriptionToString = (
+  partialDateTime: DateTimeDescription
 ): string => {
   const year = partialDateTime.year;
 
