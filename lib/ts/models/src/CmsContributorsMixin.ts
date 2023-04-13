@@ -2,8 +2,10 @@ import {Memoize} from "typescript-memoize";
 import {Agent} from "./Agent";
 import {dcterms} from "@paradicms/vocabularies";
 import {ModelMixin} from "./ModelMixin";
+import {ContributorsMixin} from "./ContributorsMixin";
 
-export abstract class HasContributors extends ModelMixin {
+export abstract class CmsContributorsMixin extends ModelMixin
+  implements ContributorsMixin {
   @Memoize()
   get contributors(): readonly (Agent | string)[] {
     return this.filterAndMapObjects(dcterms.contributor, term => {

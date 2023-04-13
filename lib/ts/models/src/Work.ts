@@ -22,15 +22,11 @@ import {HasImages} from "./HasImages";
 import {HasPage} from "./HasPage";
 import {HasTitle} from "./HasTitle";
 import {HasRelations} from "./HasRelations";
+import {CmsRightsMixin} from "./CmsRightsMixin";
 import {RightsMixin} from "./RightsMixin";
-import {Agent} from "./Agent";
 
 const getRightsAgentUris = (
-    rights: {
-      contributorAgentUris: readonly string[];
-      creatorAgentUris: readonly string[];
-      rightsHolderAgentUris: readonly string[];
-    } | null
+    rights: RightsMixin | null
 ): readonly string[] => {
   const result: string[] = [];
 
@@ -46,11 +42,7 @@ const getRightsAgentUris = (
 };
 
 const getRightsWorkAgents = (
-  rights: {
-    contributorAgents: readonly Agent[];
-    creatorAgents: readonly Agent[];
-    rightsHolderAgents: readonly Agent[];
-  } | null,
+  rights: RightsMixin | null,
   rolePrefix: string
 ): readonly WorkAgent[] => {
   const result: WorkAgent[] = [];
@@ -90,7 +82,7 @@ export class Work extends Mixin(
   HasPage,
   HasTitle,
   HasRelations,
-  RightsMixin
+  CmsRightsMixin
 ) {
   @Memoize()
   get agents(): readonly WorkAgent[] {

@@ -2,9 +2,9 @@ import {Model} from "./Model";
 import {Mixin} from "ts-mixer";
 import {rdf} from "@paradicms/vocabularies";
 import {requireNonNull} from "@paradicms/utilities";
-import {RightsMixin} from "./RightsMixin";
+import {CmsRightsMixin} from "./CmsRightsMixin";
 
-export class Text extends Mixin(Model, RightsMixin) {
+export class Text extends Mixin(Model, CmsRightsMixin) {
   override toString() {
     return this.value;
   }

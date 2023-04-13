@@ -2,13 +2,13 @@ import {WorkEvent} from "./WorkEvent";
 import {Mixin} from "ts-mixer";
 import {Agent} from "./Agent";
 import {WorkLocationRole} from "./WorkLocationRole";
-import {HasContributors} from "./HasContributors";
-import {HasCreators} from "./HasCreators";
+import {CmsContributorsMixin} from "./CmsContributorsMixin";
+import {CmsCreatorsMixin} from "./CmsCreatorsMixin";
 
 export class WorkCreation extends Mixin(
   WorkEvent,
-  HasContributors,
-  HasCreators
+  CmsContributorsMixin,
+  CmsCreatorsMixin
 ) {
   get agents(): readonly Agent[] {
     return this.agentUris.map(agentUri => this.modelSet.agentByUri(agentUri));

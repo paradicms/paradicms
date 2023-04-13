@@ -19,8 +19,7 @@ import {WorkOpening} from "./WorkOpening";
 import {WorkClosing} from "./WorkClosing";
 import {ConceptPropertyValue} from "./ConceptPropertyValue";
 import {Location} from "./Location";
-import {License} from "./License";
-import {RightsStatement} from "./RightsStatement";
+import {RightsMixin} from "./RightsMixin";
 
 /**
  * Subset a ModelSet to reduce the amount of data passed between getStaticProps and the component.
@@ -131,13 +130,7 @@ export class ModelSubsetter {
 
   private addRightsModelSet(
     agentJoinSelector: AgentJoinSelector,
-    rights: {
-      contributorAgents: readonly Agent[];
-      creatorAgents: readonly Agent[];
-      rightsHolderAgents: readonly Agent[];
-      license: License | string | null;
-      rightsStatement: RightsStatement | string | null;
-    } | null
+    rights: RightsMixin | null
   ): void {
     if (!rights) {
       return;

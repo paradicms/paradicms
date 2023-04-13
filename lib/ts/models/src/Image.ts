@@ -7,9 +7,9 @@ import {Memoize} from "typescript-memoize";
 import {Mixin} from "ts-mixer";
 import {cms, dcterms, exif, foaf} from "@paradicms/vocabularies";
 import {requireNonNull} from "@paradicms/utilities";
-import {RightsMixin} from "./RightsMixin";
+import {CmsRightsMixin} from "./CmsRightsMixin";
 
-export class Image extends Mixin(NamedModel, RightsMixin) {
+export class Image extends Mixin(NamedModel, CmsRightsMixin) {
   @Memoize()
   get depictsUri(): string {
     return requireNonNull(
