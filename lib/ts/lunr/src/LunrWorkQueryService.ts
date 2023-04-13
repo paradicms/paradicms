@@ -448,18 +448,13 @@ export class LunrWorkQueryService implements WorkQueryService {
     if (!imageSrc) {
       return null;
     }
-    const rights = image.rights;
     return {
+      creators: image.creators.map(creator => creator.toString()),
+      license: image.license?.toString() ?? null,
       exactDimensions: image.exactDimensions,
       maxDimensions: image.maxDimensions,
-      rights: rights
-        ? {
-            creators: rights.creators.map(creator => creator.toString()),
-            license: rights.license?.toString() ?? null,
-            holders: rights.rightsHolders.map(holder => holder.toString()),
-            statement: rights.rightsStatement?.toString() ?? null,
-          }
-        : null,
+      rightsHolders: image.rightsHolders.map(holder => holder.toString()),
+      rightsStatement: image.rightsStatement?.toString() ?? null,
       src: imageSrc,
     };
   }

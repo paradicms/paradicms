@@ -67,11 +67,11 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
             }}
           />
         </div>
-        {!hideImageRights && originalImage?.rights?.requiresAttribution ? (
+        {!hideImageRights && originalImage?.requiresAttribution ? (
           <div className="mt-2">
             <RightsParagraph
               material="Image"
-              rights={originalImage.rights}
+              rights={originalImage}
               style={{fontSize: "xx-small"}}
             />
           </div>

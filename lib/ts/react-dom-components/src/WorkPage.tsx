@@ -1,4 +1,4 @@
-import {Image, Rights, Text, Work, WorkAgent} from "@paradicms/models";
+import {Image, RightsMixin, Text, Work, WorkAgent} from "@paradicms/models";
 import {
   Card,
   CardBody,
@@ -37,17 +37,11 @@ export const WorkPage: React.FunctionComponent<{
     [work]
   );
 
-  const workDescriptionRights: Rights | null = useMemo(() => {
-    if (
-      workDescription &&
-      workDescription instanceof Text &&
-      workDescription.rights
-    ) {
-      return workDescription.rights;
-    } else if (work.rights) {
-      return work.rights;
+  const workDescriptionRights: RightsMixin | null = useMemo(() => {
+    if (workDescription && workDescription instanceof Text) {
+      return workDescription;
     } else {
-      return null;
+      return work;
     }
   }, [work, workDescription]);
 
@@ -84,11 +78,11 @@ export const WorkPage: React.FunctionComponent<{
               onShowImage={setCurrentWorkImagesCarouselImage}
             />
           </CardBody>
-          {workImagesCarouselImage?.rights?.requiresAttribution ? (
+          {workImagesCarouselImage?.requiresAttribution ? (
             <CardFooter className="text-center">
               <RightsParagraph
                 material="Image"
-                rights={workImagesCarouselImage.rights}
+                rights={workImagesCarouselImage}
                 style={RIGHTS_STYLE}
               />
             </CardFooter>

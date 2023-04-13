@@ -48,11 +48,11 @@ const WorkAgentCard: React.FunctionComponent<{
           title={workAgent.agent.name}
         />
       </CardBody>
-      {thumbnail?.rights?.requiresAttribution ? (
+      {thumbnail?.requiresAttribution ? (
         <CardFooter>
           <RightsParagraph
             material="Image"
-            rights={thumbnail.rights}
+            rights={thumbnail}
             style={{fontSize: "x-small", marginBottom: 0}}
           />
         </CardFooter>

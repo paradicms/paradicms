@@ -1,12 +1,12 @@
-import {Rights} from "@paradicms/models";
 import * as React from "react";
 import {useMemo} from "react";
 import {RightsStatementLink} from "./RightsStatementLink";
 import {LicenseLink} from "./LicenseLink";
+import {RightsMixin} from "@paradicms/models";
 
 export const RightsParagraph: React.FunctionComponent<{
   material: string;
-  rights: Rights;
+  rights: RightsMixin;
   style?: React.CSSProperties;
   tag?: React.ElementType;
 }> = ({material, rights, style, tag}) => {

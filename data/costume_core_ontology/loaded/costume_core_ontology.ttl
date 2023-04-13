@@ -3264,12 +3264,12 @@ coco:CC00618 a owl:NamedIndividual ;
 
 coco:CC00619 a owl:NamedIndividual ;
     rdfs:label "InC-RUU"@en ;
-    dcterms:description [ rdfs:label "In Copyright - Rights-holders Unlocatable or Unidentificable"@en ;
+    dcterms:description [ rdfs:label "In Copyright - Rights-rightsHolders Unlocatable or Unidentificable"@en ;
             dcterms:creator "RightsStatements.org" ;
             dcterms:license <https://creativecommons.org/publicdomain/zero/1.0/> ;
             dcterms:rights <https://creativecommons.org/publicdomain/zero/1.0/> ;
             dcterms:source <https://rightsstatements.org/page/1.0/> ],
-        "In Copyright - Rights-holders Unlocatable or Unidentificable"@en ;
+        "In Copyright - Rights-rightsHolders Unlocatable or Unidentificable"@en ;
     dcterms:identifier "CC00619" .
 
 coco:CC00620 a owl:NamedIndividual ;

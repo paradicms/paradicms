@@ -61,18 +61,18 @@ export const GalleryCard: React.FunctionComponent<{
         <CardTitle className="mb-1" tag="h5">
           {renderLink(title)}
         </CardTitle>
-        {subtitle || (thumbnail && thumbnail.rights?.requiresAttribution) ? (
+        {subtitle || (thumbnail && thumbnail.requiresAttribution) ? (
           <CardText tag="div">
             {subtitle ? (
               <div className="mb-1" style={{fontSize: "small"}}>
                 {subtitle}
               </div>
             ) : null}
-            {thumbnail && thumbnail.rights?.requiresAttribution ? (
+            {thumbnail && thumbnail.requiresAttribution ? (
               <RightsParagraph
                 tag="div"
                 material="Image"
-                rights={thumbnail.rights}
+                rights={thumbnail}
                 style={RIGHTS_STYLE}
               />
             ) : null}

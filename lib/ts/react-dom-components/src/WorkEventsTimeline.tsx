@@ -32,10 +32,10 @@ export const WorkEventsTimeline: React.FunctionComponent<{
                 }}
               ></div>
               {workEvent.description instanceof Text &&
-              workEvent.description.rights?.requiresAttribution ? (
+              workEvent.description.requiresAttribution ? (
                 <RightsParagraph
                   material="Text"
-                  rights={workEvent.description.rights}
+                  rights={workEvent.description}
                   style={{fontSize: "x-small", marginBottom: 0}}
                 />
               ) : null}
