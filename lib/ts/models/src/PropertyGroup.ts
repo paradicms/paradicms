@@ -1,15 +1,15 @@
 import {NamedModel} from "./NamedModel";
 import {Mixin} from "ts-mixer";
 import {Property} from "./Property";
-import {HasComment} from "./HasComment";
-import {HasLabel} from "./HasLabel";
-import {HasImages} from "./HasImages";
+import {CmsCommentMixin} from "./CmsCommentMixin";
+import {CmsLabelMixin} from "./CmsLabelMixin";
+import {CmsImagesMixin} from "./CmsImagesMixin";
 
 export class PropertyGroup extends Mixin(
   NamedModel,
-  HasComment,
-  HasImages,
-  HasLabel
+  CmsCommentMixin,
+  CmsImagesMixin,
+  CmsLabelMixin
 ) {
   get properties(): readonly Property[] {
     return this.modelSet.propertiesByGroupUri(this.uri);

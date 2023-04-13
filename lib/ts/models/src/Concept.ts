@@ -3,10 +3,14 @@ import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
 import {Memoize} from "typescript-memoize";
 import {Mixin} from "ts-mixer";
 import {rdf, skos} from "@paradicms/vocabularies";
-import {HasDescription} from "./HasDescription";
-import {HasImages} from "./HasImages";
+import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
+import {CmsImagesMixin} from "./CmsImagesMixin";
 
-export class Concept extends Mixin(NamedModel, HasDescription, HasImages) {
+export class Concept extends Mixin(
+  NamedModel,
+  CmsDescriptionMixin,
+  CmsImagesMixin
+) {
   @Memoize()
   get altLabels(): readonly Literal[] {
     return this.filterAndMapObjects(skos.altLabel, term =>

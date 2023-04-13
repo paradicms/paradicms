@@ -4,15 +4,15 @@ import {selectThumbnail} from "./selectThumbnail";
 import {Image} from "./Image";
 import {Work} from "./Work";
 import {Mixin} from "ts-mixer";
-import {HasDescription} from "./HasDescription";
-import {HasImages} from "./HasImages";
-import {HasTitle} from "./HasTitle";
+import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
+import {CmsImagesMixin} from "./CmsImagesMixin";
+import {CmsTitleMixin} from "./CmsTitleMixin";
 
 export class Collection extends Mixin(
   NamedModel,
-  HasDescription,
-  HasImages,
-  HasTitle
+  CmsDescriptionMixin,
+  CmsImagesMixin,
+  CmsTitleMixin
 ) {
   override thumbnail(selector: ThumbnailSelector): Image | null {
     const collectionImages: readonly Image[] = this.modelSet.imagesByDepictsUri(

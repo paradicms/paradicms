@@ -7,9 +7,9 @@ import {PartialDateTime} from "./PartialDateTime";
 import {mapPartialDateTimeObject} from "./mapPartialDateTimeObject";
 import {mapLocationObject} from "./mapLocationObject";
 import {partialDateTimeToString} from "./partialDateTimeToString";
-import {HasDescription} from "./HasDescription";
+import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
 
-export class Event extends Mixin(NamedModel, HasDescription) {
+export class Event extends Mixin(NamedModel, CmsDescriptionMixin) {
   @Memoize()
   get displayDate(): string | null {
     const date = this.date;

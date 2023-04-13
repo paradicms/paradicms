@@ -1,16 +1,16 @@
 import {NamedModel} from "./NamedModel";
 import {Mixin} from "ts-mixer";
-import {HasImages} from "./HasImages";
-import {HasName} from "./HasName";
-import {HasPage} from "./HasPage";
-import {HasRelations} from "./HasRelations";
+import {CmsImagesMixin} from "./CmsImagesMixin";
+import {CmsNameMixin} from "./CmsNameMixin";
+import {CmsPageMixin} from "./CmsPageMixin";
+import {CmsRelationsMixin} from "./CmsRelationsMixin";
 
 export class Agent extends Mixin(
   NamedModel,
-  HasImages,
-  HasName,
-  HasPage,
-  HasRelations
+  CmsImagesMixin,
+  CmsNameMixin,
+  CmsPageMixin,
+  CmsRelationsMixin
 ) {
   override toString() {
     return this.name;

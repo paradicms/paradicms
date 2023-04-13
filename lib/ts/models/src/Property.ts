@@ -6,15 +6,15 @@ import {PropertyValue} from "./PropertyValue";
 import {Memoize} from "typescript-memoize";
 import {getRdfInstanceQuads} from "@paradicms/rdf";
 import {createPropertyValuesFromQuadSubjects} from "./createPropertyValuesFromQuadSubjects";
-import {HasComment} from "./HasComment";
-import {HasImages} from "./HasImages";
-import {HasLabel} from "./HasLabel";
+import {CmsCommentMixin} from "./CmsCommentMixin";
+import {CmsImagesMixin} from "./CmsImagesMixin";
+import {CmsLabelMixin} from "./CmsLabelMixin";
 
 export class Property extends Mixin(
   NamedModel,
-  HasComment,
-  HasImages,
-  HasLabel
+  CmsCommentMixin,
+  CmsImagesMixin,
+  CmsLabelMixin
 ) {
   get filterable(): boolean {
     return (

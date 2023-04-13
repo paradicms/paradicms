@@ -1,7 +1,7 @@
 import {foaf} from "@paradicms/vocabularies";
 import {ModelMixin} from "./ModelMixin";
 
-export abstract class HasPage extends ModelMixin {
+export abstract class CmsPageMixin extends ModelMixin {
   get page(): string | null {
     return this.findAndMapObject(foaf.page, term => {
       switch (term.termType) {

@@ -1,7 +1,7 @@
 import {ModelMixin} from "./ModelMixin";
 import {dcterms} from "@paradicms/vocabularies";
 
-export abstract class HasRelations extends ModelMixin {
+export abstract class CmsRelationsMixin extends ModelMixin {
   get wikipediaUrl(): string | null {
     return this.findAndMapObject(dcterms.relation, term =>
       term.termType === "NamedNode" &&

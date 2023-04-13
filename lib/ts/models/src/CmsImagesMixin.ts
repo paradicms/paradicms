@@ -3,7 +3,7 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {NamedModelMixin} from "./NamedModelMixin";
 
-export abstract class HasImages extends NamedModelMixin {
+export abstract class CmsImagesMixin extends NamedModelMixin {
   get images(): readonly Image[] {
     return this.modelSet.imagesByDepictsUri(this.uri);
   }

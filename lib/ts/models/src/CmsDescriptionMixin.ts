@@ -4,7 +4,7 @@ import {dcterms} from "@paradicms/vocabularies";
 import {NamedModelMixin} from "./NamedModelMixin";
 import {mapTextObject} from "./mapTextObject";
 
-export abstract class HasDescription extends NamedModelMixin {
+export abstract class CmsDescriptionMixin extends NamedModelMixin {
   @Memoize()
   get description(): string | Text | null {
     return this.findAndMapObject(dcterms.description, term =>

@@ -17,11 +17,11 @@ import {visitWorkEvent} from "./WorkEventVisitor";
 import {WorkClosing} from "./WorkClosing";
 import {WorkOpening} from "./WorkOpening";
 import {WorkCreation} from "./WorkCreation";
-import {HasDescription} from "./HasDescription";
-import {HasImages} from "./HasImages";
-import {HasPage} from "./HasPage";
-import {HasTitle} from "./HasTitle";
-import {HasRelations} from "./HasRelations";
+import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
+import {CmsImagesMixin} from "./CmsImagesMixin";
+import {CmsPageMixin} from "./CmsPageMixin";
+import {CmsTitleMixin} from "./CmsTitleMixin";
+import {CmsRelationsMixin} from "./CmsRelationsMixin";
 import {CmsRightsMixin} from "./CmsRightsMixin";
 import {RightsMixin} from "./RightsMixin";
 
@@ -77,11 +77,11 @@ const getRightsWorkAgents = (
 
 export class Work extends Mixin(
   NamedModel,
-  HasDescription,
-  HasImages,
-  HasPage,
-  HasTitle,
-  HasRelations,
+  CmsDescriptionMixin,
+  CmsImagesMixin,
+  CmsPageMixin,
+  CmsTitleMixin,
+  CmsRelationsMixin,
   CmsRightsMixin
 ) {
   @Memoize()
