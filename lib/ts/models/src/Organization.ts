@@ -1,3 +1,3 @@
 import {Agent} from "./Agent";
 
-export class Organization extends Agent {}
+export interface Organization extends Agent {}
