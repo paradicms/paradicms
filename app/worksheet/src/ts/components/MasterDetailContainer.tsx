@@ -94,10 +94,10 @@ const ItemDetailCard: React.FunctionComponent<{
         <Col className="p-0 text-center" xs={12}>
           <p>{item.description.toString()}</p>
           {item.description instanceof Text &&
-          item.description.rights?.requiresAttribution ? (
+          item.description.requiresAttribution ? (
             <RightsParagraph
               material="Text"
-              rights={item.description.rights}
+              rights={item.description}
               style={{fontSize: "xx-small"}}
             />
           ) : null}

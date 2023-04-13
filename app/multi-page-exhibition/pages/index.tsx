@@ -62,12 +62,12 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
           ></Col>
         </Row>
         {collectionDescription instanceof Text &&
-        collectionDescription.rights?.requiresAttribution ? (
+        collectionDescription.requiresAttribution ? (
           <Row className="mt-2">
             <Col className="text-center" xs={12}>
               <RightsParagraph
                 material="Text"
-                rights={collectionDescription.rights}
+                rights={collectionDescription}
                 style={{fontSize: "xx-small"}}
               />
             </Col>

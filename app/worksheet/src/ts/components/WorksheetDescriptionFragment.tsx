@@ -11,10 +11,10 @@ export const WorksheetDescriptionFragment: React.FunctionComponent<{
   return (
     <>
       <p>{description.toString()}</p>
-      {description instanceof Text && description.rights ? (
+      {description instanceof Text && description.requiresAttribution ? (
         <RightsParagraph
           material="Text"
-          rights={description.rights}
+          rights={description}
           style={{fontSize: "xx-small"}}
         />
       ) : null}
