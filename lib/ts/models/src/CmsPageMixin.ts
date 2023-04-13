@@ -1,7 +1,7 @@
 import {foaf} from "@paradicms/vocabularies";
-import {ModelMixin} from "./ModelMixin";
+import {ResourceBackedModelMixin} from "./ResourceBackedModelMixin";
 
-export abstract class CmsPageMixin extends ModelMixin {
+export abstract class CmsPageMixin extends ResourceBackedModelMixin {
   get page(): string | null {
     return this.findAndMapObject(foaf.page, term => {
       switch (term.termType) {

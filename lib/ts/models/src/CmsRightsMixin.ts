@@ -6,12 +6,16 @@ import {Mixin} from "ts-mixer";
 import {dcterms} from "@paradicms/vocabularies";
 import {CmsContributorsMixin} from "./CmsContributorsMixin";
 import {CmsCreatorsMixin} from "./CmsCreatorsMixin";
-import {ModelMixin} from "./ModelMixin";
 import {mapAgentObject} from "./mapAgentObject";
 import {RightsMixin} from "./RightsMixin";
+import {ResourceBackedModelMixin} from "./ResourceBackedModelMixin";
 
 export abstract class CmsRightsMixin
-  extends Mixin(ModelMixin, CmsContributorsMixin, CmsCreatorsMixin)
+  extends Mixin(
+    ResourceBackedModelMixin,
+    CmsContributorsMixin,
+    CmsCreatorsMixin
+  )
   implements RightsMixin {
   // @Memoize()
   // get agents(): readonly Agent[] {

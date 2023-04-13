@@ -1,10 +1,10 @@
 import {Memoize} from "typescript-memoize";
 import {Agent} from "./Agent";
 import {dcterms} from "@paradicms/vocabularies";
-import {ModelMixin} from "./ModelMixin";
 import {ContributorsMixin} from "./ContributorsMixin";
+import {ResourceBackedModelMixin} from "./ResourceBackedModelMixin";
 
-export abstract class CmsContributorsMixin extends ModelMixin
+export abstract class CmsContributorsMixin extends ResourceBackedModelMixin
   implements ContributorsMixin {
   @Memoize()
   get contributors(): readonly (Agent | string)[] {
