@@ -75,7 +75,7 @@ describe("ModelSet", () => {
       expect(sut.workEventByUri(workEvent.uri).uri).to.eq(workEvent.uri);
       expect(
         sut
-          .workEventsByWork(workEvent.workUri)
+          .workEventsByWorkUri(workEvent.workUri)
           .some(otherWorkEvent => otherWorkEvent.uri === workEvent.uri)
       );
     }

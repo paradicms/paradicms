@@ -7,7 +7,7 @@ describe("WorkCreation", () => {
   const modelSet = ModelSet.fromDatasetCore(syntheticData);
   const work = modelSet.works[0];
   const sut: WorkCreation = modelSet
-    .workEventsByWork(work.uri)
+    .workEventsByWorkUri(work.uri)
     .find(event => event instanceof WorkCreation)! as WorkCreation;
 
   before(() => {

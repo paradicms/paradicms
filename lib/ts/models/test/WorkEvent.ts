@@ -5,7 +5,7 @@ import {syntheticData} from "@paradicms/test";
 describe("WorkEvent", () => {
   const modelSet = ModelSet.fromDatasetCore(syntheticData);
   const work = modelSet.works[0];
-  const sut: WorkEvent = modelSet.workEventsByWork(work.uri)[0];
+  const sut: WorkEvent = modelSet.workEventsByWorkUri(work.uri)[0];
 
   before(() => {
     expect(sut).is.not.undefined;

@@ -106,13 +106,13 @@ describe("ModelSubsetter", () => {
   it("should get a work event subset", () => {
     const work = completeModelSet.works[0];
     const workClosing: WorkClosing = completeModelSet
-      .workEventsByWork(work.uri)
+      .workEventsByWorkUri(work.uri)
       .find(event => event instanceof WorkClosing)! as WorkClosing;
     const workCreation: WorkCreation = completeModelSet
-      .workEventsByWork(work.uri)
+      .workEventsByWorkUri(work.uri)
       .find(event => event instanceof WorkCreation)! as WorkCreation;
     const workOpening: WorkOpening = completeModelSet
-      .workEventsByWork(work.uri)
+      .workEventsByWorkUri(work.uri)
       .find(event => event instanceof WorkOpening)! as WorkOpening;
 
     const workEventsModelSet = sut
