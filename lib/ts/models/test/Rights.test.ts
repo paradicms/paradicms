@@ -28,7 +28,7 @@ describe("Rights", () => {
   });
 
   it("should not have a joined holder", () => {
-    expect(sut.holderAgents).to.be.empty;
+    expect(sut.rightsHolderAgents).to.be.empty;
   });
 
   it("should have a joined license", () => {
@@ -38,12 +38,12 @@ describe("Rights", () => {
   });
 
   it("should have a joined rights statement", () => {
-    expect(sut.statement).to.not.be.empty;
-    expect(sut.statement).to.not.be.instanceof(String);
-    expect((sut.statement! as RightsStatement).prefLabel).to.not.be.empty;
+    expect(sut.rightsStatement).to.not.be.empty;
+    expect(sut.rightsStatement).to.not.be.instanceof(String);
+    expect((sut.rightsStatement! as RightsStatement).prefLabel).to.not.be.empty;
   });
 
   it("should have a text holder", () => {
-    expect(sut.holders).to.not.be.empty;
+    expect(sut.rightsHolders).to.not.be.empty;
   });
 });

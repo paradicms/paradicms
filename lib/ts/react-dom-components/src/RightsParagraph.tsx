@@ -34,16 +34,16 @@ export const RightsParagraph: React.FunctionComponent<{
       creatorTexts.add(creator.toString());
     }
 
-    if (rights.statement) {
+    if (rights.rightsStatement) {
       pushRightsElement(
         <span>
           <i>Statement</i>:{" "}
-          <RightsStatementLink rightsStatement={rights.statement} />
+          <RightsStatementLink rightsStatement={rights.rightsStatement} />
         </span>
       );
     }
 
-    for (const holder of rights.holders) {
+    for (const holder of rights.rightsHolders) {
       if (creatorTexts.has(holder.toString())) {
         continue;
       }

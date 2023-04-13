@@ -49,7 +49,7 @@ const getRightsWorkAgents = (
     });
   }
 
-  for (const holderAgent of rights.holderAgents) {
+  for (const holderAgent of rights.rightsHolderAgents) {
     result.push({
       agent: holderAgent,
       role: rolePrefix + " holder",

@@ -93,7 +93,7 @@ describe("ModelSubsetter", () => {
       completeModelSet.rightsStatements.find(
         rightsStatement =>
           rightsStatement.uri ===
-          (work.rights!.statement! as RightsStatement).uri
+          (work.rights!.rightsStatement! as RightsStatement).uri
       )!,
     ]);
     expectModelsDeepEq(workModelSet.works, [work]);

@@ -68,8 +68,8 @@ describe("ModelSet", () => {
       ).to.be.true;
       expect(rights!.license).to.not.be.null;
       expect((rights!.license! as License).uri).to.not.be.empty;
-      expect(rights!.statement).to.not.be.null;
-      expect((rights!.statement! as RightsStatement).uri).to.not.be.empty;
+      expect(rights!.rightsStatement).to.not.be.null;
+      expect((rights!.rightsStatement! as RightsStatement).uri).to.not.be.empty;
     }
 
     for (const workEvent of sut.workEvents) {

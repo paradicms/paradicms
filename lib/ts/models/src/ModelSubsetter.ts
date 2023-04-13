@@ -145,7 +145,7 @@ export class ModelSubsetter {
       this.modelSetBuilder.addLicense(license);
     }
 
-    const rightsStatement = rights.statement;
+    const rightsStatement = rights.rightsStatement;
     if (rightsStatement && typeof rightsStatement !== "string") {
       this.modelSetBuilder.addRightsStatement(rightsStatement);
     }

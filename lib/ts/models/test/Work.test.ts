@@ -74,7 +74,7 @@ describe("Work", () => {
   });
 
   it("should get the work's rights", () => {
-    expect(sut.rights!.statement).to.not.be.null;
+    expect(sut.rights!.rightsStatement).to.not.be.null;
   });
 
   it("should get the work's title", () => {

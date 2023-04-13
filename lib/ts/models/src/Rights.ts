@@ -32,23 +32,7 @@ export class Rights extends Mixin(Model, HasContributors, HasCreators) {
   get agentUris(): readonly string[] {
     return this.contributorAgentUris
       .concat(this.creatorAgentUris)
-      .concat(this.holderAgentUris);
-  }
-
-  get holderAgents(): readonly Agent[] {
-    return this.holderAgentUris.map(agentUri =>
-      this.modelSet.agentByUri(agentUri)
-    );
-  }
-
-  @Memoize()
-  get holderAgentUris(): readonly string[] {
-    return this.filterAndMapObjects(dcterms.rightsHolder, this.mapUriObject);
-  }
-
-  @Memoize()
-  get holders(): readonly (Agent | string)[] {
-    return this.agentsOrStrings(dcterms.rightsHolder);
+      .concat(this.rightsHolderAgentUris);
   }
 
   @Memoize()
@@ -73,8 +57,24 @@ export class Rights extends Mixin(Model, HasContributors, HasCreators) {
     return true;
   }
 
+  get rightsHolderAgents(): readonly Agent[] {
+    return this.rightsHolderAgentUris.map(agentUri =>
+        this.modelSet.agentByUri(agentUri)
+    );
+  }
+
   @Memoize()
-  get statement(): RightsStatement | string | null {
+  get rightsHolderAgentUris(): readonly string[] {
+    return this.filterAndMapObjects(dcterms.rightsHolder, this.mapUriObject);
+  }
+
+  @Memoize()
+  get rightsHolders(): readonly (Agent | string)[] {
+    return this.agentsOrStrings(dcterms.rightsHolder);
+  }
+
+  @Memoize()
+  get rightsStatement(): RightsStatement | string | null {
     return this.findAndMapObject(dcterms.rights, term => {
       switch (term.termType) {
         case "Literal":

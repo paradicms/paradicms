@@ -455,9 +455,9 @@ export class LunrWorkQueryService implements WorkQueryService {
       rights: rights
         ? {
             creators: rights.creators.map(creator => creator.toString()),
-            holders: rights.holders.map(holder => holder.toString()),
             license: rights.license?.toString() ?? null,
-            statement: rights.statement?.toString() ?? null,
+            holders: rights.rightsHolders.map(holder => holder.toString()),
+            statement: rights.rightsStatement?.toString() ?? null,
           }
         : null,
       src: imageSrc,
