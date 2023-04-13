@@ -5,12 +5,17 @@ import {CmsContributorsMixin} from "./CmsContributorsMixin";
 import {CmsCreatorsMixin} from "./CmsCreatorsMixin";
 import {CmsWorkEvent} from "./CmsWorkEvent";
 import {WorkCreation} from "./WorkCreation";
+import {WorkEventVisitor} from "./WorkEventVisitor";
 
 export class CmsWorkCreation extends Mixin(
   CmsWorkEvent,
   CmsContributorsMixin,
   CmsCreatorsMixin
 ) implements WorkCreation {
+  accept<T>(visitor: WorkEventVisitor<T>): T {
+    return visitor.visitWorkCreation(this);
+  }
+
   get agents(): readonly Agent[] {
     return this.agentUris.map(agentUri => this.modelSet.agentByUri(agentUri));
   }

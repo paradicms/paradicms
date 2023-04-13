@@ -11,8 +11,6 @@ import {cms, dcterms} from "@paradicms/vocabularies";
 import {mapTextObject} from "./mapTextObject";
 import {createPropertyValuesFromQuadObjects} from "./createPropertyValuesFromQuadObjects";
 import {mapLocationObject} from "./mapLocationObject";
-import {Location} from "./Location";
-import {visitWorkEvent} from "./WorkEventVisitor";
 import {WorkClosing} from "./WorkClosing";
 import {WorkOpening} from "./WorkOpening";
 import {WorkCreation} from "./WorkCreation";
@@ -26,6 +24,7 @@ import {RightsMixin} from "./RightsMixin";
 import {ResourceBackedNamedModel} from "./ResourceBackedNamedModel";
 import {Work} from "./Work";
 import {CmsText} from "./CmsText";
+import {CmsLocation} from "CmsLocation";
 
 const getRightsAgentUris = (
     rights: RightsMixin | null
@@ -145,7 +144,7 @@ export class CmsWork extends Mixin(
     let startDisplayDate: string | undefined;
     let endDisplayDate: string | undefined;
     for (const event of this.events) {
-      visitWorkEvent(event, {
+      event.accept({
         visitWorkClosing(workClosing: WorkClosing): void {
           if (!endDisplayDate && workClosing.displayDate) {
             endDisplayDate = workClosing.displayDate;
@@ -182,7 +181,7 @@ export class CmsWork extends Mixin(
   @Memoize()
   get location(): WorkLocation | null {
     const location = this.findAndMapObject(dcterms.spatial, term => mapLocationObject(this, term));
-    if (location && location instanceof Location) {
+    if (location && location instanceof CmsLocation) {
       return {
         label: this.title,
         location,
