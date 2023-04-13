@@ -1,5 +1,4 @@
 import {ModelSet} from "./ModelSet";
-import {Rights} from "./Rights";
 import {CollectionJoinSelector} from "./CollectionJoinSelector";
 import {Collection} from "./Collection";
 import {ModelSetBuilder} from "./ModelSetBuilder";
@@ -20,6 +19,8 @@ import {WorkOpening} from "./WorkOpening";
 import {WorkClosing} from "./WorkClosing";
 import {ConceptPropertyValue} from "./ConceptPropertyValue";
 import {Location} from "./Location";
+import {License} from "./License";
+import {RightsStatement} from "./RightsStatement";
 
 /**
  * Subset a ModelSet to reduce the amount of data passed between getStaticProps and the component.
@@ -118,7 +119,7 @@ export class ModelSubsetter {
     image: Image
   ): void {
     this.modelSetBuilder.addImage(image);
-    this.addRightsModelSet(agentJoinSelector, image.rights);
+    this.addRightsModelSet(agentJoinSelector, image);
   }
 
   private addLocationModelSet(location: Location): void {
@@ -130,14 +131,26 @@ export class ModelSubsetter {
 
   private addRightsModelSet(
     agentJoinSelector: AgentJoinSelector,
-    rights: Rights | null
+    rights: {
+      contributorAgents: readonly Agent[];
+      creatorAgents: readonly Agent[];
+      rightsHolderAgents: readonly Agent[];
+      license: License | string | null;
+      rightsStatement: RightsStatement | string | null;
+    } | null
   ): void {
     if (!rights) {
       return;
     }
 
-    for (const agent of rights.agents) {
-      this.addAgentModelSet(agent, agentJoinSelector);
+    for (const agents of [
+      rights.contributorAgents,
+      rights.creatorAgents,
+      rights.rightsHolderAgents,
+    ]) {
+      for (const agent of agents) {
+        this.addAgentModelSet(agent, agentJoinSelector);
+      }
     }
 
     const license = rights.license;
@@ -164,12 +177,12 @@ export class ModelSubsetter {
       this.modelSetBuilder.addWork(work);
 
       // Work ModelSets always include rights
-      this.addRightsModelSet(joinSelector.agents ?? {}, work.rights);
+      this.addRightsModelSet(joinSelector.agents ?? {}, work);
 
       {
         const description = work.description;
         if (description && description instanceof Text) {
-          this.addRightsModelSet(joinSelector.agents ?? {}, description.rights);
+          this.addRightsModelSet(joinSelector.agents ?? {}, description);
         }
       }
 

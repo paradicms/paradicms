@@ -29,7 +29,6 @@ export * from "./Person";
 export * from "./Property";
 export * from "./PropertyGroup";
 export * from "./PropertyValue";
-export * from "./Rights";
 export * from "./RightsStatement";
 export * from "./selectThumbnail";
 export * from "./Text";
