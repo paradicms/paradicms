@@ -1,17 +1,7 @@
 import {Model} from "./Model";
-import {Mixin} from "ts-mixer";
-import {rdf} from "@paradicms/vocabularies";
-import {requireNonNull} from "@paradicms/utilities";
-import {CmsRightsMixin} from "./CmsRightsMixin";
+import {RightsMixin} from "./RightsMixin";
 
-export class Text extends Mixin(Model, CmsRightsMixin) {
-  override toString() {
-    return this.value;
-  }
-
-  get value(): string {
-    return requireNonNull(
-      this.findAndMapObject(rdf.value, this.mapStringObject)
-    );
-  }
+export interface Text extends Model, RightsMixin {
+  toString(): string;
+  readonly value: string;
 }
