@@ -1,9 +1,9 @@
 import {Image} from "./Image";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
-import {NamedModelMixin} from "./NamedModelMixin";
+import {ResourceBackedNamedModelMixin} from "./ResourceBackedNamedModelMixin";
 
-export abstract class CmsImagesMixin extends NamedModelMixin {
+export abstract class CmsImagesMixin extends ResourceBackedNamedModelMixin {
   get images(): readonly Image[] {
     return this.modelSet.imagesByDepictsUri(this.uri);
   }

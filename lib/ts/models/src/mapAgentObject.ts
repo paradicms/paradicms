@@ -1,12 +1,12 @@
 import {Term} from "@rdfjs/types";
-import {ModelParameters} from "./ModelParameters";
+import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {Agent} from "./Agent";
 
 /**
  * Map a term in a modelSet to an Agent.
  */
 export const mapAgentObject = (
-  modelParameters: Omit<ModelParameters, "node">,
+  modelParameters: Omit<ResourceBackedModelParameters, "node">,
   term: Term
 ): Agent | string | null => {
   switch (term.termType) {

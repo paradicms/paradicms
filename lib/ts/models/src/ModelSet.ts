@@ -15,7 +15,7 @@ import {NamedModel} from "./NamedModel";
 import {Concept} from "./Concept";
 import {Organization} from "./Organization";
 import {Agent} from "./Agent";
-import {ModelParameters} from "./ModelParameters";
+import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {WorkEvent} from "./WorkEvent";
 import {WorkCreation} from "./WorkCreation";
 import {Event} from "./Event";
@@ -33,7 +33,9 @@ import {Location} from "./Location";
 import invariant from "ts-invariant";
 
 const eventClassesByRdfType = (() => {
-  const result: {[index: string]: {new (kwds: ModelParameters): Event}} = {};
+  const result: {
+    [index: string]: {new (kwds: ResourceBackedModelParameters): Event};
+  } = {};
   result[cms.WorkClosing.value] = WorkClosing;
   result[cms.WorkCreation.value] = WorkCreation;
   result[cms.WorkOpening.value] = WorkOpening;
@@ -419,7 +421,7 @@ export class ModelSet {
     return null;
   }
 
-  protected readEvent(kwds: ModelParameters): Event {
+  protected readEvent(kwds: ResourceBackedModelParameters): Event {
     for (const quad of this.dataset.match(
       kwds.node,
       rdf.type,
@@ -462,7 +464,7 @@ export class ModelSet {
     this._workEventsByWorkUriIndex = workEventsByWorkUriIndex;
   }
 
-  protected readCollection(kwds: ModelParameters): Collection {
+  protected readCollection(kwds: ResourceBackedModelParameters): Collection {
     return new Collection(kwds);
   }
 
@@ -479,7 +481,7 @@ export class ModelSet {
     this._collections = sortNamedModelsArray(collections);
   }
 
-  protected readConcept(kwds: ModelParameters): Concept {
+  protected readConcept(kwds: ResourceBackedModelParameters): Concept {
     return new Concept(kwds);
   }
 
@@ -496,7 +498,7 @@ export class ModelSet {
     this._concepts = sortNamedModelsArray(concepts);
   }
 
-  protected readImage(kwds: ModelParameters): Image {
+  protected readImage(kwds: ResourceBackedModelParameters): Image {
     return new Image(kwds);
   }
 
@@ -537,7 +539,7 @@ export class ModelSet {
     );
   }
 
-  protected readLicense(kwds: ModelParameters): License {
+  protected readLicense(kwds: ResourceBackedModelParameters): License {
     return new License(kwds);
   }
 
@@ -553,7 +555,7 @@ export class ModelSet {
   }
 
   protected readNamedModels(
-    callback: (kwds: ModelParameters) => void,
+    callback: (kwds: ResourceBackedModelParameters) => void,
     type: NamedNode
   ): void {
     const uniqueModelSubjects = new TermSet();
@@ -592,7 +594,7 @@ export class ModelSet {
     });
   }
 
-  protected readNamedLocation(kwds: ModelParameters): Location {
+  protected readNamedLocation(kwds: ResourceBackedModelParameters): Location {
     return new Location(kwds);
   }
 
@@ -605,7 +607,9 @@ export class ModelSet {
     }, cms.Location);
   }
 
-  protected readOrganization(kwds: ModelParameters): Organization {
+  protected readOrganization(
+    kwds: ResourceBackedModelParameters
+  ): Organization {
     return new Organization(kwds);
   }
 
@@ -631,7 +635,7 @@ export class ModelSet {
     this._people = sortNamedModelsArray(people);
   }
 
-  private readPerson(kwds: ModelParameters): Person {
+  private readPerson(kwds: ResourceBackedModelParameters): Person {
     return new Person(kwds);
   }
 
@@ -659,7 +663,7 @@ export class ModelSet {
     );
   }
 
-  private readProperty(kwds: ModelParameters): Property {
+  private readProperty(kwds: ResourceBackedModelParameters): Property {
     return new Property(kwds);
   }
 
@@ -674,11 +678,15 @@ export class ModelSet {
     this._propertyGroups = sortNamedModelsArray(propertyGroups);
   }
 
-  private readPropertyGroup(kwds: ModelParameters): PropertyGroup {
+  private readPropertyGroup(
+    kwds: ResourceBackedModelParameters
+  ): PropertyGroup {
     return new PropertyGroup(kwds);
   }
 
-  protected readRightsStatement(kwds: ModelParameters): RightsStatement {
+  protected readRightsStatement(
+    kwds: ResourceBackedModelParameters
+  ): RightsStatement {
     return new RightsStatement(kwds);
   }
 
@@ -693,7 +701,7 @@ export class ModelSet {
     this._rightsStatements = sortNamedModelsArray(rightsStatements);
   }
 
-  protected readWork(kwds: ModelParameters): Work {
+  protected readWork(kwds: ResourceBackedModelParameters): Work {
     return new Work(kwds);
   }
 

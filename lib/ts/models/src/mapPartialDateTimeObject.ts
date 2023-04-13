@@ -1,5 +1,5 @@
 import {Term} from "@rdfjs/types";
-import {ModelParameters} from "./ModelParameters";
+import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {PartialDateTime} from "./PartialDateTime";
 import {DateTimeDescription} from "./DateTimeDescription";
 import anyDateParser from "any-date-parser";
@@ -8,7 +8,7 @@ import anyDateParser from "any-date-parser";
  * Map a term in a modelSet to a PartialDateTime.
  */
 export const mapPartialDateTimeObject = (
-  modelParameters: Omit<ModelParameters, "node">,
+  modelParameters: Omit<ResourceBackedModelParameters, "node">,
   term: Term
 ): PartialDateTime | null => {
   switch (term.termType) {

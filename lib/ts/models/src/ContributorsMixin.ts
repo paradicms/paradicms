@@ -1,7 +1,7 @@
 import {Agent} from "./Agent";
 
 export interface ContributorsMixin {
-  get contributors(): readonly (Agent | string)[];
-  get contributorAgents(): readonly Agent[];
-  get contributorAgentUris(): readonly string[];
+  readonly contributors: readonly (Agent | string)[];
+  readonly contributorAgents: readonly Agent[];
+  readonly contributorAgentUris: readonly string[];
 }

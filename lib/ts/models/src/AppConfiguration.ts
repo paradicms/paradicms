@@ -1,7 +1,7 @@
 import {configuration} from "@paradicms/vocabularies";
-import {Model} from "./Model";
+import {ResourceBackedModel} from "./ResourceBackedModel";
 
-export class AppConfiguration extends Model {
+export class AppConfiguration extends ResourceBackedModel {
   get objectsPerPage(): number | null {
     return this.findAndMapObject(
       configuration.objectsPerPage,

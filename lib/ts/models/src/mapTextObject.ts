@@ -1,12 +1,12 @@
 import {Term} from "@rdfjs/types";
 import {Text} from "./Text";
-import {ModelParameters} from "./ModelParameters";
+import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 
 /**
  * Map a term in a modelSet to a Text.
  */
 export const mapTextObject = (
-  modelParameters: Omit<ModelParameters, "node">,
+  modelParameters: Omit<ResourceBackedModelParameters, "node">,
   term: Term
 ): Text | string | null => {
   switch (term.termType) {

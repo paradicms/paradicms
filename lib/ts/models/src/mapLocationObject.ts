@@ -1,12 +1,12 @@
 import {Term} from "@rdfjs/types";
-import {ModelParameters} from "./ModelParameters";
+import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {Location} from "./Location";
 
 /**
  * Map a term in a modelSet to a Location.
  */
 export const mapLocationObject = (
-  modelParameters: Omit<ModelParameters, "node">,
+  modelParameters: Omit<ResourceBackedModelParameters, "node">,
   term: Term
 ): Location | string | null => {
   switch (term.termType) {

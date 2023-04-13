@@ -1,7 +1,7 @@
-import {ModelMixin} from "./ModelMixin";
 import {dcterms} from "@paradicms/vocabularies";
+import {ResourceBackedModelMixin} from "./ResourceBackedModelMixin";
 
-export abstract class CmsRelationsMixin extends ModelMixin {
+export abstract class CmsRelationsMixin extends ResourceBackedModelMixin {
   get wikipediaUrl(): string | null {
     return this.findAndMapObject(dcterms.relation, term =>
       term.termType === "NamedNode" &&
