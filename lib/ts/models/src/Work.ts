@@ -1,6 +1,5 @@
 import {NamedModel} from "./NamedModel";
 import {Collection} from "./Collection";
-import {Rights} from "./Rights";
 import {Text} from "./Text";
 import {Memoize} from "typescript-memoize";
 import {PropertyValue} from "./PropertyValue";
@@ -23,10 +22,35 @@ import {HasImages} from "./HasImages";
 import {HasPage} from "./HasPage";
 import {HasTitle} from "./HasTitle";
 import {HasRelations} from "./HasRelations";
-import {HasRights} from "./HasRights";
+import {RightsMixin} from "./RightsMixin";
+import {Agent} from "./Agent";
+
+const getRightsAgentUris = (
+    rights: {
+      contributorAgentUris: readonly string[];
+      creatorAgentUris: readonly string[];
+      rightsHolderAgentUris: readonly string[];
+    } | null
+): readonly string[] => {
+  const result: string[] = [];
+
+  if (!rights) {
+    return result;
+  }
+
+  result.push(...rights.contributorAgentUris);
+  result.push(...rights.creatorAgentUris);
+  result.push(...rights.rightsHolderAgentUris);
+
+  return result;
+};
 
 const getRightsWorkAgents = (
-  rights: Rights | null,
+  rights: {
+    contributorAgents: readonly Agent[];
+    creatorAgents: readonly Agent[];
+    rightsHolderAgents: readonly Agent[];
+  } | null,
   rolePrefix: string
 ): readonly WorkAgent[] => {
   const result: WorkAgent[] = [];
@@ -66,20 +90,20 @@ export class Work extends Mixin(
   HasPage,
   HasTitle,
   HasRelations,
-  HasRights
+  RightsMixin
 ) {
   @Memoize()
   get agents(): readonly WorkAgent[] {
     const result: WorkAgent[] = [];
 
-    result.push(...getRightsWorkAgents(this.rights, "Work"));
+    result.push(...getRightsWorkAgents(this, "Work"));
 
     if (this.description && this.description instanceof Text) {
-      result.push(...getRightsWorkAgents(this.description.rights, "Text"));
+      result.push(...getRightsWorkAgents(this.description, "Text"));
     }
 
     for (const image of this.originalImages) {
-      result.push(...getRightsWorkAgents(image.rights, "Image"));
+      result.push(...getRightsWorkAgents(image, "Image"));
     }
 
     return result;
@@ -88,23 +112,17 @@ export class Work extends Mixin(
   @Memoize()
   get agentUris(): readonly string[] {
     const result: string[] = [];
-
-    if (this.rights) {
-      result.push(...this.rights.agentUris);
-    }
+    result.push(...getRightsAgentUris(this));
 
     if (
       this.description &&
-      this.description instanceof Text &&
-      this.description.rights
+      this.description instanceof Text
     ) {
-      result.push(...this.description.rights.agentUris);
+      result.push(...getRightsAgentUris(this.description));
     }
 
     for (const image of this.originalImages) {
-      if (image.rights) {
-        result.push(...image.rights.agentUris);
-      }
+      result.push(...getRightsAgentUris(image));
     }
 
     return result;

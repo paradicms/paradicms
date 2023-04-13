@@ -1,39 +1,30 @@
-import {Model} from "./Model";
 import {License} from "./License";
 import {RightsStatement} from "./RightsStatement";
 import {Agent} from "./Agent";
-import {NamedNode} from "@rdfjs/types";
 import {Memoize} from "typescript-memoize";
 import {Mixin} from "ts-mixer";
 import {dcterms} from "@paradicms/vocabularies";
 import {HasContributors} from "./HasContributors";
 import {HasCreators} from "./HasCreators";
+import {ModelMixin} from "./ModelMixin";
+import {mapAgentObject} from "./mapAgentObject";
 
-export class Rights extends Mixin(Model, HasContributors, HasCreators) {
-  private agentsOrStrings(property: NamedNode): readonly (Agent | string)[] {
-    return this.filterAndMapObjects(dcterms.creator, term => {
-      switch (term.termType) {
-        case "Literal":
-          return term.value;
-        case "NamedNode":
-          return this.modelSet.agentByUri(term.value);
-        default:
-          return null;
-      }
-    });
-  }
-
-  @Memoize()
-  get agents(): readonly Agent[] {
-    return this.agentUris.map(agentUri => this.modelSet.agentByUri(agentUri));
-  }
-
-  @Memoize()
-  get agentUris(): readonly string[] {
-    return this.contributorAgentUris
-      .concat(this.creatorAgentUris)
-      .concat(this.rightsHolderAgentUris);
-  }
+export abstract class RightsMixin extends Mixin(
+  ModelMixin,
+  HasContributors,
+  HasCreators
+) {
+  // @Memoize()
+  // get agents(): readonly Agent[] {
+  //   return this.agentUris.map(agentUri => this.modelSet.agentByUri(agentUri));
+  // }
+  //
+  // @Memoize()
+  // get agentUris(): readonly string[] {
+  //   return this.contributorAgentUris
+  //     .concat(this.creatorAgentUris)
+  //     .concat(this.rightsHolderAgentUris);
+  // }
 
   @Memoize()
   get license(): License | string | null {
@@ -59,7 +50,7 @@ export class Rights extends Mixin(Model, HasContributors, HasCreators) {
 
   get rightsHolderAgents(): readonly Agent[] {
     return this.rightsHolderAgentUris.map(agentUri =>
-        this.modelSet.agentByUri(agentUri)
+      this.modelSet.agentByUri(agentUri)
     );
   }
 
@@ -70,7 +61,9 @@ export class Rights extends Mixin(Model, HasContributors, HasCreators) {
 
   @Memoize()
   get rightsHolders(): readonly (Agent | string)[] {
-    return this.agentsOrStrings(dcterms.rightsHolder);
+    return this.filterAndMapObjects(dcterms.rightsHolder, term =>
+      mapAgentObject(this, term)
+    );
   }
 
   @Memoize()
