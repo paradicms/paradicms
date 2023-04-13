@@ -1,6 +1,6 @@
 import {ModelMixin} from "./ModelMixin";
 import {Memoize} from "typescript-memoize";
-import {Rights} from "../Rights";
+import {Rights} from "./Rights";
 import {dcterms} from "@paradicms/vocabularies";
 
 export abstract class HasRights extends ModelMixin {

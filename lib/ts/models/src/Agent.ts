@@ -1,6 +1,9 @@
 import {NamedModel} from "./NamedModel";
 import {Mixin} from "ts-mixer";
-import {HasImages, HasName, HasPage, HasRelations} from "./mixins";
+import {HasImages} from "./HasImages";
+import {HasName} from "./HasName";
+import {HasPage} from "./HasPage";
+import {HasRelations} from "./HasRelations";
 
 export class Agent extends Mixin(
   NamedModel,

@@ -1,9 +1,9 @@
 import {WorkEvent} from "./WorkEvent";
 import {Mixin} from "ts-mixer";
-import {HasCreators} from "./mixins/HasCreators";
-import {HasContributors} from "./mixins/HasContributors";
 import {Agent} from "./Agent";
 import {WorkLocationRole} from "./WorkLocationRole";
+import {HasContributors} from "./HasContributors";
+import {HasCreators} from "./HasCreators";
 
 export class WorkCreation extends Mixin(
   WorkEvent,

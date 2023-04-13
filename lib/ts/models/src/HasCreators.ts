@@ -1,12 +1,12 @@
 import {Memoize} from "typescript-memoize";
-import {Agent} from "../Agent";
+import {Agent} from "./Agent";
 import {dcterms} from "@paradicms/vocabularies";
 import {ModelMixin} from "./ModelMixin";
 
-export abstract class HasContributors extends ModelMixin {
+export abstract class HasCreators extends ModelMixin {
   @Memoize()
-  get contributors(): readonly (Agent | string)[] {
-    return this.filterAndMapObjects(dcterms.contributor, term => {
+  get creators(): readonly (Agent | string)[] {
+    return this.filterAndMapObjects(dcterms.creator, term => {
       switch (term.termType) {
         case "Literal":
           return term.value;
@@ -18,14 +18,14 @@ export abstract class HasContributors extends ModelMixin {
     });
   }
 
-  get contributorAgents(): readonly Agent[] {
-    return this.contributorAgentUris.map(agentUri =>
+  get creatorAgents(): readonly Agent[] {
+    return this.creatorAgentUris.map(agentUri =>
       this.modelSet.agentByUri(agentUri)
     );
   }
 
   @Memoize()
-  get contributorAgentUris(): readonly string[] {
-    return this.filterAndMapObjects(dcterms.contributor, this.mapUriObject);
+  get creatorAgentUris(): readonly string[] {
+    return this.filterAndMapObjects(dcterms.creator, this.mapUriObject);
   }
 }

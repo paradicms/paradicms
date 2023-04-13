@@ -1,8 +1,8 @@
 import {Memoize} from "typescript-memoize";
-import {Text} from "../Text";
+import {Text} from "./Text";
 import {dcterms} from "@paradicms/vocabularies";
 import {NamedModelMixin} from "./NamedModelMixin";
-import {mapTextObject} from "../mapTextObject";
+import {mapTextObject} from "./mapTextObject";
 
 export abstract class HasDescription extends NamedModelMixin {
   @Memoize()

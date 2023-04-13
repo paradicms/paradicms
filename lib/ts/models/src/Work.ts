@@ -7,7 +7,6 @@ import {PropertyValue} from "./PropertyValue";
 import {WorkAgent} from "./WorkAgent";
 import {Mixin} from "ts-mixer";
 import {DataFactory} from "@paradicms/rdf";
-import {HasDescription, HasImages, HasPage, HasRelations, HasRights, HasTitle,} from "./mixins";
 import {WorkEvent} from "./WorkEvent";
 import {WorkLocation} from "./WorkLocation";
 import {cms, dcterms} from "@paradicms/vocabularies";
@@ -19,6 +18,12 @@ import {visitWorkEvent} from "./WorkEventVisitor";
 import {WorkClosing} from "./WorkClosing";
 import {WorkOpening} from "./WorkOpening";
 import {WorkCreation} from "./WorkCreation";
+import {HasDescription} from "./HasDescription";
+import {HasImages} from "./HasImages";
+import {HasPage} from "./HasPage";
+import {HasTitle} from "./HasTitle";
+import {HasRelations} from "./HasRelations";
+import {HasRights} from "./HasRights";
 
 const getRightsWorkAgents = (
   rights: Rights | null,

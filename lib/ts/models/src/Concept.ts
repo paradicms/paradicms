@@ -1,9 +1,10 @@
 import {NamedModel} from "./NamedModel";
 import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
 import {Memoize} from "typescript-memoize";
-import {HasDescription, HasImages} from "./mixins";
 import {Mixin} from "ts-mixer";
 import {rdf, skos} from "@paradicms/vocabularies";
+import {HasDescription} from "./HasDescription";
+import {HasImages} from "./HasImages";
 
 export class Concept extends Mixin(NamedModel, HasDescription, HasImages) {
   @Memoize()

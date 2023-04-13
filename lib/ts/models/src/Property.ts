@@ -1,5 +1,4 @@
 import {NamedModel} from "./NamedModel";
-import {HasComment, HasImages, HasLabel} from "./mixins";
 import {Mixin} from "ts-mixer";
 import {NamedNode} from "@rdfjs/types";
 import {cms, rdfs, sh} from "@paradicms/vocabularies";
@@ -7,6 +6,9 @@ import {PropertyValue} from "./PropertyValue";
 import {Memoize} from "typescript-memoize";
 import {getRdfInstanceQuads} from "@paradicms/rdf";
 import {createPropertyValuesFromQuadSubjects} from "./createPropertyValuesFromQuadSubjects";
+import {HasComment} from "./HasComment";
+import {HasImages} from "./HasImages";
+import {HasLabel} from "./HasLabel";
 
 export class Property extends Mixin(
   NamedModel,

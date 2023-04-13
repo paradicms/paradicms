@@ -17,7 +17,6 @@ export * from "./ImageDimensions";
 export * from "./License";
 export * from "./LiteralPropertyValue";
 export * from "./Location";
-export * from "./mixins";
 export * from "./Model";
 export * from "./ModelParameters";
 export * from "./ModelSet";

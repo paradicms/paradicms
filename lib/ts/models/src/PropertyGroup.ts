@@ -1,7 +1,9 @@
 import {NamedModel} from "./NamedModel";
-import {HasComment, HasImages, HasLabel} from "./mixins";
 import {Mixin} from "ts-mixer";
 import {Property} from "./Property";
+import {HasComment} from "./HasComment";
+import {HasLabel} from "./HasLabel";
+import {HasImages} from "./HasImages";
 
 export class PropertyGroup extends Mixin(
   NamedModel,

@@ -1,6 +1,6 @@
-import {Image} from "../Image";
-import {ThumbnailSelector} from "../ThumbnailSelector";
-import {selectThumbnail} from "../selectThumbnail";
+import {Image} from "./Image";
+import {ThumbnailSelector} from "./ThumbnailSelector";
+import {selectThumbnail} from "./selectThumbnail";
 import {NamedModelMixin} from "./NamedModelMixin";
 
 export abstract class HasImages extends NamedModelMixin {

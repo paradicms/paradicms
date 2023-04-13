@@ -5,9 +5,9 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Memoize} from "typescript-memoize";
 import {Mixin} from "ts-mixer";
-import {HasRights} from "./mixins";
 import {cms, dcterms, exif, foaf} from "@paradicms/vocabularies";
 import {requireNonNull} from "@paradicms/utilities";
+import {HasRights} from "./HasRights";
 
 export class Image extends Mixin(NamedModel, HasRights) {
   @Memoize()

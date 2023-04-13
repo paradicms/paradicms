@@ -1,8 +1,8 @@
 import {Model} from "./Model";
 import {Mixin} from "ts-mixer";
-import {HasRights} from "./mixins/HasRights";
 import {rdf} from "@paradicms/vocabularies";
 import {requireNonNull} from "@paradicms/utilities";
+import {HasRights} from "./HasRights";
 
 export class Text extends Mixin(Model, HasRights) {
   override toString() {

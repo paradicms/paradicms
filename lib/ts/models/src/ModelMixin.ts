@@ -1,4 +1,4 @@
-import {ModelSet} from "../ModelSet";
+import {ModelSet} from "./ModelSet";
 import {BlankNode, NamedNode, Term} from "@rdfjs/types";
 import {NonNullable} from "@paradicms/utilities";
 

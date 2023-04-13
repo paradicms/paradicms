@@ -1,6 +1,5 @@
 import {NamedModel} from "./NamedModel";
 import {Location} from "./Location";
-import {HasDescription} from "./mixins";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {dcterms, vra} from "@paradicms/vocabularies";
@@ -8,6 +7,7 @@ import {PartialDateTime} from "./PartialDateTime";
 import {mapPartialDateTimeObject} from "./mapPartialDateTimeObject";
 import {mapLocationObject} from "./mapLocationObject";
 import {partialDateTimeToString} from "./partialDateTimeToString";
+import {HasDescription} from "./HasDescription";
 
 export class Event extends Mixin(NamedModel, HasDescription) {
   @Memoize()
