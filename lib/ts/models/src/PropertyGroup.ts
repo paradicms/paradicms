@@ -1,17 +1,9 @@
 import {NamedModel} from "./NamedModel";
-import {Mixin} from "ts-mixer";
 import {Property} from "./Property";
-import {CmsCommentMixin} from "./CmsCommentMixin";
-import {CmsLabelMixin} from "./CmsLabelMixin";
-import {CmsImagesMixin} from "./CmsImagesMixin";
+import {ImagesMixin} from "./ImagesMixin";
 
-export class PropertyGroup extends Mixin(
-  NamedModel,
-  CmsCommentMixin,
-  CmsImagesMixin,
-  CmsLabelMixin
-) {
-  get properties(): readonly Property[] {
-    return this.modelSet.propertiesByGroupUri(this.uri);
-  }
+export interface PropertyGroup extends NamedModel, ImagesMixin {
+  readonly comment: string | null;
+  readonly label: string;
+  readonly properties: readonly Property[];
 }
