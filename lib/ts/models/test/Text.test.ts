@@ -11,10 +11,8 @@ describe("Text", () => {
     expect(sut.value).to.not.be.empty;
   });
 
-  it("should have rights", () => {
-    const rights = sut.rights;
-    expect(rights).to.not.be.null;
-    const license = rights!.license;
+  it("should have a license", () => {
+    const license = sut.license;
     expect(license).to.not.be.null;
   });
 

@@ -48,28 +48,26 @@ describe("ModelSet", () => {
 
     for (const work of sut.works) {
       expect(work.originalImages).to.not.be.empty;
-      const rights = work.rights;
-      expect(rights).to.not.be.null;
-      expect(rights!.contributors).to.not.be.empty;
-      expect(rights!.contributorAgents).to.not.be.empty;
-      const contributorAgent = rights!.contributorAgents[0];
+      expect(work.contributors).to.not.be.empty;
+      expect(work.contributorAgents).to.not.be.empty;
+      const contributorAgent = work.contributorAgents[0];
       expect(
         sut
           .agentWorks(contributorAgent.uri)
           .some(contributorAgentWork => contributorAgentWork.uri === work.uri)
       ).to.be.true;
-      expect(rights!.creators).to.not.be.empty;
-      expect(rights!.creatorAgents).to.not.be.empty;
-      const creatorAgent = rights!.creatorAgents[0];
+      expect(work.creators).to.not.be.empty;
+      expect(work.creatorAgents).to.not.be.empty;
+      const creatorAgent = work.creatorAgents[0];
       expect(
         sut
           .agentWorks(creatorAgent.uri)
           .some(agentWork => agentWork.uri === work.uri)
       ).to.be.true;
-      expect(rights!.license).to.not.be.null;
-      expect((rights!.license! as License).uri).to.not.be.empty;
-      expect(rights!.rightsStatement).to.not.be.null;
-      expect((rights!.rightsStatement! as RightsStatement).uri).to.not.be.empty;
+      expect(work.license).to.not.be.null;
+      expect((work.license! as License).uri).to.not.be.empty;
+      expect(work.rightsStatement).to.not.be.null;
+      expect((work.rightsStatement! as RightsStatement).uri).to.not.be.empty;
     }
 
     for (const workEvent of sut.workEvents) {

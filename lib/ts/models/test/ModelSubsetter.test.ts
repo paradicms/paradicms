@@ -66,8 +66,9 @@ describe("ModelSubsetter", () => {
       completeModelSet.images.filter(
         image =>
           image.depictsUri === work.uri ||
-          work.rights!.agents.some(
-            agent => agent.thumbnail(THUMBNAIL_SELECTOR)!.uri === image.uri
+          work.agents.some(
+            agent =>
+              agent.agent.thumbnail(THUMBNAIL_SELECTOR)!.uri === image.uri
           )
       )
     );
@@ -77,23 +78,20 @@ describe("ModelSubsetter", () => {
     }
     expectModelsDeepEq(workModelSet.licenses, [
       completeModelSet.licenses.find(
-        license => license.uri === (work.rights!.license! as License).uri
+        license => license.uri === (work.license! as License).uri
       )!,
     ]);
     expectModelsDeepEq(
       workModelSet.agents,
       completeModelSet.agents.filter(modelSetAgent =>
-        work.rights!.agents.some(
-          workAgent => workAgent.uri === modelSetAgent.uri
-        )
+        work.agents.some(workAgent => workAgent.agent.uri === modelSetAgent.uri)
       )
     );
     expect(workModelSet.concepts).to.be.empty;
     expectModelsDeepEq(workModelSet.rightsStatements, [
       completeModelSet.rightsStatements.find(
         rightsStatement =>
-          rightsStatement.uri ===
-          (work.rights!.rightsStatement! as RightsStatement).uri
+          rightsStatement.uri === (work.rightsStatement! as RightsStatement).uri
       )!,
     ]);
     expectModelsDeepEq(workModelSet.works, [work]);

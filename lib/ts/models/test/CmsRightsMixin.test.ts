@@ -5,8 +5,8 @@ import {ModelSet} from "../src";
 import {Agent} from "../src/Agent";
 import {syntheticData} from "@paradicms/test";
 
-describe("Rights", () => {
-  const sut = ModelSet.fromDatasetCore(syntheticData).works[0].rights!;
+describe("CmsRightsMixin", () => {
+  const sut = ModelSet.fromDatasetCore(syntheticData).works[0];
 
   it("should have a contributor", () => {
     expect(sut.contributors).to.not.be.empty;

@@ -73,8 +73,8 @@ describe("Work", () => {
     expect(propertyValue.value).to.eq((sut.description as Text).value);
   });
 
-  it("should get the work's rights", () => {
-    expect(sut.rights!.rightsStatement).to.not.be.null;
+  it("should get the work's rights statement", () => {
+    expect(sut.rightsStatement).to.not.be.null;
   });
 
   it("should get the work's title", () => {
