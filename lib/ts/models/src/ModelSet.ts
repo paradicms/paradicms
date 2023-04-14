@@ -12,12 +12,13 @@ import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
 import {AppConfiguration} from "./AppConfiguration";
 import {Location} from "./Location";
+import {NamedLocation} from "NamedLocation";
 
 export interface ModelSet {
   agentByUri(agentUri: string): Agent;
   readonly agents: readonly Agent[];
   agentWorks(agentUri: string): readonly Work[];
-  readonly appConfiguration(): AppConfiguration | null;
+  readonly appConfiguration: AppConfiguration | null;
   collectionWorks(collectionUri: string): readonly Work[];
   readonly collections: readonly Collection[];
   collectionByUri(collectionUri: string): Collection;
@@ -31,7 +32,8 @@ export interface ModelSet {
   licenseByUri(licenseUri: string): License;
   readonly licenses: readonly License[];
   logContents(): void;
-  namedLocationByUri(locationUri: string): Location;
+  readonly namedLocations: readonly NamedLocation[];
+  namedLocationByUri(locationUri: string): NamedLocation;
   organizationByUri(organizationUri: string): Organization;
   organizationByUriOptional(organizationUri: string): Organization | null;
   readonly organizations: readonly Organization[];
