@@ -14,7 +14,8 @@ import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
 import {AppConfiguration} from "./AppConfiguration";
 import {ModelSet} from "./ModelSet";
-import {NamedLocation} from "NamedLocation";
+import {NamedLocation} from "./NamedLocation";
+import {ModelReader} from "./ModelReader";
 
 const indexNamedModelsByUri = <NamedModelT extends NamedModel>(
   namedModels: readonly NamedModelT[]
@@ -78,7 +79,7 @@ const sortNamedModelsMultimap = <NamedModelT extends NamedModel>(namedModels: {
   return sortedNamedModels;
 };
 
-export abstract class CachingModelSet implements ModelSet {
+export class CachingModelSet implements ModelSet {
   private _appConfiguration?: AppConfiguration | null;
   private _collections?: readonly Collection[];
   private _collectionsByUriIndex?: {[index: string]: Collection};
@@ -109,6 +110,8 @@ export abstract class CachingModelSet implements ModelSet {
   private _worksByAgentUriIndex?: {[index: string]: readonly Work[]};
   private _worksByCollectionUriIndex?: {[index: string]: readonly Work[]};
   private _worksByUriIndex?: {[index: string]: Work};
+
+  constructor(private readonly modelReaders: readonly ModelReader[]) {}
 
   agentByUri(agentUri: string): Agent {
     for (const index of [this.organizationsByUriIndex, this.peopleByUriIndex]) {
@@ -409,19 +412,101 @@ export abstract class CachingModelSet implements ModelSet {
     return requireDefined(this._propertyGroupsByUriIndex);
   }
 
-  protected abstract readAppConfiguration(): AppConfiguration | null;
-  protected abstract readCollections(): readonly Collection[];
-  protected abstract readConcepts(): readonly Concept[];
-  protected abstract readImages(): readonly Image[];
-  protected abstract readLicenses(): readonly License[];
-  protected abstract readNamedLocations(): readonly NamedLocation[];
-  protected abstract readOrganizations(): readonly Organization[];
-  protected abstract readPeople(): readonly Person[];
-  protected abstract readProperties(): readonly Property[];
-  protected abstract readPropertyGroups(): readonly PropertyGroup[];
-  protected abstract readRightsStatements(): readonly RightsStatement[];
-  protected abstract readWorkEvents(): readonly WorkEvent[];
-  protected abstract readWorks(): readonly Work[];
+  private readAppConfiguration(): AppConfiguration | null {
+    for (const modelReader of this.modelReaders) {
+      const appConfiguration = modelReader.readAppConfiguration({
+        modelSet: this,
+      });
+      if (appConfiguration) {
+        return appConfiguration;
+      }
+    }
+    return null;
+  }
+
+  private readCollections(): readonly Collection[] {
+    const kwds = {modelSet: this};
+    return this.modelReaders.flatMap(modelReader =>
+      modelReader.readCollections(kwds)
+    );
+  }
+
+  private readConcepts(): readonly Concept[] {
+    const kwds = {modelSet: this};
+    return this.modelReaders.flatMap(modelReader =>
+      modelReader.readConcepts(kwds)
+    );
+  }
+
+  private readImages(): readonly Image[] {
+    const kwds = {modelSet: this};
+    return this.modelReaders.flatMap(modelReader =>
+      modelReader.readImages(kwds)
+    );
+  }
+
+  private readLicenses(): readonly License[] {
+    const kwds = {modelSet: this};
+    return this.modelReaders.flatMap(modelReader =>
+      modelReader.readLicenses(kwds)
+    );
+  }
+
+  private readNamedLocations(): readonly NamedLocation[] {
+    const kwds = {modelSet: this};
+    return this.modelReaders.flatMap(modelReader =>
+      modelReader.readNamedLocations(kwds)
+    );
+  }
+
+  private readOrganizations(): readonly Organization[] {
+    const kwds = {modelSet: this};
+    return this.modelReaders.flatMap(modelReader =>
+      modelReader.readOrganizations(kwds)
+    );
+  }
+
+  private readPeople(): readonly Person[] {
+    const kwds = {modelSet: this};
+    return this.modelReaders.flatMap(modelReader =>
+      modelReader.readPeople(kwds)
+    );
+  }
+
+  private readProperties(): readonly Property[] {
+    const kwds = {modelSet: this};
+    return this.modelReaders.flatMap(modelReader =>
+      modelReader.readProperties(kwds)
+    );
+  }
+
+  private readPropertyGroups(): readonly PropertyGroup[] {
+    const kwds = {modelSet: this};
+    return this.modelReaders.flatMap(modelReader =>
+      modelReader.readPropertyGroups(kwds)
+    );
+  }
+
+  private readRightsStatements(): readonly RightsStatement[] {
+    const kwds = {modelSet: this};
+    return this.modelReaders.flatMap(modelReader =>
+      modelReader.readRightsStatements(kwds)
+    );
+  }
+
+  private readWorkEvents(): readonly WorkEvent[] {
+    const kwds = {modelSet: this};
+    return this.modelReaders.flatMap(modelReader =>
+      modelReader.readWorkEvents(kwds)
+    );
+  }
+
+  private readWorks(): readonly Work[] {
+    const kwds = {modelSet: this};
+    return this.modelReaders.flatMap(modelReader =>
+      modelReader.readWorks(kwds)
+    );
+  }
 
   get rightsStatements(): readonly RightsStatement[] {
     if (!this._rightsStatements) {
