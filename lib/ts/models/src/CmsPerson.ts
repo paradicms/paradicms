@@ -1,7 +1,7 @@
-import {contact, foaf} from "@paradicms/vocabularies";
-import {CmsAgent} from "./CmsAgent";
-import {Person} from "./Person";
-import { AgentVisitor } from "AgentVisitor";
+import { contact, foaf } from "@paradicms/vocabularies";
+import { AgentVisitor } from "./AgentVisitor";
+import { CmsAgent } from "./CmsAgent";
+import { Person } from "./Person";
 
 export class CmsPerson extends CmsAgent implements Person {
   override accept<T>(visitor: AgentVisitor<T>): T {
