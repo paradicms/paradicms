@@ -1,6 +1,6 @@
+import {WorkAgent, imagePlaceholderSrc} from "@paradicms/models";
 import * as React from "react";
 import {useCallback, useState} from "react";
-import {Image, WorkAgent} from "@paradicms/models";
 import {
   Card,
   CardBody,
@@ -37,7 +37,7 @@ const WorkAgentCard: React.FunctionComponent<{
           src={
             thumbnail?.src
               ? getAbsoluteImageSrc(thumbnail.src)
-              : Image.placeholderSrc(
+              : imagePlaceholderSrc(
                   imagesCarouselThumbnailSelector.targetDimensions
                 )
           }

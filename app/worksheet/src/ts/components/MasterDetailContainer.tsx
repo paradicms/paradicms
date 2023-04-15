@@ -1,5 +1,22 @@
+import {faInfoCircle, faTimes} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+  Image,
+  Text,
+  imagePlaceholderSrc,
+  selectThumbnail,
+} from "@paradicms/models";
+import {
+  ImagesCarousel,
+  RightsParagraph,
+  galleryThumbnailSelector,
+} from "@paradicms/react-dom-components";
+import {Literal} from "@rdfjs/types";
+import classnames from "classnames";
+import ISO6391 from "iso-639-1";
 import * as React from "react";
 import {useEffect, useState} from "react";
+import {useLocation} from "react-router";
 import {
   Button,
   Card,
@@ -10,19 +27,7 @@ import {
   Row,
   Table,
 } from "reactstrap";
-import {Image, selectThumbnail, Text} from "@paradicms/models";
-import {
-  galleryThumbnailSelector,
-  ImagesCarousel,
-  RightsParagraph,
-} from "@paradicms/react-dom-components";
-import classnames from "classnames";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faInfoCircle, faTimes} from "@fortawesome/free-solid-svg-icons";
-import {useLocation} from "react-router";
 import {WorksheetMode} from "~/models/WorksheetMode";
-import {Literal} from "@rdfjs/types";
-import ISO6391 from "iso-639-1";
 
 interface Item {
   altLabels: readonly Literal[] | null;
@@ -203,7 +208,7 @@ const ItemsGallery: React.FunctionComponent<{
         if (thumbnail) {
           thumbnailSrc = thumbnail.src ?? thumbnail.uri;
         } else {
-          thumbnailSrc = Image.placeholderSrc(
+          thumbnailSrc = imagePlaceholderSrc(
             galleryThumbnailSelector.targetDimensions
           );
         }

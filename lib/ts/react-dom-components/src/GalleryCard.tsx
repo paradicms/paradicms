@@ -1,8 +1,8 @@
-import {Image} from "@paradicms/models";
-import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
-import {RightsParagraph} from "./RightsParagraph";
+import {Image, imagePlaceholderSrc} from "@paradicms/models";
 import * as React from "react";
 import {Card, CardBody, CardText, CardTitle} from "reactstrap";
+import {RightsParagraph} from "./RightsParagraph";
+import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "xx-small",
@@ -45,9 +45,7 @@ export const GalleryCard: React.FunctionComponent<{
             src={
               thumbnail?.src
                 ? getAbsoluteImageSrc(thumbnail.src)
-                : Image.placeholderSrc(
-                    galleryThumbnailSelector.targetDimensions
-                  )
+                : imagePlaceholderSrc(galleryThumbnailSelector.targetDimensions)
             }
             style={{
               alignSelf: "center",

@@ -1,10 +1,10 @@
+import {Image, imagePlaceholderSrc} from "@paradicms/models";
 import * as React from "react";
 import {useCallback, useEffect, useState} from "react";
-import {Image} from "@paradicms/models";
-import {Carousel, CarouselItem} from "reactstrap";
 import ImageZoom from "react-medium-image-zoom";
-import {RightsParagraph} from "./RightsParagraph";
+import {Carousel, CarouselItem} from "reactstrap";
 import {FontAwesomeCarouselControl} from "./FontAwesomeCarouselControl";
+import {RightsParagraph} from "./RightsParagraph";
 import {imagesCarouselThumbnailSelector} from "./imagesCarouselThumbnailSelector";
 
 export interface ImagesCarouselProps {
@@ -34,7 +34,7 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
           src={
             originalImage.src
               ? getAbsoluteImageSrc(originalImage.src)
-              : Image.placeholderSrc(
+              : imagePlaceholderSrc(
                   imagesCarouselThumbnailSelector.targetDimensions
                 )
           }
