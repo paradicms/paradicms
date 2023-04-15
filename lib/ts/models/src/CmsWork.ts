@@ -194,9 +194,10 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   propertyValues(propertyUri: string): readonly PropertyValue[] {
-    return createPropertyValuesFromQuadObjects(
-      this.modelSet,
-      this.dataset
+    return createPropertyValuesFromQuadObjects({
+      dataset: this.dataset, 
+      modelSet: this.modelSet,
+      quads: this.dataset
         .match(
           this.node,
           DataFactory.namedNode(propertyUri),
@@ -204,6 +205,6 @@ export class CmsWork extends Mixin(
           this.graphNode
         )
         .toArray()
-    );
+        });
   }
 }

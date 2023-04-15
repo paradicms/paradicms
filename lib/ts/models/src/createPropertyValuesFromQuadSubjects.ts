@@ -1,19 +1,23 @@
 import {Quad} from "@rdfjs/types";
 import {PropertyValue} from "./PropertyValue";
 import {createPropertyValueFromTerm} from "./createPropertyValueFromTerm";
-import {DatasetBackedModelSet} from "DatasetBackedModelSet";
+import {Dataset} from "@rdfjs/types";
+import {ModelSet} from "./ModelSet";
 
-export const createPropertyValuesFromQuadSubjects = (
-  modelSet: DatasetBackedModelSet,
-  quads: readonly Quad[]
-): readonly PropertyValue[] => {
+export const createPropertyValuesFromQuadSubjects = (kwds: {
+  dataset: Dataset;
+  modelSet: ModelSet;
+  quads: readonly Quad[];
+}): readonly PropertyValue[] => {
+  const {dataset, modelSet, quads} = kwds;
   const propertyValues: PropertyValue[] = [];
   for (const quad of quads) {
-    const propertyValue = createPropertyValueFromTerm(
+    const propertyValue = createPropertyValueFromTerm({
+      dataset,
       modelSet,
-      quad.subject,
-      quad.graph
-    );
+      term: quad.subject,
+      termGraph: quad.graph,
+    });
     if (propertyValue) {
       propertyValues.push(propertyValue);
     }

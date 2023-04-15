@@ -9,12 +9,13 @@ import {Person} from "./Person";
 import {Organization} from "./Organization";
 import {Agent} from "./Agent";
 import {Event} from "./Event";
-import {Store} from "@paradicms/rdf";
+import {DataFactory, Store} from "@paradicms/rdf";
 import {AppConfiguration} from "./AppConfiguration";
 import {Model} from "./Model";
 import {Property} from "./Property";
 import {Location} from "./Location";
 import invariant from "ts-invariant";
+import {DatasetBackedModelSet} from "./DatasetBackedModelSet";
 
 export class ModelSetBuilder {
   private appConfiguration: AppConfiguration | null | undefined;
@@ -212,14 +213,16 @@ export class ModelSetBuilder {
     const store = new Store();
 
     const addModelToStore = (model: Model) => {
-      // Add all quads that belong to the model's graph
-      for (const quad of model.modelSet.dataset.match(
-        null,
-        null,
-        null,
-        model.graphNode
-      )) {
-        store.add(quad);
+      const modelGraph = DataFactory.blankNode();
+      for (const triple of model.toRdf()) {
+        store.addQuad(
+          DataFactory.quad(
+            triple.subject,
+            triple.predicate,
+            triple.object,
+            modelGraph
+          )
+        );
       }
     };
 
@@ -247,6 +250,6 @@ export class ModelSetBuilder {
         addModelToStore(modelsByUri[modelUri]);
       }
     }
-    return ModelSet.fromDatasetCore(store);
+    return DatasetBackedModelSet.fromDatasetCore(store);
   }
 }

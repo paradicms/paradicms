@@ -12,6 +12,7 @@ import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
 import {AppConfiguration} from "./AppConfiguration";
 import {NamedLocation} from "NamedLocation";
+import {Dataset} from "@rdfjs/types";
 
 export interface ModelSet {
   agentByUri(agentUri: string): Agent;
@@ -45,6 +46,7 @@ export interface ModelSet {
   propertyGroupByUriOptional(propertyGroupUri: string): PropertyGroup | null;
   readonly rightsStatements: readonly RightsStatement[];
   rightsStatementByUri(rightsStatementUri: string): RightsStatement;
+  toRdf(): Dataset;
   workByUri(workUri: string): Work;
   readonly workEvents: readonly WorkEvent[];
   workEventsByWork(workUri: string): readonly WorkEvent[];

@@ -50,7 +50,8 @@ export class CmsModelReader extends DatasetModelReader {
       dataset: this.dataset,
     }).values()) {
       return new AppConfiguration({
-        ...kwds,
+        dataset: this.dataset,
+        modelSet: kwds.modelSet,
         graphNode: quad.graph as BlankNode | DefaultGraph | NamedNode,
         node: quad.subject as BlankNode | NamedNode,
       });
@@ -151,8 +152,9 @@ export class CmsModelReader extends DatasetModelReader {
       if (workEventClass) {
         workEvents.push(
           new workEventClass({
+            dataset: this.dataset,
             graphNode: quad.graph as BlankNode | DefaultGraph | NamedNode,
-            modelSet: this,
+            modelSet: kwds.modelSet,
             node: quad.subject as BlankNode | NamedNode,
           })
         );

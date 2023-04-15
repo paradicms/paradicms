@@ -16,6 +16,7 @@ import {AppConfiguration} from "./AppConfiguration";
 import {ModelSet} from "./ModelSet";
 import {NamedLocation} from "./NamedLocation";
 import {ModelReader} from "./ModelReader";
+import {Dataset} from "rdf-js";
 
 const indexNamedModelsByUri = <NamedModelT extends NamedModel>(
   namedModels: readonly NamedModelT[]
@@ -530,29 +531,9 @@ export class CachingModelSet implements ModelSet {
     return requireDefined(this._rightsStatementsByUriIndex);
   }
 
-  // toFastRdfString(): string {
-  //   // return datasetToString(this.dataset, {
-  //   //   prefixes: {
-  //   //     cms: cms[""],
-  //   //     configuration: configuration[""],
-  //   //     contact: contact[""],
-  //   //     dash: dash[""],
-  //   //     dc11: dc11[""],
-  //   //     dcterms: dcterms[""],
-  //   //     exif: exif[""],
-  //   //     foaf: foaf[""],
-  //   //     rdf: rdf[""],
-  //   //     rdfs: rdfs[""],
-  //   //     sh: sh[""],
-  //   //     skos: skos[""],
-  //   //     time: time[""],
-  //   //     vra: vra[""],
-  //   //     wgs: wgs[""],
-  //   //     xsd: xsd[""],
-  //   //   },
-  //   // });
-  //   return datasetToFastRdfString(this.dataset);
-  // }
+  toRdf(): Dataset {
+    throw new EvalError("use model.toRdf to serialize");
+  }
 
   workByUri(workUri: string): Work {
     return this.modelByUri(this.worksByUriIndex, workUri);

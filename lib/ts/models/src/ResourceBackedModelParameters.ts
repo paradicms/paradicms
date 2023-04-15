@@ -1,8 +1,9 @@
-import {DatasetBackedModelSet} from "DatasetBackedModelSet";
-import {BlankNode, DefaultGraph, NamedNode} from "@rdfjs/types";
+import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
+import {ModelSet} from "./ModelSet";
 
 export interface ResourceBackedModelParameters {
+  dataset: Dataset;
   graphNode: BlankNode | DefaultGraph | NamedNode;
-  modelSet: DatasetBackedModelSet;
+  modelSet: ModelSet;
   node: BlankNode | NamedNode;
 }

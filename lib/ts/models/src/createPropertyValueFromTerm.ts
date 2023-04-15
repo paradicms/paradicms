@@ -12,25 +12,28 @@ import {ConceptPropertyValue} from "./ConceptPropertyValue";
 import {AgentPropertyValue} from "./AgentPropertyValue";
 import {LiteralPropertyValue} from "./LiteralPropertyValue";
 import {DcmiTypePropertyValue} from "./DcmiTypePropertyValue";
-import {DatasetBackedModelSet} from "DatasetBackedModelSet";
-import {CmsText} from "CmsText";
+import {CmsText} from "./CmsText";
+import {ModelSet} from "./ModelSet";
+import {Dataset} from "@rdfjs/types";
 
-export const createPropertyValueFromTerm = (
-  modelSet: DatasetBackedModelSet,
-  term: Term,
-  termGraph: Quad_Graph
-): PropertyValue | null => {
+export const createPropertyValueFromTerm = (kwds: {
+  dataset: Dataset;
+  modelSet: ModelSet;
+  term: Term;
+  termGraph: Quad_Graph;
+}): PropertyValue | null => {
+  const {dataset, modelSet, term, termGraph} = kwds;
+
   switch (term.termType) {
     case "BlankNode": {
-      if (
-        modelSet.dataset.match(term, rdf.type, cms.Text, termGraph).size === 0
-      ) {
+      if (dataset.match(term, rdf.type, cms.Text, termGraph).size === 0) {
         return null;
       }
       return new TextPropertyValue(
         new CmsText({
-          modelSet,
+          dataset,
           graphNode: termGraph as BlankNode | DefaultGraph | NamedNode, // Blank node must be in the same graph as the current node
+          modelSet,
           node: term,
         })
       );

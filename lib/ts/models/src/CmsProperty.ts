@@ -50,12 +50,16 @@ export class CmsProperty
       return [];
     }
 
-    return createPropertyValuesFromQuadSubjects(this.modelSet, [
-      ...getRdfInstanceQuads({
-        class_: range,
-        dataset: this.dataset,
-      }),
-    ]);
+    return createPropertyValuesFromQuadSubjects({
+      dataset: this.dataset,
+      modelSet: this.modelSet,
+      quads: [
+        ...getRdfInstanceQuads({
+          class_: range,
+          dataset: this.dataset,
+        }),
+      ],
+    });
   }
 
   get searchable(): boolean {
