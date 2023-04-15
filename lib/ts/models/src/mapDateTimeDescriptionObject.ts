@@ -2,6 +2,7 @@ import {Term} from "@rdfjs/types";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {DateTimeDescription} from "./DateTimeDescription";
 import anyDateParser from "any-date-parser";
+import {CmsDateTimeDescription} from "CmsDateTimeDescription";
 
 /**
  * Map a term in a modelSet to a PartialDateTime.
@@ -13,7 +14,7 @@ export const mapDateTimeDescriptionObject = (
   switch (term.termType) {
     case "BlankNode":
     case "NamedNode":
-      return new DateTimeDescription({
+      return new CmsDateTimeDescription({
         ...modelParameters,
         node: term,
       });

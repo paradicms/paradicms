@@ -45,7 +45,11 @@ export abstract class CmsRightsMixin
 
   get requiresAttribution(): boolean {
     const license = this.license;
-    if (license instanceof License && !license.requiresAttribution) {
+    if (
+      license &&
+      typeof license !== "string" &&
+      !license.requiresAttribution
+    ) {
       return false;
     }
     return true;

@@ -7,8 +7,11 @@ import {Memoize} from "typescript-memoize";
 import {WorkEvent} from "./WorkEvent";
 import {CmsEvent} from "./CmsEvent";
 import {CmsLocation} from "./CmsLocation";
+import { WorkEventVisitor } from "WorkEventVisitor";
 
 export abstract class CmsWorkEvent extends CmsEvent implements WorkEvent {
+  abstract accept<T>(visitor: WorkEventVisitor<T>): T;
+  
   get work(): Work {
     return this.modelSet.workByUri(this.workUri);
   }

@@ -1,4 +1,3 @@
-import {ModelSet} from "./ModelSet";
 import {
   BlankNode,
   DefaultGraph,
@@ -7,16 +6,17 @@ import {
   Term,
 } from "@rdfjs/types";
 import {cms, dcmitype, rdf} from "@paradicms/vocabularies";
-import {Text} from "./Text";
 import {PropertyValue} from "./PropertyValue";
 import {TextPropertyValue} from "./TextPropertyValue";
 import {ConceptPropertyValue} from "./ConceptPropertyValue";
 import {AgentPropertyValue} from "./AgentPropertyValue";
 import {LiteralPropertyValue} from "./LiteralPropertyValue";
 import {DcmiTypePropertyValue} from "./DcmiTypePropertyValue";
+import {DatasetBackedModelSet} from "DatasetBackedModelSet";
+import {CmsText} from "CmsText";
 
 export const createPropertyValueFromTerm = (
-  modelSet: ModelSet,
+  modelSet: DatasetBackedModelSet,
   term: Term,
   termGraph: Quad_Graph
 ): PropertyValue | null => {
@@ -28,7 +28,7 @@ export const createPropertyValueFromTerm = (
         return null;
       }
       return new TextPropertyValue(
-        new Text({
+        new CmsText({
           modelSet,
           graphNode: termGraph as BlankNode | DefaultGraph | NamedNode, // Blank node must be in the same graph as the current node
           node: term,

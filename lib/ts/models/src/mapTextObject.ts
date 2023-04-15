@@ -1,6 +1,7 @@
 import {Term} from "@rdfjs/types";
 import {Text} from "./Text";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
+import {CmsText} from "CmsText";
 
 /**
  * Map a term in a modelSet to a Text.
@@ -11,7 +12,7 @@ export const mapTextObject = (
 ): Text | string | null => {
   switch (term.termType) {
     case "BlankNode":
-      return new Text({...modelParameters, node: term});
+      return new CmsText({...modelParameters, node: term});
     case "Literal":
       return term.value;
     default:

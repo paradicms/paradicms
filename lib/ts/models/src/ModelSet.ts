@@ -11,7 +11,6 @@ import {WorkEvent} from "./WorkEvent";
 import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
 import {AppConfiguration} from "./AppConfiguration";
-import {Location} from "./Location";
 import {NamedLocation} from "NamedLocation";
 
 export interface ModelSet {

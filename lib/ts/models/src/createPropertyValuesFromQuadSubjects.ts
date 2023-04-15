@@ -1,10 +1,10 @@
-import {ModelSet} from "./ModelSet";
 import {Quad} from "@rdfjs/types";
 import {PropertyValue} from "./PropertyValue";
 import {createPropertyValueFromTerm} from "./createPropertyValueFromTerm";
+import {DatasetBackedModelSet} from "DatasetBackedModelSet";
 
 export const createPropertyValuesFromQuadSubjects = (
-  modelSet: ModelSet,
+  modelSet: DatasetBackedModelSet,
   quads: readonly Quad[]
 ): readonly PropertyValue[] => {
   const propertyValues: PropertyValue[] = [];
