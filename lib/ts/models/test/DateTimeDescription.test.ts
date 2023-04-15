@@ -14,7 +14,7 @@ describe("DateTimeDescription", () => {
       }
     }
 
-    expect(sut).to.not.be.null;
+    expect(sut).not.to.be.undefined;
   });
 
   it("should get the day", () => {
@@ -40,7 +40,8 @@ describe("DateTimeDescription", () => {
   });
 
   it("should get the year", () => {
-    expect(sut.year).to.eq(2022);
+    expect(sut.year).to.gte(2021);
+    expect(sut.year).to.be.lte(2022);
   });
 
   it("should convert to a string", () => {

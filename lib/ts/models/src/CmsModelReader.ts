@@ -1,5 +1,5 @@
 import {getRdfInstanceQuads} from "@paradicms/rdf";
-import {cms, configuration} from "@paradicms/vocabularies";
+import {cms, configuration, rdf} from "@paradicms/vocabularies";
 import {BlankNode, DefaultGraph, NamedNode} from "@rdfjs/types";
 import {AppConfiguration} from "./AppConfiguration";
 import {CmsCollection} from "./CmsCollection";
@@ -148,16 +148,32 @@ export class CmsModelReader extends DatasetModelReader {
       if (quad.subject.termType !== "NamedNode") {
         continue;
       }
-      const workEventClass = workEventClassesByRdfType[quad.object.value];
-      if (workEventClass) {
-        workEvents.push(
-          new workEventClass({
-            dataset: this.dataset,
-            graphNode: quad.graph as BlankNode | DefaultGraph | NamedNode,
-            modelSet: kwds.modelSet,
-            node: quad.subject as BlankNode | NamedNode,
-          })
-        );
+      for (const rdfTypeQuad of this.dataset.match(
+        quad.subject,
+        rdf.type,
+        null,
+        quad.graph
+      )) {
+        if (
+          rdfTypeQuad.object.termType !== "NamedNode" ||
+          rdfTypeQuad.object.equals(cms.Event) ||
+          rdfTypeQuad.object.equals(cms.WorkEvent)
+        ) {
+          continue;
+        }
+        const workEventClass =
+          workEventClassesByRdfType[rdfTypeQuad.object.value];
+        if (workEventClass) {
+          workEvents.push(
+            new workEventClass({
+              dataset: this.dataset,
+              graphNode: quad.graph as BlankNode | DefaultGraph | NamedNode,
+              modelSet: kwds.modelSet,
+              node: quad.subject as BlankNode | NamedNode,
+            })
+          );
+          break;
+        }
       }
     }
     return workEvents;
