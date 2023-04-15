@@ -6,7 +6,6 @@ import {WorkJoinSelector} from "./WorkJoinSelector";
 import {Work} from "./Work";
 import {Image} from "Image";
 import {Agent} from "./Agent";
-import {Text} from "./Text";
 import {AgentJoinSelector} from "./AgentJoinSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {ConceptJoinSelector} from "./ConceptJoinSelector";
@@ -14,7 +13,6 @@ import {Concept} from "./Concept";
 import {WorkCreation} from "./WorkCreation";
 import {WorkEvent} from "./WorkEvent";
 import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
-import {visitWorkEvent} from "./WorkEventVisitor";
 import {WorkOpening} from "./WorkOpening";
 import {WorkClosing} from "./WorkClosing";
 import {ConceptPropertyValue} from "./ConceptPropertyValue";
@@ -122,7 +120,7 @@ export class ModelSubsetter {
   }
 
   private addLocationModelSet(location: Location): void {
-    if (location.node.termType === "BlankNode") {
+    if (typeof (location as any).uri === "undefined") {
       return;
     }
     this.modelSetBuilder.addLocation(location);
@@ -174,7 +172,7 @@ export class ModelSubsetter {
 
       {
         const description = work.description;
-        if (description && description instanceof Text) {
+        if (description && typeof description !== "string") {
           this.addRightsModelSet(joinSelector.agents ?? {}, description);
         }
       }
@@ -254,7 +252,11 @@ export class ModelSubsetter {
   ): void {
     this.modelSetBuilder.addEvent(workEvent);
 
-    if (joinSelector.location && workEvent.location instanceof Location) {
+    if (
+      joinSelector.location &&
+      workEvent.location &&
+      typeof workEvent.location !== "string"
+    ) {
       this.addLocationModelSet(workEvent.location);
     }
     if (joinSelector.work) {
@@ -262,7 +264,7 @@ export class ModelSubsetter {
     }
 
     const self = this;
-    visitWorkEvent(workEvent, {
+    workEvent.accept({
       visitWorkClosing(workClosing: WorkClosing): void {},
       visitWorkCreation(workCreation: WorkCreation): void {
         if (joinSelector.agents) {
