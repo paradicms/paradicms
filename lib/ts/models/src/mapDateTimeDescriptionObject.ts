@@ -1,8 +1,8 @@
 import {Term} from "@rdfjs/types";
-import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {DateTimeDescription} from "./DateTimeDescription";
 import anyDateParser from "any-date-parser";
-import {CmsDateTimeDescription} from "CmsDateTimeDescription";
+import {CmsDateTimeDescription} from "./CmsDateTimeDescription";
+import {DateTimeDescription} from "./DateTimeDescription";
+import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 
 /**
  * Map a term in a modelSet to a PartialDateTime.

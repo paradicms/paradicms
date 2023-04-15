@@ -1,23 +1,23 @@
-import {ModelSet} from "./ModelSet";
-import {CollectionJoinSelector} from "./CollectionJoinSelector";
-import {Collection} from "./Collection";
-import {ModelSetBuilder} from "./ModelSetBuilder";
-import {WorkJoinSelector} from "./WorkJoinSelector";
-import {Work} from "./Work";
-import {Image} from "Image";
 import {Agent} from "./Agent";
 import {AgentJoinSelector} from "./AgentJoinSelector";
-import {selectThumbnail} from "./selectThumbnail";
-import {ConceptJoinSelector} from "./ConceptJoinSelector";
+import {Collection} from "./Collection";
+import {CollectionJoinSelector} from "./CollectionJoinSelector";
 import {Concept} from "./Concept";
+import {ConceptJoinSelector} from "./ConceptJoinSelector";
+import {ConceptPropertyValue} from "./ConceptPropertyValue";
+import {Image} from "./Image";
+import {Location} from "./Location";
+import {ModelSet} from "./ModelSet";
+import {ModelSetBuilder} from "./ModelSetBuilder";
+import {RightsMixin} from "./RightsMixin";
+import {Work} from "./Work";
+import {WorkClosing} from "./WorkClosing";
 import {WorkCreation} from "./WorkCreation";
 import {WorkEvent} from "./WorkEvent";
 import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
+import {WorkJoinSelector} from "./WorkJoinSelector";
 import {WorkOpening} from "./WorkOpening";
-import {WorkClosing} from "./WorkClosing";
-import {ConceptPropertyValue} from "./ConceptPropertyValue";
-import {Location} from "./Location";
-import {RightsMixin} from "./RightsMixin";
+import {selectThumbnail} from "./selectThumbnail";
 
 /**
  * Subset a ModelSet to reduce the amount of data passed between getStaticProps and the component.

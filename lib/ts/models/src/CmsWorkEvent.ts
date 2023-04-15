@@ -1,13 +1,13 @@
-import {Work} from "./Work";
-import {cms} from "@paradicms/vocabularies";
-import {requireNonNull} from "@paradicms/utilities";
-import {WorkLocation} from "./WorkLocation";
-import {WorkLocationRole} from "./WorkLocationRole";
-import {Memoize} from "typescript-memoize";
-import {WorkEvent} from "./WorkEvent";
-import {CmsEvent} from "./CmsEvent";
-import {CmsLocation} from "./CmsLocation";
-import { WorkEventVisitor } from "WorkEventVisitor";
+import { requireNonNull } from "@paradicms/utilities";
+import { cms } from "@paradicms/vocabularies";
+import { Memoize } from "typescript-memoize";
+import { CmsEvent } from "./CmsEvent";
+import { CmsLocation } from "./CmsLocation";
+import { Work } from "./Work";
+import { WorkEvent } from "./WorkEvent";
+import { WorkEventVisitor } from "./WorkEventVisitor";
+import { WorkLocation } from "./WorkLocation";
+import { WorkLocationRole } from "./WorkLocationRole";
 
 export abstract class CmsWorkEvent extends CmsEvent implements WorkEvent {
   abstract accept<T>(visitor: WorkEventVisitor<T>): T;

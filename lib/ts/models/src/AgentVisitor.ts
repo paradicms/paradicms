@@ -1,5 +1,5 @@
-import {Person} from "Person";
-import {Organization} from "Organization";
+import {Organization} from "./Organization";
+import {Person} from "./Person";
 
 /**
  * Visitor pattern for concrete Agent instances.

@@ -1,7 +1,7 @@
 import {Term} from "@rdfjs/types";
-import {Text} from "./Text";
+import {CmsText} from "./CmsText";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {CmsText} from "CmsText";
+import {Text} from "./Text";
 
 /**
  * Map a term in a modelSet to a Text.
