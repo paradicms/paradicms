@@ -98,7 +98,8 @@ const ItemDetailCard: React.FunctionComponent<{
       <Row key={"row" + rows.length.toString()}>
         <Col className="p-0 text-center" xs={12}>
           <p>{item.description.toString()}</p>
-          {item.description instanceof Text &&
+          {item.description &&
+          typeof item.description !== "string" &&
           item.description.requiresAttribution ? (
             <RightsParagraph
               material="Text"

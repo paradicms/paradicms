@@ -1,15 +1,14 @@
-import * as React from "react";
-import {useMemo} from "react";
+import {readModelSetFile} from "@paradicms/next";
+import {fastRdfStringToDataset} from "@paradicms/rdf";
+import {RightsParagraph} from "@paradicms/react-dom-components";
+import fs from "fs";
+import {Hrefs} from "lib/Hrefs";
 import {GetStaticProps} from "next";
 import {useRouter} from "next/router";
-import {Hrefs} from "lib/Hrefs";
-import fs from "fs";
-import {readModelSetFile} from "@paradicms/next";
-import {ModelSet, Text} from "@paradicms/models";
-import {Layout} from "../components/Layout";
+import * as React from "react";
+import {useMemo} from "react";
 import {Col, Container, Row} from "reactstrap";
-import {RightsParagraph} from "@paradicms/react-dom-components";
-import {fastRdfStringToDataset} from "@paradicms/rdf";
+import {Layout} from "../components/Layout";
 
 const readFile = (filePath: string) =>
   fs.promises.readFile(filePath).then(contents => contents.toString());
@@ -61,7 +60,8 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
             }}
           ></Col>
         </Row>
-        {collectionDescription instanceof Text &&
+        {collectionDescription &&
+        typeof collectionDescription !== "string" &&
         collectionDescription.requiresAttribution ? (
           <Row className="mt-2">
             <Col className="text-center" xs={12}>
