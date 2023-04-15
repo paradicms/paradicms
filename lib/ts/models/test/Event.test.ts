@@ -1,13 +1,10 @@
 import {expect} from "chai";
-import {ModelSet} from "../src";
-import {syntheticData} from "@paradicms/test";
-import {Location} from "../src/Location";
-import {Text} from "../src/Text";
 import {Event} from "../src/Event";
+import {Location} from "../src/Location";
+import {testModelSet} from "./testModelSet";
 
 describe("Event", () => {
-  const modelSet = ModelSet.fromDatasetCore(syntheticData);
-  const sut: Event = modelSet.workEvents[0];
+  const sut: Event = testModelSet.workEvents[0];
 
   before(() => {
     expect(sut).is.not.undefined;
@@ -15,14 +12,14 @@ describe("Event", () => {
 
   it("should get the description", () => {
     expect(
-      modelSet.workEvents.some(workEvent => {
+      testModelSet.workEvents.some(workEvent => {
         const description = workEvent.description;
         return description instanceof Text;
       })
     ).to.be.true;
 
     expect(
-      modelSet.workEvents.some(workEvent => workEvent.description === null)
+      testModelSet.workEvents.some(workEvent => workEvent.description === null)
     ).to.be.true;
   });
 

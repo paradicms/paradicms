@@ -1,11 +1,10 @@
 import {expect} from "chai";
-import {ModelSet, WorkEvent} from "../src";
-import {syntheticData} from "@paradicms/test";
+import {WorkEvent} from "../src";
+import {testModelSet} from "./testModelSet";
 
 describe("WorkEvent", () => {
-  const modelSet = ModelSet.fromDatasetCore(syntheticData);
-  const work = modelSet.works[0];
-  const sut: WorkEvent = modelSet.workEventsByWorkUri(work.uri)[0];
+  const work = testModelSet.works[0];
+  const sut: WorkEvent = testModelSet.workEventsByWorkUri(work.uri)[0];
 
   before(() => {
     expect(sut).is.not.undefined;

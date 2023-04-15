@@ -1,18 +1,18 @@
+import {Dataset} from "@rdfjs/types";
+import {NamedLocation} from "NamedLocation";
+import {Agent} from "./Agent";
+import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
+import {Concept} from "./Concept";
 import {Image} from "./Image";
 import {License} from "./License";
-import {RightsStatement} from "./RightsStatement";
-import {Work} from "./Work";
-import {Person} from "./Person";
-import {Concept} from "./Concept";
 import {Organization} from "./Organization";
-import {Agent} from "./Agent";
-import {WorkEvent} from "./WorkEvent";
+import {Person} from "./Person";
 import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
-import {AppConfiguration} from "./AppConfiguration";
-import {NamedLocation} from "NamedLocation";
-import {Dataset} from "@rdfjs/types";
+import {RightsStatement} from "./RightsStatement";
+import {Work} from "./Work";
+import {WorkEvent} from "./WorkEvent";
 
 export interface ModelSet {
   agentByUri(agentUri: string): Agent;
@@ -46,10 +46,11 @@ export interface ModelSet {
   propertyGroupByUriOptional(propertyGroupUri: string): PropertyGroup | null;
   readonly rightsStatements: readonly RightsStatement[];
   rightsStatementByUri(rightsStatementUri: string): RightsStatement;
+  toFastRdfString(): string;
   toRdf(): Dataset;
   workByUri(workUri: string): Work;
   readonly workEvents: readonly WorkEvent[];
-  workEventsByWork(workUri: string): readonly WorkEvent[];
+  workEventsByWorkUri(workUri: string): readonly WorkEvent[];
   workEventByUri(workEventUri: string): WorkEvent;
   readonly works: readonly Work[];
 }

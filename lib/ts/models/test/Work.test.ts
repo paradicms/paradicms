@@ -1,11 +1,10 @@
-import {expect} from "chai";
-import {ModelSet, Text} from "../src";
-import {syntheticData} from "@paradicms/test";
 import {dcterms} from "@paradicms/vocabularies";
+import {expect} from "chai";
+import {Text} from "../src";
+import {testModelSet} from "./testModelSet";
 
 describe("Work", () => {
-  const modelSet = ModelSet.fromDatasetCore(syntheticData);
-  const sut = modelSet.workByUri("http://example.com/collection0/work2");
+  const sut = testModelSet.workByUri("http://example.com/collection0/work2");
 
   it("should get the work's description", () => {
     expect(sut.description).to.be.instanceof(Text);
@@ -27,7 +26,7 @@ describe("Work", () => {
 
   it("should get the work's images", () => {
     expect(sut.images.map(image => image.uri).sort()).to.deep.eq(
-      modelSet.images
+      testModelSet.images
         .filter(image => image.depictsUri === sut.uri)
         .map(image => image.uri)
         .sort()
@@ -36,7 +35,7 @@ describe("Work", () => {
 
   it("should get the work's images", () => {
     expect(sut.originalImages.map(image => image.uri).sort()).to.deep.eq(
-      modelSet.images
+      testModelSet.images
         .filter(
           image =>
             image.depictsUri === sut.uri && image.originalImageUri === null

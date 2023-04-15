@@ -1,22 +1,23 @@
+import {datasetToFastRdfString} from "@paradicms/rdf";
+import {requireDefined} from "@paradicms/utilities";
+import {Dataset} from "rdf-js";
+import {Agent} from "./Agent";
+import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
+import {Concept} from "./Concept";
 import {Image} from "./Image";
 import {License} from "./License";
-import {RightsStatement} from "./RightsStatement";
-import {Work} from "./Work";
-import {Person} from "./Person";
-import {NamedModel} from "./NamedModel";
-import {Concept} from "./Concept";
-import {Organization} from "./Organization";
-import {Agent} from "./Agent";
-import {WorkEvent} from "./WorkEvent";
-import {requireDefined} from "@paradicms/utilities";
-import {Property} from "./Property";
-import {PropertyGroup} from "./PropertyGroup";
-import {AppConfiguration} from "./AppConfiguration";
+import {ModelReader} from "./ModelReader";
 import {ModelSet} from "./ModelSet";
 import {NamedLocation} from "./NamedLocation";
-import {ModelReader} from "./ModelReader";
-import {Dataset} from "rdf-js";
+import {NamedModel} from "./NamedModel";
+import {Organization} from "./Organization";
+import {Person} from "./Person";
+import {Property} from "./Property";
+import {PropertyGroup} from "./PropertyGroup";
+import {RightsStatement} from "./RightsStatement";
+import {Work} from "./Work";
+import {WorkEvent} from "./WorkEvent";
 
 const indexNamedModelsByUri = <NamedModelT extends NamedModel>(
   namedModels: readonly NamedModelT[]
@@ -531,6 +532,10 @@ export class CachingModelSet implements ModelSet {
     return requireDefined(this._rightsStatementsByUriIndex);
   }
 
+  toFastRdfString(): string {
+    return datasetToFastRdfString(this.toRdf());
+  }
+
   toRdf(): Dataset {
     throw new EvalError("use model.toRdf to serialize");
   }
@@ -546,7 +551,7 @@ export class CachingModelSet implements ModelSet {
     return this._workEvents!;
   }
 
-  workEventsByWork(workUri: string): readonly WorkEvent[] {
+  workEventsByWorkUri(workUri: string): readonly WorkEvent[] {
     return this.workEventsByWorkUriIndex[workUri] ?? [];
   }
 

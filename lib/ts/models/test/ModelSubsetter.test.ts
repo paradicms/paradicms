@@ -1,18 +1,17 @@
 import {expect} from "chai";
-import {ModelSubsetter} from "../src/ModelSubsetter";
-import {ThumbnailSelector} from "../src/ThumbnailSelector";
+import invariant from "ts-invariant";
 import {
   License,
   Location,
-  ModelSet,
   RightsStatement,
   WorkClosing,
   WorkOpening,
 } from "../src";
+import {ModelSubsetter} from "../src/ModelSubsetter";
 import {NamedModel} from "../src/NamedModel";
-import {syntheticData} from "@paradicms/test";
+import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {WorkCreation} from "../src/WorkCreation";
-import invariant from "ts-invariant";
+import {testModelSet} from "./testModelSet";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
@@ -35,7 +34,7 @@ const expectModelsDeepEq = <ModelT extends NamedModel>(
   );
 
 describe("ModelSubsetter", () => {
-  const completeModelSet = ModelSet.fromDatasetCore(syntheticData);
+  const completeModelSet = testModelSet;
   const sut = new ModelSubsetter({
     completeModelSet: completeModelSet,
   });

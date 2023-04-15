@@ -1,14 +1,12 @@
 import {expect} from "chai";
-import {ModelSet, WorkCreation} from "../src";
-import {syntheticData} from "@paradicms/test";
 import {DateTimeDescription} from "../src/DateTimeDescription";
+import {testModelSet} from "./testModelSet";
 
 describe("DateTimeDescription", () => {
-  const modelSet = ModelSet.fromDatasetCore(syntheticData);
   let sut: DateTimeDescription;
 
   before(() => {
-    for (const work of modelSet.works) {
+    for (const work of testModelSet.works) {
       for (const workEvent of work.events) {
         if (workEvent instanceof WorkCreation) {
           sut = workEvent.date! as DateTimeDescription;

@@ -1,10 +1,9 @@
 import {expect} from "chai";
-import {ModelSet, Text} from "../src";
-import {syntheticData} from "@paradicms/test";
+import {Text} from "../src";
+import {testModelSet} from "./testModelSet";
 
 describe("Text", () => {
-  const modelSet = ModelSet.fromDatasetCore(syntheticData);
-  const work = modelSet.workByUri("http://example.com/collection0/work2");
+  const work = testModelSet.workByUri("http://example.com/collection0/work2");
   const sut: Text = work.description! as Text;
 
   it("should provide the value", () => {

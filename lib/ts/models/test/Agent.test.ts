@@ -1,11 +1,8 @@
 import {expect} from "chai";
-import {ModelSet} from "../src";
-import {syntheticData} from "@paradicms/test";
+import {testModelSet} from "./testModelSet";
 
 describe("Agent", () => {
-  const sut = ModelSet.fromDatasetCore(syntheticData).personByUri(
-    "http://example.com/person4"
-  );
+  const sut = testModelSet.personByUri("http://example.com/person4");
 
   it("should get the agent's images", () => {
     expect(sut.images).to.not.be.empty;

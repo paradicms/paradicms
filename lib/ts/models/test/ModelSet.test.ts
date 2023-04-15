@@ -1,11 +1,10 @@
-import {ModelSet} from "../src/ModelSet";
+import {expect} from "chai";
 import {License} from "../src/License";
 import {RightsStatement} from "../src/RightsStatement";
-import {expect} from "chai";
-import {syntheticData} from "@paradicms/test";
+import {testModelSet} from "./testModelSet";
 
 describe("ModelSet", () => {
-  const sut = ModelSet.fromDatasetCore(syntheticData);
+  const sut = testModelSet;
 
   it("should exercise all indices", () => {
     const collections = sut.collections;

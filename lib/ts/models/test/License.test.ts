@@ -1,9 +1,8 @@
 import {expect} from "chai";
-import {ModelSet} from "../src";
-import {syntheticData} from "@paradicms/test";
+import {testModelSet} from "./testModelSet";
 
 describe("License", () => {
-  const sut = ModelSet.fromDatasetCore(syntheticData).licenses[0];
+  const sut = testModelSet.licenses[0];
 
   it("should get the license's identifier", () => {
     expect(sut.identifier).to.not.be.empty;

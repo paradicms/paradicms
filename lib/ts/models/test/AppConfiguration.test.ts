@@ -2,11 +2,12 @@ import {expect} from "chai";
 import {anyRdfStringToDataset} from "@paradicms/rdf";
 import {testAppConfigurationTtl} from "./testAppConfigurationTtl";
 import {AppConfiguration, ModelSet} from "../src";
+import {ModelSetFactory} from "../src/ModelSetFactory";
 
 describe("AppConfiguration", () => {
   let jsonLdAppConfiguration: AppConfiguration;
   before(async () => {
-    jsonLdAppConfiguration = ModelSet.fromDataset(
+    jsonLdAppConfiguration = ModelSetFactory.fromDataset(
       await anyRdfStringToDataset(testAppConfigurationTtl, {
         contentType: "text/turtle",
       })
