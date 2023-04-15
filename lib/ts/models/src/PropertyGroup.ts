@@ -1,15 +1,9 @@
 import {NamedModel} from "./NamedModel";
-import {HasComment, HasImages, HasLabel} from "./mixins";
-import {Mixin} from "ts-mixer";
 import {Property} from "./Property";
+import {ImagesMixin} from "./ImagesMixin";
 
-export class PropertyGroup extends Mixin(
-  NamedModel,
-  HasComment,
-  HasImages,
-  HasLabel
-) {
-  get properties(): readonly Property[] {
-    return this.modelSet.propertiesByGroupUri(this.uri);
-  }
+export interface PropertyGroup extends NamedModel, ImagesMixin {
+  readonly comment: string | null;
+  readonly label: string;
+  readonly properties: readonly Property[];
 }

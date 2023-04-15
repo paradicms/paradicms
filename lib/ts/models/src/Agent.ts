@@ -1,15 +1,11 @@
+import {AgentVisitor} from "./AgentVisitor";
+import {ImagesMixin} from "./ImagesMixin";
 import {NamedModel} from "./NamedModel";
-import {Mixin} from "ts-mixer";
-import {HasImages, HasName, HasPage, HasRelations} from "./mixins";
+import {RelationsMixin} from "./RelationsMixin";
 
-export class Agent extends Mixin(
-  NamedModel,
-  HasImages,
-  HasName,
-  HasPage,
-  HasRelations
-) {
-  override toString() {
-    return this.name;
-  }
+export interface Agent extends NamedModel, ImagesMixin, RelationsMixin {
+  accept<T>(visitor: AgentVisitor<T>): T;
+  readonly name: string;
+  readonly page: string | null;
+  toString(): string;
 }

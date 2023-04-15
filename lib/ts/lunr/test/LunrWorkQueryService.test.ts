@@ -1,17 +1,17 @@
-import {expect} from "chai";
-import {LunrWorkQueryService} from "../src/LunrWorkQueryService";
-import {ModelSet, visitWorkEvent, WorkClosing, WorkCreation, WorkOpening} from "@paradicms/models";
-import {vra} from "@paradicms/vocabularies";
-import {syntheticData} from "@paradicms/test";
+import { ModelSetFactory, WorkClosing, WorkCreation, WorkLocation, WorkOpening } from "@paradicms/models";
 import {
   StringPropertyValueFacet,
   StringPropertyValueFilter,
   WorkEventsSortProperty,
   WorksSortProperty
 } from "@paradicms/services";
+import { syntheticData } from "@paradicms/test";
+import { vra } from "@paradicms/vocabularies";
+import { expect } from "chai";
+import { LunrWorkQueryService } from "../src/LunrWorkQueryService";
 
 describe("LunrWorkQueryService", () => {
-  const modelSet = ModelSet.fromDatasetCore(syntheticData);
+  const modelSet = ModelSetFactory.fromDatasetCore(syntheticData);
   const sut = new LunrWorkQueryService({
     modelSet
   });
@@ -93,7 +93,7 @@ describe("LunrWorkQueryService", () => {
     for (const workEvent of result.modelSet.workEvents) {
       expect(workEvent.location).to.not.be.null;
       expect(workEvent.work).to.not.be.null;
-      visitWorkEvent(workEvent, {
+      workEvent.accept({
         visitWorkClosing(workClosing: WorkClosing): void {
         },
         visitWorkCreation(workCreation: WorkCreation): void {
@@ -147,7 +147,7 @@ describe("LunrWorkQueryService", () => {
 
   it("getWorkLocations returns all work locations", async () => {
     // All locations should be represented
-    const expectedWorkLocations = [];
+    const expectedWorkLocations: WorkLocation[] = [];
     for (const work of modelSet.works) {
       if (work.location) {
         expectedWorkLocations.push(work.location);
@@ -244,7 +244,7 @@ describe("LunrWorkQueryService", () => {
       },
       {
         filters: []!,
-        text: "Collection0Work2",
+        text: "CmsCollection0CmsWork2",
       }
     );
 

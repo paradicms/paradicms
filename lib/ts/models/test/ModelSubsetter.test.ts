@@ -1,18 +1,16 @@
 import {expect} from "chai";
-import {ModelSubsetter} from "../src/ModelSubsetter";
-import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {
   License,
   Location,
-  ModelSet,
   RightsStatement,
   WorkClosing,
   WorkOpening,
 } from "../src";
+import {ModelSubsetter} from "../src/ModelSubsetter";
 import {NamedModel} from "../src/NamedModel";
-import {syntheticData} from "@paradicms/test";
+import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {WorkCreation} from "../src/WorkCreation";
-import invariant from "ts-invariant";
+import {testModelSet} from "./testModelSet";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
@@ -35,7 +33,7 @@ const expectModelsDeepEq = <ModelT extends NamedModel>(
   );
 
 describe("ModelSubsetter", () => {
-  const completeModelSet = ModelSet.fromDatasetCore(syntheticData);
+  const completeModelSet = testModelSet;
   const sut = new ModelSubsetter({
     completeModelSet: completeModelSet,
   });
@@ -66,8 +64,9 @@ describe("ModelSubsetter", () => {
       completeModelSet.images.filter(
         image =>
           image.depictsUri === work.uri ||
-          work.rights!.agents.some(
-            agent => agent.thumbnail(THUMBNAIL_SELECTOR)!.uri === image.uri
+          work.agents.some(
+            agent =>
+              agent.agent.thumbnail(THUMBNAIL_SELECTOR)!.uri === image.uri
           )
       )
     );
@@ -77,23 +76,20 @@ describe("ModelSubsetter", () => {
     }
     expectModelsDeepEq(workModelSet.licenses, [
       completeModelSet.licenses.find(
-        license => license.uri === (work.rights!.license! as License).uri
+        license => license.uri === (work.license! as License).uri
       )!,
     ]);
     expectModelsDeepEq(
       workModelSet.agents,
       completeModelSet.agents.filter(modelSetAgent =>
-        work.rights!.agents.some(
-          workAgent => workAgent.uri === modelSetAgent.uri
-        )
+        work.agents.some(workAgent => workAgent.agent.uri === modelSetAgent.uri)
       )
     );
     expect(workModelSet.concepts).to.be.empty;
     expectModelsDeepEq(workModelSet.rightsStatements, [
       completeModelSet.rightsStatements.find(
         rightsStatement =>
-          rightsStatement.uri ===
-          (work.rights!.statement! as RightsStatement).uri
+          rightsStatement.uri === (work.rightsStatement! as RightsStatement).uri
       )!,
     ]);
     expectModelsDeepEq(workModelSet.works, [work]);
@@ -107,34 +103,41 @@ describe("ModelSubsetter", () => {
 
   it("should get a work event subset", () => {
     const work = completeModelSet.works[0];
-    const workClosing: WorkClosing = completeModelSet
-      .workEventsByWork(work.uri)
-      .find(event => event instanceof WorkClosing)! as WorkClosing;
-    const workCreation: WorkCreation = completeModelSet
-      .workEventsByWork(work.uri)
-      .find(event => event instanceof WorkCreation)! as WorkCreation;
-    const workOpening: WorkOpening = completeModelSet
-      .workEventsByWork(work.uri)
-      .find(event => event instanceof WorkOpening)! as WorkOpening;
+    let workClosing: WorkClosing | undefined;
+    let workCreation: WorkCreation | undefined;
+    let workOpening: WorkOpening | undefined;
+    for (const workEvent of completeModelSet.workEventsByWorkUri(work.uri)) {
+      workEvent.accept({
+        visitWorkClosing: function(event: WorkClosing): void {
+          workClosing = event;
+        },
+        visitWorkCreation: function(event: WorkCreation): void {
+          workCreation = event;
+        },
+        visitWorkOpening: function(event: WorkOpening): void {
+          workOpening = event;
+        },
+      });
+    }
 
     const workEventsModelSet = sut
-      .workEventsModelSet([workCreation], {
+      .workEventsModelSet([workCreation!], {
         agents: {},
         location: true,
         work: {},
       })
       .build();
     expectModelsDeepEq(workEventsModelSet.works, [work]);
-    expectModelsDeepEq(workEventsModelSet.agents, workCreation.agents);
+    expectModelsDeepEq(workEventsModelSet.agents, workCreation!.agents);
     expectModelsDeepEq(workEventsModelSet.works[0].events, [
-      workClosing,
-      workCreation,
-      workOpening,
+      workClosing!,
+      workCreation!,
+      workOpening!,
     ]);
     for (const event of workEventsModelSet.works[0].events) {
       expect(event.location).not.to.be.null;
-      invariant(event.location instanceof Location);
-      const location: Location = event.location!;
+      expect(event.location).not.to.be.instanceof(String);
+      const location: Location = event.location! as Location;
       expect(location.lat).not.to.be.undefined;
     }
   });

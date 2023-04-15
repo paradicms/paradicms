@@ -4,14 +4,12 @@ interface ImageDimensions {
 }
 
 export interface ValueFacetValueThumbnail {
+  readonly creators: readonly string[];
   // Can't use class Models since facets are not assumed to be part of the ModelSet.
   readonly exactDimensions: ImageDimensions | null;
+  readonly license: string | null;
   readonly maxDimensions: ImageDimensions | null;
-  rights: {
-    readonly creators: readonly string[];
-    readonly holders: readonly string[];
-    readonly license: string | null;
-    statement: string | null;
-  } | null;
+  readonly rightsHolders: readonly string[];
+  readonly rightsStatement: string | null;
   src: string;
 }

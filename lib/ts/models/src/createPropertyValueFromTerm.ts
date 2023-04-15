@@ -1,36 +1,39 @@
-import {ModelSet} from "./ModelSet";
+import {cms, dcmitype, rdf} from "@paradicms/vocabularies";
 import {
   BlankNode,
+  Dataset,
   DefaultGraph,
   NamedNode,
   Quad_Graph,
   Term,
 } from "@rdfjs/types";
-import {cms, dcmitype, rdf} from "@paradicms/vocabularies";
-import {Text} from "./Text";
+import {AgentPropertyValue} from "./AgentPropertyValue";
+import {ConceptPropertyValue} from "./ConceptPropertyValue";
+import {DcmiTypePropertyValue} from "./DcmiTypePropertyValue";
+import {LiteralPropertyValue} from "./LiteralPropertyValue";
+import {ModelSet} from "./ModelSet";
 import {PropertyValue} from "./PropertyValue";
 import {TextPropertyValue} from "./TextPropertyValue";
-import {ConceptPropertyValue} from "./ConceptPropertyValue";
-import {AgentPropertyValue} from "./AgentPropertyValue";
-import {LiteralPropertyValue} from "./LiteralPropertyValue";
-import {DcmiTypePropertyValue} from "./DcmiTypePropertyValue";
+import {CmsText} from "./cms/CmsText";
 
-export const createPropertyValueFromTerm = (
-  modelSet: ModelSet,
-  term: Term,
-  termGraph: Quad_Graph
-): PropertyValue | null => {
+export const createPropertyValueFromTerm = (kwds: {
+  dataset: Dataset;
+  modelSet: ModelSet;
+  term: Term;
+  termGraph: Quad_Graph;
+}): PropertyValue | null => {
+  const {dataset, modelSet, term, termGraph} = kwds;
+
   switch (term.termType) {
     case "BlankNode": {
-      if (
-        modelSet.dataset.match(term, rdf.type, cms.Text, termGraph).size === 0
-      ) {
+      if (dataset.match(term, rdf.type, cms.Text, termGraph).size === 0) {
         return null;
       }
       return new TextPropertyValue(
-        new Text({
-          modelSet,
+        new CmsText({
+          dataset,
           graphNode: termGraph as BlankNode | DefaultGraph | NamedNode, // Blank node must be in the same graph as the current node
+          modelSet,
           node: term,
         })
       );

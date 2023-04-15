@@ -1,13 +1,10 @@
 import {expect} from "chai";
-import {ModelSet} from "../src";
-import {syntheticData} from "@paradicms/test";
-import {Location} from "../src/Location";
-import {Text} from "../src/Text";
 import {Event} from "../src/Event";
+import {Location} from "../src/Location";
+import {testModelSet} from "./testModelSet";
 
 describe("Event", () => {
-  const modelSet = ModelSet.fromDatasetCore(syntheticData);
-  const sut: Event = modelSet.workEvents[0];
+  const sut: Event = testModelSet.workEvents[0];
 
   before(() => {
     expect(sut).is.not.undefined;
@@ -15,14 +12,14 @@ describe("Event", () => {
 
   it("should get the description", () => {
     expect(
-      modelSet.workEvents.some(workEvent => {
+      testModelSet.workEvents.some(workEvent => {
         const description = workEvent.description;
-        return description instanceof Text;
+        return typeof description !== "string";
       })
     ).to.be.true;
 
     expect(
-      modelSet.workEvents.some(workEvent => workEvent.description === null)
+      testModelSet.workEvents.some(workEvent => workEvent.description === null)
     ).to.be.true;
   });
 
@@ -36,7 +33,8 @@ describe("Event", () => {
 
   it("should get the location", () => {
     const location = sut.location;
-    expect(location).to.be.instanceof(Location);
+    expect(location).not.to.be.null;
+    expect(location).not.to.be.instanceof(String);
     expect((location as Location).lat).to.not.eq(0);
     expect((location as Location).long).to.not.eq(0);
   });

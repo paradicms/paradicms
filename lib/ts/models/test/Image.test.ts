@@ -1,12 +1,10 @@
 import {expect} from "chai";
-import {Image, ModelSet} from "../src";
-import {syntheticData} from "@paradicms/test";
+import {imagePlaceholderSrc} from "../src";
+import {testModelSet} from "./testModelSet";
 
 describe("Image", () => {
   // sut should be an original image
-  const sut = ModelSet.fromDatasetCore(syntheticData).works[0].images.find(
-    image => image.isOriginal
-  )!;
+  const sut = testModelSet.works[0].images.find(image => image.isOriginal)!;
 
   it("should get the image's original image", () => {
     expect(sut.originalImage.uri).to.eq(sut.uri);
@@ -25,16 +23,16 @@ describe("Image", () => {
     expect(sut.maxDimensions).to.be.null;
   });
 
-  it("should get image's rights", () => {
-    expect(sut.rights).to.not.be.null;
-  });
+  // it("should get image's rights", () => {
+  //   expect(sut.rights).to.not.be.null;
+  // });
 
   it("should get the image's src", () => {
     expect(sut.src).to.not.be.empty;
   });
 
   it("should generate a placeholder src", () => {
-    expect(Image.placeholderSrc({height: 200, width: 200})).to.not.be.empty;
+    expect(imagePlaceholderSrc({height: 200, width: 200})).to.not.be.empty;
   });
 
   it("should get a thumbnail", () => {

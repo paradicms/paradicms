@@ -1,17 +1,18 @@
 import {expect} from "chai";
+import {Text} from "../src";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
-import {ModelSet, Text} from "../src";
-import {syntheticData} from "@paradicms/test";
+import {testModelSet} from "./testModelSet";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
 };
 
 describe("Collection", () => {
-  const sut = ModelSet.fromDatasetCore(syntheticData).collections[0];
+  const sut = testModelSet.collections[0];
 
   it("should get the collection's description", () => {
-    expect(sut.description).to.be.instanceof(Text);
+    expect(sut.description).not.to.be.null;
+    expect(sut.description).not.to.be.instanceof(String);
     const description: Text = sut.description as Text;
     expect(description.value).to.not.be.empty;
   });

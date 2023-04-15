@@ -1,25 +1,23 @@
-import {ModelSet} from "./ModelSet";
-import {Rights} from "./Rights";
-import {CollectionJoinSelector} from "./CollectionJoinSelector";
-import {Collection} from "./Collection";
-import {ModelSetBuilder} from "./ModelSetBuilder";
-import {WorkJoinSelector} from "./WorkJoinSelector";
-import {Work} from "./Work";
-import {Image} from "Image";
 import {Agent} from "./Agent";
-import {Text} from "./Text";
 import {AgentJoinSelector} from "./AgentJoinSelector";
-import {selectThumbnail} from "./selectThumbnail";
-import {ConceptJoinSelector} from "./ConceptJoinSelector";
+import {Collection} from "./Collection";
+import {CollectionJoinSelector} from "./CollectionJoinSelector";
 import {Concept} from "./Concept";
+import {ConceptJoinSelector} from "./ConceptJoinSelector";
+import {ConceptPropertyValue} from "./ConceptPropertyValue";
+import {Image} from "./Image";
+import {Location} from "./Location";
+import {ModelSet} from "./ModelSet";
+import {ModelSetBuilder} from "./ModelSetBuilder";
+import {RightsMixin} from "./RightsMixin";
+import {Work} from "./Work";
+import {WorkClosing} from "./WorkClosing";
 import {WorkCreation} from "./WorkCreation";
 import {WorkEvent} from "./WorkEvent";
 import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
-import {visitWorkEvent} from "./WorkEventVisitor";
+import {WorkJoinSelector} from "./WorkJoinSelector";
 import {WorkOpening} from "./WorkOpening";
-import {WorkClosing} from "./WorkClosing";
-import {ConceptPropertyValue} from "./ConceptPropertyValue";
-import {Location} from "./Location";
+import {selectThumbnail} from "./selectThumbnail";
 
 /**
  * Subset a ModelSet to reduce the amount of data passed between getStaticProps and the component.
@@ -118,11 +116,11 @@ export class ModelSubsetter {
     image: Image
   ): void {
     this.modelSetBuilder.addImage(image);
-    this.addRightsModelSet(agentJoinSelector, image.rights);
+    this.addRightsModelSet(agentJoinSelector, image);
   }
 
   private addLocationModelSet(location: Location): void {
-    if (location.node.termType === "BlankNode") {
+    if (typeof (location as any).uri === "undefined") {
       return;
     }
     this.modelSetBuilder.addLocation(location);
@@ -130,14 +128,20 @@ export class ModelSubsetter {
 
   private addRightsModelSet(
     agentJoinSelector: AgentJoinSelector,
-    rights: Rights | null
+    rights: RightsMixin | null
   ): void {
     if (!rights) {
       return;
     }
 
-    for (const agent of rights.agents) {
-      this.addAgentModelSet(agent, agentJoinSelector);
+    for (const agents of [
+      rights.contributorAgents,
+      rights.creatorAgents,
+      rights.rightsHolderAgents,
+    ]) {
+      for (const agent of agents) {
+        this.addAgentModelSet(agent, agentJoinSelector);
+      }
     }
 
     const license = rights.license;
@@ -145,7 +149,7 @@ export class ModelSubsetter {
       this.modelSetBuilder.addLicense(license);
     }
 
-    const rightsStatement = rights.statement;
+    const rightsStatement = rights.rightsStatement;
     if (rightsStatement && typeof rightsStatement !== "string") {
       this.modelSetBuilder.addRightsStatement(rightsStatement);
     }
@@ -164,12 +168,12 @@ export class ModelSubsetter {
       this.modelSetBuilder.addWork(work);
 
       // Work ModelSets always include rights
-      this.addRightsModelSet(joinSelector.agents ?? {}, work.rights);
+      this.addRightsModelSet(joinSelector.agents ?? {}, work);
 
       {
         const description = work.description;
-        if (description && description instanceof Text) {
-          this.addRightsModelSet(joinSelector.agents ?? {}, description.rights);
+        if (description && typeof description !== "string") {
+          this.addRightsModelSet(joinSelector.agents ?? {}, description);
         }
       }
 
@@ -248,7 +252,11 @@ export class ModelSubsetter {
   ): void {
     this.modelSetBuilder.addEvent(workEvent);
 
-    if (joinSelector.location && workEvent.location instanceof Location) {
+    if (
+      joinSelector.location &&
+      workEvent.location &&
+      typeof workEvent.location !== "string"
+    ) {
       this.addLocationModelSet(workEvent.location);
     }
     if (joinSelector.work) {
@@ -256,7 +264,7 @@ export class ModelSubsetter {
     }
 
     const self = this;
-    visitWorkEvent(workEvent, {
+    workEvent.accept({
       visitWorkClosing(workClosing: WorkClosing): void {},
       visitWorkCreation(workCreation: WorkCreation): void {
         if (joinSelector.agents) {

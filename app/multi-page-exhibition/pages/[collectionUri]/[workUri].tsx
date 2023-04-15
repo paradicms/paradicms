@@ -1,25 +1,24 @@
-import * as React from "react";
-import {useCallback, useMemo} from "react";
-import {Layout} from "components/Layout";
-import {ModelSet, ModelSubsetter} from "@paradicms/models";
+import {ModelSet, ModelSetFactory, ModelSubsetter} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
   getAbsoluteImageSrc,
   readModelSetFile,
 } from "@paradicms/next";
-import {GetStaticPaths, GetStaticProps} from "next";
-import {Hrefs} from "lib/Hrefs";
-import fs from "fs";
 import {
   WorkPage as DelegateWorkPage,
   workPageWorkJoinSelector,
 } from "@paradicms/react-dom-components";
-import Hammer from "react-hammerjs";
-import {useRouter} from "next/router";
-import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
-import {fastRdfStringToDataset} from "@paradicms/rdf";
+import {Layout} from "components/Layout";
+import fs from "fs";
+import {Hrefs} from "lib/Hrefs";
+import {GetStaticPaths, GetStaticProps} from "next";
+import dynamic from "next/dynamic";
+import {useRouter} from "next/router";
+import * as React from "react";
+import {useCallback, useMemo} from "react";
+import Hammer from "react-hammerjs";
 
 const WorkLocationsMap = dynamic<{
   readonly collectionUri: string;
@@ -51,7 +50,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   previousWorkUri,
 }) => {
   const modelSet = useMemo<ModelSet>(
-    () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
+    () => ModelSetFactory.fromFastRdfString(modelSetString),
     [modelSetString]
   );
   const collection = modelSet.collectionByUri(collectionUri);

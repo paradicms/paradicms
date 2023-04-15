@@ -9,12 +9,13 @@ import {Person} from "./Person";
 import {Organization} from "./Organization";
 import {Agent} from "./Agent";
 import {Event} from "./Event";
-import {Store} from "@paradicms/rdf";
+import {DataFactory, Store} from "@paradicms/rdf";
 import {AppConfiguration} from "./AppConfiguration";
 import {Model} from "./Model";
 import {Property} from "./Property";
 import {Location} from "./Location";
 import invariant from "ts-invariant";
+import {ModelSetFactory} from "./ModelSetFactory";
 
 export class ModelSetBuilder {
   private appConfiguration: AppConfiguration | null | undefined;
@@ -31,13 +32,15 @@ export class ModelSetBuilder {
   private worksByUri: {[index: string]: Work} | undefined;
 
   addAgent(agent: Agent) {
-    if (agent instanceof Organization) {
-      return this.addOrganization(agent);
-    } else if (agent instanceof Person) {
-      return this.addPerson(agent);
-    } else {
-      throw new EvalError();
-    }
+    const self = this;
+    return agent.accept({
+      visitOrganization(organization: Organization) {
+        return self.addOrganization(organization);
+      },
+      visitPerson(person: Person) {
+        return self.addPerson(person);
+      },
+    });
   }
 
   addAppConfiguration(appConfiguration: AppConfiguration | null) {
@@ -96,14 +99,12 @@ export class ModelSetBuilder {
   }
 
   addLocation(location: Location) {
-    invariant(
-      location.node.termType === "NamedNode",
-      "only named locations can be added"
-    );
+    const locationUri = (location as any).uri;
+    invariant(locationUri, "only named locations can be added");
     if (!this.locationsByUri) {
       this.locationsByUri = {};
     }
-    this.locationsByUri[location.node.value] = location;
+    this.locationsByUri[locationUri] = location;
     return this;
   }
 
@@ -212,14 +213,16 @@ export class ModelSetBuilder {
     const store = new Store();
 
     const addModelToStore = (model: Model) => {
-      // Add all quads that belong to the model's graph
-      for (const quad of model.modelSet.dataset.match(
-        null,
-        null,
-        null,
-        model.graphNode
-      )) {
-        store.add(quad);
+      const modelGraph = DataFactory.blankNode();
+      for (const triple of model.toRdf()) {
+        store.addQuad(
+          DataFactory.quad(
+            triple.subject,
+            triple.predicate,
+            triple.object,
+            modelGraph
+          )
+        );
       }
     };
 
@@ -247,6 +250,6 @@ export class ModelSetBuilder {
         addModelToStore(modelsByUri[modelUri]);
       }
     }
-    return ModelSet.fromDatasetCore(store);
+    return ModelSetFactory.fromDatasetCore(store);
   }
 }

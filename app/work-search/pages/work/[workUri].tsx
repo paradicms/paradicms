@@ -1,24 +1,23 @@
-import * as React from "react";
-import {useMemo} from "react";
-import {Layout} from "components/Layout";
-import {ModelSet, ModelSubsetter} from "@paradicms/models";
+import {ModelSetFactory, ModelSubsetter} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
   getAbsoluteImageSrc,
   readModelSetFile,
 } from "@paradicms/next";
-import {GetStaticPaths, GetStaticProps} from "next";
 import {
-  getNamedModelLinks,
   WorkPage as DelegateWorkPage,
+  getNamedModelLinks,
   workPageWorkJoinSelector,
 } from "@paradicms/react-dom-components";
-import * as fs from "fs";
-import dynamic from "next/dynamic";
 import {WorkLocationSummary} from "@paradicms/services";
-import {fastRdfStringToDataset} from "@paradicms/rdf";
+import {Layout} from "components/Layout";
+import * as fs from "fs";
+import {GetStaticPaths, GetStaticProps} from "next";
+import dynamic from "next/dynamic";
 import {useRouter} from "next/router";
+import * as React from "react";
+import {useMemo} from "react";
 
 const readFile = (filePath: string) =>
   fs.promises.readFile(filePath).then(contents => contents.toString());
@@ -45,7 +44,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
   workUri,
 }) => {
   const modelSet = useMemo(
-    () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
+    () => ModelSetFactory.fromFastRdfString(modelSetString),
     [modelSetString]
   );
   const router = useRouter();

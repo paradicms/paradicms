@@ -1,11 +1,8 @@
 import {expect} from "chai";
-import {ModelSet} from "../src";
-import {syntheticData} from "@paradicms/test";
+import {testModelSet} from "./testModelSet";
 
 describe("Property", () => {
-  const sut = ModelSet.fromDatasetCore(syntheticData).properties.find(
-    property => property.filterable
-  )!;
+  const sut = testModelSet.properties.find(property => property.filterable)!;
 
   it("should get the label", () => {
     expect(sut.label).to.not.be.empty;

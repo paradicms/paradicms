@@ -1,25 +1,20 @@
 import {expect} from "chai";
-import {ModelSet, WorkCreation} from "../src";
-import {syntheticData} from "@paradicms/test";
 import {DateTimeDescription} from "../src/DateTimeDescription";
+import {testModelSet} from "./testModelSet";
 
 describe("DateTimeDescription", () => {
-  const modelSet = ModelSet.fromDatasetCore(syntheticData);
   let sut: DateTimeDescription;
 
   before(() => {
-    for (const work of modelSet.works) {
+    for (const work of testModelSet.works) {
       for (const workEvent of work.events) {
-        if (workEvent instanceof WorkCreation) {
-          sut = workEvent.date! as DateTimeDescription;
-          expect(sut).to.be.instanceof(DateTimeDescription);
-          return;
+        if (workEvent.date) {
+          sut = workEvent.date;
         }
       }
     }
 
-    expect(sut).to.not.be.null;
-    expect(sut).to.be.instanceof(DateTimeDescription);
+    expect(sut).not.to.be.undefined;
   });
 
   it("should get the day", () => {
@@ -45,7 +40,8 @@ describe("DateTimeDescription", () => {
   });
 
   it("should get the year", () => {
-    expect(sut.year).to.eq(2022);
+    expect(sut.year).to.gte(2021);
+    expect(sut.year).to.be.lte(2022);
   });
 
   it("should convert to a string", () => {

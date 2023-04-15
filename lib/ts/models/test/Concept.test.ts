@@ -1,10 +1,8 @@
 import {expect} from "chai";
-import {ModelSet} from "../src";
-import {syntheticData} from "@paradicms/test";
+import {testModelSet} from "./testModelSet";
 
 describe("Concept", () => {
-  const modelSet = ModelSet.fromDatasetCore(syntheticData);
-  const sut = modelSet.concepts[0];
+  const sut = testModelSet.concepts[0];
 
   it("should get the prefLabel", () => {
     expect(sut.prefLabel).to.not.be.empty;

@@ -6890,13 +6890,13 @@ coco:CC00619 a cms:Concept,
     dcterms:description [ a cms:Text ;
             dcterms:creator "RightsStatements.org" ;
             dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
-            rdf:value "In Copyright - Rights-holders Unlocatable or Unidentificable" ] ;
+            rdf:value "In Copyright - Rights-rightsHolders Unlocatable or Unidentificable" ] ;
     dcterms:title "InC-RUU" ;
     cms:collection coco:rights ;
     skos:definition [ a cms:Text ;
             dcterms:creator "RightsStatements.org" ;
             dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
-            rdf:value "In Copyright - Rights-holders Unlocatable or Unidentificable" ] ;
+            rdf:value "In Copyright - Rights-rightsHolders Unlocatable or Unidentificable" ] ;
     skos:prefLabel "InC-RUU" .
 
 coco:CC00620 a cms:Concept,

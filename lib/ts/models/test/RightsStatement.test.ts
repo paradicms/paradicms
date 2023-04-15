@@ -1,9 +1,8 @@
 import {expect} from "chai";
-import {ModelSet} from "../src";
-import {syntheticData} from "@paradicms/test";
+import {testModelSet} from "./testModelSet";
 
 describe("RightsStatement", () => {
-  const sut = ModelSet.fromDatasetCore(syntheticData).rightsStatements[0];
+  const sut = testModelSet.rightsStatements[0];
 
   it("should get the statement's definition", () => {
     expect(sut.definition).to.not.be.empty;

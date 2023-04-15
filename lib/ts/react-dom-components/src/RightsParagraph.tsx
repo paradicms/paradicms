@@ -1,12 +1,12 @@
-import {Rights} from "@paradicms/models";
 import * as React from "react";
 import {useMemo} from "react";
 import {RightsStatementLink} from "./RightsStatementLink";
 import {LicenseLink} from "./LicenseLink";
+import {RightsMixin} from "@paradicms/models";
 
 export const RightsParagraph: React.FunctionComponent<{
   material: string;
-  rights: Rights;
+  rights: RightsMixin;
   style?: React.CSSProperties;
   tag?: React.ElementType;
 }> = ({material, rights, style, tag}) => {
@@ -34,16 +34,16 @@ export const RightsParagraph: React.FunctionComponent<{
       creatorTexts.add(creator.toString());
     }
 
-    if (rights.statement) {
+    if (rights.rightsStatement) {
       pushRightsElement(
         <span>
           <i>Statement</i>:{" "}
-          <RightsStatementLink rightsStatement={rights.statement} />
+          <RightsStatementLink rightsStatement={rights.rightsStatement} />
         </span>
       );
     }
 
-    for (const holder of rights.holders) {
+    for (const holder of rights.rightsHolders) {
       if (creatorTexts.has(holder.toString())) {
         continue;
       }

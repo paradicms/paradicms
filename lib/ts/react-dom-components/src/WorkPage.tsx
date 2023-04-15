@@ -1,4 +1,7 @@
-import {Image, Rights, Text, Work, WorkAgent} from "@paradicms/models";
+import {Image, RightsMixin, Text, Work, WorkAgent} from "@paradicms/models";
+import {WorkLocationSummary, summarizeWorkLocation} from "@paradicms/services";
+import * as React from "react";
+import {useMemo, useState} from "react";
 import {
   Card,
   CardBody,
@@ -12,13 +15,10 @@ import {
   TabContent,
   TabPane,
 } from "reactstrap";
-import * as React from "react";
-import {useMemo, useState} from "react";
-import {RightsParagraph} from "./RightsParagraph";
-import {summarizeWorkLocation, WorkLocationSummary} from "@paradicms/services";
-import {WorkEventsTimeline} from "./WorkEventsTimeline";
 import {ImagesCarousel} from "./ImagesCarousel";
+import {RightsParagraph} from "./RightsParagraph";
 import {WorkAgentsCarousel} from "./WorkAgentsCarousel";
+import {WorkEventsTimeline} from "./WorkEventsTimeline";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "x-small",
@@ -37,17 +37,11 @@ export const WorkPage: React.FunctionComponent<{
     [work]
   );
 
-  const workDescriptionRights: Rights | null = useMemo(() => {
-    if (
-      workDescription &&
-      workDescription instanceof Text &&
-      workDescription.rights
-    ) {
-      return workDescription.rights;
-    } else if (work.rights) {
-      return work.rights;
+  const workDescriptionRights: RightsMixin | null = useMemo(() => {
+    if (workDescription && typeof workDescription !== "string") {
+      return workDescription;
     } else {
-      return null;
+      return work;
     }
   }, [work, workDescription]);
 
@@ -84,11 +78,11 @@ export const WorkPage: React.FunctionComponent<{
               onShowImage={setCurrentWorkImagesCarouselImage}
             />
           </CardBody>
-          {workImagesCarouselImage?.rights?.requiresAttribution ? (
+          {workImagesCarouselImage?.requiresAttribution ? (
             <CardFooter className="text-center">
               <RightsParagraph
                 material="Image"
-                rights={workImagesCarouselImage.rights}
+                rights={workImagesCarouselImage}
                 style={RIGHTS_STYLE}
               />
             </CardFooter>

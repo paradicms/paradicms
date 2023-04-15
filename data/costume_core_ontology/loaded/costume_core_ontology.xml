@@ -4278,7 +4278,7 @@ When additions are made to the catalog record, additional names and dates should
     <rdfs:label xml:lang="en">InC-RUU</rdfs:label>
     <dcterms:identifier>CC00619</dcterms:identifier>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <dcterms:description xml:lang="en">In Copyright - Rights-holders Unlocatable or Unidentificable</dcterms:description>
+    <dcterms:description xml:lang="en">In Copyright - Rights-rightsHolders Unlocatable or Unidentificable</dcterms:description>
     <dcterms:description rdf:nodeID="N5710b278b7ce45c0843a30e8ceda9253"/>
   </rdf:Description>
   <rdf:Description rdf:nodeID="Na389665397184bb2833033e9188e7825">
@@ -8683,7 +8683,7 @@ Include MLA style parenthetical citations to references listed in References fie
     <dcterms:description rdf:nodeID="N3ff5d3b7819046b896344a2e19df6007"/>
   </rdf:Description>
   <rdf:Description rdf:nodeID="N5710b278b7ce45c0843a30e8ceda9253">
-    <rdfs:label xml:lang="en">In Copyright - Rights-holders Unlocatable or Unidentificable</rdfs:label>
+    <rdfs:label xml:lang="en">In Copyright - Rights-rightsHolders Unlocatable or Unidentificable</rdfs:label>
     <dcterms:creator>RightsStatements.org</dcterms:creator>
     <dcterms:source rdf:resource="https://rightsstatements.org/page/1.0/"/>
     <dcterms:license rdf:resource="https://creativecommons.org/publicdomain/zero/1.0/"/>

@@ -1,19 +1,7 @@
-import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
 import {ModelSet} from "./ModelSet";
-import {ModelParameters} from "./ModelParameters";
-import {Resource} from "@paradicms/rdf";
+import {ModelToRdfTriple} from "./ModelToRdfTriple";
 
-export class Model extends Resource {
+export interface Model {
   readonly modelSet: ModelSet;
-  readonly graphNode: BlankNode | DefaultGraph | NamedNode;
-
-  constructor(kwds: ModelParameters) {
-    super({node: kwds.node});
-    this.modelSet = kwds.modelSet;
-    this.graphNode = kwds.graphNode;
-  }
-
-  get dataset(): Dataset {
-    return this.modelSet.dataset;
-  }
+  toRdf(): readonly ModelToRdfTriple[];
 }

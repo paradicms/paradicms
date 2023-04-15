@@ -1,14 +1,21 @@
 import {expect} from "chai";
-import {ModelSet} from "../src";
-import {syntheticData} from "@paradicms/test";
+import {WorkClosing, WorkOpening} from "../src";
 import {WorkCreation} from "../src/WorkCreation";
+import {testModelSet} from "./testModelSet";
 
 describe("WorkCreation", () => {
-  const modelSet = ModelSet.fromDatasetCore(syntheticData);
-  const work = modelSet.works[0];
-  const sut: WorkCreation = modelSet
-    .workEventsByWork(work.uri)
-    .find(event => event instanceof WorkCreation)! as WorkCreation;
+  const work = testModelSet.works[0];
+
+  let sut: WorkCreation;
+  testModelSet.workEventsByWorkUri(work.uri).forEach(workEvent =>
+    workEvent.accept({
+      visitWorkClosing: function(workClosing: WorkClosing): void {},
+      visitWorkCreation: function(workCreation: WorkCreation): void {
+        sut = workCreation;
+      },
+      visitWorkOpening: function(workOpening: WorkOpening): void {},
+    })
+  );
 
   before(() => {
     expect(sut).is.not.undefined;
@@ -16,7 +23,7 @@ describe("WorkCreation", () => {
 
   it("should expose the creator", () => {
     const creator = sut.creatorAgents[0];
-    modelSet.agentByUri(creator.uri);
+    testModelSet.agentByUri(creator.uri);
     expect(work.agents.some(agent => agent.agent.uri === creator.uri)).to.be
       .true;
   });
