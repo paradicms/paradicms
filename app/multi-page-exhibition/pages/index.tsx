@@ -1,5 +1,5 @@
+import {ModelSetFactory} from "@paradicms/models";
 import {readModelSetFile} from "@paradicms/next";
-import {fastRdfStringToDataset} from "@paradicms/rdf";
 import {RightsParagraph} from "@paradicms/react-dom-components";
 import fs from "fs";
 import {Hrefs} from "lib/Hrefs";
@@ -26,7 +26,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
 }) => {
   const router = useRouter();
   const modelSet = useMemo(
-    () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
+    () => ModelSetFactory.fromFastRdfString(modelSetString),
     [modelSetString]
   );
   const collection = modelSet.collectionByUri(collectionUri);

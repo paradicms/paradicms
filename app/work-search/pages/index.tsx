@@ -1,23 +1,22 @@
-import * as React from "react";
-import {useMemo} from "react";
-import {ModelSet, ModelSubsetter} from "@paradicms/models";
-import {Layout} from "components/Layout";
-import {GetStaticProps} from "next";
+import {LunrWorkQueryService} from "@paradicms/lunr";
+import {ModelSet, ModelSetFactory, ModelSubsetter} from "@paradicms/models";
+import {getAbsoluteImageSrc, readModelSetFile} from "@paradicms/next";
 import {
   WorkSearchPage,
   workSearchWorkJoinSelector,
 } from "@paradicms/react-dom-components";
-import {Hrefs} from "lib/Hrefs";
-import Link from "next/link";
-import {getAbsoluteImageSrc, readModelSetFile} from "@paradicms/next";
-import fs from "fs";
-import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
-import {LunrWorkQueryService} from "@paradicms/lunr";
 import {useWorkSearchQueryParams} from "@paradicms/react-dom-hooks";
+import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
+import {Layout} from "components/Layout";
+import fs from "fs";
+import {Hrefs} from "lib/Hrefs";
+import {GetStaticProps} from "next";
 import dynamic from "next/dynamic";
-import {fastRdfStringToDataset} from "@paradicms/rdf";
-import {getDefaultWorksQueryFilters} from "../lib/getDefaultWorksQueryFilters";
+import Link from "next/link";
 import {useRouter} from "next/router";
+import * as React from "react";
+import {useMemo} from "react";
+import {getDefaultWorksQueryFilters} from "../lib/getDefaultWorksQueryFilters";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -42,7 +41,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   modelSetString,
 }) => {
   const modelSet = useMemo<ModelSet>(
-    () => ModelSet.fromDataset(fastRdfStringToDataset(modelSetString)),
+    () => ModelSetFactory.fromFastRdfString(modelSetString),
     [modelSetString]
   );
   const configuration = modelSet.appConfiguration;

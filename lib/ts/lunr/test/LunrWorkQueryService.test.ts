@@ -1,17 +1,17 @@
-import {expect} from "chai";
-import {LunrWorkQueryService} from "../src/LunrWorkQueryService";
-import {ModelSet, visitWorkEvent, WorkClosing, WorkCreation, WorkOpening} from "@paradicms/models";
-import {vra} from "@paradicms/vocabularies";
-import {syntheticData} from "@paradicms/test";
+import { ModelSetFactory, visitWorkEvent, WorkClosing, WorkCreation, WorkOpening } from "@paradicms/models";
 import {
   StringPropertyValueFacet,
   StringPropertyValueFilter,
   WorkEventsSortProperty,
   WorksSortProperty
 } from "@paradicms/services";
+import { syntheticData } from "@paradicms/test";
+import { vra } from "@paradicms/vocabularies";
+import { expect } from "chai";
+import { LunrWorkQueryService } from "../src/LunrWorkQueryService";
 
 describe("LunrWorkQueryService", () => {
-  const modelSet = ModelSet.fromDatasetCore(syntheticData);
+  const modelSet = ModelSetFactory.fromDatasetCore(syntheticData);
   const sut = new LunrWorkQueryService({
     modelSet
   });

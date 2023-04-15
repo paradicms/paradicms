@@ -1,30 +1,30 @@
+import {ModelSet, ModelSetFactory} from "@paradicms/models";
+import {anyRdfStringToDataset} from "@paradicms/rdf";
 import {useEffect, useState} from "react";
-import {WorksheetDefinition} from "~/models/WorksheetDefinition";
-import {Exception} from "~/Exception";
-import {loadGapiClient} from "~/loadGapiClient";
-import {FatalErrorModal} from "~/components/FatalErrorModal";
-import {WorksheetDefinitionContext} from "~/contexts/WorksheetDefinitionContext";
+import {useLocation} from "react-router";
 import {
-  BrowserRouter as Router,
   Route,
+  BrowserRouter as Router,
   Routes,
   useNavigate,
 } from "react-router-dom";
-import {Hrefs} from "~/Hrefs";
-import {LoginPage} from "~/pages/LoginPage";
-import {LoginCallbackPage} from "~/pages/LoginCallbackPage";
-import {LogoutPage} from "~/pages/LogoutPage";
-import {LogoutCallbackPage} from "~/pages/LogoutCallbackPage";
-import {WorksheetStartPage} from "~/pages/WorksheetStartPage";
-import {WorksheetEditPage} from "~/pages/WorksheetEditPage";
-import {WorksheetFeatureSetEditPage} from "~/pages/WorksheetFeatureSetEditPage";
-import {WorksheetFeatureEditPage} from "~/pages/WorksheetFeatureEditPage";
-import {WorksheetReviewPage} from "~/pages/WorksheetReviewPage";
-import {UserSettingsPage} from "~/pages/UserSettingsPage";
-import {useLocation} from "react-router";
 import {QueryParamProvider} from "use-query-params";
-import {anyRdfStringToDataset} from "@paradicms/rdf";
-import {ModelSet} from "@paradicms/models";
+import {Exception} from "~/Exception";
+import {Hrefs} from "~/Hrefs";
+import {FatalErrorModal} from "~/components/FatalErrorModal";
+import {WorksheetDefinitionContext} from "~/contexts/WorksheetDefinitionContext";
+import {loadGapiClient} from "~/loadGapiClient";
+import {WorksheetDefinition} from "~/models/WorksheetDefinition";
+import {LoginCallbackPage} from "~/pages/LoginCallbackPage";
+import {LoginPage} from "~/pages/LoginPage";
+import {LogoutCallbackPage} from "~/pages/LogoutCallbackPage";
+import {LogoutPage} from "~/pages/LogoutPage";
+import {UserSettingsPage} from "~/pages/UserSettingsPage";
+import {WorksheetEditPage} from "~/pages/WorksheetEditPage";
+import {WorksheetFeatureEditPage} from "~/pages/WorksheetFeatureEditPage";
+import {WorksheetFeatureSetEditPage} from "~/pages/WorksheetFeatureSetEditPage";
+import {WorksheetReviewPage} from "~/pages/WorksheetReviewPage";
+import {WorksheetStartPage} from "~/pages/WorksheetStartPage";
 import React = require("react");
 
 const RouteAdapter: React.FunctionComponent<{children?: any}> = ({
@@ -70,7 +70,9 @@ export const Application: React.FunctionComponent = () => {
         }).then(responseDataset => {
           let worksheetDefinitionModelSet: ModelSet;
           try {
-            worksheetDefinitionModelSet = ModelSet.fromDataset(responseDataset);
+            worksheetDefinitionModelSet = ModelSetFactory.fromDataset(
+              responseDataset
+            );
           } catch (e) {
             setError(e);
             return;

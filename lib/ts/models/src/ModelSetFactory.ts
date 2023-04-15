@@ -14,7 +14,7 @@ class DatasetBackedModelSet extends CachingModelSet {
 }
 
 export class ModelSetFactory {
-  static async fromFastRdfString(fastRdfString: string) {
+  static fromFastRdfString(fastRdfString: string) {
     return ModelSetFactory.fromDataset(fastRdfStringToDataset(fastRdfString));
   }
 
