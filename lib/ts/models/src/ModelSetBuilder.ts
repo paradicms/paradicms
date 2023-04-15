@@ -15,7 +15,7 @@ import {Model} from "./Model";
 import {Property} from "./Property";
 import {Location} from "./Location";
 import invariant from "ts-invariant";
-import {DatasetBackedModelSet} from "./DatasetBackedModelSet";
+import {ModelSetFactory} from "./ModelSetFactory";
 
 export class ModelSetBuilder {
   private appConfiguration: AppConfiguration | null | undefined;
@@ -250,6 +250,6 @@ export class ModelSetBuilder {
         addModelToStore(modelsByUri[modelUri]);
       }
     }
-    return DatasetBackedModelSet.fromDatasetCore(store);
+    return ModelSetFactory.fromDatasetCore(store);
   }
 }
