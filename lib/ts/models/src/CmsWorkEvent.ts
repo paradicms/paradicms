@@ -2,7 +2,6 @@ import { requireNonNull } from "@paradicms/utilities";
 import { cms } from "@paradicms/vocabularies";
 import { Memoize } from "typescript-memoize";
 import { CmsEvent } from "./CmsEvent";
-import { CmsLocation } from "./CmsLocation";
 import { Work } from "./Work";
 import { WorkEvent } from "./WorkEvent";
 import { WorkEventVisitor } from "./WorkEventVisitor";
@@ -18,7 +17,7 @@ export abstract class CmsWorkEvent extends CmsEvent implements WorkEvent {
 
   @Memoize()
   get workLocation(): WorkLocation | null {
-    if (!(this.location instanceof CmsLocation)) {
+    if (!this.location || typeof(this.location) === "string") {
       return null;
     }
 

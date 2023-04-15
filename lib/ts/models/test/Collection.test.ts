@@ -1,6 +1,6 @@
 import {expect} from "chai";
-import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {Text} from "../src";
+import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {testModelSet} from "./testModelSet";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
@@ -11,7 +11,8 @@ describe("Collection", () => {
   const sut = testModelSet.collections[0];
 
   it("should get the collection's description", () => {
-    expect(sut.description).to.be.instanceof(Text);
+    expect(sut.description).not.to.be.null;
+    expect(sut.description).not.to.be.instanceof(String);
     const description: Text = sut.description as Text;
     expect(description.value).to.not.be.empty;
   });

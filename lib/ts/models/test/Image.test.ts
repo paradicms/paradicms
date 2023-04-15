@@ -1,4 +1,5 @@
 import {expect} from "chai";
+import {imagePlaceholderSrc} from "../src";
 import {testModelSet} from "./testModelSet";
 
 describe("Image", () => {
@@ -31,7 +32,7 @@ describe("Image", () => {
   });
 
   it("should generate a placeholder src", () => {
-    expect(Image.placeholderSrc({height: 200, width: 200})).to.not.be.empty;
+    expect(imagePlaceholderSrc({height: 200, width: 200})).to.not.be.empty;
   });
 
   it("should get a thumbnail", () => {

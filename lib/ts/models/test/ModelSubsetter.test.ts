@@ -1,5 +1,4 @@
 import {expect} from "chai";
-import invariant from "ts-invariant";
 import {
   License,
   Location,
@@ -104,34 +103,41 @@ describe("ModelSubsetter", () => {
 
   it("should get a work event subset", () => {
     const work = completeModelSet.works[0];
-    const workClosing: WorkClosing = completeModelSet
-      .workEventsByWorkUri(work.uri)
-      .find(event => event instanceof WorkClosing)! as WorkClosing;
-    const workCreation: WorkCreation = completeModelSet
-      .workEventsByWorkUri(work.uri)
-      .find(event => event instanceof WorkCreation)! as WorkCreation;
-    const workOpening: WorkOpening = completeModelSet
-      .workEventsByWorkUri(work.uri)
-      .find(event => event instanceof WorkOpening)! as WorkOpening;
+    let workClosing: WorkClosing | undefined;
+    let workCreation: WorkCreation | undefined;
+    let workOpening: WorkOpening | undefined;
+    for (const workEvent of completeModelSet.workEventsByWorkUri(work.uri)) {
+      workEvent.accept({
+        visitWorkClosing: function(event: WorkClosing): void {
+          workClosing = event;
+        },
+        visitWorkCreation: function(event: WorkCreation): void {
+          workCreation = event;
+        },
+        visitWorkOpening: function(event: WorkOpening): void {
+          workOpening = event;
+        },
+      });
+    }
 
     const workEventsModelSet = sut
-      .workEventsModelSet([workCreation], {
+      .workEventsModelSet([workCreation!], {
         agents: {},
         location: true,
         work: {},
       })
       .build();
     expectModelsDeepEq(workEventsModelSet.works, [work]);
-    expectModelsDeepEq(workEventsModelSet.agents, workCreation.agents);
+    expectModelsDeepEq(workEventsModelSet.agents, workCreation!.agents);
     expectModelsDeepEq(workEventsModelSet.works[0].events, [
-      workClosing,
-      workCreation,
-      workOpening,
+      workClosing!,
+      workCreation!,
+      workOpening!,
     ]);
     for (const event of workEventsModelSet.works[0].events) {
       expect(event.location).not.to.be.null;
-      invariant(event.location instanceof Location);
-      const location: Location = event.location!;
+      expect(event.location).not.to.be.instanceof(String);
+      const location: Location = event.location! as Location;
       expect(location.lat).not.to.be.undefined;
     }
   });

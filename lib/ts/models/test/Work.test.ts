@@ -7,7 +7,8 @@ describe("Work", () => {
   const sut = testModelSet.workByUri("http://example.com/collection0/work2");
 
   it("should get the work's description", () => {
-    expect(sut.description).to.be.instanceof(Text);
+    expect(sut.description).not.to.be.null;
+    expect(sut.description).not.to.be.instanceof(String);
     const description: Text = sut.description as Text;
     expect(description.value).to.not.be.empty;
   });

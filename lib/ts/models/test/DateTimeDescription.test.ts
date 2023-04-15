@@ -8,16 +8,13 @@ describe("DateTimeDescription", () => {
   before(() => {
     for (const work of testModelSet.works) {
       for (const workEvent of work.events) {
-        if (workEvent instanceof WorkCreation) {
-          sut = workEvent.date! as DateTimeDescription;
-          expect(sut).to.be.instanceof(DateTimeDescription);
-          return;
+        if (workEvent.date) {
+          sut = workEvent.date;
         }
       }
     }
 
     expect(sut).to.not.be.null;
-    expect(sut).to.be.instanceof(DateTimeDescription);
   });
 
   it("should get the day", () => {

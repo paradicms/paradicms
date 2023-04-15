@@ -1,12 +1,21 @@
 import {expect} from "chai";
+import {WorkClosing, WorkOpening} from "../src";
 import {WorkCreation} from "../src/WorkCreation";
 import {testModelSet} from "./testModelSet";
 
 describe("WorkCreation", () => {
   const work = testModelSet.works[0];
-  const sut: WorkCreation = testModelSet
-    .workEventsByWorkUri(work.uri)
-    .find(event => event instanceof WorkCreation)! as WorkCreation;
+
+  let sut: WorkCreation;
+  testModelSet.workEventsByWorkUri(work.uri).forEach(workEvent =>
+    workEvent.accept({
+      visitWorkClosing: function(workClosing: WorkClosing): void {},
+      visitWorkCreation: function(workCreation: WorkCreation): void {
+        sut = workCreation;
+      },
+      visitWorkOpening: function(workOpening: WorkOpening): void {},
+    })
+  );
 
   before(() => {
     expect(sut).is.not.undefined;

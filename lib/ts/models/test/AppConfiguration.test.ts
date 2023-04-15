@@ -1,8 +1,8 @@
-import {expect} from "chai";
 import {anyRdfStringToDataset} from "@paradicms/rdf";
-import {testAppConfigurationTtl} from "./testAppConfigurationTtl";
-import {AppConfiguration, ModelSet} from "../src";
+import {expect} from "chai";
+import {AppConfiguration} from "../src";
 import {ModelSetFactory} from "../src/ModelSetFactory";
+import {testAppConfigurationTtl} from "./testAppConfigurationTtl";
 
 describe("AppConfiguration", () => {
   let jsonLdAppConfiguration: AppConfiguration;
@@ -17,7 +17,7 @@ describe("AppConfiguration", () => {
 
   it("from should return a configuration from a .ttl", async () => {
     expect(
-      ModelSet.fromDataset(
+      ModelSetFactory.fromDataset(
         await anyRdfStringToDataset(testAppConfigurationTtl, {
           contentType: "text/turtle",
         })
@@ -45,7 +45,7 @@ describe("AppConfiguration", () => {
       title: "Test title",
     };
 
-    jsonLdAppConfiguration = ModelSet.fromDataset(
+    jsonLdAppConfiguration = ModelSetFactory.fromDataset(
       await anyRdfStringToDataset(JSON.stringify(json), {
         contentType: "application/ld+json",
       })

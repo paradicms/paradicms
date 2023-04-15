@@ -4,11 +4,9 @@ import { Mixin } from "ts-mixer";
 import { Memoize } from "typescript-memoize";
 import { CmsDescriptionMixin } from "./CmsDescriptionMixin";
 import { CmsImagesMixin } from "./CmsImagesMixin";
-import { CmsLocation } from "./CmsLocation";
 import { CmsPageMixin } from "./CmsPageMixin";
 import { CmsRelationsMixin } from "./CmsRelationsMixin";
 import { CmsRightsMixin } from "./CmsRightsMixin";
-import { CmsText } from "./CmsText";
 import { CmsTitleMixin } from "./CmsTitleMixin";
 import { Collection } from "./Collection";
 import { PropertyValue } from "./PropertyValue";
@@ -91,7 +89,7 @@ export class CmsWork extends Mixin(
 
     result.push(...getRightsWorkAgents(this, "Work"));
 
-    if (this.description && this.description instanceof CmsText) {
+    if (this.description && typeof this.description !== "string") {
       result.push(...getRightsWorkAgents(this.description, "Text"));
     }
 
@@ -108,8 +106,7 @@ export class CmsWork extends Mixin(
     result.push(...getRightsAgentUris(this));
 
     if (
-      this.description &&
-      this.description instanceof CmsText
+      this.description && typeof this.description !== "string"
     ) {
       result.push(...getRightsAgentUris(this.description));
     }
@@ -181,7 +178,7 @@ export class CmsWork extends Mixin(
   @Memoize()
   get location(): WorkLocation | null {
     const location = this.findAndMapObject(dcterms.spatial, term => mapLocationObject(this, term));
-    if (location && location instanceof CmsLocation) {
+    if (location && typeof location !== "string") {
       return {
         label: this.title,
         location,

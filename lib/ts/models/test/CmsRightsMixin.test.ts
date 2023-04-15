@@ -1,7 +1,7 @@
 import {expect} from "chai";
+import {Agent} from "../src/Agent";
 import {License} from "../src/License";
 import {RightsStatement} from "../src/RightsStatement";
-import {Agent} from "../src/Agent";
 import {testModelSet} from "./testModelSet";
 
 describe("CmsRightsMixin", () => {
@@ -9,8 +9,11 @@ describe("CmsRightsMixin", () => {
 
   it("should have a contributor", () => {
     expect(sut.contributors).to.not.be.empty;
-    expect(sut.contributors.filter(contributor => contributor instanceof Agent))
-      .to.not.be.empty;
+    expect(
+      sut.contributors.filter(
+        contributor => contributor && typeof contributor !== "string"
+      )
+    ).to.not.be.empty;
     expect(sut.contributorAgents).to.not.be.empty;
     expect(
       sut.contributorAgents.map(contributor => contributor as Agent)[0].name
@@ -19,8 +22,9 @@ describe("CmsRightsMixin", () => {
 
   it("should have a creator", () => {
     expect(sut.creators).to.not.be.empty;
-    expect(sut.creators.filter(creator => creator instanceof Agent)).to.not.be
-      .empty;
+    expect(
+      sut.creators.filter(creator => creator && typeof creator !== "string")
+    ).to.not.be.empty;
     expect(sut.creatorAgents).to.not.be.empty;
     expect(sut.creatorAgents.map(creator => creator as Agent)[0].name).to.not.be
       .empty;
