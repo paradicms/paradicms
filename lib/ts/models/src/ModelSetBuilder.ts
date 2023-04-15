@@ -31,13 +31,15 @@ export class ModelSetBuilder {
   private worksByUri: {[index: string]: Work} | undefined;
 
   addAgent(agent: Agent) {
-    if (agent instanceof Organization) {
-      return this.addOrganization(agent);
-    } else if (agent instanceof Person) {
-      return this.addPerson(agent);
-    } else {
-      throw new EvalError();
-    }
+    const self = this;
+    return agent.accept({
+      visitOrganization(organization: Organization) {
+        return self.addOrganization(organization);
+      },
+      visitPerson(person: Person) {
+        return self.addPerson(person);
+      },
+    });
   }
 
   addAppConfiguration(appConfiguration: AppConfiguration | null) {
@@ -96,14 +98,12 @@ export class ModelSetBuilder {
   }
 
   addLocation(location: Location) {
-    invariant(
-      location.node.termType === "NamedNode",
-      "only named locations can be added"
-    );
+    const locationUri = (location as any).uri;
+    invariant(locationUri, "only named locations can be added");
     if (!this.locationsByUri) {
       this.locationsByUri = {};
     }
-    this.locationsByUri[location.node.value] = location;
+    this.locationsByUri[locationUri] = location;
     return this;
   }
 
