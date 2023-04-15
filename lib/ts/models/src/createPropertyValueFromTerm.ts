@@ -1,20 +1,20 @@
+import {cms, dcmitype, rdf} from "@paradicms/vocabularies";
 import {
   BlankNode,
+  Dataset,
   DefaultGraph,
   NamedNode,
   Quad_Graph,
   Term,
 } from "@rdfjs/types";
-import {cms, dcmitype, rdf} from "@paradicms/vocabularies";
+import {AgentPropertyValue} from "./AgentPropertyValue";
+import {ConceptPropertyValue} from "./ConceptPropertyValue";
+import {DcmiTypePropertyValue} from "./DcmiTypePropertyValue";
+import {LiteralPropertyValue} from "./LiteralPropertyValue";
+import {ModelSet} from "./ModelSet";
 import {PropertyValue} from "./PropertyValue";
 import {TextPropertyValue} from "./TextPropertyValue";
-import {ConceptPropertyValue} from "./ConceptPropertyValue";
-import {AgentPropertyValue} from "./AgentPropertyValue";
-import {LiteralPropertyValue} from "./LiteralPropertyValue";
-import {DcmiTypePropertyValue} from "./DcmiTypePropertyValue";
-import {CmsText} from "./CmsText";
-import {ModelSet} from "./ModelSet";
-import {Dataset} from "@rdfjs/types";
+import {CmsText} from "./cms/CmsText";
 
 export const createPropertyValueFromTerm = (kwds: {
   dataset: Dataset;

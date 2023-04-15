@@ -1,7 +1,7 @@
 import { datasetCoreToDataset, fastRdfStringToDataset } from "@paradicms/rdf";
 import { Dataset, DatasetCore } from "@rdfjs/types";
 import { CachingModelSet } from "./CachingModelSet";
-import { CmsModelReader } from "./CmsModelReader";
+import { CmsModelReader } from "./cms/CmsModelReader";
 
 class DatasetBackedModelSet extends CachingModelSet {
   constructor(private readonly dataset: Dataset) {

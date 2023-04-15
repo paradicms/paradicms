@@ -61,6 +61,6 @@ export const readModelSetFile = async (
     }
   }
 
-  _modelSet = ModelSet.fromDatasetCore(combinedStore);
+  _modelSet = ModelSetFactory.fromDatasetCore(combinedStore);
   return _modelSet!;
 };

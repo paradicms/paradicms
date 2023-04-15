@@ -1,7 +1,7 @@
 import {Term} from "@rdfjs/types";
-import {CmsLocation} from "./CmsLocation";
 import {Location} from "./Location";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
+import {CmsLocation} from "./cms/CmsLocation";
 
 /**
  * Map a term in a modelSet to a Location.
