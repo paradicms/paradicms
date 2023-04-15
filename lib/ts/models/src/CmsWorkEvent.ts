@@ -8,7 +8,7 @@ import {WorkEvent} from "./WorkEvent";
 import {CmsEvent} from "./CmsEvent";
 import {CmsLocation} from "./CmsLocation";
 
-export class CmsWorkEvent extends CmsEvent implements WorkEvent {
+export abstract class CmsWorkEvent extends CmsEvent implements WorkEvent {
   get work(): Work {
     return this.modelSet.workByUri(this.workUri);
   }
