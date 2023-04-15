@@ -1,9 +1,9 @@
-import {ModelSet} from "@paradicms/models";
+import {ModelSet, ModelSetFactory} from "@paradicms/models";
 import {
-  anyRdfStringToDataset,
-  createDataset,
   DataFactory,
   Store,
+  anyRdfStringToDataset,
+  createDataset,
 } from "@paradicms/rdf";
 
 let _modelSet: ModelSet | undefined;
@@ -31,7 +31,7 @@ export const readModelSetFile = async (
   }
 
   if (filePaths.length === 0) {
-    _modelSet = ModelSet.fromDataset(createDataset());
+    _modelSet = ModelSetFactory.fromDataset(createDataset());
     return Promise.resolve(_modelSet!);
   }
 

@@ -1,12 +1,12 @@
-import {Text, Work, WorkEvent} from "@paradicms/models";
+import {faEllipsisV} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Work, WorkEvent} from "@paradicms/models";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
-import {faEllipsisV} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {getWorkEventIcon} from "./getWorkEventIcon";
 import {RightsParagraph} from "./RightsParagraph";
+import {getWorkEventIcon} from "./getWorkEventIcon";
 import React = require("react");
 
 export const WorkEventsTimeline: React.FunctionComponent<{
@@ -31,7 +31,8 @@ export const WorkEventsTimeline: React.FunctionComponent<{
                   __html: workEvent.description.toString(),
                 }}
               ></div>
-              {workEvent.description instanceof Text &&
+              {workEvent.description &&
+              typeof workEvent.description !== "string" &&
               workEvent.description.requiresAttribution ? (
                 <RightsParagraph
                   material="Text"
