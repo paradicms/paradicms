@@ -1,13 +1,17 @@
-import { requireNonNull } from "@paradicms/utilities";
-import { dc11 } from "@paradicms/vocabularies";
-import { License } from "../License";
-import { ResourceBackedNamedModel } from "../ResourceBackedNamedModel";
+import {requireNonNull} from "@paradicms/utilities";
+import {dc11} from "@paradicms/vocabularies";
+import {License} from "../License";
+import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 
 export class CmsLicense extends ResourceBackedNamedModel implements License {
   get identifier(): string {
     return requireNonNull(
       this.findAndMapObject(dc11.identifier, this.mapStringObject)
     );
+  }
+
+  get label(): string {
+    return this.title;
   }
 
   get requiresAttribution(): boolean {
@@ -24,9 +28,5 @@ export class CmsLicense extends ResourceBackedNamedModel implements License {
     return requireNonNull(
       this.findAndMapObject(dc11.title, this.mapStringObject)
     );
-  }
-
-  override toString() {
-    return this.title;
   }
 }

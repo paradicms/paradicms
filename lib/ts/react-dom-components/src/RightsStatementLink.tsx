@@ -11,7 +11,5 @@ export const RightsStatementLink: React.FunctionComponent<{
     return <span>{rightsStatement as string}</span>;
   }
   const rightsStatementModel = rightsStatement as RightsStatement;
-  return (
-    <a href={rightsStatementModel.uri}>{rightsStatementModel.prefLabel}</a>
-  );
+  return <a href={rightsStatementModel.uri}>{rightsStatementModel.label}</a>;
 };

@@ -10,7 +10,7 @@ import {mapDateTimeDescriptionObject} from "../mapDateTimeDescriptionObject";
 import {mapLocationObject} from "../mapLocationObject";
 import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
 
-export class CmsEvent
+export abstract class CmsEvent
   extends Mixin(ResourceBackedNamedModel, CmsDescriptionMixin)
   implements Event {
   @Memoize()
@@ -85,6 +85,8 @@ export class CmsEvent
       mapDateTimeDescriptionObject(this, term)
     );
   }
+
+  abstract readonly label: string;
 
   @Memoize()
   get location(): Location | string | null {

@@ -39,7 +39,7 @@ describe("Event", () => {
     expect((location as Location).long).to.not.eq(0);
   });
 
-  it("should get the title", () => {
-    expect(sut.title).to.not.be.empty;
+  it("should get the label", () => {
+    expect(sut.label).to.not.be.empty;
   });
 });

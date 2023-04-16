@@ -54,6 +54,10 @@ export class CmsImage extends Mixin(ResourceBackedNamedModel, CmsRightsMixin)
     return this.originalImageUri === null;
   }
 
+  get label(): string | null {
+    return this.title;
+  }
+
   @Memoize()
   get maxDimensions(): ImageDimensions | null {
     return this.imageDimensions(cms.imageMaxHeight, cms.imageMaxWidth);

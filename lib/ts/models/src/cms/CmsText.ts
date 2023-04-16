@@ -5,7 +5,7 @@ import { ResourceBackedModel } from "../ResourceBackedModel";
 import { CmsRightsMixin } from "./CmsRightsMixin";
 
 export class CmsText extends Mixin(ResourceBackedModel, CmsRightsMixin) {
-  override toString() {
+  override toString(): string {
     return this.value;
   }
 

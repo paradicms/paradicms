@@ -1,9 +1,9 @@
-import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
-import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {Resource} from "@paradicms/rdf";
-import {Model} from "./Model";
-import {ModelToRdfTriple} from "./ModelToRdfTriple";
-import {ModelSet} from "./ModelSet";
+import { Resource } from "@paradicms/rdf";
+import { BlankNode, Dataset, DefaultGraph, NamedNode } from "@rdfjs/types";
+import { Model } from "./Model";
+import { ModelSet } from "./ModelSet";
+import { ModelToRdfTriple } from "./ModelToRdfTriple";
+import { ResourceBackedModelParameters } from "./ResourceBackedModelParameters";
 
 export class ResourceBackedModel extends Resource implements Model {
   readonly dataset: Dataset;
@@ -45,5 +45,9 @@ export class ResourceBackedModel extends Resource implements Model {
       });
     }
     return triples;
+  }
+
+  override toString(): string {
+    throw new EvalError("should never call toString()");
   }
 }

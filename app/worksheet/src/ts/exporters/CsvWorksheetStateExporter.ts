@@ -1,10 +1,9 @@
+import {WorksheetStateExporter} from "~/exporters/WorksheetStateExporter";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {WorksheetState} from "~/models/WorksheetState";
-import {WorksheetStateExporter} from "~/exporters/WorksheetStateExporter";
 
 export class CsvWorksheetStateExporter
-  implements WorksheetStateExporter<string[][]>
-{
+  implements WorksheetStateExporter<string[][]> {
   static readonly FIRST_FEATURE_COLUMN_INDEX = 5;
 
   export(
@@ -25,13 +24,14 @@ export class CsvWorksheetStateExporter
         }
       }
 
-      const featureSetDefinition =
-        worksheetDefinition.featureSetByUriOptional(featureSetUri);
+      const featureSetDefinition = worksheetDefinition.featureSetByUriOptional(
+        featureSetUri
+      );
       if (!featureSetDefinition) {
         return undefined;
       }
       // const featureDefinition = worksheetDefinition.features.find((featureDefinition) => featureDefinition.id.equals(featureId))!;
-      return featureSetDefinition.title + "|" + featureUri;
+      return featureSetDefinition.label + "|" + featureUri;
     };
 
     const headerRow = ["id", "ctime", "mtime", "description", "workType"];
@@ -65,17 +65,17 @@ export class CsvWorksheetStateExporter
       const workType: string[] = [];
       for (const featureSetState of worksheetState.featureSets ?? []) {
         const featureSetDefinition = worksheetDefinition.featureSets.find(
-          (featureSetDefinition) =>
+          featureSetDefinition =>
             featureSetDefinition.uri === featureSetState.uri
         );
         if (featureSetDefinition) {
-          workType.push(featureSetDefinition.title);
+          workType.push(featureSetDefinition.label);
         }
 
         for (const featureState of featureSetState.features ?? []) {
           if (
             !(featureState.values ?? []).some(
-              (featureValueState) => featureValueState.selected
+              featureValueState => featureValueState.selected
             )
           ) {
             // Ignore text for now
@@ -109,10 +109,9 @@ export class CsvWorksheetStateExporter
             if (!featureValueState.selected) {
               continue;
             }
-            const featureValueDefinition =
-              worksheetDefinition.featureValueByUriOptional(
-                featureValueState.uri
-              );
+            const featureValueDefinition = worksheetDefinition.featureValueByUriOptional(
+              featureValueState.uri
+            );
             if (!featureValueDefinition) {
               console.warn(
                 "feature value not present in definition? skipping: " +

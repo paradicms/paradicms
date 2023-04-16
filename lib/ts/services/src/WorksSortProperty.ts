@@ -1,4 +1,4 @@
 export enum WorksSortProperty {
+  LABEL = "label",
   RELEVANCE = "relevance",
-  TITLE = "title",
 }

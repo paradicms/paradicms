@@ -25,7 +25,7 @@ const WorkAgentCard: React.FunctionComponent<{
   return (
     <Card className="text-center">
       <CardHeader tag="h6">
-        <div>{workAgent.agent.name}</div>
+        <div>{workAgent.agent.label}</div>
         {agentLinks.length > 0 ? (
           <div className="mt-1" style={{fontSize: "x-small"}}>
             {agentLinks}
@@ -45,7 +45,7 @@ const WorkAgentCard: React.FunctionComponent<{
             maxHeight: imagesCarouselThumbnailSelector.targetDimensions.height,
             maxWidth: imagesCarouselThumbnailSelector.targetDimensions.width,
           }}
-          title={workAgent.agent.name}
+          title={workAgent.agent.label}
         />
       </CardBody>
       {thumbnail?.requiresAttribution ? (

@@ -17,11 +17,22 @@ export class CmsConcept
     );
   }
 
+  get label(): string {
+    if (this.prefLabel) {
+      return this.prefLabel;
+    }
+    for (const altLabel of this.altLabels) {
+      return altLabel.value;
+    }
+    return this.value.value;
+  }
+
   @Memoize()
   get prefLabel(): string | null {
     return this.findAndMapObject(skos.prefLabel, this.mapStringObject);
   }
 
+  @Memoize()
   get value(): BlankNode | Literal | NamedNode {
     return (
       this.findAndMapObject(rdf.value, term => {

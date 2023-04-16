@@ -1,17 +1,17 @@
 import * as React from "react";
 import {useCallback, useMemo, useState} from "react";
-import {useWorksheet} from "~/hooks/useWorksheet";
-import {Spinner} from "~/components/Spinner";
-import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
-import {Button, Col, Container, Form, Input, Row, Table} from "reactstrap";
-import {StringWorksheetStateExporter} from "~/exporters/StringWorksheetStateExporter";
-import {TextWorksheetStateExporter} from "~/exporters/TextWorksheetStateExporter";
-import {CsvStringWorksheetStateExporter} from "~/exporters/CsvStringWorksheetStateExporter";
-import {JsonStringWorksheetStateExporter} from "~/exporters/JsonStringWorksheetStateExporter";
-import {JsonLdStringWorksheetStateExporter} from "~/exporters/JsonLdStringWorksheetStateExporter";
 import {Link} from "react-router-dom";
+import {Button, Col, Container, Form, Input, Row, Table} from "reactstrap";
 import {Hrefs} from "~/Hrefs";
 import {GenericErrorHandler} from "~/components/GenericErrorHandler";
+import {Spinner} from "~/components/Spinner";
+import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
+import {CsvStringWorksheetStateExporter} from "~/exporters/CsvStringWorksheetStateExporter";
+import {JsonLdStringWorksheetStateExporter} from "~/exporters/JsonLdStringWorksheetStateExporter";
+import {JsonStringWorksheetStateExporter} from "~/exporters/JsonStringWorksheetStateExporter";
+import {StringWorksheetStateExporter} from "~/exporters/StringWorksheetStateExporter";
+import {TextWorksheetStateExporter} from "~/exporters/TextWorksheetStateExporter";
+import {useWorksheet} from "~/hooks/useWorksheet";
 import CopyToClipboard = require("react-copy-to-clipboard");
 
 const STRING_EXPORTERS: StringWorksheetStateExporter[] = [
@@ -192,7 +192,7 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
               }
               return (
                 <React.Fragment key={featureSet.uri}>
-                  <h4 className="text-center">{featureSet.definition.title}</h4>
+                  <h4 className="text-center">{featureSet.definition.label}</h4>
                   <Table className="table-bordered">
                     <thead>
                       <tr>
@@ -215,7 +215,7 @@ export const WorksheetReviewPage: React.FunctionComponent = () => {
                                   worksheetStateId: worksheet!.stateId,
                                 })}
                               >
-                                {feature.definition.title}
+                                {feature.definition.label}
                               </Link>
                             </td>
                             <td className="align-middle">

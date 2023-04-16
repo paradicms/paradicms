@@ -16,7 +16,7 @@ describe("CmsRightsMixin", () => {
     ).to.not.be.empty;
     expect(sut.contributorAgents).to.not.be.empty;
     expect(
-      sut.contributorAgents.map(contributor => contributor as Agent)[0].name
+      sut.contributorAgents.map(contributor => contributor as Agent)[0].label
     ).to.not.be.empty;
   });
 
@@ -26,14 +26,14 @@ describe("CmsRightsMixin", () => {
       sut.creators.filter(creator => creator && typeof creator !== "string")
     ).to.not.be.empty;
     expect(sut.creatorAgents).to.not.be.empty;
-    expect(sut.creatorAgents.map(creator => creator as Agent)[0].name).to.not.be
-      .empty;
+    expect(sut.creatorAgents.map(creator => creator as Agent)[0].label).to.not
+      .be.empty;
   });
 
   it("should have a license", () => {
     expect(sut.license).to.not.be.empty;
     expect(sut.license).to.not.be.instanceof(String);
-    expect((sut.license! as License).title).to.not.be.empty;
+    expect((sut.license! as License).label).to.not.be.empty;
   });
 
   it("should not have a non-text rights holder", () => {
@@ -47,6 +47,6 @@ describe("CmsRightsMixin", () => {
   it("should have a rights statement", () => {
     expect(sut.rightsStatement).to.not.be.empty;
     expect(sut.rightsStatement).to.not.be.instanceof(String);
-    expect((sut.rightsStatement! as RightsStatement).prefLabel).to.not.be.empty;
+    expect((sut.rightsStatement! as RightsStatement).label).to.not.be.empty;
   });
 });

@@ -336,7 +336,7 @@ export class MemWorkQueryService implements WorkQueryService {
       case WorkAgentsSortProperty.NAME:
         workAgents.sort(
           (left, right) =>
-            compareMultiplier * left.name.localeCompare(right.name)
+            compareMultiplier * left.label.localeCompare(right.label)
         );
         return;
       default:
@@ -359,10 +359,10 @@ export class MemWorkQueryService implements WorkQueryService {
           (left, right) => compareMultiplier * left.compareByDate(right)
         );
         return;
-      case WorkEventsSortProperty.TITLE:
+      case WorkEventsSortProperty.LABEL:
         workEvents.sort(
           (left, right) =>
-            compareMultiplier * left.title.localeCompare(right.title)
+            compareMultiplier * left.label.localeCompare(right.label)
         );
         return;
       default:
@@ -377,14 +377,14 @@ export class MemWorkQueryService implements WorkQueryService {
   private static sortWorksInPlace(sort: WorksSort, works: Work[]): void {
     const compareMultiplier = sort.ascending ? 1 : -1;
     switch (sort.property) {
-      case WorksSortProperty.RELEVANCE:
-        // Works are already sorted by relevance
-        return;
-      case WorksSortProperty.TITLE:
+      case WorksSortProperty.LABEL:
         works.sort(
           (left, right) =>
-            compareMultiplier * left.title.localeCompare(right.title)
+            compareMultiplier * left.label.localeCompare(right.label)
         );
+        return;
+      case WorksSortProperty.RELEVANCE:
+        // Works are already sorted by relevance
         return;
       default:
         MemWorkQueryService.sortWorksInPlace(defaultWorksSort, works);
@@ -448,13 +448,26 @@ export class MemWorkQueryService implements WorkQueryService {
     if (!imageSrc) {
       return null;
     }
+
     return {
-      creators: image.creators.map(creator => creator.toString()),
-      license: image.license?.toString() ?? null,
+      creators: image.creators.map(creator =>
+        typeof creator !== "string" ? creator.label : creator
+      ),
+      license: image.license
+        ? typeof image.license !== "string"
+          ? image.license.label
+          : image.license
+        : null,
       exactDimensions: image.exactDimensions,
       maxDimensions: image.maxDimensions,
-      rightsHolders: image.rightsHolders.map(holder => holder.toString()),
-      rightsStatement: image.rightsStatement?.toString() ?? null,
+      rightsHolders: image.rightsHolders.map(holder =>
+        typeof holder !== "string" ? holder.label : holder
+      ),
+      rightsStatement: image.rightsStatement
+        ? typeof image.rightsStatement !== "string"
+          ? image.rightsStatement.label
+          : image.rightsStatement
+        : null,
       src: imageSrc,
     };
   }

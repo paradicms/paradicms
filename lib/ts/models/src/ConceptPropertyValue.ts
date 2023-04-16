@@ -1,6 +1,6 @@
-import {Concept} from "./Concept";
-import {ThumbnailSelector} from "./ThumbnailSelector";
-import {PropertyValue} from "./PropertyValue";
+import { Concept } from "./Concept";
+import { PropertyValue } from "./PropertyValue";
+import { ThumbnailSelector } from "./ThumbnailSelector";
 
 export class ConceptPropertyValue extends PropertyValue {
     constructor(readonly concept: Concept) {
@@ -8,7 +8,7 @@ export class ConceptPropertyValue extends PropertyValue {
     }
 
     get label() {
-        return this.concept.prefLabel ?? this.value;
+        return this.concept.label;
     }
 
     override thumbnail(selector: ThumbnailSelector) {

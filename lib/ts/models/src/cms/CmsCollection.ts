@@ -15,6 +15,10 @@ export class CmsCollection extends Mixin(
   CmsImagesMixin,
   CmsTitleMixin
 ) implements Collection {
+  get label(): string {
+    return this.title;
+  }
+
   override thumbnail(selector: ThumbnailSelector): Image | null {
     const collectionImages: readonly Image[] = this.modelSet.imagesByDepictsUri(
       this.uri

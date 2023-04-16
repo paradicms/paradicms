@@ -56,7 +56,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
       collectionTitle={collectionTitle ?? undefined}
       configuration={modelSet.appConfiguration}
       properties={modelSet.properties}
-      title={work.title}
+      title={work.label}
     >
       <DelegateWorkPage
         getAbsoluteImageSrc={relativeImageSrc =>
@@ -99,7 +99,7 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       collectionTitle:
         completeModelSet.collections.length === 1
-          ? completeModelSet.collections[0].title
+          ? completeModelSet.collections[0].label
           : null,
       modelSetString: new ModelSubsetter({
         completeModelSet,

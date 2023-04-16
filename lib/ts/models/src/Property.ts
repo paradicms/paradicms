@@ -1,7 +1,7 @@
-import {NamedModel} from "./NamedModel";
 import {NamedNode} from "@rdfjs/types";
-import {PropertyValue} from "./PropertyValue";
 import {ImagesMixin} from "./ImagesMixin";
+import {NamedModel} from "./NamedModel";
+import {PropertyValue} from "./PropertyValue";
 
 export interface Property extends NamedModel, ImagesMixin {
   readonly comment: string | null;

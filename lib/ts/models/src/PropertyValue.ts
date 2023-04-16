@@ -1,5 +1,5 @@
-import {ThumbnailSelector} from "./ThumbnailSelector";
 import {Image} from "./Image";
+import {ThumbnailSelector} from "./ThumbnailSelector";
 
 /**
  * Abstract base class for property values.
@@ -11,10 +11,6 @@ export abstract class PropertyValue {
 
   thumbnail(selector: ThumbnailSelector): Image | null {
     return null;
-  }
-
-  toString() {
-    throw new EvalError("use .value, not .toString()");
   }
 
   abstract get value(): string;

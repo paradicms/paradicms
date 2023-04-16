@@ -1,10 +1,10 @@
-import * as React from "react";
-import {WorkLocationSummary} from "@paradicms/services";
-import {MapContainer, Marker, TileLayer, Tooltip} from "react-leaflet";
-import {useRouter} from "next/router";
-import {Hrefs} from "../lib/Hrefs";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {getWorkLocationIcon} from "@paradicms/react-dom-components";
+import {WorkLocationSummary} from "@paradicms/services";
+import {useRouter} from "next/router";
+import * as React from "react";
+import {MapContainer, Marker, TileLayer, Tooltip} from "react-leaflet";
+import {Hrefs} from "../lib/Hrefs";
 
 export const WorkLocationsMap: React.FunctionComponent<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -44,7 +44,7 @@ export const WorkLocationsMap: React.FunctionComponent<{
               icon={getWorkLocationIcon(workLocation)}
               style={{height: "16px", width: "16px"}}
             />
-            {workLocation.label ?? workLocation.work.title}
+            {workLocation.label ?? workLocation.work.label}
           </Tooltip>
         </Marker>
       ))}

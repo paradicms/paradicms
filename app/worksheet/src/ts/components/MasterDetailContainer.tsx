@@ -33,9 +33,9 @@ interface Item {
   altLabels: readonly Literal[] | null;
   description: string | Text | null;
   images: readonly Image[];
+  label: string;
   onToggleSelected: () => void | null;
   selected: boolean | null;
-  title: string;
 }
 
 export const MasterDetailContainer: React.FunctionComponent<{
@@ -166,7 +166,7 @@ const ItemDetailCard: React.FunctionComponent<{
           className="align-items-center flex-grow-1 text-center"
           style={{fontSize: "x-large"}}
         >
-          {item.title}
+          {item.label}
         </div>
         <div className="align-items-center">
           <Button color="link" onClick={onClose}>
@@ -189,7 +189,7 @@ const ItemDetailCard: React.FunctionComponent<{
       </CardBody>
     </Card>
   );
-  return <div>{item.title}</div>;
+  return <div>{item.label}</div>;
 };
 
 const ItemsGallery: React.FunctionComponent<{
@@ -199,7 +199,7 @@ const ItemsGallery: React.FunctionComponent<{
   <Container fluid>
     <Row>
       {items.map((item, itemI) => {
-        const {onToggleSelected, images, selected, title} = item;
+        const {onToggleSelected, images, selected, label} = item;
 
         let thumbnail: Image | null = selectThumbnail(
           images,
@@ -231,7 +231,7 @@ const ItemsGallery: React.FunctionComponent<{
                 onClick={onToggleSelected}
                 style={{cursor: "pointer", textDecoration: "none"}}
               >
-                {title}
+                {label}
               </Button>
             </CardHeader>
             <CardBody
@@ -292,7 +292,7 @@ const ItemsTable: React.FunctionComponent<{
           >
             <tbody>
               {items.map((item, itemI) => {
-                const {onToggleSelected, selected, title} = item;
+                const {onToggleSelected, selected, label} = item;
 
                 return (
                   <tr
@@ -320,7 +320,7 @@ const ItemsTable: React.FunctionComponent<{
                           width: "90%",
                         }}
                       >
-                        {title}
+                        {label}
                       </Button>
                     </td>
                     <td className="text-center align-middle">

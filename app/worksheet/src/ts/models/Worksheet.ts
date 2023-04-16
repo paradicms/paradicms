@@ -1,11 +1,11 @@
-import {WorksheetState} from "~/models/WorksheetState";
-import {WorksheetMark} from "~/models/WorksheetMark";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
+import {WorksheetFeature} from "~/models/WorksheetFeature";
 import {WorksheetFeatureSet} from "~/models/WorksheetFeatureSet";
 import {WorksheetFeatureSetState} from "~/models/WorksheetFeatureSetState";
-import {WorksheetStateService} from "~/services/WorksheetStateService";
-import {WorksheetFeature} from "~/models/WorksheetFeature";
+import {WorksheetMark} from "~/models/WorksheetMark";
 import {WorksheetMode} from "~/models/WorksheetMode";
+import {WorksheetState} from "~/models/WorksheetState";
+import {WorksheetStateService} from "~/services/WorksheetStateService";
 
 const isEqual = (
   leftMark: WorksheetMark,
@@ -48,17 +48,17 @@ export class Worksheet {
     this.definition = kwds.definition;
     this.featureSets = this.definition.featureSets
       .map(
-        (featureSetDefinition) =>
+        featureSetDefinition =>
           new WorksheetFeatureSet({
             definition: featureSetDefinition,
             initialState: initialState.featureSets?.find(
-              (featureSetState) =>
+              featureSetState =>
                 featureSetState.uri === featureSetDefinition.uri
             ),
           })
       )
       .sort((left, right) =>
-        left.definition.title!.localeCompare(right.definition.title!)
+        left.definition.label!.localeCompare(right.definition.label!)
       );
     this.featureSetsByUri = this.featureSets.reduce((map, featureSet) => {
       map[featureSet.uri] = featureSet;

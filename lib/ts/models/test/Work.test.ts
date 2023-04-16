@@ -54,7 +54,7 @@ describe("Work", () => {
     const propertyValues = sut.propertyValues(dcterms.title.value);
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];
-    expect(propertyValue.value).to.eq(sut.title);
+    expect(propertyValue.value).to.eq(sut.label);
   });
 
   it("should get the work's property values (named)", () => {
@@ -77,9 +77,9 @@ describe("Work", () => {
     expect(sut.rightsStatement).to.not.be.null;
   });
 
-  it("should get the work's title", () => {
-    expect(sut.title).to.not.be.empty;
-    expect(sut.title).to.not.be.empty;
+  it("should get the work's label", () => {
+    expect(sut.label).to.not.be.empty;
+    expect(sut.label).to.not.be.empty;
   });
 
   it("should get the work's URI", () => {

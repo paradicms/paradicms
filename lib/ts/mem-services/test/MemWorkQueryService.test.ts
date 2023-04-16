@@ -132,7 +132,7 @@ describe("MemWorkQueryService", () => {
           offset: 0,
           sort: {
             ascending: false,
-            property: WorkEventsSortProperty.TITLE
+            property: WorkEventsSortProperty.LABEL
           }
         },
         {
@@ -142,7 +142,7 @@ describe("MemWorkQueryService", () => {
 
     const workEvents = result.modelSet.workEvents;
     expect(workEvents).to.have.length(2);
-    expect(workEvents[0].title.localeCompare(workEvents[1].title) > 0);
+    expect(workEvents[0].label.localeCompare(workEvents[1].label) > 0);
   });
 
   it("getWorkLocations returns all work locations", async () => {
@@ -168,7 +168,7 @@ describe("MemWorkQueryService", () => {
       for (const expectedWorkLocation of expectedWorkLocations) {
         const resultWorkLocation = result.workLocations.find(resultWorkLocation => resultWorkLocation.work.uri === work.uri && resultWorkLocation.location.lat === expectedWorkLocation.location.lat && resultWorkLocation.location.long === expectedWorkLocation.location.long);
         expect(resultWorkLocation).to.not.be.undefined;
-        expect(resultWorkLocation!.work.title).to.eq(work.title);
+        expect(resultWorkLocation!.work.label).to.eq(work.label);
       }
     }
   });
@@ -255,7 +255,7 @@ describe("MemWorkQueryService", () => {
     );
   });
 
-  it("getWorks sorts by title", async () => {
+  it("getWorks sorts by label", async () => {
     const allWorkUris = (await sut.getWorks(
         {
           offset: 0,
@@ -272,7 +272,7 @@ describe("MemWorkQueryService", () => {
           limit: 4,
           sort: {
             ascending: false,
-            property: WorksSortProperty.TITLE
+            property: WorksSortProperty.LABEL
           }
         },
         {

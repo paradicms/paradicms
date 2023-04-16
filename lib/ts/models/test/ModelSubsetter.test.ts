@@ -95,7 +95,7 @@ describe("ModelSubsetter", () => {
     expectModelsDeepEq(workModelSet.works, [work]);
     for (const work of workModelSet.works) {
       expect(work.location).not.to.be.null;
-      expect(work.location!.location.node.termType).to.eq("NamedNode");
+      expect((work.location!.location as any).uri).to.not.be.empty;
       expect(work.location!.location.lat).not.to.be.undefined;
     }
     expectModelsDeepEq(workModelSet.workEvents, work.events);

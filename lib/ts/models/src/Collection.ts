@@ -5,6 +5,6 @@ import {Work} from "./Work";
 
 export interface Collection extends NamedModel, ImagesMixin {
   readonly description: string | Text | null;
-  readonly title: string;
+  readonly label: string;
   readonly works: readonly Work[];
 }

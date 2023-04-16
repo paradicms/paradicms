@@ -1,5 +1,5 @@
-import * as React from "react";
 import {Agent} from "@paradicms/models";
+import * as React from "react";
 import {Gallery} from "./Gallery";
 import {GalleryCard} from "./GalleryCard";
 import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
@@ -13,7 +13,7 @@ const AgentsGalleryCard: React.FunctionComponent<{
     <GalleryCard
       getAbsoluteImageSrc={getAbsoluteImageSrc}
       thumbnail={agent.thumbnail(galleryThumbnailSelector)}
-      title={agent.name}
+      title={agent.label}
     />
   );
 };

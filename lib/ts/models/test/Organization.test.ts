@@ -13,8 +13,8 @@ describe("Organization", () => {
       .be.null;
   });
 
-  it("should get the organization's name", () => {
-    expect(sut.name).to.not.be.empty;
+  it("should get the organization's label", () => {
+    expect(sut.label).to.not.be.empty;
   });
 
   it("should get the organization's page", () => {

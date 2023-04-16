@@ -23,7 +23,7 @@ export const WorkEventsTimeline: React.FunctionComponent<{
           key={workEvent.uri}
           icon={<FontAwesomeIcon icon={getWorkEventIcon(workEvent)} />}
         >
-          <h3>{workEvent.title}</h3>
+          <h3>{workEvent.label}</h3>
           {workEvent.description ? (
             <>
               <div

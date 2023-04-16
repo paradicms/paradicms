@@ -96,7 +96,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     props: {
       collectionTitle:
         completeModelSet.collections.length === 1
-          ? completeModelSet.collections[0].title
+          ? completeModelSet.collections[0].label
           : null,
       modelSetString: new ModelSubsetter({
         completeModelSet,

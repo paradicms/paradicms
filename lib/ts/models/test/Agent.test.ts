@@ -11,16 +11,12 @@ describe("Agent", () => {
       .be.null;
   });
 
-  it("should get the agent's name", () => {
-    expect(sut.name).to.not.be.empty;
+  it("should get the agent's label", () => {
+    expect(sut.label).to.not.be.empty;
   });
 
   it("should get the agent's page", () => {
     expect(sut.page).to.not.be.empty;
-  });
-
-  it("should call the agent's .toString()", () => {
-    expect(sut.toString()).to.eq(sut.name);
   });
 
   it("should get the agent's Wikidata concept URI", () => {

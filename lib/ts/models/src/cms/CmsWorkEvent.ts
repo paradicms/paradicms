@@ -11,6 +11,10 @@ import { CmsEvent } from "./CmsEvent";
 export abstract class CmsWorkEvent extends CmsEvent implements WorkEvent {
   abstract accept<T>(visitor: WorkEventVisitor<T>): T;
   
+  get label(): string {
+    return this.title;
+  }
+
   get work(): Work {
     return this.modelSet.workByUri(this.workUri);
   }
@@ -42,7 +46,7 @@ export abstract class CmsWorkEvent extends CmsEvent implements WorkEvent {
     if (super.title) {
       return super.title;
     } else {
-      return `${this.workLocationRole}: "${this.work.title}"`;
+      return `${this.workLocationRole}: "${this.work.label}"`;
     }
   }
 

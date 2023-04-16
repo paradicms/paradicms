@@ -1,7 +1,7 @@
-import { requireNonNull } from "@paradicms/utilities";
-import { dcterms, skos } from "@paradicms/vocabularies";
-import { ResourceBackedNamedModel } from "../ResourceBackedNamedModel";
-import { RightsStatement } from "../RightsStatement";
+import {requireNonNull} from "@paradicms/utilities";
+import {dcterms, skos} from "@paradicms/vocabularies";
+import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
+import {RightsStatement} from "../RightsStatement";
 
 export class CmsRightsStatement extends ResourceBackedNamedModel
   implements RightsStatement {
@@ -19,13 +19,13 @@ export class CmsRightsStatement extends ResourceBackedNamedModel
     );
   }
 
+  get label(): string {
+    return this.prefLabel;
+  }
+
   get prefLabel(): string {
     return requireNonNull(
       this.findAndMapObject(skos.prefLabel, this.mapStringObject)
     );
-  }
-
-  override toString() {
-    return this.prefLabel;
   }
 }

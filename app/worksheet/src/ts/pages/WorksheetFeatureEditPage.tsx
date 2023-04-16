@@ -1,12 +1,12 @@
 import * as React from "react";
-import {useWorksheet} from "~/hooks/useWorksheet";
-import {Spinner} from "~/components/Spinner";
-import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
-import {MasterDetailContainer} from "~/components/MasterDetailContainer";
 import {Navigate} from "react-router-dom";
-import {WorksheetMode} from "~/models/WorksheetMode";
 import {Hrefs} from "~/Hrefs";
 import {GenericErrorHandler} from "~/components/GenericErrorHandler";
+import {MasterDetailContainer} from "~/components/MasterDetailContainer";
+import {Spinner} from "~/components/Spinner";
+import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
+import {useWorksheet} from "~/hooks/useWorksheet";
+import {WorksheetMode} from "~/models/WorksheetMode";
 
 export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
   const {
@@ -43,7 +43,7 @@ export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
   return (
     <WorksheetNavigationFrame
       dispatchWorksheet={dispatchWorksheet}
-      headline={"Feature: " + feature.definition.title}
+      headline={"Feature: " + feature.definition.label}
       finishButtonEnabled={true}
       nextButtonEnabled={true}
       previousButtonEnabled={true}
@@ -61,12 +61,12 @@ export const WorksheetFeatureEditPage: React.FunctionComponent = () => {
           altLabels: featureValue.definition.altLabels,
           description: featureValue.definition.description,
           images: featureValue.definition.images,
+          label: featureValue.definition.label,
           onToggleSelected: () => {
             featureValue.selected = !featureValue.selected;
             dispatchWorksheet({payload: worksheet});
           },
           selected: featureValue.selected,
-          title: featureValue.definition.prefLabel!,
         }))}
         mode={worksheet.currentMark.mode}
       />

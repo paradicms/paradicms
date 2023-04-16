@@ -7,7 +7,7 @@ export class AgentPropertyValue extends PropertyValue {
   }
 
   get label() {
-    return this.agent.name;
+    return this.agent.label;
   }
 
   get value() {

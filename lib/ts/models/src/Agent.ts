@@ -5,7 +5,5 @@ import {RelationsMixin} from "./RelationsMixin";
 
 export interface Agent extends NamedModel, ImagesMixin, RelationsMixin {
   accept<T>(visitor: AgentVisitor<T>): T;
-  readonly name: string;
-  readonly page: string | null;
-  toString(): string;
+  readonly label: string;
 }
