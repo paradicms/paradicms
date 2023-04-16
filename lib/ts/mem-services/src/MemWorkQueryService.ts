@@ -448,13 +448,26 @@ export class MemWorkQueryService implements WorkQueryService {
     if (!imageSrc) {
       return null;
     }
+
     return {
-      creators: image.creators.map(creator => creator.toString()),
-      license: image.license?.toString() ?? null,
+      creators: image.creators.map(creator =>
+        typeof creator !== "string" ? creator.label : creator
+      ),
+      license: image.license
+        ? typeof image.license !== "string"
+          ? image.license.label
+          : image.license
+        : null,
       exactDimensions: image.exactDimensions,
       maxDimensions: image.maxDimensions,
-      rightsHolders: image.rightsHolders.map(holder => holder.toString()),
-      rightsStatement: image.rightsStatement?.toString() ?? null,
+      rightsHolders: image.rightsHolders.map(holder =>
+        typeof holder !== "string" ? holder.label : holder
+      ),
+      rightsStatement: image.rightsStatement
+        ? typeof image.rightsStatement !== "string"
+          ? image.rightsStatement.label
+          : image.rightsStatement
+        : null,
       src: imageSrc,
     };
   }

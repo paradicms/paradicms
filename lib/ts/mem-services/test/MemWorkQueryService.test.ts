@@ -255,7 +255,7 @@ describe("MemWorkQueryService", () => {
     );
   });
 
-  it("getWorks sorts by title", async () => {
+  it("getWorks sorts by label", async () => {
     const allWorkUris = (await sut.getWorks(
         {
           offset: 0,
@@ -272,7 +272,7 @@ describe("MemWorkQueryService", () => {
           limit: 4,
           sort: {
             ascending: false,
-            property: WorksSortProperty.TITLE
+            property: WorksSortProperty.LABEL
           }
         },
         {

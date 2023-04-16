@@ -47,6 +47,6 @@ describe("CmsRightsMixin", () => {
   it("should have a rights statement", () => {
     expect(sut.rightsStatement).to.not.be.empty;
     expect(sut.rightsStatement).to.not.be.instanceof(String);
-    expect((sut.rightsStatement! as RightsStatement).prefLabel).to.not.be.empty;
+    expect((sut.rightsStatement! as RightsStatement).label).to.not.be.empty;
   });
 });
