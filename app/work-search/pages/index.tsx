@@ -1,4 +1,4 @@
-import {MemWorkQueryService} from "@paradicms/lunr";
+import {MemWorkQueryService} from "@paradicms/mem-services";
 import {ModelSet, ModelSetFactory, ModelSubsetter} from "@paradicms/models";
 import {getAbsoluteImageSrc, readModelSetFile} from "@paradicms/next";
 import {
