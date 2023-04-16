@@ -1,6 +1,6 @@
-import {NamedModel} from "./NamedModel";
-import {Location} from "./Location";
 import {DateTimeDescription} from "./DateTimeDescription";
+import {Location} from "./Location";
+import {NamedModel} from "./NamedModel";
 import {Text} from "./Text";
 
 export interface Event extends NamedModel {
@@ -8,6 +8,7 @@ export interface Event extends NamedModel {
   readonly date: DateTimeDescription | null;
   readonly description: string | Text | null;
   readonly displayDate: string | null;
+  readonly label: string;
   readonly endDate: DateTimeDescription | null;
   readonly location: Location | string | null;
 
@@ -23,5 +24,4 @@ export interface Event extends NamedModel {
   } | null;
 
   readonly startDate: DateTimeDescription | null;
-  readonly title: string | null;
 }

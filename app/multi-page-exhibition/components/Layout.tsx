@@ -1,13 +1,13 @@
-import * as React from "react";
-import {Hrefs} from "lib/Hrefs";
-import {Nav, Navbar, NavItem, NavLink} from "reactstrap";
-import Link from "next/link";
-import Head from "next/head";
 import {AppConfiguration, Collection, Work} from "@paradicms/models";
 import {
   defaultBootstrapStylesheetHref,
   getNamedModelLinks,
 } from "@paradicms/react-dom-components";
+import {Hrefs} from "lib/Hrefs";
+import Head from "next/head";
+import Link from "next/link";
+import * as React from "react";
+import {Nav, NavItem, NavLink, Navbar} from "reactstrap";
 
 const textStyle: React.CSSProperties = {fontSize: "xx-large"};
 
@@ -33,7 +33,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
     <>
       <Head>
         <title>
-          {collection.title + (currentWork ? " - " + currentWork.title : "")}
+          {collection.label + (currentWork ? " - " + currentWork.label : "")}
         </title>
         <link
           rel="stylesheet"
@@ -65,7 +65,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
           </NavItem>
         </Nav>
         <div className="navbar-brand mx-auto" style={textStyle}>
-          <Link href={Hrefs.home}>{collection.title}</Link>
+          <Link href={Hrefs.home}>{collection.label}</Link>
           {currentWork ? (
             <>
               <span>&nbsp;/&nbsp;</span>
@@ -75,7 +75,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
                   workUri: currentWork.uri,
                 })}
               >
-                {currentWork.title}
+                {currentWork.label}
               </Link>
             </>
           ) : null}

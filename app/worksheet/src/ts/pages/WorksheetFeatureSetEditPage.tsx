@@ -1,15 +1,15 @@
 import * as React from "react";
-import {useWorksheet} from "~/hooks/useWorksheet";
+import {useNavigate} from "react-router-dom";
+import Select from "react-select";
+import {Table} from "reactstrap";
+import {Hrefs} from "~/Hrefs";
+import {GenericErrorHandler} from "~/components/GenericErrorHandler";
+import {MasterDetailContainer} from "~/components/MasterDetailContainer";
 import {Spinner} from "~/components/Spinner";
 import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
-import {MasterDetailContainer} from "~/components/MasterDetailContainer";
-import {useNavigate} from "react-router-dom";
-import {Hrefs} from "~/Hrefs";
-import {WorksheetMode} from "~/models/WorksheetMode";
+import {useWorksheet} from "~/hooks/useWorksheet";
 import {WorksheetFeatureSet} from "~/models/WorksheetFeatureSet";
-import {Table} from "reactstrap";
-import Select from "react-select";
-import {GenericErrorHandler} from "~/components/GenericErrorHandler";
+import {WorksheetMode} from "~/models/WorksheetMode";
 
 const WorksheetFeatureSelectsTable: React.FunctionComponent<{
   dispatchFeatureSet: () => void;
@@ -22,7 +22,7 @@ const WorksheetFeatureSelectsTable: React.FunctionComponent<{
           return (
             <tr key={featureI}>
               <td style={{verticalAlign: "middle", width: "10%"}}>
-                <strong>{feature.definition.title}</strong>
+                <strong>{feature.definition.label}</strong>
               </td>
               <td className="w-90">
                 <Select
@@ -83,7 +83,7 @@ export const WorksheetFeatureSetEditPage: React.FunctionComponent = () => {
     <WorksheetNavigationFrame
       dispatchWorksheet={dispatchWorksheet}
       finishButtonEnabled={true}
-      headline={`Feature Set: ${featureSet.definition.title}`}
+      headline={`Feature Set: ${featureSet.definition.label}`}
       nextButtonEnabled={true}
       previousButtonEnabled={true}
       worksheet={worksheet}
@@ -109,6 +109,7 @@ export const WorksheetFeatureSetEditPage: React.FunctionComponent = () => {
               altLabels: null,
               description: feature.definition.description,
               images: feature.definition.images,
+              label: feature.definition.label,
               onToggleSelected: () => {
                 navigate(
                   Hrefs.worksheetMark({
@@ -121,7 +122,6 @@ export const WorksheetFeatureSetEditPage: React.FunctionComponent = () => {
                 );
               },
               selected: null,
-              title: feature.definition.title,
             }))}
             mode={worksheet.currentMark.mode}
           />

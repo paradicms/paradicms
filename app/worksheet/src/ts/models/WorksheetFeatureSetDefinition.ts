@@ -1,6 +1,6 @@
 import {PropertyGroup} from "@paradicms/models";
-import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
 import {Memoize} from "typescript-memoize";
+import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
 
 export class WorksheetFeatureSetDefinition {
   constructor(private readonly propertyGroup: PropertyGroup) {}
@@ -24,7 +24,7 @@ export class WorksheetFeatureSetDefinition {
     return this.propertyGroup.images;
   }
 
-  get title() {
+  get label() {
     return this.propertyGroup.label;
   }
 

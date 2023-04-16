@@ -19,6 +19,10 @@ export class CmsRightsStatement extends ResourceBackedNamedModel
     );
   }
 
+  get label(): string {
+    return this.prefLabel;
+  }
+
   get prefLabel(): string {
     return requireNonNull(
       this.findAndMapObject(skos.prefLabel, this.mapStringObject)

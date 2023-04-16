@@ -1,6 +1,6 @@
+import {StringWorksheetStateExporter} from "~/exporters/StringWorksheetStateExporter";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {WorksheetState} from "~/models/WorksheetState";
-import {StringWorksheetStateExporter} from "~/exporters/StringWorksheetStateExporter";
 
 export class TextWorksheetStateExporter
   implements StringWorksheetStateExporter {
@@ -44,7 +44,7 @@ export class TextWorksheetStateExporter
         }
         if (clauses.length > 0) {
           paragraphs.push(
-            featureSetDefinition.title + ": " + clauses.join("; ")
+            featureSetDefinition.label + ": " + clauses.join("; ")
           );
         }
       }

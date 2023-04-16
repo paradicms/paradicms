@@ -10,6 +10,10 @@ export class CmsLicense extends ResourceBackedNamedModel implements License {
     );
   }
 
+  get label(): string {
+    return this.title;
+  }
+
   get requiresAttribution(): boolean {
     switch (this.uri) {
       case "http://creativecommons.org/publicdomain/mark/1.0/":

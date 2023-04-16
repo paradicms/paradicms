@@ -19,7 +19,6 @@ import { mapLocationObject } from "../mapLocationObject";
 import { mapTextObject } from "../mapTextObject";
 import { CmsDescriptionMixin } from "./CmsDescriptionMixin";
 import { CmsImagesMixin } from "./CmsImagesMixin";
-import { CmsPageMixin } from "./CmsPageMixin";
 import { CmsRelationsMixin } from "./CmsRelationsMixin";
 import { CmsRightsMixin } from "./CmsRightsMixin";
 import { CmsTitleMixin } from "./CmsTitleMixin";
@@ -78,7 +77,6 @@ export class CmsWork extends Mixin(
   ResourceBackedNamedModel,
   CmsDescriptionMixin,
   CmsImagesMixin,
-  CmsPageMixin,
   CmsTitleMixin,
   CmsRelationsMixin,
   CmsRightsMixin
@@ -173,6 +171,10 @@ export class CmsWork extends Mixin(
   @Memoize()
   get events(): readonly WorkEvent[] {
     return this.modelSet.workEventsByWorkUri(this.uri);
+  }
+
+  get label(): string {
+    return this.title;
   }
 
   @Memoize()

@@ -336,7 +336,7 @@ export class MemWorkQueryService implements WorkQueryService {
       case WorkAgentsSortProperty.NAME:
         workAgents.sort(
           (left, right) =>
-            compareMultiplier * left.name.localeCompare(right.name)
+            compareMultiplier * left.label.localeCompare(right.label)
         );
         return;
       default:
@@ -359,10 +359,10 @@ export class MemWorkQueryService implements WorkQueryService {
           (left, right) => compareMultiplier * left.compareByDate(right)
         );
         return;
-      case WorkEventsSortProperty.TITLE:
+      case WorkEventsSortProperty.LABEL:
         workEvents.sort(
           (left, right) =>
-            compareMultiplier * left.title.localeCompare(right.title)
+            compareMultiplier * left.label.localeCompare(right.label)
         );
         return;
       default:
@@ -377,14 +377,14 @@ export class MemWorkQueryService implements WorkQueryService {
   private static sortWorksInPlace(sort: WorksSort, works: Work[]): void {
     const compareMultiplier = sort.ascending ? 1 : -1;
     switch (sort.property) {
-      case WorksSortProperty.RELEVANCE:
-        // Works are already sorted by relevance
-        return;
-      case WorksSortProperty.TITLE:
+      case WorksSortProperty.LABEL:
         works.sort(
           (left, right) =>
-            compareMultiplier * left.title.localeCompare(right.title)
+            compareMultiplier * left.label.localeCompare(right.label)
         );
+        return;
+      case WorksSortProperty.RELEVANCE:
+        // Works are already sorted by relevance
         return;
       default:
         MemWorkQueryService.sortWorksInPlace(defaultWorksSort, works);

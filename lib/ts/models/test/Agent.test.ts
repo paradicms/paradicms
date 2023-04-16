@@ -11,8 +11,8 @@ describe("Agent", () => {
       .be.null;
   });
 
-  it("should get the agent's name", () => {
-    expect(sut.name).to.not.be.empty;
+  it("should get the agent's label", () => {
+    expect(sut.label).to.not.be.empty;
   });
 
   it("should get the agent's page", () => {

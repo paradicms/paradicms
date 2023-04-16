@@ -17,8 +17,8 @@ describe("Collection", () => {
     expect(description.value).to.not.be.empty;
   });
 
-  it("should get the collection's title", () => {
-    expect(sut.title).to.eq(sut.title);
+  it("should get the collection's label", () => {
+    expect(sut.label).to.eq(sut.label);
   });
 
   it("should get the collection's URI", () => {

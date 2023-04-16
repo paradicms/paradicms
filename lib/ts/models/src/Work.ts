@@ -1,13 +1,13 @@
-import {NamedModel} from "./NamedModel";
 import {Collection} from "./Collection";
-import {Text} from "./Text";
+import {ImagesMixin} from "./ImagesMixin";
+import {NamedModel} from "./NamedModel";
 import {PropertyValue} from "./PropertyValue";
+import {RelationsMixin} from "./RelationsMixin";
+import {RightsMixin} from "./RightsMixin";
+import {Text} from "./Text";
 import {WorkAgent} from "./WorkAgent";
 import {WorkEvent} from "./WorkEvent";
 import {WorkLocation} from "./WorkLocation";
-import {RightsMixin} from "./RightsMixin";
-import {ImagesMixin} from "./ImagesMixin";
-import {RelationsMixin} from "./RelationsMixin";
 
 export interface Work
   extends NamedModel,
@@ -21,8 +21,7 @@ export interface Work
   readonly description: string | Text | null;
   readonly displayDate: string | null;
   readonly events: readonly WorkEvent[];
+  readonly label: string;
   readonly location: WorkLocation | null;
-  readonly page: string | null;
   propertyValues(propertyUri: string): readonly PropertyValue[];
-  readonly title: string;
 }

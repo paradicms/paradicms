@@ -56,7 +56,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
         <Container fluid>
           <Row>
             <Col className="text-center" xs={12}>
-              <h1>{collection.title}</h1>
+              <h1>{collection.label}</h1>
             </Col>
           </Row>
           {collectionDescription ? (
@@ -99,7 +99,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
         >
           <Row>
             <Col className="text-center" xs={12}>
-              <h2>{work.title}</h2>
+              <h2>{work.label}</h2>
             </Col>
           </Row>
           <Row>
@@ -130,7 +130,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   return (
     <>
       <Head>
-        <title>{modelSet.collections[0].title}</title>
+        <title>{modelSet.collections[0].label}</title>
         <link
           rel="stylesheet"
           href={configuration?.stylesheet ?? defaultBootstrapStylesheetHref}

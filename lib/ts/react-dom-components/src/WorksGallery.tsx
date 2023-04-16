@@ -1,8 +1,8 @@
-import * as React from "react";
 import {Work} from "@paradicms/models";
+import * as React from "react";
 import {Gallery} from "./Gallery";
-import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 import {GalleryCard} from "./GalleryCard";
+import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 
 const WorksGalleryCard: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
@@ -17,7 +17,7 @@ const WorksGalleryCard: React.FunctionComponent<{
     renderLink={children => renderWorkLink(work.uri, children)}
     subtitle={work.displayDate}
     thumbnail={work.thumbnail(galleryThumbnailSelector)}
-    title={work.title}
+    title={work.label}
   />
 );
 

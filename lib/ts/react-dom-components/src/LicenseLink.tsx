@@ -11,5 +11,5 @@ export const LicenseLink: React.FunctionComponent<{
     return <span>{license as string}</span>;
   }
   const licenseModel = license as License;
-  return <a href={licenseModel.uri}>{licenseModel.title}</a>;
+  return <a href={licenseModel.uri}>{licenseModel.label}</a>;
 };

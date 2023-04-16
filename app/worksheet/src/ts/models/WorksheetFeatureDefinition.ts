@@ -12,12 +12,12 @@ export class WorksheetFeatureDefinition {
     return this.property.images;
   }
 
-  get order() {
-    return this.property.order;
+  get label() {
+    return this.property.label;
   }
 
-  get title() {
-    return this.property.label;
+  get order() {
+    return this.property.order;
   }
 
   get uri() {

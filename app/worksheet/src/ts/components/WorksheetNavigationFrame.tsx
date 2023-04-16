@@ -1,5 +1,4 @@
 import classnames from "classnames";
-import {Hrefs} from "~/Hrefs";
 import * as React from "react";
 import {Dispatch, ReactNode, useCallback, useState} from "react";
 import Hammer from "react-hammerjs";
@@ -14,25 +13,24 @@ import {
   Progress,
   Row,
 } from "reactstrap";
-import {Worksheet} from "~/models/Worksheet";
-import {Frame} from "~/components/Frame";
-import {Headline} from "~/components/Headline";
 import {useQueryParam} from "use-query-params";
-import {WorksheetMode} from "~/models/WorksheetMode";
-import {WorksheetReducerAction} from "~/hooks/useWorksheet";
 import {Exception} from "~/Exception";
+import {Hrefs} from "~/Hrefs";
+import {Frame} from "~/components/Frame";
 import {GenericErrorHandler} from "~/components/GenericErrorHandler";
+import {Headline} from "~/components/Headline";
+import {WorksheetReducerAction} from "~/hooks/useWorksheet";
+import {Worksheet} from "~/models/Worksheet";
+import {WorksheetMode} from "~/models/WorksheetMode";
 
-export const WorksheetNavigationFrame: React.FunctionComponent<
-  React.PropsWithChildren<{
-    dispatchWorksheet: Dispatch<WorksheetReducerAction>;
-    finishButtonEnabled: boolean;
-    headline: string;
-    nextButtonEnabled: boolean;
-    previousButtonEnabled: boolean;
-    worksheet: Worksheet;
-  }>
-> = ({
+export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithChildren<{
+  dispatchWorksheet: Dispatch<WorksheetReducerAction>;
+  finishButtonEnabled: boolean;
+  headline: string;
+  nextButtonEnabled: boolean;
+  previousButtonEnabled: boolean;
+  worksheet: Worksheet;
+}>> = ({
   children,
   finishButtonEnabled,
   headline,
@@ -97,7 +95,7 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
             worksheetStateId: worksheet.stateId,
           })}
         >
-          Feature Set: {worksheet.currentFeatureSet.definition.title}
+          Feature Set: {worksheet.currentFeatureSet.definition.label}
         </Link>
       </BreadcrumbItem>
     );
@@ -114,7 +112,7 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
             worksheetStateId: worksheet.stateId,
           })}
         >
-          Feature: {worksheet.currentFeature.definition.title}
+          Feature: {worksheet.currentFeature.definition.label}
         </Link>
       </BreadcrumbItem>
     );
@@ -193,7 +191,7 @@ export const WorksheetNavigationFrame: React.FunctionComponent<
                   <Input
                     id="modeSelect"
                     name="modeSelect"
-                    onChange={(event) => {
+                    onChange={event => {
                       const newMode = event.target.value;
                       worksheet
                         .save()

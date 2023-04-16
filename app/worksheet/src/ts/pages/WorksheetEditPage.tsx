@@ -1,11 +1,11 @@
 import * as React from "react";
-import {useWorksheet} from "~/hooks/useWorksheet";
 import {Col, Container, Input, Row} from "reactstrap";
 import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
+import {useWorksheet} from "~/hooks/useWorksheet";
 // import {useReducer} from "react";
-import {Spinner} from "~/components/Spinner";
-import {MasterDetailContainer} from "~/components/MasterDetailContainer";
 import {GenericErrorHandler} from "~/components/GenericErrorHandler";
+import {MasterDetailContainer} from "~/components/MasterDetailContainer";
+import {Spinner} from "~/components/Spinner";
 
 export const WorksheetEditPage: React.FunctionComponent = () => {
   const {
@@ -45,12 +45,12 @@ export const WorksheetEditPage: React.FunctionComponent = () => {
                 altLabels: null,
                 description: featureSet.definition.description,
                 images: featureSet.definition.images,
+                label: featureSet.definition.label,
                 onToggleSelected: () => {
                   featureSet.selected = !featureSet.selected;
                   dispatchWorksheet({payload: worksheet});
                 },
                 selected: featureSet.selected,
-                title: featureSet.definition.title!,
               }))}
               mode={worksheet.currentMark.mode}
             />
