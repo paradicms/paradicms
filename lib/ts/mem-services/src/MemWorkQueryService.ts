@@ -8,8 +8,6 @@ import {
   Work,
   WorkEvent,
 } from "@paradicms/models";
-import lunr, {Index} from "lunr";
-import invariant from "ts-invariant";
 import {
   defaultWorkAgentsSort,
   defaultWorkEventsSort,
@@ -41,6 +39,8 @@ import {
   WorksSort,
   WorksSortProperty,
 } from "@paradicms/services";
+import lunr, {Index} from "lunr";
+import invariant from "ts-invariant";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -64,7 +64,7 @@ interface MutableValueFacetValue<ValueT extends JsonPrimitiveType>
   count: number;
 }
 
-export class LunrWorkQueryService implements WorkQueryService {
+export class MemWorkQueryService implements WorkQueryService {
   private readonly index: Index;
   private readonly modelSet: ModelSet;
 
@@ -85,7 +85,7 @@ export class LunrWorkQueryService implements WorkQueryService {
     this.index = lunr(function() {
       const propertyFieldNamesByUri: {[index: string]: string} = {};
       for (const propertyUri of searchablePropertyUris) {
-        const fieldName = LunrWorkQueryService.encodeFieldName(propertyUri);
+        const fieldName = MemWorkQueryService.encodeFieldName(propertyUri);
         propertyFieldNamesByUri[propertyUri] = fieldName;
         this.field(fieldName);
       }
@@ -141,7 +141,7 @@ export class LunrWorkQueryService implements WorkQueryService {
                   label: propertyValue.label,
                   value: propertyValueString,
                   thumbnail: valueFacetValueThumbnailSelector
-                    ? LunrWorkQueryService.toValueFacetValueThumbnail(
+                    ? MemWorkQueryService.toValueFacetValueThumbnail(
                         propertyValue.thumbnail(
                           valueFacetValueThumbnailSelector
                         )
@@ -179,7 +179,7 @@ export class LunrWorkQueryService implements WorkQueryService {
       switch (filter.type) {
         case "StringPropertyValue": {
           filteredWorks = filteredWorks.filter(work =>
-            LunrWorkQueryService.testValueFilter(
+            MemWorkQueryService.testValueFilter(
               filter as StringPropertyValueFilter,
               work
                 .propertyValues(
@@ -224,7 +224,7 @@ export class LunrWorkQueryService implements WorkQueryService {
       );
 
       const sortedAgents = agents;
-      LunrWorkQueryService.sortWorkAgentsInPlace(
+      MemWorkQueryService.sortWorkAgentsInPlace(
         options.sort ?? defaultWorkAgentsSort,
         sortedAgents
       );
@@ -282,7 +282,7 @@ export class LunrWorkQueryService implements WorkQueryService {
       // # 95: if search text specified, leave the works in the order they came out of Lunr (sorted by score/relevance).
       // If not, sort the works by title
       const sortedWorks = filteredWorks.concat();
-      LunrWorkQueryService.sortWorksInPlace(
+      MemWorkQueryService.sortWorksInPlace(
         options.sort ?? defaultWorksSort,
         sortedWorks
       );
@@ -340,7 +340,7 @@ export class LunrWorkQueryService implements WorkQueryService {
         );
         return;
       default:
-        LunrWorkQueryService.sortWorkAgentsInPlace(
+        MemWorkQueryService.sortWorkAgentsInPlace(
           defaultWorkAgentsSort,
           workAgents
         );
@@ -366,7 +366,7 @@ export class LunrWorkQueryService implements WorkQueryService {
         );
         return;
       default:
-        LunrWorkQueryService.sortWorkEventsInPlace(
+        MemWorkQueryService.sortWorkEventsInPlace(
           defaultWorkEventsSort,
           workEvents
         );
@@ -387,7 +387,7 @@ export class LunrWorkQueryService implements WorkQueryService {
         );
         return;
       default:
-        LunrWorkQueryService.sortWorksInPlace(defaultWorksSort, works);
+        MemWorkQueryService.sortWorksInPlace(defaultWorksSort, works);
         return;
     }
   }
@@ -488,7 +488,7 @@ export class LunrWorkQueryService implements WorkQueryService {
       );
 
       const sortedWorkEvents = workEvents;
-      LunrWorkQueryService.sortWorkEventsInPlace(
+      MemWorkQueryService.sortWorkEventsInPlace(
         options.sort ?? defaultWorkEventsSort,
         sortedWorkEvents
       );

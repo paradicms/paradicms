@@ -8,11 +8,11 @@ import {
 import { syntheticData } from "@paradicms/test";
 import { vra } from "@paradicms/vocabularies";
 import { expect } from "chai";
-import { LunrWorkQueryService } from "../src/LunrWorkQueryService";
+import { MemWorkQueryService } from "../src/MemWorkQueryService";
 
-describe("LunrWorkQueryService", () => {
+describe("MemWorkQueryService", () => {
   const modelSet = ModelSetFactory.fromDatasetCore(syntheticData);
-  const sut = new LunrWorkQueryService({
+  const sut = new MemWorkQueryService({
     modelSet
   });
 

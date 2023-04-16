@@ -1,4 +1,4 @@
-import {LunrWorkQueryService} from "@paradicms/lunr";
+import {MemWorkQueryService} from "@paradicms/mem-services";
 import {ModelSet, ModelSetFactory, ModelSubsetter} from "@paradicms/models";
 import {getAbsoluteImageSrc, readModelSetFile} from "@paradicms/next";
 import {
@@ -48,7 +48,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   const router = useRouter();
   const workQueryService = useMemo<WorkQueryService>(
     () =>
-      new LunrWorkQueryService({
+      new MemWorkQueryService({
         modelSet,
       }),
     [configuration, modelSet]

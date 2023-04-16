@@ -1,9 +1,8 @@
 {
   "author": "Minor Gordon",
-  "name": "@paradicms/lunr",
-  "description": "Paradicms lunr library",
+  "name": "@paradicms/mem-services",
+  "description": "Paradicms memory-backed service implementations",
   "dependencies": {
-    "@paradicms/models": "1.0.5",
     "@paradicms/services": "1.0.5",
     "@types/lunr": "^2.3.3",
     "base-x": "^3.0.8",

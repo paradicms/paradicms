@@ -1,21 +1,21 @@
-import {Image} from "./Image";
-import {ModelSet} from "./ModelSet";
-import {Collection} from "./Collection";
-import {License} from "./License";
-import {RightsStatement} from "./RightsStatement";
-import {Concept} from "./Concept";
-import {Work} from "./Work";
-import {Person} from "./Person";
-import {Organization} from "./Organization";
-import {Agent} from "./Agent";
-import {Event} from "./Event";
 import {DataFactory, Store} from "@paradicms/rdf";
-import {AppConfiguration} from "./AppConfiguration";
-import {Model} from "./Model";
-import {Property} from "./Property";
-import {Location} from "./Location";
 import invariant from "ts-invariant";
+import {Agent} from "./Agent";
+import {AppConfiguration} from "./AppConfiguration";
+import {Collection} from "./Collection";
+import {Concept} from "./Concept";
+import {Event} from "./Event";
+import {Image} from "./Image";
+import {License} from "./License";
+import {Location} from "./Location";
+import {Model} from "./Model";
+import {ModelSet} from "./ModelSet";
 import {ModelSetFactory} from "./ModelSetFactory";
+import {Organization} from "./Organization";
+import {Person} from "./Person";
+import {Property} from "./Property";
+import {RightsStatement} from "./RightsStatement";
+import {Work} from "./Work";
 
 export class ModelSetBuilder {
   private appConfiguration: AppConfiguration | null | undefined;
@@ -31,7 +31,7 @@ export class ModelSetBuilder {
   private rightsStatementsByUri: {[index: string]: RightsStatement} | undefined;
   private worksByUri: {[index: string]: Work} | undefined;
 
-  addAgent(agent: Agent) {
+  addAgent(agent: Agent): ModelSetBuilder {
     const self = this;
     return agent.accept({
       visitOrganization(organization: Organization) {
@@ -43,7 +43,9 @@ export class ModelSetBuilder {
     });
   }
 
-  addAppConfiguration(appConfiguration: AppConfiguration | null) {
+  addAppConfiguration(
+    appConfiguration: AppConfiguration | null
+  ): ModelSetBuilder {
     if (typeof this.appConfiguration !== "undefined") {
       throw new RangeError("tried to add AppConfiguration twice");
     }
@@ -51,7 +53,7 @@ export class ModelSetBuilder {
     return this;
   }
 
-  addCollection(collection: Collection) {
+  addCollection(collection: Collection): ModelSetBuilder {
     this.collectionsByUri = ModelSetBuilder.addNamedModel(
       this.collectionsByUri,
       collection
@@ -59,7 +61,7 @@ export class ModelSetBuilder {
     return this;
   }
 
-  addCollections(collections: readonly Collection[]) {
+  addCollections(collections: readonly Collection[]): ModelSetBuilder {
     this.collectionsByUri = ModelSetBuilder.addNamedModels(
       this.collectionsByUri,
       collections
@@ -67,22 +69,38 @@ export class ModelSetBuilder {
     return this;
   }
 
-  addEvent(event: Event) {
+  addConcept(concept: Concept): ModelSetBuilder {
+    this.conceptsByUri = ModelSetBuilder.addNamedModel(
+      this.conceptsByUri,
+      concept
+    );
+    return this;
+  }
+
+  addConcepts(concepts: readonly Concept[]): ModelSetBuilder {
+    this.conceptsByUri = ModelSetBuilder.addNamedModels(
+      this.conceptsByUri,
+      concepts
+    );
+    return this;
+  }
+
+  addEvent(event: Event): ModelSetBuilder {
     this.eventsByUri = ModelSetBuilder.addNamedModel(this.eventsByUri, event);
     return this;
   }
 
-  addImage(image: Image) {
+  addImage(image: Image): ModelSetBuilder {
     this.imagesByUri = ModelSetBuilder.addNamedModel(this.imagesByUri, image);
     return this;
   }
 
-  addImages(images: readonly Image[]) {
+  addImages(images: readonly Image[]): ModelSetBuilder {
     this.imagesByUri = ModelSetBuilder.addNamedModels(this.imagesByUri, images);
     return this;
   }
 
-  addLicense(license: License) {
+  addLicense(license: License): ModelSetBuilder {
     this.licensesByUri = ModelSetBuilder.addNamedModel(
       this.licensesByUri,
       license
@@ -90,7 +108,7 @@ export class ModelSetBuilder {
     return this;
   }
 
-  addLicenses(licenses: readonly License[]) {
+  addLicenses(licenses: readonly License[]): ModelSetBuilder {
     this.licensesByUri = ModelSetBuilder.addNamedModels(
       this.licensesByUri,
       licenses
@@ -98,7 +116,7 @@ export class ModelSetBuilder {
     return this;
   }
 
-  addLocation(location: Location) {
+  addLocation(location: Location): ModelSetBuilder {
     const locationUri = (location as any).uri;
     invariant(locationUri, "only named locations can be added");
     if (!this.locationsByUri) {
@@ -138,7 +156,7 @@ export class ModelSetBuilder {
     return addedModels;
   }
 
-  addOrganization(organization: Organization) {
+  addOrganization(organization: Organization): ModelSetBuilder {
     this.organizationsByUri = ModelSetBuilder.addNamedModel(
       this.organizationsByUri,
       organization
@@ -146,12 +164,12 @@ export class ModelSetBuilder {
     return this;
   }
 
-  addPerson(person: Person) {
+  addPerson(person: Person): ModelSetBuilder {
     this.peopleByUri = ModelSetBuilder.addNamedModel(this.peopleByUri, person);
     return this;
   }
 
-  addProperties(properties: readonly Property[]) {
+  addProperties(properties: readonly Property[]): ModelSetBuilder {
     this.propertiesByUri = ModelSetBuilder.addNamedModels(
       this.propertiesByUri,
       properties
@@ -159,7 +177,7 @@ export class ModelSetBuilder {
     return this;
   }
 
-  addProperty(property: Property) {
+  addProperty(property: Property): ModelSetBuilder {
     this.propertiesByUri = ModelSetBuilder.addNamedModel(
       this.propertiesByUri,
       property
@@ -167,33 +185,7 @@ export class ModelSetBuilder {
     return this;
   }
 
-  addWork(work: Work) {
-    this.worksByUri = ModelSetBuilder.addNamedModel(this.worksByUri, work);
-    return this;
-  }
-
-  addWorks(works: readonly Work[]) {
-    this.worksByUri = ModelSetBuilder.addNamedModels(this.worksByUri, works);
-    return this;
-  }
-
-  addConcept(concept: Concept) {
-    this.conceptsByUri = ModelSetBuilder.addNamedModel(
-      this.conceptsByUri,
-      concept
-    );
-    return this;
-  }
-
-  addConcepts(concepts: readonly Concept[]) {
-    this.conceptsByUri = ModelSetBuilder.addNamedModels(
-      this.conceptsByUri,
-      concepts
-    );
-    return this;
-  }
-
-  addRightsStatement(rightsStatement: RightsStatement) {
+  addRightsStatement(rightsStatement: RightsStatement): ModelSetBuilder {
     this.rightsStatementsByUri = ModelSetBuilder.addNamedModel(
       this.rightsStatementsByUri,
       rightsStatement
@@ -201,11 +193,23 @@ export class ModelSetBuilder {
     return this;
   }
 
-  addRightsStatements(rightsStatements: readonly RightsStatement[]) {
+  addRightsStatements(
+    rightsStatements: readonly RightsStatement[]
+  ): ModelSetBuilder {
     this.rightsStatementsByUri = ModelSetBuilder.addNamedModels(
       this.rightsStatementsByUri,
       rightsStatements
     );
+    return this;
+  }
+
+  addWork(work: Work): ModelSetBuilder {
+    this.worksByUri = ModelSetBuilder.addNamedModel(this.worksByUri, work);
+    return this;
+  }
+
+  addWorks(works: readonly Work[]): ModelSetBuilder {
+    this.worksByUri = ModelSetBuilder.addNamedModels(this.worksByUri, works);
     return this;
   }
 
