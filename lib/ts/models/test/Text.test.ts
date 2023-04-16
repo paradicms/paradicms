@@ -14,8 +14,4 @@ describe("Text", () => {
     const license = sut.license;
     expect(license).to.not.be.null;
   });
-
-  it("should return the text from .toString()", () => {
-    expect(sut.toString()).to.eq(sut.value);
-  });
 });

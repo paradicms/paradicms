@@ -5,5 +5,4 @@ export interface RightsStatement extends NamedModel {
   readonly description: string | null;
   readonly identifier: string;
   readonly prefLabel: string;
-  toString(): string;
 }

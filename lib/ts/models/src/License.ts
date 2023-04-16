@@ -4,5 +4,4 @@ export interface License extends NamedModel {
   readonly identifier: string;
   readonly requiresAttribution: boolean;
   readonly title: string;
-  toString(): string;
 }

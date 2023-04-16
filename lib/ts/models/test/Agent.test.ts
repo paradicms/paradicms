@@ -19,10 +19,6 @@ describe("Agent", () => {
     expect(sut.page).to.not.be.empty;
   });
 
-  it("should call the agent's .toString()", () => {
-    expect(sut.toString()).to.eq(sut.name);
-  });
-
   it("should get the agent's Wikidata concept URI", () => {
     expect(sut.wikidataConceptUri).to.eq(
       "http://www.wikidata.org/entity/Q7251"

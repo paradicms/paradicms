@@ -15,8 +15,4 @@ describe("License", () => {
   it("should get the license's uri", () => {
     expect(sut.uri).to.not.be.empty;
   });
-
-  it("should return the title from .toString()", () => {
-    expect(sut.toString()).to.eq(sut.title);
-  });
 });

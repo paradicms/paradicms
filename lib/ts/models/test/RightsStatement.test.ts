@@ -19,8 +19,4 @@ describe("RightsStatement", () => {
   it("should get the statement's prefLabel", () => {
     expect(sut.prefLabel).to.not.be.empty;
   });
-
-  it("should return the statement's prefLabel from .toString()", () => {
-    expect(sut.toString()).to.eq(sut.prefLabel);
-  });
 });
