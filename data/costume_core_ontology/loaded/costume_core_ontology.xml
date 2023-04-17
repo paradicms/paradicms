@@ -133,7 +133,7 @@
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
   </rdf:Description>
   <rdf:Description rdf:nodeID="Nc40a42bc031345978ab5ad3b37d71605">
-    <rdfs:label xml:lang="en">An amorphous, inorganic substance made by fusing silica (silicon dioxide) with a basic oxide; generally transparent but often translucent or opaque. Its characteristic properties are its hardness and rigidity at ordinary temperatures, its capacity for plastic working at elevated temperatures, and its resistance to weathering and to most chemicals except hydrofluoric acid. Used for both utilitarian and decorative purposes, it can be formed into various shapes, colored or decorated. Glass originated as a glaze in Mesopotamia in about 3500 BCE and the first objects made wholly of glass date to about 2500 BCE.</rdfs:label>
+    <rdfs:label xml:lang="en">An amorphous, inorganic substance made by fusing silica (silicon dioxide) with a basic oxide; generally transparent but often translucent or opaque. Its characteristic imageProperties are its hardness and rigidity at ordinary temperatures, its capacity for plastic working at elevated temperatures, and its resistance to weathering and to most chemicals except hydrofluoric acid. Used for both utilitarian and decorative purposes, it can be formed into various shapes, colored or decorated. Glass originated as a glaze in Mesopotamia in about 3500 BCE and the first objects made wholly of glass date to about 2500 BCE.</rdfs:label>
     <dcterms:creator>The J. Paul Getty Trust</dcterms:creator>
     <dcterms:source rdf:resource="http://www.getty.edu/research/tools/vocabularies/aat/"/>
     <dcterms:license rdf:resource="https://opendatacommons.org/licenses/by/1-0/"/>
@@ -4230,7 +4230,7 @@ When additions are made to the catalog record, additional names and dates should
     <rdfs:label xml:lang="en">glass</rdfs:label>
     <dcterms:identifier>CC00215</dcterms:identifier>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
-    <dcterms:description xml:lang="en">An amorphous, inorganic substance made by fusing silica (silicon dioxide) with a basic oxide; generally transparent but often translucent or opaque. Its characteristic properties are its hardness and rigidity at ordinary temperatures, its capacity for plastic working at elevated temperatures, and its resistance to weathering and to most chemicals except hydrofluoric acid. Used for both utilitarian and decorative purposes, it can be formed into various shapes, colored or decorated. Glass originated as a glaze in Mesopotamia in about 3500 BCE and the first objects made wholly of glass date to about 2500 BCE.</dcterms:description>
+    <dcterms:description xml:lang="en">An amorphous, inorganic substance made by fusing silica (silicon dioxide) with a basic oxide; generally transparent but often translucent or opaque. Its characteristic imageProperties are its hardness and rigidity at ordinary temperatures, its capacity for plastic working at elevated temperatures, and its resistance to weathering and to most chemicals except hydrofluoric acid. Used for both utilitarian and decorative purposes, it can be formed into various shapes, colored or decorated. Glass originated as a glaze in Mesopotamia in about 3500 BCE and the first objects made wholly of glass date to about 2500 BCE.</dcterms:description>
     <dcterms:description rdf:nodeID="Nc40a42bc031345978ab5ad3b37d71605"/>
     <owl:sameAs rdf:resource="http://vocab.getty.edu/aat/300010797"/>
   </rdf:Description>
