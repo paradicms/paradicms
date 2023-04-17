@@ -9097,7 +9097,7 @@ ns1:4a484c6537e2e9673410eb844b48be68b3124aa211ab0bb75cd97b6f00ff0ba1 {
 
 ns1:fa3fc6771fa8a3e6961c8e61d81e627c2de4edb864ddce5a3bdf5dc1e3c47108 {
     <urn:paradicms_etl:pipeline:synthetic_data:property_group> a cms:PropertyGroup ;
-        rdfs:label "Synthetic data imageProperties" .
+        rdfs:label "Synthetic data properties" .
 }
 
 ns1:e2e303e64f0cf425a590b2a44dfc4186a2cf1d97e396ac3c42e3f9d2f0ed0b39 {
