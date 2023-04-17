@@ -8,6 +8,8 @@ from paradicms_etl.models.cms.cms_named_location import CmsNamedLocation
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.cms.cms_organization import CmsOrganization
 from paradicms_etl.models.cms.cms_person import CmsPerson
+from paradicms_etl.models.cms.cms_property import CmsProperty
+from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.cms.cms_rights_statement import CmsRightsStatement
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.cms.cms_work_closing import CmsWorkClosing
@@ -23,6 +25,8 @@ __CMS_ROOT_MODEL_CLASSES: Tuple[Type[CmsNamedModel], ...] = (
     CmsNamedLocation,
     CmsOrganization,
     CmsPerson,
+    CmsProperty,
+    CmsPropertyGroup,
     CmsRightsStatement,
     CmsWork,
     CmsWorkClosing,
