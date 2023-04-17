@@ -14,6 +14,7 @@ interface Cms {
     "http://www.paradicms.org/ns/cms#propertyFilterable"
   >;
   propertyGroup: NamedNode<"http://www.paradicms.org/ns/cms#propertyGroup">;
+  propertyOrder: NamedNode<"http://www.paradicms.org/ns/cms#propertyOrder">;
   propertySearchable: NamedNode<
     "http://www.paradicms.org/ns/cms#propertySearchable"
   >;

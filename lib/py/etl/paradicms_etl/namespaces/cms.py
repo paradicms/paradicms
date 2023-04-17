@@ -14,6 +14,7 @@ class CMS(DefinedNamespace):
     imageSrc: URIRef
     propertyFilterable: URIRef
     propertyGroup: URIRef
+    propertyOrder: URIRef
     propertySearchable: URIRef
     thumbnailOf: URIRef
     work: URIRef

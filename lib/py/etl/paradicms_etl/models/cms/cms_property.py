@@ -30,7 +30,7 @@ class CmsProperty(CmsNamedModel, Property):
             return self
 
         def set_order(self, order: int) -> "CmsProperty.Builder":
-            self.set(SH.order, order)
+            self.set(CMS.propertyOrder, order)
             return self
 
         def set_range(self, range_: URIRef) -> "CmsProperty.Builder":

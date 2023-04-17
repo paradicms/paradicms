@@ -1,5 +1,5 @@
 import {getRdfInstanceQuads} from "@paradicms/rdf";
-import {cms, rdfs, sh} from "@paradicms/vocabularies";
+import {cms, rdfs} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
@@ -33,7 +33,7 @@ export class CmsProperty
   }
 
   get order(): number {
-    return this.findAndMapObject(sh.order, this.mapIntObject) ?? 0;
+    return this.findAndMapObject(cms.propertyOrder, this.mapIntObject) ?? 0;
   }
 
   @Memoize()
