@@ -1,8 +1,9 @@
 import {expect} from "chai";
-import {ValueFilter, ValueFilterState} from "../src";
+import {StringPropertyValueFilter, ValueFilter, ValueFilterState} from "../src";
 
-const emptyFilter = (): ValueFilter<string> => ({
+const emptyFilter = (): StringPropertyValueFilter => ({
   label: "Ignored",
+  propertyUri: "http://example.com/property",
   type: "StringPropertyValue",
 });
 
