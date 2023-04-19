@@ -1,9 +1,9 @@
 import {ModelSetFactory} from "@paradicms/models";
-import {getAbsoluteImageSrc, readModelSetFile} from "@paradicms/next";
+import {getAbsoluteImageSrc, readModelSet} from "@paradicms/next";
 import {
+  defaultBootstrapStylesheetHref,
   RightsParagraph,
   WorkPage,
-  defaultBootstrapStylesheetHref,
 } from "@paradicms/react-dom-components";
 import {WorkLocationSummary} from "@paradicms/services";
 import fs from "fs";
@@ -14,9 +14,7 @@ import {useRouter} from "next/router";
 import * as React from "react";
 import {useMemo} from "react";
 import {Col, Container, Row} from "reactstrap";
-
-const readFile = (filePath: string) =>
-  fs.promises.readFile(filePath).then(contents => contents.toString());
+import path from "path";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -150,7 +148,11 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const modelSet = await readModelSetFile(readFile);
+  const modelSet = await readModelSet({
+    pathDelimiter: path.delimiter,
+    readFile: (filePath: string) =>
+      fs.promises.readFile(filePath).then(contents => contents.toString()),
+  });
   const collection = modelSet.collections[0];
 
   return {

@@ -3,7 +3,7 @@ import os
 import shutil
 import subprocess
 from pathlib import Path
-from typing import List, Optional, Union
+from typing import List, Union, Tuple
 
 import sys
 
@@ -38,16 +38,14 @@ class AppPackage:
 
         self.__app_dir_path = app_dir_path
 
-    def build(
-        self,
-        *,
-        data_file_path: Path,
-        configuration_file_path: Optional[Path] = None,
-    ) -> Path:
+    def build(self, *, data_file_paths: Tuple[Path, ...]) -> Path:
         """
         Build the app
         :return: directory path to the built site
         """
+
+        if not data_file_paths:
+            raise ValueError("must specify at least one data file path")
 
         self.__logger.info("building app")
 
@@ -69,8 +67,7 @@ class AppPackage:
 
         self.__run_script(
             "build",
-            configuration_file_path=configuration_file_path,
-            data_file_path=data_file_path,
+            data_file_paths=data_file_paths,
         )
         self.__logger.info("built GUI")
 
@@ -113,17 +110,11 @@ class AppPackage:
     def clean(self):
         self.__run_script("clean")
 
-    def dev(
-        self,
-        *,
-        data_file_path: Path,
-        configuration_file_path: Optional[Path] = None,
-    ):
-        self.__run_script(
-            "dev",
-            configuration_file_path=configuration_file_path,
-            data_file_path=data_file_path,
-        )
+    def dev(self, *, data_file_paths: Tuple[Path, ...] = ()):
+        if not data_file_paths:
+            raise ValueError("must specify at least one data file path")
+
+        self.__run_script("dev", data_file_paths=data_file_paths)
 
     @property
     def app_dir_path(self) -> Path:
@@ -133,16 +124,15 @@ class AppPackage:
         self,
         script,
         check=True,
-        configuration_file_path: Optional[Path] = None,
-        data_file_path: Optional[Path] = None,
+        data_file_paths: Tuple[Path, ...] = (),
         shell=None,
         **kwds,
     ):
         subprocess_env = os.environ.copy()
-        if configuration_file_path is not None:
-            subprocess_env["CONFIGURATION_FILE_PATH"] = str(configuration_file_path)
-        if data_file_path is not None:
-            subprocess_env["DATA_FILE_PATH"] = str(data_file_path)
+        if data_file_paths:
+            subprocess_env["DATA_FILE_PATHS"] = os.path.pathsep.join(
+                str(data_file_path) for data_file_path in data_file_paths
+            )
         subprocess_env["EDITOR"] = ""
         self.__logger.info("subprocess environment variables: %s", subprocess_env)
 

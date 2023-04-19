@@ -1,6 +1,6 @@
 import {MemWorkQueryService} from "@paradicms/mem-services";
 import {ModelSet, ModelSetFactory, ModelSubsetter} from "@paradicms/models";
-import {getAbsoluteImageSrc, readModelSetFile} from "@paradicms/next";
+import {getAbsoluteImageSrc, readModelSet} from "@paradicms/next";
 import {
   WorkSearchPage,
   workSearchWorkJoinSelector,
@@ -8,7 +8,6 @@ import {
 import {useWorkSearchQueryParams} from "@paradicms/react-dom-hooks";
 import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
 import {Layout} from "components/Layout";
-import fs from "fs";
 import {Hrefs} from "lib/Hrefs";
 import {GetStaticProps} from "next";
 import dynamic from "next/dynamic";
@@ -17,6 +16,8 @@ import {useRouter} from "next/router";
 import * as React from "react";
 import {useMemo} from "react";
 import {getDefaultWorksQueryFilters} from "../lib/getDefaultWorksQueryFilters";
+import path from "path";
+import fs from "fs";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -27,9 +28,6 @@ const WorkLocationsMap = dynamic<{
     ),
   {ssr: false}
 );
-
-const readFile = (filePath: string) =>
-  fs.promises.readFile(filePath).then(contents => contents.toString());
 
 interface StaticProps {
   readonly collectionTitle: string | null;
@@ -90,7 +88,11 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const completeModelSet = await readModelSetFile(readFile);
+  const completeModelSet = await readModelSet({
+    pathDelimiter: path.delimiter,
+    readFile: (filePath: string) =>
+      fs.promises.readFile(filePath).then(contents => contents.toString()),
+  });
 
   return {
     props: {

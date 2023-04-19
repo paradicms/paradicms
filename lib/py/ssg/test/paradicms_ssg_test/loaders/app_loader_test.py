@@ -60,9 +60,6 @@ def test_load_minimal(app: str, synthetic_data_models: Tuple[Model, ...], tmp_pa
     # Only pass in one original image so the test doesn't take too long
     app_loader(flush=True, models=[original_images[0]] + other_models)
 
-    assert (
-        loaded_data_dir_path / "data" / f"{SyntheticDataPipeline.ID}.trig"
-    ).is_file()
     assert (loaded_data_dir_path / "deployed" / "index.html").is_file()
 
 

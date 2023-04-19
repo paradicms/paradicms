@@ -1,5 +1,5 @@
 import {ModelSetFactory} from "@paradicms/models";
-import {readModelSetFile} from "@paradicms/next";
+import {readModelSet} from "@paradicms/next";
 import {RightsParagraph} from "@paradicms/react-dom-components";
 import fs from "fs";
 import {Hrefs} from "lib/Hrefs";
@@ -9,9 +9,7 @@ import * as React from "react";
 import {useMemo} from "react";
 import {Col, Container, Row} from "reactstrap";
 import {Layout} from "../components/Layout";
-
-const readFile = (filePath: string) =>
-  fs.promises.readFile(filePath).then(contents => contents.toString());
+import * as path from "path";
 
 interface StaticProps {
   readonly collectionUri: string;
@@ -83,7 +81,11 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const modelSet = await readModelSetFile(readFile);
+  const modelSet = await readModelSet({
+    pathDelimiter: path.delimiter,
+    readFile: (filePath: string) =>
+      fs.promises.readFile(filePath).then(contents => contents.toString()),
+  });
   const collection = modelSet.collections[0];
 
   return {

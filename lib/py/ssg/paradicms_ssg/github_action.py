@@ -34,9 +34,14 @@ class GitHubAction(ABC, Generic[InputsT]):
 
     def _create_loader(self) -> Loader:
         return AppLoader(
-            app_configuration=Path(self._inputs.app_configuration_file_path)
-            if self._inputs.app_configuration_file_path
-            else None,
+            data_file_paths=tuple(
+                Path(data_file_path)
+                for data_file_path in self._inputs.data_file_paths.split(
+                    os.path.pathsep
+                )
+            )
+            if self._inputs.data_file_paths
+            else (),
             deployer=FsDeployer(
                 # We're running in an environment that's never been used before, so no need to archive
                 archive=False,

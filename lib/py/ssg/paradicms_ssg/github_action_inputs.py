@@ -10,18 +10,16 @@ class GitHubActionInputs:
 
     REQUIRED = _RequiredType()
 
-    app_configuration_file_path: str = dataclasses.field(
-        default="",
-        metadata={
-            "description": "Path to an app configuration file, which controls the static site generator"
-        },
-    )
-
     build_directory_path: str = dataclasses.field(
         default="_site",
         metadata={
             "description": "Path to a directory where the generated static assets (CSS, HTML, JavaScript) should be placed"
         },
+    )
+
+    data_file_paths: str = dataclasses.field(
+        default="",
+        metadata={"description": "Colon-separated paths to one or more data files"},
     )
 
     debug: str = dataclasses.field(
