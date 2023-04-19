@@ -45,18 +45,21 @@ const getOptionValue = <T extends JsonPrimitiveType>(
   }
 };
 
-export const ValueFilterSelect = <T extends JsonPrimitiveType>(props: {
-  facet: ValueFacet<T>;
-  filter: ValueFilter<T>;
+export const ValueFilterSelect = <
+  ValueT extends JsonPrimitiveType,
+  ValueFilterT extends ValueFilter<ValueT>
+>(props: {
+  facet: ValueFacet<ValueT>;
+  filter: ValueFilterT;
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
-  onChange: (newFilter: ValueFilter<T>) => void;
+  onChange: (newFilter: ValueFilterT) => void;
 }) => {
   const {facet, filter, getAbsoluteImageSrc, onChange} = props;
 
   const useThumbnails = facet.values.every(value => !!value.thumbnail);
 
-  const options: ValueFilterSelectOption<T>[] = useMemo(() => {
-    const options: ValueFilterSelectOption<T>[] = [];
+  const options: ValueFilterSelectOption<ValueT>[] = useMemo(() => {
+    const options: ValueFilterSelectOption<ValueT>[] = [];
     if (facet.unknownCount > 0) {
       const knownCount = facet.values.reduce(
         (sum, value) => value.count + sum,
@@ -91,7 +94,7 @@ export const ValueFilterSelect = <T extends JsonPrimitiveType>(props: {
   }, [facet, filter]);
 
   return (
-    <Select<ValueFilterSelectOption<T>, true>
+    <Select<ValueFilterSelectOption<ValueT>, true>
       backspaceRemovesValue={true}
       formatOptionLabel={(option, formatOptionLabelMeta) => {
         switch (formatOptionLabelMeta.context) {

@@ -1,5 +1,4 @@
-import {FacetType} from "./FacetType";
+import {StringPropertyValueFacet} from "./StringPropertyValueFacet";
 
-export interface Facet {
-  readonly type: FacetType;
-}
+// Discriminated union on "type"
+export type Facet = StringPropertyValueFacet;
