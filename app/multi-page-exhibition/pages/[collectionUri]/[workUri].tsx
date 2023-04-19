@@ -118,11 +118,13 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 
 export default WorkPage;
 
+const readFile = (filePath: string) =>
+  fs.promises.readFile(filePath).then(contents => contents.toString());
+
 export const getStaticPaths: GetStaticPaths = async () => {
   const modelSet = await readModelSet({
     pathDelimiter: path.delimiter,
-    readFile: (filePath: string) =>
-      fs.promises.readFile(filePath).then(contents => contents.toString()),
+    readFile,
   });
 
   const paths: {params: {collectionUri: string; workUri: string}}[] = [];
@@ -156,8 +158,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   const completeModelSet = await readModelSet({
     pathDelimiter: path.delimiter,
-    readFile: (filePath: string) =>
-      fs.promises.readFile(filePath).then(contents => contents.toString()),
+    readFile,
   });
 
   const currentWork = completeModelSet.workByUri(workUri);
