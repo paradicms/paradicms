@@ -18,6 +18,7 @@ import dynamic from "next/dynamic";
 import {useRouter} from "next/router";
 import * as React from "react";
 import {useMemo} from "react";
+import path from "path";
 
 const readFile = (filePath: string) =>
   fs.promises.readFile(filePath).then(contents => contents.toString());
@@ -74,8 +75,14 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 export default WorkPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const modelSet = await readModelSet({
+    pathDelimiter: path.delimiter,
+    readFile: (filePath: string) =>
+      fs.promises.readFile(filePath).then(contents => contents.toString()),
+  });
+
   const paths: {params: {workUri: string}}[] = [];
-  for (const work of (await readModelSet(readFile)).works) {
+  for (const work of modelSet.works) {
     paths.push({
       params: {
         workUri: encodeFileName(work.uri),
@@ -93,7 +100,12 @@ export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
   const workUri = decodeFileName(params!.workUri as string);
-  const completeModelSet = await readModelSet(readFile);
+
+  const completeModelSet = await readModelSet({
+    pathDelimiter: path.delimiter,
+    readFile: (filePath: string) =>
+      fs.promises.readFile(filePath).then(contents => contents.toString()),
+  });
 
   return {
     props: {

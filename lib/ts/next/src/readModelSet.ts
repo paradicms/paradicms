@@ -8,35 +8,43 @@ import {
 
 let _modelSet: ModelSet | undefined;
 
-export const readModelSet = async (
+export const readModelSet = async (kwds: {
+  pathDelimiter: string;
   // There are issues importing "fs" from a library, so pass in the function we need here
   // https://github.com/vercel/next.js/issues/7755
-  readFile: (filePath: string) => Promise<string>
-): Promise<ModelSet> => {
+  readFile: (filePath: string) => Promise<string>;
+}): Promise<ModelSet> => {
+  const {pathDelimiter, readFile} = kwds;
+
   if (typeof _modelSet !== "undefined") {
     return Promise.resolve(_modelSet);
   }
 
-  const filePaths: string[] = [];
+  let dataFilePaths: string[] = [];
 
-  const configurationFilePath: string | undefined =
-    process.env.CONFIGURATION_FILE_PATH;
-  if (configurationFilePath) {
-    filePaths.push(configurationFilePath);
+  {
+    const dataFilePath = process.env.DATA_FILE_PATH;
+    if (dataFilePath) {
+      dataFilePaths.push(dataFilePath);
+    }
   }
 
-  const dataFilePath: string | undefined = process.env.DATA_FILE_PATH;
-  if (dataFilePath) {
-    filePaths.push(dataFilePath);
+  {
+    const dataFilePathsString = process.env.DATA_FILE_PATHS;
+    if (dataFilePathsString) {
+      dataFilePaths = dataFilePaths.concat(
+        dataFilePathsString.split(pathDelimiter)
+      );
+    }
   }
 
-  if (filePaths.length === 0) {
+  if (dataFilePaths.length === 0) {
     _modelSet = ModelSetFactory.fromDataset(createDataset());
     return Promise.resolve(_modelSet!);
   }
 
   const combinedStore = new Store();
-  for (const filePath of filePaths) {
+  for (const filePath of dataFilePaths) {
     const fileContents = await readFile(filePath);
     const fileDataset = await anyRdfStringToDataset(fileContents, {
       path: filePath,

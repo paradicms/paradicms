@@ -19,6 +19,7 @@ import {useRouter} from "next/router";
 import * as React from "react";
 import {useCallback, useMemo} from "react";
 import Hammer from "react-hammerjs";
+import path from "path";
 
 const WorkLocationsMap = dynamic<{
   readonly collectionUri: string;
@@ -30,9 +31,6 @@ const WorkLocationsMap = dynamic<{
     ),
   {ssr: false}
 );
-
-const readFile = (filePath: string) =>
-  fs.promises.readFile(filePath).then(contents => contents.toString());
 
 interface StaticProps {
   readonly collectionUri: string;
@@ -121,9 +119,13 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 export default WorkPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths: {params: {collectionUri: string; workUri: string}}[] = [];
+  const modelSet = await readModelSet({
+    pathDelimiter: path.delimiter,
+    readFile: (filePath: string) =>
+      fs.promises.readFile(filePath).then(contents => contents.toString()),
+  });
 
-  const modelSet = await readModelSet(readFile);
+  const paths: {params: {collectionUri: string; workUri: string}}[] = [];
 
   // Use first collection with works
   for (const collection of modelSet.collections) {
@@ -152,7 +154,11 @@ export const getStaticProps: GetStaticProps = async ({
   const collectionUri = decodeFileName(params!.collectionUri as string);
   const workUri = decodeFileName(params!.workUri as string);
 
-  const completeModelSet = await readModelSet(readFile);
+  const completeModelSet = await readModelSet({
+    pathDelimiter: path.delimiter,
+    readFile: (filePath: string) =>
+      fs.promises.readFile(filePath).then(contents => contents.toString()),
+  });
 
   const currentWork = completeModelSet.workByUri(workUri);
   const collectionWorks = completeModelSet.collectionWorks(collectionUri);

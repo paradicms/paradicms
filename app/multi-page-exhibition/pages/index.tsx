@@ -9,9 +9,7 @@ import * as React from "react";
 import {useMemo} from "react";
 import {Col, Container, Row} from "reactstrap";
 import {Layout} from "../components/Layout";
-
-const readFile = (filePath: string) =>
-  fs.promises.readFile(filePath).then(contents => contents.toString());
+import * as path from "path";
 
 interface StaticProps {
   readonly collectionUri: string;
@@ -83,7 +81,11 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const modelSet = await readModelSet(readFile);
+  const modelSet = await readModelSet({
+    pathDelimiter: path.delimiter,
+    readFile: (filePath: string) =>
+      fs.promises.readFile(filePath).then(contents => contents.toString()),
+  });
   const collection = modelSet.collections[0];
 
   return {
