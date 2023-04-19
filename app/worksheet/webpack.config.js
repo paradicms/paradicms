@@ -8,9 +8,13 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = (env, argv) => {
   const mode = argv && argv.mode ? argv.mode : "development";
 
-  const dataFilePaths = process.env.DATA_FILE_PATHS;
-  if (!dataFilePaths) {
+  const dataFilePath = process.env.DATA_FILE_PATHS;
+  if (!dataFilePath) {
     throw new EvalError("no data file paths specified");
+  } else if (dataFilePath.indexOf(path.delimiter) !== -1) {
+    throw new RangeError(
+      "cannot specify more than one data file path: " + dataFilePath
+    );
   }
 
   return {
