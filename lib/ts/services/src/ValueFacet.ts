@@ -1,5 +1,4 @@
 import {ValueFacetValue} from "./ValueFacetValue";
-import {Facet} from "./Facet";
 import {JsonPrimitiveType} from "./JsonPrimitiveType";
 
 /**
@@ -9,7 +8,7 @@ import {JsonPrimitiveType} from "./JsonPrimitiveType";
  *
  * The naming follows that of Lucene/ElasticSearch (value and range facets).
  */
-export interface ValueFacet<T extends JsonPrimitiveType> extends Facet {
+export interface ValueFacet<T extends JsonPrimitiveType> {
   /**
    * Count of models that do not have a value for the property.
    */

@@ -2,7 +2,6 @@ export * from "./defaultWorkAgentsSort";
 export * from "./defaultWorkEventsSort";
 export * from "./defaultWorksSort";
 export * from "./Facet";
-export * from "./FacetType";
 export * from "./Filter";
 export * from "./filterDiscriminatedUnionSchema";
 export * from "./FilterVisitor";
