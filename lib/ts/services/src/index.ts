@@ -5,7 +5,6 @@ export * from "./Facet";
 export * from "./FacetType";
 export * from "./Filter";
 export * from "./filterDiscriminatedUnionSchema";
-export * from "./FilterType";
 export * from "./FilterVisitor";
 export * from "./GetWorkAgentsOptions";
 export * from "./GetWorkAgentsResult";
