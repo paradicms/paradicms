@@ -8,9 +8,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = (env, argv) => {
   const mode = argv && argv.mode ? argv.mode : "development";
 
-  const dataFilePath = process.env.DATA_FILE_PATH;
-  if (!dataFilePath) {
-    throw new EvalError("no data file path specified");
+  const dataFilePaths = process.env.DATA_FILE_PATHS;
+  if (!dataFilePaths) {
+    throw new EvalError("no data file paths specified");
   }
 
   return {

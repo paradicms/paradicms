@@ -28,7 +28,7 @@ def test_build(synthetic_data_models: Tuple[Model, ...], tmp_path):
     gui_data_loader(flush=True, models=synthetic_data_models)
 
     app_out_dir_path = app_package.build(
-        data_file_path=tmp_path / (pipeline_id + ".trig")
+        data_file_paths=(tmp_path / (pipeline_id + ".trig"),)
     )
     assert app_out_dir_path == (app_package.app_dir_path / "out")
     assert app_out_dir_path.is_dir()
