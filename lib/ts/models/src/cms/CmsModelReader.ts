@@ -7,8 +7,8 @@ import {Concept} from "../Concept";
 import {DatasetModelReader} from "../DatasetModelReader";
 import {Image} from "../Image";
 import {License} from "../License";
+import {Location} from "../Location";
 import {ModelSet} from "../ModelSet";
-import {NamedLocation} from "../NamedLocation";
 import {Organization} from "../Organization";
 import {Person} from "../Person";
 import {Property} from "../Property";
@@ -21,7 +21,7 @@ import {CmsCollection} from "./CmsCollection";
 import {CmsConcept} from "./CmsConcept";
 import {CmsImage} from "./CmsImage";
 import {CmsLicense} from "./CmsLicense";
-import {CmsNamedLocation} from "./CmsNamedLocation";
+import {CmsLocation} from "./CmsLocation";
 import {CmsOrganization} from "./CmsOrganization";
 import {CmsPerson} from "./CmsPerson";
 import {CmsProperty} from "./CmsProperty";
@@ -91,10 +91,10 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readNamedLocations(kwds: {modelSet: ModelSet}): readonly NamedLocation[] {
+  readLocations(kwds: {modelSet: ModelSet}): readonly Location[] {
     return this.readNamedModels({
       class_: cms.Location,
-      factory: CmsNamedLocation,
+      factory: CmsLocation,
       ...kwds,
     });
   }

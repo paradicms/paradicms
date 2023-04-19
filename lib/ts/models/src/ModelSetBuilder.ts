@@ -117,12 +117,11 @@ export class ModelSetBuilder {
   }
 
   addLocation(location: Location): ModelSetBuilder {
-    const locationUri = (location as any).uri;
-    invariant(locationUri, "only named locations can be added");
+    invariant(location.uri, "only named locations can be added");
     if (!this.locationsByUri) {
       this.locationsByUri = {};
     }
-    this.locationsByUri[locationUri] = location;
+    this.locationsByUri[location.uri] = location;
     return this;
   }
 

@@ -3,8 +3,8 @@ import {Collection} from "./Collection";
 import {Concept} from "./Concept";
 import {Image} from "./Image";
 import {License} from "./License";
+import {Location} from "./Location";
 import {ModelSet} from "./ModelSet";
-import {NamedLocation} from "./NamedLocation";
 import {Organization} from "./Organization";
 import {Person} from "./Person";
 import {Property} from "./Property";
@@ -19,7 +19,7 @@ export interface ModelReader {
   readConcepts(kwds: {modelSet: ModelSet}): readonly Concept[];
   readImages(kwds: {modelSet: ModelSet}): readonly Image[];
   readLicenses(kwds: {modelSet: ModelSet}): readonly License[];
-  readNamedLocations(kwds: {modelSet: ModelSet}): readonly NamedLocation[];
+  readLocations(kwds: {modelSet: ModelSet}): readonly Location[];
   readOrganizations(kwds: {modelSet: ModelSet}): readonly Organization[];
   readPeople(kwds: {modelSet: ModelSet}): readonly Person[];
   readProperties(kwds: {modelSet: ModelSet}): readonly Property[];

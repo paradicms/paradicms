@@ -120,7 +120,7 @@ export class ModelSubsetter {
   }
 
   private addLocationModelSet(location: Location): void {
-    if (typeof (location as any).uri === "undefined") {
+    if (!location.uri) {
       return;
     }
     this.modelSetBuilder.addLocation(location);
