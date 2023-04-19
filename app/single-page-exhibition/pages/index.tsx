@@ -1,9 +1,9 @@
 import {ModelSetFactory} from "@paradicms/models";
-import {getAbsoluteImageSrc, readModelSetFile} from "@paradicms/next";
+import {getAbsoluteImageSrc, readModelSet} from "@paradicms/next";
 import {
+  defaultBootstrapStylesheetHref,
   RightsParagraph,
   WorkPage,
-  defaultBootstrapStylesheetHref,
 } from "@paradicms/react-dom-components";
 import {WorkLocationSummary} from "@paradicms/services";
 import fs from "fs";
@@ -150,7 +150,7 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const modelSet = await readModelSetFile(readFile);
+  const modelSet = await readModelSet(readFile);
   const collection = modelSet.collections[0];
 
   return {

@@ -3,11 +3,11 @@ import {
   decodeFileName,
   encodeFileName,
   getAbsoluteImageSrc,
-  readModelSetFile,
+  readModelSet,
 } from "@paradicms/next";
 import {
-  WorkPage as DelegateWorkPage,
   getNamedModelLinks,
+  WorkPage as DelegateWorkPage,
   workPageWorkJoinSelector,
 } from "@paradicms/react-dom-components";
 import {WorkLocationSummary} from "@paradicms/services";
@@ -75,7 +75,7 @@ export default WorkPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {workUri: string}}[] = [];
-  for (const work of (await readModelSetFile(readFile)).works) {
+  for (const work of (await readModelSet(readFile)).works) {
     paths.push({
       params: {
         workUri: encodeFileName(work.uri),
@@ -93,7 +93,7 @@ export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
   const workUri = decodeFileName(params!.workUri as string);
-  const completeModelSet = await readModelSetFile(readFile);
+  const completeModelSet = await readModelSet(readFile);
 
   return {
     props: {

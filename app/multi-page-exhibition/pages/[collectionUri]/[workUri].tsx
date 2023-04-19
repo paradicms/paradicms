@@ -3,7 +3,7 @@ import {
   decodeFileName,
   encodeFileName,
   getAbsoluteImageSrc,
-  readModelSetFile,
+  readModelSet,
 } from "@paradicms/next";
 import {
   WorkPage as DelegateWorkPage,
@@ -123,7 +123,7 @@ export default WorkPage;
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {collectionUri: string; workUri: string}}[] = [];
 
-  const modelSet = await readModelSetFile(readFile);
+  const modelSet = await readModelSet(readFile);
 
   // Use first collection with works
   for (const collection of modelSet.collections) {
@@ -152,7 +152,7 @@ export const getStaticProps: GetStaticProps = async ({
   const collectionUri = decodeFileName(params!.collectionUri as string);
   const workUri = decodeFileName(params!.workUri as string);
 
-  const completeModelSet = await readModelSetFile(readFile);
+  const completeModelSet = await readModelSet(readFile);
 
   const currentWork = completeModelSet.workByUri(workUri);
   const collectionWorks = completeModelSet.collectionWorks(collectionUri);

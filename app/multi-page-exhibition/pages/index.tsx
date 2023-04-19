@@ -1,5 +1,5 @@
 import {ModelSetFactory} from "@paradicms/models";
-import {readModelSetFile} from "@paradicms/next";
+import {readModelSet} from "@paradicms/next";
 import {RightsParagraph} from "@paradicms/react-dom-components";
 import fs from "fs";
 import {Hrefs} from "lib/Hrefs";
@@ -83,7 +83,7 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const modelSet = await readModelSetFile(readFile);
+  const modelSet = await readModelSet(readFile);
   const collection = modelSet.collections[0];
 
   return {

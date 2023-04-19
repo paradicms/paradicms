@@ -1,14 +1,14 @@
 import {ModelSet, ModelSetFactory} from "@paradicms/models";
 import {
-  DataFactory,
-  Store,
   anyRdfStringToDataset,
   createDataset,
+  DataFactory,
+  Store,
 } from "@paradicms/rdf";
 
 let _modelSet: ModelSet | undefined;
 
-export const readModelSetFile = async (
+export const readModelSet = async (
   // There are issues importing "fs" from a library, so pass in the function we need here
   // https://github.com/vercel/next.js/issues/7755
   readFile: (filePath: string) => Promise<string>

@@ -1,6 +1,6 @@
 import {MemWorkQueryService} from "@paradicms/mem-services";
 import {ModelSet, ModelSetFactory, ModelSubsetter} from "@paradicms/models";
-import {getAbsoluteImageSrc, readModelSetFile} from "@paradicms/next";
+import {getAbsoluteImageSrc, readModelSet} from "@paradicms/next";
 import {
   WorkSearchPage,
   workSearchWorkJoinSelector,
@@ -90,7 +90,7 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const completeModelSet = await readModelSetFile(readFile);
+  const completeModelSet = await readModelSet(readFile);
 
   return {
     props: {

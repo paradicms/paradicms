@@ -1,3 +1,3 @@
 export * from "./encodeFileName";
 export * from "./getAbsoluteImageSrc";
-export * from "./readModelSetFile";
+export * from "./readModelSet";
