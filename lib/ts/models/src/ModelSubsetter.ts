@@ -1,3 +1,4 @@
+import invariant from "ts-invariant";
 import {Agent} from "./Agent";
 import {AgentJoinSelector} from "./AgentJoinSelector";
 import {Collection} from "./Collection";
@@ -45,6 +46,8 @@ export class ModelSubsetter {
     joinSelector: AgentJoinSelector
   ): void {
     this.modelSetBuilder.addAgent(agent);
+
+    invariant(agent.uri, "can only add named agents");
 
     if (joinSelector.thumbnail) {
       const thumbnailImage = this.completeModelSet

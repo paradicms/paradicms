@@ -80,10 +80,6 @@ describe("ModelSet", () => {
     }
   });
 
-  it("should log its contents", () => {
-    sut.logContents();
-  });
-
   it("should serialize itself", () => {
     expect(sut.toFastRdfString()).to.not.be.empty;
   });

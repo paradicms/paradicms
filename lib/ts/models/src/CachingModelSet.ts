@@ -11,7 +11,6 @@ import {Location} from "./Location";
 import {Model} from "./Model";
 import {ModelReader} from "./ModelReader";
 import {ModelSet} from "./ModelSet";
-import {NamedModel} from "./NamedModel";
 import {Organization} from "./Organization";
 import {Person} from "./Person";
 import {Property} from "./Property";
@@ -137,7 +136,6 @@ export class CachingModelSet implements ModelSet {
         return agent;
       }
     }
-    // this.logContents();
     throw new RangeError("no such agent " + agentUri);
   }
 
@@ -286,39 +284,12 @@ export class CachingModelSet implements ModelSet {
     return requireDefined(this._locationsByUriIndex);
   }
 
-  logContents(): void {
-    const models: {[index: string]: readonly NamedModel[]} = {
-      collections: this.collections,
-      images: this.images,
-      licenses: this.licenses,
-      concepts: this.concepts,
-      organizations: this.organizations,
-      people: this.people,
-      rightsStatements: this.rightsStatements,
-      works: this.works,
-    };
-    for (const key of Object.keys(models)) {
-      const keyModels = models[key];
-      console.log(
-        "  ",
-        keyModels.length,
-        key,
-        ":",
-        keyModels
-          .map(model => model.uri)
-          .sort()
-          .join(" ")
-      );
-    }
-  }
-
   private modelByUri<ModelT>(
     index: {[index: string]: ModelT},
     uri: string
   ): ModelT {
     const model = this.modelByUriOptional(index, uri);
     if (!model) {
-      // this.logContents();
       throw new RangeError("no such model " + uri);
     }
     return model;

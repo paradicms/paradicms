@@ -117,18 +117,18 @@ export class ModelSetBuilder {
   }
 
   addLocation(location: Location): ModelSetBuilder {
-    invariant(location.uri, "only named locations can be added");
-    if (!this.locationsByUri) {
-      this.locationsByUri = {};
-    }
-    this.locationsByUri[location.uri] = location;
+    this.locationsByUri = ModelSetBuilder.addNamedModel(
+      this.locationsByUri,
+      location
+    );
     return this;
   }
 
-  private static addNamedModel<ModelT extends {uri: string}>(
+  private static addNamedModel<ModelT extends {uri: string | null}>(
     addedModels: {[index: string]: ModelT} | undefined,
     newModel: ModelT
   ): {[index: string]: ModelT} {
+    invariant(newModel.uri, "can only add named models");
     if (!addedModels) {
       addedModels = {};
     }
@@ -139,7 +139,7 @@ export class ModelSetBuilder {
     return addedModels;
   }
 
-  private static addNamedModels<ModelT extends {uri: string}>(
+  private static addNamedModels<ModelT extends {uri: string | null}>(
     addedModels: {[index: string]: ModelT} | undefined,
     newModels: readonly ModelT[]
   ): {[index: string]: ModelT} {
@@ -147,6 +147,7 @@ export class ModelSetBuilder {
       addedModels = {};
     }
     for (const newModel of newModels) {
+      invariant(newModel.uri, "can only add named models");
       const addedModel = addedModels[newModel.uri];
       if (!addedModel) {
         addedModels[newModel.uri] = newModel;

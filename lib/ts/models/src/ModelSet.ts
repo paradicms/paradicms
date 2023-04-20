@@ -27,7 +27,6 @@ export interface ModelSet {
   imagesByDepictsUri(depictsUri: string): readonly Image[];
   imagesByOriginalImageUri(originalImageUri: string): readonly Image[];
   licenseByUri(licenseUri: string): License;
-  logContents(): void;
   locationByUri(locationUri: string): Location;
   organizationByUri(organizationUri: string): Organization;
   organizationByUriOptional(organizationUri: string): Organization | null;
