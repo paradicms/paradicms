@@ -1,8 +1,8 @@
-import {Agent} from "./Agent";
 import {PropertyValue} from "./PropertyValue";
+import {AgentUnion} from "./AgentUnion";
 
 export class AgentPropertyValue extends PropertyValue {
-  constructor(readonly agent: Agent) {
+  constructor(readonly agent: AgentUnion) {
     super();
   }
 

@@ -1,7 +1,6 @@
 import {dcterms} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
-import {Agent} from "../Agent";
 import {License} from "../License";
 import {ResourceBackedModelMixin} from "../ResourceBackedModelMixin";
 import {RightsMixin} from "../RightsMixin";
@@ -9,6 +8,7 @@ import {RightsStatement} from "../RightsStatement";
 import {mapAgentObject} from "../mapAgentObject";
 import {CmsContributorsMixin} from "./CmsContributorsMixin";
 import {CmsCreatorsMixin} from "./CmsCreatorsMixin";
+import {AgentUnion} from "../AgentUnion";
 
 export abstract class CmsRightsMixin
   extends Mixin(
@@ -17,20 +17,8 @@ export abstract class CmsRightsMixin
     CmsCreatorsMixin
   )
   implements RightsMixin {
-  // @Memoize()
-  // get agents(): readonly Agent[] {
-  //   return this.agentUris.map(agentUri => this.modelSet.agentByUri(agentUri));
-  // }
-  //
-  // @Memoize()
-  // get agentUris(): readonly string[] {
-  //   return this.contributorAgentUris
-  //     .concat(this.creatorAgentUris)
-  //     .concat(this.rightsHolderAgentUris);
-  // }
-
   @Memoize()
-  get license(): License | string | null {
+  get license(): License | null {
     return this.findAndMapObject(dcterms.license, term => {
       switch (term.termType) {
         case "Literal":
@@ -55,26 +43,15 @@ export abstract class CmsRightsMixin
     return true;
   }
 
-  get rightsHolderAgents(): readonly Agent[] {
-    return this.rightsHolderAgentUris.map(agentUri =>
-      this.modelSet.agentByUri(agentUri)
-    );
-  }
-
   @Memoize()
-  get rightsHolderAgentUris(): readonly string[] {
-    return this.filterAndMapObjects(dcterms.rightsHolder, this.mapUriObject);
-  }
-
-  @Memoize()
-  get rightsHolders(): readonly (Agent | string)[] {
+  get rightsHolders(): readonly AgentUnion[] {
     return this.filterAndMapObjects(dcterms.rightsHolder, term =>
       mapAgentObject(this, term)
     );
   }
 
   @Memoize()
-  get rightsStatement(): RightsStatement | string | null {
+  get rightsStatement(): RightsStatement | null {
     return this.findAndMapObject(dcterms.rights, term => {
       switch (term.termType) {
         case "Literal":

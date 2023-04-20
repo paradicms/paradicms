@@ -6,7 +6,7 @@ import {mapTextObject} from "../mapTextObject";
 
 export abstract class CmsDescriptionMixin extends ResourceBackedNamedModelMixin {
   @Memoize()
-  get description(): string | Text | null {
+  get description(): Text | null {
     return this.findAndMapObject(dcterms.description, term =>
       mapTextObject(this, term)
     );

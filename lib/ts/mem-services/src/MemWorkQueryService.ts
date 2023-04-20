@@ -1,5 +1,6 @@
 import {
   Agent,
+  AgentUnion,
   defaultProperties,
   Image,
   ModelSet,
@@ -243,7 +244,6 @@ export class MemWorkQueryService implements WorkQueryService {
       resolve({
         modelSet: slicedAgentsModelSet,
         totalWorkAgentsCount: agents.length,
-        workAgentUris: slicedAgents.map(agent => agent.uri!),
       });
     });
   }
@@ -332,7 +332,7 @@ export class MemWorkQueryService implements WorkQueryService {
 
   private static sortWorkAgentsInPlace(
     sort: WorkAgentsSort,
-    workAgents: Agent[]
+    workAgents: AgentUnion[]
   ): void {
     const compareMultiplier = sort.ascending ? 1 : -1;
     switch (sort.property) {

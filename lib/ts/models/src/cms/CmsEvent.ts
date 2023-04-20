@@ -89,7 +89,7 @@ export abstract class CmsEvent
   abstract readonly label: string;
 
   @Memoize()
-  get location(): Location | string | null {
+  get location(): Location | null {
     return this.findAndMapObject(dcterms.spatial, term =>
       mapLocationObject(this, term)
     );

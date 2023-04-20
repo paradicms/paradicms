@@ -8,7 +8,7 @@ import {Agent} from "./Agent";
 export const mapAgentObject = (
   modelParameters: Omit<ResourceBackedModelParameters, "node">,
   term: Term
-): Agent | string | null => {
+): Agent | null => {
   switch (term.termType) {
     case "Literal":
       return term.value;

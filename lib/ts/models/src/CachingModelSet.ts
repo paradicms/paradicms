@@ -1,7 +1,6 @@
 import {datasetToFastRdfString} from "@paradicms/rdf";
 import {requireDefined} from "@paradicms/utilities";
 import {Dataset} from "rdf-js";
-import {Agent} from "./Agent";
 import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
 import {Concept} from "./Concept";
@@ -18,6 +17,7 @@ import {PropertyGroup} from "./PropertyGroup";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
 import {WorkEventUnion} from "./WorkEventUnion";
+import {AgentUnion} from "./AgentUnion";
 
 const indexModelsByUri = <ModelT extends Model>(
   models: readonly ModelT[]
@@ -125,7 +125,7 @@ export class CachingModelSet implements ModelSet {
 
   constructor(private readonly modelReaders: readonly ModelReader[]) {}
 
-  agentByUri(agentUri: string): Agent {
+  agentByUri(agentUri: string): AgentUnion {
     for (const index of [this.organizationsByUriIndex, this.peopleByUriIndex]) {
       const agent = index[agentUri];
       if (agent) {

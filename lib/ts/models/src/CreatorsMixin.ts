@@ -1,7 +1,5 @@
-import {Agent} from "./Agent";
+import {AgentUnion} from "./AgentUnion";
 
 export interface CreatorsMixin {
-  readonly creators: readonly (Agent | string)[];
-  readonly creatorAgents: readonly Agent[];
-  readonly creatorAgentUris: readonly string[];
+  readonly creators: readonly AgentUnion[];
 }

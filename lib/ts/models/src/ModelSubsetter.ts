@@ -1,5 +1,4 @@
 import invariant from "ts-invariant";
-import {Agent} from "./Agent";
 import {AgentJoinSelector} from "./AgentJoinSelector";
 import {Collection} from "./Collection";
 import {CollectionJoinSelector} from "./CollectionJoinSelector";
@@ -16,6 +15,7 @@ import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
 import {WorkJoinSelector} from "./WorkJoinSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {WorkEventUnion} from "./WorkEventUnion";
+import {AgentUnion} from "./AgentUnion";
 
 /**
  * Subset a ModelSet to reduce the amount of data passed between getStaticProps and the component.
@@ -39,7 +39,7 @@ export class ModelSubsetter {
   // Use the this.modelSetBuilder pattern internally rather than a more functional algorithm, such as merging modelSets,
   // which was the initial implementation
   private addAgentModelSet(
-    agent: Agent,
+    agent: AgentUnion,
     joinSelector: AgentJoinSelector
   ): void {
     this.modelSetBuilder.addAgent(agent);
@@ -276,7 +276,7 @@ export class ModelSubsetter {
   }
 
   agentsModelSet(
-    agents: readonly Agent[],
+    agents: readonly AgentUnion[],
     joinSelector?: AgentJoinSelector
   ): ModelSetBuilder {
     for (const agent of agents) {

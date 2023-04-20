@@ -2,14 +2,14 @@ import {faInfoCircle, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   Image,
-  Text,
   imagePlaceholderSrc,
   selectThumbnail,
+  Text,
 } from "@paradicms/models";
 import {
+  galleryThumbnailSelector,
   ImagesCarousel,
   RightsParagraph,
-  galleryThumbnailSelector,
 } from "@paradicms/react-dom-components";
 import {Literal} from "@rdfjs/types";
 import classnames from "classnames";
@@ -31,7 +31,7 @@ import {WorksheetMode} from "~/models/WorksheetMode";
 
 interface Item {
   altLabels: readonly Literal[] | null;
-  description: string | Text | null;
+  description: Text | null;
   images: readonly Image[];
   label: string;
   onToggleSelected: () => void | null;

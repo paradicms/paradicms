@@ -1,6 +1,5 @@
 import {DataFactory, Store} from "@paradicms/rdf";
 import invariant from "ts-invariant";
-import {Agent} from "./Agent";
 import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
 import {Concept} from "./Concept";
@@ -16,6 +15,7 @@ import {Person} from "./Person";
 import {Property} from "./Property";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
+import {AgentUnion} from "./AgentUnion";
 
 export class ModelSetBuilder {
   private appConfiguration: AppConfiguration | null | undefined;
@@ -31,16 +31,13 @@ export class ModelSetBuilder {
   private rightsStatementsByUri: {[index: string]: RightsStatement} | undefined;
   private worksByUri: {[index: string]: Work} | undefined;
 
-  addAgent(agent: Agent): ModelSetBuilder {
-    const self = this;
-    return agent.accept({
-      visitOrganization(organization: Organization) {
-        return self.addOrganization(organization);
-      },
-      visitPerson(person: Person) {
-        return self.addPerson(person);
-      },
-    });
+  addAgent(agent: AgentUnion): ModelSetBuilder {
+    switch (agent.type) {
+      case "Organization":
+        return this.addOrganization(agent);
+      case "Person":
+        return this.addPerson(agent);
+    }
   }
 
   addAppConfiguration(

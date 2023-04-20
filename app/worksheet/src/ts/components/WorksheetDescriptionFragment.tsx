@@ -3,7 +3,7 @@ import {RightsParagraph} from "@paradicms/react-dom-components";
 import * as React from "react";
 
 export const WorksheetDescriptionFragment: React.FunctionComponent<{
-  description: string | Text | null;
+  description: Text | null;
 }> = ({description}) => {
   if (!description) {
     return null;

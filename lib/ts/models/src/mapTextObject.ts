@@ -9,7 +9,7 @@ import {CmsText} from "./cms/CmsText";
 export const mapTextObject = (
   modelParameters: Omit<ResourceBackedModelParameters, "node">,
   term: Term
-): Text | string | null => {
+): Text | null => {
   switch (term.termType) {
     case "BlankNode":
       return new CmsText({...modelParameters, node: term});

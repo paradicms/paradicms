@@ -1,5 +1,5 @@
 import {Image, RightsMixin, Text, Work, WorkAgent} from "@paradicms/models";
-import {WorkLocationSummary, summarizeWorkLocation} from "@paradicms/services";
+import {summarizeWorkLocation, WorkLocationSummary} from "@paradicms/services";
 import * as React from "react";
 import {useMemo, useState} from "react";
 import {
@@ -32,7 +32,7 @@ export const WorkPage: React.FunctionComponent<{
   ) => React.ReactElement;
   work: Work;
 }> = ({getAbsoluteImageSrc, renderWorkLocationsMap, work}) => {
-  const workDescription: string | Text | null = useMemo(
+  const workDescription: Text | null = useMemo(
     () => work.description ?? work.description ?? null,
     [work]
   );

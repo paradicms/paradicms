@@ -128,7 +128,7 @@ export class CmsWork extends Mixin(
   }
 
   @Memoize()
-  override get description(): string | Text | null {
+  override get description(): Text | null {
     return this.findAndMapObject(dcterms.description, term =>
       mapTextObject(this, term)
     );

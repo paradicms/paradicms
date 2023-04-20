@@ -9,7 +9,7 @@ import {CmsLocation} from "./cms/CmsLocation";
 export const mapLocationObject = (
   modelParameters: Omit<ResourceBackedModelParameters, "node">,
   term: Term
-): Location | string | null => {
+): Location | null => {
   switch (term.termType) {
     case "BlankNode":
       return new CmsLocation({

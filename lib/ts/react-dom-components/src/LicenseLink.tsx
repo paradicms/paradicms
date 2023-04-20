@@ -2,7 +2,7 @@ import {License} from "@paradicms/models";
 import * as React from "react";
 
 export const LicenseLink: React.FunctionComponent<{
-  license: License | string | null;
+  license: License | null;
 }> = ({license}) => {
   if (!license) {
     return null;

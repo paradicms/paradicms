@@ -2,7 +2,7 @@ import {RightsStatement} from "@paradicms/models";
 import * as React from "react";
 
 export const RightsStatementLink: React.FunctionComponent<{
-  rightsStatement: string | RightsStatement | null;
+  rightsStatement: RightsStatement | null;
 }> = ({rightsStatement}) => {
   if (!rightsStatement) {
     return null;

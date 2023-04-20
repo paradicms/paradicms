@@ -8,6 +8,5 @@ export interface WorkCreation
     ContributorsMixin,
     CreatorsMixin {
   readonly agents: readonly Agent[];
-  readonly agentUris: readonly string[];
   readonly type: "WorkCreation";
 }
