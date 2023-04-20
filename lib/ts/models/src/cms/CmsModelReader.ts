@@ -16,6 +16,7 @@ import {PropertyGroup} from "../PropertyGroup";
 import {ResourceBackedModelParameters} from "../ResourceBackedModelParameters";
 import {RightsStatement} from "../RightsStatement";
 import {Work} from "../Work";
+import {WorkEventUnion} from "../WorkEventUnion";
 import {CmsCollection} from "./CmsCollection";
 import {CmsConcept} from "./CmsConcept";
 import {CmsImage} from "./CmsImage";
@@ -29,13 +30,13 @@ import {CmsRightsStatement} from "./CmsRightsStatement";
 import {CmsWork} from "./CmsWork";
 import {CmsWorkClosing} from "./CmsWorkClosing";
 import {CmsWorkCreation} from "./CmsWorkCreation";
-import {CmsWorkEvent} from "./CmsWorkEvent";
 import {CmsWorkOpening} from "./CmsWorkOpening";
-import {WorkEventUnion} from "../WorkEventUnion";
 
 const workEventClassesByRdfType = (() => {
   const result: {
-    [index: string]: {new (kwds: ResourceBackedModelParameters): CmsWorkEvent};
+    [index: string]: {
+      new (kwds: ResourceBackedModelParameters): WorkEventUnion;
+    };
   } = {};
   result[cms.WorkClosing.value] = CmsWorkClosing;
   result[cms.WorkCreation.value] = CmsWorkCreation;
