@@ -17,7 +17,7 @@ import {useEffect, useState} from "react";
 import {WorksGallery} from "./WorksGallery";
 import {Pagination} from "./Pagination";
 import {
-  Filter,
+  FilterUnion,
   GetWorkAgentsResult,
   GetWorkEventsResult,
   GetWorkLocationsResult,
@@ -65,7 +65,7 @@ const worksPageMax = (kwds: {
 export const WorkSearchPage: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   objectsPerPage: number;
-  onChangeFilters: (filters: readonly Filter[]) => void;
+  onChangeFilters: (filters: readonly FilterUnion[]) => void;
   renderWorkLink: (
     workUri: string,
     children: React.ReactNode

@@ -3,7 +3,7 @@ import {
   defaultWorkAgentsSort,
   defaultWorkEventsSort,
   defaultWorksSort,
-  Filter,
+  FilterUnion,
   WorkAgentsSort,
   WorkAgentsSortProperty,
   WorkEventsSort,
@@ -16,9 +16,9 @@ import {usePageQueryParam} from "./usePageQueryParam";
 import {useSortQueryParams} from "./useSortQueryParams";
 
 export const useWorkSearchQueryParams = (defaultWorksQuery: {
-  filters: readonly Filter[];
+  filters: readonly FilterUnion[];
 }): {
-  onChangeFilters: (filters: readonly Filter[]) => void;
+  onChangeFilters: (filters: readonly FilterUnion[]) => void;
   onSearch: (text: string) => void;
   setWorksQuery: (worksQuery: WorksQuery) => void;
   setWorkAgentsPage: (page: number | undefined) => void;

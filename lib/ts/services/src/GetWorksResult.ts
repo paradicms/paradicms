@@ -1,8 +1,8 @@
 import {ModelSet} from "@paradicms/models";
-import {Facet} from "./Facet";
+import {FacetUnion} from "./FacetUnion";
 
 export interface GetWorksResult {
   readonly modelSet: ModelSet;
-  readonly facets: readonly Facet[];
+  readonly facets: readonly FacetUnion[];
   readonly totalWorksCount: number;
 }

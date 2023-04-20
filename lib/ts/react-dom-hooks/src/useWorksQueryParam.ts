@@ -1,10 +1,10 @@
 import {useQueryParam} from "use-query-params";
 import {JsonQueryParamConfig} from "@paradicms/react-dom";
-import {Filter, WorksQuery, worksQuerySchema} from "@paradicms/services";
+import {FilterUnion, WorksQuery, worksQuerySchema} from "@paradicms/services";
 
 export const useWorksQueryParam = (
   defaultWorksQuery: {
-    filters: readonly Filter[];
+    filters: readonly FilterUnion[];
   },
   name: string
 ): [WorksQuery, (worksQuery: WorksQuery) => void] => {

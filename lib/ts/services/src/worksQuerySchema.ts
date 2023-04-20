@@ -1,7 +1,7 @@
 import {z} from "zod";
-import {filterDiscriminatedUnionSchema} from "./filterDiscriminatedUnionSchema";
+import {filterUnionSchema} from "./filterUnionSchema";
 
 export const worksQuerySchema = z.object({
-  filters: z.array(filterDiscriminatedUnionSchema),
+  filters: z.array(filterUnionSchema),
   text: z.string().optional(),
 });

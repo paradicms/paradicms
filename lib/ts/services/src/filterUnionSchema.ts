@@ -1,6 +1,6 @@
 import {z} from "zod";
 import {stringPropertyValueFilterSchema} from "./stringPropertyValueFilterSchema";
 
-export const filterDiscriminatedUnionSchema = z.discriminatedUnion("type", [
+export const filterUnionSchema = z.discriminatedUnion("type", [
   stringPropertyValueFilterSchema,
 ]);

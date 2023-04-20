@@ -1,22 +1,22 @@
 import * as React from "react";
-import {Facet, Filter} from "@paradicms/services";
+import {FacetUnion, FilterUnion} from "@paradicms/services";
 import {createFilterControl} from "./createFilterControl";
 
 export const createFilterControls = (kwds: {
-  facets: readonly Facet[];
-  filters: readonly Filter[];
+  facets: readonly FacetUnion[];
+  filters: readonly FilterUnion[];
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
-  onChangeFilters: (filters: readonly Filter[]) => void;
-}): readonly {control: React.ReactElement; filter: Filter}[] => {
+  onChangeFilters: (filters: readonly FilterUnion[]) => void;
+}): readonly {control: React.ReactElement; filter: FilterUnion}[] => {
   const {facets, filters, getAbsoluteImageSrc, onChangeFilters} = kwds;
 
   const filterControls: {
     control: React.ReactElement;
-    filter: Filter;
+    filter: FilterUnion;
   }[] = [];
 
   filters.forEach((filter, filterI) => {
-    const onChangeFilter = (newFilter: Filter) => {
+    const onChangeFilter = (newFilter: FilterUnion) => {
       const filtersCopy = kwds.filters.concat();
       filtersCopy[filterI] = newFilter;
       onChangeFilters(filtersCopy);

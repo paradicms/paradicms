@@ -12,8 +12,8 @@ import {
   defaultWorkAgentsSort,
   defaultWorkEventsSort,
   defaultWorksSort,
-  Facet,
-  Filter,
+  FacetUnion,
+  FilterUnion,
   GetWorkAgentsOptions,
   GetWorkAgentsResult,
   GetWorkEventsOptions,
@@ -112,12 +112,12 @@ export class MemWorkQueryService implements WorkQueryService {
   }
 
   private facetizeWorks(kwds: {
-    filters: readonly Filter[];
+    filters: readonly FilterUnion[];
     valueFacetValueThumbnailSelector?: ThumbnailSelector;
     works: readonly Work[];
-  }): readonly Facet[] {
+  }): readonly FacetUnion[] {
     const {filters, valueFacetValueThumbnailSelector, works} = kwds;
-    const facets: Facet[] = [];
+    const facets: FacetUnion[] = [];
     for (const filter of filters) {
       switch (filter.type) {
         case "StringPropertyValue": {
@@ -170,7 +170,7 @@ export class MemWorkQueryService implements WorkQueryService {
   }
 
   private filterWorks(kwds: {
-    filters: readonly Filter[];
+    filters: readonly FilterUnion[];
     works: readonly Work[];
   }): readonly Work[] {
     const {filters, works} = kwds;
