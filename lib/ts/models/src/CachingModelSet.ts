@@ -99,7 +99,6 @@ export class CachingModelSet implements ModelSet {
   private _appConfiguration?: AppConfiguration | null;
   private _collections?: readonly Collection[];
   private _collectionsByUriIndex?: {[index: string]: Collection};
-  private _concepts?: readonly Concept[];
   private _conceptsByUriIndex?: {[index: string]: Concept};
   private _images?: readonly Image[];
   private _imagesByDepictsUriIndex?: {[index: string]: readonly Image[]};
@@ -168,13 +167,6 @@ export class CachingModelSet implements ModelSet {
     return requireDefined(this._collectionsByUriIndex);
   }
 
-  private get concepts(): readonly Concept[] {
-    if (!this._concepts) {
-      this._concepts = sortModelsArray(this.readConcepts());
-    }
-    return requireDefined(this._concepts);
-  }
-
   conceptByUri(conceptUri: string): Concept {
     return this.modelByUri(this.conceptsByUriIndex, conceptUri);
   }
@@ -185,7 +177,7 @@ export class CachingModelSet implements ModelSet {
 
   private get conceptsByUriIndex(): {[index: string]: Concept} {
     if (!this._conceptsByUriIndex) {
-      this._conceptsByUriIndex = indexModelsByUri(this.concepts);
+      this._conceptsByUriIndex = indexModelsByUri(this.readConcepts());
     }
     return requireDefined(this._conceptsByUriIndex);
   }
@@ -476,7 +468,7 @@ export class CachingModelSet implements ModelSet {
     return this.modelByUri(this.worksByUriIndex, workUri);
   }
 
-  get workEvents(): readonly WorkEventUnion[] {
+  private get workEvents(): readonly WorkEventUnion[] {
     if (!this._workEvents) {
       this._workEvents = sortModelsArray(this.readWorkEvents());
     }
