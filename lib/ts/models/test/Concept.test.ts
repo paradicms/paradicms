@@ -2,7 +2,9 @@ import {expect} from "chai";
 import {testModelSet} from "./testModelSet";
 
 describe("Concept", () => {
-  const sut = testModelSet.concepts[0];
+  const sut = testModelSet.conceptByUri(
+    "urn:paradicms_etl:pipeline:synthetic_data:concept:0"
+  );
 
   it("should get the prefLabel", () => {
     expect(sut.prefLabel).to.not.be.empty;
