@@ -17,7 +17,7 @@ import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
-import {WorkEvent} from "./WorkEvent";
+import {WorkEventUnion} from "./WorkEventUnion";
 
 const indexModelsByUri = <ModelT extends Model>(
   models: readonly ModelT[]
@@ -113,9 +113,11 @@ export class CachingModelSet implements ModelSet {
   private _propertiesByGroupUriIndex?: {[index: string]: readonly Property[]};
   private _propertyGroupsByUriIndex?: {[index: string]: PropertyGroup};
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
-  private _workEvents?: readonly WorkEvent[];
-  private _workEventsByUriIndex?: {[index: string]: WorkEvent};
-  private _workEventsByWorkUriIndex?: {[index: string]: readonly WorkEvent[]};
+  private _workEvents?: readonly WorkEventUnion[];
+  private _workEventsByUriIndex?: {[index: string]: WorkEventUnion};
+  private _workEventsByWorkUriIndex?: {
+    [index: string]: readonly WorkEventUnion[];
+  };
   private _works?: readonly Work[];
   private _worksByAgentUriIndex?: {[index: string]: readonly Work[]};
   private _worksByCollectionUriIndex?: {[index: string]: readonly Work[]};
@@ -435,7 +437,7 @@ export class CachingModelSet implements ModelSet {
     );
   }
 
-  private readWorkEvents(): readonly WorkEvent[] {
+  private readWorkEvents(): readonly WorkEventUnion[] {
     const kwds = {modelSet: this};
     return this.modelReaders.flatMap(modelReader =>
       modelReader.readWorkEvents(kwds)
@@ -474,23 +476,23 @@ export class CachingModelSet implements ModelSet {
     return this.modelByUri(this.worksByUriIndex, workUri);
   }
 
-  get workEvents(): readonly WorkEvent[] {
+  get workEvents(): readonly WorkEventUnion[] {
     if (!this._workEvents) {
       this._workEvents = sortModelsArray(this.readWorkEvents());
     }
     return this._workEvents!;
   }
 
-  workEventsByWorkUri(workUri: string): readonly WorkEvent[] {
+  workEventsByWorkUri(workUri: string): readonly WorkEventUnion[] {
     return this.workEventsByWorkUriIndex[workUri] ?? [];
   }
 
-  workEventByUri(workEventUri: string): WorkEvent {
+  workEventByUri(workEventUri: string): WorkEventUnion {
     return this.modelByUri(this.workEventsByUriIndex, workEventUri);
   }
 
   private get workEventsByUriIndex(): {
-    [index: string]: WorkEvent;
+    [index: string]: WorkEventUnion;
   } {
     if (!this._workEventsByUriIndex) {
       this._workEventsByUriIndex = indexModelsByUri(this.workEvents);
@@ -499,7 +501,7 @@ export class CachingModelSet implements ModelSet {
   }
 
   private get workEventsByWorkUriIndex(): {
-    [index: string]: readonly WorkEvent[];
+    [index: string]: readonly WorkEventUnion[];
   } {
     if (!this._workEventsByWorkUriIndex) {
       this._workEventsByWorkUriIndex = indexModelsByKey(

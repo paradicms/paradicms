@@ -7,11 +7,11 @@ import {
 import {
   WorkClosing,
   WorkCreation,
-  WorkEvent,
+  WorkEventUnion,
   WorkOpening,
 } from "@paradicms/models";
 
-export const getWorkEventIcon = (workEvent: WorkEvent): IconDefinition => {
+export const getWorkEventIcon = (workEvent: WorkEventUnion): IconDefinition => {
   return workEvent.accept({
     visitWorkClosing(workClosing: WorkClosing): IconDefinition {
       return faDoorClosed;

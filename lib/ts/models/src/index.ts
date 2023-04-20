@@ -1,7 +1,7 @@
 export * from "./Agent";
 export * from "./AgentJoinSelector";
 export * from "./AgentPropertyValue";
-export * from "./AgentVisitor";
+export * from "./AgentUnion";
 export * from "./AppConfiguration";
 export * from "./Collection";
 export * from "./CollectionJoinSelector";
@@ -39,7 +39,7 @@ export * from "./WorkClosing";
 export * from "./WorkCreation";
 export * from "./WorkEvent";
 export * from "./WorkEventJoinSelector";
-export * from "./WorkEventVisitor";
+export * from "./WorkEventUnion";
 export * from "./WorkJoinSelector";
 export * from "./WorkLocation";
 export * from "./WorkLocationRole";

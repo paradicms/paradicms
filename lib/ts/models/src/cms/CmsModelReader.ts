@@ -16,7 +16,6 @@ import {PropertyGroup} from "../PropertyGroup";
 import {ResourceBackedModelParameters} from "../ResourceBackedModelParameters";
 import {RightsStatement} from "../RightsStatement";
 import {Work} from "../Work";
-import {WorkEvent} from "../WorkEvent";
 import {CmsCollection} from "./CmsCollection";
 import {CmsConcept} from "./CmsConcept";
 import {CmsImage} from "./CmsImage";
@@ -32,6 +31,7 @@ import {CmsWorkClosing} from "./CmsWorkClosing";
 import {CmsWorkCreation} from "./CmsWorkCreation";
 import {CmsWorkEvent} from "./CmsWorkEvent";
 import {CmsWorkOpening} from "./CmsWorkOpening";
+import {WorkEventUnion} from "../WorkEventUnion";
 
 const workEventClassesByRdfType = (() => {
   const result: {
@@ -141,8 +141,8 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readWorkEvents(kwds: {modelSet: ModelSet}): readonly WorkEvent[] {
-    const workEvents: CmsWorkEvent[] = [];
+  readWorkEvents(kwds: {modelSet: ModelSet}): readonly WorkEventUnion[] {
+    const workEvents: WorkEventUnion[] = [];
     for (const quad of getRdfInstanceQuads({
       class_: cms.WorkEvent,
       dataset: this.dataset,

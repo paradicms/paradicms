@@ -1,27 +1,27 @@
-import { DataFactory } from "@paradicms/rdf";
-import { cms, dcterms } from "@paradicms/vocabularies";
-import { Mixin } from "ts-mixer";
-import { Memoize } from "typescript-memoize";
-import { Collection } from "../Collection";
-import { PropertyValue } from "../PropertyValue";
-import { ResourceBackedNamedModel } from "../ResourceBackedNamedModel";
-import { RightsMixin } from "../RightsMixin";
-import { Text } from "../Text";
-import { Work } from "../Work";
-import { WorkAgent } from "../WorkAgent";
-import { WorkClosing } from "../WorkClosing";
-import { WorkCreation } from "../WorkCreation";
-import { WorkEvent } from "../WorkEvent";
-import { WorkLocation } from "../WorkLocation";
-import { WorkOpening } from "../WorkOpening";
-import { createPropertyValuesFromQuadObjects } from "../createPropertyValuesFromQuadObjects";
-import { mapLocationObject } from "../mapLocationObject";
-import { mapTextObject } from "../mapTextObject";
-import { CmsDescriptionMixin } from "./CmsDescriptionMixin";
-import { CmsImagesMixin } from "./CmsImagesMixin";
-import { CmsRelationsMixin } from "./CmsRelationsMixin";
-import { CmsRightsMixin } from "./CmsRightsMixin";
-import { CmsTitleMixin } from "./CmsTitleMixin";
+import {DataFactory} from "@paradicms/rdf";
+import {cms, dcterms} from "@paradicms/vocabularies";
+import {Mixin} from "ts-mixer";
+import {Memoize} from "typescript-memoize";
+import {Collection} from "../Collection";
+import {PropertyValue} from "../PropertyValue";
+import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
+import {RightsMixin} from "../RightsMixin";
+import {Text} from "../Text";
+import {Work} from "../Work";
+import {WorkAgent} from "../WorkAgent";
+import {WorkClosing} from "../WorkClosing";
+import {WorkCreation} from "../WorkCreation";
+import {WorkLocation} from "../WorkLocation";
+import {WorkOpening} from "../WorkOpening";
+import {createPropertyValuesFromQuadObjects} from "../createPropertyValuesFromQuadObjects";
+import {mapLocationObject} from "../mapLocationObject";
+import {mapTextObject} from "../mapTextObject";
+import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
+import {CmsImagesMixin} from "./CmsImagesMixin";
+import {CmsRelationsMixin} from "./CmsRelationsMixin";
+import {CmsRightsMixin} from "./CmsRightsMixin";
+import {CmsTitleMixin} from "./CmsTitleMixin";
+import {WorkEventUnion} from "../WorkEventUnion";
 
 const getRightsAgentUris = (
     rights: RightsMixin | null
@@ -169,7 +169,7 @@ export class CmsWork extends Mixin(
 
 
   @Memoize()
-  get events(): readonly WorkEvent[] {
+  get events(): readonly WorkEventUnion[] {
     return this.modelSet.workEventsByWorkUri(this.uri);
   }
 

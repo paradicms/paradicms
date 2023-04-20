@@ -16,7 +16,7 @@ import {PropertyGroup} from "./PropertyGroup";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
-import {WorkEvent} from "./WorkEvent";
+import {WorkEventUnion} from "./WorkEventUnion";
 
 export abstract class DatasetModelReader implements ModelReader {
   constructor(protected readonly dataset: Dataset) {}
@@ -40,7 +40,9 @@ export abstract class DatasetModelReader implements ModelReader {
   abstract readNamedRightsStatements(kwds: {
     modelSet: ModelSet;
   }): readonly RightsStatement[];
-  abstract readWorkEvents(kwds: {modelSet: ModelSet}): readonly WorkEvent[];
+  abstract readWorkEvents(kwds: {
+    modelSet: ModelSet;
+  }): readonly WorkEventUnion[];
   abstract readWorks(kwds: {modelSet: ModelSet}): readonly Work[];
 
   protected readNamedModels<NamedModelT extends Model>(kwds: {

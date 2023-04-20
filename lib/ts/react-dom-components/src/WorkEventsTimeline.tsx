@@ -1,6 +1,6 @@
 import {faEllipsisV} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Work, WorkEvent} from "@paradicms/models";
+import {WorkEventUnion} from "@paradicms/models";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -13,7 +13,7 @@ export const WorkEventsTimeline: React.FunctionComponent<{
   readonly page: number; // 0-based
   readonly pageMax: number; // 0-based
   readonly setPage: (newPage: number) => void;
-  readonly workEvents: readonly (WorkEvent & {readonly work: Work})[];
+  readonly workEvents: readonly WorkEventUnion[];
 }> = ({page, pageMax, setPage, workEvents}) => {
   return (
     <VerticalTimeline layout="1-column">

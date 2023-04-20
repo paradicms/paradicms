@@ -1,5 +1,4 @@
 import {Dataset} from "@rdfjs/types";
-import {Agent} from "./Agent";
 import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
 import {Concept} from "./Concept";
@@ -12,10 +11,11 @@ import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
-import {WorkEvent} from "./WorkEvent";
+import {AgentUnion} from "./AgentUnion";
+import {WorkEventUnion} from "./WorkEventUnion";
 
 export interface ModelSet {
-  agentByUri(agentUri: string): Agent;
+  agentByUri(agentUri: string): AgentUnion;
   agentWorks(agentUri: string): readonly Work[];
   readonly appConfiguration: AppConfiguration | null;
   collectionWorks(collectionUri: string): readonly Work[];
@@ -39,7 +39,7 @@ export interface ModelSet {
   toFastRdfString(): string;
   toRdf(): Dataset;
   workByUri(workUri: string): Work;
-  workEventsByWorkUri(workUri: string): readonly WorkEvent[];
-  workEventByUri(workEventUri: string): WorkEvent;
+  workEventsByWorkUri(workUri: string): readonly WorkEventUnion[];
+  workEventByUri(workEventUri: string): WorkEventUnion;
   readonly works: readonly Work[];
 }

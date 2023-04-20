@@ -6,7 +6,7 @@ import {
   ModelSubsetter,
   ThumbnailSelector,
   Work,
-  WorkEvent,
+  WorkEventUnion,
 } from "@paradicms/models";
 import {
   defaultWorkAgentsSort,
@@ -353,7 +353,7 @@ export class MemWorkQueryService implements WorkQueryService {
 
   private static sortWorkEventsInPlace(
     sort: WorkEventsSort,
-    workEvents: WorkEvent[]
+    workEvents: WorkEventUnion[]
   ): void {
     const compareMultiplier = sort.ascending ? 1 : -1;
     switch (sort.property) {
