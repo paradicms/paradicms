@@ -19,5 +19,5 @@ export class CmsWorkCreation extends Mixin(
     return "Creation";
   }
 
-  type: "WorkCreation" = "WorkCreation";
+  readonly type: "WorkCreation" = "WorkCreation";
 }

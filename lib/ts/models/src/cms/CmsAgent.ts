@@ -1,6 +1,5 @@
 import {Mixin} from "ts-mixer";
 import {Agent} from "../Agent";
-import {AgentVisitor} from "../AgentVisitor";
 import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsNameMixin} from "./CmsNameMixin";
@@ -14,10 +13,6 @@ export class CmsAgent
     CmsRelationsMixin
   )
   implements Agent {
-  accept<T>(visitor: AgentVisitor<T>): T {
-    throw new EvalError();
-  }
-
   get label(): string {
     return this.name;
   }

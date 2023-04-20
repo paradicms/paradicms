@@ -7,5 +7,5 @@ export class CmsWorkOpening extends CmsWorkEvent implements  WorkOpening{
         return "Opening";
     }
 
-    type: "WorkOpening" = "WorkOpening";
+    readonly type: "WorkOpening" = "WorkOpening";
 }

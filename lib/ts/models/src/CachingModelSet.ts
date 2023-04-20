@@ -1,6 +1,7 @@
 import {datasetToFastRdfString} from "@paradicms/rdf";
 import {requireDefined} from "@paradicms/utilities";
 import {Dataset} from "rdf-js";
+import {AgentUnion} from "./AgentUnion";
 import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
 import {Concept} from "./Concept";
@@ -17,7 +18,6 @@ import {PropertyGroup} from "./PropertyGroup";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
 import {WorkEventUnion} from "./WorkEventUnion";
-import {AgentUnion} from "./AgentUnion";
 
 const indexModelsByUri = <ModelT extends Model>(
   models: readonly ModelT[]
@@ -523,10 +523,15 @@ export class CachingModelSet implements ModelSet {
     [index: string]: readonly Work[];
   } {
     if (!this._worksByAgentUriIndex) {
-      this._worksByAgentUriIndex = indexModelsByKeys(
-        this.works,
-        work => work.agentUris
-      );
+      this._worksByAgentUriIndex = indexModelsByKeys(this.works, work => {
+        const agentUris: string[] = [];
+        for (const agent of work.agents) {
+          if (agent.agent.uri) {
+            agentUris.push(agent.agent.uri);
+          }
+        }
+        return agentUris;
+      });
     }
     return requireDefined(this._worksByAgentUriIndex);
   }
@@ -535,9 +540,8 @@ export class CachingModelSet implements ModelSet {
     [index: string]: readonly Work[];
   } {
     if (!this._worksByCollectionUriIndex) {
-      this._worksByCollectionUriIndex = indexModelsByKeys(
-        this.works,
-        work => work.collectionUris
+      this._worksByCollectionUriIndex = indexModelsByKeys(this.works, work =>
+        work.collections.map(collection => collection.uri)
       );
     }
     return requireDefined(this._worksByCollectionUriIndex);

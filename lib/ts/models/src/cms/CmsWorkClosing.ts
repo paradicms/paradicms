@@ -7,5 +7,5 @@ export class CmsWorkClosing extends CmsWorkEvent implements WorkClosing {
         return "Closing";
     }
 
-    type: "WorkClosing" = "WorkClosing";
+    readonly type: "WorkClosing" = "WorkClosing";
 }
