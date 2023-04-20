@@ -7,6 +7,7 @@ import {ResourceBackedModelMixin} from "../ResourceBackedModelMixin";
 import {RightsMixin} from "../RightsMixin";
 import {RightsStatement} from "../RightsStatement";
 import {LiteralLicense} from "../literal/LiteralLicense";
+import {LiteralRightsStatement} from "../literal/LiteralRightsStatement";
 import {mapAgentObject} from "../mapAgentObject";
 import {CmsContributorsMixin} from "./CmsContributorsMixin";
 import {CmsCreatorsMixin} from "./CmsCreatorsMixin";
@@ -58,7 +59,7 @@ export abstract class CmsRightsMixin
     return this.findAndMapObject(dcterms.rights, term => {
       switch (term.termType) {
         case "Literal":
-          return term.value;
+          return new LiteralRightsStatement(term);
         case "NamedNode":
           return this.modelSet.rightsStatementByUri(term.value);
         default:
