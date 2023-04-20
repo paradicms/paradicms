@@ -105,19 +105,13 @@ export class CachingModelSet implements ModelSet {
   private _imagesByDepictsUriIndex?: {[index: string]: readonly Image[]};
   private _imagesByOriginalImageUriIndex?: {[index: string]: readonly Image[]};
   private _imagesByUriIndex?: {[index: string]: Image};
-  private _namedLicenses?: readonly License[];
   private _licensesByUriIndex?: {[index: string]: License};
-  private _namedLocations?: readonly Location[];
   private _locationsByUriIndex?: {[index: string]: Location};
-  private _namedOrganizations?: readonly Organization[];
   private _organizationsByUriIndex?: {[index: string]: Organization};
-  private _namedPeople?: readonly Person[];
   private _peopleByUriIndex?: {[index: string]: Person};
   private _properties?: readonly Property[];
   private _propertiesByGroupUriIndex?: {[index: string]: readonly Property[]};
-  private _propertyGroups?: readonly PropertyGroup[];
   private _propertyGroupsByUriIndex?: {[index: string]: PropertyGroup};
-  private _namedRightsStatements?: readonly RightsStatement[];
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
   private _workEvents?: readonly WorkEvent[];
   private _workEventsByUriIndex?: {[index: string]: WorkEvent};
@@ -172,7 +166,7 @@ export class CachingModelSet implements ModelSet {
     return requireDefined(this._collectionsByUriIndex);
   }
 
-  get concepts(): readonly Concept[] {
+  private get concepts(): readonly Concept[] {
     if (!this._concepts) {
       this._concepts = sortModelsArray(this.readConcepts());
     }
@@ -198,7 +192,7 @@ export class CachingModelSet implements ModelSet {
     return this.modelByUri(this.imagesByUriIndex, imageUri);
   }
 
-  get images(): readonly Image[] {
+  private get images(): readonly Image[] {
     if (!this._images) {
       this._images = sortModelsArray(this.readImages());
     }
@@ -249,16 +243,9 @@ export class CachingModelSet implements ModelSet {
     return this.modelByUri(this.licensesByUriIndex, licenseUri);
   }
 
-  get licenses(): readonly License[] {
-    if (!this._namedLicenses) {
-      this._namedLicenses = sortModelsArray(this.readNamedLicenses());
-    }
-    return requireDefined(this._namedLicenses);
-  }
-
   private get licensesByUriIndex(): {[index: string]: License} {
     if (!this._licensesByUriIndex) {
-      this._licensesByUriIndex = indexModelsByUri(this.licenses);
+      this._licensesByUriIndex = indexModelsByUri(this.readNamedLicenses());
     }
     return requireDefined(this._licensesByUriIndex);
   }
@@ -267,19 +254,9 @@ export class CachingModelSet implements ModelSet {
     return this.modelByUri(this.locationsByUriIndex, locationUri);
   }
 
-  private get locations(): readonly Location[] {
-    if (!this._namedLocations) {
-      this._namedLocations = sortModelsArray(this.readNamedLocations());
-    }
-    return requireDefined(this._namedLocations);
-  }
-
   private get locationsByUriIndex(): {[index: string]: Location} {
     if (!this._locationsByUriIndex) {
-      this._locationsByUriIndex = {};
-      for (const location of this.locations) {
-        this._locationsByUriIndex[location.uri!] = location;
-      }
+      this._locationsByUriIndex = indexModelsByUri(this.readNamedLocations());
     }
     return requireDefined(this._locationsByUriIndex);
   }
@@ -313,13 +290,6 @@ export class CachingModelSet implements ModelSet {
     );
   }
 
-  get organizations(): readonly Organization[] {
-    if (!this._namedOrganizations) {
-      this._namedOrganizations = sortModelsArray(this.readNamedOrganizations());
-    }
-    return requireDefined(this._namedOrganizations);
-  }
-
   private get organizationsByUriIndex(): {[index: string]: Organization} {
     if (!this._organizationsByUriIndex) {
       this._organizationsByUriIndex = indexModelsByUri(
@@ -329,16 +299,9 @@ export class CachingModelSet implements ModelSet {
     return requireDefined(this._organizationsByUriIndex);
   }
 
-  get people(): readonly Person[] {
-    if (!this._namedPeople) {
-      this._namedPeople = sortModelsArray(this.readNamedPeople());
-    }
-    return requireDefined(this._namedPeople);
-  }
-
   private get peopleByUriIndex(): {[index: string]: Person} {
     if (!this._peopleByUriIndex) {
-      this._peopleByUriIndex = indexModelsByUri(this.people);
+      this._peopleByUriIndex = indexModelsByUri(this.readNamedPeople());
     }
     return requireDefined(this._peopleByUriIndex);
   }
@@ -374,13 +337,6 @@ export class CachingModelSet implements ModelSet {
     return this._propertiesByGroupUriIndex!;
   }
 
-  get propertyGroups(): readonly PropertyGroup[] {
-    if (!this._propertyGroups) {
-      this._propertyGroups = sortModelsArray(this.readPropertyGroups());
-    }
-    return requireDefined(this._propertyGroups);
-  }
-
   propertyGroupByUriOptional(propertyGroupUri: string): PropertyGroup | null {
     return this.modelByUriOptional(
       this.propertyGroupsByUriIndex,
@@ -390,7 +346,9 @@ export class CachingModelSet implements ModelSet {
 
   private get propertyGroupsByUriIndex(): {[index: string]: PropertyGroup} {
     if (!this._propertyGroupsByUriIndex) {
-      this._propertyGroupsByUriIndex = indexModelsByUri(this.propertyGroups);
+      this._propertyGroupsByUriIndex = indexModelsByUri(
+        this.readPropertyGroups()
+      );
     }
     return requireDefined(this._propertyGroupsByUriIndex);
   }
@@ -456,6 +414,13 @@ export class CachingModelSet implements ModelSet {
     );
   }
 
+  private readNamedRightsStatements(): readonly RightsStatement[] {
+    const kwds = {modelSet: this};
+    return this.modelReaders.flatMap(modelReader =>
+      modelReader.readNamedRightsStatements(kwds)
+    );
+  }
+
   private readProperties(): readonly Property[] {
     const kwds = {modelSet: this};
     return this.modelReaders.flatMap(modelReader =>
@@ -467,13 +432,6 @@ export class CachingModelSet implements ModelSet {
     const kwds = {modelSet: this};
     return this.modelReaders.flatMap(modelReader =>
       modelReader.readPropertyGroups(kwds)
-    );
-  }
-
-  private readNamedRightsStatements(): readonly RightsStatement[] {
-    const kwds = {modelSet: this};
-    return this.modelReaders.flatMap(modelReader =>
-      modelReader.readNamedRightsStatements(kwds)
     );
   }
 
@@ -491,15 +449,6 @@ export class CachingModelSet implements ModelSet {
     );
   }
 
-  get rightsStatements(): readonly RightsStatement[] {
-    if (!this._namedRightsStatements) {
-      this._namedRightsStatements = sortModelsArray(
-        this.readNamedRightsStatements()
-      );
-    }
-    return requireDefined(this._namedRightsStatements);
-  }
-
   rightsStatementByUri(rightsStatementUri: string): RightsStatement {
     return this.modelByUri(this.rightsStatementsByUriIndex, rightsStatementUri);
   }
@@ -507,7 +456,7 @@ export class CachingModelSet implements ModelSet {
   private get rightsStatementsByUriIndex(): {[index: string]: RightsStatement} {
     if (!this._rightsStatementsByUriIndex) {
       this._rightsStatementsByUriIndex = indexModelsByUri(
-        this.rightsStatements
+        this.readNamedRightsStatements()
       );
     }
     return requireDefined(this._rightsStatementsByUriIndex);
