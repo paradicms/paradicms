@@ -135,9 +135,9 @@ export class ModelSubsetter {
     }
 
     for (const agents of [
-      rights.contributorAgents,
-      rights.creatorAgents,
-      rights.rightsHolderAgents,
+      rights.contributors,
+      rights.creators,
+      rights.rightsHolders,
     ]) {
       for (const agent of agents) {
         this.addAgentModelSet(agent, agentJoinSelector);
@@ -193,8 +193,8 @@ export class ModelSubsetter {
       }
 
       if (collectionUris) {
-        for (const collectionUri of work.collectionUris) {
-          collectionUris.add(collectionUri);
+        for (const collection of work.collections) {
+          collectionUris.add(collection.uri);
         }
       }
 
