@@ -1,5 +1,6 @@
 import {DataFactory, Store} from "@paradicms/rdf";
 import invariant from "ts-invariant";
+import {AgentUnion} from "./AgentUnion";
 import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
 import {Concept} from "./Concept";
@@ -15,7 +16,6 @@ import {Person} from "./Person";
 import {Property} from "./Property";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
-import {AgentUnion} from "./AgentUnion";
 
 export class ModelSetBuilder {
   private appConfiguration: AppConfiguration | null | undefined;
@@ -35,6 +35,8 @@ export class ModelSetBuilder {
     switch (agent.type) {
       case "Organization":
         return this.addOrganization(agent);
+      case "OtherAgent":
+        throw new EvalError("not implemented");
       case "Person":
         return this.addPerson(agent);
     }
