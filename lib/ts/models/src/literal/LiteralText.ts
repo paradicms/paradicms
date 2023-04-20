@@ -11,7 +11,9 @@ export class LiteralText implements Text {
   readonly contributors: readonly AgentUnion[] = [];
   readonly creators: readonly AgentUnion[] = [];
   readonly license: License | null = null;
-  readonly requiresAttribution: boolean = true;
+  get requiresAttribution(): boolean {
+    return this.license?.requiresAttribution ?? false;
+  }
   readonly rightsHolders: readonly AgentUnion[] = [];
   readonly rightsStatement: RightsStatement | null = null;
   toRdf(): readonly ModelToRdfTriple[] {
