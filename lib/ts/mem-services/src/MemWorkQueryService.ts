@@ -213,6 +213,9 @@ export class MemWorkQueryService implements WorkQueryService {
       const agentsByUri: {[index: string]: Agent} = {};
       for (const work of works) {
         for (const agent of work.agents) {
+          if (!agent.agent.uri) {
+            continue;
+          }
           if (agentsByUri[agent.agent.uri]) {
             continue;
           }
@@ -240,7 +243,7 @@ export class MemWorkQueryService implements WorkQueryService {
       resolve({
         modelSet: slicedAgentsModelSet,
         totalWorkAgentsCount: agents.length,
-        workAgentUris: slicedAgents.map(agent => agent.uri),
+        workAgentUris: slicedAgents.map(agent => agent.uri!),
       });
     });
   }
