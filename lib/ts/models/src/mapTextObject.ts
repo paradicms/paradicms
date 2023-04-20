@@ -13,6 +13,7 @@ export const mapTextObject = (
 ): Text | null => {
   switch (term.termType) {
     case "BlankNode":
+    case "NamedNode":
       return new CmsText({...modelParameters, node: term});
     case "Literal":
       return new LiteralText(term);
