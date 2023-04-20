@@ -1,13 +1,13 @@
 import {Term} from "@rdfjs/types";
-import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {Text} from "./Text";
-import {CmsText} from "./cms/CmsText";
-import {LiteralText} from "./literal/LiteralText";
+import {ResourceBackedModelParameters} from "../ResourceBackedModelParameters";
+import {Text} from "../Text";
+import {LiteralText} from "../literal/LiteralText";
+import {CmsText} from "./CmsText";
 
 /**
  * Map a term in a modelSet to a Text.
  */
-export const mapTextObject = (
+export const mapCmsTextObject = (
   modelParameters: Omit<ResourceBackedModelParameters, "node">,
   term: Term
 ): Text | null => {

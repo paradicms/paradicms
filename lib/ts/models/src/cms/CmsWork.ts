@@ -12,13 +12,13 @@ import { WorkAgent } from "../WorkAgent";
 import { WorkEventUnion } from "../WorkEventUnion";
 import { WorkLocation } from "../WorkLocation";
 import { createPropertyValuesFromQuadObjects } from "../createPropertyValuesFromQuadObjects";
-import { mapLocationObject } from "../mapLocationObject";
-import { mapTextObject } from "../mapTextObject";
 import { CmsDescriptionMixin } from "./CmsDescriptionMixin";
 import { CmsImagesMixin } from "./CmsImagesMixin";
 import { CmsRelationsMixin } from "./CmsRelationsMixin";
 import { CmsRightsMixin } from "./CmsRightsMixin";
 import { CmsTitleMixin } from "./CmsTitleMixin";
+import { mapCmsLocationObject } from "./mapCmsLocationObject";
+import { mapCmsTextObject } from "./mapCmsTextObject";
 
 const getRightsWorkAgents = (
   rights: RightsMixin | null,
@@ -86,7 +86,7 @@ export class CmsWork extends Mixin(
   @Memoize()
   override get description(): Text | null {
     return this.findAndMapObject(dcterms.description, term =>
-      mapTextObject(this, term)
+      mapCmsTextObject(this, term)
     );
   }
 
@@ -135,7 +135,7 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   get location(): WorkLocation | null {
-    const location = this.findAndMapObject(dcterms.spatial, term => mapLocationObject(this, term));
+    const location = this.findAndMapObject(dcterms.spatial, term => mapCmsLocationObject(this, term));
     if (location && typeof location !== "string") {
       return {
         label: this.title,

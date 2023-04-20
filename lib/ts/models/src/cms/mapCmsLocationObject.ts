@@ -1,13 +1,13 @@
 import {Term} from "@rdfjs/types";
-import {Location} from "./Location";
-import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {CmsLocation} from "./cms/CmsLocation";
-import {LiteralLocation} from "./literal/LiteralLocation";
+import {Location} from "../Location";
+import {ResourceBackedModelParameters} from "../ResourceBackedModelParameters";
+import {LiteralLocation} from "../literal/LiteralLocation";
+import {CmsLocation} from "./CmsLocation";
 
 /**
  * Map a term in a modelSet to a Location.
  */
-export const mapLocationObject = (
+export const mapCmsLocationObject = (
   modelParameters: Omit<ResourceBackedModelParameters, "node">,
   term: Term
 ): Location | null => {
