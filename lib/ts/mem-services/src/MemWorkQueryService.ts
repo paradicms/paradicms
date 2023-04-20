@@ -1,5 +1,4 @@
 import {
-  Agent,
   AgentUnion,
   defaultProperties,
   Image,
@@ -211,7 +210,7 @@ export class MemWorkQueryService implements WorkQueryService {
         works: this.searchWorks(query),
       });
 
-      const agentsByUri: {[index: string]: Agent} = {};
+      const agentsByUri: {[index: string]: AgentUnion} = {};
       for (const work of works) {
         for (const agent of work.agents) {
           if (!agent.agent.uri) {

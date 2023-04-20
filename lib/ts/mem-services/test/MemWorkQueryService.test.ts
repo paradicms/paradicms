@@ -1,14 +1,14 @@
-import { ModelSetFactory, WorkClosing, WorkCreation, WorkLocation, WorkOpening } from "@paradicms/models";
+import {ModelSetFactory, WorkCreation, WorkLocation} from "@paradicms/models";
 import {
-  StringPropertyValueFacet,
-  StringPropertyValueFilter,
-  WorkEventsSortProperty,
-  WorksSortProperty
+    StringPropertyValueFacet,
+    StringPropertyValueFilter,
+    WorkEventsSortProperty,
+    WorksSortProperty
 } from "@paradicms/services";
-import { syntheticData } from "@paradicms/test";
-import { vra } from "@paradicms/vocabularies";
-import { expect } from "chai";
-import { MemWorkQueryService } from "../src/MemWorkQueryService";
+import {syntheticData} from "@paradicms/test";
+import {vra} from "@paradicms/vocabularies";
+import {expect} from "chai";
+import {MemWorkQueryService} from "../src/MemWorkQueryService";
 
 describe("MemWorkQueryService", () => {
   const modelSet = ModelSetFactory.fromDatasetCore(syntheticData);
@@ -93,15 +93,11 @@ describe("MemWorkQueryService", () => {
     for (const workEvent of result.modelSet.workEvents) {
       expect(workEvent.location).to.not.be.null;
       expect(workEvent.work).to.not.be.null;
-      workEvent.accept({
-        visitWorkClosing(workClosing: WorkClosing): void {
-        },
-        visitWorkCreation(workCreation: WorkCreation): void {
-          expect(workCreation.creatorAgents).to.not.be.empty;
-        },
-        visitWorkOpening(workOpening: WorkOpening): void {
-        },
-      });
+      switch (workEvent.type) {
+          case "WorkCreation":
+              expect(workEvent.creators).to.not.be.empty;
+              break;
+      }
     }
   });
 

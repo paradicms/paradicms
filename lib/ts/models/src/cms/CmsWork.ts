@@ -138,24 +138,24 @@ export class CmsWork extends Mixin(
   get displayDate(): string | null {
     let startDisplayDate: string | undefined;
     let endDisplayDate: string | undefined;
-    for (const event of this.events) {
-      event.accept({
-        visitWorkClosing(workClosing: WorkClosing): void {
-          if (!endDisplayDate && workClosing.displayDate) {
-            endDisplayDate = workClosing.displayDate;
+    for (const workEvent of this.events) {
+      switch (workEvent.type) {
+        case "WorkClosing":
+          if (!endDisplayDate && workEvent.displayDate) {
+            endDisplayDate = workEvent.displayDate;
           }
-        },
-        visitWorkCreation(workCreation: WorkCreation): void {
-          if (!startDisplayDate && workCreation.displayDate) {
-            startDisplayDate = workCreation.displayDate;
+          break;
+        case "WorkCreation":
+          if (!startDisplayDate && workEvent.displayDate) {
+            startDisplayDate = workEvent.displayDate;
           }
-        },
-        visitWorkOpening(workOpening: WorkOpening): void {
-          if (!startDisplayDate && workOpening.displayDate) {
-            startDisplayDate = workOpening.displayDate;
+          break;
+        case "WorkOpening":
+          if (!startDisplayDate && workEvent.displayDate) {
+            startDisplayDate = workEvent.displayDate;
           }
-        }
-      });
+          break;
+      }
     }
 
     if (startDisplayDate && endDisplayDate) {

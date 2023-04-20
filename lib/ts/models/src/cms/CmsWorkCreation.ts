@@ -1,11 +1,11 @@
-import { Mixin } from "ts-mixer";
-import { Agent } from "../Agent";
-import { WorkCreation } from "../WorkCreation";
-import { WorkEventVisitor } from "../WorkEventVisitor";
-import { WorkLocationRole } from "../WorkLocationRole";
-import { CmsContributorsMixin } from "./CmsContributorsMixin";
-import { CmsCreatorsMixin } from "./CmsCreatorsMixin";
-import { CmsWorkEvent } from "./CmsWorkEvent";
+import {Mixin} from "ts-mixer";
+import {WorkCreation} from "../WorkCreation";
+import {WorkEventVisitor} from "../WorkEventVisitor";
+import {WorkLocationRole} from "../WorkLocationRole";
+import {CmsContributorsMixin} from "./CmsContributorsMixin";
+import {CmsCreatorsMixin} from "./CmsCreatorsMixin";
+import {CmsWorkEvent} from "./CmsWorkEvent";
+import {AgentUnion} from "../AgentUnion";
 
 export class CmsWorkCreation extends Mixin(
   CmsWorkEvent,
@@ -16,12 +16,8 @@ export class CmsWorkCreation extends Mixin(
     return visitor.visitWorkCreation(this);
   }
 
-  get agents(): readonly Agent[] {
-    return this.agentUris.map(agentUri => this.modelSet.agentByUri(agentUri));
-  }
-
-  get agentUris(): readonly string[] {
-    return this.contributorAgentUris.concat(this.creatorAgentUris);
+  get agents(): readonly AgentUnion[] {
+    return this.contributors.concat(this.creators);
   }
 
   protected override get workLocationRole(): WorkLocationRole {

@@ -107,17 +107,17 @@ describe("ModelSubsetter", () => {
     let workCreation: WorkCreation | undefined;
     let workOpening: WorkOpening | undefined;
     for (const workEvent of completeModelSet.workEventsByWorkUri(work.uri)) {
-      workEvent.accept({
-        visitWorkClosing: function(event: WorkClosing): void {
-          workClosing = event;
-        },
-        visitWorkCreation: function(event: WorkCreation): void {
-          workCreation = event;
-        },
-        visitWorkOpening: function(event: WorkOpening): void {
-          workOpening = event;
-        },
-      });
+      switch (workEvent.type) {
+        case "WorkClosing":
+          workClosing = workEvent;
+          break;
+        case "WorkCreation":
+          workCreation = workEvent;
+          break;
+        case "WorkOpening":
+          workOpening = workEvent;
+          break;
+      }
     }
 
     const workEventsModelSet = sut

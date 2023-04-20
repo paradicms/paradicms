@@ -1,6 +1,6 @@
 import {Term} from "@rdfjs/types";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {Agent} from "./Agent";
+import {AgentUnion} from "./AgentUnion";
 
 /**
  * Map a term in a modelSet to an Agent.
@@ -8,7 +8,7 @@ import {Agent} from "./Agent";
 export const mapAgentObject = (
   modelParameters: Omit<ResourceBackedModelParameters, "node">,
   term: Term
-): Agent | null => {
+): AgentUnion | null => {
   switch (term.termType) {
     case "Literal":
       return term.value;
