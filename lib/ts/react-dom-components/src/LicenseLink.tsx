@@ -2,7 +2,7 @@ import {License} from "@paradicms/models";
 import * as React from "react";
 
 export const LicenseLink: React.FunctionComponent<{
-  license: string | License | null;
+  license: License | string | null;
 }> = ({license}) => {
   if (!license) {
     return null;
@@ -10,6 +10,8 @@ export const LicenseLink: React.FunctionComponent<{
   if (typeof license === "string") {
     return <span>{license as string}</span>;
   }
-  const licenseModel = license as License;
-  return <a href={licenseModel.uri}>{licenseModel.label}</a>;
+  if (!license.uri) {
+    return <span>{license.label}</span>;
+  }
+  return <a href={license.uri}>{license.label}</a>;
 };

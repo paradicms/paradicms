@@ -1,6 +1,6 @@
-import {NamedModel} from "./NamedModel";
+import {Model} from "./Model";
 
-export interface License extends NamedModel {
+export interface License extends Model {
   readonly label: string;
   readonly requiresAttribution: boolean;
 }
