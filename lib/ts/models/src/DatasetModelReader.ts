@@ -27,17 +27,17 @@ export abstract class DatasetModelReader implements ModelReader {
   abstract readCollections(kwds: {modelSet: ModelSet}): readonly Collection[];
   abstract readConcepts(kwds: {modelSet: ModelSet}): readonly Concept[];
   abstract readImages(kwds: {modelSet: ModelSet}): readonly Image[];
-  abstract readLicenses(kwds: {modelSet: ModelSet}): readonly License[];
-  abstract readLocations(kwds: {modelSet: ModelSet}): readonly Location[];
-  abstract readOrganizations(kwds: {
+  abstract readNamedLicenses(kwds: {modelSet: ModelSet}): readonly License[];
+  abstract readNamedLocations(kwds: {modelSet: ModelSet}): readonly Location[];
+  abstract readNamedOrganizations(kwds: {
     modelSet: ModelSet;
   }): readonly Organization[];
-  abstract readPeople(kwds: {modelSet: ModelSet}): readonly Person[];
+  abstract readNamedPeople(kwds: {modelSet: ModelSet}): readonly Person[];
   abstract readProperties(kwds: {modelSet: ModelSet}): readonly Property[];
   abstract readPropertyGroups(kwds: {
     modelSet: ModelSet;
   }): readonly PropertyGroup[];
-  abstract readRightsStatements(kwds: {
+  abstract readNamedRightsStatements(kwds: {
     modelSet: ModelSet;
   }): readonly RightsStatement[];
   abstract readWorkEvents(kwds: {modelSet: ModelSet}): readonly WorkEvent[];

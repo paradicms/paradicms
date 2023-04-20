@@ -83,7 +83,7 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readLicenses(kwds: {modelSet: ModelSet}): readonly License[] {
+  readNamedLicenses(kwds: {modelSet: ModelSet}): readonly License[] {
     return this.readNamedModels({
       class_: cms.License,
       factory: CmsLicense,
@@ -91,7 +91,7 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readLocations(kwds: {modelSet: ModelSet}): readonly Location[] {
+  readNamedLocations(kwds: {modelSet: ModelSet}): readonly Location[] {
     return this.readNamedModels({
       class_: cms.Location,
       factory: CmsLocation,
@@ -99,7 +99,7 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readOrganizations(kwds: {modelSet: ModelSet}): readonly Organization[] {
+  readNamedOrganizations(kwds: {modelSet: ModelSet}): readonly Organization[] {
     return this.readNamedModels({
       class_: cms.Organization,
       factory: CmsOrganization,
@@ -107,7 +107,7 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readPeople(kwds: {modelSet: ModelSet}): readonly Person[] {
+  readNamedPeople(kwds: {modelSet: ModelSet}): readonly Person[] {
     return this.readNamedModels({
       class_: cms.Person,
       factory: CmsPerson,
@@ -131,7 +131,9 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readRightsStatements(kwds: {modelSet: ModelSet}): readonly RightsStatement[] {
+  readNamedRightsStatements(kwds: {
+    modelSet: ModelSet;
+  }): readonly RightsStatement[] {
     return this.readNamedModels({
       class_: cms.RightsStatement,
       factory: CmsRightsStatement,
