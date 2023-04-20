@@ -23,14 +23,14 @@ export const AgentsGallery: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
 }> = ({agents, getAbsoluteImageSrc}) => (
   <Gallery
-    cards={agents.map(agent => ({
+    cards={agents.map((agent, agentI) => ({
       element: (
         <AgentsGalleryCard
           agent={agent}
           getAbsoluteImageSrc={getAbsoluteImageSrc}
         />
       ),
-      key: agent.uri,
+      key: agentI,
     }))}
   />
 );
