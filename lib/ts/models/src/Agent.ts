@@ -1,9 +1,9 @@
 import {AgentVisitor} from "./AgentVisitor";
 import {ImagesMixin} from "./ImagesMixin";
-import {NamedModel} from "./NamedModel";
+import {Model} from "./Model";
 import {RelationsMixin} from "./RelationsMixin";
 
-export interface Agent extends NamedModel, ImagesMixin, RelationsMixin {
+export interface Agent extends Model, ImagesMixin, RelationsMixin {
   accept<T>(visitor: AgentVisitor<T>): T;
   readonly label: string;
 }
