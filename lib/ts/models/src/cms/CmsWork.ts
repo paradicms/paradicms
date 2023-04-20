@@ -1,43 +1,24 @@
-import {DataFactory} from "@paradicms/rdf";
-import {cms, dcterms} from "@paradicms/vocabularies";
-import {Mixin} from "ts-mixer";
-import {Memoize} from "typescript-memoize";
-import {Collection} from "../Collection";
-import {PropertyValue} from "../PropertyValue";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
-import {RightsMixin} from "../RightsMixin";
-import {Text} from "../Text";
-import {Work} from "../Work";
-import {WorkAgent} from "../WorkAgent";
-import {WorkClosing} from "../WorkClosing";
-import {WorkCreation} from "../WorkCreation";
-import {WorkLocation} from "../WorkLocation";
-import {WorkOpening} from "../WorkOpening";
-import {createPropertyValuesFromQuadObjects} from "../createPropertyValuesFromQuadObjects";
-import {mapLocationObject} from "../mapLocationObject";
-import {mapTextObject} from "../mapTextObject";
-import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
-import {CmsImagesMixin} from "./CmsImagesMixin";
-import {CmsRelationsMixin} from "./CmsRelationsMixin";
-import {CmsRightsMixin} from "./CmsRightsMixin";
-import {CmsTitleMixin} from "./CmsTitleMixin";
-import {WorkEventUnion} from "../WorkEventUnion";
-
-const getRightsAgentUris = (
-    rights: RightsMixin | null
-): readonly string[] => {
-  const result: string[] = [];
-
-  if (!rights) {
-    return result;
-  }
-
-  result.push(...rights.contributorAgentUris);
-  result.push(...rights.creatorAgentUris);
-  result.push(...rights.rightsHolderAgentUris);
-
-  return result;
-};
+import { DataFactory } from "@paradicms/rdf";
+import { cms, dcterms } from "@paradicms/vocabularies";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { Collection } from "../Collection";
+import { PropertyValue } from "../PropertyValue";
+import { ResourceBackedNamedModel } from "../ResourceBackedNamedModel";
+import { RightsMixin } from "../RightsMixin";
+import { Text } from "../Text";
+import { Work } from "../Work";
+import { WorkAgent } from "../WorkAgent";
+import { WorkEventUnion } from "../WorkEventUnion";
+import { WorkLocation } from "../WorkLocation";
+import { createPropertyValuesFromQuadObjects } from "../createPropertyValuesFromQuadObjects";
+import { mapLocationObject } from "../mapLocationObject";
+import { mapTextObject } from "../mapTextObject";
+import { CmsDescriptionMixin } from "./CmsDescriptionMixin";
+import { CmsImagesMixin } from "./CmsImagesMixin";
+import { CmsRelationsMixin } from "./CmsRelationsMixin";
+import { CmsRightsMixin } from "./CmsRightsMixin";
+import { CmsTitleMixin } from "./CmsTitleMixin";
 
 const getRightsWorkAgents = (
   rights: RightsMixin | null,
@@ -49,24 +30,24 @@ const getRightsWorkAgents = (
     return result;
   }
 
-  for (const contributorAgent of rights.contributorAgents) {
+  for (const contributor of rights.contributors) {
     result.push({
-      agent: contributorAgent,
+      agent: contributor,
       role: rolePrefix + " contributor",
     });
   }
 
-  for (const creatorAgent of rights.creatorAgents) {
+  for (const creator of rights.creators) {
     result.push({
-      agent: creatorAgent,
+      agent: creator,
       role: rolePrefix + " creator",
     });
   }
 
-  for (const holderAgent of rights.rightsHolderAgents) {
+  for (const rightsHolder of rights.rightsHolders) {
     result.push({
-      agent: holderAgent,
-      role: rolePrefix + " holder",
+      agent: rightsHolder,
+      role: rolePrefix + " rights holder",
     });
   }
 
@@ -98,33 +79,8 @@ export class CmsWork extends Mixin(
     return result;
   }
 
-  @Memoize()
-  get agentUris(): readonly string[] {
-    const result: string[] = [];
-    result.push(...getRightsAgentUris(this));
-
-    if (
-      this.description && typeof this.description !== "string"
-    ) {
-      result.push(...getRightsAgentUris(this.description));
-    }
-
-    for (const image of this.originalImages) {
-      result.push(...getRightsAgentUris(image));
-    }
-
-    return result;
-  }
-
   get collections(): readonly Collection[] {
-    return this.collectionUris.map(collectionUri =>
-      this.modelSet.collectionByUri(collectionUri)
-    );
-  }
-
-  @Memoize()
-  get collectionUris(): readonly string[] {
-    return this.filterAndMapObjects(cms.collection, this.mapUriObject);
+    return this.filterAndMapObjects(cms.collection, collection => collection.termType === "NamedNode" ? this.modelSet.collectionByUri(collection.value) : null);
   }
 
   @Memoize()
