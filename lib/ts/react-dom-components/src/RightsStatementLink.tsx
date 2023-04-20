@@ -10,6 +10,8 @@ export const RightsStatementLink: React.FunctionComponent<{
   if (typeof rightsStatement === "string") {
     return <span>{rightsStatement as string}</span>;
   }
-  const rightsStatementModel = rightsStatement as RightsStatement;
-  return <a href={rightsStatementModel.uri}>{rightsStatementModel.label}</a>;
+  if (!rightsStatement.uri) {
+    return <span>{rightsStatement.label}</span>;
+  }
+  return <a href={rightsStatement.uri}>{rightsStatement.label}</a>;
 };
