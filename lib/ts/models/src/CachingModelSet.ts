@@ -99,6 +99,7 @@ export class CachingModelSet implements ModelSet {
   private _appConfiguration?: AppConfiguration | null;
   private _collections?: readonly Collection[];
   private _collectionsByUriIndex?: {[index: string]: Collection};
+  private _concepts?: readonly Concept[];
   private _conceptsByUriIndex?: {[index: string]: Concept};
   private _images?: readonly Image[];
   private _imagesByDepictsUriIndex?: {[index: string]: readonly Image[]};
@@ -110,6 +111,7 @@ export class CachingModelSet implements ModelSet {
   private _peopleByUriIndex?: {[index: string]: Person};
   private _properties?: readonly Property[];
   private _propertiesByGroupUriIndex?: {[index: string]: readonly Property[]};
+  private _propertyGroups?: readonly PropertyGroup[];
   private _propertyGroupsByUriIndex?: {[index: string]: PropertyGroup};
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
   private _workEvents?: readonly WorkEventUnion[];
@@ -175,9 +177,16 @@ export class CachingModelSet implements ModelSet {
     return this.modelByUriOptional(this.conceptsByUriIndex, conceptUri);
   }
 
+  get concepts(): readonly Concept[] {
+    if (!this._concepts) {
+      this._concepts = sortModelsArray(this.readConcepts());
+    }
+    return requireDefined(this._concepts);
+  }
+
   private get conceptsByUriIndex(): {[index: string]: Concept} {
     if (!this._conceptsByUriIndex) {
-      this._conceptsByUriIndex = indexModelsByUri(this.readConcepts());
+      this._conceptsByUriIndex = indexModelsByUri(this.concepts);
     }
     return requireDefined(this._conceptsByUriIndex);
   }
@@ -338,11 +347,16 @@ export class CachingModelSet implements ModelSet {
     );
   }
 
+  get propertyGroups(): readonly PropertyGroup[] {
+    if (!this._propertyGroups) {
+      this._propertyGroups = sortModelsArray(this.readPropertyGroups());
+    }
+    return requireDefined(this._propertyGroups);
+  }
+
   private get propertyGroupsByUriIndex(): {[index: string]: PropertyGroup} {
     if (!this._propertyGroupsByUriIndex) {
-      this._propertyGroupsByUriIndex = indexModelsByUri(
-        this.readPropertyGroups()
-      );
+      this._propertyGroupsByUriIndex = indexModelsByUri(this.propertyGroups);
     }
     return requireDefined(this._propertyGroupsByUriIndex);
   }

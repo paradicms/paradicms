@@ -1,4 +1,5 @@
 import {Dataset} from "@rdfjs/types";
+import {AgentUnion} from "./AgentUnion";
 import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
 import {Concept} from "./Concept";
@@ -11,7 +12,6 @@ import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
-import {AgentUnion} from "./AgentUnion";
 import {WorkEventUnion} from "./WorkEventUnion";
 
 export interface ModelSet {
@@ -23,6 +23,7 @@ export interface ModelSet {
   collectionByUri(collectionUri: string): Collection;
   conceptByUri(conceptUri: string): Concept;
   conceptByUriOptional(conceptUri: string): Concept | null;
+  readonly concepts: readonly Concept[];
   imageByUri(imageUri: string): Image;
   imagesByDepictsUri(depictsUri: string): readonly Image[];
   imagesByOriginalImageUri(originalImageUri: string): readonly Image[];
@@ -35,6 +36,7 @@ export interface ModelSet {
   readonly properties: readonly Property[];
   propertiesByGroupUri(propertyGroupUri: string): readonly Property[];
   propertyGroupByUriOptional(propertyGroupUri: string): PropertyGroup | null;
+  readonly propertyGroups: readonly PropertyGroup[];
   rightsStatementByUri(rightsStatementUri: string): RightsStatement;
   toFastRdfString(): string;
   toRdf(): Dataset;

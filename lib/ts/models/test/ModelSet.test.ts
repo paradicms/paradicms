@@ -25,9 +25,10 @@ describe("ModelSet", () => {
       }
     }
 
-    const concept = sut.conceptByUri(
-      "urn:paradicms_etl:pipeline:synthetic_data:concept:0"
-    );
+    // const concept = sut.conceptByUri(
+    //   "urn:paradicms_etl:pipeline:synthetic_data:concept:0"
+    // );
+    const concept = sut.concepts[0];
     expect(concept.value.value).to.eq(
       sut.conceptByUri(concept.uri).value.value
     );
@@ -42,9 +43,10 @@ describe("ModelSet", () => {
       }
     }
 
-    // for (const propertyGroup of sut.propertyGroups) {
-    //   expect(propertyGroup.properties).to.have.length(sut.properties.length);
-    // }
+    expect(sut.propertyGroups).to.not.be.empty;
+    for (const propertyGroup of sut.propertyGroups) {
+      expect(propertyGroup.properties).to.have.length(sut.properties.length);
+    }
 
     for (const work of sut.works) {
       expect(work.originalImages).to.not.be.empty;
