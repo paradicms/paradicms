@@ -12,10 +12,7 @@ describe("Event", () => {
 
   it("should get the description", () => {
     expect(
-      testModelSet.works[0].events.some(workEvent => {
-        const description = workEvent.description;
-        return typeof description !== "string";
-      })
+      testModelSet.works[0].events.some(workEvent => workEvent.description)
     ).to.be.true;
 
     expect(
