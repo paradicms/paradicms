@@ -14,8 +14,8 @@ describe("Work", () => {
   });
 
   it("should get the work's agents", () => {
-    expect(sut.agents).to.have.length(4);
-    // expect(agents.map(agent => agent.agent.uri)).to.deep.eq(sut.agentUris);
+    expect(sut.agents).to.have.length(8);
+    expect(sut.agents.filter(agent => agent.agent.uri)).to.have.length(4);
   });
 
   it("should get the work's collections", () => {
