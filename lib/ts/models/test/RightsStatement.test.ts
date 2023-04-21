@@ -2,7 +2,9 @@ import {expect} from "chai";
 import {testModelSet} from "./testModelSet";
 
 describe("RightsStatement", () => {
-  const sut = testModelSet.rightsStatements[0];
+  const sut = testModelSet.rightsStatementByUri(
+    "http://rightsstatements.org/vocab/InC-EDU/1.0/"
+  );
 
   // it("should get the statement's definition", () => {
   //   expect(sut.definition).to.not.be.empty;
