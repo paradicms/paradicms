@@ -18,7 +18,7 @@ export abstract class CmsWorkEvent extends CmsEvent implements WorkEvent {
 
   @Memoize()
   get workLocation(): WorkLocation | null {
-    if (!this.location || typeof(this.location) === "string") {
+    if (!this.location) {
       return null;
     }
 

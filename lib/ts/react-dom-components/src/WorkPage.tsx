@@ -1,7 +1,7 @@
-import {Image, RightsMixin, Text, Work, WorkAgent} from "@paradicms/models";
-import {summarizeWorkLocation, WorkLocationSummary} from "@paradicms/services";
+import {Image, Work, WorkAgent} from "@paradicms/models";
+import {WorkLocationSummary, summarizeWorkLocation} from "@paradicms/services";
 import * as React from "react";
-import {useMemo, useState} from "react";
+import {useState} from "react";
 import {
   Card,
   CardBody,
@@ -32,19 +32,6 @@ export const WorkPage: React.FunctionComponent<{
   ) => React.ReactElement;
   work: Work;
 }> = ({getAbsoluteImageSrc, renderWorkLocationsMap, work}) => {
-  const workDescription: Text | null = useMemo(
-    () => work.description ?? work.description ?? null,
-    [work]
-  );
-
-  const workDescriptionRights: RightsMixin | null = useMemo(() => {
-    if (workDescription && typeof workDescription !== "string") {
-      return workDescription;
-    } else {
-      return work;
-    }
-  }, [work, workDescription]);
-
   const workAgents: WorkAgent[] = [];
   for (const workAgent of work.agents) {
     if (
@@ -164,7 +151,7 @@ export const WorkPage: React.FunctionComponent<{
     );
   }
 
-  const rightCol = workDescription ? (
+  const rightCol = work.description ? (
     <Container fluid>
       <Row>&nbsp;</Row>
       <Row className="mt-4">
@@ -172,7 +159,7 @@ export const WorkPage: React.FunctionComponent<{
           className="text-wrap"
           xs={12}
           dangerouslySetInnerHTML={{
-            __html: workDescription.toString(),
+            __html: work.description.toString(),
           }}
         ></Col>
       </Row>
@@ -197,12 +184,12 @@ export const WorkPage: React.FunctionComponent<{
           {rightCol}
         </Col>
       </Row>
-      {workDescription && workDescriptionRights?.requiresAttribution ? (
+      {work.description?.requiresAttribution ? (
         <Row className="mt-2">
           <Col style={{textAlign: "center"}} xs={12}>
             <RightsParagraph
               material="Text"
-              rights={workDescriptionRights}
+              rights={work.description}
               style={RIGHTS_STYLE}
             />
           </Col>

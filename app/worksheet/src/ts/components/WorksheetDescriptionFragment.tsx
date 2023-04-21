@@ -11,9 +11,7 @@ export const WorksheetDescriptionFragment: React.FunctionComponent<{
   return (
     <>
       <p>{description.toString()}</p>
-      {description &&
-      typeof description !== "string" &&
-      description.requiresAttribution ? (
+      {description.requiresAttribution ? (
         <RightsParagraph
           material="Text"
           rights={description}

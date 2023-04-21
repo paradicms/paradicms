@@ -1,5 +1,5 @@
-import invariant from "ts-invariant";
 import {AgentJoinSelector} from "./AgentJoinSelector";
+import {AgentUnion} from "./AgentUnion";
 import {Collection} from "./Collection";
 import {CollectionJoinSelector} from "./CollectionJoinSelector";
 import {Concept} from "./Concept";
@@ -12,10 +12,9 @@ import {ModelSetBuilder} from "./ModelSetBuilder";
 import {RightsMixin} from "./RightsMixin";
 import {Work} from "./Work";
 import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
+import {WorkEventUnion} from "./WorkEventUnion";
 import {WorkJoinSelector} from "./WorkJoinSelector";
 import {selectThumbnail} from "./selectThumbnail";
-import {WorkEventUnion} from "./WorkEventUnion";
-import {AgentUnion} from "./AgentUnion";
 
 /**
  * Subset a ModelSet to reduce the amount of data passed between getStaticProps and the component.
@@ -44,7 +43,9 @@ export class ModelSubsetter {
   ): void {
     this.modelSetBuilder.addAgent(agent);
 
-    invariant(agent.uri, "can only add named agents");
+    if (!agent.uri) {
+      return;
+    }
 
     if (joinSelector.thumbnail) {
       const thumbnailImage = this.completeModelSet
@@ -144,14 +145,12 @@ export class ModelSubsetter {
       }
     }
 
-    const license = rights.license;
-    if (license && typeof license !== "string") {
-      this.modelSetBuilder.addLicense(license);
+    if (rights.license) {
+      this.modelSetBuilder.addLicense(rights.license);
     }
 
-    const rightsStatement = rights.rightsStatement;
-    if (rightsStatement && typeof rightsStatement !== "string") {
-      this.modelSetBuilder.addRightsStatement(rightsStatement);
+    if (rights.rightsStatement) {
+      this.modelSetBuilder.addRightsStatement(rights.rightsStatement);
     }
   }
 
@@ -170,11 +169,8 @@ export class ModelSubsetter {
       // Work ModelSets always include rights
       this.addRightsModelSet(joinSelector.agents ?? {}, work);
 
-      {
-        const description = work.description;
-        if (description && typeof description !== "string") {
-          this.addRightsModelSet(joinSelector.agents ?? {}, description);
-        }
+      if (work.description) {
+        this.addRightsModelSet(joinSelector.agents ?? {}, work.description);
       }
 
       if (joinSelector.allImages) {
@@ -252,11 +248,7 @@ export class ModelSubsetter {
   ): void {
     this.modelSetBuilder.addEvent(workEvent);
 
-    if (
-      joinSelector.location &&
-      workEvent.location &&
-      typeof workEvent.location !== "string"
-    ) {
+    if (joinSelector.location && workEvent.location) {
       this.addLocationModelSet(workEvent.location);
     }
     if (joinSelector.work) {

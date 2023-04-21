@@ -31,9 +31,7 @@ export const WorkEventsTimeline: React.FunctionComponent<{
                   __html: workEvent.description.toString(),
                 }}
               ></div>
-              {workEvent.description &&
-              typeof workEvent.description !== "string" &&
-              workEvent.description.requiresAttribution ? (
+              {workEvent.description.requiresAttribution ? (
                 <RightsParagraph
                   material="Text"
                   rights={workEvent.description}

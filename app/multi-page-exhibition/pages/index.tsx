@@ -5,11 +5,11 @@ import fs from "fs";
 import {Hrefs} from "lib/Hrefs";
 import {GetStaticProps} from "next";
 import {useRouter} from "next/router";
+import * as path from "path";
 import * as React from "react";
 import {useMemo} from "react";
 import {Col, Container, Row} from "reactstrap";
 import {Layout} from "../components/Layout";
-import * as path from "path";
 
 interface StaticProps {
   readonly collectionUri: string;
@@ -28,16 +28,15 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     [modelSetString]
   );
   const collection = modelSet.collectionByUri(collectionUri);
-  const collectionDescription = collection.description;
   const configuration = modelSet.appConfiguration;
 
   React.useEffect(() => {
-    if (!collectionDescription) {
+    if (!collection.description) {
       router.push(Hrefs.work({collectionUri, workUri: firstWorkUri}));
     }
   }, []);
 
-  if (!collectionDescription) {
+  if (!collection.description) {
     // Will redirect in the useEffect, so this render will never be seen
     return <div></div>;
   }
@@ -54,18 +53,16 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
             className="text-wrap"
             xs={12}
             dangerouslySetInnerHTML={{
-              __html: collectionDescription.toString(),
+              __html: collection.description.toString(),
             }}
           ></Col>
         </Row>
-        {collectionDescription &&
-        typeof collectionDescription !== "string" &&
-        collectionDescription.requiresAttribution ? (
+        {collection.description.requiresAttribution ? (
           <Row className="mt-2">
             <Col className="text-center" xs={12}>
               <RightsParagraph
                 material="Text"
-                rights={collectionDescription}
+                rights={collection.description}
                 style={{fontSize: "xx-small"}}
               />
             </Col>

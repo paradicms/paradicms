@@ -7,9 +7,6 @@ export const RightsStatementLink: React.FunctionComponent<{
   if (!rightsStatement) {
     return null;
   }
-  if (typeof rightsStatement === "string") {
-    return <span>{rightsStatement as string}</span>;
-  }
   if (!rightsStatement.uri) {
     return <span>{rightsStatement.label}</span>;
   }

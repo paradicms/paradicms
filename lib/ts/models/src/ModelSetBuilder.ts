@@ -36,7 +36,7 @@ export class ModelSetBuilder {
       case "Organization":
         return this.addOrganization(agent);
       case "OtherAgent":
-        throw new EvalError("not implemented");
+        return this;
       case "Person":
         return this.addPerson(agent);
     }

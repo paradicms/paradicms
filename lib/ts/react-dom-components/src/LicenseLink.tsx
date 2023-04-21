@@ -7,9 +7,6 @@ export const LicenseLink: React.FunctionComponent<{
   if (!license) {
     return null;
   }
-  if (typeof license === "string") {
-    return <span>{license as string}</span>;
-  }
   if (!license.uri) {
     return <span>{license.label}</span>;
   }

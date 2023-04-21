@@ -68,7 +68,7 @@ export class CmsWork extends Mixin(
 
     result.push(...getRightsWorkAgents(this, "Work"));
 
-    if (this.description && typeof this.description !== "string") {
+    if (this.description) {
       result.push(...getRightsWorkAgents(this.description, "Text"));
     }
 
@@ -136,7 +136,7 @@ export class CmsWork extends Mixin(
   @Memoize()
   get location(): WorkLocation | null {
     const location = this.findAndMapObject(dcterms.spatial, term => mapCmsLocationObject(this, term));
-    if (location && typeof location !== "string") {
+    if (location) {
       return {
         label: this.title,
         location,
