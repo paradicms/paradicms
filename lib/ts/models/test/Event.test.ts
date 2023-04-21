@@ -12,12 +12,14 @@ describe("Event", () => {
 
   it("should get the description", () => {
     expect(
-      testModelSet.works[0].events.some(workEvent => workEvent.description)
+      testModelSet.works.some(work =>
+        work.events.some(workEvent => workEvent.description)
+      )
     ).to.be.true;
 
     expect(
-      testModelSet.works[0].events.some(
-        workEvent => workEvent.description === null
+      testModelSet.works.some(work =>
+        work.events.some(workEvent => workEvent.description === null)
       )
     ).to.be.true;
   });
