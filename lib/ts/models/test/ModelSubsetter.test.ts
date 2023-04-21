@@ -29,12 +29,6 @@ const expectModelsDeepEq = <ModelT extends NamedModel>(
       .sort()
   );
 
-const countModelSetNamedAgents = (modelSet: ModelSet): number =>
-  countModelSetRdfInstances(cms.Agent, modelSet);
-
-const countModelSetConcepts = (modelSet: ModelSet): number =>
-  countModelSetRdfInstances(cms.Concept, modelSet);
-
 const countModelSetImages = (modelSet: ModelSet): number =>
   countModelSetRdfInstances(cms.Image, modelSet);
 
@@ -79,7 +73,7 @@ describe("ModelSubsetter", () => {
         )
       )
     );
-    expect(countModelSetNamedAgents(workModelSet)).to.eq(4);
+    expect(workModelSet.namedAgents).to.have.length(4);
     for (const work of workModelSet.works) {
       expect(work.agents).to.not.be.empty;
       for (const agent of work.agents) {
@@ -88,7 +82,7 @@ describe("ModelSubsetter", () => {
         }
       }
     }
-    expect(countModelSetConcepts(workModelSet)).to.eq(0);
+    expect(workModelSet.concepts).to.have.length(0);
 
     expect(countModelSetImages(workModelSet)).to.eq(14);
 

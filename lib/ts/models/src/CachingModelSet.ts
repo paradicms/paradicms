@@ -107,7 +107,9 @@ export class CachingModelSet implements ModelSet {
   private _imagesByUriIndex?: {[index: string]: Image};
   private _licensesByUriIndex?: {[index: string]: License};
   private _locationsByUriIndex?: {[index: string]: Location};
-  private _organizationsByUriIndex?: {[index: string]: Organization};
+  private _namedOrganizations?: readonly Organization[];
+  private _namedOrganizationsByUriIndex?: {[index: string]: Organization};
+  private _namedPeople?: readonly Person[];
   private _peopleByUriIndex?: {[index: string]: Person};
   private _properties?: readonly Property[];
   private _propertiesByGroupUriIndex?: {[index: string]: readonly Property[]};
@@ -282,6 +284,27 @@ export class CachingModelSet implements ModelSet {
     return index[uri] ?? null;
   }
 
+  get namedAgents(): readonly AgentUnion[] {
+    const namedAgents: AgentUnion[] = [];
+    namedAgents.push(...this.namedOrganizations);
+    namedAgents.push(...this.namedPeople);
+    return namedAgents;
+  }
+
+  private get namedOrganizations(): readonly Organization[] {
+    if (!this._namedOrganizations) {
+      this._namedOrganizations = sortModelsArray(this.readNamedOrganizations());
+    }
+    return requireDefined(this._namedOrganizations);
+  }
+
+  private get namedPeople(): readonly Person[] {
+    if (!this._namedPeople) {
+      this._namedPeople = sortModelsArray(this.readNamedPeople());
+    }
+    return requireDefined(this._namedPeople);
+  }
+
   organizationByUri(organizationUri: string): Organization {
     return this.modelByUri(this.organizationsByUriIndex, organizationUri);
   }
@@ -294,17 +317,17 @@ export class CachingModelSet implements ModelSet {
   }
 
   private get organizationsByUriIndex(): {[index: string]: Organization} {
-    if (!this._organizationsByUriIndex) {
-      this._organizationsByUriIndex = indexModelsByUri(
-        this.readNamedOrganizations()
+    if (!this._namedOrganizationsByUriIndex) {
+      this._namedOrganizationsByUriIndex = indexModelsByUri(
+        this.namedOrganizations
       );
     }
-    return requireDefined(this._organizationsByUriIndex);
+    return requireDefined(this._namedOrganizationsByUriIndex);
   }
 
   private get peopleByUriIndex(): {[index: string]: Person} {
     if (!this._peopleByUriIndex) {
-      this._peopleByUriIndex = indexModelsByUri(this.readNamedPeople());
+      this._peopleByUriIndex = indexModelsByUri(this.namedPeople);
     }
     return requireDefined(this._peopleByUriIndex);
   }
