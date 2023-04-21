@@ -1,3 +1,20 @@
+import {faFilter} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+  FilterUnion,
+  GetWorkAgentsResult,
+  GetWorkEventsResult,
+  GetWorkLocationsResult,
+  GetWorksResult,
+  WorkAgentsSort,
+  WorkLocationSummary,
+  WorkQueryService,
+  WorksQuery,
+  WorksSort,
+} from "@paradicms/services";
+import {calculatePageMax} from "@paradicms/utilities";
+import * as React from "react";
+import {useEffect, useState} from "react";
 import {
   Button,
   Col,
@@ -12,35 +29,18 @@ import {
   TabContent,
   TabPane,
 } from "reactstrap";
-import * as React from "react";
-import {useEffect, useState} from "react";
-import {WorksGallery} from "./WorksGallery";
-import {Pagination} from "./Pagination";
-import {
-  FilterUnion,
-  GetWorkAgentsResult,
-  GetWorkEventsResult,
-  GetWorkLocationsResult,
-  GetWorksResult,
-  WorkAgentsSort,
-  WorkLocationSummary,
-  WorkQueryService,
-  WorksQuery,
-  WorksSort,
-} from "@paradicms/services";
-import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 import {useQueryParam} from "use-query-params";
 import {AgentsGallery} from "./AgentsGallery";
-import {WorkEventsTimeline} from "./WorkEventsTimeline";
-import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
-import {createFilterControls} from "./createFilterControls";
-import {calculatePageMax} from "@paradicms/utilities";
-import {WorkAgentsSortDropdown} from "./WorkAgentsSortDropdown";
-import {WorksSortDropdown} from "./WorksSortDropdown";
-import {valueThumbnailSelector} from "./valueThumbnailSelector";
 import {FilterControlsContainer} from "./FilterControlsContainer";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFilter} from "@fortawesome/free-solid-svg-icons";
+import {Pagination} from "./Pagination";
+import {WorkAgentsSortDropdown} from "./WorkAgentsSortDropdown";
+import {WorkEventsTimeline} from "./WorkEventsTimeline";
+import {WorksGallery} from "./WorksGallery";
+import {WorksSortDropdown} from "./WorksSortDropdown";
+import {createFilterControls} from "./createFilterControls";
+import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
+import {valueThumbnailSelector} from "./valueThumbnailSelector";
+import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 
 type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
 
@@ -360,8 +360,8 @@ export const WorkSearchPage: React.FunctionComponent<{
         </Row>
         <Row>
           <AgentsGallery
-            agents={getWorkAgentsResult.workAgentUris.map(workAgentUri =>
-              getWorkAgentsResult.modelSet.agentByUri(workAgentUri)
+            agents={getWorkAgentsResult.modelSet.works.flatMap(work =>
+              work.agents.map(agent => agent.agent)
             )}
             getAbsoluteImageSrc={getAbsoluteImageSrc}
           />
