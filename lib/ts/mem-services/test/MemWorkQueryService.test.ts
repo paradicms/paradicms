@@ -1,14 +1,14 @@
-import { ModelSetFactory, WorkLocation } from "@paradicms/models";
+import {ModelSetFactory, WorkLocation} from "@paradicms/models";
 import {
-  StringPropertyValueFacet,
-  StringPropertyValueFilter,
-  WorkEventsSortProperty,
-  WorksSortProperty
+    StringPropertyValueFacet,
+    StringPropertyValueFilter,
+    WorkEventsSortProperty,
+    WorksSortProperty
 } from "@paradicms/services";
-import { syntheticData } from "@paradicms/test";
-import { vra } from "@paradicms/vocabularies";
-import { expect } from "chai";
-import { MemWorkQueryService } from "../src/MemWorkQueryService";
+import {syntheticData} from "@paradicms/test";
+import {vra} from "@paradicms/vocabularies";
+import {expect} from "chai";
+import {MemWorkQueryService} from "../src/MemWorkQueryService";
 
 describe("MemWorkQueryService", () => {
   const modelSet = ModelSetFactory.fromDatasetCore(syntheticData);
@@ -101,7 +101,7 @@ describe("MemWorkQueryService", () => {
     }
   });
 
-  it("getWorkEvents sorts by date", async () => {
+  it("getWorkEvents sorted by date", async () => {
     const result = await sut.getWorkEvents(
         {
           limit: 2,

@@ -210,6 +210,10 @@ export class MemWorkQueryService implements WorkQueryService {
         works: this.searchWorks(query),
       });
 
+      // Need to distinguish work agents from other agents
+      // Just include works??? that a sliced agent is associated with
+      // Then need to keep all the (agent, [works]) pairs and slice the pair list
+      // All works for an included agent need to be included
       const agentsByUri: {[index: string]: AgentUnion} = {};
       for (const work of works) {
         for (const agent of work.agents) {

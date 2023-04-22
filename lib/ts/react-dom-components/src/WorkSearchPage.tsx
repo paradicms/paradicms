@@ -360,7 +360,7 @@ export const WorkSearchPage: React.FunctionComponent<{
         </Row>
         <Row>
           <AgentsGallery
-            agents={getWorkAgentsResult.modelSet.namedAgents}
+            agents={getWorkAgentsResult.modelSet.workAgents}
             getAbsoluteImageSrc={getAbsoluteImageSrc}
           />
         </Row>
@@ -391,9 +391,7 @@ export const WorkSearchPage: React.FunctionComponent<{
           totalObjects: getWorkEventsResult.totalWorkEventsCount,
         })}
         setPage={setWorkEventsPage}
-        workEvents={getWorkEventsResult.workEventUris.map(workEventUri =>
-          getWorkEventsResult.modelSet.workEventByUri(workEventUri)
-        )}
+        workEvents={getWorkEventsResult.modelSet.workEvents}
       />
     ) : null,
   });
