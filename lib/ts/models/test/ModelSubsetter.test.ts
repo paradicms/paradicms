@@ -29,22 +29,28 @@ const expectModelsDeepEq = <ModelT extends NamedModel>(
       .sort()
   );
 
+const countModelSetNamedAgents = (modelSet: ModelSet): number =>
+  countModelSetNamedRdfInstances(cms.Agent, modelSet);
+
 const countModelSetImages = (modelSet: ModelSet): number =>
-  countModelSetRdfInstances(cms.Image, modelSet);
+  countModelSetNamedRdfInstances(cms.Image, modelSet);
 
 const countModelSetNamedLicenses = (modelSet: ModelSet): number =>
-  countModelSetRdfInstances(cms.License, modelSet);
+  countModelSetNamedRdfInstances(cms.License, modelSet);
 
-const countModelSetRdfInstances = (class_: NamedNode, modelSet: ModelSet) =>
+const countModelSetNamedRdfInstances = (
+  class_: NamedNode,
+  modelSet: ModelSet
+) =>
   [
     ...getRdfInstanceQuads({
       class_,
       dataset: modelSet.toRdf(),
-    }),
-  ].length;
+    }).values(),
+  ].filter(quad => quad.subject.termType === "NamedNode").length;
 
 const countModelSetRightsStatements = (modelSet: ModelSet): number =>
-  countModelSetRdfInstances(cms.RightsStatement, modelSet);
+  countModelSetNamedRdfInstances(cms.RightsStatement, modelSet);
 
 describe("ModelSubsetter", () => {
   const completeModelSet = testModelSet;
@@ -73,7 +79,8 @@ describe("ModelSubsetter", () => {
         )
       )
     );
-    expect(workModelSet.namedAgents).to.have.length(4);
+    expect(countModelSetNamedAgents(workModelSet)).to.eq(4);
+    // expect(workModelSet.namedAgents).to.have.length(4);
     for (const work of workModelSet.works) {
       expect(work.agents).to.not.be.empty;
       for (const agent of work.agents) {

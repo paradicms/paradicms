@@ -508,7 +508,6 @@ export class MemWorkQueryService implements WorkQueryService {
       resolve({
         modelSet: slicedWorkEventsModelSet,
         totalWorkEventsCount: workEvents.length,
-        workEventUris: slicedWorkEvents.map(workEvent => workEvent.uri),
       });
     });
   }

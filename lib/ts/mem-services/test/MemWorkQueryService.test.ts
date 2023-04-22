@@ -45,9 +45,9 @@ describe("MemWorkQueryService", () => {
       }
     );
 
-    expect(result.modelSet.namedAgents).to.not.be.empty;
+    expect(result.workAgentUris).to.not.be.empty;
     let haveAgentWorks = false;
-    for (const agent of result.modelSet.namedAgents) {
+    for (const agent of result.workAgentUris.map(workAgentUri => result.modelSet.agentByUri(workAgentUri))) {
       const agentWorks = result.modelSet.agentWorks(agent.uri!);
       haveAgentWorks ||= agentWorks.length > 0;
       for (const work of agentWorks) {
@@ -70,7 +70,6 @@ describe("MemWorkQueryService", () => {
 
     expect(result.totalWorkEventsCount).to.be.gt(0);
     expect(result.modelSet.workEvents).to.have.length(result.totalWorkEventsCount);
-    expect(result.workEventUris).to.have.length(result.totalWorkEventsCount);
   });
 
   it("getWorkEvents returns the other models associated with an event", async () => {
