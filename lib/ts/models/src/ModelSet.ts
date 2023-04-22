@@ -1,18 +1,18 @@
-import { Dataset } from "@rdfjs/types";
-import { AgentUnion } from "./AgentUnion";
-import { AppConfiguration } from "./AppConfiguration";
-import { Collection } from "./Collection";
-import { Concept } from "./Concept";
-import { Image } from "./Image";
-import { License } from "./License";
-import { Location } from "./Location";
-import { Organization } from "./Organization";
-import { Person } from "./Person";
-import { Property } from "./Property";
-import { PropertyGroup } from "./PropertyGroup";
-import { RightsStatement } from "./RightsStatement";
-import { Work } from "./Work";
-import { WorkEventUnion } from "./WorkEventUnion";
+import {Dataset} from "@rdfjs/types";
+import {AgentUnion} from "./AgentUnion";
+import {AppConfiguration} from "./AppConfiguration";
+import {Collection} from "./Collection";
+import {Concept} from "./Concept";
+import {Image} from "./Image";
+import {License} from "./License";
+import {Location} from "./Location";
+import {Organization} from "./Organization";
+import {Person} from "./Person";
+import {Property} from "./Property";
+import {PropertyGroup} from "./PropertyGroup";
+import {RightsStatement} from "./RightsStatement";
+import {Work} from "./Work";
+import {WorkEventUnion} from "./WorkEventUnion";
 
 export interface ModelSet {
   agentByUri(agentUri: string): AgentUnion;
@@ -29,7 +29,6 @@ export interface ModelSet {
   imagesByOriginalImageUri(originalImageUri: string): readonly Image[];
   licenseByUri(licenseUri: string): License;
   locationByUri(locationUri: string): Location;
-  get namedAgents(): readonly AgentUnion[];
   organizationByUri(organizationUri: string): Organization;
   organizationByUriOptional(organizationUri: string): Organization | null;
   personByUri(personUri: string): Person;
@@ -42,6 +41,7 @@ export interface ModelSet {
   toFastRdfString(): string;
   toRdf(): Dataset;
   workByUri(workUri: string): Work;
+  get workEvents(): readonly WorkEventUnion[];
   workEventsByWorkUri(workUri: string): readonly WorkEventUnion[];
   workEventByUri(workEventUri: string): WorkEventUnion;
   readonly works: readonly Work[];
