@@ -105,11 +105,14 @@ export class CachingModelSet implements ModelSet {
   private _imagesByDepictsUriIndex?: {[index: string]: readonly Image[]};
   private _imagesByOriginalImageUriIndex?: {[index: string]: readonly Image[]};
   private _imagesByUriIndex?: {[index: string]: Image};
+  private _namedLicenses?: readonly License[];
   private _licensesByUriIndex?: {[index: string]: License};
   private _locationsByUriIndex?: {[index: string]: Location};
+  private _namedLocations?: readonly Location[];
   private _namedOrganizations?: readonly Organization[];
   private _namedOrganizationsByUriIndex?: {[index: string]: Organization};
   private _namedPeople?: readonly Person[];
+  private _namedRightsStatements?: readonly RightsStatement[];
   private _peopleByUriIndex?: {[index: string]: Person};
   private _properties?: readonly Property[];
   private _propertiesByGroupUriIndex?: {[index: string]: readonly Property[]};
@@ -250,7 +253,7 @@ export class CachingModelSet implements ModelSet {
 
   private get licensesByUriIndex(): {[index: string]: License} {
     if (!this._licensesByUriIndex) {
-      this._licensesByUriIndex = indexModelsByUri(this.readNamedLicenses());
+      this._licensesByUriIndex = indexModelsByUri(this.namedLicenses);
     }
     return requireDefined(this._licensesByUriIndex);
   }
@@ -261,7 +264,7 @@ export class CachingModelSet implements ModelSet {
 
   private get locationsByUriIndex(): {[index: string]: Location} {
     if (!this._locationsByUriIndex) {
-      this._locationsByUriIndex = indexModelsByUri(this.readNamedLocations());
+      this._locationsByUriIndex = indexModelsByUri(this.namedLocations);
     }
     return requireDefined(this._locationsByUriIndex);
   }
@@ -284,11 +287,18 @@ export class CachingModelSet implements ModelSet {
     return index[uri] ?? null;
   }
 
-  get namedAgents(): readonly AgentUnion[] {
-    const namedAgents: AgentUnion[] = [];
-    namedAgents.push(...this.namedOrganizations);
-    namedAgents.push(...this.namedPeople);
-    return namedAgents;
+  private get namedLicenses(): readonly License[] {
+    if (!this._namedLicenses) {
+      this._namedLicenses = sortModelsArray(this.readNamedLicenses());
+    }
+    return requireDefined(this._namedLicenses);
+  }
+
+  private get namedLocations(): readonly Location[] {
+    if (!this._namedLocations) {
+      this._namedLocations = sortModelsArray(this.readNamedLocations());
+    }
+    return requireDefined(this._namedLocations);
   }
 
   private get namedOrganizations(): readonly Organization[] {
@@ -303,6 +313,15 @@ export class CachingModelSet implements ModelSet {
       this._namedPeople = sortModelsArray(this.readNamedPeople());
     }
     return requireDefined(this._namedPeople);
+  }
+
+  private get namedRightsStatements(): readonly RightsStatement[] {
+    if (!this._namedRightsStatements) {
+      this._namedRightsStatements = sortModelsArray(
+        this.readNamedRightsStatements()
+      );
+    }
+    return requireDefined(this._namedRightsStatements);
   }
 
   organizationByUri(organizationUri: string): Organization {
@@ -487,7 +506,7 @@ export class CachingModelSet implements ModelSet {
   private get rightsStatementsByUriIndex(): {[index: string]: RightsStatement} {
     if (!this._rightsStatementsByUriIndex) {
       this._rightsStatementsByUriIndex = indexModelsByUri(
-        this.readNamedRightsStatements()
+        this.namedRightsStatements
       );
     }
     return requireDefined(this._rightsStatementsByUriIndex);
@@ -505,7 +524,7 @@ export class CachingModelSet implements ModelSet {
     return this.modelByUri(this.worksByUriIndex, workUri);
   }
 
-  private get workEvents(): readonly WorkEventUnion[] {
+  get workEvents(): readonly WorkEventUnion[] {
     if (!this._workEvents) {
       this._workEvents = sortModelsArray(this.readWorkEvents());
     }
