@@ -148,9 +148,6 @@ export class CmsModelReader extends DatasetModelReader {
       class_: cms.WorkEvent,
       dataset: this.dataset,
     }).values()) {
-      if (quad.subject.termType !== "NamedNode") {
-        continue;
-      }
       for (const rdfTypeQuad of this.dataset.match(
         quad.subject,
         rdf.type,
