@@ -16,8 +16,8 @@ describe("MemWorkQueryService", () => {
     modelSet
   });
 
-  it("getWorkAgents returns at least one agent from an empty query", async () => {
-    const result = await sut.getWorkAgents(
+  it("getNamedWorkAgents returns at least one agent from an empty query", async () => {
+    const result = await sut.getNamedWorkAgents(
       {
         limit: Number.MAX_SAFE_INTEGER,
         offset: 0,
@@ -27,12 +27,12 @@ describe("MemWorkQueryService", () => {
       }
     );
 
-    expect(result.modelSet.namedAgents).to.not.be.empty;
     expect(result.modelSet.works).to.be.empty;
+    expect(result.workAgentUris).not.to.be.empty;
   });
 
-  it("getWorkAgents returns the works associated with an agent", async () => {
-    const result = await sut.getWorkAgents(
+  it("getNamedWorkAgents returns the works associated with an agent", async () => {
+    const result = await sut.getNamedWorkAgents(
       {
         agentJoinSelector: {
           works: {},

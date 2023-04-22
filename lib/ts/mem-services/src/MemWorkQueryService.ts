@@ -14,8 +14,8 @@ import {
   defaultWorksSort,
   FacetUnion,
   FilterUnion,
-  GetWorkAgentsOptions,
-  GetWorkAgentsResult,
+  GetNamedWorkAgentsOptions,
+  GetNamedWorkAgentsResult,
   GetWorkEventsOptions,
   GetWorkEventsResult,
   GetWorkLocationsOptions,
@@ -194,10 +194,10 @@ export class MemWorkQueryService implements WorkQueryService {
     return filteredWorks;
   }
 
-  getWorkAgents(
-    options: GetWorkAgentsOptions,
+  getNamedWorkAgents(
+    options: GetNamedWorkAgentsOptions,
     query: WorksQuery
-  ): Promise<GetWorkAgentsResult> {
+  ): Promise<GetNamedWorkAgentsResult> {
     const {agentJoinSelector, limit, offset} = options;
 
     invariant(!!query, "query must be defined");
@@ -210,10 +210,6 @@ export class MemWorkQueryService implements WorkQueryService {
         works: this.searchWorks(query),
       });
 
-      // Need to distinguish work agents from other agents
-      // Just include works??? that a sliced agent is associated with
-      // Then need to keep all the (agent, [works]) pairs and slice the pair list
-      // All works for an included agent need to be included
       const agentsByUri: {[index: string]: AgentUnion} = {};
       for (const work of works) {
         for (const agent of work.agents) {
@@ -247,6 +243,7 @@ export class MemWorkQueryService implements WorkQueryService {
       resolve({
         modelSet: slicedAgentsModelSet,
         totalWorkAgentsCount: agents.length,
+        workAgentUris: slicedAgents.map(agent => agent.uri!),
       });
     });
   }
