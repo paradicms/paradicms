@@ -360,7 +360,9 @@ export const WorkSearchPage: React.FunctionComponent<{
         </Row>
         <Row>
           <AgentsGallery
-            agents={getWorkAgentsResult.modelSet.workAgents}
+            agents={getWorkAgentsResult.workAgentUris.map(workAgentUri =>
+              getWorkAgentsResult.modelSet.agentByUri(workAgentUri)
+            )}
             getAbsoluteImageSrc={getAbsoluteImageSrc}
           />
         </Row>
