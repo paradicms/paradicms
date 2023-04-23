@@ -123,7 +123,7 @@ export class ModelSetBuilder {
   private addNamedModel<ModelT extends Model>(model: ModelT): ModelSetBuilder {
     invariant(model.uri, "can only add named models");
     if (this.addedModelUris.has(model.uri)) {
-      console.debug("tried to add model", model.uri, "twice");
+      // console.debug("tried to add model", model.uri, "twice");
       return this;
     }
     this.store.addQuads(ModelSetBuilder.modelToQuads(model));
