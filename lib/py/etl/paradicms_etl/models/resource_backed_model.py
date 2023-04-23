@@ -5,11 +5,10 @@ import rdflib
 from rdflib import ConjunctiveGraph, Literal, RDF, URIRef
 from rdflib import Graph
 from rdflib.resource import Resource
-from rdflib.term import Identifier, Node
+from rdflib.term import Node, BNode
 
 import paradicms_etl
 from paradicms_etl.model import Model
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.namespaces.bind_namespaces import EXCLUDE_RDFLIB_NAMESPACE_PREFIXES
 from paradicms_etl.utils.module_namespaces import module_namespaces
@@ -19,18 +18,19 @@ _ValueT = TypeVar("_ValueT")
 
 class ResourceBackedModel(Model):
     class Builder:
-        def __init__(self, identifier: Identifier):
+        def __init__(self, *, uri: Optional[URIRef] = None):
             graph = Graph()
-            self._resource = graph.resource(identifier)
+            self._resource = graph.resource(uri if uri is not None else BNode())
 
         def add(self, p: URIRef, o: Any) -> "ResourceBackedModel.Builder":
             if o is None:
                 pass
-            elif isinstance(o, NamedModel):
-                # Assume that NamedModel's are yielded separately
-                self._resource.add(p, o.uri)
             elif isinstance(o, Model):
-                self._resource.add(p, o.to_rdf(graph=self._resource.graph))
+                if o.uri is not None:
+                    # Assume that named models are yielded separately
+                    self._resource.add(p, o.uri)
+                else:
+                    self._resource.add(p, o.to_rdf(graph=self._resource.graph))
             elif isinstance(o, Node):
                 self._resource.add(p, o)
             elif isinstance(o, (list, tuple)):
@@ -189,6 +189,14 @@ class ResourceBackedModel(Model):
         for value in self.__values(p):
             if isinstance(value, Resource) and isinstance(value.identifier, URIRef):
                 yield value.identifier
+
+    @property
+    def uri(self) -> Optional[URIRef]:
+        return (
+            self._resource.identifier
+            if isinstance(self._resource.identifier, URIRef)
+            else None
+        )
 
     def __values(
         self, p: Union[URIRef, Tuple[URIRef, ...]]

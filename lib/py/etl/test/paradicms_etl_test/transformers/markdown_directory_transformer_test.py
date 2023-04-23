@@ -7,7 +7,6 @@ from paradicms_etl.extractors.markdown_directory_extractor import (
 )
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
@@ -29,8 +28,6 @@ def test_transform(data_dir_path: Path):
         )(**extractor())
     )
     assert models
-    for model in models:
-        assert isinstance(model, NamedModel), type(model)
 
     collections = {
         model.uri: model for model in models if isinstance(model, Collection)

@@ -26,29 +26,23 @@ class CmsRightsMixin(RightsMixin):
         def add(self, p: URIRef, o: Any):
             raise NotImplementedError
 
-        def add_contributor(
-            self, contributor: Union[str, URIRef]
-        ) -> "CmsRightsMixin.Builder":
+        def add_contributor(self, contributor: Any) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.contributor, contributor)
             return self
 
-        def add_creator(self, creator: Union[str, URIRef]) -> "CmsRightsMixin.Builder":
+        def add_creator(self, creator: Any) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.creator, creator)
             return self
 
-        def add_license(self, license: Union[str, URIRef]) -> "CmsRightsMixin.Builder":
+        def add_license(self, license: Any) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.license, license)
             return self
 
-        def add_rights_holder(
-            self, holder: Union[str, URIRef]
-        ) -> "CmsRightsMixin.Builder":
+        def add_rights_holder(self, holder: Any) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.rightsHolder, holder)
             return self
 
-        def add_rights_statement(
-            self, statement: Union[str, URIRef]
-        ) -> "CmsRightsMixin.Builder":
+        def add_rights_statement(self, statement: Any) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.rights, statement)
             return self
 
@@ -66,15 +60,15 @@ class CmsRightsMixin(RightsMixin):
             return self
 
     @property
-    def contributors(self) -> Tuple[Union[str, URIRef], ...]:
+    def contributors(self) -> Tuple[Any, ...]:
         return self.__plural_values(DCTERMS.contributor)
 
     @property
-    def creators(self) -> Tuple[Union[str, URIRef], ...]:
+    def creators(self) -> Tuple[Any, ...]:
         return self.__plural_values(DCTERMS.creator)
 
     @property
-    def rights_holders(self) -> Tuple[Union[str, URIRef], ...]:
+    def rights_holders(self) -> Tuple[Any, ...]:
         return self.__plural_values(DCTERMS.rightsHolder)
 
     @classmethod
@@ -97,7 +91,7 @@ class CmsRightsMixin(RightsMixin):
     def license(self) -> Union[str, URIRef, None]:
         return self.__singular_value(DCTERMS.license)
 
-    def __plural_values(self, p: URIRef) -> Tuple[Union[str, URIRef], ...]:
+    def __plural_values(self, p: URIRef) -> Tuple[Any, ...]:
         values = []
         for o in self._resource.objects(p):
             if isinstance(o, Literal):
@@ -105,7 +99,11 @@ class CmsRightsMixin(RightsMixin):
                 if isinstance(py_o, str):
                     values.append(py_o)
             elif isinstance(o, Resource):
-                values.append(o.identifier)
+                if isinstance(o.identifier, URIRef):
+                    values.append(o.identifier)
+                else:
+                    # raise NotImplementedError("blank node")
+                    continue
         return tuple(values)
 
     @property

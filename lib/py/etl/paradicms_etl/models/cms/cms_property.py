@@ -77,3 +77,7 @@ class CmsProperty(CmsNamedModel, Property):
     @property
     def range(self) -> Optional[URIRef]:
         return self._optional_uri_value(RDFS.range)
+
+    @property
+    def uri(self) -> URIRef:
+        return super().uri

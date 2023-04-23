@@ -1,9 +1,9 @@
 from abc import abstractmethod
 
-from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.model import Model
 
 
-class Agent(NamedModel):
+class Agent(Model):
     @property
     @abstractmethod
     def label(self) -> str:

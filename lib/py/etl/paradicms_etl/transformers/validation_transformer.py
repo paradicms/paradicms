@@ -11,7 +11,6 @@ from paradicms_etl.models.event import Event
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.license import License
 from paradicms_etl.models.location import Location
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
@@ -119,8 +118,9 @@ class __Validator:
 
     def _validate_license(self, license: License):
         self.__validate_named_model(license)
-        assert license.uri not in self.__license_uris
-        self.__license_uris.add(license.uri)
+        if license.uri is not None:
+            assert license.uri not in self.__license_uris
+            self.__license_uris.add(license.uri)
 
     def _validate_license_references(self):
         self.__validate_uri_references(
@@ -130,15 +130,17 @@ class __Validator:
             warn=False,
         )
 
-    def _validate_named_location(self, location: Location):
-        assert isinstance(location, NamedModel)
+    def _validate_location(self, location: Location):
         self.__validate_named_model(location)
-        self.__location_uris.add(location.uri)
+        if location.uri is not None:
+            self.__location_uris.add(location.uri)
 
-    def _validate_named_location_references(self):
+    def _validate_location_references(self):
         pass
 
-    def __validate_named_model(self, model: NamedModel):
+    def __validate_named_model(self, model: Model):
+        if model.uri is None:
+            return
         if model.uri not in self.__model_uris:
             self.__model_uris.add(model.uri)
         else:
@@ -152,16 +154,18 @@ class __Validator:
 
     def _validate_organization(self, organization: Organization):
         self.__validate_named_model(organization)
-        assert organization.uri not in self.__organization_uris
-        self.__organization_uris.add(organization.uri)
+        if organization.uri is not None:
+            assert organization.uri not in self.__organization_uris
+            self.__organization_uris.add(organization.uri)
 
     def _validate_organization_references(self):
         pass
 
     def _validate_person(self, person: Person):
         self.__validate_named_model(person)
-        assert person.uri not in self.__person_uris
-        self.__person_uris.add(person.uri)
+        if person.uri is not None:
+            assert person.uri not in self.__person_uris
+            self.__person_uris.add(person.uri)
 
     def _validate_person_references(self):
         pass
@@ -190,8 +194,9 @@ class __Validator:
 
     def _validate_rights_statement(self, rights_statement: RightsStatement):
         self.__validate_named_model(rights_statement)
-        assert rights_statement.uri not in self.__rights_statement_uris
-        self.__rights_statement_uris.add(rights_statement.uri)
+        if rights_statement.uri is not None:
+            assert rights_statement.uri not in self.__rights_statement_uris
+            self.__rights_statement_uris.add(rights_statement.uri)
 
     def _validate_rights_statement_references(self):
         self.__validate_uri_references(

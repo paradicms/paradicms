@@ -1,9 +1,9 @@
 from abc import abstractmethod
 
-from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.model import Model
 
 
-class RightsStatement(NamedModel):
+class RightsStatement(Model):
     """
     A rights statement. Adapted from the rightsstatements.org data model (https://github.com/rightsstatements/data-model).
     """

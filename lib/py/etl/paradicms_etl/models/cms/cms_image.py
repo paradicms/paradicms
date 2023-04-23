@@ -188,3 +188,7 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
     @property
     def title(self):
         return self._optional_str_value(DCTERMS.title)
+
+    @property
+    def uri(self) -> URIRef:
+        return super().uri

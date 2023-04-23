@@ -1,3 +1,5 @@
+from typing import Optional
+
 from rdflib import URIRef
 
 from paradicms_etl.models.cms.cms_agent import CmsAgent
@@ -10,5 +12,5 @@ class CmsOrganization(CmsAgent, Organization):
             return CmsOrganization(self._resource)
 
     @classmethod
-    def builder(cls, *, name: str, uri: URIRef) -> Builder:
+    def builder(cls, *, name: str, uri: Optional[URIRef] = None) -> Builder:
         return cls.Builder(name=name, uri=uri)

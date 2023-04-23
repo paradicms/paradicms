@@ -9,7 +9,6 @@ from rdflib.util import guess_format
 
 from paradicms_etl.loaders.buffering_loader import BufferingLoader
 from paradicms_etl.model import Model
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.namespaces import bind_namespaces
 
 
@@ -41,7 +40,7 @@ class RdfFileLoader(BufferingLoader):
         )
         self.__logger.debug("serializing %d models to a graph", len(models))
         for model in models:
-            if isinstance(model, NamedModel):
+            if model.uri is not None:
                 model_graph_uri = URIRef(
                     f"urn:paradicms_etl:pipeline:{self.__pipeline_id}:model:{hashlib.sha256(str(model.uri).encode('utf-8')).hexdigest()}"
                 )

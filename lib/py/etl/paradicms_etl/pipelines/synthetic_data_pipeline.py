@@ -12,12 +12,11 @@ from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.cms.cms_agent import CmsAgent
-from paradicms_etl.models.cms.cms_anonymous_location import CmsAnonymousLocation
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_concept import CmsConcept
 from paradicms_etl.models.cms.cms_date_time_description import CmsDateTimeDescription
 from paradicms_etl.models.cms.cms_image import CmsImage
-from paradicms_etl.models.cms.cms_named_location import CmsNamedLocation
+from paradicms_etl.models.cms.cms_location import CmsLocation
 from paradicms_etl.models.cms.cms_organization import CmsOrganization
 from paradicms_etl.models.cms.cms_person import CmsPerson
 from paradicms_etl.models.cms.cms_property import CmsProperty
@@ -451,11 +450,12 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     )
 
             # dcterms:contributor
-            contributor_uris = [
-                agents[(work_i + i) % len(agents)].uri for i in range(2)
+            contributors = [
+                CmsPerson.builder(name=f"{title} contributor {contributor_i}").build()
+                for contributor_i in range(2)
             ]
-            for contributor_uri in contributor_uris:
-                work_builder.add(DCTERMS.contributor, contributor_uri)
+            for contributor in contributors:
+                work_builder.add(DCTERMS.contributor, contributor)
 
             # dcterms:creator
             creator_uris = [agents[(work_i + i) % len(agents)].uri for i in range(2, 4)]
@@ -491,13 +491,10 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 description = None
 
             anonymous_location = (
-                CmsAnonymousLocation.builder()
-                .set_lat(42.728104)
-                .set_long(-73.687576)
-                .build()
+                CmsLocation.builder().set_lat(42.728104).set_long(-73.687576).build()
             )
             named_location = (
-                CmsNamedLocation.builder(uri=URIRef(str(work_uri) + "Location"))
+                CmsLocation.builder(uri=URIRef(str(work_uri) + "Location"))
                 .set_lat(42.728104)
                 .set_long(-73.687576)
                 .build()
@@ -516,11 +513,10 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 text_prefix=work.title,
             )
 
-            yield CmsWorkClosing.builder(
-                uri=URIRef(str(work.uri) + "Closing"), work_uri=work.uri
-            ).set_description(description).set_date(destruction_date).set_location(
-                anonymous_location
-            ).set_title(
+            # Anonymous event
+            yield CmsWorkClosing.builder(work_uri=work.uri).set_description(
+                description
+            ).set_date(destruction_date).set_location(anonymous_location).set_title(
                 f"{work.title} closing"
             ).build()
 
@@ -533,10 +529,10 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 .set_location(named_location)
                 .set_title(f"{work.title} creation")
             )
-            for contributor_uri in contributor_uris:
-                work_creation_builder.add_contributor_uri(contributor_uri)
+            # for contributor in contributor_uris:
+            #     work_creation_builder.add_contributor_uri(contributor_uri)
             for creator_uri in creator_uris:
-                work_creation_builder.add_creator_uri(creator_uri)
+                work_creation_builder.add_creator(creator_uri)
             yield work_creation_builder.build()
 
             yield CmsWorkOpening.builder(

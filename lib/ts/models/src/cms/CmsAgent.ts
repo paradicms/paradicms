@@ -1,13 +1,13 @@
 import {Mixin} from "ts-mixer";
 import {Agent} from "../Agent";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsNameMixin} from "./CmsNameMixin";
 import {CmsRelationsMixin} from "./CmsRelationsMixin";
+import {ResourceBackedModel} from "../ResourceBackedModel";
 
 export class CmsAgent
   extends Mixin(
-    ResourceBackedNamedModel,
+    ResourceBackedModel,
     CmsImagesMixin,
     CmsNameMixin,
     CmsRelationsMixin

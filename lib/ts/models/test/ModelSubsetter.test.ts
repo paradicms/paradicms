@@ -79,10 +79,9 @@ describe("ModelSubsetter", () => {
         )
       )
     );
-    expect(countModelSetNamedAgents(workModelSet)).to.eq(4);
-    // expect(workModelSet.namedAgents).to.have.length(4);
+    expect(countModelSetNamedAgents(workModelSet)).to.eq(2);
     for (const work of workModelSet.works) {
-      expect(work.agents).to.not.be.empty;
+      expect(work.agents).to.have.length(8); // 2 named agents + 2 blank node agents + 4 literal agents
       for (const agent of work.agents) {
         if (agent.agent.uri) {
           expect(agent.agent.thumbnail(THUMBNAIL_SELECTOR)).to.not.be.null;
@@ -91,7 +90,7 @@ describe("ModelSubsetter", () => {
     }
     expect(workModelSet.concepts).to.have.length(0);
 
-    expect(countModelSetImages(workModelSet)).to.eq(14);
+    expect(countModelSetImages(workModelSet)).to.eq(12);
 
     expect(work.license).to.not.be.null;
     expect(countModelSetNamedLicenses(workModelSet)).to.eq(1);

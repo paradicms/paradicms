@@ -3,7 +3,7 @@ from io import BytesIO
 from typing import Dict, Any
 
 from PIL import Image
-from rdflib import DCTERMS, RDF, Literal, XSD, BNode
+from rdflib import DCTERMS, RDF, Literal, XSD
 
 from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.models.image_data import ImageData
@@ -27,7 +27,7 @@ class CmsImageData(CmsModel, ImageData):
         buffer = BytesIO()
         pil_image.save(buffer, format="JPEG")
         return (
-            cls.__Builder(BNode())
+            cls.__Builder()
             .add(DCTERMS.format, Literal("image/jpeg"))
             .add(
                 RDF.value,

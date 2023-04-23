@@ -3,7 +3,7 @@ from typing import Union
 from rdflib import RDF, DCTERMS
 from rdflib.resource import Resource
 
-from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
+from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.event import Event
 from paradicms_etl.models.location import Location
@@ -12,10 +12,10 @@ from paradicms_etl.namespaces import CMS, VRA
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class CmsEvent(CmsNamedModel, Event):
+class CmsEvent(CmsModel, Event):
     LABEL_PROPERTY = DCTERMS.title
 
-    class Builder(CmsNamedModel.Builder):
+    class Builder(CmsModel.Builder):
         def set_date(self, date: DateTimeUnion) -> "CmsEvent.Builder":
             self.set(DCTERMS.date, date)
             return self
@@ -42,12 +42,12 @@ class CmsEvent(CmsNamedModel, Event):
 
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS.Event)
-        CmsNamedModel.__init__(self, resource)
+        CmsModel.__init__(self, resource)
 
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            CmsNamedModel.json_ld_context(),
+            CmsModel.json_ld_context(),
             {
                 "description": {"@id": str(DCTERMS.description)},
                 "date": {"@id": str(DCTERMS.date)},

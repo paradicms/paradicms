@@ -51,11 +51,16 @@ export abstract class DatasetModelReader implements ModelReader {
     modelSet: ModelSet;
   }): readonly NamedModelT[] {
     const namedModels: NamedModelT[] = [];
+    // const namedModelUris: Set<string> = new Set<string>();
     for (const quad of getRdfInstanceQuads({
       class_: kwds.class_,
       dataset: this.dataset,
     }).values()) {
       if (quad.subject.termType === "NamedNode") {
+        // invariant(
+        //   !namedModelUris.has(quad.subject.value),
+        //   "duplicate named model instance: " + quad.subject.value
+        // );
         namedModels.push(
           new kwds.factory({
             dataset: this.dataset,
@@ -64,6 +69,7 @@ export abstract class DatasetModelReader implements ModelReader {
             node: quad.subject as NamedNode,
           })
         );
+        // namedModelUris.add(quad.subject.value);
       }
     }
     return namedModels;

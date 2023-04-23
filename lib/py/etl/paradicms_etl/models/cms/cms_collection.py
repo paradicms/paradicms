@@ -52,3 +52,7 @@ class CmsCollection(CmsNamedModel, Collection):
     @property
     def title(self) -> str:
         return self._required_str_value(DCTERMS.title)
+
+    @property
+    def uri(self) -> URIRef:
+        return super().uri

@@ -138,7 +138,7 @@ class MarkdownDirectoryTransformer:
             model_id: str,
             transformed_model: Model,
         ):
-            if isinstance(transformed_model, NamedModel):
+            if transformed_model.uri is not None:
                 assert (
                     transformed_model.uri not in self.__transformed_models_by_uri
                 ), transformed_model.uri

@@ -73,6 +73,10 @@ class CmsConcept(CmsNamedModel, Concept):
         return tuple(self._uri_values(RDF.type))
 
     @property
+    def uri(self) -> URIRef:
+        return super().uri
+
+    @property
     def value(self) -> Node:
         value = self._resource.value(RDF.value)
         if value is None:

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from rdflib import Graph
+from rdflib import Graph, URIRef
 from rdflib.resource import Resource
 
 
@@ -17,4 +17,9 @@ class Model(ABC):
 
     @abstractmethod
     def to_rdf(self, graph: Graph) -> Resource:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def uri(self) -> Optional[URIRef]:
         raise NotImplementedError

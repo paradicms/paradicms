@@ -1,5 +1,5 @@
-from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.model import Model
 
 
-class Event(NamedModel):
+class Event(Model):
     pass
