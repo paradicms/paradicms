@@ -1,3 +1,5 @@
+from typing import Optional
+
 from rdflib import URIRef
 
 from paradicms_etl.models.cms.cms_work_event import CmsWorkEvent
@@ -10,5 +12,5 @@ class CmsWorkOpening(CmsWorkEvent, WorkOpening):
             return CmsWorkOpening(self._resource)
 
     @classmethod
-    def builder(cls, *, uri: URIRef, work_uri: URIRef):
+    def builder(cls, *, work_uri: URIRef, uri: Optional[URIRef] = None):
         return cls.Builder(uri=uri, work_uri=work_uri)

@@ -512,11 +512,10 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 text_prefix=work.title,
             )
 
-            yield CmsWorkClosing.builder(
-                uri=URIRef(str(work.uri) + "Closing"), work_uri=work.uri
-            ).set_description(description).set_date(destruction_date).set_location(
-                anonymous_location
-            ).set_title(
+            # Anonymous event
+            yield CmsWorkClosing.builder(work_uri=work.uri).set_description(
+                description
+            ).set_date(destruction_date).set_location(anonymous_location).set_title(
                 f"{work.title} closing"
             ).build()
 

@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Optional
 
 from rdflib import URIRef, DCTERMS
 from rdflib.resource import Resource
@@ -22,7 +22,7 @@ class CmsWorkCreation(CmsWorkEvent, WorkCreation):
             return CmsWorkCreation(self._resource)
 
     @classmethod
-    def builder(cls, *, uri: URIRef, work_uri: URIRef):
+    def builder(cls, *, work_uri: URIRef, uri: Optional[URIRef] = None):
         return cls.Builder(uri=uri, work_uri=work_uri)
 
     def __init__(self, resource: Resource):
