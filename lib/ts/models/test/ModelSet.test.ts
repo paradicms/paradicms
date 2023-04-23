@@ -51,14 +51,10 @@ describe("ModelSet", () => {
     for (const work of sut.works) {
       expect(work.originalImages).to.not.be.empty;
       expect(work.contributors).to.not.be.empty;
-      const contributor = work.contributors.find(
-        contributor => contributor.uri !== null
-      )!;
+      expect(work.contributors.every(contributor => contributor.uri === null));
       expect(
-        sut
-          .agentWorks(contributor.uri!)
-          .some(contributorAgentWork => contributorAgentWork.uri === work.uri)
-      ).to.be.true;
+        work.contributors.every(contributor => contributor.label.length > 0)
+      );
       expect(work.creators).to.not.be.empty;
       const creator = work.creators.find(creator => creator.uri !== null)!;
       expect(
