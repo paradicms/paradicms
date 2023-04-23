@@ -41,4 +41,4 @@ class CmsPropertyGroup(CmsNamedModel, PropertyGroup):
 
     @property
     def uri(self) -> URIRef:
-        return CmsNamedModel.uri(self)
+        return super().uri

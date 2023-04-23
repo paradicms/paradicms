@@ -74,7 +74,7 @@ class CmsConcept(CmsNamedModel, Concept):
 
     @property
     def uri(self) -> URIRef:
-        return CmsNamedModel.uri(self)
+        return super().uri
 
     @property
     def value(self) -> Node:

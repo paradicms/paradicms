@@ -191,4 +191,4 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
 
     @property
     def uri(self) -> URIRef:
-        return CmsNamedModel.uri(self)
+        return super().uri
