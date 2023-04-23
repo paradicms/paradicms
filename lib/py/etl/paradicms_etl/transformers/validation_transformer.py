@@ -11,7 +11,6 @@ from paradicms_etl.models.event import Event
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.license import License
 from paradicms_etl.models.location import Location
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
@@ -131,12 +130,12 @@ class __Validator:
             warn=False,
         )
 
-    def _validate_named_location(self, location: Location):
-        assert isinstance(location, NamedModel)
+    def _validate_location(self, location: Location):
         self.__validate_named_model(location)
-        self.__location_uris.add(location.uri)
+        if location.uri is not None:
+            self.__location_uris.add(location.uri)
 
-    def _validate_named_location_references(self):
+    def _validate_location_references(self):
         pass
 
     def __validate_named_model(self, model: Model):
