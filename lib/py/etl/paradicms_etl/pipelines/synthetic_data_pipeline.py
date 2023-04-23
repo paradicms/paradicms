@@ -450,11 +450,12 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     )
 
             # dcterms:contributor
-            contributor_uris = [
-                agents[(work_i + i) % len(agents)].uri for i in range(2)
+            contributors = [
+                CmsPerson.builder(name=f"{title} contributor {contributor_i}").build()
+                for contributor_i in range(2)
             ]
-            for contributor_uri in contributor_uris:
-                work_builder.add(DCTERMS.contributor, contributor_uri)
+            for contributor in contributors:
+                work_builder.add(DCTERMS.contributor, contributor)
 
             # dcterms:creator
             creator_uris = [agents[(work_i + i) % len(agents)].uri for i in range(2, 4)]
@@ -528,10 +529,10 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 .set_location(named_location)
                 .set_title(f"{work.title} creation")
             )
-            for contributor_uri in contributor_uris:
-                work_creation_builder.add_contributor_uri(contributor_uri)
+            # for contributor in contributor_uris:
+            #     work_creation_builder.add_contributor_uri(contributor_uri)
             for creator_uri in creator_uris:
-                work_creation_builder.add_creator_uri(creator_uri)
+                work_creation_builder.add_creator(creator_uri)
             yield work_creation_builder.build()
 
             yield CmsWorkOpening.builder(

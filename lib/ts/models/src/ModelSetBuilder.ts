@@ -15,13 +15,12 @@ import {Property} from "./Property";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
 import {Quad} from "@rdfjs/types";
-import {isomorphic} from "rdf-isomorphic";
 import {ModelSet} from "./ModelSet";
 import {ModelSetFactory} from "./ModelSetFactory";
 
 export class ModelSetBuilder {
   private addedAppConfiguration: boolean = false;
-  private readonly addedModelDefaultGraphQuads: Quad[][] = [];
+  // private readonly addedModelDefaultGraphQuads: Quad[][] = [];
   private readonly addedModelUris: Set<string> = new Set<string>();
   private readonly store: Store = new Store();
 
@@ -94,30 +93,32 @@ export class ModelSetBuilder {
     if (model.uri) {
       return this.addNamedModel(model);
     }
-    const defaultGraph = DataFactory.defaultGraph();
-    const modelDefaultGraphQuads = model
-      .toRdf()
-      .map(triple =>
-        DataFactory.quad(
-          triple.subject,
-          triple.predicate,
-          triple.object,
-          defaultGraph
-        )
-      );
-    // Serialize the model to quads in the default graph
-    // Then test whether that set of quads is isomorphic with previously-added sets of (model) quads
-    for (const addedModelDefaultGraphQuads of this
-      .addedModelDefaultGraphQuads) {
-      if (isomorphic(modelDefaultGraphQuads, addedModelDefaultGraphQuads)) {
-        console.debug("tried to add isomorphic model");
-        return this;
-      }
-    }
-    // Add a named graph to the store, not the triples in the default graph
-    this.store.addQuads(ModelSetBuilder.modelToQuads(model));
-    this.addedModelDefaultGraphQuads.push(modelDefaultGraphQuads);
+    // Blank node models should be included in the triples of another model
     return this;
+    // const defaultGraph = DataFactory.defaultGraph();
+    // const modelDefaultGraphQuads = model
+    //   .toRdf()
+    //   .map(triple =>
+    //     DataFactory.quad(
+    //       triple.subject,
+    //       triple.predicate,
+    //       triple.object,
+    //       defaultGraph
+    //     )
+    //   );
+    // // Serialize the model to quads in the default graph
+    // // Then test whether that set of quads is isomorphic with previously-added sets of (model) quads
+    // for (const addedModelDefaultGraphQuads of this
+    //   .addedModelDefaultGraphQuads) {
+    //   if (isomorphic(modelDefaultGraphQuads, addedModelDefaultGraphQuads)) {
+    //     console.debug("tried to add isomorphic model");
+    //     return this;
+    //   }
+    // }
+    // // Add a named graph to the store, not the triples in the default graph
+    // this.store.addQuads(ModelSetBuilder.modelToQuads(model));
+    // this.addedModelDefaultGraphQuads.push(modelDefaultGraphQuads);
+    // return this;
   }
 
   private addNamedModel<ModelT extends Model>(model: ModelT): ModelSetBuilder {
@@ -141,11 +142,11 @@ export class ModelSetBuilder {
   }
 
   addOrganization(organization: Organization): ModelSetBuilder {
-    return this.addNamedModel(organization);
+    return this.addModel(organization);
   }
 
   addPerson(person: Person): ModelSetBuilder {
-    return this.addNamedModel(person);
+    return this.addModel(person);
   }
 
   addProperties(properties: readonly Property[]): ModelSetBuilder {

@@ -1,4 +1,4 @@
-from typing import Tuple, Optional
+from typing import Tuple, Optional, Any
 
 from rdflib import URIRef, DCTERMS
 from rdflib.resource import Resource
@@ -10,11 +10,11 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 class CmsWorkCreation(CmsWorkEvent, WorkCreation):
     class Builder(CmsWorkEvent.Builder):
-        def add_contributor_uri(self, contributor: URIRef) -> "CmsWorkCreation.Builder":
+        def add_contributor(self, contributor: Any) -> "CmsWorkCreation.Builder":
             self.add(DCTERMS.contributor, contributor)
             return self
 
-        def add_creator_uri(self, creator: URIRef) -> "CmsWorkCreation.Builder":
+        def add_creator(self, creator: Any) -> "CmsWorkCreation.Builder":
             self.add(DCTERMS.creator, creator)
             return self
 
