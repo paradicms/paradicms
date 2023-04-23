@@ -6,9 +6,9 @@ import {Event} from "../Event";
 import {Location} from "../Location";
 import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {dateTimeDescriptionToString} from "../dateTimeDescriptionToString";
-import {mapDateTimeDescriptionObject} from "../mapDateTimeDescriptionObject";
-import {mapLocationObject} from "../mapLocationObject";
 import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
+import {mapCmsDateTimeDescriptionObject} from "./mapCmsDateTimeDescriptionObject";
+import {mapCmsLocationObject} from "./mapCmsLocationObject";
 
 export abstract class CmsEvent
   extends Mixin(ResourceBackedNamedModel, CmsDescriptionMixin)
@@ -75,23 +75,23 @@ export abstract class CmsEvent
   @Memoize()
   get date(): DateTimeDescription | null {
     return this.findAndMapObject(dcterms.date, term =>
-      mapDateTimeDescriptionObject(this, term)
+      mapCmsDateTimeDescriptionObject(this, term)
     );
   }
 
   @Memoize()
   get endDate(): DateTimeDescription | null {
     return this.findAndMapObject(vra.endDate, term =>
-      mapDateTimeDescriptionObject(this, term)
+      mapCmsDateTimeDescriptionObject(this, term)
     );
   }
 
   abstract readonly label: string;
 
   @Memoize()
-  get location(): Location | string | null {
+  get location(): Location | null {
     return this.findAndMapObject(dcterms.spatial, term =>
-      mapLocationObject(this, term)
+      mapCmsLocationObject(this, term)
     );
   }
 
@@ -122,7 +122,7 @@ export abstract class CmsEvent
   @Memoize()
   get startDate(): DateTimeDescription | null {
     return this.findAndMapObject(vra.startDate, term =>
-      mapDateTimeDescriptionObject(this, term)
+      mapCmsDateTimeDescriptionObject(this, term)
     );
   }
 

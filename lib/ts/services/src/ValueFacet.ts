@@ -1,5 +1,6 @@
 import {ValueFacetValue} from "./ValueFacetValue";
 import {JsonPrimitiveType} from "./JsonPrimitiveType";
+import {Facet} from "./Facet";
 
 /**
  * Facet that creates a histogram of distinct values (model, property, value).
@@ -8,7 +9,7 @@ import {JsonPrimitiveType} from "./JsonPrimitiveType";
  *
  * The naming follows that of Lucene/ElasticSearch (value and range facets).
  */
-export interface ValueFacet<T extends JsonPrimitiveType> {
+export interface ValueFacet<T extends JsonPrimitiveType> extends Facet {
   /**
    * Count of models that do not have a value for the property.
    */

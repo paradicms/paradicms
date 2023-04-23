@@ -4,7 +4,7 @@ import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 export const Gallery: React.FunctionComponent<{
   cards: readonly {
     element: React.ReactElement;
-    key: string;
+    key: React.Key;
   }[];
 }> = ({cards}) => (
   <>

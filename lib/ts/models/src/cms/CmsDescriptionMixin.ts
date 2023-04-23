@@ -2,13 +2,13 @@ import {dcterms} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
 import {ResourceBackedNamedModelMixin} from "../ResourceBackedNamedModelMixin";
 import {Text} from "../Text";
-import {mapTextObject} from "../mapTextObject";
+import {mapCmsTextObject} from "./mapCmsTextObject";
 
 export abstract class CmsDescriptionMixin extends ResourceBackedNamedModelMixin {
   @Memoize()
-  get description(): string | Text | null {
+  get description(): Text | null {
     return this.findAndMapObject(dcterms.description, term =>
-      mapTextObject(this, term)
+      mapCmsTextObject(this, term)
     );
   }
 }

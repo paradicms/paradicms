@@ -1,3 +1,20 @@
+import {faFilter} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+  FilterUnion,
+  GetNamedWorkAgentsResult,
+  GetWorkEventsResult,
+  GetWorkLocationsResult,
+  GetWorksResult,
+  WorkAgentsSort,
+  WorkLocationSummary,
+  WorkQueryService,
+  WorksQuery,
+  WorksSort,
+} from "@paradicms/services";
+import {calculatePageMax} from "@paradicms/utilities";
+import * as React from "react";
+import {useEffect, useState} from "react";
 import {
   Button,
   Col,
@@ -12,40 +29,23 @@ import {
   TabContent,
   TabPane,
 } from "reactstrap";
-import * as React from "react";
-import {useEffect, useState} from "react";
-import {WorksGallery} from "./WorksGallery";
-import {Pagination} from "./Pagination";
-import {
-  Filter,
-  GetWorkAgentsResult,
-  GetWorkEventsResult,
-  GetWorkLocationsResult,
-  GetWorksResult,
-  WorkAgentsSort,
-  WorkLocationSummary,
-  WorkQueryService,
-  WorksQuery,
-  WorksSort,
-} from "@paradicms/services";
-import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 import {useQueryParam} from "use-query-params";
 import {AgentsGallery} from "./AgentsGallery";
-import {WorkEventsTimeline} from "./WorkEventsTimeline";
-import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
-import {createFilterControls} from "./createFilterControls";
-import {calculatePageMax} from "@paradicms/utilities";
-import {WorkAgentsSortDropdown} from "./WorkAgentsSortDropdown";
-import {WorksSortDropdown} from "./WorksSortDropdown";
-import {valueThumbnailSelector} from "./valueThumbnailSelector";
 import {FilterControlsContainer} from "./FilterControlsContainer";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFilter} from "@fortawesome/free-solid-svg-icons";
+import {Pagination} from "./Pagination";
+import {WorkAgentsSortDropdown} from "./WorkAgentsSortDropdown";
+import {WorkEventsTimeline} from "./WorkEventsTimeline";
+import {WorksGallery} from "./WorksGallery";
+import {WorksSortDropdown} from "./WorksSortDropdown";
+import {createFilterControls} from "./createFilterControls";
+import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
+import {valueThumbnailSelector} from "./valueThumbnailSelector";
+import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 
 type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
 
 const workAgentsPageMax = (kwds: {
-  getWorkAgentsResult: GetWorkAgentsResult;
+  getWorkAgentsResult: GetNamedWorkAgentsResult;
   objectsPerPage: number;
 }) =>
   calculatePageMax({
@@ -65,7 +65,7 @@ const worksPageMax = (kwds: {
 export const WorkSearchPage: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   objectsPerPage: number;
-  onChangeFilters: (filters: readonly Filter[]) => void;
+  onChangeFilters: (filters: readonly FilterUnion[]) => void;
   renderWorkLink: (
     workUri: string,
     children: React.ReactNode
@@ -113,7 +113,7 @@ export const WorkSearchPage: React.FunctionComponent<{
   const [
     getWorkAgentsResult,
     setGetWorkAgentsResult,
-  ] = useState<GetWorkAgentsResult | null>(null);
+  ] = useState<GetNamedWorkAgentsResult | null>(null);
 
   const [
     getWorkEventsResult,
@@ -180,7 +180,7 @@ export const WorkSearchPage: React.FunctionComponent<{
       // console.debug("getWorkAgents");
       setLoadingWorkAgents(true);
       workQueryService
-        .getWorkAgents(
+        .getNamedWorkAgents(
           {
             agentJoinSelector: {
               thumbnail: galleryThumbnailSelector,
@@ -393,9 +393,7 @@ export const WorkSearchPage: React.FunctionComponent<{
           totalObjects: getWorkEventsResult.totalWorkEventsCount,
         })}
         setPage={setWorkEventsPage}
-        workEvents={getWorkEventsResult.workEventUris.map(workEventUri =>
-          getWorkEventsResult.modelSet.workEventByUri(workEventUri)
-        )}
+        workEvents={getWorkEventsResult.modelSet.workEvents}
       />
     ) : null,
   });

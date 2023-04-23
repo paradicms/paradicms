@@ -6,11 +6,11 @@ import {Text} from "./Text";
 export interface Event extends NamedModel {
   compareByDate(other: Event): number;
   readonly date: DateTimeDescription | null;
-  readonly description: string | Text | null;
+  readonly description: Text | null;
   readonly displayDate: string | null;
   readonly label: string;
   readonly endDate: DateTimeDescription | null;
-  readonly location: Location | string | null;
+  readonly location: Location | null;
 
   /**
    * Synthesize a date that can be used for sorting this event.

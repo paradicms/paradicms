@@ -3,28 +3,30 @@ import {Collection} from "./Collection";
 import {Concept} from "./Concept";
 import {Image} from "./Image";
 import {License} from "./License";
+import {Location} from "./Location";
 import {ModelSet} from "./ModelSet";
-import {NamedLocation} from "./NamedLocation";
 import {Organization} from "./Organization";
 import {Person} from "./Person";
 import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
-import {WorkEvent} from "./WorkEvent";
+import {WorkEventUnion} from "./WorkEventUnion";
 
 export interface ModelReader {
   readAppConfiguration(kwds: {modelSet: ModelSet}): AppConfiguration | null;
   readCollections(kwds: {modelSet: ModelSet}): readonly Collection[];
   readConcepts(kwds: {modelSet: ModelSet}): readonly Concept[];
   readImages(kwds: {modelSet: ModelSet}): readonly Image[];
-  readLicenses(kwds: {modelSet: ModelSet}): readonly License[];
-  readNamedLocations(kwds: {modelSet: ModelSet}): readonly NamedLocation[];
-  readOrganizations(kwds: {modelSet: ModelSet}): readonly Organization[];
-  readPeople(kwds: {modelSet: ModelSet}): readonly Person[];
+  readNamedLicenses(kwds: {modelSet: ModelSet}): readonly License[];
+  readNamedLocations(kwds: {modelSet: ModelSet}): readonly Location[];
+  readNamedOrganizations(kwds: {modelSet: ModelSet}): readonly Organization[];
+  readNamedPeople(kwds: {modelSet: ModelSet}): readonly Person[];
   readProperties(kwds: {modelSet: ModelSet}): readonly Property[];
   readPropertyGroups(kwds: {modelSet: ModelSet}): readonly PropertyGroup[];
-  readRightsStatements(kwds: {modelSet: ModelSet}): readonly RightsStatement[];
-  readWorkEvents(kwds: {modelSet: ModelSet}): readonly WorkEvent[];
+  readNamedRightsStatements(kwds: {
+    modelSet: ModelSet;
+  }): readonly RightsStatement[];
+  readWorkEvents(kwds: {modelSet: ModelSet}): readonly WorkEventUnion[];
   readWorks(kwds: {modelSet: ModelSet}): readonly Work[];
 }

@@ -1,14 +1,14 @@
-import { ModelSetFactory, WorkClosing, WorkCreation, WorkLocation, WorkOpening } from "@paradicms/models";
+import {ModelSetFactory, WorkLocation} from "@paradicms/models";
 import {
-  StringPropertyValueFacet,
-  StringPropertyValueFilter,
-  WorkEventsSortProperty,
-  WorksSortProperty
+    StringPropertyValueFacet,
+    StringPropertyValueFilter,
+    WorkEventsSortProperty,
+    WorksSortProperty
 } from "@paradicms/services";
-import { syntheticData } from "@paradicms/test";
-import { vra } from "@paradicms/vocabularies";
-import { expect } from "chai";
-import { MemWorkQueryService } from "../src/MemWorkQueryService";
+import {syntheticData} from "@paradicms/test";
+import {vra} from "@paradicms/vocabularies";
+import {expect} from "chai";
+import {MemWorkQueryService} from "../src/MemWorkQueryService";
 
 describe("MemWorkQueryService", () => {
   const modelSet = ModelSetFactory.fromDatasetCore(syntheticData);
@@ -16,8 +16,8 @@ describe("MemWorkQueryService", () => {
     modelSet
   });
 
-  it("getWorkAgents returns at least one agent from an empty query", async () => {
-    const result = await sut.getWorkAgents(
+  it("getNamedWorkAgents returns at least one agent from an empty query", async () => {
+    const result = await sut.getNamedWorkAgents(
       {
         limit: Number.MAX_SAFE_INTEGER,
         offset: 0,
@@ -27,12 +27,12 @@ describe("MemWorkQueryService", () => {
       }
     );
 
-    expect(result.modelSet.agents).to.not.be.empty;
     expect(result.modelSet.works).to.be.empty;
+    expect(result.workAgentUris).not.to.be.empty;
   });
 
-  it("getWorkAgents returns the works associated with an agent", async () => {
-    const result = await sut.getWorkAgents(
+  it("getNamedWorkAgents returns the works associated with an agent", async () => {
+    const result = await sut.getNamedWorkAgents(
       {
         agentJoinSelector: {
           works: {},
@@ -45,10 +45,10 @@ describe("MemWorkQueryService", () => {
       }
     );
 
-    expect(result.modelSet.agents).to.not.be.empty;
+    expect(result.workAgentUris).to.not.be.empty;
     let haveAgentWorks = false;
-    for (const agent of result.modelSet.agents) {
-      const agentWorks = result.modelSet.agentWorks(agent.uri);
+    for (const agent of result.workAgentUris.map(workAgentUri => result.modelSet.agentByUri(workAgentUri))) {
+      const agentWorks = result.modelSet.agentWorks(agent.uri!);
       haveAgentWorks ||= agentWorks.length > 0;
       for (const work of agentWorks) {
         expect(work.agents.some(workAgent => workAgent.agent.uri === agent.uri)).to.be.true;
@@ -70,7 +70,6 @@ describe("MemWorkQueryService", () => {
 
     expect(result.totalWorkEventsCount).to.be.gt(0);
     expect(result.modelSet.workEvents).to.have.length(result.totalWorkEventsCount);
-    expect(result.workEventUris).to.have.length(result.totalWorkEventsCount);
   });
 
   it("getWorkEvents returns the other models associated with an event", async () => {
@@ -93,19 +92,15 @@ describe("MemWorkQueryService", () => {
     for (const workEvent of result.modelSet.workEvents) {
       expect(workEvent.location).to.not.be.null;
       expect(workEvent.work).to.not.be.null;
-      workEvent.accept({
-        visitWorkClosing(workClosing: WorkClosing): void {
-        },
-        visitWorkCreation(workCreation: WorkCreation): void {
-          expect(workCreation.creatorAgents).to.not.be.empty;
-        },
-        visitWorkOpening(workOpening: WorkOpening): void {
-        },
-      });
+      switch (workEvent.type) {
+          case "WorkCreation":
+              expect(workEvent.creators).to.not.be.empty;
+              break;
+      }
     }
   });
 
-  it("getWorkEvents sorts by date", async () => {
+  it("getWorkEvents sorted by date", async () => {
     const result = await sut.getWorkEvents(
         {
           limit: 2,

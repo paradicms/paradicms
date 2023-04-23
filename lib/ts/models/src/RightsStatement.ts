@@ -1,5 +1,5 @@
-import {NamedModel} from "./NamedModel";
+import {Model} from "./Model";
 
-export interface RightsStatement extends NamedModel {
+export interface RightsStatement extends Model {
   readonly label: string;
 }

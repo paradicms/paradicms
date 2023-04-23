@@ -4,9 +4,9 @@
  * Queries are never passed over getStaticProps, but they are serialized to the browser query string,
  * so it's preferable to allow the optional fields to be undefined rather than null.
  */
-import {Filter} from "./Filter";
+import {FilterUnion} from "./FilterUnion";
 
 export interface WorksQuery {
-  readonly filters: readonly Filter[];
+  readonly filters: readonly FilterUnion[];
   readonly text?: string;
 }

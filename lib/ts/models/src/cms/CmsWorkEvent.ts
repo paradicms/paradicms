@@ -3,14 +3,11 @@ import { cms } from "@paradicms/vocabularies";
 import { Memoize } from "typescript-memoize";
 import { Work } from "../Work";
 import { WorkEvent } from "../WorkEvent";
-import { WorkEventVisitor } from "../WorkEventVisitor";
 import { WorkLocation } from "../WorkLocation";
 import { WorkLocationRole } from "../WorkLocationRole";
 import { CmsEvent } from "./CmsEvent";
 
 export abstract class CmsWorkEvent extends CmsEvent implements WorkEvent {
-  abstract accept<T>(visitor: WorkEventVisitor<T>): T;
-  
   get label(): string {
     return this.title;
   }
@@ -21,7 +18,7 @@ export abstract class CmsWorkEvent extends CmsEvent implements WorkEvent {
 
   @Memoize()
   get workLocation(): WorkLocation | null {
-    if (!this.location || typeof(this.location) === "string") {
+    if (!this.location) {
       return null;
     }
 

@@ -2,9 +2,10 @@ import {NamedNode} from "@rdfjs/types";
 import {ImagesMixin} from "./ImagesMixin";
 import {NamedModel} from "./NamedModel";
 import {PropertyValue} from "./PropertyValue";
+import {Text} from "./Text";
 
 export interface Property extends NamedModel, ImagesMixin {
-  readonly comment: string | null;
+  readonly comment: Text | null;
   readonly filterable: boolean;
   readonly label: string;
   readonly groupUris: readonly string[];

@@ -1,4 +1,6 @@
-import {StringPropertyValueFilter} from "./StringPropertyValueFilter";
-
-// Discriminated union on "type"
-export type Filter = StringPropertyValueFilter;
+export interface Filter {
+  /**
+   * Label for this filter in the user interface.
+   */
+  readonly label: string;
+}

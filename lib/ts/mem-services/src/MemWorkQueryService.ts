@@ -1,21 +1,21 @@
 import {
-  Agent,
+  AgentUnion,
   defaultProperties,
   Image,
   ModelSet,
   ModelSubsetter,
   ThumbnailSelector,
   Work,
-  WorkEvent,
+  WorkEventUnion,
 } from "@paradicms/models";
 import {
   defaultWorkAgentsSort,
   defaultWorkEventsSort,
   defaultWorksSort,
-  Facet,
-  Filter,
-  GetWorkAgentsOptions,
-  GetWorkAgentsResult,
+  FacetUnion,
+  FilterUnion,
+  GetNamedWorkAgentsOptions,
+  GetNamedWorkAgentsResult,
   GetWorkEventsOptions,
   GetWorkEventsResult,
   GetWorkLocationsOptions,
@@ -112,12 +112,12 @@ export class MemWorkQueryService implements WorkQueryService {
   }
 
   private facetizeWorks(kwds: {
-    filters: readonly Filter[];
+    filters: readonly FilterUnion[];
     valueFacetValueThumbnailSelector?: ThumbnailSelector;
     works: readonly Work[];
-  }): readonly Facet[] {
+  }): readonly FacetUnion[] {
     const {filters, valueFacetValueThumbnailSelector, works} = kwds;
-    const facets: Facet[] = [];
+    const facets: FacetUnion[] = [];
     for (const filter of filters) {
       switch (filter.type) {
         case "StringPropertyValue": {
@@ -170,7 +170,7 @@ export class MemWorkQueryService implements WorkQueryService {
   }
 
   private filterWorks(kwds: {
-    filters: readonly Filter[];
+    filters: readonly FilterUnion[];
     works: readonly Work[];
   }): readonly Work[] {
     const {filters, works} = kwds;
@@ -194,10 +194,10 @@ export class MemWorkQueryService implements WorkQueryService {
     return filteredWorks;
   }
 
-  getWorkAgents(
-    options: GetWorkAgentsOptions,
+  getNamedWorkAgents(
+    options: GetNamedWorkAgentsOptions,
     query: WorksQuery
-  ): Promise<GetWorkAgentsResult> {
+  ): Promise<GetNamedWorkAgentsResult> {
     const {agentJoinSelector, limit, offset} = options;
 
     invariant(!!query, "query must be defined");
@@ -210,9 +210,12 @@ export class MemWorkQueryService implements WorkQueryService {
         works: this.searchWorks(query),
       });
 
-      const agentsByUri: {[index: string]: Agent} = {};
+      const agentsByUri: {[index: string]: AgentUnion} = {};
       for (const work of works) {
         for (const agent of work.agents) {
+          if (!agent.agent.uri) {
+            continue;
+          }
           if (agentsByUri[agent.agent.uri]) {
             continue;
           }
@@ -240,7 +243,7 @@ export class MemWorkQueryService implements WorkQueryService {
       resolve({
         modelSet: slicedAgentsModelSet,
         totalWorkAgentsCount: agents.length,
-        workAgentUris: slicedAgents.map(agent => agent.uri),
+        workAgentUris: slicedAgents.map(agent => agent.uri!),
       });
     });
   }
@@ -329,7 +332,7 @@ export class MemWorkQueryService implements WorkQueryService {
 
   private static sortWorkAgentsInPlace(
     sort: WorkAgentsSort,
-    workAgents: Agent[]
+    workAgents: AgentUnion[]
   ): void {
     const compareMultiplier = sort.ascending ? 1 : -1;
     switch (sort.property) {
@@ -350,7 +353,7 @@ export class MemWorkQueryService implements WorkQueryService {
 
   private static sortWorkEventsInPlace(
     sort: WorkEventsSort,
-    workEvents: WorkEvent[]
+    workEvents: WorkEventUnion[]
   ): void {
     const compareMultiplier = sort.ascending ? 1 : -1;
     switch (sort.property) {
@@ -450,24 +453,12 @@ export class MemWorkQueryService implements WorkQueryService {
     }
 
     return {
-      creators: image.creators.map(creator =>
-        typeof creator !== "string" ? creator.label : creator
-      ),
-      license: image.license
-        ? typeof image.license !== "string"
-          ? image.license.label
-          : image.license
-        : null,
+      creators: image.creators.map(creator => creator.label),
+      license: image.license?.label ?? null,
       exactDimensions: image.exactDimensions,
       maxDimensions: image.maxDimensions,
-      rightsHolders: image.rightsHolders.map(holder =>
-        typeof holder !== "string" ? holder.label : holder
-      ),
-      rightsStatement: image.rightsStatement
-        ? typeof image.rightsStatement !== "string"
-          ? image.rightsStatement.label
-          : image.rightsStatement
-        : null,
+      rightsHolders: image.rightsHolders.map(holder => holder.label),
+      rightsStatement: image.rightsStatement?.label ?? null,
       src: imageSrc,
     };
   }
@@ -517,7 +508,6 @@ export class MemWorkQueryService implements WorkQueryService {
       resolve({
         modelSet: slicedWorkEventsModelSet,
         totalWorkEventsCount: workEvents.length,
-        workEventUris: slicedWorkEvents.map(workEvent => workEvent.uri),
       });
     });
   }

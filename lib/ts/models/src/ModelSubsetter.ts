@@ -1,5 +1,5 @@
-import {Agent} from "./Agent";
 import {AgentJoinSelector} from "./AgentJoinSelector";
+import {AgentUnion} from "./AgentUnion";
 import {Collection} from "./Collection";
 import {CollectionJoinSelector} from "./CollectionJoinSelector";
 import {Concept} from "./Concept";
@@ -11,12 +11,9 @@ import {ModelSet} from "./ModelSet";
 import {ModelSetBuilder} from "./ModelSetBuilder";
 import {RightsMixin} from "./RightsMixin";
 import {Work} from "./Work";
-import {WorkClosing} from "./WorkClosing";
-import {WorkCreation} from "./WorkCreation";
-import {WorkEvent} from "./WorkEvent";
 import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
+import {WorkEventUnion} from "./WorkEventUnion";
 import {WorkJoinSelector} from "./WorkJoinSelector";
-import {WorkOpening} from "./WorkOpening";
 import {selectThumbnail} from "./selectThumbnail";
 
 /**
@@ -41,10 +38,14 @@ export class ModelSubsetter {
   // Use the this.modelSetBuilder pattern internally rather than a more functional algorithm, such as merging modelSets,
   // which was the initial implementation
   private addAgentModelSet(
-    agent: Agent,
+    agent: AgentUnion,
     joinSelector: AgentJoinSelector
   ): void {
     this.modelSetBuilder.addAgent(agent);
+
+    if (!agent.uri) {
+      return;
+    }
 
     if (joinSelector.thumbnail) {
       const thumbnailImage = this.completeModelSet
@@ -120,7 +121,7 @@ export class ModelSubsetter {
   }
 
   private addLocationModelSet(location: Location): void {
-    if (typeof (location as any).uri === "undefined") {
+    if (!location.uri) {
       return;
     }
     this.modelSetBuilder.addLocation(location);
@@ -135,23 +136,21 @@ export class ModelSubsetter {
     }
 
     for (const agents of [
-      rights.contributorAgents,
-      rights.creatorAgents,
-      rights.rightsHolderAgents,
+      rights.contributors,
+      rights.creators,
+      rights.rightsHolders,
     ]) {
       for (const agent of agents) {
         this.addAgentModelSet(agent, agentJoinSelector);
       }
     }
 
-    const license = rights.license;
-    if (license && typeof license !== "string") {
-      this.modelSetBuilder.addLicense(license);
+    if (rights.license) {
+      this.modelSetBuilder.addLicense(rights.license);
     }
 
-    const rightsStatement = rights.rightsStatement;
-    if (rightsStatement && typeof rightsStatement !== "string") {
-      this.modelSetBuilder.addRightsStatement(rightsStatement);
+    if (rights.rightsStatement) {
+      this.modelSetBuilder.addRightsStatement(rights.rightsStatement);
     }
   }
 
@@ -170,11 +169,8 @@ export class ModelSubsetter {
       // Work ModelSets always include rights
       this.addRightsModelSet(joinSelector.agents ?? {}, work);
 
-      {
-        const description = work.description;
-        if (description && typeof description !== "string") {
-          this.addRightsModelSet(joinSelector.agents ?? {}, description);
-        }
+      if (work.description) {
+        this.addRightsModelSet(joinSelector.agents ?? {}, work.description);
       }
 
       if (joinSelector.allImages) {
@@ -193,8 +189,8 @@ export class ModelSubsetter {
       }
 
       if (collectionUris) {
-        for (const collectionUri of work.collectionUris) {
-          collectionUris.add(collectionUri);
+        for (const collection of work.collections) {
+          collectionUris.add(collection.uri);
         }
       }
 
@@ -248,37 +244,31 @@ export class ModelSubsetter {
 
   private addWorkEventModelSet(
     joinSelector: WorkEventJoinSelector,
-    workEvent: WorkEvent
+    workEvent: WorkEventUnion
   ): void {
     this.modelSetBuilder.addEvent(workEvent);
 
-    if (
-      joinSelector.location &&
-      workEvent.location &&
-      typeof workEvent.location !== "string"
-    ) {
+    if (joinSelector.location && workEvent.location) {
       this.addLocationModelSet(workEvent.location);
     }
     if (joinSelector.work) {
       this.addWorkModelSets([workEvent.work], joinSelector.work);
     }
 
-    const self = this;
-    workEvent.accept({
-      visitWorkClosing(workClosing: WorkClosing): void {},
-      visitWorkCreation(workCreation: WorkCreation): void {
+    switch (workEvent.type) {
+      case "WorkCreation": {
         if (joinSelector.agents) {
-          for (const agent of workCreation.agents) {
-            self.addAgentModelSet(agent, joinSelector.agents);
+          for (const agent of workEvent.agents) {
+            this.addAgentModelSet(agent, joinSelector.agents);
           }
         }
-      },
-      visitWorkOpening(workOpening: WorkOpening): void {},
-    });
+        break;
+      }
+    }
   }
 
   agentsModelSet(
-    agents: readonly Agent[],
+    agents: readonly AgentUnion[],
     joinSelector?: AgentJoinSelector
   ): ModelSetBuilder {
     for (const agent of agents) {
@@ -293,7 +283,7 @@ export class ModelSubsetter {
   }
 
   workEventsModelSet(
-    workEvents: readonly WorkEvent[],
+    workEvents: readonly WorkEventUnion[],
     joinSelector?: WorkEventJoinSelector
   ): ModelSetBuilder {
     for (const workEvent of workEvents) {

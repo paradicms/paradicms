@@ -9,35 +9,16 @@ import { RightsMixin } from "../RightsMixin";
 import { Text } from "../Text";
 import { Work } from "../Work";
 import { WorkAgent } from "../WorkAgent";
-import { WorkClosing } from "../WorkClosing";
-import { WorkCreation } from "../WorkCreation";
-import { WorkEvent } from "../WorkEvent";
+import { WorkEventUnion } from "../WorkEventUnion";
 import { WorkLocation } from "../WorkLocation";
-import { WorkOpening } from "../WorkOpening";
 import { createPropertyValuesFromQuadObjects } from "../createPropertyValuesFromQuadObjects";
-import { mapLocationObject } from "../mapLocationObject";
-import { mapTextObject } from "../mapTextObject";
 import { CmsDescriptionMixin } from "./CmsDescriptionMixin";
 import { CmsImagesMixin } from "./CmsImagesMixin";
 import { CmsRelationsMixin } from "./CmsRelationsMixin";
 import { CmsRightsMixin } from "./CmsRightsMixin";
 import { CmsTitleMixin } from "./CmsTitleMixin";
-
-const getRightsAgentUris = (
-    rights: RightsMixin | null
-): readonly string[] => {
-  const result: string[] = [];
-
-  if (!rights) {
-    return result;
-  }
-
-  result.push(...rights.contributorAgentUris);
-  result.push(...rights.creatorAgentUris);
-  result.push(...rights.rightsHolderAgentUris);
-
-  return result;
-};
+import { mapCmsLocationObject } from "./mapCmsLocationObject";
+import { mapCmsTextObject } from "./mapCmsTextObject";
 
 const getRightsWorkAgents = (
   rights: RightsMixin | null,
@@ -49,24 +30,24 @@ const getRightsWorkAgents = (
     return result;
   }
 
-  for (const contributorAgent of rights.contributorAgents) {
+  for (const contributor of rights.contributors) {
     result.push({
-      agent: contributorAgent,
+      agent: contributor,
       role: rolePrefix + " contributor",
     });
   }
 
-  for (const creatorAgent of rights.creatorAgents) {
+  for (const creator of rights.creators) {
     result.push({
-      agent: creatorAgent,
+      agent: creator,
       role: rolePrefix + " creator",
     });
   }
 
-  for (const holderAgent of rights.rightsHolderAgents) {
+  for (const rightsHolder of rights.rightsHolders) {
     result.push({
-      agent: holderAgent,
-      role: rolePrefix + " holder",
+      agent: rightsHolder,
+      role: rolePrefix + " rights holder",
     });
   }
 
@@ -87,7 +68,7 @@ export class CmsWork extends Mixin(
 
     result.push(...getRightsWorkAgents(this, "Work"));
 
-    if (this.description && typeof this.description !== "string") {
+    if (this.description) {
       result.push(...getRightsWorkAgents(this.description, "Text"));
     }
 
@@ -98,39 +79,14 @@ export class CmsWork extends Mixin(
     return result;
   }
 
-  @Memoize()
-  get agentUris(): readonly string[] {
-    const result: string[] = [];
-    result.push(...getRightsAgentUris(this));
-
-    if (
-      this.description && typeof this.description !== "string"
-    ) {
-      result.push(...getRightsAgentUris(this.description));
-    }
-
-    for (const image of this.originalImages) {
-      result.push(...getRightsAgentUris(image));
-    }
-
-    return result;
-  }
-
   get collections(): readonly Collection[] {
-    return this.collectionUris.map(collectionUri =>
-      this.modelSet.collectionByUri(collectionUri)
-    );
+    return this.filterAndMapObjects(cms.collection, collection => collection.termType === "NamedNode" ? this.modelSet.collectionByUri(collection.value) : null);
   }
 
   @Memoize()
-  get collectionUris(): readonly string[] {
-    return this.filterAndMapObjects(cms.collection, this.mapUriObject);
-  }
-
-  @Memoize()
-  override get description(): string | Text | null {
+  override get description(): Text | null {
     return this.findAndMapObject(dcterms.description, term =>
-      mapTextObject(this, term)
+      mapCmsTextObject(this, term)
     );
   }
 
@@ -138,24 +94,24 @@ export class CmsWork extends Mixin(
   get displayDate(): string | null {
     let startDisplayDate: string | undefined;
     let endDisplayDate: string | undefined;
-    for (const event of this.events) {
-      event.accept({
-        visitWorkClosing(workClosing: WorkClosing): void {
-          if (!endDisplayDate && workClosing.displayDate) {
-            endDisplayDate = workClosing.displayDate;
+    for (const workEvent of this.events) {
+      switch (workEvent.type) {
+        case "WorkClosing":
+          if (!endDisplayDate && workEvent.displayDate) {
+            endDisplayDate = workEvent.displayDate;
           }
-        },
-        visitWorkCreation(workCreation: WorkCreation): void {
-          if (!startDisplayDate && workCreation.displayDate) {
-            startDisplayDate = workCreation.displayDate;
+          break;
+        case "WorkCreation":
+          if (!startDisplayDate && workEvent.displayDate) {
+            startDisplayDate = workEvent.displayDate;
           }
-        },
-        visitWorkOpening(workOpening: WorkOpening): void {
-          if (!startDisplayDate && workOpening.displayDate) {
-            startDisplayDate = workOpening.displayDate;
+          break;
+        case "WorkOpening":
+          if (!startDisplayDate && workEvent.displayDate) {
+            startDisplayDate = workEvent.displayDate;
           }
-        }
-      });
+          break;
+      }
     }
 
     if (startDisplayDate && endDisplayDate) {
@@ -169,7 +125,7 @@ export class CmsWork extends Mixin(
 
 
   @Memoize()
-  get events(): readonly WorkEvent[] {
+  get events(): readonly WorkEventUnion[] {
     return this.modelSet.workEventsByWorkUri(this.uri);
   }
 
@@ -179,8 +135,8 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   get location(): WorkLocation | null {
-    const location = this.findAndMapObject(dcterms.spatial, term => mapLocationObject(this, term));
-    if (location && typeof location !== "string") {
+    const location = this.findAndMapObject(dcterms.spatial, term => mapCmsLocationObject(this, term));
+    if (location) {
       return {
         label: this.title,
         location,

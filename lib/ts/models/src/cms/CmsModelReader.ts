@@ -7,8 +7,8 @@ import {Concept} from "../Concept";
 import {DatasetModelReader} from "../DatasetModelReader";
 import {Image} from "../Image";
 import {License} from "../License";
+import {Location} from "../Location";
 import {ModelSet} from "../ModelSet";
-import {NamedLocation} from "../NamedLocation";
 import {Organization} from "../Organization";
 import {Person} from "../Person";
 import {Property} from "../Property";
@@ -16,12 +16,12 @@ import {PropertyGroup} from "../PropertyGroup";
 import {ResourceBackedModelParameters} from "../ResourceBackedModelParameters";
 import {RightsStatement} from "../RightsStatement";
 import {Work} from "../Work";
-import {WorkEvent} from "../WorkEvent";
+import {WorkEventUnion} from "../WorkEventUnion";
 import {CmsCollection} from "./CmsCollection";
 import {CmsConcept} from "./CmsConcept";
 import {CmsImage} from "./CmsImage";
 import {CmsLicense} from "./CmsLicense";
-import {CmsNamedLocation} from "./CmsNamedLocation";
+import {CmsLocation} from "./CmsLocation";
 import {CmsOrganization} from "./CmsOrganization";
 import {CmsPerson} from "./CmsPerson";
 import {CmsProperty} from "./CmsProperty";
@@ -30,12 +30,13 @@ import {CmsRightsStatement} from "./CmsRightsStatement";
 import {CmsWork} from "./CmsWork";
 import {CmsWorkClosing} from "./CmsWorkClosing";
 import {CmsWorkCreation} from "./CmsWorkCreation";
-import {CmsWorkEvent} from "./CmsWorkEvent";
 import {CmsWorkOpening} from "./CmsWorkOpening";
 
 const workEventClassesByRdfType = (() => {
   const result: {
-    [index: string]: {new (kwds: ResourceBackedModelParameters): CmsWorkEvent};
+    [index: string]: {
+      new (kwds: ResourceBackedModelParameters): WorkEventUnion;
+    };
   } = {};
   result[cms.WorkClosing.value] = CmsWorkClosing;
   result[cms.WorkCreation.value] = CmsWorkCreation;
@@ -83,7 +84,7 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readLicenses(kwds: {modelSet: ModelSet}): readonly License[] {
+  readNamedLicenses(kwds: {modelSet: ModelSet}): readonly License[] {
     return this.readNamedModels({
       class_: cms.License,
       factory: CmsLicense,
@@ -91,15 +92,15 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readNamedLocations(kwds: {modelSet: ModelSet}): readonly NamedLocation[] {
+  readNamedLocations(kwds: {modelSet: ModelSet}): readonly Location[] {
     return this.readNamedModels({
       class_: cms.Location,
-      factory: CmsNamedLocation,
+      factory: CmsLocation,
       ...kwds,
     });
   }
 
-  readOrganizations(kwds: {modelSet: ModelSet}): readonly Organization[] {
+  readNamedOrganizations(kwds: {modelSet: ModelSet}): readonly Organization[] {
     return this.readNamedModels({
       class_: cms.Organization,
       factory: CmsOrganization,
@@ -107,7 +108,7 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readPeople(kwds: {modelSet: ModelSet}): readonly Person[] {
+  readNamedPeople(kwds: {modelSet: ModelSet}): readonly Person[] {
     return this.readNamedModels({
       class_: cms.Person,
       factory: CmsPerson,
@@ -131,7 +132,9 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readRightsStatements(kwds: {modelSet: ModelSet}): readonly RightsStatement[] {
+  readNamedRightsStatements(kwds: {
+    modelSet: ModelSet;
+  }): readonly RightsStatement[] {
     return this.readNamedModels({
       class_: cms.RightsStatement,
       factory: CmsRightsStatement,
@@ -139,15 +142,12 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readWorkEvents(kwds: {modelSet: ModelSet}): readonly WorkEvent[] {
-    const workEvents: CmsWorkEvent[] = [];
+  readWorkEvents(kwds: {modelSet: ModelSet}): readonly WorkEventUnion[] {
+    const workEvents: WorkEventUnion[] = [];
     for (const quad of getRdfInstanceQuads({
       class_: cms.WorkEvent,
       dataset: this.dataset,
     }).values()) {
-      if (quad.subject.termType !== "NamedNode") {
-        continue;
-      }
       for (const rdfTypeQuad of this.dataset.match(
         quad.subject,
         rdf.type,

@@ -4,7 +4,7 @@ import {Location} from "../src/Location";
 import {testModelSet} from "./testModelSet";
 
 describe("Event", () => {
-  const sut: Event = testModelSet.workEvents[0];
+  const sut: Event = testModelSet.works[0].events[0];
 
   before(() => {
     expect(sut).is.not.undefined;
@@ -12,14 +12,15 @@ describe("Event", () => {
 
   it("should get the description", () => {
     expect(
-      testModelSet.workEvents.some(workEvent => {
-        const description = workEvent.description;
-        return typeof description !== "string";
-      })
+      testModelSet.works.some(work =>
+        work.events.some(workEvent => workEvent.description)
+      )
     ).to.be.true;
 
     expect(
-      testModelSet.workEvents.some(workEvent => workEvent.description === null)
+      testModelSet.works.some(work =>
+        work.events.some(workEvent => workEvent.description === null)
+      )
     ).to.be.true;
   });
 

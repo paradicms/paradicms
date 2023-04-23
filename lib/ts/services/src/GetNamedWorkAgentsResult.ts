@@ -1,6 +1,6 @@
 import {ModelSet} from "@paradicms/models";
 
-export interface GetWorkAgentsResult {
+export interface GetNamedWorkAgentsResult {
   readonly modelSet: ModelSet;
   readonly totalWorkAgentsCount: number;
   readonly workAgentUris: readonly string[];

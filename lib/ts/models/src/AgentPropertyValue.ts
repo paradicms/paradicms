@@ -1,8 +1,8 @@
-import {Agent} from "./Agent";
 import {PropertyValue} from "./PropertyValue";
+import {AgentUnion} from "./AgentUnion";
 
 export class AgentPropertyValue extends PropertyValue {
-  constructor(readonly agent: Agent) {
+  constructor(readonly agent: AgentUnion) {
     super();
   }
 
@@ -11,6 +11,6 @@ export class AgentPropertyValue extends PropertyValue {
   }
 
   get value() {
-    return this.agent.uri;
+    return this.agent.uri ?? this.agent.label;
   }
 }

@@ -1,11 +1,11 @@
 import * as React from "react";
-import {Filter} from "@paradicms/services";
+import {FilterUnion} from "@paradicms/services";
 import {Col, Container, Row} from "reactstrap";
 
 export const FilterControlsContainer: React.FunctionComponent<{
   filterControls: readonly {
     control: React.ReactElement;
-    filter: Filter;
+    filter: FilterUnion;
   }[];
 }> = ({filterControls}) => (
   <Container className="mx-0 px-0" fluid>

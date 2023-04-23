@@ -1,11 +1,11 @@
-import {Agent} from "@paradicms/models";
+import {AgentUnion} from "@paradicms/models";
 import * as React from "react";
 import {Gallery} from "./Gallery";
 import {GalleryCard} from "./GalleryCard";
 import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 
 const AgentsGalleryCard: React.FunctionComponent<{
-  agent: Agent;
+  agent: AgentUnion;
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   role?: string;
 }> = ({agent, getAbsoluteImageSrc}) => {
@@ -19,18 +19,18 @@ const AgentsGalleryCard: React.FunctionComponent<{
 };
 
 export const AgentsGallery: React.FunctionComponent<{
-  agents: readonly Agent[];
+  agents: readonly AgentUnion[];
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
 }> = ({agents, getAbsoluteImageSrc}) => (
   <Gallery
-    cards={agents.map(agent => ({
+    cards={agents.map((agent, agentI) => ({
       element: (
         <AgentsGalleryCard
           agent={agent}
           getAbsoluteImageSrc={getAbsoluteImageSrc}
         />
       ),
-      key: agent.uri,
+      key: agentI,
     }))}
   />
 );

@@ -31,7 +31,7 @@ import {WorksheetMode} from "~/models/WorksheetMode";
 
 interface Item {
   altLabels: readonly Literal[] | null;
-  description: string | Text | null;
+  description: Text | null;
   images: readonly Image[];
   label: string;
   onToggleSelected: () => void | null;
@@ -98,9 +98,7 @@ const ItemDetailCard: React.FunctionComponent<{
       <Row key={"row" + rows.length.toString()}>
         <Col className="p-0 text-center" xs={12}>
           <p>{item.description.toString()}</p>
-          {item.description &&
-          typeof item.description !== "string" &&
-          item.description.requiresAttribution ? (
+          {item.description?.requiresAttribution ? (
             <RightsParagraph
               material="Text"
               rights={item.description}

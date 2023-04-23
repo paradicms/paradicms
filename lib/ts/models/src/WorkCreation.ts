@@ -1,12 +1,12 @@
 import {WorkEvent} from "./WorkEvent";
-import {Agent} from "./Agent";
 import {ContributorsMixin} from "./ContributorsMixin";
 import {CreatorsMixin} from "./CreatorsMixin";
+import {AgentUnion} from "./AgentUnion";
 
 export interface WorkCreation
   extends WorkEvent,
     ContributorsMixin,
     CreatorsMixin {
-  readonly agents: readonly Agent[];
-  readonly agentUris: readonly string[];
+  readonly agents: readonly AgentUnion[];
+  readonly type: "WorkCreation";
 }

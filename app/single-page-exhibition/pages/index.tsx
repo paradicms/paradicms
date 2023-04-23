@@ -1,9 +1,9 @@
 import {ModelSetFactory} from "@paradicms/models";
 import {getAbsoluteImageSrc, readModelSet} from "@paradicms/next";
 import {
-  defaultBootstrapStylesheetHref,
   RightsParagraph,
   WorkPage,
+  defaultBootstrapStylesheetHref,
 } from "@paradicms/react-dom-components";
 import {WorkLocationSummary} from "@paradicms/services";
 import fs from "fs";
@@ -11,10 +11,10 @@ import {GetStaticProps} from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import {useRouter} from "next/router";
+import path from "path";
 import * as React from "react";
 import {useMemo} from "react";
 import {Col, Container, Row} from "reactstrap";
-import path from "path";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -45,7 +45,6 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     const collection = modelSet.collectionByUri(collectionUri);
     const pages: React.ReactElement[] = [];
 
-    const collectionDescription = collection.description;
     pages.push(
       <div
         className="d-flex align-items-center justify-content-center"
@@ -57,26 +56,24 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
               <h1>{collection.label}</h1>
             </Col>
           </Row>
-          {collectionDescription ? (
+          {collection.description ? (
             <Row>
               <Col
                 className="offset-lg-4 text-wrap"
                 lg={4}
                 xs={12}
                 dangerouslySetInnerHTML={{
-                  __html: collectionDescription.toString(),
+                  __html: collection.description.toString(),
                 }}
               ></Col>
             </Row>
           ) : null}
-          {collectionDescription &&
-          typeof collectionDescription !== "string" &&
-          collectionDescription.requiresAttribution ? (
+          {collection.description?.requiresAttribution ? (
             <Row className="mt-2">
               <Col className="text-center" xs={12}>
                 <RightsParagraph
                   material="Text"
-                  rights={collectionDescription}
+                  rights={collection.description}
                   style={{fontSize: "xx-small"}}
                 />
               </Col>

@@ -1,33 +1,25 @@
 import {dcterms} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
-import {Agent} from "../Agent";
+import {AgentUnion} from "../AgentUnion";
 import {CreatorsMixin} from "../CreatorsMixin";
 import {ResourceBackedModelMixin} from "../ResourceBackedModelMixin";
+import {LiteralAgent} from "../literal/LiteralAgent";
 
 export abstract class CmsCreatorsMixin extends ResourceBackedModelMixin
   implements CreatorsMixin {
   @Memoize()
-  get creators(): readonly (Agent | string)[] {
+  get creators(): readonly AgentUnion[] {
     return this.filterAndMapObjects(dcterms.creator, term => {
       switch (term.termType) {
+        case "BlankNode":
+          throw new RangeError("not implemented");
         case "Literal":
-          return term.value;
+          return new LiteralAgent(term);
         case "NamedNode":
           return this.modelSet.agentByUri(term.value);
         default:
           return null;
       }
     });
-  }
-
-  get creatorAgents(): readonly Agent[] {
-    return this.creatorAgentUris.map(agentUri =>
-      this.modelSet.agentByUri(agentUri)
-    );
-  }
-
-  @Memoize()
-  get creatorAgentUris(): readonly string[] {
-    return this.filterAndMapObjects(dcterms.creator, this.mapUriObject);
   }
 }

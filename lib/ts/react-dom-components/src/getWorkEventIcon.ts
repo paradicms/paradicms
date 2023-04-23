@@ -4,23 +4,15 @@ import {
   faDoorOpen,
   faLightbulb,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  WorkClosing,
-  WorkCreation,
-  WorkEvent,
-  WorkOpening,
-} from "@paradicms/models";
+import {WorkEventUnion} from "@paradicms/models";
 
-export const getWorkEventIcon = (workEvent: WorkEvent): IconDefinition => {
-  return workEvent.accept({
-    visitWorkClosing(workClosing: WorkClosing): IconDefinition {
+export const getWorkEventIcon = (workEvent: WorkEventUnion): IconDefinition => {
+  switch (workEvent.type) {
+    case "WorkClosing":
       return faDoorClosed;
-    },
-    visitWorkCreation(workCreation: WorkCreation): IconDefinition {
+    case "WorkCreation":
       return faLightbulb;
-    },
-    visitWorkOpening(workOpening: WorkOpening): IconDefinition {
+    case "WorkOpening":
       return faDoorOpen;
-    },
-  });
+  }
 };
