@@ -1,3 +1,5 @@
+from typing import Optional
+
 from rdflib import URIRef
 from rdflib.namespace import FOAF
 
@@ -20,7 +22,7 @@ class CmsPerson(CmsAgent, Person):
             return self
 
     @classmethod
-    def builder(cls, *, name: str, uri: URIRef) -> Builder:
+    def builder(cls, *, name: str, uri: Optional[URIRef] = None) -> Builder:
         return cls.Builder(name=name, uri=uri)
 
     @classmethod

@@ -1,4 +1,4 @@
-from rdflib import BNode, RDF
+from rdflib import RDF
 from rdflib.resource import Resource
 
 from paradicms_etl.models.cms.cms_model import CmsModel
@@ -10,7 +10,7 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 class CmsText(CmsModel, CmsRightsMixin, Text):
     class Builder(CmsModel.Builder, CmsRightsMixin.Builder):
         def __init__(self, *, value: str):
-            CmsModel.Builder.__init__(self, BNode())
+            CmsModel.Builder.__init__(self)
             self.add(RDF.value, value)
 
         def build(self) -> "CmsText":

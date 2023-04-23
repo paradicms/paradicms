@@ -5,7 +5,7 @@ import rdflib
 from rdflib import ConjunctiveGraph, Literal, RDF, URIRef
 from rdflib import Graph
 from rdflib.resource import Resource
-from rdflib.term import Identifier, Node
+from rdflib.term import Node, BNode
 
 import paradicms_etl
 from paradicms_etl.model import Model
@@ -19,9 +19,9 @@ _ValueT = TypeVar("_ValueT")
 
 class ResourceBackedModel(Model):
     class Builder:
-        def __init__(self, identifier: Identifier):
+        def __init__(self, *, uri: Optional[URIRef] = None):
             graph = Graph()
-            self._resource = graph.resource(identifier)
+            self._resource = graph.resource(uri if uri is not None else BNode())
 
         def add(self, p: URIRef, o: Any) -> "ResourceBackedModel.Builder":
             if o is None:
@@ -189,6 +189,14 @@ class ResourceBackedModel(Model):
         for value in self.__values(p):
             if isinstance(value, Resource) and isinstance(value.identifier, URIRef):
                 yield value.identifier
+
+    @property
+    def uri(self) -> Optional[URIRef]:
+        return (
+            self._resource.identifier
+            if isinstance(self._resource.identifier, URIRef)
+            else None
+        )
 
     def __values(
         self, p: Union[URIRef, Tuple[URIRef, ...]]

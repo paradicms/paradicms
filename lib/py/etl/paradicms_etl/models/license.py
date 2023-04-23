@@ -1,10 +1,10 @@
 from abc import abstractmethod
 from typing import Optional
 
-from paradicms_etl.models.named_model import NamedModel
+from paradicms_etl.model import Model
 
 
-class License(NamedModel):
+class License(Model):
     """
     A license. Adapted from the creativecommons.org license RDF (https://github.com/creativecommons/cc.licenserdf).
     """

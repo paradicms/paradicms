@@ -86,3 +86,7 @@ class CmsWork(CmsNamedModel, CmsRightsMixin, Work):
     @property
     def title(self) -> str:
         return self._required_str_value(DCTERMS.title)
+
+    @property
+    def uri(self) -> URIRef:
+        return CmsNamedModel.uri(self)

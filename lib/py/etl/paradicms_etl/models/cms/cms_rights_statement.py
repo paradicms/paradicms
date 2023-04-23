@@ -1,21 +1,21 @@
 from rdflib import DCTERMS, SKOS, URIRef
 from rdflib.resource import Resource
 
-from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
+from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class CmsRightsStatement(CmsNamedModel, RightsStatement):
+class CmsRightsStatement(CmsModel, RightsStatement):
     """
     A rights statement. Adapted from the rightsstatements.org data model (https://github.com/rightsstatements/data-model).
     """
 
     LABEL_PROPERTY = SKOS.prefLabel
 
-    class Builder(CmsNamedModel.Builder):
+    class Builder(CmsModel.Builder):
         def __init__(self, *, identifier: str, pref_label: str, uri: URIRef):
-            CmsNamedModel.Builder.__init__(self, uri=uri)
+            CmsModel.Builder.__init__(self, uri=uri)
             self.set(DCTERMS.identifier, identifier)
             self.set(SKOS.prefLabel, pref_label)
 
@@ -39,7 +39,7 @@ class CmsRightsStatement(CmsNamedModel, RightsStatement):
             return self
 
     def __init__(self, resource: Resource):
-        CmsNamedModel.__init__(self, resource)
+        CmsModel.__init__(self, resource)
         self.identifier
         self.pref_label
 
@@ -54,7 +54,7 @@ class CmsRightsStatement(CmsNamedModel, RightsStatement):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            CmsNamedModel.json_ld_context(),
+            CmsModel.json_ld_context(),
             {
                 "definition": {"@id": str(SKOS.definition)},
                 "description": {"@id": str(DCTERMS.description)},

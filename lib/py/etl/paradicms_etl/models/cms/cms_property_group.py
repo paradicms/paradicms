@@ -38,3 +38,7 @@ class CmsPropertyGroup(CmsNamedModel, PropertyGroup):
     @property
     def label(self) -> str:
         return self._required_str_value(RDFS.label)
+
+    @property
+    def uri(self) -> URIRef:
+        return CmsNamedModel.uri(self)
