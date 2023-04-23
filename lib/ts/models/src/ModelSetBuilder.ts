@@ -9,27 +9,21 @@ import {Image} from "./Image";
 import {License} from "./License";
 import {Location} from "./Location";
 import {Model} from "./Model";
-import {ModelSet} from "./ModelSet";
-import {ModelSetFactory} from "./ModelSetFactory";
 import {Organization} from "./Organization";
 import {Person} from "./Person";
 import {Property} from "./Property";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
+import {Quad} from "@rdfjs/types";
+import {isomorphic} from "rdf-isomorphic";
+import {ModelSet} from "./ModelSet";
+import {ModelSetFactory} from "./ModelSetFactory";
 
 export class ModelSetBuilder {
-  private appConfiguration: AppConfiguration | null | undefined;
-  private collectionsByUri: {[index: string]: Collection} | undefined;
-  private eventsByUri: {[index: string]: Event} | undefined;
-  private imagesByUri: {[index: string]: Image} | undefined;
-  private licensesByUri: {[index: string]: License} | undefined;
-  private conceptsByUri: {[index: string]: Concept} | undefined;
-  private locationsByUri: {[index: string]: Location} | undefined;
-  private organizationsByUri: {[index: string]: Organization} | undefined;
-  private peopleByUri: {[index: string]: Person} | undefined;
-  private propertiesByUri: {[index: string]: Property} | undefined;
-  private rightsStatementsByUri: {[index: string]: RightsStatement} | undefined;
-  private worksByUri: {[index: string]: Work} | undefined;
+  private addedAppConfiguration: boolean = false;
+  private readonly addedModelDefaultGraphQuads: Quad[][] = [];
+  private readonly addedModelUris: Set<string> = new Set<string>();
+  private readonly store: Store = new Store();
 
   addAgent(agent: AgentUnion): ModelSetBuilder {
     switch (agent.type) {
@@ -45,214 +39,156 @@ export class ModelSetBuilder {
   addAppConfiguration(
     appConfiguration: AppConfiguration | null
   ): ModelSetBuilder {
-    if (typeof this.appConfiguration !== "undefined") {
+    if (!appConfiguration) {
+      return this;
+    }
+    if (this.addedAppConfiguration) {
       throw new RangeError("tried to add AppConfiguration twice");
     }
-    this.appConfiguration = appConfiguration;
+    this.addModel(appConfiguration);
+    this.addedAppConfiguration = true;
     return this;
   }
 
   addCollection(collection: Collection): ModelSetBuilder {
-    this.collectionsByUri = ModelSetBuilder.addNamedModel(
-      this.collectionsByUri,
-      collection
-    );
-    return this;
+    return this.addNamedModel(collection);
   }
 
   addCollections(collections: readonly Collection[]): ModelSetBuilder {
-    this.collectionsByUri = ModelSetBuilder.addNamedModels(
-      this.collectionsByUri,
-      collections
-    );
-    return this;
+    return this.addNamedModels(collections);
   }
 
   addConcept(concept: Concept): ModelSetBuilder {
-    this.conceptsByUri = ModelSetBuilder.addNamedModel(
-      this.conceptsByUri,
-      concept
-    );
-    return this;
+    return this.addNamedModel(concept);
   }
 
   addConcepts(concepts: readonly Concept[]): ModelSetBuilder {
-    this.conceptsByUri = ModelSetBuilder.addNamedModels(
-      this.conceptsByUri,
-      concepts
-    );
-    return this;
+    return this.addNamedModels(concepts);
   }
 
   addEvent(event: Event): ModelSetBuilder {
-    this.eventsByUri = ModelSetBuilder.addNamedModel(this.eventsByUri, event);
-    return this;
+    return this.addModel(event);
   }
 
   addImage(image: Image): ModelSetBuilder {
-    this.imagesByUri = ModelSetBuilder.addNamedModel(this.imagesByUri, image);
-    return this;
+    return this.addNamedModel(image);
   }
 
   addImages(images: readonly Image[]): ModelSetBuilder {
-    this.imagesByUri = ModelSetBuilder.addNamedModels(this.imagesByUri, images);
-    return this;
+    return this.addNamedModels(images);
   }
 
   addLicense(license: License): ModelSetBuilder {
-    this.licensesByUri = ModelSetBuilder.addNamedModel(
-      this.licensesByUri,
-      license
-    );
-    return this;
+    return this.addNamedModel(license);
   }
 
   addLicenses(licenses: readonly License[]): ModelSetBuilder {
-    this.licensesByUri = ModelSetBuilder.addNamedModels(
-      this.licensesByUri,
-      licenses
-    );
-    return this;
+    return this.addNamedModels(licenses);
   }
 
   addLocation(location: Location): ModelSetBuilder {
-    this.locationsByUri = ModelSetBuilder.addNamedModel(
-      this.locationsByUri,
-      location
-    );
+    return this.addNamedModel(location);
+  }
+
+  private addModel<ModelT extends Model>(model: ModelT): ModelSetBuilder {
+    if (model.uri) {
+      return this.addNamedModel(model);
+    }
+    const defaultGraph = DataFactory.defaultGraph();
+    const modelDefaultGraphQuads = model
+      .toRdf()
+      .map(triple =>
+        DataFactory.quad(
+          triple.subject,
+          triple.predicate,
+          triple.object,
+          defaultGraph
+        )
+      );
+    // Serialize the model to quads in the default graph
+    // Then test whether that set of quads is isomorphic with previously-added sets of (model) quads
+    for (const addedModelDefaultGraphQuads of this
+      .addedModelDefaultGraphQuads) {
+      if (isomorphic(modelDefaultGraphQuads, addedModelDefaultGraphQuads)) {
+        console.debug("tried to add isomorphic model");
+        return this;
+      }
+    }
+    // Add a named graph to the store, not the triples in the default graph
+    this.store.addQuads(ModelSetBuilder.modelToQuads(model));
+    this.addedModelDefaultGraphQuads.push(modelDefaultGraphQuads);
     return this;
   }
 
-  private static addNamedModel<ModelT extends {uri: string | null}>(
-    addedModels: {[index: string]: ModelT} | undefined,
-    newModel: ModelT
-  ): {[index: string]: ModelT} {
-    invariant(newModel.uri, "can only add named models");
-    if (!addedModels) {
-      addedModels = {};
+  private addNamedModel<ModelT extends Model>(model: ModelT): ModelSetBuilder {
+    invariant(model.uri, "can only add named models");
+    if (this.addedModelUris.has(model.uri)) {
+      console.debug("tried to add model", model.uri, "twice");
+      return this;
     }
-    const addedModel = addedModels[newModel.uri];
-    if (!addedModel) {
-      addedModels[newModel.uri] = newModel;
-    }
-    return addedModels;
+    this.store.addQuads(ModelSetBuilder.modelToQuads(model));
+    this.addedModelUris.add(model.uri);
+    return this;
   }
 
-  private static addNamedModels<ModelT extends {uri: string | null}>(
-    addedModels: {[index: string]: ModelT} | undefined,
-    newModels: readonly ModelT[]
-  ): {[index: string]: ModelT} {
-    if (!addedModels) {
-      addedModels = {};
+  private addNamedModels<ModelT extends Model>(
+    models: readonly ModelT[]
+  ): ModelSetBuilder {
+    for (const model of models) {
+      this.addNamedModel(model);
     }
-    for (const newModel of newModels) {
-      invariant(newModel.uri, "can only add named models");
-      const addedModel = addedModels[newModel.uri];
-      if (!addedModel) {
-        addedModels[newModel.uri] = newModel;
-      }
-    }
-    return addedModels;
+    return this;
   }
 
   addOrganization(organization: Organization): ModelSetBuilder {
-    this.organizationsByUri = ModelSetBuilder.addNamedModel(
-      this.organizationsByUri,
-      organization
-    );
-    return this;
+    return this.addNamedModel(organization);
   }
 
   addPerson(person: Person): ModelSetBuilder {
-    this.peopleByUri = ModelSetBuilder.addNamedModel(this.peopleByUri, person);
-    return this;
+    return this.addNamedModel(person);
   }
 
   addProperties(properties: readonly Property[]): ModelSetBuilder {
-    this.propertiesByUri = ModelSetBuilder.addNamedModels(
-      this.propertiesByUri,
-      properties
-    );
-    return this;
+    return this.addNamedModels(properties);
   }
 
   addProperty(property: Property): ModelSetBuilder {
-    this.propertiesByUri = ModelSetBuilder.addNamedModel(
-      this.propertiesByUri,
-      property
-    );
-    return this;
+    return this.addNamedModel(property);
   }
 
   addRightsStatement(rightsStatement: RightsStatement): ModelSetBuilder {
-    this.rightsStatementsByUri = ModelSetBuilder.addNamedModel(
-      this.rightsStatementsByUri,
-      rightsStatement
-    );
-    return this;
+    return this.addNamedModel(rightsStatement);
   }
 
   addRightsStatements(
     rightsStatements: readonly RightsStatement[]
   ): ModelSetBuilder {
-    this.rightsStatementsByUri = ModelSetBuilder.addNamedModels(
-      this.rightsStatementsByUri,
-      rightsStatements
-    );
-    return this;
+    return this.addNamedModels(rightsStatements);
   }
 
   addWork(work: Work): ModelSetBuilder {
-    this.worksByUri = ModelSetBuilder.addNamedModel(this.worksByUri, work);
-    return this;
+    return this.addNamedModel(work);
   }
 
   addWorks(works: readonly Work[]): ModelSetBuilder {
-    this.worksByUri = ModelSetBuilder.addNamedModels(this.worksByUri, works);
-    return this;
+    return this.addNamedModels(works);
   }
 
   build(): ModelSet {
-    const store = new Store();
+    return ModelSetFactory.fromDatasetCore(this.store);
+  }
 
-    const addModelToStore = (model: Model) => {
-      const modelGraph = DataFactory.blankNode();
-      for (const triple of model.toRdf()) {
-        store.addQuad(
-          DataFactory.quad(
-            triple.subject,
-            triple.predicate,
-            triple.object,
-            modelGraph
-          )
-        );
-      }
-    };
-
-    if (this.appConfiguration) {
-      addModelToStore(this.appConfiguration);
-    }
-
-    for (const modelsByUri of [
-      this.collectionsByUri,
-      this.conceptsByUri,
-      this.eventsByUri,
-      this.imagesByUri,
-      this.licensesByUri,
-      this.locationsByUri,
-      this.organizationsByUri,
-      this.peopleByUri,
-      this.propertiesByUri,
-      this.worksByUri,
-      this.rightsStatementsByUri,
-    ]) {
-      if (!modelsByUri) {
-        continue;
-      }
-      for (const modelUri of Object.keys(modelsByUri)) {
-        addModelToStore(modelsByUri[modelUri]);
-      }
-    }
-    return ModelSetFactory.fromDatasetCore(store);
+  private static modelToQuads(model: Model): Quad[] {
+    const modelGraph = DataFactory.blankNode();
+    return model
+      .toRdf()
+      .map(triple =>
+        DataFactory.quad(
+          triple.subject,
+          triple.predicate,
+          triple.object,
+          modelGraph
+        )
+      );
   }
 }
