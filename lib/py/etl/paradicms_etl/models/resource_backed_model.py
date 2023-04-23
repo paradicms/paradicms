@@ -9,7 +9,6 @@ from rdflib.term import Node, BNode
 
 import paradicms_etl
 from paradicms_etl.model import Model
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.namespaces.bind_namespaces import EXCLUDE_RDFLIB_NAMESPACE_PREFIXES
 from paradicms_etl.utils.module_namespaces import module_namespaces
@@ -26,11 +25,12 @@ class ResourceBackedModel(Model):
         def add(self, p: URIRef, o: Any) -> "ResourceBackedModel.Builder":
             if o is None:
                 pass
-            elif isinstance(o, NamedModel):
-                # Assume that NamedModel's are yielded separately
-                self._resource.add(p, o.uri)
             elif isinstance(o, Model):
-                self._resource.add(p, o.to_rdf(graph=self._resource.graph))
+                if o.uri is not None:
+                    # Assume that named models are yielded separately
+                    self._resource.add(p, o.uri)
+                else:
+                    self._resource.add(p, o.to_rdf(graph=self._resource.graph))
             elif isinstance(o, Node):
                 self._resource.add(p, o)
             elif isinstance(o, (list, tuple)):
