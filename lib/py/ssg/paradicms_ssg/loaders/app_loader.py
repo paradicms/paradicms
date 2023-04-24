@@ -146,19 +146,21 @@ class AppLoader(BufferingLoader):
 
             models = tuple(gui_images + other_models)
 
-        loaded_data_file_path = app_package.app_dir_path / "public" / "data.trig"
-        data_loader = RdfFileLoader(
-            additional_namespace_modules=(paradicms_ssg.namespaces,),
-            pipeline_id=self.__pipeline_id,
-            rdf_file_path=loaded_data_file_path,
-        )
-        data_loader(flush=True, models=models)
-        self.__logger.info("loaded data to %s", loaded_data_file_path)
+        data_file_paths = list(self.__data_file_paths)
 
-        data_file_paths = [loaded_data_file_path]
         if isinstance(self.__app_configuration, Path):
             data_file_paths.append(self.__app_configuration)
-        data_file_paths.extend(self.__data_file_paths)
+
+        if models:
+            loaded_data_file_path = app_package.app_dir_path / "public" / "data.trig"
+            data_loader = RdfFileLoader(
+                additional_namespace_modules=(paradicms_ssg.namespaces,),
+                pipeline_id=self.__pipeline_id,
+                rdf_file_path=loaded_data_file_path,
+            )
+            data_loader(flush=True, models=models)
+            self.__logger.info("loaded data to %s", loaded_data_file_path)
+            data_file_paths.append(loaded_data_file_path)
 
         app_package_build_kwds = {
             "data_file_paths": tuple(data_file_paths),
