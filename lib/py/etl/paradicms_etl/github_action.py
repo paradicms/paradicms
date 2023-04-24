@@ -23,6 +23,13 @@ class GitHubAction(ABC):
 
         REQUIRED = _RequiredType()
 
+        data_directory_path: str = dataclasses.field(
+            default="_data",
+            metadata={
+                "description": "Path to a directory where extracted/ and loaded/ data should be stored"
+            },
+        )
+
         debug: str = dataclasses.field(
             default="", metadata={"description": "Debug the action"}
         )
@@ -65,12 +72,9 @@ class GitHubAction(ABC):
                 if not value.strip():
                     raise ValueError("empty/blank " + field.name)
 
-    def __init__(
-        self, *, data_dir_path: Path, debug: bool, force_extract: bool, pipeline_id: str
-    ):
-        self._data_dir_path = data_dir_path
+    def __init__(self, *, data_directory_path: str, debug: bool, pipeline_id: str):
+        self._data_directory_path = Path(data_directory_path)
         self._debug = debug
-        self._force_extract = force_extract
         self.__logger = logging.getLogger(__name__)
         self._pipeline_id = pipeline_id
 
@@ -78,16 +82,6 @@ class GitHubAction(ABC):
     def _add_arguments(cls, arg_parser: ArgParser, *, inputs_class: Type[Inputs]):
         arg_parser.add_argument(
             "-c", is_config_file=True, help="path to a file to read arguments from"
-        )
-        arg_parser.add_argument(
-            "--data-dir-path",
-            help="path to a directory to store extracted and loaded data",
-            type=Path,
-        )
-        arg_parser.add_argument(
-            "--force-extract",
-            action="store_true",
-            help="force extraction, ignoring any cached files",
         )
 
         for field in dataclasses.fields(inputs_class):
@@ -102,10 +96,6 @@ class GitHubAction(ABC):
                 env_var="INPUT_" + field.name.upper(),
                 required=id(field.default) == id(GitHubAction.Inputs.REQUIRED),
             )
-
-    @property
-    def _extracted_data_dir_path(self) -> Path:
-        return self._data_dir_path / "extracted"
 
     @classmethod
     def __generate_action_yml(cls, inputs_class: Type[Inputs]):
@@ -161,11 +151,11 @@ class GitHubAction(ABC):
         cls_kwds.update(inputs)
 
         # Call its run method
-        if args.data_dir_path:
+        if args.data_directory_path:
             cls(**cls_kwds)._run()
         else:
             with TemporaryDirectory() as temp_dir:
-                cls_kwds["data_dir_path"] = Path(temp_dir)
+                cls_kwds["data_directory_path"] = Path(temp_dir)
                 cls(**cls_kwds)._run()
 
     @classmethod
