@@ -19,7 +19,6 @@ from paradicms_etl.models.cms.cms_root_model_classes_by_name import (
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.markdown_directory import MarkdownDirectory
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_closing import WorkClosing
@@ -278,9 +277,7 @@ class MarkdownDirectoryTransformer:
                             metadata_file_entry.model_id
                         )
 
-                        if transformed_model is None or not isinstance(
-                            transformed_model, NamedModel
-                        ):
+                        if transformed_model is None or transformed_model.uri is None:
                             continue
 
                         image_resource.add(FOAF.depicts, transformed_model.uri)
@@ -341,9 +338,7 @@ class MarkdownDirectoryTransformer:
                     image_file_entry,
                 ) in image_file_entries_by_model_id.items():
                     transformed_model = transformed_models_of_class.get(model_id)
-                    if transformed_model is None or not isinstance(
-                        transformed_model, NamedModel
-                    ):
+                    if transformed_model is None or transformed_model.uri is None:
                         self.__logger.warning(
                             "image file %s does not have a sibling .md file",
                             image_file_entry.path,
