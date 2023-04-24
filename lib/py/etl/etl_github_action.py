@@ -5,6 +5,7 @@ from typing import Type, Optional
 from configargparse import ArgParser
 
 from paradicms_etl.github_action import GitHubAction
+from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 
 
 class EtlGitHubAction(GitHubAction):
@@ -15,14 +16,19 @@ class EtlGitHubAction(GitHubAction):
         )
 
     def __init__(
-        self, *, force_extract: bool, loaded_data_file_path: Optional[str], **kwds
+        self,
+        *,
+        force_extract: bool,
+        loaded_data_file_path: Optional[str] = None,
+        **kwds
     ):
         GitHubAction.__init__(self, **kwds)
         self._force_extract = force_extract
-        self._loaded_data_file_path = (
-            Path(loaded_data_file_path)
+        self._loader = RdfFileLoader(
+            rdf_file_path=Path(loaded_data_file_path)
             if loaded_data_file_path
-            else self._data_directory_path / "loaded" / (self._pipeline_id + ".trig")
+            else self._data_directory_path / "loaded" / (self._pipeline_id + ".trig"),
+            pipeline_id=self._pipeline_id,
         )
 
     @classmethod
@@ -38,5 +44,5 @@ class EtlGitHubAction(GitHubAction):
         )
 
     @property
-    def _extracted_data_directory_path(self) -> Path:
+    def _extracted_data_dir_path(self) -> Path:
         return self._data_directory_path / "extracted"
