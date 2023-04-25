@@ -19,6 +19,11 @@ class Model(ABC):
     def label_property_uri(cls) -> Optional[URIRef]:
         return None
 
+    @classmethod
+    @abstractmethod
+    def rdf_type_uri(cls) -> URIRef:
+        raise NotImplementedError
+
     @abstractmethod
     def to_rdf(self, graph: Graph) -> Resource:
         raise NotImplementedError
