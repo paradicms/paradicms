@@ -30,6 +30,11 @@ def synthetic_data_models() -> Tuple[Model, ...]:
 
 
 @pytest.fixture
+def synthetic_data_rdf_file_path(data_dir_path: Path) -> Path:
+    return data_dir_path / "synthetic" / "synthetic_data.trig"
+
+
+@pytest.fixture
 def test_image_file_path(data_dir_path: Path) -> Path:
     return (
         data_dir_path
