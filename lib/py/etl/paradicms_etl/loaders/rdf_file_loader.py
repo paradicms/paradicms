@@ -13,6 +13,8 @@ from paradicms_etl.namespaces import bind_namespaces
 
 
 class RdfFileLoader(BufferingLoader):
+    __FORMATS = {"nquads", "trig"}
+
     def __init__(
         self,
         *,
@@ -29,6 +31,11 @@ class RdfFileLoader(BufferingLoader):
             format = guess_format(str(rdf_file_path))
             if format is None:
                 raise ValueError("unable to guess format from file path")
+        if format not in self.__FORMATS:
+            raise ValueError(
+                "format must be one of "
+                + " ".join(str(format_) for format_ in self.__FORMATS)
+            )
         self.__format = format
         self.__pipeline_id = pipeline_id
 
