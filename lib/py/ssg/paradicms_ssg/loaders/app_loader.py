@@ -38,7 +38,6 @@ class AppLoader(BufferingLoader):
         loaded_data_dir_path: Path,
         pipeline_id: str,
         app_configuration: Union[AppConfiguration, Path, None] = None,
-        data_file_paths: Tuple[Path, ...] = (),
         deployer: Optional[Deployer] = None,
         dev: bool = False,
         image_archiver: Optional[ImageArchiver] = None,
@@ -65,7 +64,6 @@ class AppLoader(BufferingLoader):
             self.__app_configuration = AppConfiguration.from_rdf_file(app_configuration)
         else:
             raise TypeError(type(app_configuration))
-        self.__data_file_paths = data_file_paths
         self.__deployer = deployer
         self.__dev = dev
         self.__image_archiver = image_archiver
@@ -146,7 +144,7 @@ class AppLoader(BufferingLoader):
 
             models = tuple(gui_images + other_models)
 
-        data_file_paths = list(self.__data_file_paths)
+        data_file_paths = []
 
         if isinstance(self.__app_configuration, Path):
             data_file_paths.append(self.__app_configuration)
@@ -155,7 +153,6 @@ class AppLoader(BufferingLoader):
             loaded_data_file_path = app_package.app_dir_path / "public" / "data.trig"
             data_loader = RdfFileLoader(
                 additional_namespace_modules=(paradicms_ssg.namespaces,),
-                pipeline_id=self.__pipeline_id,
                 rdf_file_path=loaded_data_file_path,
             )
             data_loader(flush=True, models=models)
