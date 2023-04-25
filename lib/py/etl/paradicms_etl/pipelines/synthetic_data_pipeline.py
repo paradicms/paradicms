@@ -560,7 +560,6 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     ),
                     RdfFileLoader(
                         rdf_file_path=rdf_file_path,
-                        pipeline_id=self.ID,
                     ),
                     self.__SyntheticDataTsLoader(
                         rdf_file_path=rdf_file_path,

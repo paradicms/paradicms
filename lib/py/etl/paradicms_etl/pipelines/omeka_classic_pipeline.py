@@ -35,8 +35,7 @@ class OmekaClassicPipeline(Pipeline):
                 rdf_file_path=self._loaded_data_dir_path(
                     data_dir_path=data_dir_path, pipeline_id=pipeline_id
                 )
-                / "data.trig",
-                pipeline_id=pipeline_id,
+                / "data.trig"
             ),
             transformer=OmekaClassicTransformer(
                 fullsize_max_height_px=fullsize_height_px,

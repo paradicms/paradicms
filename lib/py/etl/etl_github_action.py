@@ -28,7 +28,6 @@ class EtlGitHubAction(GitHubAction):
             rdf_file_path=Path(loaded_data_file_path)
             if loaded_data_file_path
             else self._data_directory_path / "loaded" / (self._pipeline_id + ".trig"),
-            pipeline_id=self._pipeline_id,
         )
 
     @classmethod

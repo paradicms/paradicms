@@ -49,7 +49,6 @@ class CostumeCoreOntologyAirtableToOntologyRdfPipeline(Pipeline):
                 loaders=(
                     lambda *, models, **kwds: RdfFileLoader(
                         format="ttl",
-                        pipeline_id=self.ID,
                         rdf_file_path=data_dir_path
                         / self.ID
                         / "loaded"
@@ -64,7 +63,6 @@ class CostumeCoreOntologyAirtableToOntologyRdfPipeline(Pipeline):
                     ),
                     lambda *, models, **kwds: RdfFileLoader(
                         format="xml",
-                        pipeline_id=self.ID,
                         rdf_file_path=data_dir_path
                         / self.ID
                         / "loaded"

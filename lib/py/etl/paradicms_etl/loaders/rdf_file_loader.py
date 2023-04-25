@@ -1,10 +1,10 @@
-import hashlib
 import logging
 from pathlib import Path
 from types import ModuleType
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Set
 
-from rdflib import ConjunctiveGraph, URIRef, BNode
+from rdflib import ConjunctiveGraph, Graph
+from rdflib.term import Identifier
 from rdflib.util import guess_format
 
 from paradicms_etl.loaders.buffering_loader import BufferingLoader
@@ -13,12 +13,9 @@ from paradicms_etl.namespaces import bind_namespaces
 
 
 class RdfFileLoader(BufferingLoader):
-    __FORMATS = {"nquads", "trig"}
-
     def __init__(
         self,
         *,
-        pipeline_id: str,
         rdf_file_path: Path,
         additional_namespace_modules: Tuple[ModuleType, ...] = (),
         format: Optional[str] = None,
@@ -31,13 +28,7 @@ class RdfFileLoader(BufferingLoader):
             format = guess_format(str(rdf_file_path))
             if format is None:
                 raise ValueError("unable to guess format from file path")
-        if format not in self.__FORMATS:
-            raise ValueError(
-                "format must be one of "
-                + " ".join(str(format_) for format_ in self.__FORMATS)
-            )
         self.__format = format
-        self.__pipeline_id = pipeline_id
 
     def _flush(self, *, models: Tuple[Model, ...]):
         conjunctive_graph = ConjunctiveGraph()
@@ -46,16 +37,26 @@ class RdfFileLoader(BufferingLoader):
             additional_namespace_modules=self.__additional_namespace_modules,
         )
         self.__logger.debug("serializing %d models to a graph", len(models))
+        conjunctive_graph_context_identifiers: Set[Identifier] = set()
         for model in models:
-            if model.uri is not None:
-                model_graph_uri = URIRef(
-                    f"urn:paradicms_etl:pipeline:{self.__pipeline_id}:model:{hashlib.sha256(str(model.uri).encode('utf-8')).hexdigest()}"
+            model_graph = Graph()
+            model_resource = model.to_rdf(graph=model_graph)
+            if model_resource.identifier in conjunctive_graph_context_identifiers:
+                self.__logger.warning(
+                    "duplicate model identifier %s, not adding to conjunctive graph",
+                    model_resource.identifier,
                 )
-                model_graph = conjunctive_graph.get_context(model_graph_uri)
-            else:
-                model_graph = conjunctive_graph.get_context(BNode())
+                continue
 
-            model.to_rdf(graph=model_graph)
+            # Use the model's BNode or URIRef as the graph identifier, too
+            conjunctive_graph_context: Graph = conjunctive_graph.get_context(
+                model_resource.identifier
+            )
+            for triple in model_graph:
+                conjunctive_graph_context.add(triple)
+            conjunctive_graph_context_identifiers.add(
+                conjunctive_graph_context.identifier
+            )
 
         self.__logger.debug(
             "writing %d models to %s", len(models), self.__rdf_file_path

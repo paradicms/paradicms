@@ -22,9 +22,7 @@ def test_build(synthetic_data_models: Tuple[Model, ...], tmp_path):
     assert not (app_package.app_dir_path / "out").exists()
 
     pipeline_id = "test"
-    gui_data_loader = RdfFileLoader(
-        rdf_file_path=tmp_path / (pipeline_id + ".trig"), pipeline_id=pipeline_id
-    )
+    gui_data_loader = RdfFileLoader(rdf_file_path=tmp_path / (pipeline_id + ".trig"))
     gui_data_loader(flush=True, models=synthetic_data_models)
 
     app_out_dir_path = app_package.build(

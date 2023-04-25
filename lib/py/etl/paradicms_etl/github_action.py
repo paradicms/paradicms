@@ -4,7 +4,6 @@ import os
 import sys
 from abc import ABC, abstractmethod
 from pathlib import Path
-from tempfile import TemporaryDirectory
 from typing import Dict, Any, Type, Optional
 
 import yaml
@@ -151,12 +150,7 @@ class GitHubAction(ABC):
         cls_kwds.update(inputs)
 
         # Call its run method
-        if args.data_directory_path:
-            cls(**cls_kwds)._run()
-        else:
-            with TemporaryDirectory() as temp_dir:
-                cls_kwds["data_directory_path"] = Path(temp_dir)
-                cls(**cls_kwds)._run()
+        cls(**cls_kwds)._run()
 
     @classmethod
     def __parse_args(cls, *, inputs_class: Type[Inputs]):
