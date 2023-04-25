@@ -10,8 +10,6 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class CmsAgent(CmsModel, Agent):
-    LABEL_PROPERTY = FOAF.name
-
     class Builder(CmsModel.Builder):
         def __init__(self, *, name: str, uri: Optional[URIRef] = None):
             CmsModel.Builder.__init__(self, uri=uri)
@@ -49,6 +47,10 @@ class CmsAgent(CmsModel, Agent):
     @property
     def label(self) -> str:
         return self.name
+
+    @classmethod
+    def label_property_uri(cls):
+        return FOAF.name
 
     @property
     def name(self) -> str:

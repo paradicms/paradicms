@@ -11,8 +11,6 @@ class CmsRightsStatement(CmsModel, RightsStatement):
     A rights statement. Adapted from the rightsstatements.org data model (https://github.com/rightsstatements/data-model).
     """
 
-    LABEL_PROPERTY = SKOS.prefLabel
-
     class Builder(CmsModel.Builder):
         def __init__(self, *, identifier: str, pref_label: str, uri: URIRef):
             CmsModel.Builder.__init__(self, uri=uri)
@@ -68,6 +66,10 @@ class CmsRightsStatement(CmsModel, RightsStatement):
     @property
     def label(self) -> str:
         return self.pref_label
+
+    @classmethod
+    def label_property_uri(cls):
+        return SKOS.prefLabel
 
     @property
     def pref_label(self) -> str:

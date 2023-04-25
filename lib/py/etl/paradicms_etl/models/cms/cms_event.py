@@ -13,8 +13,6 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class CmsEvent(CmsModel, Event):
-    LABEL_PROPERTY = DCTERMS.title
-
     class Builder(CmsModel.Builder):
         def set_date(self, date: DateTimeUnion) -> "CmsEvent.Builder":
             self.set(DCTERMS.date, date)
@@ -57,3 +55,7 @@ class CmsEvent(CmsModel, Event):
                 "title": {"@id": str(DCTERMS.title)},
             },
         )
+
+    @classmethod
+    def label_property_uri(cls):
+        return DCTERMS.title

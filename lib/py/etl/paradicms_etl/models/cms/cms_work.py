@@ -14,8 +14,6 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class CmsWork(CmsNamedModel, CmsRightsMixin, Work):
-    LABEL_PROPERTY = DCTERMS.title
-
     class Builder(CmsNamedModel.Builder, CmsRightsMixin.Builder):
         def __init__(self, *, title: str, uri: URIRef):
             CmsNamedModel.Builder.__init__(self, uri=uri)
@@ -82,6 +80,10 @@ class CmsWork(CmsNamedModel, CmsRightsMixin, Work):
     @property
     def label(self) -> str:
         return self.title
+
+    @classmethod
+    def label_property_uri(cls):
+        return DCTERMS.title
 
     @property
     def title(self) -> str:

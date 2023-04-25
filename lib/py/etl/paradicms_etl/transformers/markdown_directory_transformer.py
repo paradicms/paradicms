@@ -210,12 +210,12 @@ class MarkdownDirectoryTransformer:
             model_class: Type[Model],
             resource: Resource,
         ) -> None:
-            label_property = getattr(model_class, "LABEL_PROPERTY", None)
-            if label_property is None:
+            label_property_uri = model_class.label_property_uri()
+            if label_property_uri is None:
                 return
-            if resource.value(label_property) is None:
+            if resource.value(label_property_uri) is None:
                 resource.add(
-                    label_property,
+                    label_property_uri,
                     Literal(model_id),
                 )
 
