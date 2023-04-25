@@ -1,7 +1,7 @@
 import logging
 from typing import Optional, Dict, Type, Iterable
 
-from rdflib import ConjunctiveGraph, RDF
+from rdflib import ConjunctiveGraph, RDF, URIRef
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_root_model_classes_by_name import (
@@ -42,6 +42,8 @@ class RdfConjunctiveGraphTransformer:
 
             root_model_class: Optional[Type[ResourceBackedModel]] = None
             for root_model_rdf_type in root_model_rdf_types:
+                if not isinstance(root_model_rdf_type, URIRef):
+                    continue
                 root_model_class = self.__root_model_classes_by_rdf_type_uri.get(
                     root_model_rdf_type
                 )
