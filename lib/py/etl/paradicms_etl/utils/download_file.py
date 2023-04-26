@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 def download_file(
     *,
     from_url: str,
-    atomic: bool = True,
+    atomic: bool = False,
     force: bool = False,
     to_file_extension: Optional[str] = None,
     to_file_path: Optional[Path] = None,
