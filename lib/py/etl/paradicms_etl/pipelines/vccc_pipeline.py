@@ -22,7 +22,6 @@ class VcccPipeline(Pipeline):
             id=self.__ID,
             loader=RdfFileLoader(
                 rdf_file_path=data_dir_path / self.__ID / "loaded" / "vccc.trig",
-                pipeline_id=self.__ID,
             ),
             transformer=VcccTransformer(),
         )

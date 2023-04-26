@@ -26,8 +26,7 @@ class __MarkdownDirectoryPipeline(Pipeline):
                 / "test"
                 / self.ID
                 / "loaded"
-                / "markdown_directory.trig",
-                pipeline_id=self.ID,
+                / "markdown_directory.trig"
             ),
         )
 

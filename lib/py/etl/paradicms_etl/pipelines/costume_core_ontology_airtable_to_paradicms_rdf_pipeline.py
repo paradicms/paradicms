@@ -38,7 +38,6 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
                 / "loaded"
                 / "costume_core_ontology_paradicms.ttl",
                 format="ttl",
-                pipeline_id=self.ID,
             )(
                 models=(
                     model

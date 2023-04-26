@@ -49,6 +49,7 @@ class ResourceBackedModel(Model):
 
     def __init__(self, resource: Resource):
         Model.__init__(self)
+        resource.add(RDF.type, self.rdf_type_uri())
         self.__resource = resource
 
     @classmethod

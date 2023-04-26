@@ -122,7 +122,13 @@ export const selectThumbnail = <
     return candidateImages[candidateImages.length - 1].image;
   }
 
-  console.warn("no acceptable thumbnail found in", images.length, "images");
+  console.warn(
+    "no acceptable thumbnail for selector",
+    JSON.stringify(selector),
+    "found in",
+    images.length,
+    "images"
+  );
 
   return null;
 };

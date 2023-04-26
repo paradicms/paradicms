@@ -262,6 +262,10 @@ class WikidataItem(ResourceBackedNamedModel):
     def labels(self) -> WikidataItemLabels:
         return self.__labels
 
+    @classmethod
+    def rdf_type_uri(cls):
+        return WIKIBASE.Item
+
     @property
     def statements(self) -> Tuple[WikidataStatement, ...]:
         return self.__statements

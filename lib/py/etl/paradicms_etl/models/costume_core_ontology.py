@@ -61,6 +61,14 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
         def label(self):
             return self.display_name_en
 
+        @classmethod
+        def label_property_uri(cls):
+            return RDFS.label
+
+        @classmethod
+        def rdf_type_uri(cls):
+            return OWL.NamedIndividual
+
         @property
         def thumbnail_url(self) -> Optional[str]:
             return (
@@ -73,7 +81,7 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
             resource = graph.resource(URIRef(self.uri))
             resource.add(RDFS.label, Literal(self.label, lang="en"))
             resource.add(DCTERMS.identifier, Literal(self.id))
-            resource.add(RDF.type, OWL.NamedIndividual)
+            resource.add(RDF.type, self.rdf_type_uri())
             if self.description:
                 resource.add(
                     DCTERMS.description, Literal(self.description.text_en, lang="en")
@@ -134,6 +142,14 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
         def label(self):
             return self.display_name_en
 
+        @classmethod
+        def label_property_uri(cls):
+            return RDFS.label
+
+        @classmethod
+        def rdf_type_uri(cls):
+            return OWL.ObjectProperty
+
         def to_rdf(self, graph: Graph) -> Resource:
             assert self.terms is not None
             resource = graph.resource(URIRef(self.uri))
@@ -160,7 +176,6 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
     class Builder(ResourceBackedNamedModel.Builder):
         def __init__(self):
             ResourceBackedNamedModel.Builder.__init__(self, uri=URIRef(str(COCO)[:-1]))
-            self.add(RDF.type, OWL.Ontology)
             self.add(DCTERMS.title, Literal("Costume Core Ontology"))
             self.add(DCTERMS.creator, Literal("Arden Kirkland"))
             self.add(DCTERMS.contributor, Literal("Minor Gordon"))
@@ -205,3 +220,7 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
     @classmethod
     def builder(cls):
         return cls.Builder()
+
+    @classmethod
+    def rdf_type_uri(cls):
+        return OWL.Ontology

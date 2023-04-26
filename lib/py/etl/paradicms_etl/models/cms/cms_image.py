@@ -17,8 +17,6 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
-    LABEL_PROPERTY = DCTERMS.title
-
     class Builder(CmsNamedModel.Builder, CmsRightsMixin.Builder):
         def __init__(self, *, depicts_uri: URIRef, uri: URIRef):
             CmsNamedModel.Builder.__init__(self, uri=uri)
@@ -155,6 +153,14 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
         ):
             raise TypeError("expected original image URI to be a URIRef")
         return original_image_uri
+
+    @property
+    def label(self) -> Optional[str]:
+        return self.title
+
+    @classmethod
+    def label_property_uri(cls):
+        return DCTERMS.title
 
     def replace(self, *, copyable: Optional[bool] = None, src: Optional[str] = None):
         graph = Graph()
