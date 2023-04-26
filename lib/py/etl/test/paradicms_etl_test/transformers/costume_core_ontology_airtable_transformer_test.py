@@ -20,7 +20,7 @@ from paradicms_etl.transformers.costume_core_ontology_airtable_transformer impor
 def test_transform(data_dir_path: Path):
     extractor = CostumeCoreOntologyAirtableExtractor(
         access_token="willneverbeused",
-        extracted_data_dir_path=data_dir_path / "costume_core_ontology" / "extracted",
+        cache_dir_path=data_dir_path / "costume_core_ontology" / "extracted",
     )
     extract_result = extractor(force=False)
 

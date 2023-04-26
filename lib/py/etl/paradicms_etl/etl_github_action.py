@@ -10,24 +10,43 @@ from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 
 class EtlGitHubAction(GitHubAction):
     class Inputs(GitHubAction.Inputs):
-        loaded_data_file_path: str = dataclasses.field(
+        cache_directory_path: str = dataclasses.field(
+            default="_cache",
+            metadata={
+                "description": "Path to a directory in which to store cached data"
+            },
+        )
+
+        data_directory_path: str = dataclasses.field(
+            default="_data",
+            metadata={
+                "description": "Path to a directory in which to store the loaded RDF file"
+            },
+        )
+
+        data_file_path: str = dataclasses.field(
             default="",
-            metadata={"description": "Path to the RDF file to output"},
+            metadata={
+                "description": "Path to a file in which to store the loaded RDF, overrides data_directory_path if specified"
+            },
         )
 
     def __init__(
         self,
         *,
         force_extract: bool,
-        loaded_data_file_path: Optional[str] = None,
+        cache_directory_path: str,
+        data_directory_path: str,
+        data_file_path: Optional[str] = None,
         **kwds
     ):
         GitHubAction.__init__(self, **kwds)
+        self._cache_dir_path = Path(cache_directory_path)
         self._force_extract = force_extract
         self._loader = RdfFileLoader(
-            rdf_file_path=Path(loaded_data_file_path)
-            if loaded_data_file_path
-            else self._data_directory_path / "loaded" / (self._pipeline_id + ".trig"),
+            rdf_file_path=Path(data_file_path)
+            if data_file_path is not None
+            else Path(data_directory_path) / (self._pipeline_id + ".trig")
         )
 
     @classmethod
@@ -41,7 +60,3 @@ class EtlGitHubAction(GitHubAction):
             action="store_true",
             help="force extraction, ignoring any cached files",
         )
-
-    @property
-    def _extracted_data_dir_path(self) -> Path:
-        return self._data_directory_path / "extracted"

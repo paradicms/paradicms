@@ -14,7 +14,7 @@ class VcccPipeline(Pipeline):
             self,
             extractor=OmekaClassicExtractor(
                 api_key=omeka_api_key,
-                extracted_data_dir_path=self._extracted_data_dir_path(
+                cache_dir_path=self._cache_dir_path(
                     data_dir_path=data_dir_path, pipeline_id=self.__ID
                 ),
                 endpoint_url="https://vccc.vassarspaces.net/",

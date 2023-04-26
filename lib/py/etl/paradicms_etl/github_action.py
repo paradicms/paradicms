@@ -22,13 +22,6 @@ class GitHubAction(ABC):
 
         REQUIRED = _RequiredType()
 
-        data_directory_path: str = dataclasses.field(
-            default="_data",
-            metadata={
-                "description": "Path to a directory where extracted/ and loaded/ data should be stored"
-            },
-        )
-
         debug: str = dataclasses.field(
             default="", metadata={"description": "Debug the action"}
         )
@@ -71,8 +64,7 @@ class GitHubAction(ABC):
                 if not value.strip():
                     raise ValueError("empty/blank " + field.name)
 
-    def __init__(self, *, data_directory_path: str, debug: bool, pipeline_id: str):
-        self._data_directory_path = Path(data_directory_path)
+    def __init__(self, *, debug: bool, pipeline_id: str):
         self._debug = debug
         self.__logger = logging.getLogger(__name__)
         self._pipeline_id = pipeline_id

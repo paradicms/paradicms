@@ -89,7 +89,7 @@ class Pipeline(ABC):
         return self.__load(self.extract_transform(force_extract=force_extract))
 
     @staticmethod
-    def _extracted_data_dir_path(*, data_dir_path: Path, pipeline_id: str):
+    def _cache_dir_path(*, data_dir_path: Path, pipeline_id: str):
         return data_dir_path / pipeline_id / "extracted"
 
     @property
