@@ -74,10 +74,14 @@ class Pipeline(ABC):
     def _add_data_dir_path_argument(cls, arg_parser: ArgParser):
         arg_parser.add_argument(
             "--data-dir-path",
-            help="path to an existing directory to store cached extracted data and/or loaded data",
+            help="path to an existing directory to store cached data and/or loaded data",
             required=True,
             type=existing_directory_argument_type,
         )
+
+    @staticmethod
+    def _cache_dir_path(*, data_dir_path: Path, pipeline_id: str):
+        return data_dir_path / pipeline_id / "cache"
 
     def extract_transform(self, *, force_extract: bool = False) -> Iterable[Model]:
         return self.__transform(self.__extract(force=force_extract))
@@ -87,10 +91,6 @@ class Pipeline(ABC):
 
     def extract_transform_load(self, *, force_extract: bool = False):
         return self.__load(self.extract_transform(force_extract=force_extract))
-
-    @staticmethod
-    def _extracted_data_dir_path(*, data_dir_path: Path, pipeline_id: str):
-        return data_dir_path / pipeline_id / "extracted"
 
     @property
     def extractor(self):

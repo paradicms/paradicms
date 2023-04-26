@@ -18,7 +18,7 @@ from paradicms_etl.transformers.markdown_directory_transformer import (
 def test_transform(data_dir_path: Path):
     markdown_directory_data_dir_path = data_dir_path / "test" / "markdown_directory"
     extractor = MarkdownDirectoryExtractor(
-        markdown_directory_path=markdown_directory_data_dir_path / "extracted"
+        markdown_directory_path=markdown_directory_data_dir_path
     )
     models = tuple(
         MarkdownDirectoryTransformer(

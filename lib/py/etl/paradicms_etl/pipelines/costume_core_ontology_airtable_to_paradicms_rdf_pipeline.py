@@ -27,9 +27,10 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
             self,
             extractor=CostumeCoreOntologyAirtableExtractor(
                 access_token=airtable_access_token,
-                extracted_data_dir_path=self._extracted_data_dir_path(
+                cache_dir_path=self._cache_dir_path(
                     data_dir_path=data_dir_path, pipeline_id=self.ID
-                ),
+                )
+                / "airtable",
             ),
             id=self.ID,
             loader=lambda *, models, **kwds: RdfFileLoader(

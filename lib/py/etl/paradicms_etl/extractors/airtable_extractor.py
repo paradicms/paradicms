@@ -20,7 +20,7 @@ class AirtableExtractor:
         *,
         access_token: str,
         base_id: str,
-        extracted_data_dir_path: Path,
+        cache_dir_path: Path,
         tables: Union[List[str], Tuple[str, ...], Dict[str, Dict[str, str]]],
     ):
         """
@@ -30,7 +30,7 @@ class AirtableExtractor:
         """
         self.__access_token = access_token
         self.__base_id = base_id
-        self.__extracted_data_dir_path = extracted_data_dir_path
+        self.__cache_dir_path = cache_dir_path
         self.__logger = logging.getLogger(__name__)
         if isinstance(tables, (list, tuple)):
             self.__tables: Dict[str, Dict[str, str]] = {table: {} for table in tables}
@@ -46,7 +46,7 @@ class AirtableExtractor:
         base = self.__extract_base_metadata(base_id=self.__base_id, force=force)
 
         records_by_table = {}
-        self.__extracted_data_dir_path.mkdir(parents=True, exist_ok=True)
+        self.__cache_dir_path.mkdir(parents=True, exist_ok=True)
         for table, query_parameters in self.__tables.items():
             records_by_table[table] = self.__extract_table_records(
                 force=force, table=table, query_parameters=query_parameters
@@ -123,9 +123,7 @@ class AirtableExtractor:
                 f"{key}={quote(value)}" for key, value in query_parameters.items()
             )
 
-        file_path = self.__extracted_data_dir_path / (
-            str(sanitize_filename(url)) + ".json"
-        )
+        file_path = self.__cache_dir_path / (str(sanitize_filename(url)) + ".json")
 
         if file_path.is_file() and not force:
             with open(file_path, "rb") as file_:

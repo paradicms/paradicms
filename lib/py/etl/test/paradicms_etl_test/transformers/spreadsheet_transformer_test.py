@@ -54,7 +54,7 @@ def test_transform_google_sheets(google_sheets_spreadsheet_id: str, tmp_path: Pa
         tuple(
             SpreadsheetTransformer(pipeline_id="test")(
                 **GoogleSheetsExtractor(
-                    extracted_data_dir_path=tmp_path,
+                    cache_dir_path=tmp_path,
                     spreadsheet_id=google_sheets_spreadsheet_id,
                 )(force=False)
             )
@@ -67,7 +67,7 @@ def test_transform_google_sheets_dressdiscover_exhibitions(tmp_path: Path):
     models = tuple(
         SpreadsheetTransformer(pipeline_id="test")(
             **GoogleSheetsExtractor(
-                extracted_data_dir_path=tmp_path,
+                cache_dir_path=tmp_path,
                 spreadsheet_id="1j2oaMvMxY4pnXO-sEH_fky2R2gm6TQeIev_Q8rVOD4M",
             )(force=False)
         )

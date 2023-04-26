@@ -17,7 +17,7 @@ from paradicms_etl.transformers.wikidata_items_transformer import (
 @pytest.mark.skipif("CI" in os.environ, reason="don't connect to Wikidata in CI")
 def test_transform(tmp_path):
     graph = WikidataQidExtractor(
-        extracted_data_dir_path=tmp_path,
+        cache_dir_path=tmp_path,
         qids=(
             "Q160534",
             "Q698487",

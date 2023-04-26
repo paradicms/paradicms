@@ -13,7 +13,7 @@ def test_transform(data_dir_path: Path):
     extractor = OmekaClassicExtractor(
         api_key="willneverbeused",
         endpoint_url="https://vccc.vassarspaces.net/",
-        extracted_data_dir_path=data_dir_path / "vccc" / "extracted",
+        cache_dir_path=data_dir_path / "vccc" / "cache" / "omeka-classic",
     )
     extract_result = extractor(force=False)
     transformer = VcccTransformer()

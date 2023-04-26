@@ -11,7 +11,7 @@ def test_transform(data_dir_path: Path):
     extractor = OmekaClassicExtractor(
         api_key="willneverbeused",
         endpoint_url="https://vcomeka.com/vccc/",
-        extracted_data_dir_path=data_dir_path / "test" / "omeka_classic",
+        cache_dir_path=data_dir_path / "test" / "omeka_classic",
     )
     extract_result = extractor(force=False)
     transformer = OmekaClassicTransformer(

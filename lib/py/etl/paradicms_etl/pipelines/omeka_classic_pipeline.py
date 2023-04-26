@@ -26,9 +26,10 @@ class OmekaClassicPipeline(Pipeline):
             extractor=OmekaClassicExtractor(
                 api_key=api_key,
                 endpoint_url=endpoint_url,
-                extracted_data_dir_path=self._extracted_data_dir_path(
+                cache_dir_path=self._cache_dir_path(
                     data_dir_path=data_dir_path, pipeline_id=pipeline_id
-                ),
+                )
+                / "omeka-classic",
             ),
             id=pipeline_id,
             loader=RdfFileLoader(

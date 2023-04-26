@@ -9,7 +9,7 @@ from paradicms_etl.extractors.google_sheets_extractor import GoogleSheetsExtract
 @pytest.mark.skipif("CI" in os.environ, reason="don't connect to Google Sheets in CI")
 def test_extract(google_sheets_spreadsheet_id: str, tmp_path: Path):
     GoogleSheetsExtractor(
-        extracted_data_dir_path=tmp_path,
+        cache_dir_path=tmp_path,
         spreadsheet_id=google_sheets_spreadsheet_id,
     )(force=False)
     file_paths = list(os.walk(tmp_path))

@@ -1,8 +1,5 @@
-*
-!/costume_core_ontology/extracted/*
-!/costume_core_template/extracted/*
-!/.gitignore
-!/synthetic/*
-!/test/*
-!/vccc/extracted/*
-!/vccc_high_quality/extracted/*
+/ComputerScienceInventions/
+/costume_core_template/loaded/
+/exhibitions/*
+/vccc/loaded/
+/vccc_high_quality/loaded/

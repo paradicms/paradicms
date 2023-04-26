@@ -35,7 +35,7 @@ class AppLoader(BufferingLoader):
     def __init__(
         self,
         *,
-        loaded_data_dir_path: Path,
+        cache_dir_path: Path,
         pipeline_id: str,
         app_configuration: Union[AppConfiguration, Path, None] = None,
         deployer: Optional[Deployer] = None,
@@ -64,10 +64,10 @@ class AppLoader(BufferingLoader):
             self.__app_configuration = AppConfiguration.from_rdf_file(app_configuration)
         else:
             raise TypeError(type(app_configuration))
+        self.__cache_dir_path = cache_dir_path
         self.__deployer = deployer
         self.__dev = dev
         self.__image_archiver = image_archiver
-        self.__loaded_data_dir_path = loaded_data_dir_path
         self.__logger = logging.getLogger(__name__)
         self.__pipeline_id = pipeline_id
         self.__sleep_s_after_image_download = sleep_s_after_image_download
@@ -136,7 +136,7 @@ class AppLoader(BufferingLoader):
             gui_images.extend(
                 ImagesLoader(
                     image_archiver=image_archiver,
-                    loaded_data_dir_path=self.__loaded_data_dir_path / "images",
+                    loaded_data_dir_path=self.__cache_dir_path / "images",
                     sleep_s_after_image_download=self.__sleep_s_after_image_download,
                     thumbnail_max_dimensions=self.__thumbnail_max_dimensions,
                 )(flush=True, models=copyable_original_images)
@@ -173,7 +173,7 @@ class AppLoader(BufferingLoader):
             deployer = self.__deployer
             if deployer is None:
                 deployer = FsDeployer(
-                    deploy_dir_path=self.__loaded_data_dir_path / "deployed"
+                    deploy_dir_path=self.__cache_dir_path / "deployed"
                 )
 
             deployer(app_out_dir_path=app_out_dir_path)

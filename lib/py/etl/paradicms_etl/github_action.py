@@ -22,10 +22,10 @@ class GitHubAction(ABC):
 
         REQUIRED = _RequiredType()
 
-        data_directory_path: str = dataclasses.field(
-            default="_data",
+        cache_directory_path: str = dataclasses.field(
+            default="_cache",
             metadata={
-                "description": "Path to a directory where extracted/ and loaded/ data should be stored"
+                "description": "Path to a directory in which to store cached data"
             },
         )
 
@@ -71,8 +71,8 @@ class GitHubAction(ABC):
                 if not value.strip():
                     raise ValueError("empty/blank " + field.name)
 
-    def __init__(self, *, data_directory_path: str, debug: bool, pipeline_id: str):
-        self._data_directory_path = Path(data_directory_path)
+    def __init__(self, *, cache_directory_path: str, debug: bool, pipeline_id: str):
+        self._cache_dir_path = Path(cache_directory_path) / pipeline_id
         self._debug = debug
         self.__logger = logging.getLogger(__name__)
         self._pipeline_id = pipeline_id
