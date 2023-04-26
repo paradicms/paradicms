@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import Optional, Tuple, Union
+from typing import Optional, Tuple
 
 import paradicms_ssg.namespaces
 from paradicms_etl.loaders.buffering_loader import BufferingLoader
@@ -18,7 +18,7 @@ from paradicms_ssg.models.app_configuration import AppConfiguration
 
 class AppLoader(BufferingLoader):
     """
-    Loader that statically generates a web site using one of the GUI implementations in gui/.
+    Loader that statically generates a website using one of the app implementations in app/.
 
     The loader:
     - Writes the input data to an rdf/turtle file
@@ -37,7 +37,6 @@ class AppLoader(BufferingLoader):
         *,
         cache_dir_path: Path,
         pipeline_id: str,
-        app_configuration: Union[AppConfiguration, Path, None] = None,
         deployer: Optional[Deployer] = None,
         dev: bool = False,
         image_archiver: Optional[ImageArchiver] = None,
@@ -47,23 +46,16 @@ class AppLoader(BufferingLoader):
         ] = ImagesLoader.THUMBNAIL_MAX_DIMENSIONS_DEFAULT,
     ):
         """
-        :param app_configuration: path to an app configuration file
+        :param cache_dir_path: directory in which to store cached data such as image thumbnails
         :param deployer: optional deployer implementation; if not specified, defaults to a file system deployer that writes to the loaded data directory
         :param dev: transform the input data to RDF and archive and thumbnail but run the Next.js dev server instead of generating and deploying static files
         :param image_archiver: optional image archiver implementation; if not specified, defaults to a file system archiver that writes to Next's public/ directory
+        :param pipeline_id: pipeline identifier
         :param sleep_s_after_image_download: sleep this number of seconds after downloading each image, to avoid triggering denial of service mechanisms
         :param thumbnail_max_dimensions: maximum dimensions of amage thumbnails to use
         """
 
         BufferingLoader.__init__(self)
-        if app_configuration is None:
-            self.__app_configuration = None
-        elif isinstance(app_configuration, AppConfiguration):
-            self.__app_configuration = app_configuration
-        elif isinstance(app_configuration, Path):
-            self.__app_configuration = AppConfiguration.from_rdf_file(app_configuration)
-        else:
-            raise TypeError(type(app_configuration))
         self.__cache_dir_path = cache_dir_path
         self.__deployer = deployer
         self.__dev = dev
@@ -74,16 +66,13 @@ class AppLoader(BufferingLoader):
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
 
     def _flush(self, models):
-        if self.__app_configuration is not None:
-            app_configuration = self.__app_configuration
-        else:
-            app_configuration: Optional[AppConfiguration] = None
-            for model in models:
-                if isinstance(model, AppConfiguration):
-                    app_configuration = model
-                    break
-            if app_configuration is None:
-                self.__logger.warning("no %s in models", AppConfiguration.__name__)
+        app_configuration: Optional[AppConfiguration] = None
+        for model in models:
+            if isinstance(model, AppConfiguration):
+                app_configuration = model
+                break
+        if app_configuration is None:
+            self.__logger.warning("no %s in models", AppConfiguration.__name__)
 
         app = app_configuration.app if app_configuration is not None else None
         if app is None:
@@ -92,6 +81,7 @@ class AppLoader(BufferingLoader):
                 "app configuration does not specify an app, using the default %s",
                 app,
             )
+
         app_package = AppPackage(app=app)
 
         image_archiver = self.__image_archiver
@@ -145,9 +135,6 @@ class AppLoader(BufferingLoader):
             models = tuple(gui_images + other_models)
 
         data_file_paths = []
-
-        if isinstance(self.__app_configuration, Path):
-            data_file_paths.append(self.__app_configuration)
 
         if models:
             loaded_data_file_path = app_package.app_dir_path / "public" / "data.trig"

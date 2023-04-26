@@ -103,7 +103,6 @@ def test_load_excel_2010_test_data(
         ),
         id=pipeline_id,
         loader=AppLoader(
-            app_configuration=app_configuration,
             image_archiver=NopImageArchiver(),
             loaded_data_dir_path=loaded_data_dir_path,
             pipeline_id=SyntheticDataPipeline.ID,
