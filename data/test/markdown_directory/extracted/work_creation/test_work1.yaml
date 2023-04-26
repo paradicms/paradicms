@@ -1,5 +1,0 @@
-creator:
-- md:person:test_person
-date:
-  "rdf:type": http://www.paradicms.org/ns#DateTimeDescription
-  "time:year": 2022

@@ -43,11 +43,4 @@ def synthetic_data_original_images(
 
 @pytest.fixture
 def test_image_file_path(data_dir_path: Path) -> Path:
-    return (
-        data_dir_path
-        / "test"
-        / "markdown_directory"
-        / "extracted"
-        / "image"
-        / "test_work2.gif"
-    )
+    return data_dir_path / "test" / "markdown_directory" / "image" / "test_work2.gif"

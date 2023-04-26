@@ -1,8 +1,5 @@
-*
-!/costume_core_ontology/cache/airtable/*
-!/costume_core_template/cache/airtable/*
-!/.gitignore
-!/synthetic/*
-!/test/*
-!/vccc/cache/omeka-classic/*
-!/vccc_high_quality/cache/omeka-classic/*
+/ComputerScienceInventions/
+/costume_core_template/loaded/
+/exhibitions/*
+/vccc/loaded/
+/vccc_high_quality/loaded/
