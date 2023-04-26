@@ -42,13 +42,14 @@ def download_file(
         temp_file_path, _ = urlretrieve(from_url)
         logger.debug("downloaded %s to %s", from_url, temp_file_path)
         to_file_path.unlink(missing_ok=True)
-        to_file_path.parent.mkdir(exist_ok=True, parents=True)
         Path(temp_file_path).rename(to_file_path)
         logger.debug("renamed %s to %s", temp_file_path, to_file_path)
     else:
         with urlopen(from_url) as open_from_url:
             to_file_path.unlink(missing_ok=True)
+            to_file_path.parent.mkdir(exist_ok=True, parents=True)
             with open(to_file_path, "w+b") as to_file:
                 to_file.write(open_from_url.read())
+                logger.debug("downloaded %s to %s", from_url, to_file_path)
 
     return to_file_path
