@@ -28,7 +28,8 @@ class OmekaClassicPipeline(Pipeline):
                 endpoint_url=endpoint_url,
                 cache_dir_path=self._cache_dir_path(
                     data_dir_path=data_dir_path, pipeline_id=pipeline_id
-                ),
+                )
+                / "omeka-classic",
             ),
             id=pipeline_id,
             loader=RdfFileLoader(

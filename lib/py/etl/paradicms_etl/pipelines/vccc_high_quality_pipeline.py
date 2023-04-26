@@ -136,7 +136,8 @@ class VcccHighQualityPipeline(Pipeline):
                 api_key=omeka_api_key,
                 cache_dir_path=self._cache_dir_path(
                     data_dir_path=data_dir_path, pipeline_id=self.__ID
-                ),
+                )
+                / "omeka-classic",
                 endpoint_url="https://vcomeka.com/vccc/",
             ),
             id=self.__ID,

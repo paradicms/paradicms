@@ -22,6 +22,13 @@ class GitHubAction(ABC):
 
         REQUIRED = _RequiredType()
 
+        cache_directory_path: str = dataclasses.field(
+            default="_cache",
+            metadata={
+                "description": "Path to a directory in which to store cached data"
+            },
+        )
+
         debug: str = dataclasses.field(
             default="", metadata={"description": "Debug the action"}
         )
@@ -64,7 +71,8 @@ class GitHubAction(ABC):
                 if not value.strip():
                     raise ValueError("empty/blank " + field.name)
 
-    def __init__(self, *, debug: bool, pipeline_id: str):
+    def __init__(self, *, cache_directory_path: str, debug: bool, pipeline_id: str):
+        self._cache_dir_path = Path(cache_directory_path) / pipeline_id
         self._debug = debug
         self.__logger = logging.getLogger(__name__)
         self._pipeline_id = pipeline_id

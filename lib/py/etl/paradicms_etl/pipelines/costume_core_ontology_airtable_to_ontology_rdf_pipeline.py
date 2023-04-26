@@ -42,7 +42,8 @@ class CostumeCoreOntologyAirtableToOntologyRdfPipeline(Pipeline):
                 access_token=airtable_access_token,
                 cache_dir_path=self._cache_dir_path(
                     data_dir_path=data_dir_path, pipeline_id=self.ID
-                ),
+                )
+                / "airtable",
             ),
             id=self.ID,
             loader=CompositeLoader(
