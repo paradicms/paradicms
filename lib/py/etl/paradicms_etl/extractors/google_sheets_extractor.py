@@ -14,7 +14,6 @@ class GoogleSheetsExtractor:
     def __extract(self, *, cache_dir_path: Path, force: bool):
         xlsx_file_path = cache_dir_path / (self.__spreadsheet_id + ".xlsx")
         download_file(
-            atomic=False,
             force=force,
             from_url=f"https://docs.google.com/spreadsheets/u/0/d/{self.__spreadsheet_id}/export?"
             f"format=xlsx&id={self.__spreadsheet_id}",
