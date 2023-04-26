@@ -17,7 +17,7 @@ def test_transform(data_dir_path: Path):
     extractor = CostumeCoreDataAirtableExtractor(
         access_token="willneverbeused",
         base_id="appgU92SdGTwPIVNg",
-        cache_dir_path=data_dir_path / "costume_core_template" / "extracted",
+        cache_dir_path=data_dir_path / "costume_core_template" / "cache" / "airtable",
     )
     extract_result = extractor(force=False)
 

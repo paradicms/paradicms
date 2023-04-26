@@ -1,8 +1,8 @@
 *
-!/costume_core_ontology/extracted/*
-!/costume_core_template/extracted/*
+!/costume_core_ontology/cache/airtable/*
+!/costume_core_template/cache/airtable/*
 !/.gitignore
 !/synthetic/*
 !/test/*
-!/vccc/extracted/*
-!/vccc_high_quality/extracted/*
+!/vccc/cache/omeka-classic/*
+!/vccc_high_quality/cache/omeka-classic/*
