@@ -2,6 +2,7 @@ import json
 import logging
 from pathlib import Path
 from typing import Dict, List, Tuple, Union, Any, Optional
+from urllib.error import HTTPError
 from urllib.parse import quote
 from urllib.request import urlopen, Request
 
@@ -130,13 +131,17 @@ class AirtableExtractor:
                 return json.load(file_)
 
         self.__logger.debug("downloading %s to %s", url, file_path)
-        f = urlopen(
-            Request(url, headers={"Authorization": "Bearer " + self.__access_token})
-        )
         try:
-            response_str = f.read()
-        finally:
-            f.close()
+            with urlopen(
+                Request(url, headers={"Authorization": "Bearer " + self.__access_token})
+            ) as f:
+                response_str = f.read()
+        except HTTPError as e:
+            self.__logger.warning(
+                "HTTP error with full response:\n%s", e.read(), exc_info=True
+            )
+            raise
+
         file_path.parent.mkdir(parents=True, exist_ok=True)
         with open(file_path, "w+b") as file_:
             file_.write(response_str)

@@ -1,9 +1,8 @@
 import json
 import logging
+from typing import Optional, Tuple
 from urllib.error import HTTPError
 from urllib.request import urlopen
-
-from typing import Optional, Tuple
 
 from .no_such_omeka_classic_collection_exception import (
     NoSuchOmekaClassicCollectionException,
@@ -126,8 +125,5 @@ class OmekaClassicRestApiClient:
 
     def __get_url(self, url) -> str:
         self.__logger.debug("getting URL %s", url)
-        url = urlopen(url)
-        try:
-            return url.read()
-        finally:
-            url.close()
+        with urlopen(url) as open_url:
+            return open_url.read()
