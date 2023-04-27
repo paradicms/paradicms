@@ -117,8 +117,19 @@ class DirectoryTransformer:
                 Dict[str, DirectoryExtractor.ImageFileEntry],
             ] = {}
             for image_file_entry in image_file_entries:
+                try:
+                    root_model_class = self.__root_model_class(
+                        image_file_entry.model_type
+                    )
+                except KeyError:
+                    self.__logger.warning(
+                        "unknown model type %s for file %s",
+                        image_file_entry.model_type,
+                        image_file_entry.path,
+                    )
+                    continue
                 self.__untransformed_image_file_entries_by_root_model_class.setdefault(
-                    self.__root_model_class(image_file_entry.model_type),
+                    root_model_class,
                     {},
                 )[image_file_entry.model_id] = image_file_entry
             self.__untransformed_metadata_file_entries_by_root_model_class: Dict[
@@ -126,8 +137,19 @@ class DirectoryTransformer:
                 List[DirectoryExtractor.MetadataFileEntry],
             ] = {}
             for metadata_file_entry in metadata_file_entries:
+                try:
+                    root_model_class = self.__root_model_class(
+                        metadata_file_entry.model_type
+                    )
+                except KeyError:
+                    self.__logger.warning(
+                        "unknown model type %s for file %s",
+                        metadata_file_entry.model_type,
+                        metadata_file_entry.path,
+                    )
+                    continue
                 self.__untransformed_metadata_file_entries_by_root_model_class.setdefault(
-                    self.__root_model_class(metadata_file_entry.model_type),
+                    root_model_class,
                     [],
                 ).append(
                     metadata_file_entry

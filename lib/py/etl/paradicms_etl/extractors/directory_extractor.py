@@ -60,6 +60,11 @@ class DirectoryExtractor:
                     self.__logger.debug("skipping hidden file %s", file_path)
                     continue
 
+                file_format = splitext(file_name)[1][1:].lower()
+                if not file_format:
+                    self.__logger.debug("skipping file with no extension %s", file_path)
+                    continue
+
                 if dir_path == root_dir_path:
                     model_id = "singleton"
                     model_type = str(file_name.stem)
@@ -85,7 +90,7 @@ class DirectoryExtractor:
                 with open(file_path) as metadata_file:
                     metadata_file_entries.append(
                         DirectoryExtractor.MetadataFileEntry(
-                            format=splitext(file_name)[1][1:].lower(),
+                            format=file_format,
                             model_id=model_id,
                             model_type=model_type,
                             source=metadata_file.read(),
