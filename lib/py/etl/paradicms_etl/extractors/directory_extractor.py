@@ -20,6 +20,7 @@ class DirectoryExtractor:
         format: str
         model_id: str
         model_type: str
+        path: Path
         source: str
 
     def __init__(self, *, directory_path: Path):
@@ -93,6 +94,7 @@ class DirectoryExtractor:
                             format=file_format,
                             model_id=model_id,
                             model_type=model_type,
+                            path=file_path,
                             source=metadata_file.read(),
                         )
                     )
