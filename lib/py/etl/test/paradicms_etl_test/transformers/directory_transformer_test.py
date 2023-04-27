@@ -20,7 +20,7 @@ def test_transform(data_dir_path: Path):
     extractor = DirectoryExtractor(directory_path=directory_data_dir_path)
     models = tuple(
         DirectoryTransformer(
-            # collection_uri="urn:markdown:test:collection:default",
+            # collection_uri="urn:directory:test:collection:default",
             # collection_title="Markdown directory test collection",
             pipeline_id="test"
         )(**extractor())
@@ -36,27 +36,27 @@ def test_transform(data_dir_path: Path):
 
     works = {model.uri: model for model in models if isinstance(model, Work)}
     assert len(works) == 2
-    work1 = works[URIRef("urn:markdown:test:cms-work:test_work1")]
-    work2 = works[URIRef("urn:markdown:test:cms-work:test_work2")]
+    work1 = works[URIRef("urn:directory:test:cms-work:test_work1")]
+    work2 = works[URIRef("urn:directory:test:cms-work:test_work2")]
 
     work1_description = work1.description
     assert work1_description is not None
     assert isinstance(work1_description, Text)
     assert work1_description.rights_holders == (
-        URIRef("urn:markdown:test:cms-person:test_person"),
+        URIRef("urn:directory:test:cms-person:test_person"),
     )
 
     images = {model.uri: model for model in models if isinstance(model, Image)}
     assert len(images) == 2
     assert (
-        images[URIRef("urn:markdown:test:cms-image:test_work1")].depicts_uri
+        images[URIRef("urn:directory:test:cms-image:test_work1")].depicts_uri
         == work1.uri
     )
     assert (
-        images[URIRef("urn:markdown:test:cms-image:test_work2")].depicts_uri
+        images[URIRef("urn:directory:test:cms-image:test_work2")].depicts_uri
         == work2.uri
     )
-    assert images[URIRef("urn:markdown:test:cms-image:test_work2")].src
+    assert images[URIRef("urn:directory:test:cms-image:test_work2")].src
 
     people = [model for model in models if isinstance(model, Person)]
     assert len(people) == 1
