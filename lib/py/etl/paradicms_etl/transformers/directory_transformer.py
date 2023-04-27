@@ -33,9 +33,9 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 class DirectoryTransformer:
     """
-    Transform a directory of Markdown files to a set of models.
+    Transform a directory of files to a set of models.
 
-    See DirectoryExtractorExtractor for the expected directory structure.
+    See DirectoryExtractor for the expected directory structure.
 
     See the user documentation for information about the transformation process.
     """
@@ -192,7 +192,7 @@ class DirectoryTransformer:
 
         @property
         def __pipeline_namespace(self) -> Namespace:
-            return Namespace(f"urn:markdown:{self.__pipeline_id}:")
+            return Namespace(f"urn:directory:{self.__pipeline_id}:")
 
         def __root_model_class(self, model_class: Union[Type[Model], str]):
             if isinstance(model_class, str):
@@ -279,7 +279,7 @@ class DirectoryTransformer:
 
                         image_resource.add(FOAF.depicts, transformed_model.uri)
                         self.__logger.debug(
-                            "image markdown %s has no depicts statement but corresponds to the model %s, adding depicts statement",
+                            "image file entry %s has no depicts statement but corresponds to the model %s, adding depicts statement",
                             metadata_file_entry.model_id,
                             transformed_model.uri,
                         )
@@ -288,13 +288,13 @@ class DirectoryTransformer:
 
                     if not added_depicts:
                         self.__logger.warning(
-                            "image markdown %s has no depicts statement and does not correspond to another model",
+                            "image file entry %s has no depicts statement and does not correspond to another model",
                             metadata_file_entry.model_id,
                         )
 
                 image = image_root_model_class.from_rdf(resource=image_resource)
 
-                # If the .md image metadata has no src and there is a sibling image file (i.e., a .jpg) with the same model id (i.e., file stem) as the Markdown file,
+                # If the image metadata has no src and there is a sibling image file (i.e., a .jpg) with the same model id (i.e., file stem) as the metadata file,
                 # use that image file as the src.
                 if image.src is None:
                     image_file_entry = (
@@ -342,7 +342,7 @@ class DirectoryTransformer:
                         )
                         continue
 
-                    # Image file corresponds to a model Markdown file
+                    # Image file corresponds to a model metadata file
                     # Synthesize an Image model
                     self.__logger.debug(
                         "synthesizing an Image model for the model %s",
@@ -522,14 +522,14 @@ class DirectoryTransformer:
                         work = transformed_works_by_id.get(metadata_file_entry.model_id)
                         if work is None:
                             self.__logger.warning(
-                                "work event markdown %s has no work statement and its id does not correspond to a Work",
+                                "work event file entry %s has no work statement and its id does not correspond to a Work",
                                 metadata_file_entry.model_id,
                             )
                             continue
 
                         work_event_resource.add(CMS.work, work.uri)
                         self.__logger.debug(
-                            "work event markdown %s has no work statement but corresponds to the model %s, adding work statement",
+                            "work event file entry %s has no work statement but corresponds to the model %s, adding work statement",
                             metadata_file_entry.model_id,
                             work.uri,
                         )
