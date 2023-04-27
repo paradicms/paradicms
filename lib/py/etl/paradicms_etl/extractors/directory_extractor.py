@@ -29,6 +29,7 @@ class DirectoryExtractor:
     def __call__(self, **kwds):
         """
         Extract entries from a directory with the structure:
+        collection.md
         other/id.md
         person/id1.md
         person/id2.md
@@ -41,17 +42,30 @@ class DirectoryExtractor:
         root_dir_path = self.__directory_path.absolute()
         for dir_path, _, file_names in os.walk(root_dir_path):
             dir_path = Path(dir_path)
-            if dir_path == root_dir_path:
-                continue
-            dir_relpath = dir_path.relative_to(root_dir_path)
-            if str(dir_relpath).startswith("."):
-                self.__logger.debug("skipping hidden directory %s", dir_path)
-                continue
-            model_type = str(dir_relpath).replace(os.path.sep, "/")
-            for file_name in file_names:
-                file_name = Path(file_name)
+
+            if dir_path != root_dir_path:
+                dir_relpath = dir_path.relative_to(root_dir_path)
+                if str(dir_relpath).startswith("."):
+                    self.__logger.debug("skipping hidden directory %s", dir_path)
+                    continue
+                model_type = str(dir_relpath).replace(os.path.sep, "/")
+            else:
+                model_type = None
+
+            for file_name_str in file_names:
+                file_name = Path(file_name_str)
                 file_path = dir_path / file_name
-                model_id = str(file_name.stem)
+
+                if file_name_str.startswith("."):
+                    self.__logger.debug("skipping hidden file %s", file_path)
+                    continue
+
+                if dir_path == root_dir_path:
+                    model_id = "singleton"
+                    model_type = str(file_name.stem)
+                else:
+                    model_id = str(file_name.stem)
+                    assert model_type is not None
 
                 try:
                     with Image.open(str(file_path)) as image:
