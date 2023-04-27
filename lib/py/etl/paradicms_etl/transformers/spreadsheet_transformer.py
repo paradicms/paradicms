@@ -137,7 +137,7 @@ class SpreadsheetTransformer:
                     row_dict["@id"] = str(
                         self.__model_uri(
                             model_class=model_class,
-                            model_id=str(row_i),
+                            model_id=sheet_name + ":" + str(row_i),
                         )
                     )
 
