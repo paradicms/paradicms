@@ -2,26 +2,24 @@ from pathlib import Path
 
 from rdflib import URIRef
 
-from paradicms_etl.extractors.markdown_directory_extractor import (
-    MarkdownDirectoryExtractor,
+from paradicms_etl.extractors.directory_extractor import (
+    DirectoryExtractor,
 )
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
-from paradicms_etl.transformers.markdown_directory_transformer import (
-    MarkdownDirectoryTransformer,
+from paradicms_etl.transformers.directory_transformer import (
+    DirectoryTransformer,
 )
 
 
 def test_transform(data_dir_path: Path):
-    markdown_directory_data_dir_path = data_dir_path / "test" / "markdown_directory"
-    extractor = MarkdownDirectoryExtractor(
-        markdown_directory_path=markdown_directory_data_dir_path
-    )
+    directory_data_dir_path = data_dir_path / "test" / "directory"
+    extractor = DirectoryExtractor(directory_path=directory_data_dir_path)
     models = tuple(
-        MarkdownDirectoryTransformer(
+        DirectoryTransformer(
             # collection_uri="urn:markdown:test:collection:default",
             # collection_title="Markdown directory test collection",
             pipeline_id="test"

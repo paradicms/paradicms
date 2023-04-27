@@ -1,33 +1,44 @@
 import logging
 import os
+from dataclasses import dataclass
 from os.path import splitext
 from pathlib import Path
 
 from PIL import Image, UnidentifiedImageError
 
-from paradicms_etl.models.markdown_directory import MarkdownDirectory
 
+class DirectoryExtractor:
+    @dataclass(frozen=True)
+    class ImageFileEntry:
+        mime_type: str
+        model_id: str
+        model_type: str
+        path: Path
 
-class MarkdownDirectoryExtractor:
-    def __init__(self, *, markdown_directory_path: Path):
+    @dataclass(frozen=True)
+    class MetadataFileEntry:
+        format: str
+        model_id: str
+        model_type: str
+        source: str
+
+    def __init__(self, *, directory_path: Path):
         self.__logger = logging.getLogger(__name__)
-        self.__markdown_directory_path = markdown_directory_path
+        self.__directory_path = directory_path
 
     def __call__(self, **kwds):
         """
         Extract entries from a directory with the structure:
-        work/id1.md
-        work/id2.md
+        other/id.md
         person/id1.md
         person/id2.md
-        other/id.md
-
-        into a MarkdownDirectory dataclass.
+        work/id1.md
+        work/id2.md
         """
 
         image_file_entries = []
         metadata_file_entries = []
-        root_dir_path = self.__markdown_directory_path.absolute()
+        root_dir_path = self.__directory_path.absolute()
         for dir_path, _, file_names in os.walk(root_dir_path):
             dir_path = Path(dir_path)
             if dir_path == root_dir_path:
@@ -46,7 +57,7 @@ class MarkdownDirectoryExtractor:
                     with Image.open(str(file_path)) as image:
                         image_format = image.format
                     image_file_entries.append(
-                        MarkdownDirectory.ImageFileEntry(
+                        DirectoryExtractor.ImageFileEntry(
                             mime_type="image/" + image_format.lower(),
                             model_id=model_id,
                             model_type=model_type,
@@ -59,7 +70,7 @@ class MarkdownDirectoryExtractor:
 
                 with open(file_path) as metadata_file:
                     metadata_file_entries.append(
-                        MarkdownDirectory.MetadataFileEntry(
+                        DirectoryExtractor.MetadataFileEntry(
                             format=splitext(file_name)[1][1:].lower(),
                             model_id=model_id,
                             model_type=model_type,
@@ -68,9 +79,7 @@ class MarkdownDirectoryExtractor:
                     )
 
         return {
-            "markdown_directory": MarkdownDirectory(
-                image_file_entries=tuple(image_file_entries),
-                metadata_file_entries=tuple(metadata_file_entries),
-                name=str(root_dir_path.name),
-            )
+            "directory_name": str(root_dir_path.name),
+            "image_file_entries": tuple(image_file_entries),
+            "metadata_file_entries": tuple(metadata_file_entries),
         }

@@ -10,6 +10,7 @@ from rdflib.resource import Resource
 from stringcase import spinalcase, snakecase
 from yaml import FullLoader
 
+from paradicms_etl.extractors.directory_extractor import DirectoryExtractor
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_image import CmsImage
@@ -18,7 +19,6 @@ from paradicms_etl.models.cms.cms_root_model_classes_by_name import (
 )
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
-from paradicms_etl.models.markdown_directory import MarkdownDirectory
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_closing import WorkClosing
@@ -31,11 +31,11 @@ from paradicms_etl.utils.markdown_to_dict_transformer import (
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class MarkdownDirectoryTransformer:
+class DirectoryTransformer:
     """
     Transform a directory of Markdown files to a set of models.
 
-    See MarkdownDirectoryExtractor for the expected directory structure.
+    See DirectoryExtractorExtractor for the expected directory structure.
 
     See the user documentation for information about the transformation process.
     """
@@ -74,14 +74,16 @@ class MarkdownDirectoryTransformer:
             self,
             *,
             default_collection: Optional[Collection],
+            directory_name: str,
+            image_file_entries: Tuple[DirectoryExtractor.ImageFileEntry, ...],
+            metadata_file_entries: Tuple[DirectoryExtractor.MetadataFileEntry, ...],
             logger: Logger,
-            markdown_directory: MarkdownDirectory,
             pipeline_id: str,
             root_model_classes_by_name: Dict[str, Type[ResourceBackedModel]],
         ):
             self.__default_collection = default_collection
+            self.__directory_name = directory_name
             self.__logger = logger
-            self.__markdown_directory = markdown_directory
             self.__pipeline_id = pipeline_id
             self.__root_model_classes_by_alias = root_model_classes_by_name.copy()
 
@@ -112,18 +114,18 @@ class MarkdownDirectoryTransformer:
             self.__transformed_models_by_uri: Dict[str, Model] = {}
             self.__untransformed_image_file_entries_by_root_model_class: Dict[
                 Type[Model],
-                Dict[str, MarkdownDirectory.ImageFileEntry],
+                Dict[str, DirectoryExtractor.ImageFileEntry],
             ] = {}
-            for image_file_entry in markdown_directory.image_file_entries:
+            for image_file_entry in image_file_entries:
                 self.__untransformed_image_file_entries_by_root_model_class.setdefault(
                     self.__root_model_class(image_file_entry.model_type),
                     {},
                 )[image_file_entry.model_id] = image_file_entry
             self.__untransformed_metadata_file_entries_by_root_model_class: Dict[
                 Type[Model],
-                List[MarkdownDirectory.MetadataFileEntry],
+                List[DirectoryExtractor.MetadataFileEntry],
             ] = {}
-            for metadata_file_entry in markdown_directory.metadata_file_entries:
+            for metadata_file_entry in metadata_file_entries:
                 self.__untransformed_metadata_file_entries_by_root_model_class.setdefault(
                     self.__root_model_class(metadata_file_entry.model_type),
                     [],
@@ -163,19 +165,14 @@ class MarkdownDirectoryTransformer:
             self.__transform_image_file_entries()
             return tuple(self.__transformed_models)
 
-        def __default_collection_uri(self, *, markdown_directory_name: str) -> URIRef:
-            return self.__model_uri(
-                model_class=CmsCollection,
-                model_id=markdown_directory_name,
-            )
-
         def __get_or_synthesize_default_collection(self) -> Collection:
             if self.__default_collection is None:
-                model_id = self.__markdown_directory.name
+                model_id = self.__directory_name
                 self.__default_collection = CmsCollection.builder(
-                    title=self.__markdown_directory.name,
-                    uri=self.__default_collection_uri(
-                        markdown_directory_name=self.__markdown_directory.name
+                    title=self.__directory_name,
+                    uri=self.__model_uri(
+                        model_class=CmsCollection,
+                        model_id=model_id,
                     ),
                 ).build()
                 self.__buffer_transformed_model(
@@ -308,7 +305,7 @@ class MarkdownDirectoryTransformer:
                     )
                     if image_file_entry is not None:
                         assert isinstance(
-                            image_file_entry, MarkdownDirectory.ImageFileEntry
+                            image_file_entry, DirectoryExtractor.ImageFileEntry
                         )
                         image = image.replace(src=image_file_entry.path.as_uri())
 
@@ -368,7 +365,7 @@ class MarkdownDirectoryTransformer:
                     )
 
         def __transform_metadata_file_entry_to_resource(
-            self, metadata_file_entry: MarkdownDirectory.MetadataFileEntry
+            self, metadata_file_entry: DirectoryExtractor.MetadataFileEntry
         ) -> Resource:
             root_model_class = self.__root_model_class(metadata_file_entry.model_type)
 
@@ -545,11 +542,19 @@ class MarkdownDirectoryTransformer:
                         ),
                     )
 
-    def __call__(self, *, markdown_directory: MarkdownDirectory):  # type: ignore
+    def __call__(
+        self,
+        *,
+        directory_name: str,
+        image_file_entries: Tuple[DirectoryExtractor.ImageFileEntry, ...],
+        metadata_file_entries: Tuple[DirectoryExtractor.MetadataFileEntry, ...],
+    ):
         yield from self.__TransformInvocation(
             default_collection=self.__default_collection,
+            directory_name=directory_name,
+            image_file_entries=image_file_entries,
+            metadata_file_entries=metadata_file_entries,
             logger=self.__logger,
-            markdown_directory=markdown_directory,
             pipeline_id=self.__pipeline_id,
             root_model_classes_by_name=self.__root_model_classes_by_name,
         )()
