@@ -24,14 +24,14 @@ export const RightsParagraph: React.FunctionComponent<{
       result.push(<span key={result.length}>{rightsElement}</span>);
     };
 
-    const creatorTexts = new Set<string>();
+    const creatorLabels = new Set<string>();
     for (const creator of rights.creators) {
       pushRightsElement(
         <span>
-          <i>Creator</i>: {creator.toString()}
+          <i>Creator</i>: {creator.label}
         </span>
       );
-      creatorTexts.add(creator.toString());
+      creatorLabels.add(creator.label);
     }
 
     if (rights.rightsStatement) {
@@ -44,12 +44,12 @@ export const RightsParagraph: React.FunctionComponent<{
     }
 
     for (const holder of rights.rightsHolders) {
-      if (creatorTexts.has(holder.toString())) {
+      if (creatorLabels.has(holder.label)) {
         continue;
       }
       pushRightsElement(
         <span>
-          <i>Holder</i>: {holder.toString()}
+          <i>Holder</i>: {holder.label}
         </span>
       );
     }
