@@ -17,7 +17,7 @@ class EtlGitHubAction(GitHubAction, ABC):
     @dataclasses.dataclass(frozen=True)
     class Inputs(GitHubAction.Inputs):
         loaded_data_directory_path: str = dataclasses.field(
-            default="_data",
+            default=".paradicms/data",
             metadata={
                 "description": "Path to a directory in which to store the loaded RDF file"
             },

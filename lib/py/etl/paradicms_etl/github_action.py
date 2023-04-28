@@ -23,7 +23,7 @@ class GitHubAction(ABC):
         REQUIRED = _RequiredType()
 
         cache_directory_path: str = dataclasses.field(
-            default="_cache",
+            default=".paradicms/.cache",
             metadata={
                 "description": "Path to a directory in which to store cached data"
             },
