@@ -1,5 +1,4 @@
 build/
-_cache/
 /config/
 dist/
 *.iml
@@ -12,6 +11,7 @@ node_modules/
 null/
 .nyc_output/
 out/
+.paradicms/
 **/public/data.trig
 **/public/img/archive/
 *.pyc
