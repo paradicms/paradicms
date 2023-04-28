@@ -22,7 +22,9 @@ class ImageData(Model):
         for pil_format, mime_type in Image.MIME.items():
             if mime_type == format_:
                 return Image.open(BytesIO(self._value), formats=(pil_format,)).copy()
-        raise ValueError(f"unable to convert MIME type {format_} to PIL format")
+        raise ValueError(
+            f"unable to convert MIME type {format_} to PIL format (available PIL MIME types and formats: {' '.join(pil_format + ':' + mime_type for pil_format, mime_type in Image.MIME.items())})"
+        )
 
     @property
     @abstractmethod
