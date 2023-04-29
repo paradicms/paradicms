@@ -94,11 +94,12 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
                 description_resource.add(
                     DCTERMS.creator, Literal(self.description.rights.author)
                 )
-                source_resource = graph.resource(
-                    URIRef(self.description.rights.source_url)
-                )
-                # source_resource.add(RDFS.label, Literal(self.description.rights.source_name))
-                description_resource.add(DCTERMS.source, source_resource)
+                if self.description.rights.source_url:
+                    source_resource = graph.resource(
+                        URIRef(self.description.rights.source_url)
+                    )
+                    # source_resource.add(RDFS.label, Literal(self.description.rights.source_name))
+                    description_resource.add(DCTERMS.source, source_resource)
                 if self.description.rights.license_uri:
                     description_resource.add(
                         DCTERMS.license, URIRef(self.description.rights.license_uri)

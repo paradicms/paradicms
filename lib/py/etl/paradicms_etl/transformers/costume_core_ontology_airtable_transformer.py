@@ -15,7 +15,7 @@ from typing import (
 from urllib.parse import quote_plus
 
 from inflector import Inflector
-from rdflib import URIRef, Literal, DCTERMS
+from rdflib import URIRef, Literal
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
@@ -33,7 +33,7 @@ from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
-from paradicms_etl.namespaces import COCO, VRA
+from paradicms_etl.namespaces import COCO
 
 _RightsMixinBuilderT = TypeVar("_RightsMixinBuilderT", bound=CmsRightsMixin.Builder)
 
@@ -54,25 +54,6 @@ class CostumeCoreOntologyAirtableTransformer:
     - CmsConcept (formerly WorksheetFeatureValue), CmsImage, CmsProperty (formerly WorksheetFeature), and CmsPropertyGroup (formerly WorksheetFeatureSet) to build a Costume Core
         worksheet app
     """
-
-    __FILTERABLE_FEATURE_URIS = {
-        DCTERMS.creator,
-        DCTERMS.subject,
-    }
-
-    __SEARCHABLE_FEATURE_URIS = {
-        COCO.conditionDescription,
-        COCO.publicInformation,
-        COCO.treatment,
-        COCO.wornBy,
-        DCTERMS.alternative,
-        DCTERMS.date,
-        DCTERMS.description,
-        DCTERMS.identifier,
-        DCTERMS.spatial,
-        DCTERMS.title,
-        VRA.culturalContext,
-    }
 
     class __ImageDepictsType(Enum):
         FEATURE = "feature"
@@ -329,13 +310,18 @@ class CostumeCoreOntologyAirtableTransformer:
         if feature_description:
             property_builder.set_comment(feature_description)
 
-        if fields.get("feature_values_ids", []):
+        if fields["Filterable"] == "Y":
+            # if fields.get("feature_values_ids", []):
             property_builder.set_filterable(True)
-        elif feature_uri in self.__FILTERABLE_FEATURE_URIS:
-            property_builder.set_filterable(True)
+        # elif feature_uri in self.__FILTERABLE_FEATURE_URIS:
+        #     property_builder.set_filterable(True)
+        else:
+            assert fields["Filterable"] == "N"
 
-        if feature_uri in self.__SEARCHABLE_FEATURE_URIS:
+        if fields["Searchable"] == "Y":
             property_builder.set_searchable(True)
+        else:
+            assert fields["Searchable"] == "N"
 
         return property_builder.build()
 
@@ -420,10 +406,19 @@ class CostumeCoreOntologyAirtableTransformer:
         if not image_filename:
             return
 
-        image_filename = image_filename[0]
-        assert image_filename
+        image_record_id = image_filename[0]
+        assert image_record_id
 
-        image_record = image_records_by_id[image_filename]
+        try:
+            image_record = image_records_by_id[image_record_id]
+        except KeyError:
+            self.__logger.warning(
+                "dangling image_filename %s in feature value record %s",
+                image_record_id,
+                fields["id"],
+            )
+            return
+
         image_filename = image_record["fields"]["filename"]
 
         # See note in transform_image_records re: image URIs.
@@ -572,7 +567,19 @@ class CostumeCoreOntologyAirtableTransformer:
             image_record_id = image_record_id[0]
             assert image_record_id
 
-            image_record = image_records_by_id[image_record_id]
+            try:
+                image_record = image_records_by_id[image_record_id]
+            except KeyError:
+                self.__logger.warning(
+                    "dangling image_filename %s in feature value record %s",
+                    image_record_id,
+                    fields["id"],
+                )
+                image_record = None
+        else:
+            image_record = None
+
+        if image_record is not None:
             image_filename = image_record["fields"]["filename"]
 
             image_rights = self.__transform_rights_fields_to_costume_core_rights(
@@ -762,7 +769,9 @@ class CostumeCoreOntologyAirtableTransformer:
             return list_[0]
 
         return CostumeCoreOntology.Rights(
-            author=get_first_list_element(record_fields[f"{key_prefix}_rights_author"]),
+            author=get_first_list_element(
+                record_fields.get(f"{key_prefix}_rights_author")
+            ),
             license_uri=get_first_list_element(
                 record_fields.get(f"{key_prefix}_rights_license")
             ),
@@ -770,10 +779,10 @@ class CostumeCoreOntologyAirtableTransformer:
                 record_fields.get(f"{key_prefix}_rights_statement")
             ),
             source_name=get_first_list_element(
-                record_fields[f"{key_prefix}_rights_source_name"]
+                record_fields.get(f"{key_prefix}_rights_source_name")
             ),
             source_url=get_first_list_element(
-                record_fields[f"{key_prefix}_rights_source_url"]
+                record_fields.get(f"{key_prefix}_rights_source_url")
             ),
         )
 
