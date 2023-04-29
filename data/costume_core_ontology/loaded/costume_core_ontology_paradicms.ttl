@@ -24,6 +24,7 @@ dcterms:creator a cms:Property ;
     rdfs:label "Creator" ;
     cms:propertyFilterable true ;
     cms:propertyOrder 44 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             rdf:value """Full name of each known designer, maker, manufacturer, etc. 
 
@@ -78,6 +79,7 @@ No spaces or uncommon characters.""" ] ;
 dcterms:isReferencedBy a cms:Property ;
     rdfs:label "References" ;
     cms:propertyOrder 47 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             rdf:value "References about this object, or about similar objects in texts or online, as either a full bibliographic citation (in MLA format) or a URL." ] ;
     rdfs:range <urn:costumeCore:ontology:featureRange:isReferencedBy> .
@@ -85,6 +87,7 @@ dcterms:isReferencedBy a cms:Property ;
 dcterms:relation a cms:Property ;
     rdfs:label "Relation" ;
     cms:propertyOrder 41 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             rdf:value "Enter the identifier for any related items. For clothing artifacts this will be an ID# like VC1992124. For other relations, such as exhibitions, the identifier may take a different form, such as the title. See the identifier element in the item itself to check." ] ;
     rdfs:range <urn:costumeCore:ontology:featureRange:relation> .
@@ -92,12 +95,14 @@ dcterms:relation a cms:Property ;
 dcterms:rightsHolder a cms:Property ;
     rdfs:label "Rights Holder" ;
     cms:propertyOrder 70 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             rdf:value "A rights statement including what is covered (images or object itself), person or organization owning or managing rights, a copyright symbol and date if appropriate, and additional contact information. " ] ;
     rdfs:range <urn:costumeCore:ontology:featureRange:rightsHolder> .
 
 dcterms:spatial a cms:Property ;
     rdfs:label "Region" ;
+    cms:propertyFilterable true ;
     cms:propertyOrder 52 ;
     cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
@@ -110,6 +115,7 @@ dcterms:subject a cms:Property ;
     rdfs:label "Subject" ;
     cms:propertyFilterable true ;
     cms:propertyOrder 40 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -128,6 +134,7 @@ In title case, less than 100 characters.""" ] ;
 
 vra:culturalContext a cms:Property ;
     rdfs:label "Culture" ;
+    cms:propertyFilterable true ;
     cms:propertyOrder 53 ;
     cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
@@ -137,7 +144,9 @@ vra:culturalContext a cms:Property ;
 
 vra:donator a cms:Property ;
     rdfs:label "Donor" ;
+    cms:propertyFilterable true ;
     cms:propertyOrder 46 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             rdf:value "Full name(s) of all donors. To protect the privacy of some private donors, they may request that this read simply \"Anonymous\" with no specifics. Instead, the specifics can be entered under \"private information.\"" ] ;
     rdfs:range <urn:costumeCore:ontology:featureRange:donator> .
@@ -145,6 +154,7 @@ vra:donator a cms:Property ;
 vra:endDate a cms:Property ;
     rdfs:label "Date Latest" ;
     cms:propertyOrder 50 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             rdf:value "The latest the garment could have been made, in the format YYYY or YYYY-MM or YYYY-MM-DD. Follow ISO 8601 standards." ] ;
     rdfs:range <urn:costumeCore:ontology:featureRange:endDate> .
@@ -152,13 +162,16 @@ vra:endDate a cms:Property ;
 vra:hasInscription a cms:Property ;
     rdfs:label "Label" ;
     cms:propertyOrder 39 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             rdf:value "The exact text, in quotes, from each label within the object, followed by a phrase describing where the label is located on the object." ] ;
     rdfs:range <urn:costumeCore:ontology:featureRange:hasInscription> .
 
 vra:placeOfRepository a cms:Property ;
     rdfs:label "Holding Institution" ;
+    cms:propertyFilterable true ;
     cms:propertyOrder 68 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             rdf:value """The name of the collection the garment belongs to, institutional or private. Include the address of a public institution, if appropriate. 
 
@@ -168,6 +181,7 @@ To protect the privacy of some private collectors, they may request that this re
 vra:startDate a cms:Property ;
     rdfs:label "Date Earliest" ;
     cms:propertyOrder 49 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             rdf:value "The earliest the garment could have been made, in the format YYYY or YYYY-MM or YYYY-MM-DD. Follow ISO 8601 standards." ] ;
     rdfs:range <urn:costumeCore:ontology:featureRange:startDate> .
@@ -219,14 +233,6 @@ coco:CC00018 a cms:Concept,
 coco:CC00019 a cms:Work ;
     dcterms:title "jewel" .
 
-coco:CC00021 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:neckline> ;
-    dcterms:title "off-the-shoulder neckline" ;
-    cms:collection coco:neckline ;
-    skos:prefLabel "off-the-shoulder neckline" .
-
 coco:CC00022 a cms:Work ;
     dcterms:description [ a cms:Text ;
             dcterms:creator "The J. Paul Getty Trust" ;
@@ -234,14 +240,6 @@ coco:CC00022 a cms:Work ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Refers to 18th- and 19th-century full-length gowns cut without a center front opening in the skirt and usually without a train." ] ;
     dcterms:title "round gown" .
-
-coco:CC00026 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:neckline> ;
-    dcterms:title "sweetheart neckline" ;
-    cms:collection coco:neckline ;
-    skos:prefLabel "sweetheart neckline" .
 
 coco:CC00030 a cms:Work ;
     dcterms:description [ a cms:Text ;
@@ -272,38 +270,6 @@ coco:CC00033 a cms:Work ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "A collar designed to be worn with the neck button either fastened or unfastened." ] ;
     dcterms:title "convertible collar" .
-
-coco:CC00034 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:neckline> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "Wikidata contributors" ;
-            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
-            rdf:value "has fabric that drapes loosely around the neck, sometimes cut or knit in one with the torso, sometimes as an added a foldover collar" ] ;
-    dcterms:title "cowl neck" ;
-    cms:collection coco:neckline ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "Wikidata contributors" ;
-            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
-            rdf:value "has fabric that drapes loosely around the neck, sometimes cut or knit in one with the torso, sometimes as an added a foldover collar" ] ;
-    skos:prefLabel "cowl neck" .
-
-coco:CC00035 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:neckline> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "Wikidata contributors" ;
-            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
-            rdf:value "a neckline with fabric standing high and close to the neck, cut or knit in one piece with the torso rather than as an added collar" ] ;
-    dcterms:title "funnel neck" ;
-    cms:collection coco:neckline ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "Wikidata contributors" ;
-            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
-            rdf:value "a neckline with fabric standing high and close to the neck, cut or knit in one piece with the torso rather than as an added collar" ] ;
-    skos:prefLabel "funnel neck" .
 
 coco:CC00038 a cms:Work ;
     dcterms:description [ a cms:Text ;
@@ -767,14 +733,14 @@ coco:CC00094 a cms:Concept,
             dcterms:creator "The J. Paul Getty Trust" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Tubular strip of textile, usually bias-cut, which may or may not enclose a cord, used for trimming the edges and seams of costume, coverings, and hangings. May be of matching or contrasting fabric, sometimes also in leather." ] ;
+            rdf:value "Trimming or finishing edges or seams with tubular strips of textile or leather." ] ;
     dcterms:title "piping" ;
     cms:collection coco:hasTechnique ;
     skos:definition [ a cms:Text ;
             dcterms:creator "The J. Paul Getty Trust" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Tubular strip of textile, usually bias-cut, which may or may not enclose a cord, used for trimming the edges and seams of costume, coverings, and hangings. May be of matching or contrasting fabric, sometimes also in leather." ] ;
+            rdf:value "Trimming or finishing edges or seams with tubular strips of textile or leather." ] ;
     skos:prefLabel "piping" .
 
 coco:CC00096 a cms:Concept,
@@ -861,8 +827,12 @@ coco:CC00103 a cms:Concept,
         cms:Work,
         skos:Concept,
         <urn:costumeCore:ontology:featureRange:hasTechnique> ;
+    dcterms:description [ a cms:Text ;
+            rdf:value "A technique used by designers for cutting fabric to utilize the greater stretch in the bias or diagonal direction of the fabric, thereby causing it to accentuate body lines and curves and drape softly." ] ;
     dcterms:title "bias-cut" ;
     cms:collection coco:hasTechnique ;
+    skos:definition [ a cms:Text ;
+            rdf:value "A technique used by designers for cutting fabric to utilize the greater stretch in the bias or diagonal direction of the fabric, thereby causing it to accentuate body lines and curves and drape softly." ] ;
     skos:prefLabel "bias-cut" .
 
 coco:CC00108 a cms:Concept,
@@ -1444,6 +1414,24 @@ coco:CC00168 a cms:Concept,
             rdf:value "A skirt cut to be wider at the hem than at the waistline." ] ;
     skos:prefLabel "flared skirt" .
 
+coco:CC00170 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:hasTechnique> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Bunching folds of textile together by pulling on a thread stitched through it for this purpose or on one or more of its constituent filaments, to create fullness." ] ;
+    dcterms:title "gathering" ;
+    cms:collection coco:hasTechnique ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Bunching folds of textile together by pulling on a thread stitched through it for this purpose or on one or more of its constituent filaments, to create fullness." ] ;
+    skos:prefLabel "gathering" .
+
 coco:CC00172 a cms:Work ;
     dcterms:description [ a cms:Text ;
             dcterms:creator "The J. Paul Getty Trust" ;
@@ -1629,6 +1617,26 @@ coco:CC00196 a cms:Concept,
             rdf:value "Synthetic fiber in which the fiber forming substance is composed of at least 85% acrylic resin." ] ;
     skos:prefLabel "acrylic" .
 
+coco:CC00197 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:fiber>,
+        <urn:costumeCore:ontology:featureRange:material> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "The long, fine hair from any breed of Angora rabbit. The white French rabbit is favored for its high-quality, soft hair. Angora dyes readily, but is difficult to spin because of its fine texture and it does not felt like common rabbit hair. It is usually mixed with sheep wool or other fibers for weaving." ] ;
+    dcterms:title "angora" ;
+    cms:collection coco:fiber,
+        coco:material ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "The long, fine hair from any breed of Angora rabbit. The white French rabbit is favored for its high-quality, soft hair. Angora dyes readily, but is difficult to spin because of its fine texture and it does not felt like common rabbit hair. It is usually mixed with sheep wool or other fibers for weaving." ] ;
+    skos:prefLabel "angora" .
+
 coco:CC00198 a cms:Work ;
     dcterms:description [ a cms:Text ;
             dcterms:creator "The J. Paul Getty Trust" ;
@@ -1674,6 +1682,26 @@ coco:CC00201 a cms:Concept,
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Fine body hair, or camel wool, used as a textile fiber." ] ;
     skos:prefLabel "camel hair" .
+
+coco:CC00202 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:fiber>,
+        <urn:costumeCore:ontology:featureRange:material> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Yarn or fabric made from the fine, soft, light wool from the undercoat of the Kashmir goat." ] ;
+    dcterms:title "cashmere" ;
+    cms:collection coco:fiber,
+        coco:material ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Yarn or fabric made from the fine, soft, light wool from the undercoat of the Kashmir goat." ] ;
+    skos:prefLabel "cashmere" .
 
 coco:CC00206 a cms:Concept,
         cms:Work,
@@ -2032,7 +2060,7 @@ coco:CC00242 a cms:Concept,
             dcterms:creator "The J. Paul Getty Trust" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Textile made from silk fiber, which is a fiber derived from the cocoon of the silkworm moth." ] ;
+            rdf:value "A fine, lustrous, natural fiber obtained from the catepillar cocoons of silk moths, such as the domesticated Bombyx mori. Silkworm silk is composed of a heavy and light chain of core proteins called fibroins, which are coated by sericin, a collection of sticky, glue-like proteins. Microscopically, raw silk appears as two strands that are held together with sericin protein." ] ;
     dcterms:title "silk" ;
     cms:collection coco:fiber,
         coco:material ;
@@ -2040,7 +2068,7 @@ coco:CC00242 a cms:Concept,
             dcterms:creator "The J. Paul Getty Trust" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Textile made from silk fiber, which is a fiber derived from the cocoon of the silkworm moth." ] ;
+            rdf:value "A fine, lustrous, natural fiber obtained from the catepillar cocoons of silk moths, such as the domesticated Bombyx mori. Silkworm silk is composed of a heavy and light chain of core proteins called fibroins, which are coated by sericin, a collection of sticky, glue-like proteins. Microscopically, raw silk appears as two strands that are held together with sericin protein." ] ;
     skos:prefLabel "silk" .
 
 coco:CC00243 a cms:Concept,
@@ -2090,6 +2118,26 @@ coco:CC00246 a cms:Work ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Refers to a woven textile characterized by parallel diagonal ridges or ribs, produced by passing the weft threads over one and under two or more threads of the warp, instead of over and under in regular succession, as in plain weaving. Regular twill features a diagonal line that is repeated regularly, usually running from the left to right at a 45-degree angle and upward. The weave may be varied in several ways, including changing the angle or direction of the twill line, as exemplified in herringbone twill." ] ;
     dcterms:title "twill weave" .
+
+coco:CC00250 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:fiber>,
+        <urn:costumeCore:ontology:featureRange:material> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Textile made from the animal hair wool. (AAT)" ] ;
+    dcterms:title "wool" ;
+    cms:collection coco:fiber,
+        coco:material ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Textile made from the animal hair wool. (AAT)" ] ;
+    skos:prefLabel "wool" .
 
 coco:CC00251 a cms:Concept,
         cms:Work,
@@ -2425,24 +2473,6 @@ coco:CC00275 a cms:Concept,
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Plain-woven textile, originally of silk, now made also of wool, cotton, and synthetic fibers, characterized by slight, flat ribs in the weft; used, for example, for women's suits and dresses, hats, trimmings, and interior furnishings." ] ;
     skos:prefLabel "faille" .
-
-coco:CC00277 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Patterns of or pertaining to flowers." ] ;
-    dcterms:title "floral patterns" ;
-    cms:collection coco:pattern ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Patterns of or pertaining to flowers." ] ;
-    skos:prefLabel "floral patterns" .
 
 coco:CC00278 a cms:Concept,
         cms:Work,
@@ -2860,24 +2890,6 @@ coco:CC00299 a cms:Concept,
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Long bast fibers obtained from the leaves of the species Ananas comosus, native to tropical America. The fibers are fine, soft, lustrous, and light cream in color. They are resistant to salt water, strong, wear resistant, and easy to clean; used for fabric, rope, twine, and paper." ] ;
     skos:prefLabel "pineapple fiber" .
-
-coco:CC00300 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "The characteristic pattern known from plaid textiles, consisting of bars or stripes of various colors crossing each other at right angles over a contrasting background color, whether or not the pattern exists on a textile or another material. Plaid patterns were known from ancient times in many cultures." ] ;
-    dcterms:title "plaid (pattern)" ;
-    cms:collection coco:pattern ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "The characteristic pattern known from plaid textiles, consisting of bars or stripes of various colors crossing each other at right angles over a contrasting background color, whether or not the pattern exists on a textile or another material. Plaid patterns were known from ancient times in many cultures." ] ;
-    skos:prefLabel "plaid (pattern)" .
 
 coco:CC00301 a cms:Work ;
     dcterms:description [ a cms:Text ;
@@ -4291,24 +4303,66 @@ coco:CC00415 a cms:Concept,
         cms:Work,
         skos:Concept,
         <urn:costumeCore:ontology:featureRange:condition> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "Museum of Applied Arts & Sciences and contributors" ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC-NC/1.0/> ;
+            rdf:value """wear, damage, brittleness, stains, large
+losses. Handle as little as possible. Dress should
+not be placed on a mannequin for photography or
+display. """ ] ;
     dcterms:title "poor" ;
     cms:collection coco:condition ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "Museum of Applied Arts & Sciences and contributors" ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC-NC/1.0/> ;
+            rdf:value """wear, damage, brittleness, stains, large
+losses. Handle as little as possible. Dress should
+not be placed on a mannequin for photography or
+display. """ ] ;
     skos:prefLabel "poor" .
 
 coco:CC00416 a cms:Concept,
         cms:Work,
         skos:Concept,
         <urn:costumeCore:ontology:featureRange:condition> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "Museum of Applied Arts & Sciences and contributors" ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC-NC/1.0/> ;
+            rdf:value """minor damage, some losses or deterioration.
+Handle with extra caution. Dress can be placed on a
+mannequin for photography or display for a short
+period of time""" ] ;
     dcterms:title "fair" ;
     cms:collection coco:condition ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "Museum of Applied Arts & Sciences and contributors" ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC-NC/1.0/> ;
+            rdf:value """minor damage, some losses or deterioration.
+Handle with extra caution. Dress can be placed on a
+mannequin for photography or display for a short
+period of time""" ] ;
     skos:prefLabel "fair" .
 
 coco:CC00417 a cms:Concept,
         cms:Work,
         skos:Concept,
         <urn:costumeCore:ontology:featureRange:condition> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "Museum of Applied Arts & Sciences and contributors" ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC-NC/1.0/> ;
+            rdf:value """some signs of wear but physically sound.
+Minor physical damage such as staining, surface
+dirt. Dress can be placed on a mannequin for
+photography and display""" ] ;
     dcterms:title "good" ;
     cms:collection coco:condition ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "Museum of Applied Arts & Sciences and contributors" ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC-NC/1.0/> ;
+            rdf:value """some signs of wear but physically sound.
+Minor physical damage such as staining, surface
+dirt. Dress can be placed on a mannequin for
+photography and display""" ] ;
     skos:prefLabel "good" .
 
 coco:CC00418 a cms:Concept,
@@ -4323,8 +4377,16 @@ coco:CC00419 a cms:Concept,
         cms:Work,
         skos:Concept,
         <urn:costumeCore:ontology:featureRange:condition> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "Museum of Applied Arts & Sciences and contributors" ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC-NC/1.0/> ;
+            rdf:value "as new condition, with little or no sign of use" ] ;
     dcterms:title "excellent" ;
     cms:collection coco:condition ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "Museum of Applied Arts & Sciences and contributors" ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC-NC/1.0/> ;
+            rdf:value "as new condition, with little or no sign of use" ] ;
     skos:prefLabel "excellent" .
 
 coco:CC00420 a cms:Concept,
@@ -4657,38 +4719,6 @@ coco:CC00452 a cms:Concept,
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Vestments resembling dalmatics worn by subdeacons over the alb (and also by bishops between the alb and dalmatic) at celebrations of the Eucharist." ] ;
     skos:prefLabel "tunicles" .
-
-coco:CC00453 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:title "diamonds (motifs)" ;
-    cms:collection coco:pattern ;
-    skos:prefLabel "diamonds (motifs)" .
-
-coco:CC00454 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:title "stripes" ;
-    cms:collection coco:pattern ;
-    skos:prefLabel "stripes" .
-
-coco:CC00455 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:title "stars (motifs)" ;
-    cms:collection coco:pattern ;
-    skos:prefLabel "stars (motifs)" .
-
-coco:CC00456 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:title "shells (motifs)" ;
-    cms:collection coco:pattern ;
-    skos:prefLabel "shells (motifs)" .
 
 coco:CC00457 a cms:Concept,
         cms:Work,
@@ -5109,54 +5139,6 @@ coco:CC00488 a cms:Work ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "The Materials hierarchy contains terms for a broad range of substances, from natural and synthetic raw materials to material products. Material products are included here rather than in the Objects facet because they can be used in the construction of various objects (e.g., \"plank\" for floors or walls), and because they are not necessary constituent parts of objects (e.g., \"shingle\" is not essential to roofs in the same way as roof ridges or eaves). Relation to Other Hierarchies: Terms denoting activities performed on or with materials are found in the Processes and Techniques hierarchy (e.g., \"glassworking\"). Terms for generic object types are found in the Object Genres hierarchy (e.g., \"artifacts (object genres),\" \"images (object genres)\"), while terms for materials themselves are found here (e.g., \"metal,\" \"textile\"). Terms for tools used in the creation of images (e.g., \"charcoal sticks,\" \"pens\") are in the Tools and Equipment hierarchy, while terms for the materials of which they are made or which they use are found here (e.g., \"charcoal,\" \"ink\")." ] ;
     dcterms:title "Materials" .
-
-coco:CC00489 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:neckline> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "Wikidata contributors" ;
-            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
-            rdf:value "wide, shallowly-curved neckline" ] ;
-    dcterms:title "ballerina neckline" ;
-    cms:collection coco:neckline ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "Wikidata contributors" ;
-            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
-            rdf:value "wide, shallowly-curved neckline" ] ;
-    skos:prefLabel "ballerina neckline" .
-
-coco:CC00490 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:neckline> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "Wikidata contributors" ;
-            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
-            rdf:value "a low neckline on a woman's dress, especially one that reveals or emphasizes her cleavage" ] ;
-    dcterms:title "décolletage" ;
-    cms:collection coco:neckline ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "Wikidata contributors" ;
-            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
-            rdf:value "a low neckline on a woman's dress, especially one that reveals or emphasizes her cleavage" ] ;
-    skos:prefLabel "décolletage" .
-
-coco:CC00491 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:neckline> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "Wikidata contributors" ;
-            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
-            rdf:value "V-shaped neckline resulting from overlapping left and right sides of a wrapped garment" ] ;
-    dcterms:title "surplice neckline" ;
-    cms:collection coco:neckline ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "Wikidata contributors" ;
-            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
-            rdf:value "V-shaped neckline resulting from overlapping left and right sides of a wrapped garment" ] ;
-    skos:prefLabel "surplice neckline" .
 
 coco:CC00492 a cms:Concept,
         cms:Work,
@@ -6484,184 +6466,6 @@ coco:CC00583 a cms:Concept,
             rdf:value "The dress of an actor or actress who is representing a character on stage or in film, or of any other person who is playing a role or impersonating a character, as during Carnevale or Halloween." ] ;
     skos:prefLabel "costume" .
 
-coco:CC00584 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Patterns having a watered or rippled look. To refer to the optical illusion of movement caused by intersecting lines, use \"moiré effect.\"" ] ;
-    dcterms:title "moiré" ;
-    cms:collection coco:pattern ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Patterns having a watered or rippled look. To refer to the optical illusion of movement caused by intersecting lines, use \"moiré effect.\"" ] ;
-    skos:prefLabel "moiré" .
-
-coco:CC00585 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "General term for motifs consisting of a spirally wound band. For simple motifs of coiled lines, use \"spirals\"; for scroll-shaped architectural elements use other terms, such as \"consoles\" and \"volutes\"; for a series of scrolls, in running or allover patterns, use \"scrollwork.\"" ] ;
-    dcterms:title "scroll" ;
-    cms:collection coco:pattern ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "General term for motifs consisting of a spirally wound band. For simple motifs of coiled lines, use \"spirals\"; for scroll-shaped architectural elements use other terms, such as \"consoles\" and \"volutes\"; for a series of scrolls, in running or allover patterns, use \"scrollwork.\"" ] ;
-    skos:prefLabel "scroll" .
-
-coco:CC00586 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Motif derived from the the boteh, copied from Kashmiri shawls by the woollen manufacturers of Paisley, Scotland in the 19th century, and becoming popular in Britain, France, and North America. It occurs in many variations and with numerous ancillary motifs, particularly in textile patterns." ] ;
-    dcterms:title "paisley" ;
-    cms:collection coco:pattern ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Motif derived from the the boteh, copied from Kashmiri shawls by the woollen manufacturers of Paisley, Scotland in the 19th century, and becoming popular in Britain, France, and North America. It occurs in many variations and with numerous ancillary motifs, particularly in textile patterns." ] ;
-    skos:prefLabel "paisley" .
-
-coco:CC00587 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Simple geometric forms composed of Vs used singly, in a vertical series, or in a string to form a zigzag." ] ;
-    dcterms:title "chevron" ;
-    cms:collection coco:pattern ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Simple geometric forms composed of Vs used singly, in a vertical series, or in a string to form a zigzag." ] ;
-    skos:prefLabel "chevron" .
-
-coco:CC00588 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "An irregular check pattern, most commonly appearing in woven fabric." ] ;
-    dcterms:title "houndstooth" ;
-    cms:collection coco:pattern ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "An irregular check pattern, most commonly appearing in woven fabric." ] ;
-    skos:prefLabel "houndstooth" .
-
-coco:CC00589 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "Wikidata contributors" ;
-            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
-            rdf:value "pattern of intersecting vertical and horizontal lines" ] ;
-    dcterms:title "check" ;
-    cms:collection coco:pattern ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "Wikidata contributors" ;
-            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
-            rdf:value "pattern of intersecting vertical and horizontal lines" ] ;
-    skos:prefLabel "check" .
-
-coco:CC00590 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Round dots of uniform size repeated at regular intervals so as to form a pattern, usually designated as a pattern for fabric, or otherwise applied to planographic surfaces." ] ;
-    dcterms:title "polka dots" ;
-    cms:collection coco:pattern ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Round dots of uniform size repeated at regular intervals so as to form a pattern, usually designated as a pattern for fabric, or otherwise applied to planographic surfaces." ] ;
-    skos:prefLabel "polka dots" .
-
-coco:CC00591 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Technique of resist dyeing in which hanks of thread are bound and dyed before being woven into fabric." ] ;
-    dcterms:title "ikat" ;
-    cms:collection coco:pattern ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Technique of resist dyeing in which hanks of thread are bound and dyed before being woven into fabric." ] ;
-    skos:prefLabel "ikat" .
-
-coco:CC00592 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "The technique of disguising the appearance of beings or things so as to make them blend into their surroundings." ] ;
-    dcterms:title "camouflage" ;
-    cms:collection coco:pattern ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "The technique of disguising the appearance of beings or things so as to make them blend into their surroundings." ] ;
-    skos:prefLabel "camouflage" .
-
-coco:CC00593 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "A print made to resemble the pattern of the skin and fur of an animal such as a leopard, cheetah, jaguar, zebra, tiger, giraffe, or snake." ] ;
-    dcterms:title "animal print" ;
-    cms:collection coco:pattern ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "A print made to resemble the pattern of the skin and fur of an animal such as a leopard, cheetah, jaguar, zebra, tiger, giraffe, or snake." ] ;
-    skos:prefLabel "animal print" .
-
 coco:CC00594 a cms:Concept,
         cms:Work,
         skos:Concept,
@@ -6681,42 +6485,6 @@ coco:CC00594 a cms:Concept,
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Wool textile with a rough, homespun surface effect." ] ;
     skos:prefLabel "tweed" .
-
-coco:CC00595 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Design elements with geometrical themes." ] ;
-    dcterms:title "geometric" ;
-    cms:collection coco:pattern ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Design elements with geometrical themes." ] ;
-    skos:prefLabel "geometric" .
-
-coco:CC00596 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:pattern> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "A lozenge twill with a small weave unit which has an interlacing forming a spot in the center of each lozenge." ] ;
-    dcterms:title "bird's-eye twill" ;
-    cms:collection coco:pattern ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "A lozenge twill with a small weave unit which has an interlacing forming a spot in the center of each lozenge." ] ;
-    skos:prefLabel "bird's-eye twill" .
 
 coco:CC00597 a cms:Concept,
         cms:Work,
@@ -7225,6 +6993,7 @@ This may incorporate details checked off on a separate worksheet.""" ] ;
 coco:costOriginal a cms:Property ;
     rdfs:label "Cost Original" ;
     cms:propertyOrder 58 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -7243,6 +7012,7 @@ coco:dimensionsOther a cms:Property ;
 coco:exhibitions a cms:Property ;
     rdfs:label "Exhibitions" ;
     cms:propertyOrder 60 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -7300,6 +7070,7 @@ Include MLA style parenthetical citations to references listed in References fie
 coco:size a cms:Property ;
     rdfs:label "Size" ;
     cms:propertyOrder 28 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -7345,6 +7116,7 @@ coco:waistIn a cms:Property ;
 
 coco:wornBy a cms:Property ;
     rdfs:label "Worn by" ;
+    cms:propertyFilterable true ;
     cms:propertyOrder 45 ;
     cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
@@ -7359,6 +7131,7 @@ coco:classification a cms:Collection,
     dcterms:title "Classification" ;
     cms:propertyFilterable true ;
     cms:propertyOrder 59 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -7846,15 +7619,13 @@ coco:classification a cms:Collection,
     foaf:depicts coco:CC00015 .
 
 <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00016:CC00016.jpg:fullSize> a cms:Image ;
-    dcterms:creator "Wikimedia user At~A~Glance" ;
-    dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:creator "Stevage" ;
     cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00016.jpg" ;
     foaf:depicts coco:CC00016 ;
     foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00016:CC00016.jpg:thumbnail> .
 
 <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00016:CC00016.jpg:thumbnail> a cms:Image ;
-    dcterms:creator "Wikimedia user At~A~Glance" ;
-    dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
+    dcterms:creator "Stevage" ;
     cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00016.jpg" ;
     cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00016:CC00016.jpg:fullSize> ;
     exif:height 200 ;
@@ -7893,16 +7664,28 @@ coco:classification a cms:Collection,
     exif:width 200 ;
     foaf:depicts coco:CC00020 .
 
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00021:CC00021.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Arkirkland" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00021.jpg" ;
+    foaf:depicts coco:CC00021 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00021:CC00021.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00021:CC00021.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Arkirkland" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00021.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00021:CC00021.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00021 .
+
 <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00023:CC00023.jpg:fullSize> a cms:Image ;
-    dcterms:creator "Unknown, but Item is held by John Oxley Library, State Library of Queensland" ;
-    dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+    dcterms:creator "Arkirkland" ;
     cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00023.jpg" ;
     foaf:depicts coco:CC00023 ;
     foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00023:CC00023.jpg:thumbnail> .
 
 <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00023:CC00023.jpg:thumbnail> a cms:Image ;
-    dcterms:creator "Unknown, but Item is held by John Oxley Library, State Library of Queensland" ;
-    dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+    dcterms:creator "Arkirkland" ;
     cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00023.jpg" ;
     cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00023:CC00023.jpg:fullSize> ;
     exif:height 200 ;
@@ -7940,6 +7723,20 @@ coco:classification a cms:Collection,
     exif:height 200 ;
     exif:width 200 ;
     foaf:depicts coco:CC00025 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00026:CC00026.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Kelson" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00026.jpg" ;
+    foaf:depicts coco:CC00026 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00026:CC00026.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00026:CC00026.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Kelson" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00026.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00026:CC00026.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00026 .
 
 <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00027:CC00027.jpg:fullSize> a cms:Image ;
     dcterms:creator "David Ring for MoMu - Fashion Museum Antwerp" ;
@@ -7988,6 +7785,34 @@ coco:classification a cms:Collection,
     exif:height 200 ;
     exif:width 200 ;
     foaf:depicts coco:CC00029 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00034:CC00034.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Arkirkland" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00034.jpg" ;
+    foaf:depicts coco:CC00034 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00034:CC00034.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00034:CC00034.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Arkirkland" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00034.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00034:CC00034.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00034 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00035:CC00035.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Arkirkland" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00035.jpg" ;
+    foaf:depicts coco:CC00035 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00035:CC00035.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00035:CC00035.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Arkirkland" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00035.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00035:CC00035.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00035 .
 
 <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00036:CC00036.jpg:fullSize> a cms:Image ;
     dcterms:creator "David Ring for MoMu - Fashion Museum Antwerp" ;
@@ -8723,22 +8548,6 @@ coco:classification a cms:Collection,
     exif:width 200 ;
     foaf:depicts coco:CC00169 .
 
-<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00170:CC00170.jpg:fullSize> a cms:Image ;
-    dcterms:creator "Joan Rocaguinard" ;
-    dcterms:license <http://creativecommons.org/licenses/by-sa/3.0/> ;
-    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00170.jpg" ;
-    foaf:depicts coco:CC00170 ;
-    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00170:CC00170.jpg:thumbnail> .
-
-<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00170:CC00170.jpg:thumbnail> a cms:Image ;
-    dcterms:creator "Joan Rocaguinard" ;
-    dcterms:license <http://creativecommons.org/licenses/by-sa/3.0/> ;
-    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00170.jpg" ;
-    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00170:CC00170.jpg:fullSize> ;
-    exif:height 200 ;
-    exif:width 200 ;
-    foaf:depicts coco:CC00170 .
-
 <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00171:CC00171.jpg:fullSize> a cms:Image ;
     dcterms:creator "Wikimedia User: Sophus Bie" ;
     dcterms:license <http://creativecommons.org/licenses/by-sa/3.0/> ;
@@ -8883,22 +8692,6 @@ coco:classification a cms:Collection,
     exif:width 200 ;
     foaf:depicts coco:CC00194 .
 
-<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00197:CC00197.jpg:fullSize> a cms:Image ;
-    dcterms:creator "Wikipedia Users Oldhaus and Devvyn" ;
-    dcterms:license <http://creativecommons.org/licenses/by-sa/3.0/> ;
-    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00197.jpg" ;
-    foaf:depicts coco:CC00197 ;
-    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00197:CC00197.jpg:thumbnail> .
-
-<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00197:CC00197.jpg:thumbnail> a cms:Image ;
-    dcterms:creator "Wikipedia Users Oldhaus and Devvyn" ;
-    dcterms:license <http://creativecommons.org/licenses/by-sa/3.0/> ;
-    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00197.jpg" ;
-    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00197:CC00197.jpg:fullSize> ;
-    exif:height 200 ;
-    exif:width 200 ;
-    foaf:depicts coco:CC00197 .
-
 <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00200:CC00200.jpg:fullSize> a cms:Image ;
     dcterms:creator "LACMA" ;
     dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -8914,22 +8707,6 @@ coco:classification a cms:Collection,
     exif:height 200 ;
     exif:width 200 ;
     foaf:depicts coco:CC00200 .
-
-<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00202:CC00202.jpg:fullSize> a cms:Image ;
-    dcterms:creator "Wikipedia User Adrianrowe" ;
-    dcterms:license <http://creativecommons.org/licenses/by-sa/4.0/> ;
-    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00202.jpg" ;
-    foaf:depicts coco:CC00202 ;
-    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00202:CC00202.jpg:thumbnail> .
-
-<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00202:CC00202.jpg:thumbnail> a cms:Image ;
-    dcterms:creator "Wikipedia User Adrianrowe" ;
-    dcterms:license <http://creativecommons.org/licenses/by-sa/4.0/> ;
-    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00202.jpg" ;
-    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00202:CC00202.jpg:fullSize> ;
-    exif:height 200 ;
-    exif:width 200 ;
-    foaf:depicts coco:CC00202 .
 
 <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00203:CC00203.jpg:fullSize> a cms:Image ;
     dcterms:creator "Gerald R. Ford Presidential Library and Museum" ;
@@ -9235,22 +9012,6 @@ coco:classification a cms:Collection,
     exif:width 200 ;
     foaf:depicts coco:CC00249 .
 
-<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00250:CC00250.jpg:fullSize> a cms:Image ;
-    dcterms:creator "Wikipedia User Charles Esson" ;
-    dcterms:license <http://creativecommons.org/licenses/by-sa/3.0/> ;
-    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00250.jpg" ;
-    foaf:depicts coco:CC00250 ;
-    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00250:CC00250.jpg:thumbnail> .
-
-<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00250:CC00250.jpg:thumbnail> a cms:Image ;
-    dcterms:creator "Wikipedia User Charles Esson" ;
-    dcterms:license <http://creativecommons.org/licenses/by-sa/3.0/> ;
-    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00250.jpg" ;
-    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00250:CC00250.jpg:fullSize> ;
-    exif:height 200 ;
-    exif:width 200 ;
-    foaf:depicts coco:CC00250 .
-
 <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00256:CC00256.jpg:fullSize> a cms:Image ;
     dcterms:creator "David Ring for MoMu - Fashion Museum Antwerp" ;
     dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
@@ -9330,6 +9091,34 @@ coco:classification a cms:Collection,
     exif:height 200 ;
     exif:width 200 ;
     foaf:depicts coco:CC00276 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00277:CC00277.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Fæ" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00277.jpg" ;
+    foaf:depicts coco:CC00277 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00277:CC00277.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00277:CC00277.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Fæ" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00277.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00277:CC00277.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00277 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00300:CC00300.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Hsq7278" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00300.jpg" ;
+    foaf:depicts coco:CC00300 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00300:CC00300.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00300:CC00300.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Hsq7278" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00300.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00300:CC00300.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00300 .
 
 <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00307:CC00307.jpg:fullSize> a cms:Image ;
     dcterms:creator "Auckland Museum" ;
@@ -9523,6 +9312,104 @@ coco:classification a cms:Collection,
     exif:width 200 ;
     foaf:depicts coco:CC00428 .
 
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00453:CC00453.jpg:fullSize> a cms:Image ;
+    dcterms:creator "FDRMRZUSA" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00453.jpg" ;
+    foaf:depicts coco:CC00453 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00453:CC00453.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00453:CC00453.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "FDRMRZUSA" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00453.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00453:CC00453.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00453 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00454:CC00454.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Mattes" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00454.jpg" ;
+    foaf:depicts coco:CC00454 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00454:CC00454.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00454:CC00454.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Mattes" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00454.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00454:CC00454.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00454 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00455:CC00455.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Pharos" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00455.jpg" ;
+    foaf:depicts coco:CC00455 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00455:CC00455.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00455:CC00455.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Pharos" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00455.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00455:CC00455.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00455 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00456:CC00456.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Fæ" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00456.jpg" ;
+    foaf:depicts coco:CC00456 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00456:CC00456.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00456:CC00456.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Fæ" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00456.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00456:CC00456.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00456 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00489:CC00489.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Arkirkland" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00489.jpg" ;
+    foaf:depicts coco:CC00489 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00489:CC00489.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00489:CC00489.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Arkirkland" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00489.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00489:CC00489.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00489 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00490:CC00490.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Vanalman" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00490.jpg" ;
+    foaf:depicts coco:CC00490 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00490:CC00490.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00490:CC00490.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Vanalman" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00490.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00490:CC00490.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00490 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00491:CC00491.jpg:fullSize> a cms:Image ;
+    dcterms:creator "TobiasMoMu" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00491.jpg" ;
+    foaf:depicts coco:CC00491 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00491:CC00491.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00491:CC00491.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "TobiasMoMu" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00491.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00491:CC00491.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00491 .
+
 <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00515:CC00515.jpg:fullSize> a cms:Image ;
     dcterms:creator "Wikipedia user Shani Evenstein (שני אבנשטיין)" ;
     dcterms:license <http://creativecommons.org/licenses/by-sa/4.0/> ;
@@ -9554,6 +9441,174 @@ coco:classification a cms:Collection,
     exif:height 200 ;
     exif:width 200 ;
     foaf:depicts coco:CC00525 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00584:CC00584.jpg:fullSize> a cms:Image ;
+    dcterms:creator "PKM" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00584.jpg" ;
+    foaf:depicts coco:CC00584 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00584:CC00584.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00584:CC00584.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "PKM" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00584.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00584:CC00584.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00584 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00585:CC00585.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Fæ" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00585.jpg" ;
+    foaf:depicts coco:CC00585 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00585:CC00585.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00585:CC00585.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Fæ" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00585.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00585:CC00585.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00585 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00586:CC00586.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Sialkgraph" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00586.jpg" ;
+    foaf:depicts coco:CC00586 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00586:CC00586.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00586:CC00586.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Sialkgraph" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00586.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00586:CC00586.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00586 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00587:CC00587.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Stolbovsky" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00587.jpg" ;
+    foaf:depicts coco:CC00587 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00587:CC00587.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00587:CC00587.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Stolbovsky" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00587.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00587:CC00587.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00587 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00588:CC00588.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Kotivalo" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00588.jpg" ;
+    foaf:depicts coco:CC00588 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00588:CC00588.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00588:CC00588.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Kotivalo" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00588.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00588:CC00588.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00588 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00589:CC00589.jpg:fullSize> a cms:Image ;
+    dcterms:creator "RokerHRO" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00589.jpg" ;
+    foaf:depicts coco:CC00589 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00589:CC00589.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00589:CC00589.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "RokerHRO" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00589.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00589:CC00589.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00589 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00590:CC00590.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Shyamal" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00590.jpg" ;
+    foaf:depicts coco:CC00590 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00590:CC00590.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00590:CC00590.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Shyamal" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00590.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00590:CC00590.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00590 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00591:CC00591.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Chiswick Chap" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00591.jpg" ;
+    foaf:depicts coco:CC00591 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00591:CC00591.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00591:CC00591.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Chiswick Chap" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00591.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00591:CC00591.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00591 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00592:CC00592.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Illegitimate Barrister" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00592.jpg" ;
+    foaf:depicts coco:CC00592 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00592:CC00592.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00592:CC00592.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Illegitimate Barrister" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00592.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00592:CC00592.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00592 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00593:CC00593.jpg:fullSize> a cms:Image ;
+    dcterms:creator "VikySmiles" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00593.jpg" ;
+    foaf:depicts coco:CC00593 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00593:CC00593.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00593:CC00593.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "VikySmiles" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00593.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00593:CC00593.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00593 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00595:CC00595.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Fæ" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00595.jpg" ;
+    foaf:depicts coco:CC00595 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00595:CC00595.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00595:CC00595.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Fæ" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00595.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00595:CC00595.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00595 .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00596:CC00596.jpg:fullSize> a cms:Image ;
+    dcterms:creator "PKM" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/CC00596.jpg" ;
+    foaf:depicts coco:CC00596 ;
+    foaf:thumbnail <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00596:CC00596.jpg:thumbnail> .
+
+<urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00596:CC00596.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "PKM" ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/CC00596.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00596:CC00596.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:CC00596 .
 
 <urn:costumeCore:image:featureValue:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FCC00606:CC00606.jpg:fullSize> a cms:Image ;
     dcterms:creator "David Ring for MoMu - Fashion Museum Antwerp" ;
@@ -9854,13 +9909,13 @@ coco:CC00015 a cms:Concept,
     dcterms:description [ a cms:Text ;
             dcterms:creator "Wikidata contributors" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
-            rdf:value "round neckline fitting close to the base of the neck, or a shiort or sweater with such a neckline" ] ;
+            rdf:value "round neckline fitting close to the base of the neck, or a shirt or sweater with such a neckline" ] ;
     dcterms:title "crew neck" ;
     cms:collection coco:neckline ;
     skos:definition [ a cms:Text ;
             dcterms:creator "Wikidata contributors" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
-            rdf:value "round neckline fitting close to the base of the neck, or a shiort or sweater with such a neckline" ] ;
+            rdf:value "round neckline fitting close to the base of the neck, or a shirt or sweater with such a neckline" ] ;
     skos:prefLabel "crew neck" .
 
 coco:CC00016 a cms:Concept,
@@ -9905,6 +9960,14 @@ coco:CC00020 a cms:Concept,
     cms:collection coco:neckline ;
     skos:prefLabel "keyhole neckline" .
 
+coco:CC00021 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:neckline> ;
+    dcterms:title "off-the-shoulder neckline" ;
+    cms:collection coco:neckline ;
+    skos:prefLabel "off-the-shoulder neckline" .
+
 coco:CC00023 a cms:Work ;
     dcterms:title "scoop neck" .
 
@@ -9931,6 +9994,14 @@ coco:CC00025 a cms:Concept,
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Upper edge of the garment is just above the bustline with nothing over the shoulders." ] ;
     skos:prefLabel "strapless" .
+
+coco:CC00026 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:neckline> ;
+    dcterms:title "sweetheart neckline" ;
+    cms:collection coco:neckline ;
+    skos:prefLabel "sweetheart neckline" .
 
 coco:CC00027 a cms:Concept,
         cms:Work,
@@ -9965,6 +10036,38 @@ coco:CC00029 a cms:Concept,
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Flat, stand-up collars, starched, wired, or otherwise stiffened, especially those commonly worn by men and women in the 17th century." ] ;
     skos:prefLabel "band collar" .
+
+coco:CC00034 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:neckline> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "Wikidata contributors" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "has fabric that drapes loosely around the neck, sometimes cut or knit in one with the torso, sometimes as an added a foldover collar" ] ;
+    dcterms:title "cowl neck" ;
+    cms:collection coco:neckline ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "Wikidata contributors" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "has fabric that drapes loosely around the neck, sometimes cut or knit in one with the torso, sometimes as an added a foldover collar" ] ;
+    skos:prefLabel "cowl neck" .
+
+coco:CC00035 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:neckline> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "Wikidata contributors" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "a neckline with fabric standing high and close to the neck, cut or knit in one piece with the torso rather than as an added collar" ] ;
+    dcterms:title "funnel neck" ;
+    cms:collection coco:neckline ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "Wikidata contributors" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "a neckline with fabric standing high and close to the neck, cut or knit in one piece with the torso rather than as an added collar" ] ;
+    skos:prefLabel "funnel neck" .
 
 coco:CC00036 a cms:Work ;
     dcterms:description [ a cms:Text ;
@@ -10687,24 +10790,6 @@ coco:CC00165 a cms:Work ;
 coco:CC00169 a cms:Work ;
     dcterms:title "flounced skirt" .
 
-coco:CC00170 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:hasTechnique> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Bunching folds of textile together by pulling on a thread stitched through it for this purpose or on one or more of its constituent filaments, to create fullness." ] ;
-    dcterms:title "gathering" ;
-    cms:collection coco:hasTechnique ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Bunching folds of textile together by pulling on a thread stitched through it for this purpose or on one or more of its constituent filaments, to create fullness." ] ;
-    skos:prefLabel "gathering" .
-
 coco:CC00171 a cms:Concept,
         cms:Work,
         skos:Concept,
@@ -10833,26 +10918,6 @@ coco:CC00194 a cms:Concept,
             rdf:value "Extended parts of a skirt, gown, or state robe that lie on the floor and trail behind the wearer, either separate or attached. (AAT)" ] ;
     skos:prefLabel "train" .
 
-coco:CC00197 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:fiber>,
-        <urn:costumeCore:ontology:featureRange:material> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "The long, fine hair from any breed of Angora rabbit. The white French rabbit is favored for its high-quality, soft hair. Angora dyes readily, but is difficult to spin because of its fine texture and it does not felt like common rabbit hair. It is usually mixed with sheep wool or other fibers for weaving." ] ;
-    dcterms:title "angora" ;
-    cms:collection coco:fiber,
-        coco:material ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "The long, fine hair from any breed of Angora rabbit. The white French rabbit is favored for its high-quality, soft hair. Angora dyes readily, but is difficult to spin because of its fine texture and it does not felt like common rabbit hair. It is usually mixed with sheep wool or other fibers for weaving." ] ;
-    skos:prefLabel "angora" .
-
 coco:CC00200 a cms:Concept,
         cms:Work,
         skos:Concept,
@@ -10872,26 +10937,6 @@ coco:CC00200 a cms:Concept,
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Textile produced by brocading, typically richly figured and incorporating metal thread. (AAT)" ] ;
     skos:prefLabel "brocade" .
-
-coco:CC00202 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:fiber>,
-        <urn:costumeCore:ontology:featureRange:material> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Yarn or fabric made from the fine, soft, light wool from the undercoat of the Kashmir goat." ] ;
-    dcterms:title "cashmere" ;
-    cms:collection coco:fiber,
-        coco:material ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Yarn or fabric made from the fine, soft, light wool from the undercoat of the Kashmir goat." ] ;
-    skos:prefLabel "cashmere" .
 
 coco:CC00203 a cms:Concept,
         cms:Work,
@@ -11249,26 +11294,6 @@ coco:CC00249 a cms:Concept,
             rdf:value "The principal tissue of trees and other plants that provides both strength and a means of conducting nutrients. Wood is one of the most versatile materials known." ] ;
     skos:prefLabel "wood" .
 
-coco:CC00250 a cms:Concept,
-        cms:Work,
-        skos:Concept,
-        <urn:costumeCore:ontology:featureRange:fiber>,
-        <urn:costumeCore:ontology:featureRange:material> ;
-    dcterms:description [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Textile made from the animal hair wool. (AAT)" ] ;
-    dcterms:title "wool" ;
-    cms:collection coco:fiber,
-        coco:material ;
-    skos:definition [ a cms:Text ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
-            rdf:value "Textile made from the animal hair wool. (AAT)" ] ;
-    skos:prefLabel "wool" .
-
 coco:CC00256 a cms:Concept,
         cms:Work,
         skos:Concept,
@@ -11360,6 +11385,42 @@ coco:CC00276 a cms:Concept,
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Material comprising stiff, lightweight, often colorful, keratin structures that are the principal covering of birds." ] ;
     skos:prefLabel "feathers" .
+
+coco:CC00277 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Patterns of or pertaining to flowers." ] ;
+    dcterms:title "floral patterns" ;
+    cms:collection coco:pattern ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Patterns of or pertaining to flowers." ] ;
+    skos:prefLabel "floral patterns" .
+
+coco:CC00300 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "The characteristic pattern known from plaid textiles, consisting of bars or stripes of various colors crossing each other at right angles over a contrasting background color, whether or not the pattern exists on a textile or another material. Plaid patterns were known from ancient times in many cultures." ] ;
+    dcterms:title "plaid (pattern)" ;
+    cms:collection coco:pattern ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "The characteristic pattern known from plaid textiles, consisting of bars or stripes of various colors crossing each other at right angles over a contrasting background color, whether or not the pattern exists on a textile or another material. Plaid patterns were known from ancient times in many cultures." ] ;
+    skos:prefLabel "plaid (pattern)" .
 
 coco:CC00307 a cms:Concept,
         cms:Work,
@@ -11569,6 +11630,86 @@ coco:CC00428 a cms:Concept,
             rdf:value "Close-fitting trousers that fit over footwear and strap under the sole, worn especially as part of a military uniform or for horseback riding. Use also for loose-fitting trousers worn over breeches or other bifurcated garments as protective wear by military personnel and others, especially during the 18th and 19th centuries." ] ;
     skos:prefLabel "overalls" .
 
+coco:CC00453 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:title "diamonds (motifs)" ;
+    cms:collection coco:pattern ;
+    skos:prefLabel "diamonds (motifs)" .
+
+coco:CC00454 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:title "stripes" ;
+    cms:collection coco:pattern ;
+    skos:prefLabel "stripes" .
+
+coco:CC00455 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:title "stars (motifs)" ;
+    cms:collection coco:pattern ;
+    skos:prefLabel "stars (motifs)" .
+
+coco:CC00456 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:title "shells (motifs)" ;
+    cms:collection coco:pattern ;
+    skos:prefLabel "shells (motifs)" .
+
+coco:CC00489 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:neckline> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "Wikidata contributors" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "wide, shallowly-curved neckline" ] ;
+    dcterms:title "ballerina neckline" ;
+    cms:collection coco:neckline ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "Wikidata contributors" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "wide, shallowly-curved neckline" ] ;
+    skos:prefLabel "ballerina neckline" .
+
+coco:CC00490 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:neckline> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "Wikidata contributors" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "a low neckline on a woman's dress, especially one that reveals or emphasizes her cleavage" ] ;
+    dcterms:title "décolletage" ;
+    cms:collection coco:neckline ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "Wikidata contributors" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "a low neckline on a woman's dress, especially one that reveals or emphasizes her cleavage" ] ;
+    skos:prefLabel "décolletage" .
+
+coco:CC00491 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:neckline> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "Wikidata contributors" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "V-shaped neckline resulting from overlapping left and right sides of a wrapped garment" ] ;
+    dcterms:title "surplice neckline" ;
+    cms:collection coco:neckline ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "Wikidata contributors" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "V-shaped neckline resulting from overlapping left and right sides of a wrapped garment" ] ;
+    skos:prefLabel "surplice neckline" .
+
 coco:CC00515 a cms:Concept,
         cms:Work,
         skos:Concept,
@@ -11604,6 +11745,220 @@ coco:CC00525 a cms:Concept,
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Exposed bifurcated garments extending from the waist or hip to any portion of the leg above the knee." ] ;
     skos:prefLabel "shorts" .
+
+coco:CC00584 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Patterns having a watered or rippled look. To refer to the optical illusion of movement caused by intersecting lines, use \"moiré effect.\"" ] ;
+    dcterms:title "moiré" ;
+    cms:collection coco:pattern ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Patterns having a watered or rippled look. To refer to the optical illusion of movement caused by intersecting lines, use \"moiré effect.\"" ] ;
+    skos:prefLabel "moiré" .
+
+coco:CC00585 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "General term for motifs consisting of a spirally wound band. For simple motifs of coiled lines, use \"spirals\"; for scroll-shaped architectural elements use other terms, such as \"consoles\" and \"volutes\"; for a series of scrolls, in running or allover patterns, use \"scrollwork.\"" ] ;
+    dcterms:title "scroll" ;
+    cms:collection coco:pattern ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "General term for motifs consisting of a spirally wound band. For simple motifs of coiled lines, use \"spirals\"; for scroll-shaped architectural elements use other terms, such as \"consoles\" and \"volutes\"; for a series of scrolls, in running or allover patterns, use \"scrollwork.\"" ] ;
+    skos:prefLabel "scroll" .
+
+coco:CC00586 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Motif derived from the the boteh, copied from Kashmiri shawls by the woollen manufacturers of Paisley, Scotland in the 19th century, and becoming popular in Britain, France, and North America. It occurs in many variations and with numerous ancillary motifs, particularly in textile patterns." ] ;
+    dcterms:title "paisley" ;
+    cms:collection coco:pattern ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Motif derived from the the boteh, copied from Kashmiri shawls by the woollen manufacturers of Paisley, Scotland in the 19th century, and becoming popular in Britain, France, and North America. It occurs in many variations and with numerous ancillary motifs, particularly in textile patterns." ] ;
+    skos:prefLabel "paisley" .
+
+coco:CC00587 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Simple geometric forms composed of Vs used singly, in a vertical series, or in a string to form a zigzag." ] ;
+    dcterms:title "chevron" ;
+    cms:collection coco:pattern ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Simple geometric forms composed of Vs used singly, in a vertical series, or in a string to form a zigzag." ] ;
+    skos:prefLabel "chevron" .
+
+coco:CC00588 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "An irregular check pattern, most commonly appearing in woven fabric." ] ;
+    dcterms:title "houndstooth" ;
+    cms:collection coco:pattern ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "An irregular check pattern, most commonly appearing in woven fabric." ] ;
+    skos:prefLabel "houndstooth" .
+
+coco:CC00589 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "Wikidata contributors" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "pattern of intersecting vertical and horizontal lines" ] ;
+    dcterms:title "check" ;
+    cms:collection coco:pattern ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "Wikidata contributors" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "pattern of intersecting vertical and horizontal lines" ] ;
+    skos:prefLabel "check" .
+
+coco:CC00590 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Round dots of uniform size repeated at regular intervals so as to form a pattern, usually designated as a pattern for fabric, or otherwise applied to planographic surfaces." ] ;
+    dcterms:title "polka dots" ;
+    cms:collection coco:pattern ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Round dots of uniform size repeated at regular intervals so as to form a pattern, usually designated as a pattern for fabric, or otherwise applied to planographic surfaces." ] ;
+    skos:prefLabel "polka dots" .
+
+coco:CC00591 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Technique of resist dyeing in which hanks of thread are bound and dyed before being woven into fabric." ] ;
+    dcterms:title "ikat" ;
+    cms:collection coco:pattern ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Technique of resist dyeing in which hanks of thread are bound and dyed before being woven into fabric." ] ;
+    skos:prefLabel "ikat" .
+
+coco:CC00592 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "The technique of disguising the appearance of beings or things so as to make them blend into their surroundings." ] ;
+    dcterms:title "camouflage" ;
+    cms:collection coco:pattern ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "The technique of disguising the appearance of beings or things so as to make them blend into their surroundings." ] ;
+    skos:prefLabel "camouflage" .
+
+coco:CC00593 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "A print made to resemble the pattern of the skin and fur of an animal such as a leopard, cheetah, jaguar, zebra, tiger, giraffe, or snake." ] ;
+    dcterms:title "animal print" ;
+    cms:collection coco:pattern ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "A print made to resemble the pattern of the skin and fur of an animal such as a leopard, cheetah, jaguar, zebra, tiger, giraffe, or snake." ] ;
+    skos:prefLabel "animal print" .
+
+coco:CC00595 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Design elements with geometrical themes." ] ;
+    dcterms:title "geometric" ;
+    cms:collection coco:pattern ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Design elements with geometrical themes." ] ;
+    skos:prefLabel "geometric" .
+
+coco:CC00596 a cms:Concept,
+        cms:Work,
+        skos:Concept,
+        <urn:costumeCore:ontology:featureRange:pattern> ;
+    dcterms:description [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "A lozenge twill with a small weave unit which has an interlacing forming a spot in the center of each lozenge." ] ;
+    dcterms:title "bird's-eye twill" ;
+    cms:collection coco:pattern ;
+    skos:definition [ a cms:Text ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "A lozenge twill with a small weave unit which has an interlacing forming a spot in the center of each lozenge." ] ;
+    skos:prefLabel "bird's-eye twill" .
 
 coco:CC00606 a cms:Concept,
         cms:Work,
@@ -11721,12 +12076,29 @@ coco:socioEconomicClass a cms:Collection,
     dcterms:title "Socio Economic Class" ;
     cms:propertyFilterable true ;
     cms:propertyOrder 57 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Each term that indicates the socioeconomic class of the person(s) who wore the object. This can have multiple values to show that the object was passed up or down through different classes." ] ;
     rdfs:range <urn:costumeCore:ontology:featureRange:socioEconomicClass> .
+
+<http://creativecommons.org/licenses/by/4.0/> a cc:License,
+        cms:License ;
+    cc:legalcode <http://creativecommons.org/licenses/by/4.0/legalcode> ;
+    cc:licenseClass <http://creativecommons.org/license/> ;
+    cc:permits cc:DerivativeWorks,
+        cc:Distribution,
+        cc:Reproduction ;
+    cc:requires cc:Attribution,
+        cc:Notice ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by" ;
+    dc:title "Attribution 4.0 International"@en ;
+    dcterms:hasVersion "4.0" ;
+    foaf:logo <http://i.creativecommons.org/l/by/4.0/80x15.png>,
+        <http://i.creativecommons.org/l/by/4.0/88x31.png> .
 
 coco:sleeveLength a cms:Collection,
         cms:Property ;
@@ -11738,6 +12110,7 @@ coco:sleeveLength a cms:Collection,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 22 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -11756,6 +12129,7 @@ coco:closurePlacement a cms:Collection,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 18 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -11780,6 +12154,7 @@ coco:gender a cms:Collection,
     dcterms:title "Gender" ;
     cms:propertyFilterable true ;
     cms:propertyOrder 55 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
@@ -11787,21 +12162,19 @@ coco:gender a cms:Collection,
             rdf:value "The gender for which the object was originally intended." ] ;
     rdfs:range <urn:costumeCore:ontology:featureRange:gender> .
 
-<http://creativecommons.org/licenses/by/4.0/> a cc:License,
-        cms:License ;
-    cc:legalcode <http://creativecommons.org/licenses/by/4.0/legalcode> ;
-    cc:licenseClass <http://creativecommons.org/license/> ;
-    cc:permits cc:DerivativeWorks,
-        cc:Distribution,
-        cc:Reproduction ;
-    cc:requires cc:Attribution,
-        cc:Notice ;
-    dc:creator <http://creativecommons.org> ;
-    dc:identifier "by" ;
-    dc:title "Attribution 4.0 International"@en ;
-    dcterms:hasVersion "4.0" ;
-    foaf:logo <http://i.creativecommons.org/l/by/4.0/80x15.png>,
-        <http://i.creativecommons.org/l/by/4.0/88x31.png> .
+<http://rightsstatements.org/vocab/InC-NC/1.0/> a cms:RightsStatement ;
+    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright but that non-commercial use is allowed without the need to obtain additional permission."@en ;
+    dcterms:identifier "InC-NC" ;
+    skos:definition """This Item is protected by copyright and/or related rights.
+
+  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use. In addition, no permission is required from the rights-holder(s) for non-commercial uses.
+
+  For other uses you need to obtain permission from the rights-holder(s)."""@en ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use."@en,
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available."@en,
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material."@en ;
+    skos:prefLabel "In Copyright - Non-Commercial Use Permitted"@en ;
+    skos:scopeNote "This Rights Statement can be used only for copyrighted Items for which the organization making the Item available is the rights-holder or has been explicitly authorized by the rights-holder(s) to allow third parties to use their Work(s) for non-commercial purposes without obtaining permission first."@en .
 
 coco:lifeStages a cms:Collection,
         cms:Property ;
@@ -11809,6 +12182,7 @@ coco:lifeStages a cms:Collection,
     dcterms:title "Life Stages" ;
     cms:propertyFilterable true ;
     cms:propertyOrder 56 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -11844,6 +12218,7 @@ coco:length a cms:Collection,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 24 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -11862,6 +12237,7 @@ coco:waistline a cms:Collection,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 23 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -11878,6 +12254,7 @@ coco:collar a cms:Collection,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 20 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
@@ -11891,6 +12268,7 @@ coco:liturgicalType a cms:Collection,
     dcterms:title "Liturgical Type" ;
     cms:propertyFilterable true ;
     cms:propertyOrder 16 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -11903,6 +12281,7 @@ coco:type a cms:Collection,
     dcterms:title "Type" ;
     cms:propertyFilterable true ;
     cms:propertyOrder 71 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -11921,6 +12300,7 @@ coco:closure a cms:Collection,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 17 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
@@ -11934,6 +12314,7 @@ coco:rights a cms:Collection,
     dcterms:title "Rights" ;
     cms:propertyFilterable true ;
     cms:propertyOrder 69 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -11965,6 +12346,7 @@ coco:pantsType a cms:Collection,
     cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:pants> ;
     cms:propertyOrder 14 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -11983,6 +12365,7 @@ coco:trimming a cms:Collection,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 9 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
@@ -11996,6 +12379,7 @@ coco:function a cms:Collection,
     dcterms:title "Function" ;
     cms:propertyFilterable true ;
     cms:propertyOrder 54 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
@@ -12013,6 +12397,7 @@ coco:neckline a cms:Collection,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 19 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -12043,6 +12428,7 @@ coco:sleeveType a cms:Collection,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 21 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -12061,6 +12447,7 @@ coco:costumeComponents a cms:Collection,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 25 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
@@ -12076,6 +12463,7 @@ coco:skirtType a cms:Collection,
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:skirt> ;
     cms:propertyOrder 15 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -12110,6 +12498,7 @@ coco:dressType a cms:Collection,
     cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:dress> ;
     cms:propertyOrder 13 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
@@ -12129,6 +12518,7 @@ coco:pattern a cms:Collection,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 6 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
@@ -12142,6 +12532,7 @@ coco:icomType a cms:Collection,
     dcterms:title "ICOM Type" ;
     cms:propertyFilterable true ;
     cms:propertyOrder 72 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -12161,6 +12552,7 @@ coco:workType a cms:Collection,
     dcterms:title "Work Type" ;
     cms:propertyFilterable true ;
     cms:propertyOrder 3 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -12195,6 +12587,7 @@ coco:otherMaterials a cms:Collection,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 10 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -12213,6 +12606,7 @@ coco:colorMain a cms:Collection,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 4 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/licenses/by-sa/4.0/> ;
@@ -12232,6 +12626,7 @@ coco:colorSecondary a cms:Collection,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 5 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/licenses/by-sa/4.0/> ;
@@ -12251,12 +12646,30 @@ coco:fiber a cms:Collection,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 7 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Each term for the type of fiber used in the materials of the object, distinguished from the textile type, trimmings, or other materials." ] ;
     rdfs:range <urn:costumeCore:ontology:featureRange:fiber> .
+
+<http://creativecommons.org/licenses/by-sa/3.0/> a cc:License,
+        cms:License ;
+    cc:legalcode <http://creativecommons.org/licenses/by-sa/3.0/legalcode> ;
+    cc:licenseClass <http://creativecommons.org/license/> ;
+    cc:permits cc:DerivativeWorks,
+        cc:Distribution,
+        cc:Reproduction ;
+    cc:requires cc:Attribution,
+        cc:Notice,
+        cc:ShareAlike ;
+    dc:creator <http://creativecommons.org> ;
+    dc:identifier "by-sa" ;
+    dc:title "Attribution-ShareAlike 3.0 Unported"@en ;
+    dcterms:hasVersion "3.0" ;
+    foaf:logo <http://i.creativecommons.org/l/by-sa/3.0/80x15.png>,
+        <http://i.creativecommons.org/l/by-sa/3.0/88x31.png> .
 
 coco:hasTechnique a cms:Collection,
         cms:Property ;
@@ -12270,6 +12683,7 @@ coco:hasTechnique a cms:Collection,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 12 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
@@ -12291,29 +12705,13 @@ coco:textileMaterials a cms:Collection,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
     cms:propertyOrder 8 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Each term for materials produced from component fibers, distinguished from the fibers, trimmings, or other materials." ] ;
     rdfs:range <urn:costumeCore:ontology:featureRange:textileMaterials> .
-
-<http://creativecommons.org/licenses/by-sa/3.0/> a cc:License,
-        cms:License ;
-    cc:legalcode <http://creativecommons.org/licenses/by-sa/3.0/legalcode> ;
-    cc:licenseClass <http://creativecommons.org/license/> ;
-    cc:permits cc:DerivativeWorks,
-        cc:Distribution,
-        cc:Reproduction ;
-    cc:requires cc:Attribution,
-        cc:Notice,
-        cc:ShareAlike ;
-    dc:creator <http://creativecommons.org> ;
-    dc:identifier "by-sa" ;
-    dc:title "Attribution-ShareAlike 3.0 Unported"@en ;
-    dcterms:hasVersion "3.0" ;
-    foaf:logo <http://i.creativecommons.org/l/by-sa/3.0/80x15.png>,
-        <http://i.creativecommons.org/l/by-sa/3.0/88x31.png> .
 
 <http://creativecommons.org/licenses/by-sa/4.0/> a cc:License,
         cms:License ;
@@ -12338,6 +12736,7 @@ coco:temporal a cms:Collection,
     dcterms:title "Style Period" ;
     cms:propertyFilterable true ;
     cms:propertyOrder 48 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
@@ -12352,6 +12751,7 @@ coco:material a cms:Collection,
     dcterms:title "Material" ;
     cms:propertyFilterable true ;
     cms:propertyOrder 11 ;
+    cms:propertySearchable true ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
