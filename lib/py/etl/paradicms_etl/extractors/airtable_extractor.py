@@ -29,7 +29,11 @@ class AirtableExtractor:
         :param base_id: Airtable base identifier
         :param tables: a list or a union of table [names] or a dict where the keys are table names and the values are API query parameters
         """
+        if not access_token:
+            raise ValueError("empty Airtable access token")
         self.__access_token = access_token
+        if not base_id:
+            raise ValueError("empty Airtable base id")
         self.__base_id = base_id
         self.__cache_dir_path = cache_dir_path
         self.__logger = logging.getLogger(__name__)
