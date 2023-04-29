@@ -43,10 +43,9 @@ class RdfFileLoader(BufferingLoader):
             model_resource = model.to_rdf(graph=model_graph)
             if model_resource.identifier in conjunctive_graph_context_identifiers:
                 self.__logger.warning(
-                    "duplicate model identifier %s, not adding to conjunctive graph",
+                    "duplicate model identifier %s",
                     model_resource.identifier,
                 )
-                continue
 
             # Use the model's BNode or URIRef as the graph identifier, too
             conjunctive_graph_context: Graph = conjunctive_graph.get_context(

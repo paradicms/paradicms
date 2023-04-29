@@ -7,9 +7,170 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vra: <http://purl.org/vra/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+dcterms:alternative a cms:Property ;
+    rdfs:label "Alternative Title" ;
+    cms:propertyOrder 43 ;
+    cms:propertySearchable true ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "Any additional titles by which the item is known, other than the preferred title, including nicknames or titles in other languages." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:alternative> .
+
+dcterms:creator a cms:Property ;
+    rdfs:label "Creator" ;
+    cms:propertyFilterable true ;
+    cms:propertyOrder 44 ;
+    rdfs:comment [ a cms:Text ;
+            rdf:value """Full name of each known designer, maker, manufacturer, etc. 
+
+Use the display form with first name first, not last name first.""" ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:creator> .
+
+dcterms:date a cms:Property ;
+    rdfs:label "Date" ;
+    cms:propertyOrder 51 ;
+    cms:propertySearchable true ;
+    rdfs:comment [ a cms:Text ;
+            rdf:value """If known, the year in which the item was created. Otherwise, a range of years that it could possibly have been created, from the earliest to latest. A more precise date can be entered if known, as YYYY-MM or YYYY-MM-DD. Uncertainty can be indicated in parentheses after the date or range of dates (for example, "(circa)").
+
+Follow ISO 8601 standards for initial numbers and follow with additional display terms.""" ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:date> .
+
+dcterms:description a cms:Property ;
+    rdfs:label "Description" ;
+    cms:propertyOrder 26 ;
+    cms:propertySearchable true ;
+    rdfs:comment [ a cms:Text ;
+            rdf:value """Use the details from each component section of the data entry process to construct the full description for display. 
+
+Start with one sentence that sums up the work type(s), colors, and important features. 
+
+Follow with a description of materials and notable techniques, separated by commas. 
+
+The next sentences list each component with an ID number or letter in parentheses, ex. "bodice (a)", with structural details separated by commas (in order from the top down, outside in). This is the place to describe where particular materials or techniques are located on the garment.
+
+Copy from Description Autofill if available (as values) and edit as needed.""" ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:description> .
+
+dcterms:extent a cms:Property ;
+    rdfs:label "Measurements Display" ;
+    cms:propertyOrder 38 ;
+    rdfs:comment [ a cms:Text ;
+            rdf:value """Use each separate measurement recorded in the data entry process to construct the full list of measurements for display.
+
+List all measurements of the item, separated by commas. Measurements should be in inches, to the nearest .25 inch. Describe the part being measured in parentheses.""" ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:extent> .
+
+dcterms:identifier a cms:Property ;
+    rdfs:label "Identifier" ;
+    cms:propertyOrder 1 ;
+    cms:propertySearchable true ;
+    rdfs:comment [ a cms:Text ;
+            rdf:value """A unique ID number for the item. This will often be formatted like VC1992124 (VC=repository, 1992 = year, 124 = serial number).
+
+No spaces or uncommon characters.""" ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:identifier> .
+
+dcterms:isReferencedBy a cms:Property ;
+    rdfs:label "References" ;
+    cms:propertyOrder 47 ;
+    rdfs:comment [ a cms:Text ;
+            rdf:value "References about this object, or about similar objects in texts or online, as either a full bibliographic citation (in MLA format) or a URL." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:isReferencedBy> .
+
+dcterms:relation a cms:Property ;
+    rdfs:label "Relation" ;
+    cms:propertyOrder 41 ;
+    rdfs:comment [ a cms:Text ;
+            rdf:value "Enter the identifier for any related items. For clothing artifacts this will be an ID# like VC1992124. For other relations, such as exhibitions, the identifier may take a different form, such as the title. See the identifier element in the item itself to check." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:relation> .
+
+dcterms:rightsHolder a cms:Property ;
+    rdfs:label "Rights Holder" ;
+    cms:propertyOrder 70 ;
+    rdfs:comment [ a cms:Text ;
+            rdf:value "A rights statement including what is covered (images or object itself), person or organization owning or managing rights, a copyright symbol and date if appropriate, and additional contact information. " ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:rightsHolder> .
+
+dcterms:spatial a cms:Property ;
+    rdfs:label "Region" ;
+    cms:propertyOrder 52 ;
+    cms:propertySearchable true ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "Where the item was originally made, if known; with all levels such as city, county, state, country, each as a separate entry." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:spatial> .
+
+dcterms:subject a cms:Property ;
+    rdfs:label "Subject" ;
+    cms:propertyFilterable true ;
+    cms:propertyOrder 40 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "All costume artifacts should have the subject \"Costume\" or \"Clothing and Dress.\" " ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:subject> .
+
+dcterms:title a cms:Property ;
+    rdfs:label "Title" ;
+    cms:propertyOrder 42 ;
+    cms:propertySearchable true ;
+    rdfs:comment [ a cms:Text ;
+            rdf:value """For costume artifacts that have not been titled by the original maker, this should be a descriptive phrase with about 3 important details, usually color, function, work type, or a notable detail.
+
+In title case, less than 100 characters.""" ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:title> .
+
+vra:culturalContext a cms:Property ;
+    rdfs:label "Culture" ;
+    cms:propertyOrder 53 ;
+    cms:propertySearchable true ;
+    rdfs:comment [ a cms:Text ;
+            rdf:value """The name(s) of the culture, people, or nationality from which the work originated or was used.
+""" ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:culturalContext> .
+
+vra:donator a cms:Property ;
+    rdfs:label "Donor" ;
+    cms:propertyOrder 46 ;
+    rdfs:comment [ a cms:Text ;
+            rdf:value "Full name(s) of all donors. To protect the privacy of some private donors, they may request that this read simply \"Anonymous\" with no specifics. Instead, the specifics can be entered under \"private information.\"" ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:donator> .
+
+vra:endDate a cms:Property ;
+    rdfs:label "Date Latest" ;
+    cms:propertyOrder 50 ;
+    rdfs:comment [ a cms:Text ;
+            rdf:value "The latest the garment could have been made, in the format YYYY or YYYY-MM or YYYY-MM-DD. Follow ISO 8601 standards." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:endDate> .
+
+vra:hasInscription a cms:Property ;
+    rdfs:label "Label" ;
+    cms:propertyOrder 39 ;
+    rdfs:comment [ a cms:Text ;
+            rdf:value "The exact text, in quotes, from each label within the object, followed by a phrase describing where the label is located on the object." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:hasInscription> .
+
+vra:placeOfRepository a cms:Property ;
+    rdfs:label "Holding Institution" ;
+    cms:propertyOrder 68 ;
+    rdfs:comment [ a cms:Text ;
+            rdf:value """The name of the collection the garment belongs to, institutional or private. Include the address of a public institution, if appropriate. 
+
+To protect the privacy of some private collectors, they may request that this read simply 'Private Collection' with no specifics. Instead, the specifics can be entered under 'private information.'""" ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:placeOfRepository> .
+
+vra:startDate a cms:Property ;
+    rdfs:label "Date Earliest" ;
+    cms:propertyOrder 49 ;
+    rdfs:comment [ a cms:Text ;
+            rdf:value "The earliest the garment could have been made, in the format YYYY or YYYY-MM or YYYY-MM-DD. Follow ISO 8601 standards." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:startDate> .
 
 coco:CC00010 a cms:Concept,
         cms:Work,
@@ -6890,13 +7051,13 @@ coco:CC00619 a cms:Concept,
     dcterms:description [ a cms:Text ;
             dcterms:creator "RightsStatements.org" ;
             dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
-            rdf:value "In Copyright - Rights-rightsHolders Unlocatable or Unidentificable" ] ;
+            rdf:value "In Copyright - Rights-holders Unlocatable or Unidentificable" ] ;
     dcterms:title "InC-RUU" ;
     cms:collection coco:rights ;
     skos:definition [ a cms:Text ;
             dcterms:creator "RightsStatements.org" ;
             dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
-            rdf:value "In Copyright - Rights-rightsHolders Unlocatable or Unidentificable" ] ;
+            rdf:value "In Copyright - Rights-holders Unlocatable or Unidentificable" ] ;
     skos:prefLabel "InC-RUU" .
 
 coco:CC00620 a cms:Concept,
@@ -7011,8 +7172,198 @@ coco:CC00627 a cms:Concept,
     cms:collection coco:length ;
     skos:prefLabel "above waist length" .
 
-coco:classification a cms:Collection ;
-    dcterms:title "Classification" .
+coco:cataloguerWithDate a cms:Property ;
+    rdfs:label "Cataloguer With Date" ;
+    cms:propertyOrder 2 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value """Full names of all catalogers, with the date in parentheses, in the format YYYY-MM-DD.
+
+When additions are made to the catalog record, additional names and dates should be added and existing entries should not be deleted.""" ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:cataloguerWithDate> .
+
+coco:cbLengthIn a cms:Property ;
+    rdfs:label "Center Back Length" ;
+    cms:propertyOrder 33 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "The center back measurement from top edge (neckline or waist) to hem, in inches, as decimals to the nearest quarter inch." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:cbLengthIn> .
+
+coco:cfLengthIn a cms:Property ;
+    rdfs:label "Center Front Length" ;
+    cms:propertyOrder 32 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "The center front measurement from top edge (neckline or waist) to hem, in inches, as decimals to the nearest quarter inch." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:cfLengthIn> .
+
+coco:chestIn a cms:Property ;
+    rdfs:label "Chest" ;
+    cms:propertyOrder 29 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "The measurement straight around the fullest part of the chest, in inches, as decimals to the nearest quarter inch." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:chestIn> .
+
+coco:conditionDescription a cms:Property ;
+    rdfs:label "Condition Description" ;
+    cms:propertyOrder 64 ;
+    cms:propertySearchable true ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value """Narrative description of the overall physical condition, characteristics, and completeness of a work, describing where each issue is located on the garment. 
+
+This may incorporate details checked off on a separate worksheet.""" ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:conditionDescription> .
+
+coco:costOriginal a cms:Property ;
+    rdfs:label "Cost Original" ;
+    cms:propertyOrder 58 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "The cost of the object when originally created, indicating the units (dollars, etc.)" ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:costOriginal> .
+
+coco:dimensionsOther a cms:Property ;
+    rdfs:label "Measurements Other" ;
+    cms:propertyOrder 36 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "Any other measurements that are notable on this garment, in inches, as decimals to the nearest quarter inch. Describe what the measurement is of, in parentheses, after the measurement." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:dimensionsOther> .
+
+coco:exhibitions a cms:Property ;
+    rdfs:label "Exhibitions" ;
+    cms:propertyOrder 60 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "A list of all exhibitions that included this object,  including the title or name of each exhibition, its location, and other pertinent information." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:exhibitions> .
+
+coco:hemCircumferenceIn a cms:Property ;
+    rdfs:label "Hem Circumference" ;
+    cms:propertyOrder 35 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "The measurement all around the hem, in inches, as decimals to the nearest quarter inch." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:hemCircumferenceIn> .
+
+coco:hipsIn a cms:Property ;
+    rdfs:label "Hips" ;
+    cms:propertyOrder 31 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "The measurement straight around the fullest part of the hips, in inches, as decimals to the nearest quarter inch." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:hipsIn> .
+
+coco:mannequin a cms:Property ;
+    rdfs:label "Mannequin" ;
+    cms:propertyOrder 67 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "The size and year, or name, of any mannequins the garment fits on for display." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:mannequin> .
+
+coco:privateInformation a cms:Property ;
+    rdfs:label "Private Information" ;
+    cms:propertyOrder 61 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "Any information that doesn't fit elsewhere, and isn't suited for public view (for example private stories or communication with the donor)." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:privateInformation> .
+
+coco:publicInformation a cms:Property ;
+    rdfs:label "Public Information" ;
+    cms:propertyOrder 62 ;
+    cms:propertySearchable true ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value """A brief narrative about the object, with any interesting / important information (numbers in parentheses can provide links to external references, which then are also listed in reference field).
+
+Include MLA style parenthetical citations to references listed in References field as needed.""" ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:publicInformation> .
+
+coco:size a cms:Property ;
+    rdfs:label "Size" ;
+    cms:propertyOrder 28 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "The size of the object, if shown on a label or otherwise identified." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:size> .
+
+coco:storageLocation a cms:Property ;
+    rdfs:label "Storage Location" ;
+    cms:propertyOrder 66 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "Where the garment has been put away in storage, for example by shelf section, ex. \"C4\"" ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:storageLocation> .
+
+coco:treatment a cms:Property ;
+    rdfs:label "Treatment" ;
+    cms:propertyOrder 65 ;
+    cms:propertySearchable true ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "All procedures that have been completed to repair, conserve, stabilize, or display an object, in a narrative paragraph." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:treatment> .
+
+coco:underarmToWaistIn a cms:Property ;
+    rdfs:label "Underarm To Waist" ;
+    cms:propertyOrder 34 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "The measurement from armpit to waist at the side seam, in inches, as decimals to the nearest quarter inch." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:underarmToWaistIn> .
+
+coco:waistIn a cms:Property ;
+    rdfs:label "Waist" ;
+    cms:propertyOrder 30 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "The measurement straight around the narrowest part of the waist, in inches, as decimals to the nearest quarter inch." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:waistIn> .
+
+coco:wornBy a cms:Property ;
+    rdfs:label "Worn by" ;
+    cms:propertyOrder 45 ;
+    cms:propertySearchable true ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/licenses/by-sa/4.0/> ;
+            rdf:value "Full name(s) of anyone known to have worn a costume artifact." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:wornBy> .
+
+coco:classification a cms:Collection,
+        cms:Property ;
+    rdfs:label "Classification" ;
+    dcterms:title "Classification" ;
+    cms:propertyFilterable true ;
+    cms:propertyOrder 59 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "A classification term should be applied for all costume items, such as \"Costume,\" or \"Fashion.\" This may vary based on the larger overall collection in which these objects will be published." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:classification> .
 
 <urn:costumeCore:image:feature:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2Fcollar:collar.jpg:fullSize> a cms:Image ;
     dcterms:creator "Wikipedia User Arkirkland" ;
@@ -7066,6 +7417,24 @@ coco:classification a cms:Collection ;
     exif:width 200 ;
     foaf:depicts coco:colorSecondary .
 
+<urn:costumeCore:image:feature:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2Fcondition:condition.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Wikipedia User Arkirkland" ;
+    dcterms:license <http://creativecommons.org/licenses/by-sa/4.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/condition.jpg" ;
+    foaf:depicts coco:condition ;
+    foaf:thumbnail <urn:costumeCore:image:feature:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2Fcondition:condition.jpg:thumbnail> .
+
+<urn:costumeCore:image:feature:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2Fcondition:condition.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Wikipedia User Arkirkland" ;
+    dcterms:license <http://creativecommons.org/licenses/by-sa/4.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/condition.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:feature:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2Fcondition:condition.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:condition .
+
 <urn:costumeCore:image:feature:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2Ffiber:fiber.jpg:fullSize> a cms:Image ;
     dcterms:creator "Flickr User Quinn Dombrowski" ;
     dcterms:license <http://creativecommons.org/licenses/by-sa/2.0/> ;
@@ -7083,6 +7452,40 @@ coco:classification a cms:Collection ;
     exif:height 200 ;
     exif:width 200 ;
     foaf:depicts coco:fiber .
+
+<urn:costumeCore:image:feature:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2Fgender:gender.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Wikipedia User Arkirkland" ;
+    dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/gender.jpg" ;
+    foaf:depicts coco:gender ;
+    foaf:thumbnail <urn:costumeCore:image:feature:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2Fgender:gender.jpg:thumbnail> .
+
+<urn:costumeCore:image:feature:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2Fgender:gender.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Wikipedia User Arkirkland" ;
+    dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/gender.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:feature:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2Fgender:gender.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:gender .
+
+<urn:costumeCore:image:feature:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FlifeStages:lifeStages.jpg:fullSize> a cms:Image ;
+    dcterms:creator "Wikipedia User Rajendra prabhune" ;
+    dcterms:license <http://creativecommons.org/licenses/by-sa/4.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/full_size/lifeStages.jpg" ;
+    foaf:depicts coco:lifeStages ;
+    foaf:thumbnail <urn:costumeCore:image:feature:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FlifeStages:lifeStages.jpg:thumbnail> .
+
+<urn:costumeCore:image:feature:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FlifeStages:lifeStages.jpg:thumbnail> a cms:Image ;
+    dcterms:creator "Wikipedia User Rajendra prabhune" ;
+    dcterms:license <http://creativecommons.org/licenses/by-sa/4.0/> ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+    cms:imageSrc "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/lifeStages.jpg" ;
+    cms:thumbnailOf <urn:costumeCore:image:feature:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2FlifeStages:lifeStages.jpg:fullSize> ;
+    exif:height 200 ;
+    exif:width 200 ;
+    foaf:depicts coco:lifeStages .
 
 <urn:costumeCore:image:feature:https%3A%2F%2Fw3id.org%2FcostumeCore%2Fontology%2Fpattern:pattern.jpg:fullSize> a cms:Image ;
     dcterms:creator "Flickr User Ruth Hartnup" ;
@@ -11312,49 +11715,77 @@ coco:CC00630 a cms:Concept,
     foaf:logo <http://i.creativecommons.org/l/by-sa/2.5/80x15.png>,
         <http://i.creativecommons.org/l/by-sa/2.5/88x31.png> .
 
-coco:socioEconomicClass a cms:Collection ;
-    dcterms:title "Socio Economic Class" .
-
-coco:condition a cms:Collection ;
-    dcterms:title "Condition Term" .
-
-coco:gender a cms:Collection ;
-    dcterms:title "Gender" .
-
-coco:lifeStages a cms:Collection ;
-    dcterms:title "Life Stages" .
+coco:socioEconomicClass a cms:Collection,
+        cms:Property ;
+    rdfs:label "Socio Economic Class" ;
+    dcterms:title "Socio Economic Class" ;
+    cms:propertyFilterable true ;
+    cms:propertyOrder 57 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Each term that indicates the socioeconomic class of the person(s) who wore the object. This can have multiple values to show that the object was passed up or down through different classes." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:socioEconomicClass> .
 
 coco:sleeveLength a cms:Collection,
         cms:Property ;
     rdfs:label "Sleeve Length" ;
     dcterms:title "Sleeve Length" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 22 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Each term that describes the length of the sleeves of the garment." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:sleeveLength> ;
-    sh:order 22 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:sleeveLength> .
 
 coco:closurePlacement a cms:Collection,
         cms:Property ;
     rdfs:label "Closure Placement" ;
     dcterms:title "Closure Placement" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:pants>,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 18 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Each placement of closures on the item." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:closurePlacement> ;
-    sh:order 18 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:closurePlacement> .
+
+coco:condition a cms:Collection,
+        cms:Property ;
+    rdfs:label "Condition Term" ;
+    dcterms:title "Condition Term" ;
+    cms:propertyFilterable true ;
+    cms:propertyOrder 63 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "A single term to indicate a rating of the overall condition of the object." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:condition> .
+
+coco:gender a cms:Collection,
+        cms:Property ;
+    rdfs:label "Gender" ;
+    dcterms:title "Gender" ;
+    cms:propertyFilterable true ;
+    cms:propertyOrder 55 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "The gender for which the object was originally intended." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:gender> .
 
 <http://creativecommons.org/licenses/by/4.0/> a cc:License,
         cms:License ;
@@ -11371,6 +11802,18 @@ coco:closurePlacement a cms:Collection,
     dcterms:hasVersion "4.0" ;
     foaf:logo <http://i.creativecommons.org/l/by/4.0/80x15.png>,
         <http://i.creativecommons.org/l/by/4.0/88x31.png> .
+
+coco:lifeStages a cms:Collection,
+        cms:Property ;
+    rdfs:label "Life Stages" ;
+    dcterms:title "Life Stages" ;
+    cms:propertyFilterable true ;
+    cms:propertyOrder 56 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "Each age of the wearer for which the object was intended." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:lifeStages> .
 
 <http://creativecommons.org/licenses/by/2.0/> a cc:License,
         cms:License ;
@@ -11393,78 +11836,109 @@ coco:length a cms:Collection,
         cms:Property ;
     rdfs:label "Length" ;
     dcterms:title "Length" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:pants>,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 24 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Each length of the object, where the hem lands on the body." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:length> ;
-    sh:order 24 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:length> .
 
 coco:waistline a cms:Collection,
         cms:Property ;
     rdfs:label "Waistline" ;
     dcterms:title "Waistline" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:pants>,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 23 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Each term that describes the level and shape of the waist of the garment." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:waistline> ;
-    sh:order 23 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:waistline> .
 
 coco:collar a cms:Collection,
         cms:Property ;
     rdfs:label "Collar" ;
     dcterms:title "Collar" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 20 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Each term that describes the collar of the garment." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:collar> ;
-    sh:order 20 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:collar> .
 
-coco:liturgicalType a cms:Collection ;
-    dcterms:title "Liturgical Type" .
+coco:liturgicalType a cms:Collection,
+        cms:Property ;
+    rdfs:label "Liturgical Type" ;
+    dcterms:title "Liturgical Type" ;
+    cms:propertyFilterable true ;
+    cms:propertyOrder 16 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "Each type of liturgical garment or accessory." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:liturgicalType> .
 
-coco:type a cms:Collection ;
-    dcterms:title "Type" .
+coco:type a cms:Collection,
+        cms:Property ;
+    rdfs:label "Type" ;
+    dcterms:title "Type" ;
+    cms:propertyFilterable true ;
+    cms:propertyOrder 71 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "All clothing objects will have DCMI type \"Physical Object.\" " ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:type> .
 
 coco:closure a cms:Collection,
         cms:Property ;
     rdfs:label "Closure" ;
     dcterms:title "Closure" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:pants>,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 17 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Each closure used on the garment." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:closure> ;
-    sh:order 17 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:closure> .
 
-coco:rights a cms:Collection ;
-    dcterms:title "Rights" .
+coco:rights a cms:Collection,
+        cms:Property ;
+    rdfs:label "Rights" ;
+    dcterms:title "Rights" ;
+    cms:propertyFilterable true ;
+    cms:propertyOrder 69 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "A standardized rights statement. In most cases, clothing artifacts are not protected by copyright, but may be represented in images that are under copyright." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:rights> .
 
 <http://creativecommons.org/licenses/by-sa/2.0/> a cc:License,
         cms:License ;
@@ -11488,49 +11962,62 @@ coco:pantsType a cms:Collection,
         cms:Property ;
     rdfs:label "Pants Type" ;
     dcterms:title "Pants Type" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:pants> ;
+    cms:propertyOrder 14 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Each term that describes the length and shape of pants." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:pantsType> ;
-    sh:order 14 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:pantsType> .
 
 coco:trimming a cms:Collection,
         cms:Property ;
     rdfs:label "Trimming" ;
     dcterms:title "Trimming" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:pants>,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 9 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Each term for decorative material added to an object, distinguished from the fibers, textile type,  or other materials." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:trimming> ;
-    sh:order 9 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:trimming> .
 
-coco:function a cms:Collection ;
-    dcterms:title "Function" .
+coco:function a cms:Collection,
+        cms:Property ;
+    rdfs:label "Function" ;
+    dcterms:title "Function" ;
+    cms:propertyFilterable true ;
+    cms:propertyOrder 54 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Each function for which the object was worn. " ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:function> .
 
 coco:neckline a cms:Collection,
         cms:Property ;
     rdfs:label "Neckline" ;
     dcterms:title "Neckline" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 19 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Each type of neckline of the garment." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:neckline> ;
-    sh:order 19 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:neckline> .
 
 <urn:costumeCore:ontology:featureSet:pants> a cms:PropertyGroup ;
     rdfs:label "Pants" ;
@@ -11550,47 +12037,50 @@ coco:sleeveType a cms:Collection,
         cms:Property ;
     rdfs:label "Sleeve Type" ;
     dcterms:title "Sleeve Type" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 21 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Each term that describes the shape of the sleeves of the garment." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:sleeveType> ;
-    sh:order 21 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:sleeveType> .
 
 coco:costumeComponents a cms:Collection,
         cms:Property ;
     rdfs:label "Costume Components" ;
     dcterms:title "Costume Components" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:pants>,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 25 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Each additional component of the garment not included elsewhere." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:costumeComponents> ;
-    sh:order 25 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:costumeComponents> .
 
 coco:skirtType a cms:Collection,
         cms:Property ;
     rdfs:label "Skirt Type" ;
     dcterms:title "Skirt Type" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:skirt> ;
+    cms:propertyOrder 15 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Each term that describes the skirt of the garment." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:skirtType> ;
-    sh:order 15 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:skirtType> .
 
 <urn:costumeCore:ontology:featureSet:coat> a cms:PropertyGroup ;
     rdfs:label "Coat" ;
@@ -11617,35 +12107,46 @@ coco:dressType a cms:Collection,
         cms:Property ;
     rdfs:label "Dress Type" ;
     dcterms:title "Dress Type" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:dress> ;
+    cms:propertyOrder 13 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Each term that describes the type of dress." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:dressType> ;
-    sh:order 13 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:dressType> .
 
 coco:pattern a cms:Collection,
         cms:Property ;
     rdfs:label "Pattern" ;
     dcterms:title "Pattern" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:pants>,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 6 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Each design motif appearing on the object." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:pattern> ;
-    sh:order 6 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:pattern> .
 
-coco:icomType a cms:Collection ;
-    dcterms:title "ICOM Type" .
+coco:icomType a cms:Collection,
+        cms:Property ;
+    rdfs:label "ICOM Type" ;
+    dcterms:title "ICOM Type" ;
+    cms:propertyFilterable true ;
+    cms:propertyOrder 72 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "The second and third level classes from the ICOM Vocabulary." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:icomType> .
 
 <urn:costumeCore:ontology:featureSet:dress> a cms:PropertyGroup ;
     rdfs:label "Dress" ;
@@ -11654,8 +12155,17 @@ coco:icomType a cms:Collection ;
             dcterms:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
             rdf:value "A set of features appropriate for garments that cover both the upper and lower body (above and below the waist, past the hips), and are continuous, with closures instead any of significant openings along the entire length." ] .
 
-coco:workType a cms:Collection ;
-    dcterms:title "Work Type" .
+coco:workType a cms:Collection,
+        cms:Property ;
+    rdfs:label "Work Type" ;
+    dcterms:title "Work Type" ;
+    cms:propertyFilterable true ;
+    cms:propertyOrder 3 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value "Each top-level work type of the object. More specific terms are possible as sub-categories, in other fields, or can be included in the description." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:workType> .
 
 <http://creativecommons.org/licenses/by/3.0/> a cc:License,
         cms:License ;
@@ -11677,83 +12187,89 @@ coco:otherMaterials a cms:Collection,
         cms:Property ;
     rdfs:label "Other Materials" ;
     dcterms:title "Other Materials" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:pants>,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 10 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
             rdf:value "Any other material terms that do not describe fibers, textiles, or trimmings." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:otherMaterials> ;
-    sh:order 10 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:otherMaterials> .
 
 coco:colorMain a cms:Collection,
         cms:Property ;
     rdfs:label "Color Main" ;
     dcterms:title "Color Main" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:pants>,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 4 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/licenses/by-sa/4.0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "The most dominant color in the garment." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:colorMain> ;
-    sh:order 4 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:colorMain> .
 
 coco:colorSecondary a cms:Collection,
         cms:Property ;
     rdfs:label "Color Secondary" ;
     dcterms:title "Color Secondary" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:pants>,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 5 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://creativecommons.org/licenses/by-sa/4.0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Any additional colors in the garment." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:colorSecondary> ;
-    sh:order 5 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:colorSecondary> .
 
 coco:fiber a cms:Collection,
         cms:Property ;
     rdfs:label "Fiber" ;
     dcterms:title "Fiber" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:pants>,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 7 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Each term for the type of fiber used in the materials of the object, distinguished from the textile type, trimmings, or other materials." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:fiber> ;
-    sh:order 7 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:fiber> .
 
 coco:hasTechnique a cms:Collection,
         cms:Property ;
     rdfs:label "Technique" ;
     dcterms:title "Technique" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:pants>,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 12 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
@@ -11761,26 +12277,26 @@ coco:hasTechnique a cms:Collection,
             rdf:value """Each process involved in making the object. 
 
 Do not include a description of where the technique is in evidence on the garment: that should be a part of the narrative description.""" ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:hasTechnique> ;
-    sh:order 12 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:hasTechnique> .
 
 coco:textileMaterials a cms:Collection,
         cms:Property ;
     rdfs:label "Textile Materials" ;
     dcterms:title "Textile Materials" ;
+    cms:propertyFilterable true ;
     cms:propertyGroup <urn:costumeCore:ontology:featureSet:coat>,
         <urn:costumeCore:ontology:featureSet:dress>,
         <urn:costumeCore:ontology:featureSet:jacket>,
         <urn:costumeCore:ontology:featureSet:pants>,
         <urn:costumeCore:ontology:featureSet:skirt>,
         <urn:costumeCore:ontology:featureSet:top> ;
+    cms:propertyOrder 8 ;
     rdfs:comment [ a cms:Text ;
             dcterms:creator "Arden Kirkland" ;
             dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
             dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
             rdf:value "Each term for materials produced from component fibers, distinguished from the fibers, trimmings, or other materials." ] ;
-    rdfs:range <urn:costumeCore:ontology:featureRange:textileMaterials> ;
-    sh:order 8 .
+    rdfs:range <urn:costumeCore:ontology:featureRange:textileMaterials> .
 
 <http://creativecommons.org/licenses/by-sa/3.0/> a cc:License,
         cms:License ;
@@ -11816,11 +12332,32 @@ coco:textileMaterials a cms:Collection,
     foaf:logo <http://i.creativecommons.org/l/by-sa/4.0/80x15.png>,
         <http://i.creativecommons.org/l/by-sa/4.0/88x31.png> .
 
-coco:temporal a cms:Collection ;
-    dcterms:title "Style Period" .
+coco:temporal a cms:Collection,
+        cms:Property ;
+    rdfs:label "Style Period" ;
+    dcterms:title "Style Period" ;
+    cms:propertyFilterable true ;
+    cms:propertyOrder 48 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://creativecommons.org/publicdomain/mark/1.0/> ;
+            rdf:value """Each decade (or longer fashion style periods) in which the object was made or used. 
 
-coco:material a cms:Collection ;
-    dcterms:title "Material" .
+Do not include an apostrophe in a decade name; just add an "s," like "1950s.\"""" ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:temporal> .
+
+coco:material a cms:Collection,
+        cms:Property ;
+    rdfs:label "Material" ;
+    dcterms:title "Material" ;
+    cms:propertyFilterable true ;
+    cms:propertyOrder 11 ;
+    rdfs:comment [ a cms:Text ;
+            dcterms:creator "Arden Kirkland" ;
+            dcterms:license <http://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <http://rightsstatements.org/vocab/InC/1.0/> ;
+            rdf:value "Each material in the object." ] ;
+    rdfs:range <urn:costumeCore:ontology:featureRange:material> .
 
 <http://creativecommons.org/publicdomain/zero/1.0/> a cc:License,
         cms:License ;
@@ -11850,7 +12387,7 @@ coco:material a cms:Collection ;
 
 <http://opendatacommons.org/licenses/by/1-0/> a cms:License ;
     dc:identifier "ODC-By" ;
-    dc:title "Open Data Commons Attribution License (ODC-By) v1.0" ;
+    dc:title "Open Data Commons Attribution CmsLicense (ODC-By) v1.0" ;
     dcterms:hasVersion "1.0" .
 
 <http://rightsstatements.org/vocab/InC/1.0/> a cms:RightsStatement ;
