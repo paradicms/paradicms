@@ -29,7 +29,6 @@ from paradicms_etl.models.cms.cms_text import CmsText
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
-from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -59,13 +58,6 @@ class CostumeCoreOntologyAirtableTransformer:
         FEATURE = "feature"
         FEATURE_SET = "featureSet"
         FEATURE_VALUE = "featureValue"
-
-        def __str__(self):
-            return self.value
-
-    class __ImageType(Enum):
-        FULL_SIZE = "fullSize"
-        THUMBNAIL = "thumbnail"
 
         def __str__(self):
             return self.value
@@ -131,28 +123,6 @@ class CostumeCoreOntologyAirtableTransformer:
             )
         )
 
-    @staticmethod
-    def __image_uri(
-        *,
-        depicts_type: __ImageDepictsType,
-        depicts_uri: URIRef,
-        filename: str,
-        type: __ImageType,
-    ) -> URIRef:
-        return URIRef(
-            ":".join(
-                (
-                    "urn",
-                    "costumeCore",
-                    "image",
-                    str(depicts_type),
-                    quote_plus(depicts_uri),
-                    filename,
-                    str(type),
-                )
-            )
-        )
-
     def __call__(self, *, base: Dict[str, Any], records_by_table: Dict[str, Tuple]) -> Iterable[Model]:  # type: ignore
         costume_core_ontology_builder = CostumeCoreOntology.builder()
         if self.__ontology_version is not None:
@@ -174,11 +144,7 @@ class CostumeCoreOntologyAirtableTransformer:
             for record in records_by_table["feature_values"]
             if "id" in record["fields"]
         )
-        image_records = tuple(
-            record
-            for record in records_by_table["images"]
-            if "filename" in record["fields"]
-        )
+        image_records = tuple(record for record in records_by_table["images"])
         image_records_by_id = {
             image_record["id"]: image_record for image_record in image_records
         }
@@ -401,61 +367,29 @@ class CostumeCoreOntologyAirtableTransformer:
     def __transform_feature_value_record_to_images(
         self, *, depicts_uri: URIRef, feature_value_record, image_records_by_id
     ) -> Iterable:
-        fields = feature_value_record["fields"]
-        image_filename = fields.get("image_filename")
-        if not image_filename:
-            return
+        feature_value_image_records = []
+        for feature_value_image in feature_value_record["fields"].get("images", []):
+            feature_value_image_record = None
+            for image_record in image_records_by_id.values():
+                if (
+                    image_record["fields"]["image"][0]["id"]
+                    == feature_value_image["id"]
+                ):
+                    feature_value_image_record = image_record
+                    break
+            if feature_value_image_record is not None:
+                feature_value_image_records.append(feature_value_image_record)
+            else:
+                self.__logger.warning(
+                    "no image record found for feature value image %s",
+                    feature_value_image,
+                )
 
-        image_record_id = image_filename[0]
-        assert image_record_id
-
-        try:
-            image_record = image_records_by_id[image_record_id]
-        except KeyError:
-            self.__logger.warning(
-                "dangling image_filename %s in feature value record %s",
-                image_record_id,
-                fields["id"],
-            )
-            return
-
-        image_filename = image_record["fields"]["filename"]
-
-        # See note in transform_image_records re: image URIs.
-
-        full_size_image = self.__transform_rights_fields_to_rights(
-            key_prefix="image",
-            record_fields=fields,
-            model_builder=CmsImage.builder(
-                depicts_uri=depicts_uri,
-                uri=self.__image_uri(
-                    depicts_uri=depicts_uri,
-                    depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
-                    filename=image_filename,
-                    type=self.__ImageType.FULL_SIZE,
-                ),
-            ).set_src(
-                CostumeCoreOntology.Term.FULL_SIZE_IMAGE_BASE_URL + image_filename,
-            ),
-        ).build()
-        yield full_size_image
-
-        yield self.__transform_rights_fields_to_rights(
-            key_prefix="image",
-            record_fields=fields,
-            model_builder=CmsImage.builder(
-                depicts_uri=depicts_uri,
-                uri=self.__image_uri(
-                    depicts_uri=depicts_uri,
-                    depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
-                    filename=image_filename,
-                    type=self.__ImageType.THUMBNAIL,
-                ),
-            )
-            .set_exact_dimensions(ImageDimensions(height=200, width=200))
-            .set_original_image_uri(full_size_image.uri)
-            .set_src(CostumeCoreOntology.Term.THUMBNAIL_BASE_URL + image_filename),
-        ).build()
+        yield from self.__transform_image_records_to_images(
+            depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
+            depicts_uri=depicts_uri,
+            image_records=feature_value_image_records,
+        )
 
     def __transform_feature_value_record_to_concept(
         self,
@@ -562,37 +496,6 @@ class CostumeCoreOntologyAirtableTransformer:
                     break
         features = tuple(features_list)
 
-        image_record_id = fields.get("image_filename")
-        if image_record_id:
-            image_record_id = image_record_id[0]
-            assert image_record_id
-
-            try:
-                image_record = image_records_by_id[image_record_id]
-            except KeyError:
-                self.__logger.warning(
-                    "dangling image_filename %s in feature value record %s",
-                    image_record_id,
-                    fields["id"],
-                )
-                image_record = None
-        else:
-            image_record = None
-
-        if image_record is not None:
-            image_filename = image_record["fields"]["filename"]
-
-            image_rights = self.__transform_rights_fields_to_costume_core_rights(
-                key_prefix="image", record_fields=feature_value_record["fields"]
-            )
-        else:
-            self.__logger.debug(
-                "feature value record %s has no image_filename",
-                feature_value_record["fields"]["id"],
-            )
-            image_filename = None
-            image_rights = None
-
         # cc_uri = fields.get("CC_URI")
         # if cc_uri is None:
         #     uri = inferred_uri
@@ -608,8 +511,6 @@ class CostumeCoreOntologyAirtableTransformer:
             display_name_en=fields["display_name_en"],
             features=features,
             id=fields["id"],
-            image_filename=image_filename,
-            image_rights=image_rights,
             _uri=URIRef(str(COCO[fields["id"]])),
             wikidata_id=fields.get("WikidataID"),
         )
@@ -717,7 +618,9 @@ class CostumeCoreOntologyAirtableTransformer:
             return
 
         for image_record in image_records:
-            image_filename = image_record["fields"]["filename"]
+            assert len(image_record["fields"]["image"]) == 1, len(
+                image_record["fields"]["image"]
+            )
 
             # The same image may be used to depict multiple objects e.g., a feature value, a feature, and a feature set.
             # Allow the src to be duplicated but make the URIs unique.
@@ -727,35 +630,22 @@ class CostumeCoreOntologyAirtableTransformer:
                 record_fields=image_record["fields"],
                 model_builder=CmsImage.builder(
                     depicts_uri=depicts_uri,
-                    uri=self.__image_uri(
-                        depicts_uri=depicts_uri,
-                        depicts_type=depicts_type,
-                        filename=image_filename,
-                        type=self.__ImageType.FULL_SIZE,
+                    uri=URIRef(
+                        ":".join(
+                            (
+                                "urn",
+                                "costumeCore",
+                                "image",
+                                str(depicts_type),
+                                quote_plus(depicts_uri),
+                                image_record["fields"]["image"][0]["id"],
+                            )
+                        )
                     ),
-                ).set_src(
-                    CostumeCoreOntology.Term.FULL_SIZE_IMAGE_BASE_URL + image_filename
-                ),
+                ).set_src(image_record["fields"]["image"][0]["url"]),
             ).build()
 
             yield full_size_image
-
-            yield self.__transform_rights_fields_to_rights(
-                key_prefix="image",
-                record_fields=image_record["fields"],
-                model_builder=CmsImage.builder(
-                    depicts_uri=depicts_uri,
-                    uri=self.__image_uri(
-                        depicts_uri=depicts_uri,
-                        depicts_type=depicts_type,
-                        filename=image_filename,
-                        type=self.__ImageType.THUMBNAIL,
-                    ),
-                )
-                .set_exact_dimensions(ImageDimensions(height=200, width=200))
-                .set_original_image_uri(full_size_image.uri)
-                .set_src(CostumeCoreOntology.Term.THUMBNAIL_BASE_URL + image_filename),
-            ).build()
 
     def __transform_rights_fields_to_costume_core_rights(
         self, *, key_prefix: str, record_fields: Dict[str, Union[str, List[str], None]]
