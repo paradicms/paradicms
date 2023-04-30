@@ -2,7 +2,7 @@ from urllib.error import HTTPError
 
 from rdflib import URIRef
 
-from paradicms_ssg.file_cache import FileCache
+from paradicms_etl.utils.file_cache import FileCache
 
 PLACEHOLDER_IMAGE_URL = "https://paradicms.org/img/placeholder/1000x1000.png"
 

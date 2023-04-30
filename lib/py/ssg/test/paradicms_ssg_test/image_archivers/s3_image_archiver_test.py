@@ -4,7 +4,7 @@ from pathlib import Path
 
 from rdflib import URIRef
 
-from paradicms_ssg.file_cache import FileCache
+from paradicms_etl.utils.file_cache import FileCache
 from paradicms_ssg.image_archivers.s3_image_archiver import S3ImageArchiver
 
 

@@ -10,7 +10,7 @@ from rdflib import URIRef
 
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
-from paradicms_ssg.file_cache import FileCache
+from paradicms_etl.utils.file_cache import FileCache
 
 
 class OriginalImageFileCache:
