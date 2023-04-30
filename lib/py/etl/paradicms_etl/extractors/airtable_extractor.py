@@ -8,6 +8,9 @@ from urllib.parse import quote
 from urllib.request import urlopen, Request
 
 from pathvalidate import sanitize_filename
+from rdflib import URIRef
+
+from paradicms_etl.utils.file_cache import FileCache
 
 
 class AirtableExtractor:
@@ -16,6 +19,7 @@ class AirtableExtractor:
     """
 
     _AIRTABLE_API_BASE_URL = "https://api.airtable.com/v0"
+    __IMAGE_KEYs = ("id", "width", "height", "url", "size", "type")
 
     def __init__(
         self,
@@ -37,6 +41,7 @@ class AirtableExtractor:
             raise ValueError("empty Airtable base id")
         self.__base_id = base_id
         self.__cache_dir_path = cache_dir_path
+        self.__image_file_cache = FileCache(cache_dir_path=cache_dir_path / "images")
         self.__logger = logging.getLogger(__name__)
         if isinstance(tables, (list, tuple)):
             self.__tables: Dict[str, Dict[str, str]] = {table: {} for table in tables}
@@ -56,13 +61,43 @@ class AirtableExtractor:
             rmtree(self.__cache_dir_path, ignore_errors=True)
         self.__cache_dir_path.mkdir(parents=True, exist_ok=True)
         for table, query_parameters in self.__tables.items():
-            records_by_table[table] = self.__extract_table_records(
+            table_records = self.__extract_table_records(
                 force=force, table=table, query_parameters=query_parameters
             )
+            records_by_table[table] = table_records
+            for table_record in table_records:
+                self.__cache_record_images(table_record)
+
         return {
             "base": base,
             "records_by_table": records_by_table,
         }
+
+    def __cache_record_images(self, record) -> None:
+        """
+        Cache any images in a record to the local file system. Records are modified to include the file URL.
+        """
+        for field_key, list_field_value in record["fields"].items():
+            if isinstance(list_field_value, list):
+                field_values = list_field_value
+            else:
+                field_values = [list_field_value]
+
+            for list_field_value in field_values:
+                if not isinstance(list_field_value, dict):
+                    break
+                if not all(
+                    image_key in list_field_value for image_key in self.__IMAGE_KEYs
+                ):
+                    break
+                list_field_value["cached_url"] = self.__image_file_cache.get_file(
+                    URIRef(list_field_value["url"])
+                ).as_uri()
+                self.__logger.debug(
+                    "cached %s as %s",
+                    list_field_value["url"],
+                    list_field_value["cached_url"],
+                )
 
     def __extract_base_metadata(self, *, base_id: str, force: bool) -> Dict[str, Any]:
         base_ids = []
