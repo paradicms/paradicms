@@ -3,12 +3,12 @@ import logging
 import mimetypes
 import os
 from pathlib import Path
+from time import sleep
 from typing import Optional, Dict, Any
 from urllib.request import urlopen
 
 from pathvalidate import sanitize_filename
 from rdflib import URIRef
-from time import sleep
 
 
 class FileCache:
@@ -113,7 +113,7 @@ class FileCache:
             headers_dict = {key: value for key, value in open_file_url.headers.items()}
             cached_file_path = get_cached_file_path(headers_dict)
             cached_file_path.unlink(missing_ok=True)
-            file_cache_dir_path.mkdir(exist_ok=True)
+            file_cache_dir_path.mkdir(exist_ok=True, parents=True)
             with open(cached_file_path, "w+b") as cached_file:
                 cached_file.write(open_file_url.read())
                 self.__logger.debug("downloaded %s to %s", file_url, cached_file_path)
