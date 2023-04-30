@@ -45,6 +45,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "clean": "rimraf out",
-    "dev": "webpack serve --mode development"
+    "dev": "webpack serve --mode development",
+    "export": "/usr/bin/true"
   }
 }

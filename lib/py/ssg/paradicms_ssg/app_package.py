@@ -97,7 +97,7 @@ class AppPackage:
                 if src_file_path.is_file():
                     shutil.copyfile(src_file_path, dst_file_path)
                 elif src_file_path.is_dir():
-                    shutil.copytree(src_file_path, dst_file_path)
+                    shutil.copytree(src_file_path, dst_file_path, dirs_exist_ok=True)
                 self.__logger.info("copied %s to %s", src_file_path, dst_file_path)
 
         if not app_out_dir_path.is_dir():

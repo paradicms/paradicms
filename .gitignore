@@ -16,5 +16,6 @@ out/
 **/public/img/archive/
 *.pyc
 .pytest_cache/
+_site/
 __snapshots__/
 yarn-error.log

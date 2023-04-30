@@ -18,7 +18,7 @@ module.exports = (env, argv) => {
   }
 
   return {
-    context: path.join(__dirname, "./src"),
+    context: __dirname,
     devServer: {
       historyApiFallback: true,
       host: "localhost",
@@ -29,7 +29,7 @@ module.exports = (env, argv) => {
     },
     devtool: mode === "production" ? "hidden-source-map" : "eval-source-map",
     entry: {
-      app: "./ts/main.tsx",
+      app: "./src/ts/main.tsx",
     },
     ignoreWarnings: [/Failed to parse source map/],
     mode,
@@ -57,9 +57,17 @@ module.exports = (env, argv) => {
       new CopyWebpackPlugin({
         patterns: [
           {from: dataFilePath, to: "data.trig"},
-          {from: "img", to: "img"},
-          "google*.html",
-          "*.pdf",
+          {from: "src/img", to: "img"},
+          {from: "public/img", to: "img"},
+          {from: "src/google*.html", to: "."},
+          {
+            from: "src/GettingStartedWithDressDiscover.pdf",
+            to: "GettingStartedWithDressDiscover.pdf",
+          },
+          {
+            from: "src/google070af747ec3734ac.html",
+            to: "google070af747ec3734ac.html",
+          },
         ],
       }),
       new webpack.DefinePlugin({
@@ -68,7 +76,7 @@ module.exports = (env, argv) => {
       }),
       new HtmlWebpackPlugin({
         hash: true,
-        template: "index.html",
+        template: "src/index.html",
         templateParameters: {
           stylesheetHref:
             process.env.STYLESHEET_HREF ??
