@@ -63,13 +63,6 @@ class CostumeCoreOntologyAirtableTransformer:
         def __str__(self):
             return self.value
 
-    class __ImageType(Enum):
-        FULL_SIZE = "fullSize"
-        THUMBNAIL = "thumbnail"
-
-        def __str__(self):
-            return self.value
-
     def __init__(self, *, ontology_version: Optional[str] = None):
         self.__logger = logging.getLogger(__name__)
         self.__ontology_version = ontology_version
@@ -131,28 +124,6 @@ class CostumeCoreOntologyAirtableTransformer:
             )
         )
 
-    @staticmethod
-    def __image_uri(
-        *,
-        depicts_type: __ImageDepictsType,
-        depicts_uri: URIRef,
-        filename: str,
-        type: __ImageType,
-    ) -> URIRef:
-        return URIRef(
-            ":".join(
-                (
-                    "urn",
-                    "costumeCore",
-                    "image",
-                    str(depicts_type),
-                    quote_plus(depicts_uri),
-                    filename,
-                    str(type),
-                )
-            )
-        )
-
     def __call__(self, *, base: Dict[str, Any], records_by_table: Dict[str, Tuple]) -> Iterable[Model]:  # type: ignore
         costume_core_ontology_builder = CostumeCoreOntology.builder()
         if self.__ontology_version is not None:
@@ -174,11 +145,7 @@ class CostumeCoreOntologyAirtableTransformer:
             for record in records_by_table["feature_values"]
             if "id" in record["fields"]
         )
-        image_records = tuple(
-            record
-            for record in records_by_table["images"]
-            if "filename" in record["fields"]
-        )
+        image_records = tuple(record for record in records_by_table["images"])
         image_records_by_id = {
             image_record["id"]: image_record for image_record in image_records
         }
@@ -398,65 +365,6 @@ class CostumeCoreOntologyAirtableTransformer:
                 ),
             )
 
-    def __transform_feature_value_record_to_images(
-        self, *, depicts_uri: URIRef, feature_value_record, image_records_by_id
-    ) -> Iterable:
-        fields = feature_value_record["fields"]
-        image_filename = fields.get("image_filename")
-        if not image_filename:
-            return
-
-        image_record_id = image_filename[0]
-        assert image_record_id
-
-        try:
-            image_record = image_records_by_id[image_record_id]
-        except KeyError:
-            self.__logger.warning(
-                "dangling image_filename %s in feature value record %s",
-                image_record_id,
-                fields["id"],
-            )
-            return
-
-        image_filename = image_record["fields"]["filename"]
-
-        # See note in transform_image_records re: image URIs.
-
-        full_size_image = self.__transform_rights_fields_to_rights(
-            key_prefix="image",
-            record_fields=fields,
-            model_builder=CmsImage.builder(
-                depicts_uri=depicts_uri,
-                uri=self.__image_uri(
-                    depicts_uri=depicts_uri,
-                    depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
-                    filename=image_filename,
-                    type=self.__ImageType.FULL_SIZE,
-                ),
-            ).set_src(
-                CostumeCoreOntology.Term.FULL_SIZE_IMAGE_BASE_URL + image_filename,
-            ),
-        ).build()
-        yield full_size_image
-
-        yield self.__transform_rights_fields_to_rights(
-            key_prefix="image",
-            record_fields=fields,
-            model_builder=CmsImage.builder(
-                depicts_uri=depicts_uri,
-                uri=self.__image_uri(
-                    depicts_uri=depicts_uri,
-                    depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
-                    filename=image_filename,
-                    type=self.__ImageType.THUMBNAIL,
-                ),
-            )
-            .set_exact_dimensions(ImageDimensions(height=200, width=200))
-            .set_original_image_uri(full_size_image.uri)
-            .set_src(CostumeCoreOntology.Term.THUMBNAIL_BASE_URL + image_filename),
-        ).build()
-
     def __transform_feature_value_record_to_concept(
         self,
         *,
@@ -562,37 +470,6 @@ class CostumeCoreOntologyAirtableTransformer:
                     break
         features = tuple(features_list)
 
-        image_record_id = fields.get("image_filename")
-        if image_record_id:
-            image_record_id = image_record_id[0]
-            assert image_record_id
-
-            try:
-                image_record = image_records_by_id[image_record_id]
-            except KeyError:
-                self.__logger.warning(
-                    "dangling image_filename %s in feature value record %s",
-                    image_record_id,
-                    fields["id"],
-                )
-                image_record = None
-        else:
-            image_record = None
-
-        if image_record is not None:
-            image_filename = image_record["fields"]["filename"]
-
-            image_rights = self.__transform_rights_fields_to_costume_core_rights(
-                key_prefix="image", record_fields=feature_value_record["fields"]
-            )
-        else:
-            self.__logger.debug(
-                "feature value record %s has no image_filename",
-                feature_value_record["fields"]["id"],
-            )
-            image_filename = None
-            image_rights = None
-
         # cc_uri = fields.get("CC_URI")
         # if cc_uri is None:
         #     uri = inferred_uri
@@ -608,8 +485,6 @@ class CostumeCoreOntologyAirtableTransformer:
             display_name_en=fields["display_name_en"],
             features=features,
             id=fields["id"],
-            image_filename=image_filename,
-            image_rights=image_rights,
             _uri=URIRef(str(COCO[fields["id"]])),
             wikidata_id=fields.get("WikidataID"),
         )
@@ -671,6 +546,8 @@ class CostumeCoreOntologyAirtableTransformer:
             if costume_core_ontology_term:
                 yield costume_core_ontology_term
 
+            image_depicts_uris: Set[URIRef] = set()
+
             concept = self.__transform_feature_value_record_to_concept(
                 feature_records=feature_records,
                 feature_value_record=feature_value_record,
@@ -678,12 +555,7 @@ class CostumeCoreOntologyAirtableTransformer:
             )
             if concept is not None:
                 yield concept
-
-                yield from self.__transform_feature_value_record_to_images(
-                    depicts_uri=concept.uri,
-                    feature_value_record=feature_value_record,
-                    image_records_by_id=image_records_by_id,
-                )
+                image_depicts_uris.add(concept.uri)
 
             work = self.__transform_feature_value_record_to_work(
                 feature_records=feature_records,
@@ -695,11 +567,35 @@ class CostumeCoreOntologyAirtableTransformer:
                 if concept is not None:
                     assert concept.uri == work.uri
                 else:
-                    yield from self.__transform_feature_value_record_to_images(
-                        depicts_uri=work.uri,
-                        feature_value_record=feature_value_record,
-                        image_records_by_id=image_records_by_id,
+                    image_depicts_uris.add(work.uri)
+
+            if not image_depicts_uris:
+                continue
+
+            feature_value_image_records = []
+            for feature_value_image in feature_value_record["fields"].get("images", []):
+                feature_value_image_record = None
+                for image_record in image_records_by_id.values():
+                    if (
+                        image_record["fields"]["image"][0]["id"]
+                        == feature_value_image["id"]
+                    ):
+                        feature_value_image_record = image_record
+                        break
+                if feature_value_image_record is not None:
+                    feature_value_image_records.append(feature_value_image_record)
+                else:
+                    self.__logger.warning(
+                        "no image record found for feature value image %s",
+                        feature_value_image,
                     )
+
+            for image_depicts_uri in image_depicts_uris:
+                yield from self.__transform_image_records_to_images(
+                    depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
+                    depicts_uri=image_depicts_uri,
+                    image_records=feature_value_image_records,
+                )
 
     def __transform_image_records_to_images(
         self, *, depicts_type: __ImageDepictsType, depicts_uri: URIRef, image_records
@@ -717,45 +613,44 @@ class CostumeCoreOntologyAirtableTransformer:
             return
 
         for image_record in image_records:
-            image_filename = image_record["fields"]["filename"]
+            for image_field_value in image_record["fields"]["image"]:
+                if "cached_url" not in image_field_value:
+                    self.__logger.warning(
+                        "image %s (url=%s) does not have a cached_url, skipping",
+                        image_field_value["id"],
+                        image_field_value["url"],
+                    )
+                    continue
 
-            # The same image may be used to depict multiple objects e.g., a feature value, a feature, and a feature set.
-            # Allow the src to be duplicated but make the URIs unique.
-
-            full_size_image = self.__transform_rights_fields_to_rights(
-                key_prefix="image",
-                record_fields=image_record["fields"],
-                model_builder=CmsImage.builder(
-                    depicts_uri=depicts_uri,
-                    uri=self.__image_uri(
+                # The same image may be used to depict multiple objects e.g., a feature value, a feature, and a feature set.
+                # Allow the src to be duplicated but make the URIs unique.
+                yield self.__transform_rights_fields_to_rights(
+                    key_prefix="image",
+                    record_fields=image_record["fields"],
+                    model_builder=CmsImage.builder(
                         depicts_uri=depicts_uri,
-                        depicts_type=depicts_type,
-                        filename=image_filename,
-                        type=self.__ImageType.FULL_SIZE,
-                    ),
-                ).set_src(
-                    CostumeCoreOntology.Term.FULL_SIZE_IMAGE_BASE_URL + image_filename
-                ),
-            ).build()
-
-            yield full_size_image
-
-            yield self.__transform_rights_fields_to_rights(
-                key_prefix="image",
-                record_fields=image_record["fields"],
-                model_builder=CmsImage.builder(
-                    depicts_uri=depicts_uri,
-                    uri=self.__image_uri(
-                        depicts_uri=depicts_uri,
-                        depicts_type=depicts_type,
-                        filename=image_filename,
-                        type=self.__ImageType.THUMBNAIL,
-                    ),
-                )
-                .set_exact_dimensions(ImageDimensions(height=200, width=200))
-                .set_original_image_uri(full_size_image.uri)
-                .set_src(CostumeCoreOntology.Term.THUMBNAIL_BASE_URL + image_filename),
-            ).build()
+                        uri=URIRef(
+                            ":".join(
+                                (
+                                    "urn",
+                                    "costumeCore",
+                                    "image",
+                                    str(depicts_type),
+                                    quote_plus(depicts_uri),
+                                    image_field_value["id"],
+                                )
+                            )
+                        ),
+                    )
+                    .set_format(image_field_value["type"])
+                    .set_exact_dimensions(
+                        ImageDimensions(
+                            height=image_field_value["height"],
+                            width=image_field_value["width"],
+                        )
+                    )
+                    .set_src(image_field_value["cached_url"]),
+                ).build()
 
     def __transform_rights_fields_to_costume_core_rights(
         self, *, key_prefix: str, record_fields: Dict[str, Union[str, List[str], None]]

@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple
-from urllib.parse import quote
 
 from rdflib import Literal, OWL, URIRef, Graph, BNode
 from rdflib.collection import Collection
@@ -28,34 +27,17 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
 
     @dataclass(frozen=True)
     class Term(NamedModel):
-        FULL_SIZE_IMAGE_BASE_URL = (
-            "https://worksheet.dressdiscover.org/img/worksheet/full_size/"
-        )
-        THUMBNAIL_BASE_URL = (
-            "https://worksheet.dressdiscover.org/img/worksheet/thumbnail/"
-        )
-
         display_name_en: str
         id: str
         _uri: URIRef
         aat_id: Optional[str] = None
         description: Optional["CostumeCoreOntology.Description"] = None
         features: Optional[Tuple[str, ...]] = None
-        image_filename: Optional[str] = None
-        image_rights: Optional["CostumeCoreOntology.Rights"] = None
         wikidata_id: Optional[str] = None
 
         @classmethod
         def from_rdf(cls, resource: Resource):
             raise NotImplementedError
-
-        @property
-        def full_size_image_url(self) -> Optional[str]:
-            return (
-                self.FULL_SIZE_IMAGE_BASE_URL + quote(self.image_filename)
-                if self.image_filename
-                else None
-            )
 
         @property
         def label(self):
@@ -68,14 +50,6 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
         @classmethod
         def rdf_type_uri(cls):
             return OWL.NamedIndividual
-
-        @property
-        def thumbnail_url(self) -> Optional[str]:
-            return (
-                self.THUMBNAIL_BASE_URL + quote(self.image_filename)
-                if self.image_filename
-                else None
-            )
 
         def to_rdf(self, graph: Graph) -> Resource:
             resource = graph.resource(URIRef(self.uri))

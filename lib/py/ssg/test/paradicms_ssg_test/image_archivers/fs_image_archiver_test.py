@@ -1,6 +1,6 @@
 from rdflib import URIRef
 
-from paradicms_ssg.file_cache import FileCache
+from paradicms_etl.utils.file_cache import FileCache
 from paradicms_ssg.image_archivers.fs_image_archiver import FsImageArchiver
 
 
