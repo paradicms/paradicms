@@ -21,29 +21,32 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
         self,
         *,
         airtable_access_token: str,
-        data_dir_path: Optional[Path] = None,
-        paradicms_rdf_file_path: Optional[str] = None,
+        cache_dir_path: Optional[Path] = None,
+        paradicms_rdf_file_path: Optional[Path] = None,
     ):
-        if data_dir_path is None:
+        if cache_dir_path is None or paradicms_rdf_file_path is None:
             data_dir_path = self.__find_data_dir_path()
+            if cache_dir_path is None:
+                cache_dir_path = self._cache_dir_path(
+                    data_dir_path=data_dir_path, pipeline_id=self.ID
+                )
+            if paradicms_rdf_file_path is None:
+                paradicms_rdf_file_path = (
+                    data_dir_path
+                    / self.ID
+                    / "loaded"
+                    / "costume_core_ontology_paradicms.trig"
+                )
 
         Pipeline.__init__(
             self,
             extractor=CostumeCoreOntologyAirtableExtractor(
                 access_token=airtable_access_token,
-                cache_dir_path=self._cache_dir_path(
-                    data_dir_path=data_dir_path, pipeline_id=self.ID
-                )
-                / "airtable",
+                cache_dir_path=cache_dir_path / "airtable",
             ),
             id=self.ID,
             loader=lambda *, models, **kwds: RdfFileLoader(
-                rdf_file_path=Path(paradicms_rdf_file_path)
-                if paradicms_rdf_file_path
-                else data_dir_path
-                / self.ID
-                / "loaded"
-                / "costume_core_ontology_paradicms.trig"
+                rdf_file_path=paradicms_rdf_file_path
             )(
                 models=(
                     model
@@ -66,7 +69,8 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
     def add_arguments(cls, arg_parser: ArgParser):
         Pipeline.add_arguments(arg_parser)
         arg_parser.add_argument("--airtable-access-token", required=True)
-        arg_parser.add_argument("--paradicms-rdf-file-path")
+        arg_parser.add_argument("--cache-dir-path", type=Path)
+        arg_parser.add_argument("--paradicms-rdf-file-path", type=Path)
 
     @staticmethod
     def __find_data_dir_path() -> Path:
