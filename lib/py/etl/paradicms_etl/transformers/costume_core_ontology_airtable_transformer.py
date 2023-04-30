@@ -364,33 +364,6 @@ class CostumeCoreOntologyAirtableTransformer:
                 ),
             )
 
-    def __transform_feature_value_record_to_images(
-        self, *, depicts_uri: URIRef, feature_value_record, image_records_by_id
-    ) -> Iterable:
-        feature_value_image_records = []
-        for feature_value_image in feature_value_record["fields"].get("images", []):
-            feature_value_image_record = None
-            for image_record in image_records_by_id.values():
-                if (
-                    image_record["fields"]["image"][0]["id"]
-                    == feature_value_image["id"]
-                ):
-                    feature_value_image_record = image_record
-                    break
-            if feature_value_image_record is not None:
-                feature_value_image_records.append(feature_value_image_record)
-            else:
-                self.__logger.warning(
-                    "no image record found for feature value image %s",
-                    feature_value_image,
-                )
-
-        yield from self.__transform_image_records_to_images(
-            depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
-            depicts_uri=depicts_uri,
-            image_records=feature_value_image_records,
-        )
-
     def __transform_feature_value_record_to_concept(
         self,
         *,
@@ -572,6 +545,8 @@ class CostumeCoreOntologyAirtableTransformer:
             if costume_core_ontology_term:
                 yield costume_core_ontology_term
 
+            image_depicts_uris: Set[URIRef] = set()
+
             concept = self.__transform_feature_value_record_to_concept(
                 feature_records=feature_records,
                 feature_value_record=feature_value_record,
@@ -579,12 +554,7 @@ class CostumeCoreOntologyAirtableTransformer:
             )
             if concept is not None:
                 yield concept
-
-                yield from self.__transform_feature_value_record_to_images(
-                    depicts_uri=concept.uri,
-                    feature_value_record=feature_value_record,
-                    image_records_by_id=image_records_by_id,
-                )
+                image_depicts_uris.add(concept.uri)
 
             work = self.__transform_feature_value_record_to_work(
                 feature_records=feature_records,
@@ -596,11 +566,35 @@ class CostumeCoreOntologyAirtableTransformer:
                 if concept is not None:
                     assert concept.uri == work.uri
                 else:
-                    yield from self.__transform_feature_value_record_to_images(
-                        depicts_uri=work.uri,
-                        feature_value_record=feature_value_record,
-                        image_records_by_id=image_records_by_id,
+                    image_depicts_uris.add(work.uri)
+
+            if not image_depicts_uris:
+                continue
+
+            feature_value_image_records = []
+            for feature_value_image in feature_value_record["fields"].get("images", []):
+                feature_value_image_record = None
+                for image_record in image_records_by_id.values():
+                    if (
+                        image_record["fields"]["image"][0]["id"]
+                        == feature_value_image["id"]
+                    ):
+                        feature_value_image_record = image_record
+                        break
+                if feature_value_image_record is not None:
+                    feature_value_image_records.append(feature_value_image_record)
+                else:
+                    self.__logger.warning(
+                        "no image record found for feature value image %s",
+                        feature_value_image,
                     )
+
+            for image_depicts_uri in image_depicts_uris:
+                yield from self.__transform_image_records_to_images(
+                    depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
+                    depicts_uri=image_depicts_uri,
+                    image_records=feature_value_image_records,
+                )
 
     def __transform_image_records_to_images(
         self, *, depicts_type: __ImageDepictsType, depicts_uri: URIRef, image_records
