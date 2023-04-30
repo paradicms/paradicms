@@ -58,7 +58,7 @@ module.exports = (env, argv) => {
         patterns: [
           {from: dataFilePath, to: "data.trig"},
           {from: "src/img", to: "img"},
-          {from: "public/img", to: "img"},
+          {from: "public/img", to: "img", noErrorOnMissing: true},
           {from: "src/google*.html", to: "."},
           {
             from: "src/GettingStartedWithDressDiscover.pdf",
