@@ -29,6 +29,7 @@ from paradicms_etl.models.cms.cms_text import CmsText
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
+from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -612,32 +613,44 @@ class CostumeCoreOntologyAirtableTransformer:
             return
 
         for image_record in image_records:
-            assert len(image_record["fields"]["image"]) == 1, len(
-                image_record["fields"]["image"]
-            )
+            for image_field_value in image_record["fields"]["image"]:
+                if "cached_url" not in image_field_value:
+                    self.__logger.warning(
+                        "image %s (url=%s) does not have a cached_url, skipping",
+                        image_field_value["id"],
+                        image_field_value["url"],
+                    )
+                    continue
 
-            # The same image may be used to depict multiple objects e.g., a feature value, a feature, and a feature set.
-            # Allow the src to be duplicated but make the URIs unique.
-
-            yield self.__transform_rights_fields_to_rights(
-                key_prefix="image",
-                record_fields=image_record["fields"],
-                model_builder=CmsImage.builder(
-                    depicts_uri=depicts_uri,
-                    uri=URIRef(
-                        ":".join(
-                            (
-                                "urn",
-                                "costumeCore",
-                                "image",
-                                str(depicts_type),
-                                quote_plus(depicts_uri),
-                                image_record["fields"]["image"][0]["id"],
+                # The same image may be used to depict multiple objects e.g., a feature value, a feature, and a feature set.
+                # Allow the src to be duplicated but make the URIs unique.
+                yield self.__transform_rights_fields_to_rights(
+                    key_prefix="image",
+                    record_fields=image_record["fields"],
+                    model_builder=CmsImage.builder(
+                        depicts_uri=depicts_uri,
+                        uri=URIRef(
+                            ":".join(
+                                (
+                                    "urn",
+                                    "costumeCore",
+                                    "image",
+                                    str(depicts_type),
+                                    quote_plus(depicts_uri),
+                                    image_field_value["id"],
+                                )
                             )
+                        ),
+                    )
+                    .set_format(image_field_value["type"])
+                    .set_exact_dimensions(
+                        ImageDimensions(
+                            height=image_field_value["height"],
+                            width=image_field_value["width"],
                         )
-                    ),
-                ).set_src(image_record["fields"]["image"][0]["url"]),
-            ).build()
+                    )
+                    .set_src(image_field_value["cached_url"]),
+                ).build()
 
     def __transform_rights_fields_to_costume_core_rights(
         self, *, key_prefix: str, record_fields: Dict[str, Union[str, List[str], None]]
