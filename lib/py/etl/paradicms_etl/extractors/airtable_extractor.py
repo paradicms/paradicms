@@ -1,6 +1,7 @@
 import json
 import logging
 from pathlib import Path
+from shutil import rmtree
 from typing import Dict, List, Tuple, Union, Any, Optional
 from urllib.error import HTTPError
 from urllib.parse import quote
@@ -51,7 +52,8 @@ class AirtableExtractor:
         base = self.__extract_base_metadata(base_id=self.__base_id, force=force)
 
         records_by_table = {}
-        self.__cache_dir_path.mkdir(parents=True, exist_ok=True)
+        rmtree(self.__cache_dir_path, ignore_errors=True)
+        self.__cache_dir_path.mkdir(parents=True)
         for table, query_parameters in self.__tables.items():
             records_by_table[table] = self.__extract_table_records(
                 force=force, table=table, query_parameters=query_parameters
