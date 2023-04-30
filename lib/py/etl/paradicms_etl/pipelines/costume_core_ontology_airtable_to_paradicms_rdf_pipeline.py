@@ -18,7 +18,11 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
     ID = "costume_core_ontology"
 
     def __init__(
-        self, *, airtable_access_token: str, data_dir_path: Optional[Path] = None
+        self,
+        *,
+        airtable_access_token: str,
+        data_dir_path: Optional[Path] = None,
+        paradicms_rdf_file_path: Optional[str] = None,
     ):
         if data_dir_path is None:
             data_dir_path = self.__find_data_dir_path()
@@ -34,11 +38,12 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
             ),
             id=self.ID,
             loader=lambda *, models, **kwds: RdfFileLoader(
-                rdf_file_path=data_dir_path
+                rdf_file_path=Path(paradicms_rdf_file_path)
+                if paradicms_rdf_file_path
+                else data_dir_path
                 / self.ID
                 / "loaded"
-                / "costume_core_ontology_paradicms.ttl",
-                format="ttl",
+                / "costume_core_ontology_paradicms.trig"
             )(
                 models=(
                     model
@@ -52,7 +57,7 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
                         ),
                     )
                 ),
-                **kwds
+                **kwds,
             ),
             transformer=CostumeCoreOntologyAirtableTransformer(),
         )
@@ -61,6 +66,7 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
     def add_arguments(cls, arg_parser: ArgParser):
         Pipeline.add_arguments(arg_parser)
         arg_parser.add_argument("--airtable-access-token", required=True)
+        arg_parser.add_argument("--paradicms-rdf-file-path")
 
     @staticmethod
     def __find_data_dir_path() -> Path:
