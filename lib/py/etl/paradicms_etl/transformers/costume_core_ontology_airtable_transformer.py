@@ -619,7 +619,7 @@ class CostumeCoreOntologyAirtableTransformer:
             # The same image may be used to depict multiple objects e.g., a feature value, a feature, and a feature set.
             # Allow the src to be duplicated but make the URIs unique.
 
-            full_size_image = self.__transform_rights_fields_to_rights(
+            yield self.__transform_rights_fields_to_rights(
                 key_prefix="image",
                 record_fields=image_record["fields"],
                 model_builder=CmsImage.builder(
@@ -638,8 +638,6 @@ class CostumeCoreOntologyAirtableTransformer:
                     ),
                 ).set_src(image_record["fields"]["image"][0]["url"]),
             ).build()
-
-            yield full_size_image
 
     def __transform_rights_fields_to_costume_core_rights(
         self, *, key_prefix: str, record_fields: Dict[str, Union[str, List[str], None]]
