@@ -11,9 +11,11 @@ from typing import (
     Optional,
     Any,
     TypeVar,
+    Type,
 )
 from urllib.parse import quote_plus
 
+import PIL
 from inflector import Inflector
 from rdflib import URIRef, Literal
 
@@ -21,6 +23,7 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_concept import CmsConcept
 from paradicms_etl.models.cms.cms_image import CmsImage
+from paradicms_etl.models.cms.cms_image_data import CmsImageData
 from paradicms_etl.models.cms.cms_license import CmsLicense
 from paradicms_etl.models.cms.cms_property import CmsProperty
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
@@ -29,6 +32,7 @@ from paradicms_etl.models.cms.cms_text import CmsText
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
+from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -63,7 +67,15 @@ class CostumeCoreOntologyAirtableTransformer:
         def __str__(self):
             return self.value
 
-    def __init__(self, *, ontology_version: Optional[str] = None):
+    def __init__(
+        self,
+        *,
+        image_data_class: Optional[Type[ImageData]] = None,
+        ontology_version: Optional[str] = None,
+    ):
+        if image_data_class is None:
+            image_data_class = CmsImageData
+        self.__image_data_class = image_data_class
         self.__logger = logging.getLogger(__name__)
         self.__ontology_version = ontology_version
 
@@ -614,13 +626,18 @@ class CostumeCoreOntologyAirtableTransformer:
 
         for image_record in image_records:
             for image_field_value in image_record["fields"]["image"]:
-                if "cached_url" not in image_field_value:
+                if "cached_file_path" not in image_field_value:
                     self.__logger.warning(
-                        "image %s (url=%s) does not have a cached_url, skipping",
+                        "image %s (url=%s) does not have a cached_file_path, skipping",
                         image_field_value["id"],
                         image_field_value["url"],
                     )
                     continue
+
+                with PIL.Image.open(image_field_value["cached_file_path"]) as pil_image:
+                    image_data = self.__image_data_class.from_pil_image(
+                        pil_image.copy().convert("RGB")
+                    )
 
                 # The same image may be used to depict multiple objects e.g., a feature value, a feature, and a feature set.
                 # Allow the src to be duplicated but make the URIs unique.
@@ -649,7 +666,7 @@ class CostumeCoreOntologyAirtableTransformer:
                             width=image_field_value["width"],
                         )
                     )
-                    .set_src(image_field_value["cached_url"]),
+                    .set_src(image_data),
                 ).build()
 
     def __transform_rights_fields_to_costume_core_rights(

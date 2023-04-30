@@ -90,13 +90,13 @@ class AirtableExtractor:
                     image_key in list_field_value for image_key in self.__IMAGE_KEYs
                 ):
                     break
-                list_field_value["cached_url"] = self.__image_file_cache.get_file(
-                    URIRef(list_field_value["url"])
-                ).as_uri()
+                list_field_value["cached_file_path"] = str(
+                    self.__image_file_cache.get_file(URIRef(list_field_value["url"]))
+                )
                 self.__logger.debug(
                     "cached %s as %s",
                     list_field_value["url"],
-                    list_field_value["cached_url"],
+                    list_field_value["cached_file_path"],
                 )
 
     def __extract_base_metadata(self, *, base_id: str, force: bool) -> Dict[str, Any]:

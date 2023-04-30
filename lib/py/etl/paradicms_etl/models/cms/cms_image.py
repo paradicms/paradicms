@@ -74,7 +74,9 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
             self.add(CMS.thumbnailOf, original_image_uri)
             return self
 
-        def set_src(self, src: Union[str, Literal, URIRef]) -> "CmsImage.Builder":
+        def set_src(
+            self, src: Union[str, CmsImageData, Literal, URIRef]
+        ) -> "CmsImage.Builder":
             """
             src that can be used in an <img> tag; if not specified, defaults to URI
             """
