@@ -3,6 +3,8 @@ from io import BytesIO
 
 from PIL import Image
 
+__import__("PIL.JpegImagePlugin")
+
 from paradicms_etl.model import Model
 
 
