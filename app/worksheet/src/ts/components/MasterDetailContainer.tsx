@@ -2,14 +2,14 @@ import {faInfoCircle, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   Image,
-  Text,
   imagePlaceholderSrc,
   selectThumbnail,
+  Text,
 } from "@paradicms/models";
 import {
+  galleryThumbnailSelector,
   ImagesCarousel,
   RightsParagraph,
-  galleryThumbnailSelector,
 } from "@paradicms/react-dom-components";
 import {Literal} from "@rdfjs/types";
 import classnames from "classnames";
@@ -220,7 +220,11 @@ const ItemsGallery: React.FunctionComponent<{
               "me-4": true,
             })}
             key={itemI}
-            style={{borderWidth: "8px", width: "240px"}}
+            style={{
+              borderWidth: "8px",
+              maxWidth: galleryThumbnailSelector.targetDimensions.width + 40,
+              minHeight: galleryThumbnailSelector.targetDimensions.height,
+            }}
           >
             <CardHeader className="px-0 mt-2 text-center w-100">
               <Button
@@ -238,11 +242,11 @@ const ItemsGallery: React.FunctionComponent<{
             >
               <a onClick={onToggleSelected}>
                 <img
-                  className="figure-img rounded"
+                  className="rounded"
                   src={thumbnailSrc}
                   style={{
-                    height: galleryThumbnailSelector.targetDimensions.height,
-                    width: galleryThumbnailSelector.targetDimensions.width,
+                    maxHeight: galleryThumbnailSelector.targetDimensions.height,
+                    maxWidth: galleryThumbnailSelector.targetDimensions.width,
                   }}
                 />
               </a>
