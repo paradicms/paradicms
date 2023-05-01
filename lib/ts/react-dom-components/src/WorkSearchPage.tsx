@@ -345,6 +345,17 @@ export const WorkSearchPage: React.FunctionComponent<{
       </Container>
     ),
   });
+  if (renderWorkLocationsMap) {
+    tabs.push({
+      key: "workLocations",
+      title: "Map",
+      content:
+        getWorkLocationsResult &&
+        getWorkLocationsResult.workLocations.length > 0
+          ? renderWorkLocationsMap(getWorkLocationsResult.workLocations)
+          : null,
+    });
+  }
   tabs.push({
     key: "workAgents",
     title: "People",
@@ -397,17 +408,6 @@ export const WorkSearchPage: React.FunctionComponent<{
       />
     ) : null,
   });
-  if (renderWorkLocationsMap) {
-    tabs.push({
-      key: "workLocations",
-      title: "Map",
-      content:
-        getWorkLocationsResult &&
-        getWorkLocationsResult.workLocations.length > 0
-          ? renderWorkLocationsMap(getWorkLocationsResult.workLocations)
-          : null,
-    });
-  }
 
   return (
     <>

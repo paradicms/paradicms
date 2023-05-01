@@ -1,5 +1,5 @@
 import {Image, Work, WorkAgent} from "@paradicms/models";
-import {WorkLocationSummary, summarizeWorkLocation} from "@paradicms/services";
+import {summarizeWorkLocation, WorkLocationSummary} from "@paradicms/services";
 import * as React from "react";
 import {useState} from "react";
 import {
@@ -78,6 +78,23 @@ export const WorkPage: React.FunctionComponent<{
       ),
     });
   }
+  if (renderWorkLocationsMap) {
+    const workLocations = [];
+    if (work.location) {
+      workLocations.push(summarizeWorkLocation(work, work.location));
+    }
+    for (const event of work.events) {
+      if (event.workLocation) {
+        workLocations.push(summarizeWorkLocation(work, event.workLocation));
+      }
+    }
+    if (workLocations.length > 0) {
+      leftColTabs.push({
+        title: "Map",
+        content: renderWorkLocationsMap(workLocations),
+      });
+    }
+  }
   if (workAgents.length > 0) {
     leftColTabs.push({
       title: "People",
@@ -102,23 +119,6 @@ export const WorkPage: React.FunctionComponent<{
       ),
     });
   }
-  if (renderWorkLocationsMap) {
-    const workLocations = [];
-    if (work.location) {
-      workLocations.push(summarizeWorkLocation(work, work.location));
-    }
-    for (const event of work.events) {
-      if (event.workLocation) {
-        workLocations.push(summarizeWorkLocation(work, event.workLocation));
-      }
-    }
-    if (workLocations.length > 0) {
-      leftColTabs.push({
-        title: "Map",
-        content: renderWorkLocationsMap(workLocations),
-      });
-    }
-  }
 
   let leftCol: React.ReactNode;
   if (leftColTabs.length === 1) {
@@ -134,6 +134,7 @@ export const WorkPage: React.FunctionComponent<{
                   activeLeftColTabIndex === navTabIndex ? "active" : undefined
                 }
                 onClick={() => setActiveLeftColTabIndex(navTabIndex)}
+                style={{cursor: "pointer", fontSize: "small"}}
               >
                 {navTab.title}
               </NavLink>
